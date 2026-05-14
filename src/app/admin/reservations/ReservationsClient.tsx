@@ -20,7 +20,9 @@ interface Reservation {
 }
 interface ResSettings {
   minNoticeHours: number; maxAdvanceDays: number; slotLengthMinutes: number;
-  maxPerSlot: number; maxGuests: number; requireDeposit: boolean; depositAmount: number;
+  maxPerSlot: number; minGuests: number; maxGuests: number;
+  autoConfirm: boolean; allowPreOrder: boolean; holdMinutes: number;
+  requireDeposit: boolean; depositAmount: number;
   cancellationPolicy: string; reservationHours: string; blackoutDates: string;
 }
 
@@ -556,7 +558,9 @@ function SettingsTab() {
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<ResSettings>({
     minNoticeHours: 2, maxAdvanceDays: 30, slotLengthMinutes: 30,
-    maxPerSlot: 10, maxGuests: 20, requireDeposit: false, depositAmount: 0,
+    maxPerSlot: 10, minGuests: 1, maxGuests: 20,
+    autoConfirm: true, allowPreOrder: false, holdMinutes: 15,
+    requireDeposit: false, depositAmount: 0,
     cancellationPolicy: "", reservationHours: "{}", blackoutDates: "[]",
   });
   const [hours, setHours] = useState<Record<number, { enabled: boolean; open: string; close: string }>>(
@@ -599,6 +603,41 @@ function SettingsTab() {
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
+        <h3 className="font-semibold text-gray-900">Reservation Behavior</h3>
+        <div className="space-y-3">
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={form.autoConfirm}
+              onChange={e => setForm(f => ({ ...f, autoConfirm: e.target.checked }))}
+              className="mt-1 w-4 h-4 accent-orange-500"
+            />
+            <div className="flex-1">
+              <div className="text-sm font-medium text-gray-800">Auto-confirm reservations</div>
+              <p className="text-xs text-gray-500 mt-0.5">
+                When ON: bookings that fit your rules confirm instantly. When OFF: you accept or reject each one from the Reservations tab.
+              </p>
+            </div>
+          </label>
+
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={form.allowPreOrder}
+              onChange={e => setForm(f => ({ ...f, allowPreOrder: e.target.checked }))}
+              className="mt-1 w-4 h-4 accent-orange-500"
+            />
+            <div className="flex-1">
+              <div className="text-sm font-medium text-gray-800">Allow guests to pre-order their food when booking</div>
+              <p className="text-xs text-gray-500 mt-0.5">
+                Customers can add menu items to their reservation. Their items appear on the kitchen display when they arrive.
+              </p>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
         <h3 className="font-semibold text-gray-900">Booking Rules</h3>
         <div className="grid grid-cols-2 gap-4">
           {([
@@ -606,7 +645,9 @@ function SettingsTab() {
             ["maxAdvanceDays", "Max Advance (days)", "How many days ahead customers can book"],
             ["slotLengthMinutes", "Time Slot (min)", "Length of each booking slot"],
             ["maxPerSlot", "Max per Slot", "Maximum reservations per time slot"],
-            ["maxGuests", "Max Guests Total", "Maximum guests across all simultaneous reservations"],
+            ["minGuests", "Min Guests", "Smallest party size customers can book"],
+            ["maxGuests", "Max Guests", "Largest party size customers can book"],
+            ["holdMinutes", "Hold table when late (min)", "How long the table is held past the reservation time"],
           ] as [keyof ResSettings, string, string][]).map(([key, label, hint]) => (
             <div key={key}>
               <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>

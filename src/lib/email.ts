@@ -53,6 +53,42 @@ export async function sendOrderStatusUpdateEmail(params: {
   }
 }
 
+export async function sendReservationConfirmation(params: {
+  to: string;
+  customerName: string;
+  restaurantName: string;
+  partySize: number;
+  date: string;       // "YYYY-MM-DD"
+  time: string;       // "HH:MM"
+  confirmationCode: string;
+  status: "pending" | "confirmed";
+  depositPaid?: boolean;
+  depositAmount?: number;
+  preOrderTotal?: number;
+}) {
+  if (!EMAIL_ENABLED) {
+    console.log("[Email Placeholder]", params.status === "confirmed" ? "Confirmation" : "Request received", "→", params.to, "code:", params.confirmationCode);
+    return { success: true };
+  }
+}
+
+export async function sendNewReservationNotification(params: {
+  restaurantEmail: string;
+  restaurantName: string;
+  customerName: string;
+  partySize: number;
+  date: string;
+  time: string;
+  confirmationCode: string;
+  status: "pending" | "confirmed";
+  dashboardUrl: string;
+}) {
+  if (!EMAIL_ENABLED) {
+    console.log("[Email Placeholder] Notify", params.restaurantEmail, "of", params.status, "reservation:", params.confirmationCode);
+    return { success: true };
+  }
+}
+
 export async function sendTrialExpiringEmail(params: {
   to: string;
   restaurantName: string;

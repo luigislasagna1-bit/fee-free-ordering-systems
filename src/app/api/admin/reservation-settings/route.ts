@@ -27,7 +27,8 @@ export async function PUT(req: NextRequest) {
     const body = await req.json();
     const {
       minNoticeHours, maxAdvanceDays, slotLengthMinutes,
-      maxPerSlot, maxGuests, requireDeposit, depositAmount,
+      maxPerSlot, minGuests, maxGuests, autoConfirm, allowPreOrder, holdMinutes,
+      requireDeposit, depositAmount,
       cancellationPolicy, reservationHours, blackoutDates,
     } = body;
 
@@ -38,7 +39,11 @@ export async function PUT(req: NextRequest) {
         ...(maxAdvanceDays     !== undefined && { maxAdvanceDays:     parseInt(maxAdvanceDays) }),
         ...(slotLengthMinutes  !== undefined && { slotLengthMinutes:  parseInt(slotLengthMinutes) }),
         ...(maxPerSlot         !== undefined && { maxPerSlot:         parseInt(maxPerSlot) }),
+        ...(minGuests          !== undefined && { minGuests:          parseInt(minGuests) }),
         ...(maxGuests          !== undefined && { maxGuests:          parseInt(maxGuests) }),
+        ...(autoConfirm        !== undefined && { autoConfirm }),
+        ...(allowPreOrder      !== undefined && { allowPreOrder }),
+        ...(holdMinutes        !== undefined && { holdMinutes:        parseInt(holdMinutes) }),
         ...(requireDeposit     !== undefined && { requireDeposit }),
         ...(depositAmount      !== undefined && { depositAmount:      parseFloat(depositAmount) }),
         ...(cancellationPolicy !== undefined && { cancellationPolicy }),

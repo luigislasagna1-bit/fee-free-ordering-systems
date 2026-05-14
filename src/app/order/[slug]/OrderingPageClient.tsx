@@ -6,7 +6,7 @@ import {
   Truck, ShoppingBag, Image as ImageIcon, ChevronLeft, ChevronRight,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { parseTheme, bannerHeightPx } from "@/lib/theme";
 import {
@@ -15,6 +15,7 @@ import {
 } from "./PizzaBuilder";
 import { geocodeAddress, findZoneForPoint, type ZoneLike } from "@/lib/geocode";
 import { CheckoutModal } from "./CheckoutModal";
+import { ReservationModal } from "./ReservationModal";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -239,6 +240,16 @@ export function OrderingPageClient({
 }) {
   const theme = parseTheme(themeSettings);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Auto-open the reservation modal when the customer arrived from the info
+  // page (or any link) with ?reservation=1 in the URL.
+  useEffect(() => {
+    if (searchParams.get("reservation") === "1" && restaurant.acceptsReservations) {
+      setReservationOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
@@ -247,6 +258,7 @@ export function OrderingPageClient({
   const [itemNotes, setItemNotes] = useState("");
   const [orderType, setOrderType] = useState<"pickup" | "delivery">(restaurant.acceptsPickup ? "pickup" : "delivery");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [reservationOpen, setReservationOpen] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [couponId, setCouponId] = useState<string | null>(null);

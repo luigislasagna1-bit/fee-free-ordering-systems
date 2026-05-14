@@ -477,7 +477,11 @@ model ReservationSettings {
   maxAdvanceDays       Int      @default(30)
   slotLengthMinutes    Int      @default(30)
   maxPerSlot           Int      @default(10)
+  minGuests            Int      @default(1)
   maxGuests            Int      @default(20)
+  autoConfirm          Boolean  @default(true)
+  allowPreOrder        Boolean  @default(false)
+  holdMinutes          Int      @default(15)
   requireDeposit       Boolean  @default(false)
   depositAmount        Float    @default(0)
   cancellationPolicy   String   @default("")
@@ -524,6 +528,8 @@ model Reservation {
   staffNotes       String?
   depositAmount    Float    @default(0)
   depositPaid      Boolean  @default(false)
+  preOrderTotal    Float    @default(0)
+  paymentIntentId  String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
