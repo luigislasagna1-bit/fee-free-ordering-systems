@@ -1,0 +1,555 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Restaurant {
+  id                 String   @id @default(cuid())
+  name               String
+  slug               String   @unique
+  slogan             String?
+  description        String?
+  phone              String?
+  email              String?
+  address            String?
+  city               String?
+  state              String?
+  zip                String?
+  country            String   @default("US")
+  timezone           String   @default("America/New_York")
+  cuisineType        String?
+  logoUrl            String?
+  bannerUrl          String?
+  isActive           Boolean  @default(true)
+  acceptsPickup      Boolean  @default(true)
+  acceptsDelivery    Boolean  @default(false)
+  acceptsDineIn      Boolean  @default(false)
+  acceptsCatering    Boolean  @default(false)
+  acceptsTakeOut     Boolean  @default(false)
+  acceptsReservations Boolean  @default(false)
+  serviceSettings    String?  // JSON: per-service { displayName, description, estimatedTime }
+  minimumOrder       Float    @default(0)
+  deliveryFee        Float    @default(0)
+  estimatedPickup    Int      @default(20)
+  estimatedDelivery  Int      @default(45)
+  taxRate            Float    @default(0)
+  stripeAccountId    String?
+  stripeAccountStatus String? @default("not_connected")
+  subscriptionPlanId String?
+  trialEndsAt        DateTime?
+  subscriptionStatus String   @default("trial")
+  reviewLink         String?
+  infoContent        String?  // JSON for info page custom CTAs etc
+  themeSettings      String?  // JSON for customer-facing website theme
+  lat                Float?   // geocoded restaurant latitude
+  lng                Float?   // geocoded restaurant longitude
+  mapProvider        String   @default("leaflet")  // "leaflet" | "google"
+  googleMapsApiKey   String?  // only used when mapProvider = "google"
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  subscriptionPlan SubscriptionPlan?  @relation(fields: [subscriptionPlanId], references: [id])
+  users            User[]
+  menuCategories   MenuCategory[]
+  menuItems        MenuItem[]
+  modifierGroups   ModifierGroup[]
+  orders           Order[]
+  customers        Customer[]
+  coupons          Coupon[]
+  deliveryZones    DeliveryZone[]
+  openingHours     OpeningHours[]
+  receiptTemplates ReceiptTemplate[]
+  promotions         Promotion[]
+  printerSettings    PrinterSettings?
+  autopilotCampaigns   AutopilotCampaign[]
+  paymentProvider      PaymentProvider?
+  printLogs            PrintLog[]
+  reservationSettings  ReservationSettings?
+  reservationTables    ReservationTable[]
+  reservations         Reservation[]
+}
+
+model SubscriptionPlan {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  price       Float
+  interval    String   @default("month")
+  description String?
+  features    String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  restaurants Restaurant[]
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String
+  role         String   @default("restaurant_admin")
+  restaurantId String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant Restaurant? @relation(fields: [restaurantId], references: [id])
+}
+
+model MenuCategory {
+  id           String   @id @default(cuid())
+  restaurantId String
+  name         String
+  description  String?
+  imageUrl     String?
+  isActive     Boolean  @default(true)
+  isHidden     Boolean  @default(false)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant     Restaurant      @relation(fields: [restaurantId], references: [id])
+  menuItems      MenuItem[]
+  modifierGroups ModifierGroup[]
+
+  @@index([restaurantId, isActive])
+}
+
+model MenuItem {
+  id             String   @id @default(cuid())
+  restaurantId   String
+  categoryId     String
+  name           String
+  description    String?
+  price          Float
+  imageUrl       String?
+  isAvailable    Boolean  @default(true)
+  isFeatured     Boolean  @default(false)
+  isSoldOut      Boolean  @default(false)
+  isHidden       Boolean  @default(false)
+  hasVariants    Boolean  @default(false)
+  forPickup      Boolean  @default(true)
+  forDelivery    Boolean  @default(true)
+  availableDays  String?  // JSON: [0,1,2,3,4,5,6] — null = all days
+  availableFrom  String?  // "HH:MM"
+  availableTo    String?  // "HH:MM"
+  sortOrder      Int      @default(0)
+  calories       Int?
+  allergens      String?
+  pizzaConfig    String?  // JSON: PizzaConfig — marks item as a pizza builder item
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  restaurant     Restaurant      @relation(fields: [restaurantId], references: [id])
+  category       MenuCategory    @relation(fields: [categoryId], references: [id])
+  variants       ItemVariant[]
+  modifierGroups ModifierGroup[]
+  orderItems     OrderItem[]
+
+  @@index([restaurantId, isAvailable])
+  @@index([categoryId, sortOrder])
+}
+
+// Represents a size/variation (e.g., Small / Medium / Large)
+model ItemVariant {
+  id         String   @id @default(cuid())
+  menuItemId String
+  name       String   // e.g., "Small (6 Slice - 10 inch)"
+  price      Float
+  sortOrder  Int      @default(0)
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  menuItem       MenuItem        @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  modifierGroups ModifierGroup[]
+}
+
+// Modifier groups can be:
+// - item-level:    menuItemId set, categoryId null, restaurantId null
+// - variant-level: variantId set, menuItemId set
+// - category-level: categoryId set, menuItemId null
+// - library (reusable): restaurantId set, menuItemId null, categoryId null
+model ModifierGroup {
+  id            String   @id @default(cuid())
+  restaurantId  String?  // null = item-scoped, set = library group
+  menuItemId    String?
+  variantId     String?
+  categoryId    String?
+  name          String
+  description   String?
+  required      Boolean  @default(false)
+  minSelect     Int      @default(0)
+  maxSelect     Int      @default(1)
+  maxPerOption  Int      @default(1)  // how many times same option can be picked
+  isHidden      Boolean  @default(false)
+  sortOrder     Int      @default(0)
+  libraryGroupId String? // if attached from a library group (points to the source library ModifierGroup id)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  restaurant Restaurant?  @relation(fields: [restaurantId], references: [id])
+  menuItem   MenuItem?    @relation(fields: [menuItemId], references: [id])
+  variant    ItemVariant? @relation(fields: [variantId], references: [id])
+  category   MenuCategory? @relation(fields: [categoryId], references: [id])
+  options    ModifierOption[]
+}
+
+model ModifierOption {
+  id              String   @id @default(cuid())
+  modifierGroupId String
+  name            String
+  priceAdjustment Float    @default(0)
+  isDefault       Boolean  @default(false)
+  isAvailable     Boolean  @default(true)
+  sortOrder       Int      @default(0)
+  createdAt       DateTime @default(now())
+
+  modifierGroup ModifierGroup       @relation(fields: [modifierGroupId], references: [id], onDelete: Cascade)
+  orderItemMods OrderItemModifier[]
+}
+
+model Order {
+  id               String   @id @default(cuid())
+  restaurantId     String
+  customerId       String?
+  orderNumber      String
+  status           String   @default("pending")
+  type             String   @default("pickup")
+  customerName     String
+  customerEmail    String?
+  customerPhone    String?
+  deliveryAddress  String?
+  deliveryCity     String?
+  deliveryZip      String?
+  notes            String?
+  couponId         String?
+  couponDiscount   Float    @default(0)
+  promoDiscount    Float    @default(0)
+  subtotal         Float
+  taxAmount        Float    @default(0)
+  deliveryFee      Float    @default(0)
+  tip              Float    @default(0)
+  total            Float
+  paymentMethod    String   @default("cash")
+  paymentStatus    String   @default("pending")
+  paymentIntentId  String?
+  refundStatus     String?   // null | "pending" | "refunded" | "failed"
+  scheduledFor     DateTime?
+  estimatedReady   DateTime?
+  acceptedAt       DateTime?
+  rejectedAt       DateTime?
+  rejectionReason  String?
+  completedAt      DateTime?
+  preparationTime  Int?
+  deliveryZoneId           String?
+  deliveryEstimatedMinutes Int?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  restaurant    Restaurant     @relation(fields: [restaurantId], references: [id])
+  customer      Customer?      @relation(fields: [customerId], references: [id])
+  coupon        Coupon?        @relation(fields: [couponId], references: [id])
+  deliveryZone  DeliveryZone?  @relation(fields: [deliveryZoneId], references: [id])
+  items         OrderItem[]
+
+  @@index([restaurantId, createdAt])
+  @@index([restaurantId, status])
+  @@index([restaurantId, orderNumber])
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  orderId    String
+  menuItemId String?
+  variantId  String?
+  variantName String?
+  name       String
+  price      Float
+  quantity   Int
+  notes      String?
+  subtotal   Float
+  createdAt  DateTime @default(now())
+
+  order      Order               @relation(fields: [orderId], references: [id])
+  menuItem   MenuItem?           @relation(fields: [menuItemId], references: [id], onDelete: SetNull)
+  modifiers  OrderItemModifier[]
+}
+
+model OrderItemModifier {
+  id               String  @id @default(cuid())
+  orderItemId      String
+  modifierOptionId String? // nullable so deleting a modifier group doesn't break order history
+  name             String
+  priceAdjustment  Float   @default(0)
+
+  orderItem      OrderItem       @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  modifierOption ModifierOption? @relation(fields: [modifierOptionId], references: [id], onDelete: SetNull)
+}
+
+model Customer {
+  id           String   @id @default(cuid())
+  restaurantId String
+  name         String
+  email        String?
+  phone        String?
+  address      String?
+  notes        String?
+  totalOrders  Int      @default(0)
+  totalSpent   Float    @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  orders     Order[]
+
+  @@index([restaurantId])
+  @@index([restaurantId, email])
+}
+
+model Coupon {
+  id             String    @id @default(cuid())
+  restaurantId   String
+  code           String
+  description    String?
+  discountType   String    @default("percentage")
+  discountValue  Float
+  minimumOrder   Float     @default(0)
+  maxUses        Int?
+  usedCount      Int       @default(0)
+  isActive       Boolean   @default(true)
+  expiresAt      DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  orders     Order[]
+
+  @@unique([restaurantId, code])
+  @@index([restaurantId, isActive])
+}
+
+model Promotion {
+  id            String    @id @default(cuid())
+  restaurantId  String
+  name          String
+  description   String?
+  promotionType String    @default("percentage_off")
+  isActive      Boolean   @default(true)
+  stackingRule  String    @default("standard")
+  orderType     String    @default("both")
+  customerType  String    @default("any")
+  minimumOrder  Float     @default(0)
+  rules         String    @default("{}")
+  daysOfWeek    String?
+  startsAt      DateTime?
+  endsAt        DateTime?
+  usageLimit    Int?
+  usedCount     Int       @default(0)
+  autoApply     Boolean   @default(true)
+  couponCode    String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  @@index([restaurantId, isActive])
+}
+
+model DeliveryZone {
+  id           String   @id @default(cuid())
+  restaurantId String
+  name         String
+  color        String   @default("#f97316")
+  centerLat    Float    @default(0)
+  centerLng    Float    @default(0)
+  radiusKm     Float    @default(5)
+  deliveryFee  Float    @default(0)
+  minimumOrder Float    @default(0)
+  estimatedMinutes Int  @default(30)
+  isActive     Boolean  @default(true)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  orders     Order[]
+
+  @@index([restaurantId])
+}
+
+model OpeningHours {
+  id           String  @id @default(cuid())
+  restaurantId String
+  dayOfWeek    Int
+  isOpen       Boolean @default(true)
+  openTime     String  @default("09:00")
+  closeTime    String  @default("21:00")
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  @@unique([restaurantId, dayOfWeek])
+}
+
+model ReceiptTemplate {
+  id           String   @id @default(cuid())
+  restaurantId String
+  name         String
+  type         String   @default("customer")
+  template     String
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
+model PrinterSettings {
+  id                   String   @id @default(cuid())
+  restaurantId         String   @unique
+  // PrintNode credentials (AES-256-GCM encrypted)
+  printNodeApiKeyEnc   String?
+  printNodeApiKeyIv    String?
+  printNodeApiKeyTag   String?
+  printNodeConnected   Boolean  @default(false)
+  printNodeAccountName String?
+  selectedPrinterId    Int?     // PrintNode printer ID
+  selectedPrinterName  String?  // Cached printer display name
+  // Print options
+  autoPrint            Boolean  @default(false)
+  printKitchen         Boolean  @default(true)
+  printCustomer        Boolean  @default(true)
+  kitchenCopies        Int      @default(1)
+  customerCopies       Int      @default(1)
+  paperWidth           String   @default("80mm")
+  fontSize             String   @default("normal")
+  showLargeOrderNumber Boolean  @default(true)
+  showLogo             Boolean  @default(false)
+  printerLanguage      String   @default("escpos") // escpos | starprnt | plaintext
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
+model PrintLog {
+  id             String   @id @default(cuid())
+  restaurantId   String
+  orderId        String?
+  orderNumber    String?
+  receiptType    String           // kitchen | customer | test
+  printerName    String?
+  printNodeJobId Int?
+  status         String   @default("sent") // sent | failed
+  errorMessage   String?
+  createdAt      DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  @@index([restaurantId, createdAt])
+}
+
+model AutopilotCampaign {
+  id           String   @id @default(cuid())
+  restaurantId String
+  campaignType String   // second_order | cart_abandonment | reengagement
+  isEnabled    Boolean  @default(false)
+  subject      String   @default("")
+  emailBody    String   @default("")
+  delayHours   Int      @default(24)
+  couponId     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  @@unique([restaurantId, campaignType])
+}
+
+model ReservationSettings {
+  id                   String   @id @default(cuid())
+  restaurantId         String   @unique
+  minNoticeHours       Int      @default(2)
+  maxAdvanceDays       Int      @default(30)
+  slotLengthMinutes    Int      @default(30)
+  maxPerSlot           Int      @default(10)
+  maxGuests            Int      @default(20)
+  requireDeposit       Boolean  @default(false)
+  depositAmount        Float    @default(0)
+  cancellationPolicy   String   @default("")
+  reservationHours     String   @default("{}") // JSON: { "0": { open: "10:00", close: "22:00", enabled: true } }
+  blackoutDates        String   @default("[]") // JSON: ["2024-12-25"]
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
+model ReservationTable {
+  id           String   @id @default(cuid())
+  restaurantId String
+  name         String
+  number       Int?
+  section      String?
+  capacity     Int      @default(4)
+  isActive     Boolean  @default(true)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
+  reservations Reservation[]
+
+  @@index([restaurantId])
+}
+
+model Reservation {
+  id               String   @id @default(cuid())
+  restaurantId     String
+  tableId          String?
+  orderId          String?
+  confirmationCode String
+  status           String   @default("pending") // pending | confirmed | seated | completed | cancelled | no_show
+  customerName     String
+  customerEmail    String?
+  customerPhone    String?
+  partySize        Int
+  date             String   // "YYYY-MM-DD"
+  time             String   // "HH:MM"
+  durationMinutes  Int      @default(90)
+  notes            String?
+  staffNotes       String?
+  depositAmount    Float    @default(0)
+  depositPaid      Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  restaurant Restaurant        @relation(fields: [restaurantId], references: [id])
+  table      ReservationTable? @relation(fields: [tableId], references: [id])
+
+  @@index([restaurantId, date])
+  @@index([restaurantId, status])
+}
+
+model PaymentProvider {
+  id                String   @id @default(cuid())
+  restaurantId      String   @unique
+  provider          String   @default("stripe")      // stripe
+  mode              String   @default("test")         // test | live
+  publishableKey    String   @default("")
+  secretKeyEnc      String   @default("")             // AES-256-GCM encrypted
+  secretKeyIv       String   @default("")
+  secretKeyTag      String   @default("")
+  isActive          Boolean  @default(false)
+  connectMethod     String   @default("direct")       // direct | connect
+  stripeAccountId   String?
+  lastTestedAt      DateTime?
+  lastTestStatus    String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+}

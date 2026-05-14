@@ -1,0 +1,1345 @@
+"use client";
+/**
+ * PizzaBuilder — Enterprise-grade pizza customization component.
+ *
+ * Architecture:
+ * • Reads a `pizzaConfig` JSON blob from a MenuItem to understand which
+ *   modifier groups are crust / sauce / cheese / toppings.
+ * • Supports whole-pizza, left-half, and right-half topping placement.
+ * • Supports Extra / Normal / Light per-topping quantity modifiers.
+ * • Live SVG pizza visual updates as selections change.
+ * • Deterministic pricing engine (no rounding drift).
+ * • Serialises the customisation into OrderItemModifier names so kitchen
+ *   tickets print correctly without any additional schema.
+ *
+ * Multi-tenancy: all data (groups, options, prices) comes from the
+ * restaurant's own menu items — no cross-restaurant data leaks possible.
+ */
+import { useState, useMemo, useCallback } from "react";
+import {
+  X, Plus, Minus, ChevronLeft, ChevronRight,
+  Scissors, Check, Flame, Leaf, AlertCircle,
+} from "lucide-react";
+import { formatCurrency } from "@/lib/utils";
+
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+export type ToppingPlacement = "whole" | "left" | "right";
+export type ToppingQuantity  = "light" | "normal" | "extra";
+
+export interface PizzaConfig {
+  isPizza: boolean;
+  allowHalfHalf: boolean;
+  /** Modifier group ID for crust selection */
+  crustGroupId?: string;
+  /** Modifier group ID for sauce selection */
+  sauceGroupId?: string;
+  /** Modifier group ID for cheese selection */
+  cheeseGroupId?: string;
+  /** One or more modifier group IDs containing toppings */
+  toppingGroupIds: string[];
+  /** How many toppings are included in the base price (0 = all toppings charged individually via option.priceAdjustment) */
+  includedToppings: number;
+  /** Price per topping when includedToppings > 0; ignored when 0 (uses option prices) */
+  extraToppingPrice: number;
+  /** Per-variant topping prices keyed by variant name (overrides extraToppingPrice when a size is selected) */
+  variantToppingPrices?: Record<string, number>;
+  /** Multiplier applied to half-pizza toppings (default 0.5 → 50%) */
+  halfToppingMultiplier: number;
+  /** Additional price multiplier for "Extra" quantity on top of base topping price (default 0 = no upcharge) */
+  extraQuantityMultiplier: number;
+}
+
+export interface SelectedTopping {
+  optionId: string;
+  name: string;
+  groupId: string;
+  placement: ToppingPlacement;
+  quantity: ToppingQuantity;
+  /** Base unit price for one Normal whole topping */
+  unitPrice: number;
+}
+
+export interface PizzaCustomization {
+  isHalfHalf: boolean;
+  crustOptionId: string | null;
+  sauceOptionId: string | null;
+  leftSauceOptionId: string | null;
+  rightSauceOptionId: string | null;
+  cheeseOptionId: string | null;
+  leftCheeseOptionId: string | null;
+  rightCheeseOptionId: string | null;
+  toppings: SelectedTopping[];
+  // Selections from modifier groups attached to the pizza item that don't
+  // play a pizza-specific role (crust/sauce/cheese/topping). Cook level,
+  // allergen flags, etc. Keyed by group id → array of selected option ids.
+  otherSelections: Record<string, string[]>;
+}
+
+export interface PizzaAddResult {
+  variantId: string | null;
+  variant: { id: string; name: string; price: number } | null;
+  quantity: number;
+  notes: string;
+  lineTotal: number;
+  customization: PizzaCustomization;
+}
+
+interface ModOption {
+  id: string; name: string; priceAdjustment: number;
+  isDefault: boolean; isAvailable: boolean;
+}
+interface ModGroup {
+  id: string; name: string; description?: string;
+  required: boolean; minSelect: number; maxSelect: number;
+  libraryGroupId?: string | null;
+  options: ModOption[];
+}
+interface ItemVariant { id: string; name: string; price: number; isDefault: boolean }
+interface MenuItem {
+  id: string; name: string; description?: string; price: number;
+  imageUrl?: string; hasVariants: boolean;
+  variants: ItemVariant[]; modifierGroups: ModGroup[];
+}
+
+// ── Utility: parse & validate PizzaConfig from JSON string ───────────────────
+
+export function parsePizzaConfig(json: string | null | undefined): PizzaConfig | null {
+  if (!json) return null;
+  try {
+    const c = JSON.parse(json);
+    if (!c?.isPizza) return null;
+    return {
+      isPizza: true,
+      allowHalfHalf:          c.allowHalfHalf          ?? true,
+      crustGroupId:           c.crustGroupId            ?? undefined,
+      sauceGroupId:           c.sauceGroupId            ?? undefined,
+      cheeseGroupId:          c.cheeseGroupId           ?? undefined,
+      toppingGroupIds:        Array.isArray(c.toppingGroupIds) ? c.toppingGroupIds : [],
+      includedToppings:       Number(c.includedToppings)      || 0,
+      extraToppingPrice:      Number(c.extraToppingPrice)     || 0,
+      variantToppingPrices:   c.variantToppingPrices && typeof c.variantToppingPrices === "object"
+                                ? Object.fromEntries(
+                                    Object.entries(c.variantToppingPrices).map(([k, v]) => [k, Number(v) || 0])
+                                  )
+                                : undefined,
+      halfToppingMultiplier:  Number(c.halfToppingMultiplier) || 0.5,
+      extraQuantityMultiplier:Number(c.extraQuantityMultiplier)|| 0,
+    };
+  } catch { return null; }
+}
+
+// ── Pricing engine ────────────────────────────────────────────────────────────
+
+function computePrice(
+  customization: PizzaCustomization,
+  variantId: string | null,
+  item: MenuItem,
+  groups: ModGroup[],
+  config: PizzaConfig,
+): number {
+  // 1 Base price
+  let price = item.hasVariants && variantId
+    ? (item.variants.find(v => v.id === variantId)?.price ?? 0)
+    : item.price;
+
+  const findOpt = (groupId: string | undefined, optId: string | null) => {
+    if (!groupId || !optId) return null;
+    const grp = groups.find(g => g.id === groupId || g.libraryGroupId === groupId);
+    return grp?.options.find(o => o.id === optId) ?? null;
+  };
+
+  // 2 Crust
+  price += findOpt(config.crustGroupId, customization.crustOptionId)?.priceAdjustment ?? 0;
+
+  // 3 Sauce(s)
+  price += findOpt(config.sauceGroupId, customization.sauceOptionId)?.priceAdjustment ?? 0;
+  if (customization.isHalfHalf) {
+    price += findOpt(config.sauceGroupId, customization.leftSauceOptionId)?.priceAdjustment ?? 0;
+    price += findOpt(config.sauceGroupId, customization.rightSauceOptionId)?.priceAdjustment ?? 0;
+  }
+
+  // 4 Cheese(s)
+  price += findOpt(config.cheeseGroupId, customization.cheeseOptionId)?.priceAdjustment ?? 0;
+  if (customization.isHalfHalf) {
+    price += findOpt(config.cheeseGroupId, customization.leftCheeseOptionId)?.priceAdjustment ?? 0;
+    price += findOpt(config.cheeseGroupId, customization.rightCheeseOptionId)?.priceAdjustment ?? 0;
+  }
+
+  // 5 Toppings
+  const toppingGroups = groups.filter(g => config.toppingGroupIds.includes(g.id));
+  const { toppings } = customization;
+
+  if (config.extraToppingPrice > 0) {
+    // Included-toppings model: first N whole toppings free, then charge per topping
+    let toppingTotal = 0;
+    let includedLeft = config.includedToppings;
+
+    for (const t of toppings) {
+      const isHalf = t.placement !== "whole";
+      const baseCharge = isHalf
+        ? config.extraToppingPrice * config.halfToppingMultiplier
+        : config.extraToppingPrice;
+
+      let charge = baseCharge;
+      if (t.quantity === "extra") charge += baseCharge * config.extraQuantityMultiplier;
+      else if (t.quantity === "light") charge = 0;
+
+      // Deduct from included toppings (only whole toppings consume inclusions)
+      if (!isHalf && t.quantity !== "light" && includedLeft > 0) {
+        charge = Math.max(0, charge - config.extraToppingPrice);
+        includedLeft--;
+      }
+
+      toppingTotal += charge;
+    }
+    price += toppingTotal;
+  } else {
+    // Per-option price model: each option's priceAdjustment drives cost
+    for (const t of toppings) {
+      const grp = toppingGroups.find(g => g.id === t.groupId);
+      const opt = grp?.options.find(o => o.id === t.optionId);
+      if (!opt) continue;
+
+      let adj = opt.priceAdjustment;
+      if (t.placement !== "whole") adj *= config.halfToppingMultiplier;
+      if (t.quantity === "extra")  adj += opt.priceAdjustment * config.extraQuantityMultiplier;
+      else if (t.quantity === "light") adj = 0;
+
+      price += adj;
+    }
+  }
+
+  // 6 Other (non-role) modifier groups — flat priceAdjustment per selected option
+  for (const [groupId, optionIds] of Object.entries(customization.otherSelections)) {
+    const grp = groups.find(g => g.id === groupId);
+    if (!grp) continue;
+    for (const optId of optionIds) {
+      const opt = grp.options.find(o => o.id === optId);
+      if (opt) price += opt.priceAdjustment;
+    }
+  }
+
+  // Round to 2 dp without fp drift
+  return Math.round(price * 100) / 100;
+}
+
+// ── Serialise PizzaCustomization → OrderItemModifier array ───────────────────
+// Kitchen tickets read these modifier names, so keep them descriptive.
+
+export function pizzaCustomizationToModifiers(
+  customization: PizzaCustomization,
+  groups: ModGroup[],
+): { modifierOptionId: string; name: string; priceAdjustment: number }[] {
+  const out: { modifierOptionId: string; name: string; priceAdjustment: number }[] = [];
+  const findOpt = (groupId: string | undefined, optId: string | null) =>
+    groupId && optId
+      ? groups.find(g => g.id === groupId || g.libraryGroupId === groupId)?.options.find(o => o.id === optId) ?? null
+      : null;
+
+  // Half/half side codes — prefixed to each modifier so kitchen staff can
+  // immediately see where each item belongs. Crust never gets a code (it's
+  // always applied to the whole pizza). When the pizza is NOT half/half,
+  // no prefix is added since everything is whole by definition.
+  const wholePrefix = customization.isHalfHalf ? "(W) " : "";
+  const leftPrefix  = "(L.H) ";
+  const rightPrefix = "(R.H) ";
+
+  // Crust — no prefix, no role label
+  if (customization.crustOptionId) {
+    const g = groups.find(g => g.options.some(o => o.id === customization.crustOptionId));
+    const o = g?.options.find(o => o.id === customization.crustOptionId);
+    if (o) out.push({ modifierOptionId: o.id, name: o.name, priceAdjustment: o.priceAdjustment });
+  }
+
+  // Other (non-role) modifier groups — cook level, allergen flags, etc.
+  // Apply to the whole pizza by convention, so no half/half prefix.
+  for (const [groupId, optionIds] of Object.entries(customization.otherSelections)) {
+    const grp = groups.find(g => g.id === groupId);
+    if (!grp) continue;
+    for (const optId of optionIds) {
+      const o = grp.options.find(opt => opt.id === optId);
+      if (o) out.push({ modifierOptionId: o.id, name: o.name, priceAdjustment: o.priceAdjustment });
+    }
+  }
+
+  // Sauce / cheese — half/half codes only when applicable
+  const addSauceOrCheese = (optId: string | null, prefix: string) => {
+    if (!optId) return;
+    const g = groups.find(g => g.options.some(o => o.id === optId));
+    const o = g?.options.find(o => o.id === optId);
+    if (o) out.push({ modifierOptionId: o.id, name: `${prefix}${o.name}`, priceAdjustment: o.priceAdjustment });
+  };
+
+  if (customization.isHalfHalf && (customization.leftSauceOptionId || customization.rightSauceOptionId)) {
+    addSauceOrCheese(customization.leftSauceOptionId, leftPrefix);
+    addSauceOrCheese(customization.rightSauceOptionId, rightPrefix);
+  } else {
+    addSauceOrCheese(customization.sauceOptionId, wholePrefix);
+  }
+
+  if (customization.isHalfHalf && (customization.leftCheeseOptionId || customization.rightCheeseOptionId)) {
+    addSauceOrCheese(customization.leftCheeseOptionId, leftPrefix);
+    addSauceOrCheese(customization.rightCheeseOptionId, rightPrefix);
+  } else {
+    addSauceOrCheese(customization.cheeseOptionId, wholePrefix);
+  }
+
+  // Toppings
+  for (const t of customization.toppings) {
+    const grp = groups.find(g => g.id === t.groupId);
+    const opt = grp?.options.find(o => o.id === t.optionId);
+    if (!opt) continue;
+
+    const prefix =
+      t.placement === "left"  ? leftPrefix  :
+      t.placement === "right" ? rightPrefix :
+      wholePrefix;
+    const quantity =
+      t.quantity === "extra" ? ", Extra" :
+      t.quantity === "light" ? ", Light" : "";
+
+    out.push({
+      modifierOptionId: opt.id,
+      name: `${prefix}${opt.name}${quantity}`,
+      priceAdjustment: opt.priceAdjustment,
+    });
+  }
+
+  return out;
+}
+
+// ── SVG Pizza Visual ──────────────────────────────────────────────────────────
+
+// Pre-computed topping slot positions (viewBox 0 0 200 200, pizza radius 82)
+const WHOLE_SLOTS: [number, number][] = [
+  [100, 100], [80, 75],  [120, 75],  [130, 105], [115, 130],
+  [85, 130],  [70, 105], [60, 80],   [100, 55],  [140, 80],
+  [148, 112], [130, 148],[100, 158], [70, 148],  [52, 112],
+];
+const LEFT_SLOTS: [number, number][] = [
+  [72, 88],  [58, 105], [68, 124], [85, 65],   [78, 140],
+  [48, 90],  [55, 130], [88, 112], [65, 78],   [52, 115],
+];
+const RIGHT_SLOTS: [number, number][] = [
+  [128, 88], [142, 105],[132, 124],[115, 65],  [122, 140],
+  [152, 90], [145, 130],[112, 112],[135, 78],  [148, 115],
+];
+
+const TOPPING_PALETTE = [
+  "#c0392b", "#8B4513", "#27ae60", "#f39c12", "#1a252f",
+  "#d81b60", "#e65100", "#795548", "#6a1b9a", "#00838f",
+];
+
+function toppingColor(name: string): string {
+  let h = 0;
+  for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) & 0x7fffffff;
+  return TOPPING_PALETTE[h % TOPPING_PALETTE.length];
+}
+
+function PizzaVisual({
+  isHalfHalf, toppings,
+}: { isHalfHalf: boolean; toppings: SelectedTopping[] }) {
+  const whole = toppings.filter(t => t.placement === "whole");
+  const left  = toppings.filter(t => t.placement === "left");
+  const right = toppings.filter(t => t.placement === "right");
+
+  return (
+    <svg viewBox="0 0 200 200" className="w-full drop-shadow-lg select-none" aria-hidden="true">
+      <defs>
+        <radialGradient id="crustGrad" cx="50%" cy="45%" r="55%">
+          <stop offset="0%"   stopColor="#e8c06a" />
+          <stop offset="100%" stopColor="#c4873a" />
+        </radialGradient>
+        <radialGradient id="pizzaGrad" cx="50%" cy="45%" r="55%">
+          <stop offset="0%"   stopColor="#f5d17b" />
+          <stop offset="100%" stopColor="#e8b860" />
+        </radialGradient>
+        <radialGradient id="sauceGrad" cx="50%" cy="45%" r="55%">
+          <stop offset="0%"   stopColor="#e53935" />
+          <stop offset="100%" stopColor="#b71c1c" />
+        </radialGradient>
+        <radialGradient id="cheeseGrad" cx="50%" cy="45%" r="55%">
+          <stop offset="0%"   stopColor="#fff8e1" />
+          <stop offset="100%" stopColor="#ffe082" />
+        </radialGradient>
+        <radialGradient id="gloss" cx="40%" cy="35%" r="55%">
+          <stop offset="0%"   stopColor="white" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="white" stopOpacity="0" />
+        </radialGradient>
+        <clipPath id="leftHalf">
+          <rect x="0" y="0" width="100" height="200" />
+        </clipPath>
+        <clipPath id="rightHalf">
+          <rect x="100" y="0" width="100" height="200" />
+        </clipPath>
+      </defs>
+
+      {/* Crust */}
+      <circle cx="100" cy="100" r="92" fill="url(#crustGrad)" />
+
+      {/* Pizza base */}
+      <circle cx="100" cy="100" r="82" fill="url(#pizzaGrad)" />
+
+      {/* Sauce */}
+      <circle cx="100" cy="100" r="76" fill="url(#sauceGrad)" opacity="0.85" />
+
+      {/* Cheese */}
+      <circle cx="100" cy="100" r="72" fill="url(#cheeseGrad)" opacity="0.75" />
+
+      {/* Half/half divider */}
+      {isHalfHalf && (
+        <>
+          <line
+            x1="100" y1="18" x2="100" y2="182"
+            stroke="rgba(255,255,255,0.7)" strokeWidth="2"
+            strokeDasharray="4 3"
+          />
+          <text x="62" y="104" textAnchor="middle" fontSize="8" fontWeight="700"
+            fill="rgba(255,255,255,0.9)" style={{ userSelect: "none" }}>LEFT</text>
+          <text x="138" y="104" textAnchor="middle" fontSize="8" fontWeight="700"
+            fill="rgba(255,255,255,0.9)" style={{ userSelect: "none" }}>RIGHT</text>
+        </>
+      )}
+
+      {/* Whole toppings */}
+      {whole.map((t, i) => {
+        const [cx, cy] = WHOLE_SLOTS[i % WHOLE_SLOTS.length];
+        const col = toppingColor(t.name);
+        return (
+          <g key={`w-${t.optionId}-${i}`}>
+            <circle cx={cx} cy={cy} r={t.quantity === "extra" ? 8 : 6.5} fill={col} opacity="0.92" />
+            {t.quantity === "extra" && (
+              <circle cx={cx + 6} cy={cy - 6} r={4} fill={col} opacity="0.75" />
+            )}
+          </g>
+        );
+      })}
+
+      {/* Left half toppings */}
+      {left.map((t, i) => {
+        const [cx, cy] = LEFT_SLOTS[i % LEFT_SLOTS.length];
+        return (
+          <circle key={`l-${t.optionId}-${i}`}
+            cx={cx} cy={cy} r="6.5" fill={toppingColor(t.name)} opacity="0.92" />
+        );
+      })}
+
+      {/* Right half toppings */}
+      {right.map((t, i) => {
+        const [cx, cy] = RIGHT_SLOTS[i % RIGHT_SLOTS.length];
+        return (
+          <circle key={`r-${t.optionId}-${i}`}
+            cx={cx} cy={cy} r="6.5" fill={toppingColor(t.name)} opacity="0.92" />
+        );
+      })}
+
+      {/* Gloss sheen */}
+      <circle cx="100" cy="100" r="82" fill="url(#gloss)" />
+    </svg>
+  );
+}
+
+// ── Topping pill ──────────────────────────────────────────────────────────────
+
+function ToppingPill({
+  opt, topping, onToggle, onSetQuantity, primaryColor,
+}: {
+  opt: ModOption;
+  topping: SelectedTopping | undefined;
+  onToggle: () => void;
+  onSetQuantity: (qty: ToppingQuantity) => void;
+  primaryColor: string;
+}) {
+  const selected = !!topping;
+  const qty = topping?.quantity ?? "normal";
+
+  return (
+    <div
+      className={`flex items-center justify-between px-3 py-2.5 rounded-xl border-2 transition-all text-sm ${
+        selected ? "shadow-sm" : "border-gray-100 bg-white hover:border-gray-300"
+      }`}
+      style={selected ? { borderColor: primaryColor, backgroundColor: `${primaryColor}10` } : {}}
+    >
+      <button
+        className="flex items-center gap-2 flex-1 text-left min-w-0"
+        onClick={onToggle}
+      >
+        <span
+          className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all ${
+            selected ? "" : "border-gray-300"
+          }`}
+          style={selected ? { borderColor: primaryColor, backgroundColor: primaryColor } : {}}
+        >
+          {selected && <Check className="w-3 h-3 text-white" />}
+        </span>
+        <span className={`font-medium truncate ${selected ? "text-gray-900" : "text-gray-700"}`}>
+          {opt.name}
+        </span>
+        {opt.priceAdjustment > 0 && (
+          <span className="text-xs text-gray-400 flex-shrink-0">
+            +{formatCurrency(opt.priceAdjustment)}
+          </span>
+        )}
+      </button>
+
+      {selected && (
+        <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
+          <QtyButton
+            label="Light"
+            active={qty === "light"}
+            activeColor="#0284c7"
+            onClick={(e) => { e.stopPropagation(); onSetQuantity("light"); }}
+          />
+          <QtyButton
+            label="Xtra"
+            active={qty === "extra"}
+            activeColor="#ea580c"
+            onClick={(e) => { e.stopPropagation(); onSetQuantity("extra"); }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function QtyButton({
+  label, active, activeColor, onClick,
+}: {
+  label: string;
+  active: boolean;
+  activeColor: string;
+  onClick: (e: React.MouseEvent) => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`text-xs font-bold px-2.5 py-1 rounded-lg border-2 transition ${
+        active
+          ? "text-white"
+          : "text-gray-500 border-gray-200 bg-white hover:border-gray-400 hover:text-gray-700"
+      }`}
+      style={active ? { backgroundColor: activeColor, borderColor: activeColor } : {}}
+    >
+      {label}
+    </button>
+  );
+}
+
+// ── Placement selector pill ───────────────────────────────────────────────────
+
+function PlacementButton({
+  label, active, onClick, primaryColor,
+}: { label: string; active: boolean; onClick: () => void; primaryColor: string }) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex-1 py-1.5 rounded-lg text-xs font-semibold transition"
+      style={
+        active
+          ? { backgroundColor: primaryColor, color: "#fff" }
+          : { backgroundColor: "#f3f4f6", color: "#6b7280" }
+      }
+    >
+      {label}
+    </button>
+  );
+}
+
+// ── Main PizzaBuilder ─────────────────────────────────────────────────────────
+
+interface PizzaBuilderProps {
+  item: MenuItem;
+  config: PizzaConfig;
+  primaryColor: string;
+  onClose: () => void;
+  onAdd: (result: PizzaAddResult) => void;
+  // When present (re-editing an existing cart entry), seeds the builder state
+  // instead of using defaultCustomization().
+  initial?: {
+    variantId: string | null;
+    customization: PizzaCustomization;
+    quantity: number;
+    notes: string;
+  };
+}
+
+// Default customization state
+function defaultCustomization(item: MenuItem, config: PizzaConfig, groups: ModGroup[]): PizzaCustomization {
+  const findDefault = (groupId?: string) =>
+    groupId
+      ? groups.find(g => g.id === groupId)?.options.find(o => o.isDefault && o.isAvailable)?.id ?? null
+      : null;
+
+  // Pre-fill defaults on any non-role groups attached to the item.
+  const roleIds = new Set<string>();
+  if (config.crustGroupId)  roleIds.add(config.crustGroupId);
+  if (config.sauceGroupId)  roleIds.add(config.sauceGroupId);
+  if (config.cheeseGroupId) roleIds.add(config.cheeseGroupId);
+  for (const id of config.toppingGroupIds) roleIds.add(id);
+  const otherSelections: Record<string, string[]> = {};
+  for (const g of groups) {
+    if (roleIds.has(g.id) || (g.libraryGroupId && roleIds.has(g.libraryGroupId))) continue;
+    const preselected = g.options
+      .filter(o => o.isDefault && o.isAvailable)
+      .slice(0, Math.max(1, g.maxSelect))
+      .map(o => o.id);
+    if (preselected.length > 0) otherSelections[g.id] = preselected;
+  }
+
+  return {
+    isHalfHalf: false,
+    crustOptionId:       findDefault(config.crustGroupId),
+    sauceOptionId:       findDefault(config.sauceGroupId),
+    leftSauceOptionId:   null,
+    rightSauceOptionId:  null,
+    cheeseOptionId:      findDefault(config.cheeseGroupId),
+    leftCheeseOptionId:  null,
+    rightCheeseOptionId: null,
+    toppings: [],
+    otherSelections,
+  };
+}
+
+export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initial }: PizzaBuilderProps) {
+  const groups = item.modifierGroups;
+
+  // ── State ────────────────────────────────────────────────────────────────
+  const [variantId, setVariantId] = useState<string | null>(
+    initial?.variantId ?? (
+      item.hasVariants
+        ? (item.variants.find(v => v.isDefault)?.id ?? item.variants[0]?.id ?? null)
+        : null
+    )
+  );
+  const [customization, setCustomization] = useState<PizzaCustomization>(() =>
+    initial?.customization ?? defaultCustomization(item, config, groups)
+  );
+  const [toppingPlacement, setToppingPlacement] = useState<ToppingPlacement>("whole");
+  const [sauceMode, setSauceMode] = useState<"whole" | "split">(
+    initial?.customization.isHalfHalf &&
+    (initial.customization.leftSauceOptionId || initial.customization.rightSauceOptionId)
+      ? "split"
+      : "whole"
+  );
+  const [cheeseMode, setCheeseMode] = useState<"whole" | "split">(
+    initial?.customization.isHalfHalf &&
+    (initial.customization.leftCheeseOptionId || initial.customization.rightCheeseOptionId)
+      ? "split"
+      : "whole"
+  );
+  const [quantity, setQuantity] = useState(initial?.quantity ?? 1);
+  const [notes, setNotes] = useState(initial?.notes ?? "");
+
+  // Derived — match by id OR libraryGroupId (pizzaConfig stores library group IDs;
+  // item.modifierGroups contains attached copies whose libraryGroupId points back to the source)
+  const matchesGroup = (g: ModGroup, configId: string | undefined) =>
+    !!configId && (g.id === configId || g.libraryGroupId === configId);
+  const crustGroup    = groups.find(g => matchesGroup(g, config.crustGroupId));
+  const sauceGroup    = groups.find(g => matchesGroup(g, config.sauceGroupId));
+  const cheeseGroup   = groups.find(g => matchesGroup(g, config.cheeseGroupId));
+  const toppingGroups = groups.filter(g =>
+    config.toppingGroupIds.some(tid => g.id === tid || g.libraryGroupId === tid)
+  );
+  // Any modifier group attached to the item that isn't playing a pizza role
+  // (e.g. Cook Level). These render as their own sections under Crust.
+  const usedGroupIds = new Set<string>();
+  if (crustGroup)  usedGroupIds.add(crustGroup.id);
+  if (sauceGroup)  usedGroupIds.add(sauceGroup.id);
+  if (cheeseGroup) usedGroupIds.add(cheeseGroup.id);
+  for (const g of toppingGroups) usedGroupIds.add(g.id);
+  const otherGroups = groups.filter(g => !usedGroupIds.has(g.id));
+
+  // Resolve per-variant topping price — override config.extraToppingPrice for the selected size
+  const effectiveConfig = useMemo((): PizzaConfig => {
+    if (!config.variantToppingPrices || !variantId) return config;
+    const variantName = item.variants.find(v => v.id === variantId)?.name;
+    if (!variantName) return config;
+    const price = config.variantToppingPrices[variantName];
+    if (price === undefined) return config;
+    return { ...config, extraToppingPrice: price };
+  }, [config, variantId, item.variants]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Unit price (for a single pizza at current customization)
+  const unitPrice = useMemo(
+    () => computePrice(customization, variantId, item, groups, effectiveConfig),
+    [customization, variantId, effectiveConfig] // eslint-disable-line react-hooks/exhaustive-deps
+  );
+  const lineTotal = Math.round(unitPrice * quantity * 100) / 100;
+
+  // ── Crust handler ────────────────────────────────────────────────────────
+  const setCrust = (optionId: string) =>
+    setCustomization(c => ({ ...c, crustOptionId: optionId }));
+
+  // ── Sauce handlers ───────────────────────────────────────────────────────
+  const setSauce = (optId: string, side: "whole" | "left" | "right") =>
+    setCustomization(c => ({
+      ...c,
+      sauceOptionId:      side === "whole" ? optId : c.sauceOptionId,
+      leftSauceOptionId:  side === "left"  ? optId : c.leftSauceOptionId,
+      rightSauceOptionId: side === "right" ? optId : c.rightSauceOptionId,
+    }));
+
+  // ── Cheese handlers ──────────────────────────────────────────────────────
+  const setCheese = (optId: string, side: "whole" | "left" | "right") =>
+    setCustomization(c => ({
+      ...c,
+      cheeseOptionId:      side === "whole" ? optId : c.cheeseOptionId,
+      leftCheeseOptionId:  side === "left"  ? optId : c.leftCheeseOptionId,
+      rightCheeseOptionId: side === "right" ? optId : c.rightCheeseOptionId,
+    }));
+
+  // ── Topping handlers ─────────────────────────────────────────────────────
+
+  const toggleTopping = useCallback((opt: ModOption, groupId: string) => {
+    setCustomization(c => {
+      const placement = c.isHalfHalf ? toppingPlacement : "whole";
+      const existing = c.toppings.findIndex(
+        t => t.optionId === opt.id && t.placement === placement
+      );
+      if (existing >= 0) {
+        // Remove
+        return { ...c, toppings: c.toppings.filter((_, i) => i !== existing) };
+      }
+      // Add
+      const unitPrice = effectiveConfig.extraToppingPrice > 0
+        ? effectiveConfig.extraToppingPrice
+        : opt.priceAdjustment;
+      return {
+        ...c,
+        toppings: [...c.toppings, {
+          optionId: opt.id, name: opt.name, groupId,
+          placement, quantity: "normal", unitPrice,
+        }],
+      };
+    });
+  }, [toppingPlacement, effectiveConfig.extraToppingPrice]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const setToppingQuantity = useCallback(
+    (optionId: string, placement: ToppingPlacement, qty: ToppingQuantity) => {
+      setCustomization(c => ({
+        ...c,
+        toppings: c.toppings.map(t => {
+          if (t.optionId !== optionId || t.placement !== placement) return t;
+          // Tapping the already-active quantity returns to normal.
+          const next: ToppingQuantity = t.quantity === qty ? "normal" : qty;
+          return { ...t, quantity: next };
+        }),
+      }));
+    },
+    [],
+  );
+
+  // ── Half/half toggle ─────────────────────────────────────────────────────
+
+  const toggleHalfHalf = () => {
+    setCustomization(c => {
+      if (c.isHalfHalf) {
+        // Turning OFF: merge all toppings back to "whole", drop duplicates
+        const seen = new Set<string>();
+        const merged = c.toppings
+          .filter(t => { const k = t.optionId; if (seen.has(k)) return false; seen.add(k); return true; })
+          .map(t => ({ ...t, placement: "whole" as ToppingPlacement }));
+        return { ...c, isHalfHalf: false, toppings: merged };
+      }
+      // Turning ON: convert all "whole" toppings to left half by default
+      return {
+        ...c,
+        isHalfHalf: true,
+        toppings: c.toppings.map(t => ({ ...t, placement: "left" as ToppingPlacement })),
+      };
+    });
+    setToppingPlacement("whole");
+  };
+
+  // ── Add to cart ──────────────────────────────────────────────────────────
+
+  const handleAdd = () => {
+    if (item.hasVariants && !variantId) return;
+
+    const variant = variantId
+      ? item.variants.find(v => v.id === variantId) ?? null
+      : null;
+
+    onAdd({
+      variantId,
+      variant: variant ? { id: variant.id, name: variant.name, price: variant.price } : null,
+      quantity,
+      notes,
+      lineTotal,
+      customization,
+    });
+  };
+
+  // ── Other-group selection handler ────────────────────────────────────────
+  const toggleOtherOption = (group: ModGroup, optionId: string) =>
+    setCustomization(c => {
+      const current = c.otherSelections[group.id] ?? [];
+      const alreadySelected = current.includes(optionId);
+      let next: string[];
+      if (group.maxSelect <= 1) {
+        // Single-select: clicking the same option deselects (only if not required)
+        next = alreadySelected && !group.required ? [] : [optionId];
+      } else if (alreadySelected) {
+        next = current.filter(id => id !== optionId);
+      } else {
+        // Multi-select: respect maxSelect cap
+        next = current.length < group.maxSelect ? [...current, optionId] : current;
+      }
+      return { ...c, otherSelections: { ...c.otherSelections, [group.id]: next } };
+    });
+
+  // ── Validation ───────────────────────────────────────────────────────────
+  const crustMissing = !!(crustGroup?.required && !customization.crustOptionId);
+
+  // Sauce: when half/half, both halves must be set if the group is required;
+  // when whole, the single sauce must be set.
+  const sauceMissing = !!(sauceGroup?.required) && (
+    customization.isHalfHalf
+      ? !customization.leftSauceOptionId || !customization.rightSauceOptionId
+      : !customization.sauceOptionId
+  );
+  const cheeseMissing = !!(cheeseGroup?.required) && (
+    customization.isHalfHalf
+      ? !customization.leftCheeseOptionId || !customization.rightCheeseOptionId
+      : !customization.cheeseOptionId
+  );
+
+  // Topping groups: each required (or minSelect > 0) group must have enough picks.
+  // Count placements per group across the whole pizza (left + right + whole).
+  const toppingGroupsSatisfied = toppingGroups.every(g => {
+    const min = g.required && g.minSelect < 1 ? 1 : g.minSelect;
+    if (min === 0) return true;
+    const count = customization.toppings.filter(t => t.groupId === g.id).length;
+    return count >= min;
+  });
+
+  const otherGroupsSatisfied = otherGroups.every(g => {
+    const selectedCount = (customization.otherSelections[g.id] ?? []).length;
+    const min = g.required && g.minSelect < 1 ? 1 : g.minSelect;
+    return selectedCount >= min;
+  });
+
+  const canAdd =
+    !crustMissing &&
+    !sauceMissing &&
+    !cheeseMissing &&
+    toppingGroupsSatisfied &&
+    otherGroupsSatisfied &&
+    (!item.hasVariants || !!variantId);
+
+  // ── Render ───────────────────────────────────────────────────────────────
+
+  return (
+    <div
+      className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white w-full sm:rounded-2xl flex flex-col overflow-hidden"
+        style={{ maxWidth: 860, maxHeight: "96vh" }}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* ── Header ── */}
+        <div className="flex items-start gap-4 p-5 border-b border-gray-100 flex-shrink-0">
+          {item.imageUrl && (
+            <img
+              src={item.imageUrl}
+              alt={item.name}
+              className="w-16 h-16 rounded-xl object-cover flex-shrink-0 shadow-sm"
+            />
+          )}
+          <div className="flex-1 min-w-0">
+            <h2 className="text-xl font-bold text-gray-900 leading-tight">{item.name}</h2>
+            {item.description && (
+              <p className="text-sm text-gray-500 mt-0.5 line-clamp-2">{item.description}</p>
+            )}
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-gray-100 rounded-xl flex-shrink-0 transition"
+          >
+            <X className="w-5 h-5 text-gray-500" />
+          </button>
+        </div>
+
+        {/* ── Body (two-column on desktop) ── */}
+        <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
+
+          {/* ── Left: Options ── */}
+          <div className="flex-1 overflow-y-auto p-5 space-y-6">
+
+            {/* Size */}
+            {item.hasVariants && item.variants.length > 0 && (
+              <section>
+                <SectionHeader label="Choose Size" required />
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {item.variants.map(v => (
+                    <button
+                      key={v.id}
+                      onClick={() => setVariantId(v.id)}
+                      className="flex flex-col items-center py-3 px-2 rounded-xl border-2 transition text-center"
+                      style={
+                        variantId === v.id
+                          ? { borderColor: primaryColor, backgroundColor: `${primaryColor}12` }
+                          : { borderColor: "#f3f4f6" }
+                      }
+                    >
+                      <span className="text-sm font-bold text-gray-900">{v.name}</span>
+                      <span className="text-xs font-semibold mt-1" style={{ color: primaryColor }}>
+                        {formatCurrency(v.price)}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Crust */}
+            {crustGroup && (
+              <section>
+                <SectionHeader
+                  label="Choose Crust"
+                  required={crustGroup.required}
+                />
+                <div className="grid grid-cols-2 gap-2">
+                  {crustGroup.options.filter(o => o.isAvailable).map(opt => (
+                    <button
+                      key={opt.id}
+                      onClick={() => setCrust(opt.id)}
+                      className="py-3 px-3 rounded-xl border-2 transition text-sm font-medium text-left"
+                      style={
+                        customization.crustOptionId === opt.id
+                          ? { borderColor: primaryColor, backgroundColor: `${primaryColor}12`, color: primaryColor }
+                          : { borderColor: "#f3f4f6", color: "#374151" }
+                      }
+                    >
+                      {opt.name}
+                      {opt.priceAdjustment > 0 && (
+                        <span className="block text-xs font-normal text-gray-400 mt-0.5">
+                          +{formatCurrency(opt.priceAdjustment)}
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* ── Other (non-role) modifier groups: cook level, etc. ── */}
+            {otherGroups.map(g => {
+              const selected = customization.otherSelections[g.id] ?? [];
+              return (
+                <section key={g.id}>
+                  <SectionHeader label={g.name} required={g.required || g.minSelect > 0} />
+                  <div className="grid grid-cols-2 gap-2">
+                    {g.options.filter(o => o.isAvailable).map(opt => {
+                      const isSelected = selected.includes(opt.id);
+                      return (
+                        <button
+                          key={opt.id}
+                          onClick={() => toggleOtherOption(g, opt.id)}
+                          className="py-3 px-3 rounded-xl border-2 transition text-sm font-medium text-left"
+                          style={
+                            isSelected
+                              ? { borderColor: primaryColor, backgroundColor: `${primaryColor}12`, color: primaryColor }
+                              : { borderColor: "#f3f4f6", color: "#374151" }
+                          }
+                        >
+                          {opt.name}
+                          {opt.priceAdjustment > 0 && (
+                            <span className="block text-xs font-normal text-gray-400 mt-0.5">
+                              +{formatCurrency(opt.priceAdjustment)}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </section>
+              );
+            })}
+
+            {/* ── Half & Half toggle ── */}
+            {config.allowHalfHalf && (
+              <section>
+                <div
+                  className="flex items-center justify-between p-3.5 rounded-xl border-2 cursor-pointer transition"
+                  style={
+                    customization.isHalfHalf
+                      ? { borderColor: primaryColor, backgroundColor: `${primaryColor}10` }
+                      : { borderColor: "#f3f4f6" }
+                  }
+                  onClick={toggleHalfHalf}
+                >
+                  <div className="flex items-center gap-3">
+                    <Scissors
+                      className="w-5 h-5 flex-shrink-0"
+                      style={{ color: customization.isHalfHalf ? primaryColor : "#9ca3af" }}
+                    />
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">Half &amp; Half</p>
+                      <p className="text-xs text-gray-400">Different toppings on each half</p>
+                    </div>
+                  </div>
+                  <div
+                    className="w-11 h-6 rounded-full relative transition-all flex-shrink-0"
+                    style={{ backgroundColor: customization.isHalfHalf ? primaryColor : "#e5e7eb" }}
+                  >
+                    <div
+                      className="absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all"
+                      style={{ left: customization.isHalfHalf ? "calc(100% - 1.375rem)" : "0.125rem" }}
+                    />
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* Sauce */}
+            {sauceGroup && (
+              <section>
+                <div className="flex items-center justify-between mb-2">
+                  <SectionHeader label="Sauce" required={sauceGroup.required} />
+                  {customization.isHalfHalf && (
+                    <div className="flex rounded-lg overflow-hidden border border-gray-200 text-xs">
+                      {(["whole", "split"] as const).map(m => (
+                        <button
+                          key={m}
+                          onClick={() => setSauceMode(m)}
+                          className="px-2.5 py-1 font-medium transition capitalize"
+                          style={
+                            sauceMode === m
+                              ? { backgroundColor: primaryColor, color: "#fff" }
+                              : { color: "#6b7280" }
+                          }
+                        >
+                          {m}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {(!customization.isHalfHalf || sauceMode === "whole") && (
+                  <OptionRow
+                    options={sauceGroup.options.filter(o => o.isAvailable)}
+                    selectedId={customization.sauceOptionId}
+                    onSelect={id => setSauce(id, "whole")}
+                    primaryColor={primaryColor}
+                  />
+                )}
+                {customization.isHalfHalf && sauceMode === "split" && (
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-xs font-semibold text-gray-500 mb-1.5">LEFT HALF</p>
+                      <OptionRow
+                        options={sauceGroup.options.filter(o => o.isAvailable)}
+                        selectedId={customization.leftSauceOptionId}
+                        onSelect={id => setSauce(id, "left")}
+                        primaryColor={primaryColor}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-gray-500 mb-1.5">RIGHT HALF</p>
+                      <OptionRow
+                        options={sauceGroup.options.filter(o => o.isAvailable)}
+                        selectedId={customization.rightSauceOptionId}
+                        onSelect={id => setSauce(id, "right")}
+                        primaryColor={primaryColor}
+                      />
+                    </div>
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* Cheese */}
+            {cheeseGroup && (
+              <section>
+                <div className="flex items-center justify-between mb-2">
+                  <SectionHeader label="Cheese" required={cheeseGroup.required} />
+                  {customization.isHalfHalf && (
+                    <div className="flex rounded-lg overflow-hidden border border-gray-200 text-xs">
+                      {(["whole", "split"] as const).map(m => (
+                        <button
+                          key={m}
+                          onClick={() => setCheeseMode(m)}
+                          className="px-2.5 py-1 font-medium transition capitalize"
+                          style={
+                            cheeseMode === m
+                              ? { backgroundColor: primaryColor, color: "#fff" }
+                              : { color: "#6b7280" }
+                          }
+                        >
+                          {m}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {(!customization.isHalfHalf || cheeseMode === "whole") && (
+                  <OptionRow
+                    options={cheeseGroup.options.filter(o => o.isAvailable)}
+                    selectedId={customization.cheeseOptionId}
+                    onSelect={id => setCheese(id, "whole")}
+                    primaryColor={primaryColor}
+                  />
+                )}
+                {customization.isHalfHalf && cheeseMode === "split" && (
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-xs font-semibold text-gray-500 mb-1.5">LEFT HALF</p>
+                      <OptionRow
+                        options={cheeseGroup.options.filter(o => o.isAvailable)}
+                        selectedId={customization.leftCheeseOptionId}
+                        onSelect={id => setCheese(id, "left")}
+                        primaryColor={primaryColor}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-gray-500 mb-1.5">RIGHT HALF</p>
+                      <OptionRow
+                        options={cheeseGroup.options.filter(o => o.isAvailable)}
+                        selectedId={customization.rightCheeseOptionId}
+                        onSelect={id => setCheese(id, "right")}
+                        primaryColor={primaryColor}
+                      />
+                    </div>
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* Toppings */}
+            {toppingGroups.length > 0 && (
+              <section>
+                <div className="flex items-center justify-between mb-3">
+                  <SectionHeader
+                    label={
+                      config.includedToppings > 0
+                        ? `Toppings (${config.includedToppings} included)`
+                        : "Toppings"
+                    }
+                  />
+                  {/* Topping count badge */}
+                  {customization.toppings.length > 0 && (
+                    <span
+                      className="text-xs font-bold px-2 py-0.5 rounded-full text-white"
+                      style={{ backgroundColor: primaryColor }}
+                    >
+                      {customization.toppings.length}
+                    </span>
+                  )}
+                </div>
+
+                {/* Placement selector for half-half mode */}
+                {customization.isHalfHalf && (
+                  <div className="flex gap-1 p-1 bg-gray-100 rounded-xl mb-4">
+                    <PlacementButton
+                      label="◑ Left Half"
+                      active={toppingPlacement === "left"}
+                      onClick={() => setToppingPlacement("left")}
+                      primaryColor={primaryColor}
+                    />
+                    <PlacementButton
+                      label="⬤ Whole"
+                      active={toppingPlacement === "whole"}
+                      onClick={() => setToppingPlacement("whole")}
+                      primaryColor={primaryColor}
+                    />
+                    <PlacementButton
+                      label="Right Half ◐"
+                      active={toppingPlacement === "right"}
+                      onClick={() => setToppingPlacement("right")}
+                      primaryColor={primaryColor}
+                    />
+                  </div>
+                )}
+
+                <div className="space-y-5">
+                  {toppingGroups.map(g => (
+                    <div key={g.id}>
+                      {toppingGroups.length > 1 && (
+                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+                          {g.name}
+                        </p>
+                      )}
+                      <div className="space-y-1.5">
+                        {g.options.filter(o => o.isAvailable).map(opt => {
+                          const placement = customization.isHalfHalf ? toppingPlacement : "whole";
+                          const t = customization.toppings.find(
+                            t => t.optionId === opt.id && t.placement === placement
+                          );
+                          return (
+                            <ToppingPill
+                              key={opt.id}
+                              opt={opt}
+                              topping={t}
+                              onToggle={() => toggleTopping(opt, g.id)}
+                              onSetQuantity={(qty) => setToppingQuantity(opt.id, placement, qty)}
+                              primaryColor={primaryColor}
+                            />
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Quantity legend */}
+                <p className="text-xs text-gray-400 mt-3">
+                  Tap a topping to add it. After adding, use the{" "}
+                  <span className="font-semibold text-sky-600">Light</span> or{" "}
+                  <span className="font-semibold text-orange-600">Xtra</span>{" "}
+                  buttons to adjust the amount.
+                </p>
+              </section>
+            )}
+
+            {/* Special instructions */}
+            <section>
+              <SectionHeader label="Special Instructions" />
+              <textarea
+                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 text-gray-900 placeholder:text-gray-400"
+                style={{ "--tw-ring-color": primaryColor } as React.CSSProperties}
+                rows={2}
+                placeholder="Extra crispy, no garlic, etc."
+                value={notes}
+                onChange={e => setNotes(e.target.value)}
+              />
+            </section>
+          </div>
+
+          {/* ── Right: Pizza visual (desktop only) ── */}
+          <div
+            className="hidden md:flex flex-col items-center justify-start p-6 border-l border-gray-100 flex-shrink-0"
+            style={{ width: 240, backgroundColor: "#fafafa" }}
+          >
+            <div className="w-full">
+              <PizzaVisual
+                isHalfHalf={customization.isHalfHalf}
+                toppings={customization.toppings}
+              />
+            </div>
+            {/* Toppings summary */}
+            {customization.toppings.length > 0 && (
+              <div className="mt-4 w-full">
+                <p className="text-xs font-bold text-gray-400 uppercase mb-2">Your toppings</p>
+                <div className="space-y-1 max-h-40 overflow-y-auto">
+                  {customization.toppings.map((t, i) => (
+                    <div key={i} className="flex items-center gap-1.5 text-xs text-gray-600">
+                      <span
+                        className="w-2 h-2 rounded-full flex-shrink-0"
+                        style={{ backgroundColor: toppingColor(t.name) }}
+                      />
+                      <span className="truncate">{t.name}</span>
+                      {t.placement !== "whole" && (
+                        <span className="text-gray-400 flex-shrink-0">
+                          ({t.placement === "left" ? "L" : "R"})
+                        </span>
+                      )}
+                      {t.quantity !== "normal" && (
+                        <span className="font-semibold flex-shrink-0">
+                          {t.quantity === "extra" ? "✕" : "↓"}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ── Sticky footer ── */}
+        <div className="flex-shrink-0 border-t border-gray-100 p-4 bg-white">
+          {!canAdd && (
+            <div className="flex items-center gap-2 text-xs text-red-600 mb-3">
+              <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+              {crustMissing       ? "Please choose a crust to continue"
+               : sauceMissing     ? (sauceGroup?.name  ? `Please choose ${sauceGroup.name.toLowerCase()} to continue`  : "Please choose a sauce to continue")
+               : cheeseMissing    ? (cheeseGroup?.name ? `Please choose ${cheeseGroup.name.toLowerCase()} to continue` : "Please choose a cheese to continue")
+               : !toppingGroupsSatisfied ? "Please make required topping selections"
+               : !otherGroupsSatisfied   ? "Please make all required selections"
+               : item.hasVariants && !variantId ? "Please choose a size to continue"
+               : "Please complete required selections"}
+            </div>
+          )}
+          <div className="flex items-center gap-3">
+            {/* Quantity */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition flex-shrink-0"
+              >
+                <Minus className="w-4 h-4 text-gray-600" />
+              </button>
+              <span className="w-6 text-center font-bold text-gray-900">{quantity}</span>
+              <button
+                onClick={() => setQuantity(q => q + 1)}
+                className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition flex-shrink-0"
+              >
+                <Plus className="w-4 h-4 text-gray-600" />
+              </button>
+            </div>
+
+            {/* Add to cart */}
+            <button
+              onClick={handleAdd}
+              disabled={!canAdd}
+              className="flex-1 text-white font-bold py-3 rounded-xl transition text-base disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{ backgroundColor: primaryColor }}
+            >
+              Add to Cart · {formatCurrency(lineTotal)}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Small shared sub-components ───────────────────────────────────────────────
+
+function SectionHeader({ label, required }: { label: string; required?: boolean }) {
+  return (
+    <div className="flex items-center gap-2 mb-3">
+      <span className="text-sm font-bold text-gray-900">{label}</span>
+      {required && (
+        <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full font-medium">
+          Required
+        </span>
+      )}
+    </div>
+  );
+}
+
+/** Single-select horizontal pill row (for sauce / cheese) */
+function OptionRow({
+  options, selectedId, onSelect, primaryColor,
+}: {
+  options: ModOption[]; selectedId: string | null;
+  onSelect: (id: string) => void; primaryColor: string;
+}) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {options.map(opt => (
+        <button
+          key={opt.id}
+          onClick={() => onSelect(opt.id)}
+          className="px-3 py-1.5 rounded-full text-sm font-medium border-2 transition"
+          style={
+            selectedId === opt.id
+              ? { borderColor: primaryColor, backgroundColor: `${primaryColor}15`, color: primaryColor }
+              : { borderColor: "#f3f4f6", color: "#374151" }
+          }
+        >
+          {opt.name}
+          {opt.priceAdjustment > 0 && (
+            <span className="ml-1 text-xs opacity-70">+{formatCurrency(opt.priceAdjustment)}</span>
+          )}
+        </button>
+      ))}
+    </div>
+  );
+}
