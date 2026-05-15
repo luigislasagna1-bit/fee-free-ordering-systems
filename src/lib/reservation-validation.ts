@@ -13,6 +13,7 @@ export interface ReservationSettingsLike {
   holdMinutes: number;
   requireDeposit: boolean;
   depositAmount: number;
+  cancellationPolicy?: string;
   reservationHours: string;       // JSON: { "0": { open: "10:00", close: "22:00", enabled: true }, … }
   blackoutDates: string;          // JSON: ["YYYY-MM-DD", …]
 }

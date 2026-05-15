@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import {
   ShoppingCart, MapPin, Phone, Clock, Plus, Minus, X,
-  AlertCircle, Tag, Loader2, ChevronDown, Star, Info,
+  AlertCircle, Tag, Loader2, ChevronDown, Star, Info, Calendar,
   Truck, ShoppingBag, Image as ImageIcon, ChevronLeft, ChevronRight,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
@@ -16,6 +16,9 @@ import {
 import { geocodeAddress, findZoneForPoint, type ZoneLike } from "@/lib/geocode";
 import { CheckoutModal } from "./CheckoutModal";
 import { ReservationModal } from "./ReservationModal";
+import { evaluateApplicableFees, type ServiceFeeRow } from "@/lib/service-fees";
+import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -125,6 +128,7 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
 }
 
 function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<typeof parseTheme>; onOpen: (i: MenuItem) => void }) {
+  const t = useTranslations("ordering");
   const isSold = item.isSoldOut;
   const basePrice = item.hasVariants && item.variants?.length
     ? Math.min(...item.variants.map(v => v.price))
@@ -151,7 +155,7 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
         )}
         {isSold && (
           <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-            <span className="bg-white text-gray-800 text-xs font-bold px-2 py-1 rounded-full">Sold Out</span>
+            <span className="bg-white text-gray-800 text-xs font-bold px-2 py-1 rounded-full">{t("soldOut")}</span>
           </div>
         )}
       </div>
@@ -173,6 +177,7 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
 }
 
 function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<typeof parseTheme>; onOpen: (i: MenuItem) => void }) {
+  const t = useTranslations("ordering");
   const isSold = item.isSoldOut;
   const basePrice = item.hasVariants && item.variants?.length
     ? Math.min(...item.variants.map(v => v.price))
@@ -199,7 +204,7 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
         )}
         {isSold && (
           <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-            <span className="bg-white text-gray-800 text-xs font-bold px-3 py-1.5 rounded-full">Sold Out</span>
+            <span className="bg-white text-gray-800 text-xs font-bold px-3 py-1.5 rounded-full">{t("soldOut")}</span>
           </div>
         )}
       </div>
@@ -232,12 +237,15 @@ export function OrderingPageClient({
   cardPaymentEnabled = false,
   stripePublishableKey = null,
   themeSettings = null,
+  locale = "en",
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
   stripePublishableKey?: string | null;
   themeSettings?: string | null;
+  locale?: string;
 }) {
+  const t = useTranslations("ordering");
   const theme = parseTheme(themeSettings);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -399,7 +407,13 @@ export function OrderingPageClient({
   const deliveryFee = hasFreeDelivery ? 0 : baseDeliveryFee;
   const tipAmount = Math.round((subtotal * (tipPercent / 100)) * 100) / 100;
   const totalDiscount = couponDiscount + promoDiscount;
-  const taxBase = Math.max(0, subtotal - totalDiscount + deliveryFee);
+  const feeOrderType: "pickup" | "delivery" = orderType === "delivery" ? "delivery" : "pickup";
+  const appliedServiceFees = evaluateApplicableFees(
+    (restaurant.serviceFees ?? []) as ServiceFeeRow[],
+    { subtotal, type: feeOrderType, at: new Date() },
+  );
+  const serviceFeesTotal = appliedServiceFees.reduce((s, f) => s + f.amount, 0);
+  const taxBase = Math.max(0, subtotal - totalDiscount + deliveryFee + serviceFeesTotal);
   const taxAmount = taxBase * (restaurant.taxRate / 100);
   const total = taxBase + taxAmount + tipAmount;
 
@@ -694,16 +708,28 @@ export function OrderingPageClient({
           {todayHours && (
             <span className={`flex items-center gap-1.5 ${todayHours.isOpen ? "text-green-600" : "text-red-600"}`}>
               <Clock className="w-4 h-4" />
-              {todayHours.isOpen ? `Open: ${todayHours.openTime} – ${todayHours.closeTime}` : "Closed today"}
+              {todayHours.isOpen ? `${t("open")}: ${todayHours.openTime} – ${todayHours.closeTime}` : t("closedToday")}
             </span>
           )}
-          <a
-            href={infoLink}
-            className="ml-auto flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full border-2 transition hover:bg-gray-50"
-            style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
-          >
-            <Info className="w-4 h-4" /> Restaurant Info
-          </a>
+          <div className="ml-auto flex items-center gap-2">
+            <LanguageSwitcher currentLocale={locale} />
+            {restaurant.acceptsReservations && (
+              <button
+                onClick={() => setReservationOpen(true)}
+                className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full text-white transition hover:opacity-90"
+                style={{ backgroundColor: theme.primaryColor }}
+              >
+                <Calendar className="w-4 h-4" /> {t("tableReservation")}
+              </button>
+            )}
+            <a
+              href={infoLink}
+              className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full border-2 transition hover:bg-gray-50"
+              style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
+            >
+              <Info className="w-4 h-4" /> {t("restaurantInfo")}
+            </a>
+          </div>
         </div>
       </div>
 
@@ -719,7 +745,7 @@ export function OrderingPageClient({
                 : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
               }
             >
-              <ShoppingBag className="w-4 h-4" /> Pickup · {restaurant.estimatedPickup} min
+              <ShoppingBag className="w-4 h-4" /> {t("pickup")} · {restaurant.estimatedPickup} {t("minutes")}
             </button>
           )}
           {restaurant.acceptsDelivery && (
@@ -731,7 +757,7 @@ export function OrderingPageClient({
                 : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
               }
             >
-              <Truck className="w-4 h-4" /> Delivery · {estimatedDeliveryMinutes} min
+              <Truck className="w-4 h-4" /> {t("delivery")} · {estimatedDeliveryMinutes} {t("minutes")}
               {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{formatCurrency(baseDeliveryFee)})</span>}
             </button>
           )}
@@ -786,7 +812,7 @@ export function OrderingPageClient({
             <div className="bg-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold flex-shrink-0" style={{ color: theme.primaryColor }}>
               {cartCount}
             </div>
-            <span className="flex-1 text-left">View Cart</span>
+            <span className="flex-1 text-left">{t("viewCart")}</span>
             <span>{formatCurrency(subtotal)}</span>
           </button>
         </div>
@@ -900,7 +926,7 @@ export function OrderingPageClient({
               <button onClick={addToCart}
                 className="w-full text-white font-bold py-4 rounded-xl transition"
                 style={{ backgroundColor: theme.primaryColor }}>
-                Add to Cart · {formatCurrency(currentItemPrice)}
+                {t("addToCart")} · {formatCurrency(currentItemPrice)}
               </button>
             </div>
           </div>
@@ -1004,13 +1030,13 @@ export function OrderingPageClient({
 
                 {/* Totals */}
                 <div className="px-4 py-3 space-y-1.5 text-sm border-b border-gray-100">
-                  <div className="flex justify-between text-gray-600"><span>Subtotal</span><span>{formatCurrency(subtotal)}</span></div>
+                  <div className="flex justify-between text-gray-600"><span>{t("subtotal")}</span><span>{formatCurrency(subtotal)}</span></div>
                   {promoDiscount > 0 && <div className="flex justify-between text-green-600 font-medium"><span>Promo discount</span><span>-{formatCurrency(promoDiscount)}</span></div>}
                   {couponDiscount > 0 && <div className="flex justify-between text-green-600 font-medium"><span>Coupon discount</span><span>-{formatCurrency(couponDiscount)}</span></div>}
                   {orderType === "delivery" && (
                     <div className="flex justify-between text-gray-600">
                       <span>
-                        Delivery fee
+                        {t("deliveryFee")}
                         {resolvedZone && resolvedZone.inside && (
                           <span className="block text-xs text-gray-400">
                             {resolvedZone.zone.name} · ~{resolvedZone.zone.estimatedMinutes} min
@@ -1020,8 +1046,14 @@ export function OrderingPageClient({
                       <span>{hasFreeDelivery ? <span className="line-through text-gray-400">{formatCurrency(baseDeliveryFee)}</span> : formatCurrency(deliveryFee)}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-gray-600"><span>Tax ({restaurant.taxRate}%)</span><span>{formatCurrency(taxAmount)}</span></div>
-                  <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-100 mt-1"><span>Total</span><span>{formatCurrency(total)}</span></div>
+                  {appliedServiceFees.map(f => (
+                    <div key={f.name} className="flex justify-between text-gray-600">
+                      <span>{f.name}</span>
+                      <span>{formatCurrency(f.amount)}</span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between text-gray-600"><span>{t("tax")} ({restaurant.taxRate}%)</span><span>{formatCurrency(taxAmount)}</span></div>
+                  <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-100 mt-1"><span>{t("total")}</span><span>{formatCurrency(total)}</span></div>
                 </div>
 
                 {/* Out-of-area warning */}
@@ -1046,7 +1078,7 @@ export function OrderingPageClient({
                     disabled={orderType === "delivery" && minimumOrderForType > 0 && subtotal < minimumOrderForType}
                     className="w-full text-white font-bold py-4 rounded-xl transition text-base disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ backgroundColor: theme.primaryColor }}>
-                    Proceed to Checkout → {formatCurrency(total)}
+                    {t("proceedToCheckout")} → {formatCurrency(total)}
                   </button>
                 </div>
               </div>
@@ -1122,6 +1154,7 @@ export function OrderingPageClient({
           subtotal={subtotal}
           totalDiscount={totalDiscount}
           deliveryFee={deliveryFee}
+          appliedServiceFees={appliedServiceFees}
           taxAmount={taxAmount}
           tipAmount={tipAmount}
           tipPercent={tipPercent}
@@ -1150,6 +1183,20 @@ export function OrderingPageClient({
           mapProvider={restaurant.mapProvider ?? "leaflet"}
           googleMapsApiKey={restaurant.googleMapsApiKey ?? null}
           onClose={() => setCheckoutOpen(false)}
+        />
+      )}
+
+      {reservationOpen && restaurant.acceptsReservations && restaurant.reservationSettings && (
+        <ReservationModal
+          restaurantSlug={restaurant.slug}
+          restaurantName={restaurant.name}
+          settings={restaurant.reservationSettings}
+          theme={theme}
+          onClose={() => {
+            setReservationOpen(false);
+            // Clean the ?reservation=1 from the URL so a refresh doesn't reopen.
+            if (searchParams.get("reservation")) router.replace(`/order/${restaurant.slug}`);
+          }}
         />
       )}
     </div>

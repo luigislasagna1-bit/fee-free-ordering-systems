@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 // ── GET — recent print jobs ──────────────────────────────────────────────────
 
 export async function GET() {
-  const user = await getSessionUser();
+  const user = await getSessionUser({ preferKitchen: true });
   if (!user?.restaurantId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

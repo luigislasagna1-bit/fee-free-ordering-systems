@@ -99,7 +99,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const order = await prisma.order.update({
     where: { id },
     data: updates,
-    include: { restaurant: { select: { name: true } } },
+    include: { restaurant: { select: { name: true, defaultLanguage: true } } },
   });
 
   // Attempt Stripe refund if payment was captured and order is cancelled
@@ -116,6 +116,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       restaurantName: order.restaurant.name,
       estimatedReady: order.estimatedReady ? new Date(order.estimatedReady) : undefined,
       rejectionReason: order.rejectionReason || undefined,
+      locale: order.restaurant.defaultLanguage || "en",
     }).catch(() => {});
   }
 

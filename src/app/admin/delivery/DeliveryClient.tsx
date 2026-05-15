@@ -7,6 +7,7 @@ import {
   ChevronDown, ChevronRight, AlertTriangle,
 } from "lucide-react";
 import NextLink from "next/link";
+import { useTranslations } from "next-intl";
 
 const DeliveryMap = dynamic(() => import("./DeliveryMap"), {
   ssr: false,
@@ -75,6 +76,9 @@ export function DeliveryClient({
   zones: Zone[];
   restaurant: Restaurant | null;
 }) {
+  const t = useTranslations("admin.delivery");
+  const tCommon = useTranslations("common");
+  const tToasts = useTranslations("admin.toasts");
   const [zones, setZones] = useState<Zone[]>(initial);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -282,10 +286,9 @@ export function DeliveryClient({
         {/* Header */}
         <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
           <div>
-            <h1 className="font-bold text-gray-900">Delivery Zones</h1>
+            <h1 className="font-bold text-gray-900">{t("title")}</h1>
             <p className="text-xs text-gray-500 mt-0.5">
-              {zones.filter((z) => z.isActive).length} active zone
-              {zones.filter((z) => z.isActive).length !== 1 ? "s" : ""}
+              {zones.filter((z) => z.isActive).length} {tCommon("active")}
             </p>
           </div>
           <button
@@ -295,7 +298,7 @@ export function DeliveryClient({
             }}
             className="flex items-center gap-1.5 bg-orange-500 text-white text-sm font-semibold px-3 py-2 rounded-lg hover:bg-orange-600 transition"
           >
-            <Plus className="w-4 h-4" /> Add Zone
+            <Plus className="w-4 h-4" /> {t("newZone")}
           </button>
         </div>
 
@@ -304,7 +307,7 @@ export function DeliveryClient({
           {showAddForm && (
             <div className="border-b border-orange-100 bg-orange-50 p-4">
               <div className="flex items-center justify-between mb-3">
-                <h2 className="text-sm font-bold text-gray-900">New Delivery Zone</h2>
+                <h2 className="text-sm font-bold text-gray-900">{t("newZone")}</h2>
                 <button
                   onClick={() => setShowAddForm(false)}
                   className="text-gray-400 hover:text-gray-600"
@@ -314,18 +317,17 @@ export function DeliveryClient({
               </div>
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Zone Name *</label>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">{t("zoneName")}</label>
                   <input
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
                     value={form.name}
                     onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                    placeholder="e.g. Zone 1 – Local"
                   />
                 </div>
 
                 {/* Color picker */}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Zone Color</label>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">{t("color")}</label>
                   <div className="flex gap-2 flex-wrap">
                     {ZONE_COLORS.map((c) => (
                       <button
@@ -338,13 +340,9 @@ export function DeliveryClient({
                   </div>
                 </div>
 
-                <p className="text-xs text-gray-500 -mt-1">
-                  Zones are concentric circles around your restaurant. Only the radius and pricing differ.
-                </p>
-
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Radius (km)</label>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">{t("radius")}</label>
                     <input
                       type="number" min="0.5" step="0.5"
                       className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
@@ -353,7 +351,7 @@ export function DeliveryClient({
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Delivery Fee ($)</label>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">{t("deliveryFee")}</label>
                     <input
                       type="number" min="0" step="0.50"
                       className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
@@ -362,7 +360,7 @@ export function DeliveryClient({
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Minimum Order ($)</label>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">{t("minimumOrder")}</label>
                     <input
                       type="number" min="0" step="1"
                       className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
@@ -371,7 +369,7 @@ export function DeliveryClient({
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Std. Time (min)</label>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">{t("estimatedMinutes")}</label>
                     <input
                       type="number" min="0" step="5"
                       className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
@@ -387,13 +385,13 @@ export function DeliveryClient({
                     disabled={saving}
                     className="flex-1 bg-orange-500 text-white text-sm font-semibold py-2 rounded-lg hover:bg-orange-600 transition disabled:opacity-60"
                   >
-                    {saving ? "Saving…" : "Add Zone"}
+                    {saving ? tCommon("loading") : t("newZone")}
                   </button>
                   <button
                     onClick={() => setShowAddForm(false)}
                     className="px-3 text-sm text-gray-500 hover:text-gray-700"
                   >
-                    Cancel
+                    {tCommon("cancel")}
                   </button>
                 </div>
               </div>
@@ -404,8 +402,7 @@ export function DeliveryClient({
           {zones.length === 0 && !showAddForm ? (
             <div className="p-8 text-center text-gray-400">
               <MapPin className="w-10 h-10 mx-auto mb-3 opacity-30" />
-              <p className="text-sm font-medium">No delivery zones yet</p>
-              <p className="text-xs mt-1">Add zones to enable delivery orders</p>
+              <p className="text-sm font-medium">{t("noZones")}</p>
             </div>
           ) : (
             <div className="divide-y divide-gray-100">

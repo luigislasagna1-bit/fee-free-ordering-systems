@@ -29,6 +29,7 @@ export async function GET() {
         estimatedPickup: true,
         estimatedDelivery: true,
         serviceSettings: true,
+        autoAcceptOrders: true,
       },
     });
 
@@ -46,6 +47,7 @@ export async function GET() {
         reservations: restaurant?.acceptsReservations ?? false,
       },
       settings: { ...DEFAULT_SETTINGS, ...settings },
+      autoAcceptOrders: restaurant?.autoAcceptOrders ?? false,
     });
   } catch (e: any) {
     return NextResponse.json({ error: e.message }, { status: 500 });
@@ -59,7 +61,7 @@ export async function PUT(req: NextRequest) {
     if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await req.json();
-    const { enabled, settings } = body;
+    const { enabled, settings, autoAcceptOrders } = body;
 
     await prisma.restaurant.update({
       where: { id: restaurantId },
@@ -73,6 +75,7 @@ export async function PUT(req: NextRequest) {
         estimatedPickup:     settings?.pickup?.estimatedTime    ?? undefined,
         estimatedDelivery:   settings?.delivery?.estimatedTime  ?? undefined,
         serviceSettings:     JSON.stringify({ ...DEFAULT_SETTINGS, ...settings }),
+        autoAcceptOrders:    typeof autoAcceptOrders === "boolean" ? autoAcceptOrders : undefined,
       },
     });
 

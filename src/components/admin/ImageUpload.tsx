@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { Upload, X, ImageIcon, Link } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface Props {
   value: string;
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Props) {
+  const tCommon = useTranslations("common");
+  const tOrdering = useTranslations("ordering");
   const [uploading, setUploading] = useState(false);
   const [showUrlInput, setShowUrlInput] = useState(false);
   const [urlDraft, setUrlDraft] = useState(value);
@@ -87,12 +90,12 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
           {uploading ? (
             <div className="flex flex-col items-center gap-1">
               <div className="w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
-              <span className="text-xs text-gray-400">Uploading…</span>
+              <span className="text-xs text-gray-400">{tCommon("loading")}</span>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-1 text-gray-300">
               <ImageIcon className="w-6 h-6" />
-              <span className="text-xs">Drop image here</span>
+              <span className="text-xs">{tCommon("add")}</span>
             </div>
           )}
         </div>
@@ -107,7 +110,7 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
           className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-gray-200 rounded-lg text-gray-700 hover:border-orange-400 hover:text-orange-600 transition disabled:opacity-50"
         >
           <Upload className="w-3.5 h-3.5" />
-          {uploading ? "Uploading…" : value ? "Replace" : "Upload Image"}
+          {uploading ? tCommon("loading") : value ? tCommon("edit") : tCommon("add")}
         </button>
         <button
           type="button"
@@ -115,7 +118,7 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
           className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-gray-200 rounded-lg text-gray-700 hover:border-gray-400 transition"
         >
           <Link className="w-3.5 h-3.5" />
-          Use URL
+          URL
         </button>
         {value && (
           <button
@@ -123,7 +126,7 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
             onClick={() => onChange("")}
             className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-red-400 hover:text-red-600 transition"
           >
-            <X className="w-3.5 h-3.5" /> Remove
+            <X className="w-3.5 h-3.5" /> {tCommon("remove")}
           </button>
         )}
       </div>
@@ -143,7 +146,7 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
             onClick={applyUrl}
             className="px-3 py-1.5 text-xs font-medium bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
           >
-            Apply
+            {tOrdering("apply")}
           </button>
         </div>
       )}

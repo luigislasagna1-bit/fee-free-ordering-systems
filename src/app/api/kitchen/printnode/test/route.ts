@@ -5,7 +5,7 @@ import { decrypt } from "@/lib/encrypt";
 
 export async function POST() {
   try {
-    const user = await getSessionUser();
+    const user = await getSessionUser({ preferKitchen: true });
     if (!user?.restaurantId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

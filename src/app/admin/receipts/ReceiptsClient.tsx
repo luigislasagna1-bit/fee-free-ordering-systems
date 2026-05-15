@@ -17,6 +17,7 @@ import {
 import { ReceiptRenderer, PAPER_WIDTH_PX, SAMPLE_ORDER } from "./ReceiptRenderer";
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "@/lib/receipt-schema";
 import { parseReceiptConfig } from "@/lib/receipt-schema";
+import { useTranslations } from "next-intl";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -231,6 +232,13 @@ function MessagePanel({ config, onChange }: { config: CustomerConfig; onChange: 
 
 // ─── Main editor ──────────────────────────────────────────────────────────────
 
+function useReceiptsT() {
+  const t = useTranslations("admin.receipts");
+  const tCommon = useTranslations("common");
+  const tToasts = useTranslations("admin.toasts");
+  return { t, tCommon, tToasts };
+}
+
 export function ReceiptsClient({
   templates,
   restaurant,
@@ -239,7 +247,9 @@ export function ReceiptsClient({
   templates: { type: string; template: string }[];
   restaurant: any;
   printerSettings?: any;
+  __unused?: never;
 }) {
+  const { t: tR, tCommon, tToasts } = useReceiptsT();
   const custRaw = templates.find((t) => t.type === "customer")?.template ?? null;
   const kitRaw  = templates.find((t) => t.type === "kitchen")?.template  ?? null;
 
@@ -297,10 +307,10 @@ export function ReceiptsClient({
         body: JSON.stringify({ customerTemplate: custConfig, kitchenTemplate: kitConfig, kitchenCopies, customerCopies }),
       });
       if (!res.ok) throw new Error("Failed");
-      if (!silent) toast.success("Receipt templates saved!");
+      if (!silent) toast.success(tToasts("saved"));
       ok = true;
     } catch {
-      toast.error("Failed to save");
+      toast.error(tToasts("saveFailed"));
     }
     setSaving(false);
     return ok;
@@ -388,7 +398,7 @@ export function ReceiptsClient({
               )}
             >
               {t === "customer" ? <Receipt className="w-4 h-4" /> : <ChefHat className="w-4 h-4" />}
-              {t === "customer" ? "Customer Receipt" : "Kitchen Receipt"}
+              {t === "customer" ? tR("customerReceipt") : tR("kitchenReceipt")}
             </button>
           ))}
         </div>
@@ -397,7 +407,7 @@ export function ReceiptsClient({
         <div className="flex-1 overflow-y-auto">
           <div className="px-3 pt-3 pb-1">
             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
-              Sections — drag to reorder
+              {tR("sections")}
             </div>
           </div>
 

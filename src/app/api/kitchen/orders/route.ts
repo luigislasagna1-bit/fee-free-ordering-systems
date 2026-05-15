@@ -11,7 +11,7 @@ export async function GET() {
     if (!["restaurant_admin", "kitchen_staff", "superadmin"].includes(role)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const user = await getSessionUser();
+    const user = await getSessionUser({ preferKitchen: true });
     const restaurantId = user?.restaurantId;
     if (!restaurantId) return NextResponse.json({ error: "No restaurant associated" }, { status: 400 });
 

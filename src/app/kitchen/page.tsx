@@ -1,11 +1,11 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { kitchenAuthOptions } from "@/lib/auth-kitchen";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { KitchenDisplay } from "./KitchenDisplay";
 
 export default async function KitchenPage() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(kitchenAuthOptions);
   if (!session) redirect("/kitchen/login");
   const role = (session.user as any)?.role;
   if (!["restaurant_admin", "kitchen_staff", "superadmin"].includes(role)) redirect("/kitchen/login");

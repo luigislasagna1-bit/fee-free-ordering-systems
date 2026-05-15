@@ -4,6 +4,7 @@ import { generateOrderNumber } from "@/lib/utils";
 import { sendOrderConfirmationEmail, sendNewOrderNotificationEmail } from "@/lib/email";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
+import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "catering"] as const;
 const ALLOWED_PAYMENT_METHODS = ["cash", "card"] as const;
@@ -225,9 +226,22 @@ export async function POST(req: NextRequest) {
       ? Math.max(0, zoneDeliveryFee)
       : 0;
 
+    // ── Service fees (server-side evaluation; client values ignored) ────────
+    const feeOrderType: "pickup" | "delivery" = type === "delivery" ? "delivery" : "pickup";
+    const activeFees = await prisma.serviceFee.findMany({
+      where: { restaurantId: restaurant.id, isActive: true },
+      orderBy: { sortOrder: "asc" },
+    });
+    const appliedFees = evaluateApplicableFees(activeFees as unknown as ServiceFeeRow[], {
+      subtotal: serverSubtotal,
+      type: feeOrderType,
+      at: new Date(),
+    });
+    const serverServiceFeesTotal = sumAppliedFees(appliedFees);
+
     // ── Tax & total ─────────────────────────────────────────────────────────
     const totalDiscount = serverCouponDiscount + serverPromoDiscount;
-    const taxBase = Math.max(0, serverSubtotal - totalDiscount + serverDeliveryFee);
+    const taxBase = Math.max(0, serverSubtotal - totalDiscount + serverDeliveryFee + serverServiceFeesTotal);
     const serverTax = Math.round(taxBase * (restaurant.taxRate / 100) * 100) / 100;
     const serverTip = typeof clientTip === "number" && clientTip >= 0
       ? Math.min(Math.round(clientTip * 100) / 100, serverSubtotal * 2) // cap at 200% of subtotal
@@ -258,13 +272,29 @@ export async function POST(req: NextRequest) {
       await prisma.coupon.update({ where: { id: resolvedCouponId }, data: { usedCount: { increment: 1 } } });
     }
 
+    // ── Auto-accept handling ────────────────────────────────────────────────
+    const wantsAutoAccept = !!restaurant.autoAcceptOrders;
+    const fulfillmentMinutes = type === "delivery"
+      ? restaurant.estimatedDelivery
+      : restaurant.estimatedPickup;
+    const initialStatus = wantsAutoAccept ? "accepted" : "pending";
+    const acceptedAtValue: Date | null = wantsAutoAccept ? new Date() : null;
+    const estimatedReadyValue: Date | null = wantsAutoAccept
+      ? new Date(Date.now() + fulfillmentMinutes * 60_000)
+      : null;
+    const preparationTimeValue: number | null = wantsAutoAccept ? fulfillmentMinutes : null;
+
     // ── Create order ────────────────────────────────────────────────────────
     const order = await prisma.order.create({
       data: {
         restaurantId: restaurant.id,
         customerId: customer?.id || null,
         orderNumber: generateOrderNumber(),
-        status: "pending",
+        status: initialStatus,
+        acceptedAt: acceptedAtValue,
+        estimatedReady: estimatedReadyValue,
+        preparationTime: preparationTimeValue,
+        appliedServiceFees: appliedFees.length > 0 ? JSON.stringify(appliedFees) : null,
         type,
         customerName: sanitize(customerName, 100),
         customerEmail: cleanEmail,
@@ -316,16 +346,18 @@ export async function POST(req: NextRequest) {
         orderType: type,
         estimatedTime: type === "pickup" ? restaurant.estimatedPickup : restaurant.estimatedDelivery,
         trackingUrl: `${baseUrl}/order/${restaurantSlug}/status/${order.id}`,
+        locale: restaurant.defaultLanguage || "en",
       }).catch(() => {});
     }
     if (restaurant.email) {
       sendNewOrderNotificationEmail({
-        restaurantEmail: restaurant.email,
+        to: restaurant.email ?? "",
         restaurantName: restaurant.name,
         orderNumber: order.orderNumber,
         customerName: sanitize(customerName, 100),
         total: serverTotal,
         dashboardUrl: `${baseUrl}/admin/orders`,
+        locale: restaurant.defaultLanguage || "en",
       }).catch(() => {});
     }
 

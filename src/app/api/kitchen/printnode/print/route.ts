@@ -6,6 +6,7 @@ import { decrypt } from "@/lib/encrypt";
 import {
   buildKitchenReceiptFromConfig,
   buildCustomerReceiptFromConfig,
+  buildReservationReceipt,
   SAMPLE_RECEIPT_ORDER,
   type ReceiptOrder,
   type ReceiptRestaurant,
@@ -215,14 +216,15 @@ async function submitJob(
 
 export async function POST(req: NextRequest) {
   try {
-    const user = await getSessionUser();
+    const user = await getSessionUser({ preferKitchen: true });
     if (!user?.restaurantId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await req.json() as {
-      type: "kitchen" | "customer" | "both" | "test" | "test_kitchen" | "test_customer";
+      type?: "kitchen" | "customer" | "both" | "test" | "test_kitchen" | "test_customer";
       orderId?: string;
+      reservationId?: string;
       // Optional inline templates — used for "test this current draft" prints from
       // the receipt template editor.  When present, these REPLACE the saved DB
       // templates for this single request, so the user can preview unsaved edits.
@@ -248,11 +250,13 @@ export async function POST(req: NextRequest) {
 
     const restaurant = await prisma.restaurant.findUnique({
       where: { id: user.restaurantId },
-      select: { name: true, address: true, city: true, state: true, zip: true, phone: true, email: true },
+      select: { name: true, address: true, city: true, state: true, zip: true, phone: true, email: true, defaultLanguage: true },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
-    const receiptRestaurant: ReceiptRestaurant = restaurant;
+    const { defaultLanguage, ...restaurantForReceipt } = restaurant;
+    const receiptRestaurant: ReceiptRestaurant = restaurantForReceipt;
+    const locale = defaultLanguage || "en";
     const paperWidth = ps.paperWidth ?? "80mm";
     const lang = (ps.printerLanguage ?? "escpos") as PrinterLanguage;
 
@@ -286,8 +290,8 @@ export async function POST(req: NextRequest) {
     // ── Test print (both receipts at once) ───────────────────────────────────
     if (body.type === "test") {
       const sampleOrder = { ...SAMPLE_RECEIPT_ORDER, createdAt: new Date().toISOString() };
-      const kitBuf  = await buildKitchenReceiptFromConfig(sampleOrder, receiptRestaurant, kitchenConfig, paperWidth, lang);
-      const custBuf = await buildCustomerReceiptFromConfig(sampleOrder, receiptRestaurant, customerConfig, paperWidth, lang);
+      const kitBuf  = await buildKitchenReceiptFromConfig(sampleOrder, receiptRestaurant, kitchenConfig, paperWidth, lang, locale);
+      const custBuf = await buildCustomerReceiptFromConfig(sampleOrder, receiptRestaurant, customerConfig, paperWidth, lang, locale);
       const buf     = Buffer.concat([kitBuf, custBuf]);
       const jobId   = await submitJob(apiKey, ps.selectedPrinterId, "Test Receipt", buf, 1);
 
@@ -310,8 +314,8 @@ export async function POST(req: NextRequest) {
       const sampleOrder = { ...SAMPLE_RECEIPT_ORDER, createdAt: new Date().toISOString() };
       const isKitchen = body.type === "test_kitchen";
       const buf = isKitchen
-        ? await buildKitchenReceiptFromConfig(sampleOrder, receiptRestaurant, kitchenConfig, paperWidth, lang)
-        : await buildCustomerReceiptFromConfig(sampleOrder, receiptRestaurant, customerConfig, paperWidth, lang);
+        ? await buildKitchenReceiptFromConfig(sampleOrder, receiptRestaurant, kitchenConfig, paperWidth, lang, locale)
+        : await buildCustomerReceiptFromConfig(sampleOrder, receiptRestaurant, customerConfig, paperWidth, lang, locale);
       const jobId = await submitJob(
         apiKey,
         ps.selectedPrinterId,
@@ -324,6 +328,54 @@ export async function POST(req: NextRequest) {
         data: {
           restaurantId: user.restaurantId,
           receiptType:  isKitchen ? "test_kitchen" : "test_customer",
+          printerName:  ps.selectedPrinterName ?? undefined,
+          printNodeJobId: jobId,
+          status: "sent",
+        },
+      });
+      return NextResponse.json({ success: true, jobId });
+    }
+
+    // ── Reservation print ─────────────────────────────────────────────────────
+    if (body.reservationId) {
+      const reservation = await prisma.reservation.findFirst({
+        where: { id: body.reservationId, restaurantId: user.restaurantId },
+        include: { table: true },
+      });
+      if (!reservation) {
+        return NextResponse.json({ error: "Reservation not found" }, { status: 404 });
+      }
+
+      const buf = await buildReservationReceipt({
+        restaurantName: receiptRestaurant.name,
+        confirmationCode: reservation.confirmationCode,
+        customerName: reservation.customerName,
+        customerPhone: reservation.customerPhone,
+        customerEmail: reservation.customerEmail,
+        partySize: reservation.partySize,
+        date: reservation.date,
+        time: reservation.time,
+        tableName: reservation.table?.name ?? null,
+        notes: reservation.notes,
+        depositAmount: reservation.depositAmount,
+        depositPaid: reservation.depositPaid,
+        preOrderTotal: reservation.preOrderTotal,
+        status: reservation.status,
+        createdAt: new Date(),
+      }, paperWidth, lang, locale);
+
+      const jobId = await submitJob(
+        apiKey,
+        ps.selectedPrinterId,
+        `Reservation ${reservation.confirmationCode}`,
+        buf,
+        ps.kitchenCopies ?? 1,
+      );
+
+      await prisma.printLog.create({
+        data: {
+          restaurantId: user.restaurantId,
+          receiptType:  "reservation",
           printerName:  ps.selectedPrinterName ?? undefined,
           printNodeJobId: jobId,
           status: "sent",
@@ -384,7 +436,7 @@ export async function POST(req: NextRequest) {
     const logs: { receiptType: string; jobId: number }[] = [];
 
     if (doKitchen) {
-      const buf   = await buildKitchenReceiptFromConfig(receiptOrder, receiptRestaurant, kitchenConfig, paperWidth, lang);
+      const buf   = await buildKitchenReceiptFromConfig(receiptOrder, receiptRestaurant, kitchenConfig, paperWidth, lang, locale);
       console.log("[printnode/print] kitchen payload", {
         bytes: buf.length, lang, paperWidth,
         copies: ps.kitchenCopies,
@@ -403,7 +455,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (doCustomer) {
-      const buf   = await buildCustomerReceiptFromConfig(receiptOrder, receiptRestaurant, customerConfig, paperWidth, lang);
+      const buf   = await buildCustomerReceiptFromConfig(receiptOrder, receiptRestaurant, customerConfig, paperWidth, lang, locale);
       console.log("[printnode/print] customer payload", {
         bytes: buf.length, lang, paperWidth,
         copies: ps.customerCopies,

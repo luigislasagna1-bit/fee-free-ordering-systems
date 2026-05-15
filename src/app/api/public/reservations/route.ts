@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
       where: { slug: restaurantSlug, isActive: true },
       select: {
         id: true, name: true, email: true, slug: true, acceptsReservations: true,
-        reservationSettings: true,
+        reservationSettings: true, defaultLanguage: true,
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
@@ -141,11 +141,12 @@ export async function POST(req: NextRequest) {
         status: initialStatus === "confirmed" ? "confirmed" : "pending",
         depositAmount: reservation.depositAmount,
         preOrderTotal,
+        locale: restaurant.defaultLanguage || "en",
       });
     }
     if (restaurant.email) {
       await sendNewReservationNotification({
-        restaurantEmail: restaurant.email,
+        to: restaurant.email ?? "",
         restaurantName: restaurant.name,
         customerName: reservation.customerName,
         partySize: reservation.partySize,
@@ -154,6 +155,7 @@ export async function POST(req: NextRequest) {
         confirmationCode: reservation.confirmationCode,
         status: initialStatus === "confirmed" ? "confirmed" : "pending",
         dashboardUrl: `${process.env.NEXT_PUBLIC_APP_URL ?? ""}/admin/reservations`,
+        locale: restaurant.defaultLanguage || "en",
       });
     }
 

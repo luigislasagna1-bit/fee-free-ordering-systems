@@ -30,6 +30,7 @@ interface Props {
   subtotal: number;
   totalDiscount: number;
   deliveryFee: number;
+  appliedServiceFees: { name: string; amount: number }[];
   taxAmount: number;
   tipAmount: number;
   tipPercent: number;
@@ -61,7 +62,7 @@ interface Props {
 }
 
 export function CheckoutModal({
-  theme, orderType, cart, subtotal, totalDiscount, deliveryFee, taxAmount,
+  theme, orderType, cart, subtotal, totalDiscount, deliveryFee, appliedServiceFees, taxAmount,
   tipAmount, tipPercent, setTipPercent, total, taxRate,
   customerInfo, setCustomerInfo,
   editingSection, setEditingSection,
@@ -433,6 +434,12 @@ export function CheckoutModal({
                 {orderType === "delivery" && (
                   <div className="flex justify-between text-gray-600"><span>Delivery</span><span>{formatCurrency(deliveryFee)}</span></div>
                 )}
+                {appliedServiceFees.map(f => (
+                  <div key={f.name} className="flex justify-between text-gray-600">
+                    <span>{f.name}</span>
+                    <span>{formatCurrency(f.amount)}</span>
+                  </div>
+                ))}
                 <div className="flex justify-between text-gray-600"><span>Tax ({taxRate}%)</span><span>{formatCurrency(taxAmount)}</span></div>
                 {tipAmount > 0 && (
                   <div className="flex justify-between text-gray-600"><span>Tip</span><span>{formatCurrency(tipAmount)}</span></div>

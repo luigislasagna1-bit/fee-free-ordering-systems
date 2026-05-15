@@ -1,8 +1,10 @@
 import { redirect } from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { ImpersonationBanner } from "@/components/admin/ImpersonationBanner";
 import { getSessionUser } from "@/lib/session";
+import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -34,16 +36,21 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     restaurantName = restaurant?.name || "";
   }
 
+  const locale = await resolveLocale({ restaurantId });
+  const messages = await loadMessages(locale);
+
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden flex-col">
-      {user?.isImpersonating && <ImpersonationBanner restaurantName={restaurantName} />}
-      <div className="flex flex-1 overflow-hidden">
-        <AdminSidebar session={session} pendingOrders={pendingOrders} />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <AdminHeader session={session} pendingOrders={pendingOrders} />
-          <main className="flex-1 overflow-y-auto p-6">{children}</main>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <div className="flex h-screen bg-gray-50 overflow-hidden flex-col">
+        {user?.isImpersonating && <ImpersonationBanner restaurantName={restaurantName} />}
+        <div className="flex flex-1 overflow-hidden">
+          <AdminSidebar session={session} pendingOrders={pendingOrders} />
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <AdminHeader session={session} pendingOrders={pendingOrders} restaurantName={restaurantName} />
+            <main className="flex-1 overflow-y-auto p-6">{children}</main>
+          </div>
         </div>
       </div>
-    </div>
+    </NextIntlClientProvider>
   );
 }

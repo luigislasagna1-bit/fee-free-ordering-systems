@@ -8,6 +8,7 @@ import {
 import { formatCurrency } from "@/lib/utils";
 import toast from "react-hot-toast";
 import type { T, Order } from "./kitchen-types";
+import { useTranslations } from "next-intl";
 
 interface Props {
   order: Order;
@@ -34,6 +35,10 @@ function fmtTime(d: string | Date | null | undefined) {
 }
 
 export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady }: Props) {
+  const tk = useTranslations("kitchen");
+  const tc = useTranslations("checkout");
+  const tCommon = useTranslations("common");
+  const tReceipt = useTranslations("receipt.orderTypes");
   const [rejectReason, setRejectReason] = useState("");
   const [showReject, setShowReject] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
@@ -87,7 +92,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
             <X className="w-4 h-4" />
           </button>
           <div>
-            <div className={`font-bold text-lg ${t.text}`}>Order #{order.orderNumber}</div>
+            <div className={`font-bold text-lg ${t.text}`}>{tk("orderNumber")}{order.orderNumber}</div>
             <div className={`text-xs ${t.muted}`}>{fmtTime(order.createdAt)}</div>
           </div>
           <StatusBadge />
@@ -102,7 +107,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
         <div className="p-5 space-y-5">
 
           {/* Customer Info */}
-          <Section title="Customer" t={t}>
+          <Section title={tk("customer")} t={t}>
             <div className="space-y-2">
               <Row icon={<User className="w-4 h-4" />} t={t}>{order.customerName}</Row>
               {order.customerPhone && <Row icon={<Phone className="w-4 h-4" />} t={t}>{order.customerPhone}</Row>}
@@ -111,11 +116,11 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           </Section>
 
           {/* Delivery/Pickup */}
-          <Section title={order.type === "delivery" ? "Delivery Address" : "Order Type"} t={t}>
+          <Section title={order.type === "delivery" ? tc("deliveryAddress") : tk("orderType")} t={t}>
             <div className="space-y-1">
               <div className={`flex items-center gap-2 text-sm font-semibold ${t.text}`}>
                 <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${order.type === "delivery" ? "bg-blue-500 text-white" : "bg-orange-500 text-white"}`}>
-                  {order.type.toUpperCase()}
+                  {(() => { try { return tReceipt(order.type); } catch { return order.type.toUpperCase(); } })()}
                 </span>
               </div>
               {order.deliveryAddress && (
@@ -128,19 +133,19 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
 
           {/* Timing */}
           {(order.acceptedAt || order.estimatedReady || order.completedAt) && (
-            <Section title="Timing" t={t}>
+            <Section title={tk("estimatedTime")} t={t}>
               <div className="space-y-1.5">
-                {order.acceptedAt && <Row icon={<CheckCircle className="w-4 h-4 text-green-500" />} t={t}>Accepted: {fmtTime(order.acceptedAt)}</Row>}
-                {order.estimatedReady && <Row icon={<Clock className="w-4 h-4 text-blue-500" />} t={t}>Ready by: {fmtTime(order.estimatedReady)}</Row>}
-                {order.preparationTime && <Row icon={<Clock className="w-4 h-4" />} t={t}>Prep time: {order.preparationTime} min</Row>}
-                {order.completedAt && <Row icon={<Package className="w-4 h-4 text-gray-500" />} t={t}>Completed: {fmtTime(order.completedAt)}</Row>}
+                {order.acceptedAt && <Row icon={<CheckCircle className="w-4 h-4 text-green-500" />} t={t}>{tk("accepted")}: {fmtTime(order.acceptedAt)}</Row>}
+                {order.estimatedReady && <Row icon={<Clock className="w-4 h-4 text-blue-500" />} t={t}>{tk("ready")}: {fmtTime(order.estimatedReady)}</Row>}
+                {order.preparationTime && <Row icon={<Clock className="w-4 h-4" />} t={t}>{tk("preparationTime")}: {order.preparationTime} {tk("minAway", { minutes: "" })}</Row>}
+                {order.completedAt && <Row icon={<Package className="w-4 h-4 text-gray-500" />} t={t}>{tk("completed")}: {fmtTime(order.completedAt)}</Row>}
               </div>
             </Section>
           )}
 
           {/* Notes */}
           {order.notes && (
-            <Section title="Order Notes" t={t}>
+            <Section title={tCommon("notes")} t={t}>
               <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2 text-sm text-yellow-700 dark:text-yellow-300">
                 {order.notes}
               </div>
@@ -148,7 +153,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           )}
 
           {/* Items */}
-          <Section title="Items" t={t}>
+          <Section title={tk("items")} t={t}>
             <div className="space-y-3">
               {order.items.map((item) => (
                 <div key={item.id} className={`border-b ${t.border} pb-3 last:border-0 last:pb-0`}>
@@ -169,26 +174,26 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           </Section>
 
           {/* Totals */}
-          <Section title="Totals" t={t}>
+          <Section title={tCommon("total")} t={t}>
             <div className="space-y-1.5">
-              <TotalRow label="Subtotal" value={formatCurrency(order.subtotal)} t={t} />
-              {(order.couponDiscount ?? 0) > 0 && <TotalRow label="Coupon discount" value={`-${formatCurrency(order.couponDiscount!)}`} t={t} />}
-              {(order.promoDiscount ?? 0) > 0 && <TotalRow label="Promo discount" value={`-${formatCurrency(order.promoDiscount!)}`} t={t} />}
-              {order.deliveryFee > 0 && <TotalRow label="Delivery fee" value={formatCurrency(order.deliveryFee)} t={t} />}
-              <TotalRow label="Tax" value={formatCurrency(order.taxAmount)} t={t} />
-              {(order.tip ?? 0) > 0 && <TotalRow label="Tip" value={formatCurrency(order.tip!)} t={t} />}
+              <TotalRow label={tCommon("subtotal")} value={formatCurrency(order.subtotal)} t={t} />
+              {(order.couponDiscount ?? 0) > 0 && <TotalRow label={tc("discount")} value={`-${formatCurrency(order.couponDiscount!)}`} t={t} />}
+              {(order.promoDiscount ?? 0) > 0 && <TotalRow label={tc("discount")} value={`-${formatCurrency(order.promoDiscount!)}`} t={t} />}
+              {order.deliveryFee > 0 && <TotalRow label={tc("delivery")} value={formatCurrency(order.deliveryFee)} t={t} />}
+              <TotalRow label={tc("tax")} value={formatCurrency(order.taxAmount)} t={t} />
+              {(order.tip ?? 0) > 0 && <TotalRow label={tc("tip")} value={formatCurrency(order.tip!)} t={t} />}
               <div className={`flex justify-between font-bold text-sm pt-1.5 border-t ${t.border} ${t.text}`}>
-                <span>TOTAL</span>
+                <span>{tCommon("total").toUpperCase()}</span>
                 <span>{formatCurrency(order.total)}</span>
               </div>
             </div>
           </Section>
 
           {/* Payment */}
-          <Section title="Payment" t={t}>
+          <Section title={tc("paymentMethod")} t={t}>
             <div className="space-y-1">
               <Row icon={<CreditCard className="w-4 h-4" />} t={t}>
-                {order.paymentMethod === "card" ? "Credit/Debit Card" : order.paymentMethod === "cash" ? "Cash" : order.paymentMethod}
+                {order.paymentMethod === "card" ? tc("payWithCard") : order.paymentMethod === "cash" ? tc("payInCashPickup") : order.paymentMethod}
               </Row>
               <div className="flex items-center gap-2">
                 <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
@@ -224,14 +229,14 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                 disabled={busy}
                 className="flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
               >
-                <CheckCircle className="w-4 h-4" /> Accept
+                <CheckCircle className="w-4 h-4" /> {tk("accept")}
               </button>
               <button
                 onClick={() => setShowReject(true)}
                 disabled={busy}
                 className="flex items-center justify-center gap-1.5 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
               >
-                <XCircle className="w-4 h-4" /> Reject
+                <XCircle className="w-4 h-4" /> {tk("reject")}
               </button>
             </>
           )}
@@ -241,7 +246,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               disabled={busy}
               className="col-span-2 flex items-center justify-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
             >
-              <ChefHat className="w-4 h-4" /> Start Preparing
+              <ChefHat className="w-4 h-4" /> {tk("preparing")}
             </button>
           )}
           {order.status === "preparing" && (
@@ -250,7 +255,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               disabled={busy}
               className="col-span-2 flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
             >
-              <Package className="w-4 h-4" /> Mark Ready
+              <Package className="w-4 h-4" /> {tk("markReady")}
             </button>
           )}
           {order.status === "ready" && (
@@ -259,16 +264,16 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               disabled={busy}
               className="col-span-2 flex items-center justify-center gap-1.5 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
             >
-              <CheckCircle className="w-4 h-4" /> Complete Order
+              <CheckCircle className="w-4 h-4" /> {tk("markComplete")}
             </button>
           )}
         </div>
 
         {/* Print buttons */}
         <div className={`grid grid-cols-3 gap-1.5 border-t ${t.border} pt-3`}>
-          <PrintBtn label="Kitchen" icon={<UtensilsCrossed className="w-3.5 h-3.5" />} onClick={() => print("kitchen")} loading={printing === "kitchen"} t={t} />
-          <PrintBtn label="Receipt" icon={<ReceiptText className="w-3.5 h-3.5" />} onClick={() => print("customer")} loading={printing === "customer"} t={t} />
-          <PrintBtn label="Both" icon={<RefreshCw className="w-3.5 h-3.5" />} onClick={() => print("both")} loading={printing === "both"} t={t} />
+          <PrintBtn label={tk("title")} icon={<UtensilsCrossed className="w-3.5 h-3.5" />} onClick={() => print("kitchen")} loading={printing === "kitchen"} t={t} />
+          <PrintBtn label={tk("print")} icon={<ReceiptText className="w-3.5 h-3.5" />} onClick={() => print("customer")} loading={printing === "customer"} t={t} />
+          <PrintBtn label={tCommon("all")} icon={<RefreshCw className="w-3.5 h-3.5" />} onClick={() => print("both")} loading={printing === "both"} t={t} />
         </div>
 
         {/* Cancel */}
@@ -277,19 +282,18 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
             onClick={() => setShowCancel(true)}
             className={`w-full text-xs ${t.muted} hover:text-red-500 transition py-1`}
           >
-            Cancel order
+            {tCommon("cancel")}
           </button>
         )}
       </div>
 
       {/* Reject modal */}
       {showReject && (
-        <Modal title="Reject Order" t={t} onClose={() => setShowReject(false)}>
-          <label className={`text-sm ${t.muted} block mb-2`}>Reason (optional)</label>
+        <Modal title={tk("reject")} t={t} onClose={() => setShowReject(false)}>
+          <label className={`text-sm ${t.muted} block mb-2`}>{tk("rejectionReason")}</label>
           <textarea
             className={`w-full rounded-xl px-3 py-2 text-sm border ${t.input} focus:outline-none focus:ring-2 focus:ring-red-500 mb-4`}
             rows={3}
-            placeholder="We are too busy, item not available..."
             value={rejectReason}
             onChange={(e) => setRejectReason(e.target.value)}
           />
@@ -299,10 +303,10 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               disabled={busy}
               className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm transition"
             >
-              {busy ? "Rejecting..." : "Reject Order"}
+              {busy ? tCommon("loading") : tk("reject")}
             </button>
             <button onClick={() => setShowReject(false)} className={`flex-1 ${t.btn} py-2.5 rounded-xl text-sm transition`}>
-              Cancel
+              {tCommon("cancel")}
             </button>
           </div>
         </Modal>
@@ -310,20 +314,11 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
 
       {/* Cancel modal */}
       {showCancel && (
-        <Modal title="Cancel Order" t={t} onClose={() => setShowCancel(false)}>
-          {order.paymentStatus === "paid" && (
-            <div className="flex gap-2 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 mb-3">
-              <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
-              <p className={`text-xs ${t.muted}`}>
-                This order has been paid. A refund will be automatically initiated through your payment provider.
-              </p>
-            </div>
-          )}
-          <label className={`text-sm ${t.muted} block mb-2`}>Reason (optional)</label>
+        <Modal title={tCommon("cancel")} t={t} onClose={() => setShowCancel(false)}>
+          <label className={`text-sm ${t.muted} block mb-2`}>{tk("rejectionReason")}</label>
           <textarea
             className={`w-full rounded-xl px-3 py-2 text-sm border ${t.input} focus:outline-none focus:ring-2 focus:ring-red-500 mb-4`}
             rows={2}
-            placeholder="Out of stock, restaurant closing early..."
             value={cancelReason}
             onChange={(e) => setCancelReason(e.target.value)}
           />
@@ -333,10 +328,10 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               disabled={busy}
               className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm transition"
             >
-              {busy ? "Cancelling..." : "Cancel Order"}
+              {busy ? tCommon("loading") : tCommon("cancel")}
             </button>
             <button onClick={() => setShowCancel(false)} className={`flex-1 ${t.btn} py-2.5 rounded-xl text-sm transition`}>
-              Back
+              {tCommon("back")}
             </button>
           </div>
         </Modal>

@@ -49,6 +49,8 @@ model Restaurant {
   lng                Float?   // geocoded restaurant longitude
   mapProvider        String   @default("leaflet")  // "leaflet" | "google"
   googleMapsApiKey   String?  // only used when mapProvider = "google"
+  autoAcceptOrders   Boolean  @default(false)
+  defaultLanguage    String   @default("en")
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
@@ -71,6 +73,52 @@ model Restaurant {
   reservationSettings  ReservationSettings?
   reservationTables    ReservationTable[]
   reservations         Reservation[]
+  notificationRecipients NotificationRecipient[]
+  serviceFees          ServiceFee[]
+
+  // Customer-side email toggles (single set per restaurant)
+  customerEmailPickupReady   Boolean @default(true)
+  customerEmailDeliveryReady Boolean @default(true)
+  customerEmailDineInReady   Boolean @default(false)
+  customerEmailOrderRejected Boolean @default(true)
+  customerEmailOrderConfirm  Boolean @default(true)
+}
+
+model NotificationRecipient {
+  id            String   @id @default(cuid())
+  restaurantId  String
+  email         String
+  name          String?
+  isActive      Boolean  @default(true)
+  emailLanguage String   @default("en")
+
+  // Confirmation events
+  deliveryConfirmed         Boolean @default(true)
+  pickupConfirmed           Boolean @default(true)
+  tableReservationConfirmed Boolean @default(true)
+  orderAheadConfirmed       Boolean @default(true)
+  dineInConfirmed           Boolean @default(true)
+
+  // Operational events
+  orderPlaced    Boolean @default(true)
+  orderAccepted  Boolean @default(true)
+  orderRejected  Boolean @default(true)
+  orderCanceled  Boolean @default(true)
+  orderMissed    Boolean @default(true)
+  orderNotPlaced Boolean @default(true)
+
+  // System events
+  lowBattery       Boolean @default(true)
+  badInternet      Boolean @default(true)
+  endOfDayReport   Boolean @default(true)
+  endOfMonthReport Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId])
 }
 
 model SubscriptionPlan {
@@ -98,7 +146,34 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  restaurant Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurant  Restaurant?           @relation(fields: [restaurantId], references: [id])
+  resetTokens PasswordResetToken[]
+}
+
+// Singleton row holding platform-wide settings (Resend API key, etc.).
+// Only the super admin can read/write. Secrets are AES-256-GCM encrypted at rest.
+model PlatformSettings {
+  id              String   @id @default("singleton")
+  // Resend (email) — encrypted key, plain envelope (iv + auth tag)
+  resendApiKeyEnc String?
+  resendApiKeyIv  String?
+  resendApiKeyTag String?
+  emailFrom       String?  // e.g. "Fee Free Ordering <hello@yourdomain.com>"
+  updatedAt       DateTime @updatedAt
+  updatedBy       String?
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  token     String    @unique
+  userId    String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model MenuCategory {
@@ -248,6 +323,7 @@ model Order {
   preparationTime  Int?
   deliveryZoneId           String?
   deliveryEstimatedMinutes Int?
+  appliedServiceFees String?  // JSON: [{ name, amount }] frozen at order time
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
@@ -538,6 +614,26 @@ model Reservation {
 
   @@index([restaurantId, date])
   @@index([restaurantId, status])
+}
+
+model ServiceFee {
+  id                 String   @id @default(cuid())
+  restaurantId       String
+  name               String
+  feeType            String   // "fixed" | "percent"
+  amount             Float
+  appliesTo          String   @default("both")  // "pickup" | "delivery" | "both"
+  daysOfWeek         String?  // CSV "0,5,6" — null = every day
+  publicHolidaysOnly Boolean  @default(false)
+  countryCode        String   @default("US")
+  isActive           Boolean  @default(true)
+  sortOrder          Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId])
 }
 
 model PaymentProvider {

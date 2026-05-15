@@ -11,6 +11,7 @@ import { signOut } from "next-auth/react";
 import { PrinterSetupModal } from "./PrinterSetupModal";
 import { OrderDetail } from "./OrderDetail";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
+import { useTranslations } from "next-intl";
 
 // ── Countdown hook ────────────────────────────────────────────────────────────
 // Returns 0 until the client mounts so SSR and the first client render match
@@ -28,19 +29,100 @@ function useNow(intervalMs = 1000) {
 }
 
 // ── Status badge ──────────────────────────────────────────────────────────────
+function ReservationStatusBadge({ status, t }: { status: string; t: T }) {
+  const tk = useTranslations("kitchen");
+  const map: Record<string, { bg: string; key: string }> = {
+    pending:   { bg: "bg-yellow-100 text-yellow-800",    key: "pending" },
+    confirmed: { bg: "bg-blue-100 text-blue-800",        key: "confirmed" },
+    seated:    { bg: "bg-emerald-100 text-emerald-800",  key: "seated" },
+    no_show:   { bg: "bg-red-100 text-red-700",          key: "noShow" },
+    completed: { bg: t.badgeCompleted ?? "bg-gray-100 text-gray-700", key: "done" },
+    cancelled: { bg: "bg-gray-100 text-gray-500",        key: "cancelled" },
+  };
+  const m = map[status] ?? { bg: "bg-gray-100 text-gray-700", key: "" };
+  const label = m.key ? tk(m.key).toUpperCase() : status.toUpperCase();
+  return <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap ${m.bg}`}>{label}</span>;
+}
+
+function ReservationCard({
+  r, t, onStatusChange, onPrint, compact,
+}: {
+  r: KitchenReservation;
+  t: T;
+  onStatusChange: (id: string, status: string) => void;
+  onPrint: (id: string) => void;
+  compact?: boolean;
+}) {
+  const tk = useTranslations("kitchen");
+  return (
+    <div className={`${t.row} rounded-xl p-${compact ? "3" : "4"} border ${t.border}`}>
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className={`font-bold ${t.text} ${compact ? "text-sm" : ""}`}>{r.customerName}</span>
+            <ReservationStatusBadge status={r.status} t={t} />
+            {r.depositPaid && (
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
+                {tk("depositPaid").toUpperCase()}
+              </span>
+            )}
+          </div>
+          <div className={`text-xs ${t.muted} mt-1 flex gap-3 flex-wrap`}>
+            <span>{r.date} · {r.time}</span>
+            <span>{tk("partyOf", { n: r.partySize })}</span>
+            {r.table && <span>{r.table.name}</span>}
+            {!compact && r.customerPhone && <span>📞 {r.customerPhone}</span>}
+          </div>
+          {!compact && r.notes && (
+            <div className={`text-xs ${t.muted} mt-1 italic`}>&quot;{r.notes}&quot;</div>
+          )}
+          <div className="text-[10px] font-mono text-gray-400 mt-1">#{r.confirmationCode}</div>
+        </div>
+        <div className="flex flex-col gap-1.5 flex-shrink-0">
+          <button onClick={() => onPrint(r.id)}
+            className={`text-xs font-semibold px-3 py-1.5 rounded-lg border ${t.border} ${t.muted} hover:${t.text} transition flex items-center gap-1`}>
+            <Printer className="w-3 h-3" /> {tk("print")}
+          </button>
+          {r.status === "pending" && (
+            <button onClick={() => onStatusChange(r.id, "confirmed")}
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-500 text-white hover:bg-blue-600">
+              {tk("confirmed")}
+            </button>
+          )}
+          {(r.status === "pending" || r.status === "confirmed") && (
+            <>
+              <button onClick={() => onStatusChange(r.id, "seated")}
+                className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600">
+                {tk("seated")}
+              </button>
+              <button onClick={() => onStatusChange(r.id, "no_show")}
+                className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-red-500 text-white hover:bg-red-600">
+                {tk("noShow")}
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function StatusBadge({ status, t }: { status: string; t: T }) {
+  const tk = useTranslations("kitchen");
   const cls: Record<string, string> = {
     pending: t.badgePending, accepted: t.badgeAccepted, preparing: t.badgePreparing,
     ready: t.badgeReady, completed: t.badgeCompleted, rejected: t.badgeRejected,
     cancelled: t.badgeCancelled,
   };
-  const label: Record<string, string> = {
-    pending: "NEW", accepted: "ACCEPTED", preparing: "PREPARING",
-    ready: "READY", completed: "DONE", rejected: "REJECTED", cancelled: "CANCELLED",
+  const keyMap: Record<string, string> = {
+    pending: "pending", accepted: "accepted", preparing: "preparing",
+    ready: "ready", completed: "done", rejected: "rejected", cancelled: "cancelled",
   };
+  const k = keyMap[status];
+  const label = k ? tk(k).toUpperCase() : status.toUpperCase();
   return (
     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap ${cls[status] ?? t.badgeCompleted}`}>
-      {label[status] ?? status.toUpperCase()}
+      {label}
     </span>
   );
 }
@@ -61,6 +143,7 @@ function Countdown({ createdAt, now }: { createdAt: string; now: number }) {
 function OrderRow({ order, selected, onClick, t, now }: {
   order: Order; selected: boolean; onClick: () => void; t: T; now: number;
 }) {
+  const tk = useTranslations("kitchen");
   // `now === 0` means the client hasn't mounted yet (see useNow). Render
   // stable, time-independent values during SSR/first paint to match hydration.
   const isNew = !!now && order.status === "pending" && (now - new Date(order.createdAt).getTime()) < 30000;
@@ -69,11 +152,11 @@ function OrderRow({ order, selected, onClick, t, now }: {
     if (!now) return "";
     const diff = now - new Date(order.createdAt).getTime();
     const m = Math.floor(diff / 60000);
-    if (m < 1) return "just now";
-    if (m < 60) return `${m}m ago`;
+    if (m < 1) return tk("addedAt");
+    if (m < 60) return `${m} ${tk("minAway", { minutes: m })}`;
     const h = Math.floor(m / 60);
-    if (h < 24) return `${h}h ago`;
-    return `${Math.floor(h / 24)}d ago`;
+    if (h < 24) return `${h}h`;
+    return `${Math.floor(h / 24)}d`;
   })();
 
   const isTest = order.customerName.startsWith("[TEST]");
@@ -103,7 +186,7 @@ function OrderRow({ order, selected, onClick, t, now }: {
             {order.deliveryAddress && ` · ${order.deliveryAddress}`}
           </div>
           <div className={`text-xs ${t.subtle} flex items-center gap-2 mt-0.5`}>
-            <span>{order.items.length} item{order.items.length !== 1 ? "s" : ""}</span>
+            <span>{order.items.length} {tk("items")}</span>
             <span>·</span>
             <span>{timeAgo}</span>
           </div>
@@ -126,6 +209,7 @@ function ConfirmModal({ title, message, confirmLabel, onConfirm, onCancel, t }: 
   title: string; message: string; confirmLabel: string;
   onConfirm: () => void; onCancel: () => void; t: T;
 }) {
+  const tc = useTranslations("common");
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
       <div className={`${t.modal} rounded-2xl w-full max-w-sm p-6 shadow-2xl`}>
@@ -142,7 +226,7 @@ function ConfirmModal({ title, message, confirmLabel, onConfirm, onCancel, t }: 
             onClick={onCancel}
             className={`flex-1 ${t.btn} py-2.5 rounded-xl font-semibold text-sm transition`}
           >
-            Cancel
+            {tc("cancel")}
           </button>
         </div>
       </div>
@@ -151,7 +235,23 @@ function ConfirmModal({ title, message, confirmLabel, onConfirm, onCancel, t }: 
 }
 
 // ── Main KitchenDisplay ───────────────────────────────────────────────────────
-type KTab = "orders" | "inprogress" | "complete";
+type KTab = "orders" | "inprogress" | "complete" | "reservations";
+
+type KitchenReservation = {
+  id: string;
+  confirmationCode: string;
+  status: string;
+  customerName: string;
+  customerPhone: string | null;
+  partySize: number;
+  date: string;
+  time: string;
+  notes: string | null;
+  preOrderTotal: number;
+  depositPaid: boolean;
+  depositAmount: number;
+  table: { name: string; number: number | null } | null;
+};
 
 function loadSet(key: string): Set<string> {
   if (typeof window === "undefined") return new Set();
@@ -166,6 +266,7 @@ const IN_PROGRESS_STATUSES = ["accepted", "preparing", "ready"];
 const COMPLETE_STATUSES = ["completed", "rejected", "cancelled"];
 
 export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any; initialOrders: Order[] }) {
+  const tk = useTranslations("kitchen");
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
     if (typeof window === "undefined") return "light";
     return (localStorage.getItem("kds-theme") as ThemeMode) ?? "light";
@@ -174,6 +275,54 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const [activeTab, setActiveTab] = useState<KTab>("orders");
+  const [reservations, setReservations] = useState<KitchenReservation[]>([]);
+
+  // Poll upcoming reservations whenever the Reservations OR Orders tab is open
+  // (Orders tab shows reservations alongside the order list).
+  useEffect(() => {
+    if (activeTab !== "reservations" && activeTab !== "orders") return;
+    let cancelled = false;
+    const fetchRes = async () => {
+      try {
+        const res = await fetch("/api/admin/reservations/upcoming");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!cancelled) setReservations(data);
+      } catch {}
+    };
+    fetchRes();
+    const id = setInterval(fetchRes, 30000);
+    return () => { cancelled = true; clearInterval(id); };
+  }, [activeTab]);
+
+  const printReservation = async (id: string) => {
+    if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
+      toast.error("No printer configured. Open Printer Setup to connect.");
+      setShowPrinterSetup(true);
+      return;
+    }
+    try {
+      const res = await fetch("/api/kitchen/printnode/print", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reservationId: id }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Print failed");
+      toast.success("Reservation sent to printer");
+    } catch (e: any) {
+      toast.error(e.message || "Print failed");
+    }
+  };
+
+  const updateReservationStatus = async (id: string, status: string) => {
+    await fetch(`/api/admin/reservations/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+    setReservations(prev => prev.map(r => r.id === id ? { ...r, status } : r));
+  };
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showPrinterSetup, setShowPrinterSetup] = useState(false);
   const [printerSettings, setPrinterSettings] = useState<PrinterSettings | null>(null);
@@ -363,6 +512,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     orders: ordersTabItems.length,
     inprogress: inProgressItems.length,
     complete: completeItems.length,
+    reservations: reservations.filter(r => r.status === "pending" || r.status === "confirmed").length,
   };
 
   const pendingCount = orders.filter(o => o.status === "pending").length;
@@ -389,14 +539,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             </div>
           )}
 
-          <button onClick={fetchOrders} className={`p-2 rounded-lg ${t.btn} ${t.muted}`} title="Refresh">
+          <button onClick={fetchOrders} className={`p-2 rounded-lg ${t.btn} ${t.muted}`} title={tk("inProgress")}>
             <RefreshCw className="w-4 h-4" />
           </button>
 
           <button
             onClick={() => setThemeMode(m => m === "light" ? "dark" : "light")}
             className={`p-2 rounded-lg ${t.btn} ${t.muted}`}
-            title={`Switch to ${themeMode === "light" ? "dark" : "light"} mode`}
+            title={themeMode === "light" ? tk("darkMode") : tk("lightMode")}
           >
             {themeMode === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
           </button>
@@ -406,31 +556,30 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
               printerReady ? "border-green-500/40 text-green-600" : "border-orange-500/40 text-orange-600"
             } ${t.btn}`}
-            title="Printer Setup"
+            title={tk("printerSetup")}
           >
             <Printer className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">
-              {printerReady ? (printerSettings!.selectedPrinterName ?? "Printer") : "Setup Printer"}
+              {printerReady ? (printerSettings!.selectedPrinterName ?? tk("printerConnected")) : tk("printerSetup")}
             </span>
           </button>
 
-          {/* Test Order — replaces the Admin button */}
           <button
             onClick={createTestOrder}
             disabled={testOrdering}
             className={`hidden sm:flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border font-semibold transition disabled:opacity-50 border-purple-500/40 text-purple-600 ${t.btn}`}
-            title="Create a realistic test order"
+            title={tk("testPrint")}
           >
             {testOrdering
               ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
               : <FlaskConical className="w-3.5 h-3.5" />}
-            Test Order
+            {tk("testPrint")}
           </button>
 
           <button
             onClick={() => signOut({ callbackUrl: "/kitchen/login" })}
             className={`p-2 rounded-lg ${t.btn} ${t.muted}`}
-            title="Sign out"
+            title={tk("logOut")}
           >
             <LogOut className="w-4 h-4" />
           </button>
@@ -439,8 +588,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
       {/* ── Tabs ── */}
       <div className={`${t.tabs} flex items-center flex-shrink-0`}>
-        {(["orders", "inprogress", "complete"] as KTab[]).map(tab => {
-          const labels: Record<KTab, string> = { orders: "Orders", inprogress: "In Progress", complete: "Complete" };
+        {(["orders", "inprogress", "complete", "reservations"] as KTab[]).map(tab => {
+          const labels: Record<KTab, string> = { orders: tk("newOrders"), inprogress: tk("inProgress"), complete: tk("completed"), reservations: tk("reservations") };
           const count = tabCounts[tab];
           return (
             <button
@@ -468,7 +617,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             onClick={() => setClearConfirm("orders")}
             className={`ml-auto mr-3 my-1.5 flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 transition`}
           >
-            <Trash2 className="w-3.5 h-3.5" /> Clear History
+            <Trash2 className="w-3.5 h-3.5" /> {tk("done")}
           </button>
         )}
         {activeTab === "complete" && tabCounts.complete > 0 && (
@@ -476,23 +625,63 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             onClick={() => setClearConfirm("complete")}
             className={`ml-auto mr-3 my-1.5 flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 transition`}
           >
-            <Trash2 className="w-3.5 h-3.5" /> Clear History
+            <Trash2 className="w-3.5 h-3.5" /> {tk("done")}
           </button>
         )}
       </div>
 
-      {/* ── Main content ── */}
+      {/* Render a reservation card, reused on both Reservations tab and Orders tab. */}
+      {/* (defined as a const so the JSX below can reference it) */}
+
+      {/* ── Reservations panel (replaces the order list when this tab is active) ── */}
+      {activeTab === "reservations" && (
+        <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          {reservations.length === 0 ? (
+            <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
+              <Clock className="w-10 h-10 mb-3 opacity-30" />
+              <p className="text-sm">{tk("noReservations")}</p>
+            </div>
+          ) : reservations.map(r => (
+            <ReservationCard
+              key={r.id}
+              r={r}
+              t={t}
+              onStatusChange={updateReservationStatus}
+              onPrint={printReservation}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* ── Main content (orders / in-progress / complete) ── */}
+      {activeTab !== "reservations" && (
       <div className="flex-1 flex overflow-hidden">
         {/* Order list */}
         <div className={`${selectedOrder ? "hidden md:flex" : "flex"} flex-col w-full md:w-2/5 lg:w-1/3 border-r ${t.border} overflow-y-auto`}>
+          {/* Reservations strip — only on the Orders tab */}
+          {activeTab === "orders" && reservations.length > 0 && (
+            <div className={`px-3 py-3 border-b ${t.border} space-y-2 bg-opacity-50`}>
+              <div className={`text-[11px] font-bold uppercase tracking-wider ${t.muted} px-1`}>
+                {tk("reservations")} · {reservations.length}
+              </div>
+              {reservations.slice(0, 6).map(r => (
+                <ReservationCard key={r.id} r={r} t={t} onStatusChange={updateReservationStatus} onPrint={printReservation} compact />
+              ))}
+              {reservations.length > 6 && (
+                <button
+                  onClick={() => setActiveTab("reservations")}
+                  className={`w-full text-xs font-semibold py-1.5 rounded-lg ${t.muted} hover:${t.text} transition`}
+                >
+                  + {reservations.length - 6} more — see all
+                </button>
+              )}
+            </div>
+          )}
+
           {tabOrders.length === 0 ? (
             <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
               <Package className="w-10 h-10 mb-3 opacity-30" />
-              <p className="text-sm">
-                {activeTab === "orders" ? "No orders yet" :
-                 activeTab === "inprogress" ? "No orders in progress" :
-                 "No completed orders"}
-              </p>
+              <p className="text-sm">{tk("noOrders")}</p>
             </div>
           ) : (
             tabOrders.map(order => (
@@ -530,11 +719,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           <div className={`hidden md:flex flex-1 items-center justify-center ${t.muted}`}>
             <div className="text-center">
               <ChefHat className="w-12 h-12 mx-auto mb-3 opacity-20" />
-              <p className="text-sm">Select an order to view details</p>
+              <p className="text-sm">{tk("openOrder")}</p>
             </div>
           </div>
         )}
       </div>
+      )}
 
       {/* ── Accept + prep time modal ── */}
       {prepModal && (

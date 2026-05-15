@@ -9,10 +9,9 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { parseTheme } from "@/lib/theme";
+import { useTranslations } from "next-intl";
 
 const DeliveryZonesMap = dynamic(() => import("../DeliveryZonesMap"), { ssr: false });
-
-const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 function formatTime(t: string) {
   if (!t) return "";
@@ -74,6 +73,8 @@ interface Restaurant {
 }
 
 export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant }) {
+  const tInfo = useTranslations("info");
+  const tOrdering = useTranslations("ordering");
   const [inquiry, setInquiry] = useState({ name: "", email: "", phone: "", message: "" });
   const [sending, setSending] = useState(false);
 
@@ -128,7 +129,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
           href={`/order/${restaurant.slug}`}
           className="absolute top-4 left-4 flex items-center gap-1.5 bg-white/20 backdrop-blur-sm text-white text-sm font-medium px-3 py-1.5 rounded-full hover:bg-white/30 transition"
         >
-          <ArrowLeft className="w-4 h-4" /> Order Now
+          <ArrowLeft className="w-4 h-4" /> {tInfo("viewMenu")}
         </Link>
 
         <div className="absolute bottom-4 left-4 flex items-end gap-3">
@@ -149,25 +150,27 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
       <div className="max-w-2xl mx-auto px-4 py-6 space-y-5">
         {/* Services */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-          <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">Services</h2>
+          <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">{tInfo("ourServices")}</h2>
           <div className="grid grid-cols-2 gap-3">
             {restaurant.acceptsPickup && (
-              <ServiceBadge icon={ShoppingBag} label={svcSettings.pickup?.displayName || "Pickup"} detail={`~${pickupTime} min`} primaryColor={p} />
+              <ServiceBadge icon={ShoppingBag} label={svcSettings.pickup?.displayName || tOrdering("pickup")} detail={`~${pickupTime} ${tOrdering("minutes")}`} primaryColor={p} />
             )}
             {restaurant.acceptsDelivery && (
-              <ServiceBadge icon={Truck} label={svcSettings.delivery?.displayName || "Delivery"} detail={`~${deliveryTime} min`} primaryColor={p} />
+              <ServiceBadge icon={Truck} label={svcSettings.delivery?.displayName || tOrdering("delivery")} detail={`~${deliveryTime} ${tOrdering("minutes")}`} primaryColor={p} />
             )}
             {restaurant.acceptsDineIn && (
-              <ServiceBadge icon={UtensilsCrossed} label={svcSettings.dineIn?.displayName || "Dine-In"} primaryColor={p} />
+              <ServiceBadge icon={UtensilsCrossed} label={svcSettings.dineIn?.displayName || tOrdering("dineIn")} primaryColor={p} />
             )}
             {restaurant.acceptsTakeOut && (
-              <ServiceBadge icon={Package} label={svcSettings.takeOut?.displayName || "Take Out"} primaryColor={p} />
+              <ServiceBadge icon={Package} label={svcSettings.takeOut?.displayName || tOrdering("takeOut")} primaryColor={p} />
             )}
             {restaurant.acceptsCatering && (
-              <ServiceBadge icon={PartyPopper} label={svcSettings.catering?.displayName || "Catering"} detail="Contact us" primaryColor={p} />
+              <ServiceBadge icon={PartyPopper} label={svcSettings.catering?.displayName || tOrdering("catering")} primaryColor={p} />
             )}
             {restaurant.acceptsReservations && (
-              <ServiceBadge icon={CalendarDays} label={svcSettings.reservations?.displayName || "Reservations"} detail="Book a table" primaryColor={p} />
+              <a href={`/order/${restaurant.slug}?reservation=1`} className="contents">
+                <ServiceBadge icon={CalendarDays} label={svcSettings.reservations?.displayName || tOrdering("tableReservation")} detail={tInfo("bookATable")} primaryColor={p} />
+              </a>
             )}
           </div>
         </div>
@@ -182,8 +185,8 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
             <Clock className="w-4 h-4 flex-shrink-0" />
             <span>
               {todayHours.isOpen
-                ? `Open today ${formatTime(todayHours.openTime)} – ${formatTime(todayHours.closeTime)}`
-                : "Closed today"}
+                ? `${tInfo("open")} · ${formatTime(todayHours.openTime)} – ${formatTime(todayHours.closeTime)}`
+                : tInfo("closedToday")}
             </span>
           </div>
         )}
@@ -192,7 +195,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
         {restaurant.openingHours.length > 0 && (
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
             <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <Clock className="w-4 h-4" /> Hours of Operation
+              <Clock className="w-4 h-4" /> {tInfo("openingHours")}
             </h2>
             <div className="space-y-1.5">
               {restaurant.openingHours.map((h) => (
@@ -203,11 +206,11 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
                   }`}
                   style={h.dayOfWeek === todayIndex ? { backgroundColor: `${p}15`, color: p } : {}}
                 >
-                  <span>{DAY_NAMES[h.dayOfWeek]}</span>
+                  <span>{tInfo(`days.${h.dayOfWeek}`)}</span>
                   <span>
                     {h.isOpen
                       ? `${formatTime(h.openTime)} – ${formatTime(h.closeTime)}`
-                      : <span className="text-red-500">Closed</span>}
+                      : <span className="text-red-500">{tInfo("closed")}</span>}
                   </span>
                 </div>
               ))}
@@ -221,7 +224,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
           && (restaurant.deliveryZones?.length ?? 0) > 0 && (
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
             <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <Truck className="w-4 h-4" /> Our Delivery Areas
+              <Truck className="w-4 h-4" /> {tInfo("ourDeliveryAreas")}
             </h2>
             <DeliveryZonesMap
               restaurantLat={restaurant.lat}
@@ -247,7 +250,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
         {/* Contact */}
         {(restaurant.phone || restaurant.email || fullAddress) && (
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-            <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">Contact</h2>
+            <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">{tInfo("contact")}</h2>
             <div className="space-y-3">
               {restaurant.phone && (
                 <a href={`tel:${restaurant.phone}`} className="flex items-center gap-3 text-sm text-gray-700 transition group">
@@ -294,7 +297,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
             className="flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-semibold px-5 py-4 rounded-xl transition shadow-sm w-full"
           >
             <Star className="w-5 h-5 fill-yellow-700 text-yellow-700" />
-            <span>Leave Us a Review</span>
+            <span>{tInfo("leaveAReview")}</span>
             <ExternalLink className="w-4 h-4 ml-auto" />
           </a>
         )}
@@ -324,7 +327,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
           href={`/order/${restaurant.slug}`}
           className="flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-bold px-5 py-4 rounded-xl transition shadow-sm w-full text-center"
         >
-          <ShoppingBag className="w-5 h-5" /> Order Online
+          <ShoppingBag className="w-5 h-5" /> {tInfo("viewMenu")}
         </Link>
 
         {/* Inquiry Form */}
@@ -394,7 +397,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
         {/* Description */}
         {restaurant.description && (
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-            <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-2">About Us</h2>
+            <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-2">{tInfo("aboutUs")}</h2>
             <p className="text-sm text-gray-600 leading-relaxed">{restaurant.description}</p>
           </div>
         )}

@@ -4,6 +4,7 @@ import {
   CreditCard, CheckCircle, XCircle, AlertCircle, Eye, EyeOff,
   Loader2, Zap, Shield, RefreshCw, ExternalLink, Info
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface SavedProvider {
   mode: string;
@@ -22,6 +23,8 @@ interface Props {
 }
 
 export function ProvidersClient({ savedProvider, encryptionConfigured }: Props) {
+  const t = useTranslations("admin.payments");
+  const tCommon = useTranslations("common");
   const [mode, setMode] = useState<"test" | "live">(
     (savedProvider?.mode as "test" | "live") ?? "test"
   );
@@ -81,19 +84,13 @@ export function ProvidersClient({ savedProvider, encryptionConfigured }: Props) 
   }
 
   const pkPlaceholder = mode === "live" ? "pk_live_..." : "pk_test_...";
-  const skPlaceholder = hasSecretKey
-    ? "Secret key saved — enter new value to replace"
-    : mode === "live"
-    ? "sk_live_... or rk_live_..."
-    : "sk_test_... or rk_test_...";
+  const skPlaceholder = mode === "live" ? "sk_live_..." : "sk_test_...";
 
   return (
     <div className="p-6 max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Payment Providers</h1>
-        <p className="text-sm text-gray-500 mt-1">
-          Configure how your customers pay online. Keys are stored encrypted and never exposed.
-        </p>
+        <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
+        <p className="text-sm text-gray-500 mt-1">{t("helpText")}</p>
       </div>
 
       {!encryptionConfigured && (
@@ -131,11 +128,11 @@ export function ProvidersClient({ savedProvider, encryptionConfigured }: Props) 
                 {lastTestStatus === "ok"
                   ? <CheckCircle className="w-3.5 h-3.5" />
                   : <XCircle className="w-3.5 h-3.5" />}
-                {lastTestStatus === "ok" ? "Connected" : "Failed"}
+                {lastTestStatus === "ok" ? t("connected") : t("testFailed")}
               </div>
             )}
             <label className="flex items-center gap-2 cursor-pointer">
-              <span className="text-sm text-gray-600">Active</span>
+              <span className="text-sm text-gray-600">{t("active")}</span>
               <div
                 onClick={() => setIsActive(!isActive)}
                 className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${isActive ? "bg-orange-500" : "bg-gray-300"}`}
@@ -149,7 +146,7 @@ export function ProvidersClient({ savedProvider, encryptionConfigured }: Props) 
         <div className="p-6 space-y-5">
           {/* Mode toggle */}
           <div>
-            <label className="text-sm font-semibold text-gray-700 block mb-2">Mode</label>
+            <label className="text-sm font-semibold text-gray-700 block mb-2">{tCommon("type")}</label>
             <div className="flex rounded-xl border border-gray-200 overflow-hidden w-fit">
               {(["test", "live"] as const).map((m) => (
                 <button
@@ -163,26 +160,16 @@ export function ProvidersClient({ savedProvider, encryptionConfigured }: Props) 
                       : "bg-white text-gray-500 hover:bg-gray-50"
                   }`}
                 >
-                  {m === "live" ? "Live" : "Test"}
+                  {m === "live" ? t("modeLive") : t("modeTest")}
                 </button>
               ))}
             </div>
-            {mode === "test" && (
-              <p className="mt-1.5 text-xs text-gray-500">
-                Use test keys for development. No real charges.
-              </p>
-            )}
-            {mode === "live" && (
-              <p className="mt-1.5 text-xs text-amber-600 font-medium">
-                Live mode — real charges will be processed.
-              </p>
-            )}
           </div>
 
           {/* Publishable key */}
           <div>
             <label className="text-sm font-semibold text-gray-700 block mb-1">
-              Publishable Key
+              {t("publishableKey")}
             </label>
             <input
               type="text"
@@ -191,18 +178,13 @@ export function ProvidersClient({ savedProvider, encryptionConfigured }: Props) 
               placeholder={pkPlaceholder}
               className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-mono focus:ring-2 focus:ring-orange-500 focus:outline-none"
             />
-            <p className="mt-1 text-xs text-gray-400">
-              Safe to expose — used in the browser for payment forms.
-            </p>
+            <p className="mt-1 text-xs text-gray-400">&nbsp;</p>
           </div>
 
           {/* Secret key */}
           <div>
             <label className="text-sm font-semibold text-gray-700 block mb-1">
-              Secret Key
-              <span className="ml-2 text-xs font-normal text-gray-400 inline-flex items-center gap-1">
-                <Shield className="w-3 h-3" /> Stored encrypted
-              </span>
+              {t("secretKey")}
             </label>
             <div className="relative">
               <input
@@ -223,12 +205,7 @@ export function ProvidersClient({ savedProvider, encryptionConfigured }: Props) 
             </div>
             {hasSecretKey && !secretKey && (
               <p className="mt-1 text-xs text-green-600 flex items-center gap-1">
-                <CheckCircle className="w-3 h-3" /> A secret key is saved. Leave blank to keep it.
-              </p>
-            )}
-            {!encryptionConfigured && (
-              <p className="mt-1 text-xs text-amber-600">
-                Configure ENCRYPTION_KEY before saving a secret key.
+                <CheckCircle className="w-3 h-3" /> ✓
               </p>
             )}
           </div>
@@ -243,7 +220,7 @@ export function ProvidersClient({ savedProvider, encryptionConfigured }: Props) 
           {saveSuccess && (
             <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex gap-2 text-sm text-green-700">
               <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-              Settings saved successfully.
+              {t("testSuccess")}
             </div>
           )}
           {testResult && (
@@ -261,7 +238,7 @@ export function ProvidersClient({ savedProvider, encryptionConfigured }: Props) 
               className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition disabled:opacity-50"
             >
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
-              {saving ? "Saving..." : "Save Keys"}
+              {saving ? tCommon("loading") : t("saveAndTest")}
             </button>
             <button
               onClick={handleTest}
@@ -269,7 +246,7 @@ export function ProvidersClient({ savedProvider, encryptionConfigured }: Props) 
               className="flex items-center gap-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold px-5 py-2.5 rounded-xl text-sm transition disabled:opacity-50"
             >
               {testing ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
-              {testing ? "Testing..." : "Test Connection"}
+              {testing ? tCommon("loading") : t("testConnection")}
             </button>
           </div>
 
@@ -281,63 +258,15 @@ export function ProvidersClient({ savedProvider, encryptionConfigured }: Props) 
         </div>
       </div>
 
-      {/* How to get keys */}
       <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5">
-        <div className="flex items-center gap-2 font-semibold text-blue-900 mb-3">
-          <Info className="w-4 h-4" /> How to get your Stripe keys
-        </div>
-        <ol className="space-y-2 text-sm text-blue-800">
-          <li className="flex gap-2">
-            <span className="font-bold">1.</span>
-            <span>Log in to your Stripe Dashboard at <span className="font-mono text-xs bg-blue-100 px-1 rounded">dashboard.stripe.com</span></span>
-          </li>
-          <li className="flex gap-2">
-            <span className="font-bold">2.</span>
-            <span>Go to <strong>Developers → API keys</strong></span>
-          </li>
-          <li className="flex gap-2">
-            <span className="font-bold">3.</span>
-            <span>Copy your <strong>Publishable key</strong> and <strong>Secret key</strong></span>
-          </li>
-          <li className="flex gap-2">
-            <span className="font-bold">4.</span>
-            <span>Paste them above and click <strong>Save Keys</strong></span>
-          </li>
-          <li className="flex gap-2">
-            <span className="font-bold">5.</span>
-            <span>Enable the toggle and click <strong>Test Connection</strong> to verify</span>
-          </li>
-        </ol>
         <a
           href="https://dashboard.stripe.com/apikeys"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-3 inline-flex items-center gap-1.5 text-sm text-blue-700 hover:text-blue-900 font-medium"
+          className="inline-flex items-center gap-1.5 text-sm text-blue-700 hover:text-blue-900 font-medium"
         >
-          Open Stripe Dashboard <ExternalLink className="w-3.5 h-3.5" />
+          Stripe Dashboard <ExternalLink className="w-3.5 h-3.5" />
         </a>
-      </div>
-
-      {/* What happens info */}
-      <div className="bg-gray-50 rounded-2xl p-5 border border-gray-100">
-        <div className="flex items-center gap-2 font-semibold text-gray-700 mb-3">
-          <Zap className="w-4 h-4 text-orange-500" /> How online payments work
-        </div>
-        <div className="grid grid-cols-3 gap-4 text-center text-sm">
-          {[
-            { step: "1", icon: CreditCard, title: "Customer checks out", desc: "Selects 'Pay Online (Card)' on your ordering page" },
-            { step: "2", icon: Shield, title: "Secure payment", desc: "Stripe processes the card using your own keys" },
-            { step: "3", icon: CheckCircle, title: "Order confirmed", desc: "Money goes directly to your Stripe account" },
-          ].map(({ step, icon: Icon, title, desc }) => (
-            <div key={step} className="flex flex-col items-center gap-2">
-              <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center">
-                <Icon className="w-4 h-4 text-orange-600" />
-              </div>
-              <div className="font-semibold text-gray-800">{title}</div>
-              <div className="text-gray-500 text-xs">{desc}</div>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );

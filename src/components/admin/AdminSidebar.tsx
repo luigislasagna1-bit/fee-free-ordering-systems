@@ -5,17 +5,18 @@ import {
   LayoutDashboard, ShoppingBag, UtensilsCrossed, Users, BarChart3,
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
-  Wrench, Megaphone, MoreHorizontal, Map,
+  Wrench, Megaphone, MoreHorizontal, Map, Bell, Wallet,
   type LucideIcon,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import type { Session } from "next-auth";
+import { useTranslations } from "next-intl";
 
 type NavItem = {
   href: string;
-  label: string;
+  labelKey: string;          // key into the "admin.sidebar" namespace
   icon: LucideIcon;
   exact?: boolean;
   badgeKey?: string;
@@ -23,62 +24,64 @@ type NavItem = {
 
 type NavGroup = {
   key: string;
-  label: string;
-  icon: LucideIcon; // representative icon shown when sidebar is collapsed
+  labelKey: string;          // key into the "admin.sidebar" namespace
+  icon: LucideIcon;
   items: NavItem[];
 };
 
 const navGroups: NavGroup[] = [
   {
     key: "setup",
-    label: "Setup",
+    labelKey: "setup",
     icon: Wrench,
     items: [
-      { href: "/admin/profile",            label: "Restaurant Profile", icon: Store },
-      { href: "/admin/menu",               label: "Menu",               icon: UtensilsCrossed },
-      { href: "/admin/hours",              label: "Opening Hours",      icon: Clock },
-      { href: "/admin/services",           label: "Services",           icon: Layers },
-      { href: "/admin/delivery",           label: "Delivery Zones",     icon: Truck },
-      { href: "/admin/reservations",       label: "Reservations",       icon: CalendarDays },
-      { href: "/admin/payments/providers", label: "Payments",           icon: CreditCard },
-      { href: "/admin/map-settings",       label: "Map Settings",       icon: Map },
-      { href: "/admin/receipts",           label: "Receipts",           icon: Receipt },
+      { href: "/admin/profile",            labelKey: "profile",        icon: Store },
+      { href: "/admin/menu",               labelKey: "menu",           icon: UtensilsCrossed },
+      { href: "/admin/hours",              labelKey: "openingHours",   icon: Clock },
+      { href: "/admin/services",           labelKey: "services",       icon: Layers },
+      { href: "/admin/delivery",           labelKey: "deliveryZones",  icon: Truck },
+      { href: "/admin/reservations",       labelKey: "reservations",   icon: CalendarDays },
+      { href: "/admin/payments/providers", labelKey: "payments",       icon: CreditCard },
+      { href: "/admin/service-fees",       labelKey: "serviceFees",    icon: Wallet },
+      { href: "/admin/map-settings",       labelKey: "mapSettings",    icon: Map },
+      { href: "/admin/notifications",      labelKey: "notifications",  icon: Bell },
+      { href: "/admin/receipts",           labelKey: "receipts",       icon: Receipt },
     ],
   },
   {
     key: "marketing",
-    label: "Marketing Tools",
+    labelKey: "marketing",
     icon: Megaphone,
     items: [
-      { href: "/admin/promotions", label: "Promotions & Coupons", icon: Tag },
-      { href: "/admin/autopilot",  label: "Autopilot",            icon: Zap },
-      { href: "/admin/website",    label: "Website Theme",        icon: Palette },
+      { href: "/admin/promotions", labelKey: "promotions",   icon: Tag },
+      { href: "/admin/autopilot",  labelKey: "autopilot",    icon: Zap },
+      { href: "/admin/website",    labelKey: "websiteTheme", icon: Palette },
     ],
   },
   {
     key: "reports",
-    label: "Reports",
+    labelKey: "reports",
     icon: BarChart3,
     items: [
-      { href: "/admin",           label: "Dashboard",  icon: LayoutDashboard, exact: true },
-      { href: "/admin/reports",   label: "Reports",    icon: BarChart3 },
-      { href: "/admin/customers", label: "Customers",  icon: Users },
+      { href: "/admin",           labelKey: "dashboard", icon: LayoutDashboard, exact: true },
+      { href: "/admin/reports",   labelKey: "reports",   icon: BarChart3 },
+      { href: "/admin/customers", labelKey: "customers", icon: Users },
     ],
   },
   {
     key: "online-ordering",
-    label: "Online Ordering",
+    labelKey: "onlineOrdering",
     icon: ShoppingBag,
     items: [
-      { href: "/admin/orders", label: "Orders", icon: ShoppingBag, badgeKey: "orders" },
+      { href: "/admin/orders", labelKey: "orders", icon: ShoppingBag, badgeKey: "orders" },
     ],
   },
   {
     key: "other",
-    label: "Other",
+    labelKey: "other",
     icon: MoreHorizontal,
     items: [
-      { href: "/admin/settings", label: "Settings", icon: Settings },
+      { href: "/admin/settings", labelKey: "settings", icon: Settings },
     ],
   },
 ];
@@ -90,6 +93,7 @@ function isActiveItem(item: NavItem, pathname: string): boolean {
 }
 
 export function AdminSidebar({ session, pendingOrders = 0 }: { session: Session; pendingOrders?: number }) {
+  const t = useTranslations("admin.sidebar");
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const restaurantSlug = (session.user as any)?.restaurantSlug;
@@ -127,7 +131,8 @@ export function AdminSidebar({ session, pendingOrders = 0 }: { session: Session;
     setOpenGroups(prev => ({ ...prev, [key]: !prev[key] }));
 
   const renderItem = (item: NavItem) => {
-    const { href, label, icon: Icon, exact, badgeKey } = item;
+    const { href, labelKey, icon: Icon, exact, badgeKey } = item;
+    const label = t(labelKey);
     const active = exact ? pathname === href : pathname.startsWith(href);
     const badge = badgeKey === "orders" && pendingOrders > 0 ? pendingOrders : null;
 
@@ -170,7 +175,7 @@ export function AdminSidebar({ session, pendingOrders = 0 }: { session: Session;
         {!collapsed && (
           <Link href="/admin" className="flex items-center gap-2 text-orange-400 font-bold text-lg truncate">
             <ChefHat className="w-6 h-6 flex-shrink-0" />
-            <span className="truncate">Admin Panel</span>
+            <span className="truncate">{t("dashboard")}</span>
           </Link>
         )}
         <button
@@ -198,7 +203,7 @@ export function AdminSidebar({ session, pendingOrders = 0 }: { session: Session;
                   setCollapsed(false);
                   setOpenGroups(prev => ({ ...prev, [group.key]: true }));
                 }}
-                title={group.label}
+                title={t(group.labelKey)}
                 className={cn(
                   "w-full flex items-center justify-center py-3 transition mx-2 rounded-lg mb-1 relative",
                   activeInGroup ? "bg-orange-500 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
@@ -224,7 +229,7 @@ export function AdminSidebar({ session, pendingOrders = 0 }: { session: Session;
                   onClick={() => toggleGroup(group.key)}
                   className="w-full flex items-center justify-between px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-gray-500 hover:text-gray-300 transition"
                 >
-                  <span>{group.label}</span>
+                  <span>{t(group.labelKey)}</span>
                   <ChevronDown
                     className={cn("w-3.5 h-3.5 transition-transform", !isOpen && "-rotate-90")}
                   />
@@ -247,7 +252,7 @@ export function AdminSidebar({ session, pendingOrders = 0 }: { session: Session;
             target="_blank"
             className="flex items-center gap-2 text-xs text-blue-400 hover:text-blue-300 transition"
           >
-            <Store className="w-4 h-4" /> View ordering page
+            <Store className="w-4 h-4" /> {t("viewOrderingPage")}
           </Link>
         )}
         {!collapsed && (
@@ -257,14 +262,14 @@ export function AdminSidebar({ session, pendingOrders = 0 }: { session: Session;
         )}
         <button
           onClick={() => signOut({ callbackUrl: "/login" })}
-          title="Log out"
+          title={t("logOut")}
           className={cn(
             "flex items-center gap-2 text-sm text-gray-400 hover:text-red-400 transition",
             collapsed && "justify-center"
           )}
         >
           <LogOut className="w-4 h-4 flex-shrink-0" />
-          {!collapsed && "Log out"}
+          {!collapsed && t("logOut")}
         </button>
       </div>
     </aside>

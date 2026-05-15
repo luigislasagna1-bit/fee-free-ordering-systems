@@ -1,14 +1,19 @@
+"use client";
 import type { Session } from "next-auth";
 import { Bell } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
-export function AdminHeader({ session, pendingOrders = 0 }: { session: Session; pendingOrders?: number }) {
+export function AdminHeader({ session, pendingOrders = 0, restaurantName }: { session: Session; pendingOrders?: number; restaurantName?: string }) {
+  const tAdmin = useTranslations("admin");
+  const tOrders = useTranslations("admin.orders");
   const user = session.user as any;
+  const displayName = restaurantName || user?.name || user?.email;
   return (
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0">
       <div>
-        <span className="text-sm text-gray-500">Welcome back,</span>
-        <span className="ml-1 font-semibold text-gray-900">{user?.name || user?.email}</span>
+        <span className="text-sm text-gray-500">{tAdmin("welcomeBack")},</span>
+        <span className="ml-1 font-semibold text-gray-900">{displayName}</span>
       </div>
       <div className="flex items-center gap-4">
         {pendingOrders > 0 && (
@@ -17,7 +22,7 @@ export function AdminHeader({ session, pendingOrders = 0 }: { session: Session; 
             className="flex items-center gap-2 bg-yellow-50 border border-yellow-200 text-yellow-800 text-xs font-medium px-3 py-1.5 rounded-full hover:bg-yellow-100 transition"
           >
             <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse" />
-            {pendingOrders} pending order{pendingOrders !== 1 ? "s" : ""}
+            {pendingOrders} {tOrders("pending")}
           </Link>
         )}
         <div className="relative p-2 text-gray-400">

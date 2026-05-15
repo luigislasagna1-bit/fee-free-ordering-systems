@@ -5,8 +5,11 @@ import {
   CreditCard, Zap, Bell, Globe, Code2, CheckCircle2,
   ChevronRight, Shield, Building2, ArrowUpRight, ExternalLink,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allPlans: any[] }) {
+  const t = useTranslations("admin.settings");
+  const tSidebar = useTranslations("admin.sidebar");
   const plan = restaurant?.subscriptionPlan;
 
   const handleUpgrade = (planName: string) => {
@@ -25,34 +28,29 @@ export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allP
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-gray-500 text-sm mt-1">Manage billing and integrations</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
       </div>
 
       <div className="space-y-6">
         {/* Customer Payment Processing — link to Payments page */}
-        <Section title="Customer Payment Processing">
+        <Section title={tSidebar("payments")}>
           <div className="flex items-start gap-5">
             <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center flex-shrink-0">
               <CreditCard className="w-6 h-6 text-orange-500" />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-gray-900 mb-1">Accept Card Payments from Customers</h3>
-              <p className="text-sm text-gray-500 mb-4">
-                Set up Stripe to accept credit/debit cards, Apple Pay, and Google Pay directly in your ordering page. Payment settings are managed in the Payments section.
-              </p>
               <a
                 href="/admin/payments/providers"
                 className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition"
               >
-                <CreditCard className="w-4 h-4" /> Manage Payment Settings <ExternalLink className="w-3.5 h-3.5" />
+                <CreditCard className="w-4 h-4" /> {tSidebar("payments")} <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
           </div>
         </Section>
 
         {/* Subscription / Plan */}
-        <Section title="Platform Subscription Billing">
+        <Section title={t("account")}>
           <div className="flex items-start gap-5 mb-6">
             <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center flex-shrink-0">
               <Zap className="w-6 h-6 text-orange-500" />
@@ -122,7 +120,7 @@ export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allP
         </Section>
 
         {/* Notifications */}
-        <Section title="Email Notifications">
+        <Section title={tSidebar("notifications")}>
           <div className="flex items-start gap-5 mb-4">
             <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
               <Bell className="w-6 h-6 text-blue-500" />
@@ -151,7 +149,7 @@ export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allP
         </Section>
 
         {/* Advanced */}
-        <Section title="Advanced Integrations">
+        <Section title={t("dangerZone")}>
           <div className="space-y-3">
             {[
               {

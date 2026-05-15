@@ -3,14 +3,9 @@ import bcrypt from "bcryptjs";
 import prisma from "@/lib/db";
 import { slugify } from "@/lib/utils";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
-
-function validatePassword(pw: string): string | null {
-  if (pw.length < 10) return "Password must be at least 10 characters";
-  if (!/[A-Z]/.test(pw)) return "Password must contain at least one uppercase letter";
-  if (!/[0-9]/.test(pw)) return "Password must contain at least one number";
-  if (!/[^A-Za-z0-9]/.test(pw)) return "Password must contain at least one special character";
-  return null;
-}
+import { validatePassword } from "@/lib/password";
+import { sendSignupConfirmationEmail } from "@/lib/email";
+import { cookies } from "next/headers";
 
 export async function POST(req: NextRequest) {
   // Rate limit: 5 registrations per IP per hour
@@ -76,15 +71,54 @@ export async function POST(req: NextRequest) {
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
+    const ownerNameClean = ownerName ? String(ownerName).trim().slice(0, 100) : restaurantNameClean;
     await prisma.user.create({
       data: {
         email: emailClean,
-        name: ownerName ? String(ownerName).trim().slice(0, 100) : restaurantNameClean,
+        name: ownerNameClean,
         passwordHash,
         role: "restaurant_admin",
         restaurantId: restaurant.id,
       },
     });
+
+    // Store the owner's email on the restaurant so notifications & receipts have a default,
+    // and auto-create a NotificationRecipient row with all toggles defaulting on.
+    await prisma.restaurant.update({
+      where: { id: restaurant.id },
+      data: { email: emailClean },
+    });
+    await prisma.notificationRecipient.create({
+      data: {
+        restaurantId: restaurant.id,
+        email: emailClean,
+        name: ownerNameClean,
+      },
+    });
+
+    // Pick up the signup-form locale from the cookie so the welcome email is
+    // in the same language they were just browsing in.
+    const cookieStore = await cookies();
+    const signupLocale = cookieStore.get("fee-free-locale")?.value || "en";
+
+    // Persist the locale on the freshly-created restaurant so subsequent
+    // notifications and surfaces follow the owner's chosen language.
+    if (["fr", "es", "it", "pt"].includes(signupLocale)) {
+      await prisma.restaurant.update({
+        where: { id: restaurant.id },
+        data: { defaultLanguage: signupLocale },
+      });
+    }
+
+    // Welcome email (non-blocking — failure shouldn't break signup)
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+    sendSignupConfirmationEmail({
+      to: emailClean,
+      name: ownerNameClean,
+      restaurantName: restaurantNameClean,
+      loginUrl: `${baseUrl}/login`,
+      locale: signupLocale,
+    }).catch(() => {});
 
     return NextResponse.json({ success: true, slug });
   } catch (err) {

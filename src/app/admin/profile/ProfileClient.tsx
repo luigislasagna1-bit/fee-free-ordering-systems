@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import NextLink from "next/link";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { useTranslations } from "next-intl";
 
 // Leaflet must be loaded client-side only
 const ProfileMap = dynamic(() => import("./ProfileMap"), {
@@ -47,6 +48,7 @@ type FormState = {
   estimatedPickup: string; estimatedDelivery: string;
   logoUrl: string; bannerUrl: string;
   reviewLink: string; infoContent: string;
+  defaultLanguage: string;
 };
 
 /** One result from Nominatim's /search endpoint with addressdetails=1 */
@@ -119,6 +121,7 @@ function LocationSection({
   onCoordsChange, onAddressFill,
   mapProvider, googleMapsApiKey,
 }: LocationSectionProps) {
+  const tProfile = useTranslations("admin.profile");
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<NominatimPlace[]>([]);
   const [searching, setSearching] = useState(false);
@@ -222,7 +225,7 @@ function LocationSection({
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
       <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4 flex items-center gap-2">
-        <MapPin className="w-4 h-4 text-orange-500" /> Location Pin
+        <MapPin className="w-4 h-4 text-orange-500" /> {tProfile("location")}
       </div>
 
       {/* Coordinates status badge */}
@@ -249,7 +252,7 @@ function LocationSection({
       {/* Address search / autocomplete */}
       <div className="relative mb-3" ref={dropdownRef}>
         <label className="block text-xs font-medium text-gray-600 mb-1">
-          Search &amp; select your restaurant address
+          {tProfile("address")}
         </label>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
@@ -303,7 +306,7 @@ function LocationSection({
         {geocoding
           ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
           : <MapPin className="w-3.5 h-3.5" />}
-        {geocoding ? "Geocoding…" : "Geocode from address fields below"}
+        {tProfile("geocodeFromAddress")}
       </button>
 
       {/* Interactive map */}
@@ -327,6 +330,8 @@ function LocationSection({
 // ─── Main ProfileClient ───────────────────────────────────────────────────────
 
 export function ProfileClient({ restaurant }: { restaurant: any }) {
+  const t = useTranslations("admin.profile");
+  const tCommon = useTranslations("common");
   const [form, setForm] = useState<FormState>({
     name: restaurant?.name || "",
     slogan: restaurant?.slogan || "",
@@ -349,6 +354,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
     bannerUrl: restaurant?.bannerUrl || "",
     reviewLink: restaurant?.reviewLink || "",
     infoContent: restaurant?.infoContent || "",
+    defaultLanguage: restaurant?.defaultLanguage || "en",
   });
 
   // lat/lng are managed separately — they're not part of the main text form
@@ -396,6 +402,14 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
         }
       }
 
+      // Detect whether the language is changing so we can sync the cookie +
+      // reload to make the new language take effect immediately. Without this,
+      // a `fee-free-locale` cookie set by an earlier customer / auth-page
+      // language pick would override the new restaurant default and the admin
+      // would silently keep showing the old language.
+      const previousLanguage = restaurant?.defaultLanguage || "en";
+      const languageChanged = form.defaultLanguage !== previousLanguage;
+
       const res = await fetch("/api/restaurants/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -413,6 +427,14 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
 
       if (!res.ok) throw new Error("Failed");
       toast.success("Profile saved!");
+
+      if (languageChanged) {
+        // Align the cookie with the saved restaurant default so admin /
+        // kitchen / ordering surfaces all immediately reflect the new
+        // language on the next render — and reload to apply it.
+        document.cookie = `fee-free-locale=${encodeURIComponent(form.defaultLanguage)}; path=/; max-age=${60 * 60 * 24 * 365}`;
+        setTimeout(() => window.location.reload(), 400);
+      }
     } catch {
       toast.error("Failed to save profile");
     }
@@ -424,14 +446,14 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Restaurant Profile</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
         <button
           onClick={save}
           disabled={loading}
           className="flex items-center gap-2 bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition text-sm disabled:opacity-60"
         >
           <Save className="w-4 h-4" />
-          {loading ? "Saving…" : "Save Changes"}
+          {loading ? tCommon("loading") : tCommon("saveChanges")}
         </button>
       </div>
 
@@ -439,16 +461,16 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
         {/* ── Basic Info ─────────────────────────────────────────────── */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4 flex items-center gap-2">
-            <Store className="w-4 h-4" /> Basic Info
+            <Store className="w-4 h-4" /> {t("basicInfo")}
           </div>
           <div className="grid md:grid-cols-2 gap-4">
-            <Field {...fp} label="Restaurant Name" field="name" placeholder="Pizza Palace" />
-            <Field {...fp} label="Cuisine Type" field="cuisineType" placeholder="Italian / Pizza" />
+            <Field {...fp} label={t("restaurantName")} field="name" />
+            <Field {...fp} label={t("cuisineType")} field="cuisineType" />
             <div className="md:col-span-2">
-              <Field {...fp} label="Slogan" field="slogan" placeholder="Fresh ingredients, bold flavors" />
+              <Field {...fp} label={t("slogan")} field="slogan" />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("description")}</label>
               <textarea
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
                 rows={3}
@@ -463,17 +485,17 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
         {/* ── Branding ───────────────────────────────────────────────── */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4 flex items-center gap-2">
-            <ImageIcon className="w-4 h-4" /> Branding
+            <ImageIcon className="w-4 h-4" /> {t("logo")} / {t("banner")}
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <ImageUpload
-              label="Restaurant Logo"
+              label={t("logo")}
               value={form.logoUrl}
               onChange={(url) => setForm((f) => ({ ...f, logoUrl: url }))}
               aspectRatio="square"
             />
             <ImageUpload
-              label="Banner Image"
+              label={t("banner")}
               value={form.bannerUrl}
               onChange={(url) => setForm((f) => ({ ...f, bannerUrl: url }))}
               aspectRatio="wide"
@@ -484,17 +506,17 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
         {/* ── Contact & Location ─────────────────────────────────────── */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4">
-            Contact &amp; Location
+            {t("contactInfo")} &amp; {t("location")}
           </div>
           <div className="grid md:grid-cols-2 gap-4">
-            <Field {...fp} label="Phone" field="phone" type="tel" placeholder="(555) 123-4567" />
-            <Field {...fp} label="Email" field="email" type="email" placeholder="info@restaurant.com" />
-            <Field {...fp} label="Street Address" field="address" placeholder="123 Main St" />
-            <Field {...fp} label="City" field="city" placeholder="Milton" />
-            <Field {...fp} label="Province / State" field="state" placeholder="ON" />
-            <Field {...fp} label="Postal / Zip Code" field="zip" placeholder="L9T 2H6" />
+            <Field {...fp} label={t("phone")} field="phone" type="tel" />
+            <Field {...fp} label={t("email")} field="email" type="email" />
+            <Field {...fp} label={t("address")} field="address" />
+            <Field {...fp} label={t("city")} field="city" />
+            <Field {...fp} label={t("state")} field="state" />
+            <Field {...fp} label={t("zip")} field="zip" />
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("country")}</label>
               <select
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
                 value={form.country}
@@ -532,16 +554,13 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm font-bold text-gray-700 uppercase tracking-wide">Services</div>
-              <p className="text-xs text-gray-500 mt-1">
-                Enable or configure Pickup, Delivery, Dine-In, Catering, and Reservations.
-              </p>
+              <div className="text-sm font-bold text-gray-700 uppercase tracking-wide">{tCommon("settings")}</div>
             </div>
             <NextLink
               href="/admin/services"
               className="flex items-center gap-1.5 text-sm font-semibold text-orange-600 hover:text-orange-700 transition"
             >
-              Manage Services →
+              {tCommon("edit")} →
             </NextLink>
           </div>
         </div>
@@ -549,38 +568,58 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
         {/* ── Ordering Settings ──────────────────────────────────────── */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4">
-            Ordering Settings
+            {t("orderingSettings")}
           </div>
           <div className="grid md:grid-cols-2 gap-4">
-            <Field {...fp} label="Est. Pickup Time (minutes)" field="estimatedPickup" type="number" />
-            <Field {...fp} label="Est. Delivery Time (minutes)" field="estimatedDelivery" type="number" />
-            <Field {...fp} label="Minimum Order ($)" field="minimumOrder" type="number" />
-            <Field {...fp} label="Delivery Fee ($)" field="deliveryFee" type="number" />
-            <Field {...fp} label="Tax Rate (%)" field="taxRate" type="number" />
+            <Field {...fp} label={t("estPickupTime")} field="estimatedPickup" type="number" />
+            <Field {...fp} label={t("estDeliveryTime")} field="estimatedDelivery" type="number" />
+            <Field {...fp} label={t("minimumOrder")} field="minimumOrder" type="number" />
+            <Field {...fp} label={t("deliveryFee")} field="deliveryFee" type="number" />
+            <Field {...fp} label={t("taxRate")} field="taxRate" type="number" />
+          </div>
+        </div>
+
+        {/* ── Language ───────────────────────────────────────────────── */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4 flex items-center gap-2">
+            <Store className="w-4 h-4" /> {t("language")}
+          </div>
+          <div className="space-y-3">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t("defaultLanguageLabel")}
+            </label>
+            <select
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+              value={form.defaultLanguage}
+              onChange={(e) => setForm((f) => ({ ...f, defaultLanguage: e.target.value }))}
+            >
+              <option value="en">English</option>
+              <option value="fr">Français</option>
+              <option value="es">Español</option>
+              <option value="it">Italiano</option>
+              <option value="pt">Português</option>
+            </select>
+            <p className="text-xs text-gray-400">{t("languageHelp")}</p>
           </div>
         </div>
 
         {/* ── Info Page ──────────────────────────────────────────────── */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4 flex items-center gap-2">
-            <LinkIcon className="w-4 h-4" /> Info Page
+            <LinkIcon className="w-4 h-4" /> {t("infoPage")}
           </div>
           <div className="space-y-4">
-            <Field {...fp} label="Google / Yelp Review Link" field="reviewLink" placeholder="https://g.page/…" />
+            <Field {...fp} label={t("reviewLink")} field="reviewLink" placeholder="https://g.page/…" />
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Custom CTA / Extra Info (JSON)
+                {t("customCta")}
               </label>
               <textarea
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm font-mono"
                 rows={4}
                 value={form.infoContent}
                 onChange={(e) => setForm((f) => ({ ...f, infoContent: e.target.value }))}
-                placeholder={`{"ctaLabel": "Join Our VIP Club", "ctaUrl": "https://...", "ctaDescription": "Get exclusive deals!"}`}
               />
-              <p className="text-xs text-gray-400 mt-1">
-                Optional JSON to configure a custom CTA button on your info page.
-              </p>
             </div>
           </div>
         </div>
@@ -588,14 +627,14 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
         {/* ── Your Links ─────────────────────────────────────────────── */}
         {restaurant?.slug && (
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">Your Links</div>
+            <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">{t("yourLinks")}</div>
             <div className="space-y-2">
               <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
-                <div className="text-xs text-gray-500 mb-0.5">Ordering Page</div>
+                <div className="text-xs text-gray-500 mb-0.5">{t("orderingPage")}</div>
                 <div className="font-mono text-orange-700 text-sm">/order/{restaurant.slug}</div>
               </div>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <div className="text-xs text-gray-500 mb-0.5">Restaurant Info Page</div>
+                <div className="text-xs text-gray-500 mb-0.5">{t("infoPageLink")}</div>
                 <div className="font-mono text-blue-700 text-sm">/order/{restaurant.slug}/info</div>
               </div>
             </div>

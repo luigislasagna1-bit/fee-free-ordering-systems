@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
+import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import { RestaurantInfoClient } from "./RestaurantInfoClient";
 
 export default async function RestaurantInfoPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -8,6 +10,7 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug, isActive: true },
     select: {
+      id: true,
       slug: true, name: true, slogan: true, description: true,
       phone: true, email: true, address: true, city: true, state: true, zip: true,
       lat: true, lng: true,
@@ -17,7 +20,7 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
       acceptsCatering: true, acceptsTakeOut: true, acceptsReservations: true,
       estimatedPickup: true, estimatedDelivery: true,
       reviewLink: true, infoContent: true,
-      themeSettings: true, serviceSettings: true,
+      themeSettings: true, serviceSettings: true, defaultLanguage: true,
       openingHours: { orderBy: { dayOfWeek: "asc" } },
       deliveryZones: {
         where: { isActive: true },
@@ -28,5 +31,12 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
 
   if (!restaurant) notFound();
 
-  return <RestaurantInfoClient restaurant={restaurant as any} />;
+  const locale = await resolveLocale({ restaurantId: restaurant.id });
+  const messages = await loadMessages(locale);
+
+  return (
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <RestaurantInfoClient restaurant={restaurant as any} />
+    </NextIntlClientProvider>
+  );
 }

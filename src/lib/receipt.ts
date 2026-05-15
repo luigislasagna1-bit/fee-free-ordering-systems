@@ -10,8 +10,22 @@
 //   "plaintext"  — No control codes (debug / unsupported hardware)
 
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "./receipt-schema";
+import { getDict, type Translator } from "./i18n-dict";
 
 export type PrinterLanguage = "escpos" | "starprnt" | "star_line" | "plaintext";
+
+// Translate the canonical lowercase order-type string ("delivery" / "pickup" /
+// "dine_in" / "catering" / "takeout") via the receipt dictionary. Falls back
+// to the raw value when the key isn't present so an unfamiliar type still
+// renders something on paper.
+function tOrderTypeUpper(type: string, t: Translator): string {
+  const v = t(`receipt.orderTypes.${type}`);
+  return v.startsWith("receipt.") ? type.toUpperCase() : v;
+}
+function tOrderTypeLower(type: string, t: Translator): string {
+  const v = t(`receipt.orderTypesLower.${type}`);
+  return v.startsWith("receipt.") ? type : v;
+}
 
 const ESC = 0x1b;
 const GS  = 0x1d;
@@ -478,6 +492,7 @@ export interface ReceiptOrder {
   tip?: number;
   couponDiscount?: number;
   promoDiscount?: number;
+  appliedServiceFees?: string | null;  // JSON: [{ name, amount }]
   total: number;
   paymentMethod: string;
   paymentStatus: string;
@@ -528,19 +543,20 @@ async function renderKitchenSection(
   section: Section,
   order: ReceiptOrder,
   config: KitchenConfig,
+  t: Translator,
 ): Promise<void> {
   const s = section.style;
 
   switch (section.type) {
     case "k_title":
-      r.line("--- KITCHEN ORDER ---");
+      r.line(`--- ${t("receipt.kitchen.title")} ---`);
       break;
 
     case "k_order_type":
       // Always render as a centred badge.  The section's highlight style controls
       // whether it's inverted; applyStyle() has already set the inverse state.
       // line() auto-pads to full width so the coloured bar spans the paper.
-      r.line(`  ${order.type.toUpperCase()}  `);
+      r.line(`  ${tOrderTypeUpper(order.type, t)}  `);
       break;
 
     case "k_order_number":
@@ -549,7 +565,7 @@ async function renderKitchenSection(
 
     case "k_datetime":
       r.line(fmtDateTime(order.createdAt));
-      if (order.estimatedReady) r.line(`Ready: ${fmtTime(order.estimatedReady)}`);
+      if (order.estimatedReady) r.line(`${t("kitchen.ready")} : ${fmtTime(order.estimatedReady)}`);
       break;
 
     case "k_customer":
@@ -560,8 +576,8 @@ async function renderKitchenSection(
         if (order.deliveryCity) r.line(order.deliveryCity);
         if (order.deliveryZoneName || order.deliveryEstimatedMinutes) {
           const parts: string[] = [];
-          if (order.deliveryZoneName) parts.push(`Zone: ${order.deliveryZoneName}`);
-          if (order.deliveryEstimatedMinutes) parts.push(`ETA ~${order.deliveryEstimatedMinutes} min`);
+          if (order.deliveryZoneName) parts.push(`${order.deliveryZoneName}`);
+          if (order.deliveryEstimatedMinutes) parts.push(`~${order.deliveryEstimatedMinutes} ${t("receipt.kitchen.minutes")}`);
           r.line(parts.join(" · "));
         }
       }
@@ -601,7 +617,7 @@ async function renderKitchenSection(
       // "NOTES:" label was hardcoded to inverse+bold which made the whole
       // section ignore the template's bold/highlight toggles.
       if (order.notes) {
-        r.line("NOTES:");
+        r.line(`${t("receipt.kitchen.notes")}:`);
         r.wrapped(order.notes);
       }
       break;
@@ -609,9 +625,9 @@ async function renderKitchenSection(
     case "k_prep": {
       const payStatus = order.paymentStatus === "paid"
         ? "PAID"
-        : `PAY ON ${order.type.toUpperCase()}`;
-      r.line(`Payment: ${payStatus}`);
-      if (order.preparationTime) r.line(`Prep: ${order.preparationTime} min`);
+        : `${t("receipt.customer.payOnType", { type: tOrderTypeLower(order.type, t) }).toUpperCase()}`;
+      r.line(`${t("receipt.kitchen.payment")}: ${payStatus}`);
+      if (order.preparationTime) r.line(`${t("receipt.kitchen.prep")}: ${order.preparationTime} ${t("receipt.kitchen.minutes")}`);
       break;
     }
   }
@@ -625,6 +641,7 @@ async function renderCustomerSection(
   order: ReceiptOrder,
   restaurant: ReceiptRestaurant,
   config: CustomerConfig,
+  t: Translator,
 ): Promise<void> {
   const s = section.style;
 
@@ -652,9 +669,9 @@ async function renderCustomerSection(
       break;
 
     case "order_info":
-      r.line(`Order #${order.orderNumber}`);
-      r.line(`${order.type.toUpperCase()} ORDER`);
-      r.line(`Date: ${fmtDateTime(order.createdAt)}`);
+      r.line(`${t("receipt.customer.orderNumber")}${order.orderNumber}`);
+      r.line(t("receipt.customer.title", { type: tOrderTypeUpper(order.type, t) }));
+      r.line(`${t("receipt.customer.date")}: ${fmtDateTime(order.createdAt)}`);
       break;
 
     case "customer_info":
@@ -696,44 +713,50 @@ async function renderCustomerSection(
       break;
 
     case "totals":
-      // Every row inherits the section's style.  TOTAL used to force bold via
-      // a hardcoded isBold=true parameter, overriding the template's setting.
-      r.columns("Subtotal", fmt(order.subtotal));
+      r.columns(t("receipt.customer.subtotal"), fmt(order.subtotal));
       if ((order.couponDiscount ?? 0) > 0)
-        r.columns("Coupon discount", `-${fmt(order.couponDiscount!)}`);
+        r.columns(t("receipt.customer.couponDiscount"), `-${fmt(order.couponDiscount!)}`);
       if ((order.promoDiscount ?? 0) > 0)
-        r.columns("Promo discount",  `-${fmt(order.promoDiscount!)}`);
-      if (order.deliveryFee > 0) r.columns("Delivery fee", fmt(order.deliveryFee));
-      if (order.taxAmount   > 0) r.columns("Tax",          fmt(order.taxAmount));
-      if ((order.tip ?? 0)  > 0) r.columns("Tip",          fmt(order.tip!));
+        r.columns(t("receipt.customer.promoDiscount"),  `-${fmt(order.promoDiscount!)}`);
+      if (order.deliveryFee > 0) r.columns(t("receipt.customer.deliveryFee"), fmt(order.deliveryFee));
+      if (order.appliedServiceFees) {
+        try {
+          const fees = JSON.parse(order.appliedServiceFees) as { name: string; amount: number }[];
+          for (const fee of fees) {
+            if (fee && typeof fee.amount === "number" && fee.amount > 0) {
+              // Fee NAMES are owner-entered content and stay as-typed.
+              r.columns(fee.name, fmt(fee.amount));
+            }
+          }
+        } catch { /* ignore malformed JSON */ }
+      }
+      if (order.taxAmount   > 0) r.columns(t("receipt.customer.tax"), fmt(order.taxAmount));
+      if ((order.tip ?? 0)  > 0) r.columns(t("receipt.customer.tip"), fmt(order.tip!));
       r.divider("-");
-      r.columns("TOTAL", fmt(order.total));
+      r.columns(t("receipt.customer.total"), fmt(order.total));
       break;
 
     case "payment": {
-      const label  = order.paymentMethod === "card" ? "Credit/Debit Card"
-                   : order.paymentMethod === "cash" ? "Cash"
+      const label  = order.paymentMethod === "card" ? t("receipt.customer.creditCard")
+                   : order.paymentMethod === "cash" ? t("receipt.customer.cash")
                    : order.paymentMethod;
       const status = order.paymentStatus === "paid"    ? "PAID"
-                   : order.paymentStatus === "pending" ? `Pay on ${order.type}`
+                   : order.paymentStatus === "pending" ? t("receipt.customer.payOnType", { type: tOrderTypeLower(order.type, t) })
                    : order.paymentStatus;
-      r.line(`Payment: ${label}`);
-      r.line(`Status: ${status}`);  // inherits section style — no hardcoded invert
+      r.line(`${t("receipt.kitchen.payment")}: ${label}`);
+      r.line(`${t("receipt.reservation.status")}: ${status}`);
       break;
     }
 
     case "notes":
-      // Both label and body inherit the section's style.  Previously the
-      // "Order Notes:" label was hardcoded to inverse+bold which overrode
-      // whatever the template specified.
       if (order.notes) {
-        r.line("Order Notes:");
+        r.line(`${t("receipt.customer.orderNotes")}:`);
         r.wrapped(order.notes);
       }
       break;
 
     case "thank_you":
-      r.wrapped(config.thankYouMessage || "Thank you for your order!");
+      r.wrapped(config.thankYouMessage || t("receipt.customer.thankYou"));
       break;
 
     case "footer":
@@ -754,6 +777,7 @@ async function renderSections(
   config: CustomerConfig | KitchenConfig,
   order: ReceiptOrder,
   restaurant: ReceiptRestaurant,
+  t: Translator,
 ) {
   for (const section of config.sections) {
     if (!section.enabled) continue;
@@ -765,9 +789,9 @@ async function renderSections(
     applyStyle(r, s);
 
     if (config.receiptType === "kitchen") {
-      await renderKitchenSection(r, section, order, config as KitchenConfig);
+      await renderKitchenSection(r, section, order, config as KitchenConfig, t);
     } else {
-      await renderCustomerSection(r, section, order, restaurant, config as CustomerConfig);
+      await renderCustomerSection(r, section, order, restaurant, config as CustomerConfig, t);
     }
 
     r.resetStyle().left();
@@ -796,11 +820,13 @@ export async function buildKitchenReceiptFromConfig(
   config: KitchenConfig,
   paperWidth = "80mm",
   lang: PrinterLanguage = "escpos",
+  locale: string = "en",
 ): Promise<Buffer> {
-  console.log(`[receipt] Kitchen print — lang=${lang} paper=${paperWidth} sections=${config.sections.filter(s => s.enabled).length}`);
+  console.log(`[receipt] Kitchen print — lang=${lang} paper=${paperWidth} locale=${locale} sections=${config.sections.filter(s => s.enabled).length}`);
   const r = new EscPos(paperWidth, lang);
+  const t = await getDict(locale);
   r.init();
-  await renderSections(r, config, order, restaurant);
+  await renderSections(r, config, order, restaurant, t);
   r.nl(4).cut();
   return r.build();
 }
@@ -811,12 +837,93 @@ export async function buildCustomerReceiptFromConfig(
   config: CustomerConfig,
   paperWidth = "80mm",
   lang: PrinterLanguage = "escpos",
+  locale: string = "en",
 ): Promise<Buffer> {
-  console.log(`[receipt] Customer print — lang=${lang} paper=${paperWidth} sections=${config.sections.filter(s => s.enabled).length}`);
+  console.log(`[receipt] Customer print — lang=${lang} paper=${paperWidth} locale=${locale} sections=${config.sections.filter(s => s.enabled).length}`);
   const r = new EscPos(paperWidth, lang);
+  const t = await getDict(locale);
   r.init();
-  await renderSections(r, config, order, restaurant);
+  await renderSections(r, config, order, restaurant, t);
   r.nl(4).cut();
+  return r.build();
+}
+
+// ── Reservation receipt ──────────────────────────────────────────────────────
+
+export interface ReservationReceiptData {
+  restaurantName: string;
+  confirmationCode: string;
+  customerName: string;
+  customerPhone?: string | null;
+  customerEmail?: string | null;
+  partySize: number;
+  date: string;          // "YYYY-MM-DD"
+  time: string;          // "HH:MM"
+  tableName?: string | null;
+  notes?: string | null;
+  depositAmount?: number;
+  depositPaid?: boolean;
+  preOrderTotal?: number;
+  status: string;
+  createdAt: Date;
+}
+
+export async function buildReservationReceipt(
+  data: ReservationReceiptData,
+  paperWidth = "80mm",
+  lang: PrinterLanguage = "escpos",
+  locale: string = "en",
+): Promise<Buffer> {
+  const r = new EscPos(paperWidth, lang);
+  const t = await getDict(locale);
+  r.init();
+
+  r.center().sizeMode(24).bold(true).line(t("receipt.reservation.title")).bold(false).sizeMode(12);
+  r.line("");
+  r.line(data.restaurantName);
+  r.divider("-");
+
+  r.left().bold(true).line(`#${data.confirmationCode}`).bold(false);
+  r.line(`${t("receipt.reservation.status")}: ${data.status.toUpperCase()}`);
+  r.line(`${t("receipt.reservation.printed")}: ${data.createdAt.toLocaleString()}`);
+  r.divider("-");
+
+  r.bold(true).line(t("receipt.reservation.guest")).bold(false);
+  r.line(data.customerName);
+  if (data.customerPhone) r.line(data.customerPhone);
+  if (data.customerEmail) r.wrapped(data.customerEmail);
+  r.divider("-");
+
+  r.bold(true).line(t("receipt.reservation.booking")).bold(false);
+  r.sizeMode(24).line(`${data.date}`).sizeMode(12);
+  r.sizeMode(24).line(`${data.time}`).sizeMode(12);
+  r.line(t("receipt.reservation.partyOf", { n: data.partySize }));
+  if (data.tableName) r.line(`${t("receipt.reservation.table")}: ${data.tableName}`);
+  r.divider("-");
+
+  if (data.notes) {
+    r.bold(true).line(t("receipt.reservation.notes")).bold(false);
+    r.wrapped(data.notes);
+    r.divider("-");
+  }
+
+  if ((data.depositAmount ?? 0) > 0) {
+    r.bold(true).line(t("receipt.reservation.deposit")).bold(false);
+    r.columns(t("receipt.reservation.amount"), `$${(data.depositAmount ?? 0).toFixed(2)}`);
+    r.columns(t("receipt.reservation.status"), data.depositPaid ? "PAID" : "PENDING");
+    r.divider("-");
+  }
+
+  if ((data.preOrderTotal ?? 0) > 0) {
+    r.bold(true).line(t("receipt.reservation.preOrder")).bold(false);
+    r.columns(t("receipt.customer.subtotal"), `$${(data.preOrderTotal ?? 0).toFixed(2)}`);
+    r.line(t("receipt.reservation.preOrderHint"));
+    r.divider("-");
+  }
+
+  r.line("");
+  r.center().line(t("receipt.customer.thankYou"));
+  r.line("").nl(2).cut();
   return r.build();
 }
 

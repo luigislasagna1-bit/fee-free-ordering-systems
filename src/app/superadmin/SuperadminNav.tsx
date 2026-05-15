@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Store, CreditCard, LogOut } from "lucide-react";
+import { LayoutDashboard, Store, CreditCard, Mail, LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 
@@ -9,6 +9,7 @@ const items = [
   { href: "/superadmin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/superadmin/restaurants", label: "Restaurants", icon: Store },
   { href: "/superadmin/billing", label: "Billing", icon: CreditCard },
+  { href: "/superadmin/settings/email", label: "Email Settings", icon: Mail },
 ];
 
 export function SuperadminNav() {

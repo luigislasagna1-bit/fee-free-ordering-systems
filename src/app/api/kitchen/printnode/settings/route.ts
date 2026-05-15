@@ -5,7 +5,7 @@ import { encrypt, decrypt } from "@/lib/encrypt";
 
 export async function GET() {
   try {
-    const user = await getSessionUser();
+    const user = await getSessionUser({ preferKitchen: true });
     if (!user?.restaurantId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -48,7 +48,7 @@ export async function GET() {
 
 export async function PUT(req: NextRequest) {
   try {
-    const user = await getSessionUser();
+    const user = await getSessionUser({ preferKitchen: true });
     if (!user?.restaurantId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

@@ -9,13 +9,16 @@ export async function PUT(req: NextRequest) {
 
   const data = await req.json();
   const {
-    name, slogan, description, phone, email, address, city, state, zip, cuisineType,
+    name, slogan, description, phone, email, address, city, state, zip, country, cuisineType,
     timezone, taxRate, minimumOrder, deliveryFee, estimatedPickup, estimatedDelivery,
     acceptsPickup, acceptsDelivery, acceptsDineIn, acceptsCatering,
     logoUrl, bannerUrl, reviewLink, infoContent, themeSettings,
     lat, lng,
     mapProvider, googleMapsApiKey,
+    defaultLanguage,
   } = data;
+
+  const ALLOWED_LOCALES = ["en", "fr", "es", "it", "pt"];
 
   if (mapProvider !== undefined && mapProvider !== "leaflet" && mapProvider !== "google") {
     return NextResponse.json({ error: "Invalid mapProvider" }, { status: 400 });
@@ -32,6 +35,9 @@ export async function PUT(req: NextRequest) {
   if (city !== undefined) updateData.city = city;
   if (state !== undefined) updateData.state = state;
   if (zip !== undefined) updateData.zip = zip;
+  if (country !== undefined && typeof country === "string" && country.trim()) {
+    updateData.country = country.trim().slice(0, 10);
+  }
   if (cuisineType !== undefined) updateData.cuisineType = cuisineType;
   if (timezone !== undefined) updateData.timezone = timezone;
   if (taxRate !== undefined) updateData.taxRate = taxRate;
@@ -52,6 +58,9 @@ export async function PUT(req: NextRequest) {
   if (lng !== undefined) updateData.lng = lng;
   if (mapProvider !== undefined) updateData.mapProvider = mapProvider;
   if (googleMapsApiKey !== undefined) updateData.googleMapsApiKey = googleMapsApiKey || null;
+  if (defaultLanguage !== undefined && ALLOWED_LOCALES.includes(defaultLanguage)) {
+    updateData.defaultLanguage = defaultLanguage;
+  }
 
   await prisma.restaurant.update({ where: { id: restaurantId }, data: updateData });
   return NextResponse.json({ success: true });
