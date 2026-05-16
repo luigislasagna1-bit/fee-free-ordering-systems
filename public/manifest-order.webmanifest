@@ -1,0 +1,25 @@
+{
+  "name": "Order Online",
+  "short_name": "Order",
+  "description": "Order food from your favorite restaurant — no fees, ever.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#F97316",
+  "icons": [
+    {
+      "src": "/icons/order-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/order-icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

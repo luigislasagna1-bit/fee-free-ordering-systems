@@ -117,6 +117,7 @@
     "takeOut": "Take Out",
     "tableReservation": "Table Reservation",
     "restaurantInfo": "Restaurant Info",
+    "followUs": "Follow us",
     "menu": "Menu",
     "proceedToCheckout": "Proceed to Checkout",
     "subtotal": "Subtotal",
@@ -168,23 +169,77 @@
     "free": "Free",
     "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Heads up: Your address is outside our standard delivery areas. We'll do our best, but expect a longer wait or a follow-up call. Fee: {fee}, ETA: ~{minutes} min.",
+    "size": "Size",
+    "required": "Required",
+    "pickRange": "Pick {min}–{max}",
+    "upToMax": "Up to {max}",
+    "notesPlaceholder": "No onions, extra sauce, etc.",
+    "editItem": "Edit this item",
+    "yesEdit": "Yes, edit",
+    "codeApplied": "Code: {code} applied!",
+    "headsUp": "Heads up:",
+    "outOfAreaWarning": "Your address is outside our standard delivery areas. We'll do our best, but expect a longer wait or a follow-up call.",
+    "feeEta": "Fee: {fee}, ETA: ~{minutes} min.",
     "toasts": {
       "itemAdded": "Added to cart",
+      "itemAddedNamed": "{name} added!",
+      "itemUpdated": "Item updated",
       "itemRemoved": "Removed from cart",
       "cartCleared": "Cart cleared",
+      "cartEmpty": "Cart is empty",
       "minimumNotMet": "Minimum order not met",
       "outOfStock": "Item out of stock",
       "addressRequired": "Delivery address required",
+      "nameAndPhone": "Name and phone are required",
       "orderPlaced": "Order placed successfully",
       "orderFailed": "Failed to place order. Please try again.",
+      "paymentSetupFailed": "Payment setup failed",
       "couponApplied": "Coupon applied",
+      "couponAppliedAmount": "Coupon applied! -{amount}",
       "invalidCoupon": "Invalid or expired coupon",
       "couponMinimumNotMet": "Coupon requires a higher subtotal",
       "addressLookupFailed": "Could not locate that address",
       "outOfArea": "Sorry — your address is outside our delivery area.",
       "modifierRequired": "Please make a required selection",
+      "chooseSize": "Please choose a size",
+      "pleaseSelect": "Please select {name}",
+      "chooseAtLeast": "{name}: choose at least {n}",
       "paymentFailed": "Payment failed. Please try again.",
       "selectVariant": "Please select an option"
+    }
+  },
+  "pizza": {
+    "chooseSize": "Choose Size",
+    "chooseCrust": "Choose Crust",
+    "halfHalf": "Half & Half",
+    "halfHalfDesc": "Different toppings on each half",
+    "sauce": "Sauce",
+    "cheese": "Cheese",
+    "toppings": "Toppings",
+    "toppingsIncluded": "Toppings ({count} included)",
+    "whole": "whole",
+    "split": "split",
+    "leftHalf": "LEFT HALF",
+    "rightHalf": "RIGHT HALF",
+    "leftHalfButton": "◑ Left Half",
+    "wholeButton": "⬤ Whole",
+    "rightHalfButton": "Right Half ◐",
+    "leftSvg": "LEFT",
+    "rightSvg": "RIGHT",
+    "specialInstructions": "Special Instructions",
+    "notesPlaceholder": "Extra crispy, no garlic, etc.",
+    "yourToppings": "Your toppings",
+    "topingsHelp": "Tap a topping to add it. After adding, use the Light or Xtra buttons to adjust the amount.",
+    "errors": {
+      "chooseCrust": "Please choose a crust to continue",
+      "chooseSauce": "Please choose a sauce to continue",
+      "chooseSauceNamed": "Please choose {name} to continue",
+      "chooseCheese": "Please choose a cheese to continue",
+      "chooseCheeseNamed": "Please choose {name} to continue",
+      "chooseToppings": "Please make required topping selections",
+      "completeSelections": "Please make all required selections",
+      "chooseSize": "Please choose a size to continue",
+      "completeRequired": "Please complete required selections"
     }
   },
   "info": {
@@ -265,7 +320,37 @@
     "errorCardDeclined": "Card declined. Please try a different card.",
     "errorOrderFailed": "Couldn't place order. Try again.",
     "back": "Back",
-    "next": "Next"
+    "next": "Next",
+    "contact": "CONTACT",
+    "orderingMethod": "ORDERING METHOD",
+    "availableTimeChoice": "AVAILABLE TIME CHOICE",
+    "paymentMethodHeading": "PAYMENT METHOD",
+    "tipsHeading": "TIPS?",
+    "orderNotesHeading": "ORDER NOTES",
+    "addDetails": "Add details",
+    "fullNamePlaceholder": "Full name *",
+    "phonePlaceholder": "Phone *",
+    "emailPlaceholder": "Email (optional)",
+    "startTypingAddress": "Start typing your address…",
+    "streetAddressPlaceholder": "Street address *",
+    "cityPlaceholder": "City",
+    "zipPlaceholder": "Zip",
+    "scheduleForLaterOptional": "Schedule for later (optional)",
+    "switchToASAP": "Switch to ASAP",
+    "cashOnPickup": "Cash on Pickup",
+    "cashOnDelivery": "Cash on Delivery",
+    "payOnlineCard": "Pay Online (Card)",
+    "cardComingSoon": "Online card payment coming soon. Please pay on {type} for now.",
+    "anyInstructions": "Any special instructions…",
+    "qty": "Qty",
+    "item": "Item",
+    "price": "Price",
+    "cartEmpty": "Cart is empty",
+    "couponCodePlaceholder": "Coupon code",
+    "noNotes": "No notes",
+    "locatingAddress": "Locating your address…",
+    "youreIn": "You're in {zone} — Fee {fee}, ~{minutes} min.",
+    "outsideStandard": "Outside our standard delivery areas."
   },
   "reservation": {
     "title": "Book a table",
@@ -288,7 +373,26 @@
     "weWillEmailYou": "We'll send a confirmation to {email}.",
     "addToCalendar": "Add to calendar",
     "submitting": "Submitting…",
-    "errorBookingFailed": "Couldn't book that time. Please pick another."
+    "errorBookingFailed": "Couldn't book that time. Please pick another.",
+    "numberOfPeople": "Number of People",
+    "person": "person",
+    "people": "people",
+    "fullName": "Full name *",
+    "phoneRequired": "Phone *",
+    "emailForConfirmation": "Email (optional — for confirmation)",
+    "commentsPlaceholder": "Comments (optional) — special requests, allergies, etc.",
+    "noReservationsToday": "No reservations available on this day.",
+    "depositHintPerGuest": "A {amount} per guest deposit is required to confirm this reservation. Total: {total}.",
+    "reserveTable": "Reserve this table",
+    "reserving": "Reserving…",
+    "done": "Done",
+    "reservationConfirmedHeading": "Reservation confirmed!",
+    "seeYou": "See you on {date} at {time} for {n} {label}.",
+    "requestReceived": "Request received",
+    "reviewAndConfirm": "{restaurant} will review your request and send a confirmation shortly.",
+    "emailSent": "A confirmation email has been sent to {email}.",
+    "nameAndPhone": "Name and phone are required.",
+    "reservationFailed": "Reservation failed"
   },
   "kitchen": {
     "title": "Kitchen Display",
@@ -347,7 +451,9 @@
       "completed": "Marked completed",
       "printed": "Sent to printer",
       "printFailed": "Failed to print"
-    }
+    },
+    "complete": "Complete",
+    "clearOrders": "Clear orders"
   },
   "admin": {
     "welcomeBack": "Welcome back",
@@ -369,6 +475,7 @@
       "notifications": "Notifications",
       "receipts": "Receipts",
       "promotions": "Promotions & Coupons",
+      "socialMedia": "Social Media",
       "autopilot": "Autopilot",
       "websiteTheme": "Website Theme",
       "dashboard": "Dashboard",
@@ -691,6 +798,28 @@
       "active": "Active",
       "confirmDelete": "Delete this promotion?"
     },
+    "socialMedia": {
+      "title": "Social Media",
+      "subtitle": "Connect your social accounts. Customers see them as clickable icons on your ordering page.",
+      "yourAccounts": "Your Accounts",
+      "yourAccountsHelp": "Filled in",
+      "saved": "Social links saved.",
+      "saveFailed": "Failed to save social links.",
+      "openLink": "Open link",
+      "customerPreviewTitle": "Where customers see this",
+      "customerPreviewBody": "Saved links appear as a row of clickable icons at the bottom of your customer ordering page.",
+      "comingSoon": "Coming soon",
+      "aiPostsTitle": "AI-generated social posts",
+      "aiPostsBody": "Fill in a quick weekly form (specials, events, promotions) and we'll draft posts you approve in one click.",
+      "tierGated": "Premium tier",
+      "roadmapScheduleTitle": "Auto-schedule to your platforms",
+      "roadmapScheduleBody": "Connect Instagram, Facebook, X and TikTok. Approve drafts in batches, we post them on schedule.",
+      "roadmapTemplateTitle": "Weekly content templates",
+      "roadmapTemplateBody": "Pre-built templates for daily specials, events, behind-the-scenes — fill the blanks, get a polished post.",
+      "roadmapAutoTitle": "Fully automated mode",
+      "roadmapAutoBody": "Once you trust the drafts, switch to auto-publish and we'll keep your feeds active hands-free.",
+      "currentTier": "Current tier"
+    },
     "autopilot": {
       "title": "Autopilot",
       "subtitle": "Automated emails that grow your repeat customers.",
@@ -808,6 +937,56 @@
       "uploaded": "Uploaded",
       "uploadFailed": "Upload failed",
       "copiedToClipboard": "Copied to clipboard"
+    },
+    "websiteHub": {
+      "title": "Website",
+      "subtitle": "Configure how customers reach your ordering page.",
+      "liveAt": "Live at",
+      "open": "Open",
+      "themeTitle": "Theme & Branding",
+      "themeBody": "Colors, logo, banner, layout for your ordering page.",
+      "domainTitle": "Domain & URL",
+      "domainBody": "Pick a free subdomain or connect your own domain with SSL."
+    },
+    "domain": {
+      "title": "Domain & URL",
+      "subtitle": "Pick a free subdomain on our platform or bring your own domain.",
+      "devModeBanner": "Development mode — domain changes won’t go live until production deploy.",
+      "liveAt": "Live at",
+      "open": "Open",
+      "copy": "Copy",
+      "copied": "Copied to clipboard",
+      "copyFailed": "Could not copy",
+      "freeSubdomainTitle": "Free subdomain",
+      "freeSubdomainBody": "Lowercase letters, numbers, and hyphens. 3–63 characters.",
+      "save": "Save",
+      "saveFailed": "Could not save",
+      "subdomainSaved": "Subdomain saved",
+      "available": "Available",
+      "notAvailable": "Not available",
+      "checkFailed": "Could not check availability",
+      "customDomainTitle": "Connect your own domain",
+      "customDomainBody": "Bring a domain you already own. We’ll handle SSL.",
+      "connect": "Connect",
+      "connectFailed": "Could not connect domain",
+      "customConnected": "Domain connected — add DNS records to verify.",
+      "recheck": "Re-check",
+      "verified": "Domain verified",
+      "notYetVerified": "Not yet verified — check DNS propagation.",
+      "verifyFailed": "Verification failed",
+      "disconnect": "Disconnect",
+      "disconnectConfirm": "Disconnect this domain? You can re-connect it later.",
+      "disconnected": "Domain disconnected",
+      "disconnectFailed": "Could not disconnect",
+      "dnsInstructions": "Add these records at your DNS provider, then click Re-check.",
+      "dnsType": "Type",
+      "dnsName": "Name",
+      "dnsValue": "Value",
+      "statusNone": "Not connected",
+      "statusPending": "Pending DNS",
+      "statusVerifying": "Verifying",
+      "statusVerified": "Verified",
+      "statusError": "Error"
     }
   },
   "impersonation": {
@@ -1055,16 +1234,46 @@
       "title": "Frequently Asked Questions",
       "subtitle": "Everything you need to know before signing up.",
       "items": [
-        { "q": "Do you charge a commission on orders?", "a": "No. We charge a flat monthly subscription. You keep 100% of every order." },
-        { "q": "How long does setup take?", "a": "Most restaurants are taking orders within 30 minutes. Import your menu from PDF or add items manually." },
-        { "q": "Do you support pickup AND delivery?", "a": "Yes. You configure each service independently with its own ETA, fees, and minimum order." },
-        { "q": "What about credit card processing?", "a": "Connect your own Stripe account directly. We never touch the funds — they go straight to your bank." },
-        { "q": "Can I use a thermal receipt printer?", "a": "Yes. We integrate with PrintNode for ESC/POS thermal printers (Star, Epson, etc.)." },
-        { "q": "Can customers reserve tables?", "a": "Yes. The reservation system supports table-by-table management, pre-orders, and optional deposits." },
-        { "q": "What languages are supported?", "a": "English, French, Spanish, Italian, and Portuguese — across customer ordering, kitchen display, admin panel, and emails." },
-        { "q": "Can I run promotions?", "a": "Yes. Percent-off, fixed discounts, free delivery, BOGO, scheduled promotions, and one-off coupon codes." },
-        { "q": "Is there a free trial?", "a": "Yes — 14 days, no credit card required." },
-        { "q": "Can I cancel anytime?", "a": "Yes. No contracts, no commitments." }
+        {
+          "q": "Do you charge a commission on orders?",
+          "a": "No. We charge a flat monthly subscription. You keep 100% of every order."
+        },
+        {
+          "q": "How long does setup take?",
+          "a": "Most restaurants are taking orders within 30 minutes. Import your menu from PDF or add items manually."
+        },
+        {
+          "q": "Do you support pickup AND delivery?",
+          "a": "Yes. You configure each service independently with its own ETA, fees, and minimum order."
+        },
+        {
+          "q": "What about credit card processing?",
+          "a": "Connect your own Stripe account directly. We never touch the funds — they go straight to your bank."
+        },
+        {
+          "q": "Can I use a thermal receipt printer?",
+          "a": "Yes. We integrate with PrintNode for ESC/POS thermal printers (Star, Epson, etc.)."
+        },
+        {
+          "q": "Can customers reserve tables?",
+          "a": "Yes. The reservation system supports table-by-table management, pre-orders, and optional deposits."
+        },
+        {
+          "q": "What languages are supported?",
+          "a": "English, French, Spanish, Italian, and Portuguese — across customer ordering, kitchen display, admin panel, and emails."
+        },
+        {
+          "q": "Can I run promotions?",
+          "a": "Yes. Percent-off, fixed discounts, free delivery, BOGO, scheduled promotions, and one-off coupon codes."
+        },
+        {
+          "q": "Is there a free trial?",
+          "a": "Yes — 14 days, no credit card required."
+        },
+        {
+          "q": "Can I cancel anytime?",
+          "a": "Yes. No contracts, no commitments."
+        }
       ]
     },
     "demo": {

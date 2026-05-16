@@ -1,0 +1,25 @@
+{
+  "name": "Kitchen Display",
+  "short_name": "Kitchen",
+  "description": "Live kitchen display for incoming orders.",
+  "start_url": "/kitchen",
+  "scope": "/kitchen",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#0F172A",
+  "theme_color": "#0F172A",
+  "icons": [
+    {
+      "src": "/icons/kitchen-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/kitchen-icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

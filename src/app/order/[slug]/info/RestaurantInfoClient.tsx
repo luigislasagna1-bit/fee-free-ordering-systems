@@ -95,7 +95,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
     e.preventDefault();
     setSending(true);
     await new Promise((r) => setTimeout(r, 800));
-    toast.success("Message sent! We'll get back to you soon.");
+    toast.success("✓");
     setInquiry({ name: "", email: "", phone: "", message: "" });
     setSending(false);
   };
@@ -333,54 +333,48 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
         {/* Inquiry Form */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
           <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-1 flex items-center gap-2">
-            <Send className="w-4 h-4" /> Send Us a Message
+            <Send className="w-4 h-4" /> {tInfo("contact")}
           </h2>
-          <p className="text-xs text-gray-400 mb-4">Catering inquiries, special requests, or just say hello.</p>
           <form onSubmit={sendInquiry} className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Name *</label>
+                <label className="block text-xs font-medium text-gray-600 mb-1">{tInfo("contact")} *</label>
                 <input
                   required type="text"
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                   style={focusRingStyle}
                   value={inquiry.name}
                   onChange={(e) => setInquiry({ ...inquiry, name: e.target.value })}
-                  placeholder="Jane Smith"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Phone</label>
+                <label className="block text-xs font-medium text-gray-600 mb-1">{tInfo("phone")}</label>
                 <input
                   type="tel"
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                   style={focusRingStyle}
                   value={inquiry.phone}
                   onChange={(e) => setInquiry({ ...inquiry, phone: e.target.value })}
-                  placeholder="(555) 000-0000"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Email *</label>
+              <label className="block text-xs font-medium text-gray-600 mb-1">{tInfo("email")} *</label>
               <input
                 required type="email"
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                 style={focusRingStyle}
                 value={inquiry.email}
                 onChange={(e) => setInquiry({ ...inquiry, email: e.target.value })}
-                placeholder="jane@example.com"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Message *</label>
               <textarea
                 required rows={4}
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 resize-none"
                 style={focusRingStyle}
                 value={inquiry.message}
                 onChange={(e) => setInquiry({ ...inquiry, message: e.target.value })}
-                placeholder="Tell us about your catering event, special request, or question..."
               />
             </div>
             <button
@@ -389,7 +383,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
               className="w-full text-white font-semibold py-2.5 rounded-lg text-sm transition disabled:opacity-60"
               style={{ backgroundColor: p }}
             >
-              {sending ? "Sending..." : "Send Message"}
+              {sending ? "…" : tOrdering("apply")}
             </button>
           </form>
         </div>

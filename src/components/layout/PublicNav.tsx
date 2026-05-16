@@ -71,8 +71,14 @@ export function PublicNav({ currentLocale = "en" }: Props) {
             {t("startTrial")}
           </Link>
         </div>
-        <button className="md:hidden p-2" onClick={() => setOpen(!open)}>
-          {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        <button
+          type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen(!open)}
+          className="md:hidden p-2 -mr-2 cursor-pointer touch-manipulation text-gray-700 active:bg-gray-100 rounded-lg"
+        >
+          {open ? <X className="w-6 h-6 pointer-events-none" /> : <Menu className="w-6 h-6 pointer-events-none" />}
         </button>
       </div>
       {open && (

@@ -8,7 +8,21 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import prisma from "./db";
 
-const USE_SECURE_PREFIX = process.env.NODE_ENV === "production";
+// Match the same tunnel-aware logic as the admin auth (lib/auth.ts). Real
+// production domain → strict prefixed cookies. Tunnel hosts or dev → plain
+// cookies because iOS Safari drops prefixed cookies on shared wildcard hosts.
+function hostnameOf(url: string | undefined): string {
+  if (!url) return "";
+  try { return new URL(url).hostname.toLowerCase(); } catch { return ""; }
+}
+const TUNNEL_SUFFIXES = [
+  ".ngrok-free.dev", ".ngrok-free.app", ".ngrok.io", ".ngrok.app",
+  ".trycloudflare.com", ".loca.lt", ".ts.net",
+];
+const NEXTAUTH_HOST = hostnameOf(process.env.NEXTAUTH_URL);
+const IS_TUNNEL_HOST = TUNNEL_SUFFIXES.some((s) => NEXTAUTH_HOST.endsWith(s));
+const USE_SECURE_PREFIX =
+  process.env.NODE_ENV === "production" && NEXTAUTH_HOST !== "" && !IS_TUNNEL_HOST;
 // Different cookie name from the main auth flow → separate cookie jar entries.
 const KITCHEN_COOKIE_NAME = USE_SECURE_PREFIX
   ? "__Secure-next-auth.kitchen-session-token"

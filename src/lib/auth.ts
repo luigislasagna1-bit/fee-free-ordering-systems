@@ -3,11 +3,46 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import prisma from "./db";
 
+// Cookie strictness. Use NextAuth's `__Host-`/`__Secure-` prefixed cookies
+// only on a real production domain — NOT on dev tunnels (ngrok-free.dev,
+// trycloudflare.com, loca.lt, etc.). iOS Safari treats those shared wildcard
+// hosts as "trackers" and silently drops prefixed cookies, which makes login
+// appear to do nothing. Once we deploy to feefreeordering.com (or whatever
+// the real domain is), the URL no longer matches the tunnel-suffix list and
+// USE_SECURE_PREFIX flips to true automatically.
+function hostnameOf(url: string | undefined): string {
+  if (!url) return "";
+  try { return new URL(url).hostname.toLowerCase(); } catch { return ""; }
+}
+const TUNNEL_SUFFIXES = [
+  ".ngrok-free.dev", ".ngrok-free.app", ".ngrok.io", ".ngrok.app",
+  ".trycloudflare.com", ".loca.lt", ".ts.net",
+];
+const NEXTAUTH_HOST = hostnameOf(process.env.NEXTAUTH_URL);
+const IS_TUNNEL_HOST = TUNNEL_SUFFIXES.some((s) => NEXTAUTH_HOST.endsWith(s));
+const USE_SECURE_PREFIX =
+  process.env.NODE_ENV === "production" && NEXTAUTH_HOST !== "" && !IS_TUNNEL_HOST;
+const ADMIN_COOKIE_NAME = USE_SECURE_PREFIX
+  ? "__Secure-next-auth.session-token"
+  : "next-auth.session-token";
+
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
+  useSecureCookies: USE_SECURE_PREFIX,
   pages: {
     signIn: "/login",
+  },
+  cookies: {
+    sessionToken: {
+      name: ADMIN_COOKIE_NAME,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: USE_SECURE_PREFIX,
+      },
+    },
   },
   providers: [
     CredentialsProvider({

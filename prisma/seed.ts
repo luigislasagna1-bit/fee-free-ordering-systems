@@ -1,15 +1,18 @@
-import "dotenv/config";
+import * as dotenv from "dotenv";
 import path from "node:path";
-// Use require for CJS-compatible imports in tsx
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const Database = require("better-sqlite3");
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
+// Load .env then .env.local (override) so DATABASE_URL is resolved the same
+// way Prisma CLI resolves it.
+dotenv.config({ path: path.resolve(process.cwd(), ".env") });
+dotenv.config({ path: path.resolve(process.cwd(), ".env.local"), override: true });
+
 import { PrismaClient } from "../src/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
 
-const dbUrl = process.env.DATABASE_URL || `file:${path.join(__dirname, "dev.db")}`;
-const adapter = new PrismaBetterSqlite3({ url: dbUrl });
+// Postgres seed: Prisma 7 needs the pg adapter even for first-party Postgres.
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) throw new Error("DATABASE_URL missing — set it in .env.local before seeding.");
+const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter } as any);
 
 async function main() {

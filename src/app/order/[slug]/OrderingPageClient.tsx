@@ -19,6 +19,7 @@ import { ReservationModal } from "./ReservationModal";
 import { evaluateApplicableFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { SocialFooter } from "./SocialFooter";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -246,6 +247,7 @@ export function OrderingPageClient({
   locale?: string;
 }) {
   const t = useTranslations("ordering");
+  const tT = useTranslations("ordering.toasts");
   const theme = parseTheme(themeSettings);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -470,11 +472,11 @@ export function OrderingPageClient({
     if (isEdit) {
       setEditingCartIndex(null);
       setCartOpen(true);
-      toast.success("Item updated");
+      toast.success(tT("itemUpdated"));
     } else {
-      toast.success(`${pizzaItem.name} added! 🍕`);
+      toast.success(tT("itemAddedNamed", { name: pizzaItem.name }) + " 🍕");
     }
-  }, [pizzaItem, editingCartIndex]);
+  }, [pizzaItem, editingCartIndex, tT]);
 
   // Open the appropriate editor pre-seeded with the cart entry's current selections.
   const beginEdit = (idx: number) => {
@@ -519,14 +521,14 @@ export function OrderingPageClient({
 
   const addToCart = () => {
     if (!selectedItem) return;
-    if (selectedItem.hasVariants && !selectedVariant) { toast.error("Please choose a size"); return; }
+    if (selectedItem.hasVariants && !selectedVariant) { toast.error(tT("chooseSize")); return; }
     for (const g of selectedItem.modifierGroups) {
       const selected = mods[g.id] || [];
       if (g.required && selected.length === 0) {
-        toast.error(`Please select ${g.name}`); return;
+        toast.error(tT("pleaseSelect", { name: g.name })); return;
       }
       if (g.minSelect > 0 && selected.length < g.minSelect) {
-        toast.error(`${g.name}: choose at least ${g.minSelect}`); return;
+        toast.error(tT("chooseAtLeast", { name: g.name, n: g.minSelect })); return;
       }
     }
     const lineTotal = currentItemPrice;
@@ -549,9 +551,9 @@ export function OrderingPageClient({
     if (isEdit) {
       setEditingCartIndex(null);
       setCartOpen(true);
-      toast.success("Item updated");
+      toast.success(tT("itemUpdated"));
     } else {
-      toast.success(`${selectedItem.name} added!`);
+      toast.success(tT("itemAddedNamed", { name: selectedItem.name }));
     }
   };
 
@@ -575,10 +577,10 @@ export function OrderingPageClient({
     try {
       const res = await fetch(`/api/public/coupon?code=${couponCode}&restaurantSlug=${restaurant.slug}&subtotal=${subtotal}`);
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Invalid coupon");
+      if (!res.ok) throw new Error(data.error || tT("invalidCoupon"));
       setCouponDiscount(data.discount);
       setCouponId(data.id);
-      toast.success(`Coupon applied! -${formatCurrency(data.discount)}`);
+      toast.success(tT("couponAppliedAmount", { amount: formatCurrency(data.discount) }));
     } catch (e: any) { toast.error(e.message); }
     setCouponLoading(false);
   };
@@ -612,9 +614,9 @@ export function OrderingPageClient({
   });
 
   const placeOrder = async () => {
-    if (!customerInfo.name || !customerInfo.phone) { toast.error("Name and phone are required"); return; }
-    if (orderType === "delivery" && !customerInfo.address) { toast.error("Delivery address required"); return; }
-    if (cart.length === 0) { toast.error("Cart is empty"); return; }
+    if (!customerInfo.name || !customerInfo.phone) { toast.error(tT("nameAndPhone")); return; }
+    if (orderType === "delivery" && !customerInfo.address) { toast.error(tT("addressRequired")); return; }
+    if (cart.length === 0) { toast.error(tT("cartEmpty")); return; }
     setOrderLoading(true);
     try {
       const orderRes = await fetch("/api/orders", {
@@ -623,7 +625,7 @@ export function OrderingPageClient({
         body: JSON.stringify(buildOrderPayload()),
       });
       const orderData = await orderRes.json();
-      if (!orderRes.ok) throw new Error(orderData.error || "Order failed");
+      if (!orderRes.ok) throw new Error(orderData.error || tT("orderFailed"));
 
       if (customerInfo.paymentMethod === "card" && cardPaymentEnabled) {
         // Create payment intent and go to payment page
@@ -637,7 +639,7 @@ export function OrderingPageClient({
           }),
         });
         const piData = await piRes.json();
-        if (!piRes.ok) throw new Error(piData.error || "Payment setup failed");
+        if (!piRes.ok) throw new Error(piData.error || tT("paymentSetupFailed"));
         const params = new URLSearchParams({
           orderId: orderData.id,
           clientSecret: piData.clientSecret,
@@ -799,6 +801,9 @@ export function OrderingPageClient({
             />
           ))}
         </div>
+
+        {/* ── Social media links (footer) ───────────────────────────── */}
+        <SocialFooter socialLinks={(restaurant as any).socialLinks} primaryColor={theme.primaryColor} />
       </div>
 
       {/* ── Floating cart ─────────────────────────────────────────────── */}
@@ -844,8 +849,8 @@ export function OrderingPageClient({
             {selectedItem.hasVariants && selectedItem.variants?.length > 0 && (
               <div className="p-5 border-b border-gray-100">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="font-semibold text-gray-900">Size</span>
-                  <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">Required</span>
+                  <span className="font-semibold text-gray-900">{t("size")}</span>
+                  <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">{t("required")}</span>
                 </div>
                 <div className="space-y-2">
                   {selectedItem.variants.map(v => (
@@ -877,11 +882,11 @@ export function OrderingPageClient({
                   <div className="flex items-start justify-between gap-2 mb-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-semibold text-gray-900">{group.name}</span>
-                      {group.required && <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full font-medium">Required</span>}
+                      {group.required && <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full font-medium">{t("required")}</span>}
                     </div>
                     <div className="flex items-center gap-1.5 flex-shrink-0 text-xs text-gray-400">
-                      {group.minSelect > 0 && group.maxSelect > 1 && <span>Pick {group.minSelect}–{group.maxSelect}</span>}
-                      {group.minSelect === 0 && group.maxSelect > 1 && <span>Up to {group.maxSelect}</span>}
+                      {group.minSelect > 0 && group.maxSelect > 1 && <span>{t("pickRange", { min: group.minSelect, max: group.maxSelect })}</span>}
+                      {group.minSelect === 0 && group.maxSelect > 1 && <span>{t("upToMax", { max: group.maxSelect })}</span>}
                       {group.maxSelect > 1 && <span className={`font-medium ${atMax ? "text-orange-600" : "text-gray-500"}`}>{selectedCount}/{group.maxSelect}</span>}
                     </div>
                   </div>
@@ -918,9 +923,9 @@ export function OrderingPageClient({
 
             {/* Notes */}
             <div className="p-5 border-b border-gray-100">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Special Instructions</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t("specialInstructions")}</label>
               <textarea className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none resize-none"
-                rows={2} placeholder="No onions, extra sauce, etc." value={itemNotes} onChange={e => setItemNotes(e.target.value)} />
+                rows={2} placeholder={t("notesPlaceholder")} value={itemNotes} onChange={e => setItemNotes(e.target.value)} />
             </div>
             <div className="p-5">
               <button onClick={addToCart}
@@ -938,14 +943,14 @@ export function OrderingPageClient({
         <div className="fixed inset-0 bg-black/60 z-50 flex justify-end" onClick={() => setCartOpen(false)}>
           <div className="bg-white w-full max-w-md h-full overflow-y-auto flex flex-col" onClick={e => e.stopPropagation()}>
             <div className="p-4 border-b border-gray-100 flex items-center justify-between flex-shrink-0">
-              <h2 className="font-bold text-lg text-gray-900">Your Cart</h2>
+              <h2 className="font-bold text-lg text-gray-900">{t("yourCart")}</h2>
               <button onClick={() => setCartOpen(false)} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5 text-gray-400" /></button>
             </div>
             <div className="flex-1 overflow-y-auto">
               {cart.length === 0 ? (
                 <div className="p-12 text-center text-gray-400">
                   <ShoppingCart className="w-12 h-12 mx-auto mb-3 opacity-40" />
-                  <p className="font-medium">Your cart is empty</p>
+                  <p className="font-medium">{t("emptyCart")}</p>
                 </div>
               ) : (
                 <div className="divide-y divide-gray-50">
@@ -956,7 +961,7 @@ export function OrderingPageClient({
                           className="flex-1 min-w-0 cursor-pointer"
                           onClick={() => setPendingEditIndex(idx)}
                           role="button"
-                          aria-label="Edit this item"
+                          aria-label={t("editItem")}
                         >
                           <div className="font-semibold text-gray-900 text-sm">{ci.menuItem.name}</div>
                           {ci.variant && <div className="text-xs mt-0.5 font-medium" style={{ color: theme.primaryColor }}>{ci.variant.name}</div>}
@@ -1000,7 +1005,7 @@ export function OrderingPageClient({
                         <span>-{formatCurrency(r.discount)}</span>
                       </div>
                     ))}
-                    {hasFreeDelivery && <div className="text-sm text-green-700 font-medium">🚚 Free delivery applied</div>}
+                    {hasFreeDelivery && <div className="text-sm text-green-700 font-medium">🚚 {t("freeDeliveryApplied")}</div>}
                   </div>
                 )}
 
@@ -1008,7 +1013,7 @@ export function OrderingPageClient({
                 <div className="p-4 border-b border-gray-100">
                   {couponId ? (
                     <div className="flex items-center justify-between text-sm text-green-700 bg-green-50 rounded-lg px-3 py-2">
-                      <span>Code: <span className="font-mono font-bold">{couponCode}</span> applied!</span>
+                      <span>{t("codeApplied", { code: couponCode })}</span>
                       <span className="font-bold">-{formatCurrency(couponDiscount)}</span>
                     </div>
                   ) : (
@@ -1016,13 +1021,13 @@ export function OrderingPageClient({
                       <div className="relative flex-1">
                         <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input type="text" className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-2.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
-                          placeholder="Coupon or promo code" value={couponCode}
+                          placeholder={t("couponCode")} value={couponCode}
                           onChange={e => setCouponCode(e.target.value.toUpperCase())}
                           onKeyDown={e => e.key === "Enter" && applyCoupon()} />
                       </div>
                       <button onClick={applyCoupon} disabled={couponLoading}
                         className="bg-gray-900 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition disabled:opacity-50">
-                        {couponLoading ? "..." : "Apply"}
+                        {couponLoading ? "..." : t("apply")}
                       </button>
                     </div>
                   )}
@@ -1031,8 +1036,8 @@ export function OrderingPageClient({
                 {/* Totals */}
                 <div className="px-4 py-3 space-y-1.5 text-sm border-b border-gray-100">
                   <div className="flex justify-between text-gray-600"><span>{t("subtotal")}</span><span>{formatCurrency(subtotal)}</span></div>
-                  {promoDiscount > 0 && <div className="flex justify-between text-green-600 font-medium"><span>Promo discount</span><span>-{formatCurrency(promoDiscount)}</span></div>}
-                  {couponDiscount > 0 && <div className="flex justify-between text-green-600 font-medium"><span>Coupon discount</span><span>-{formatCurrency(couponDiscount)}</span></div>}
+                  {promoDiscount > 0 && <div className="flex justify-between text-green-600 font-medium"><span>{t("promoDiscount")}</span><span>-{formatCurrency(promoDiscount)}</span></div>}
+                  {couponDiscount > 0 && <div className="flex justify-between text-green-600 font-medium"><span>{t("couponDiscount")}</span><span>-{formatCurrency(couponDiscount)}</span></div>}
                   {orderType === "delivery" && (
                     <div className="flex justify-between text-gray-600">
                       <span>
@@ -1059,16 +1064,15 @@ export function OrderingPageClient({
                 {/* Out-of-area warning */}
                 {orderType === "delivery" && resolvedZone && !resolvedZone.inside && (
                   <div className="mx-4 mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
-                    <strong>Heads up:</strong> Your address is outside our standard delivery areas.
-                    We'll do our best, but expect a longer wait or a follow-up call.
-                    Fee: {formatCurrency(resolvedZone.zone.deliveryFee)}, ETA: ~{resolvedZone.zone.estimatedMinutes} min.
+                    <strong>{t("headsUp")}</strong> {t("outOfAreaWarning")}{" "}
+                    {t("feeEta", { fee: formatCurrency(resolvedZone.zone.deliveryFee), minutes: resolvedZone.zone.estimatedMinutes })}
                   </div>
                 )}
 
                 {/* Minimum order warning */}
                 {orderType === "delivery" && minimumOrderForType > 0 && subtotal < minimumOrderForType && (
                   <div className="mx-4 mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
-                    Minimum order for this delivery zone is {formatCurrency(minimumOrderForType)}. Add {formatCurrency(minimumOrderForType - subtotal)} more to continue.
+                    {t("addMoreToContinue", { min: formatCurrency(minimumOrderForType), more: formatCurrency(minimumOrderForType - subtotal) })}
                   </div>
                 )}
 
@@ -1097,23 +1101,21 @@ export function OrderingPageClient({
             className="bg-white rounded-2xl shadow-xl w-full max-w-sm p-5"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-base font-bold text-gray-900">Adjust this item?</h3>
-            <p className="text-sm text-gray-500 mt-1">
-              Reopen the editor with your current selections so you can change them.
-            </p>
+            <h3 className="text-base font-bold text-gray-900">{t("adjustItem")}</h3>
+            <p className="text-sm text-gray-500 mt-1">{t("adjustItemDesc")}</p>
             <div className="flex gap-2 mt-4">
               <button
                 onClick={() => setPendingEditIndex(null)}
                 className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50"
               >
-                No
+                {t("keepAsIs")}
               </button>
               <button
                 onClick={() => beginEdit(pendingEditIndex!)}
                 className="flex-1 py-2.5 rounded-xl text-white text-sm font-semibold"
                 style={{ backgroundColor: theme.primaryColor }}
               >
-                Yes, edit
+                {t("yesEdit")}
               </button>
             </div>
           </div>
@@ -1202,3 +1204,4 @@ export function OrderingPageClient({
     </div>
   );
 }
+

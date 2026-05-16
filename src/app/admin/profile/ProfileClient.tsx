@@ -402,13 +402,15 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
         }
       }
 
-      // Detect whether the language is changing so we can sync the cookie +
-      // reload to make the new language take effect immediately. Without this,
-      // a `fee-free-locale` cookie set by an earlier customer / auth-page
-      // language pick would override the new restaurant default and the admin
-      // would silently keep showing the old language.
-      const previousLanguage = restaurant?.defaultLanguage || "en";
-      const languageChanged = form.defaultLanguage !== previousLanguage;
+      // Compare the form's language to the *live effective locale* (the cookie),
+      // not the DB value. Superadmin impersonation can leave behind a stale
+      // `fee-free-locale` cookie from a previous restaurant, so even when the
+      // DB already matches `form.defaultLanguage` the rendered UI may not.
+      // Treating any cookie/form mismatch as "needs reload" makes Save always
+      // bring the visible language in line with what the admin picked.
+      const cookieMatch = document.cookie.match(/(?:^|; )fee-free-locale=([^;]+)/);
+      const currentCookieLocale = cookieMatch ? decodeURIComponent(cookieMatch[1]) : "";
+      const languageChanged = currentCookieLocale !== form.defaultLanguage;
 
       const res = await fetch("/api/restaurants/profile", {
         method: "PUT",

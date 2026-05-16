@@ -5,7 +5,7 @@ import {
   LayoutDashboard, ShoppingBag, UtensilsCrossed, Users, BarChart3,
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
-  Wrench, Megaphone, MoreHorizontal, Map, Bell, Wallet,
+  Wrench, Megaphone, MoreHorizontal, Map, Bell, Wallet, Share2,
   type LucideIcon,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
@@ -53,9 +53,10 @@ const navGroups: NavGroup[] = [
     labelKey: "marketing",
     icon: Megaphone,
     items: [
-      { href: "/admin/promotions", labelKey: "promotions",   icon: Tag },
-      { href: "/admin/autopilot",  labelKey: "autopilot",    icon: Zap },
-      { href: "/admin/website",    labelKey: "websiteTheme", icon: Palette },
+      { href: "/admin/promotions",   labelKey: "promotions",   icon: Tag },
+      { href: "/admin/social-media", labelKey: "socialMedia",  icon: Share2 },
+      { href: "/admin/autopilot",    labelKey: "autopilot",    icon: Zap },
+      { href: "/admin/website",      labelKey: "websiteTheme", icon: Palette },
     ],
   },
   {

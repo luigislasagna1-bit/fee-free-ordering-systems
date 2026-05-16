@@ -1,19 +1,24 @@
 import { PrismaClient } from "@/generated/prisma/client";
-import path from "node:path";
+import { PrismaPg } from "@prisma/adapter-pg";
+
+// Prisma 7 uses driver adapters even for first-party Postgres. The pg adapter
+// wraps the standard `pg` Node driver and gives Prisma a connection it can
+// stream queries through. DATABASE_URL is read once at module load — the
+// global singleton pattern below stops HMR from opening a new connection
+// pool on every dev-server file change.
 
 function createPrismaClient(): PrismaClient {
-  const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
-  // Fallback to the project-root dev.db (matches .env's DATABASE_URL="file:./dev.db")
-  // rather than the legacy prisma/dev.db location, so a missing .env doesn't
-  // silently route us to an empty database.
-  const dbUrl = process.env.DATABASE_URL || `file:${path.join(process.cwd(), "dev.db")}`;
-  const adapter = new PrismaBetterSqlite3({ url: dbUrl });
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error("DATABASE_URL is not set. Add it to .env.local — see .env.example.");
+  }
+  const adapter = new PrismaPg({ connectionString });
   return new PrismaClient({ adapter } as any);
 }
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
-export const prisma = globalForPrisma.prisma || createPrismaClient();
+export const prisma = globalForPrisma.prisma ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 

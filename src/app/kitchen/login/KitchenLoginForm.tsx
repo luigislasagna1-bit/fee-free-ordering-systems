@@ -23,8 +23,11 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
         password: form.password,
         redirect: false,
       });
-      if (result?.error) throw new Error(tAuth("invalidCredentials"));
-      setTimeout(() => router.push("/kitchen"), 400);
+      if (!result || result.error) throw new Error(tAuth("invalidCredentials"));
+      // Hard navigation so the kitchen session cookie is read on the next
+      // server render — soft-nav (router.push) can race the cookie write on
+      // some mobile browsers (notably iOS Safari over a tunnel).
+      window.location.assign("/kitchen");
     } catch (err: any) {
       toast.error(err.message);
     } finally {

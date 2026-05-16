@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 model Restaurant {
@@ -51,6 +51,18 @@ model Restaurant {
   googleMapsApiKey   String?  // only used when mapProvider = "google"
   autoAcceptOrders   Boolean  @default(false)
   defaultLanguage    String   @default("en")
+  socialLinks        String?  // JSON: { instagram, facebook, tiktok, x, youtube, linkedin, pinterest, snapchat, threads, whatsapp, yelp, googleBusiness, tripadvisor, website }
+  marketingTier      String   @default("free") // "free" | "social_basic" | "social_pro" | "social_managed" — gates AI-post / scheduling features
+
+  // Domain routing: "subdomain" → <sub>.<PLATFORM_DOMAIN>, "customDomain" → bring-your-own.
+  // slug stays internal-stable (used by /order/[slug] paths and order references);
+  // subdomain is the marketing-changeable label the customer sees in their address bar.
+  subdomain            String?  @unique
+  customDomain         String?  @unique
+  customDomainStatus   String   @default("none")  // none | pending | verifying | verified | error
+  customDomainAddedAt  DateTime?
+  customDomainError    String?
+
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
@@ -519,7 +531,7 @@ model PrintLog {
   orderNumber    String?
   receiptType    String           // kitchen | customer | test
   printerName    String?
-  printNodeJobId Int?
+  printNodeJobId BigInt?  // PrintNode job IDs have outgrown int32; BigInt is safe
   status         String   @default("sent") // sent | failed
   errorMessage   String?
   createdAt      DateTime @default(now())

@@ -168,23 +168,78 @@
     "free": "Grátis",
     "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Atenção: seu endereço está fora da nossa área de entrega padrão. Faremos o possível, mas espere maior demora ou uma ligação. Taxa: {fee}, ETA: ~{minutes} min.",
+    "size": "Tamanho",
+    "required": "Obrigatório",
+    "pickRange": "Escolha {min}–{max}",
+    "upToMax": "Até {max}",
+    "notesPlaceholder": "Sem cebola, molho extra, etc.",
+    "editItem": "Editar este item",
+    "yesEdit": "Sim, editar",
+    "codeApplied": "Código: {code} aplicado!",
+    "headsUp": "Atenção:",
+    "outOfAreaWarning": "Seu endereço está fora da nossa área de entrega padrão. Faremos o possível, mas espere mais demora ou uma ligação.",
+    "feeEta": "Taxa: {fee}, ETA: ~{minutes} min.",
     "toasts": {
       "itemAdded": "Adicionado ao carrinho",
+      "itemAddedNamed": "{name} adicionado!",
+      "itemUpdated": "Item atualizado",
       "itemRemoved": "Removido do carrinho",
       "cartCleared": "Carrinho esvaziado",
+      "cartEmpty": "O carrinho está vazio",
       "minimumNotMet": "Pedido mínimo não atingido",
       "outOfStock": "Item esgotado",
       "addressRequired": "Endereço de entrega obrigatório",
+      "nameAndPhone": "Nome e telefone são obrigatórios",
       "orderPlaced": "Pedido realizado com sucesso",
       "orderFailed": "Falha ao realizar o pedido. Tente novamente.",
+      "paymentSetupFailed": "Falha na configuração do pagamento",
       "couponApplied": "Cupom aplicado",
+      "couponAppliedAmount": "Cupom aplicado! -{amount}",
       "invalidCoupon": "Cupom inválido ou expirado",
       "couponMinimumNotMet": "O cupom requer um subtotal maior",
       "addressLookupFailed": "Não foi possível localizar esse endereço",
       "outOfArea": "Desculpe — seu endereço está fora da nossa área de entrega.",
       "modifierRequired": "Faça uma seleção obrigatória",
+      "chooseSize": "Por favor, escolha um tamanho",
+      "pleaseSelect": "Por favor, selecione {name}",
+      "chooseAtLeast": "{name}: escolha pelo menos {n}",
       "paymentFailed": "Falha no pagamento. Tente novamente.",
       "selectVariant": "Selecione uma opção"
+    },
+    "followUs": "Siga-nos"
+  },
+  "pizza": {
+    "chooseSize": "Escolher tamanho",
+    "chooseCrust": "Escolher massa",
+    "halfHalf": "Meio-meio",
+    "halfHalfDesc": "Coberturas diferentes em cada metade",
+    "sauce": "Molho",
+    "cheese": "Queijo",
+    "toppings": "Coberturas",
+    "toppingsIncluded": "Coberturas ({count} incluídas)",
+    "whole": "inteira",
+    "split": "dividida",
+    "leftHalf": "METADE ESQUERDA",
+    "rightHalf": "METADE DIREITA",
+    "leftHalfButton": "◑ Metade esquerda",
+    "wholeButton": "⬤ Inteira",
+    "rightHalfButton": "Metade direita ◐",
+    "leftSvg": "ESQUERDA",
+    "rightSvg": "DIREITA",
+    "specialInstructions": "Instruções especiais",
+    "notesPlaceholder": "Extra crocante, sem alho, etc.",
+    "yourToppings": "Suas coberturas",
+    "topingsHelp": "Toque numa cobertura para adicionar. Depois, use os botões Leve ou Extra para ajustar a quantidade.",
+    "errors": {
+      "chooseCrust": "Escolha uma massa para continuar",
+      "chooseSauce": "Escolha um molho para continuar",
+      "chooseSauceNamed": "Escolha {name} para continuar",
+      "chooseCheese": "Escolha um queijo para continuar",
+      "chooseCheeseNamed": "Escolha {name} para continuar",
+      "chooseToppings": "Faça as seleções obrigatórias de coberturas",
+      "completeSelections": "Faça todas as seleções obrigatórias",
+      "chooseSize": "Escolha um tamanho para continuar",
+      "completeRequired": "Complete as seleções obrigatórias"
     }
   },
   "info": {
@@ -265,7 +320,37 @@
     "errorCardDeclined": "Cartão recusado. Tente outro.",
     "errorOrderFailed": "Não foi possível enviar o pedido. Tente novamente.",
     "back": "Voltar",
-    "next": "Próximo"
+    "next": "Próximo",
+    "contact": "CONTATO",
+    "orderingMethod": "MÉTODO DE PEDIDO",
+    "availableTimeChoice": "HORÁRIO DISPONÍVEL",
+    "paymentMethodHeading": "MÉTODO DE PAGAMENTO",
+    "tipsHeading": "GORJETA?",
+    "orderNotesHeading": "NOTAS DO PEDIDO",
+    "addDetails": "Adicionar detalhes",
+    "fullNamePlaceholder": "Nome completo *",
+    "phonePlaceholder": "Telefone *",
+    "emailPlaceholder": "E-mail (opcional)",
+    "startTypingAddress": "Comece a digitar seu endereço…",
+    "streetAddressPlaceholder": "Endereço *",
+    "cityPlaceholder": "Cidade",
+    "zipPlaceholder": "CEP",
+    "scheduleForLaterOptional": "Agendar para depois (opcional)",
+    "switchToASAP": "Voltar a o mais rápido possível",
+    "cashOnPickup": "Dinheiro na retirada",
+    "cashOnDelivery": "Dinheiro na entrega",
+    "payOnlineCard": "Pagar online (cartão)",
+    "cardComingSoon": "Pagamento online com cartão em breve. Por favor, pague na {type} por enquanto.",
+    "anyInstructions": "Instruções especiais…",
+    "qty": "Qtd",
+    "item": "Item",
+    "price": "Preço",
+    "cartEmpty": "O carrinho está vazio",
+    "couponCodePlaceholder": "Código do cupom",
+    "noNotes": "Sem notas",
+    "locatingAddress": "Localizando seu endereço…",
+    "youreIn": "Você está em {zone} — Taxa {fee}, ~{minutes} min.",
+    "outsideStandard": "Fora da nossa área de entrega padrão."
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -288,7 +373,26 @@
     "weWillEmailYou": "Enviaremos a confirmação para {email}.",
     "addToCalendar": "Adicionar ao calendário",
     "submitting": "Enviando…",
-    "errorBookingFailed": "Não foi possível reservar. Escolha outro horário."
+    "errorBookingFailed": "Não foi possível reservar. Escolha outro horário.",
+    "numberOfPeople": "Número de pessoas",
+    "person": "pessoa",
+    "people": "pessoas",
+    "fullName": "Nome completo *",
+    "phoneRequired": "Telefone *",
+    "emailForConfirmation": "E-mail (opcional — para confirmação)",
+    "commentsPlaceholder": "Comentários (opcional) — pedidos especiais, alergias, etc.",
+    "noReservationsToday": "Sem reservas disponíveis neste dia.",
+    "depositHintPerGuest": "É necessário um depósito de {amount} por pessoa para confirmar. Total: {total}.",
+    "reserveTable": "Reservar esta mesa",
+    "reserving": "Reservando…",
+    "done": "Pronto",
+    "reservationConfirmedHeading": "Reserva confirmada!",
+    "seeYou": "Vemo-nos em {date} às {time} para {n} {label}.",
+    "requestReceived": "Pedido recebido",
+    "reviewAndConfirm": "{restaurant} analisará sua solicitação e enviará uma confirmação em breve.",
+    "emailSent": "Foi enviado um e-mail de confirmação para {email}.",
+    "nameAndPhone": "Nome e telefone são obrigatórios.",
+    "reservationFailed": "Falha na reserva"
   },
   "kitchen": {
     "title": "Tela da cozinha",
@@ -347,7 +451,9 @@
       "completed": "Marcado como concluído",
       "printed": "Enviado à impressora",
       "printFailed": "Falha na impressão"
-    }
+    },
+    "complete": "Pronto",
+    "clearOrders": "Limpar pedidos"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",
@@ -376,7 +482,8 @@
       "orders": "Pedidos",
       "settings": "Configurações",
       "viewOrderingPage": "Ver página de pedidos",
-      "logOut": "Sair"
+      "logOut": "Sair",
+      "socialMedia": "Redes sociais"
     },
     "dashboard": {
       "title": "Painel",
@@ -808,6 +915,78 @@
       "uploaded": "Enviado",
       "uploadFailed": "Falha no envio",
       "copiedToClipboard": "Copiado para a área de transferência"
+    },
+    "socialMedia": {
+      "title": "Redes sociais",
+      "subtitle": "Conecte suas contas sociais. Os clientes veem como ícones clicáveis na sua página de pedidos.",
+      "yourAccounts": "Suas contas",
+      "yourAccountsHelp": "Preenchidos",
+      "saved": "Links sociais salvos.",
+      "saveFailed": "Falha ao salvar os links sociais.",
+      "openLink": "Abrir link",
+      "customerPreviewTitle": "Onde os clientes veem isso",
+      "customerPreviewBody": "Os links salvos aparecem como uma linha de ícones clicáveis no rodapé da sua página de pedidos.",
+      "comingSoon": "Em breve",
+      "aiPostsTitle": "Publicações geradas por IA",
+      "aiPostsBody": "Preencha um formulário semanal (ofertas, eventos, promoções) e geramos publicações para você aprovar com um clique.",
+      "tierGated": "Plano premium",
+      "roadmapScheduleTitle": "Agendamento automático nas suas plataformas",
+      "roadmapScheduleBody": "Conecte Instagram, Facebook, X e TikTok. Aprove em lotes e publicamos no calendário.",
+      "roadmapTemplateTitle": "Modelos de conteúdo semanais",
+      "roadmapTemplateBody": "Modelos prontos para ofertas, eventos, bastidores — preencha os espaços, obtenha uma publicação polida.",
+      "roadmapAutoTitle": "Modo totalmente automatizado",
+      "roadmapAutoBody": "Quando confiar nos rascunhos, ative a publicação automática e mantemos suas redes ativas sem intervenção.",
+      "currentTier": "Plano atual"
+    },
+    "websiteHub": {
+      "title": "Site",
+      "subtitle": "Configure como os clientes acessam sua página de pedidos.",
+      "liveAt": "Ativo em",
+      "open": "Abrir",
+      "themeTitle": "Tema e marca",
+      "themeBody": "Cores, logo, banner e layout da sua página de pedidos.",
+      "domainTitle": "Domínio e URL",
+      "domainBody": "Escolha um subdomínio grátis ou conecte seu próprio domínio com SSL."
+    },
+    "domain": {
+      "title": "Domínio e URL",
+      "subtitle": "Escolha um subdomínio grátis ou use seu próprio domínio.",
+      "devModeBanner": "Modo de desenvolvimento — as alterações de domínio não serão ativadas até o deploy em produção.",
+      "liveAt": "Ativo em",
+      "open": "Abrir",
+      "copy": "Copiar",
+      "copied": "Copiado para a área de transferência",
+      "copyFailed": "Não foi possível copiar",
+      "freeSubdomainTitle": "Subdomínio grátis",
+      "freeSubdomainBody": "Letras minúsculas, números e hifens. 3–63 caracteres.",
+      "save": "Salvar",
+      "saveFailed": "Falha ao salvar",
+      "subdomainSaved": "Subdomínio salvo",
+      "available": "Disponível",
+      "notAvailable": "Indisponível",
+      "checkFailed": "Não foi possível verificar a disponibilidade",
+      "customDomainTitle": "Conecte seu próprio domínio",
+      "customDomainBody": "Use um domínio que você já possui. Cuidamos do SSL.",
+      "connect": "Conectar",
+      "connectFailed": "Falha ao conectar o domínio",
+      "customConnected": "Domínio conectado — adicione os registros DNS para verificar.",
+      "recheck": "Verificar novamente",
+      "verified": "Domínio verificado",
+      "notYetVerified": "Ainda não verificado — verifique a propagação DNS.",
+      "verifyFailed": "Falha na verificação",
+      "disconnect": "Desconectar",
+      "disconnectConfirm": "Desconectar este domínio? Você pode reconectar mais tarde.",
+      "disconnected": "Domínio desconectado",
+      "disconnectFailed": "Falha ao desconectar",
+      "dnsInstructions": "Adicione esses registros no seu provedor DNS e clique em Verificar novamente.",
+      "dnsType": "Tipo",
+      "dnsName": "Nome",
+      "dnsValue": "Valor",
+      "statusNone": "Não conectado",
+      "statusPending": "DNS pendente",
+      "statusVerifying": "Verificando",
+      "statusVerified": "Verificado",
+      "statusError": "Erro"
     }
   },
   "impersonation": {
@@ -1055,16 +1234,46 @@
       "title": "Perguntas frequentes",
       "subtitle": "Tudo que você precisa saber antes de se inscrever.",
       "items": [
-        { "q": "Vocês cobram comissão por pedido?", "a": "Não. Cobramos uma assinatura mensal fixa. Você fica com 100% de cada pedido." },
-        { "q": "Quanto tempo leva a configuração?", "a": "A maioria dos restaurantes recebe pedidos em 30 minutos. Importe seu menu de PDF ou adicione itens manualmente." },
-        { "q": "Vocês suportam retirada E entrega?", "a": "Sim. Cada serviço é configurado independentemente com seus tempos, taxas e mínimos." },
-        { "q": "E o processamento de cartões?", "a": "Conecte sua própria conta Stripe diretamente. Nunca tocamos nos fundos." },
-        { "q": "Posso usar uma impressora térmica?", "a": "Sim. Integramos com PrintNode para impressoras térmicas ESC/POS (Star, Epson, etc.)." },
-        { "q": "Clientes podem reservar mesas?", "a": "Sim. O sistema gerencia mesas, pré-pedidos e depósitos opcionais." },
-        { "q": "Quais idiomas são suportados?", "a": "Inglês, francês, espanhol, italiano e português — em pedidos, cozinha, admin e e-mails." },
-        { "q": "Posso fazer promoções?", "a": "Sim. Descontos %, valores fixos, entrega grátis, BOGO, promoções agendadas e cupons." },
-        { "q": "Existe avaliação gratuita?", "a": "Sim — 14 dias, sem cartão de crédito." },
-        { "q": "Posso cancelar a qualquer momento?", "a": "Sim. Sem contratos, sem compromissos." }
+        {
+          "q": "Vocês cobram comissão por pedido?",
+          "a": "Não. Cobramos uma assinatura mensal fixa. Você fica com 100% de cada pedido."
+        },
+        {
+          "q": "Quanto tempo leva a configuração?",
+          "a": "A maioria dos restaurantes recebe pedidos em 30 minutos. Importe seu menu de PDF ou adicione itens manualmente."
+        },
+        {
+          "q": "Vocês suportam retirada E entrega?",
+          "a": "Sim. Cada serviço é configurado independentemente com seus tempos, taxas e mínimos."
+        },
+        {
+          "q": "E o processamento de cartões?",
+          "a": "Conecte sua própria conta Stripe diretamente. Nunca tocamos nos fundos."
+        },
+        {
+          "q": "Posso usar uma impressora térmica?",
+          "a": "Sim. Integramos com PrintNode para impressoras térmicas ESC/POS (Star, Epson, etc.)."
+        },
+        {
+          "q": "Clientes podem reservar mesas?",
+          "a": "Sim. O sistema gerencia mesas, pré-pedidos e depósitos opcionais."
+        },
+        {
+          "q": "Quais idiomas são suportados?",
+          "a": "Inglês, francês, espanhol, italiano e português — em pedidos, cozinha, admin e e-mails."
+        },
+        {
+          "q": "Posso fazer promoções?",
+          "a": "Sim. Descontos %, valores fixos, entrega grátis, BOGO, promoções agendadas e cupons."
+        },
+        {
+          "q": "Existe avaliação gratuita?",
+          "a": "Sim — 14 dias, sem cartão de crédito."
+        },
+        {
+          "q": "Posso cancelar a qualquer momento?",
+          "a": "Sim. Sem contratos, sem compromissos."
+        }
       ]
     },
     "demo": {

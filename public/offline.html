@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>You're offline — Fee Free Ordering</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      background: #fff7ed;
+      color: #1f2937;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+    .card {
+      max-width: 360px;
+      background: #fff;
+      padding: 32px 28px;
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    h1 { font-size: 20px; margin: 0 0 8px; color: #111827; }
+    p { font-size: 14px; color: #6b7280; margin: 0 0 20px; line-height: 1.5; }
+    button {
+      background: #F97316; color: white; font-weight: 600;
+      border: none; padding: 12px 24px; border-radius: 12px;
+      font-size: 14px; cursor: pointer; width: 100%;
+    }
+    button:active { transform: scale(0.98); }
+    .icon { font-size: 48px; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">📡</div>
+    <h1>You're offline</h1>
+    <p>Check your connection and try again. Your order won't be lost.</p>
+    <button onclick="location.reload()">Try again</button>
+  </div>
+</body>
+</html>

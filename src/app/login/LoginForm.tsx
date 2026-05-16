@@ -20,14 +20,21 @@ function LoginFormInner({ locale }: { locale: string }) {
     e.preventDefault();
     setLoading(true);
     try {
+      // First check credentials with redirect:false so we can show inline
+      // errors. If valid, do a full-page navigation to /admin — this is more
+      // reliable than router.push() across mobile browsers (especially iOS
+      // Safari) because it forces a fresh request that picks up the freshly
+      // set HttpOnly session cookie.
       const result = await signIn("credentials", {
         email: form.email,
         password: form.password,
         redirect: false,
       });
-      if (result?.error) throw new Error(tAuth("invalidCredentials"));
+      if (!result || result.error) throw new Error(tAuth("invalidCredentials"));
       toast.success(tToasts("saved"));
-      setTimeout(() => router.push("/admin"), 400);
+      // Force a hard navigation so the cookie is read on the server render of
+      // /admin. Soft-nav via router.push() can race the cookie write.
+      window.location.assign("/admin");
     } catch (err: any) {
       toast.error(err.message);
     } finally {

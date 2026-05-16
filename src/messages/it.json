@@ -168,23 +168,78 @@
     "free": "Gratis",
     "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Attenzione: il tuo indirizzo è fuori dalla nostra zona di consegna standard. Faremo del nostro meglio, ma aspettati tempi più lunghi o una telefonata. Costo: {fee}, ETA: ~{minutes} min.",
+    "size": "Taglia",
+    "required": "Obbligatorio",
+    "pickRange": "Scegli {min}–{max}",
+    "upToMax": "Fino a {max}",
+    "notesPlaceholder": "Senza cipolla, salsa extra, ecc.",
+    "editItem": "Modifica questo articolo",
+    "yesEdit": "Sì, modifica",
+    "codeApplied": "Codice: {code} applicato!",
+    "headsUp": "Attenzione:",
+    "outOfAreaWarning": "Il tuo indirizzo è fuori dalla nostra zona di consegna standard. Faremo del nostro meglio, ma aspettati tempi più lunghi o una chiamata.",
+    "feeEta": "Costo: {fee}, ETA: ~{minutes} min.",
     "toasts": {
       "itemAdded": "Aggiunto al carrello",
+      "itemAddedNamed": "{name} aggiunto!",
+      "itemUpdated": "Articolo aggiornato",
       "itemRemoved": "Rimosso dal carrello",
       "cartCleared": "Carrello svuotato",
+      "cartEmpty": "Il carrello è vuoto",
       "minimumNotMet": "Ordine minimo non raggiunto",
       "outOfStock": "Articolo esaurito",
       "addressRequired": "Indirizzo di consegna richiesto",
+      "nameAndPhone": "Nome e telefono sono obbligatori",
       "orderPlaced": "Ordine effettuato con successo",
       "orderFailed": "Errore nell'ordine. Riprova.",
+      "paymentSetupFailed": "Configurazione del pagamento fallita",
       "couponApplied": "Coupon applicato",
+      "couponAppliedAmount": "Coupon applicato! -{amount}",
       "invalidCoupon": "Coupon non valido o scaduto",
       "couponMinimumNotMet": "Il coupon richiede un subtotale più alto",
       "addressLookupFailed": "Impossibile localizzare l'indirizzo",
       "outOfArea": "Spiacenti — il tuo indirizzo è fuori dalla zona di consegna.",
       "modifierRequired": "Effettua una selezione obbligatoria",
+      "chooseSize": "Seleziona una taglia",
+      "pleaseSelect": "Seleziona {name}",
+      "chooseAtLeast": "{name}: scegli almeno {n}",
       "paymentFailed": "Pagamento fallito. Riprova.",
       "selectVariant": "Seleziona un'opzione"
+    },
+    "followUs": "Seguici"
+  },
+  "pizza": {
+    "chooseSize": "Scegli la taglia",
+    "chooseCrust": "Scegli l'impasto",
+    "halfHalf": "Metà-metà",
+    "halfHalfDesc": "Condimenti diversi su ogni metà",
+    "sauce": "Salsa",
+    "cheese": "Formaggio",
+    "toppings": "Condimenti",
+    "toppingsIncluded": "Condimenti ({count} inclusi)",
+    "whole": "intera",
+    "split": "divisa",
+    "leftHalf": "META SINISTRA",
+    "rightHalf": "METÀ DESTRA",
+    "leftHalfButton": "◑ Metà sinistra",
+    "wholeButton": "⬤ Intera",
+    "rightHalfButton": "Metà destra ◐",
+    "leftSvg": "SINISTRA",
+    "rightSvg": "DESTRA",
+    "specialInstructions": "Istruzioni speciali",
+    "notesPlaceholder": "Extra croccante, senza aglio, ecc.",
+    "yourToppings": "I tuoi condimenti",
+    "topingsHelp": "Tocca un condimento per aggiungerlo. Poi usa i pulsanti Leggero o Extra per regolare la quantità.",
+    "errors": {
+      "chooseCrust": "Scegli un impasto per continuare",
+      "chooseSauce": "Scegli una salsa per continuare",
+      "chooseSauceNamed": "Scegli {name} per continuare",
+      "chooseCheese": "Scegli un formaggio per continuare",
+      "chooseCheeseNamed": "Scegli {name} per continuare",
+      "chooseToppings": "Effettua le selezioni obbligatorie di condimenti",
+      "completeSelections": "Effettua tutte le selezioni obbligatorie",
+      "chooseSize": "Scegli una taglia per continuare",
+      "completeRequired": "Completa le selezioni obbligatorie"
     }
   },
   "info": {
@@ -241,7 +296,7 @@
     "cvc": "CVC",
     "cardholderName": "Intestatario",
     "tipTitle": "Aggiungi una mancia",
-    "noTip": "Senza mancia",
+    "noTip": "Nessuna mancia",
     "customTip": "Personalizzata",
     "placeOrder": "Effettua ordine",
     "placingOrder": "Invio ordine…",
@@ -265,7 +320,37 @@
     "errorCardDeclined": "Carta rifiutata. Prova un'altra carta.",
     "errorOrderFailed": "Impossibile inviare l'ordine. Riprova.",
     "back": "Indietro",
-    "next": "Avanti"
+    "next": "Avanti",
+    "contact": "CONTATTO",
+    "orderingMethod": "METODO D'ORDINE",
+    "availableTimeChoice": "ORARIO DISPONIBILE",
+    "paymentMethodHeading": "METODO DI PAGAMENTO",
+    "tipsHeading": "MANCIA?",
+    "orderNotesHeading": "NOTE ORDINE",
+    "addDetails": "Aggiungi dettagli",
+    "fullNamePlaceholder": "Nome completo *",
+    "phonePlaceholder": "Telefono *",
+    "emailPlaceholder": "E-mail (facoltativo)",
+    "startTypingAddress": "Inizia a digitare l'indirizzo…",
+    "streetAddressPlaceholder": "Indirizzo *",
+    "cityPlaceholder": "Città",
+    "zipPlaceholder": "CAP",
+    "scheduleForLaterOptional": "Programma più tardi (facoltativo)",
+    "switchToASAP": "Torna a il prima possibile",
+    "cashOnPickup": "Contanti al ritiro",
+    "cashOnDelivery": "Contanti alla consegna",
+    "payOnlineCard": "Paga online (carta)",
+    "cardComingSoon": "Pagamento online con carta in arrivo. Paga al {type} per ora.",
+    "anyInstructions": "Istruzioni speciali…",
+    "qty": "Q.tà",
+    "item": "Articolo",
+    "price": "Prezzo",
+    "cartEmpty": "Il carrello è vuoto",
+    "couponCodePlaceholder": "Codice coupon",
+    "noNotes": "Nessuna nota",
+    "locatingAddress": "Localizzazione del tuo indirizzo…",
+    "youreIn": "Sei in {zone} — Costo {fee}, ~{minutes} min.",
+    "outsideStandard": "Fuori dalla nostra zona di consegna standard."
   },
   "reservation": {
     "title": "Prenota un tavolo",
@@ -288,7 +373,26 @@
     "weWillEmailYou": "Invieremo una conferma a {email}.",
     "addToCalendar": "Aggiungi al calendario",
     "submitting": "Invio…",
-    "errorBookingFailed": "Impossibile prenotare. Scegli un altro orario."
+    "errorBookingFailed": "Impossibile prenotare. Scegli un altro orario.",
+    "numberOfPeople": "Numero di persone",
+    "person": "persona",
+    "people": "persone",
+    "fullName": "Nome completo *",
+    "phoneRequired": "Telefono *",
+    "emailForConfirmation": "E-mail (facoltativo — per la conferma)",
+    "commentsPlaceholder": "Commenti (facoltativo) — richieste speciali, allergie, ecc.",
+    "noReservationsToday": "Nessuna prenotazione disponibile in questo giorno.",
+    "depositHintPerGuest": "È richiesta una caparra di {amount} a persona per confermare. Totale: {total}.",
+    "reserveTable": "Prenota questo tavolo",
+    "reserving": "Prenotazione…",
+    "done": "Fatto",
+    "reservationConfirmedHeading": "Prenotazione confermata!",
+    "seeYou": "Ci vediamo il {date} alle {time} per {n} {label}.",
+    "requestReceived": "Richiesta ricevuta",
+    "reviewAndConfirm": "{restaurant} esaminerà la tua richiesta e ti invierà una conferma a breve.",
+    "emailSent": "Un'e-mail di conferma è stata inviata a {email}.",
+    "nameAndPhone": "Nome e telefono sono obbligatori.",
+    "reservationFailed": "Prenotazione fallita"
   },
   "kitchen": {
     "title": "Display cucina",
@@ -347,7 +451,9 @@
       "completed": "Segnato completato",
       "printed": "Inviato alla stampante",
       "printFailed": "Stampa fallita"
-    }
+    },
+    "complete": "Pronto",
+    "clearOrders": "Cancella ordini"
   },
   "admin": {
     "welcomeBack": "Bentornato",
@@ -376,7 +482,8 @@
       "orders": "Ordini",
       "settings": "Impostazioni",
       "viewOrderingPage": "Vedi pagina ordini",
-      "logOut": "Esci"
+      "logOut": "Esci",
+      "socialMedia": "Social media"
     },
     "dashboard": {
       "title": "Pannello",
@@ -808,6 +915,78 @@
       "uploaded": "Caricato",
       "uploadFailed": "Caricamento fallito",
       "copiedToClipboard": "Copiato negli appunti"
+    },
+    "socialMedia": {
+      "title": "Social media",
+      "subtitle": "Collega i tuoi account social. I clienti li vedono come icone cliccabili sulla pagina d’ordinazione.",
+      "yourAccounts": "I tuoi account",
+      "yourAccountsHelp": "Compilati",
+      "saved": "Link social salvati.",
+      "saveFailed": "Salvataggio dei link social non riuscito.",
+      "openLink": "Apri link",
+      "customerPreviewTitle": "Dove lo vedono i clienti",
+      "customerPreviewBody": "I link salvati appaiono come una riga di icone cliccabili in fondo alla pagina d’ordinazione.",
+      "comingSoon": "Prossimamente",
+      "aiPostsTitle": "Post generati con IA",
+      "aiPostsBody": "Compila un breve modulo settimanale (offerte, eventi, promozioni) e creiamo post da approvare con un clic.",
+      "tierGated": "Piano premium",
+      "roadmapScheduleTitle": "Pianificazione automatica sulle tue piattaforme",
+      "roadmapScheduleBody": "Collega Instagram, Facebook, X e TikTok. Approva in blocchi, pubblichiamo secondo il calendario.",
+      "roadmapTemplateTitle": "Template di contenuti settimanali",
+      "roadmapTemplateBody": "Template pronti per offerte, eventi, dietro le quinte — riempi i campi, ottieni un post curato.",
+      "roadmapAutoTitle": "Modalità completamente automatica",
+      "roadmapAutoBody": "Quando ti fidi delle bozze, passa alla pubblicazione automatica e teniamo i tuoi profili attivi senza intervento.",
+      "currentTier": "Piano attuale"
+    },
+    "websiteHub": {
+      "title": "Sito web",
+      "subtitle": "Configura come i clienti raggiungono la tua pagina di ordinazione.",
+      "liveAt": "Online su",
+      "open": "Apri",
+      "themeTitle": "Tema e brand",
+      "themeBody": "Colori, logo, banner, layout della pagina di ordinazione.",
+      "domainTitle": "Dominio e URL",
+      "domainBody": "Scegli un sottodominio gratuito o connetti il tuo dominio con SSL."
+    },
+    "domain": {
+      "title": "Dominio e URL",
+      "subtitle": "Scegli un sottodominio gratuito o usa il tuo dominio.",
+      "devModeBanner": "Modalità sviluppo — le modifiche al dominio non saranno attive fino al deploy in produzione.",
+      "liveAt": "Online su",
+      "open": "Apri",
+      "copy": "Copia",
+      "copied": "Copiato negli appunti",
+      "copyFailed": "Impossibile copiare",
+      "freeSubdomainTitle": "Sottodominio gratuito",
+      "freeSubdomainBody": "Lettere minuscole, numeri e trattini. 3–63 caratteri.",
+      "save": "Salva",
+      "saveFailed": "Salvataggio non riuscito",
+      "subdomainSaved": "Sottodominio salvato",
+      "available": "Disponibile",
+      "notAvailable": "Non disponibile",
+      "checkFailed": "Impossibile verificare la disponibilità",
+      "customDomainTitle": "Connetti il tuo dominio",
+      "customDomainBody": "Usa un dominio che già possiedi. Pensiamo noi al certificato SSL.",
+      "connect": "Connetti",
+      "connectFailed": "Connessione del dominio non riuscita",
+      "customConnected": "Dominio connesso — aggiungi i record DNS per verificare.",
+      "recheck": "Ricontrolla",
+      "verified": "Dominio verificato",
+      "notYetVerified": "Non ancora verificato — controlla la propagazione DNS.",
+      "verifyFailed": "Verifica non riuscita",
+      "disconnect": "Disconnetti",
+      "disconnectConfirm": "Disconnettere questo dominio? Potrai riconnetterlo in seguito.",
+      "disconnected": "Dominio disconnesso",
+      "disconnectFailed": "Disconnessione non riuscita",
+      "dnsInstructions": "Aggiungi questi record dal tuo provider DNS, poi clicca Ricontrolla.",
+      "dnsType": "Tipo",
+      "dnsName": "Nome",
+      "dnsValue": "Valore",
+      "statusNone": "Non connesso",
+      "statusPending": "DNS in attesa",
+      "statusVerifying": "In verifica",
+      "statusVerified": "Verificato",
+      "statusError": "Errore"
     }
   },
   "impersonation": {
@@ -1055,16 +1234,46 @@
       "title": "Domande frequenti",
       "subtitle": "Tutto quello che devi sapere prima di iscriverti.",
       "items": [
-        { "q": "Prendete una commissione sugli ordini?", "a": "No. Cobriamo un abbonamento mensile fisso. Tieni il 100% di ogni ordine." },
-        { "q": "Quanto dura il setup?", "a": "La maggior parte dei ristoranti riceve ordini entro 30 minuti. Importa il menù da PDF o aggiungi gli articoli manualmente." },
-        { "q": "Supportate ritiro E consegna?", "a": "Sì. Ogni servizio si configura indipendentemente con i propri tempi, costi e minimi." },
-        { "q": "E i pagamenti con carta?", "a": "Connetti direttamente il tuo account Stripe. Non tocchiamo mai i fondi." },
-        { "q": "Posso usare una stampante termica?", "a": "Sì. Integriamo PrintNode per stampanti termiche ESC/POS (Star, Epson, ecc.)." },
-        { "q": "I clienti possono prenotare un tavolo?", "a": "Sì. Il sistema gestisce tavoli, pre-ordini e caparre opzionali." },
-        { "q": "Quali lingue sono supportate?", "a": "Inglese, francese, spagnolo, italiano e portoghese — su ordini, cucina, admin ed e-mail." },
-        { "q": "Posso fare promozioni?", "a": "Sì. Sconti %, importi fissi, consegna gratuita, BOGO, promozioni programmate e codici coupon." },
-        { "q": "C'è una prova gratuita?", "a": "Sì — 14 giorni, senza carta di credito." },
-        { "q": "Posso cancellare quando voglio?", "a": "Sì. Nessun contratto, nessun impegno." }
+        {
+          "q": "Prendete una commissione sugli ordini?",
+          "a": "No. Cobriamo un abbonamento mensile fisso. Tieni il 100% di ogni ordine."
+        },
+        {
+          "q": "Quanto dura il setup?",
+          "a": "La maggior parte dei ristoranti riceve ordini entro 30 minuti. Importa il menù da PDF o aggiungi gli articoli manualmente."
+        },
+        {
+          "q": "Supportate ritiro E consegna?",
+          "a": "Sì. Ogni servizio si configura indipendentemente con i propri tempi, costi e minimi."
+        },
+        {
+          "q": "E i pagamenti con carta?",
+          "a": "Connetti direttamente il tuo account Stripe. Non tocchiamo mai i fondi."
+        },
+        {
+          "q": "Posso usare una stampante termica?",
+          "a": "Sì. Integriamo PrintNode per stampanti termiche ESC/POS (Star, Epson, ecc.)."
+        },
+        {
+          "q": "I clienti possono prenotare un tavolo?",
+          "a": "Sì. Il sistema gestisce tavoli, pre-ordini e caparre opzionali."
+        },
+        {
+          "q": "Quali lingue sono supportate?",
+          "a": "Inglese, francese, spagnolo, italiano e portoghese — su ordini, cucina, admin ed e-mail."
+        },
+        {
+          "q": "Posso fare promozioni?",
+          "a": "Sì. Sconti %, importi fissi, consegna gratuita, BOGO, promozioni programmate e codici coupon."
+        },
+        {
+          "q": "C'è una prova gratuita?",
+          "a": "Sì — 14 giorni, senza carta di credito."
+        },
+        {
+          "q": "Posso cancellare quando voglio?",
+          "a": "Sì. Nessun contratto, nessun impegno."
+        }
       ]
     },
     "demo": {

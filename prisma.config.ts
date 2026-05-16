@@ -1,10 +1,12 @@
-import "dotenv/config";
+import * as dotenv from "dotenv";
 import path from "node:path";
 import { defineConfig } from "prisma/config";
 
-const dbPath = process.env.DATABASE_URL
-  ? process.env.DATABASE_URL.replace("file:", "")
-  : path.join(__dirname, "prisma", "dev.db");
+// Load both .env (committed defaults) and .env.local (per-developer overrides
+// like the Postgres URL). Order matters: .env.local wins where keys collide,
+// matching Next.js's own env-loading behaviour.
+dotenv.config({ path: path.resolve(process.cwd(), ".env") });
+dotenv.config({ path: path.resolve(process.cwd(), ".env.local"), override: true });
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -12,6 +14,6 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: `file:${dbPath}`,
+    url: process.env.DATABASE_URL!,
   },
 });

@@ -40,6 +40,22 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
   await prisma.modifierGroup.update({ where: { id }, data: updateData });
 
+  // If this is a library group (restaurantId set, no menuItemId/categoryId),
+  // propagate structural changes to every attached copy so the customer view stays in sync.
+  const current = await prisma.modifierGroup.findUnique({ where: { id }, select: { restaurantId: true, menuItemId: true, categoryId: true } });
+  if (current?.restaurantId && !current.menuItemId && !current.categoryId) {
+    const propagate: any = {};
+    if (required !== undefined) propagate.required = required;
+    if (minSelect !== undefined) propagate.minSelect = minSelect;
+    if (maxSelect !== undefined) propagate.maxSelect = maxSelect;
+    if (maxPerOption !== undefined) propagate.maxPerOption = maxPerOption;
+    if (name !== undefined) propagate.name = name;
+    if (description !== undefined) propagate.description = description;
+    if (Object.keys(propagate).length > 0) {
+      await prisma.modifierGroup.updateMany({ where: { libraryGroupId: id }, data: propagate });
+    }
+  }
+
   // Sync options if provided
   if (Array.isArray(options)) {
     // Delete removed options (those not in new list by id)

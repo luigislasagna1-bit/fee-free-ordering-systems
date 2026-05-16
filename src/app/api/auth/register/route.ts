@@ -57,6 +57,9 @@ export async function POST(req: NextRequest) {
       data: {
         name: restaurantNameClean,
         slug,
+        // Auto-provision a subdomain matching the slug so every new tenant is
+        // live at <slug>.<PLATFORM_DOMAIN> immediately, no admin visit needed.
+        subdomain: slug,
         phone: phone ? String(phone).trim().slice(0, 30) : null,
         subscriptionStatus: "trial",
         trialEndsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),

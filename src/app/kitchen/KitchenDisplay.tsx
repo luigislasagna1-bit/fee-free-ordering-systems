@@ -522,12 +522,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   return (
     <div className={`h-screen flex flex-col ${t.base}`}>
       {/* ── Header ── */}
-      <header className={`${t.header} px-4 py-3 flex items-center justify-between flex-shrink-0`}>
-        <div className="flex items-center gap-3">
-          <ChefHat className="w-6 h-6 text-orange-500" />
-          <div>
-            <div className={`font-bold text-base ${t.text} leading-tight`}>{restaurant?.name ?? "Kitchen"}</div>
-            <div className={`text-xs ${t.muted}`}>Kitchen Display</div>
+      <header className={`${t.header} px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between flex-shrink-0 gap-2`}>
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <ChefHat className="w-6 h-6 text-orange-500 flex-shrink-0" />
+          <div className="min-w-0">
+            <div className={`font-bold text-sm sm:text-base ${t.text} leading-tight truncate`}>{restaurant?.name ?? "Kitchen"}</div>
+            {/* Subtitle hidden on phones — they're already on the kitchen page, the chef-hat
+                + restaurant name is enough orientation. Frees ~14px vertical for the tabs. */}
+            <div className={`text-xs ${t.muted} hidden sm:block`}>Kitchen Display</div>
           </div>
         </div>
 
@@ -586,46 +588,63 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         </div>
       </header>
 
-      {/* ── Tabs ── */}
-      <div className={`${t.tabs} flex items-center flex-shrink-0`}>
-        {(["orders", "inprogress", "complete", "reservations"] as KTab[]).map(tab => {
-          const labels: Record<KTab, string> = { orders: tk("newOrders"), inprogress: tk("inProgress"), complete: tk("completed"), reservations: tk("reservations") };
-          const count = tabCounts[tab];
-          return (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-5 py-3 text-sm font-semibold flex items-center gap-2 border-b-2 transition ${activeTab === tab ? t.tabActive : t.tabInactive}`}
-            >
-              {labels[tab]}
-              {count > 0 && (
-                <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
-                  tab === "orders" && pendingCount > 0 ? "bg-orange-500 text-white" :
-                  tab === "inprogress" ? "bg-blue-500 text-white" :
-                  "bg-gray-200 text-gray-700"
-                }`}>
-                  {count}
-                </span>
-              )}
-            </button>
-          );
-        })}
+      {/* ── Tabs ── flex-1 tabs share width so all four fit on a 375px phone.
+           The clear-history action collapses to an icon-only trash button on
+           mobile so it doesn't push the reservations tab off-screen. */}
+      <div className={`${t.tabs} flex items-stretch flex-shrink-0`}>
+        <div className="flex flex-1 min-w-0">
+          {(["orders", "inprogress", "complete", "reservations"] as KTab[]).map(tab => {
+            const labels: Record<KTab, string> = {
+              orders: tk("allOrders"),
+              inprogress: tk("inProgress"),
+              complete: tk("complete"),
+              reservations: tk("reservations"),
+            };
+            const count = tabCounts[tab];
+            return (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setActiveTab(tab)}
+                className={`flex-1 min-w-0 px-1.5 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-sm font-semibold flex items-center justify-center sm:justify-start gap-1 sm:gap-2 border-b-2 transition touch-manipulation cursor-pointer whitespace-nowrap ${activeTab === tab ? t.tabActive : t.tabInactive}`}
+              >
+                <span className="truncate">{labels[tab]}</span>
+                {/* Count badge: full pill on tablet+, mobile shows only a small
+                    colored dot so the full tab label has room to render. */}
+                {count > 0 && (
+                  <>
+                    <span className={`hidden sm:inline text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full flex-shrink-0 ${
+                      tab === "orders" && pendingCount > 0 ? "bg-orange-500 text-white" :
+                      tab === "inprogress" ? "bg-blue-500 text-white" :
+                      "bg-gray-200 text-gray-700"
+                    }`}>
+                      {count}
+                    </span>
+                    <span className={`sm:hidden inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                      tab === "orders" && pendingCount > 0 ? "bg-orange-500" :
+                      tab === "inprogress" ? "bg-blue-500" :
+                      "bg-gray-400"
+                    }`} aria-hidden="true" />
+                  </>
+                )}
+              </button>
+            );
+          })}
+        </div>
 
-        {/* Clear history buttons */}
-        {activeTab === "orders" && tabCounts.orders > 0 && (
+        {/* Clear history button — shown only for the relevant tabs. Icon-only on
+            mobile, icon + "Clear orders" label on tablet/desktop. */}
+        {((activeTab === "orders" && tabCounts.orders > 0) ||
+          (activeTab === "complete" && tabCounts.complete > 0)) && (
           <button
-            onClick={() => setClearConfirm("orders")}
-            className={`ml-auto mr-3 my-1.5 flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 transition`}
+            type="button"
+            onClick={() => setClearConfirm(activeTab === "orders" ? "orders" : "complete")}
+            aria-label={tk("clearOrders")}
+            title={tk("clearOrders")}
+            className={`flex-shrink-0 my-1.5 mx-1.5 sm:mr-3 flex items-center gap-1.5 text-xs font-semibold px-2 sm:px-3 py-1.5 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 active:bg-red-500/20 transition touch-manipulation cursor-pointer`}
           >
-            <Trash2 className="w-3.5 h-3.5" /> {tk("done")}
-          </button>
-        )}
-        {activeTab === "complete" && tabCounts.complete > 0 && (
-          <button
-            onClick={() => setClearConfirm("complete")}
-            className={`ml-auto mr-3 my-1.5 flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 transition`}
-          >
-            <Trash2 className="w-3.5 h-3.5" /> {tk("done")}
+            <Trash2 className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">{tk("clearOrders")}</span>
           </button>
         )}
       </div>

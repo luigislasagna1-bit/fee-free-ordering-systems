@@ -4,6 +4,7 @@ import { X, Calendar, Clock, Users, CheckCircle2, AlertCircle, Loader2 } from "l
 import toast from "react-hot-toast";
 import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { parseTheme } from "@/lib/theme";
+import { useTranslations } from "next-intl";
 
 type Theme = ReturnType<typeof parseTheme>;
 
@@ -39,6 +40,8 @@ function generateTimeSlots(openHHMM: string, closeHHMM: string, stepMin: number)
 }
 
 export function ReservationModal({ restaurantSlug, restaurantName, settings, theme, onClose }: Props) {
+  const tr = useTranslations("reservation");
+  const tOrd = useTranslations("ordering");
   const [step, setStep] = useState<"details" | "preorder" | "deposit" | "done">("details");
   const [partySize, setPartySize] = useState(Math.max(2, settings.minGuests));
   const [date, setDate] = useState(todayISO());
@@ -74,7 +77,7 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
 
   const submit = async () => {
     if (!validation.ok) { toast.error(validation.reason); return; }
-    if (!name.trim() || !phone.trim()) { toast.error("Name and phone are required."); return; }
+    if (!name.trim() || !phone.trim()) { toast.error(tr("nameAndPhone")); return; }
 
     setSubmitting(true);
     try {
@@ -88,12 +91,12 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Reservation failed");
+      if (!res.ok) throw new Error(data.error || tr("reservationFailed"));
       setConfirmationCode(data.confirmationCode);
       setFinalStatus(data.status === "confirmed" ? "confirmed" : "pending");
       setStep("done");
     } catch (e: any) {
-      toast.error(e.message || "Reservation failed");
+      toast.error(e.message || tr("reservationFailed"));
     }
     setSubmitting(false);
   };
@@ -110,7 +113,7 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <div>
-            <h2 className="text-lg font-bold text-gray-900">Table Reservation</h2>
+            <h2 className="text-lg font-bold text-gray-900">{tOrd("tableReservation")}</h2>
             <p className="text-xs text-gray-500">{restaurantName}</p>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-700">
@@ -125,7 +128,7 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
               {/* Party size */}
               <div>
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                  <Users className="w-4 h-4" /> Number of People
+                  <Users className="w-4 h-4" /> {tr("numberOfPeople")}
                 </label>
                 <select
                   value={partySize}
@@ -134,7 +137,7 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 >
                   {partySizeRange.map(n => (
-                    <option key={n} value={n}>{n} {n === 1 ? "person" : "people"}</option>
+                    <option key={n} value={n}>{n} {n === 1 ? tr("person") : tr("people")}</option>
                   ))}
                 </select>
               </div>
@@ -142,7 +145,7 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
               {/* Date */}
               <div>
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                  <Calendar className="w-4 h-4" /> Date
+                  <Calendar className="w-4 h-4" /> {tr("selectDate")}
                 </label>
                 <input
                   type="date"
@@ -158,11 +161,11 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
               {/* Time */}
               <div>
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                  <Clock className="w-4 h-4" /> Time
+                  <Clock className="w-4 h-4" /> {tr("selectTime")}
                 </label>
                 {timeSlots.length === 0 ? (
                   <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                    No reservations available on this day.
+                    {tr("noReservationsToday")}
                   </p>
                 ) : (
                   <select
@@ -181,20 +184,20 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
               {/* Contact */}
               <div className="grid grid-cols-2 gap-3">
                 <input
-                  type="text" placeholder="Full name *"
+                  type="text" placeholder={tr("fullName")}
                   value={name} onChange={e => setName(e.target.value)}
                   className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 />
                 <input
-                  type="tel" placeholder="Phone *"
+                  type="tel" placeholder={tr("phoneRequired")}
                   value={phone} onChange={e => setPhone(e.target.value)}
                   className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 />
               </div>
               <input
-                type="email" placeholder="Email (optional — for confirmation)"
+                type="email" placeholder={tr("emailForConfirmation")}
                 value={email} onChange={e => setEmail(e.target.value)}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
                 style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
@@ -202,7 +205,7 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
 
               {/* Comments */}
               <textarea
-                rows={2} placeholder="Comments (optional) — special requests, allergies, etc."
+                rows={2} placeholder={tr("commentsPlaceholder")}
                 value={notes} onChange={e => setNotes(e.target.value)}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 resize-none"
                 style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
@@ -219,8 +222,7 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
               {/* Deposit hint */}
               {settings.requireDeposit && settings.depositAmount > 0 && (
                 <div className="text-xs text-gray-500 bg-gray-50 rounded-lg px-3 py-2">
-                  A ${settings.depositAmount.toFixed(2)} per guest deposit is required to confirm this reservation.
-                  Total: ${(settings.depositAmount * partySize).toFixed(2)}.
+                  {tr("depositHintPerGuest", { amount: `$${settings.depositAmount.toFixed(2)}`, total: `$${(settings.depositAmount * partySize).toFixed(2)}` })}
                 </div>
               )}
 
@@ -236,27 +238,27 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
               <CheckCircle2 className="w-14 h-14 mx-auto" style={{ color: theme.primaryColor }} />
               {finalStatus === "confirmed" ? (
                 <>
-                  <h3 className="text-xl font-bold text-gray-900">Reservation confirmed!</h3>
+                  <h3 className="text-xl font-bold text-gray-900">{tr("reservationConfirmedHeading")}</h3>
                   <p className="text-sm text-gray-600">
-                    See you on {date} at {time} for {partySize} {partySize === 1 ? "person" : "people"}.
+                    {tr("seeYou", { date, time, n: partySize, label: partySize === 1 ? tr("person") : tr("people") })}
                   </p>
                 </>
               ) : (
                 <>
-                  <h3 className="text-xl font-bold text-gray-900">Request received</h3>
+                  <h3 className="text-xl font-bold text-gray-900">{tr("requestReceived")}</h3>
                   <p className="text-sm text-gray-600">
-                    {restaurantName} will review your request and send a confirmation shortly.
+                    {tr("reviewAndConfirm", { restaurant: restaurantName })}
                   </p>
                 </>
               )}
               {confirmationCode && (
                 <div className="mt-4">
-                  <p className="text-xs text-gray-400 uppercase tracking-wider">Confirmation code</p>
+                  <p className="text-xs text-gray-400 uppercase tracking-wider">{tr("confirmationCode")}</p>
                   <p className="text-2xl font-mono font-bold tracking-widest mt-1">{confirmationCode}</p>
                 </div>
               )}
               {email && (
-                <p className="text-xs text-gray-500 mt-3">A confirmation email has been sent to {email}.</p>
+                <p className="text-xs text-gray-500 mt-3">{tr("emailSent", { email })}</p>
               )}
             </div>
           )}
@@ -272,7 +274,7 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
               style={{ backgroundColor: theme.primaryColor }}
             >
               {submitting && <Loader2 className="w-5 h-5 animate-spin" />}
-              {submitting ? "Reserving…" : "Reserve this table"}
+              {submitting ? tr("reserving") : tr("reserveTable")}
             </button>
           )}
           {step === "done" && (
@@ -281,7 +283,7 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
               className="w-full text-white font-bold py-3 rounded-xl"
               style={{ backgroundColor: theme.primaryColor }}
             >
-              Done
+              {tr("done")}
             </button>
           )}
         </div>

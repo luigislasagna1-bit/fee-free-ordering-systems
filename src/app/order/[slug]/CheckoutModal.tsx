@@ -8,6 +8,7 @@ import { Autocomplete } from "@react-google-maps/api";
 import { formatCurrency } from "@/lib/utils";
 import { parseTheme } from "@/lib/theme";
 import { useGoogleMaps } from "@/lib/use-google-maps";
+import { useTranslations } from "next-intl";
 
 type Theme = ReturnType<typeof parseTheme>;
 type SectionKey = null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes";
@@ -74,6 +75,9 @@ export function CheckoutModal({
   mapProvider, googleMapsApiKey,
   onClose,
 }: Props) {
+  const tc = useTranslations("checkout");
+  const tOrd = useTranslations("ordering");
+  const tCommon = useTranslations("common");
   const [showCouponField, setShowCouponField] = useState(false);
   const googleEnabled = mapProvider === "google" && !!googleMapsApiKey;
   const { isLoaded: gmapsLoaded } = useGoogleMaps(googleEnabled ? googleMapsApiKey! : "");
@@ -127,7 +131,7 @@ export function CheckoutModal({
 
   const notesSummary = customerInfo.notes
     ? customerInfo.notes.length > 60 ? customerInfo.notes.slice(0, 60) + "…" : customerInfo.notes
-    : "No notes";
+    : tc("noNotes");
 
   return (
     <div
@@ -140,7 +144,7 @@ export function CheckoutModal({
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 flex-shrink-0">
-          <h2 className="text-lg font-bold text-gray-900 truncate">Checkout</h2>
+          <h2 className="text-lg font-bold text-gray-900 truncate">{tc("title")}</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-700">
             <X className="w-5 h-5" />
           </button>
@@ -154,8 +158,8 @@ export function CheckoutModal({
               {/* CONTACT */}
               <SectionCard
                 icon={<User className="w-4 h-4" />}
-                label="CONTACT"
-                summary={contactSummary ?? "Add details"}
+                label={tc("contact")}
+                summary={contactSummary ?? tc("addDetails")}
                 onEdit={() => toggleEdit("contact")}
                 expanded={editingSection === "contact"}
                 primary={theme.primaryColor}
@@ -164,19 +168,19 @@ export function CheckoutModal({
                   <input
                     className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    placeholder="Full name *" value={customerInfo.name}
+                    placeholder={tc("fullNamePlaceholder")} value={customerInfo.name}
                     onChange={e => setCustomerInfo({ ...customerInfo, name: e.target.value })}
                   />
                   <input
                     className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    placeholder="Phone *" value={customerInfo.phone}
+                    placeholder={tc("phonePlaceholder")} value={customerInfo.phone}
                     onChange={e => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
                   />
                   <input
                     className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    placeholder="Email (optional)" value={customerInfo.email}
+                    placeholder={tc("emailPlaceholder")} value={customerInfo.email}
                     onChange={e => setCustomerInfo({ ...customerInfo, email: e.target.value })}
                   />
                 </div>
@@ -185,7 +189,7 @@ export function CheckoutModal({
               {/* ORDERING METHOD (address only — order-type toggle stays on the main page) */}
               <SectionCard
                 icon={orderType === "delivery" ? <Truck className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
-                label="ORDERING METHOD"
+                label={tc("orderingMethod")}
                 summary={orderingSummary}
                 onEdit={orderType === "delivery" ? () => toggleEdit("ordering") : undefined}
                 expanded={editingSection === "ordering" && orderType === "delivery"}
@@ -200,7 +204,7 @@ export function CheckoutModal({
                         options={{ fields: ["address_components", "formatted_address", "geometry"], types: ["address"] }}
                       >
                         <input
-                          type="text" placeholder="Start typing your address…"
+                          type="text" placeholder={tc("startTypingAddress")}
                           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                           style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                           value={customerInfo.address}
@@ -209,7 +213,7 @@ export function CheckoutModal({
                       </Autocomplete>
                     ) : (
                       <input
-                        type="text" placeholder="Street address *"
+                        type="text" placeholder={tc("streetAddressPlaceholder")}
                         className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                         style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                         value={customerInfo.address}
@@ -218,14 +222,14 @@ export function CheckoutModal({
                     )}
                     <div className="grid grid-cols-2 gap-2">
                       <input
-                        type="text" placeholder="City"
+                        type="text" placeholder={tc("cityPlaceholder")}
                         className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                         style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                         value={customerInfo.city}
                         onChange={e => setCustomerInfo({ ...customerInfo, city: e.target.value })}
                       />
                       <input
-                        type="text" placeholder="Zip"
+                        type="text" placeholder={tc("zipPlaceholder")}
                         className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                         style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                         value={customerInfo.zip}
@@ -234,7 +238,7 @@ export function CheckoutModal({
                     </div>
                     {hasZones && geocoding && (
                       <p className="text-xs text-gray-500 flex items-center gap-1.5">
-                        <Loader2 className="w-3 h-3 animate-spin" /> Locating your address…
+                        <Loader2 className="w-3 h-3 animate-spin" /> {tc("locatingAddress")}
                       </p>
                     )}
                     {hasZones && !geocoding && geocodeError && (
@@ -242,13 +246,12 @@ export function CheckoutModal({
                     )}
                     {hasZones && resolvedZone && resolvedZone.inside && (
                       <p className="text-xs text-gray-600">
-                        You're in <span className="font-semibold" style={{ color: resolvedZone.zone.color }}>{resolvedZone.zone.name}</span>
-                        {" "}— Fee {formatCurrency(resolvedZone.zone.deliveryFee)}, ~{resolvedZone.zone.estimatedMinutes} min.
+                        {tc("youreIn", { zone: resolvedZone.zone.name, fee: formatCurrency(resolvedZone.zone.deliveryFee), minutes: resolvedZone.zone.estimatedMinutes })}
                       </p>
                     )}
                     {hasZones && resolvedZone && !resolvedZone.inside && (
                       <p className="text-xs text-amber-700">
-                        <strong>Outside our standard delivery areas.</strong> Fee {formatCurrency(resolvedZone.zone.deliveryFee)}, ETA ~{resolvedZone.zone.estimatedMinutes} min.
+                        <strong>{tc("outsideStandard")}</strong> {tc("outsideAreaWarning", { fee: formatCurrency(resolvedZone.zone.deliveryFee), minutes: resolvedZone.zone.estimatedMinutes })}
                       </p>
                     )}
                   </div>
@@ -258,14 +261,14 @@ export function CheckoutModal({
               {/* AVAILABLE TIME CHOICE */}
               <SectionCard
                 icon={<Clock className="w-4 h-4" />}
-                label="AVAILABLE TIME CHOICE"
+                label={tc("availableTimeChoice")}
                 summary={timeSummary}
                 onEdit={() => toggleEdit("time")}
                 expanded={editingSection === "time"}
                 primary={theme.primaryColor}
               >
                 <div className="pt-3 space-y-2">
-                  <label className="block text-xs text-gray-500">Schedule for later (optional)</label>
+                  <label className="block text-xs text-gray-500">{tc("scheduleForLaterOptional")}</label>
                   <input
                     type="datetime-local"
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
@@ -279,7 +282,7 @@ export function CheckoutModal({
                       onClick={() => setCustomerInfo({ ...customerInfo, scheduledFor: "" })}
                       className="text-xs text-gray-500 hover:text-gray-700 underline"
                     >
-                      Switch to ASAP
+                      {tc("switchToASAP")}
                     </button>
                   )}
                 </div>
@@ -288,7 +291,7 @@ export function CheckoutModal({
               {/* PAYMENT METHOD */}
               <SectionCard
                 icon={<CreditCard className="w-4 h-4" />}
-                label="PAYMENT METHOD"
+                label={tc("paymentMethodHeading")}
                 summary={paymentSummary}
                 onEdit={() => toggleEdit("payment")}
                 expanded={editingSection === "payment"}
@@ -296,8 +299,8 @@ export function CheckoutModal({
               >
                 <div className="pt-3 grid grid-cols-2 gap-2">
                   {[
-                    { value: "cash", label: `Cash on ${orderType === "pickup" ? "Pickup" : "Delivery"}` },
-                    { value: "card", label: "Pay Online (Card)" },
+                    { value: "cash", label: orderType === "pickup" ? tc("cashOnPickup") : tc("cashOnDelivery") },
+                    { value: "card", label: tc("payOnlineCard") },
                   ].map(pm => (
                     <button
                       key={pm.value}
@@ -315,7 +318,7 @@ export function CheckoutModal({
                 {customerInfo.paymentMethod === "card" && !cardPaymentEnabled && (
                   <div className="mt-2 p-2.5 bg-blue-50 rounded-lg text-xs text-blue-700 flex items-start gap-2">
                     <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
-                    Online card payment coming soon. Please pay on {orderType === "pickup" ? "pickup" : "delivery"} for now.
+                    {tc("cardComingSoon", { type: orderType === "pickup" ? tOrd("pickup").toLowerCase() : tOrd("delivery").toLowerCase() })}
                   </div>
                 )}
               </SectionCard>
@@ -323,7 +326,7 @@ export function CheckoutModal({
               {/* TIPS */}
               <SectionCard
                 icon={<Heart className="w-4 h-4" />}
-                label="TIPS?"
+                label={tc("tipsHeading")}
                 summary={tipsSummary}
                 onEdit={() => toggleEdit("tips")}
                 expanded={editingSection === "tips"}
@@ -340,7 +343,7 @@ export function CheckoutModal({
                         : { borderColor: "#e5e7eb", color: "#4b5563" }
                       }
                     >
-                      {p === 0 ? "No tip" : `${p}%`}
+                      {p === 0 ? tc("noTip") : `${p}%`}
                     </button>
                   ))}
                 </div>
@@ -349,7 +352,7 @@ export function CheckoutModal({
               {/* NOTES */}
               <SectionCard
                 icon={<Edit2 className="w-4 h-4" />}
-                label="ORDER NOTES"
+                label={tc("orderNotesHeading")}
                 summary={notesSummary}
                 onEdit={() => toggleEdit("notes")}
                 expanded={editingSection === "notes"}
@@ -359,7 +362,7 @@ export function CheckoutModal({
                   className="mt-3 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 resize-none"
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                   rows={2}
-                  placeholder="Any special instructions…"
+                  placeholder={tc("anyInstructions")}
                   value={customerInfo.notes}
                   onChange={e => setCustomerInfo({ ...customerInfo, notes: e.target.value })}
                 />
@@ -369,12 +372,12 @@ export function CheckoutModal({
             {/* ── Right column: order summary ── */}
             <div className="p-5 bg-gray-50">
               <div className="grid grid-cols-[40px_1fr_70px] gap-3 text-xs font-bold text-gray-500 uppercase pb-2 border-b border-gray-200">
-                <span>Qty</span>
-                <span>Item</span>
-                <span className="text-right">Price</span>
+                <span>{tc("qty")}</span>
+                <span>{tc("item")}</span>
+                <span className="text-right">{tc("price")}</span>
               </div>
               {cart.length === 0 ? (
-                <div className="py-10 text-center text-gray-400 text-sm">Cart is empty</div>
+                <div className="py-10 text-center text-gray-400 text-sm">{tc("cartEmpty")}</div>
               ) : (
                 <div className="divide-y divide-gray-100">
                   {cart.map((ci, i) => (
@@ -400,7 +403,7 @@ export function CheckoutModal({
                 ) : showCouponField ? (
                   <div className="flex gap-2">
                     <input
-                      type="text" placeholder="Coupon code"
+                      type="text" placeholder={tc("couponCodePlaceholder")}
                       className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                       style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                       value={couponCode}
@@ -420,7 +423,7 @@ export function CheckoutModal({
                     className="text-sm font-semibold underline"
                     style={{ color: theme.primaryColor }}
                   >
-                    Add coupon code
+                    {tOrd("couponCode")}
                   </button>
                 )}
               </div>
@@ -429,10 +432,10 @@ export function CheckoutModal({
               <div className="mt-4 pt-3 border-t border-gray-200 space-y-1 text-sm">
                 <div className="flex justify-between text-gray-600"><span>Sub-Total</span><span>{formatCurrency(subtotal)}</span></div>
                 {totalDiscount > 0 && (
-                  <div className="flex justify-between text-green-600 font-medium"><span>Discount</span><span>-{formatCurrency(totalDiscount)}</span></div>
+                  <div className="flex justify-between text-green-600 font-medium"><span>{tc("discount")}</span><span>-{formatCurrency(totalDiscount)}</span></div>
                 )}
                 {orderType === "delivery" && (
-                  <div className="flex justify-between text-gray-600"><span>Delivery</span><span>{formatCurrency(deliveryFee)}</span></div>
+                  <div className="flex justify-between text-gray-600"><span>{tc("delivery")}</span><span>{formatCurrency(deliveryFee)}</span></div>
                 )}
                 {appliedServiceFees.map(f => (
                   <div key={f.name} className="flex justify-between text-gray-600">
@@ -442,10 +445,10 @@ export function CheckoutModal({
                 ))}
                 <div className="flex justify-between text-gray-600"><span>Tax ({taxRate}%)</span><span>{formatCurrency(taxAmount)}</span></div>
                 {tipAmount > 0 && (
-                  <div className="flex justify-between text-gray-600"><span>Tip</span><span>{formatCurrency(tipAmount)}</span></div>
+                  <div className="flex justify-between text-gray-600"><span>{tc("tip")}</span><span>{formatCurrency(tipAmount)}</span></div>
                 )}
                 <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-200 mt-1">
-                  <span>Total</span><span>{formatCurrency(total)}</span>
+                  <span>{tc("total")}</span><span>{formatCurrency(total)}</span>
                 </div>
               </div>
             </div>
@@ -455,7 +458,7 @@ export function CheckoutModal({
         {/* Footer */}
         <div className="border-t border-gray-100 px-5 py-4 bg-white flex-shrink-0 flex items-center gap-3">
           <div className="flex-1">
-            <div className="text-xs text-gray-500 uppercase font-bold">Total</div>
+            <div className="text-xs text-gray-500 uppercase font-bold">{tc("total")}</div>
             <div className="text-lg font-bold text-gray-900">{formatCurrency(total)}</div>
           </div>
           <button
@@ -466,8 +469,8 @@ export function CheckoutModal({
           >
             {orderLoading && <Loader2 className="w-5 h-5 animate-spin" />}
             {orderLoading
-              ? "Placing order…"
-              : `Place ${orderType === "delivery" ? "Delivery" : "Pickup"} Order Now`}
+              ? tc("placingOrder")
+              : tc("placeOrder")}
           </button>
         </div>
       </div>
@@ -487,6 +490,7 @@ function SectionCard({
   primary: string;
   children?: React.ReactNode;
 }) {
+  const tc = useTranslations("common");
   return (
     <div className="border border-gray-200 rounded-xl bg-white overflow-hidden">
       <div className="flex items-center gap-3 px-4 py-3">
@@ -498,7 +502,7 @@ function SectionCard({
         {onEdit && (
           <button
             onClick={onEdit}
-            title="Edit"
+            title={tc("edit")}
             className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-700 flex-shrink-0"
           >
             {expanded ? <ChevronDown className="w-4 h-4" /> : <Edit2 className="w-3.5 h-3.5" />}

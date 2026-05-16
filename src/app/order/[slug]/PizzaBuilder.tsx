@@ -15,12 +15,13 @@
  * Multi-tenancy: all data (groups, options, prices) comes from the
  * restaurant's own menu items — no cross-restaurant data leaks possible.
  */
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import {
   X, Plus, Minus, ChevronLeft, ChevronRight,
   Scissors, Check, Flame, Leaf, AlertCircle,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -340,6 +341,7 @@ function toppingColor(name: string): string {
 function PizzaVisual({
   isHalfHalf, toppings,
 }: { isHalfHalf: boolean; toppings: SelectedTopping[] }) {
+  const tp = useTranslations("pizza");
   const whole = toppings.filter(t => t.placement === "whole");
   const left  = toppings.filter(t => t.placement === "left");
   const right = toppings.filter(t => t.placement === "right");
@@ -396,9 +398,9 @@ function PizzaVisual({
             strokeDasharray="4 3"
           />
           <text x="62" y="104" textAnchor="middle" fontSize="8" fontWeight="700"
-            fill="rgba(255,255,255,0.9)" style={{ userSelect: "none" }}>LEFT</text>
+            fill="rgba(255,255,255,0.9)" style={{ userSelect: "none" }}>{tp("leftSvg")}</text>
           <text x="138" y="104" textAnchor="middle" fontSize="8" fontWeight="700"
-            fill="rgba(255,255,255,0.9)" style={{ userSelect: "none" }}>RIGHT</text>
+            fill="rgba(255,255,255,0.9)" style={{ userSelect: "none" }}>{tp("rightSvg")}</text>
         </>
       )}
 
@@ -603,6 +605,8 @@ function defaultCustomization(item: MenuItem, config: PizzaConfig, groups: ModGr
 }
 
 export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initial }: PizzaBuilderProps) {
+  const tp = useTranslations("pizza");
+  const tOrd = useTranslations("ordering");
   const groups = item.modifierGroups;
 
   // ── State ────────────────────────────────────────────────────────────────
@@ -829,6 +833,54 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
     otherGroupsSatisfied &&
     (!item.hasVariants || !!variantId);
 
+  // ── Missing-section nudge ─────────────────────────────────────────────────
+  // When the user taps a disabled Add to Cart, we don't want a dead button.
+  // Compute which section is the first one they need to fill in, then scroll
+  // the modal body to that section and pulse a red ring around it for ~2.5s.
+  // The order of checks below matches the visual order of the sections in
+  // the modal so the user always gets walked top-down through what's missing.
+  const firstMissingOtherGroup = otherGroups.find(g => {
+    const min = g.required && g.minSelect < 1 ? 1 : g.minSelect;
+    return (customization.otherSelections[g.id] ?? []).length < min;
+  });
+  const firstMissingToppingGroup = toppingGroups.find(g => {
+    const min = g.required && g.minSelect < 1 ? 1 : g.minSelect;
+    if (min === 0) return false;
+    const count = customization.toppings.filter(t => t.groupId === g.id).length;
+    return count < min;
+  });
+  const firstMissingSection: string | null = (() => {
+    if (item.hasVariants && !variantId) return "size";
+    if (crustMissing) return "crust";
+    if (firstMissingOtherGroup) return `other-${firstMissingOtherGroup.id}`;
+    if (sauceMissing) return "sauce";
+    if (cheeseMissing) return "cheese";
+    if (firstMissingToppingGroup) return `toppings`;
+    return null;
+  })();
+
+  const scrollAreaRef = useRef<HTMLDivElement | null>(null);
+  const [highlightedSection, setHighlightedSection] = useState<string | null>(null);
+  const highlightTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const focusMissingSection = useCallback(() => {
+    if (!firstMissingSection) return;
+    const scope = scrollAreaRef.current ?? document;
+    const el = scope.querySelector<HTMLElement>(`[data-pizza-section="${firstMissingSection}"]`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    setHighlightedSection(firstMissingSection);
+    if (highlightTimerRef.current) clearTimeout(highlightTimerRef.current);
+    highlightTimerRef.current = setTimeout(() => setHighlightedSection(null), 2500);
+  }, [firstMissingSection]);
+
+  // Helper for adding the highlight ring inline at each section.
+  const ringFor = (key: string): string =>
+    highlightedSection === key
+      ? "ring-2 ring-red-500 ring-offset-2 rounded-2xl animate-pulse"
+      : "";
+
   // ── Render ───────────────────────────────────────────────────────────────
 
   return (
@@ -868,12 +920,12 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
         <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
 
           {/* ── Left: Options ── */}
-          <div className="flex-1 overflow-y-auto p-5 space-y-6">
+          <div ref={scrollAreaRef} className="flex-1 overflow-y-auto p-5 space-y-6">
 
             {/* Size */}
             {item.hasVariants && item.variants.length > 0 && (
-              <section>
-                <SectionHeader label="Choose Size" required />
+              <section data-pizza-section="size" className={ringFor("size")}>
+                <SectionHeader label={tp("chooseSize")} required />
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {item.variants.map(v => (
                     <button
@@ -898,9 +950,9 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
 
             {/* Crust */}
             {crustGroup && (
-              <section>
+              <section data-pizza-section="crust" className={ringFor("crust")}>
                 <SectionHeader
-                  label="Choose Crust"
+                  label={tp("chooseCrust")}
                   required={crustGroup.required}
                 />
                 <div className="grid grid-cols-2 gap-2">
@@ -931,7 +983,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
             {otherGroups.map(g => {
               const selected = customization.otherSelections[g.id] ?? [];
               return (
-                <section key={g.id}>
+                <section key={g.id} data-pizza-section={`other-${g.id}`} className={ringFor(`other-${g.id}`)}>
                   <SectionHeader label={g.name} required={g.required || g.minSelect > 0} />
                   <div className="grid grid-cols-2 gap-2">
                     {g.options.filter(o => o.isAvailable).map(opt => {
@@ -979,8 +1031,8 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                       style={{ color: customization.isHalfHalf ? primaryColor : "#9ca3af" }}
                     />
                     <div>
-                      <p className="text-sm font-semibold text-gray-900">Half &amp; Half</p>
-                      <p className="text-xs text-gray-400">Different toppings on each half</p>
+                      <p className="text-sm font-semibold text-gray-900">{tp("halfHalf")}</p>
+                      <p className="text-xs text-gray-400">{tp("halfHalfDesc")}</p>
                     </div>
                   </div>
                   <div
@@ -998,9 +1050,9 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
 
             {/* Sauce */}
             {sauceGroup && (
-              <section>
+              <section data-pizza-section="sauce" className={ringFor("sauce")}>
                 <div className="flex items-center justify-between mb-2">
-                  <SectionHeader label="Sauce" required={sauceGroup.required} />
+                  <SectionHeader label={tp("sauce")} required={sauceGroup.required} />
                   {customization.isHalfHalf && (
                     <div className="flex rounded-lg overflow-hidden border border-gray-200 text-xs">
                       {(["whole", "split"] as const).map(m => (
@@ -1031,7 +1083,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                 {customization.isHalfHalf && sauceMode === "split" && (
                   <div className="space-y-3">
                     <div>
-                      <p className="text-xs font-semibold text-gray-500 mb-1.5">LEFT HALF</p>
+                      <p className="text-xs font-semibold text-gray-500 mb-1.5">{tp("leftHalf")}</p>
                       <OptionRow
                         options={sauceGroup.options.filter(o => o.isAvailable)}
                         selectedId={customization.leftSauceOptionId}
@@ -1040,7 +1092,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                       />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-gray-500 mb-1.5">RIGHT HALF</p>
+                      <p className="text-xs font-semibold text-gray-500 mb-1.5">{tp("rightHalf")}</p>
                       <OptionRow
                         options={sauceGroup.options.filter(o => o.isAvailable)}
                         selectedId={customization.rightSauceOptionId}
@@ -1055,9 +1107,9 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
 
             {/* Cheese */}
             {cheeseGroup && (
-              <section>
+              <section data-pizza-section="cheese" className={ringFor("cheese")}>
                 <div className="flex items-center justify-between mb-2">
-                  <SectionHeader label="Cheese" required={cheeseGroup.required} />
+                  <SectionHeader label={tp("cheese")} required={cheeseGroup.required} />
                   {customization.isHalfHalf && (
                     <div className="flex rounded-lg overflow-hidden border border-gray-200 text-xs">
                       {(["whole", "split"] as const).map(m => (
@@ -1088,7 +1140,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                 {customization.isHalfHalf && cheeseMode === "split" && (
                   <div className="space-y-3">
                     <div>
-                      <p className="text-xs font-semibold text-gray-500 mb-1.5">LEFT HALF</p>
+                      <p className="text-xs font-semibold text-gray-500 mb-1.5">{tp("leftHalf")}</p>
                       <OptionRow
                         options={cheeseGroup.options.filter(o => o.isAvailable)}
                         selectedId={customization.leftCheeseOptionId}
@@ -1097,7 +1149,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                       />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-gray-500 mb-1.5">RIGHT HALF</p>
+                      <p className="text-xs font-semibold text-gray-500 mb-1.5">{tp("rightHalf")}</p>
                       <OptionRow
                         options={cheeseGroup.options.filter(o => o.isAvailable)}
                         selectedId={customization.rightCheeseOptionId}
@@ -1112,13 +1164,13 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
 
             {/* Toppings */}
             {toppingGroups.length > 0 && (
-              <section>
+              <section data-pizza-section="toppings" className={ringFor("toppings")}>
                 <div className="flex items-center justify-between mb-3">
                   <SectionHeader
                     label={
                       config.includedToppings > 0
-                        ? `Toppings (${config.includedToppings} included)`
-                        : "Toppings"
+                        ? tp("toppingsIncluded", { count: config.includedToppings })
+                        : tp("toppings")
                     }
                   />
                   {/* Topping count badge */}
@@ -1136,19 +1188,19 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                 {customization.isHalfHalf && (
                   <div className="flex gap-1 p-1 bg-gray-100 rounded-xl mb-4">
                     <PlacementButton
-                      label="◑ Left Half"
+                      label={tp("leftHalfButton")}
                       active={toppingPlacement === "left"}
                       onClick={() => setToppingPlacement("left")}
                       primaryColor={primaryColor}
                     />
                     <PlacementButton
-                      label="⬤ Whole"
+                      label={tp("wholeButton")}
                       active={toppingPlacement === "whole"}
                       onClick={() => setToppingPlacement("whole")}
                       primaryColor={primaryColor}
                     />
                     <PlacementButton
-                      label="Right Half ◐"
+                      label={tp("rightHalfButton")}
                       active={toppingPlacement === "right"}
                       onClick={() => setToppingPlacement("right")}
                       primaryColor={primaryColor}
@@ -1188,22 +1240,19 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
 
                 {/* Quantity legend */}
                 <p className="text-xs text-gray-400 mt-3">
-                  Tap a topping to add it. After adding, use the{" "}
-                  <span className="font-semibold text-sky-600">Light</span> or{" "}
-                  <span className="font-semibold text-orange-600">Xtra</span>{" "}
-                  buttons to adjust the amount.
+                  {tp("topingsHelp")}
                 </p>
               </section>
             )}
 
             {/* Special instructions */}
             <section>
-              <SectionHeader label="Special Instructions" />
+              <SectionHeader label={tp("specialInstructions")} />
               <textarea
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 text-gray-900 placeholder:text-gray-400"
                 style={{ "--tw-ring-color": primaryColor } as React.CSSProperties}
                 rows={2}
-                placeholder="Extra crispy, no garlic, etc."
+                placeholder={tp("notesPlaceholder")}
                 value={notes}
                 onChange={e => setNotes(e.target.value)}
               />
@@ -1224,7 +1273,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
             {/* Toppings summary */}
             {customization.toppings.length > 0 && (
               <div className="mt-4 w-full">
-                <p className="text-xs font-bold text-gray-400 uppercase mb-2">Your toppings</p>
+                <p className="text-xs font-bold text-gray-400 uppercase mb-2">{tp("yourToppings")}</p>
                 <div className="space-y-1 max-h-40 overflow-y-auto">
                   {customization.toppings.map((t, i) => (
                     <div key={i} className="flex items-center gap-1.5 text-xs text-gray-600">
@@ -1254,16 +1303,24 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
         {/* ── Sticky footer ── */}
         <div className="flex-shrink-0 border-t border-gray-100 p-4 bg-white">
           {!canAdd && (
-            <div className="flex items-center gap-2 text-xs text-red-600 mb-3">
+            <button
+              type="button"
+              onClick={focusMissingSection}
+              className="flex items-center gap-2 text-xs text-red-600 mb-3 w-full text-left cursor-pointer active:bg-red-50 -mx-1 px-1 py-1 rounded-md transition touch-manipulation"
+              title="Tap to jump to the section that needs your attention"
+            >
               <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-              {crustMissing       ? "Please choose a crust to continue"
-               : sauceMissing     ? (sauceGroup?.name  ? `Please choose ${sauceGroup.name.toLowerCase()} to continue`  : "Please choose a sauce to continue")
-               : cheeseMissing    ? (cheeseGroup?.name ? `Please choose ${cheeseGroup.name.toLowerCase()} to continue` : "Please choose a cheese to continue")
-               : !toppingGroupsSatisfied ? "Please make required topping selections"
-               : !otherGroupsSatisfied   ? "Please make all required selections"
-               : item.hasVariants && !variantId ? "Please choose a size to continue"
-               : "Please complete required selections"}
-            </div>
+              <span className="flex-1">
+                {item.hasVariants && !variantId ? tp("errors.chooseSize")
+                 : crustMissing      ? tp("errors.chooseCrust")
+                 : !otherGroupsSatisfied   ? tp("errors.completeSelections")
+                 : sauceMissing      ? (sauceGroup?.name  ? tp("errors.chooseSauceNamed", { name: sauceGroup.name.toLowerCase() })  : tp("errors.chooseSauce"))
+                 : cheeseMissing     ? (cheeseGroup?.name ? tp("errors.chooseCheeseNamed", { name: cheeseGroup.name.toLowerCase() }) : tp("errors.chooseCheese"))
+                 : !toppingGroupsSatisfied ? tp("errors.chooseToppings")
+                 : tp("errors.completeRequired")}
+              </span>
+              <span className="text-red-500 font-semibold flex-shrink-0">→</span>
+            </button>
           )}
           <div className="flex items-center gap-3">
             {/* Quantity */}
@@ -1283,14 +1340,18 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
               </button>
             </div>
 
-            {/* Add to cart */}
+            {/* Add to cart. When validation fails we deliberately leave the
+                button enabled and intercept the click → scroll the user to
+                the first missing section and pulse a red ring around it.
+                aria-disabled still announces the state to screen readers. */}
             <button
-              onClick={handleAdd}
-              disabled={!canAdd}
-              className="flex-1 text-white font-bold py-3 rounded-xl transition text-base disabled:opacity-40 disabled:cursor-not-allowed"
+              type="button"
+              onClick={canAdd ? handleAdd : focusMissingSection}
+              aria-disabled={!canAdd}
+              className={`flex-1 text-white font-bold py-3 rounded-xl transition text-base touch-manipulation ${canAdd ? "cursor-pointer" : "opacity-50 cursor-pointer"}`}
               style={{ backgroundColor: primaryColor }}
             >
-              Add to Cart · {formatCurrency(lineTotal)}
+              {tOrd("addToCart")} · {formatCurrency(lineTotal)}
             </button>
           </div>
         </div>

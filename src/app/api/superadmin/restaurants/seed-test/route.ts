@@ -26,6 +26,7 @@ export async function POST() {
     data: {
       name,
       slug,
+      subdomain: slug, // matches default-subdomain convention
       email,
       subscriptionStatus: "trial",
       isActive: true,
