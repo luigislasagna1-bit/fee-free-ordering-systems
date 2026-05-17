@@ -1,8 +1,16 @@
 /**
- * Monthly-digest cron handler. Mirrors daily-digest exactly except:
- *   - Uses buildMonthlyDigest (previous calendar month, YoY comparison)
- *   - Fires on the 1st of each month
- *   - Filters recipients by `endOfMonthReport = true`
+ * Monthly-digest handler — MANUAL TRIGGER ONLY.
+ *
+ * Vercel Hobby allows 2 crons total. Both slots are used by /api/cron/commissions
+ * and /api/cron/daily-digest. The daily handler self-dispatches the monthly
+ * digest when UTC day === 1, so this endpoint is NOT scheduled in vercel.json.
+ *
+ * It exists for:
+ *   - One-off debug runs (curl with the bearer token)
+ *   - A future upgrade to Pro plan where we'd give monthly its own slot
+ *
+ * Guarded against accidental mid-month runs with the UTC-day-1 check unless
+ * CRON_FORCE_MONTHLY=1 is set.
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -78,7 +86,7 @@ export async function GET(req: NextRequest) {
     try {
       await Promise.all(
         r.notificationRecipients.map((recipient) =>
-          sendMonthlyDigestEmail({ to: recipient.email, stats: stats! }).catch((err) => {
+          sendMonthlyDigestEmail({ to: recipient.email, stats: stats!, locale: recipient.emailLanguage }).catch((err) => {
             console.error(`[monthly-digest] send to ${recipient.email} failed:`, err);
             errors++;
           })

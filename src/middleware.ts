@@ -43,7 +43,8 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Skip API, _next assets, favicon, static files. Catch everything else so
-  // hosted-site subdomains hit the rewriter.
-  matcher: ["/((?!api|_next|.*\\..*|favicon.ico).*)"],
+  // Skip API, _next assets, favicon, static files, and /embed/* (the widget
+  // iframe must always render on the apex regardless of host). Catch
+  // everything else so hosted-site subdomains hit the rewriter.
+  matcher: ["/((?!api|_next|embed|.*\\..*|favicon.ico).*)"],
 };

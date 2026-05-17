@@ -86,7 +86,7 @@ export async function GET(req: NextRequest) {
         try {
           await Promise.all(
             dailyRecipients.map((recipient) =>
-              sendDailyDigestEmail({ to: recipient.email, stats: stats! }).catch((err) => {
+              sendDailyDigestEmail({ to: recipient.email, stats: stats!, locale: recipient.emailLanguage }).catch((err) => {
                 console.error(`[daily-digest] send to ${recipient.email} failed:`, err);
                 errors++;
               })
@@ -113,7 +113,7 @@ export async function GET(req: NextRequest) {
         try {
           await Promise.all(
             monthlyRecipients.map((recipient) =>
-              sendMonthlyDigestEmail({ to: recipient.email, stats: stats! }).catch((err) => {
+              sendMonthlyDigestEmail({ to: recipient.email, stats: stats!, locale: recipient.emailLanguage }).catch((err) => {
                 console.error(`[daily-digest] monthly send to ${recipient.email} failed:`, err);
                 errors++;
               })

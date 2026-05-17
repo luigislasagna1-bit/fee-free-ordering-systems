@@ -2,11 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 
+// Allow-listed columns the API will write. Keep this in sync with the admin
+// UI in src/app/admin/notifications/NotificationsClient.tsx — toggles hidden
+// from the UI are also stripped from this list, so a curl-wielding user can't
+// flip dead toggles that no handler reads. The DB columns remain so old data
+// isn't lost when/if the toggle is re-enabled later.
 const TOGGLES = [
   "isActive", "emailLanguage",
   "deliveryConfirmed", "pickupConfirmed", "tableReservationConfirmed", "orderAheadConfirmed", "dineInConfirmed",
-  "orderPlaced", "orderAccepted", "orderRejected", "orderCanceled", "orderMissed", "orderNotPlaced",
-  "lowBattery", "badInternet", "endOfDayReport", "endOfMonthReport",
+  "orderPlaced", "orderAccepted", "orderRejected", "orderCanceled", "orderMissed",
+  "endOfDayReport", "endOfMonthReport",
+  // Dead toggles intentionally excluded (no handler ever reads them):
+  //   "orderNotPlaced", "lowBattery", "badInternet"
 ];
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

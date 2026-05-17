@@ -455,89 +455,97 @@ function fmtMoney(n: number): string {
   return `$${(n ?? 0).toFixed(2)}`;
 }
 
-function digestHtml(s: DigestStats, kind: "daily" | "monthly"): string {
+function digestHtml(s: DigestStats, kind: "daily" | "monthly", t: Translator): string {
   const headline =
-    kind === "daily" ? "Online ordering daily insights" : "Monthly performance report";
+    kind === "daily" ? t("email.digest.headlineDaily") : t("email.digest.headlineMonthly");
   return `
     <h2 style="font-size:14px; color:#666; margin:0 0 8px;">${headline}</h2>
     <p style="margin:0 0 16px; color:#999;">${s.periodLabel}</p>
-    <p>Hi there,</p>
-    <p>Here is the sales report for <strong>${s.restaurantName}</strong>.</p>
+    <p>${t("email.digest.hi")}</p>
+    <p>${t("email.digest.intro", { restaurant: s.restaurantName })}</p>
 
-    <h3 style="font-size:14px; color:#f97316; margin:20px 0 8px;">SALES PERFORMANCE
+    <h3 style="font-size:14px; color:#f97316; margin:20px 0 8px;">${t("email.digest.salesPerformance")}
       <span style="color:#888; font-weight:normal; font-size:12px;">(${s.comparisonLabel})</span>
     </h3>
     <table style="width:100%; border-collapse:collapse;">
       <tr>
-        <td style="padding:8px 0; width:50%;"><strong>Sales</strong><br>
+        <td style="padding:8px 0; width:50%;"><strong>${t("email.digest.sales")}</strong><br>
           <span style="font-size:18px;">${fmtMoney(s.sales)}</span> ${fmtDelta(s.salesDelta)}
         </td>
-        <td style="padding:8px 0;"><strong>Orders</strong><br>
+        <td style="padding:8px 0;"><strong>${t("email.digest.orders")}</strong><br>
           <span style="font-size:18px;">${s.orders}</span> ${fmtDelta(s.ordersDelta)}
         </td>
       </tr>
       <tr>
-        <td style="padding:8px 0;"><strong>Avg. order value</strong><br>
+        <td style="padding:8px 0;"><strong>${t("email.digest.avgOrderValue")}</strong><br>
           <span style="font-size:18px;">${fmtMoney(s.avgOrderValue)}</span> ${fmtDelta(s.avgOrderValueDelta)}
         </td>
-        <td style="padding:8px 0;"><strong>Table reservations</strong><br>
+        <td style="padding:8px 0;"><strong>${t("email.digest.tableReservations")}</strong><br>
           <span style="font-size:18px;">${s.tableReservations}</span> ${fmtDelta(s.reservationsDelta)}
         </td>
       </tr>
     </table>
 
-    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">CHANNELS</h3>
+    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">${t("email.digest.channels")}</h3>
     <table style="width:100%; border-collapse:collapse; font-size:13px;">
       <tr>
-        <td style="padding:6px 0;">Pickup</td>
+        <td style="padding:6px 0;">${t("email.digest.pickup")}</td>
         <td style="text-align:right;">${s.pickupOrders} · ${fmtMoney(s.pickupSales)}</td>
       </tr>
       <tr>
-        <td style="padding:6px 0;">Delivery</td>
+        <td style="padding:6px 0;">${t("email.digest.delivery")}</td>
         <td style="text-align:right;">${s.deliveryOrders} · ${fmtMoney(s.deliverySales)}</td>
       </tr>
       <tr>
-        <td style="padding:6px 0;">Dine-in</td>
+        <td style="padding:6px 0;">${t("email.digest.dineIn")}</td>
         <td style="text-align:right;">${s.dineInOrders} · ${fmtMoney(s.dineInSales)}</td>
       </tr>
     </table>
 
-    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">PAYMENTS</h3>
+    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">${t("email.digest.payments")}</h3>
     <table style="width:100%; border-collapse:collapse; font-size:13px;">
       <tr>
-        <td style="padding:6px 0;">Offline payments</td>
+        <td style="padding:6px 0;">${t("email.digest.offlinePayments")}</td>
         <td style="text-align:right;">${s.offlinePayments} · ${fmtMoney(s.offlinePaymentsAmount)}</td>
       </tr>
       <tr>
-        <td style="padding:6px 0;">Online payments</td>
+        <td style="padding:6px 0;">${t("email.digest.onlinePayments")}</td>
         <td style="text-align:right;">${s.onlinePayments} · ${fmtMoney(s.onlinePaymentsAmount)}</td>
       </tr>
     </table>
 
-    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">SALES BREAKDOWN</h3>
+    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">${t("email.digest.salesBreakdown")}</h3>
     <table style="width:100%; border-collapse:collapse; font-size:13px;">
-      <tr><td style="padding:6px 0;">Sub-totals</td><td style="text-align:right;">${fmtMoney(s.subTotals)}</td></tr>
-      <tr><td style="padding:6px 0;">Tax</td><td style="text-align:right;">${fmtMoney(s.taxAmount)}</td></tr>
-      <tr><td style="padding:6px 0;">Delivery fees</td><td style="text-align:right;">${fmtMoney(s.deliveryFees)}</td></tr>
-      <tr><td style="padding:6px 0;">Tips</td><td style="text-align:right;">${fmtMoney(s.tips)}</td></tr>
-      <tr><td style="padding:6px 0;">Other fees</td><td style="text-align:right;">${fmtMoney(s.otherFees)}</td></tr>
-      <tr style="border-top:1px solid #eee;"><td style="padding:8px 0;"><strong>Total</strong></td><td style="text-align:right;"><strong>${fmtMoney(s.total)}</strong></td></tr>
+      <tr><td style="padding:6px 0;">${t("email.digest.subTotals")}</td><td style="text-align:right;">${fmtMoney(s.subTotals)}</td></tr>
+      <tr><td style="padding:6px 0;">${t("email.digest.tax")}</td><td style="text-align:right;">${fmtMoney(s.taxAmount)}</td></tr>
+      <tr><td style="padding:6px 0;">${t("email.digest.deliveryFees")}</td><td style="text-align:right;">${fmtMoney(s.deliveryFees)}</td></tr>
+      <tr><td style="padding:6px 0;">${t("email.digest.tips")}</td><td style="text-align:right;">${fmtMoney(s.tips)}</td></tr>
+      <tr><td style="padding:6px 0;">${t("email.digest.otherFees")}</td><td style="text-align:right;">${fmtMoney(s.otherFees)}</td></tr>
+      <tr style="border-top:1px solid #eee;"><td style="padding:8px 0;"><strong>${t("email.digest.total")}</strong></td><td style="text-align:right;"><strong>${fmtMoney(s.total)}</strong></td></tr>
     </table>
   `;
 }
 
-export async function sendDailyDigestEmail(params: { to: string; stats: DigestStats }) {
+export async function sendDailyDigestEmail(params: { to: string; stats: DigestStats; locale?: string }) {
+  const t = await getDict(params.locale);
   return send({
     to: params.to,
-    subject: `Daily report — ${params.stats.restaurantName} — ${params.stats.periodLabel}`,
-    html: wrap("", digestHtml(params.stats, "daily")),
+    subject: t("email.digest.subjectDaily", {
+      restaurant: params.stats.restaurantName,
+      period: params.stats.periodLabel,
+    }),
+    html: wrap("", digestHtml(params.stats, "daily", t)),
   });
 }
 
-export async function sendMonthlyDigestEmail(params: { to: string; stats: DigestStats }) {
+export async function sendMonthlyDigestEmail(params: { to: string; stats: DigestStats; locale?: string }) {
+  const t = await getDict(params.locale);
   return send({
     to: params.to,
-    subject: `Monthly report — ${params.stats.restaurantName} — ${params.stats.periodLabel}`,
-    html: wrap("", digestHtml(params.stats, "monthly")),
+    subject: t("email.digest.subjectMonthly", {
+      restaurant: params.stats.restaurantName,
+      period: params.stats.periodLabel,
+    }),
+    html: wrap("", digestHtml(params.stats, "monthly", t)),
   });
 }
