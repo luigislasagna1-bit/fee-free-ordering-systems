@@ -17,6 +17,17 @@ export async function handleSubscriptionEvent(event: Stripe.Event) {
   const sub = event.data.object as Stripe.Subscription;
   const customerId = typeof sub.customer === "string" ? sub.customer : sub.customer.id;
 
+  // Branch 1: add-on subscription — Stripe Checkout for an AddOn stamps
+  // subscription_data.metadata.addOnSlug. When present, this sub belongs to
+  // RestaurantAddOn, not the platform plan, so we route to the add-on
+  // handler and skip the legacy plan update entirely.
+  const addOnSlug = (sub.metadata as any)?.addOnSlug as string | undefined;
+  const addOnRestaurantId = (sub.metadata as any)?.restaurantId as string | undefined;
+  if (addOnSlug) {
+    await handleAddOnSubscriptionEvent(event, sub, addOnSlug, addOnRestaurantId);
+    return;
+  }
+
   const restaurant = await prisma.restaurant.findUnique({
     where: { stripeCustomerId: customerId },
     select: { id: true, email: true, name: true, defaultLanguage: true },
@@ -71,6 +82,79 @@ export async function handleSubscriptionEvent(event: Stripe.Event) {
       stripeSubscriptionId: sub.id,
       currentPeriodEnd: periodEndSec ? new Date(periodEndSec * 1000) : null,
       cancelAtPeriodEnd: sub.cancel_at_period_end ?? false,
+    },
+  });
+}
+
+/**
+ * Mirror Stripe lifecycle into the RestaurantAddOn row. The Checkout
+ * session put `addOnSlug` + `restaurantId` into subscription.metadata so
+ * we can find the right row without a customer lookup.
+ */
+async function handleAddOnSubscriptionEvent(
+  event: Stripe.Event,
+  sub: Stripe.Subscription,
+  addOnSlug: string,
+  restaurantIdHint?: string
+) {
+  const customerId = typeof sub.customer === "string" ? sub.customer : sub.customer.id;
+
+  // Find AddOn row (by slug — metadata is authoritative).
+  const addOn = await prisma.addOn.findUnique({ where: { slug: addOnSlug } });
+  if (!addOn) {
+    console.warn(`[stripe] add-on subscription for unknown slug ${addOnSlug}`);
+    return;
+  }
+
+  // Resolve restaurant from metadata or by stripeCustomerId.
+  let restaurantId = restaurantIdHint || null;
+  if (!restaurantId) {
+    const r = await prisma.restaurant.findUnique({
+      where: { stripeCustomerId: customerId },
+      select: { id: true },
+    });
+    if (r) restaurantId = r.id;
+  }
+  if (!restaurantId) {
+    console.warn(`[stripe] add-on subscription has no resolvable restaurant (customer=${customerId})`);
+    return;
+  }
+
+  if (event.type === "customer.subscription.deleted") {
+    await prisma.restaurantAddOn.updateMany({
+      where: { restaurantId, addOnId: addOn.id },
+      data: {
+        status: "cancelled",
+        cancelAtPeriodEnd: false,
+      },
+    });
+    return;
+  }
+
+  const sAny = sub as any;
+  const periodEndSec: number | undefined =
+    sAny.current_period_end ?? sAny.items?.data?.[0]?.current_period_end;
+  const trialEndSec = sAny.trial_end as number | undefined;
+  const status = mapStripeStatus(sub.status);
+
+  await prisma.restaurantAddOn.upsert({
+    where: { restaurantId_addOnId: { restaurantId, addOnId: addOn.id } },
+    create: {
+      restaurantId,
+      addOnId: addOn.id,
+      status,
+      stripeSubscriptionId: sub.id,
+      currentPeriodEnd: periodEndSec ? new Date(periodEndSec * 1000) : null,
+      cancelAtPeriodEnd: sub.cancel_at_period_end ?? false,
+      trialEndsAt: trialEndSec ? new Date(trialEndSec * 1000) : null,
+      activatedAt: new Date(),
+    },
+    update: {
+      status,
+      stripeSubscriptionId: sub.id,
+      currentPeriodEnd: periodEndSec ? new Date(periodEndSec * 1000) : null,
+      cancelAtPeriodEnd: sub.cancel_at_period_end ?? false,
+      trialEndsAt: trialEndSec ? new Date(trialEndSec * 1000) : null,
     },
   });
 }

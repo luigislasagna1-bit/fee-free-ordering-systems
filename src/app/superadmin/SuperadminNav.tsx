@@ -9,6 +9,7 @@ const items = [
   { href: "/superadmin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/superadmin/restaurants", label: "Restaurants", icon: Store },
   { href: "/superadmin/billing", label: "Billing", icon: CreditCard },
+  { href: "/superadmin/add-ons", label: "Add-Ons", icon: Zap },
   { href: "/superadmin/resellers", label: "Resellers", icon: Users },
   { href: "/superadmin/payouts", label: "Payouts", icon: Wallet },
   { href: "/superadmin/settings/stripe", label: "Stripe Settings", icon: Zap },

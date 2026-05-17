@@ -6,6 +6,7 @@ import {
   getPublishableKey,
   stripeReady,
 } from "@/lib/stripe";
+import { hasFeature } from "@/lib/entitlements";
 
 const ALLOWED_CURRENCIES = new Set(["usd", "cad", "gbp", "eur", "aud"]);
 const MAX_AMOUNT = 10_000; // $10,000 hard cap
@@ -57,6 +58,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { error: "Restaurant hasn't finished payment setup yet" },
       { status: 400 }
+    );
+  }
+
+  // Phase 5 entitlement gate — online card payments require the
+  // `card_payments` feature, which the "Online Payments" add-on grants.
+  // Restaurants without the add-on can still take cash/pay-at-store but
+  // can't accept card payments through this endpoint.
+  if (!(await hasFeature(restaurant.id, "card_payments"))) {
+    return NextResponse.json(
+      {
+        error: "Online card payments are a paid add-on. The restaurant hasn't subscribed.",
+        code: "feature_locked",
+        feature: "card_payments",
+      },
+      { status: 402 }
     );
   }
 

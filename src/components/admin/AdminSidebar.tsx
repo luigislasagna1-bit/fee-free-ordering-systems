@@ -120,7 +120,8 @@ const navGroups: NavGroup[] = [
     label: "Subscription & Billing",
     icon: Wallet,
     items: [
-      { href: "/admin/billing", labelKey: "billing", label: "Billing & Add-Ons", icon: Wallet },
+      { href: "/admin/billing", labelKey: "billing", label: "Billing", icon: Wallet },
+      { href: "/admin/billing/add-ons", labelKey: "addOns", label: "Add-Ons", icon: Zap },
     ],
   },
   {
