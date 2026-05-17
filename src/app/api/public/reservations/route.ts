@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
-import { sendReservationConfirmation, sendNewReservationNotification } from "@/lib/email";
+import { notifyStaff, notifyCustomer } from "@/lib/notifications";
 
 function generateConfirmationCode(): string {
   // 6-char uppercase, no ambiguous chars (no O/0/I/1)
@@ -128,36 +128,38 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Notifications (placeholder if EMAIL_ENABLED is false — logs to console)
-    if (reservation.customerEmail) {
-      await sendReservationConfirmation({
-        to: reservation.customerEmail,
+    // ── Notifications (toggle-aware fan-out) ─────────────────────────────
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
+    const status = initialStatus === "confirmed" ? "confirmed" : "pending";
+    notifyCustomer({
+      restaurantId: restaurant.id,
+      customerEmail: reservation.customerEmail,
+      customerLocale: restaurant.defaultLanguage || "en",
+      payload: {
+        event: "reservationConfirmation",
         customerName: reservation.customerName,
-        restaurantName: restaurant.name,
         partySize: reservation.partySize,
         date: reservation.date,
         time: reservation.time,
         confirmationCode: reservation.confirmationCode,
-        status: initialStatus === "confirmed" ? "confirmed" : "pending",
+        status,
         depositAmount: reservation.depositAmount,
-        preOrderTotal,
-        locale: restaurant.defaultLanguage || "en",
-      });
-    }
-    if (restaurant.email) {
-      await sendNewReservationNotification({
-        to: restaurant.email ?? "",
-        restaurantName: restaurant.name,
+        preOrderTotal: preOrderTotal ?? undefined,
+      },
+    }).catch((e) => console.error("[notifyCustomer reservation]", e));
+    notifyStaff({
+      restaurantId: restaurant.id,
+      payload: {
+        event: "reservationConfirmed",
         customerName: reservation.customerName,
         partySize: reservation.partySize,
         date: reservation.date,
         time: reservation.time,
         confirmationCode: reservation.confirmationCode,
-        status: initialStatus === "confirmed" ? "confirmed" : "pending",
-        dashboardUrl: `${process.env.NEXT_PUBLIC_APP_URL ?? ""}/admin/reservations`,
-        locale: restaurant.defaultLanguage || "en",
-      });
-    }
+        status,
+        dashboardUrl: `${baseUrl}/admin/reservations`,
+      },
+    }).catch((e) => console.error("[notifyStaff reservation]", e));
 
     return NextResponse.json({
       ok: true,

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { sendOrderStatusUpdateEmail } from "@/lib/email";
+import { notifyStaff, notifyCustomer, staffAcceptEventForOrderType } from "@/lib/notifications";
 import { refundDestinationPayment, stripeReady } from "@/lib/stripe";
 
 const ALLOWED_STATUSES = ["pending", "accepted", "preparing", "ready", "completed", "rejected", "cancelled"] as const;
@@ -99,7 +99,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const order = await prisma.order.update({
     where: { id },
     data: updates,
-    include: { restaurant: { select: { name: true, defaultLanguage: true } } },
+    include: { restaurant: { select: { id: true, name: true, defaultLanguage: true } } },
   });
 
   // Attempt Stripe refund if payment was captured and order is cancelled
@@ -107,17 +107,60 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     refundOrderAsync(id, existing.paymentIntentId).catch(() => {});
   }
 
-  if (order.customerEmail) {
-    sendOrderStatusUpdateEmail({
-      to: order.customerEmail,
+  // ── Notifications ──────────────────────────────────────────────────────
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+  // Always tell the customer about status changes (toggle is per-status inside notifyCustomer).
+  notifyCustomer({
+    restaurantId: order.restaurant.id,
+    customerEmail: order.customerEmail,
+    orderType: order.type,
+    customerLocale: order.restaurant.defaultLanguage || "en",
+    payload: {
+      event: "orderStatusUpdate",
       customerName: order.customerName,
       orderNumber: order.orderNumber,
       status: order.status,
-      restaurantName: order.restaurant.name,
       estimatedReady: order.estimatedReady ? new Date(order.estimatedReady) : undefined,
       rejectionReason: order.rejectionReason || undefined,
-      locale: order.restaurant.defaultLanguage || "en",
-    }).catch(() => {});
+    },
+  }).catch((e) => console.error("[notifyCustomer orderStatusUpdate]", e));
+
+  // Fan-out to staff recipients based on the new status. Each transition maps
+  // to a specific toggle so a restaurant can mute, e.g., dine-in confirmations
+  // without losing delivery ones.
+  if (newStatus === "accepted") {
+    const acceptEvent = staffAcceptEventForOrderType(order.type, !!order.scheduledFor);
+    notifyStaff({
+      restaurantId: order.restaurant.id,
+      payload: {
+        event: acceptEvent,
+        orderNumber: order.orderNumber,
+        customerName: order.customerName,
+        total: order.total,
+        dashboardUrl: `${baseUrl}/admin/orders`,
+      },
+    }).catch((e) => console.error("[notifyStaff order accepted]", e));
+  } else if (newStatus === "rejected") {
+    notifyStaff({
+      restaurantId: order.restaurant.id,
+      payload: {
+        event: "orderRejected",
+        orderNumber: order.orderNumber,
+        customerName: order.customerName,
+        reason: order.rejectionReason || undefined,
+        dashboardUrl: `${baseUrl}/admin/orders`,
+      },
+    }).catch((e) => console.error("[notifyStaff orderRejected]", e));
+  } else if (newStatus === "cancelled") {
+    notifyStaff({
+      restaurantId: order.restaurant.id,
+      payload: {
+        event: "orderCanceled",
+        orderNumber: order.orderNumber,
+        customerName: order.customerName,
+        dashboardUrl: `${baseUrl}/admin/orders`,
+      },
+    }).catch((e) => console.error("[notifyStaff orderCanceled]", e));
   }
 
   return NextResponse.json(order);

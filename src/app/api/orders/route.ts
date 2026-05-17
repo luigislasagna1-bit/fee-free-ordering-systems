@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { generateOrderNumber } from "@/lib/utils";
-import { sendOrderConfirmationEmail, sendNewOrderNotificationEmail } from "@/lib/email";
+import { notifyStaff, notifyCustomer } from "@/lib/notifications";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
@@ -333,33 +333,33 @@ export async function POST(req: NextRequest) {
       include: { items: { include: { modifiers: true } } },
     });
 
-    // ── Emails (fire-and-forget) ────────────────────────────────────────────
+    // ── Notifications (toggle-aware fan-out, fire-and-forget) ──────────────
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
-    if (cleanEmail) {
-      sendOrderConfirmationEmail({
-        to: cleanEmail,
+    notifyCustomer({
+      restaurantId: restaurant.id,
+      customerEmail: cleanEmail,
+      orderType: type,
+      payload: {
+        event: "orderConfirmed",
         customerName: sanitize(customerName, 100),
         orderNumber: order.orderNumber,
-        restaurantName: restaurant.name,
         items: validatedItems.map((i) => ({ name: i.name, quantity: i.quantity, price: i.price })),
         total: serverTotal,
         orderType: type,
         estimatedTime: type === "pickup" ? restaurant.estimatedPickup : restaurant.estimatedDelivery,
         trackingUrl: `${baseUrl}/order/${restaurantSlug}/status/${order.id}`,
-        locale: restaurant.defaultLanguage || "en",
-      }).catch(() => {});
-    }
-    if (restaurant.email) {
-      sendNewOrderNotificationEmail({
-        to: restaurant.email ?? "",
-        restaurantName: restaurant.name,
+      },
+    }).catch((e) => console.error("[notifyCustomer orderConfirmed]", e));
+    notifyStaff({
+      restaurantId: restaurant.id,
+      payload: {
+        event: "orderPlaced",
         orderNumber: order.orderNumber,
         customerName: sanitize(customerName, 100),
         total: serverTotal,
         dashboardUrl: `${baseUrl}/admin/orders`,
-        locale: restaurant.defaultLanguage || "en",
-      }).catch(() => {});
-    }
+      },
+    }).catch((e) => console.error("[notifyStaff orderPlaced]", e));
 
     return NextResponse.json({ id: order.id, orderNumber: order.orderNumber, total: serverTotal }, { status: 201 });
   } catch (err) {
