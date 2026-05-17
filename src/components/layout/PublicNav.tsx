@@ -29,6 +29,7 @@ export function PublicNav({ currentLocale = "en" }: Props) {
   const items: [string, string][] = [
     [t("features"), "/features"],
     [t("pricing"), "/pricing"],
+    [t("partners"), "/partners"],
     [t("faq"), "/faq"],
     [t("demo"), "/demo"],
   ];
