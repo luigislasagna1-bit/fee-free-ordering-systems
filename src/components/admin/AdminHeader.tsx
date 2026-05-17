@@ -1,9 +1,10 @@
 "use client";
 import type { Session } from "next-auth";
-import { Bell } from "lucide-react";
+import { Bell, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { LocationSwitcher, type LocationOption } from "./LocationSwitcher";
+import type { SetupProgress } from "@/lib/setup-checklist";
 
 export function AdminHeader({
   session,
@@ -11,6 +12,7 @@ export function AdminHeader({
   restaurantName,
   locations,
   activeLocationId,
+  setupProgress,
 }: {
   session: Session;
   pendingOrders?: number;
@@ -18,13 +20,52 @@ export function AdminHeader({
   /** When the brand has multiple locations, the switcher renders. Pass null/empty to hide. */
   locations?: LocationOption[];
   activeLocationId?: string;
+  /** When set and percent < 100, a sticky banner prompts the owner to finish setup. */
+  setupProgress?: SetupProgress | null;
 }) {
   const tAdmin = useTranslations("admin");
   const tOrders = useTranslations("admin.orders");
   const user = session.user as any;
   const displayName = restaurantName || user?.name || user?.email;
 
+  const showSetupBanner = !!setupProgress && setupProgress.percent < 100;
+
   return (
+    <div className="flex-shrink-0">
+    {showSetupBanner && setupProgress && (
+      <Link
+        href="/admin"
+        className="block bg-gradient-to-r from-orange-50 to-amber-50 border-b border-orange-200 px-6 py-2 hover:from-orange-100 hover:to-amber-100 transition"
+      >
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2 min-w-0">
+            <AlertCircle className="w-4 h-4 text-orange-600 flex-shrink-0" />
+            <span className="text-sm text-orange-900 truncate">
+              <span className="font-semibold">Setup {setupProgress.percent}% complete</span>
+              <span className="text-orange-700">
+                {" · "}
+                {setupProgress.publishReady
+                  ? "You're ready to publish"
+                  : `${setupProgress.requiredStepsRemaining.length} required step${
+                      setupProgress.requiredStepsRemaining.length === 1 ? "" : "s"
+                    } left`}
+              </span>
+            </span>
+          </div>
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <div className="w-32 h-1.5 bg-orange-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-orange-500 transition-all"
+                style={{ width: `${setupProgress.percent}%` }}
+              />
+            </div>
+            <span className="text-xs font-medium text-orange-700 hidden sm:inline">
+              Finish setup &rarr;
+            </span>
+          </div>
+        </div>
+      </Link>
+    )}
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0">
       <div className="flex items-center gap-4 min-w-0">
         <div className="min-w-0">
@@ -56,5 +97,6 @@ export function AdminHeader({
         </div>
       </div>
     </header>
+    </div>
   );
 }

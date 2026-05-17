@@ -9,6 +9,8 @@ import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { loadSetupProgress } from "@/lib/setup-checklist-loader";
+import type { SetupProgress } from "@/lib/setup-checklist";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -33,6 +35,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const restaurantId = user?.restaurantId;
   let pendingOrders = 0;
   let restaurantName = "";
+  let setupProgress: SetupProgress | null = null;
   let locationsForSwitcher: Array<{ id: string; name: string; city: string | null; isParent: boolean }> = [];
   if (restaurantId) {
     const [count, restaurant] = await Promise.all([
@@ -50,6 +53,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     ]);
     pendingOrders = count;
     restaurantName = restaurant?.name || "";
+
+    // Load setup progress for the sidebar checkmarks + header banner.
+    // Failure to load shouldn't break the layout — fall back to null.
+    try {
+      setupProgress = await loadSetupProgress(restaurantId);
+    } catch (err) {
+      console.error("[admin-layout] loadSetupProgress failed", err);
+      setupProgress = null;
+    }
 
     // Build the location list for the switcher. The "brand parent" is either
     // the current restaurant (if it has no parent) or its parent. Then the
@@ -121,7 +133,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           />
         )}
         <div className="flex flex-1 overflow-hidden">
-          <AdminSidebar session={session} pendingOrders={pendingOrders} />
+          <AdminSidebar session={session} pendingOrders={pendingOrders} setupProgress={setupProgress} />
           <div className="flex-1 flex flex-col overflow-hidden">
             <AdminHeader
               session={session}
@@ -129,6 +141,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               restaurantName={restaurantName}
               locations={locationsForSwitcher}
               activeLocationId={restaurantId}
+              setupProgress={setupProgress}
             />
             <main className="flex-1 overflow-y-auto p-6">{children}</main>
           </div>
