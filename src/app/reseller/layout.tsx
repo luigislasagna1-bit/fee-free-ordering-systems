@@ -1,55 +1,67 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { ChefHat } from "lucide-react";
 import prisma from "@/lib/db";
 import { ROLES } from "@/lib/roles";
+import { getSessionUser } from "@/lib/session";
 import { ResellerNav } from "./ResellerNav";
+import { SuperadminImpersonationBanner } from "./SuperadminImpersonationBanner";
 
 /**
  * /reseller/* root layout.
  *
- * Role gate: only reseller_partner OR pending_reseller users land here.
- * Pending/suspended/rejected users are punted to the holding page so they
- * still see a useful message instead of empty dashboards.
+ * Admits:
+ *   - reseller_partner (their own dashboard)
+ *   - pending_reseller (shown the holding page)
+ *   - superadmin currently in SA→reseller impersonation mode (effective role
+ *     swapped to reseller_partner by getSessionUser())
+ *
+ * Pending/suspended/rejected resellers get the holding page; approved ones
+ * get the nav + dashboard.
  */
 export default async function ResellerLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect("/login");
-  const role = (session.user as any)?.role;
-  const resellerProfileId = (session.user as any)?.resellerProfileId;
+  const user = await getSessionUser();
+  if (!user) redirect("/login");
 
-  if (role !== ROLES.RESELLER_PARTNER && role !== ROLES.PENDING_RESELLER) {
+  if (user.role !== ROLES.RESELLER_PARTNER && user.role !== ROLES.PENDING_RESELLER) {
     redirect("/login");
   }
 
   // Resolve the profile status. Pending / suspended / rejected → holding page.
-  const profile = resellerProfileId
+  const profile = user.resellerProfileId
     ? await prisma.resellerProfile.findUnique({
-        where: { id: resellerProfileId },
+        where: { id: user.resellerProfileId },
         select: { status: true, companyName: true, suspendedReason: true },
       })
     : null;
 
   const isApproved = profile?.status === "approved";
+  const isSuperadminViewing = user.impersonationMode === "superadmin_as_reseller";
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
-      <aside className="w-60 bg-gray-900 text-white flex flex-col">
-        <div className="h-16 flex items-center px-5 border-b border-gray-700">
-          <ChefHat className="w-6 h-6 text-orange-400 mr-2" />
-          <div>
-            <div className="font-bold text-orange-400 text-sm">Partner</div>
-            <div className="text-[10px] uppercase tracking-wider text-gray-500">Reseller</div>
+    <div className="flex h-screen bg-gray-50 overflow-hidden flex-col">
+      {isSuperadminViewing && user.resellerProfileId && (
+        <SuperadminImpersonationBanner
+          resellerProfileId={user.resellerProfileId}
+          companyName={profile?.companyName ?? null}
+        />
+      )}
+      <div className="flex flex-1 overflow-hidden">
+        <aside className="w-60 bg-gray-900 text-white flex flex-col">
+          <div className="h-16 flex items-center px-5 border-b border-gray-700">
+            <ChefHat className="w-6 h-6 text-orange-400 mr-2" />
+            <div>
+              <div className="font-bold text-orange-400 text-sm">Partner</div>
+              <div className="text-[10px] uppercase tracking-wider text-gray-500">Reseller</div>
+            </div>
           </div>
-        </div>
-        {isApproved && <ResellerNav />}
-        <div className="mt-auto p-4 border-t border-gray-700 text-xs text-gray-500">
-          {profile?.companyName ?? (session.user as any)?.email}
-          <div className="mt-1 text-[10px] uppercase">{profile?.status ?? "no profile"}</div>
-        </div>
-      </aside>
-      <main className="flex-1 overflow-y-auto p-6">{children}</main>
+          {isApproved && <ResellerNav />}
+          <div className="mt-auto p-4 border-t border-gray-700 text-xs text-gray-500">
+            {profile?.companyName ?? user.email}
+            <div className="mt-1 text-[10px] uppercase">{profile?.status ?? "no profile"}</div>
+          </div>
+        </aside>
+        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+      </div>
     </div>
   );
 }

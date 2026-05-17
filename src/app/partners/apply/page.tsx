@@ -22,6 +22,11 @@ export default function PartnersApplyPage() {
         </div>
 
         <ApplyClient />
+
+        <p className="text-center text-xs text-gray-500 mt-6 max-w-md mx-auto">
+          Already have a restaurant account on Fee Free Ordering? Use a <strong>different email</strong> for
+          this reseller application — one account per role, no self-referrals.
+        </p>
       </div>
     </div>
   );

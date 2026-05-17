@@ -107,6 +107,15 @@ model Restaurant {
   restaurantAccess     RestaurantAccess[]
   commissions          CommissionTransaction[]
 
+  // Multi-location: a child Restaurant points its parentRestaurantId at the
+  // brand's "primary" Restaurant. Nullable — existing restaurants stay
+  // top-level (parent = null). Each location bills/operates independently;
+  // the parent link only drives UX (location switcher, "add another location"
+  // button in the admin sidebar).
+  parentRestaurantId   String?
+  parentRestaurant     Restaurant?  @relation("Locations", fields: [parentRestaurantId], references: [id], onDelete: SetNull)
+  childLocations       Restaurant[] @relation("Locations")
+
   // Customer-side email toggles (single set per restaurant)
   customerEmailPickupReady   Boolean @default(true)
   customerEmailDeliveryReady Boolean @default(true)
@@ -115,6 +124,7 @@ model Restaurant {
   customerEmailOrderConfirm  Boolean @default(true)
 
   @@index([resellerProfileId])
+  @@index([parentRestaurantId])
 }
 
 model NotificationRecipient {
@@ -797,6 +807,11 @@ model ResellerProfile {
   referralCode      String   @unique @default(cuid())
   totalEarnedCents  Int      @default(0) // lifetime gross
   totalPaidCents    Int      @default(0) // lifetime payouts marked paid
+
+  // Superadmin can pin a custom flat rate that overrides the default tier
+  // table (0/5/10%). When non-null, recordCommissionForInvoice uses this
+  // value regardless of active-paying count. Useful for VIP partners.
+  customCommissionRate Float?   // percent, e.g. 7 means 7%
 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt

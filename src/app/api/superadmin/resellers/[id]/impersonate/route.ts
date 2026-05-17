@@ -1,0 +1,51 @@
+import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import prisma from "@/lib/db";
+import { getSessionUser, SA_RESELLER_IMPERSONATE_COOKIE } from "@/lib/session";
+import { isSuperadmin } from "@/lib/roles";
+
+/**
+ * POST — set the sa_reseller_impersonate cookie. Superadmin only.
+ * DELETE — clear the cookie.
+ *
+ * The cookie carries the ResellerProfile.id. getSessionUser() reads it on
+ * every request and swaps the superadmin's effective identity to that reseller.
+ */
+export async function POST(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const user = await getSessionUser();
+  if (!isSuperadmin(user?.role)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+  const { id } = await params;
+
+  // Confirm the reseller exists before stashing the cookie — otherwise we'd
+  // hand out an SA→nowhere cookie that getSessionUser would silently drop.
+  const profile = await prisma.resellerProfile.findUnique({
+    where: { id },
+    select: { id: true },
+  });
+  if (!profile) {
+    return NextResponse.json({ error: "Reseller not found" }, { status: 404 });
+  }
+
+  const cookieStore = await cookies();
+  cookieStore.set(SA_RESELLER_IMPERSONATE_COOKIE, id, {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 8 * 60 * 60, // 8h
+  });
+  return NextResponse.json({ ok: true });
+}
+
+export async function DELETE() {
+  const user = await getSessionUser();
+  // Allow either a plain superadmin or a superadmin currently in
+  // SA→reseller mode (so the "exit" button on the reseller side works).
+  if (!isSuperadmin(user?.role) && user?.impersonationMode !== "superadmin_as_reseller") {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+  const cookieStore = await cookies();
+  cookieStore.delete(SA_RESELLER_IMPERSONATE_COOKIE);
+  return NextResponse.json({ ok: true });
+}

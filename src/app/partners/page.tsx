@@ -222,9 +222,11 @@ export default async function PartnersPage() {
               No fixed-term contract. You can stop bringing on restaurants whenever — your existing commission tail
               keeps paying as long as those restaurants remain active.
             </Faq>
-            <Faq q="What if I'm already a customer myself?">
-              That's fine. You'll have a separate reseller account from your restaurant account. Your own restaurant
-              doesn't count toward your reseller tier (no self-referrals).
+            <Faq q="Can I be both a reseller and a restaurant owner?">
+              Yes. Use <strong>different email addresses</strong> for each account — one for your restaurant,
+              one for your reseller account. Log in with whichever email matches what you want to do. Your own
+              restaurant <strong>doesn't count</strong> toward your reseller tier (no self-referrals — we flag and
+              remove any). This mirrors how other partner programs handle the same case.
             </Faq>
           </div>
         </div>

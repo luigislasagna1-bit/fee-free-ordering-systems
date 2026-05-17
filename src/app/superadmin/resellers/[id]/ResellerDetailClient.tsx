@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2, CheckCircle2, AlertTriangle, XCircle } from "lucide-react";
+import { Loader2, CheckCircle2, AlertTriangle, XCircle, Percent, LogIn } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
 type Profile = {
@@ -17,13 +17,47 @@ type Profile = {
   totalEarnedCents: number;
   totalPaidCents: number;
   referralCode: string;
+  customCommissionRate: number | null;
   user: { id: string; email: string; name: string | null };
 };
 
 export function ResellerDetailClient({ initial }: { initial: Profile }) {
-  const [profile, setProfile] = useState(initial);
+  const [profile] = useState(initial);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Local state for the custom-rate input — empty string means "use default tiers"
+  const [rateInput, setRateInput] = useState<string>(
+    initial.customCommissionRate !== null && initial.customCommissionRate !== undefined
+      ? String(initial.customCommissionRate)
+      : ""
+  );
+  const [rateSaved, setRateSaved] = useState(false);
+
+  async function saveCustomRate() {
+    setBusy("rate");
+    setError(null);
+    setRateSaved(false);
+    try {
+      const value = rateInput.trim();
+      const res = await fetch(`/api/superadmin/resellers/${profile.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ customCommissionRate: value === "" ? null : Number(value) }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(data.error || "Could not save rate");
+        return;
+      }
+      setRateSaved(true);
+      setTimeout(() => setRateSaved(false), 3000);
+    } catch {
+      setError("Could not save rate");
+    } finally {
+      setBusy(null);
+    }
+  }
 
   async function action(path: string, body?: any) {
     setBusy(path);
@@ -85,7 +119,78 @@ export function ResellerDetailClient({ initial }: { initial: Profile }) {
         <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700 mb-4">{error}</div>
       )}
 
+      {/* Custom commission rate — overrides the default 0/5/10% tier table when set. */}
+      {profile.status === "approved" && (
+        <div className="bg-gray-50 rounded-xl border border-gray-200 p-4 mb-4">
+          <div className="flex items-center gap-2 mb-1">
+            <Percent className="w-4 h-4 text-gray-700" />
+            <h3 className="text-sm font-bold text-gray-900">Custom commission rate</h3>
+          </div>
+          <p className="text-xs text-gray-500 mb-3">
+            Leave blank to use the default tiers (0% &lt; 6, 5% 6–49, 10% 50+). Setting a value here
+            pins this reseller to that flat rate on every paid invoice going forward.
+          </p>
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="relative">
+              <input
+                type="number"
+                step="0.1"
+                min="0"
+                max="100"
+                value={rateInput}
+                onChange={(e) => setRateInput(e.target.value)}
+                placeholder="e.g. 7"
+                className="w-32 border border-gray-200 rounded-lg px-3 py-2 pr-8 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              />
+              <Percent className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            </div>
+            <button
+              onClick={saveCustomRate}
+              disabled={busy === "rate"}
+              className="inline-flex items-center gap-1.5 bg-gray-900 hover:bg-gray-800 text-white text-sm font-semibold px-4 py-2 rounded-lg disabled:opacity-50"
+            >
+              {busy === "rate" ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
+              Save rate
+            </button>
+            {rateSaved && (
+              <span className="inline-flex items-center gap-1 text-xs text-green-700">
+                <CheckCircle2 className="w-3.5 h-3.5" /> Saved
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-wrap gap-2">
+        {/* SA → Reseller impersonation — only when approved. */}
+        {profile.status === "approved" && (
+          <button
+            onClick={async () => {
+              setBusy("impersonate");
+              setError(null);
+              try {
+                const res = await fetch(`/api/superadmin/resellers/${profile.id}/impersonate`, {
+                  method: "POST",
+                });
+                if (!res.ok) {
+                  const data = await res.json().catch(() => ({}));
+                  setError(data.error || "Could not start impersonation");
+                  return;
+                }
+                window.location.assign("/reseller");
+              } catch {
+                setError("Could not start impersonation");
+              } finally {
+                setBusy(null);
+              }
+            }}
+            disabled={busy !== null}
+            className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold text-sm px-4 py-2 rounded-lg transition disabled:opacity-50"
+          >
+            {busy === "impersonate" ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogIn className="w-4 h-4" />}
+            Log in as this reseller
+          </button>
+        )}
         {profile.status === "pending" && (
           <>
             <Action onClick={() => action("approve")} busy={busy === "approve"} variant="primary" icon={<CheckCircle2 className="w-4 h-4" />}>

@@ -3,17 +3,37 @@ import type { Session } from "next-auth";
 import { Bell } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { LocationSwitcher, type LocationOption } from "./LocationSwitcher";
 
-export function AdminHeader({ session, pendingOrders = 0, restaurantName }: { session: Session; pendingOrders?: number; restaurantName?: string }) {
+export function AdminHeader({
+  session,
+  pendingOrders = 0,
+  restaurantName,
+  locations,
+  activeLocationId,
+}: {
+  session: Session;
+  pendingOrders?: number;
+  restaurantName?: string;
+  /** When the brand has multiple locations, the switcher renders. Pass null/empty to hide. */
+  locations?: LocationOption[];
+  activeLocationId?: string;
+}) {
   const tAdmin = useTranslations("admin");
   const tOrders = useTranslations("admin.orders");
   const user = session.user as any;
   const displayName = restaurantName || user?.name || user?.email;
+
   return (
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0">
-      <div>
-        <span className="text-sm text-gray-500">{tAdmin("welcomeBack")},</span>
-        <span className="ml-1 font-semibold text-gray-900">{displayName}</span>
+      <div className="flex items-center gap-4 min-w-0">
+        <div className="min-w-0">
+          <span className="text-sm text-gray-500">{tAdmin("welcomeBack")},</span>
+          <span className="ml-1 font-semibold text-gray-900 truncate">{displayName}</span>
+        </div>
+        {locations && locations.length > 1 && activeLocationId && (
+          <LocationSwitcher locations={locations} activeId={activeLocationId} />
+        )}
       </div>
       <div className="flex items-center gap-4">
         {pendingOrders > 0 && (

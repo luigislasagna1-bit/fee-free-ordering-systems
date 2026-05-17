@@ -36,6 +36,7 @@ const navGroups: NavGroup[] = [
     icon: Wrench,
     items: [
       { href: "/admin/profile",            labelKey: "profile",        icon: Store },
+      { href: "/admin/locations",          labelKey: "locations",      icon: Map },
       { href: "/admin/menu",               labelKey: "menu",           icon: UtensilsCrossed },
       { href: "/admin/hours",              labelKey: "openingHours",   icon: Clock },
       { href: "/admin/services",           labelKey: "services",       icon: Layers },

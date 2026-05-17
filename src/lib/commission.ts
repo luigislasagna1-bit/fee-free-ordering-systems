@@ -77,13 +77,19 @@ export async function recordCommissionForInvoice(
 
   const profile = await prisma.resellerProfile.findUnique({
     where: { id: resellerProfileId },
-    select: { status: true },
+    select: { status: true, customCommissionRate: true },
   });
   if (profile?.status !== "approved") return { ok: false, reason: "reseller not approved" };
 
   const paidAt = invoice.paidAt ?? new Date();
+  // activePayingCount is recorded for audit regardless. The rate itself can
+  // be overridden by superadmin via ResellerProfile.customCommissionRate — when
+  // set (non-null), it wins over the tier table.
   const activePayingCount = await countActivePaying(resellerProfileId, paidAt);
-  const ratePercent = rateForActiveCount(activePayingCount);
+  const ratePercent =
+    profile.customCommissionRate !== null && profile.customCommissionRate !== undefined
+      ? profile.customCommissionRate
+      : rateForActiveCount(activePayingCount);
 
   // Net = paid - refunded - taxes - stripe fees. Taxes and fees are 0 for
   // our current plans; the columns exist so we can refine later without

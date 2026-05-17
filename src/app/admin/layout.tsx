@@ -33,16 +33,49 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const restaurantId = user?.restaurantId;
   let pendingOrders = 0;
   let restaurantName = "";
+  let locationsForSwitcher: Array<{ id: string; name: string; city: string | null; isParent: boolean }> = [];
   if (restaurantId) {
     const [count, restaurant] = await Promise.all([
       prisma.order.count({ where: { restaurantId, status: "pending" } }),
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
-        select: { name: true, subscriptionStatus: true, trialEndsAt: true },
+        select: {
+          name: true,
+          subscriptionStatus: true,
+          trialEndsAt: true,
+          parentRestaurantId: true,
+          id: true,
+        },
       }),
     ]);
     pendingOrders = count;
     restaurantName = restaurant?.name || "";
+
+    // Build the location list for the switcher. The "brand parent" is either
+    // the current restaurant (if it has no parent) or its parent. Then the
+    // children of that parent (plus the parent itself) are the dropdown options.
+    if (restaurant) {
+      const parentId = restaurant.parentRestaurantId ?? restaurant.id;
+      const [parent, children] = await Promise.all([
+        restaurant.parentRestaurantId
+          ? prisma.restaurant.findUnique({
+              where: { id: parentId },
+              select: { id: true, name: true, city: true },
+            })
+          : Promise.resolve({ id: restaurant.id, name: restaurant.name, city: null as string | null }),
+        prisma.restaurant.findMany({
+          where: { parentRestaurantId: parentId },
+          select: { id: true, name: true, city: true },
+          orderBy: { createdAt: "asc" },
+        }),
+      ]);
+      if (parent) {
+        locationsForSwitcher = [
+          { id: parent.id, name: parent.name, city: parent.city, isParent: true },
+          ...children.map((c) => ({ id: c.id, name: c.name, city: c.city, isParent: false })),
+        ];
+      }
+    }
 
     // Gate admin access on subscription state. Past-due restaurants — or
     // expired trials with no card on file — get redirected to /admin/billing
@@ -78,13 +111,25 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         {user?.isImpersonating && (
           <ImpersonationBanner
             restaurantName={restaurantName}
-            mode={user.impersonationMode === "reseller" ? "reseller" : "superadmin"}
+            mode={
+              user.impersonationMode === "reseller"
+                ? "reseller"
+                : user.impersonationMode === "superadmin_as_reseller"
+                ? "superadmin_as_reseller"
+                : "superadmin"
+            }
           />
         )}
         <div className="flex flex-1 overflow-hidden">
           <AdminSidebar session={session} pendingOrders={pendingOrders} />
           <div className="flex-1 flex flex-col overflow-hidden">
-            <AdminHeader session={session} pendingOrders={pendingOrders} restaurantName={restaurantName} />
+            <AdminHeader
+              session={session}
+              pendingOrders={pendingOrders}
+              restaurantName={restaurantName}
+              locations={locationsForSwitcher}
+              activeLocationId={restaurantId}
+            />
             <main className="flex-1 overflow-y-auto p-6">{children}</main>
           </div>
         </div>
