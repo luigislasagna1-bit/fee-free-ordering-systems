@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
-import { isResellerPartner, isSuperadmin, ROLES } from "@/lib/roles";
+import { getSessionUser, isResellerView } from "@/lib/session";
+import { isSuperadmin, ROLES } from "@/lib/roles";
 import { slugify } from "@/lib/utils";
 import { sendBillingNotificationEmail } from "@/lib/email";
 import crypto from "crypto";
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
   let resellerProfileId: string | null = null;
   if (isSuperadmin(user.role) && queriedId) {
     resellerProfileId = queriedId;
-  } else if (isResellerPartner(user.role) && user.resellerProfileId) {
+  } else if (isResellerView(user) && user.resellerProfileId) {
     resellerProfileId = user.resellerProfileId;
   } else {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const user = await getSessionUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (!isResellerPartner(user.role) || !user.resellerProfileId) {
+  if (!isResellerView(user) || !user.resellerProfileId) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

@@ -1,12 +1,11 @@
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
-import { isResellerPartner } from "@/lib/roles";
+import { getSessionUser, isResellerView } from "@/lib/session";
 import { formatCurrency } from "@/lib/utils";
 
 export default async function ResellerCommissionsPage() {
   const user = await getSessionUser();
-  if (!user || !isResellerPartner(user.role) || !user.resellerProfileId) {
+  if (!user || !isResellerView(user) || !user.resellerProfileId) {
     redirect("/reseller/holding");
   }
 

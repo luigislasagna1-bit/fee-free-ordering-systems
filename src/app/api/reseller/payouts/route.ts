@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
-import { isResellerPartner } from "@/lib/roles";
+import { getSessionUser, isResellerView } from "@/lib/session";
 import { availableBalanceCents } from "@/lib/commission";
 
 const MIN_PAYOUT_CENTS = 50_00; // $50 minimum
@@ -12,7 +11,7 @@ const MIN_PAYOUT_CENTS = 50_00; // $50 minimum
  */
 export async function GET() {
   const user = await getSessionUser();
-  if (!user || !isResellerPartner(user.role) || !user.resellerProfileId) {
+  if (!user || !isResellerView(user) || !user.resellerProfileId) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -36,7 +35,7 @@ export async function GET() {
  */
 export async function POST() {
   const user = await getSessionUser();
-  if (!user || !isResellerPartner(user.role) || !user.resellerProfileId) {
+  if (!user || !isResellerView(user) || !user.resellerProfileId) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

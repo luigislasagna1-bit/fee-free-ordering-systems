@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
-import { isResellerPartner } from "@/lib/roles";
+import { getSessionUser, isResellerView } from "@/lib/session";
 import {
   countActivePaying,
   rateForActiveCount,
@@ -16,7 +15,7 @@ import {
 
 export default async function ResellerDashboardPage() {
   const user = await getSessionUser();
-  if (!user || !isResellerPartner(user.role) || !user.resellerProfileId) {
+  if (!user || !isResellerView(user) || !user.resellerProfileId) {
     redirect("/reseller/holding");
   }
 

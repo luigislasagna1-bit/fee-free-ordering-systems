@@ -22,7 +22,11 @@ export default async function ResellerLayout({ children }: { children: React.Rea
   const user = await getSessionUser();
   if (!user) redirect("/login");
 
-  if (user.role !== ROLES.RESELLER_PARTNER && user.role !== ROLES.PENDING_RESELLER) {
+  // Admit real resellers + pending applicants + superadmins currently in
+  // SA→reseller impersonation (effectiveRole === "reseller_partner").
+  const isActingAsReseller = user.effectiveRole === ROLES.RESELLER_PARTNER;
+  const isPending = user.role === ROLES.PENDING_RESELLER;
+  if (!isActingAsReseller && !isPending) {
     redirect("/login");
   }
 

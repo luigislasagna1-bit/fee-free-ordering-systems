@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
-import { isResellerPartner } from "@/lib/roles";
+import { getSessionUser, isResellerView } from "@/lib/session";
 import { encrypt, decrypt } from "@/lib/encrypt";
 
 /**
@@ -17,7 +16,7 @@ import { encrypt, decrypt } from "@/lib/encrypt";
  */
 export async function GET() {
   const user = await getSessionUser();
-  if (!user || !isResellerPartner(user.role) || !user.resellerProfileId) {
+  if (!user || !isResellerView(user) || !user.resellerProfileId) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const profile = await prisma.resellerProfile.findUnique({
@@ -55,7 +54,7 @@ export async function GET() {
 
 export async function PUT(req: NextRequest) {
   const user = await getSessionUser();
-  if (!user || !isResellerPartner(user.role) || !user.resellerProfileId) {
+  if (!user || !isResellerView(user) || !user.resellerProfileId) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const body = await req.json().catch(() => ({}));

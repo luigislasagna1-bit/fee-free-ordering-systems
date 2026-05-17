@@ -24,10 +24,17 @@ export interface SessionUser {
   id: string;
   name: string;
   email: string;
+  /** The user's actual role from their JWT. Never changes from impersonation —
+   *  use this for API authorization checks ("is this person actually a superadmin?"). */
   role: string;
+  /** The role the user is currently *acting as*. Same as `role` unless an
+   *  impersonation cookie swaps the experience (e.g. a superadmin doing
+   *  SA→reseller sees `effectiveRole = "reseller_partner"`). Use this for UI
+   *  routing and reseller-context API endpoints. */
+  effectiveRole: string;
   restaurantId: string | undefined;
   restaurantSlug: string | undefined;
-  /** ResellerProfile.id when role === "reseller_partner". Undefined otherwise. */
+  /** ResellerProfile.id — set when effectiveRole === "reseller_partner". */
   resellerProfileId: string | undefined;
   isImpersonating: boolean;
   /** Distinguishes which kind of impersonation is active.
@@ -39,6 +46,13 @@ export interface SessionUser {
   impersonationMode: "superadmin" | "reseller" | "superadmin_as_reseller" | null;
 }
 
+/** True when the user is acting as a reseller — real reseller OR a superadmin
+ *  who's currently in SA→reseller impersonation. Use this on /reseller pages
+ *  and /api/reseller endpoints. */
+export function isResellerView(user: SessionUser | null): boolean {
+  return user?.effectiveRole === "reseller_partner";
+}
+
 function baseFromSession(session: Session | null): SessionUser | null {
   if (!session?.user) return null;
   const user = session.user as any;
@@ -47,6 +61,7 @@ function baseFromSession(session: Session | null): SessionUser | null {
     name: user.name,
     email: user.email,
     role: user.role,
+    effectiveRole: user.role,
     restaurantId: user.restaurantId ?? undefined,
     restaurantSlug: user.restaurantSlug ?? undefined,
     resellerProfileId: user.resellerProfileId ?? undefined,
@@ -116,8 +131,11 @@ export async function getSessionUser(opts?: { preferKitchen?: boolean }): Promis
   async function applyImpersonation(user: SessionUser | null): Promise<SessionUser | null> {
     if (!user) return null;
 
-    // Superadmin assuming a reseller's identity.
     let workingUser = user;
+
+    // Step 1: SA → reseller. Only swaps the *effective* role + resellerProfileId.
+    // The underlying `role` STAYS "superadmin" so superadmin-only APIs keep
+    // working while the SA browses the reseller portal.
     if (workingUser.role === "superadmin" && saResellerImpersonateId) {
       const profile = await prisma.resellerProfile.findUnique({
         where: { id: saResellerImpersonateId },
@@ -126,9 +144,8 @@ export async function getSessionUser(opts?: { preferKitchen?: boolean }): Promis
       if (profile) {
         workingUser = {
           ...workingUser,
-          role: "reseller_partner",
+          effectiveRole: "reseller_partner",
           resellerProfileId: saResellerImpersonateId,
-          // Carry the SA→reseller mode; subsequent restaurant swap won't overwrite it.
           isImpersonating: true,
           impersonationMode: "superadmin_as_reseller",
         };
@@ -136,28 +153,36 @@ export async function getSessionUser(opts?: { preferKitchen?: boolean }): Promis
       // If profile is missing, silently strip and continue as plain superadmin.
     }
 
-    // Restaurant-level impersonation. Superadmin OR (post-swap) superadmin-as-reseller
-    // can use sa_impersonate. A real reseller uses partner_impersonate.
-    if (
-      (workingUser.role === "superadmin" || workingUser.impersonationMode === "superadmin_as_reseller") &&
-      saImpersonateId
-    ) {
+    // Step 2: restaurant-level impersonation.
+    // A real superadmin (role === "superadmin") uses sa_impersonate. This
+    // includes the SA→reseller chain since their role stays superadmin.
+    // A real reseller (role === "reseller_partner") uses partner_impersonate.
+    if (workingUser.role === "superadmin" && saImpersonateId) {
       return {
         ...workingUser,
         restaurantId: saImpersonateId,
         isImpersonating: true,
-        // Preserve "superadmin_as_reseller" if it was set; otherwise mark "superadmin".
+        // Preserve "superadmin_as_reseller" if the SA was already in that mode;
+        // otherwise this is a plain SA→restaurant impersonation.
         impersonationMode: workingUser.impersonationMode ?? "superadmin",
       };
     }
-    if (workingUser.role === "reseller_partner" && partnerImpersonateId) {
+    // Reseller→restaurant. Real resellers use partner_impersonate; an SA in
+    // SA→reseller mode can also drill into one of the impersonated reseller's
+    // restaurants via the same cookie (their effectiveRole is reseller_partner
+    // and resellerCanImpersonate validates against the swapped resellerProfileId).
+    if (
+      (workingUser.role === "reseller_partner" ||
+        workingUser.impersonationMode === "superadmin_as_reseller") &&
+      partnerImpersonateId
+    ) {
       const allowed = await resellerCanImpersonate(workingUser.resellerProfileId, partnerImpersonateId);
       if (allowed) {
         return {
           ...workingUser,
           restaurantId: partnerImpersonateId,
           isImpersonating: true,
-          // Preserve "superadmin_as_reseller" if SA-chained; otherwise plain "reseller".
+          // Preserve SA→reseller mode if applicable; otherwise plain reseller.
           impersonationMode: workingUser.impersonationMode ?? "reseller",
         };
       }
@@ -185,7 +210,7 @@ export async function getSessionUser(opts?: { preferKitchen?: boolean }): Promis
   if (
     chosen &&
     !chosen.isImpersonating &&
-    chosen.role === "restaurant_admin" &&
+    chosen.effectiveRole === "restaurant_admin" &&
     chosen.restaurantId &&
     activeLocationId &&
     activeLocationId !== chosen.restaurantId

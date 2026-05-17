@@ -40,9 +40,10 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
 
 export async function DELETE() {
   const user = await getSessionUser();
-  // Allow either a plain superadmin or a superadmin currently in
-  // SA→reseller mode (so the "exit" button on the reseller side works).
-  if (!isSuperadmin(user?.role) && user?.impersonationMode !== "superadmin_as_reseller") {
+  // user.role stays "superadmin" even while in SA→reseller mode (effectiveRole
+  // is the one that gets swapped), so this check admits the exit-impersonation
+  // request correctly.
+  if (!isSuperadmin(user?.role)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const cookieStore = await cookies();

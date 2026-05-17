@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
-import { isResellerPartner, isSuperadmin } from "@/lib/roles";
+import { getSessionUser, isResellerView } from "@/lib/session";
+import { isSuperadmin } from "@/lib/roles";
 
 /**
  * GET /api/reseller/commissions
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
   let resellerProfileId: string;
   if (isSuperadmin(user.role) && queriedReseller) {
     resellerProfileId = queriedReseller;
-  } else if (isResellerPartner(user.role) && user.resellerProfileId) {
+  } else if (isResellerView(user) && user.resellerProfileId) {
     resellerProfileId = user.resellerProfileId;
   } else {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });

@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import prisma from "@/lib/db";
-import { getSessionUser, PARTNER_IMPERSONATE_COOKIE } from "@/lib/session";
-import { isResellerPartner } from "@/lib/roles";
+import { getSessionUser, isResellerView, PARTNER_IMPERSONATE_COOKIE } from "@/lib/session";
 
 /**
  * POST — body { restaurantId } sets the partner_impersonate cookie if the
@@ -15,7 +14,7 @@ import { isResellerPartner } from "@/lib/roles";
 export async function POST(req: NextRequest) {
   const user = await getSessionUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (!isResellerPartner(user.role) || !user.resellerProfileId) {
+  if (!isResellerView(user) || !user.resellerProfileId) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -55,7 +54,7 @@ export async function POST(req: NextRequest) {
 export async function DELETE() {
   const user = await getSessionUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (!isResellerPartner(user.role)) {
+  if (!isResellerView(user)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const cookieStore = await cookies();
