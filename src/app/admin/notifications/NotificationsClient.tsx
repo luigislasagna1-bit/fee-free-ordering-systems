@@ -43,17 +43,18 @@ const CONFIRMATION_TOGGLES: { key: keyof Recipient; tk: string }[] = [
   { key: "dineInConfirmed",           tk: "dineInConfirmed" },
 ];
 
+// We hide a few toggles that have no implementation:
+//   - orderMissed:    needs every-N-min cron; Vercel Hobby is daily-only.
+//   - orderNotPlaced: requires abandoned-cart tracking we don't have yet.
+//   - lowBattery / badInternet: tablet-client telemetry; we don't ship a tablet app.
+// The schema columns stay so the data isn't lost if we re-enable later.
 const OPERATIONAL_TOGGLES: { key: keyof Recipient; tk: string }[] = [
-  { key: "orderRejected",  tk: "orderRejected" },
-  { key: "orderMissed",    tk: "orderMissed" },
-  { key: "orderNotPlaced", tk: "orderNotPlaced" },
   { key: "orderPlaced",    tk: "orderPlaced" },
+  { key: "orderRejected",  tk: "orderRejected" },
   { key: "orderCanceled",  tk: "orderCanceled" },
 ];
 
 const SYSTEM_TOGGLES: { key: keyof Recipient; tk: string }[] = [
-  { key: "lowBattery",       tk: "lowBattery" },
-  { key: "badInternet",      tk: "badInternet" },
   { key: "endOfDayReport",   tk: "endOfDayReport" },
   { key: "endOfMonthReport", tk: "endOfMonthReport" },
 ];

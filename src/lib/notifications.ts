@@ -30,7 +30,43 @@ import {
   sendOrderRejectedEmail,
   sendOrderCanceledEmail,
   sendReservationConfirmation,
+  setEmailImprint,
 } from "@/lib/email";
+
+/**
+ * Resolve the email footer imprint for a restaurant. If the restaurant is
+ * under an approved reseller and the reseller has set a `companyName`, that
+ * name replaces the default "Fee Free Ordering Systems" in the email footer.
+ * (Phase 2-D will introduce a separate `whiteLabel` opt-in toggle; until then,
+ * the presence of a companyName is the signal — a reseller who doesn't want
+ * their brand on emails just leaves the field blank.)
+ */
+async function resolveImprint(restaurantId: string): Promise<string | null> {
+  const restaurant = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: {
+      resellerProfile: {
+        select: { status: true, companyName: true },
+      },
+    },
+  });
+  const p = restaurant?.resellerProfile;
+  if (!p || p.status !== "approved" || !p.companyName) return null;
+  return p.companyName;
+}
+
+/** Run a send inside an imprint scope, then always clear it. The setter is
+ *  module-scoped global state in email.ts, so the try/finally is critical —
+ *  one whitelabel send must not bleed into the next platform send. */
+async function withImprint<T>(restaurantId: string, fn: () => Promise<T>): Promise<T> {
+  const imprint = await resolveImprint(restaurantId);
+  setEmailImprint(imprint);
+  try {
+    return await fn();
+  } finally {
+    setEmailImprint(null);
+  }
+}
 
 // ─── Event → toggle field mapping ──────────────────────────────────────────
 
@@ -145,16 +181,21 @@ export async function notifyStaff(args: {
   }
 
   let sent = 0;
-  await Promise.all(
-    eligible.map(async (r) => {
-      try {
-        await dispatchStaffEvent(r.email, r.emailLanguage, restaurant.name, payload);
-        sent++;
-      } catch (err) {
-        console.error(`[notifyStaff] send to ${r.email} failed:`, err instanceof Error ? err.message : err);
-      }
-    })
-  );
+  // Wrap the whole fan-out in an imprint scope. All recipients on the same
+  // restaurant share the same imprint (they're all under the same reseller),
+  // so we resolve it once and apply once.
+  await withImprint(restaurant.id, async () => {
+    await Promise.all(
+      eligible.map(async (r) => {
+        try {
+          await dispatchStaffEvent(r.email, r.emailLanguage, restaurant.name, payload);
+          sent++;
+        } catch (err) {
+          console.error(`[notifyStaff] send to ${r.email} failed:`, err instanceof Error ? err.message : err);
+        }
+      })
+    );
+  });
   return { sent, skipped: restaurant.notificationRecipients.length - sent };
 }
 
@@ -307,17 +348,19 @@ export async function notifyCustomer(args: {
   switch (payload.event) {
     case "orderConfirmed": {
       if (!restaurant.customerEmailOrderConfirm) return { sent: false, reason: "toggle off" };
-      await sendOrderConfirmationEmail({
-        to: customerEmail,
-        customerName: payload.customerName,
-        orderNumber: payload.orderNumber,
-        restaurantName: restaurant.name,
-        items: payload.items,
-        total: payload.total,
-        orderType: payload.orderType,
-        estimatedTime: payload.estimatedTime,
-        trackingUrl: payload.trackingUrl,
-        locale,
+      await withImprint(restaurantId, async () => {
+        await sendOrderConfirmationEmail({
+          to: customerEmail,
+          customerName: payload.customerName,
+          orderNumber: payload.orderNumber,
+          restaurantName: restaurant.name,
+          items: payload.items,
+          total: payload.total,
+          orderType: payload.orderType,
+          estimatedTime: payload.estimatedTime,
+          trackingUrl: payload.trackingUrl,
+          locale,
+        });
       });
       return { sent: true };
     }
@@ -337,33 +380,37 @@ export async function notifyCustomer(args: {
         toggle = restaurant.customerEmailOrderRejected;
       }
       if (!toggle) return { sent: false, reason: "toggle off" };
-      await sendOrderStatusUpdateEmail({
-        to: customerEmail,
-        customerName: payload.customerName,
-        orderNumber: payload.orderNumber,
-        status: payload.status,
-        restaurantName: restaurant.name,
-        estimatedReady: payload.estimatedReady,
-        rejectionReason: payload.rejectionReason,
-        locale,
+      await withImprint(restaurantId, async () => {
+        await sendOrderStatusUpdateEmail({
+          to: customerEmail,
+          customerName: payload.customerName,
+          orderNumber: payload.orderNumber,
+          status: payload.status,
+          restaurantName: restaurant.name,
+          estimatedReady: payload.estimatedReady,
+          rejectionReason: payload.rejectionReason,
+          locale,
+        });
       });
       return { sent: true };
     }
     case "reservationConfirmation": {
       // Reservations always send — customer expects this after booking.
-      await sendReservationConfirmation({
-        to: customerEmail,
-        customerName: payload.customerName,
-        restaurantName: restaurant.name,
-        partySize: payload.partySize,
-        date: payload.date,
-        time: payload.time,
-        confirmationCode: payload.confirmationCode,
-        status: payload.status as "confirmed" | "pending",
-        depositPaid: payload.depositPaid,
-        depositAmount: payload.depositAmount,
-        preOrderTotal: payload.preOrderTotal,
-        locale,
+      await withImprint(restaurantId, async () => {
+        await sendReservationConfirmation({
+          to: customerEmail,
+          customerName: payload.customerName,
+          restaurantName: restaurant.name,
+          partySize: payload.partySize,
+          date: payload.date,
+          time: payload.time,
+          confirmationCode: payload.confirmationCode,
+          status: payload.status,
+          depositPaid: payload.depositPaid,
+          depositAmount: payload.depositAmount,
+          preOrderTotal: payload.preOrderTotal,
+          locale,
+        });
       });
       return { sent: true };
     }

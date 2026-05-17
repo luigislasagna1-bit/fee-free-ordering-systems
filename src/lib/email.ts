@@ -78,13 +78,26 @@ async function send({ to, subject, html, text }: { to: string; subject: string; 
 }
 
 // ─── Layout helper ────────────────────────────────────────────────────────────
+/**
+ * Module-scoped imprint override. Set this per-send via `setEmailImprint()`
+ * (called by `src/lib/notifications.ts` when the restaurant is under a
+ * whitelabel reseller) so the wrap() footer shows the reseller's brand instead
+ * of "Fee Free Ordering Systems". Always cleared in a finally block so one
+ * send's override never leaks to the next.
+ */
+let activeImprint: string | null = null;
+export function setEmailImprint(imprint: string | null) {
+  activeImprint = imprint;
+}
+
 function wrap(title: string, body: string) {
+  const footer = activeImprint ?? "Fee Free Ordering Systems";
   return `<!doctype html><html><body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#f6f6f6; padding:24px; color:#111;">
   <div style="max-width:560px; margin:0 auto; background:#fff; border-radius:12px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.06);">
     <h1 style="margin:0 0 12px; font-size:20px; color:#111;">${title}</h1>
     ${body}
     <hr style="border:none; border-top:1px solid #eee; margin:24px 0">
-    <p style="font-size:12px; color:#888; margin:0;">Fee Free Ordering Systems</p>
+    <p style="font-size:12px; color:#888; margin:0;">${footer}</p>
   </div>
 </body></html>`;
 }
@@ -389,5 +402,142 @@ export async function sendTrialExpiringEmail(params: {
       <p>${t("email.trialExpiring.body", { restaurant: params.restaurantName, days: params.daysLeft })}</p>
       <p><a href="${params.upgradeUrl}">${t("email.common.viewInAdmin")}</a></p>
     `),
+  });
+}
+
+// ─── Digest / report emails (Phase E4) ─────────────────────────────────────
+
+/** Stats payload shared by both daily and monthly digests. All money values
+ *  are in dollars (not cents) — this template formats them. */
+export interface DigestStats {
+  restaurantName: string;
+  periodLabel: string;            // e.g. "Friday, May 15, 2026" or "May 2026"
+  comparisonLabel: string;        // e.g. "vs previous Friday" or "vs previous month"
+
+  sales: number;
+  salesDelta: number;             // percent change vs previous period (signed)
+  orders: number;
+  ordersDelta: number;
+  avgOrderValue: number;
+  avgOrderValueDelta: number;
+  tableReservations: number;
+  reservationsDelta: number;
+
+  pickupOrders: number;
+  pickupSales: number;
+  deliveryOrders: number;
+  deliverySales: number;
+  dineInOrders: number;
+  dineInSales: number;
+
+  offlinePayments: number;        // count
+  offlinePaymentsAmount: number;
+  onlinePayments: number;
+  onlinePaymentsAmount: number;
+
+  subTotals: number;
+  taxAmount: number;
+  deliveryFees: number;
+  tips: number;
+  otherFees: number;
+  total: number;
+}
+
+/** Number formatter for delta percentages: -23 → "−23%", 5 → "+5%", 0 → "—". */
+function fmtDelta(n: number): string {
+  if (!Number.isFinite(n) || Math.abs(n) < 0.5) return "—";
+  const sign = n > 0 ? "+" : "";
+  const color = n > 0 ? "#16a34a" : "#dc2626";
+  return `<span style="color:${color}">${sign}${Math.round(n)}%</span>`;
+}
+
+function fmtMoney(n: number): string {
+  return `$${(n ?? 0).toFixed(2)}`;
+}
+
+function digestHtml(s: DigestStats, kind: "daily" | "monthly"): string {
+  const headline =
+    kind === "daily" ? "Online ordering daily insights" : "Monthly performance report";
+  return `
+    <h2 style="font-size:14px; color:#666; margin:0 0 8px;">${headline}</h2>
+    <p style="margin:0 0 16px; color:#999;">${s.periodLabel}</p>
+    <p>Hi there,</p>
+    <p>Here is the sales report for <strong>${s.restaurantName}</strong>.</p>
+
+    <h3 style="font-size:14px; color:#f97316; margin:20px 0 8px;">SALES PERFORMANCE
+      <span style="color:#888; font-weight:normal; font-size:12px;">(${s.comparisonLabel})</span>
+    </h3>
+    <table style="width:100%; border-collapse:collapse;">
+      <tr>
+        <td style="padding:8px 0; width:50%;"><strong>Sales</strong><br>
+          <span style="font-size:18px;">${fmtMoney(s.sales)}</span> ${fmtDelta(s.salesDelta)}
+        </td>
+        <td style="padding:8px 0;"><strong>Orders</strong><br>
+          <span style="font-size:18px;">${s.orders}</span> ${fmtDelta(s.ordersDelta)}
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:8px 0;"><strong>Avg. order value</strong><br>
+          <span style="font-size:18px;">${fmtMoney(s.avgOrderValue)}</span> ${fmtDelta(s.avgOrderValueDelta)}
+        </td>
+        <td style="padding:8px 0;"><strong>Table reservations</strong><br>
+          <span style="font-size:18px;">${s.tableReservations}</span> ${fmtDelta(s.reservationsDelta)}
+        </td>
+      </tr>
+    </table>
+
+    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">CHANNELS</h3>
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+      <tr>
+        <td style="padding:6px 0;">Pickup</td>
+        <td style="text-align:right;">${s.pickupOrders} · ${fmtMoney(s.pickupSales)}</td>
+      </tr>
+      <tr>
+        <td style="padding:6px 0;">Delivery</td>
+        <td style="text-align:right;">${s.deliveryOrders} · ${fmtMoney(s.deliverySales)}</td>
+      </tr>
+      <tr>
+        <td style="padding:6px 0;">Dine-in</td>
+        <td style="text-align:right;">${s.dineInOrders} · ${fmtMoney(s.dineInSales)}</td>
+      </tr>
+    </table>
+
+    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">PAYMENTS</h3>
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+      <tr>
+        <td style="padding:6px 0;">Offline payments</td>
+        <td style="text-align:right;">${s.offlinePayments} · ${fmtMoney(s.offlinePaymentsAmount)}</td>
+      </tr>
+      <tr>
+        <td style="padding:6px 0;">Online payments</td>
+        <td style="text-align:right;">${s.onlinePayments} · ${fmtMoney(s.onlinePaymentsAmount)}</td>
+      </tr>
+    </table>
+
+    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">SALES BREAKDOWN</h3>
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+      <tr><td style="padding:6px 0;">Sub-totals</td><td style="text-align:right;">${fmtMoney(s.subTotals)}</td></tr>
+      <tr><td style="padding:6px 0;">Tax</td><td style="text-align:right;">${fmtMoney(s.taxAmount)}</td></tr>
+      <tr><td style="padding:6px 0;">Delivery fees</td><td style="text-align:right;">${fmtMoney(s.deliveryFees)}</td></tr>
+      <tr><td style="padding:6px 0;">Tips</td><td style="text-align:right;">${fmtMoney(s.tips)}</td></tr>
+      <tr><td style="padding:6px 0;">Other fees</td><td style="text-align:right;">${fmtMoney(s.otherFees)}</td></tr>
+      <tr style="border-top:1px solid #eee;"><td style="padding:8px 0;"><strong>Total</strong></td><td style="text-align:right;"><strong>${fmtMoney(s.total)}</strong></td></tr>
+    </table>
+  `;
+}
+
+export async function sendDailyDigestEmail(params: { to: string; stats: DigestStats }) {
+  return send({
+    to: params.to,
+    subject: `Daily report — ${params.stats.restaurantName} — ${params.stats.periodLabel}`,
+    html: wrap("", digestHtml(params.stats, "daily")),
+  });
+}
+
+export async function sendMonthlyDigestEmail(params: { to: string; stats: DigestStats }) {
+  return send({
+    to: params.to,
+    subject: `Monthly report — ${params.stats.restaurantName} — ${params.stats.periodLabel}`,
+    html: wrap("", digestHtml(params.stats, "monthly")),
   });
 }
