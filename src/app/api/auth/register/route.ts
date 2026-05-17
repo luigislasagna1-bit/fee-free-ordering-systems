@@ -6,7 +6,6 @@ import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { validatePassword } from "@/lib/password";
 import { sendSignupConfirmationEmail } from "@/lib/email";
 import { cookies } from "next/headers";
-import { getStripe, stripeReady } from "@/lib/stripe";
 
 export async function POST(req: NextRequest) {
   // Rate limit: 5 registrations per IP per hour
@@ -72,7 +71,12 @@ export async function POST(req: NextRequest) {
       slugExists = await prisma.restaurant.findUnique({ where: { slug } });
     }
 
-    const starterPlan = await prisma.subscriptionPlan.findUnique({ where: { slug: "starter" } });
+    // Phase 1 of the GloriaFood-style redesign: new signups default to the
+    // Free plan (the legacy Starter/Growth/Pro/Enterprise plans are marked
+    // inactive but still referenced by older restaurants). There's no trial
+    // period anymore — the core product is free forever; payment only kicks
+    // in when the owner subscribes to a specific add-on.
+    const freePlan = await prisma.subscriptionPlan.findUnique({ where: { slug: "free" } });
 
     const restaurant = await prisma.restaurant.create({
       data: {
@@ -82,9 +86,8 @@ export async function POST(req: NextRequest) {
         // live at <slug>.<PLATFORM_DOMAIN> immediately, no admin visit needed.
         subdomain: slug,
         phone: phone ? String(phone).trim().slice(0, 30) : null,
-        subscriptionStatus: "trialing",
-        trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
-        subscriptionPlanId: starterPlan?.id || null,
+        subscriptionStatus: "active",
+        subscriptionPlanId: freePlan?.id || null,
         resellerProfileId,
       },
     });
@@ -121,25 +124,8 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Create a Stripe Customer so the restaurant can be billed later via Checkout/Portal.
-    // We don't attach a card here — that happens when they convert from trial in /admin/billing.
-    // Failure shouldn't break signup; we'll create the customer lazily on first billing action.
-    if (await stripeReady()) {
-      try {
-        const stripe = await getStripe();
-        const customer = await stripe.customers.create({
-          email: emailClean,
-          name: restaurantNameClean,
-          metadata: { restaurantId: restaurant.id },
-        });
-        await prisma.restaurant.update({
-          where: { id: restaurant.id },
-          data: { stripeCustomerId: customer.id },
-        });
-      } catch (err) {
-        console.error("[register] stripe customer create failed", err);
-      }
-    }
+    // Stripe Customer is created lazily on first add-on subscription (Phase 5).
+    // Signup no longer touches Stripe — the core product is free, no card needed.
 
     // Pick up the signup-form locale from the cookie so the welcome email is
     // in the same language they were just browsing in.

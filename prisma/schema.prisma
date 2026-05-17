@@ -123,8 +123,22 @@ model Restaurant {
   customerEmailOrderRejected Boolean @default(true)
   customerEmailOrderConfirm  Boolean @default(true)
 
+  // Publishing / setup state (Phase 1 of the GloriaFood-style redesign).
+  // publishedAt is null until the owner finishes required setup and clicks
+  // "Publish" — only then does the Legacy Website widget render and the
+  // /order/<slug> page accept real customers. Existing restaurants get this
+  // field auto-populated by scripts/migrate-to-free-plan.ts so nothing breaks.
+  publishedAt          DateTime?
+  ownerEmailVerifiedAt DateTime?
+  /// Opaque public ID used by the widget embed snippet so the embed URL
+  /// doesn't leak the slug. Generated lazily on first publish (Phase 3).
+  widgetPublicId       String?   @unique
+
+  addOns               RestaurantAddOn[]
+
   @@index([resellerProfileId])
   @@index([parentRestaurantId])
+  @@index([publishedAt])
 }
 
 model NotificationRecipient {
@@ -249,6 +263,13 @@ model User {
   isActive     Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  /// Phase 1 of the signup-redesign: set when the owner clicks the verify
+  /// link from their welcome email. Required for publishing (Phase 3 wires
+  /// the actual gate; this field exists earlier so we can mark existing
+  /// restaurants as already-verified via the migration script).
+  emailVerifiedAt  DateTime?
+  emailVerifyToken String?   @unique
 
   restaurant  Restaurant?           @relation(fields: [restaurantId], references: [id])
   resetTokens PasswordResetToken[]
@@ -897,5 +918,65 @@ model PayoutRequest {
   commissions       CommissionTransaction[]
 
   @@index([resellerProfileId, status])
+}
+
+// ─── Phase 1: Add-on catalog + per-restaurant subscriptions ────────────────
+//
+// We're decoupling "plan" (free for everyone going forward) from "add-ons"
+// (individual feature unlocks billed independently). The old SubscriptionPlan
+// model stays as-is for backward compatibility; new signups land on a Free
+// plan there. AddOn is a flat catalog of features owners can subscribe to,
+// each with its own Stripe Price.
+
+model AddOn {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  name            String
+  description     String?
+  monthlyPriceCents  Int   @default(0)
+  yearlyPriceCents   Int?
+  trialDays       Int?
+  isActive        Boolean  @default(true)
+  displayOrder    Int      @default(0)
+  /// JSON-encoded array of feature slugs this add-on unlocks. e.g.
+  /// `["card_payments","stripe_connect"]` for online_payments. Keeping this
+  /// as a JSON string instead of a relation table keeps Phase 1 simple; we
+  /// can split to a relation later if the list gets unwieldy.
+  enabledFeatures String   @default("[]")
+  /// JSON-encoded array of other add-on slugs that must be active for this
+  /// to work (e.g. custom_domain requires hosted_website).
+  requiredDependencies String @default("[]")
+  /// Stripe wiring — populated when the superadmin syncs an add-on (Phase 5).
+  stripePriceId   String?  @unique
+  stripeProductId String?  @unique
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  restaurantAddOns RestaurantAddOn[]
+
+  @@index([slug])
+}
+
+model RestaurantAddOn {
+  id              String   @id @default(cuid())
+  restaurantId    String
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  addOnId         String
+  addOn           AddOn    @relation(fields: [addOnId], references: [id])
+
+  status          String   @default("active") // active | trialing | past_due | cancelled | incomplete
+  stripeSubscriptionId String?  @unique
+  currentPeriodEnd DateTime?
+  cancelAtPeriodEnd Boolean @default(false)
+  trialEndsAt     DateTime?
+  activatedAt     DateTime @default(now())
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([restaurantId, addOnId])
+  @@index([restaurantId])
+  @@index([status])
 }
 
