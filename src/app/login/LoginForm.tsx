@@ -1,6 +1,6 @@
 "use client";
 import { useState, Suspense } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, getSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { LayoutDashboard, Loader2, ChefHat } from "lucide-react";
@@ -32,9 +32,18 @@ function LoginFormInner({ locale }: { locale: string }) {
       });
       if (!result || result.error) throw new Error(tAuth("invalidCredentials"));
       toast.success(tToasts("saved"));
-      // Force a hard navigation so the cookie is read on the server render of
-      // /admin. Soft-nav via router.push() can race the cookie write.
-      window.location.assign("/admin");
+      // Route by role. Pending/approved resellers go to /reseller (the layout +
+      // page handle holding vs dashboard). Superadmins land on the superadmin
+      // area. Everyone else (restaurant_admin, kitchen_staff) goes to /admin
+      // where the layout sorts them out. Hard navigation so the freshly-set
+      // session cookie is picked up by the server render of the destination.
+      const session = await getSession();
+      const role = (session?.user as any)?.role;
+      const dest =
+        role === "superadmin" ? "/superadmin"
+        : role === "reseller_partner" || role === "pending_reseller" ? "/reseller"
+        : "/admin";
+      window.location.assign(dest);
     } catch (err: any) {
       toast.error(err.message);
     } finally {
