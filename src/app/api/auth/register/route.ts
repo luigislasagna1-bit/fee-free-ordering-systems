@@ -6,6 +6,7 @@ import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { validatePassword } from "@/lib/password";
 import { sendSignupConfirmationEmail } from "@/lib/email";
 import { cookies } from "next/headers";
+import { getStripe, stripeReady } from "@/lib/stripe";
 
 export async function POST(req: NextRequest) {
   // Rate limit: 5 registrations per IP per hour
@@ -15,10 +16,30 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { restaurantName, ownerName, email, password, phone } = await req.json();
+    const { restaurantName, ownerName, email, password, phone, ref } = await req.json();
 
     if (!restaurantName || !email || !password) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    // Reseller attribution: ?ref=<referralCode> on the signup form OR a
+    // "feefree_ref" cookie carries the code. Only count it if the matching
+    // reseller is approved. This is the *only* place the link is set —
+    // restaurants cannot self-claim a reseller later.
+    let resellerProfileId: string | null = null;
+    const cookieStore0 = await cookies();
+    const refCode: string | null =
+      (typeof ref === "string" && ref.trim()) ||
+      cookieStore0.get("feefree_ref")?.value ||
+      null;
+    if (refCode) {
+      const profile = await prisma.resellerProfile.findUnique({
+        where: { referralCode: refCode },
+        select: { id: true, status: true },
+      });
+      if (profile?.status === "approved") {
+        resellerProfileId = profile.id;
+      }
     }
 
     // Validate email format
@@ -61,9 +82,10 @@ export async function POST(req: NextRequest) {
         // live at <slug>.<PLATFORM_DOMAIN> immediately, no admin visit needed.
         subdomain: slug,
         phone: phone ? String(phone).trim().slice(0, 30) : null,
-        subscriptionStatus: "trial",
-        trialEndsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        subscriptionStatus: "trialing",
+        trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
         subscriptionPlanId: starterPlan?.id || null,
+        resellerProfileId,
       },
     });
 
@@ -98,6 +120,26 @@ export async function POST(req: NextRequest) {
         name: ownerNameClean,
       },
     });
+
+    // Create a Stripe Customer so the restaurant can be billed later via Checkout/Portal.
+    // We don't attach a card here — that happens when they convert from trial in /admin/billing.
+    // Failure shouldn't break signup; we'll create the customer lazily on first billing action.
+    if (await stripeReady()) {
+      try {
+        const stripe = await getStripe();
+        const customer = await stripe.customers.create({
+          email: emailClean,
+          name: restaurantNameClean,
+          metadata: { restaurantId: restaurant.id },
+        });
+        await prisma.restaurant.update({
+          where: { id: restaurant.id },
+          data: { stripeCustomerId: customer.id },
+        });
+      } catch (err) {
+        console.error("[register] stripe customer create failed", err);
+      }
+    }
 
     // Pick up the signup-form locale from the cookie so the welcome email is
     // in the same language they were just browsing in.

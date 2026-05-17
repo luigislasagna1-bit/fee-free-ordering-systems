@@ -14,8 +14,11 @@ export async function GET() {
   const restaurant = await prisma.restaurant.findUnique({ where: { id: restaurantId } });
   if (!restaurant?.stripeAccountId) return NextResponse.redirect(`${baseUrl}/admin/settings`);
 
-  const result = await createConnectOnboardingLink(restaurant.stripeAccountId, baseUrl);
-  if ("error" in result) return NextResponse.redirect(`${baseUrl}/admin/settings?stripe=error`);
-
-  return NextResponse.redirect(result.url);
+  try {
+    const result = await createConnectOnboardingLink(restaurant.stripeAccountId, baseUrl);
+    return NextResponse.redirect(result.url);
+  } catch (err) {
+    console.error("[stripe connect refresh]", err);
+    return NextResponse.redirect(`${baseUrl}/admin/settings?stripe=error`);
+  }
 }

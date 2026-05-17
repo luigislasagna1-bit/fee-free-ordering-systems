@@ -345,6 +345,35 @@ export async function sendSignupConfirmationEmail(params: {
 
 // ─── Trial expiring ──────────────────────────────────────────────────────────
 
+/**
+ * Generic billing notification — used by Stripe webhook handlers when a
+ * subscription event needs to be surfaced to the restaurant owner
+ * (payment failed, 3DS auth needed, dispute, etc.). Plain wording so we
+ * don't need a new translation key per scenario.
+ */
+export async function sendBillingNotificationEmail(params: {
+  to: string;
+  restaurantName: string;
+  subject: string;
+  headline: string;
+  body: string;
+  ctaLabel?: string;
+  ctaUrl?: string;
+}) {
+  const cta = params.ctaUrl && params.ctaLabel
+    ? `<p style="margin-top:16px"><a href="${params.ctaUrl}" style="display:inline-block;background:#f97316;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${params.ctaLabel}</a></p>`
+    : "";
+  return send({
+    to: params.to,
+    subject: params.subject,
+    html: wrap(params.headline, `
+      <p>Hi ${params.restaurantName},</p>
+      <p>${params.body}</p>
+      ${cta}
+    `),
+  });
+}
+
 export async function sendTrialExpiringEmail(params: {
   to: string;
   restaurantName: string;

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { sendOrderStatusUpdateEmail } from "@/lib/email";
-import { decrypt } from "@/lib/encrypt";
+import { refundDestinationPayment, stripeReady } from "@/lib/stripe";
 
 const ALLOWED_STATUSES = ["pending", "accepted", "preparing", "ready", "completed", "rejected", "cancelled"] as const;
 
@@ -104,7 +104,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
   // Attempt Stripe refund if payment was captured and order is cancelled
   if (newStatus === "cancelled" && existing.paymentStatus === "paid" && existing.paymentIntentId) {
-    refundOrderAsync(user.restaurantId, id, existing.paymentIntentId).catch(() => {});
+    refundOrderAsync(id, existing.paymentIntentId).catch(() => {});
   }
 
   if (order.customerEmail) {
@@ -123,35 +123,33 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   return NextResponse.json(order);
 }
 
-async function refundOrderAsync(restaurantId: string, orderId: string, paymentIntentId: string) {
+async function refundOrderAsync(orderId: string, paymentIntentId: string) {
   try {
     await prisma.order.update({ where: { id: orderId }, data: { refundStatus: "pending" } });
 
-    const pp = await prisma.paymentProvider.findUnique({ where: { restaurantId } });
-    if (!pp?.secretKeyEnc || !pp.secretKeyIv || !pp.secretKeyTag || !process.env.ENCRYPTION_KEY) {
+    if (!(await stripeReady())) {
       await prisma.order.update({ where: { id: orderId }, data: { refundStatus: "failed" } });
       return;
     }
 
-    const secretKey = decrypt(pp.secretKeyEnc, pp.secretKeyIv, pp.secretKeyTag);
-    const res = await fetch("https://api.stripe.com/v1/refunds", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${secretKey}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: `payment_intent=${paymentIntentId}`,
+    // Destination charge refund — also reverses the transfer to the connected
+    // account and refunds the platform application fee so the restaurant
+    // doesn't eat the fee on a cancelled order.
+    await refundDestinationPayment({
+      paymentIntentId,
+      refundApplicationFee: true,
+      reason: "requested_by_customer",
     });
 
-    if (res.ok) {
-      await prisma.order.update({
-        where: { id: orderId },
-        data: { refundStatus: "refunded", paymentStatus: "refunded" },
-      });
-    } else {
-      await prisma.order.update({ where: { id: orderId }, data: { refundStatus: "failed" } });
-    }
-  } catch {
+    // The actual paymentStatus → "refunded" transition is driven by the
+    // charge.refunded webhook for idempotency; we mark refundStatus optimistically
+    // here so the admin UI reflects the in-flight state immediately.
+    await prisma.order.update({
+      where: { id: orderId },
+      data: { refundStatus: "refunded", paymentStatus: "refunded" },
+    });
+  } catch (err) {
+    console.error("[refund]", err instanceof Error ? err.message : err);
     await prisma.order.update({ where: { id: orderId }, data: { refundStatus: "failed" } }).catch(() => {});
   }
 }

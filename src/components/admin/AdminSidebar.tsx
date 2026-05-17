@@ -42,6 +42,7 @@ const navGroups: NavGroup[] = [
       { href: "/admin/delivery",           labelKey: "deliveryZones",  icon: Truck },
       { href: "/admin/reservations",       labelKey: "reservations",   icon: CalendarDays },
       { href: "/admin/payments/providers", labelKey: "payments",       icon: CreditCard },
+      { href: "/admin/billing",            labelKey: "billing",        icon: Wallet },
       { href: "/admin/service-fees",       labelKey: "serviceFees",    icon: Wallet },
       { href: "/admin/map-settings",       labelKey: "mapSettings",    icon: Map },
       { href: "/admin/notifications",      labelKey: "notifications",  icon: Bell },

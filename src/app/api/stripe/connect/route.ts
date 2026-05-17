@@ -2,7 +2,7 @@
 // DELETE /api/stripe/connect — disconnect account
 import { NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
-import { createConnectAccount, createConnectOnboardingLink, STRIPE_ENABLED } from "@/lib/stripe";
+import { createConnectAccount, createConnectOnboardingLink, stripeReady } from "@/lib/stripe";
 import prisma from "@/lib/db";
 
 export async function POST() {
@@ -10,9 +10,9 @@ export async function POST() {
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  if (!STRIPE_ENABLED) {
+  if (!(await stripeReady())) {
     return NextResponse.json({
-      error: "Stripe is not enabled. Set STRIPE_ENABLED=true and STRIPE_SECRET_KEY in your .env file.",
+      error: "Stripe is not configured. Set it up at /superadmin/settings/stripe.",
       setupRequired: true,
     }, { status: 400 });
   }
@@ -22,26 +22,29 @@ export async function POST() {
 
   let accountId = restaurant.stripeAccountId;
 
-  // Create a new connected account if not exists
-  if (!accountId) {
-    const result = await createConnectAccount({
-      email: restaurant.email || undefined,
-      restaurantName: restaurant.name,
-    });
-    if ("error" in result) return NextResponse.json({ error: result.error }, { status: 500 });
-    accountId = result.accountId;
-    await prisma.restaurant.update({
-      where: { id: restaurantId },
-      data: { stripeAccountId: accountId, stripeAccountStatus: "pending" },
-    });
+  // createConnectAccount + createConnectOnboardingLink now throw on failure
+  // (instead of returning { error }). Single try/catch surfaces any Stripe
+  // API error to the admin UI as a clean 502.
+  try {
+    if (!accountId) {
+      const result = await createConnectAccount({
+        email: restaurant.email || undefined,
+        restaurantName: restaurant.name,
+      });
+      accountId = result.accountId;
+      await prisma.restaurant.update({
+        where: { id: restaurantId },
+        data: { stripeAccountId: accountId, stripeAccountStatus: "pending" },
+      });
+    }
+
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+    const linkResult = await createConnectOnboardingLink(accountId!, baseUrl);
+    return NextResponse.json({ url: linkResult.url, accountId });
+  } catch (err: any) {
+    console.error("[stripe connect]", err);
+    return NextResponse.json({ error: err?.message ?? "Stripe error" }, { status: 502 });
   }
-
-  // Generate onboarding link
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
-  const linkResult = await createConnectOnboardingLink(accountId!, baseUrl);
-  if ("error" in linkResult) return NextResponse.json({ error: linkResult.error }, { status: 500 });
-
-  return NextResponse.json({ url: linkResult.url, accountId });
 }
 
 export async function DELETE() {

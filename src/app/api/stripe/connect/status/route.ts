@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
-import { getConnectAccountStatus, STRIPE_ENABLED } from "@/lib/stripe";
+import { getConnectAccountStatus, stripeReady } from "@/lib/stripe";
 import prisma from "@/lib/db";
 
 export async function GET() {
@@ -17,13 +17,13 @@ export async function GET() {
     return NextResponse.json({ status: "not_connected", accountId: null });
   }
 
-  if (!STRIPE_ENABLED) {
+  if (!(await stripeReady())) {
     return NextResponse.json({ status: restaurant.stripeAccountStatus || "not_connected", accountId: restaurant.stripeAccountId, stripeDisabled: true });
   }
 
   try {
+    // getConnectAccountStatus now throws on failure (instead of returning {error}).
     const acct = await getConnectAccountStatus(restaurant.stripeAccountId);
-    if ("error" in acct) throw new Error(acct.error);
 
     let status = "pending";
     if (acct.chargesEnabled && acct.payoutsEnabled) status = "connected";
@@ -31,7 +31,11 @@ export async function GET() {
 
     await prisma.restaurant.update({
       where: { id: restaurantId },
-      data: { stripeAccountStatus: status },
+      data: {
+        stripeAccountStatus: status,
+        stripeChargesEnabled: acct.chargesEnabled ?? false,
+        stripePayoutsEnabled: acct.payoutsEnabled ?? false,
+      },
     });
 
     return NextResponse.json({ status, accountId: restaurant.stripeAccountId, ...acct });

@@ -29,14 +29,26 @@ const PLATFORM_DOMAIN = process.env.PLATFORM_DOMAIN || "localtest.me";
 export const config = {
   // Apply to everything EXCEPT static assets, API routes, internal Next files,
   // and the surfaces that are explicitly part of the operator console / always
-  // passthrough. The negative lookahead keeps the matcher cheap.
+  // passthrough. The negative lookahead keeps the matcher cheap. /admin is
+  // included so we can attach an x-pathname header (read by the admin layout
+  // to power the subscription gate); the proxy logic itself passes admin
+  // requests through without any rewrite.
   matcher: [
-    "/((?!api|_next/|_static|admin|kitchen|login|signup|features|pricing|demo|faq|icons|manifest-order.webmanifest|manifest-kitchen.webmanifest|sw\\.js|offline\\.html|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
+    "/((?!api|_next/|_static|kitchen|login|signup|features|pricing|demo|faq|icons|manifest-order.webmanifest|manifest-kitchen.webmanifest|sw\\.js|offline\\.html|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
   ],
 };
 
 export async function proxy(req: NextRequest) {
   const host = req.headers.get("host") || "";
+  const pathname = req.nextUrl.pathname;
+
+  // Operator console — pass through, but attach pathname header so the admin
+  // layout's subscription gate can avoid redirect loops on /admin/billing.
+  if (pathname.startsWith("/admin")) {
+    const headers = new Headers(req.headers);
+    headers.set("x-pathname", pathname);
+    return NextResponse.next({ request: { headers } });
+  }
 
   const decision = decideHost({ host, platformDomain: PLATFORM_DOMAIN });
 
@@ -82,7 +94,7 @@ export async function proxy(req: NextRequest) {
     return NextResponse.rewrite(new URL("/not-found", req.url));
   }
 
-  const { pathname, search } = req.nextUrl;
+  const { search } = req.nextUrl;
   const rewritten = new URL(`/order/${slug}${pathname}${search}`, req.url);
 
   const requestHeaders = new Headers(req.headers);

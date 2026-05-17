@@ -56,7 +56,7 @@ export const authOptions: NextAuthOptions = {
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
-          include: { restaurant: true },
+          include: { restaurant: true, resellerProfile: { select: { id: true } } },
         });
 
         if (!user || !user.isActive) return null;
@@ -71,6 +71,7 @@ export const authOptions: NextAuthOptions = {
           role: user.role,
           restaurantId: user.restaurantId ?? undefined,
           restaurantSlug: user.restaurant?.slug ?? undefined,
+          resellerProfileId: user.resellerProfile?.id ?? undefined,
         };
       },
     }),
@@ -81,6 +82,7 @@ export const authOptions: NextAuthOptions = {
         token.role = (user as any).role;
         token.restaurantId = (user as any).restaurantId;
         token.restaurantSlug = (user as any).restaurantSlug;
+        token.resellerProfileId = (user as any).resellerProfileId;
       }
       return token;
     },
@@ -90,6 +92,7 @@ export const authOptions: NextAuthOptions = {
         (session.user as any).role = token.role;
         (session.user as any).restaurantId = token.restaurantId;
         (session.user as any).restaurantSlug = token.restaurantSlug;
+        (session.user as any).resellerProfileId = token.resellerProfileId;
       }
       return session;
     },

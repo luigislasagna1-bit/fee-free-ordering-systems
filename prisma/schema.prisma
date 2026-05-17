@@ -37,11 +37,20 @@ model Restaurant {
   estimatedPickup    Int      @default(20)
   estimatedDelivery  Int      @default(45)
   taxRate            Float    @default(0)
-  stripeAccountId    String?
-  stripeAccountStatus String? @default("not_connected")
-  subscriptionPlanId String?
-  trialEndsAt        DateTime?
-  subscriptionStatus String   @default("trial")
+  // Stripe Connect (Layer C — restaurant collects payments from customers)
+  stripeAccountId       String?
+  stripeAccountStatus   String? @default("not_connected")
+  stripeChargesEnabled  Boolean @default(false)
+  stripePayoutsEnabled  Boolean @default(false)
+
+  // Platform subscription (Layer B — restaurant pays you monthly via Stripe Checkout)
+  subscriptionPlanId      String?
+  trialEndsAt             DateTime?
+  subscriptionStatus      String   @default("trialing")   // trialing | active | past_due | cancelled | incomplete | expired
+  stripeCustomerId        String?   @unique
+  stripeSubscriptionId    String?   @unique
+  currentPeriodEnd        DateTime?
+  cancelAtPeriodEnd       Boolean   @default(false)
   reviewLink         String?
   infoContent        String?  // JSON for info page custom CTAs etc
   themeSettings      String?  // JSON for customer-facing website theme
@@ -87,6 +96,16 @@ model Restaurant {
   reservations         Reservation[]
   notificationRecipients NotificationRecipient[]
   serviceFees          ServiceFee[]
+  subscriptionInvoices SubscriptionInvoice[]
+
+  // Reseller Partner Program — set at restaurant creation when the signup
+  // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
+  // restaurants are direct, not reseller-sourced. Only superadmin can reassign
+  // (support cases). On reseller deletion → SetNull so the restaurant stays.
+  resellerProfileId    String?
+  resellerProfile      ResellerProfile? @relation(fields: [resellerProfileId], references: [id], onDelete: SetNull)
+  restaurantAccess     RestaurantAccess[]
+  commissions          CommissionTransaction[]
 
   // Customer-side email toggles (single set per restaurant)
   customerEmailPickupReady   Boolean @default(true)
@@ -94,6 +113,8 @@ model Restaurant {
   customerEmailDineInReady   Boolean @default(false)
   customerEmailOrderRejected Boolean @default(true)
   customerEmailOrderConfirm  Boolean @default(true)
+
+  @@index([resellerProfileId])
 }
 
 model NotificationRecipient {
@@ -137,14 +158,75 @@ model SubscriptionPlan {
   id          String   @id @default(cuid())
   name        String
   slug        String   @unique
-  price       Float
-  interval    String   @default("month")
+  price       Float    // monthly USD price; cents on Stripe side
+  interval    String   @default("month")  // month | year
   description String?
-  features    String
+  features    String   // JSON-encoded array of feature bullets
   isActive    Boolean  @default(true)
+
+  // Stripe sync state — Product is reused across price changes; Prices are
+  // immutable so any `price` edit creates a NEW stripePriceId. Old Prices
+  // stay archived (active=false on Stripe) so existing subscribers keep
+  // their grandfathered rate until we explicitly migrate them.
+  stripeProductId String? @unique
+  stripePriceId   String? @unique
+  syncStatus      String  @default("not_synced") // not_synced | syncing | synced | error
+  syncError       String?
+  syncedAt        DateTime?
+
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
 
   restaurants Restaurant[]
+}
+
+// Audit trail of every invoice Stripe sends for a restaurant's platform
+// subscription. Webhook handlers upsert into this table on invoice.paid /
+// invoice.payment_failed events. Keyed by stripeInvoiceId for idempotency.
+model SubscriptionInvoice {
+  id                   String    @id @default(cuid())
+  restaurantId         String
+  stripeInvoiceId      String    @unique
+  stripeSubscriptionId String?
+  amountPaid           Int       // in cents
+  amountDue            Int       @default(0) // in cents
+  currency             String    @default("usd")
+  status               String    // paid | open | uncollectible | void | draft
+  paidAt               DateTime?
+  periodStart          DateTime?
+  periodEnd            DateTime?
+  hostedInvoiceUrl     String?
+  invoicePdfUrl        String?
+  receiptUrl           String?
+  attemptCount         Int       @default(0)
+  createdAt            DateTime  @default(now())
+
+  // Refund/dispute tracking — read by the commission engine. Initially 0/false
+  // on creation; updated by charge.refunded / charge.dispute.created webhook
+  // handlers when the underlying charge is reversed.
+  amountRefundedCents  Int       @default(0)
+  disputed             Boolean   @default(false)
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  commission CommissionTransaction?
+
+  @@index([restaurantId])
+  @@index([stripeSubscriptionId])
+}
+
+// Idempotency log — every Stripe webhook event we've successfully processed.
+// On retry, we look up by stripeEventId and short-circuit.
+model StripeWebhookEvent {
+  id              String   @id @default(cuid())
+  stripeEventId   String   @unique
+  eventType       String
+  receivedAt      DateTime @default(now())
+  processedAt     DateTime?
+  status          String   @default("received") // received | processed | failed | ignored
+  errorMessage    String?
+
+  @@index([eventType])
+  @@index([receivedAt])
 }
 
 model User {
@@ -160,6 +242,8 @@ model User {
 
   restaurant  Restaurant?           @relation(fields: [restaurantId], references: [id])
   resetTokens PasswordResetToken[]
+  resellerProfile  ResellerProfile?     // present only on reseller_partner users
+  restaurantAccess RestaurantAccess[]   // non-owner restaurant grants
 }
 
 // Singleton row holding platform-wide settings (Resend API key, etc.).
@@ -171,6 +255,18 @@ model PlatformSettings {
   resendApiKeyIv  String?
   resendApiKeyTag String?
   emailFrom       String?  // e.g. "Fee Free Ordering <hello@yourdomain.com>"
+  // Stripe — secret key + webhook secret encrypted at rest. Publishable key
+  // is stored plain (safe to expose to clients). When any of these are null
+  // we fall back to the matching env var (STRIPE_SECRET_KEY etc.).
+  stripeMode             String?  // "test" | "live"
+  stripeEnabled          Boolean  @default(false)
+  stripePublishableKey   String?
+  stripeSecretKeyEnc     String?
+  stripeSecretKeyIv      String?
+  stripeSecretKeyTag     String?
+  stripeWebhookSecretEnc String?
+  stripeWebhookSecretIv  String?
+  stripeWebhookSecretTag String?
   updatedAt       DateTime @updatedAt
   updatedBy       String?
 }
@@ -667,3 +763,124 @@ model PaymentProvider {
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
 }
+
+// ─── Reseller Partner Program ──────────────────────────────────────────────
+//
+// One ResellerProfile per reseller_partner user. Status drives whether they
+// can log in / earn commission. The referralCode is appended to signup URLs
+// (/signup?ref=<code>) so attribution is set at restaurant creation time —
+// see src/app/api/auth/register/route.ts.
+model ResellerProfile {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Application + approval lifecycle
+  status            String   @default("pending") // pending | approved | suspended | rejected
+  companyName       String?
+  website           String?
+  country           String?
+  applicationNotes  String?  // what they wrote on the application form
+  approvedAt        DateTime?
+  approvedBy        String?  // superadmin User.id
+  suspendedAt       DateTime?
+  suspendedReason   String?
+
+  // Payout preferences. Money is sent manually by the superadmin per the
+  // chosen method; payoutDetails is an encrypted JSON blob (PayPal email,
+  // bank routing info, etc.) using the same AES-GCM envelope as Stripe keys.
+  payoutMethod      String?
+  payoutDetails     String?
+  payoutDetailsIv   String?
+  payoutDetailsTag  String?
+
+  referralCode      String   @unique @default(cuid())
+  totalEarnedCents  Int      @default(0) // lifetime gross
+  totalPaidCents    Int      @default(0) // lifetime payouts marked paid
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  restaurants Restaurant[]
+  commissions CommissionTransaction[]
+  payouts     PayoutRequest[]
+
+  @@index([status])
+  @@index([referralCode])
+}
+
+// Many-to-many between User and Restaurant for non-owner access. The owning
+// restaurant_admin uses User.restaurantId; everything else (reseller managers,
+// shared staff, future delegation) goes here. accessRole bounds what they can
+// do at the route level.
+model RestaurantAccess {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  accessRole   String   // owner | reseller_manager | manager | staff | readonly
+  grantedBy    String?  // user id of who granted this access
+  grantedAt    DateTime @default(now())
+
+  @@unique([userId, restaurantId])
+  @@index([restaurantId])
+}
+
+// One row per SubscriptionInvoice that earns commission for a reseller.
+// Idempotent by subscriptionInvoiceId unique. The snapshot fields
+// (activePayingCount, ratePercent, netRevenueCents) are frozen at recording
+// time so we can audit how each amount was derived.
+model CommissionTransaction {
+  id                    String   @id @default(cuid())
+  resellerProfileId     String
+  resellerProfile       ResellerProfile @relation(fields: [resellerProfileId], references: [id], onDelete: Cascade)
+  restaurantId          String
+  restaurant            Restaurant @relation(fields: [restaurantId], references: [id])
+  subscriptionInvoiceId String   @unique
+  subscriptionInvoice   SubscriptionInvoice @relation(fields: [subscriptionInvoiceId], references: [id])
+
+  netRevenueCents       Int
+  activePayingCount     Int
+  ratePercent           Float
+  commissionCents       Int
+
+  status            String   @default("pending") // pending | available | paid | reversed
+  reversedAt        DateTime?
+  reversedReason    String?
+  payoutRequestId   String?
+  payoutRequest     PayoutRequest? @relation(fields: [payoutRequestId], references: [id])
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([resellerProfileId, status])
+  @@index([restaurantId])
+}
+
+// A reseller's request to be paid out. Includes one or more commissions.
+// Superadmin approves and then marks paid after sending money out-of-band.
+model PayoutRequest {
+  id                String   @id @default(cuid())
+  resellerProfileId String
+  resellerProfile   ResellerProfile @relation(fields: [resellerProfileId], references: [id], onDelete: Cascade)
+
+  amountCents       Int
+  currency          String   @default("usd")
+  status            String   @default("requested") // requested | approved | paid | rejected | cancelled
+  requestedAt       DateTime @default(now())
+  approvedAt        DateTime?
+  approvedBy        String?
+  paidAt            DateTime?
+  paidBy            String?
+  rejectedAt        DateTime?
+  rejectedReason    String?
+
+  payoutReference   String?
+  notes             String?
+
+  commissions       CommissionTransaction[]
+
+  @@index([resellerProfileId, status])
+}
+
