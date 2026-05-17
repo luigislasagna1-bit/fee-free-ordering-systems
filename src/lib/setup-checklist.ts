@@ -196,9 +196,9 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
       id: "orders.appConnected",
       section: "orders",
       label: "Order-taking app connected",
-      // Becomes required in Phase 4 once we wire KitchenDevice tracking.
+      // Phase 4: KitchenDevice heartbeats — required for publishing.
       required: true,
-      href: "/admin/notifications",
+      href: "/admin/publishing",
       complete: hasKitchenDevice,
     },
     {

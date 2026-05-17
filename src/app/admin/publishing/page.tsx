@@ -2,17 +2,22 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import { getPublishState } from "@/lib/publishing";
-import { Globe, Code2, Smartphone, CheckCircle2, AlertCircle, Lock } from "lucide-react";
+import { listKitchenDevices, FRESHNESS_MS } from "@/lib/kitchen-devices";
+import { Globe, Code2, Smartphone, CheckCircle2, AlertCircle, Lock, Tablet } from "lucide-react";
 import { PublishToggleClient } from "./PublishToggleClient";
 
 export default async function PublishingHubPage() {
   const user = await getSessionUser();
   if (!user?.restaurantId) redirect("/login");
 
-  const state = await getPublishState(user.restaurantId);
+  const [state, devices] = await Promise.all([
+    getPublishState(user.restaurantId),
+    listKitchenDevices(user.restaurantId),
+  ]);
   const progress = state.progress;
   const isPublished = !!state.publishedAt;
   const publishReady = !!progress?.publishReady;
+  const liveDevices = devices.filter((d) => d.isLive);
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -76,6 +81,69 @@ export default async function PublishingHubPage() {
           isPublished={isPublished}
           publishReady={publishReady}
         />
+      </div>
+
+      {/* Order-taking devices */}
+      <div className="rounded-xl border border-gray-200 bg-white p-5">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 className="font-semibold text-gray-900 flex items-center gap-2">
+              <Tablet className="w-5 h-5 text-gray-500" />
+              Order-taking app
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              {liveDevices.length > 0 ? (
+                <>
+                  <span className="text-green-700 font-medium">
+                    {liveDevices.length} device{liveDevices.length === 1 ? "" : "s"} connected
+                  </span>{" "}
+                  &middot; presence refreshes every minute
+                </>
+              ) : devices.length > 0 ? (
+                <>
+                  No devices online right now. Last seen{" "}
+                  {Math.round((Date.now() - devices[0].lastSeenAt.getTime()) / 60_000)} min ago.
+                </>
+              ) : (
+                <>
+                  No kitchen device has checked in yet. Open <code>/kitchen</code> on a tablet
+                  to register it.
+                </>
+              )}
+            </p>
+          </div>
+          <Link
+            href="/kitchen"
+            className="text-sm font-medium text-orange-600 hover:underline whitespace-nowrap"
+          >
+            Open Kitchen &rarr;
+          </Link>
+        </div>
+        {devices.length > 0 && (
+          <ul className="mt-3 divide-y divide-gray-100 border-t border-gray-100">
+            {devices.slice(0, 5).map((d) => {
+              const mins = Math.max(0, Math.round((Date.now() - d.lastSeenAt.getTime()) / 60_000));
+              const fresh = d.lastSeenAt.getTime() >= Date.now() - FRESHNESS_MS;
+              return (
+                <li key={d.id} className="flex items-center justify-between py-2 text-sm">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span
+                      className={`inline-block w-2 h-2 rounded-full ${
+                        fresh ? "bg-green-500" : "bg-gray-300"
+                      }`}
+                    />
+                    <span className="font-medium text-gray-800 truncate">
+                      {d.label || (d.userAgent ? d.userAgent.slice(0, 40) : d.deviceHash.slice(0, 8))}
+                    </span>
+                  </div>
+                  <span className="text-xs text-gray-500 whitespace-nowrap">
+                    {fresh ? "online" : `${mins} min ago`}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
 
       {/* Tiles */}

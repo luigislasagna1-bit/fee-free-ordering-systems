@@ -383,6 +383,33 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     return () => clearInterval(interval);
   }, [fetchOrders]);
 
+  // Heartbeat: tell the server this device is online. Used by the admin
+  // publishing checklist to know an order-taking app is connected. Sends
+  // immediately on mount + every 60s while the page is open.
+  useEffect(() => {
+    let deviceHash = "";
+    try {
+      deviceHash = localStorage.getItem("kds-device-hash") || "";
+      if (!deviceHash) {
+        const arr = new Uint8Array(16);
+        crypto.getRandomValues(arr);
+        deviceHash = Array.from(arr, (b) => b.toString(16).padStart(2, "0")).join("");
+        localStorage.setItem("kds-device-hash", deviceHash);
+      }
+    } catch {}
+    if (!deviceHash) return;
+    const beat = () => {
+      fetch("/api/kitchen/heartbeat", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ deviceHash }),
+      }).catch(() => {});
+    };
+    beat();
+    const id = setInterval(beat, 60_000);
+    return () => clearInterval(id);
+  }, []);
+
   // Alert sound on pending orders
   useEffect(() => {
     const pending = orders.filter(o => o.status === "pending").length;

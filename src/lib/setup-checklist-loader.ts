@@ -9,6 +9,7 @@
 
 import prisma from "@/lib/db";
 import { computeSetupProgress, type SetupProgress } from "@/lib/setup-checklist";
+import { hasLiveKitchenDevice } from "@/lib/kitchen-devices";
 
 export async function loadSetupProgress(restaurantId: string): Promise<SetupProgress | null> {
   const restaurant = await prisma.restaurant.findUnique({
@@ -33,7 +34,7 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
   });
   if (!restaurant) return null;
 
-  const [hours, categories, menuItems, paymentProvider, notificationCount] = await Promise.all([
+  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive] = await Promise.all([
     prisma.openingHours.findMany({
       where: { restaurantId },
       select: { isOpen: true },
@@ -53,12 +54,10 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     prisma.notificationRecipient.count({
       where: { restaurantId, isActive: true },
     }),
+    hasLiveKitchenDevice(restaurantId),
   ]);
 
-  // Phase 4 swaps this for an actual KitchenDevice lookup. For now we treat
-  // "has any notification recipient" as a stand-in so the step doesn't appear
-  // permanently red until Phase 4 ships.
-  const hasKitchenDevice = false;
+  const hasKitchenDevice = kitchenDeviceLive;
 
   return computeSetupProgress({
     restaurant,
