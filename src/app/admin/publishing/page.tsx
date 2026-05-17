@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import { getPublishState } from "@/lib/publishing";
 import { listKitchenDevices, FRESHNESS_MS } from "@/lib/kitchen-devices";
+import { hasFeature } from "@/lib/entitlements";
 import { Globe, Code2, Smartphone, CheckCircle2, AlertCircle, Lock, Tablet } from "lucide-react";
 import { PublishToggleClient } from "./PublishToggleClient";
 
@@ -10,14 +11,16 @@ export default async function PublishingHubPage() {
   const user = await getSessionUser();
   if (!user?.restaurantId) redirect("/login");
 
-  const [state, devices] = await Promise.all([
+  const [state, devices, hasHostedSite] = await Promise.all([
     getPublishState(user.restaurantId),
     listKitchenDevices(user.restaurantId),
+    hasFeature(user.restaurantId, "hosted_marketing_page"),
   ]);
   const progress = state.progress;
   const isPublished = !!state.publishedAt;
   const publishReady = !!progress?.publishReady;
   const liveDevices = devices.filter((d) => d.isLive);
+  const hostedUrl = hasHostedSite ? `/site/${user.restaurantSlug ?? ""}` : null;
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -168,25 +171,48 @@ export default async function PublishingHubPage() {
           </div>
         </Link>
 
-        {/* Hosted Website — LOCKED */}
-        <div className="rounded-xl border border-gray-200 bg-gray-50 p-5 relative overflow-hidden">
-          <div className="flex items-start justify-between">
-            <Globe className="w-8 h-8 text-gray-400" />
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 flex items-center gap-1">
-              <Lock className="w-3 h-3" /> Add-on
-            </span>
-          </div>
-          <h3 className="font-semibold text-gray-700 mt-3">Sales Optimized Website</h3>
-          <p className="text-sm text-gray-500 mt-1">
-            We'll host a marketing page at <code className="text-xs">your-slug.feefreeordering.com</code>.
-          </p>
+        {/* Hosted Website */}
+        {hasHostedSite && hostedUrl ? (
           <Link
-            href="/admin/billing/add-ons"
-            className="mt-3 inline-block text-sm text-gray-600 font-medium hover:underline"
+            href={hostedUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group rounded-xl border border-gray-200 bg-white p-5 hover:border-orange-300 hover:shadow-md transition"
           >
-            Upgrade to unlock &rarr;
+            <div className="flex items-start justify-between">
+              <Globe className="w-8 h-8 text-orange-500" />
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700">
+                Active
+              </span>
+            </div>
+            <h3 className="font-semibold text-gray-900 mt-3">Sales Optimized Website</h3>
+            <p className="text-sm text-gray-600 mt-1">
+              Your hosted marketing page is live.
+            </p>
+            <div className="mt-3 text-sm text-orange-600 font-medium group-hover:underline">
+              View site &rarr;
+            </div>
           </Link>
-        </div>
+        ) : (
+          <div className="rounded-xl border border-gray-200 bg-gray-50 p-5 relative overflow-hidden">
+            <div className="flex items-start justify-between">
+              <Globe className="w-8 h-8 text-gray-400" />
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 flex items-center gap-1">
+                <Lock className="w-3 h-3" /> Add-on
+              </span>
+            </div>
+            <h3 className="font-semibold text-gray-700 mt-3">Sales Optimized Website</h3>
+            <p className="text-sm text-gray-500 mt-1">
+              We'll host a marketing page at <code className="text-xs">your-slug.feefreeordering.com</code>.
+            </p>
+            <Link
+              href="/admin/billing/add-ons"
+              className="mt-3 inline-block text-sm text-gray-600 font-medium hover:underline"
+            >
+              Upgrade to unlock &rarr;
+            </Link>
+          </div>
+        )}
 
         {/* Branded Mobile App — LOCKED */}
         <div className="rounded-xl border border-gray-200 bg-gray-50 p-5">
