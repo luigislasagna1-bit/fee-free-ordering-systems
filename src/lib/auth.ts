@@ -52,27 +52,54 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        // Diagnostic logging — NextAuth converts any throw or null return
+        // into a generic "Invalid email or password" with NO server-side hint,
+        // making auth failures invisible. These console.errors print to Vercel
+        // runtime logs so we can tell which step actually failed.
+        const TAG = "[authorize]";
+        try {
+          if (!credentials?.email || !credentials?.password) {
+            console.error(`${TAG} missing credentials`);
+            return null;
+          }
+          const emailLower = String(credentials.email).trim().toLowerCase();
+          console.error(`${TAG} attempting email=${emailLower}`);
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-          include: { restaurant: true, resellerProfile: { select: { id: true } } },
-        });
+          const user = await prisma.user.findUnique({
+            where: { email: emailLower },
+            include: { restaurant: true, resellerProfile: { select: { id: true } } },
+          });
 
-        if (!user || !user.isActive) return null;
+          if (!user) {
+            console.error(`${TAG} no user found for ${emailLower}`);
+            return null;
+          }
+          if (!user.isActive) {
+            console.error(`${TAG} user ${user.id} isActive=false`);
+            return null;
+          }
 
-        const valid = await bcrypt.compare(credentials.password, user.passwordHash);
-        if (!valid) return null;
+          const valid = await bcrypt.compare(credentials.password, user.passwordHash);
+          if (!valid) {
+            console.error(`${TAG} bcrypt mismatch for ${user.id}`);
+            return null;
+          }
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name ?? user.email,
-          role: user.role,
-          restaurantId: user.restaurantId ?? undefined,
-          restaurantSlug: user.restaurant?.slug ?? undefined,
-          resellerProfileId: user.resellerProfile?.id ?? undefined,
-        };
+          console.error(`${TAG} success user=${user.id} role=${user.role}`);
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name ?? user.email,
+            role: user.role,
+            restaurantId: user.restaurantId ?? undefined,
+            restaurantSlug: user.restaurant?.slug ?? undefined,
+            resellerProfileId: user.resellerProfile?.id ?? undefined,
+          };
+        } catch (err: any) {
+          console.error(`${TAG} threw:`, err?.message || err);
+          if (err?.stack) console.error(err.stack.split("\n").slice(0, 4).join(" | "));
+          return null;
+        }
       },
     }),
   ],
