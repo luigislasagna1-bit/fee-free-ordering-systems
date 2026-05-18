@@ -1301,6 +1301,10 @@
         "reservation_deposits": {
           "name": "Depósitos de reserva",
           "desc": "Cobre um depósito reembolsável ao reservar mesa para reduzir as ausências."
+        },
+        "multi_location": {
+          "name": "Multi-Unidade",
+          "desc": "Gerencie várias unidades de restaurante em uma única conta. Cada unidade tem seu próprio menu, pedidos e pagamentos Stripe — alterne entre elas pelo admin principal."
         }
       },
       "compareTitle": "Todo restaurante recebe",

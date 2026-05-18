@@ -1301,6 +1301,10 @@
         "reservation_deposits": {
           "name": "Reservation Deposits",
           "desc": "Charge a refundable deposit when guests book a table to reduce no-shows."
+        },
+        "multi_location": {
+          "name": "Multi-Location",
+          "desc": "Run multiple restaurant locations under one account. Each location has its own menu, orders, and Stripe payouts — switch between them from the parent admin."
         }
       },
       "compareTitle": "Every restaurant gets",

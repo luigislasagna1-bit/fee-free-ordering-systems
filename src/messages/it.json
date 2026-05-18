@@ -1301,6 +1301,10 @@
         "reservation_deposits": {
           "name": "Acconti prenotazione",
           "desc": "Richiedi un acconto rimborsabile alla prenotazione per ridurre i no-show."
+        },
+        "multi_location": {
+          "name": "Multi-Sede",
+          "desc": "Gestisci più ristoranti da un unico account. Ogni sede ha il proprio menu, ordini e pagamenti Stripe — passa tra di esse dall'admin principale."
         }
       },
       "compareTitle": "Ogni ristorante riceve",

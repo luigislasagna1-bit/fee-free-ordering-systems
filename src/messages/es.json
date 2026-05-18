@@ -1301,6 +1301,10 @@
         "reservation_deposits": {
           "name": "Depósitos de reserva",
           "desc": "Cobra un depósito reembolsable al reservar mesa para reducir las no-presencias."
+        },
+        "multi_location": {
+          "name": "Multi-Sucursal",
+          "desc": "Gestiona varias sucursales de restaurante en una sola cuenta. Cada sucursal tiene su propio menú, pedidos y pagos de Stripe — cambia entre ellas desde el panel principal."
         }
       },
       "compareTitle": "Cada restaurante recibe",

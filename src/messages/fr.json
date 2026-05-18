@@ -1301,6 +1301,10 @@
         "reservation_deposits": {
           "name": "Acomptes de réservation",
           "desc": "Demandez un acompte remboursable lors de la réservation pour réduire les no-shows."
+        },
+        "multi_location": {
+          "name": "Multi-établissements",
+          "desc": "Gérez plusieurs restaurants depuis un seul compte. Chaque emplacement a son propre menu, commandes et reversements Stripe — basculez entre eux depuis l'admin principal."
         }
       },
       "compareTitle": "Chaque restaurant reçoit",

@@ -141,6 +141,21 @@ async function main() {
       displayOrder: 70,
       enabledFeatures: ["take_reservation_deposit"],
     },
+    {
+      // Multi-location: parent restaurant pays this flat fee to unlock the
+      // ability to spin up child locations. Each child location separately
+      // pays for its OWN add-ons (Online Payments, Hosted Website, etc.) —
+      // the multi-location fee just unlocks the parent's privilege to manage
+      // a network. Without it, the location switcher + child-create flow
+      // are gated off.
+      slug: "multi_location",
+      name: "Multi-Location",
+      description:
+        "Manage multiple restaurant locations under one account. Each location runs its own menu, orders, and Stripe Connect — switch between them from the parent admin.",
+      monthlyPriceCents: 4999, // $49.99 — locked-in price (user-set 2026-05-18)
+      displayOrder: 80,
+      enabledFeatures: ["multi_location_management"],
+    },
   ];
 
   for (const a of addOns) {

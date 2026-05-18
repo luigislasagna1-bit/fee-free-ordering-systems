@@ -27,7 +27,8 @@ export type Feature =
   | "app_store_listing"
   | "branded_pwa"
   | "in_house_pos"
-  | "take_reservation_deposit";
+  | "take_reservation_deposit"
+  | "multi_location_management";
 
 /** Statuses on RestaurantAddOn that grant entitlements. past_due / cancelled
  *  / incomplete subscriptions do NOT grant access — the feature drops the
@@ -96,4 +97,5 @@ export const ALL_FEATURES: readonly Feature[] = [
   "branded_pwa",
   "in_house_pos",
   "take_reservation_deposit",
+  "multi_location_management",
 ];

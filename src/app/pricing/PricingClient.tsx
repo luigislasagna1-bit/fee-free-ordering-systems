@@ -11,6 +11,7 @@ import {
   Store,
   Calendar,
   Link2,
+  Building2,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -45,6 +46,7 @@ export function PricingClient({ locale }: { locale: string }) {
     { slug: "branded_mobile_app", icon: Smartphone, color: "#f59e0b" },
     { slug: "pos_module",         icon: Store,      color: "#06b6d4" },
     { slug: "reservation_deposits", icon: Calendar, color: "#ef4444" },
+    { slug: "multi_location",     icon: Building2,  color: "#0ea5e9" },
   ] as const;
 
   return (
