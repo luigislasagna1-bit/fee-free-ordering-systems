@@ -1068,9 +1068,18 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
   );
 }
 
-// ─── PDF Import Modal ─────────────────────────────────────────────────────────
+// ─── PDF Import Modal (Claude-powered, category-aware) ──────────────────────
 
-type PdfCandidate = { name: string; description: string; price: number };
+type PdfItem = { name: string; description: string; price: number };
+type PdfImportCategory = {
+  /** Original name from extraction. */
+  name: string;
+  /** When user picks "merge into existing", this is the existing MenuCategory id. */
+  existingCategoryId: string | null;
+  items: PdfItem[];
+  /** Per-item selection state. */
+  selected: boolean[];
+};
 
 function PdfImportModal({ categories, onClose, onImported }: {
   categories: Category[];
@@ -1080,13 +1089,17 @@ function PdfImportModal({ categories, onClose, onImported }: {
   const [step, setStep] = useState<"upload" | "review">("upload");
   const [uploading, setUploading] = useState(false);
   const [importing, setImporting] = useState(false);
-  const [candidates, setCandidates] = useState<PdfCandidate[]>([]);
-  const [selected, setSelected] = useState<Record<number, boolean>>({});
-  const [edited, setEdited] = useState<PdfCandidate[]>([]);
-  const [categoryId, setCategoryId] = useState(categories[0]?.id ?? "");
+  const [importCats, setImportCats] = useState<PdfImportCategory[]>([]);
+  const [extractionMethod, setExtractionMethod] = useState<"claude" | "regex_fallback">("claude");
+  const [extractionNote, setExtractionNote] = useState<string>("");
   const [error, setError] = useState("");
-  const fileRef = useState<File | null>(null);
   const inputRef = { current: null as HTMLInputElement | null };
+
+  const totalSelected = importCats.reduce(
+    (sum, c) => sum + c.selected.filter(Boolean).length,
+    0
+  );
+  const totalItems = importCats.reduce((sum, c) => sum + c.items.length, 0);
 
   const handleFile = async (file: File) => {
     setUploading(true);
@@ -1096,11 +1109,27 @@ function PdfImportModal({ categories, onClose, onImported }: {
       form.append("pdf", file);
       const res = await fetch("/api/menu/import-pdf", { method: "POST", body: form });
       const data = await res.json();
-      if (!res.ok) { setError(data.error || "Failed to parse PDF"); setUploading(false); return; }
-      setCandidates(data.candidates);
-      setEdited(data.candidates.map((c: PdfCandidate) => ({ ...c })));
-      setSelected(Object.fromEntries(data.candidates.map((_: PdfCandidate, i: number) => [i, true])));
-      if (data.categories?.length && !categoryId) setCategoryId(data.categories[0].id);
+      if (!res.ok) {
+        setError(data.error || "Failed to parse PDF");
+        setUploading(false);
+        return;
+      }
+      // Hydrate state
+      const cats = (data.categories as Array<{ name: string; items: PdfItem[] }>).map((c) => {
+        // Try to auto-match against an existing category with the same (case-insensitive) name
+        const match = categories.find(
+          (existing) => existing.name.trim().toLowerCase() === c.name.trim().toLowerCase()
+        );
+        return {
+          name: c.name,
+          existingCategoryId: match?.id ?? null,
+          items: c.items,
+          selected: c.items.map(() => true),
+        };
+      });
+      setImportCats(cats);
+      setExtractionMethod(data.method || "claude");
+      setExtractionNote(data.note || "");
       setStep("review");
     } catch {
       setError("Upload failed. Please try again.");
@@ -1109,19 +1138,33 @@ function PdfImportModal({ categories, onClose, onImported }: {
   };
 
   const confirmImport = async () => {
-    const items = edited.filter((_, i) => selected[i]);
-    if (!items.length) { toast.error("Select at least one item"); return; }
-    if (!categoryId) { toast.error("Select a category"); return; }
+    if (totalSelected === 0) {
+      toast.error("Select at least one item");
+      return;
+    }
     setImporting(true);
     try {
+      // Build the payload, only including selected items per category
+      const payload = {
+        categories: importCats
+          .map((c) => ({
+            name: c.name,
+            existingCategoryId: c.existingCategoryId,
+            items: c.items.filter((_, i) => c.selected[i]),
+          }))
+          .filter((c) => c.items.length > 0),
+      };
       const res = await fetch("/api/menu/import-pdf", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items, categoryId }),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Import failed");
-      toast.success(`${data.created} item${data.created !== 1 ? "s" : ""} imported!`);
+      const catMsg = data.categoriesCreated > 0
+        ? `${data.categoriesCreated} new categor${data.categoriesCreated === 1 ? "y" : "ies"} + `
+        : "";
+      toast.success(`${catMsg}${data.itemsCreated} item${data.itemsCreated !== 1 ? "s" : ""} imported!`);
       onImported();
     } catch (e: any) {
       toast.error(e.message || "Import failed");
@@ -1129,9 +1172,40 @@ function PdfImportModal({ categories, onClose, onImported }: {
     setImporting(false);
   };
 
-  const toggleAll = () => {
-    const allOn = candidates.every((_, i) => selected[i]);
-    setSelected(Object.fromEntries(candidates.map((_, i) => [i, !allOn])));
+  const updateItem = (catIdx: number, itemIdx: number, field: keyof PdfItem, value: string | number) => {
+    setImportCats((cats) =>
+      cats.map((c, ci) =>
+        ci !== catIdx ? c : {
+          ...c,
+          items: c.items.map((it, ii) => ii !== itemIdx ? it : { ...it, [field]: value }),
+        }
+      )
+    );
+  };
+
+  const toggleItem = (catIdx: number, itemIdx: number) => {
+    setImportCats((cats) =>
+      cats.map((c, ci) => ci !== catIdx ? c : {
+        ...c,
+        selected: c.selected.map((s, si) => si === itemIdx ? !s : s),
+      })
+    );
+  };
+
+  const toggleAllInCat = (catIdx: number) => {
+    setImportCats((cats) => cats.map((c, ci) => {
+      if (ci !== catIdx) return c;
+      const allOn = c.selected.every(Boolean);
+      return { ...c, selected: c.selected.map(() => !allOn) };
+    }));
+  };
+
+  const updateCatName = (catIdx: number, name: string) => {
+    setImportCats((cats) => cats.map((c, ci) => ci === catIdx ? { ...c, name } : c));
+  };
+
+  const updateCatMerge = (catIdx: number, existingCategoryId: string | null) => {
+    setImportCats((cats) => cats.map((c, ci) => ci === catIdx ? { ...c, existingCategoryId } : c));
   };
 
   return (
@@ -1168,7 +1242,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
               </div>
             )}
             <p className="text-xs text-gray-400 text-center max-w-sm">
-              The PDF must contain selectable text (not a scanned image). Items with a price like "$12.50" on the same line will be detected automatically.
+              We use AI (Claude) to read your PDF — including categories, prices, and descriptions. Works on print-designed menus with multi-column layouts and decorative typography.
             </p>
           </div>
         )}
@@ -1176,62 +1250,109 @@ function PdfImportModal({ categories, onClose, onImported }: {
         {step === "review" && (
           <>
             <div className="p-4 border-b bg-gray-50 flex items-center gap-3 flex-wrap">
-              <span className="text-sm font-medium text-gray-600">{candidates.length} items detected</span>
-              <button onClick={toggleAll} className="text-xs text-orange-600 hover:underline">
-                {candidates.every((_, i) => selected[i]) ? "Deselect all" : "Select all"}
-              </button>
-              <div className="ml-auto flex items-center gap-2">
-                <span className="text-sm text-gray-600">Import to:</span>
-                <select
-                  className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  value={categoryId}
-                  onChange={(e) => setCategoryId(e.target.value)}
-                >
-                  {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                </select>
-              </div>
+              <span className="text-sm font-medium text-gray-600">
+                {importCats.length} categor{importCats.length === 1 ? "y" : "ies"} · {totalItems} items detected
+              </span>
+              {extractionMethod === "regex_fallback" && (
+                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-800" title={extractionNote}>
+                  Basic extraction (AI unavailable)
+                </span>
+              )}
+              {extractionMethod === "claude" && (
+                <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">
+                  AI extraction
+                </span>
+              )}
+              <span className="ml-auto text-xs text-gray-500">
+                {totalSelected} of {totalItems} selected
+              </span>
             </div>
-            <div className="flex-1 overflow-y-auto divide-y divide-gray-100">
-              {edited.map((item, i) => (
-                <div key={i} className={`flex items-start gap-3 p-4 ${!selected[i] ? "opacity-40" : ""}`}>
-                  <input type="checkbox" checked={!!selected[i]} onChange={() => setSelected(s => ({ ...s, [i]: !s[i] }))}
-                    className="mt-1 w-4 h-4 rounded accent-orange-500 flex-shrink-0" />
-                  <div className="flex-1 grid grid-cols-[1fr_auto] gap-x-3 gap-y-1">
-                    <input
-                      className="text-sm font-medium border-b border-transparent hover:border-gray-300 focus:border-orange-400 focus:outline-none px-0 py-0.5"
-                      value={item.name}
-                      onChange={(e) => setEdited(ed => ed.map((x, j) => j === i ? { ...x, name: e.target.value } : x))}
-                    />
-                    <input
-                      type="number" step="0.01" min="0"
-                      className="w-24 text-sm text-right border border-gray-200 rounded-lg px-2 py-0.5 focus:outline-none focus:ring-2 focus:ring-orange-400"
-                      value={item.price}
-                      onChange={(e) => setEdited(ed => ed.map((x, j) => j === i ? { ...x, price: parseFloat(e.target.value) || 0 } : x))}
-                    />
-                    {item.description && (
+            <div className="flex-1 overflow-y-auto">
+              {importCats.map((cat, ci) => {
+                const allOn = cat.selected.every(Boolean);
+                const someOn = cat.selected.some(Boolean);
+                return (
+                  <div key={ci} className="border-b border-gray-100">
+                    {/* Category header */}
+                    <div className="px-4 py-3 bg-gray-50 flex items-center gap-3 flex-wrap sticky top-0 z-10">
+                      <button
+                        onClick={() => toggleAllInCat(ci)}
+                        className="text-xs text-orange-600 hover:underline whitespace-nowrap"
+                      >
+                        {allOn ? "Deselect all" : someOn ? "Select all" : "Select all"}
+                      </button>
                       <input
-                        className="col-span-2 text-xs text-gray-500 border-b border-transparent hover:border-gray-300 focus:border-orange-400 focus:outline-none px-0 py-0.5"
-                        value={item.description}
-                        onChange={(e) => setEdited(ed => ed.map((x, j) => j === i ? { ...x, description: e.target.value } : x))}
+                        className="flex-1 min-w-[180px] text-sm font-semibold text-gray-900 border-b border-transparent hover:border-gray-300 focus:border-orange-400 focus:outline-none px-0 py-0.5 bg-transparent"
+                        value={cat.name}
+                        onChange={(e) => updateCatName(ci, e.target.value)}
+                        disabled={!!cat.existingCategoryId}
                       />
-                    )}
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-500">into:</span>
+                        <select
+                          className="text-xs border border-gray-300 rounded px-2 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-orange-500"
+                          value={cat.existingCategoryId ?? ""}
+                          onChange={(e) => updateCatMerge(ci, e.target.value || null)}
+                        >
+                          <option value="">+ New: &quot;{cat.name}&quot;</option>
+                          {categories.map((c) => (
+                            <option key={c.id} value={c.id}>Merge into: {c.name}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <span className="text-xs text-gray-500">
+                        {cat.selected.filter(Boolean).length}/{cat.items.length}
+                      </span>
+                    </div>
+                    {/* Items in this category */}
+                    <div className="divide-y divide-gray-100">
+                      {cat.items.map((item, ii) => (
+                        <div key={ii} className={`flex items-start gap-3 px-4 py-3 ${!cat.selected[ii] ? "opacity-40" : ""}`}>
+                          <input
+                            type="checkbox"
+                            checked={cat.selected[ii]}
+                            onChange={() => toggleItem(ci, ii)}
+                            className="mt-1 w-4 h-4 rounded accent-orange-500 flex-shrink-0"
+                          />
+                          <div className="flex-1 grid grid-cols-[1fr_auto] gap-x-3 gap-y-1">
+                            <input
+                              className="text-sm font-medium border-b border-transparent hover:border-gray-300 focus:border-orange-400 focus:outline-none px-0 py-0.5"
+                              value={item.name}
+                              onChange={(e) => updateItem(ci, ii, "name", e.target.value)}
+                            />
+                            <input
+                              type="number" step="0.01" min="0"
+                              className="w-24 text-sm text-right border border-gray-200 rounded-lg px-2 py-0.5 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                              value={item.price}
+                              onChange={(e) => updateItem(ci, ii, "price", parseFloat(e.target.value) || 0)}
+                            />
+                            <input
+                              placeholder="Description (optional)"
+                              className="col-span-2 text-xs text-gray-500 border-b border-transparent hover:border-gray-300 focus:border-orange-400 focus:outline-none px-0 py-0.5"
+                              value={item.description}
+                              onChange={(e) => updateItem(ci, ii, "description", e.target.value)}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="flex justify-between items-center p-5 border-t bg-gray-50 rounded-b-2xl gap-3">
-              <button onClick={() => { setStep("upload"); setError(""); }} className="text-sm text-gray-500 hover:text-gray-800">
+              <button onClick={() => { setStep("upload"); setError(""); setImportCats([]); }} className="text-sm text-gray-500 hover:text-gray-800">
                 ← Upload another
               </button>
               <div className="flex gap-3">
                 <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
                 <button
                   onClick={confirmImport}
-                  disabled={importing || !Object.values(selected).some(Boolean)}
+                  disabled={importing || totalSelected === 0}
                   className="px-6 py-2 bg-orange-500 text-white text-sm font-semibold rounded-lg hover:bg-orange-600 disabled:opacity-50 flex items-center gap-2"
                 >
                   {importing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-                  Import {Object.values(selected).filter(Boolean).length} Items
+                  Import {totalSelected} Item{totalSelected === 1 ? "" : "s"}
                 </button>
               </div>
             </div>
