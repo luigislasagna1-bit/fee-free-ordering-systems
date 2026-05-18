@@ -156,7 +156,10 @@ export async function POST(req: NextRequest) {
       name: ownerNameClean,
       restaurantName: restaurantNameClean,
       loginUrl: `${baseUrl}/login`,
-      verifyUrl: `${baseUrl}/verify-email?token=${emailVerifyToken}`,
+      // Must point at the API route, not the display page. The API route
+      // consumes the token, flips emailVerifiedAt + ownerEmailVerifiedAt,
+      // then redirects to /verify-email?status=ok|invalid for the UX.
+      verifyUrl: `${baseUrl}/api/auth/verify-email?token=${emailVerifyToken}`,
       locale: signupLocale,
     }).catch(() => {});
 

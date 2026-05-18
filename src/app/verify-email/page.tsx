@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { CheckCircle2, AlertCircle } from "lucide-react";
 
 /**
@@ -17,9 +18,14 @@ export default async function VerifyEmailPage({
 }) {
   const params = await searchParams;
   const status = params.status;
-  // If a raw token landed here without going through the API route (someone
-  // hot-linking or refreshing), we don't process it here — the API route is
-  // the only writer. Show the neutral "check your email" copy.
+  // Forward stray ?token= visits to the API route, which is the only writer.
+  // This catches old email links that pointed straight at /verify-email instead
+  // of /api/auth/verify-email (early versions of the register/resend handlers
+  // built the wrong URL — fixed in those handlers, but in-flight emails still
+  // work thanks to this hop).
+  if (params.token && !status) {
+    redirect(`/api/auth/verify-email?token=${encodeURIComponent(params.token)}`);
+  }
 
   if (status === "ok") {
     return (

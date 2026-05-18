@@ -96,7 +96,8 @@ export async function POST(_req: NextRequest) {
   await sendVerifyEmail({
     to: user.email,
     name: user.name,
-    verifyUrl: `${baseUrl}/verify-email?token=${token}`,
+    // Point at the API route, not the page — see register/route.ts comment.
+    verifyUrl: `${baseUrl}/api/auth/verify-email?token=${token}`,
     locale: restaurant?.defaultLanguage || "en",
   }).catch((err) => {
     console.error("[verify-email POST] send failed", err);
