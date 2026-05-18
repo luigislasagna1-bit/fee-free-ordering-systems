@@ -34,6 +34,16 @@ export interface ExtractionResult {
   note?: string;
 }
 
+// Sonnet 4.5 is the right balance for menu extraction:
+//   - Confirmed working on Luigi's real 92-item / 9-category 5.7MB menu.
+//   - Best vision-document quality among production-grade Claude models.
+//   - Caveat: ~70s latency on large menus. Vercel Hobby caps functions
+//     at 60s — very large menus may time out. Options if this becomes
+//     an issue: upgrade Vercel Pro (300s limit), implement a
+//     background-job pattern, or downsample PDFs server-side first.
+// We tested Haiku 3.5 (deprecated, no PDF support) and Haiku 4.5
+// (model identifier 502'd — not yet available on standard accounts).
+// Stick with Sonnet 4.5 until faster vision models are GA.
 const MODEL = "claude-sonnet-4-5";
 
 const SYSTEM_PROMPT = `You are a menu extraction expert. The user will provide a restaurant menu PDF.

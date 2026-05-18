@@ -36,22 +36,63 @@ export async function POST(req: NextRequest) {
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  // Two ways to receive the PDF:
+  //   1. JSON { blobUrl } — the client uploaded directly to Vercel Blob first
+  //      and is just sending us the URL. This is the preferred path for ALL
+  //      menu PDFs because it bypasses Vercel's 4.5MB serverless body limit.
+  //   2. multipart/form-data with `pdf` file — only works for files under
+  //      ~4MB. Kept as a fallback for tiny test PDFs and for local dev.
   const contentType = req.headers.get("content-type") || "";
-  if (!contentType.includes("multipart/form-data")) {
-    return NextResponse.json({ error: "Expected multipart/form-data" }, { status: 400 });
-  }
+  let buffer: Buffer;
 
-  const form = await req.formData();
-  const file = form.get("pdf") as File | null;
-  if (!file) return NextResponse.json({ error: "No PDF file provided" }, { status: 400 });
-  if (!file.name.toLowerCase().endsWith(".pdf") && file.type !== "application/pdf") {
-    return NextResponse.json({ error: "File must be a PDF" }, { status: 400 });
-  }
-  if (file.size > 10 * 1024 * 1024) {
-    return NextResponse.json({ error: "PDF must be under 10 MB" }, { status: 400 });
-  }
+  if (contentType.includes("application/json")) {
+    const body = (await req.json().catch(() => ({}))) as { blobUrl?: string };
+    if (!body.blobUrl || typeof body.blobUrl !== "string") {
+      return NextResponse.json({ error: "Missing blobUrl" }, { status: 400 });
+    }
+    // Sanity check: only allow blobs from Vercel Blob's hostnames so a
+    // caller can't trick us into fetching arbitrary URLs from the open
+    // internet.
+    try {
+      const u = new URL(body.blobUrl);
+      if (!/^[a-z0-9.-]+\.public\.blob\.vercel-storage\.com$/.test(u.hostname)) {
+        return NextResponse.json({ error: "blobUrl must be a Vercel Blob URL" }, { status: 400 });
+      }
+    } catch {
+      return NextResponse.json({ error: "Invalid blobUrl" }, { status: 400 });
+    }
 
-  const buffer = Buffer.from(await file.arrayBuffer());
+    // Fetch the PDF bytes from blob storage. This stays inside Vercel's
+    // network (blob is hosted on Vercel infra), so it's fast.
+    const blobRes = await fetch(body.blobUrl);
+    if (!blobRes.ok) {
+      return NextResponse.json({ error: `Failed to fetch blob (HTTP ${blobRes.status})` }, { status: 502 });
+    }
+    const len = parseInt(blobRes.headers.get("content-length") || "0", 10);
+    if (len > 25 * 1024 * 1024) {
+      return NextResponse.json({ error: "PDF must be under 25 MB" }, { status: 400 });
+    }
+    buffer = Buffer.from(await blobRes.arrayBuffer());
+  } else if (contentType.includes("multipart/form-data")) {
+    const form = await req.formData();
+    const file = form.get("pdf") as File | null;
+    if (!file) return NextResponse.json({ error: "No PDF file provided" }, { status: 400 });
+    if (!file.name.toLowerCase().endsWith(".pdf") && file.type !== "application/pdf") {
+      return NextResponse.json({ error: "File must be a PDF" }, { status: 400 });
+    }
+    if (file.size > 4 * 1024 * 1024) {
+      return NextResponse.json(
+        { error: "PDF too large for direct upload (>4MB). Use the blob upload flow." },
+        { status: 413 }
+      );
+    }
+    buffer = Buffer.from(await file.arrayBuffer());
+  } else {
+    return NextResponse.json(
+      { error: "Expected application/json with blobUrl, or multipart/form-data" },
+      { status: 400 }
+    );
+  }
 
   // ─── Try Claude first ───────────────────────────────────────────────
   let categories: ExtractedCategory[] | null = null;

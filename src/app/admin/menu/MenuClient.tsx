@@ -1105,12 +1105,64 @@ function PdfImportModal({ categories, onClose, onImported }: {
     setUploading(true);
     setError("");
     try {
-      const form = new FormData();
-      form.append("pdf", file);
-      const res = await fetch("/api/menu/import-pdf", { method: "POST", body: form });
-      const data = await res.json();
+      // Step 1: client-direct upload to Vercel Blob.
+      // Real-world menu PDFs are 5-15MB — well over Vercel's 4.5MB
+      // serverless function body limit. We use the @vercel/blob/client
+      // upload() pattern, which gets a pre-signed token from our
+      // /api/menu/import-pdf/upload-url endpoint and then POSTs the file
+      // bytes directly to Vercel Blob storage. Our serverless function
+      // only ever sees the blob URL string (tiny).
+      const { upload } = await import("@vercel/blob/client");
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      // The pathname must start with menu-imports/<restaurantId>/ — the
+      // upload-url handler enforces this. We don't have the restaurantId
+      // on the client directly here, but we can pass a generic prefix
+      // and the server-side handler will validate.
+      const pathname = `menu-imports/${Date.now()}-${safeName}`;
+      let blob;
+      try {
+        blob = await upload(pathname, file, {
+          access: "public",
+          handleUploadUrl: "/api/menu/import-pdf/upload-url",
+          contentType: "application/pdf",
+        });
+      } catch (err: any) {
+        setError(`Upload to storage failed: ${err?.message || "Unknown error"}`);
+        setUploading(false);
+        return;
+      }
+
+      // Step 2: tell the server to process the uploaded blob.
+      const res = await fetch("/api/menu/import-pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ blobUrl: blob.url }),
+      });
+
+      // Vercel can return a non-JSON body (HTML error page, "504 Gateway
+      // Timeout", etc.) when the function dies. Try JSON first, fall back
+      // to text so the user sees the real reason instead of "Please try
+      // again."
+      let data: any = null;
+      const contentType = res.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text().catch(() => "");
+        data = { error: text.slice(0, 400) || `HTTP ${res.status}` };
+      }
+
       if (!res.ok) {
-        setError(data.error || "Failed to parse PDF");
+        // Map common Vercel/server failure modes to actionable messages
+        let msg = data?.error || `Upload failed (HTTP ${res.status})`;
+        if (res.status === 504 || /timed out/i.test(msg)) {
+          msg = "The AI took longer than Vercel allows (60s on Hobby plan). Upgrade to Pro or contact support — we'll switch to a faster model.";
+        } else if (/ANTHROPIC_API_KEY/i.test(msg)) {
+          msg = "AI extraction is not configured (missing API key). Contact the platform admin.";
+        } else if (/credit balance/i.test(msg)) {
+          msg = "AI quota exhausted. Contact the platform admin to top up.";
+        }
+        setError(msg);
         setUploading(false);
         return;
       }
@@ -1131,8 +1183,11 @@ function PdfImportModal({ categories, onClose, onImported }: {
       setExtractionMethod(data.method || "claude");
       setExtractionNote(data.note || "");
       setStep("review");
-    } catch {
-      setError("Upload failed. Please try again.");
+    } catch (err: any) {
+      // Network-level failure (no response at all). Most common cause:
+      // Vercel killed the function and the connection dropped. Show that.
+      const reason = err?.name === "TypeError" ? "Network or timeout error" : err?.message || "Unknown error";
+      setError(`Upload failed: ${reason}. If this menu is large, the AI may have taken longer than the 60s Vercel limit — try a shorter PDF or contact support.`);
     }
     setUploading(false);
   };
