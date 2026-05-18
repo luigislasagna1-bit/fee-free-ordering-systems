@@ -81,22 +81,35 @@ export async function POST(req: NextRequest) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
   const url = `${baseUrl}/signup?invite=${token}`;
 
-  // Optionally email the recipient (non-blocking)
+  // Email the recipient. We AWAIT this rather than fire-and-forget because
+  // Vercel terminates the serverless function as soon as the response is
+  // returned — an unawaited fetch to Resend gets killed mid-flight and the
+  // email is silently dropped (no Resend log, no error surface). Awaiting
+  // adds ~300-800ms to the response but guarantees delivery. The catch
+  // ensures a Resend outage doesn't break invite creation — the URL is
+  // still returned and the user can copy/share it manually.
+  let emailDelivered = false;
   if (email) {
-    sendLocationInviteEmail({
-      to: email,
-      brandName: brand.name,
-      suggestedName,
-      inviteUrl: url,
-    }).catch((err) => {
+    try {
+      await sendLocationInviteEmail({
+        to: email,
+        brandName: brand.name,
+        suggestedName,
+        inviteUrl: url,
+      });
+      emailDelivered = true;
+    } catch (err) {
       console.error("[locations/invite] email send failed", err);
-    });
+    }
   }
 
   return NextResponse.json({
     url,
     token,
     expiresAt: expiresAt.toISOString(),
-    emailed: !!email,
+    // emailed === true means Resend accepted the request, NOT necessarily that
+    // Gmail/Outlook actually delivered it (those can still spam-filter). If the
+    // recipient says they didn't get it, fall back to copy-pasting the URL.
+    emailed: emailDelivered,
   });
 }
