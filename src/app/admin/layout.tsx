@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { ImpersonationBanner } from "@/components/admin/ImpersonationBanner";
+import { EmailVerificationBanner } from "@/components/admin/EmailVerificationBanner";
 import { getSessionUser } from "@/lib/session";
 import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import prisma from "@/lib/db";
@@ -36,6 +37,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   let pendingOrders = 0;
   let restaurantName = "";
   let setupProgress: SetupProgress | null = null;
+  let ownerEmail: string | null = null;
+  let ownerEmailVerified = true; // default true so we don't nag superadmins / staff
   let locationsForSwitcher: Array<{ id: string; name: string; city: string | null; isParent: boolean }> = [];
   if (restaurantId) {
     const [count, restaurant] = await Promise.all([
@@ -53,6 +56,18 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     ]);
     pendingOrders = count;
     restaurantName = restaurant?.name || "";
+
+    // Email-verification state — only relevant for restaurant_admin users
+    // (the actual owner). Superadmin / reseller impersonators bypass the
+    // banner since they aren't the ones who need to verify.
+    if (role === "restaurant_admin" && user?.id) {
+      const owner = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { email: true, emailVerifiedAt: true },
+      });
+      ownerEmail = owner?.email ?? null;
+      ownerEmailVerified = !!owner?.emailVerifiedAt;
+    }
 
     // Load setup progress for the sidebar checkmarks + header banner.
     // Failure to load shouldn't break the layout — fall back to null.
@@ -120,6 +135,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <div className="flex h-screen bg-gray-50 overflow-hidden flex-col">
+        <EmailVerificationBanner email={ownerEmail} verified={ownerEmailVerified} />
         {user?.isImpersonating && (
           <ImpersonationBanner
             restaurantName={restaurantName}

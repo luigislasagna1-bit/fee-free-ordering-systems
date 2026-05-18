@@ -1163,8 +1163,18 @@
     "signup": {
       "subject": "Welcome to Fee Free Ordering",
       "title": "Welcome to Fee Free Ordering!",
-      "body": "Your restaurant {restaurant} is now live. Sign in to set up your menu, hours, and start receiving orders.",
-      "button": "Sign in"
+      "body": "Your restaurant {restaurant} is now ready to set up. Verify your email below so you can publish when you're ready.",
+      "button": "Sign in",
+      "verifyBody": "Confirm your email address so you can publish your restaurant and accept orders.",
+      "verifyButton": "Verify my email",
+      "orLogin": "Or sign in to continue setup:"
+    },
+    "verify": {
+      "subject": "Verify your email — Fee Free Ordering",
+      "title": "Verify your email",
+      "body": "Click the button below to confirm your email address. The link is single-use.",
+      "button": "Verify my email",
+      "ifYouDidntRequest": "If you didn't request this, you can safely ignore this email."
     },
     "trialExpiring": {
       "subject": "Your trial ends in {days} day(s)",

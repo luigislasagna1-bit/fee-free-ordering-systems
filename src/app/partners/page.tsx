@@ -84,7 +84,7 @@ export default async function PartnersPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
               What does this actually pay?
             </h2>
-            <p className="text-gray-600">Sample math at our $99/mo Pro plan.</p>
+            <p className="text-gray-600">Sample math assuming $99/mo average paid-add-on spend per restaurant (e.g. Online Payments + Hosted Website + Custom Domain combined).</p>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
             <EarningsCard

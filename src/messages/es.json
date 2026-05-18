@@ -1163,8 +1163,18 @@
     "signup": {
       "subject": "Bienvenido a Fee Free Ordering",
       "title": "¡Bienvenido a Fee Free Ordering!",
-      "body": "Tu restaurante {restaurant} ya está activo. Inicia sesión para configurar tu menú y empezar a recibir pedidos.",
-      "button": "Iniciar sesión"
+      "body": "Tu restaurante {restaurant} está listo para configurar. Verifica tu correo abajo para que puedas publicar cuando estés listo.",
+      "button": "Iniciar sesión",
+      "verifyBody": "Confirma tu dirección de correo para poder publicar tu restaurante y aceptar pedidos.",
+      "verifyButton": "Verificar mi correo",
+      "orLogin": "O inicia sesión para continuar la configuración:"
+    },
+    "verify": {
+      "subject": "Verifica tu correo — Fee Free Ordering",
+      "title": "Verifica tu correo",
+      "body": "Pulsa el botón abajo para confirmar tu dirección de correo. El enlace es de un solo uso.",
+      "button": "Verificar mi correo",
+      "ifYouDidntRequest": "Si no solicitaste esto, puedes ignorar este correo."
     },
     "trialExpiring": {
       "subject": "Tu prueba termina en {days} día(s)",

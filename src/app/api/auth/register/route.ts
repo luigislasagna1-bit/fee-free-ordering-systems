@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import prisma from "@/lib/db";
 import { slugify } from "@/lib/utils";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
@@ -100,6 +101,10 @@ export async function POST(req: NextRequest) {
 
     const passwordHash = await bcrypt.hash(password, 12);
     const ownerNameClean = ownerName ? String(ownerName).trim().slice(0, 100) : restaurantNameClean;
+    // Email-verification token — 32 url-safe bytes. Persisted on the User row;
+    // the welcome email contains a link with this token; clicking it hits
+    // /api/auth/verify-email which flips emailVerifiedAt + clears the token.
+    const emailVerifyToken = crypto.randomBytes(32).toString("base64url");
     await prisma.user.create({
       data: {
         email: emailClean,
@@ -107,6 +112,7 @@ export async function POST(req: NextRequest) {
         passwordHash,
         role: "restaurant_admin",
         restaurantId: restaurant.id,
+        emailVerifyToken,
       },
     });
 
@@ -141,13 +147,16 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Welcome email (non-blocking — failure shouldn't break signup)
+    // Welcome email (non-blocking — failure shouldn't break signup). The
+    // verifyUrl carries the freshly-minted token so the recipient can flip
+    // their account to "verified" before publishing.
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
     sendSignupConfirmationEmail({
       to: emailClean,
       name: ownerNameClean,
       restaurantName: restaurantNameClean,
       loginUrl: `${baseUrl}/login`,
+      verifyUrl: `${baseUrl}/verify-email?token=${emailVerifyToken}`,
       locale: signupLocale,
     }).catch(() => {});
 

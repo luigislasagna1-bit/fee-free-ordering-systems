@@ -342,16 +342,48 @@ export async function sendSignupConfirmationEmail(params: {
   name: string | null;
   restaurantName: string;
   loginUrl: string;
+  /** When provided, the welcome email leads with a "Verify your email"
+   *  button instead of (or in addition to) the Log in CTA. Phase 1 of the
+   *  free-core redesign requires email verification before publishing. */
+  verifyUrl?: string;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const verifyBlock = params.verifyUrl
+    ? `<p>${t("email.signup.verifyBody")}</p>
+       <p><a href="${params.verifyUrl}" style="display:inline-block;background:#f97316;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.signup.verifyButton")}</a></p>
+       <p style="margin-top:24px;font-size:14px;color:#6b7280">${t("email.signup.orLogin")}</p>`
+    : "";
   return send({
     to: params.to,
     subject: t("email.signup.subject"),
     html: wrap(t("email.signup.title"), `
       <p>${t("email.common.thanks")} ${params.name || params.restaurantName},</p>
       <p>${t("email.signup.body", { restaurant: params.restaurantName })}</p>
-      <p><a href="${params.loginUrl}" style="display:inline-block;background:#f97316;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.signup.button")}</a></p>
+      ${verifyBlock}
+      <p><a href="${params.loginUrl}" style="display:inline-block;background:${params.verifyUrl ? "#6b7280" : "#f97316"};color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.signup.button")}</a></p>
+    `),
+  });
+}
+
+/** Standalone "verify your email" email — used by the resend-verification
+ *  button in the admin layout banner. Same template as the signup version
+ *  but without the welcome copy. */
+export async function sendVerifyEmail(params: {
+  to: string;
+  name: string | null;
+  verifyUrl: string;
+  locale?: string;
+}) {
+  const t = await getDict(params.locale);
+  return send({
+    to: params.to,
+    subject: t("email.verify.subject"),
+    html: wrap(t("email.verify.title"), `
+      <p>${t("email.common.thanks")} ${params.name || ""},</p>
+      <p>${t("email.verify.body")}</p>
+      <p><a href="${params.verifyUrl}" style="display:inline-block;background:#f97316;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.verify.button")}</a></p>
+      <p style="margin-top:24px;font-size:13px;color:#6b7280">${t("email.verify.ifYouDidntRequest")}</p>
     `),
   });
 }
