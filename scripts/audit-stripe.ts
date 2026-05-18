@@ -88,7 +88,9 @@ async function main() {
           settings.stripeSecretKeyTag!
         );
         stripe = new Stripe(secret, { apiVersion: "2025-09-30.clover" as any });
-        const account = await stripe.accounts.retrieve();
+        // The no-arg form returns the platform account (matches the secret key).
+        // TS types in newer Stripe SDK want an explicit id; cast to any.
+        const account = await (stripe.accounts as any).retrieve();
         ok(`API call succeeded`);
         info(`Account: ${account.id} (${account.country})`);
         info(`Charges enabled on platform account: ${account.charges_enabled ? "yes" : "no"}`);
