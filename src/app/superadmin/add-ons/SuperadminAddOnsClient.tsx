@@ -18,8 +18,35 @@ type AddOnRow = {
   stripePriceId: string | null;
 };
 
+/**
+ * Per-row draft state for the price input.
+ *
+ * Why a separate draft: the canonical store is `monthlyPriceCents` (an integer).
+ * If we bind <input value={(cents/100).toFixed(2)}>, the visible string is
+ * recomputed on every keystroke — typing "1" displays as "1.00" with the
+ * cursor at the end, and the next digit you press ("0") gets appended as
+ * "1.000" which then re-rounds to 100 cents → "1.00". You're stuck.
+ *
+ * Drafts decouple input UX (a free-form string the user is typing) from the
+ * canonical numeric value (only parsed on Save). On a successful save we sync
+ * the draft back to the canonical formatted price.
+ */
+function centsToDraft(cents: number): string {
+  if (!cents) return "";
+  return (cents / 100).toFixed(2);
+}
+
+function draftToCents(s: string): number {
+  const n = parseFloat(s);
+  if (!Number.isFinite(n) || n < 0) return 0;
+  return Math.round(n * 100);
+}
+
 export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
   const [rows, setRows] = useState<AddOnRow[]>(initial);
+  const [priceDrafts, setPriceDrafts] = useState<Record<string, string>>(() =>
+    Object.fromEntries(initial.map((r) => [r.id, centsToDraft(r.monthlyPriceCents)]))
+  );
   const [savingId, setSavingId] = useState<string | null>(null);
   const [syncingId, setSyncingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -31,6 +58,10 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
   async function save(row: AddOnRow) {
     setSavingId(row.id);
     setError(null);
+    // Resolve the price-cents from the draft string at save time. This is
+    // the only place we parse — keystrokes never trigger a re-format.
+    const draft = priceDrafts[row.id] ?? "";
+    const cents = draftToCents(draft);
     try {
       const r = await fetch("/api/superadmin/add-ons", {
         method: "PATCH",
@@ -39,7 +70,7 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
           id: row.id,
           name: row.name,
           description: row.description,
-          monthlyPriceCents: row.monthlyPriceCents,
+          monthlyPriceCents: cents,
           trialDays: row.trialDays ?? 0,
           isActive: row.isActive,
           displayOrder: row.displayOrder,
@@ -50,6 +81,10 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
         setError(data?.error || "save_failed");
       } else if (data?.addOn) {
         setRows((rs) => rs.map((x) => (x.id === row.id ? data.addOn : x)));
+        // Re-format the draft to canonical "X.XX" only after a successful
+        // save, so the visible value matches what's stored without the
+        // mid-typing reformat we just removed.
+        setPriceDrafts((d) => ({ ...d, [row.id]: centsToDraft(data.addOn.monthlyPriceCents) }));
       }
     } catch (e: any) {
       setError(e?.message || "save_failed");
@@ -92,6 +127,13 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
         </div>
       )}
 
+      <p className="text-xs text-gray-500">
+        Type a price like <code className="bg-gray-100 px-1 rounded">19</code> or{" "}
+        <code className="bg-gray-100 px-1 rounded">14.99</code>, then click{" "}
+        <strong>Save</strong>. After Save shows the new price, click{" "}
+        <strong>Sync</strong> to create the Stripe Product + Price.
+      </p>
+
       <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 text-xs uppercase text-gray-600">
@@ -108,6 +150,9 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
           <tbody className="divide-y divide-gray-100">
             {rows.map((r) => {
               const synced = !!r.stripePriceId;
+              const draft = priceDrafts[r.id] ?? "";
+              const draftCents = draftToCents(draft);
+              const draftDiffersFromSaved = draftCents !== r.monthlyPriceCents;
               return (
                 <tr key={r.id}>
                   <td className="px-3 py-2"><code className="text-xs">{r.slug}</code></td>
@@ -119,16 +164,26 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
                     />
                   </td>
                   <td className="px-3 py-2">
-                    <input
-                      type="number"
-                      min={0}
-                      step="0.01"
-                      className="w-24 border border-gray-200 rounded px-2 py-1"
-                      value={(r.monthlyPriceCents / 100).toFixed(2)}
-                      onChange={(e) =>
-                        updateField(r.id, "monthlyPriceCents", Math.round(parseFloat(e.target.value || "0") * 100))
-                      }
-                    />
+                    <div className="flex items-center gap-1">
+                      <span className="text-gray-500 text-xs">$</span>
+                      <input
+                        // type=text rather than type=number so the browser
+                        // doesn't strip trailing zeroes or eat the decimal
+                        // point mid-typing. We validate on save.
+                        type="text"
+                        inputMode="decimal"
+                        placeholder="0.00"
+                        className={`w-24 border rounded px-2 py-1 ${
+                          draftDiffersFromSaved
+                            ? "border-orange-300 bg-orange-50"
+                            : "border-gray-200"
+                        }`}
+                        value={draft}
+                        onChange={(e) =>
+                          setPriceDrafts((d) => ({ ...d, [r.id]: e.target.value }))
+                        }
+                      />
+                    </div>
                   </td>
                   <td className="px-3 py-2">
                     <input
@@ -161,16 +216,22 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
                         type="button"
                         onClick={() => save(r)}
                         disabled={savingId === r.id}
-                        className="px-3 py-1 text-xs font-medium rounded border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-50"
+                        className={`px-3 py-1 text-xs font-medium rounded border ${
+                          draftDiffersFromSaved
+                            ? "border-orange-400 bg-orange-100 text-orange-800 hover:bg-orange-200"
+                            : "border-gray-300 bg-white hover:bg-gray-50"
+                        } disabled:opacity-50`}
                       >
-                        {savingId === r.id ? "Saving…" : "Save"}
+                        {savingId === r.id ? "Saving…" : draftDiffersFromSaved ? "Save *" : "Save"}
                       </button>
                       <button
                         type="button"
                         onClick={() => syncToStripe(r)}
-                        disabled={syncingId === r.id || r.monthlyPriceCents <= 0}
+                        disabled={syncingId === r.id || r.monthlyPriceCents <= 0 || draftDiffersFromSaved}
                         title={
-                          r.monthlyPriceCents <= 0
+                          draftDiffersFromSaved
+                            ? "Save your price changes first"
+                            : r.monthlyPriceCents <= 0
                             ? "Set a non-zero price first"
                             : "Push Product + Price to Stripe"
                         }
