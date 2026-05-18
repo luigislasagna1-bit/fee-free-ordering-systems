@@ -1180,7 +1180,7 @@
       "faq": "FAQ",
       "demo": "Démo",
       "login": "Connexion",
-      "startTrial": "Essai gratuit"
+      "startTrial": "Commencer gratuitement"
     },
     "footer": {
       "product": "Produit",
@@ -1193,7 +1193,7 @@
       "heroBadge": "0 % de commission sur les commandes",
       "heroTitle": "Prenez des commandes en ligne sans frais.",
       "heroSubtitle": "Gérez retrait, livraison, réservations et affichage cuisine au même endroit. Gardez 100 % de chaque commande.",
-      "startTrial": "Essai gratuit",
+      "startTrial": "Commencer gratuitement",
       "viewDemo": "Voir la démo",
       "trustedBy": "Choisi par les restaurants indépendants",
       "stats": {
@@ -1207,7 +1207,7 @@
       "featuresTitle": "Tout ce qu'il faut pour la commande en ligne",
       "ctaTitle": "Prêt à garder 100 % de vos ventes ?",
       "ctaSubtitle": "Aucune carte de crédit requise. Annulez à tout moment.",
-      "ctaButton": "Essai gratuit"
+      "ctaButton": "Commencer gratuitement"
     },
     "features": {
       "title": "Fonctionnalités",
@@ -1241,19 +1241,59 @@
       }
     },
     "pricing": {
-      "title": "Tarifs simples",
-      "subtitle": "Aucune commission par commande. Un seul forfait mensuel.",
+      "title": "Gratuit pour toujours. Payez uniquement ce dont vous avez besoin.",
+      "subtitle": "La plateforme de commande de base est gratuite pour chaque restaurant. Activez les fonctionnalités payantes au fur et à mesure.",
       "perMonth": "/mois",
-      "mostPopular": "Le plus populaire",
-      "tiers": {
-        "starter": "Starter",
-        "starterDesc": "Pour les nouveaux restaurants",
-        "pro": "Professionnel",
-        "proDesc": "Pour les restaurants établis prêts à grandir",
-        "enterprise": "Entreprise",
-        "enterpriseDesc": "Solutions sur mesure pour chaînes multi-sites"
+      "freeBadge": "Gratuit à vie",
+      "freeTitle": "Plateforme de commande",
+      "freeSubtitle": "Tout ce qu'il faut pour commencer à prendre des commandes dès aujourd'hui.",
+      "freeCta": "Commencer gratuitement",
+      "freeIncludes": [
+        "Commandes en ligne illimitées",
+        "Page de commande client",
+        "Widget intégrable sur votre site existant",
+        "App de prise de commandes (cuisine)",
+        "Tableau de bord admin",
+        "Constructeur de menu + photos",
+        "À emporter, livraison, sur place, réservations",
+        "Notifications e-mail",
+        "5+ langues",
+        "Impression de reçus"
+      ],
+      "addOnsTitle": "Modules complémentaires",
+      "addOnsSubtitle": "Activez les fonctionnalités payantes individuellement. Annulez à tout moment — sans contrat.",
+      "addOnPriceComingSoon": "Tarif annoncé au lancement",
+      "addOns": {
+        "online_payments": {
+          "name": "Paiements en ligne",
+          "desc": "Acceptez les cartes de crédit via Stripe Connect. L'argent arrive sur votre compte, pas le nôtre."
+        },
+        "hosted_website": {
+          "name": "Site web optimisé",
+          "desc": "Une page marketing soignée sur votre-nom.feefreeordering.com — générée automatiquement."
+        },
+        "custom_domain": {
+          "name": "Domaine personnalisé",
+          "desc": "Apportez votre propre domaine (ex. monrestaurant.com) et nous y hébergeons le site."
+        },
+        "advanced_promos": {
+          "name": "Marketing promotionnel avancé",
+          "desc": "Segmentation clients, campagnes e-mail automatisées, reconquête de clients inactifs."
+        },
+        "branded_mobile_app": {
+          "name": "App mobile à votre marque",
+          "desc": "Soumettez votre propre app iOS + Android aux stores avec votre branding."
+        },
+        "pos_module": {
+          "name": "Module POS",
+          "desc": "Caisse interne pour que le personnel enregistre les commandes au comptoir avec celles en ligne."
+        },
+        "reservation_deposits": {
+          "name": "Acomptes de réservation",
+          "desc": "Demandez un acompte remboursable lors de la réservation pour réduire les no-shows."
+        }
       },
-      "compareTitle": "Tous les plans incluent",
+      "compareTitle": "Chaque restaurant reçoit",
       "compareItems": [
         "Commandes illimitées",
         "Page de commande client",
@@ -1263,9 +1303,9 @@
         "5+ langues",
         "Impression de reçus"
       ],
-      "cta": "Essai gratuit",
+      "cta": "Commencer gratuitement",
       "ctaContact": "Contacter les ventes",
-      "trialNote": "Essai gratuit de 14 jours. Aucune carte de crédit requise."
+      "trialNote": "Aucune carte de crédit requise. Aucun contrat."
     },
     "faq": {
       "title": "Questions fréquentes",
@@ -1304,8 +1344,8 @@
           "a": "Oui. Remises en pourcentage, montant fixe, livraison gratuite, BOGO, promotions programmées et codes coupons ponctuels."
         },
         {
-          "q": "Y a-t-il un essai gratuit ?",
-          "a": "Oui — 14 jours, aucune carte de crédit requise."
+          "q": "Est-ce vraiment gratuit ?",
+          "a": "Oui. La plateforme de commande core est gratuite pour toujours — sans carte de crédit, sans compte à rebours. Vous payez uniquement si vous choisissez de souscrire à un module complémentaire individuel comme les paiements en ligne ou un domaine personnalisé."
         },
         {
           "q": "Puis-je annuler à tout moment ?",
@@ -1327,8 +1367,8 @@
       "tryIt": "Essayer"
     },
     "signup": {
-      "title": "Commencez votre essai gratuit",
-      "subtitle": "14 jours. Aucune carte de crédit requise.",
+      "title": "Lancez-vous en 5 minutes",
+      "subtitle": "Gratuit à vie. Aucune carte de crédit requise.",
       "restaurantName": "Nom du restaurant",
       "yourName": "Votre nom",
       "email": "E-mail",

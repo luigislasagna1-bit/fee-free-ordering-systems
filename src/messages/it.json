@@ -1180,7 +1180,7 @@
       "faq": "FAQ",
       "demo": "Demo",
       "login": "Accedi",
-      "startTrial": "Prova gratuita"
+      "startTrial": "Inizia gratis"
     },
     "footer": {
       "product": "Prodotto",
@@ -1193,7 +1193,7 @@
       "heroBadge": "0% di commissione sugli ordini",
       "heroTitle": "Accetta ordini online senza commissioni.",
       "heroSubtitle": "Gestisci ritiro, consegna, prenotazioni e display cucina da un solo posto. Tieni il 100% di ogni ordine.",
-      "startTrial": "Prova gratuita",
+      "startTrial": "Inizia gratis",
       "viewDemo": "Vedi la demo",
       "trustedBy": "Scelto da ristoranti indipendenti",
       "stats": {
@@ -1207,7 +1207,7 @@
       "featuresTitle": "Tutto ciò che serve per l'online ordering",
       "ctaTitle": "Pronto a tenere il 100% delle tue vendite?",
       "ctaSubtitle": "Senza carta di credito. Annulla quando vuoi.",
-      "ctaButton": "Prova gratuita"
+      "ctaButton": "Inizia gratis"
     },
     "features": {
       "title": "Funzionalità",
@@ -1241,19 +1241,59 @@
       }
     },
     "pricing": {
-      "title": "Prezzi semplici",
-      "subtitle": "Nessuna commissione per ordine. Un solo abbonamento mensile.",
+      "title": "Gratuito per sempre. Paga solo ciò che ti serve.",
+      "subtitle": "La piattaforma di ordinazione core è gratuita per ogni ristorante. Attiva le funzioni a pagamento man mano che cresci.",
       "perMonth": "/mese",
-      "mostPopular": "Più popolare",
-      "tiers": {
-        "starter": "Starter",
-        "starterDesc": "Per nuovi ristoranti",
-        "pro": "Professionale",
-        "proDesc": "Per ristoranti consolidati",
-        "enterprise": "Enterprise",
-        "enterpriseDesc": "Soluzioni su misura per catene multi-sede"
+      "freeBadge": "Gratis per sempre",
+      "freeTitle": "Piattaforma di ordinazione",
+      "freeSubtitle": "Tutto ciò che serve per iniziare a ricevere ordini oggi.",
+      "freeCta": "Inizia gratis",
+      "freeIncludes": [
+        "Ordini online illimitati",
+        "Pagina ordini cliente",
+        "Widget integrabile sul tuo sito esistente",
+        "App di ricezione ordini (cucina)",
+        "Pannello admin",
+        "Costruttore di menu + foto",
+        "Ritiro, consegna, al tavolo, prenotazioni",
+        "Notifiche e-mail",
+        "5+ lingue",
+        "Stampa ricevute"
+      ],
+      "addOnsTitle": "Componenti aggiuntivi",
+      "addOnsSubtitle": "Attiva le funzioni a pagamento singolarmente. Annulla quando vuoi — senza contratti.",
+      "addOnPriceComingSoon": "Prezzo annunciato al lancio",
+      "addOns": {
+        "online_payments": {
+          "name": "Pagamenti online",
+          "desc": "Accetta carte di credito tramite Stripe Connect. I soldi arrivano sul tuo conto, non sul nostro."
+        },
+        "hosted_website": {
+          "name": "Sito web ottimizzato",
+          "desc": "Una pagina marketing curata su tuo-nome.feefreeordering.com — generata automaticamente."
+        },
+        "custom_domain": {
+          "name": "Dominio personalizzato",
+          "desc": "Porta il tuo dominio (es. ilmioristorante.com) e ospiteremo lì il sito."
+        },
+        "advanced_promos": {
+          "name": "Marketing promozionale avanzato",
+          "desc": "Segmentazione clienti, campagne e-mail automatizzate, riconquista clienti inattivi."
+        },
+        "branded_mobile_app": {
+          "name": "App mobile brandizzata",
+          "desc": "Pubblica la tua app iOS + Android negli store con il tuo brand."
+        },
+        "pos_module": {
+          "name": "Modulo POS",
+          "desc": "Cassa interna per il personale che registra ordini in sede insieme a quelli online."
+        },
+        "reservation_deposits": {
+          "name": "Acconti prenotazione",
+          "desc": "Richiedi un acconto rimborsabile alla prenotazione per ridurre i no-show."
+        }
       },
-      "compareTitle": "Tutti i piani includono",
+      "compareTitle": "Ogni ristorante riceve",
       "compareItems": [
         "Ordini illimitati",
         "Pagina ordini cliente",
@@ -1263,9 +1303,9 @@
         "5+ lingue",
         "Stampa ricevute"
       ],
-      "cta": "Prova gratuita",
+      "cta": "Inizia gratis",
       "ctaContact": "Contatta le vendite",
-      "trialNote": "Prova gratuita di 14 giorni. Senza carta di credito."
+      "trialNote": "Senza carta di credito. Senza contratti."
     },
     "faq": {
       "title": "Domande frequenti",
@@ -1304,8 +1344,8 @@
           "a": "Sì. Sconti %, importi fissi, consegna gratuita, BOGO, promozioni programmate e codici coupon."
         },
         {
-          "q": "C'è una prova gratuita?",
-          "a": "Sì — 14 giorni, senza carta di credito."
+          "q": "È davvero gratis?",
+          "a": "Sì. La piattaforma di ordinazione core è gratuita per sempre — senza carta di credito, senza conto alla rovescia. Paghi solo se scegli di sottoscrivere un componente aggiuntivo individuale come Pagamenti online o un Dominio personalizzato."
         },
         {
           "q": "Posso cancellare quando voglio?",
@@ -1327,8 +1367,8 @@
       "tryIt": "Prova"
     },
     "signup": {
-      "title": "Inizia la tua prova gratuita",
-      "subtitle": "14 giorni. Senza carta di credito.",
+      "title": "Inizia in 5 minuti",
+      "subtitle": "Gratis per sempre. Senza carta di credito.",
       "restaurantName": "Nome del ristorante",
       "yourName": "Il tuo nome",
       "email": "E-mail",

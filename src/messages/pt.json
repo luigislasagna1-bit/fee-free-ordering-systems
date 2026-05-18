@@ -1180,7 +1180,7 @@
       "faq": "FAQ",
       "demo": "Demo",
       "login": "Entrar",
-      "startTrial": "Avaliação grátis"
+      "startTrial": "Começar grátis"
     },
     "footer": {
       "product": "Produto",
@@ -1193,7 +1193,7 @@
       "heroBadge": "0% de comissão nos pedidos",
       "heroTitle": "Aceite pedidos online sem taxas.",
       "heroSubtitle": "Gerencie retirada, entrega, reservas e tela de cozinha em um lugar. Fique com 100% de cada pedido.",
-      "startTrial": "Avaliação grátis",
+      "startTrial": "Começar grátis",
       "viewDemo": "Ver demo",
       "trustedBy": "Confiado por restaurantes independentes",
       "stats": {
@@ -1207,7 +1207,7 @@
       "featuresTitle": "Tudo que você precisa para pedidos online",
       "ctaTitle": "Pronto para ficar com 100% das suas vendas?",
       "ctaSubtitle": "Sem cartão de crédito. Cancele quando quiser.",
-      "ctaButton": "Avaliação grátis"
+      "ctaButton": "Começar grátis"
     },
     "features": {
       "title": "Recursos",
@@ -1241,19 +1241,59 @@
       }
     },
     "pricing": {
-      "title": "Preços simples",
-      "subtitle": "Sem comissão por pedido. Uma única taxa mensal.",
+      "title": "Grátis para sempre. Pague apenas pelo que precisar.",
+      "subtitle": "A plataforma de pedidos básica é gratuita para todo restaurante. Ative recursos pagos à medida que crescer.",
       "perMonth": "/mês",
-      "mostPopular": "Mais popular",
-      "tiers": {
-        "starter": "Starter",
-        "starterDesc": "Para novos restaurantes",
-        "pro": "Profissional",
-        "proDesc": "Para restaurantes consolidados",
-        "enterprise": "Enterprise",
-        "enterpriseDesc": "Soluções sob medida para redes multi-unidade"
+      "freeBadge": "Grátis para sempre",
+      "freeTitle": "Plataforma de pedidos",
+      "freeSubtitle": "Tudo o que você precisa para começar a receber pedidos hoje.",
+      "freeCta": "Começar grátis",
+      "freeIncludes": [
+        "Pedidos online ilimitados",
+        "Página de pedidos do cliente",
+        "Widget incorporável no seu site atual",
+        "App para receber pedidos (cozinha)",
+        "Painel admin",
+        "Construtor de menu + fotos",
+        "Retirada, entrega, no local, reservas",
+        "Notificações por e-mail",
+        "5+ idiomas",
+        "Impressão de recibos"
+      ],
+      "addOnsTitle": "Complementos",
+      "addOnsSubtitle": "Ative recursos pagos individualmente. Cancele quando quiser — sem contratos.",
+      "addOnPriceComingSoon": "Preço anunciado no lançamento",
+      "addOns": {
+        "online_payments": {
+          "name": "Pagamentos online",
+          "desc": "Aceite cartões de crédito via Stripe Connect. O dinheiro vai para a sua conta, não para a nossa."
+        },
+        "hosted_website": {
+          "name": "Site otimizado para vendas",
+          "desc": "Uma página de marketing polida em seu-nome.feefreeordering.com — gerada automaticamente."
+        },
+        "custom_domain": {
+          "name": "Domínio personalizado",
+          "desc": "Traga seu próprio domínio (ex. meurestaurante.com) e hospedaremos o site nele."
+        },
+        "advanced_promos": {
+          "name": "Marketing promocional avançado",
+          "desc": "Segmentação de clientes, campanhas de e-mail automatizadas, recuperação de clientes inativos."
+        },
+        "branded_mobile_app": {
+          "name": "App móvel com sua marca",
+          "desc": "Publique seu próprio app iOS + Android nas lojas com seu branding."
+        },
+        "pos_module": {
+          "name": "Módulo POS",
+          "desc": "Caixa interna para a equipe registrar pedidos no balcão junto com os online."
+        },
+        "reservation_deposits": {
+          "name": "Depósitos de reserva",
+          "desc": "Cobre um depósito reembolsável ao reservar mesa para reduzir as ausências."
+        }
       },
-      "compareTitle": "Todos os planos incluem",
+      "compareTitle": "Todo restaurante recebe",
       "compareItems": [
         "Pedidos ilimitados",
         "Página de pedidos do cliente",
@@ -1263,9 +1303,9 @@
         "5+ idiomas",
         "Impressão de recibos"
       ],
-      "cta": "Avaliação grátis",
+      "cta": "Começar grátis",
       "ctaContact": "Falar com vendas",
-      "trialNote": "Avaliação gratuita de 14 dias. Sem cartão de crédito."
+      "trialNote": "Sem cartão de crédito. Sem contratos."
     },
     "faq": {
       "title": "Perguntas frequentes",
@@ -1304,8 +1344,8 @@
           "a": "Sim. Descontos %, valores fixos, entrega grátis, BOGO, promoções agendadas e cupons."
         },
         {
-          "q": "Existe avaliação gratuita?",
-          "a": "Sim — 14 dias, sem cartão de crédito."
+          "q": "É realmente grátis?",
+          "a": "Sim. A plataforma de pedidos básica é grátis para sempre — sem cartão de crédito, sem contagem regressiva. Você paga somente se decidir assinar um complemento individual como Pagamentos online ou um Domínio personalizado."
         },
         {
           "q": "Posso cancelar a qualquer momento?",
@@ -1327,8 +1367,8 @@
       "tryIt": "Experimentar"
     },
     "signup": {
-      "title": "Comece sua avaliação grátis",
-      "subtitle": "14 dias. Sem cartão de crédito.",
+      "title": "Comece em 5 minutos",
+      "subtitle": "Grátis para sempre. Sem cartão de crédito.",
       "restaurantName": "Nome do restaurante",
       "yourName": "Seu nome",
       "email": "E-mail",

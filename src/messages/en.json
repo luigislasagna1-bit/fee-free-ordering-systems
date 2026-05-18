@@ -1180,7 +1180,7 @@
       "faq": "FAQ",
       "demo": "Demo",
       "login": "Log in",
-      "startTrial": "Start Free Trial"
+      "startTrial": "Get Started Free"
     },
     "footer": {
       "product": "Product",
@@ -1193,7 +1193,7 @@
       "heroBadge": "0% commission on orders",
       "heroTitle": "Take orders online without the fees.",
       "heroSubtitle": "Run pickup, delivery, table reservations, and a kitchen display from one place. Keep 100% of every order.",
-      "startTrial": "Start Free Trial",
+      "startTrial": "Get Started Free",
       "viewDemo": "View Demo",
       "trustedBy": "Trusted by independent restaurants",
       "stats": {
@@ -1207,7 +1207,7 @@
       "featuresTitle": "Everything you need to run online ordering",
       "ctaTitle": "Ready to keep 100% of your sales?",
       "ctaSubtitle": "No credit card required. Cancel anytime.",
-      "ctaButton": "Start Free Trial"
+      "ctaButton": "Get Started Free"
     },
     "features": {
       "title": "Features",
@@ -1241,19 +1241,59 @@
       }
     },
     "pricing": {
-      "title": "Simple pricing",
-      "subtitle": "No commission per order. Pay one flat monthly fee.",
+      "title": "Free forever. Pay only for what you need.",
+      "subtitle": "The core ordering platform is free for every restaurant. Unlock individual paid features as you grow.",
       "perMonth": "/month",
-      "mostPopular": "Most popular",
-      "tiers": {
-        "starter": "Starter",
-        "starterDesc": "For new restaurants getting started",
-        "pro": "Professional",
-        "proDesc": "For established restaurants ready to scale",
-        "enterprise": "Enterprise",
-        "enterpriseDesc": "Custom solutions for multi-location chains"
+      "freeBadge": "Free forever",
+      "freeTitle": "Core ordering platform",
+      "freeSubtitle": "Everything you need to start taking orders today.",
+      "freeCta": "Get Started Free",
+      "freeIncludes": [
+        "Unlimited online orders",
+        "Customer ordering page",
+        "Embeddable widget for your existing site",
+        "Order-taking app (kitchen display)",
+        "Admin dashboard",
+        "Menu builder + photos",
+        "Pickup, delivery, dine-in, reservations",
+        "Email notifications",
+        "5+ languages",
+        "Receipt printing"
+      ],
+      "addOnsTitle": "Add-ons",
+      "addOnsSubtitle": "Unlock paid features individually. Cancel anytime — no contracts.",
+      "addOnPriceComingSoon": "Pricing announced at launch",
+      "addOns": {
+        "online_payments": {
+          "name": "Online Payments",
+          "desc": "Accept credit cards through Stripe Connect. Money lands in your account, not ours."
+        },
+        "hosted_website": {
+          "name": "Sales Optimized Website",
+          "desc": "A polished marketing page at your-name.feefreeordering.com — auto-generated from your menu."
+        },
+        "custom_domain": {
+          "name": "Custom Domain",
+          "desc": "Bring your own domain (e.g. ordermyrestaurant.com) and we'll host the site there."
+        },
+        "advanced_promos": {
+          "name": "Advanced Promo Marketing",
+          "desc": "Customer segmentation, automated email campaigns, lapsed-customer win-backs."
+        },
+        "branded_mobile_app": {
+          "name": "Branded Mobile App",
+          "desc": "Submit your own iOS + Android app to the stores with your branding."
+        },
+        "pos_module": {
+          "name": "POS Module",
+          "desc": "In-house point-of-sale for staff to ring up walk-in orders alongside online ones."
+        },
+        "reservation_deposits": {
+          "name": "Reservation Deposits",
+          "desc": "Charge a refundable deposit when guests book a table to reduce no-shows."
+        }
       },
-      "compareTitle": "All plans include",
+      "compareTitle": "Every restaurant gets",
       "compareItems": [
         "Unlimited orders",
         "Customer ordering page",
@@ -1263,9 +1303,9 @@
         "5+ languages",
         "Receipt printing"
       ],
-      "cta": "Start Free Trial",
+      "cta": "Get Started Free",
       "ctaContact": "Contact sales",
-      "trialNote": "14-day free trial. No credit card required."
+      "trialNote": "No credit card required. No contracts."
     },
     "faq": {
       "title": "Frequently Asked Questions",
@@ -1304,8 +1344,8 @@
           "a": "Yes. Percent-off, fixed discounts, free delivery, BOGO, scheduled promotions, and one-off coupon codes."
         },
         {
-          "q": "Is there a free trial?",
-          "a": "Yes — 14 days, no credit card required."
+          "q": "Is it really free?",
+          "a": "Yes. The core ordering platform is free forever — no credit card, no trial countdown. You pay only if you choose to subscribe to an individual add-on like Online Payments or a Custom Domain."
         },
         {
           "q": "Can I cancel anytime?",
@@ -1327,8 +1367,8 @@
       "tryIt": "Try it"
     },
     "signup": {
-      "title": "Start your free trial",
-      "subtitle": "14 days. No credit card required.",
+      "title": "Get started in 5 minutes",
+      "subtitle": "Free forever. No credit card required.",
       "restaurantName": "Restaurant name",
       "yourName": "Your name",
       "email": "Email",
