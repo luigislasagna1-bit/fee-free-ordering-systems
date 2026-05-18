@@ -112,7 +112,11 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
                   ${dollars}
                 </span>
                 <span className="text-sm text-gray-500"> / month</span>
-                {a.trialDays && a.trialDays > 0 && (
+                {/* `a.trialDays && ...` evaluates to 0 (falsy) when trialDays is
+                    0 — and React renders that 0 as the literal text "0",
+                    causing "/month0" to appear. Use a strict > 0 check that
+                    always returns a boolean. */}
+                {(a.trialDays ?? 0) > 0 && (
                   <span className="ml-2 text-xs font-medium px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
                     {a.trialDays}-day trial
                   </span>
