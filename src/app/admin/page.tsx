@@ -1,6 +1,8 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { AdminDashboardClient } from "./AdminDashboardClient";
+import { isBrandParent, loadBrandSummary } from "@/lib/brand";
+import { BrandDashboardClient } from "./BrandDashboardClient";
 
 export default async function AdminDashboard() {
   const user = await getSessionUser();
@@ -9,6 +11,18 @@ export default async function AdminDashboard() {
   if (!restaurantId) {
     const { redirect } = await import("next/navigation");
     redirect("/superadmin");
+  }
+
+  // Multi-location detection. If the active restaurantId IS a brand parent
+  // (has ≥1 child), show the brand-wide dashboard instead of the single-
+  // location dashboard. Children fall through to the normal admin.
+  // Note: getSessionUser already applies the active_location cookie, so if
+  // the owner has drilled into a child via the LocationSwitcher, this
+  // returns false and we render the normal per-location dashboard.
+  const showBrand = await isBrandParent(restaurantId!);
+  if (showBrand) {
+    const summary = await loadBrandSummary(restaurantId!);
+    return <BrandDashboardClient summary={summary!} />;
   }
 
   const [restaurant, orderStats, recentOrders] = await Promise.all([

@@ -16,10 +16,34 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { restaurantName, ownerName, email, password, phone, ref } = await req.json();
+    const { restaurantName, ownerName, email, password, phone, ref, invite } = await req.json();
 
     if (!restaurantName || !email || !password) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    // Multi-location invite token: when present, signup links the new
+    // Restaurant to the inviting brand via parentRestaurantId. Token is
+    // single-use and expires after 30 days. Validation happens BEFORE we
+    // start creating rows so an invalid token rejects cleanly.
+    let parentRestaurantId: string | null = null;
+    let inviteRecord: { id: string } | null = null;
+    if (typeof invite === "string" && invite.trim()) {
+      const inv = await prisma.locationInvite.findUnique({
+        where: { token: invite.trim() },
+        select: { id: true, brandId: true, acceptedAt: true, expiresAt: true },
+      });
+      if (!inv) {
+        return NextResponse.json({ error: "Invite link is invalid." }, { status: 400 });
+      }
+      if (inv.acceptedAt) {
+        return NextResponse.json({ error: "This invite has already been used." }, { status: 400 });
+      }
+      if (inv.expiresAt < new Date()) {
+        return NextResponse.json({ error: "This invite has expired. Ask the brand owner for a fresh link." }, { status: 400 });
+      }
+      parentRestaurantId = inv.brandId;
+      inviteRecord = { id: inv.id };
     }
 
     // Reseller attribution: ?ref=<referralCode> on the signup form OR a
@@ -90,8 +114,21 @@ export async function POST(req: NextRequest) {
         subscriptionStatus: "active",
         subscriptionPlanId: freePlan?.id || null,
         resellerProfileId,
+        // Multi-location: when signup carries a valid invite token, link the
+        // new Restaurant to the inviting brand as a child location. The new
+        // owner has their own login, own Stripe, own add-on subscriptions —
+        // parent is purely a brand-grouping relation.
+        parentRestaurantId,
       },
     });
+
+    // Mark the invite as accepted so it can't be reused.
+    if (inviteRecord) {
+      await prisma.locationInvite.update({
+        where: { id: inviteRecord.id },
+        data: { acceptedAt: new Date(), acceptedRestaurantId: restaurant.id },
+      });
+    }
 
     for (let i = 0; i < 7; i++) {
       await prisma.openingHours.create({

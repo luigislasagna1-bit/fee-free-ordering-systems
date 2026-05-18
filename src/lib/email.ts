@@ -388,6 +388,32 @@ export async function sendVerifyEmail(params: {
   });
 }
 
+/** Invite-a-new-location email. Sent when a brand owner generates an invite
+ *  link from the brand dashboard and supplies a recipient email address.
+ *  The recipient gets a one-click button that lands at /signup?invite=token,
+ *  which our invite-aware signup flow turns into a fresh Restaurant + User
+ *  linked to the brand via parentRestaurantId. */
+export async function sendLocationInviteEmail(params: {
+  to: string;
+  brandName: string;
+  suggestedName: string | null;
+  inviteUrl: string;
+}) {
+  const friendlyName = params.suggestedName ? `the new ${params.suggestedName} location` : "a new location";
+  return send({
+    to: params.to,
+    subject: `You've been invited to set up ${friendlyName} on Fee Free Ordering`,
+    html: wrap(`Set up ${friendlyName}`, `
+      <p>Hi there,</p>
+      <p>The owner of <strong>${params.brandName}</strong> has invited you to set up ${friendlyName} on Fee Free Ordering.</p>
+      <p>This new location will operate independently — its own menu, orders, and payments — but will be linked to <strong>${params.brandName}</strong> as part of the chain.</p>
+      <p style="margin-top:20px"><a href="${params.inviteUrl}" style="display:inline-block;background:#f97316;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600">Set up the new location</a></p>
+      <p style="font-size:12px;color:#6b7280;margin-top:24px">If the button doesn't work, paste this URL into your browser:<br/>${params.inviteUrl}</p>
+      <p style="font-size:12px;color:#6b7280">This link expires in 30 days and can only be used once.</p>
+    `),
+  });
+}
+
 // ─── Trial expiring ──────────────────────────────────────────────────────────
 
 /**

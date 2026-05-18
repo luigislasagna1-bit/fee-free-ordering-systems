@@ -136,10 +136,35 @@ model Restaurant {
 
   addOns               RestaurantAddOn[]
   kitchenDevices       KitchenDevice[]
+  locationInvites      LocationInvite[]
 
   @@index([resellerProfileId])
   @@index([parentRestaurantId])
   @@index([publishedAt])
+}
+
+/// Brand → location invite tokens. When a multi-location brand owner wants
+/// to add a new location, they generate one of these rows (via the brand
+/// admin dashboard). The recipient receives an email with a signup link
+/// containing `?invite=<token>`. Completing signup creates a fresh
+/// Restaurant + User, parented under the brand. Tokens are single-use.
+model LocationInvite {
+  id                   String   @id @default(cuid())
+  brandId              String
+  brand                Restaurant @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  token                String   @unique
+  email                String?  // pre-fill on signup form (optional, owner's choice)
+  suggestedName        String?  // suggested location name (e.g. "Brooklyn Branch")
+  createdByUserId      String   // userId of the brand admin who created the invite
+  acceptedAt           DateTime?
+  acceptedRestaurantId String?  // restaurant created by accepting this invite
+  expiresAt            DateTime // 30 days from creation by default
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([brandId])
+  @@index([token])
+  @@index([expiresAt])
 }
 
 /// Tracks each kitchen PWA install (or kitchen-staff session) that has
