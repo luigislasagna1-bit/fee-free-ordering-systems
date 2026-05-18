@@ -26,19 +26,33 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing restaurantId" }, { status: 400 });
   }
 
-  // The user's User.restaurantId is the parent. Allow switching to:
+  // CANONICAL parent lookup — DO NOT use user.restaurantId here. After a
+  // prior switch, getSessionUser() applies the active_location cookie and
+  // returns the *child* as restaurantId. Validating against that would
+  // reject any attempt to switch back to the parent (the bug we're fixing).
+  // The User.restaurantId column always points at the canonical owning
+  // (parent) restaurant — fetch it fresh.
+  const userRow = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: { restaurantId: true },
+  });
+  const parentId = userRow?.restaurantId;
+  if (!parentId) {
+    return NextResponse.json({ error: "User has no owning restaurant" }, { status: 403 });
+  }
+
+  // Allowed targets:
   //   - the parent itself (back to root)
   //   - any child whose parentRestaurantId === parentId
-  // (Don't trust the cookie alone in getSessionUser — same DB check here.)
   let allowed = false;
-  if (targetId === user.restaurantId) {
+  if (targetId === parentId) {
     allowed = true;
   } else {
     const target = await prisma.restaurant.findUnique({
       where: { id: targetId },
       select: { parentRestaurantId: true },
     });
-    allowed = target?.parentRestaurantId === user.restaurantId;
+    allowed = target?.parentRestaurantId === parentId;
   }
 
   if (!allowed) {
