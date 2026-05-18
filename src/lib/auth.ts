@@ -96,8 +96,17 @@ export const authOptions: NextAuthOptions = {
             resellerProfileId: user.resellerProfile?.id ?? undefined,
           };
         } catch (err: any) {
-          console.error(`${TAG} threw:`, err?.message || err);
-          if (err?.stack) console.error(err.stack.split("\n").slice(0, 4).join(" | "));
+          // Print the full Prisma error details. The default message is
+          // truncated in Vercel's log row UI — these extra lines make sure
+          // we capture .code, .meta, and the full message even when the
+          // header line is cut off.
+          console.error(`${TAG} threw name=${err?.name} code=${err?.code}`);
+          console.error(`${TAG} meta=${JSON.stringify(err?.meta || {})}`);
+          console.error(`${TAG} message: ${err?.message || String(err)}`);
+          if (err?.stack) {
+            const lines = String(err.stack).split("\n").slice(0, 6);
+            for (const line of lines) console.error(`${TAG} stack: ${line}`);
+          }
           return null;
         }
       },
