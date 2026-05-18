@@ -52,40 +52,26 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // Diagnostic logging — NextAuth converts any throw or null return
-        // into a generic "Invalid email or password" with NO server-side hint,
-        // making auth failures invisible. These console.errors print to Vercel
-        // runtime logs so we can tell which step actually failed.
-        const TAG = "[authorize]";
+        // NextAuth converts any throw or null return from authorize() into
+        // a generic "Invalid email or password" error. The try/catch is kept
+        // so a thrown exception (e.g. transient DB outage) still surfaces as
+        // a clean rejection rather than crashing the request — but verbose
+        // diagnostic logging was removed once the channel_binding=require
+        // connection-string issue was traced and fixed.
         try {
-          if (!credentials?.email || !credentials?.password) {
-            console.error(`${TAG} missing credentials`);
-            return null;
-          }
+          if (!credentials?.email || !credentials?.password) return null;
           const emailLower = String(credentials.email).trim().toLowerCase();
-          console.error(`${TAG} attempting email=${emailLower}`);
 
           const user = await prisma.user.findUnique({
             where: { email: emailLower },
             include: { restaurant: true, resellerProfile: { select: { id: true } } },
           });
 
-          if (!user) {
-            console.error(`${TAG} no user found for ${emailLower}`);
-            return null;
-          }
-          if (!user.isActive) {
-            console.error(`${TAG} user ${user.id} isActive=false`);
-            return null;
-          }
+          if (!user || !user.isActive) return null;
 
           const valid = await bcrypt.compare(credentials.password, user.passwordHash);
-          if (!valid) {
-            console.error(`${TAG} bcrypt mismatch for ${user.id}`);
-            return null;
-          }
+          if (!valid) return null;
 
-          console.error(`${TAG} success user=${user.id} role=${user.role}`);
           return {
             id: user.id,
             email: user.email,
@@ -96,17 +82,9 @@ export const authOptions: NextAuthOptions = {
             resellerProfileId: user.resellerProfile?.id ?? undefined,
           };
         } catch (err: any) {
-          // Print the full Prisma error details. The default message is
-          // truncated in Vercel's log row UI — these extra lines make sure
-          // we capture .code, .meta, and the full message even when the
-          // header line is cut off.
-          console.error(`${TAG} threw name=${err?.name} code=${err?.code}`);
-          console.error(`${TAG} meta=${JSON.stringify(err?.meta || {})}`);
-          console.error(`${TAG} message: ${err?.message || String(err)}`);
-          if (err?.stack) {
-            const lines = String(err.stack).split("\n").slice(0, 6);
-            for (const line of lines) console.error(`${TAG} stack: ${line}`);
-          }
+          // One concise log line so a real outage is visible without
+          // spamming the runtime logs on every failed login attempt.
+          console.error(`[authorize] ${err?.code ?? err?.name ?? "error"}: ${err?.message ?? err}`);
           return null;
         }
       },

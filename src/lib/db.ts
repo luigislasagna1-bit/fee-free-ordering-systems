@@ -9,17 +9,14 @@ import { PrismaPg } from "@prisma/adapter-pg";
 
 function createPrismaClient(): PrismaClient {
   const connectionString = process.env.DATABASE_URL;
-  // Diagnostic: in production, log whether DATABASE_URL is present so a
-  // "missing env var" misconfiguration is visible in Vercel logs instead of
-  // failing silently inside NextAuth.
-  if (process.env.NODE_ENV === "production") {
-    const masked = connectionString
-      ? connectionString.replace(/:[^:@]+@/, ":****@").slice(0, 80) + "…"
-      : "(undefined)";
-    // eslint-disable-next-line no-console
-    console.error("[prisma init] DATABASE_URL:", masked);
-  }
   if (!connectionString) {
+    // Log on prod boot so a missing env var is obvious in Vercel logs
+    // instead of silently failing inside Prisma. Only fires once per cold
+    // start in production — not on every request.
+    if (process.env.NODE_ENV === "production") {
+      // eslint-disable-next-line no-console
+      console.error("[prisma init] DATABASE_URL is missing — Prisma will fail to connect.");
+    }
     throw new Error("DATABASE_URL is not set. Add it to .env.local — see .env.example.");
   }
   const adapter = new PrismaPg({ connectionString });
