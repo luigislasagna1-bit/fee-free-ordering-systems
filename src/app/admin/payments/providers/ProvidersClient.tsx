@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   CreditCard, CheckCircle, XCircle, AlertCircle, Loader2,
-  ExternalLink, Shield, Zap,
+  ExternalLink, Shield, Zap, Lock,
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
@@ -17,9 +18,18 @@ type RestaurantState = {
 interface Props {
   restaurant: RestaurantState;
   stripeConfigured: boolean;
+  /** True when the restaurant has subscribed to the Online Payments add-on
+   *  (i.e. has the `card_payments` feature). Required before connecting
+   *  Stripe is actually useful — without it, the /api/public/payment-intent
+   *  gate rejects card charges. */
+  hasOnlinePaymentsAddOn: boolean;
 }
 
-export function ProvidersClient({ restaurant, stripeConfigured }: Props) {
+export function ProvidersClient({
+  restaurant,
+  stripeConfigured,
+  hasOnlinePaymentsAddOn,
+}: Props) {
   const params = useSearchParams();
   const justConnected = params.get("status") === "connected";
 
@@ -99,6 +109,54 @@ export function ProvidersClient({ restaurant, stripeConfigured }: Props) {
             <p className="text-sm text-amber-700 mt-1">
               The platform hasn't finished setting up Stripe. Contact support to enable
               online payments for your restaurant.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Entitlement gate — if the restaurant hasn't subscribed to Online
+          Payments, connecting Stripe alone doesn't unlock card charges. The
+          customer-side /api/public/payment-intent rejects with 402 until
+          hasFeature(card_payments) returns true. Lead with the add-on. */}
+      {stripeConfigured && !hasOnlinePaymentsAddOn && (
+        <div className="bg-orange-50 border border-orange-200 rounded-xl p-5 flex gap-4">
+          <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center flex-shrink-0">
+            <Lock className="w-5 h-5" />
+          </div>
+          <div className="flex-1">
+            <p className="font-semibold text-orange-900">
+              Subscribe to Online Payments first
+            </p>
+            <p className="text-sm text-orange-800 mt-1">
+              Card payments are unlocked by the <strong>Online Payments</strong> add-on.
+              Without it, even a connected Stripe account can&apos;t accept card charges
+              from your customers — they&apos;ll get redirected to cash / pay-at-store only.
+              You can still set up Stripe Connect now and the add-on later, but you won&apos;t
+              accept cards until both are done.
+            </p>
+            <Link
+              href="/admin/billing/add-ons"
+              className="inline-flex items-center gap-2 mt-3 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
+            >
+              View add-ons
+              <ExternalLink className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Reverse case: they have the entitlement but haven't connected Stripe.
+          Most common path for a brand-new subscriber — make the next step obvious. */}
+      {stripeConfigured && hasOnlinePaymentsAddOn && !restaurant?.stripeAccountId && (
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex gap-3">
+          <Zap className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-semibold text-blue-900">
+              You&apos;re subscribed to Online Payments — one step left
+            </p>
+            <p className="text-sm text-blue-800 mt-1">
+              Connect your Stripe account below to start accepting card payments.
+              Onboarding takes about 5 minutes.
             </p>
           </div>
         </div>
