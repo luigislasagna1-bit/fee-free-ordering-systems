@@ -527,9 +527,39 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     } catch {}
   }, []);
 
+  // Kitchen orders polling. We poll every 4 seconds while the tab is
+  // visible — that's the "feels instant" target. We also force a fresh
+  // poll the moment the tab regains visibility, focus, or comes back
+  // online, so a backgrounded kitchen tab catches up immediately on
+  // re-focus instead of waiting for the next interval.
+  //
+  // Why this matters: Chromium-based browsers (Edge/Chrome) throttle
+  // setInterval to one tick per minute for hidden tabs since v87
+  // (https://www.chromium.org/.../intensive-throttling). Without the
+  // visibility/focus catch-ups, a kitchen tab in the background would
+  // see new orders 20–60 seconds late, even though the polling timer
+  // is set to 4s.
+  //
+  // Scale note: at 10k restaurants × 4s polling = 2,500 req/sec for
+  // this endpoint alone. M-future replaces this with Server-Sent
+  // Events so we get push semantics + no polling overhead. Tracked
+  // in ROADMAP.md.
   useEffect(() => {
     const interval = setInterval(fetchOrders, 4000);
-    return () => clearInterval(interval);
+    const wake = () => {
+      // Skip if the tab is still hidden (e.g. visibilitychange fired
+      // because the tab is being hidden, not shown).
+      if (document.visibilityState === "visible") fetchOrders();
+    };
+    document.addEventListener("visibilitychange", wake);
+    window.addEventListener("focus", wake);
+    window.addEventListener("online", wake);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener("visibilitychange", wake);
+      window.removeEventListener("focus", wake);
+      window.removeEventListener("online", wake);
+    };
   }, [fetchOrders]);
 
   // Heartbeat: tell the server this device is online. Used by the admin
