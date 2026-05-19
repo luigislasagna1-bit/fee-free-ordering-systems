@@ -6,6 +6,11 @@ import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
+import {
+  computeUberEatsEquivalentCents,
+  recordMarketplaceOrder,
+} from "@/lib/marketplace";
+import { hasFeature } from "@/lib/entitlements";
 
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "catering"] as const;
 const ALLOWED_PAYMENT_METHODS = ["cash", "card"] as const;
@@ -23,6 +28,13 @@ export async function POST(req: NextRequest) {
       restaurantSlug, type, customerName, customerEmail, customerPhone,
       deliveryAddress, deliveryCity, deliveryZip, notes, paymentMethod,
       scheduledFor, couponId, items, tip: clientTip,
+      // Marketplace attribution: the customer was redirected here from
+      // /marketplace/[slug] (which appends ?from=marketplace). The client
+      // forwards this in the body so we can stamp the order as having
+      // come via the marketplace channel. Trusted hint only — we also
+      // verify the restaurant is currently entitled before stamping, so
+      // a tampered client can't fake-stamp a direct order as marketplace.
+      from,
     } = body;
 
     // ── Basic input validation ──────────────────────────────────────────────
@@ -300,6 +312,18 @@ export async function POST(req: NextRequest) {
       await prisma.coupon.update({ where: { id: resolvedCouponId }, data: { usedCount: { increment: 1 } } });
     }
 
+    // ── Marketplace attribution + savings snapshot ──────────────────────────
+    // Stamp this order as "via marketplace" ONLY if the client hint is set
+    // AND the restaurant is currently entitled. A tampered client request
+    // can't fake-stamp a direct order — entitlement is enforced server-side.
+    const claimsMarketplace = from === "marketplace";
+    const viaMarketplace = claimsMarketplace
+      ? await hasFeature(restaurant.id, "marketplace_listing")
+      : false;
+    const savedVsUberEatsCents = viaMarketplace
+      ? computeUberEatsEquivalentCents(Math.round(serverTotal * 100))
+      : null;
+
     // ── Auto-accept handling ────────────────────────────────────────────────
     const wantsAutoAccept = !!restaurant.autoAcceptOrders;
     const fulfillmentMinutes = type === "delivery"
@@ -344,6 +368,8 @@ export async function POST(req: NextRequest) {
         scheduledFor: scheduledFor ? new Date(scheduledFor) : null,
         deliveryZoneId: resolvedZoneId,
         deliveryEstimatedMinutes: resolvedZoneMinutes,
+        viaMarketplace,
+        savedVsUberEatsCents,
         items: {
           create: validatedItems.map((item) => ({
             menuItemId: item.menuItemId,
@@ -373,6 +399,21 @@ export async function POST(req: NextRequest) {
     if (!isCardOrder) {
       fireOrderNotifications(order.id).catch((e) =>
         console.error("[orders POST] fireOrderNotifications:", e),
+      );
+    }
+
+    // Marketplace counters — bump monthly orders / revenue / lifetime
+    // savings. We bump on order CREATE (not on payment success) because
+    // even an abandoned card order represents marketplace engagement.
+    // If the order later gets refunded/cancelled, M2.5 will add a
+    // counter-decrement on /api/orders/[id] PATCH → "cancelled".
+    if (viaMarketplace) {
+      recordMarketplaceOrder({
+        restaurantId: restaurant.id,
+        orderTotalCents: Math.round(serverTotal * 100),
+        savedVsUberEatsCents: savedVsUberEatsCents ?? 0,
+      }).catch((e) =>
+        console.error("[orders POST] recordMarketplaceOrder:", e),
       );
     }
 

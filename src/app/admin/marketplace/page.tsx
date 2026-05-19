@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
-import { ensureMarketplaceListing } from "@/lib/marketplace";
+import { ensureMarketplaceListing, computeMonthlyChargeCents } from "@/lib/marketplace";
 import { MarketplaceLockedView } from "./MarketplaceLockedView";
 import { MarketplaceSettingsClient } from "./MarketplaceSettingsClient";
 
@@ -47,6 +47,12 @@ export default async function MarketplaceAdminPage() {
     select: { name: true, slug: true, city: true, cuisineType: true, bannerUrl: true, logoUrl: true },
   });
 
+  // Smart-billing snapshot. We compute what the restaurant would pay
+  // THIS cycle under both pricing models so the UI can show "you're
+  // currently on the per-order rate" or "you've crossed into the flat
+  // cap — every additional order this month is free".
+  const billing = computeMonthlyChargeCents(listing.currentMonthOrders);
+
   return (
     <MarketplaceSettingsClient
       initialListing={{
@@ -66,6 +72,18 @@ export default async function MarketplaceAdminPage() {
         cuisineType: restaurant?.cuisineType ?? null,
         bannerUrl: restaurant?.bannerUrl ?? null,
         logoUrl: restaurant?.logoUrl ?? null,
+      }}
+      stats={{
+        currentMonthOrders: listing.currentMonthOrders,
+        currentMonthRevenue: listing.currentMonthRevenue,
+        lifetimeSavingsVsUberEatsCents: listing.lifetimeSavingsVsUberEatsCents,
+        currentMonthStartedAt: listing.currentMonthStartedAt.toISOString(),
+        billing: {
+          flatCents: billing.flatCents,
+          perOrderCents: billing.perOrderCents,
+          effectiveCents: billing.effectiveCents,
+          whichWon: billing.whichWon,
+        },
       }}
       isSuperadmin={user.role === "superadmin"}
     />

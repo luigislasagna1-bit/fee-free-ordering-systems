@@ -198,11 +198,102 @@ export async function isOnMarketplace(restaurantId: string): Promise<boolean> {
 /**
  * "How much you would have paid on UberEats" — given an order subtotal
  * (in cents), returns 30% of it. Used by the order POST to stamp
- * a `savedVsUberEatsCents` value on every marketplace order in M2,
- * and right now to power the savings preview on /admin/marketplace.
+ * a `savedVsUberEatsCents` value on every marketplace order, and to
+ * power the savings card on /admin/marketplace.
  */
 export function computeUberEatsEquivalentCents(orderSubtotalCents: number): number {
   return Math.round(orderSubtotalCents * (UBER_EATS_COMMISSION_PCT / 100));
+}
+
+/**
+ * Compute what this restaurant SHOULD be billed for the marketplace
+ * THIS billing cycle given the month-to-date order count. Returns
+ * the lower of:
+ *   (a) Flat monthly cap ($199.99)
+ *   (b) Per-order rate × month-to-date order count
+ *
+ * Phase M2 only EXPOSES this number — we display it on /admin/marketplace
+ * so the owner sees their effective rate live. Actual differential
+ * billing through Stripe (charging the lower amount automatically each
+ * cycle) is M2.5 work — Stripe metered billing wiring + a monthly cron
+ * to reconcile. For now, Stripe charges the flat $199.99 and we'll
+ * issue a Stripe credit at month-end if the per-order math was lower.
+ */
+export function computeMonthlyChargeCents(monthToDateOrders: number): {
+  flatCents: number;
+  perOrderCents: number;
+  effectiveCents: number;
+  whichWon: "flat" | "per_order";
+} {
+  const flat = MARKETPLACE_MONTHLY_CAP_CENTS;
+  const perOrder = MARKETPLACE_PER_ORDER_CENTS * monthToDateOrders;
+  if (perOrder <= flat) {
+    return { flatCents: flat, perOrderCents: perOrder, effectiveCents: perOrder, whichWon: "per_order" };
+  }
+  return { flatCents: flat, perOrderCents: perOrder, effectiveCents: flat, whichWon: "flat" };
+}
+
+/**
+ * Stamp a fresh marketplace order: increment the listing's counters,
+ * bump lifetime savings, and roll over the monthly counters if a new
+ * calendar month has begun since `currentMonthStartedAt`.
+ *
+ * Called from the order POST AFTER the Order row is created — we have
+ * the final order total + computed savings to record. Idempotent
+ * against duplicate calls because we operate on the listing row, not
+ * the Order; if the caller accidentally invokes this twice for the
+ * same order, the second call just over-counts by one. Production
+ * callers should guard with their own once-only semantics.
+ */
+export async function recordMarketplaceOrder(args: {
+  restaurantId: string;
+  orderTotalCents: number;
+  savedVsUberEatsCents: number;
+}): Promise<void> {
+  const listing = await prisma.marketplaceListing.findUnique({
+    where: { restaurantId: args.restaurantId },
+    select: {
+      id: true,
+      currentMonthStartedAt: true,
+      currentMonthOrders: true,
+      currentMonthRevenue: true,
+    },
+  });
+  if (!listing) {
+    // No listing row — restaurant isn't entitled or webhook missed.
+    // We do NOT auto-create here because the caller already checked
+    // entitlement; if we got past that check the row really should
+    // exist. Log loudly so the gap is investigable.
+    console.warn(`[recordMarketplaceOrder] no listing for restaurant ${args.restaurantId}`);
+    return;
+  }
+
+  // Rollover check: if the listing's currentMonthStartedAt is in a
+  // previous calendar month (UTC), reset the counters to zero before
+  // adding this order. We use UTC month boundaries because Stripe
+  // bills in UTC and restaurants can be in any timezone — keeping
+  // counters in a single tz simplifies reconciliation.
+  const now = new Date();
+  const sameMonth =
+    listing.currentMonthStartedAt.getUTCFullYear() === now.getUTCFullYear() &&
+    listing.currentMonthStartedAt.getUTCMonth() === now.getUTCMonth();
+
+  await prisma.marketplaceListing.update({
+    where: { id: listing.id },
+    data: sameMonth
+      ? {
+          currentMonthOrders: { increment: 1 },
+          currentMonthRevenue: { increment: args.orderTotalCents / 100 },
+          lifetimeSavingsVsUberEatsCents: { increment: args.savedVsUberEatsCents },
+        }
+      : {
+          // New month — reset, then count this order as the first.
+          currentMonthStartedAt: new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)),
+          currentMonthOrders: 1,
+          currentMonthRevenue: args.orderTotalCents / 100,
+          lifetimeSavingsVsUberEatsCents: { increment: args.savedVsUberEatsCents },
+        },
+  });
 }
 
 function safeJsonStringArray(s: string | null | undefined): string[] {
