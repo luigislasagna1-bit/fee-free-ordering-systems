@@ -1068,7 +1068,11 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
   );
 }
 
-// ─── PDF Import Modal (Claude-powered, category-aware) ──────────────────────
+// ─── PDF Import Modal (category-aware menu reader) ─────────────────────────
+//
+// Internally this uses Anthropic Claude for the heavy lifting. We DO NOT
+// surface that to users — the UI just says "reading your menu". Keeps our
+// option to swap providers later without breaking expectations.
 
 type PdfItem = { name: string; description: string; price: number };
 type PdfImportCategory = {
@@ -1156,11 +1160,11 @@ function PdfImportModal({ categories, onClose, onImported }: {
         // Map common Vercel/server failure modes to actionable messages
         let msg = data?.error || `Upload failed (HTTP ${res.status})`;
         if (res.status === 504 || /timed out/i.test(msg)) {
-          msg = "The AI took longer than Vercel allows (60s on Hobby plan). Upgrade to Pro or contact support — we'll switch to a faster model.";
+          msg = "Reading this menu took longer than allowed. Try a smaller or simpler PDF, or contact support.";
         } else if (/ANTHROPIC_API_KEY/i.test(msg)) {
-          msg = "AI extraction is not configured (missing API key). Contact the platform admin.";
+          msg = "Menu reader is not configured. Contact the platform admin.";
         } else if (/credit balance/i.test(msg)) {
-          msg = "AI quota exhausted. Contact the platform admin to top up.";
+          msg = "Menu reader quota exhausted. Contact the platform admin.";
         }
         setError(msg);
         setUploading(false);
@@ -1187,7 +1191,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
       // Network-level failure (no response at all). Most common cause:
       // Vercel killed the function and the connection dropped. Show that.
       const reason = err?.name === "TypeError" ? "Network or timeout error" : err?.message || "Unknown error";
-      setError(`Upload failed: ${reason}. If this menu is large, the AI may have taken longer than the 60s Vercel limit — try a shorter PDF or contact support.`);
+      setError(`Upload failed: ${reason}. If this menu is large, reading it may have taken too long — try a shorter PDF or contact support.`);
     }
     setUploading(false);
   };
@@ -1297,7 +1301,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
               </div>
             )}
             <p className="text-xs text-gray-400 text-center max-w-sm">
-              We use AI (Claude) to read your PDF — including categories, prices, and descriptions. Works on print-designed menus with multi-column layouts and decorative typography.
+              We read your PDF automatically — including categories, prices, and descriptions. Works on print-designed menus with multi-column layouts and decorative typography.
             </p>
           </div>
         )}
@@ -1310,12 +1314,12 @@ function PdfImportModal({ categories, onClose, onImported }: {
               </span>
               {extractionMethod === "regex_fallback" && (
                 <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-800" title={extractionNote}>
-                  Basic extraction (AI unavailable)
+                  Basic mode
                 </span>
               )}
               {extractionMethod === "claude" && (
                 <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">
-                  AI extraction
+                  Auto-detected
                 </span>
               )}
               <span className="ml-auto text-xs text-gray-500">
