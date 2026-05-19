@@ -6,47 +6,16 @@ import { OrderingPageClient } from "./OrderingPageClient";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { stripeReady, getPublishableKey } from "@/lib/stripe";
 import { hasFeature } from "@/lib/entitlements";
+import { resolveMenuRestaurantId } from "@/lib/brand";
 
 export default async function OrderingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  const restaurant = await prisma.restaurant.findUnique({
+  // 1) Load the restaurant the customer is ordering FROM (the location).
+  // Hours, delivery zones, fees etc. are always per-location — never inherited.
+  const restaurantBase = await prisma.restaurant.findUnique({
     where: { slug, isActive: true },
     include: {
-      menuCategories: {
-        where: { isActive: true },
-        orderBy: { sortOrder: "asc" },
-        include: {
-          // Category-level modifier groups (inherited by all items in the category)
-          modifierGroups: {
-            where: { menuItemId: null, isHidden: false },
-            orderBy: { sortOrder: "asc" },
-            include: {
-              options: {
-                where: { isAvailable: true },
-                orderBy: { sortOrder: "asc" },
-              },
-            },
-          },
-          menuItems: {
-            where: { isAvailable: true },
-            orderBy: { sortOrder: "asc" },
-            include: {
-              variants: { orderBy: { sortOrder: "asc" } },
-              modifierGroups: {
-                where: { isHidden: false },
-                orderBy: { sortOrder: "asc" },
-                include: {
-                  options: {
-                    where: { isAvailable: true },
-                    orderBy: { sortOrder: "asc" },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
       openingHours: { orderBy: { dayOfWeek: "asc" } },
       deliveryZones: {
         where: { isActive: true },
@@ -60,7 +29,58 @@ export default async function OrderingPage({ params }: { params: Promise<{ slug:
     },
   });
 
-  if (!restaurant) notFound();
+  if (!restaurantBase) notFound();
+
+  // 2) Resolve which restaurant's MENU to serve. For a standalone restaurant
+  // or a customized child, this is the restaurant's own id. For a child
+  // inheriting the brand menu, this is the parent's id — so the customer
+  // sees the brand's menu but everything else (hours, delivery, taxes, the
+  // Connect account that money flows to) stays local to the location they're
+  // ordering from.
+  const menuRestaurantId = await resolveMenuRestaurantId(restaurantBase.id);
+
+  const menuCategories = await prisma.menuCategory.findMany({
+    where: { restaurantId: menuRestaurantId, isActive: true },
+    orderBy: { sortOrder: "asc" },
+    include: {
+      // Category-level modifier groups (inherited by all items in the category)
+      modifierGroups: {
+        where: { menuItemId: null, isHidden: false },
+        orderBy: { sortOrder: "asc" },
+        include: {
+          options: {
+            where: { isAvailable: true },
+            orderBy: { sortOrder: "asc" },
+          },
+        },
+      },
+      menuItems: {
+        where: { isAvailable: true },
+        orderBy: { sortOrder: "asc" },
+        include: {
+          variants: { orderBy: { sortOrder: "asc" } },
+          modifierGroups: {
+            where: { isHidden: false },
+            orderBy: { sortOrder: "asc" },
+            include: {
+              options: {
+                where: { isAvailable: true },
+                orderBy: { sortOrder: "asc" },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  // Splice the menu onto the restaurant object so the existing client
+  // component reads `restaurant.menuCategories` unchanged. The location's
+  // own row carries everything; only `menuCategories` is potentially from
+  // the parent.
+  const restaurant = { ...restaurantBase, menuCategories } as typeof restaurantBase & {
+    menuCategories: typeof menuCategories;
+  };
 
   // Card payments require THREE things to all be true:
   //   1. The platform has Stripe configured (PlatformSettings, see stripeReady())

@@ -115,6 +115,16 @@ model Restaurant {
   parentRestaurantId   String?
   parentRestaurant     Restaurant?  @relation("Locations", fields: [parentRestaurantId], references: [id], onDelete: SetNull)
   childLocations       Restaurant[] @relation("Locations")
+  /// Multi-location menu inheritance. Only meaningful for child locations
+  /// (parentRestaurantId != null). When true, this location SERVES the
+  /// parent's menu — both the customer order page and the admin's menu
+  /// editor read from the parent's MenuCategory/MenuItem rows. When false,
+  /// the location has its own independent menu (and the admin can edit
+  /// it freely). Defaults to true so new locations onboarded via invite
+  /// inherit by default — the brand sets up the menu once, every new
+  /// location adopts it. Toggling false copies the parent's menu rows
+  /// into this location so the owner has something to edit.
+  useBrandMenu         Boolean      @default(true)
 
   // Customer-side email toggles (single set per restaurant)
   customerEmailPickupReady   Boolean @default(true)

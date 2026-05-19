@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { blockIfInheritingMenu } from "@/lib/brand";
 
 // POST: attach a library modifier group to an item or category (creates a linked copy)
 export async function POST(req: NextRequest) {
@@ -8,6 +9,9 @@ export async function POST(req: NextRequest) {
     const user = await getSessionUser();
     const restaurantId = user?.restaurantId;
     if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    const blocked = await blockIfInheritingMenu(restaurantId);
+    if (blocked) return blocked;
 
     const { libraryGroupId, menuItemId, categoryId } = await req.json();
     if (!libraryGroupId) return NextResponse.json({ error: "libraryGroupId required" }, { status: 400 });
@@ -79,6 +83,9 @@ export async function DELETE(req: NextRequest) {
     const user = await getSessionUser();
     const restaurantId = user?.restaurantId;
     if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    const blocked = await blockIfInheritingMenu(restaurantId);
+    if (blocked) return blocked;
 
     const { groupId } = await req.json();
     if (!groupId) return NextResponse.json({ error: "groupId required" }, { status: 400 });

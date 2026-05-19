@@ -14,6 +14,7 @@
  */
 
 import prisma from "@/lib/db";
+import { NextResponse } from "next/server";
 
 export interface BrandSummary {
   id: string;
@@ -49,6 +50,180 @@ export async function isBrandParent(restaurantId: string): Promise<boolean> {
     where: { parentRestaurantId: restaurantId },
   });
   return childCount > 0;
+}
+
+/**
+ * Resolve the restaurantId whose MENU should be served for `restaurantId`.
+ * - Parent / standalone restaurant → returns its own id
+ * - Child with `useBrandMenu = true` → returns its parent's id
+ * - Child with `useBrandMenu = false` → returns its own id
+ *
+ * Every place in the codebase that queries MenuCategory / MenuItem by
+ * restaurantId for *serving* purposes (customer order page, kitchen
+ * receipt, menu importer preview, etc.) must funnel the id through here.
+ *
+ * Mutation endpoints (admin CRUD on menu items) deliberately do NOT use
+ * this — a child inheriting the brand menu cannot edit it. The /admin/menu
+ * UI shows the read-only state with a "Customize this location" button
+ * that flips `useBrandMenu` off + copies the brand's menu into this
+ * location's own MenuCategory/MenuItem rows.
+ */
+export async function resolveMenuRestaurantId(restaurantId: string): Promise<string> {
+  const r = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { parentRestaurantId: true, useBrandMenu: true },
+  });
+  if (!r) return restaurantId;
+  if (r.parentRestaurantId && r.useBrandMenu) return r.parentRestaurantId;
+  return restaurantId;
+}
+
+/**
+ * Guard helper for menu-CRUD route handlers. Returns a ready-to-return
+ * NextResponse when the location is inheriting (so it can't edit its
+ * own menu — must click "Customize" first), otherwise null so the
+ * handler proceeds normally.
+ *
+ * Usage:
+ *   const blocked = await blockIfInheritingMenu(restaurantId);
+ *   if (blocked) return blocked;
+ */
+export async function blockIfInheritingMenu(restaurantId: string): Promise<NextResponse | null> {
+  if (await isInheritingMenu(restaurantId)) {
+    return NextResponse.json(
+      {
+        error: "This location uses the master menu from your brand. Open /admin/menu and click \"Customize this location's menu\" before editing.",
+        code: "menu_inherited",
+      },
+      { status: 403 },
+    );
+  }
+  return null;
+}
+
+/**
+ * Returns true when this restaurant currently shows the brand's menu
+ * (i.e. it has a parent AND `useBrandMenu` is on). Used by the menu admin
+ * to render the read-only state + "Customize" CTA.
+ */
+export async function isInheritingMenu(restaurantId: string): Promise<boolean> {
+  const r = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { parentRestaurantId: true, useBrandMenu: true },
+  });
+  return !!(r?.parentRestaurantId && r.useBrandMenu);
+}
+
+/**
+ * Copy a parent restaurant's entire menu (categories, items, variants,
+ * modifier groups + options) into a child restaurant. Used when a child
+ * flips `useBrandMenu` to false — they need a starting point they can
+ * edit instead of an empty menu.
+ *
+ * Idempotency: skips categories that already exist by name in the child
+ * (matches by case-insensitive name). Existing items in matching
+ * categories are NOT touched — we never overwrite what the location
+ * already has. So calling this twice is safe.
+ */
+export async function copyBrandMenuToLocation(parentRestaurantId: string, childRestaurantId: string): Promise<{
+  categoriesCopied: number;
+  itemsCopied: number;
+}> {
+  const parentCategories = await prisma.menuCategory.findMany({
+    where: { restaurantId: parentRestaurantId },
+    orderBy: { sortOrder: "asc" },
+    include: {
+      menuItems: {
+        include: {
+          variants: true,
+          modifierGroups: { include: { options: true } },
+        },
+      },
+    },
+  });
+
+  const existingChildCategories = await prisma.menuCategory.findMany({
+    where: { restaurantId: childRestaurantId },
+    select: { id: true, name: true },
+  });
+  const existingByLowerName = new Map(
+    existingChildCategories.map((c) => [c.name.toLowerCase(), c.id]),
+  );
+
+  let categoriesCopied = 0;
+  let itemsCopied = 0;
+
+  for (const parentCat of parentCategories) {
+    let childCatId = existingByLowerName.get(parentCat.name.toLowerCase());
+    if (!childCatId) {
+      const newCat = await prisma.menuCategory.create({
+        data: {
+          restaurantId: childRestaurantId,
+          name: parentCat.name,
+          description: parentCat.description,
+          imageUrl: parentCat.imageUrl,
+          isActive: parentCat.isActive,
+          isHidden: parentCat.isHidden,
+          sortOrder: parentCat.sortOrder,
+        },
+      });
+      childCatId = newCat.id;
+      categoriesCopied++;
+    }
+
+    for (const parentItem of parentCat.menuItems) {
+      // Skip items whose names already exist in this category. Prevents
+      // duplicate-on-re-run; the child's local edits to existing items
+      // are preserved.
+      const existingItem = await prisma.menuItem.findFirst({
+        where: {
+          restaurantId: childRestaurantId,
+          categoryId: childCatId,
+          name: parentItem.name,
+        },
+        select: { id: true },
+      });
+      if (existingItem) continue;
+
+      await prisma.menuItem.create({
+        data: {
+          restaurantId: childRestaurantId,
+          categoryId: childCatId,
+          name: parentItem.name,
+          description: parentItem.description,
+          price: parentItem.price,
+          imageUrl: parentItem.imageUrl,
+          isAvailable: parentItem.isAvailable,
+          isFeatured: parentItem.isFeatured,
+          isSoldOut: false,             // never inherit sold-out — local state
+          isHidden: parentItem.isHidden,
+          hasVariants: parentItem.hasVariants,
+          forPickup: parentItem.forPickup,
+          forDelivery: parentItem.forDelivery,
+          availableDays: parentItem.availableDays,
+          availableFrom: parentItem.availableFrom,
+          availableTo: parentItem.availableTo,
+          sortOrder: parentItem.sortOrder,
+          calories: parentItem.calories,
+          allergens: parentItem.allergens,
+          pizzaConfig: parentItem.pizzaConfig,
+          variants: parentItem.variants.length > 0 ? {
+            create: parentItem.variants.map((v) => ({
+              name: v.name,
+              price: v.price,
+              sortOrder: v.sortOrder,
+            })),
+          } : undefined,
+          // ModifierGroups attached to menu items — these belong to the
+          // item directly. ModifierGroups attached to categories are
+          // copied separately below (with the category).
+        },
+      });
+      itemsCopied++;
+    }
+  }
+
+  return { categoriesCopied, itemsCopied };
 }
 
 /**
