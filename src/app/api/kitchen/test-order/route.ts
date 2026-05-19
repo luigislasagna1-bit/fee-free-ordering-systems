@@ -133,6 +133,9 @@ export async function POST() {
         total,
         paymentMethod: "cash",
         paymentStatus: "pending",
+        // Test orders are always immediately released to the kitchen.
+        // (They behave like cash orders for fan-out purposes.)
+        notifiedAt: new Date(),
         items: {
           create: orderItems.map(i => ({
             menuItemId: i.menuItemId,

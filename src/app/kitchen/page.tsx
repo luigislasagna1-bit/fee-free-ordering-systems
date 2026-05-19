@@ -26,6 +26,9 @@ export default async function KitchenPage() {
         where: {
           restaurantId,
           createdAt: { gte: thirtyDaysAgo },
+          // Same filter as /api/kitchen/orders polling: never show
+          // pre-payment card orders to the kitchen on initial SSR.
+          notifiedAt: { not: null },
         },
         orderBy: { createdAt: "desc" },
         take: 300,
