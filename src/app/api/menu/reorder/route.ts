@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { blockIfInheritingMenu } from "@/lib/brand";
 
 // POST { type: "categories"|"items"|"modifiers", ids: string[] }
 // Reorders by assigning sortOrder 0..n based on array position
@@ -8,6 +9,8 @@ export async function POST(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const blocked = await blockIfInheritingMenu(restaurantId);
+  if (blocked) return blocked;
 
   const { type, ids } = await req.json();
   if (!type || !Array.isArray(ids)) return NextResponse.json({ error: "type and ids required" }, { status: 400 });

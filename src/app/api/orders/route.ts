@@ -4,6 +4,7 @@ import { generateOrderNumber } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
+import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "catering"] as const;
@@ -54,9 +55,14 @@ export async function POST(req: NextRequest) {
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
     // ── Server-side price calculation ───────────────────────────────────────
+    // Menu items may live on the parent restaurant if this location inherits
+    // the brand menu (useBrandMenu=true). Resolve the effective menu owner
+    // before validating — otherwise inherited-menu locations would reject
+    // every order with "menu item not found".
+    const menuRestaurantId = await resolveMenuRestaurantId(restaurant.id);
     const menuItemIds = [...new Set(items.map((i: any) => String(i.menuItemId)))];
     const menuItems = await prisma.menuItem.findMany({
-      where: { id: { in: menuItemIds }, restaurantId: restaurant.id, isAvailable: true },
+      where: { id: { in: menuItemIds }, restaurantId: menuRestaurantId, isAvailable: true },
       include: {
         variants: true,
         modifierGroups: { include: { options: { where: { isAvailable: true } } } },

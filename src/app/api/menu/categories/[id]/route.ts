@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { blockIfInheritingMenu } from "@/lib/brand";
 
 async function getOwned(id: string, restaurantId: string) {
   return prisma.menuCategory.findFirst({ where: { id, restaurantId } });
@@ -10,6 +11,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const blocked = await blockIfInheritingMenu(restaurantId);
+  if (blocked) return blocked;
   const { id } = await params;
   if (!await getOwned(id, restaurantId)) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
@@ -26,6 +29,8 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const blocked = await blockIfInheritingMenu(restaurantId);
+  if (blocked) return blocked;
   const { id } = await params;
   if (!await getOwned(id, restaurantId)) return NextResponse.json({ error: "Not found" }, { status: 404 });
 

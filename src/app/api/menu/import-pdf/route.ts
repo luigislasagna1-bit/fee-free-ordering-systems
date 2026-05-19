@@ -6,6 +6,7 @@ import {
   extractMenuWithRegex,
   type ExtractedCategory,
 } from "@/lib/menu-extractor";
+import { blockIfInheritingMenu } from "@/lib/brand";
 
 // PDF parsing is slow — large print-designed menus can take 60-90 seconds
 // to extract. The legacy 60s cap was the Hobby plan ceiling. On Pro plan
@@ -38,6 +39,12 @@ export async function POST(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  // Importing a PDF would write categories + items to this location's
+  // restaurantId — but an inheriting location can't have its own menu.
+  // Block early with a clear message.
+  const blocked = await blockIfInheritingMenu(restaurantId);
+  if (blocked) return blocked;
 
   // Two ways to receive the PDF:
   //   1. JSON { blobUrl } — the client uploaded directly to Vercel Blob first

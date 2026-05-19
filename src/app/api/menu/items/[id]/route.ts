@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { syncPizzaConfigAttachments } from "@/lib/pizza-config";
+import { blockIfInheritingMenu } from "@/lib/brand";
 
 async function getRestaurantId() {
   const user = await getSessionUser();
@@ -26,6 +27,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const restaurantId = await getRestaurantId();
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const blocked = await blockIfInheritingMenu(restaurantId);
+  if (blocked) return blocked;
   const { id } = await params;
   const body = await req.json();
   const { name, description, price, categoryId, imageUrl, isAvailable, isFeatured, isHidden,
@@ -84,6 +87,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const restaurantId = await getRestaurantId();
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const blocked = await blockIfInheritingMenu(restaurantId);
+  if (blocked) return blocked;
   const { id } = await params;
   try {
     await prisma.menuItem.deleteMany({ where: { id, restaurantId } });

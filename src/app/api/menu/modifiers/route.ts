@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { blockIfInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
 
 // Modifier groups library: GET all, POST new
 export async function GET() {
@@ -8,9 +9,10 @@ export async function GET() {
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  // Return restaurant-level library groups (restaurantId set, no menuItemId)
+  // Inheriting locations read the parent's modifier library (same as menu).
+  const menuRestaurantId = await resolveMenuRestaurantId(restaurantId);
   const groups = await prisma.modifierGroup.findMany({
-    where: { restaurantId, menuItemId: null },
+    where: { restaurantId: menuRestaurantId, menuItemId: null },
     orderBy: { sortOrder: "asc" },
     include: { options: { orderBy: { sortOrder: "asc" } } },
   });
@@ -21,6 +23,9 @@ export async function POST(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const blocked = await blockIfInheritingMenu(restaurantId);
+  if (blocked) return blocked;
 
   const body = await req.json();
   const { name, description, required, minSelect, maxSelect, maxPerOption, isHidden,
