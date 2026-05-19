@@ -1,6 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 import { decideHost } from "@/lib/domains/resolve";
 import { getCached, setCached } from "@/lib/domains/lru";
+
+/**
+ * For a superadmin requesting /admin/*, send them to the equivalent
+ * /superadmin/* page instead of dropping them at the dashboard. Without
+ * this mapping, clicking "Add-Ons" while logged in as a superadmin
+ * looks like getting logged out (URL changes drastically, sidebar swaps
+ * to a different chrome). With this mapping they land on the matching
+ * superadmin page and the transition feels natural.
+ *
+ * Path-specific mappings first, then a fallback to /superadmin root.
+ */
+const ADMIN_TO_SUPERADMIN: Array<{ match: RegExp; to: string }> = [
+  { match: /^\/admin\/billing\/add-ons(?:\/|$)/, to: "/superadmin/add-ons" },
+  { match: /^\/admin\/billing(?:\/|$)/, to: "/superadmin/billing" },
+  { match: /^\/admin\/locations(?:\/|$)/, to: "/superadmin/restaurants" },
+  { match: /^\/admin(?:\/|$)/, to: "/superadmin" },
+];
 
 /**
  * Host-based multi-tenant rewriter.
@@ -42,9 +60,44 @@ export async function proxy(req: NextRequest) {
   const host = req.headers.get("host") || "";
   const pathname = req.nextUrl.pathname;
 
-  // Operator console — pass through, but attach pathname header so the admin
-  // layout's subscription gate can avoid redirect loops on /admin/billing.
+  // Operator console — two cases:
+  //
+  //  a) Superadmin with no active impersonation → path-map to the
+  //     equivalent /superadmin/* page. Otherwise clicking "Add-Ons" or
+  //     "Billing" in any admin context bounces them to /superadmin
+  //     (dashboard) which feels like getting logged out. Mapping
+  //     specifically (e.g. /admin/billing/add-ons → /superadmin/add-ons)
+  //     keeps the transition coherent.
+  //
+  //  b) Anyone else → pass through, attaching the x-pathname header so
+  //     the admin layout's subscription gate can avoid redirect loops
+  //     on /admin/billing.
   if (pathname.startsWith("/admin")) {
+    try {
+      const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+      const role = (token as { role?: string } | null)?.role;
+      const impersonatingRestaurant = req.cookies.get("sa_impersonate")?.value;
+      if (role === "superadmin" && !impersonatingRestaurant) {
+        for (const { match, to } of ADMIN_TO_SUPERADMIN) {
+          if (match.test(pathname)) {
+            const url = req.nextUrl.clone();
+            url.pathname = to;
+            const res = NextResponse.redirect(url);
+            // Auth-state-dependent redirects must not be cached by the
+            // browser — a stale cached redirect after fix changes
+            // causes lockouts (we hit this exact bug, see AGENTS.md).
+            res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+            res.headers.set("Pragma", "no-cache");
+            res.headers.set("Expires", "0");
+            return res;
+          }
+        }
+      }
+    } catch {
+      // If JWT decoding fails (e.g. NEXTAUTH_SECRET mismatch at the edge),
+      // fall through to the normal passthrough rather than 500ing the
+      // whole admin tree.
+    }
     const headers = new Headers(req.headers);
     headers.set("x-pathname", pathname);
     return NextResponse.next({ request: { headers } });
