@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { AdminDashboardClient } from "./AdminDashboardClient";
 import { isBrandParent, loadBrandSummary } from "@/lib/brand";
 import { BrandDashboardClient } from "./BrandDashboardClient";
+import { loadSetupProgress } from "@/lib/setup-checklist-loader";
 
 export default async function AdminDashboard() {
   const user = await getSessionUser();
@@ -11,6 +12,32 @@ export default async function AdminDashboard() {
   if (!restaurantId) {
     const { redirect } = await import("next/navigation");
     redirect("/superadmin");
+  }
+
+  // First-time onboarding nudge. If the restaurant hasn't published yet
+  // AND there are required setup steps still open, send the owner to
+  // the dedicated wizard instead of dropping them into the dashboard.
+  // We DON'T nudge if:
+  //   - They've already published (they know what they're doing)
+  //   - publishReady=true (gentle — wizard hero says "ready to publish"
+  //     but we don't force them through it; dashboard is fine)
+  //   - They've explicitly navigated here from /admin/setup recently
+  //     (the wizard has links to other pages; once they leave it we
+  //     respect that they want to be on the dashboard)
+  //
+  // Cookie-free heuristic: only redirect when there are required steps
+  // open. This means an owner who finished setup but hasn't published
+  // can still hit /admin and see the dashboard.
+  const restaurantForGate = await prisma.restaurant.findUnique({
+    where: { id: restaurantId! },
+    select: { publishedAt: true },
+  });
+  if (!restaurantForGate?.publishedAt) {
+    const progress = await loadSetupProgress(restaurantId!).catch(() => null);
+    if (progress && progress.requiredStepsRemaining.length > 0) {
+      const { redirect } = await import("next/navigation");
+      redirect("/admin/setup");
+    }
   }
 
   // Multi-location detection. If the active restaurantId IS a brand parent

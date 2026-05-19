@@ -1,0 +1,307 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import {
+  CheckCircle2, Circle, ArrowRight, ExternalLink, Loader2,
+  Rocket, AlertCircle, PartyPopper, ChevronDown,
+} from "lucide-react";
+import toast from "react-hot-toast";
+import type { SetupProgress, SetupSection, SetupStep } from "@/lib/setup-checklist";
+
+/**
+ * Step-by-step onboarding wizard for new restaurants.
+ *
+ * Visual model:
+ *   - Top: hero with progress bar + "X of Y steps complete"
+ *   - Middle: stacked section cards. Each section shows its own progress
+ *     and expands to reveal its steps. Completed sections collapse by
+ *     default; the first incomplete section auto-expands.
+ *   - Bottom: "Publish my restaurant" CTA card. Locked until all
+ *     required steps are done; shows what's still needed otherwise.
+ *
+ * No client-side fetching — all data is passed in from the server.
+ * Clicking a step goes to its `href`, the owner finishes it there,
+ * then comes back to /admin/setup. Refresh shows updated checkmarks.
+ */
+
+export function SetupWizardClient({
+  restaurantName,
+  restaurantSlug,
+  isPublished,
+  publishedAt,
+  progress,
+}: {
+  restaurantName: string;
+  restaurantSlug: string;
+  isPublished: boolean;
+  publishedAt: string | null;
+  progress: SetupProgress;
+}) {
+  const router = useRouter();
+  const [publishing, setPublishing] = useState(false);
+
+  // Auto-expand the FIRST incomplete section (best onboarding UX —
+  // owner sees what to work on next without hunting). Completed
+  // sections stay collapsed. Owner can manually expand/collapse any.
+  const firstIncomplete = progress.sections.find((s) => !s.complete)?.id;
+  const [expanded, setExpanded] = useState<Set<string>>(
+    new Set(firstIncomplete ? [firstIncomplete] : [progress.sections[0]?.id])
+  );
+  const toggleSection = (id: string) =>
+    setExpanded((s) => {
+      const next = new Set(s);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+
+  async function publish() {
+    if (publishing) return;
+    setPublishing(true);
+    try {
+      const res = await fetch("/api/admin/publish", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "Failed to publish");
+        return;
+      }
+      toast.success("🎉 You're live! Customers can now order from you.");
+      router.refresh();
+    } catch (e: any) {
+      toast.error(e?.message || "Failed to publish");
+    } finally {
+      setPublishing(false);
+    }
+  }
+
+  return (
+    <div className="max-w-3xl mx-auto p-4 sm:p-6 space-y-6">
+      {/* ─── HERO ───────────────────────────────────────────────────── */}
+      <div className={`rounded-2xl p-6 sm:p-8 text-white shadow-lg ${
+        isPublished
+          ? "bg-gradient-to-br from-emerald-500 to-teal-600"
+          : "bg-gradient-to-br from-orange-500 to-pink-500"
+      }`}>
+        <div className="flex items-center gap-2 mb-2">
+          {isPublished ? <PartyPopper className="w-5 h-5" /> : <Rocket className="w-5 h-5" />}
+          <span className="text-sm font-bold uppercase tracking-wider opacity-90">
+            {isPublished ? "Live" : "Setup wizard"}
+          </span>
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+          {isPublished ? `${restaurantName} is published` : `Get ${restaurantName} ready to take orders`}
+        </h1>
+        <p className="mt-2 text-white/90 text-sm sm:text-base leading-relaxed">
+          {isPublished ? (
+            <>
+              Customers can order from you at{" "}
+              <code className="bg-white/15 px-1.5 py-0.5 rounded text-xs">
+                /order/{restaurantSlug}
+              </code>
+              . You can still customize anything below — changes go live instantly.
+            </>
+          ) : (
+            <>
+              Knock off the steps below in any order. When every <strong>required</strong> step
+              is done, you can publish your restaurant and start taking real customer orders.
+            </>
+          )}
+        </p>
+
+        {/* Progress bar */}
+        <div className="mt-5">
+          <div className="flex items-center justify-between text-xs mb-1.5 opacity-90">
+            <span className="font-semibold">{progress.completedSteps} of {progress.totalSteps} steps complete</span>
+            <span className="font-bold">{progress.percent}%</span>
+          </div>
+          <div className="h-2.5 bg-white/20 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-white rounded-full transition-all"
+              style={{ width: `${progress.percent}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* ─── SECTIONS ───────────────────────────────────────────────── */}
+      <div className="space-y-3">
+        {progress.sections.map((section) => (
+          <SectionCard
+            key={section.id}
+            section={section}
+            isOpen={expanded.has(section.id)}
+            onToggle={() => toggleSection(section.id)}
+          />
+        ))}
+      </div>
+
+      {/* ─── PUBLISH CTA ────────────────────────────────────────────── */}
+      {!isPublished && (
+        <div className={`rounded-2xl p-6 border-2 ${
+          progress.publishReady
+            ? "border-emerald-300 bg-emerald-50"
+            : "border-amber-200 bg-amber-50"
+        }`}>
+          <div className="flex items-start gap-3">
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+              progress.publishReady ? "bg-emerald-500 text-white" : "bg-amber-500 text-white"
+            }`}>
+              {progress.publishReady ? <Rocket className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className={`font-bold ${progress.publishReady ? "text-emerald-900" : "text-amber-900"}`}>
+                {progress.publishReady ? "Ready to publish" : `${progress.requiredStepsRemaining.length} required step${progress.requiredStepsRemaining.length === 1 ? "" : "s"} left`}
+              </h2>
+              {progress.publishReady ? (
+                <p className="text-sm text-emerald-800 mt-1 leading-relaxed">
+                  Every required step is done. Click below and your restaurant goes live —
+                  customers can immediately start placing orders.
+                </p>
+              ) : (
+                <>
+                  <p className="text-sm text-amber-800 mt-1 leading-snug">
+                    Finish these before you can publish:
+                  </p>
+                  <ul className="mt-2 space-y-1">
+                    {progress.requiredStepsRemaining.map((step) => (
+                      <li key={step.id}>
+                        <Link
+                          href={step.href}
+                          className="inline-flex items-center gap-1.5 text-sm text-amber-900 hover:underline font-medium"
+                        >
+                          <Circle className="w-3.5 h-3.5" />
+                          {step.label}
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+          </div>
+
+          {progress.publishReady && (
+            <button
+              onClick={publish}
+              disabled={publishing}
+              className="mt-5 w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white font-bold px-6 py-3 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2"
+            >
+              {publishing ? (
+                <><Loader2 className="w-4 h-4 animate-spin" /> Publishing…</>
+              ) : (
+                <><Rocket className="w-4 h-4" /> Publish my restaurant</>
+              )}
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Already-published info card */}
+      {isPublished && (
+        <div className="rounded-2xl p-5 bg-white border border-gray-200">
+          <h3 className="font-bold text-gray-900 text-sm mb-2 flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+            You're live
+          </h3>
+          <p className="text-sm text-gray-600 leading-relaxed">
+            Published {publishedAt ? new Date(publishedAt).toLocaleDateString() : "recently"}.
+            Need to take your restaurant offline temporarily? Toggle <Link href="/admin/profile" className="text-orange-600 hover:underline">Profile → Active</Link> off
+            — that hides you from customers without losing your setup data.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SectionCard({
+  section,
+  isOpen,
+  onToggle,
+}: {
+  section: SetupSection;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  const allDone = section.complete;
+  const sectionPercent = section.totalCount > 0
+    ? Math.round((section.completedCount / section.totalCount) * 100)
+    : 100;
+
+  return (
+    <div className={`bg-white rounded-2xl border overflow-hidden transition ${
+      allDone ? "border-emerald-200" : "border-gray-200"
+    }`}>
+      <button
+        onClick={onToggle}
+        className="w-full px-5 py-4 flex items-center gap-3 text-left hover:bg-gray-50 transition"
+      >
+        <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+          allDone ? "bg-emerald-500 text-white" : "bg-gray-100 text-gray-500"
+        }`}>
+          {allDone ? <CheckCircle2 className="w-5 h-5" /> : <Circle className="w-4 h-4" />}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="font-bold text-gray-900 text-sm sm:text-base">{section.label}</div>
+          <div className="text-xs text-gray-500 mt-0.5">
+            {section.completedCount} of {section.totalCount} {section.totalCount === 1 ? "step" : "steps"}
+            {allDone ? " ✓" : ""}
+          </div>
+        </div>
+        {/* Mini per-section progress bar */}
+        <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
+          <div className="w-20 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+            <div
+              className={`h-full transition-all ${allDone ? "bg-emerald-500" : "bg-orange-400"}`}
+              style={{ width: `${sectionPercent}%` }}
+            />
+          </div>
+          <span className={`text-xs font-mono w-8 text-right ${allDone ? "text-emerald-600" : "text-gray-500"}`}>
+            {sectionPercent}%
+          </span>
+        </div>
+        <ChevronDown
+          className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {isOpen && (
+        <div className="border-t border-gray-100 divide-y divide-gray-100">
+          {section.steps.map((step) => (
+            <StepRow key={step.id} step={step} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function StepRow({ step }: { step: SetupStep }) {
+  return (
+    <Link
+      href={step.href}
+      className={`flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition group ${
+        step.complete ? "" : ""
+      }`}
+    >
+      {step.complete ? (
+        <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+      ) : (
+        <Circle className="w-4 h-4 text-gray-300 flex-shrink-0" />
+      )}
+      <div className="flex-1 min-w-0">
+        <div className={`text-sm ${step.complete ? "text-gray-500 line-through" : "text-gray-900 font-medium"}`}>
+          {step.label}
+        </div>
+        {step.required && !step.complete && (
+          <div className="text-[10px] text-amber-600 font-semibold uppercase tracking-wider mt-0.5">
+            Required to publish
+          </div>
+        )}
+      </div>
+      <ExternalLink className="w-3.5 h-3.5 text-gray-300 group-hover:text-gray-500 transition flex-shrink-0" />
+    </Link>
+  );
+}

@@ -33,8 +33,11 @@ export function AdminHeader({
   return (
     <div className="flex-shrink-0">
     {showSetupBanner && setupProgress && (
+      // Links to the dedicated setup wizard (Phase B). Was /admin before;
+      // /admin/setup gives owners the focused step-by-step view rather
+      // than the dashboard.
       <Link
-        href="/admin"
+        href="/admin/setup"
         className="block bg-gradient-to-r from-orange-50 to-amber-50 border-b border-orange-200 px-6 py-2 hover:from-orange-100 hover:to-amber-100 transition"
       >
         <div className="flex items-center justify-between gap-4">
