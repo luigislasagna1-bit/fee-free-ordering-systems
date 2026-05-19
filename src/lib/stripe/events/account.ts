@@ -1,5 +1,6 @@
 import type Stripe from "stripe";
 import prisma from "@/lib/db";
+import { syncConnectAccountProfile } from "@/lib/stripe";
 
 /**
  * Handle account.* events for Stripe Connect (Layer C — restaurant's own
@@ -36,7 +37,7 @@ export async function handleAccountEvent(event: Stripe.Event) {
     const account = event.data.object as Stripe.Account;
     const restaurant = await prisma.restaurant.findFirst({
       where: { stripeAccountId: account.id },
-      select: { id: true },
+      select: { id: true, name: true, slug: true },
     });
     if (!restaurant) return;
     // Derive status from Stripe's capability flags.
@@ -52,6 +53,22 @@ export async function handleAccountEvent(event: Stripe.Event) {
         stripeChargesEnabled: account.charges_enabled ?? false,
         stripePayoutsEnabled: account.payouts_enabled ?? false,
       },
+    });
+
+    // Lock Connect-side business_profile to our canonical values. Stripe
+    // Express onboarding lets the owner type any business name and URL
+    // (which would then appear on customer receipts + invoices). If
+    // they entered something different from the restaurant's actual name
+    // in our DB, snap it back. The sync helper no-ops when both already
+    // match, so we don't echo-loop on the very webhook our own update
+    // triggers.
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+    const desiredUrl = baseUrl ? `${baseUrl.replace(/\/$/, "")}/order/${restaurant.slug}` : null;
+    syncConnectAccountProfile(account.id, {
+      name: restaurant.name,
+      url: desiredUrl,
+    }).catch((err) => {
+      console.error("[stripe/account.updated] sync business_profile failed:", err instanceof Error ? err.message : err);
     });
   }
 }

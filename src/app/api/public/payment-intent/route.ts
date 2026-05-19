@@ -48,6 +48,7 @@ export async function POST(req: NextRequest) {
     where: { slug: restaurantSlug, isActive: true },
     select: {
       id: true,
+      name: true,
       stripeAccountId: true,
       stripeChargesEnabled: true,
     },
@@ -83,6 +84,7 @@ export async function POST(req: NextRequest) {
       restaurantStripeAccountId: restaurant.stripeAccountId,
       orderId,
       restaurantId: restaurant.id,
+      restaurantName: restaurant.name,
     });
     return NextResponse.json({
       clientSecret: intent.clientSecret,
