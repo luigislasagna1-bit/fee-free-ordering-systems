@@ -7,6 +7,7 @@
     "build": "prisma generate && next build",
     "start": "next start --port 3001",
     "lint": "eslint",
+    "preflight": "tsc --noEmit && prisma generate && next build",
     "seed": "tsx prisma/seed.ts",
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
