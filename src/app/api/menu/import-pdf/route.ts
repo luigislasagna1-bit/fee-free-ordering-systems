@@ -7,9 +7,12 @@ import {
   type ExtractedCategory,
 } from "@/lib/menu-extractor";
 
-// Claude PDF parsing is slow; bump the function timeout. Vercel Hobby caps
-// out at 60s, which is plenty for typical menus (5-15 seconds).
-export const maxDuration = 60;
+// PDF parsing is slow — large print-designed menus can take 60-90 seconds
+// to extract. The legacy 60s cap was the Hobby plan ceiling. On Pro plan
+// (which we're now on) Vercel allows up to 300s. We use the full window
+// so big PDFs don't get cut off. If a route ever does take 300s, that's
+// a real bug to investigate, not a "user's fault" timeout.
+export const maxDuration = 300;
 
 /**
  * POST /api/menu/import-pdf — extract menu from uploaded PDF.
