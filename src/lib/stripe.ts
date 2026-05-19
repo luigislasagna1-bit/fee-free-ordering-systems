@@ -212,6 +212,42 @@ export async function createConnectOnboardingLink(
   return { url: link.url };
 }
 
+/**
+ * Sync a Connect account's `business_profile` back to canonical values
+ * from our DB. Stripe Express onboarding lets the owner type any business
+ * name (which then shows on customer receipts + invoices). We snap it
+ * back to the restaurant's actual name + storefront URL so the brand
+ * stays consistent across order page, kitchen display, and Stripe-side
+ * receipts.
+ *
+ * No-ops if both values already match what we'd set, to avoid an
+ * `account.updated → setProfile → account.updated` echo loop.
+ */
+export async function syncConnectAccountProfile(
+  accountId: string,
+  desired: { name: string | null | undefined; url: string | null | undefined }
+): Promise<{ changed: boolean }> {
+  const stripe = await getStripe();
+  const account = await stripe.accounts.retrieve(accountId);
+  const currentName = account.business_profile?.name ?? null;
+  const currentUrl = account.business_profile?.url ?? null;
+
+  const desiredName = desired.name?.trim() || null;
+  const desiredUrl = desired.url?.trim() || null;
+
+  const nameMatches = currentName === desiredName;
+  const urlMatches = currentUrl === desiredUrl;
+  if (nameMatches && urlMatches) return { changed: false };
+
+  await stripe.accounts.update(accountId, {
+    business_profile: {
+      ...(desiredName ? { name: desiredName } : {}),
+      ...(desiredUrl ? { url: desiredUrl } : {}),
+    },
+  });
+  return { changed: true };
+}
+
 /** Retrieve current status of a Connect account. */
 export async function getConnectAccountStatus(accountId: string) {
   const stripe = await getStripe();
@@ -226,6 +262,34 @@ export async function getConnectAccountStatus(accountId: string) {
 }
 
 /**
+ * Sanitize a restaurant name into a Stripe-acceptable
+ * `statement_descriptor_suffix`. Stripe limits the suffix to 22 chars and
+ * disallows `< > " ' \`. We also strip control chars and collapse repeated
+ * whitespace so a bank statement reads cleanly (e.g. "LUIGIS LASAGNA").
+ *
+ * The full descriptor the customer sees is `<platform prefix>* <suffix>`,
+ * e.g. "FEE FREE* LUIGIS LASAGNA" — far more useful than just the
+ * platform name, which historically caused chargebacks because customers
+ * didn't recognize "Fee Free Ordering Systems" on their statement.
+ */
+export function buildStatementDescriptorSuffix(restaurantName: string | null | undefined): string | undefined {
+  if (!restaurantName) return undefined;
+  const cleaned = restaurantName
+    .replace(/[<>"'\\]/g, "")        // Stripe-disallowed chars
+    .replace(/[^\x20-\x7E]/g, "")    // strip non-ASCII (accented chars etc) — banks display ASCII only anyway
+    .replace(/\s+/g, " ")            // collapse whitespace
+    .trim()
+    .toUpperCase()
+    .slice(0, 22);
+  // Stripe requires the suffix to contain at least one letter and to be
+  // 5+ chars. If sanitizing produced something too short or pure-numeric,
+  // skip it — Stripe falls back to the platform's default descriptor.
+  if (cleaned.length < 5) return undefined;
+  if (!/[A-Z]/.test(cleaned)) return undefined;
+  return cleaned;
+}
+
+/**
  * Create a PaymentIntent for a customer's order using **destination charge**:
  * the platform's secret key creates the intent, money lands in the restaurant's
  * connected account minus the platform application fee.
@@ -236,14 +300,20 @@ export async function createDestinationPaymentIntent(params: {
   restaurantStripeAccountId: string;
   orderId: string;
   restaurantId: string;
+  /** Restaurant display name — used to build the customer's bank-statement
+   *  suffix so charges read like "FEE FREE* LUIGIS LASAGNA" rather than
+   *  just the platform's brand. Optional; falls back to platform default. */
+  restaurantName?: string | null;
 }) {
   const stripe = await getStripe();
   const platformFee = calculatePlatformFee(params.amountCents);
+  const statementDescriptorSuffix = buildStatementDescriptorSuffix(params.restaurantName);
   const intent = await stripe.paymentIntents.create({
     amount: params.amountCents,
     currency: params.currency,
     application_fee_amount: platformFee,
     transfer_data: { destination: params.restaurantStripeAccountId },
+    ...(statementDescriptorSuffix ? { statement_descriptor_suffix: statementDescriptorSuffix } : {}),
     metadata: {
       orderId: params.orderId,
       restaurantId: params.restaurantId,
