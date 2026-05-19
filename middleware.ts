@@ -74,7 +74,19 @@ export async function middleware(req: NextRequest) {
       url.pathname = to;
       // Preserve search params so /admin/billing/add-ons?subscribed=1 keeps
       // its query string through the redirect.
-      return NextResponse.redirect(url);
+      const res = NextResponse.redirect(url);
+      // Belt-and-suspenders no-cache on auth-state-dependent redirects.
+      // Browsers (especially Edge / Chromium) sometimes cache redirect
+      // responses even though the spec says they shouldn't for 307s.
+      // We were burned by exactly this: a user who hit /admin/billing/add-ons
+      // before the bugfix was deployed had a cached "→ /login" redirect
+      // that kept firing even AFTER the server-side fix landed, until they
+      // cleared their browser cache. Setting these headers explicitly
+      // means future redirect logic changes propagate immediately.
+      res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+      res.headers.set("Pragma", "no-cache");
+      res.headers.set("Expires", "0");
+      return res;
     }
   }
 
