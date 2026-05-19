@@ -147,6 +147,8 @@ model Restaurant {
   addOns               RestaurantAddOn[]
   kitchenDevices       KitchenDevice[]
   locationInvites      LocationInvite[]
+  marketplaceListing   MarketplaceListing?
+  shipdayConfig        ShipdayConfig?
 
   @@index([resellerProfileId])
   @@index([parentRestaurantId])
@@ -1066,3 +1068,135 @@ model RestaurantAddOn {
   @@index([status])
 }
 
+
+/// Marketplace Listing — per-restaurant settings for the public
+/// Fee Free Ordering Marketplace at /marketplace. A row is created
+/// automatically the moment the restaurant's "marketplace" add-on
+/// subscription activates (see src/lib/stripe/events/subscription.ts).
+///
+/// The presence of the row + isListed=true + an active
+/// `marketplace_listing` entitlement on the restaurant is what
+/// determines whether it appears in the public grid. Toggling
+/// isListed off lets a restaurant temporarily pause discovery
+/// (e.g. while they fix a menu issue) without canceling the
+/// subscription.
+model MarketplaceListing {
+  id                       String   @id @default(cuid())
+  restaurantId             String   @unique
+  restaurant               Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  /// User-controllable "pause" toggle. Distinct from the entitlement
+  /// (which is controlled by subscription status). When false, the
+  /// restaurant is hidden from /marketplace but still pays for the
+  /// add-on — they're just temporarily not accepting new customers
+  /// from the marketplace channel.
+  isListed                 Boolean  @default(true)
+
+  /// JSON string array — categories the customer can filter by on
+  /// the marketplace browse page. e.g. ["pizza", "italian", "delivery"].
+  /// Defaulted from restaurant.cuisineType at creation time but
+  /// fully overridable.
+  marketplaceCategories    String   @default("[]")
+
+  /// JSON string array — short visual tags shown on the tile.
+  /// e.g. ["family-friendly", "late-night", "vegetarian-options"].
+  marketplaceTags          String   @default("[]")
+
+  /// Banner image for the marketplace tile. Defaults to restaurant.bannerUrl
+  /// at creation time, but admins can upload a different one tuned for
+  /// the marketplace context (e.g. a wider crop showing more food).
+  marketplaceBanner        String?
+
+  /// One-line hook shown on the marketplace tile. Falls back to
+  /// restaurant.slogan, then restaurant.description first sentence.
+  marketplaceTagline       String?
+
+  /// 1-2 sentence description shown on the restaurant detail page in
+  /// the marketplace context. Falls back to restaurant.description.
+  marketplaceShortDesc     String?
+
+  /// Superadmin-only flag — promotes the restaurant to the top of the
+  /// browse grid + a "Featured" badge. Used for paid promotion within
+  /// the marketplace (a future revenue stream) or to spotlight new
+  /// restaurants during their first month.
+  marketplaceFeatured      Boolean  @default(false)
+
+  /// Manual ordering — when null, sort alphabetically. Admins can
+  /// drag-and-drop to reorder; superadmins can pin specific
+  /// restaurants to the top of the chain-wide grid.
+  marketplaceSortOrder     Int      @default(0)
+
+  /// Smart-billing counters (M2 will use these). On every order placed
+  /// through the marketplace channel, increment these so we can show
+  /// "this month so far: 42 orders / $1,247 in revenue / paid $X via
+  /// marketplace, would have paid $Y on UberEats".
+  currentMonthOrders       Int      @default(0)
+  currentMonthRevenue      Float    @default(0)
+  /// When the current billing month started (rolled forward by the
+  /// monthly billing cron). Used to know when to reset the counters.
+  currentMonthStartedAt    DateTime @default(now())
+
+  /// Cumulative savings vs UberEats's 30% commission, in cents.
+  /// Computed as: sum over all marketplace orders of (order_total * 0.30)
+  /// minus the marketplace subscription cost. Displayed prominently on
+  /// the admin dashboard as the headline "value delivered" number.
+  lifetimeSavingsVsUberEatsCents Int @default(0)
+
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  @@index([isListed])
+  @@index([marketplaceFeatured])
+}
+
+/// ShipDay third-party driver pool configuration — per-restaurant.
+/// Created when the restaurant first opts in to the driver_pool
+/// feature (via either the standalone "driver_pool" add-on or the
+/// bundled access from the "marketplace" add-on).
+///
+/// Stores the restaurant's ShipDay API credentials (encrypted at rest)
+/// + their per-delivery fee strategy. The kitchen display reads this
+/// row to decide whether the "send to driver pool" picker is enabled
+/// for each order.
+model ShipdayConfig {
+  id              String   @id @default(cuid())
+  restaurantId    String   @unique
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  /// Master enable. Off by default even after the add-on activates —
+  /// the restaurant has to enter their ShipDay credentials AND flip
+  /// this before any orders route to the pool. Prevents accidentally
+  /// dispatching to a misconfigured ShipDay account.
+  enabled         Boolean  @default(false)
+
+  /// ShipDay API key, encrypted with the platform's ENCRYPTION_KEY
+  /// (same scheme as PlatformSettings.stripeSecretKey). Null until
+  /// the restaurant pastes their key in /admin/delivery/pool.
+  apiKeyEnc       String?
+  apiKeyIv        String?
+  apiKeyTag       String?
+
+  /// How the per-delivery fee flows:
+  ///   "pass_through" — customer pays the entire ShipDay fee (most common)
+  ///   "flat"         — customer pays `flatDeliveryFee`, restaurant absorbs
+  ///                    the difference if ShipDay charges more
+  ///   "tiered"       — `tieredRules` JSON defines fee by order total
+  ///                    (e.g. free over $50). Restaurant absorbs gap.
+  deliveryFeeMode  String  @default("pass_through")
+  flatDeliveryFee  Float?
+  /// JSON: [{ minOrderTotal: 0, customerFee: 5 }, { minOrderTotal: 50, customerFee: 0 }]
+  /// Evaluated bottom-up: highest matching minOrderTotal wins.
+  tieredRules      String   @default("[]")
+
+  /// Driver-pool opt-in. Separate from `enabled` because the
+  /// "marketplace" add-on grants access to the pool feature but the
+  /// restaurant may still want to manage their own drivers for direct
+  /// orders. When true, orders default to the pool in the kitchen
+  /// picker; in-store remains an explicit override.
+  driverPoolEnabled Boolean @default(false)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([enabled])
+}

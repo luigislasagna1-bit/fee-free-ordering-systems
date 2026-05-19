@@ -1,6 +1,7 @@
 import type Stripe from "stripe";
 import prisma from "@/lib/db";
 import { sendTrialExpiringEmail } from "@/lib/email";
+import { ensureMarketplaceListing } from "@/lib/marketplace";
 
 /**
  * Handle customer.subscription.* events.
@@ -157,6 +158,21 @@ async function handleAddOnSubscriptionEvent(
       trialEndsAt: trialEndSec ? new Date(trialEndSec * 1000) : null,
     },
   });
+
+  // ── Side effects on activation ───────────────────────────────────────
+  // When specific add-ons go active/trialing, create the related rows so
+  // the customer-facing UI lights up immediately instead of waiting for
+  // a first admin-page visit. Idempotent helpers — safe on Stripe retries.
+  const isActive = status === "active" || status === "trialing";
+  if (isActive && addOn.slug === "marketplace") {
+    // Marketplace listing auto-creation: the moment the customer's
+    // marketplace subscription activates, they appear on /marketplace
+    // with sensible defaults (tagline = restaurant slogan, banner =
+    // restaurant banner, etc.). They can fine-tune in /admin/marketplace.
+    ensureMarketplaceListing(restaurantId).catch((e) =>
+      console.error("[stripe] ensureMarketplaceListing failed:", e),
+    );
+  }
 }
 
 /** Map Stripe's subscription.status enum onto our local string set. */
