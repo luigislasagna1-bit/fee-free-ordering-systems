@@ -149,11 +149,23 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Coupon validation (server-side) ─────────────────────────────────────
+    // Effective coupon pool = this location's coupons + any "brand"-scoped
+    // coupons owned by the parent (chain-wide promos work at any location).
+    // We build the where-clause via an OR so a single query covers both.
     let serverCouponDiscount = 0;
     let resolvedCouponId: string | null = null;
     if (couponId) {
+      const couponOwnerIds: string[] = [restaurant.id];
+      if (restaurant.parentRestaurantId) couponOwnerIds.push(restaurant.parentRestaurantId);
       const coupon = await prisma.coupon.findFirst({
-        where: { id: String(couponId), restaurantId: restaurant.id, isActive: true },
+        where: {
+          id: String(couponId),
+          isActive: true,
+          OR: [
+            { restaurantId: restaurant.id }, // local coupon
+            { restaurantId: { in: couponOwnerIds }, scope: "brand" }, // brand-wide
+          ],
+        },
       });
       if (coupon) {
         if (!coupon.expiresAt || new Date(coupon.expiresAt) > new Date()) {
@@ -171,8 +183,18 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Promo engine (server-side) ──────────────────────────────────────────
+    // Same brand-scope merging as coupons above: this location's own promos
+    // AND any "brand"-scoped promos owned by the parent.
+    const promoOwnerIds: string[] = [restaurant.id];
+    if (restaurant.parentRestaurantId) promoOwnerIds.push(restaurant.parentRestaurantId);
     const activePromos = await prisma.promotion.findMany({
-      where: { restaurantId: restaurant.id, isActive: true },
+      where: {
+        isActive: true,
+        OR: [
+          { restaurantId: restaurant.id },
+          { restaurantId: { in: promoOwnerIds }, scope: "brand" },
+        ],
+      },
     });
     const promoResults = applyPromotions(activePromos as any, {
       orderType: type,
