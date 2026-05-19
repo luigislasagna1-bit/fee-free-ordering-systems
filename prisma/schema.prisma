@@ -507,6 +507,13 @@ model Order {
   paymentStatus    String   @default("pending")
   paymentIntentId  String?
   refundStatus     String?   // null | "pending" | "refunded" | "failed"
+  /// Set when the order has been "released" to the kitchen + customer
+  /// (i.e. notifications fired, kitchen display picks it up). For cash
+  /// orders this is set immediately in /api/orders POST. For online-card
+  /// orders this stays null until the payment_intent.succeeded webhook
+  /// fires — preventing the kitchen from starting cook before payment
+  /// clears. Kitchen GET filters on `notifiedAt IS NOT NULL`.
+  notifiedAt       DateTime?
   scheduledFor     DateTime?
   estimatedReady   DateTime?
   acceptedAt       DateTime?
