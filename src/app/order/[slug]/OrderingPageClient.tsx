@@ -239,12 +239,19 @@ export function OrderingPageClient({
   stripePublishableKey = null,
   themeSettings = null,
   locale = "en",
+  isEmbedded = false,
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
   stripePublishableKey?: string | null;
   themeSettings?: string | null;
   locale?: string;
+  /** True when rendered inside the iframe widget. Strips marketing
+   *  chrome (banner photo, info link, restaurant-info bar buttons,
+   *  social footer) so the widget is a minimal ordering surface and
+   *  the SEO website (full marketing page) remains the paid upgrade
+   *  differentiator. */
+  isEmbedded?: boolean;
 }) {
   const t = useTranslations("ordering");
   const tT = useTranslations("ordering.toasts");
@@ -682,9 +689,10 @@ export function OrderingPageClient({
     <div className="min-h-screen" style={{ backgroundColor: theme.backgroundColor, color: theme.textColor }}>
       {/* Marketplace ribbon — visible only when the customer arrived from
           /marketplace. Tells them they're paying exactly what's on the menu
-          (no aggregator markup) and offers a one-tap back link. Subtle so it
-          doesn't overpower the restaurant's brand. */}
-      {fromMarketplace && (
+          (no aggregator markup) and offers a one-tap back link. Hidden in
+          embedded mode (the widget user came from the restaurant's own
+          site, not the marketplace channel). */}
+      {fromMarketplace && !isEmbedded && (
         <div className="bg-gradient-to-r from-orange-500 to-pink-500 text-white text-xs sm:text-sm py-2 px-4 flex items-center justify-between gap-2">
           <span className="flex items-center gap-1.5">
             <span aria-hidden="true">✨</span>
@@ -699,73 +707,111 @@ export function OrderingPageClient({
       )}
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <div className="relative" style={{ height: bannerH }}>
-        {restaurant.bannerUrl ? (
-          <div className="absolute inset-0 overflow-hidden">
+      {/* In embedded mode we replace the big photo hero with a compact
+          name+logo strip — the widget is supposed to be the minimal
+          ordering surface, not a marketing page. */}
+      {isEmbedded ? (
+        <div
+          className="px-4 py-3 flex items-center gap-3"
+          style={{ backgroundColor: theme.cardBackground, borderBottom: "1px solid rgba(0,0,0,0.08)" }}
+        >
+          {restaurant.logoUrl && (
             <img
-              src={restaurant.bannerUrl}
-              alt="banner"
-              className="w-full h-full object-cover"
-              style={{ objectPosition: theme.bannerPosition }}
+              src={restaurant.logoUrl}
+              alt="logo"
+              className="w-10 h-10 rounded-lg object-cover flex-shrink-0"
             />
-            <div className="absolute inset-0" style={{ backgroundColor: `rgba(0,0,0,${theme.bannerOpacity / 100})` }} />
-          </div>
-        ) : (
-          <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.accentColor})` }} />
-        )}
-        <div className="absolute bottom-0 left-0 right-0 px-4 pb-6">
-          <div
-            className="max-w-5xl mx-auto flex items-end gap-4"
-            style={{ justifyContent: theme.headerLayout === "center" ? "center" : "flex-start" }}
-          >
-            {restaurant.logoUrl && (
-              <img src={restaurant.logoUrl} alt="logo" className="w-20 h-20 rounded-2xl border-4 border-white shadow-lg object-cover flex-shrink-0" />
-            )}
-            <div className={`text-white ${theme.headerLayout === "center" ? "text-center" : ""}`}>
-              <h1 className="text-3xl md:text-4xl font-bold drop-shadow-lg">{restaurant.name}</h1>
-              {restaurant.slogan && <p className="text-white/80 mt-1">{restaurant.slogan}</p>}
-              {restaurant.description && !restaurant.slogan && <p className="text-white/70 mt-1 text-sm line-clamp-1">{restaurant.description}</p>}
+          )}
+          <h1 className="text-lg font-bold truncate" style={{ color: theme.textColor }}>
+            {restaurant.name}
+          </h1>
+        </div>
+      ) : (
+        <div className="relative" style={{ height: bannerH }}>
+          {restaurant.bannerUrl ? (
+            <div className="absolute inset-0 overflow-hidden">
+              <img
+                src={restaurant.bannerUrl}
+                alt="banner"
+                className="w-full h-full object-cover"
+                style={{ objectPosition: theme.bannerPosition }}
+              />
+              <div className="absolute inset-0" style={{ backgroundColor: `rgba(0,0,0,${theme.bannerOpacity / 100})` }} />
+            </div>
+          ) : (
+            <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.accentColor})` }} />
+          )}
+          <div className="absolute bottom-0 left-0 right-0 px-4 pb-6">
+            <div
+              className="max-w-5xl mx-auto flex items-end gap-4"
+              style={{ justifyContent: theme.headerLayout === "center" ? "center" : "flex-start" }}
+            >
+              {restaurant.logoUrl && (
+                <img src={restaurant.logoUrl} alt="logo" className="w-20 h-20 rounded-2xl border-4 border-white shadow-lg object-cover flex-shrink-0" />
+              )}
+              <div className={`text-white ${theme.headerLayout === "center" ? "text-center" : ""}`}>
+                <h1 className="text-3xl md:text-4xl font-bold drop-shadow-lg">{restaurant.name}</h1>
+                {restaurant.slogan && <p className="text-white/80 mt-1">{restaurant.slogan}</p>}
+                {restaurant.description && !restaurant.slogan && <p className="text-white/70 mt-1 text-sm line-clamp-1">{restaurant.description}</p>}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* ── Info bar ─────────────────────────────────────────────────────── */}
-      <div className="border-b border-gray-100 shadow-sm" style={{ backgroundColor: theme.cardBackground }}>
-        <div className="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center gap-4 text-sm text-gray-600">
-          {restaurant.address && (
-            <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" style={{ color: theme.primaryColor }} />{restaurant.address}{restaurant.city ? `, ${restaurant.city}` : ""}</span>
-          )}
-          {restaurant.phone && (
-            <a href={`tel:${restaurant.phone}`} className="flex items-center gap-1.5"><Phone className="w-4 h-4" style={{ color: theme.primaryColor }} />{restaurant.phone}</a>
-          )}
-          {todayHours && (
-            <span className={`flex items-center gap-1.5 ${todayHours.isOpen ? "text-green-600" : "text-red-600"}`}>
-              <Clock className="w-4 h-4" />
-              {todayHours.isOpen ? `${t("open")}: ${todayHours.openTime} – ${todayHours.closeTime}` : t("closedToday")}
-            </span>
-          )}
-          <div className="ml-auto flex items-center gap-2">
-            <LanguageSwitcher currentLocale={locale} />
-            {restaurant.acceptsReservations && (
-              <button
-                onClick={() => setReservationOpen(true)}
-                className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full text-white transition hover:opacity-90"
-                style={{ backgroundColor: theme.primaryColor }}
-              >
-                <Calendar className="w-4 h-4" /> {t("tableReservation")}
-              </button>
+      {/* In embedded mode this collapses to JUST the open/closed status —
+          no address, no phone, no language switcher, no Reservation /
+          Restaurant Info buttons. Those things belong on the SEO website
+          (paid upgrade), not on the free widget. */}
+      {isEmbedded ? (
+        todayHours && (
+          <div className="border-b border-gray-100" style={{ backgroundColor: theme.cardBackground }}>
+            <div className="px-4 py-2 text-xs">
+              <span className={`flex items-center gap-1.5 ${todayHours.isOpen ? "text-green-600" : "text-red-600"}`}>
+                <Clock className="w-3.5 h-3.5" />
+                {todayHours.isOpen ? `${t("open")} · ${todayHours.openTime} – ${todayHours.closeTime}` : t("closedToday")}
+              </span>
+            </div>
+          </div>
+        )
+      ) : (
+        <div className="border-b border-gray-100 shadow-sm" style={{ backgroundColor: theme.cardBackground }}>
+          <div className="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center gap-4 text-sm text-gray-600">
+            {restaurant.address && (
+              <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" style={{ color: theme.primaryColor }} />{restaurant.address}{restaurant.city ? `, ${restaurant.city}` : ""}</span>
             )}
-            <a
-              href={infoLink}
-              className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full border-2 transition hover:bg-gray-50"
-              style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
-            >
-              <Info className="w-4 h-4" /> {t("restaurantInfo")}
-            </a>
+            {restaurant.phone && (
+              <a href={`tel:${restaurant.phone}`} className="flex items-center gap-1.5"><Phone className="w-4 h-4" style={{ color: theme.primaryColor }} />{restaurant.phone}</a>
+            )}
+            {todayHours && (
+              <span className={`flex items-center gap-1.5 ${todayHours.isOpen ? "text-green-600" : "text-red-600"}`}>
+                <Clock className="w-4 h-4" />
+                {todayHours.isOpen ? `${t("open")}: ${todayHours.openTime} – ${todayHours.closeTime}` : t("closedToday")}
+              </span>
+            )}
+            <div className="ml-auto flex items-center gap-2">
+              <LanguageSwitcher currentLocale={locale} />
+              {restaurant.acceptsReservations && (
+                <button
+                  onClick={() => setReservationOpen(true)}
+                  className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full text-white transition hover:opacity-90"
+                  style={{ backgroundColor: theme.primaryColor }}
+                >
+                  <Calendar className="w-4 h-4" /> {t("tableReservation")}
+                </button>
+              )}
+              <a
+                href={infoLink}
+                className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full border-2 transition hover:bg-gray-50"
+                style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
+              >
+                <Info className="w-4 h-4" /> {t("restaurantInfo")}
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="max-w-5xl mx-auto px-4 py-5">
         {/* ── Order type ───────────────────────────────────────────────── */}
@@ -834,8 +880,13 @@ export function OrderingPageClient({
           ))}
         </div>
 
-        {/* ── Social media links (footer) ───────────────────────────── */}
-        <SocialFooter socialLinks={(restaurant as any).socialLinks} primaryColor={theme.primaryColor} />
+        {/* ── Social media links (footer) ─────────────────────────────
+            Hidden in embedded widget mode — the widget is for ordering
+            only. Social links / outbound calls-to-action belong on the
+            hosted SEO website (paid upgrade), not the free widget. */}
+        {!isEmbedded && (
+          <SocialFooter socialLinks={(restaurant as any).socialLinks} primaryColor={theme.primaryColor} />
+        )}
       </div>
 
       {/* ── Floating cart ─────────────────────────────────────────────── */}
