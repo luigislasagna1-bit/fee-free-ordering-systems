@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { generateOrderNumber } from "@/lib/utils";
-import { notifyStaff, notifyCustomer } from "@/lib/notifications";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
+import { fireOrderNotifications } from "@/lib/order-notifications";
 
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "catering"] as const;
 const ALLOWED_PAYMENT_METHODS = ["cash", "card"] as const;
@@ -155,11 +155,23 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Coupon validation (server-side) ─────────────────────────────────────
+    // Effective coupon pool = this location's coupons + any "brand"-scoped
+    // coupons owned by the parent (chain-wide promos work at any location).
+    // We build the where-clause via an OR so a single query covers both.
     let serverCouponDiscount = 0;
     let resolvedCouponId: string | null = null;
     if (couponId) {
+      const couponOwnerIds: string[] = [restaurant.id];
+      if (restaurant.parentRestaurantId) couponOwnerIds.push(restaurant.parentRestaurantId);
       const coupon = await prisma.coupon.findFirst({
-        where: { id: String(couponId), restaurantId: restaurant.id, isActive: true },
+        where: {
+          id: String(couponId),
+          isActive: true,
+          OR: [
+            { restaurantId: restaurant.id }, // local coupon
+            { restaurantId: { in: couponOwnerIds }, scope: "brand" }, // brand-wide
+          ],
+        },
       });
       if (coupon) {
         if (!coupon.expiresAt || new Date(coupon.expiresAt) > new Date()) {
@@ -177,8 +189,18 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Promo engine (server-side) ──────────────────────────────────────────
+    // Same brand-scope merging as coupons above: this location's own promos
+    // AND any "brand"-scoped promos owned by the parent.
+    const promoOwnerIds: string[] = [restaurant.id];
+    if (restaurant.parentRestaurantId) promoOwnerIds.push(restaurant.parentRestaurantId);
     const activePromos = await prisma.promotion.findMany({
-      where: { restaurantId: restaurant.id, isActive: true },
+      where: {
+        isActive: true,
+        OR: [
+          { restaurantId: restaurant.id },
+          { restaurantId: { in: promoOwnerIds }, scope: "brand" },
+        ],
+      },
     });
     const promoResults = applyPromotions(activePromos as any, {
       orderType: type,
@@ -339,35 +361,30 @@ export async function POST(req: NextRequest) {
       include: { items: { include: { modifiers: true } } },
     });
 
-    // ── Notifications (toggle-aware fan-out, fire-and-forget) ──────────────
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
-    notifyCustomer({
-      restaurantId: restaurant.id,
-      customerEmail: cleanEmail,
-      orderType: type,
-      payload: {
-        event: "orderConfirmed",
-        customerName: sanitize(customerName, 100),
-        orderNumber: order.orderNumber,
-        items: validatedItems.map((i) => ({ name: i.name, quantity: i.quantity, price: i.price })),
-        total: serverTotal,
-        orderType: type,
-        estimatedTime: type === "pickup" ? restaurant.estimatedPickup : restaurant.estimatedDelivery,
-        trackingUrl: `${baseUrl}/order/${restaurantSlug}/status/${order.id}`,
-      },
-    }).catch((e) => console.error("[notifyCustomer orderConfirmed]", e));
-    notifyStaff({
-      restaurantId: restaurant.id,
-      payload: {
-        event: "orderPlaced",
-        orderNumber: order.orderNumber,
-        customerName: sanitize(customerName, 100),
-        total: serverTotal,
-        dashboardUrl: `${baseUrl}/admin/orders`,
-      },
-    }).catch((e) => console.error("[notifyStaff orderPlaced]", e));
+    // ── Release the order to kitchen + customer (or defer if paying card) ──
+    // Cash / pay-at-store → fire notifications NOW. The order goes straight
+    //   to the kitchen display and the customer gets the confirmation email.
+    // Online card → DO NOT fire. The order exists in the DB but `notifiedAt`
+    //   stays null, so the kitchen GET filters it out. We release in the
+    //   payment_intent.succeeded webhook once Stripe confirms payment cleared.
+    //   This prevents a customer from "placing" a card order, never paying,
+    //   and the kitchen cooking food they'll never get paid for.
+    const isCardOrder = (paymentMethod || "cash") === "card";
+    if (!isCardOrder) {
+      fireOrderNotifications(order.id).catch((e) =>
+        console.error("[orders POST] fireOrderNotifications:", e),
+      );
+    }
 
-    return NextResponse.json({ id: order.id, orderNumber: order.orderNumber, total: serverTotal }, { status: 201 });
+    return NextResponse.json({
+      id: order.id,
+      orderNumber: order.orderNumber,
+      total: serverTotal,
+      // Client uses this to decide whether to redirect straight to the
+      // status page (cash) or first take the customer through Stripe
+      // Elements (card).
+      requiresPayment: isCardOrder,
+    }, { status: 201 });
   } catch (err) {
     console.error("[orders POST]", err);
     return NextResponse.json({ error: "Failed to place order" }, { status: 500 });
