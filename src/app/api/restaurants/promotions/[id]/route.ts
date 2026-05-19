@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { isBrandParent } from "@/lib/brand";
 
 async function getRestaurantId() {
   const user = await getSessionUser();
@@ -16,7 +17,23 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const {
     name, description, promotionType, isActive, stackingRule, orderType, customerType,
     minimumOrder, rules, daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
+    scope,
   } = body;
+
+  // If trying to flip scope to/from "brand", verify this restaurant is
+  // actually a brand parent. We don't want a child-location admin
+  // promoting one of their own promos to "brand" — there's nothing to
+  // inherit it.
+  let scopeUpdate: { scope: string } | {} = {};
+  if (scope === "brand" || scope === "location") {
+    if (scope === "brand" && !(await isBrandParent(restaurantId))) {
+      return NextResponse.json(
+        { error: "Only brand parent restaurants can mark promos as chain-wide." },
+        { status: 403 },
+      );
+    }
+    scopeUpdate = { scope };
+  }
 
   // Check coupon uniqueness if changing code
   if (couponCode !== undefined) {
@@ -46,6 +63,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       ...(usageLimit !== undefined && { usageLimit }),
       ...(autoApply !== undefined && { autoApply }),
       ...(couponCode !== undefined && { couponCode: couponCode || null }),
+      ...scopeUpdate,
     },
   });
 

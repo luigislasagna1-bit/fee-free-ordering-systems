@@ -592,6 +592,14 @@ model Coupon {
   usedCount      Int       @default(0)
   isActive       Boolean   @default(true)
   expiresAt      DateTime?
+  /// Scope of this coupon:
+  ///   "location" — only valid at the owning restaurant (default; matches
+  ///                existing single-location behavior)
+  ///   "brand"    — valid at the owning restaurant AND every child location
+  ///                under it. Only meaningful when the owning restaurant is
+  ///                a brand parent. The order POST in /api/orders also
+  ///                checks the parent's brand-scoped coupons.
+  scope          String    @default("location")
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
@@ -621,6 +629,13 @@ model Promotion {
   usedCount     Int       @default(0)
   autoApply     Boolean   @default(true)
   couponCode    String?
+  /// Scope of this promotion. Same semantics as Coupon.scope above —
+  ///   "location" → only applies at the owning restaurant (default)
+  ///   "brand"    → applies at the owning restaurant AND every child
+  ///                location under it. The order POST in /api/orders
+  ///                evaluates both location-scoped and parent-brand-scoped
+  ///                active promos for each cart.
+  scope         String    @default("location")
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
