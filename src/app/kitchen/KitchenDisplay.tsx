@@ -327,7 +327,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showPrinterSetup, setShowPrinterSetup] = useState(false);
   const [printerSettings, setPrinterSettings] = useState<PrinterSettings | null>(null);
-  const [alerting, setAlerting] = useState(false);
+  // Acknowledged = user pressed "Silence" while the bell was ringing. Bell
+  // stays quiet until a *new* pending order arrives (detected in
+  // fetchOrders below), which resets this to false and re-arms the alarm.
+  // We never persist this — every reload starts un-acknowledged so a new
+  // shift can't inherit a silenced alarm.
+  const [acknowledged, setAcknowledged] = useState(false);
   const [prepModal, setPrepModal] = useState<string | null>(null);
   const [prepTime, setPrepTime] = useState("20");
   const [testOrdering, setTestOrdering] = useState(false);
@@ -441,6 +446,20 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     } catch {}
   }, [alertVolume]);
 
+  // Derived. `alerting` is true only while there's at least one pending
+  // order AND the user hasn't silenced the current alarm. Computed each
+  // render so the bell can never get "stuck" — when pending drops to 0
+  // or `acknowledged` flips true, the very next render kills the loop.
+  const pendingCount = orders.filter(o => o.status === "pending").length;
+  const alerting = pendingCount > 0 && !acknowledged;
+
+  // Silence the current alarm. Bell stops; the visual "X new" badge
+  // stays so the kitchen still sees there's work waiting. Auto-cleared
+  // when fetchOrders detects a brand-new pending order arrival.
+  const silenceAlert = useCallback(() => {
+    setAcknowledged(true);
+  }, []);
+
   // Continuous ring loop while pending orders are unacknowledged.
   // ~1.5s between strikes ≈ GloriaFood cadence.
   useEffect(() => {
@@ -451,10 +470,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   }, [alerting, alertMuted, alertVolume, ringBellOnce]);
 
   const testAlertSound = useCallback(() => {
-    // Play 3 strikes in quick succession so the user hears the cadence.
+    // ONE strike only — restaurants confused "I keep hearing it" with
+    // "the test sound is on a loop". One clean strike (~1.3s) decays
+    // and stops with no overlap, no ambiguity. The real alarm loop is
+    // separate (see the bell-loop effect above).
     ringBellOnce(alertVolume || 1.0);
-    setTimeout(() => ringBellOnce(alertVolume || 1.0), 1500);
-    setTimeout(() => ringBellOnce(alertVolume || 1.0), 3000);
   }, [ringBellOnce, alertVolume]);
 
   // Clear history sets (localStorage-persisted).
@@ -495,7 +515,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
       const newPending = fresh.filter(o => o.status === "pending" && !seenIdsRef.current.has(o.id));
       if (newPending.length > 0) {
-        setAlerting(true);
+        // A new pending order ALWAYS re-arms the alarm — even if it was
+        // silenced for an earlier order, the kitchen must hear the bell
+        // for every new arrival.
+        setAcknowledged(false);
         toast(`🔔 ${newPending.length} new order${newPending.length > 1 ? "s" : ""}!`, { icon: "🍕", duration: 6000 });
         newPending.forEach(o => seenIdsRef.current.add(o.id));
       }
@@ -536,12 +559,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     return () => clearInterval(id);
   }, []);
 
-  // Mirror pending-orders count into the `alerting` flag — drives the bell
-  // loop above + the header badge.
-  useEffect(() => {
-    const pending = orders.filter(o => o.status === "pending").length;
-    setAlerting(pending > 0);
-  }, [orders]);
+  // pendingCount/alerting/silenceAlert are declared above next to the
+  // bell-loop effect (they have to be in scope before that effect runs).
 
   const autoPrint = useCallback(async (orderId: string) => {
     if (!printerSettings?.autoPrint || !printerSettings.printNodeConnected || !printerSettings.selectedPrinterId) return;
@@ -653,7 +672,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     reservations: reservations.filter(r => r.status === "pending" || r.status === "confirmed").length,
   };
 
-  const pendingCount = orders.filter(o => o.status === "pending").length;
+  // pendingCount is declared above next to `alerting`.
   const selectedOrder = orders.find(o => o.id === selectedId) ?? null;
   const printerReady = !!(printerSettings?.printNodeConnected && printerSettings.selectedPrinterId);
 
@@ -672,11 +691,25 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         </div>
 
         <div className="flex items-center gap-2">
-          {alerting && (
-            <div className="flex items-center gap-1.5 bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full animate-pulse">
-              <Bell className="w-3.5 h-3.5" />
-              {pendingCount} new
-            </div>
+          {/* Pending-orders badge doubles as a one-tap "silence" button.
+              While alerting: pulses orange, label "X new — tap to silence".
+              While silenced: static dim badge, label "X waiting — tap to re-arm".
+              Disappears when no orders are pending. */}
+          {pendingCount > 0 && (
+            <button
+              onClick={() => alerting ? silenceAlert() : setAcknowledged(false)}
+              className={`flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full transition cursor-pointer ${
+                alerting
+                  ? "bg-orange-500 text-white animate-pulse hover:bg-orange-600"
+                  : "bg-orange-500/20 text-orange-600 hover:bg-orange-500/30"
+              }`}
+              title={alerting ? "Tap to silence the alarm" : "Tap to re-arm the alarm"}
+              aria-label={alerting ? "Silence alarm" : "Re-arm alarm"}
+            >
+              {alerting ? <Bell className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+              <span className="hidden xs:inline sm:inline">{pendingCount} new</span>
+              <span className="xs:hidden sm:hidden">{pendingCount}</span>
+            </button>
           )}
 
           <button onClick={fetchOrders} className={`p-2 rounded-lg ${t.btn} ${t.muted}`} title={tk("inProgress")}>
@@ -1123,7 +1156,25 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               </div>
             )}
 
-            {/* Mute toggle */}
+            {/* Silence current alarm — only when actually ringing. Stops
+                the bell until the next new pending order arrives. This is
+                what owners are usually looking for when they open this
+                modal mid-rush. Put first so it's the obvious answer. */}
+            {alerting && (
+              <button
+                onClick={() => {
+                  silenceAlert();
+                  setShowSoundSettings(false);
+                }}
+                className="w-full mb-3 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm bg-red-500 hover:bg-red-600 text-white transition"
+              >
+                <VolumeX className="w-4 h-4" /> Silence current alarm
+              </button>
+            )}
+
+            {/* Mute toggle — permanently silences ALL bells (across reloads)
+                until manually unmuted. Different from Silence above, which
+                only quiets the current alarm. */}
             <button
               onClick={() => setAlertMuted((m) => !m)}
               className={`w-full mb-3 flex items-center justify-center gap-2 py-2.5 rounded-xl font-semibold text-sm transition ${
@@ -1135,17 +1186,21 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               {alertMuted ? (
                 <><VolumeX className="w-4 h-4" /> Sound muted — tap to unmute</>
               ) : (
-                <><Volume2 className="w-4 h-4" /> Sound on — tap to mute</>
+                <><Volume2 className="w-4 h-4" /> Sound on — tap to mute permanently</>
               )}
             </button>
 
-            {/* Test sound */}
+            {/* Test sound — plays ONE strike so the owner can hear the
+                tone at the current volume. Disabled when muted or volume
+                is zero. (If the real alarm is ringing right now, that's
+                what they're actually hearing — the Silence button above
+                stops it.) */}
             <button
               onClick={testAlertSound}
               disabled={alertMuted || alertVolume === 0}
               className="w-full mb-3 flex items-center justify-center gap-2 py-2.5 rounded-xl font-semibold text-sm bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white transition"
             >
-              <Bell className="w-4 h-4" /> Test sound
+              <Bell className="w-4 h-4" /> Play test sound (1 ring)
             </button>
 
             <button
