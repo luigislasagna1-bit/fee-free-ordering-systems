@@ -191,6 +191,7 @@
       "outOfStock": "Item out of stock",
       "addressRequired": "Delivery address required",
       "nameAndPhone": "Name and phone are required",
+      "emailRequired": "A valid email is required so we can send your order confirmation",
       "orderPlaced": "Order placed successfully",
       "orderFailed": "Failed to place order. Please try again.",
       "paymentSetupFailed": "Payment setup failed",

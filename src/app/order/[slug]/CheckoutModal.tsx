@@ -166,21 +166,29 @@ export function CheckoutModal({
               >
                 <div className="grid grid-cols-2 gap-2 pt-3">
                   <input
+                    required
                     className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    placeholder={tc("fullNamePlaceholder")} value={customerInfo.name}
+                    placeholder={`${tc("fullNamePlaceholder")} *`}
+                    value={customerInfo.name}
                     onChange={e => setCustomerInfo({ ...customerInfo, name: e.target.value })}
                   />
                   <input
+                    type="tel"
+                    required
                     className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    placeholder={tc("phonePlaceholder")} value={customerInfo.phone}
+                    placeholder={`${tc("phonePlaceholder")} *`}
+                    value={customerInfo.phone}
                     onChange={e => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
                   />
                   <input
+                    type="email"
+                    required
                     className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    placeholder={tc("emailPlaceholder")} value={customerInfo.email}
+                    placeholder={`${tc("emailPlaceholder")} *`}
+                    value={customerInfo.email}
                     onChange={e => setCustomerInfo({ ...customerInfo, email: e.target.value })}
                   />
                 </div>

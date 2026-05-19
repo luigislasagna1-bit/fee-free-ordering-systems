@@ -615,6 +615,13 @@ export function OrderingPageClient({
 
   const placeOrder = async () => {
     if (!customerInfo.name || !customerInfo.phone) { toast.error(tT("nameAndPhone")); return; }
+    // Email is required — customers need it for order confirmation, receipts,
+    // refund handling, and disputes. We also use it as the unique key in our
+    // customer DB so we can detect returning vs new customers.
+    if (!customerInfo.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerInfo.email)) {
+      toast.error(tT("emailRequired"));
+      return;
+    }
     if (orderType === "delivery" && !customerInfo.address) { toast.error(tT("addressRequired")); return; }
     if (cart.length === 0) { toast.error(tT("cartEmpty")); return; }
     setOrderLoading(true);

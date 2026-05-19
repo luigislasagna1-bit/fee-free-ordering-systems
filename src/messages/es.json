@@ -190,6 +190,7 @@
       "outOfStock": "Artículo agotado",
       "addressRequired": "Se requiere dirección de entrega",
       "nameAndPhone": "Nombre y teléfono son obligatorios",
+      "emailRequired": "Se requiere un correo válido para enviarte la confirmación del pedido",
       "orderPlaced": "Pedido realizado con éxito",
       "orderFailed": "No se pudo realizar el pedido. Inténtalo de nuevo.",
       "paymentSetupFailed": "Falló la configuración del pago",

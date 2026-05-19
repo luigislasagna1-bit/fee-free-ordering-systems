@@ -190,6 +190,7 @@
       "outOfStock": "Article épuisé",
       "addressRequired": "Adresse de livraison requise",
       "nameAndPhone": "Le nom et le téléphone sont obligatoires",
+      "emailRequired": "Un e-mail valide est requis pour vous envoyer la confirmation de commande",
       "orderPlaced": "Commande passée avec succès",
       "orderFailed": "Échec de la commande. Veuillez réessayer.",
       "paymentSetupFailed": "Échec de la configuration du paiement",
