@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { isRestaurantAdmin } from "@/lib/roles";
 import { sendLocationInviteEmail } from "@/lib/email";
+import { hasFeature } from "@/lib/entitlements";
 
 /**
  * POST /api/admin/locations/invite
@@ -52,6 +53,29 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { error: "Locations under a parent can't add their own sub-locations. Manage from the brand HQ." },
       { status: 400 }
+    );
+  }
+
+  // Multi-location is a paid add-on. The brand must have the
+  // `multi_location_management` entitlement (granted by the "Multi-Location"
+  // add-on) before they can invite a new location. The very first location
+  // is the brand parent itself — that's free and uncapped. This gate only
+  // fires when they try to ADD a 2nd+ location.
+  //
+  // Note: existing brands that ALREADY have multiple locations are
+  // grandfathered — we only block NEW invites, not retroactively kill
+  // their setup. So we don't check existing childCount here, just gate
+  // the create.
+  if (!(await hasFeature(brandId, "multi_location_management"))) {
+    // Soft gate: friendly message + machine-readable code so the UI can
+    // route to the add-ons page.
+    return NextResponse.json(
+      {
+        error: "Adding more locations requires the Multi-Location add-on. Subscribe at /admin/billing/add-ons to enable it.",
+        code: "feature_locked",
+        feature: "multi_location_management",
+      },
+      { status: 402 },
     );
   }
 
