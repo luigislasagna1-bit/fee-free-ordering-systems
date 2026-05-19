@@ -2,10 +2,22 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
 import { BarChart3, TrendingUp, ShoppingBag, DollarSign } from "lucide-react";
+import { isBrandParent } from "@/lib/brand";
+import { loadBrandReports } from "@/lib/brand-reports";
+import { BrandReports } from "./BrandReports";
 
 export default async function ReportsPage() {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
+
+  // Brand parents see a chain-wide aggregated report (all locations).
+  // Single locations / individual child locations see their own data.
+  if (restaurantId && (await isBrandParent(restaurantId))) {
+    const payload = await loadBrandReports(restaurantId, 30);
+    if (payload) {
+      return <BrandReports payload={payload} />;
+    }
+  }
 
   const [orders, topItems] = await Promise.all([
     prisma.order.findMany({
