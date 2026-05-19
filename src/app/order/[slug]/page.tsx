@@ -4,6 +4,8 @@ import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { OrderingPageClient } from "./OrderingPageClient";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
+import { stripeReady, getPublishableKey } from "@/lib/stripe";
+import { hasFeature } from "@/lib/entitlements";
 
 export default async function OrderingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -60,16 +62,28 @@ export default async function OrderingPage({ params }: { params: Promise<{ slug:
 
   if (!restaurant) notFound();
 
-  const paymentProvider = await prisma.paymentProvider.findUnique({
-    where: { restaurantId: restaurant.id },
-    select: { isActive: true, publishableKey: true, mode: true },
-  });
-
-  const cardPaymentEnabled = !!(
-    paymentProvider?.isActive &&
-    paymentProvider.publishableKey &&
-    paymentProvider.publishableKey.startsWith("pk_")
+  // Card payments require THREE things to all be true:
+  //   1. The platform has Stripe configured (PlatformSettings, see stripeReady())
+  //   2. THIS restaurant has Stripe Connect onboarded with charges enabled
+  //   3. THIS restaurant has the card_payments entitlement (via Online Payments
+  //      add-on subscription in /admin/billing/add-ons)
+  // The legacy PaymentProvider table is intentionally ignored — it predates
+  // the entitlement model and we don't populate it for new restaurants.
+  const [platformReady, hasCardPayments] = await Promise.all([
+    stripeReady(),
+    hasFeature(restaurant.id, "card_payments"),
+  ]);
+  const connectReady = !!(
+    (restaurant as any).stripeAccountId && (restaurant as any).stripeChargesEnabled
   );
+  const cardPaymentEnabled = platformReady && connectReady && hasCardPayments;
+
+  // Pull the PLATFORM publishable key — destination-charge model means the
+  // platform's key (not the restaurant's) is what the Stripe Elements
+  // confirms the PaymentIntent with.
+  const stripePublishableKey = cardPaymentEnabled
+    ? await getPublishableKey().catch(() => null)
+    : null;
 
   // Resolve effective locale: cookie override → restaurant default → "en".
   const cookieStore = await cookies();
@@ -88,7 +102,7 @@ export default async function OrderingPage({ params }: { params: Promise<{ slug:
       <OrderingPageClient
         restaurant={restaurant as any}
         cardPaymentEnabled={cardPaymentEnabled}
-        stripePublishableKey={cardPaymentEnabled ? paymentProvider!.publishableKey : null}
+        stripePublishableKey={stripePublishableKey}
         themeSettings={(restaurant as any).themeSettings ?? null}
         locale={locale}
       />
