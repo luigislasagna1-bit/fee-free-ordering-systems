@@ -9,7 +9,11 @@ import { PublishToggleClient } from "./PublishToggleClient";
 
 export default async function PublishingHubPage() {
   const user = await getSessionUser();
-  if (!user?.restaurantId) redirect("/login");
+  // See add-ons/page.tsx for the rationale on this two-step. Superadmins
+  // hit /login → re-auth → bounce here → loop. Sending them to /superadmin
+  // breaks the cycle.
+  if (!user) redirect("/login");
+  if (!user.restaurantId) redirect("/superadmin");
 
   const [state, devices, hasHostedSite] = await Promise.all([
     getPublishState(user.restaurantId),

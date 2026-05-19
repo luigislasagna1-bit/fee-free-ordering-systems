@@ -10,7 +10,17 @@ export default async function AddOnsPage({
   searchParams: Promise<{ subscribed?: string }>;
 }) {
   const user = await getSessionUser();
-  if (!user?.restaurantId) redirect("/login");
+  // Three cases for "no restaurantId":
+  //   - Not logged in at all → /login (NextAuth shows the sign-in form)
+  //   - Superadmin (logged in, no restaurant ownership) → /superadmin
+  //     (the platform admin dashboard — superadmins were ending up in a
+  //      redirect loop here because /login bounced them right back as
+  //      already-authed, which looked like being logged out)
+  //   - Reseller / other role with no restaurantId → /superadmin too (they
+  //     don't have a restaurant context, so this restaurant-scoped page
+  //     doesn't apply; the platform dashboard is the safe landing)
+  if (!user) redirect("/login");
+  if (!user.restaurantId) redirect("/superadmin");
 
   const params = await searchParams;
   const addOns = await listAddOnsForRestaurant(user.restaurantId);

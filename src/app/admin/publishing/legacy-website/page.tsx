@@ -6,7 +6,9 @@ import { LegacyWidgetClient } from "./LegacyWidgetClient";
 
 export default async function LegacyWebsitePage() {
   const user = await getSessionUser();
-  if (!user?.restaurantId) redirect("/login");
+  // See add-ons/page.tsx for the rationale.
+  if (!user) redirect("/login");
+  if (!user.restaurantId) redirect("/superadmin");
 
   // Always make sure we have a widgetPublicId so the snippet is copy-pastable
   // even before the owner clicks Publish. Owner can paste it now; orders won't

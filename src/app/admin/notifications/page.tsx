@@ -5,7 +5,9 @@ import { NotificationsClient } from "./NotificationsClient";
 
 export default async function NotificationsPage() {
   const user = await getSessionUser();
-  if (!user?.restaurantId) redirect("/login");
+  // See add-ons/page.tsx for the rationale.
+  if (!user) redirect("/login");
+  if (!user.restaurantId) redirect("/superadmin");
 
   const [recipients, restaurant] = await Promise.all([
     prisma.notificationRecipient.findMany({

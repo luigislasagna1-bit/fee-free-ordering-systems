@@ -5,7 +5,9 @@ import { MapSettingsClient } from "./MapSettingsClient";
 
 export default async function MapSettingsPage() {
   const user = await getSessionUser();
-  if (!user?.restaurantId) redirect("/login");
+  // See add-ons/page.tsx for the rationale.
+  if (!user) redirect("/login");
+  if (!user.restaurantId) redirect("/superadmin");
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
     select: { mapProvider: true, googleMapsApiKey: true },
