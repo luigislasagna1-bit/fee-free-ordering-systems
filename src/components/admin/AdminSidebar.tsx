@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle, Sparkles,
+  Check, Circle, Sparkles, Rocket,
   type LucideIcon,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
@@ -143,6 +143,10 @@ const navGroups: NavGroup[] = [
     icon: BarChart3,
     items: [
       { href: "/admin",           labelKey: "dashboard", label: "Dashboard", icon: LayoutDashboard, exact: true },
+      // Setup wizard — surfaces top of the Reports group so it's
+      // always reachable. The header's "Setup X% complete" banner also
+      // links here while the restaurant is unpublished.
+      { href: "/admin/setup",     labelKey: "setup",     label: "Setup",     icon: Rocket },
       { href: "/admin/reports",   labelKey: "reports",   label: "Reports",   icon: BarChart3 },
       { href: "/admin/customers", labelKey: "customers", label: "Customers", icon: Users },
     ],
