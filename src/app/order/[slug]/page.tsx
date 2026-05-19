@@ -8,8 +8,21 @@ import { stripeReady, getPublishableKey } from "@/lib/stripe";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 
-export default async function OrderingPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function OrderingPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ embedded?: string; from?: string }>;
+}) {
   const { slug } = await params;
+  // `?embedded=1` — set by the iframe widget script. Strips banner photo,
+  // contact bar buttons, info link, and social footer so the widget is
+  // a minimal "menu + order" surface, not a full marketing page. The full
+  // restaurant SEO website (banner / about / contact / footer) lives at
+  // /site/<slug> and is gated behind the hosted_website add-on.
+  const sp = await searchParams;
+  const isEmbedded = sp.embedded === "1";
 
   // 1) Load the restaurant the customer is ordering FROM (the location).
   // Hours, delivery zones, fees etc. are always per-location — never inherited.
@@ -125,6 +138,7 @@ export default async function OrderingPage({ params }: { params: Promise<{ slug:
         stripePublishableKey={stripePublishableKey}
         themeSettings={(restaurant as any).themeSettings ?? null}
         locale={locale}
+        isEmbedded={isEmbedded}
       />
     </NextIntlClientProvider>
   );
