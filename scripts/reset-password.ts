@@ -14,11 +14,20 @@
  */
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaNeon } from "@prisma/adapter-neon";
 import bcrypt from "bcryptjs";
+import { config } from "dotenv";
 
-const [, , email, password, url] = process.argv;
+// Pull DATABASE_URL from env files if it wasn't passed as an arg —
+// makes the script easier to invoke locally.
+config({ path: ".env.local" });
+config({ path: ".env" });
+
+const [, , email, password, urlArg] = process.argv;
+const url = urlArg || process.env.DATABASE_URL;
 if (!email || !password || !url) {
-  console.error("Usage: npx tsx scripts/reset-password.ts <email> <new-password> <database-url>");
+  console.error("Usage: npx tsx scripts/reset-password.ts <email> <new-password> [database-url]");
+  console.error("If database-url is omitted, reads DATABASE_URL from .env.local / .env");
   process.exit(1);
 }
 if (password.length < 8) {
@@ -27,11 +36,19 @@ if (password.length < 8) {
 }
 
 async function main() {
-  const adapter = new PrismaPg({ connectionString: url });
+  // Mirror src/lib/db.ts adapter-selection: Neon hosts need the HTTP-based
+  // PrismaNeon adapter because node-postgres can't handle Neon's
+  // channel_binding=require parameter.
+  const isNeon = /\.neon\.tech([:/?]|$)/i.test(url!);
+  const adapter = isNeon
+    ? new PrismaNeon({ connectionString: url! })
+    : new PrismaPg({ connectionString: url! });
   const prisma = new PrismaClient({ adapter } as any);
+  console.log(`DB: ${url!.replace(/:[^:@]+@/, ":***@")}`);
+  console.log(`Adapter: ${isNeon ? "PrismaNeon" : "PrismaPg"}`);
 
   const user = await prisma.user.findUnique({
-    where: { email },
+    where: { email: email.toLowerCase().trim() },
     select: { id: true, role: true, isActive: true },
   });
   if (!user) {
