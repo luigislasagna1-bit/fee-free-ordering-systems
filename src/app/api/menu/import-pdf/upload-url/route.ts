@@ -45,9 +45,13 @@ export async function POST(req: NextRequest) {
           allowedContentTypes: ["application/pdf"],
           maximumSizeInBytes: 25 * 1024 * 1024, // 25 MB
           tokenPayload: JSON.stringify({ restaurantId, userId: user.id }),
-          // Tokens expire in 30 seconds — just long enough to start the
-          // upload. The actual upload itself can run as long as it takes.
-          validUntil: Date.now() + 30_000,
+          // 5-minute token validity. The previous 30s default was too tight:
+          // Vercel's edge can add a few seconds of latency between token
+          // issuance and the actual upload starting, and clock skew between
+          // regions occasionally pushes 30s under the wire. 5 minutes is
+          // still short enough that a leaked token can't be replayed
+          // meaningfully (Blob URLs are public anyway once written).
+          validUntil: Date.now() + 5 * 60_000,
         };
       },
       onUploadCompleted: async ({ blob }) => {
