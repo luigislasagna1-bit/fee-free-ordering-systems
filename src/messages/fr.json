@@ -431,6 +431,8 @@
     "depositPending": "Dépôt en attente",
     "printerSetup": "Configuration imprimante",
     "testPrint": "Test d'impression",
+    "testOrder": "Commande test",
+    "testOrderCreated": "Commande test créée ! E-mails envoyés et sonnerie active — comme une vraie commande.",
     "printerConnected": "Imprimante connectée",
     "printerDisconnected": "Non connectée",
     "openOrder": "Ouvrir la commande",

@@ -431,6 +431,8 @@
     "depositPending": "Depósito pendente",
     "printerSetup": "Configuração da impressora",
     "testPrint": "Teste de impressão",
+    "testOrder": "Pedido de teste",
+    "testOrderCreated": "Pedido de teste criado! E-mails enviados e sino tocando — igual a um pedido real.",
     "printerConnected": "Impressora conectada",
     "printerDisconnected": "Não conectada",
     "openOrder": "Abrir pedido",

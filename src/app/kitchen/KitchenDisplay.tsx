@@ -584,20 +584,24 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     setPrepModal(null);
   };
 
-  // Test order
+  // Test order — fires a real Order through the same path as a customer
+  // order: server creates the row + sends customer-confirmation email
+  // (to the owner's inbox so they see what real customers receive) + sends
+  // staff notification through notifyStaff. We deliberately do NOT add the
+  // new order ID to seenIdsRef before fetchOrders — that way fetchOrders'
+  // own "newPending" detection picks it up identically to a real order,
+  // which triggers the new-order toast and starts the continuous bell.
   const createTestOrder = async () => {
     setTestOrdering(true);
     try {
       const res = await fetch("/api/kitchen/test-order", { method: "POST" });
       const data = await res.json();
       if (!res.ok) { toast.error(data.error ?? "Failed to create test order"); return; }
-      // Add to seen IDs so it doesn't trigger the generic "new order" detection on poll
-      // but we do want to trigger the alert once here
-      seenIdsRef.current.add(data.id);
-      await fetchOrders();
-      setAlerting(true);
       setActiveTab("orders");
-      toast("🧪 Test order created — appears as new pending order!", { icon: "🔔", duration: 6000 });
+      // fetchOrders detects the new pending order, flips `alerting` on via
+      // the pending-count effect, and the bell loop kicks in.
+      await fetchOrders();
+      toast.success(tk("testOrderCreated"), { icon: "🔔", duration: 6000 });
     } catch (e: any) {
       toast.error(e.message ?? "Error creating test order");
     } finally {
@@ -719,16 +723,22 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             </span>
           </button>
 
+          {/* Test Order — fires a real order through the full pipeline
+              (DB row + customer-confirmation email to owner inbox + staff
+              notification fan-out + kitchen bell + auto-print on accept).
+              Prominent purple pill, visible on every screen size so owners
+              can validate the end-to-end flow at any time. */}
           <button
             onClick={createTestOrder}
             disabled={testOrdering}
-            className={`hidden sm:flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border font-semibold transition disabled:opacity-50 border-purple-500/40 text-purple-600 ${t.btn}`}
-            title={tk("testPrint")}
+            className="flex items-center gap-1.5 text-xs sm:text-sm px-3 py-1.5 sm:py-2 rounded-lg font-bold transition disabled:opacity-60 bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white shadow-sm"
+            title={tk("testOrder")}
+            aria-label={tk("testOrder")}
           >
             {testOrdering
-              ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
-              : <FlaskConical className="w-3.5 h-3.5" />}
-            {tk("testPrint")}
+              ? <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
+              : <FlaskConical className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+            <span>{tk("testOrder")}</span>
           </button>
 
           <button

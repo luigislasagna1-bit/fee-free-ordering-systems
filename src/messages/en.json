@@ -431,6 +431,8 @@
     "depositPending": "Deposit pending",
     "printerSetup": "Printer Setup",
     "testPrint": "Test Print",
+    "testOrder": "Test Order",
+    "testOrderCreated": "Test order placed! Emails sent + bell ringing — just like a real order.",
     "printerConnected": "Printer connected",
     "printerDisconnected": "Not connected",
     "openOrder": "Open order",

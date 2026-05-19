@@ -431,6 +431,8 @@
     "depositPending": "Caparra in attesa",
     "printerSetup": "Configurazione stampante",
     "testPrint": "Stampa di prova",
+    "testOrder": "Ordine di prova",
+    "testOrderCreated": "Ordine di prova creato! E-mail inviate e campanella attiva — come un ordine reale.",
     "printerConnected": "Stampante connessa",
     "printerDisconnected": "Non connessa",
     "openOrder": "Apri ordine",
