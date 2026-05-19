@@ -4,12 +4,13 @@ import { formatCurrency } from "@/lib/utils";
 import {
   Bell, Printer, RefreshCw, LogOut, ChefHat, Sun, Moon,
   Package, Clock, Truck, ShoppingBag, CheckCircle, Trash2,
-  FlaskConical, Loader2, Volume2, VolumeX, AlertTriangle,
+  FlaskConical, Loader2, Volume2, VolumeX, AlertTriangle, XCircle,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
 import { PrinterSetupModal } from "./PrinterSetupModal";
 import { OrderDetail } from "./OrderDetail";
+import { RejectOrderModal } from "./RejectOrderModal";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 import { useTranslations } from "next-intl";
 
@@ -330,6 +331,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const [prepModal, setPrepModal] = useState<string | null>(null);
   const [prepTime, setPrepTime] = useState("20");
   const [testOrdering, setTestOrdering] = useState(false);
+  // Order ID being rejected from the Accept Order prep prompt. When non-null,
+  // the shared RejectOrderModal opens for that order. Setting this and
+  // setPrepModal(null) at the same time hands the user from the Accept
+  // prompt straight into the reject-reasons flow.
+  const [rejectFromPrep, setRejectFromPrep] = useState<string | null>(null);
 
   // ── Alert-sound state ──────────────────────────────────────────────────────
   // Continuous bell tone that rings while ANY order is pending. Models
@@ -976,9 +982,38 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 Cancel
               </button>
             </div>
+
+            {/* Don't want to accept? One tap opens the shared reject flow.
+                We close the Accept prompt first, then open the reject
+                modal — they're z-stacked so this also keeps focus
+                management sane. */}
+            <button
+              onClick={() => {
+                const id = prepModal;
+                setPrepModal(null);
+                if (id) setRejectFromPrep(id);
+              }}
+              className="w-full mt-3 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-bold py-3 rounded-xl transition"
+            >
+              <XCircle className="w-4 h-4" /> {tk("reject")}
+            </button>
           </div>
         </div>
       )}
+
+      {/* Reject modal triggered from the Accept Order prompt. The version
+          rendered inside OrderDetail is separate (different open state). */}
+      <RejectOrderModal
+        open={!!rejectFromPrep}
+        order={orders.find((o) => o.id === rejectFromPrep) ?? null}
+        t={t}
+        onClose={() => setRejectFromPrep(null)}
+        onConfirm={async (reason) => {
+          if (!rejectFromPrep) return;
+          await updateStatus(rejectFromPrep, "rejected", { rejectionReason: reason });
+          toast.success("Order rejected — customer notified");
+        }}
+      />
 
       {/* ── Clear history confirmation modal ── */}
       {clearConfirm === "orders" && (
