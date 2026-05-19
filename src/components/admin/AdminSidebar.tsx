@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle,
+  Check, Circle, Sparkles,
   type LucideIcon,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
@@ -131,6 +131,7 @@ const navGroups: NavGroup[] = [
     icon: Megaphone,
     items: [
       { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",  icon: Tag },
+      { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace", icon: Sparkles },
       { href: "/admin/social-media", labelKey: "socialMedia",  label: "Social Media", icon: Share2 },
       { href: "/admin/autopilot",    labelKey: "autopilot",    label: "Autopilot",   icon: Zap },
     ],

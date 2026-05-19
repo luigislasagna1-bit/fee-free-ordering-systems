@@ -28,7 +28,16 @@ export type Feature =
   | "branded_pwa"
   | "in_house_pos"
   | "take_reservation_deposit"
-  | "multi_location_management";
+  | "multi_location_management"
+  /** Listed on the public Fee Free Ordering Marketplace at /marketplace.
+   *  Granted by the "marketplace" add-on. Auto-creates a MarketplaceListing
+   *  row on activation. */
+  | "marketplace_listing"
+  /** Access to the ShipDay third-party driver pool. Granted by EITHER
+   *  the "marketplace" add-on (included) or the standalone "driver_pool"
+   *  add-on. Surfaces the per-order "send to driver pool" option in
+   *  the kitchen display. */
+  | "driver_pool";
 
 /** Statuses on RestaurantAddOn that grant entitlements. past_due / cancelled
  *  / incomplete subscriptions do NOT grant access — the feature drops the
@@ -98,4 +107,6 @@ export const ALL_FEATURES: readonly Feature[] = [
   "in_house_pos",
   "take_reservation_deposit",
   "multi_location_management",
+  "marketplace_listing",
+  "driver_pool",
 ];

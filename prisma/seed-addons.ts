@@ -156,6 +156,47 @@ async function main() {
       displayOrder: 80,
       enabledFeatures: ["multi_location_management"],
     },
+    {
+      // Marketplace: subscribe to be listed on the public Fee Free
+      // Ordering Marketplace (think GloriaFood-style discovery, NOT
+      // UberEats — no extra customer fees, no 30% commission, restaurants
+      // keep full margins). Restaurants get auto-listed on /marketplace
+      // as soon as the subscription activates. INCLUDES the driver_pool
+      // add-on so subscribers get ShipDay third-party delivery without
+      // a second subscription.
+      //
+      // Pricing model (M2): the lower of $199.99/month flat OR a per-order
+      // fee — restaurant pays whichever is cheaper that billing cycle.
+      // Cap of $199.99 means unlimited marketing reach for less than
+      // ONE day's worth of UberEats commissions on a $700 day.
+      slug: "marketplace",
+      name: "Marketplace Listing",
+      description:
+        "Get listed on the Fee Free Ordering Marketplace — bring your restaurant in front of new local customers without paying 30% commission. Flat $199.99/month max (or per-order, whichever is lower), unlimited orders, no extra fees for you OR your customers. Includes the Driver Pool add-on.",
+      monthlyPriceCents: 19999, // $199.99 flat-cap — locked in for the Marketplace launch
+      displayOrder: 90,
+      enabledFeatures: ["marketplace_listing", "driver_pool"],
+    },
+    {
+      // Driver Pool: standalone access to the ShipDay third-party driver
+      // network without subscribing to the full Marketplace. Useful for
+      // restaurants that don't want public discovery but DO want
+      // overflow delivery capacity for their own customers when they
+      // run out of in-house drivers.
+      //
+      // When opted in, the kitchen display gets a per-order "in-store
+      // driver vs send to driver pool" picker. The restaurant configures
+      // how the delivery fee flows (pass-through, flat, or tiered) so
+      // they can decide whether to absorb the ShipDay cost, pass it to
+      // the customer, or split it.
+      slug: "driver_pool",
+      name: "Driver Pool",
+      description:
+        "Tap into our ShipDay third-party driver network when your in-house drivers are busy or unavailable. Per-delivery fees only — no monthly minimums beyond this subscription. Set your own delivery pricing for customers and decide how much you absorb vs pass through.",
+      monthlyPriceCents: 1999, // $19.99
+      displayOrder: 100,
+      enabledFeatures: ["driver_pool"],
+    },
   ];
 
   for (const a of addOns) {

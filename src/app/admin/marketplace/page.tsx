@@ -1,0 +1,83 @@
+import Link from "next/link";
+import { getSessionUser } from "@/lib/session";
+import prisma from "@/lib/db";
+import { hasFeature } from "@/lib/entitlements";
+import { ensureMarketplaceListing } from "@/lib/marketplace";
+import { MarketplaceLockedView } from "./MarketplaceLockedView";
+import { MarketplaceSettingsClient } from "./MarketplaceSettingsClient";
+
+/**
+ * /admin/marketplace — restaurant owner configures how they appear on
+ * the public marketplace.
+ *
+ * Renders three different states:
+ *   1. Not subscribed → upsell card with the value prop and a link to
+ *      /admin/billing/add-ons
+ *   2. Subscribed but listing doesn't exist yet (race) → create + show editor
+ *   3. Subscribed and listing exists → full editor with isListed toggle,
+ *      tagline, categories, tags, banner override
+ */
+export default async function MarketplaceAdminPage() {
+  const user = await getSessionUser();
+  if (!user?.restaurantId) {
+    return (
+      <div className="p-6">
+        <p className="text-sm text-gray-600">Please log in to manage your marketplace listing.</p>
+      </div>
+    );
+  }
+
+  const entitled = await hasFeature(user.restaurantId, "marketplace_listing");
+
+  if (!entitled) {
+    return <MarketplaceLockedView />;
+  }
+
+  // Ensure listing exists (defensive against webhook race conditions)
+  await ensureMarketplaceListing(user.restaurantId);
+  const listing = await prisma.marketplaceListing.findUnique({
+    where: { restaurantId: user.restaurantId },
+  });
+  if (!listing) {
+    return <div className="p-6 text-sm text-red-600">Failed to create marketplace listing — try refreshing.</div>;
+  }
+
+  const restaurant = await prisma.restaurant.findUnique({
+    where: { id: user.restaurantId },
+    select: { name: true, slug: true, city: true, cuisineType: true, bannerUrl: true, logoUrl: true },
+  });
+
+  return (
+    <MarketplaceSettingsClient
+      initialListing={{
+        id: listing.id,
+        isListed: listing.isListed,
+        marketplaceTagline: listing.marketplaceTagline ?? "",
+        marketplaceShortDesc: listing.marketplaceShortDesc ?? "",
+        marketplaceBanner: listing.marketplaceBanner ?? "",
+        marketplaceCategories: safeJson(listing.marketplaceCategories),
+        marketplaceTags: safeJson(listing.marketplaceTags),
+        marketplaceFeatured: listing.marketplaceFeatured,
+      }}
+      restaurant={{
+        name: restaurant?.name ?? "Your Restaurant",
+        slug: restaurant?.slug ?? "",
+        city: restaurant?.city ?? null,
+        cuisineType: restaurant?.cuisineType ?? null,
+        bannerUrl: restaurant?.bannerUrl ?? null,
+        logoUrl: restaurant?.logoUrl ?? null,
+      }}
+      isSuperadmin={user.role === "superadmin"}
+    />
+  );
+}
+
+function safeJson(s: string | null | undefined): string[] {
+  if (!s) return [];
+  try {
+    const arr = JSON.parse(s);
+    return Array.isArray(arr) ? arr.filter((x) => typeof x === "string") : [];
+  } catch {
+    return [];
+  }
+}
