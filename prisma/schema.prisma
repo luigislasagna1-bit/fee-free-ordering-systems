@@ -507,6 +507,13 @@ model Order {
   paymentStatus    String   @default("pending")
   paymentIntentId  String?
   refundStatus     String?   // null | "pending" | "refunded" | "failed"
+  /// Set when the order has been "released" to the kitchen + customer
+  /// (i.e. notifications fired, kitchen display picks it up). For cash
+  /// orders this is set immediately in /api/orders POST. For online-card
+  /// orders this stays null until the payment_intent.succeeded webhook
+  /// fires — preventing the kitchen from starting cook before payment
+  /// clears. Kitchen GET filters on `notifiedAt IS NOT NULL`.
+  notifiedAt       DateTime?
   scheduledFor     DateTime?
   estimatedReady   DateTime?
   acceptedAt       DateTime?
@@ -592,6 +599,14 @@ model Coupon {
   usedCount      Int       @default(0)
   isActive       Boolean   @default(true)
   expiresAt      DateTime?
+  /// Scope of this coupon:
+  ///   "location" — only valid at the owning restaurant (default; matches
+  ///                existing single-location behavior)
+  ///   "brand"    — valid at the owning restaurant AND every child location
+  ///                under it. Only meaningful when the owning restaurant is
+  ///                a brand parent. The order POST in /api/orders also
+  ///                checks the parent's brand-scoped coupons.
+  scope          String    @default("location")
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
@@ -621,6 +636,13 @@ model Promotion {
   usedCount     Int       @default(0)
   autoApply     Boolean   @default(true)
   couponCode    String?
+  /// Scope of this promotion. Same semantics as Coupon.scope above —
+  ///   "location" → only applies at the owning restaurant (default)
+  ///   "brand"    → applies at the owning restaurant AND every child
+  ///                location under it. The order POST in /api/orders
+  ///                evaluates both location-scoped and parent-brand-scoped
+  ///                active promos for each cart.
+  scope         String    @default("location")
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 

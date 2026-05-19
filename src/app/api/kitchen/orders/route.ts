@@ -22,6 +22,12 @@ export async function GET() {
       where: {
         restaurantId,
         createdAt: { gte: thirtyDaysAgo },
+        // Only show orders that have been "released" — for cash orders
+        // that's immediately, for online-card orders that's once Stripe
+        // confirms payment via webhook (payment_intent.succeeded).
+        // Filters out pending-payment cards so the kitchen never starts
+        // cooking food that hasn't been paid for.
+        notifiedAt: { not: null },
       },
       orderBy: { createdAt: "desc" },
       take: 500,

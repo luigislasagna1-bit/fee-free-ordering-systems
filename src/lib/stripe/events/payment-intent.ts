@@ -1,5 +1,6 @@
 import type Stripe from "stripe";
 import prisma from "@/lib/db";
+import { fireOrderNotifications } from "@/lib/order-notifications";
 
 /**
  * Handle payment_intent.* events for customer-to-restaurant orders (Layer C).
@@ -35,6 +36,15 @@ export async function handlePaymentIntentEvent(event: Stripe.Event) {
         paymentIntentId: intent.id,
       },
     });
+    // RELEASE the order to the kitchen + send customer email NOW.
+    // For card orders, /api/orders POST deferred the fan-out (notifiedAt
+    // stayed null). This is the moment payment actually cleared, so the
+    // kitchen is allowed to start cooking. fireOrderNotifications is
+    // idempotent — Stripe can deliver the same webhook more than once
+    // (network retry) and we'll only fan out exactly one time.
+    fireOrderNotifications(orderId).catch((e) =>
+      console.error("[payment_intent.succeeded] fireOrderNotifications:", e),
+    );
   } else if (event.type === "payment_intent.payment_failed") {
     await prisma.order.update({
       where: { id: orderId },

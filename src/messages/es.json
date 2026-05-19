@@ -331,7 +331,7 @@
     "addDetails": "Añadir detalles",
     "fullNamePlaceholder": "Nombre completo *",
     "phonePlaceholder": "Teléfono *",
-    "emailPlaceholder": "Correo (opcional)",
+    "emailPlaceholder": "Correo",
     "startTypingAddress": "Empieza a escribir tu dirección…",
     "streetAddressPlaceholder": "Dirección *",
     "cityPlaceholder": "Ciudad",
