@@ -585,6 +585,12 @@ export function OrderingPageClient({
     setCouponLoading(false);
   };
 
+  // Marketplace attribution: when the customer arrived via /marketplace/[slug]
+  // (which redirects here with ?from=marketplace), forward the flag to the
+  // server so the order gets stamped + marketplace counters bump. Server
+  // verifies the entitlement before honoring the claim — see /api/orders POST.
+  const fromMarketplace = searchParams.get("from") === "marketplace";
+
   const buildOrderPayload = () => ({
     restaurantSlug: restaurant.slug, type: orderType,
     customerName: customerInfo.name, customerEmail: customerInfo.email,
@@ -592,6 +598,7 @@ export function OrderingPageClient({
     deliveryCity: customerInfo.city, deliveryZip: customerInfo.zip,
     notes: customerInfo.notes, paymentMethod: customerInfo.paymentMethod,
     scheduledFor: customerInfo.scheduledFor || null,
+    from: fromMarketplace ? "marketplace" : undefined,
     couponId, couponDiscount, subtotal, taxAmount, deliveryFee, tip: tipAmount, total,
     items: cart.map(ci => ({
       menuItemId: ci.menuItem.id,
@@ -673,6 +680,24 @@ export function OrderingPageClient({
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: theme.backgroundColor, color: theme.textColor }}>
+      {/* Marketplace ribbon — visible only when the customer arrived from
+          /marketplace. Tells them they're paying exactly what's on the menu
+          (no aggregator markup) and offers a one-tap back link. Subtle so it
+          doesn't overpower the restaurant's brand. */}
+      {fromMarketplace && (
+        <div className="bg-gradient-to-r from-orange-500 to-pink-500 text-white text-xs sm:text-sm py-2 px-4 flex items-center justify-between gap-2">
+          <span className="flex items-center gap-1.5">
+            <span aria-hidden="true">✨</span>
+            <span>
+              Ordering via the <strong>Fee Free Marketplace</strong> — same menu prices, no extra customer fees.
+            </span>
+          </span>
+          <a href="/marketplace" className="hidden sm:inline underline opacity-90 hover:opacity-100 whitespace-nowrap">
+            ← Browse other restaurants
+          </a>
+        </div>
+      )}
+
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <div className="relative" style={{ height: bannerH }}>
         {restaurant.bannerUrl ? (

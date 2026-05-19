@@ -526,6 +526,23 @@ model Order {
   /// fires — preventing the kitchen from starting cook before payment
   /// clears. Kitchen GET filters on `notifiedAt IS NOT NULL`.
   notifiedAt       DateTime?
+
+  /// Marketplace channel attribution. True when the customer came from
+  /// our /marketplace browse page (detected via ?from=marketplace at
+  /// order creation). Drives:
+  ///   - The smart-billing rollup (counts toward the monthly cap math)
+  ///   - The "saved vs UberEats" tracker (we don't compute savings for
+  ///     direct orders — those would have happened on the restaurant's
+  ///     own widget, not UberEats)
+  ///   - Reports showing marketplace vs direct revenue split
+  viaMarketplace   Boolean  @default(false)
+
+  /// Snapshot of what UberEats / DoorDash would have charged THIS restaurant
+  /// in commission on this specific order (30% of order total, in cents).
+  /// Frozen at order time so historical reports stay accurate even if our
+  /// commission-comparison rate changes later. Null for non-marketplace
+  /// orders — direct orders weren't "competing" with UberEats.
+  savedVsUberEatsCents Int?
   scheduledFor     DateTime?
   estimatedReady   DateTime?
   acceptedAt       DateTime?

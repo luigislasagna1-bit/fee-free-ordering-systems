@@ -4,9 +4,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Sparkles, Eye, EyeOff, Loader2, Check, X, ExternalLink,
-  Tag, Image as ImageIcon, AlertCircle, Star,
+  Tag, Image as ImageIcon, AlertCircle, Star, TrendingUp,
+  DollarSign, ShoppingBag, Trophy,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { formatCurrency } from "@/lib/utils";
 
 /**
  * /admin/marketplace editor. Two-column layout:
@@ -38,13 +40,28 @@ type Restaurant = {
   logoUrl: string | null;
 };
 
+type Stats = {
+  currentMonthOrders: number;
+  currentMonthRevenue: number;
+  lifetimeSavingsVsUberEatsCents: number;
+  currentMonthStartedAt: string;
+  billing: {
+    flatCents: number;
+    perOrderCents: number;
+    effectiveCents: number;
+    whichWon: "flat" | "per_order";
+  };
+};
+
 export function MarketplaceSettingsClient({
   initialListing,
   restaurant,
+  stats,
   isSuperadmin,
 }: {
   initialListing: Listing;
   restaurant: Restaurant;
+  stats: Stats;
   isSuperadmin: boolean;
 }) {
   const router = useRouter();
@@ -395,15 +412,96 @@ export function MarketplaceSettingsClient({
               )}
             </div>
 
-            {/* Stats placeholder for M2 */}
+            {/* ── Lifetime savings hero card ── */}
+            <div className="mt-4 bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-5 shadow-lg">
+              <div className="flex items-center gap-2 mb-1">
+                <Trophy className="w-4 h-4" />
+                <span className="text-xs font-bold uppercase tracking-wider opacity-90">
+                  Lifetime savings vs UberEats
+                </span>
+              </div>
+              <div className="text-3xl font-bold tracking-tight">
+                {formatCurrency(stats.lifetimeSavingsVsUberEatsCents / 100)}
+              </div>
+              <p className="text-xs mt-1.5 opacity-90 leading-relaxed">
+                That's the 30% commission you DIDN'T pay because customers ordered here instead of
+                on UberEats / DoorDash. Pure margin you got to keep.
+              </p>
+            </div>
+
+            {/* ── This-month panel ── */}
             <div className="mt-4 bg-white border border-gray-200 rounded-2xl p-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
-                Performance (Phase M2)
-              </p>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                Marketplace order counts, monthly revenue, and "vs UberEats" savings will appear here
-                as soon as orders start flowing through the marketplace channel.
-              </p>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
+                  This billing month
+                </p>
+                <span className="text-[10px] text-gray-400">
+                  since {new Date(stats.currentMonthStartedAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <StatCell
+                  icon={<ShoppingBag className="w-3.5 h-3.5" />}
+                  label="Orders"
+                  value={String(stats.currentMonthOrders)}
+                  color="text-blue-600"
+                  bg="bg-blue-50"
+                />
+                <StatCell
+                  icon={<DollarSign className="w-3.5 h-3.5" />}
+                  label="Revenue"
+                  value={formatCurrency(stats.currentMonthRevenue)}
+                  color="text-emerald-600"
+                  bg="bg-emerald-50"
+                />
+              </div>
+
+              {/* Smart-billing summary */}
+              <div className={`mt-4 rounded-xl p-3 border ${
+                stats.billing.whichWon === "per_order"
+                  ? "border-emerald-200 bg-emerald-50"
+                  : "border-orange-200 bg-orange-50"
+              }`}>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <TrendingUp className={`w-3.5 h-3.5 ${
+                    stats.billing.whichWon === "per_order" ? "text-emerald-700" : "text-orange-700"
+                  }`} />
+                  <span className={`text-xs font-bold uppercase tracking-wider ${
+                    stats.billing.whichWon === "per_order" ? "text-emerald-800" : "text-orange-800"
+                  }`}>
+                    Effective rate this cycle
+                  </span>
+                </div>
+                <div className={`text-xl font-bold ${
+                  stats.billing.whichWon === "per_order" ? "text-emerald-900" : "text-orange-900"
+                }`}>
+                  {formatCurrency(stats.billing.effectiveCents / 100)}
+                </div>
+                <p className={`text-[11px] mt-1 leading-snug ${
+                  stats.billing.whichWon === "per_order" ? "text-emerald-800" : "text-orange-800"
+                }`}>
+                  {stats.billing.whichWon === "per_order" ? (
+                    <>
+                      You're on the <strong>per-order</strong> rate ({formatCurrency(stats.billing.perOrderCents / 100)}) —
+                      cheaper than the {formatCurrency(stats.billing.flatCents / 100)} flat cap. Saving you{" "}
+                      <strong>{formatCurrency((stats.billing.flatCents - stats.billing.perOrderCents) / 100)}</strong> this month.
+                    </>
+                  ) : (
+                    <>
+                      You hit the <strong>flat monthly cap</strong> ({formatCurrency(stats.billing.flatCents / 100)}).
+                      Every additional order this month is now <strong>completely free</strong> — no per-order fees.
+                    </>
+                  )}
+                </p>
+              </div>
+
+              {stats.currentMonthOrders === 0 && (
+                <p className="mt-3 text-[11px] text-gray-500 italic leading-relaxed">
+                  No marketplace orders yet this month. Once a customer orders through{" "}
+                  <Link href="/marketplace" className="text-orange-600 hover:underline">/marketplace</Link>{" "}
+                  → your listing, real numbers appear here.
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -427,6 +525,30 @@ function CharCount({ value, max }: { value: string; max: number }) {
   return (
     <div className={`text-[10px] mt-0.5 text-right ${len > max * 0.9 ? "text-amber-600" : "text-gray-400"}`}>
       {len} / {max}
+    </div>
+  );
+}
+
+function StatCell({
+  icon,
+  label,
+  value,
+  color,
+  bg,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  color: string;
+  bg: string;
+}) {
+  return (
+    <div className={`rounded-xl p-3 ${bg}`}>
+      <div className={`flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider ${color}`}>
+        {icon}
+        {label}
+      </div>
+      <div className="mt-1 text-lg font-bold text-gray-900">{value}</div>
     </div>
   );
 }
