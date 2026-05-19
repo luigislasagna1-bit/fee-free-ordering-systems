@@ -4,7 +4,7 @@ import { formatCurrency } from "@/lib/utils";
 import {
   Bell, Printer, RefreshCw, LogOut, ChefHat, Sun, Moon,
   Package, Clock, Truck, ShoppingBag, CheckCircle, Trash2,
-  FlaskConical, Loader2,
+  FlaskConical, Loader2, Volume2, VolumeX, AlertTriangle,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
@@ -331,6 +331,126 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const [prepTime, setPrepTime] = useState("20");
   const [testOrdering, setTestOrdering] = useState(false);
 
+  // ── Alert-sound state ──────────────────────────────────────────────────────
+  // Continuous bell tone that rings while ANY order is pending. Models
+  // GloriaFood's school-bell-style notification — purposely impossible to
+  // miss. Default volume is MAX (1.0); restaurants can lower it but a
+  // warning banner appears anytime volume < 0.5 with a pending order.
+  const [alertVolume, setAlertVolume] = useState(1.0);
+  const [alertMuted, setAlertMuted] = useState(false);
+  const [showSoundSettings, setShowSoundSettings] = useState(false);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const audioUnlockedRef = useRef(false);
+
+  // Load saved volume / mute on mount.
+  useEffect(() => {
+    try {
+      const v = localStorage.getItem("kds-alert-volume");
+      if (v !== null) {
+        const n = parseFloat(v);
+        if (!Number.isNaN(n)) setAlertVolume(Math.max(0, Math.min(1, n)));
+      }
+      const m = localStorage.getItem("kds-alert-muted");
+      if (m === "1") setAlertMuted(true);
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    try { localStorage.setItem("kds-alert-volume", String(alertVolume)); } catch {}
+  }, [alertVolume]);
+  useEffect(() => {
+    try { localStorage.setItem("kds-alert-muted", alertMuted ? "1" : "0"); } catch {}
+  }, [alertMuted]);
+
+  // Browsers require a user gesture before AudioContext can play. We unlock
+  // it on the first click/keypress anywhere on the page, then keep the same
+  // AudioContext alive for the lifetime of the session.
+  useEffect(() => {
+    const unlock = () => {
+      if (audioUnlockedRef.current) return;
+      try {
+        const Ctx = (window.AudioContext || (window as any).webkitAudioContext);
+        if (!Ctx) return;
+        const ctx: AudioContext = audioCtxRef.current ?? new Ctx();
+        audioCtxRef.current = ctx;
+        if (ctx.state === "suspended") ctx.resume().catch(() => {});
+        audioUnlockedRef.current = true;
+      } catch {}
+    };
+    window.addEventListener("pointerdown", unlock, { once: true });
+    window.addEventListener("keydown", unlock, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("keydown", unlock);
+    };
+  }, []);
+
+  /**
+   * Synthesize one bell strike. We stack four sine partials at classic
+   * struck-bell harmonic ratios (1, 2.756, 5.404, 8.933) with an
+   * exponential decay envelope — produces a much warmer, more "alarm bell"
+   * sound than a single square wave.
+   */
+  const ringBellOnce = useCallback((volumeOverride?: number) => {
+    try {
+      const Ctx = (window.AudioContext || (window as any).webkitAudioContext);
+      if (!Ctx) return;
+      let ctx = audioCtxRef.current;
+      if (!ctx) {
+        ctx = new Ctx();
+        audioCtxRef.current = ctx;
+      }
+      if (ctx.state === "suspended") ctx.resume().catch(() => {});
+
+      const vol = Math.max(0, Math.min(1, volumeOverride ?? alertVolume));
+      if (vol <= 0) return;
+
+      const t0 = ctx.currentTime;
+      const fundamental = 880; // A5 — bright, attention-grabbing
+      const partials: Array<{ ratio: number; gain: number }> = [
+        { ratio: 1.000, gain: 0.50 },
+        { ratio: 2.756, gain: 0.30 },
+        { ratio: 5.404, gain: 0.15 },
+        { ratio: 8.933, gain: 0.08 },
+      ];
+
+      const master = ctx.createGain();
+      // Scale 0.0–1.0 slider → final amplitude. 0.6 peak at full volume
+      // is loud-but-safe over typical kitchen tablets / TVs.
+      master.gain.setValueAtTime(0.0001, t0);
+      master.gain.exponentialRampToValueAtTime(0.6 * vol, t0 + 0.005);
+      master.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.2);
+      master.connect(ctx.destination);
+
+      partials.forEach(({ ratio, gain }) => {
+        const osc = ctx!.createOscillator();
+        osc.type = "sine";
+        osc.frequency.value = fundamental * ratio;
+        const g = ctx!.createGain();
+        g.gain.value = gain;
+        osc.connect(g).connect(master);
+        osc.start(t0);
+        osc.stop(t0 + 1.3);
+      });
+    } catch {}
+  }, [alertVolume]);
+
+  // Continuous ring loop while pending orders are unacknowledged.
+  // ~1.5s between strikes ≈ GloriaFood cadence.
+  useEffect(() => {
+    if (!alerting || alertMuted || alertVolume <= 0) return;
+    ringBellOnce();
+    const id = setInterval(() => ringBellOnce(), 1500);
+    return () => clearInterval(id);
+  }, [alerting, alertMuted, alertVolume, ringBellOnce]);
+
+  const testAlertSound = useCallback(() => {
+    // Play 3 strikes in quick succession so the user hears the cadence.
+    ringBellOnce(alertVolume || 1.0);
+    setTimeout(() => ringBellOnce(alertVolume || 1.0), 1500);
+    setTimeout(() => ringBellOnce(alertVolume || 1.0), 3000);
+  }, [ringBellOnce, alertVolume]);
+
   // Clear history sets (localStorage-persisted).
   // Start empty on both server and client so hydration matches, then load
   // from localStorage in an effect after the first render.
@@ -410,31 +530,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     return () => clearInterval(id);
   }, []);
 
-  // Alert sound on pending orders
+  // Mirror pending-orders count into the `alerting` flag — drives the bell
+  // loop above + the header badge.
   useEffect(() => {
     const pending = orders.filter(o => o.status === "pending").length;
     setAlerting(pending > 0);
   }, [orders]);
-
-  useEffect(() => {
-    if (!alerting) return;
-    const interval = setInterval(() => {
-      try {
-        const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.frequency.value = 880;
-        osc.type = "square";
-        gain.gain.setValueAtTime(0.08, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.25);
-      } catch {}
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [alerting]);
 
   const autoPrint = useCallback(async (orderId: string) => {
     if (!printerSettings?.autoPrint || !printerSettings.printNodeConnected || !printerSettings.selectedPrinterId) return;
@@ -572,6 +673,31 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             <RefreshCw className="w-4 h-4" />
           </button>
 
+          {/* Sound settings — opens volume/mute panel. Icon reflects state:
+              muted → red bell-off, low → amber, healthy → green. */}
+          <button
+            onClick={() => setShowSoundSettings(true)}
+            className={`relative p-2 rounded-lg ${t.btn} transition ${
+              alertMuted || alertVolume === 0
+                ? "text-red-500"
+                : alertVolume < 0.5
+                  ? "text-amber-500"
+                  : "text-green-600"
+            }`}
+            title="Alert sound settings"
+            aria-label="Alert sound settings"
+          >
+            {alertMuted || alertVolume === 0 ? (
+              <VolumeX className="w-4 h-4" />
+            ) : (
+              <Volume2 className="w-4 h-4" />
+            )}
+            {/* Pulse dot when bell is actively ringing. */}
+            {alerting && !alertMuted && alertVolume > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-orange-500 rounded-full animate-ping" aria-hidden="true" />
+            )}
+          </button>
+
           <button
             onClick={() => setThemeMode(m => m === "light" ? "dark" : "light")}
             className={`p-2 rounded-lg ${t.btn} ${t.muted}`}
@@ -614,6 +740,27 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           </button>
         </div>
       </header>
+
+      {/* ── Low-volume / muted warning ──
+           Shown only when there's a pending order AND the bell is silenced
+           or quieter than 50%. Kitchens that miss orders lose money, so
+           this is intentionally loud (red) and a one-tap fix. */}
+      {alerting && (alertMuted || alertVolume < 0.5) && (
+        <div
+          className="flex-shrink-0 flex items-center gap-2 px-3 py-2 bg-red-500 text-white text-xs sm:text-sm font-semibold cursor-pointer hover:bg-red-600 transition"
+          onClick={() => setShowSoundSettings(true)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setShowSoundSettings(true); }}
+        >
+          <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+          <span className="flex-1 min-w-0">
+            {alertMuted || alertVolume === 0
+              ? "Alert sound is OFF — you may miss new orders. Tap to fix."
+              : `Alert volume is low (${Math.round(alertVolume * 100)}%) — you may miss new orders. Tap to fix.`}
+          </span>
+        </div>
+      )}
 
       {/* ── Tabs ── flex-1 tabs share width so all four fit on a 375px phone.
            The clear-history action collapses to an icon-only trash button on
@@ -843,6 +990,127 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           onConfirm={handleClearComplete}
           onCancel={() => setClearConfirm(null)}
         />
+      )}
+
+      {/* ── Alert Sound Settings Modal ──
+           Volume slider + mute toggle + test button. The intent is for the
+           default to be MAX volume and for restaurants to actively turn it
+           down — anything quieter triggers the red banner above so a
+           manager walking past sees the warning. */}
+      {showSoundSettings && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-4">
+          <div className={`${t.modal} rounded-2xl w-full max-w-sm p-6 shadow-2xl`}>
+            <div className="flex items-center gap-2 mb-1">
+              <Bell className="w-5 h-5 text-orange-500" />
+              <h3 className={`text-lg font-bold ${t.text}`}>Alert Sound</h3>
+            </div>
+            <p className={`text-sm ${t.muted} mb-5`}>
+              The bell rings continuously whenever a new order is waiting.
+              Keep it loud so you never miss one.
+            </p>
+
+            {/* Volume slider */}
+            <div className="mb-5">
+              <div className="flex items-center justify-between mb-2">
+                <label className={`text-sm font-semibold ${t.text}`}>Volume</label>
+                <span className={`text-sm font-mono ${t.muted}`}>
+                  {alertMuted ? "Muted" : `${Math.round(alertVolume * 100)}%`}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <VolumeX className={`w-4 h-4 flex-shrink-0 ${t.muted}`} />
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  step={1}
+                  value={Math.round(alertVolume * 100)}
+                  onChange={(e) => {
+                    const v = parseInt(e.target.value, 10) / 100;
+                    setAlertVolume(v);
+                    if (v > 0) setAlertMuted(false);
+                  }}
+                  className="flex-1 accent-orange-500 cursor-pointer"
+                  aria-label="Alert volume"
+                />
+                <Volume2 className={`w-4 h-4 flex-shrink-0 ${t.muted}`} />
+              </div>
+              {/* Quick presets */}
+              <div className="flex gap-2 mt-3">
+                {[
+                  { label: "25%", v: 0.25 },
+                  { label: "50%", v: 0.5 },
+                  { label: "75%", v: 0.75 },
+                  { label: "Max", v: 1.0 },
+                ].map((p) => (
+                  <button
+                    key={p.label}
+                    onClick={() => { setAlertVolume(p.v); setAlertMuted(false); }}
+                    className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition ${
+                      !alertMuted && Math.abs(alertVolume - p.v) < 0.01
+                        ? "bg-orange-500 text-white"
+                        : `${t.btn} ${t.muted}`
+                    }`}
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Low-volume warning inside the modal */}
+            {!alertMuted && alertVolume > 0 && alertVolume < 0.5 && (
+              <div className="mb-4 flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/40 text-amber-700 dark:text-amber-300 text-xs">
+                <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                <span>
+                  Volume is below 50%. We recommend keeping it at maximum
+                  so your team never misses an order during a busy rush.
+                </span>
+              </div>
+            )}
+            {(alertMuted || alertVolume === 0) && (
+              <div className="mb-4 flex items-start gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/40 text-red-600 text-xs">
+                <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                <span>
+                  Alert sound is OFF. New orders will appear visually only —
+                  you may not notice them in a noisy kitchen.
+                </span>
+              </div>
+            )}
+
+            {/* Mute toggle */}
+            <button
+              onClick={() => setAlertMuted((m) => !m)}
+              className={`w-full mb-3 flex items-center justify-center gap-2 py-2.5 rounded-xl font-semibold text-sm transition ${
+                alertMuted
+                  ? "bg-red-500 text-white hover:bg-red-600"
+                  : `${t.btn} ${t.text}`
+              }`}
+            >
+              {alertMuted ? (
+                <><VolumeX className="w-4 h-4" /> Sound muted — tap to unmute</>
+              ) : (
+                <><Volume2 className="w-4 h-4" /> Sound on — tap to mute</>
+              )}
+            </button>
+
+            {/* Test sound */}
+            <button
+              onClick={testAlertSound}
+              disabled={alertMuted || alertVolume === 0}
+              className="w-full mb-3 flex items-center justify-center gap-2 py-2.5 rounded-xl font-semibold text-sm bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white transition"
+            >
+              <Bell className="w-4 h-4" /> Test sound
+            </button>
+
+            <button
+              onClick={() => setShowSoundSettings(false)}
+              className={`w-full ${t.btn} py-2.5 rounded-xl font-semibold text-sm transition`}
+            >
+              Done
+            </button>
+          </div>
+        </div>
       )}
 
       {/* ── Printer Setup Modal ── */}
