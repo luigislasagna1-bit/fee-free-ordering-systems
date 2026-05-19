@@ -39,12 +39,47 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
   const tc = useTranslations("checkout");
   const tCommon = useTranslations("common");
   const tReceipt = useTranslations("receipt.orderTypes");
-  const [rejectReason, setRejectReason] = useState("");
+  const tReasons = useTranslations("kitchen.rejectReasons");
+  // Picked preset slug ("" while nothing selected). "other" enters the
+  // custom-text path; everything else maps to a translated reason string
+  // that gets sent to the PATCH route as rejectionReason.
+  const [rejectReasonKey, setRejectReasonKey] = useState<string>("");
+  const [rejectCustomText, setRejectCustomText] = useState("");
   const [showReject, setShowReject] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [busy, setBusy] = useState(false);
   const [printing, setPrinting] = useState<string | null>(null);
+
+  // Order is reject-eligible for a refund if it was paid online (card).
+  // We use this to surface the "a refund will be issued automatically"
+  // notice inside the reject modal so the owner knows what's about to
+  // happen to the customer's money.
+  const willRefundOnReject =
+    order.paymentMethod === "card" && order.paymentStatus === "paid";
+
+  // Preset reason slugs (must match the keys under kitchen.rejectReasons
+  // in every messages/*.json file). "other" is special — it flips the UI
+  // to a textarea so the owner can write something custom.
+  const REJECT_REASON_KEYS = [
+    "tooBusy",
+    "closingSoon",
+    "outOfItem",
+    "outsideDeliveryArea",
+    "kitchenClosed",
+    "duplicateOrder",
+    "paymentIssue",
+    "other",
+  ] as const;
+
+  // Resolve the slug + (if "other") custom text into the final reason
+  // string saved on the order and emailed to the customer.
+  const resolvedRejectReason = (() => {
+    if (!rejectReasonKey) return "";
+    if (rejectReasonKey === "other") return rejectCustomText.trim();
+    return tReasons(rejectReasonKey);
+  })();
+  const rejectDisabled = busy || !resolvedRejectReason;
 
   const act = async (fn: () => Promise<void>) => {
     setBusy(true);
@@ -287,25 +322,90 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
         )}
       </div>
 
-      {/* Reject modal */}
+      {/* Reject modal — preset reasons + Other custom text. The selected
+          reason is sent to the customer in the rejection email, so we keep
+          the language friendly and the list short. Rejecting a paid card
+          order auto-refunds via the PATCH route. */}
       {showReject && (
-        <Modal title={tk("reject")} t={t} onClose={() => setShowReject(false)}>
-          <label className={`text-sm ${t.muted} block mb-2`}>{tk("rejectionReason")}</label>
-          <textarea
-            className={`w-full rounded-xl px-3 py-2 text-sm border ${t.input} focus:outline-none focus:ring-2 focus:ring-red-500 mb-4`}
-            rows={3}
-            value={rejectReason}
-            onChange={(e) => setRejectReason(e.target.value)}
-          />
+        <Modal title={tk("reject")} t={t} onClose={() => {
+          setShowReject(false);
+          setRejectReasonKey("");
+          setRejectCustomText("");
+        }}>
+          <p className={`text-sm ${t.muted} mb-3`}>{tk("rejectReasonPrompt")}</p>
+
+          {/* Preset reason buttons — single-select, big tappable targets
+              for tablet kitchens. The picked one highlights red. */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+            {REJECT_REASON_KEYS.map((k) => {
+              const selected = rejectReasonKey === k;
+              return (
+                <button
+                  key={k}
+                  type="button"
+                  onClick={() => {
+                    setRejectReasonKey(k);
+                    if (k !== "other") setRejectCustomText("");
+                  }}
+                  className={`text-left text-sm px-3 py-2.5 rounded-xl border-2 transition font-medium ${
+                    selected
+                      ? "border-red-500 bg-red-500/10 text-red-600 font-bold"
+                      : `${t.border} ${t.muted} hover:${t.text}`
+                  }`}
+                >
+                  {tReasons(k)}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Custom-text path activates when "Other" is picked. */}
+          {rejectReasonKey === "other" && (
+            <div className="mb-3">
+              <label className={`text-xs ${t.muted} block mb-1.5 font-semibold uppercase tracking-wider`}>
+                {tk("rejectReasonCustomLabel")}
+              </label>
+              <textarea
+                autoFocus
+                rows={3}
+                maxLength={500}
+                placeholder={tk("rejectReasonCustomPlaceholder")}
+                className={`w-full rounded-xl px-3 py-2 text-sm border ${t.input} focus:outline-none focus:ring-2 focus:ring-red-500`}
+                value={rejectCustomText}
+                onChange={(e) => setRejectCustomText(e.target.value)}
+              />
+            </div>
+          )}
+
+          {/* Auto-refund notice — only when there's actually money to send back. */}
+          {willRefundOnReject && (
+            <div className="mb-4 flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/40 text-amber-700 dark:text-amber-300 text-xs">
+              <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <span>{tk("rejectRefundNotice")}</span>
+            </div>
+          )}
+
           <div className="flex gap-3">
             <button
-              onClick={() => act(async () => { await onUpdate(order.id, "rejected", { rejectionReason: rejectReason }); setShowReject(false); })}
-              disabled={busy}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm transition"
+              onClick={() => act(async () => {
+                await onUpdate(order.id, "rejected", { rejectionReason: resolvedRejectReason });
+                setShowReject(false);
+                setRejectReasonKey("");
+                setRejectCustomText("");
+              })}
+              disabled={rejectDisabled}
+              className="flex-1 bg-red-500 hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2.5 rounded-xl text-sm transition"
             >
-              {busy ? tCommon("loading") : tk("reject")}
+              {busy ? tCommon("loading") : tk("rejectConfirm")}
             </button>
-            <button onClick={() => setShowReject(false)} className={`flex-1 ${t.btn} py-2.5 rounded-xl text-sm transition`}>
+            <button
+              onClick={() => {
+                setShowReject(false);
+                setRejectReasonKey("");
+                setRejectCustomText("");
+              }}
+              className={`flex-1 ${t.btn} py-2.5 rounded-xl text-sm transition`}
+            >
               {tCommon("cancel")}
             </button>
           </div>

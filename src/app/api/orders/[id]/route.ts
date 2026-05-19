@@ -102,8 +102,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     include: { restaurant: { select: { id: true, name: true, defaultLanguage: true } } },
   });
 
-  // Attempt Stripe refund if payment was captured and order is cancelled
-  if (newStatus === "cancelled" && existing.paymentStatus === "paid" && existing.paymentIntentId) {
+  // Attempt Stripe refund if payment was captured and the order is being
+  // killed by the restaurant. Both "cancelled" (post-accept) and "rejected"
+  // (pre-accept) need to issue the customer's money back — the customer
+  // never receives the food, so we must never keep the money. The refund
+  // is fire-and-forget; the webhook flips paymentStatus to "refunded" once
+  // Stripe confirms.
+  const isKilled = newStatus === "cancelled" || newStatus === "rejected";
+  if (isKilled && existing.paymentStatus === "paid" && existing.paymentIntentId) {
     refundOrderAsync(id, existing.paymentIntentId).catch(() => {});
   }
 
