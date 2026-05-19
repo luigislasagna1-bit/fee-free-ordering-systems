@@ -68,8 +68,9 @@ export function SetupWizardClient({
       }
       toast.success("🎉 You're live! Customers can now order from you.");
       router.refresh();
-    } catch (e: any) {
-      toast.error(e?.message || "Failed to publish");
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Failed to publish";
+      toast.error(msg);
     } finally {
       setPublishing(false);
     }
@@ -203,7 +204,7 @@ export function SetupWizardClient({
         <div className="rounded-2xl p-5 bg-white border border-gray-200">
           <h3 className="font-bold text-gray-900 text-sm mb-2 flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-            You're live
+            You&apos;re live
           </h3>
           <p className="text-sm text-gray-600 leading-relaxed">
             Published {publishedAt ? new Date(publishedAt).toLocaleDateString() : "recently"}.

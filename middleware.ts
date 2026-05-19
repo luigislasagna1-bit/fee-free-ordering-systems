@@ -57,7 +57,7 @@ export async function middleware(req: NextRequest) {
 
   // Only superadmins get path-mapped. Restaurant admins, kitchen staff,
   // resellers etc. continue to their requested admin route normally.
-  const role = (token as any).role;
+  const role = (token as { role?: string }).role;
   if (role !== "superadmin") return NextResponse.next();
 
   // Superadmin requesting an /admin/* path → map to the superadmin
