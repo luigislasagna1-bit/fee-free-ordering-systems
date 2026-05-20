@@ -63,7 +63,7 @@ const navGroups: NavGroup[] = [
     items: [
       { href: "/admin/services",     labelKey: "services",      label: "Services",       icon: Layers,       step: "services.atLeastOne" },
       { href: "/admin/hours",        labelKey: "openingHours",  label: "Opening Hours",  icon: Clock,        step: "services.openingHours" },
-      { href: "/admin/delivery",     labelKey: "deliveryZones", label: "Delivery Zones", icon: Truck },
+      { href: "/admin/delivery",     labelKey: "deliveryZones", label: "Delivery Zones", icon: Truck, step: "services.deliveryZones" },
       { href: "/admin/reservations", labelKey: "reservations",  label: "Reservations",   icon: CalendarDays },
       { href: "/admin/locations",    labelKey: "locations",     label: "Locations",      icon: MapIcon },
     ],
