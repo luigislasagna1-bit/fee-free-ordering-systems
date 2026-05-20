@@ -43,6 +43,14 @@ model Restaurant {
   stripeChargesEnabled  Boolean @default(false)
   stripePayoutsEnabled  Boolean @default(false)
 
+  /// JSON array of accepted payment methods chosen by the owner.
+  /// Allowed values today: "cash" | "card_in_person" | "online_card".
+  /// Required for publishing — owner must pick at least one. When the
+  /// array includes "online_card", the Stripe Connect step also becomes
+  /// required to publish (you can't promise online card and have no
+  /// processor wired up). Empty array means "not yet configured".
+  paymentMethods        String   @default("[]")
+
   // Platform subscription (Layer B — restaurant pays you monthly via Stripe Checkout)
   subscriptionPlanId      String?
   trialEndsAt             DateTime?
