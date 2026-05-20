@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { hasFeature } from "@/lib/entitlements";
-import { ensureMarketplaceListing, computeMonthlyChargeCents } from "@/lib/marketplace";
+import {
+  ensureMarketplaceListing,
+  computeMonthlyChargeCents,
+  getMarketplaceMembership,
+} from "@/lib/marketplace";
 import { MarketplaceLockedView } from "./MarketplaceLockedView";
 import { MarketplaceSettingsClient } from "./MarketplaceSettingsClient";
 
@@ -27,9 +30,11 @@ export default async function MarketplaceAdminPage() {
     );
   }
 
-  const entitled = await hasFeature(user.restaurantId, "marketplace_listing");
+  // Membership = "monthly" (paid subscription) | "payg" (opted into PAYG) | "none".
+  // Only "none" sees the upsell; both billing modes get the editor.
+  const membership = await getMarketplaceMembership(user.restaurantId);
 
-  if (!entitled) {
+  if (membership === "none") {
     return <MarketplaceLockedView />;
   }
 
@@ -85,6 +90,7 @@ export default async function MarketplaceAdminPage() {
           capHit: billing.capHit,
         },
       }}
+      billingMode={membership}
       isSuperadmin={user.role === "superadmin"}
     />
   );

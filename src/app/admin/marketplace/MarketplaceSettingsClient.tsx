@@ -62,11 +62,16 @@ export function MarketplaceSettingsClient({
   initialListing,
   restaurant,
   stats,
+  billingMode,
   isSuperadmin,
 }: {
   initialListing: Listing;
   restaurant: Restaurant;
   stats: Stats;
+  /** Which plan the restaurant is on. Drives the "billing this month"
+   *  card — monthly subscribers see "$199.99 — flat", PAYG subscribers
+   *  see the running $X / $249.99 cap accrual. */
+  billingMode: "payg" | "monthly";
   isSuperadmin: boolean;
 }) {
   const router = useRouter();
@@ -461,53 +466,84 @@ export function MarketplaceSettingsClient({
                 />
               </div>
 
-              {/* Pay-as-you-go billing summary. Free to join; $3/order
-                  accrues toward a $249.99 monthly cap. Once the cap is
-                  hit, every additional marketplace order is free. */}
-              <div className={`mt-4 rounded-xl p-3 border ${
-                stats.billing.capHit
-                  ? "border-emerald-300 bg-emerald-50"
-                  : "border-orange-200 bg-orange-50"
-              }`}>
-                <div className="flex items-center gap-1.5 mb-1">
-                  <TrendingUp className={`w-3.5 h-3.5 ${
-                    stats.billing.capHit ? "text-emerald-700" : "text-orange-700"
-                  }`} />
-                  <span className={`text-xs font-bold uppercase tracking-wider ${
+              {/* Billing summary — totally different copy for the two
+                  plans. Monthly subscribers see a flat $199.99/mo card.
+                  PAYG subscribers see the running $X / $249.99 accrual.
+                  Mutual-exclusive: a restaurant is ONE or the OTHER,
+                  never billed twice for the same orders. */}
+              {billingMode === "monthly" ? (
+                <div className="mt-4 rounded-xl p-3 border border-emerald-300 bg-emerald-50">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <TrendingUp className="w-3.5 h-3.5 text-emerald-700" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+                      Marketplace bill this month
+                    </span>
+                  </div>
+                  <div className="text-xl font-bold text-emerald-900">
+                    $199.99
+                    <span className="text-xs font-semibold opacity-70 ml-1">/ month · flat</span>
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider opacity-60 mt-0.5">
+                    USD · tax by province (CA) · US/intl exempt
+                  </div>
+                  <p className="text-[11px] mt-1 leading-snug text-emerald-800">
+                    You&apos;re on the <strong>Monthly plan</strong>. Unlimited marketplace
+                    orders included — no per-order charges. {stats.currentMonthOrders} order
+                    {stats.currentMonthOrders === 1 ? "" : "s"} this month, all free.
+                  </p>
+                </div>
+              ) : (
+                <div className={`mt-4 rounded-xl p-3 border ${
+                  stats.billing.capHit
+                    ? "border-emerald-300 bg-emerald-50"
+                    : "border-orange-200 bg-orange-50"
+                }`}>
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <TrendingUp className={`w-3.5 h-3.5 ${
+                      stats.billing.capHit ? "text-emerald-700" : "text-orange-700"
+                    }`} />
+                    <span className={`text-xs font-bold uppercase tracking-wider ${
+                      stats.billing.capHit ? "text-emerald-800" : "text-orange-800"
+                    }`}>
+                      Marketplace bill this month
+                    </span>
+                  </div>
+                  <div className={`text-xl font-bold ${
+                    stats.billing.capHit ? "text-emerald-900" : "text-orange-900"
+                  }`}>
+                    {formatCurrency(stats.billing.effectiveCents / 100)}
+                    <span className="text-xs font-semibold opacity-70 ml-1">
+                      / {formatCurrency(stats.billing.capCents / 100)} cap
+                    </span>
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider opacity-60 mt-0.5">
+                    USD · tax by province (CA) at settlement
+                  </div>
+                  <p className={`text-[11px] mt-1 leading-snug ${
                     stats.billing.capHit ? "text-emerald-800" : "text-orange-800"
                   }`}>
-                    Marketplace bill this month
-                  </span>
+                    {stats.billing.capHit ? (
+                      <>
+                        You hit the <strong>PAYG monthly cap</strong> of {formatCurrency(stats.billing.capCents / 100)}.
+                        Every additional marketplace order this month is <strong>completely free</strong>.
+                        Counter resets the 1st of next month.
+                      </>
+                    ) : (
+                      <>
+                        You&apos;re on <strong>Pay-As-You-Go</strong>. $3 per marketplace order
+                        accrues toward a {formatCurrency(stats.billing.capCents / 100)}/month
+                        cap. After the cap, every additional order is free.
+                      </>
+                    )}
+                  </p>
+                  <Link
+                    href="/admin/billing/add-ons"
+                    className="mt-2 inline-block text-[11px] font-semibold text-orange-700 hover:underline"
+                  >
+                    Switch to Monthly ($199.99/mo, unlimited) →
+                  </Link>
                 </div>
-                <div className={`text-xl font-bold ${
-                  stats.billing.capHit ? "text-emerald-900" : "text-orange-900"
-                }`}>
-                  {formatCurrency(stats.billing.effectiveCents / 100)}
-                  <span className="text-xs font-semibold opacity-70 ml-1">
-                    / {formatCurrency(stats.billing.capCents / 100)} cap
-                  </span>
-                </div>
-                <div className="text-[10px] uppercase tracking-wider opacity-60 mt-0.5">
-                  USD · tax by province (CA) at settlement
-                </div>
-                <p className={`text-[11px] mt-1 leading-snug ${
-                  stats.billing.capHit ? "text-emerald-800" : "text-orange-800"
-                }`}>
-                  {stats.billing.capHit ? (
-                    <>
-                      You hit the <strong>monthly cap</strong> of {formatCurrency(stats.billing.capCents / 100)}.
-                      Every additional marketplace order this month is <strong>completely free</strong> —
-                      pure margin. Counter resets the 1st of next month.
-                    </>
-                  ) : (
-                    <>
-                      Free to join. <strong>$3 per marketplace order</strong> accrues toward
-                      a {formatCurrency(stats.billing.capCents / 100)}/month cap. After the
-                      cap, every additional order is free.
-                    </>
-                  )}
-                </p>
-              </div>
+              )}
 
               {stats.currentMonthOrders === 0 && (
                 <p className="mt-3 text-[11px] text-gray-500 italic leading-relaxed">

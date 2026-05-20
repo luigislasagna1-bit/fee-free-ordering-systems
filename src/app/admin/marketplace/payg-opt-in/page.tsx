@@ -37,8 +37,12 @@ export default async function PaygOptInPage() {
     }),
   ]);
 
-  // Already on monthly OR already opted into payg → nothing to do here.
-  if (listing) {
+  // Already actively listed → no need to re-opt-in. Two cases redirect:
+  //   - billingMode "monthly" + listed → they're already on the paid plan
+  //   - billingMode "payg" + listed → they already opted in
+  // A HIDDEN listing (isListed=false, e.g. post-cancellation) falls
+  // through so they can re-confirm PAYG.
+  if (listing && listing.isListed) {
     redirect("/admin/marketplace");
   }
 
@@ -67,12 +71,16 @@ export default async function PaygOptInPage() {
         <h2 className="font-bold text-gray-900">What you&apos;re agreeing to</h2>
         <ul className="space-y-2 text-sm text-gray-700">
           <li className="flex items-start gap-2">
+            <span className="text-emerald-500 font-bold flex-shrink-0">$0</span>
+            <span>charged today. <strong>You will NOT be charged $199.99 upfront.</strong></span>
+          </li>
+          <li className="flex items-start gap-2">
             <span className="text-emerald-500 font-bold flex-shrink-0">$3</span>
-            <span>per marketplace order — billed once per month after the fact.</span>
+            <span>per marketplace order — accrued and billed once per month after the fact via Stripe.</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-emerald-500 font-bold flex-shrink-0">$249.99</span>
-            <span>monthly cap. Above ~83 orders/month, every additional order is <strong>free</strong>.</span>
+            <span>monthly cap. Above ~83 orders/month, every additional marketplace order is <strong>free</strong>.</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-amber-500 font-bold flex-shrink-0">
@@ -84,11 +92,14 @@ export default async function PaygOptInPage() {
               GST/HST per CRA; US/international restaurants are tax-exempt.
             </span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-gray-400 font-bold flex-shrink-0">$0</span>
-            <span>to sign up. No card on file required for opt-in — we&apos;ll only ask for payment if you actually accrue fees.</span>
-          </li>
         </ul>
+
+        <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3 text-xs text-emerald-900 leading-relaxed">
+          <strong className="block mb-0.5">Orders from your own website / widget stay FREE.</strong>
+          We only charge when an order originates from our Marketplace
+          app. Direct customers ordering at <code className="bg-white px-1 rounded">/order/your-slug</code> or
+          via your widget never trigger this fee.
+        </div>
 
         <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 flex gap-2 text-xs text-amber-900">
           <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
@@ -99,9 +110,24 @@ export default async function PaygOptInPage() {
             ($199.99/mo) where it&apos;s bundled.
           </div>
         </div>
+
+        <p className="text-[11px] text-gray-500 leading-snug">
+          By clicking the button below, you authorize Fee Free Ordering Systems
+          to bill the $3-per-order fee monthly via Stripe (capped at $249.99/month
+          plus any applicable tax) until you cancel. Opt out any time from
+          <Link href="/admin/marketplace" className="text-orange-600 hover:underline">{" "}/admin/marketplace</Link>.
+        </p>
       </div>
 
       <PaygOptInButton />
+
+      <div className="text-center text-xs text-gray-500">
+        Prefer a flat predictable bill?{" "}
+        <Link href="/admin/billing/add-ons" className="text-orange-600 hover:underline font-semibold">
+          Subscribe to Marketplace Monthly ($199.99/mo)
+        </Link>{" "}
+        — unlimited orders, Driver Pool included, charged upfront.
+      </div>
     </div>
   );
 }

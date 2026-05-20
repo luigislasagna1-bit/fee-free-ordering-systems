@@ -24,18 +24,32 @@ export async function POST() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Create the listing if it doesn't exist; otherwise leave billingMode
-  // alone (monthly subscribers shouldn't be able to silently downgrade).
+  // Ensure listing exists. Three states the caller could be in:
+  //   1. No listing yet → create one (defaults to billingMode=payg, isListed=true).
+  //   2. Listing exists, currently HIDDEN (isListed=false, e.g. after
+  //      monthly cancellation) → re-list under PAYG. Explicit re-opt-in.
+  //   3. Listing exists with isListed=true → idempotent no-op; we never
+  //      silently flip a monthly subscriber back to PAYG via this endpoint.
   await ensureMarketplaceListing(restaurantId);
 
-  // For brand-new listings, ensureMarketplaceListing defaults to
-  // billingMode="payg" via the schema default, so no explicit update
-  // is needed. We DO double-check that no existing row has a different
-  // mode — if it does, leave it untouched.
   const listing = await prisma.marketplaceListing.findUnique({
     where: { restaurantId },
-    select: { billingMode: true },
+    select: { id: true, billingMode: true, isListed: true },
   });
 
-  return NextResponse.json({ ok: true, billingMode: listing?.billingMode ?? "payg" });
+  // Re-opt-in case: a hidden listing means the owner WAS on monthly,
+  // cancelled, and is now agreeing to PAYG. Flip both fields together
+  // so the listing actually goes live + bills correctly.
+  if (listing && !listing.isListed) {
+    await prisma.marketplaceListing.update({
+      where: { id: listing.id },
+      data: { billingMode: "payg", isListed: true },
+    });
+  }
+
+  // Monthly subscribers (billingMode === "monthly" + isListed === true)
+  // hitting this endpoint are a no-op — we don't downgrade them. They
+  // need to cancel the Stripe subscription first.
+
+  return NextResponse.json({ ok: true, billingMode: "payg" });
 }
