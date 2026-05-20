@@ -157,26 +157,31 @@ async function main() {
       enabledFeatures: ["multi_location_management"],
     },
     {
-      // Marketplace: FREE to join. Restaurants get listed on the public
-      // Fee Free Ordering Marketplace immediately on opt-in. Billed monthly
-      // based on order volume — $3.00 per order that came through the
-      // marketplace channel, capped at $249.99/month no matter how many
-      // orders ride in after that. Above the cap is pure margin for the
-      // restaurant.
+      // Marketplace — two billing modes:
       //
-      // Includes the Driver Pool add-on (normally $19.99/mo standalone)
-      // — marketplace subscribers get ShipDay third-party delivery for
-      // free as part of the bundle.
+      //   1. Monthly subscription ($199.99/mo via Stripe Checkout):
+      //      unlimited orders + ShipDay Driver Pool INCLUDED. Predictable
+      //      bill. The Stripe Product/Price this AddOn syncs to is the
+      //      $199.99 monthly plan.
       //
-      // Pricing locked here as monthlyPriceCents=0 (free base). The
-      // per-order fee + cap are NOT a Stripe subscription line item —
-      // they're accumulated server-side in marketplaceListing's monthly
-      // counters and billed via a separate monthly settlement (M2.5).
+      //   2. Pay-as-you-go (no Stripe subscription): the restaurant opts
+      //      into a MarketplaceListing with billingMode="payg" — no flat
+      //      fee, but $3 per marketplace order accrues toward a $249.99
+      //      monthly cap. Driver Pool is NOT bundled in this mode (they
+      //      can subscribe to the standalone Driver Pool add-on for
+      //      $19.99/mo if they want it).
+      //
+      // The per-order accrual + cap math lives in src/lib/marketplace.ts.
+      // Monthly settlement for PAYG restaurants runs via the cron at
+      // /api/cron/marketplace-settle.
+      //
+      // Restaurants on the monthly plan get marketplace_listing AND
+      // driver_pool entitlements via this AddOn's enabledFeatures.
       slug: "marketplace",
       name: "Marketplace",
       description:
-        "FREE to join. Get listed on the Fee Free Ordering Marketplace and reach new local customers — no 30% commission, no extra fees for customers. You pay $3 per marketplace order, capped at $249.99/month no matter how many orders come in. Includes ShipDay Driver Pool for overflow delivery. Opt in or out any time.",
-      monthlyPriceCents: 0, // FREE to join — per-order fees billed monthly via M2.5 cron
+        "Two ways to join: (1) Monthly $199.99 — unlimited orders, ShipDay Driver Pool included, predictable bill. (2) Pay-as-you-go — no subscription, $3 per marketplace order, capped at $249.99/month, Driver Pool sold separately. Either way: no 30% commission, no extra fees for customers, listed publicly on the Fee Free Ordering Marketplace.",
+      monthlyPriceCents: 19999, // $199.99 — the monthly plan price (PAYG opt-in skips Stripe entirely)
       displayOrder: 90,
       enabledFeatures: ["marketplace_listing", "driver_pool"],
     },

@@ -1124,6 +1124,20 @@ model MarketplaceListing {
   /// from the marketplace channel.
   isListed                 Boolean  @default(true)
 
+  /// Marketplace billing mode the restaurant chose:
+  ///   "payg"    — pay-as-you-go: $3 per marketplace order, capped at
+  ///               $249.99/month. NO Stripe subscription; the monthly
+  ///               settlement cron creates a one-off invoice each cycle.
+  ///               Driver Pool is NOT bundled — restaurant needs the
+  ///               standalone Driver Pool add-on if they want it.
+  ///   "monthly" — flat $199.99/month via Stripe subscription (the
+  ///               `marketplace` AddOn). Driver Pool bundled free.
+  ///               Set by the subscription webhook on activation.
+  /// Defaults to "payg" because that's the friction-free opt-in path —
+  /// no card required to start, no surprises until they actually drive
+  /// orders through the marketplace.
+  billingMode              String   @default("payg")
+
   /// JSON string array — categories the customer can filter by on
   /// the marketplace browse page. e.g. ["pizza", "italian", "delivery"].
   /// Defaulted from restaurant.cuisineType at creation time but
