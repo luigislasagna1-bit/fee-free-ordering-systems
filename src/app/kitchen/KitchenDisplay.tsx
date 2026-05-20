@@ -180,6 +180,14 @@ function OrderRow({ order, selected, onClick, t, now }: {
             <span className={`font-bold text-sm ${t.text}`}>#{order.orderNumber}</span>
             <StatusBadge status={order.status} t={t} />
             {order.status === "pending" && <Countdown createdAt={order.createdAt} now={now} />}
+            {order.viaMarketplace && (
+              // Marketplace channel attribution — purple to differentiate
+              // from direct widget/walk-up orders. Staff sees at a glance
+              // which orders came from /marketplace discovery.
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-300">
+                MARKETPLACE
+              </span>
+            )}
             {isTest && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-500">TEST</span>}
           </div>
           <div className={`text-sm ${t.textMuted} truncate`}>

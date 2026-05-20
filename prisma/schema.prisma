@@ -161,8 +161,9 @@ model Restaurant {
   addOns               RestaurantAddOn[]
   kitchenDevices       KitchenDevice[]
   locationInvites      LocationInvite[]
-  marketplaceListing   MarketplaceListing?
-  shipdayConfig        ShipdayConfig?
+  marketplaceListing     MarketplaceListing?
+  marketplaceSettlements MarketplaceSettlement[]
+  shipdayConfig          ShipdayConfig?
 
   @@index([resellerProfileId])
   @@index([parentRestaurantId])
@@ -1226,8 +1227,62 @@ model ShipdayConfig {
   /// picker; in-store remains an explicit override.
   driverPoolEnabled Boolean @default(false)
 
+  /// Which dispatch source the restaurant uses for delivery orders.
+  ///   "own"     — restaurant's in-house drivers only. ShipDay never invoked.
+  ///   "shipday" — every delivery routes to ShipDay's third-party pool.
+  ///   "both"    — kitchen sees a per-order picker: in-house vs pool.
+  ///                Defaults to in-house; staff can override.
+  /// Default "own" so brand-new restaurants stay safe — they can flip
+  /// to shipday/both after entering credentials.
+  deliverySource    String   @default("own")
+
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
   @@index([enabled])
+}
+
+/// Marketplace per-restaurant monthly settlement record.
+///
+/// Created by the monthly settlement cron (cron/marketplace-settle) at
+/// the close of each calendar month. Captures the immutable bill for
+/// that period — what the restaurant accrued in per-order fees, what
+/// we actually charge (capped at $249.99), and the Stripe invoice ID
+/// we issued for the charge. Idempotent via (restaurantId, monthStart).
+///
+/// Why a separate table (not just stamping on MarketplaceListing): the
+/// listing's counters reset on month rollover, so we lose the historical
+/// per-month detail otherwise. This is the audit trail.
+model MarketplaceSettlement {
+  id              String   @id @default(cuid())
+  restaurantId    String
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  /// First moment of the billed month (UTC). e.g. 2026-05-01T00:00:00Z
+  /// for the May 2026 settlement. The cron computes settlements for
+  /// the month that just CLOSED, not the current one.
+  monthStart      DateTime
+  /// Order count that month, copied from the listing's counter before reset.
+  ordersInMonth   Int
+  /// $3 × ordersInMonth, uncapped. For audit / "why was I charged X".
+  accruedCents    Int
+  /// What we actually invoiced: min(accruedCents, MARKETPLACE_MONTHLY_CAP_CENTS).
+  invoicedCents   Int
+
+  /// Lifecycle:
+  ///   "pending"  — row created, no Stripe call yet (e.g. cron in flight)
+  ///   "invoiced" — stripe.invoices.create succeeded, customer must pay
+  ///   "paid"     — webhook flipped this once Stripe collected the funds
+  ///   "void"     — accruedCents was 0; nothing to bill, recorded for completeness
+  ///   "failed"   — Stripe call errored; safe to retry by re-running cron
+  status          String   @default("pending")
+  stripeInvoiceId String?  @unique
+  failureReason   String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([restaurantId, monthStart])
+  @@index([status])
+  @@index([monthStart])
 }

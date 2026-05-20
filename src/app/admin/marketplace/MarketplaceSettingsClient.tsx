@@ -46,10 +46,15 @@ type Stats = {
   lifetimeSavingsVsUberEatsCents: number;
   currentMonthStartedAt: string;
   billing: {
-    flatCents: number;
-    perOrderCents: number;
+    /** $249.99 hard cap — once accruedCents hits this, the rest of the
+     *  month's orders are pure margin for the restaurant. */
+    capCents: number;
+    /** Uncapped per-order accrual: $3 × month-to-date order count. */
+    accruedCents: number;
+    /** What we'll actually bill: min(accruedCents, capCents). */
     effectiveCents: number;
-    whichWon: "flat" | "per_order";
+    /** True once the cap has been reached. */
+    capHit: boolean;
   };
 };
 
@@ -456,40 +461,46 @@ export function MarketplaceSettingsClient({
                 />
               </div>
 
-              {/* Smart-billing summary */}
+              {/* Pay-as-you-go billing summary. Free to join; $3/order
+                  accrues toward a $249.99 monthly cap. Once the cap is
+                  hit, every additional marketplace order is free. */}
               <div className={`mt-4 rounded-xl p-3 border ${
-                stats.billing.whichWon === "per_order"
-                  ? "border-emerald-200 bg-emerald-50"
+                stats.billing.capHit
+                  ? "border-emerald-300 bg-emerald-50"
                   : "border-orange-200 bg-orange-50"
               }`}>
                 <div className="flex items-center gap-1.5 mb-1">
                   <TrendingUp className={`w-3.5 h-3.5 ${
-                    stats.billing.whichWon === "per_order" ? "text-emerald-700" : "text-orange-700"
+                    stats.billing.capHit ? "text-emerald-700" : "text-orange-700"
                   }`} />
                   <span className={`text-xs font-bold uppercase tracking-wider ${
-                    stats.billing.whichWon === "per_order" ? "text-emerald-800" : "text-orange-800"
+                    stats.billing.capHit ? "text-emerald-800" : "text-orange-800"
                   }`}>
-                    Effective rate this cycle
+                    Marketplace bill this month
                   </span>
                 </div>
                 <div className={`text-xl font-bold ${
-                  stats.billing.whichWon === "per_order" ? "text-emerald-900" : "text-orange-900"
+                  stats.billing.capHit ? "text-emerald-900" : "text-orange-900"
                 }`}>
                   {formatCurrency(stats.billing.effectiveCents / 100)}
+                  <span className="text-xs font-semibold opacity-70 ml-1">
+                    / {formatCurrency(stats.billing.capCents / 100)} cap
+                  </span>
                 </div>
                 <p className={`text-[11px] mt-1 leading-snug ${
-                  stats.billing.whichWon === "per_order" ? "text-emerald-800" : "text-orange-800"
+                  stats.billing.capHit ? "text-emerald-800" : "text-orange-800"
                 }`}>
-                  {stats.billing.whichWon === "per_order" ? (
+                  {stats.billing.capHit ? (
                     <>
-                      You're on the <strong>per-order</strong> rate ({formatCurrency(stats.billing.perOrderCents / 100)}) —
-                      cheaper than the {formatCurrency(stats.billing.flatCents / 100)} flat cap. Saving you{" "}
-                      <strong>{formatCurrency((stats.billing.flatCents - stats.billing.perOrderCents) / 100)}</strong> this month.
+                      You hit the <strong>monthly cap</strong> of {formatCurrency(stats.billing.capCents / 100)}.
+                      Every additional marketplace order this month is <strong>completely free</strong> —
+                      pure margin. Counter resets the 1st of next month.
                     </>
                   ) : (
                     <>
-                      You hit the <strong>flat monthly cap</strong> ({formatCurrency(stats.billing.flatCents / 100)}).
-                      Every additional order this month is now <strong>completely free</strong> — no per-order fees.
+                      Free to join. <strong>$3 per marketplace order</strong> accrues toward
+                      a {formatCurrency(stats.billing.capCents / 100)}/month cap. After the
+                      cap, every additional order is free.
                     </>
                   )}
                 </p>

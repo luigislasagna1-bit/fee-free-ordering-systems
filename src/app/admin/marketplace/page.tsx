@@ -79,10 +79,10 @@ export default async function MarketplaceAdminPage() {
         lifetimeSavingsVsUberEatsCents: listing.lifetimeSavingsVsUberEatsCents,
         currentMonthStartedAt: listing.currentMonthStartedAt.toISOString(),
         billing: {
-          flatCents: billing.flatCents,
-          perOrderCents: billing.perOrderCents,
+          capCents: billing.capCents,
+          accruedCents: billing.accruedCents,
           effectiveCents: billing.effectiveCents,
-          whichWon: billing.whichWon,
+          capHit: billing.capHit,
         },
       }}
       isSuperadmin={user.role === "superadmin"}

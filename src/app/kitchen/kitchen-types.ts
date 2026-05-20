@@ -26,6 +26,10 @@ export type Order = {
   paymentStatus: string;
   preparationTime: number | null;
   estimatedReady: string | null;
+  /** Stamped at order creation when the customer came from /marketplace.
+   *  Kitchen display shows a purple "MARKETPLACE" badge so staff knows
+   *  it's a discovery-channel order vs a direct walk-up / widget order. */
+  viaMarketplace: boolean;
   items: {
     id: string;
     name: string;

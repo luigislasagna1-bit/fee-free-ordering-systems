@@ -70,6 +70,30 @@ export async function handleInvoiceEvent(event: Stripe.Event) {
     },
   });
 
+  // Marketplace settlement invoices are NOT subscription renewals — they
+  // come from our monthly settlement cron and have metadata.type set to
+  // "marketplace_settlement". Handle them separately: flip the settlement
+  // row's status and short-circuit before the subscription-renewal logic
+  // runs (so we don't accidentally extend currentPeriodEnd on a one-off
+  // settlement charge).
+  const meta = (invoice.metadata ?? {}) as Record<string, string>;
+  if (meta.type === "marketplace_settlement" && meta.settlementId) {
+    if (event.type === "invoice.paid") {
+      await prisma.marketplaceSettlement.update({
+        where: { id: meta.settlementId },
+        data: { status: "paid" },
+      }).catch((e) => {
+        console.error(`[stripe] marketplace_settlement paid: failed to update row ${meta.settlementId}`, e);
+      });
+    } else if (event.type === "invoice.payment_failed") {
+      await prisma.marketplaceSettlement.update({
+        where: { id: meta.settlementId },
+        data: { status: "failed", failureReason: "Stripe charge failed" },
+      }).catch(() => {});
+    }
+    return;
+  }
+
   if (event.type === "invoice.paid") {
     // Subscription successfully charged — extend the active window.
     await prisma.restaurant.update({
