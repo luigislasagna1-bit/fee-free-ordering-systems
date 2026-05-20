@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { hasFeature } from "@/lib/entitlements";
 import { PaymentMethodsClient } from "./PaymentMethodsClient";
 
 /**
@@ -44,11 +45,16 @@ export default async function PaymentMethodsPage() {
   const stripeReady =
     restaurant.stripeAccountStatus === "connected" && restaurant.stripeChargesEnabled === true;
 
+  // Online card payment is gated by the `online_payments` add-on. Without
+  // an active subscription, the tile is locked and the API rejects writes.
+  const onlinePaymentsUnlocked = await hasFeature(user.restaurantId, "card_payments");
+
   return (
     <PaymentMethodsClient
       initialMethods={methods}
       stripeReady={stripeReady}
       stripeStatus={restaurant.stripeAccountStatus ?? "not_connected"}
+      onlinePaymentsUnlocked={onlinePaymentsUnlocked}
     />
   );
 }

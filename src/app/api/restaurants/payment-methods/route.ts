@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { hasFeature } from "@/lib/entitlements";
 
 /**
  * PUT /api/restaurants/payment-methods
@@ -39,6 +40,24 @@ export async function PUT(req: NextRequest) {
       { error: "Pick at least one payment method." },
       { status: 400 }
     );
+  }
+
+  // Gate: online_card requires the online_payments add-on. Tampered
+  // clients can't bypass the UI lock by POSTing direct — re-check
+  // entitlement server-side. If they don't have it, return 412
+  // (Precondition Failed) so the client UI can show the right path.
+  if (clean.includes("online_card")) {
+    const entitled = await hasFeature(restaurantId, "card_payments");
+    if (!entitled) {
+      return NextResponse.json(
+        {
+          error: "Subscribe to the Online Payments add-on to enable online card payments.",
+          code: "addon_required",
+          addOnSlug: "online_payments",
+        },
+        { status: 412 },
+      );
+    }
   }
 
   await prisma.restaurant.update({

@@ -23,12 +23,18 @@ interface Props {
    *  Stripe is actually useful — without it, the /api/public/payment-intent
    *  gate rejects card charges. */
   hasOnlinePaymentsAddOn: boolean;
+  /** True when "online_card" is currently in the restaurant's Accepted
+   *  Methods. An owner can subscribe to the add-on but choose not to
+   *  surface online card payment to customers — Stripe onboarding shouldn't
+   *  feel mandatory in that case. */
+  onlineCardEnabled: boolean;
 }
 
 export function ProvidersClient({
   restaurant,
   stripeConfigured,
   hasOnlinePaymentsAddOn,
+  onlineCardEnabled,
 }: Props) {
   const params = useSearchParams();
   const justConnected = params.get("status") === "connected";
@@ -145,9 +151,11 @@ export function ProvidersClient({
         </div>
       )}
 
-      {/* Reverse case: they have the entitlement but haven't connected Stripe.
-          Most common path for a brand-new subscriber — make the next step obvious. */}
-      {stripeConfigured && hasOnlinePaymentsAddOn && !restaurant?.stripeAccountId && (
+      {/* Has the add-on, has online_card enabled in Accepted Methods, but no
+          Stripe yet. This is the only state where we should push connecting
+          Stripe prominently — otherwise the owner has consciously opted out
+          of online card payment and we shouldn't nag. */}
+      {stripeConfigured && hasOnlinePaymentsAddOn && onlineCardEnabled && !restaurant?.stripeAccountId && (
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex gap-3">
           <Zap className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
           <div>
@@ -158,6 +166,33 @@ export function ProvidersClient({
               Connect your Stripe account below to start accepting card payments.
               Onboarding takes about 5 minutes.
             </p>
+          </div>
+        </div>
+      )}
+
+      {/* Has the add-on, but online_card is NOT in Accepted Methods. The
+          owner is paying for the entitlement but hasn't actually turned
+          card payment on for customers. Surface that and link to the
+          right place — don't push Stripe Connect. */}
+      {stripeConfigured && hasOnlinePaymentsAddOn && !onlineCardEnabled && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3">
+          <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="text-sm font-semibold text-amber-900">
+              Online card payment is currently OFF
+            </p>
+            <p className="text-sm text-amber-800 mt-1">
+              You&apos;re subscribed to the Online Payments add-on, but customers
+              can&apos;t pay by card yet — you haven&apos;t enabled it in Accepted
+              Methods. Connecting Stripe alone won&apos;t change that.
+            </p>
+            <Link
+              href="/admin/payments"
+              className="inline-flex items-center gap-2 mt-3 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
+            >
+              Enable in Accepted Methods
+              <ExternalLink className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       )}

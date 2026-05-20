@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { Banknote, CreditCard, Globe, Check, Loader2, ArrowRight, AlertCircle } from "lucide-react";
+import { Banknote, CreditCard, Globe, Check, Loader2, ArrowRight, AlertCircle, Lock } from "lucide-react";
 
 /**
  * Accepted-payment-methods picker.
@@ -49,10 +49,14 @@ export function PaymentMethodsClient({
   initialMethods,
   stripeReady,
   stripeStatus,
+  onlinePaymentsUnlocked,
 }: {
   initialMethods: string[];
   stripeReady: boolean;
   stripeStatus: string;
+  /** True iff the restaurant has an active/trialing `online_payments`
+   *  add-on. When false, the online_card tile is locked. */
+  onlinePaymentsUnlocked: boolean;
 }) {
   const router = useRouter();
   const [methods, setMethods] = useState<Set<Method>>(
@@ -63,6 +67,10 @@ export function PaymentMethodsClient({
   const [saving, setSaving] = useState(false);
 
   function toggle(m: Method) {
+    if (m === "online_card" && !onlinePaymentsUnlocked) {
+      toast.error("Subscribe to the Online Payments add-on first.");
+      return;
+    }
     setMethods((s) => {
       const next = new Set(s);
       if (next.has(m)) next.delete(m);
@@ -116,37 +124,55 @@ export function PaymentMethodsClient({
         {METHOD_CARDS.map((m) => {
           const Icon = m.icon;
           const selected = methods.has(m.id);
+          const locked = m.id === "online_card" && !onlinePaymentsUnlocked;
           return (
             <button
               key={m.id}
               type="button"
               onClick={() => toggle(m.id)}
               className={`w-full text-left rounded-2xl border-2 p-4 transition flex items-start gap-4 ${
-                selected
+                locked
+                  ? "border-gray-200 bg-gray-50 cursor-not-allowed"
+                  : selected
                   ? "border-orange-400 bg-orange-50"
                   : "border-gray-200 bg-white hover:border-gray-300"
               }`}
             >
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                selected ? "bg-orange-500 text-white" : "bg-gray-100 text-gray-500"
+                locked ? "bg-gray-200 text-gray-400" : selected ? "bg-orange-500 text-white" : "bg-gray-100 text-gray-500"
               }`}>
                 <Icon className="w-6 h-6" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <div className="font-bold text-gray-900">{m.label}</div>
-                  {selected && (
+                <div className="flex items-center gap-2 flex-wrap">
+                  <div className={`font-bold ${locked ? "text-gray-500" : "text-gray-900"}`}>{m.label}</div>
+                  {locked && (
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-gray-200 text-gray-600 uppercase tracking-wider inline-flex items-center gap-1">
+                      <Lock className="w-2.5 h-2.5" /> Add-on required
+                    </span>
+                  )}
+                  {!locked && selected && (
                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-orange-500 text-white uppercase tracking-wider">
                       Selected
                     </span>
                   )}
                 </div>
-                <div className="text-sm text-gray-600 mt-1 leading-snug">{m.description}</div>
+                <div className={`text-sm mt-1 leading-snug ${locked ? "text-gray-500" : "text-gray-600"}`}>{m.description}</div>
+                {locked && (
+                  <Link
+                    href="/admin/billing/add-ons"
+                    onClick={(e) => e.stopPropagation()}
+                    className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-orange-600 hover:text-orange-700 hover:underline"
+                  >
+                    Subscribe to Online Payments add-on
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
+                )}
               </div>
               <div className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition ${
-                selected ? "border-orange-500 bg-orange-500 text-white" : "border-gray-300 bg-white"
+                locked ? "border-gray-300 bg-gray-100" : selected ? "border-orange-500 bg-orange-500 text-white" : "border-gray-300 bg-white"
               }`}>
-                {selected && <Check className="w-4 h-4" />}
+                {locked ? <Lock className="w-3 h-3 text-gray-400" /> : selected && <Check className="w-4 h-4" />}
               </div>
             </button>
           );
