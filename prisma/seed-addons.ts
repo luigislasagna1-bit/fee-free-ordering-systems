@@ -157,23 +157,26 @@ async function main() {
       enabledFeatures: ["multi_location_management"],
     },
     {
-      // Marketplace: subscribe to be listed on the public Fee Free
-      // Ordering Marketplace (think GloriaFood-style discovery, NOT
-      // UberEats — no extra customer fees, no 30% commission, restaurants
-      // keep full margins). Restaurants get auto-listed on /marketplace
-      // as soon as the subscription activates. INCLUDES the driver_pool
-      // add-on so subscribers get ShipDay third-party delivery without
-      // a second subscription.
+      // Marketplace: FREE to join. Restaurants get listed on the public
+      // Fee Free Ordering Marketplace immediately on opt-in. Billed monthly
+      // based on order volume — $3.00 per order that came through the
+      // marketplace channel, capped at $249.99/month no matter how many
+      // orders ride in after that. Above the cap is pure margin for the
+      // restaurant.
       //
-      // Pricing model (M2): the lower of $199.99/month flat OR a per-order
-      // fee — restaurant pays whichever is cheaper that billing cycle.
-      // Cap of $199.99 means unlimited marketing reach for less than
-      // ONE day's worth of UberEats commissions on a $700 day.
+      // Includes the Driver Pool add-on (normally $19.99/mo standalone)
+      // — marketplace subscribers get ShipDay third-party delivery for
+      // free as part of the bundle.
+      //
+      // Pricing locked here as monthlyPriceCents=0 (free base). The
+      // per-order fee + cap are NOT a Stripe subscription line item —
+      // they're accumulated server-side in marketplaceListing's monthly
+      // counters and billed via a separate monthly settlement (M2.5).
       slug: "marketplace",
-      name: "Marketplace Listing",
+      name: "Marketplace",
       description:
-        "Get listed on the Fee Free Ordering Marketplace — bring your restaurant in front of new local customers without paying 30% commission. Flat $199.99/month max (or per-order, whichever is lower), unlimited orders, no extra fees for you OR your customers. Includes the Driver Pool add-on.",
-      monthlyPriceCents: 19999, // $199.99 flat-cap — locked in for the Marketplace launch
+        "FREE to join. Get listed on the Fee Free Ordering Marketplace and reach new local customers — no 30% commission, no extra fees for customers. You pay $3 per marketplace order, capped at $249.99/month no matter how many orders come in. Includes ShipDay Driver Pool for overflow delivery. Opt in or out any time.",
+      monthlyPriceCents: 0, // FREE to join — per-order fees billed monthly via M2.5 cron
       displayOrder: 90,
       enabledFeatures: ["marketplace_listing", "driver_pool"],
     },

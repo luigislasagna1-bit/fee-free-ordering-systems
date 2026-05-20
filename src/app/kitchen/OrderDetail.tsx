@@ -96,6 +96,11 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
             <div className={`text-xs ${t.muted}`}>{fmtTime(order.createdAt)}</div>
           </div>
           <StatusBadge />
+          {order.viaMarketplace && (
+            <span className="text-[10px] font-bold px-2 py-1 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-300">
+              MARKETPLACE
+            </span>
+          )}
         </div>
         <button onClick={onClose} className={`p-1.5 rounded-lg ${t.btn} hidden md:flex`}>
           <X className="w-4 h-4" />

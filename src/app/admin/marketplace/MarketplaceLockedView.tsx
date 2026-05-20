@@ -19,29 +19,29 @@ export function MarketplaceLockedView() {
           <span className="text-sm font-bold uppercase tracking-wider opacity-90">Add-on</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-          Get on the Fee Free Marketplace
+          Get on the Fee Free Marketplace — free to join
         </h1>
         <p className="mt-2 text-white/90 text-sm sm:text-base max-w-2xl leading-relaxed">
           List your restaurant on our public marketplace at <code className="bg-white/15 px-1.5 py-0.5 rounded text-xs">/marketplace</code>.
-          Local customers discover you. You keep every dollar. Customers pay zero extra fees.
+          $0 to sign up, opt in or out any time. You pay only when orders come in — and the bill is capped.
         </p>
 
         {/* Pricing math */}
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-white/15 backdrop-blur rounded-xl p-4">
             <div className="text-xs uppercase tracking-wider opacity-80">Marketplace</div>
-            <div className="text-3xl font-bold mt-1">$199.99</div>
-            <div className="text-sm opacity-90">per month — unlimited orders</div>
+            <div className="text-3xl font-bold mt-1">$3<span className="text-lg">/order</span></div>
+            <div className="text-sm opacity-90">capped at $249.99/month</div>
             <div className="text-xs mt-2 opacity-80 italic">
-              Or per-order, whichever is <span className="font-bold not-italic">cheaper</span> that month
+              Free to join. Above ~83 orders, every additional order is <span className="font-bold not-italic">free</span>.
             </div>
           </div>
           <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
             <div className="text-xs uppercase tracking-wider opacity-80">UberEats / DoorDash</div>
-            <div className="text-3xl font-bold mt-1">$200</div>
-            <div className="text-sm opacity-90">in commission on $660 of orders</div>
+            <div className="text-3xl font-bold mt-1">30%</div>
+            <div className="text-sm opacity-90">commission on every order, forever</div>
             <div className="text-xs mt-2 opacity-80 italic">
-              30% of every order, forever
+              On a $700 order day, that's $210 — almost our entire <span className="font-bold not-italic">monthly</span> cap, gone in one day.
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@ export function MarketplaceLockedView() {
           href="/admin/billing/add-ons"
           className="inline-flex items-center justify-center gap-2 mt-6 bg-white text-orange-600 hover:bg-orange-50 font-bold px-6 py-3 rounded-xl text-sm shadow-md transition"
         >
-          <Lock className="w-4 h-4" /> Subscribe to Marketplace
+          <Lock className="w-4 h-4" /> Join the Marketplace — free
         </Link>
       </div>
 

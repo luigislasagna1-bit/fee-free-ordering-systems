@@ -16,18 +16,22 @@ import { hasFeature } from "@/lib/entitlements";
 export const UBER_EATS_COMMISSION_PCT = 30;
 
 /** Hard monthly cap we charge a marketplace subscriber. Above this,
- *  the customer is paying nothing extra and the restaurant pockets
- *  every additional order's margin. Defined here (not in the AddOn
- *  row) so order-time billing math stays consistent even if a
- *  superadmin tweaks the AddOn's display price. */
-export const MARKETPLACE_MONTHLY_CAP_CENTS = 19999; // $199.99
+ *  every additional order is free for the restaurant. With the new
+ *  $3.00/order rate, the cap hits at ~83 orders/month — covering all
+ *  but the very highest-volume restaurants for a predictable $249.99.
+ *  Defined here (not in the AddOn row) so order-time billing math
+ *  stays consistent even if a superadmin tweaks the AddOn's price. */
+export const MARKETPLACE_MONTHLY_CAP_CENTS = 24999; // $249.99
 
-/** Per-order rate used when computing the "or per-order, whichever is
- *  lower" alternative. Tuned so a restaurant doing ~$650/mo of
- *  marketplace orders pays roughly the cap, and below that pays
- *  proportionally less. Phase M2 will make this configurable
- *  per-AddOn-row. */
-export const MARKETPLACE_PER_ORDER_CENTS = 99; // $0.99/order
+/** Per-order rate for marketplace orders. This is what the platform
+ *  bills the restaurant — NOT what the customer pays (customer pays
+ *  the menu price, same as a direct order). Covers system, operations,
+ *  marketing, support — explicitly NOT delivery (that's ShipDay
+ *  passthrough, separately settled).
+ *
+ *  Free-base model: join the marketplace for $0/mo. Billed monthly
+ *  based on order volume, capped at MARKETPLACE_MONTHLY_CAP_CENTS. */
+export const MARKETPLACE_PER_ORDER_CENTS = 300; // $3.00/order
 
 export type PublicListing = {
   id: string;
@@ -206,31 +210,40 @@ export function computeUberEatsEquivalentCents(orderSubtotalCents: number): numb
 }
 
 /**
- * Compute what this restaurant SHOULD be billed for the marketplace
- * THIS billing cycle given the month-to-date order count. Returns
- * the lower of:
- *   (a) Flat monthly cap ($199.99)
- *   (b) Per-order rate × month-to-date order count
+ * Compute what the restaurant owes the platform THIS billing cycle.
  *
- * Phase M2 only EXPOSES this number — we display it on /admin/marketplace
- * so the owner sees their effective rate live. Actual differential
- * billing through Stripe (charging the lower amount automatically each
- * cycle) is M2.5 work — Stripe metered billing wiring + a monthly cron
- * to reconcile. For now, Stripe charges the flat $199.99 and we'll
- * issue a Stripe credit at month-end if the per-order math was lower.
+ * New free-base model:
+ *   - Joining the marketplace is $0/month
+ *   - Each marketplace order accrues $3.00 toward this month's bill
+ *   - Once the running total hits $249.99 (~83 orders), the cap kicks
+ *     in and every additional order this month is free
+ *
+ * Returns:
+ *   - capCents: hard monthly cap ($249.99)
+ *   - accruedCents: per-order × month-to-date count (uncapped)
+ *   - effectiveCents: min(accruedCents, capCents) — what we actually bill
+ *   - capHit: true when month-to-date has reached the cap (great UX
+ *     signal: "no more fees this month, every order is pure margin")
+ *
+ * Phase M2 EXPOSES this number on /admin/marketplace; the actual
+ * monthly settlement (Stripe invoice or ACH debit) lives in the
+ * monthly billing cron — M2.5 work.
  */
 export function computeMonthlyChargeCents(monthToDateOrders: number): {
-  flatCents: number;
-  perOrderCents: number;
+  capCents: number;
+  accruedCents: number;
   effectiveCents: number;
-  whichWon: "flat" | "per_order";
+  capHit: boolean;
 } {
-  const flat = MARKETPLACE_MONTHLY_CAP_CENTS;
-  const perOrder = MARKETPLACE_PER_ORDER_CENTS * monthToDateOrders;
-  if (perOrder <= flat) {
-    return { flatCents: flat, perOrderCents: perOrder, effectiveCents: perOrder, whichWon: "per_order" };
-  }
-  return { flatCents: flat, perOrderCents: perOrder, effectiveCents: flat, whichWon: "flat" };
+  const cap = MARKETPLACE_MONTHLY_CAP_CENTS;
+  const accrued = MARKETPLACE_PER_ORDER_CENTS * monthToDateOrders;
+  const effective = Math.min(accrued, cap);
+  return {
+    capCents: cap,
+    accruedCents: accrued,
+    effectiveCents: effective,
+    capHit: accrued >= cap,
+  };
 }
 
 /**
