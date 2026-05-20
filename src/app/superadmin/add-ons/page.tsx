@@ -3,6 +3,15 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { SuperadminAddOnsClient } from "./SuperadminAddOnsClient";
 
+// Force dynamic — this page is auth-gated and reads live AddOn rows.
+// Without explicit dynamic, Next.js may attempt to serve a stale cached
+// shell while the session-aware redirect chain plays out, which has
+// caused recurring "appears to log out the superadmin" reports from
+// Luigi. Forcing dynamic means every navigation re-evaluates the
+// session check + the query, so a cached version of an unauth redirect
+// can never serve to an authed superadmin.
+export const dynamic = "force-dynamic";
+
 export default async function SuperadminAddOnsPage() {
   const user = await getSessionUser();
   if (!user || user.role !== "superadmin") redirect("/login");

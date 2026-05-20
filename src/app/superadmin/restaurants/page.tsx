@@ -23,6 +23,9 @@ function Stat({ label, value, tone }: { label: string; value: number; tone: Tone
   );
 }
 
+// Auth-gated, live data. Never cache.
+export const dynamic = "force-dynamic";
+
 export default async function SuperadminRestaurants() {
   const restaurants = await prisma.restaurant.findMany({
     orderBy: { createdAt: "desc" },
@@ -34,6 +37,7 @@ export default async function SuperadminRestaurants() {
 
   const stats = {
     total:     restaurants.length,
+    published: restaurants.filter((r) => !!r.publishedAt).length,
     active:    restaurants.filter((r) => r.subscriptionStatus === "active").length,
     trial:     restaurants.filter((r) => r.subscriptionStatus === "trial").length,
     cancelled: restaurants.filter((r) => r.subscriptionStatus === "cancelled").length,
@@ -58,12 +62,13 @@ export default async function SuperadminRestaurants() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-7 gap-3 mb-5">
         <Stat label="Total"           value={stats.total}     tone="default" />
-        <Stat label="Active"          value={stats.active}    tone="emerald" />
+        <Stat label="Published"       value={stats.published} tone="emerald" />
+        <Stat label="Subscribed"      value={stats.active}    tone="emerald" />
         <Stat label="Trial"           value={stats.trial}     tone="yellow"  />
         <Stat label="Cancelled"       value={stats.cancelled} tone="red"     />
-        <Stat label="Inactive"        value={stats.inactive}  tone="gray"    />
+        <Stat label="Paused"          value={stats.inactive}  tone="gray"    />
         <Stat label="Test (demo-*)"   value={stats.test}      tone="purple"  />
       </div>
 
@@ -72,7 +77,7 @@ export default async function SuperadminRestaurants() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
-                {["Restaurant", "Plan", "Status", "Orders", "Customers", "Menu Items", "Ordering Page", "Joined", ""].map((h) => (
+                {["Restaurant", "Live", "Plan", "Status", "Orders", "Customers", "Menu Items", "Ordering Page", "Joined", ""].map((h) => (
                   <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase whitespace-nowrap">{h}</th>
                 ))}
               </tr>
@@ -80,7 +85,7 @@ export default async function SuperadminRestaurants() {
             <tbody className="divide-y divide-gray-100">
               {restaurants.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="text-center px-4 py-12 text-gray-500">
+                  <td colSpan={10} className="text-center px-4 py-12 text-gray-500">
                     <div className="font-semibold text-gray-700 mb-1">No restaurants in the database</div>
                     <p className="text-sm">New restaurants appear here automatically when an owner registers at{" "}
                       <a href="/signup" className="text-orange-500 hover:underline">/signup</a>
@@ -96,16 +101,23 @@ export default async function SuperadminRestaurants() {
                 restaurants.map((r) => (
                   <tr key={r.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3">
-                      <div className="font-semibold text-gray-900 flex items-center flex-wrap">
+                      <Link href={`/superadmin/restaurants/${r.id}`} className="font-semibold text-blue-600 hover:underline flex items-center flex-wrap">
                         {r.name}
                         {r.slug.startsWith("demo-") && (
                           <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-purple-100 text-purple-700">TEST</span>
                         )}
                         {!r.isActive && (
-                          <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-gray-200 text-gray-600">INACTIVE</span>
+                          <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-gray-200 text-gray-600">PAUSED</span>
                         )}
-                      </div>
+                      </Link>
                       <div className="text-xs text-gray-400">{r.email || r.phone || ""}</div>
+                    </td>
+                    <td className="px-4 py-3">
+                      {r.publishedAt ? (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">LIVE</span>
+                      ) : (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">SETUP</span>
+                      )}
                     </td>
                     <td className="px-4 py-3 text-gray-600">{r.subscriptionPlan?.name || <span className="text-gray-400">None</span>}</td>
                     <td className="px-4 py-3">
