@@ -25,6 +25,7 @@ export type StepId =
   | "services.openingHours"
   | "services.deliveryZones"
   // Payment Methods & Taxes
+  | "payments.methodsSelected"
   | "payments.taxation"
   | "payments.currency"
   | "payments.methodConfigured"
@@ -96,11 +97,17 @@ export interface ChecklistInput {
    *  ONLY when acceptsDelivery is enabled — pickup-only restaurants don't
    *  need zones. */
   deliveryZoneCount: number;
+  /** Accepted payment methods the owner chose. Slugs like "cash",
+   *  "card_in_person", "online_card". Empty array means the owner hasn't
+   *  picked yet — that's a required step. When the array includes
+   *  "online_card", `hasPaymentProvider` becomes required too. */
+  paymentMethods: string[];
 }
 
 /** Single source of truth for what "ready to publish" means. */
 export function computeSetupProgress(input: ChecklistInput): SetupProgress {
-  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount } = input;
+  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount, paymentMethods } = input;
+  const acceptsOnlineCard = paymentMethods.includes("online_card");
 
   const hasAddress = !!restaurant.address && !!restaurant.city && !!restaurant.country;
   const hasMapPin = restaurant.lat != null && restaurant.lng != null;
@@ -182,6 +189,17 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
 
     // ─── Payment Methods & Taxes ────────────────────────────────────────
     {
+      id: "payments.methodsSelected",
+      section: "payments",
+      label: "Accepted payment methods",
+      // Required: an owner must explicitly pick which methods they take
+      // (cash / card-in-person / online card). Drives the publish gate
+      // and the conditional "Stripe required" logic below.
+      required: true,
+      href: "/admin/payments",
+      complete: paymentMethods.length > 0,
+    },
+    {
       id: "payments.taxation",
       section: "payments",
       label: "Taxation configured",
@@ -204,14 +222,14 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
       id: "payments.methodConfigured",
       section: "payments",
       label: "Online card payments configured",
-      // Optional. Cash / pay-at-store ALWAYS works without any setup —
-      // a restaurant can launch with cash-only and add online cards
-      // later via the "Online Payments" add-on + Stripe Connect.
-      // The step shows as DONE only when they've actually wired Stripe
-      // (so they see a real ✓ when they finish onboarding) — there was
-      // a `|| true` bug here that made it always complete, which is
-      // why this step never appeared to "do" anything when toggled.
-      required: false,
+      // Conditionally required: only when the owner ticked "online_card"
+      // in the methods step above. A cash-only / card-in-person-only
+      // restaurant has no obligation to wire up Stripe Connect and
+      // can publish without it.
+      // Complete = Stripe Connect account is connected AND charges enabled,
+      // OR the legacy PaymentProvider row is active. Loader.ts collapses
+      // both signals into hasPaymentProvider.
+      required: acceptsOnlineCard,
       href: "/admin/payments/providers",
       complete: hasPaymentProvider,
     },

@@ -31,6 +31,15 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
       acceptsReservations: true,
       ownerEmailVerifiedAt: true,
       widgetInstalledAt: true,
+      // Stripe Connect status — when this is "connected" with charges
+      // enabled, the restaurant CAN take online card payments. We use
+      // this (not just the PaymentProvider table) because Connect
+      // onboarding writes directly to Restaurant, not PaymentProvider.
+      stripeAccountStatus: true,
+      stripeChargesEnabled: true,
+      // Accepted payment methods JSON array — drives a required setup
+      // step and conditionally makes Stripe Connect required.
+      paymentMethods: true,
     },
   });
   if (!restaurant) return null;
@@ -65,14 +74,40 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
 
   const hasKitchenDevice = kitchenDeviceLive;
 
+  // "Has online card payments wired up" — true when EITHER
+  //   - the legacy PaymentProvider row is active (older direct-charge setups), OR
+  //   - the modern Stripe Connect onboarding completed (charges enabled on the
+  //     destination account). This is what the dashboard "Connected · Live"
+  //     badge reflects, so the checkmark must follow the same signal — otherwise
+  //     owners see "Connected" on /admin/payments/providers but the setup step
+  //     stays unchecked forever (the bug Luigi hit).
+  const stripeConnectLive =
+    restaurant.stripeAccountStatus === "connected" && restaurant.stripeChargesEnabled === true;
+  const hasOnlineCardPayments = !!paymentProvider || stripeConnectLive;
+
+  // Parse accepted payment methods. Empty array / null = owner hasn't picked
+  // yet, which makes the methodsSelected step incomplete. Defensive parse:
+  // legacy rows may have malformed JSON; treat any parse error as empty.
+  let paymentMethods: string[] = [];
+  if (restaurant.paymentMethods) {
+    try {
+      const parsed = JSON.parse(restaurant.paymentMethods);
+      if (Array.isArray(parsed)) paymentMethods = parsed.filter((s) => typeof s === "string");
+    } catch {
+      // Leave as empty — checklist will surface this as incomplete and the
+      // owner can re-pick in /admin/payments.
+    }
+  }
+
   return computeSetupProgress({
     restaurant,
     hours,
     categories,
     menuItems,
-    hasPaymentProvider: !!paymentProvider,
+    hasPaymentProvider: hasOnlineCardPayments,
     hasKitchenDevice,
     notificationRecipientCount: notificationCount,
     deliveryZoneCount,
+    paymentMethods,
   });
 }

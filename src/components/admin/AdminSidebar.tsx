@@ -75,7 +75,8 @@ const navGroups: NavGroup[] = [
     icon: CreditCard,
     setupSectionId: "payments",
     items: [
-      { href: "/admin/payments/providers", labelKey: "payments",     label: "Payment Provider", icon: CreditCard, step: "payments.methodConfigured" },
+      { href: "/admin/payments",           labelKey: "paymentMethods", label: "Accepted Methods", icon: CreditCard, step: "payments.methodsSelected" },
+      { href: "/admin/payments/providers", labelKey: "payments",     label: "Stripe Connect", icon: CreditCard, step: "payments.methodConfigured" },
       { href: "/admin/service-fees",       labelKey: "serviceFees",  label: "Service Fees & Tax", icon: Wallet,   step: "payments.taxation" },
       { href: "/admin/map-settings",       labelKey: "mapSettings",  label: "Map Settings",      icon: MapIcon },
     ],

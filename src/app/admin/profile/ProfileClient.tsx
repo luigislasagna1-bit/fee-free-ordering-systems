@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import NextLink from "next/link";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { ActiveToggle } from "./ActiveToggle";
 import { useTranslations } from "next-intl";
 
 // Leaflet must be loaded client-side only
@@ -460,6 +461,9 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
       </div>
 
       <div className="space-y-6">
+        {/* ── Pause / Resume toggle ──────────────────────────────────── */}
+        <ActiveToggle initialActive={restaurant?.isActive ?? true} />
+
         {/* ── Basic Info ─────────────────────────────────────────────── */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4 flex items-center gap-2">
