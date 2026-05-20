@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
 import {
@@ -76,6 +77,7 @@ export function DeliveryClient({
   zones: Zone[];
   restaurant: Restaurant | null;
 }) {
+  const router = useRouter();
   const t = useTranslations("admin.delivery");
   const tCommon = useTranslations("common");
   const tToasts = useTranslations("admin.toasts");
@@ -185,6 +187,11 @@ export function DeliveryClient({
       setForm({ ...emptyForm, color: ZONE_COLORS[zones.length % ZONE_COLORS.length] });
       setShowAddForm(false);
       await reload();
+      // Re-render the server layout so loadSetupProgress() runs again —
+      // this is what makes the floating GuidedSetupPill auto-advance
+      // from "Working on: Delivery zones" to "Next: <whatever's next>"
+      // the moment the first zone is saved.
+      router.refresh();
     } catch (e: any) { toast.error(e.message || "Failed to save zone"); }
     setSaving(false);
   };
