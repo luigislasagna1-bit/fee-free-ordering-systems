@@ -17,6 +17,7 @@ export default async function ProvidersPage() {
             stripeAccountStatus: true,
             stripeChargesEnabled: true,
             stripePayoutsEnabled: true,
+            paymentMethods: true,
           },
         })
       : Promise.resolve(null),
@@ -28,11 +29,24 @@ export default async function ProvidersPage() {
     restaurantId ? hasFeature(restaurantId, "card_payments") : Promise.resolve(false),
   ]);
 
+  // Has the owner actually opted into online card payments in Accepted
+  // Methods? Having the add-on AND not opting in is a valid state — we
+  // shouldn't push Stripe onboarding on them. The page treats this as
+  // "online card payment is dormant; enable in Accepted Methods to use".
+  let onlineCardEnabled = false;
+  if (restaurant?.paymentMethods) {
+    try {
+      const arr = JSON.parse(restaurant.paymentMethods);
+      onlineCardEnabled = Array.isArray(arr) && arr.includes("online_card");
+    } catch { /* malformed JSON — treat as not enabled */ }
+  }
+
   return (
     <ProvidersClient
       restaurant={restaurant}
       stripeConfigured={stripeConfigured}
       hasOnlinePaymentsAddOn={hasOnlinePayments}
+      onlineCardEnabled={onlineCardEnabled}
     />
   );
 }

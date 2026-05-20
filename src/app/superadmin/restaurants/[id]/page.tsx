@@ -162,7 +162,14 @@ export default async function SuperadminRestaurantDetail({
               <div className="flex items-center gap-2 mt-2 flex-wrap">
                 <StatusBadge label={isPublished ? "Published" : "Unpublished"} tone={isPublished ? "emerald" : "amber"} />
                 <StatusBadge label={restaurant.isActive ? "Active" : "Paused"} tone={restaurant.isActive ? "emerald" : "gray"} />
-                <StatusBadge label={`Subscription: ${restaurant.subscriptionStatus}`} tone={subscriptionTone(restaurant.subscriptionStatus)} />
+                {(() => {
+                  const activeAddOns = addOnSubs.filter((s) => ["active", "trialing"].includes(s.status)).length;
+                  return activeAddOns > 0 ? (
+                    <StatusBadge label={`Paid · ${activeAddOns} add-on${activeAddOns === 1 ? "" : "s"}`} tone="purple" />
+                  ) : (
+                    <StatusBadge label="Free" tone="gray" />
+                  );
+                })()}
                 {restaurant.stripeChargesEnabled && <StatusBadge label="Stripe ✓" tone="emerald" />}
                 {isOnMarketplace && <StatusBadge label="Marketplace" tone="purple" />}
                 {parent && <StatusBadge label={`Child of ${parent.name}`} tone="blue" />}
@@ -287,20 +294,18 @@ export default async function SuperadminRestaurantDetail({
           )}
         </Card>
 
-        {/* ── Subscription & billing ───────────────────────────────── */}
-        <Card title="Subscription & billing" icon={<CreditCard className="w-4 h-4" />}>
-          <Field label="Plan" value={restaurant.subscriptionPlan?.name ?? <span className="text-gray-400 italic">none</span>} />
-          <Field label="Status" value={<span className={`text-xs font-bold uppercase px-2 py-0.5 rounded ${subscriptionTextClass(restaurant.subscriptionStatus)}`}>{restaurant.subscriptionStatus}</span>} />
-          <Field label="Trial ends" value={restaurant.trialEndsAt ? formatDate(restaurant.trialEndsAt) : <span className="text-gray-400 italic">—</span>} />
-          <Field label="Current period end" value={restaurant.currentPeriodEnd ? formatDate(restaurant.currentPeriodEnd) : <span className="text-gray-400 italic">—</span>} />
-          <Field label="Cancel at period end" value={restaurant.cancelAtPeriodEnd ? "Yes" : "No"} />
+        {/* ── Platform billing (Stripe customer for add-on subscriptions) ─ */}
+        {/* The 4-tier subscriptionStatus + trialEndsAt are legacy fields
+            from the pre-add-ons era and intentionally hidden. The Add-ons
+            card below is the source of truth for paid status. */}
+        <Card title="Platform billing" icon={<CreditCard className="w-4 h-4" />}>
           <Field
             label="Stripe customer"
             value={restaurant.stripeCustomerId ? <code className="text-xs">{restaurant.stripeCustomerId}</code> : <span className="text-gray-400 italic">none</span>}
           />
           <Field
-            label="Stripe subscription"
-            value={restaurant.stripeSubscriptionId ? <code className="text-xs">{restaurant.stripeSubscriptionId}</code> : <span className="text-gray-400 italic">none</span>}
+            label="Lazy-created on first add-on"
+            value={restaurant.stripeCustomerId ? "✓ Yes" : <span className="text-gray-400 italic">Not yet — no add-ons</span>}
           />
         </Card>
 

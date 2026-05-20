@@ -10,6 +10,7 @@
 import prisma from "@/lib/db";
 import { computeSetupProgress, type SetupProgress } from "@/lib/setup-checklist";
 import { hasLiveKitchenDevice } from "@/lib/kitchen-devices";
+import { hasFeature } from "@/lib/entitlements";
 
 export async function loadSetupProgress(restaurantId: string): Promise<SetupProgress | null> {
   const restaurant = await prisma.restaurant.findUnique({
@@ -44,7 +45,7 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
   });
   if (!restaurant) return null;
 
-  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive, deliveryZoneCount] = await Promise.all([
+  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive, deliveryZoneCount, hasOnlinePaymentsEntitlement] = await Promise.all([
     prisma.openingHours.findMany({
       where: { restaurantId },
       select: { isOpen: true },
@@ -70,6 +71,10 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     prisma.deliveryZone.count({
       where: { restaurantId, isActive: true },
     }),
+    // Online-payments entitlement (active/trialing online_payments add-on).
+    // Used to gate the online_card method + the Stripe Connect wizard step
+    // — both are no-ops without the add-on.
+    hasFeature(restaurantId, "card_payments"),
   ]);
 
   const hasKitchenDevice = kitchenDeviceLive;
@@ -109,5 +114,6 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     notificationRecipientCount: notificationCount,
     deliveryZoneCount,
     paymentMethods,
+    hasOnlinePaymentsEntitlement,
   });
 }

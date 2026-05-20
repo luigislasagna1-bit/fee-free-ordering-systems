@@ -102,12 +102,23 @@ export interface ChecklistInput {
    *  picked yet — that's a required step. When the array includes
    *  "online_card", `hasPaymentProvider` becomes required too. */
   paymentMethods: string[];
+  /** True iff the restaurant currently has the `card_payments` entitlement
+   *  (i.e. an active/trialing `online_payments` add-on subscription).
+   *  online_card in the methods array is only meaningful when this is true
+   *  — without the add-on, the user can't even *toggle* online_card on,
+   *  so we must not surface the "configure Stripe" step either. */
+  hasOnlinePaymentsEntitlement: boolean;
 }
 
 /** Single source of truth for what "ready to publish" means. */
 export function computeSetupProgress(input: ChecklistInput): SetupProgress {
-  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount, paymentMethods } = input;
-  const acceptsOnlineCard = paymentMethods.includes("online_card");
+  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount, paymentMethods, hasOnlinePaymentsEntitlement } = input;
+  // online_card is only meaningful when BOTH the owner ticked it AND they
+  // have the online_payments add-on. Without the add-on, the option is
+  // locked in the UI and the Stripe step shouldn't surface at all. This
+  // gate is what makes the wizard stop showing "Online card payments
+  // configured" to cash-only restaurants who happen to have legacy data.
+  const acceptsOnlineCard = paymentMethods.includes("online_card") && hasOnlinePaymentsEntitlement;
 
   const hasAddress = !!restaurant.address && !!restaurant.city && !!restaurant.country;
   const hasMapPin = restaurant.lat != null && restaurant.lng != null;
@@ -119,7 +130,7 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
   const hasOpenDay = hours.some((h) => h.isOpen);
   const activeMenuItems = menuItems.filter((m) => m.isAvailable);
 
-  const steps: SetupStep[] = [
+  const rawSteps: SetupStep[] = [
     // ─── Restaurant Basics ──────────────────────────────────────────────
     {
       id: "basics.nameAddress",
@@ -295,6 +306,16 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
       complete: !!restaurant.widgetInstalledAt,
     },
   ];
+
+  // Hide the "Online card payments configured" step entirely when
+  // acceptsOnlineCard is false. Showing an open circle for a step that's
+  // not required AND not actionable confuses owners (Luigi: "even though
+  // I haven't chosen online payments, the system is not letting me
+  // finish"). Cash-only / card-in-person-only restaurants shouldn't see
+  // anything Stripe-related in the wizard.
+  const steps = rawSteps.filter(
+    (s) => s.id !== "payments.methodConfigured" || acceptsOnlineCard,
+  );
 
   // Group steps into sections, count completion, and roll up.
   const sectionLabels: Record<SectionId, string> = {

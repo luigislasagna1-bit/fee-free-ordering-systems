@@ -1,42 +1,76 @@
 import Link from "next/link";
 import prisma from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
-import { Settings, Zap, CheckCircle2, XCircle } from "lucide-react";
+import { Settings, Zap, CheckCircle2, XCircle, Sparkles, Users, AlertTriangle } from "lucide-react";
 import { getStripeConfig } from "@/lib/stripe";
 
+/**
+ * Superadmin billing dashboard.
+ *
+ * Rebuilt for the free-base + paid-add-ons business model. The 4-tier
+ * subscription plans table is now legacy (every new signup defaults to
+ * Free); revenue flows through RestaurantAddOn subscriptions. This page
+ * surfaces add-on-level MRR + adoption.
+ *
+ * Legacy SubscriptionPlan rows are listed at the bottom (collapsed) for
+ * historical reference. They can be ignored unless a grandfathered
+ * restaurant is still pinned to a non-Free plan.
+ */
+export const dynamic = "force-dynamic";
+
 export default async function SuperadminBilling() {
-  const stripeCfg = await getStripeConfig();
-  const plans = await prisma.subscriptionPlan.findMany({
-    include: {
-      restaurants: {
-        select: { id: true, name: true, subscriptionStatus: true, trialEndsAt: true },
+  const [stripeCfg, addOns, plans] = await Promise.all([
+    getStripeConfig(),
+    // Real revenue driver.
+    prisma.addOn.findMany({
+      orderBy: { displayOrder: "asc" },
+      include: {
+        restaurantAddOns: {
+          where: { status: { in: ["active", "trialing", "past_due"] } },
+          select: {
+            id: true,
+            status: true,
+            restaurant: { select: { id: true, name: true } },
+            currentPeriodEnd: true,
+          },
+        },
       },
-    },
-    orderBy: { price: "asc" },
-  });
+    }),
+    // Legacy plans — kept for grandfathered restaurants. Don't surface
+    // these prominently anymore.
+    prisma.subscriptionPlan.findMany({
+      include: { _count: { select: { restaurants: true } } },
+      orderBy: { price: "asc" },
+    }),
+  ]);
 
-  const totalMRR = plans.reduce((sum, p) => {
-    const activeCount = p.restaurants.filter((r) => r.subscriptionStatus === "active").length;
-    return sum + p.price * activeCount;
-  }, 0);
-
-  const trialMRR = plans.reduce((sum, p) => {
-    const trialCount = p.restaurants.filter((r) => r.subscriptionStatus === "trialing").length;
-    return sum + p.price * trialCount;
-  }, 0);
+  // MRR = sum of monthlyPriceCents over RestaurantAddOn rows where status
+  // is "active". Trialing is a future-MRR signal — surfaced separately.
+  let activeMrrCents = 0;
+  let trialingMrrCents = 0;
+  let pastDueMrrCents = 0;
+  for (const addOn of addOns) {
+    for (const sub of addOn.restaurantAddOns) {
+      const cents = addOn.monthlyPriceCents ?? 0;
+      if (sub.status === "active") activeMrrCents += cents;
+      else if (sub.status === "trialing") trialingMrrCents += cents;
+      else if (sub.status === "past_due") pastDueMrrCents += cents;
+    }
+  }
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Billing & Subscriptions</h1>
         <Link
-          href="/superadmin/billing/plans"
+          href="/superadmin/add-ons"
           className="inline-flex items-center gap-1.5 text-sm font-semibold bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition"
         >
-          <Settings className="w-4 h-4" /> Manage Plans
+          <Settings className="w-4 h-4" /> Manage Add-On Catalog
         </Link>
       </div>
 
+      {/* Stripe config snapshot */}
       <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 mb-6">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
@@ -60,66 +94,118 @@ export default async function SuperadminBilling() {
         </div>
       </div>
 
+      {/* Top-line MRR — split active / trialing / past-due so the operator
+          can see real revenue vs. at-risk revenue at a glance. */}
       <div className="grid md:grid-cols-3 gap-5 mb-8">
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <div className="text-sm text-gray-500 mb-1">Current MRR</div>
-          <div className="text-3xl font-bold text-green-600">{formatCurrency(totalMRR)}</div>
-          <div className="text-xs text-gray-400 mt-1">Active subscriptions only</div>
+          <div className="text-sm text-gray-500 mb-1">Active MRR</div>
+          <div className="text-3xl font-bold text-green-600">{formatCurrency(activeMrrCents / 100)}</div>
+          <div className="text-xs text-gray-400 mt-1">Billing right now</div>
         </div>
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <div className="text-sm text-gray-500 mb-1">Potential MRR (trials)</div>
-          <div className="text-3xl font-bold text-yellow-600">{formatCurrency(trialMRR)}</div>
-          <div className="text-xs text-gray-400 mt-1">If all trials convert</div>
+          <div className="text-sm text-gray-500 mb-1">Trialing MRR</div>
+          <div className="text-3xl font-bold text-amber-600">{formatCurrency(trialingMrrCents / 100)}</div>
+          <div className="text-xs text-gray-400 mt-1">Will convert (or not) on trial end</div>
         </div>
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <div className="text-sm text-gray-500 mb-1">Total MRR Potential</div>
-          <div className="text-3xl font-bold text-blue-600">{formatCurrency(totalMRR + trialMRR)}</div>
-          <div className="text-xs text-gray-400 mt-1">Active + trials</div>
+          <div className="text-sm text-gray-500 mb-1">Past-due MRR</div>
+          <div className="text-3xl font-bold text-red-600">{formatCurrency(pastDueMrrCents / 100)}</div>
+          <div className="text-xs text-gray-400 mt-1">At-risk — card failed</div>
         </div>
       </div>
 
-      <div className="space-y-5">
-        {plans.map((plan) => {
-          const active = plan.restaurants.filter((r) => r.subscriptionStatus === "active");
-          const trial = plan.restaurants.filter((r) => r.subscriptionStatus === "trial");
+      {/* Add-on adoption */}
+      <div className="space-y-5 mb-10">
+        {addOns.map((addOn) => {
+          const active = addOn.restaurantAddOns.filter((s) => s.status === "active");
+          const trialing = addOn.restaurantAddOns.filter((s) => s.status === "trialing");
+          const pastDue = addOn.restaurantAddOns.filter((s) => s.status === "past_due");
+          const mrrFromThis = active.length * (addOn.monthlyPriceCents ?? 0);
           return (
-            <div key={plan.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div key={addOn.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
               <div className="flex items-center justify-between p-5 border-b border-gray-100">
-                <div>
-                  <div className="font-bold text-gray-900 text-lg">{plan.name}</div>
-                  <div className="text-sm text-gray-500">{formatCurrency(plan.price)}/month</div>
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-purple-500" />
+                  <div>
+                    <div className="font-bold text-gray-900 text-lg">{addOn.name}</div>
+                    <div className="text-sm text-gray-500">{formatCurrency((addOn.monthlyPriceCents ?? 0) / 100)}/month</div>
+                  </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold text-green-600 text-lg">{formatCurrency(plan.price * active.length)}/mo</div>
-                  <div className="text-xs text-gray-400">{active.length} active · {trial.length} trial</div>
+                  <div className="font-bold text-green-600 text-lg">{formatCurrency(mrrFromThis / 100)}/mo</div>
+                  <div className="text-xs text-gray-400">
+                    {active.length} active · {trialing.length} trial
+                    {pastDue.length > 0 && ` · ${pastDue.length} past-due`}
+                  </div>
                 </div>
               </div>
-              {plan.restaurants.length > 0 && (
+              {addOn.restaurantAddOns.length > 0 ? (
                 <div className="divide-y divide-gray-50">
-                  {plan.restaurants.map((r) => (
-                    <div key={r.id} className="flex items-center justify-between px-5 py-3 text-sm">
-                      <span className="text-gray-800">{r.name}</span>
+                  {addOn.restaurantAddOns.map((sub) => (
+                    <div key={sub.id} className="flex items-center justify-between px-5 py-3 text-sm">
+                      <Link href={`/superadmin/restaurants/${sub.restaurant.id}`} className="text-gray-800 hover:text-blue-600 hover:underline">
+                        {sub.restaurant.name}
+                      </Link>
                       <div className="flex items-center gap-3">
-                        {r.trialEndsAt && r.subscriptionStatus === "trialing" && (
-                          <span className="text-xs text-gray-400">Trial ends {new Date(r.trialEndsAt).toLocaleDateString()}</span>
+                        {sub.currentPeriodEnd && (
+                          <span className="text-xs text-gray-400">
+                            Renews {new Date(sub.currentPeriodEnd).toLocaleDateString()}
+                          </span>
                         )}
                         <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                          r.subscriptionStatus === "active" ? "bg-green-100 text-green-700"
-                          : r.subscriptionStatus === "trialing" ? "bg-yellow-100 text-yellow-700"
-                          : r.subscriptionStatus === "past_due" ? "bg-red-100 text-red-700"
+                          sub.status === "active" ? "bg-green-100 text-green-700"
+                          : sub.status === "trialing" ? "bg-amber-100 text-amber-700"
+                          : sub.status === "past_due" ? "bg-red-100 text-red-700"
                           : "bg-gray-100 text-gray-600"
                         }`}>
-                          {r.subscriptionStatus}
+                          {sub.status}
                         </span>
                       </div>
                     </div>
                   ))}
                 </div>
+              ) : (
+                <div className="px-5 py-6 text-sm text-gray-400 italic text-center">
+                  No restaurants on this add-on yet.
+                </div>
               )}
             </div>
           );
         })}
+        {addOns.length === 0 && (
+          <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 text-center text-sm text-gray-500">
+            No add-ons in catalog.{" "}
+            <Link href="/superadmin/add-ons" className="text-orange-600 hover:underline font-semibold">
+              Set one up →
+            </Link>
+          </div>
+        )}
       </div>
+
+      {/* Legacy subscription plans — collapsed reference. Every new signup
+          defaults to Free; non-Free rows here are grandfathered. */}
+      <details className="bg-gray-50 rounded-xl p-5 border border-gray-200">
+        <summary className="cursor-pointer text-sm font-semibold text-gray-600 hover:text-gray-900 flex items-center gap-2">
+          <AlertTriangle className="w-4 h-4 text-gray-400" />
+          Legacy subscription plans (pre-add-ons era)
+        </summary>
+        <div className="mt-4 text-xs text-gray-500 mb-3">
+          New signups default to the Free plan. Non-Free plans below are kept
+          only for grandfathered restaurants — they no longer drive billing.
+        </div>
+        <div className="space-y-2">
+          {plans.map((p) => (
+            <div key={p.id} className="flex items-center justify-between text-sm py-2 px-3 bg-white rounded border border-gray-100">
+              <div className="flex items-center gap-2">
+                <Users className="w-3.5 h-3.5 text-gray-400" />
+                <span className="font-medium text-gray-700">{p.name}</span>
+                <span className="text-xs text-gray-500">{formatCurrency(p.price)}/mo</span>
+              </div>
+              <span className="text-xs text-gray-500">{p._count.restaurants} restaurant{p._count.restaurants === 1 ? "" : "s"}</span>
+            </div>
+          ))}
+        </div>
+      </details>
     </div>
   );
 }
