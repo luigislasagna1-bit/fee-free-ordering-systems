@@ -321,8 +321,12 @@ export function AdminSidebar({
 
       {/* Setup-progress chip just under the header (when there's an open restaurant) */}
       {!collapsed && setupProgress && setupProgress.percent < 100 && (
+        // Drives the guided walkthrough (see /admin/setup/next).
+        // publishReady === all required done — drop the owner on the
+        // wizard page so they see the green Publish CTA. Otherwise
+        // jump straight to the first incomplete required step.
         <Link
-          href="/admin"
+          href={setupProgress.publishReady ? "/admin/setup" : "/admin/setup/next"}
           className="mx-2 mt-3 mb-1 bg-gradient-to-r from-orange-500/20 to-orange-500/10 border border-orange-500/40 rounded-lg px-3 py-2 text-xs hover:border-orange-500/70 transition"
         >
           <div className="flex items-center justify-between mb-1.5">

@@ -5,6 +5,7 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { ImpersonationBanner } from "@/components/admin/ImpersonationBanner";
 import { EmailVerificationBanner } from "@/components/admin/EmailVerificationBanner";
+import { GuidedSetupPill } from "@/components/admin/GuidedSetupPill";
 import { getSessionUser } from "@/lib/session";
 import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import prisma from "@/lib/db";
@@ -162,6 +163,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <main className="flex-1 overflow-y-auto p-6">{children}</main>
           </div>
         </div>
+        {setupProgress && <GuidedSetupPill progress={setupProgress} />}
       </div>
     </NextIntlClientProvider>
   );

@@ -33,11 +33,14 @@ export function AdminHeader({
   return (
     <div className="flex-shrink-0">
     {showSetupBanner && setupProgress && (
-      // Links to the dedicated setup wizard (Phase B). Was /admin before;
-      // /admin/setup gives owners the focused step-by-step view rather
-      // than the dashboard.
+      // /admin/setup/next walks the owner through required steps one
+      // at a time: it redirects straight to their first incomplete
+      // required step. When nothing required is left, it falls back to
+      // /admin/setup so the green "Publish my restaurant" CTA is what
+      // they see. Linking the banner here turns it into a literal
+      // "next thing to do" button rather than a checklist dump.
       <Link
-        href="/admin/setup"
+        href={setupProgress.publishReady ? "/admin/setup" : "/admin/setup/next"}
         className="block bg-gradient-to-r from-orange-50 to-amber-50 border-b border-orange-200 px-6 py-2 hover:from-orange-100 hover:to-amber-100 transition"
       >
         <div className="flex items-center justify-between gap-4">

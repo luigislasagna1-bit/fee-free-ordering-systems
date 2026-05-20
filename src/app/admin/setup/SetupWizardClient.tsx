@@ -123,6 +123,21 @@ export function SetupWizardClient({
             />
           </div>
         </div>
+
+        {/* Guided-walkthrough CTA. Sends the owner to the first incomplete
+            required step via /admin/setup/next; after they save, the
+            sticky banner on the next page brings them back here for the
+            next one. Hidden once nothing required is left — the green
+            Publish CTA below takes over from there. */}
+        {!isPublished && progress.requiredStepsRemaining.length > 0 && (
+          <Link
+            href="/admin/setup/next"
+            className="mt-5 inline-flex items-center gap-2 bg-white text-orange-600 hover:bg-orange-50 font-bold px-5 py-2.5 rounded-xl text-sm shadow-md transition"
+          >
+            {progress.completedSteps === 0 ? "Start guided setup" : "Continue where you left off"}
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        )}
       </div>
 
       {/* ─── SECTIONS ───────────────────────────────────────────────── */}
@@ -178,6 +193,17 @@ export function SetupWizardClient({
                       </li>
                     ))}
                   </ul>
+                  {/* Big, obvious "Take me there" button — same destination
+                      as the hero CTA, repeated here because owners who
+                      scroll all the way to the publish card shouldn't
+                      have to scroll back up to find the guided path. */}
+                  <Link
+                    href="/admin/setup/next"
+                    className="mt-4 inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-lg text-sm shadow transition"
+                  >
+                    Take me to the next step
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
                 </>
               )}
             </div>
