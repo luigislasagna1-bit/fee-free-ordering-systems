@@ -32,6 +32,22 @@ const SCRIPT = `(function(){
     // it, we fall back to the floating bottom-right launcher.
     var targetSel = s && s.getAttribute("data-target");
 
+    // Install-detection heartbeat. Fire exactly ONCE per page session.
+    // Server-side updateMany no-ops after the first time widgetInstalledAt
+    // is set, so this is cheap on the backend regardless of host-page
+    // traffic. Fire-and-forget — we don't care if it succeeds, the host
+    // page should never block or error on our heartbeat. Uses sendBeacon
+    // when available so the request survives a fast navigate-away;
+    // falls back to a no-cors fetch otherwise.
+    try {
+      var beaconUrl = base + "/api/widget/heartbeat?id=" + encodeURIComponent(publicId);
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(beaconUrl);
+      } else {
+        fetch(beaconUrl, { mode: "no-cors", keepalive: true }).catch(function(){});
+      }
+    } catch (e) { /* never block on heartbeat */ }
+
     // Launcher button (style works inline OR floating)
     var btn = document.createElement("button");
     btn.type = "button";

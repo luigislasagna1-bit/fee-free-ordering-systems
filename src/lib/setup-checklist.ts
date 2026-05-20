@@ -23,6 +23,7 @@ export type StepId =
   // Services & Opening Hours
   | "services.atLeastOne"
   | "services.openingHours"
+  | "services.deliveryZones"
   // Payment Methods & Taxes
   | "payments.taxation"
   | "payments.currency"
@@ -83,7 +84,7 @@ export interface ChecklistInput {
     | "id" | "name" | "address" | "city" | "country" | "phone"
     | "lat" | "lng" | "cuisineType" | "taxRate"
     | "acceptsPickup" | "acceptsDelivery" | "acceptsDineIn" | "acceptsReservations"
-    | "ownerEmailVerifiedAt"
+    | "ownerEmailVerifiedAt" | "widgetInstalledAt"
   >;
   hours: Pick<OpeningHours, "isOpen">[];
   categories: Pick<MenuCategory, "id">[];
@@ -91,11 +92,15 @@ export interface ChecklistInput {
   hasPaymentProvider: boolean;
   hasKitchenDevice: boolean;
   notificationRecipientCount: number;
+  /** Count of active delivery zones for the restaurant. Required to publish
+   *  ONLY when acceptsDelivery is enabled — pickup-only restaurants don't
+   *  need zones. */
+  deliveryZoneCount: number;
 }
 
 /** Single source of truth for what "ready to publish" means. */
 export function computeSetupProgress(input: ChecklistInput): SetupProgress {
-  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount } = input;
+  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount } = input;
 
   const hasAddress = !!restaurant.address && !!restaurant.city && !!restaurant.country;
   const hasMapPin = restaurant.lat != null && restaurant.lng != null;
@@ -159,6 +164,21 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
       href: "/admin/hours",
       complete: hasOpenDay,
     },
+    {
+      id: "services.deliveryZones",
+      section: "services",
+      label: "Delivery zones",
+      // Delivery zones are REQUIRED if the restaurant accepts delivery —
+      // otherwise the customer-facing order page has no idea where to
+      // deliver to and the order POST will reject every delivery attempt
+      // with "Minimum order for this delivery area is $0.00" (zone math
+      // falls through to the restaurant-level default with no minimum).
+      // Pickup-only restaurants don't need zones, so this step quietly
+      // auto-completes for them.
+      required: !!restaurant.acceptsDelivery,
+      href: "/admin/delivery",
+      complete: !restaurant.acceptsDelivery || deliveryZoneCount > 0,
+    },
 
     // ─── Payment Methods & Taxes ────────────────────────────────────────
     {
@@ -183,12 +203,17 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
     {
       id: "payments.methodConfigured",
       section: "payments",
-      label: "Payment methods",
-      // Optional in v1 — restaurants can accept cash/pay-at-store without
-      // online payments. Becomes auto-complete because cash is always valid.
+      label: "Online card payments configured",
+      // Optional. Cash / pay-at-store ALWAYS works without any setup —
+      // a restaurant can launch with cash-only and add online cards
+      // later via the "Online Payments" add-on + Stripe Connect.
+      // The step shows as DONE only when they've actually wired Stripe
+      // (so they see a real ✓ when they finish onboarding) — there was
+      // a `|| true` bug here that made it always complete, which is
+      // why this step never appeared to "do" anything when toggled.
       required: false,
       href: "/admin/payments/providers",
-      complete: hasPaymentProvider || true,
+      complete: hasPaymentProvider,
     },
 
     // ─── Taking Orders ──────────────────────────────────────────────────
@@ -241,10 +266,15 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
     {
       id: "publish.widgetReady",
       section: "publishing",
-      label: "Install the Legacy Website widget",
-      required: false, // optional install step — Phase 3 hooks the actual UI
+      label: "Install the widget on your website",
+      // Optional — restaurants who don't have their own external website
+      // (or who just use the marketplace / hosted-site add-on) don't need
+      // to install this. Tracked via Restaurant.widgetInstalledAt, which
+      // gets stamped when the embed widget.js script fires its install
+      // heartbeat from any third-party host page (see /api/widget/heartbeat).
+      required: false,
       href: "/admin/publishing/legacy-website",
-      complete: false, // toggled after the owner opens the publishing page in Phase 3
+      complete: !!restaurant.widgetInstalledAt,
     },
   ];
 
