@@ -199,10 +199,27 @@ export async function getSessionUser(opts?: { preferKitchen?: boolean }): Promis
   const primary  = opts?.preferKitchen ? kitchenUser : adminUser;
   const fallback = opts?.preferKitchen ? adminUser  : kitchenUser;
 
-  // Pick the resolved user before active-location swap.
-  const chosen = primary?.restaurantId ? primary
-    : fallback?.restaurantId ? fallback
-    : (primary ?? fallback ?? null);
+  // Pick the resolved user. PRIMARY wins if it exists, period.
+  //
+  // The previous logic tried to be clever and pick whichever session
+  // had a `restaurantId`. That broke superadmins catastrophically: a
+  // superadmin admin session has restaurantId=null (correct — they own
+  // no restaurant), so if the same browser ALSO had a stale kitchen
+  // session from earlier /kitchen testing (which always has a
+  // restaurantId), the fallback would WIN and Luigi would be silently
+  // downgraded to role="kitchen_staff" on /superadmin/* pages. That
+  // caused the recurring "click Add-Ons, get logged out" bug AND the
+  // "click a restaurant from the list, end up at /superadmin
+  // dashboard" bug (the detail page redirected to /admin because
+  // role !== superadmin, then the proxy bounced /admin → /superadmin).
+  //
+  // Right rule: the caller's PREFERRED session wins. The kitchen
+  // session (or admin session, with preferKitchen=true) is purely
+  // a fallback for when the preferred one is absent. Having a
+  // restaurantId is NOT a tiebreaker — it just means the user has
+  // a restaurant context, which is irrelevant to choosing which
+  // session to authenticate WITH.
+  const chosen = primary ?? fallback ?? null;
 
   // Active-location swap. Only applies to a non-impersonating restaurant_admin
   // who owns the parent and is switching to one of its sibling locations.
