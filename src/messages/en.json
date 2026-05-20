@@ -340,6 +340,8 @@
     "switchToASAP": "Switch to ASAP",
     "cashOnPickup": "Cash on Pickup",
     "cashOnDelivery": "Cash on Delivery",
+    "cardOnPickup": "Card on Pickup",
+    "cardOnDelivery": "Card on Delivery",
     "payOnlineCard": "Pay Online (Card)",
     "cardComingSoon": "Online card payment coming soon. Please pay on {type} for now.",
     "anyInstructions": "Any special instructions…",

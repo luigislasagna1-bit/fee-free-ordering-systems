@@ -26,8 +26,49 @@ import prisma from "@/lib/db";
 import {
   MARKETPLACE_MONTHLY_CAP_CENTS,
   MARKETPLACE_PER_ORDER_CENTS,
+  PLATFORM_CURRENCY,
 } from "@/lib/marketplace";
+import { getPlatformTax, stripeTaxRateDisplayName, type PlatformTax } from "@/lib/platform-tax";
 import { getStripe, stripeReady } from "@/lib/stripe";
+
+type Stripe = Awaited<ReturnType<typeof getStripe>>;
+
+/**
+ * Reusable Stripe TaxRate IDs keyed by ratePct (so we don't duplicate
+ * "13%", "5%", "0%" rates across runs). Cached in-process per cold-start.
+ * Each unique rate gets one Stripe TaxRate object; subsequent settlements
+ * for the same province reuse it.
+ */
+const taxRateIdCache = new Map<number, string>();
+async function getOrCreateProvincialTaxRate(stripe: Stripe, tax: PlatformTax): Promise<string | null> {
+  if (tax.ratePct === 0) return null; // No tax → don't attach a tax_rate
+  const cached = taxRateIdCache.get(tax.ratePct);
+  if (cached) return cached;
+  try {
+    const displayName = stripeTaxRateDisplayName(tax);
+    // Scan active rates and match by (percentage, display_name). Stripe
+    // doesn't have a "find or create" — fortunately the list is small.
+    const list = await stripe.taxRates.list({ active: true, limit: 100 });
+    const found = list.data.find(
+      (t) => t.percentage === tax.ratePct && t.display_name === displayName,
+    );
+    if (found) {
+      taxRateIdCache.set(tax.ratePct, found.id);
+      return found.id;
+    }
+    const created = await stripe.taxRates.create({
+      display_name: displayName,
+      description: `Platform tax — ${tax.label}`,
+      percentage: tax.ratePct,
+      inclusive: false,
+    });
+    taxRateIdCache.set(tax.ratePct, created.id);
+    return created.id;
+  } catch (e) {
+    console.error(`[marketplace-settlement] failed to ensure tax rate ${tax.ratePct}%`, e);
+    return null;
+  }
+}
 
 export type SettlementResult = {
   restaurantId: string;
@@ -70,18 +111,29 @@ export async function settleMarketplaceMonth(opts: { now?: Date; monthStart?: Da
   const now = opts.now ?? new Date();
   const targetMonth = opts.monthStart ?? previousMonthStartUtc(now);
 
-  // Every listing with at least 1 order in the period is eligible.
-  // We use the listing's counter because it's the canonical "orders
-  // attributable to marketplace this month" — Order.viaMarketplace
-  // is also true on those rows, but the counter is authoritative since
-  // it's what recordMarketplaceOrder() bumps once per order.
+  // Every PAYG listing with activity in the period is eligible.
+  // Restaurants on the monthly plan (billingMode="monthly") pay flat
+  // $199.99 via their Stripe subscription — the settlement engine
+  // skips them. Their listing counters still tick (for display) but
+  // don't translate into a per-order invoice.
   const candidates = await prisma.marketplaceListing.findMany({
+    where: { billingMode: "payg" },
     select: {
       id: true,
       restaurantId: true,
       currentMonthOrders: true,
       currentMonthStartedAt: true,
-      restaurant: { select: { name: true, stripeCustomerId: true } },
+      billingMode: true,
+      restaurant: {
+        select: {
+          name: true,
+          stripeCustomerId: true,
+          // country + state drive the per-province tax lookup. CRA
+          // requires destination-based tax on Canadian supplies.
+          country: true,
+          state: true,
+        },
+      },
     },
   });
 
@@ -191,18 +243,35 @@ export async function settleMarketplaceMonth(opts: { now?: Date; monthStart?: Da
       failureReason = "Restaurant has no Stripe customer ID (no prior subscription)";
     } else {
       try {
+        // Compute tax based on THIS restaurant's address (CRA rules):
+        // Canadian → province-specific GST/HST; US/intl → 0%.
+        const tax = getPlatformTax({
+          country: c.restaurant.country,
+          state: c.restaurant.state,
+        });
+        const taxRateId = tax.ratePct > 0
+          ? await getOrCreateProvincialTaxRate(stripe, tax)
+          : null;
+
         // Step 1: create the InvoiceItem (the line item).
+        // tax_rates (when present) applies the destination-province tax
+        // on top of `amount` at invoice finalization. US/international
+        // restaurants get no tax_rate at all (tax-exempt).
         await stripe.invoiceItems.create({
           customer: c.restaurant.stripeCustomerId,
-          amount: invoiced, // cents
-          currency: "usd",
+          amount: invoiced, // cents, pre-tax
+          currency: PLATFORM_CURRENCY,
           description: `Fee Free Marketplace — ${orders} order${orders === 1 ? "" : "s"} (${monthLabel(targetMonth)})`,
+          ...(taxRateId ? { tax_rates: [taxRateId] } : {}),
           metadata: {
             type: "marketplace_settlement",
             restaurantId: c.restaurantId,
             monthStart: targetMonth.toISOString(),
             ordersInMonth: String(orders),
             settlementId: settlement.id,
+            preTaxCents: String(invoiced),
+            taxRatePct: String(tax.ratePct),
+            taxLabel: tax.label,
           },
         });
         // Step 2: create + finalize the invoice. auto_advance=true tells

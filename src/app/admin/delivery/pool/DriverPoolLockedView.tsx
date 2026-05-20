@@ -29,11 +29,13 @@ export function DriverPoolLockedView() {
             <div className="text-xs uppercase tracking-wider opacity-80">Driver Pool</div>
             <div className="text-3xl font-bold mt-1">$19.99<span className="text-lg">/mo</span></div>
             <div className="text-sm opacity-90">standalone — plus per-delivery fees</div>
+            <div className="text-[10px] opacity-70 mt-1">USD · CA tax by province</div>
           </div>
           <div className="bg-white/15 backdrop-blur rounded-xl p-4 border-2 border-white/40">
             <div className="text-xs uppercase tracking-wider opacity-80">Or get it free</div>
             <div className="text-3xl font-bold mt-1">$0</div>
-            <div className="text-sm opacity-90">included with Marketplace</div>
+            <div className="text-sm opacity-90">included with Marketplace (monthly plan)</div>
+            <div className="text-[10px] opacity-70 mt-1">PAYG marketplace ≠ included</div>
           </div>
         </div>
 
@@ -48,7 +50,7 @@ export function DriverPoolLockedView() {
             href="/admin/marketplace"
             className="inline-flex items-center justify-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur text-white font-bold px-5 py-2.5 rounded-xl text-sm transition border border-white/30"
           >
-            <Sparkles className="w-4 h-4" /> Or join Marketplace — free
+            <Sparkles className="w-4 h-4" /> Or get Marketplace Monthly ($199.99/mo)
           </Link>
         </div>
       </div>

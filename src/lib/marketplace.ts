@@ -23,15 +23,28 @@ export const UBER_EATS_COMMISSION_PCT = 30;
  *  stays consistent even if a superadmin tweaks the AddOn's price. */
 export const MARKETPLACE_MONTHLY_CAP_CENTS = 24999; // $249.99
 
-/** Per-order rate for marketplace orders. This is what the platform
- *  bills the restaurant — NOT what the customer pays (customer pays
- *  the menu price, same as a direct order). Covers system, operations,
- *  marketing, support — explicitly NOT delivery (that's ShipDay
- *  passthrough, separately settled).
+/** Per-order rate for marketplace orders on the pay-as-you-go (PAYG)
+ *  billing mode. This is what the platform bills the restaurant —
+ *  NOT what the customer pays (customer pays the menu price, same
+ *  as a direct order). Covers system, operations, marketing, support
+ *  — explicitly NOT delivery (that's ShipDay passthrough).
  *
- *  Free-base model: join the marketplace for $0/mo. Billed monthly
- *  based on order volume, capped at MARKETPLACE_MONTHLY_CAP_CENTS. */
+ *  PAYG only — restaurants on the $199.99/mo monthly plan pay flat
+ *  via Stripe subscription and the settlement engine skips them. */
 export const MARKETPLACE_PER_ORDER_CENTS = 300; // $3.00/order
+
+/** Flat monthly subscription price for the Marketplace monthly plan.
+ *  Source of truth for the $199.99 price tag we show in marketing UI.
+ *  The actual Stripe Price is created from AddOn.monthlyPriceCents
+ *  when the superadmin clicks Sync — keep this in sync with the seed. */
+export const MARKETPLACE_MONTHLY_PLAN_CENTS = 19999; // $199.99
+
+/** USD — the platform always bills in USD regardless of where the
+ *  restaurant is located. Marketing copy + Stripe invoice currency.
+ *  Tax % varies by restaurant location — see src/lib/platform-tax.ts
+ *  (CRA destination-of-supply rules: Canadian = GST/HST per province,
+ *  US/international = exempt). */
+export const PLATFORM_CURRENCY = "usd";
 
 export type PublicListing = {
   id: string;
@@ -52,18 +65,27 @@ export type PublicListing = {
 };
 
 /**
- * Public marketplace browse: every restaurant that has BOTH an active
- * marketplace entitlement AND `isListed = true`. Sorted: featured
- * restaurants first, then by manual sort order, then alphabetical.
+ * Public marketplace browse: every restaurant that's opted into the
+ * marketplace AND `isListed = true`. Sorted: featured restaurants
+ * first, then by manual sort order, then alphabetical.
  *
- * This is the read backing the /marketplace page. Result is small
- * enough to render without pagination at typical scale (sub-1000
- * restaurants). When we cross that, we'll add cursor pagination.
+ * "Opted into the marketplace" = EITHER
+ *   - billingMode "monthly" backed by an active marketplace add-on
+ *     subscription ($199.99/mo); OR
+ *   - billingMode "payg" — they hit the PAYG opt-in confirmation page
+ *     and agreed to $3-per-marketplace-order billing.
+ *
+ * Both modes appear identically to customers; the only difference is
+ * how the restaurant gets billed.
+ *
+ * Result is small enough to render without pagination at typical scale
+ * (sub-1000 restaurants). When we cross that we'll add cursor pagination.
  */
 export async function listPublicMarketplaceListings(): Promise<PublicListing[]> {
   // Step 1: candidates — every listing that's set to "listed" and whose
-  // restaurant is active. Pull the restaurant + the active add-on rows
-  // so we can filter by entitlement in one round-trip.
+  // restaurant is active. Pull the active add-on rows so we can verify
+  // monthly subscribers are still entitled (subscription could have
+  // lapsed since the listing was first created).
   const rows = await prisma.marketplaceListing.findMany({
     where: {
       isListed: true,
@@ -92,19 +114,26 @@ export async function listPublicMarketplaceListings(): Promise<PublicListing[]> 
     ],
   });
 
-  // Step 2: filter to only those whose active add-ons grant
-  // `marketplace_listing`. Done in JS because Prisma can't easily
-  // express "JSON array contains X" across the relation.
+  // Step 2: filter by billing mode + entitlement.
+  //   - payg listings are always entitled (no Stripe sub required)
+  //   - monthly listings need an active add-on grant — if the
+  //     subscription lapsed, the webhook would have flipped them back
+  //     to payg, but we double-check here as defense in depth.
   const out: PublicListing[] = [];
   for (const r of rows) {
-    const granted = r.restaurant.addOns.some((sub) => {
-      try {
-        const features = JSON.parse(sub.addOn.enabledFeatures || "[]");
-        return Array.isArray(features) && features.includes("marketplace_listing");
-      } catch {
-        return false;
-      }
-    });
+    let granted = false;
+    if (r.billingMode === "payg") {
+      granted = true;
+    } else if (r.billingMode === "monthly") {
+      granted = r.restaurant.addOns.some((sub) => {
+        try {
+          const features = JSON.parse(sub.addOn.enabledFeatures || "[]");
+          return Array.isArray(features) && features.includes("marketplace_listing");
+        } catch {
+          return false;
+        }
+      });
+    }
     if (!granted) continue;
     out.push({
       id: r.id,
@@ -187,16 +216,53 @@ export async function ensureMarketplaceListing(restaurantId: string): Promise<{ 
  * Returns true if this restaurant is currently surfaceable on the
  * public marketplace. Used by /admin/marketplace and the brand
  * dashboard to show subscription state.
+ *
+ * Either billing mode counts: monthly subscribers (via the add-on
+ * entitlement) AND PAYG opt-ins (via the listing existing) both
+ * appear publicly the same way.
  */
 export async function isOnMarketplace(restaurantId: string): Promise<boolean> {
   const [listing, hasMarketplace] = await Promise.all([
     prisma.marketplaceListing.findUnique({
       where: { restaurantId },
-      select: { isListed: true },
+      select: { isListed: true, billingMode: true },
     }),
     hasFeature(restaurantId, "marketplace_listing"),
   ]);
-  return !!(listing?.isListed && hasMarketplace);
+  if (!listing?.isListed) return false;
+  if (listing.billingMode === "payg") return true;          // PAYG → no sub required
+  if (listing.billingMode === "monthly") return hasMarketplace; // monthly → must be entitled
+  return false;
+}
+
+/**
+ * Returns the marketplace "membership" state for an admin-facing page.
+ * Used by /admin/marketplace to decide which view to render:
+ *   - "none"    → restaurant hasn't opted in OR was previously listed
+ *                 but is now hidden (post-cancellation). Show the
+ *                 two-plan upsell (MarketplaceLockedView).
+ *   - "payg"    → opted into pay-as-you-go AND currently listed; show
+ *                 the listing editor.
+ *   - "monthly" → on the $199.99/mo subscription; show the listing editor.
+ *
+ * A hidden (isListed=false) listing returns "none" so the owner sees
+ * the plan-choice screen again — they have to re-confirm which way they
+ * want to be billed before being re-listed. Avoids the post-cancel
+ * silent-PAYG surprise.
+ */
+export async function getMarketplaceMembership(restaurantId: string): Promise<"none" | "payg" | "monthly"> {
+  const [listing, hasMarketplace] = await Promise.all([
+    prisma.marketplaceListing.findUnique({
+      where: { restaurantId },
+      select: { billingMode: true, isListed: true },
+    }),
+    hasFeature(restaurantId, "marketplace_listing"),
+  ]);
+  // Monthly always wins when the add-on is active — the webhook flips
+  // billingMode to "monthly" on activation, so this is just defensive.
+  if (hasMarketplace) return "monthly";
+  if (listing?.billingMode === "payg" && listing.isListed) return "payg";
+  return "none";
 }
 
 /**

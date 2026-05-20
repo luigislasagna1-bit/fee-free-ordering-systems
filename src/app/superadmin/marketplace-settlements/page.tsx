@@ -67,6 +67,7 @@ export default async function SettlementsPage() {
                 {monthLabel(month)}
               </div>
               <div className="text-2xl font-bold text-gray-900 mt-1">{formatCurrency(b.cents / 100)}</div>
+              <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">pre-tax · USD</div>
               <div className="text-xs text-gray-500 mt-1">{b.total} settlement{b.total === 1 ? "" : "s"}</div>
               <div className="flex flex-wrap gap-1.5 mt-3 text-[10px]">
                 {b.paid > 0 && <Pill tone="emerald">{b.paid} paid</Pill>}

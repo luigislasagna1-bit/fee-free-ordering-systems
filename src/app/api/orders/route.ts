@@ -9,11 +9,14 @@ import { fireOrderNotifications } from "@/lib/order-notifications";
 import {
   computeUberEatsEquivalentCents,
   recordMarketplaceOrder,
+  isOnMarketplace,
 } from "@/lib/marketplace";
-import { hasFeature } from "@/lib/entitlements";
-
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "catering"] as const;
-const ALLOWED_PAYMENT_METHODS = ["cash", "card"] as const;
+// "cash"           = pay on pickup/delivery in cash
+// "card"           = pay online by card via Stripe (gated by cardPaymentEnabled)
+// "card_in_person" = customer pays by card in person (restaurant's own POS).
+//                    No Stripe charge — same kitchen flow as cash.
+const ALLOWED_PAYMENT_METHODS = ["cash", "card", "card_in_person"] as const;
 const MAX_ITEMS = 50;
 const MAX_STRING = 500;
 
@@ -314,11 +317,13 @@ export async function POST(req: NextRequest) {
 
     // ── Marketplace attribution + savings snapshot ──────────────────────────
     // Stamp this order as "via marketplace" ONLY if the client hint is set
-    // AND the restaurant is currently entitled. A tampered client request
-    // can't fake-stamp a direct order — entitlement is enforced server-side.
+    // AND the restaurant is currently on a marketplace plan (monthly OR
+    // payg). A tampered client request can't fake-stamp a direct order —
+    // membership is enforced server-side. Direct widget/website orders
+    // (no ?from=marketplace) stay viaMarketplace=false → never billed.
     const claimsMarketplace = from === "marketplace";
     const viaMarketplace = claimsMarketplace
-      ? await hasFeature(restaurant.id, "marketplace_listing")
+      ? await isOnMarketplace(restaurant.id)
       : false;
     const savedVsUberEatsCents = viaMarketplace
       ? computeUberEatsEquivalentCents(Math.round(serverTotal * 100))

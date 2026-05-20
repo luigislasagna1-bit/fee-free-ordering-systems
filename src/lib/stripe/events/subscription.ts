@@ -164,14 +164,43 @@ async function handleAddOnSubscriptionEvent(
   // the customer-facing UI lights up immediately instead of waiting for
   // a first admin-page visit. Idempotent helpers — safe on Stripe retries.
   const isActive = status === "active" || status === "trialing";
-  if (isActive && addOn.slug === "marketplace") {
-    // Marketplace listing auto-creation: the moment the customer's
-    // marketplace subscription activates, they appear on /marketplace
-    // with sensible defaults (tagline = restaurant slogan, banner =
-    // restaurant banner, etc.). They can fine-tune in /admin/marketplace.
-    ensureMarketplaceListing(restaurantId).catch((e) =>
-      console.error("[stripe] ensureMarketplaceListing failed:", e),
-    );
+  if (addOn.slug === "marketplace") {
+    if (isActive) {
+      // Marketplace listing auto-creation: the moment the customer's
+      // marketplace subscription activates, they appear on /marketplace
+      // with sensible defaults (tagline = restaurant slogan, banner =
+      // restaurant banner, etc.). They can fine-tune in /admin/marketplace.
+      // Also flip billingMode to "monthly" — restaurants on the flat
+      // plan are NOT settled per-order by the monthly settlement cron.
+      try {
+        await ensureMarketplaceListing(restaurantId);
+        await prisma.marketplaceListing.update({
+          where: { restaurantId },
+          data: { billingMode: "monthly" },
+        });
+      } catch (e) {
+        console.error("[stripe] marketplace activation side-effects failed:", e);
+      }
+    } else {
+      // Monthly subscription ended (cancelled / past-due / expired). The
+      // listing row stays for historical / counter data, but we:
+      //   - HIDE it (isListed=false) so it disappears from the public
+      //     marketplace immediately — no surprise discovery while the
+      //     restaurant figures out their next step.
+      //   - Flip billingMode back to "payg" as the safe default. The
+      //     restaurant has to RE-VISIT /admin/marketplace to re-list:
+      //     they'll see the locked view with both plan choices and
+      //     either re-subscribe to monthly or explicitly opt into PAYG.
+      // This prevents the silent "I cancelled but I'm still being
+      // billed per order" surprise — they can't accrue PAYG fees while
+      // hidden from the marketplace (no marketplace orders → no $3 charges).
+      await prisma.marketplaceListing
+        .updateMany({
+          where: { restaurantId },
+          data: { billingMode: "payg", isListed: false },
+        })
+        .catch((e) => console.error("[stripe] marketplace deactivation failed:", e));
+    }
   }
 }
 

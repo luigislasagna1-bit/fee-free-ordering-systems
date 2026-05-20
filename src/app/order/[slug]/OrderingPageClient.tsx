@@ -240,6 +240,7 @@ export function OrderingPageClient({
   themeSettings = null,
   locale = "en",
   isEmbedded = false,
+  acceptedMethods = ["cash"],
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
@@ -252,6 +253,12 @@ export function OrderingPageClient({
    *  the SEO website (full marketing page) remains the paid upgrade
    *  differentiator. */
   isEmbedded?: boolean;
+  /** Payment method slugs the restaurant has selected in /admin/payments.
+   *  Possible values: "cash", "card_in_person", "online_card". The
+   *  checkout picker renders ONLY these options — owners who haven't
+   *  enabled Online Payments won't see a "Pay Online (Card)" button
+   *  on their customer page. */
+  acceptedMethods?: string[];
 }) {
   const t = useTranslations("ordering");
   const tT = useTranslations("ordering.toasts");
@@ -292,9 +299,16 @@ export function OrderingPageClient({
   const [editingCartIndex, setEditingCartIndex] = useState<number | null>(null);
   // Drives the "Adjust this item?" confirmation dialog.
   const [pendingEditIndex, setPendingEditIndex] = useState<number | null>(null);
+  // Default payment method: pick the FIRST accepted method so the
+  // checkout picker doesn't start on something the restaurant doesn't
+  // actually take. "cash" if accepted (the most common case), otherwise
+  // whatever's first in the array, otherwise "cash" as a safety net.
+  const defaultPaymentMethod =
+    acceptedMethods.includes("cash") ? "cash"
+    : acceptedMethods[0] ?? "cash";
   const [customerInfo, setCustomerInfo] = useState({
     name: "", email: "", phone: "", address: "", city: "", zip: "",
-    notes: "", paymentMethod: "cash", scheduledFor: "",
+    notes: "", paymentMethod: defaultPaymentMethod, scheduledFor: "",
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
   const [tipPercent, setTipPercent] = useState<number>(0); // 0/10/15/20 or custom amount
@@ -1253,6 +1267,7 @@ export function OrderingPageClient({
           orderLoading={orderLoading}
           placeOrder={placeOrder}
           cardPaymentEnabled={cardPaymentEnabled}
+          acceptedMethods={acceptedMethods}
           couponCode={couponCode}
           setCouponCode={setCouponCode}
           couponId={couponId}
