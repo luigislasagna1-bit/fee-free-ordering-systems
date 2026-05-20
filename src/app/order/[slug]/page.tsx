@@ -130,6 +130,21 @@ export default async function OrderingPage({
 
   const messages = (await import(`@/messages/${locale}.json`)).default;
 
+  // Accepted payment methods — owner sets these in /admin/payments.
+  // The customer checkout picker reflects only what the restaurant
+  // actually accepts. Defensive parse: legacy / malformed JSON falls
+  // back to ["cash", "card"] so checkout never breaks.
+  let acceptedMethods: string[] = ["cash"];
+  const raw = (restaurant as any).paymentMethods;
+  if (typeof raw === "string") {
+    try {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        acceptedMethods = parsed.filter((m: unknown): m is string => typeof m === "string");
+      }
+    } catch { /* keep default */ }
+  }
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <OrderingPageClient
@@ -139,6 +154,7 @@ export default async function OrderingPage({
         themeSettings={(restaurant as any).themeSettings ?? null}
         locale={locale}
         isEmbedded={isEmbedded}
+        acceptedMethods={acceptedMethods}
       />
     </NextIntlClientProvider>
   );

@@ -19,39 +19,62 @@ export function MarketplaceLockedView() {
           <span className="text-sm font-bold uppercase tracking-wider opacity-90">Add-on</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-          Get on the Fee Free Marketplace — free to join
+          Get on the Fee Free Marketplace
         </h1>
         <p className="mt-2 text-white/90 text-sm sm:text-base max-w-2xl leading-relaxed">
           List your restaurant on our public marketplace at <code className="bg-white/15 px-1.5 py-0.5 rounded text-xs">/marketplace</code>.
-          $0 to sign up, opt in or out any time. You pay only when orders come in — and the bill is capped.
+          No 30% commission, no extra fees for customers. Pick the plan that fits your volume —
+          you can switch any time.
         </p>
 
-        {/* Pricing math */}
+        {/* Two billing modes side-by-side. Monthly is the predictable
+            high-volume choice (includes Driver Pool); PAYG is the no-
+            commitment opt-in. Both list you on /marketplace identically. */}
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="bg-white/20 backdrop-blur rounded-xl p-4 border-2 border-white/50">
+            <div className="text-xs uppercase tracking-wider opacity-80 font-bold">Monthly plan</div>
+            <div className="text-3xl font-bold mt-1">$199.99<span className="text-lg">/mo</span></div>
+            <div className="text-sm opacity-90">unlimited orders</div>
+            <ul className="mt-3 space-y-1 text-xs opacity-90">
+              <li className="flex items-center gap-1.5"><Check className="w-3 h-3" /> No per-order fees</li>
+              <li className="flex items-center gap-1.5"><Check className="w-3 h-3" /> Driver Pool included free</li>
+              <li className="flex items-center gap-1.5"><Check className="w-3 h-3" /> Predictable, fixed bill</li>
+            </ul>
+            <div className="text-[10px] opacity-70 mt-2">USD · CA tax by province · US/intl exempt</div>
+          </div>
           <div className="bg-white/15 backdrop-blur rounded-xl p-4">
-            <div className="text-xs uppercase tracking-wider opacity-80">Marketplace</div>
+            <div className="text-xs uppercase tracking-wider opacity-80 font-bold">Pay-as-you-go</div>
             <div className="text-3xl font-bold mt-1">$3<span className="text-lg">/order</span></div>
             <div className="text-sm opacity-90">capped at $249.99/month</div>
-            <div className="text-xs mt-2 opacity-80 italic">
-              Free to join. Above ~83 orders, every additional order is <span className="font-bold not-italic">free</span>.
-            </div>
-          </div>
-          <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
-            <div className="text-xs uppercase tracking-wider opacity-80">UberEats / DoorDash</div>
-            <div className="text-3xl font-bold mt-1">30%</div>
-            <div className="text-sm opacity-90">commission on every order, forever</div>
-            <div className="text-xs mt-2 opacity-80 italic">
-              On a $700 order day, that's $210 — almost our entire <span className="font-bold not-italic">monthly</span> cap, gone in one day.
-            </div>
+            <ul className="mt-3 space-y-1 text-xs opacity-90">
+              <li className="flex items-center gap-1.5"><Check className="w-3 h-3" /> No subscription, opt out any time</li>
+              <li className="flex items-center gap-1.5"><Check className="w-3 h-3" /> Above ~83 orders/mo = free</li>
+              <li className="flex items-center gap-1.5 opacity-60"><span className="w-3 h-3 text-center leading-3">×</span> Driver Pool sold separately</li>
+            </ul>
+            <div className="text-[10px] opacity-70 mt-2">USD · CA tax by province · US/intl exempt</div>
           </div>
         </div>
 
-        <Link
-          href="/admin/billing/add-ons"
-          className="inline-flex items-center justify-center gap-2 mt-6 bg-white text-orange-600 hover:bg-orange-50 font-bold px-6 py-3 rounded-xl text-sm shadow-md transition"
-        >
-          <Lock className="w-4 h-4" /> Join the Marketplace — free
-        </Link>
+        <div className="mt-4 bg-white/10 backdrop-blur rounded-lg p-3 text-xs leading-relaxed">
+          <strong className="block mb-0.5">Compare to UberEats / DoorDash:</strong>
+          30% of every order, forever. On a $700 sales day that&apos;s $210 — almost our
+          entire <strong>monthly</strong> bill, gone in one day.
+        </div>
+
+        <div className="mt-5 flex gap-3 flex-wrap">
+          <Link
+            href="/admin/billing/add-ons"
+            className="inline-flex items-center justify-center gap-2 bg-white text-orange-600 hover:bg-orange-50 font-bold px-5 py-2.5 rounded-xl text-sm shadow-md transition"
+          >
+            <Lock className="w-4 h-4" /> Subscribe to Monthly Plan
+          </Link>
+          <Link
+            href="/admin/marketplace/payg-opt-in"
+            className="inline-flex items-center justify-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur text-white font-bold px-5 py-2.5 rounded-xl text-sm transition border border-white/30"
+          >
+            <Sparkles className="w-4 h-4" /> Start Pay-As-You-Go
+          </Link>
+        </div>
       </div>
 
       {/* What you get */}

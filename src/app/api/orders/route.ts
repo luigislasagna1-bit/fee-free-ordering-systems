@@ -13,7 +13,11 @@ import {
 import { hasFeature } from "@/lib/entitlements";
 
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "catering"] as const;
-const ALLOWED_PAYMENT_METHODS = ["cash", "card"] as const;
+// "cash"           = pay on pickup/delivery in cash
+// "card"           = pay online by card via Stripe (gated by cardPaymentEnabled)
+// "card_in_person" = customer pays by card in person (restaurant's own POS).
+//                    No Stripe charge — same kitchen flow as cash.
+const ALLOWED_PAYMENT_METHODS = ["cash", "card", "card_in_person"] as const;
 const MAX_ITEMS = 50;
 const MAX_STRING = 500;
 

@@ -45,6 +45,16 @@ interface Props {
   orderLoading: boolean;
   placeOrder: () => void;
   cardPaymentEnabled: boolean;
+  /** Payment method slugs the restaurant accepts. Drives which picker
+   *  buttons render in the checkout. Possible values:
+   *    "cash"           → Cash on pickup / delivery
+   *    "card_in_person" → Card at pickup / door (POS / mobile reader)
+   *    "online_card"    → Stripe-charged card on the checkout page
+   *  When "online_card" is in this set but cardPaymentEnabled is false
+   *  (no Stripe Connect / no card_payments entitlement), the button
+   *  renders but selecting it shows the "coming soon" notice and the
+   *  order can't actually be placed on card. */
+  acceptedMethods: string[];
   couponCode: string;
   setCouponCode: (s: string) => void;
   couponId: string | null;
@@ -69,6 +79,7 @@ export function CheckoutModal({
   editingSection, setEditingSection,
   orderLoading, placeOrder,
   cardPaymentEnabled,
+  acceptedMethods,
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
   hasZones, geocoding, geocodeError, resolvedZone,
@@ -121,9 +132,16 @@ export function CheckoutModal({
     ? `Scheduled for ${new Date(customerInfo.scheduledFor).toLocaleString()}`
     : `ASAP · ~${orderType === "delivery" ? estimatedDeliveryMinutes : estimatedPickupMinutes} min`;
 
-  const paymentSummary = customerInfo.paymentMethod === "card"
-    ? "Pay online (card)"
-    : `Cash on ${orderType === "pickup" ? "pickup" : "delivery"}`;
+  // Human-readable summary for the collapsed payment-method card.
+  // Stays consistent with the picker labels below; "card" remains the
+  // legacy slug used by the Stripe online-payment branch elsewhere in
+  // the page so we don't break the placeOrder() gate.
+  const paymentSummary =
+    customerInfo.paymentMethod === "card"
+      ? tc("payOnlineCard")
+      : customerInfo.paymentMethod === "card_in_person"
+        ? (orderType === "pickup" ? tc("cardOnPickup") : tc("cardOnDelivery"))
+        : (orderType === "pickup" ? tc("cashOnPickup") : tc("cashOnDelivery"));
 
   const tipsSummary = tipAmount > 0
     ? `${tipPercent}% (${formatCurrency(tipAmount)})`
@@ -305,24 +323,49 @@ export function CheckoutModal({
                 expanded={editingSection === "payment"}
                 primary={theme.primaryColor}
               >
-                <div className="pt-3 grid grid-cols-2 gap-2">
-                  {[
-                    { value: "cash", label: orderType === "pickup" ? tc("cashOnPickup") : tc("cashOnDelivery") },
-                    { value: "card", label: tc("payOnlineCard") },
-                  ].map(pm => (
-                    <button
-                      key={pm.value}
-                      onClick={() => setCustomerInfo({ ...customerInfo, paymentMethod: pm.value })}
-                      className="py-2 px-3 rounded-lg border-2 text-xs font-semibold transition"
-                      style={customerInfo.paymentMethod === pm.value
-                        ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}12`, color: theme.primaryColor }
-                        : { borderColor: "#e5e7eb", color: "#4b5563" }
-                      }
-                    >
-                      {pm.label}
-                    </button>
-                  ))}
-                </div>
+                {(() => {
+                  // Render only the methods the restaurant has selected
+                  // in /admin/payments. Each slug maps to one customer-
+                  // facing button. Order is fixed (cash → card_in_person
+                  // → online_card) so the layout stays predictable as
+                  // owners flip methods on/off.
+                  const all = [
+                    {
+                      slug: "cash",
+                      value: "cash",
+                      label: orderType === "pickup" ? tc("cashOnPickup") : tc("cashOnDelivery"),
+                    },
+                    {
+                      slug: "card_in_person",
+                      value: "card_in_person",
+                      label: orderType === "pickup" ? tc("cardOnPickup") : tc("cardOnDelivery"),
+                    },
+                    {
+                      slug: "online_card",
+                      value: "card", // legacy slug used by the Stripe branch in placeOrder()
+                      label: tc("payOnlineCard"),
+                    },
+                  ];
+                  const visible = all.filter((p) => acceptedMethods.includes(p.slug));
+                  const cols = visible.length >= 3 ? "grid-cols-3" : "grid-cols-2";
+                  return (
+                    <div className={`pt-3 grid ${cols} gap-2`}>
+                      {visible.map((pm) => (
+                        <button
+                          key={pm.slug}
+                          onClick={() => setCustomerInfo({ ...customerInfo, paymentMethod: pm.value })}
+                          className="py-2 px-3 rounded-lg border-2 text-xs font-semibold transition"
+                          style={customerInfo.paymentMethod === pm.value
+                            ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}12`, color: theme.primaryColor }
+                            : { borderColor: "#e5e7eb", color: "#4b5563" }
+                          }
+                        >
+                          {pm.label}
+                        </button>
+                      ))}
+                    </div>
+                  );
+                })()}
                 {customerInfo.paymentMethod === "card" && !cardPaymentEnabled && (
                   <div className="mt-2 p-2.5 bg-blue-50 rounded-lg text-xs text-blue-700 flex items-start gap-2">
                     <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />

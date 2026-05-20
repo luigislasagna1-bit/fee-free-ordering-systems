@@ -164,14 +164,35 @@ async function handleAddOnSubscriptionEvent(
   // the customer-facing UI lights up immediately instead of waiting for
   // a first admin-page visit. Idempotent helpers — safe on Stripe retries.
   const isActive = status === "active" || status === "trialing";
-  if (isActive && addOn.slug === "marketplace") {
-    // Marketplace listing auto-creation: the moment the customer's
-    // marketplace subscription activates, they appear on /marketplace
-    // with sensible defaults (tagline = restaurant slogan, banner =
-    // restaurant banner, etc.). They can fine-tune in /admin/marketplace.
-    ensureMarketplaceListing(restaurantId).catch((e) =>
-      console.error("[stripe] ensureMarketplaceListing failed:", e),
-    );
+  if (addOn.slug === "marketplace") {
+    if (isActive) {
+      // Marketplace listing auto-creation: the moment the customer's
+      // marketplace subscription activates, they appear on /marketplace
+      // with sensible defaults (tagline = restaurant slogan, banner =
+      // restaurant banner, etc.). They can fine-tune in /admin/marketplace.
+      // Also flip billingMode to "monthly" — restaurants on the flat
+      // plan are NOT settled per-order by the monthly settlement cron.
+      try {
+        await ensureMarketplaceListing(restaurantId);
+        await prisma.marketplaceListing.update({
+          where: { restaurantId },
+          data: { billingMode: "monthly" },
+        });
+      } catch (e) {
+        console.error("[stripe] marketplace activation side-effects failed:", e);
+      }
+    } else {
+      // Subscription ended / went past-due / was cancelled. The listing
+      // stays so historical data is preserved, but billing flips back to
+      // PAYG — they'll start accruing $3/order again unless they re-sub.
+      // No-op if the listing doesn't exist (was never created).
+      await prisma.marketplaceListing
+        .updateMany({
+          where: { restaurantId },
+          data: { billingMode: "payg" },
+        })
+        .catch((e) => console.error("[stripe] marketplace deactivation failed:", e));
+    }
   }
 }
 

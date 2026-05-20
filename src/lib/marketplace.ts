@@ -23,15 +23,28 @@ export const UBER_EATS_COMMISSION_PCT = 30;
  *  stays consistent even if a superadmin tweaks the AddOn's price. */
 export const MARKETPLACE_MONTHLY_CAP_CENTS = 24999; // $249.99
 
-/** Per-order rate for marketplace orders. This is what the platform
- *  bills the restaurant — NOT what the customer pays (customer pays
- *  the menu price, same as a direct order). Covers system, operations,
- *  marketing, support — explicitly NOT delivery (that's ShipDay
- *  passthrough, separately settled).
+/** Per-order rate for marketplace orders on the pay-as-you-go (PAYG)
+ *  billing mode. This is what the platform bills the restaurant —
+ *  NOT what the customer pays (customer pays the menu price, same
+ *  as a direct order). Covers system, operations, marketing, support
+ *  — explicitly NOT delivery (that's ShipDay passthrough).
  *
- *  Free-base model: join the marketplace for $0/mo. Billed monthly
- *  based on order volume, capped at MARKETPLACE_MONTHLY_CAP_CENTS. */
+ *  PAYG only — restaurants on the $199.99/mo monthly plan pay flat
+ *  via Stripe subscription and the settlement engine skips them. */
 export const MARKETPLACE_PER_ORDER_CENTS = 300; // $3.00/order
+
+/** Flat monthly subscription price for the Marketplace monthly plan.
+ *  Source of truth for the $199.99 price tag we show in marketing UI.
+ *  The actual Stripe Price is created from AddOn.monthlyPriceCents
+ *  when the superadmin clicks Sync — keep this in sync with the seed. */
+export const MARKETPLACE_MONTHLY_PLAN_CENTS = 19999; // $199.99
+
+/** USD — the platform always bills in USD regardless of where the
+ *  restaurant is located. Marketing copy + Stripe invoice currency.
+ *  Tax % varies by restaurant location — see src/lib/platform-tax.ts
+ *  (CRA destination-of-supply rules: Canadian = GST/HST per province,
+ *  US/international = exempt). */
+export const PLATFORM_CURRENCY = "usd";
 
 export type PublicListing = {
   id: string;

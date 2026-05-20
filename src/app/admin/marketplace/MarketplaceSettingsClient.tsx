@@ -487,6 +487,9 @@ export function MarketplaceSettingsClient({
                     / {formatCurrency(stats.billing.capCents / 100)} cap
                   </span>
                 </div>
+                <div className="text-[10px] uppercase tracking-wider opacity-60 mt-0.5">
+                  USD · tax by province (CA) at settlement
+                </div>
                 <p className={`text-[11px] mt-1 leading-snug ${
                   stats.billing.capHit ? "text-emerald-800" : "text-orange-800"
                 }`}>

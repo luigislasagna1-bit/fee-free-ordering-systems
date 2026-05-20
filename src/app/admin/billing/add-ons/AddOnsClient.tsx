@@ -152,6 +152,9 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
                     {a.trialDays}-day trial
                   </span>
                 )}
+                <div className="text-[10px] text-gray-400 mt-0.5 uppercase tracking-wider">
+                  USD · CA tax by province · US/intl exempt
+                </div>
               </div>
 
               {a.enabledFeatures.length > 0 && (
