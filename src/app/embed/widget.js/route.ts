@@ -168,11 +168,17 @@ const SCRIPT = `(function(){
 })();`;
 
 export async function GET() {
+  // Cache short. The loader script is a public embed pasted onto third-party
+  // sites (Wix, Squarespace, etc.) — when we ship a fix, we need it live in
+  // minutes, not hours. The previous s-maxage=3600 left Wix sandboxes
+  // serving an old script for up to an hour after deploy, even on
+  // hard-refresh (CDN doesn't honor browser bypass). Keep TTLs tight; the
+  // file is ~6KB so refetch cost is negligible vs. update latency.
   return new NextResponse(SCRIPT, {
     status: 200,
     headers: {
       "content-type": "application/javascript; charset=utf-8",
-      "cache-control": "public, max-age=300, s-maxage=3600",
+      "cache-control": "public, max-age=60, s-maxage=60, stale-while-revalidate=120, must-revalidate",
       "access-control-allow-origin": "*",
     },
   });
