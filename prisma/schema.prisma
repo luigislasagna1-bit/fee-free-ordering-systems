@@ -143,6 +143,12 @@ model Restaurant {
   /// Opaque public ID used by the widget embed snippet so the embed URL
   /// doesn't leak the slug. Generated lazily on first publish (Phase 3).
   widgetPublicId       String?   @unique
+  /// First time the embedded widget.js script fired its install heartbeat
+  /// (a one-time GET ping when the script loads on any third-party site).
+  /// Drives the "Install the Legacy Website widget" setup-checklist step
+  /// so it auto-completes when the restaurant pastes the snippet onto
+  /// their actual site, no manual confirm required.
+  widgetInstalledAt    DateTime?
 
   addOns               RestaurantAddOn[]
   kitchenDevices       KitchenDevice[]

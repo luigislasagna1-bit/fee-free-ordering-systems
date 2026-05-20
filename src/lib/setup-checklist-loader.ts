@@ -30,11 +30,12 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
       acceptsDineIn: true,
       acceptsReservations: true,
       ownerEmailVerifiedAt: true,
+      widgetInstalledAt: true,
     },
   });
   if (!restaurant) return null;
 
-  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive] = await Promise.all([
+  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive, deliveryZoneCount] = await Promise.all([
     prisma.openingHours.findMany({
       where: { restaurantId },
       select: { isOpen: true },
@@ -55,6 +56,11 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
       where: { restaurantId, isActive: true },
     }),
     hasLiveKitchenDevice(restaurantId),
+    // Delivery zones — only counted if active. A restaurant with all-paused
+    // zones is effectively zone-less and the checklist should reflect that.
+    prisma.deliveryZone.count({
+      where: { restaurantId, isActive: true },
+    }),
   ]);
 
   const hasKitchenDevice = kitchenDeviceLive;
@@ -67,5 +73,6 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     hasPaymentProvider: !!paymentProvider,
     hasKitchenDevice,
     notificationRecipientCount: notificationCount,
+    deliveryZoneCount,
   });
 }
