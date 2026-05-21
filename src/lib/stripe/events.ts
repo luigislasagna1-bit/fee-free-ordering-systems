@@ -17,6 +17,7 @@ import { handleInvoiceEvent } from "./events/invoice";
 import { handleAccountEvent } from "./events/account";
 import { handlePaymentIntentEvent } from "./events/payment-intent";
 import { handleChargeEvent } from "./events/charge";
+import { handleSetupIntentCompleted, handleSetupIntentSucceeded } from "./events/setup-intent";
 
 /**
  * Top-level dispatcher. Called from the webhook route AFTER signature
@@ -63,10 +64,23 @@ export async function dispatchStripeEvent(event: Stripe.Event): Promise<{
       await handleChargeEvent(event);
       outcome = "processed";
     } else if (event.type === "checkout.session.completed") {
-      // Subscription Checkout completion triggers customer.subscription.created
-      // and invoice.paid downstream, which we DO handle, so we don't need to
-      // process this directly. Logged as ignored on purpose.
-      outcome = "ignored";
+      // Subscription Checkout → customer.subscription.created + invoice.paid
+      // downstream which we handle separately. Setup mode is the exception —
+      // it doesn't trigger those events, so we need to handle it here to
+      // attach the collected card as the customer's default payment method.
+      const session = event.data.object as any;
+      if (session.mode === "setup" && session.setup_intent) {
+        await handleSetupIntentCompleted(session);
+        outcome = "processed";
+      } else {
+        outcome = "ignored";
+      }
+    } else if (event.type === "setup_intent.succeeded") {
+      // Belt-and-suspenders: Stripe also fires setup_intent.succeeded
+      // alongside checkout.session.completed for setup-mode sessions.
+      // The default-PM set is idempotent, so handling both is safe.
+      await handleSetupIntentSucceeded(event.data.object as any);
+      outcome = "processed";
     }
 
     await prisma.stripeWebhookEvent.update({

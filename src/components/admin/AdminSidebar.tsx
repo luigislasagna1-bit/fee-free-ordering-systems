@@ -79,7 +79,6 @@ const navGroups: NavGroup[] = [
       { href: "/admin/payments",           labelKey: "paymentMethods", label: "Accepted Methods", icon: CreditCard, step: "payments.methodsSelected" },
       { href: "/admin/payments/providers", labelKey: "payments",     label: "Stripe Connect", icon: CreditCard, step: "payments.methodConfigured" },
       { href: "/admin/service-fees",       labelKey: "serviceFees",  label: "Service Fees & Tax", icon: Wallet,   step: "payments.taxation" },
-      { href: "/admin/map-settings",       labelKey: "mapSettings",  label: "Map Settings",      icon: MapIcon },
     ],
   },
   {
@@ -168,7 +167,13 @@ const navGroups: NavGroup[] = [
     label: "Other",
     icon: MoreHorizontal,
     items: [
-      { href: "/admin/settings", labelKey: "settings", label: "Settings", icon: Settings },
+      { href: "/admin/settings",     labelKey: "settings",    label: "Settings",     icon: Settings },
+      // Map provider config — Leaflet (free default) vs Google Maps API.
+      // Optional config, NOT a setup-progress step, so it lives under
+      // "Other" rather than the setup-flow groups (which all show
+      // checkmarks for tracked steps and would confuse owners by
+      // showing a non-checkable item alongside checkable ones).
+      { href: "/admin/map-settings", labelKey: "mapSettings", label: "Map Settings", icon: MapIcon },
     ],
   },
 ];

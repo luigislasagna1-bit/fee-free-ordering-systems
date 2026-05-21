@@ -2,9 +2,12 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { Sparkles, AlertCircle } from "lucide-react";
+import { Sparkles, AlertCircle, CreditCard, CheckCircle2, Truck, ArrowRight } from "lucide-react";
 import { getPlatformTax } from "@/lib/platform-tax";
+import { restaurantHasCardOnFile } from "@/lib/addons";
+import { getMarketplaceEligibility } from "@/lib/marketplace-eligibility";
 import { PaygOptInButton } from "./PaygOptInButton";
+import { AddCardButton } from "./AddCardButton";
 
 /**
  * /admin/marketplace/payg-opt-in — restaurant opts into the marketplace
@@ -21,12 +24,19 @@ import { PaygOptInButton } from "./PaygOptInButton";
  */
 export const dynamic = "force-dynamic";
 
-export default async function PaygOptInPage() {
+export default async function PaygOptInPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ card_saved?: string }>;
+}) {
   const user = await getSessionUser();
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
 
-  const [listing, restaurant] = await Promise.all([
+  const params = await searchParams;
+  const justSavedCard = params.card_saved === "1";
+
+  const [listing, restaurant, hasCard, eligibility] = await Promise.all([
     prisma.marketplaceListing.findUnique({
       where: { restaurantId: user.restaurantId },
       select: { id: true, billingMode: true, isListed: true },
@@ -35,6 +45,8 @@ export default async function PaygOptInPage() {
       where: { id: user.restaurantId },
       select: { country: true, state: true },
     }),
+    restaurantHasCardOnFile(user.restaurantId),
+    getMarketplaceEligibility(user.restaurantId, "payg"),
   ]);
 
   // Already actively listed → no need to re-opt-in. Two cases redirect:
@@ -67,8 +79,84 @@ export default async function PaygOptInPage() {
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 space-y-4">
-        <h2 className="font-bold text-gray-900">What you&apos;re agreeing to</h2>
+      {/* Delivery-source eligibility gate. Restaurants that accept
+          delivery AND use ShipDay-managed delivery must have an active
+          Driver Pool subscription BEFORE joining PAYG marketplace.
+          Marketplace Monthly bundles Driver Pool free; PAYG does NOT.
+          Without this gate, marketplace orders requiring delivery would
+          have no way to dispatch. */}
+      {!eligibility.eligible && (
+        <div className="rounded-2xl border-2 border-red-300 bg-red-50 p-4 sm:p-5">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-red-500 text-white flex items-center justify-center flex-shrink-0">
+              <Truck className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="font-bold text-red-900">
+                Delivery setup blocks marketplace signup
+              </h2>
+              <p className="text-sm text-red-800 mt-1 leading-relaxed">
+                {eligibility.blockerMessage}
+              </p>
+              {eligibility.blockerHref && (
+                <Link
+                  href={eligibility.blockerHref}
+                  className="mt-3 inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-lg text-sm shadow transition"
+                >
+                  Fix this <ArrowRight className="w-4 h-4" />
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Card-on-file gate. Mandatory before allowing PAYG opt-in:
+          accruing per-order fees without a way to collect them later is
+          a billing dead-end. The Stripe Checkout in setup mode collects
+          the card without charging, and our setup_intent webhook sets
+          it as the customer's default payment method for future
+          invoices (including the monthly settlement). */}
+      <div className={`rounded-2xl border-2 p-4 sm:p-5 ${
+        hasCard
+          ? "border-emerald-200 bg-emerald-50"
+          : "border-orange-300 bg-orange-50"
+      }`}>
+        <div className="flex items-start gap-3">
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+            hasCard ? "bg-emerald-500 text-white" : "bg-orange-500 text-white"
+          }`}>
+            {hasCard ? <CheckCircle2 className="w-5 h-5" /> : <CreditCard className="w-5 h-5" />}
+          </div>
+          <div className="flex-1 min-w-0">
+            <h2 className={`font-bold ${hasCard ? "text-emerald-900" : "text-orange-900"}`}>
+              {hasCard
+                ? (justSavedCard ? "Card saved — you're ready to opt in" : "Card on file ✓")
+                : "Step 1: Add a payment method"}
+            </h2>
+            <p className={`text-sm mt-0.5 leading-relaxed ${hasCard ? "text-emerald-800" : "text-orange-800"}`}>
+              {hasCard
+                ? "We'll use your saved card to auto-charge the monthly PAYG bill at the end of each billing cycle. You can update it any time from your Stripe billing portal."
+                : "PAYG bills you monthly via Stripe based on the orders you got that month. We need a card on file before you can opt in — otherwise we'd have no way to collect at month-end."}
+            </p>
+            {!hasCard && <AddCardButton />}
+          </div>
+        </div>
+      </div>
+
+      <div className={`bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 space-y-4 ${
+        !hasCard ? "opacity-60 pointer-events-none" : ""
+      }`}>
+        <h2 className="font-bold text-gray-900">
+          {hasCard ? "What you're agreeing to" : "Step 2: Confirm the PAYG terms"}
+        </h2>
+
+        <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 text-xs text-blue-900 leading-relaxed">
+          💡 <strong>You picked well.</strong> We recommend Pay-As-You-Go until
+          you&apos;re consistently doing <strong>60–70 marketplace orders/month</strong>.
+          That&apos;s when Monthly ($199.99 flat, unlimited) starts saving money
+          vs. PAYG ($3 × 70 = $210). You can switch any time.
+        </div>
         <ul className="space-y-2 text-sm text-gray-700">
           <li className="flex items-start gap-2">
             <span className="text-emerald-500 font-bold flex-shrink-0">$0</span>
@@ -119,7 +207,7 @@ export default async function PaygOptInPage() {
         </p>
       </div>
 
-      <PaygOptInButton />
+      <PaygOptInButton disabled={!hasCard || !eligibility.eligible} />
 
       <div className="text-center text-xs text-gray-500">
         Prefer a flat predictable bill?{" "}

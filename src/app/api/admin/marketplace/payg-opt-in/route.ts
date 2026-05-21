@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { ensureMarketplaceListing } from "@/lib/marketplace";
+import { restaurantHasCardOnFile } from "@/lib/addons";
+import { getMarketplaceEligibility } from "@/lib/marketplace-eligibility";
 
 /**
  * POST /api/admin/marketplace/payg-opt-in
@@ -22,6 +24,37 @@ export async function POST() {
   const restaurantId = user?.restaurantId;
   if (!restaurantId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Server-side delivery-source eligibility gate (tamper-resistant).
+  // Restaurants on ShipDay-managed delivery need an active Driver Pool
+  // subscription. PAYG marketplace does NOT bundle Driver Pool —
+  // that's why we check here.
+  const eligibility = await getMarketplaceEligibility(restaurantId, "payg");
+  if (!eligibility.eligible) {
+    return NextResponse.json(
+      {
+        error: eligibility.blockerMessage,
+        code: eligibility.reason,
+        blockerHref: eligibility.blockerHref,
+      },
+      { status: 412 },
+    );
+  }
+
+  // Server-side card-on-file gate. The UI hides the opt-in button when
+  // there's no card, but a tampered client could POST direct. Reject
+  // with 412 + code:"card_required" so the client can prompt instead
+  // of showing a generic error.
+  const hasCard = await restaurantHasCardOnFile(restaurantId);
+  if (!hasCard) {
+    return NextResponse.json(
+      {
+        error: "A payment method is required before opting into Pay-As-You-Go.",
+        code: "card_required",
+      },
+      { status: 412 },
+    );
   }
 
   // Ensure listing exists. Three states the caller could be in:

@@ -55,7 +55,16 @@ export function MarketplaceLockedView() {
           </div>
         </div>
 
-        <div className="mt-4 bg-white/10 backdrop-blur rounded-lg p-3 text-xs leading-relaxed">
+        <div className="mt-4 bg-white/15 backdrop-blur rounded-lg p-3 text-xs leading-relaxed border border-white/30">
+          <strong className="block mb-1">💡 Our recommendation:</strong>
+          Start with <strong>Pay-As-You-Go</strong> until you&apos;re consistently
+          getting <strong>60–70 marketplace orders per month</strong>. At that
+          volume the Monthly plan ($199.99) starts saving you money vs. PAYG
+          ($3/order × 70 = $210). Below 60 orders, PAYG is the cheaper choice
+          and you can switch any time.
+        </div>
+
+        <div className="mt-3 bg-white/10 backdrop-blur rounded-lg p-3 text-xs leading-relaxed">
           <strong className="block mb-0.5">Compare to UberEats / DoorDash:</strong>
           30% of every order, forever. On a $700 sales day that&apos;s $210 — almost our
           entire <strong>monthly</strong> bill, gone in one day.

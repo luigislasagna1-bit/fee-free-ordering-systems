@@ -12,6 +12,10 @@
     {
       "path": "/api/cron/marketplace-settle",
       "schedule": "5 0 1 * *"
+    },
+    {
+      "path": "/api/cron/auto-reject-stale-orders",
+      "schedule": "*/5 * * * *"
     }
   ]
 }
