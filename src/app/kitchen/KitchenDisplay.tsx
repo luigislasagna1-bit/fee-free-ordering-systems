@@ -9,6 +9,7 @@ import {
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
 import { PrinterSetupModal } from "./PrinterSetupModal";
+import { DispatchModeToggle } from "./DispatchModeToggle";
 import { OrderDetail } from "./OrderDetail";
 import { RejectOrderModal } from "./RejectOrderModal";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
@@ -799,6 +800,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               {printerReady ? (printerSettings!.selectedPrinterName ?? tk("printerConnected")) : tk("printerSetup")}
             </span>
           </button>
+
+          {/* Delivery dispatch toggle — only renders for restaurants on
+              "both" mode (own + ShipDay), where staff can swap which
+              source new orders dispatch to. Hidden for own-only or
+              shipday-only restaurants (those are admin-controlled). */}
+          <DispatchModeToggle themeBtnClass={t.btn} />
 
           {/* Test Order — fires a real order through the full pipeline
               (DB row + customer-confirmation email to owner inbox + staff

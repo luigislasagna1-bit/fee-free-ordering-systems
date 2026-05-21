@@ -329,6 +329,22 @@ export async function POST(req: NextRequest) {
       ? computeUberEatsEquivalentCents(Math.round(serverTotal * 100))
       : null;
 
+    // Marketplace orders are online-card-only by platform contract.
+    // The customer-side checkout forces "card" as the only option when
+    // ?from=marketplace, but a tampered client could POST cash. Reject
+    // explicitly here so the only way a marketplace order ends up in
+    // the DB is with paymentMethod="card" — keeps the kitchen from ever
+    // accepting a cash-on-pickup marketplace order that we can't bill.
+    if (viaMarketplace && (paymentMethod ?? "cash") !== "card") {
+      return NextResponse.json(
+        {
+          error: "Marketplace orders must be paid online by card. Cash and pay-in-person aren't supported for marketplace orders.",
+          code: "marketplace_card_required",
+        },
+        { status: 400 },
+      );
+    }
+
     // ── Auto-accept handling ────────────────────────────────────────────────
     const wantsAutoAccept = !!restaurant.autoAcceptOrders;
     const fulfillmentMinutes = type === "delivery"

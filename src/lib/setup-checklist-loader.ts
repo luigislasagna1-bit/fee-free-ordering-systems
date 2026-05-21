@@ -45,7 +45,7 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
   });
   if (!restaurant) return null;
 
-  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive, deliveryZoneCount, hasOnlinePaymentsEntitlement] = await Promise.all([
+  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive, deliveryZoneCount, hasOnlinePaymentsEntitlement, shipdayConfig, hasDriverPoolEntitlement] = await Promise.all([
     prisma.openingHours.findMany({
       where: { restaurantId },
       select: { isOpen: true },
@@ -75,6 +75,16 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     // Used to gate the online_card method + the Stripe Connect wizard step
     // — both are no-ops without the add-on.
     hasFeature(restaurantId, "card_payments"),
+    // ShipdayConfig row — drives the services.deliveryManagement step.
+    // Null when the owner has never visited /admin/delivery/pool.
+    prisma.shipdayConfig.findUnique({
+      where: { restaurantId },
+      select: { deliverySource: true },
+    }),
+    // Driver Pool entitlement (active Driver Pool standalone OR bundled
+    // via Marketplace Monthly). Required for "shipday"/"both" sources
+    // to count as a complete delivery management setup.
+    hasFeature(restaurantId, "driver_pool"),
   ]);
 
   const hasKitchenDevice = kitchenDeviceLive;
@@ -104,6 +114,12 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     }
   }
 
+  const sourceRaw = shipdayConfig?.deliverySource;
+  const deliverySource =
+    sourceRaw === "own" || sourceRaw === "shipday" || sourceRaw === "both"
+      ? sourceRaw
+      : null;
+
   return computeSetupProgress({
     restaurant,
     hours,
@@ -115,5 +131,7 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     deliveryZoneCount,
     paymentMethods,
     hasOnlinePaymentsEntitlement,
+    deliverySource,
+    hasDriverPoolEntitlement,
   });
 }

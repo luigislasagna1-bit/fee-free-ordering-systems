@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { Loader2, Truck, User, Users, Key, DollarSign, Check, X, Plus, Trash2 } from "lucide-react";
+import { Loader2, Truck, User, Users, Key, DollarSign, Check, X, Plus, Trash2, Lock, ArrowRight } from "lucide-react";
 
 /**
  * Driver pool / ShipDay configuration UI.
@@ -29,7 +30,7 @@ type Initial = {
   hasApiKey: boolean;
 };
 
-export function DriverPoolClient({ initial }: { initial: Initial }) {
+export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Initial; driverPoolEntitled: boolean }) {
   const router = useRouter();
   const [enabled, setEnabled] = useState(initial.enabled);
   const [deliverySource, setDeliverySource] = useState<Initial["deliverySource"]>(initial.deliverySource);
@@ -44,8 +45,21 @@ export function DriverPoolClient({ initial }: { initial: Initial }) {
   // soft warning if they pick those without credentials.
   const needsShipDay = deliverySource !== "own";
   const missingCredentials = needsShipDay && !initial.hasApiKey && !apiKey;
+  // Entitlement gate — clicking a locked tile shows a toast pointing
+  // to the add-ons page instead of changing state.
+  function handleSourceClick(next: Initial["deliverySource"]) {
+    if (next !== "own" && !driverPoolEntitled) {
+      toast.error("Subscribe to the Driver Pool add-on (or Marketplace Monthly) to unlock ShipDay dispatch.");
+      return;
+    }
+    setDeliverySource(next);
+  }
 
   async function save() {
+    if (needsShipDay && !driverPoolEntitled) {
+      toast.error("Subscribe to Driver Pool first, or choose 'Own drivers'.");
+      return;
+    }
     if (missingCredentials) {
       toast.error("Add your ShipDay API key first, or switch source to 'Own drivers'.");
       return;
@@ -101,16 +115,16 @@ export function DriverPoolClient({ initial }: { initial: Initial }) {
       {/* Section 1: Delivery source */}
       <Section
         title="Delivery source"
-        description="Who handles your delivery orders by default?"
+        description="Who handles your delivery orders by default? You must pick one before joining the marketplace."
       >
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <SourceCard
             id="own"
             label="Own drivers"
             icon={<User className="w-5 h-5" />}
-            description="Your in-house drivers handle every delivery. ShipDay is never invoked."
+            description="Your in-house drivers handle every delivery. ShipDay is never invoked. Free."
             selected={deliverySource === "own"}
-            onClick={() => setDeliverySource("own")}
+            onClick={() => handleSourceClick("own")}
           />
           <SourceCard
             id="shipday"
@@ -118,7 +132,8 @@ export function DriverPoolClient({ initial }: { initial: Initial }) {
             icon={<Truck className="w-5 h-5" />}
             description="Every delivery routes to ShipDay's third-party pool automatically."
             selected={deliverySource === "shipday"}
-            onClick={() => setDeliverySource("shipday")}
+            onClick={() => handleSourceClick("shipday")}
+            locked={!driverPoolEntitled}
           />
           <SourceCard
             id="both"
@@ -126,9 +141,28 @@ export function DriverPoolClient({ initial }: { initial: Initial }) {
             icon={<Users className="w-5 h-5" />}
             description="Kitchen sees a picker on each delivery order: in-house or pool."
             selected={deliverySource === "both"}
-            onClick={() => setDeliverySource("both")}
+            onClick={() => handleSourceClick("both")}
+            locked={!driverPoolEntitled}
           />
         </div>
+        {!driverPoolEntitled && (
+          <div className="mt-4 rounded-xl bg-amber-50 border border-amber-200 p-3 flex items-start gap-3">
+            <Lock className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+            <div className="flex-1 text-xs text-amber-900 leading-relaxed">
+              <strong>ShipDay options are locked.</strong> To dispatch deliveries
+              to ShipDay&apos;s pool, subscribe to the standalone <strong>Driver Pool</strong>{" "}
+              add-on ($19.99/mo) or to <strong>Marketplace Monthly</strong>{" "}
+              ($199.99/mo, includes Driver Pool free). &quot;Own drivers&quot;
+              stays free and selectable for everyone.
+            </div>
+            <Link
+              href="/admin/billing/add-ons"
+              className="flex-shrink-0 inline-flex items-center gap-1 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition"
+            >
+              Get Driver Pool <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
+        )}
       </Section>
 
       {/* Section 2: ShipDay credentials — only shown when source isn't "own" */}
@@ -336,7 +370,7 @@ function Section({ title, description, children }: { title: string; description?
 }
 
 function SourceCard({
-  label, icon, description, selected, onClick,
+  label, icon, description, selected, onClick, locked = false,
 }: {
   id: string;
   label: string;
@@ -344,29 +378,42 @@ function SourceCard({
   description: string;
   selected: boolean;
   onClick: () => void;
+  /** True when this option requires the driver_pool entitlement and
+   *  the restaurant doesn't have it. Renders the card greyed-out with
+   *  a Lock badge; click still calls onClick (which toasts the upsell). */
+  locked?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       className={`text-left rounded-xl border-2 p-4 transition ${
-        selected ? "border-blue-400 bg-blue-50" : "border-gray-200 bg-white hover:border-gray-300"
+        locked
+          ? "border-gray-200 bg-gray-50 hover:border-gray-300 cursor-not-allowed"
+          : selected
+          ? "border-blue-400 bg-blue-50"
+          : "border-gray-200 bg-white hover:border-gray-300"
       }`}
     >
       <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-2 ${
-        selected ? "bg-blue-500 text-white" : "bg-gray-100 text-gray-500"
+        locked ? "bg-gray-200 text-gray-400" : selected ? "bg-blue-500 text-white" : "bg-gray-100 text-gray-500"
       }`}>
         {icon}
       </div>
-      <div className="flex items-center gap-2">
-        <div className="font-bold text-gray-900 text-sm">{label}</div>
-        {selected && (
+      <div className="flex items-center gap-2 flex-wrap">
+        <div className={`font-bold text-sm ${locked ? "text-gray-500" : "text-gray-900"}`}>{label}</div>
+        {locked && (
+          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-gray-200 text-gray-600 uppercase tracking-wider inline-flex items-center gap-1">
+            <Lock className="w-2.5 h-2.5" /> Add-on required
+          </span>
+        )}
+        {!locked && selected && (
           <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-500 text-white uppercase tracking-wider">
             Selected
           </span>
         )}
       </div>
-      <p className="text-xs text-gray-600 mt-1 leading-snug">{description}</p>
+      <p className={`text-xs mt-1 leading-snug ${locked ? "text-gray-500" : "text-gray-600"}`}>{description}</p>
     </button>
   );
 }

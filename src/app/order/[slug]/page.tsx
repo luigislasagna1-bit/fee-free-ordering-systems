@@ -23,6 +23,12 @@ export default async function OrderingPage({
   // /site/<slug> and is gated behind the hosted_website add-on.
   const sp = await searchParams;
   const isEmbedded = sp.embedded === "1";
+  // ?from=marketplace marks the customer as arriving via our public
+  // marketplace browse page. Marketplace orders MUST be paid online
+  // (no cash, no pay-in-person) — restaurants opted into the marketplace
+  // contractually accept card-only orders. This flag is what flips the
+  // checkout payment picker to "online card only" mode below.
+  const fromMarketplace = sp.from === "marketplace";
 
   // 1) Load the restaurant the customer is ordering FROM (the location).
   // Hours, delivery zones, fees etc. are always per-location — never inherited.
@@ -133,7 +139,7 @@ export default async function OrderingPage({
   // Accepted payment methods — owner sets these in /admin/payments.
   // The customer checkout picker reflects only what the restaurant
   // actually accepts. Defensive parse: legacy / malformed JSON falls
-  // back to ["cash", "card"] so checkout never breaks.
+  // back to ["cash"] so checkout never breaks.
   let acceptedMethods: string[] = ["cash"];
   const raw = (restaurant as any).paymentMethods;
   if (typeof raw === "string") {
@@ -143,6 +149,20 @@ export default async function OrderingPage({
         acceptedMethods = parsed.filter((m: unknown): m is string => typeof m === "string");
       }
     } catch { /* keep default */ }
+  }
+
+  // Marketplace orders OVERRIDE the restaurant's accepted methods —
+  // they're online-card-only by platform rule. Restaurants who join
+  // the marketplace are required to have card_payments + Stripe Connect
+  // (enforced at marketplace signup via getMarketplaceEligibility), so
+  // this override is always satisfiable. If somehow the restaurant
+  // lost their card_payments entitlement after signing up, the customer
+  // will see "card only" in the picker but `cardPaymentEnabled` will
+  // be false → place-order shows the "coming soon" message instead of
+  // accepting the order. Worst case is graceful failure, never silent
+  // cash acceptance for a marketplace order.
+  if (fromMarketplace) {
+    acceptedMethods = ["online_card"];
   }
 
   return (

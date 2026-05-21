@@ -4,6 +4,7 @@ import { getSessionUser } from "@/lib/session";
 import { requireRestaurantAccess } from "@/lib/access";
 import { getStripe, stripeReady } from "@/lib/stripe";
 import { ensureStripeCustomerForRestaurant } from "@/lib/addons";
+import { getMarketplaceEligibility } from "@/lib/marketplace-eligibility";
 
 /**
  * POST { addOnSlug } — start a Stripe Checkout session to subscribe the
@@ -39,6 +40,27 @@ export async function POST(req: NextRequest) {
   });
   if (existing && ["active", "trialing"].includes(existing.status)) {
     return NextResponse.json({ error: "already_subscribed" }, { status: 409 });
+  }
+
+  // Marketplace-specific: block signup if delivery is broken. Monthly
+  // bundles Driver Pool free, so the gate is informational — we only
+  // block when deliverySource is shipday/both AND ShipdayConfig isn't
+  // actually usable. The eligibility helper returns eligible=true for
+  // the monthly path even when DriverPool entitlement is missing,
+  // because subscribing to monthly grants it. So this check mostly
+  // catches the "owner forgot to set deliverySource" case.
+  if (addOn.slug === "marketplace") {
+    const eligibility = await getMarketplaceEligibility(user.restaurantId, "monthly");
+    if (!eligibility.eligible) {
+      return NextResponse.json(
+        {
+          error: eligibility.blockerMessage,
+          code: eligibility.reason,
+          blockerHref: eligibility.blockerHref,
+        },
+        { status: 412 },
+      );
+    }
   }
 
   // Dependencies — if this add-on requires others, ensure they're active.

@@ -89,7 +89,17 @@ export async function listPublicMarketplaceListings(): Promise<PublicListing[]> 
   const rows = await prisma.marketplaceListing.findMany({
     where: {
       isListed: true,
-      restaurant: { isActive: true },
+      restaurant: {
+        isActive: true,
+        // PUBLISHED-ONLY. An unpublished restaurant can't actually
+        // receive marketplace orders (their /order/<slug> page would
+        // 404 from the customer side), so they shouldn't be discoverable.
+        // The marketplace eligibility gate prevents new signups from
+        // unpublished restaurants, but this filter is the defense-in-depth
+        // for restaurants that got their listing created back when
+        // publishing-before-marketplace wasn't enforced.
+        publishedAt: { not: null },
+      },
     },
     include: {
       restaurant: {

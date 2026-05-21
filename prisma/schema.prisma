@@ -1244,11 +1244,23 @@ model ShipdayConfig {
   /// Which dispatch source the restaurant uses for delivery orders.
   ///   "own"     — restaurant's in-house drivers only. ShipDay never invoked.
   ///   "shipday" — every delivery routes to ShipDay's third-party pool.
-  ///   "both"    — kitchen sees a per-order picker: in-house vs pool.
-  ///                Defaults to in-house; staff can override.
+  ///   "both"    — restaurant has both options enabled; the live choice
+  ///                comes from `activeDispatchMode` (toggleable from the
+  ///                kitchen display "Delivery settings" panel). Lets a
+  ///                restaurant flip between in-house and pool throughout
+  ///                the day based on staff availability.
   /// Default "own" so brand-new restaurants stay safe — they can flip
   /// to shipday/both after entering credentials.
   deliverySource    String   @default("own")
+
+  /// When deliverySource = "both", which mode is ACTIVE right now?
+  ///   "own"     — currently sending new orders to in-house drivers
+  ///   "shipday" — currently sending new orders to the ShipDay pool
+  /// Only consulted when deliverySource = "both"; ignored otherwise.
+  /// Toggled from the kitchen display so staff can swap mid-shift
+  /// (e.g. "we're slammed in-house, route to pool for the next 2 hours").
+  /// Defaults to "own" — safer to keep new orders in-house by default.
+  activeDispatchMode String  @default("own")
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

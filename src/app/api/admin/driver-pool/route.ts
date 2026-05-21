@@ -36,15 +36,6 @@ export async function PUT(req: NextRequest) {
   }
 
   const entitled = await hasFeature(restaurantId, "driver_pool");
-  if (!entitled) {
-    return NextResponse.json(
-      {
-        error: "Subscribe to Driver Pool or Marketplace to configure dispatch.",
-        code: "addon_required",
-      },
-      { status: 412 },
-    );
-  }
 
   const body = await req.json().catch(() => null);
   if (!body || typeof body !== "object") {
@@ -59,7 +50,42 @@ export async function PUT(req: NextRequest) {
     if (!SOURCE_OK.has(body.deliverySource)) {
       return NextResponse.json({ error: "Invalid deliverySource" }, { status: 400 });
     }
+    // Only "own" is allowed without the driver_pool entitlement.
+    // "shipday" and "both" both require an active Driver Pool subscription
+    // (standalone or bundled via Marketplace Monthly). Tamper-resistant:
+    // the UI hides those tiles for non-entitled users but a direct PUT
+    // would otherwise let them save an invalid state that the kitchen
+    // can't actually dispatch.
+    if (body.deliverySource !== "own" && !entitled) {
+      return NextResponse.json(
+        {
+          error: "Subscribe to Driver Pool or Marketplace Monthly to dispatch via ShipDay.",
+          code: "addon_required",
+        },
+        { status: 412 },
+      );
+    }
     update.deliverySource = body.deliverySource;
+  }
+
+  // ShipDay-credentials / fee-mode fields are also gated — no point
+  // saving a ShipDay API key for a restaurant that can't actually use
+  // ShipDay. Reject the whole request if they try to write any of these
+  // without entitlement.
+  const usesShipdayFields =
+    typeof body.apiKey === "string" ||
+    typeof body.enabled === "boolean" && body.enabled === true ||
+    typeof body.deliveryFeeMode === "string" ||
+    typeof body.flatDeliveryFee === "number" ||
+    Array.isArray(body.tieredRules);
+  if (usesShipdayFields && !entitled) {
+    return NextResponse.json(
+      {
+        error: "Subscribe to Driver Pool or Marketplace Monthly to configure ShipDay dispatch.",
+        code: "addon_required",
+      },
+      { status: 412 },
+    );
   }
 
   if (typeof body.deliveryFeeMode === "string") {

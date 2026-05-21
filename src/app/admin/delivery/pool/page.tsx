@@ -2,17 +2,17 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
-import { DriverPoolLockedView } from "./DriverPoolLockedView";
 import { DriverPoolClient } from "./DriverPoolClient";
 
 /**
- * /admin/delivery/pool — ShipDay driver-pool configuration.
+ * /admin/delivery/pool — delivery dispatch configuration.
  *
- * Gated on the `driver_pool` entitlement (granted by EITHER the
- * Driver Pool add-on OR the bundled Marketplace add-on). Owners
- * paste their ShipDay credentials, flip the master enable, pick how
- * customers see the per-delivery fee, and choose whether their own
- * drivers, ShipDay drivers, or both handle deliveries.
+ * Available to EVERY restaurant that accepts delivery — not gated on
+ * the driver_pool entitlement. Every restaurant must explicitly choose
+ * how they manage deliveries (own drivers, ShipDay pool, or both)
+ * before they can join the marketplace. Without the Driver Pool
+ * entitlement, the "Own drivers" option is freely selectable while
+ * "ShipDay" and "Both" appear locked with an upsell link.
  *
  * The actual dispatch-to-ShipDay API calls are made at order
  * acceptance time by the kitchen — this page is config only.
@@ -24,13 +24,9 @@ export default async function DriverPoolConfigPage() {
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
 
-  const entitled = await hasFeature(user.restaurantId, "driver_pool");
-  if (!entitled) {
-    return <DriverPoolLockedView />;
-  }
-
   // Upsert pattern: create the config row if it doesn't exist yet so the
-  // form has a stable shape to bind to. Defaults match the schema.
+  // form has a stable shape to bind to. Defaults match the schema
+  // (deliverySource="own", enabled=false, etc.).
   let config = await prisma.shipdayConfig.findUnique({
     where: { restaurantId: user.restaurantId },
   });
@@ -39,6 +35,8 @@ export default async function DriverPoolConfigPage() {
       data: { restaurantId: user.restaurantId },
     });
   }
+
+  const entitled = await hasFeature(user.restaurantId, "driver_pool");
 
   // Never send the encrypted API key blob to the client — just whether
   // one has been saved. The form shows "•••• saved" if so, with a
@@ -56,6 +54,7 @@ export default async function DriverPoolConfigPage() {
         tieredRules: safeJsonArray(config.tieredRules),
         hasApiKey,
       }}
+      driverPoolEntitled={entitled}
     />
   );
 }

@@ -158,3 +158,39 @@ export async function ensureStripeCustomerForRestaurant(restaurantId: string): P
   });
   return c.id;
 }
+
+/**
+ * True iff this restaurant has at least one saved payment method on
+ * their Stripe Customer that Stripe will auto-charge for invoices.
+ *
+ * The signal is Stripe's `invoice_settings.default_payment_method` — that's
+ * the card future invoices use. A customer with a card "attached" but no
+ * default set will NOT auto-charge, so we check the default specifically.
+ *
+ * Returns false (not an error) for restaurants who don't have a Stripe
+ * Customer yet — they obviously can't have a default payment method.
+ *
+ * Used by:
+ *   - PAYG marketplace opt-in (gate before allowing opt-in)
+ *   - Add-on subscription flows that want to check before redirecting
+ *     to Checkout (so we can pre-attach a card when needed)
+ */
+export async function restaurantHasCardOnFile(restaurantId: string): Promise<boolean> {
+  const r = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { stripeCustomerId: true },
+  });
+  if (!r?.stripeCustomerId) return false;
+
+  try {
+    const stripe = await getStripe();
+    const customer = await stripe.customers.retrieve(r.stripeCustomerId);
+    if ("deleted" in customer && customer.deleted) return false;
+    const defaultPm = (customer as any).invoice_settings?.default_payment_method;
+    // default_payment_method can be either a string ID or a full PM object.
+    return !!defaultPm;
+  } catch (e) {
+    console.error(`[restaurantHasCardOnFile] Stripe lookup failed for ${restaurantId}`, e);
+    return false;
+  }
+}

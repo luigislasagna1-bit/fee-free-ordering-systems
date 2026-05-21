@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw } from "lucide-react";
+import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw, Sparkles, ArrowRight } from "lucide-react";
 
 type AddOnView = {
   id: string;
@@ -228,22 +229,52 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
                     </button>
                   </div>
                 ) : (
-                  <button
-                    type="button"
-                    onClick={() => subscribe(a.slug)}
-                    disabled={busy || notSynced || a.monthlyPriceCents <= 0}
-                    className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-orange-500 text-white hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                    title={
-                      notSynced
-                        ? "This add-on isn't synced to Stripe yet. Ask the platform admin."
-                        : a.monthlyPriceCents <= 0
-                        ? "No price set yet"
-                        : ""
-                    }
-                  >
-                    {busy && <Loader2 className="w-4 h-4 animate-spin" />}
-                    {notSynced || a.monthlyPriceCents <= 0 ? "Coming soon" : busy ? "Loading…" : "Subscribe"}
-                  </button>
+                  <div className="space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => subscribe(a.slug)}
+                      disabled={busy || notSynced || a.monthlyPriceCents <= 0}
+                      className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-orange-500 text-white hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      title={
+                        notSynced
+                          ? "This add-on isn't synced to Stripe yet. Ask the platform admin."
+                          : a.monthlyPriceCents <= 0
+                          ? "No price set yet"
+                          : ""
+                      }
+                    >
+                      {busy && <Loader2 className="w-4 h-4 animate-spin" />}
+                      {notSynced || a.monthlyPriceCents <= 0
+                        ? "Coming soon"
+                        : busy
+                          ? "Loading…"
+                          : a.slug === "marketplace"
+                            ? "Subscribe to Monthly ($199.99/mo)"
+                            : "Subscribe"}
+                    </button>
+                    {/* The Marketplace add-on has a SECOND signup path —
+                        Pay-As-You-Go ($3/order, capped at $249.99/month,
+                        no subscription). Make it visible right under
+                        the Monthly subscribe button so owners see the
+                        choice without having to hunt for it. */}
+                    {a.slug === "marketplace" && !notSynced && (
+                      <>
+                        <Link
+                          href="/admin/marketplace/payg-opt-in"
+                          className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-white text-orange-600 border border-orange-300 hover:bg-orange-50 flex items-center justify-center gap-1.5 transition"
+                        >
+                          <Sparkles className="w-3.5 h-3.5" />
+                          Or start Pay-As-You-Go
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                        <p className="text-[11px] text-gray-600 leading-snug bg-blue-50 border border-blue-100 rounded px-2 py-1.5">
+                          💡 <strong>Tip:</strong> Start with Pay-As-You-Go until
+                          you&apos;re consistently getting 60–70 marketplace
+                          orders/month. Above that volume Monthly saves money.
+                        </p>
+                      </>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
