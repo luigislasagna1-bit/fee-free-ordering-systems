@@ -1,18 +1,20 @@
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
-import { hasFeature } from "@/lib/entitlements";
+import { isOnMarketplace } from "@/lib/marketplace";
 
 /**
  * Marketplace restaurant detail page. For M1, we simply redirect to
  * the existing /order/[slug] page after verifying the restaurant IS
- * actually on the marketplace. This keeps the customer ordering
- * experience identical (existing cart, checkout, payment) while
- * making the marketplace URL structure meaningful.
+ * actually on the marketplace AND published. This keeps the customer
+ * ordering experience identical (existing cart, checkout, payment)
+ * while making the marketplace URL structure meaningful.
  *
- * M2 will wrap /order/[slug] in a marketplace chrome that shows a
- * "back to marketplace" link, a "you're saving X vs UberEats" banner,
- * and marketplace-specific cross-sells. For now, the cleanest UX is
- * a transparent redirect.
+ * Bounces back to /marketplace (no hard 404) if any of:
+ *   - The restaurant slug doesn't exist
+ *   - Restaurant is paused (isActive=false)
+ *   - Restaurant isn't published yet (publishedAt=null)
+ *   - The MarketplaceListing is hidden (isListed=false)
+ *   - Membership isn't active (no monthly add-on AND not PAYG opted in)
  */
 export default async function MarketplaceRestaurantPage({
   params,
@@ -26,22 +28,29 @@ export default async function MarketplaceRestaurantPage({
     select: {
       id: true,
       isActive: true,
+      publishedAt: true,
       marketplaceListing: { select: { isListed: true } },
     },
   });
 
-  if (!restaurant || !restaurant.isActive) {
-    // Restaurant doesn't exist or is paused — bounce to the browse page
-    // rather than a hard 404 so the customer lands somewhere useful.
+  // Restaurant doesn't exist, is paused, or isn't published → bounce
+  // back to the browse page so the customer lands somewhere useful
+  // rather than a hard 404.
+  if (!restaurant || !restaurant.isActive || !restaurant.publishedAt) {
     redirect("/marketplace");
   }
 
-  // Verify both the toggle AND the entitlement are still active. Either
-  // off (subscription expired, owner paused listing) → bounce.
-  const [stillEntitled] = await Promise.all([
-    hasFeature(restaurant.id, "marketplace_listing"),
-  ]);
-  if (!restaurant.marketplaceListing?.isListed || !stillEntitled) {
+  if (!restaurant.marketplaceListing?.isListed) {
+    redirect("/marketplace");
+  }
+
+  // Use isOnMarketplace() — accepts BOTH monthly subscribers (add-on
+  // entitlement) and PAYG opt-ins (MarketplaceListing.billingMode="payg"
+  // + isListed=true). The old code used hasFeature("marketplace_listing")
+  // which only returned true for monthly subscribers, so PAYG restaurants'
+  // tiles would bounce back to /marketplace when clicked.
+  const onMarketplace = await isOnMarketplace(restaurant.id);
+  if (!onMarketplace) {
     redirect("/marketplace");
   }
 

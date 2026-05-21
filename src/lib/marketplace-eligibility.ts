@@ -29,6 +29,7 @@ export type MarketplaceEligibility = {
   /** Machine-readable reason when ineligible. */
   reason:
     | null
+    | "not_published"               // restaurant hasn't completed setup + published yet
     | "needs_delivery_source_set"   // acceptsDelivery=true but no ShipdayConfig
     | "needs_driver_pool"           // deliverySource needs ShipDay but no entitlement
     | "needs_online_payments"       // marketplace orders MUST be paid online
@@ -62,6 +63,7 @@ export async function getMarketplaceEligibility(
       where: { id: restaurantId },
       select: {
         acceptsDelivery: true,
+        publishedAt: true,
         stripeAccountStatus: true,
         stripeChargesEnabled: true,
       },
@@ -78,6 +80,29 @@ export async function getMarketplaceEligibility(
   const stripeConnectLive = !!(
     restaurant?.stripeAccountStatus === "connected" && restaurant?.stripeChargesEnabled
   );
+
+  // FIRST gate (before all others): the restaurant must be published.
+  // Unpublished restaurants can't actually receive customer orders, so
+  // putting them on the public marketplace would just frustrate customers
+  // who click through and hit a 404. Publishing requires completing every
+  // required setup step (menu, hours, services, etc.), so this single
+  // check guarantees they're operationally ready.
+  if (!restaurant?.publishedAt) {
+    return {
+      eligible: false,
+      reason: "not_published",
+      deliverySource: "not_set",
+      acceptsDelivery,
+      hasDriverPoolEntitlement: hasDriverPool,
+      hasCardPaymentsEntitlement: hasCardPayments,
+      stripeConnectLive,
+      blockerMessage:
+        "Finish your restaurant setup and publish before joining the marketplace. " +
+        "Customers browsing the marketplace expect to order immediately — an unpublished " +
+        "restaurant can't accept those orders. Complete the setup wizard first.",
+      blockerHref: "/admin/setup",
+    };
+  }
   const sourceRaw = shipdayConfig?.deliverySource;
   const deliverySource =
     sourceRaw === "own" || sourceRaw === "shipday" || sourceRaw === "both"

@@ -1,6 +1,7 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { MenuClient } from "./MenuClient";
+import { RevertToBrandMenuBanner } from "./RevertToBrandMenuBanner";
 import { InheritedMenuView } from "./InheritedMenuView";
 import { MasterMenuBanner } from "./MasterMenuBanner";
 import { isInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
@@ -53,6 +54,17 @@ export default async function MenuPage() {
     );
   }
 
+  // Determine if THIS restaurant is a CHILD that's gone custom (not
+  // inheriting from a brand parent). If so, surface the revert banner.
+  const selfRow = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: {
+      parentRestaurantId: true,
+      parentRestaurant: { select: { name: true } },
+    },
+  });
+  const isChildOnCustomMenu = !!selfRow?.parentRestaurantId;
+
   // Brand-parent banner data — count how many child locations are
   // currently inheriting this menu so the owner sees "edits flow
   // downstream" before they touch anything.
@@ -101,6 +113,11 @@ export default async function MenuPage() {
 
   return (
     <>
+      {isChildOnCustomMenu && (
+        <RevertToBrandMenuBanner
+          brandName={selfRow?.parentRestaurant?.name ?? "the brand"}
+        />
+      )}
       <MasterMenuBanner
         inheritingCount={childCounts.inheriting}
         totalChildCount={childCounts.total}
