@@ -1,8 +1,25 @@
 # Fee Free Ordering Systems — Roadmap
 
-> Snapshot as of 2026-05-19. This is a working plan, not a contract — phases
+> Snapshot as of 2026-05-21. This is a working plan, not a contract — phases
 > can be reordered, scope can change, and some things will get cut. Use it
 > to know what's queued and roughly what each phase is for.
+
+## 🔬 Shipped 2026-05-21 — verify in prod
+
+This batch landed on main on 2026-05-21. Each item needs a smoke test
+against the live deployment before considering it done:
+
+- Card-only enforcement on marketplace orders
+- PAYG opt-in with Stripe SetupIntent card capture
+- Auto-reject-stale-orders cron (every 5 min)
+- Kitchen dispatch-mode toggle (`activeDispatchMode` column)
+- Revert-to-brand-menu banner for child locations
+- `/marketplace` published-only filter
+- `setup_intent.succeeded` Stripe webhook handler
+
+**External prerequisites:** `CRON_SECRET` set in Vercel env, Stripe
+webhook subscribes to `setup_intent.succeeded` +
+`checkout.session.completed`.
 
 ## Quick legend
 
@@ -232,6 +249,12 @@ PR or individual small PRs:
 - **Customer accounts** — currently every order creates a new Customer
   row tied to email. Real "create account" flow doesn't exist;
   customer history is read-only.
+- **Branch hygiene** — 22 remote branches; most already merged. Sweep
+  after every PR lands.
+- **ShipDay live integration** — schema/UI exist (`activeDispatchMode`,
+  DispatchModeToggle, DriverPoolClient). Missing: actual `src/lib/shipday.ts`
+  REST wrapper, `/api/webhooks/shipday` status handler, kitchen receipt
+  printing of tracking link. See Phase D.
 
 ---
 
