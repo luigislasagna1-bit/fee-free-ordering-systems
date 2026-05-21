@@ -24,6 +24,7 @@ export type StepId =
   | "services.atLeastOne"
   | "services.openingHours"
   | "services.deliveryZones"
+  | "services.deliveryManagement"
   // Payment Methods & Taxes
   | "payments.methodsSelected"
   | "payments.taxation"
@@ -108,17 +109,31 @@ export interface ChecklistInput {
    *  — without the add-on, the user can't even *toggle* online_card on,
    *  so we must not surface the "configure Stripe" step either. */
   hasOnlinePaymentsEntitlement: boolean;
+  /** ShipDay deliverySource setting: "own" | "shipday" | "both" | null
+   *  (null = no ShipdayConfig row, owner hasn't visited /admin/delivery/pool
+   *  yet). Drives the new services.deliveryManagement required step. */
+  deliverySource: "own" | "shipday" | "both" | null;
+  /** True iff active/trialing driver_pool entitlement. Required for
+   *  shipday/both deliverySource to count as "set up". */
+  hasDriverPoolEntitlement: boolean;
 }
 
 /** Single source of truth for what "ready to publish" means. */
 export function computeSetupProgress(input: ChecklistInput): SetupProgress {
-  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount, paymentMethods, hasOnlinePaymentsEntitlement } = input;
+  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount, paymentMethods, hasOnlinePaymentsEntitlement, deliverySource, hasDriverPoolEntitlement } = input;
   // online_card is only meaningful when BOTH the owner ticked it AND they
   // have the online_payments add-on. Without the add-on, the option is
   // locked in the UI and the Stripe step shouldn't surface at all. This
   // gate is what makes the wizard stop showing "Online card payments
   // configured" to cash-only restaurants who happen to have legacy data.
   const acceptsOnlineCard = paymentMethods.includes("online_card") && hasOnlinePaymentsEntitlement;
+
+  // Delivery management is "set up" when the owner has explicitly chosen
+  // a deliverySource AND, if they chose shipday/both, has the driver_pool
+  // entitlement to actually dispatch. "own" alone is enough (no add-on).
+  const deliveryManagementChosen =
+    deliverySource === "own" ||
+    ((deliverySource === "shipday" || deliverySource === "both") && hasDriverPoolEntitlement);
 
   const hasAddress = !!restaurant.address && !!restaurant.city && !!restaurant.country;
   const hasMapPin = restaurant.lat != null && restaurant.lng != null;
@@ -196,6 +211,21 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
       required: !!restaurant.acceptsDelivery,
       href: "/admin/delivery",
       complete: !restaurant.acceptsDelivery || deliveryZoneCount > 0,
+    },
+    {
+      id: "services.deliveryManagement",
+      section: "services",
+      label: "Delivery management chosen",
+      // Required when the restaurant accepts delivery — they must
+      // explicitly pick "own drivers", "ShipDay only", or "both" at
+      // /admin/delivery/pool. "Own drivers" is always free and selectable;
+      // ShipDay/Both require the Driver Pool entitlement (or Marketplace
+      // Monthly which bundles it). This also gates marketplace signup —
+      // without an explicit delivery source, marketplace orders couldn't
+      // actually be dispatched.
+      required: !!restaurant.acceptsDelivery,
+      href: "/admin/delivery/pool",
+      complete: !restaurant.acceptsDelivery || deliveryManagementChosen,
     },
 
     // ─── Payment Methods & Taxes ────────────────────────────────────────

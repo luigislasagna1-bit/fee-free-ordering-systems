@@ -139,19 +139,31 @@ export async function getMarketplaceEligibility(
   }
 
   // Delivery enabled but ShipdayConfig is missing entirely → owner
-  // hasn't visited /admin/delivery/pool yet to choose own/shipday/both.
-  // Treat "no config row" as "own" by default (safest assumption),
-  // but require they explicitly confirm by visiting the page if they
-  // want to flip to shipday/both.
-  // Note: ShipdayConfig is auto-created with deliverySource="own" when
-  // the entitlement gates open, so "not_set" here means literally no
-  // row exists (entitlement never granted). In that case we treat it
-  // as "own" → eligible.
-  if (deliverySource === "not_set" || deliverySource === "own") {
+  // hasn't visited /admin/delivery/pool yet to make the explicit
+  // delivery management choice. Force them to make it before joining
+  // the marketplace — otherwise we'd auto-default to "own" without
+  // their confirmation, and a restaurant that actually intends to use
+  // ShipDay would end up with marketplace orders they can't dispatch.
+  if (deliverySource === "not_set") {
+    return {
+      eligible: false,
+      reason: "needs_delivery_source_set",
+      deliverySource: "not_set",
+      acceptsDelivery: true,
+      hasDriverPoolEntitlement: hasDriverPool,
+      hasCardPaymentsEntitlement: true,
+      stripeConnectLive: true,
+      blockerMessage:
+        "Choose how you manage deliveries (own drivers, ShipDay pool, or both) before joining the marketplace. " +
+        "Visit Driver Pool settings to pick one — it's required even if you stick with your own in-house drivers.",
+      blockerHref: "/admin/delivery/pool",
+    };
+  }
+  if (deliverySource === "own") {
     return {
       eligible: true,
       reason: null,
-      deliverySource: deliverySource === "not_set" ? "own" : "own",
+      deliverySource: "own",
       acceptsDelivery: true,
       hasDriverPoolEntitlement: hasDriverPool,
       hasCardPaymentsEntitlement: true,
