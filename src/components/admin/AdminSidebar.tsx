@@ -413,7 +413,10 @@ export function AdminSidebar({
         href={href}
         title={display}
         className={cn(
-          "flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition mx-2 rounded-lg mb-0.5 relative",
+          // LEAF ITEM — text-sm + medium weight, mixed case, smaller padding
+          // than sub-group buttons so the visual indentation reads as
+          // hierarchy. All leaves share this exact style.
+          "flex items-center gap-2.5 px-3 py-1.5 text-sm font-medium transition mx-2 rounded-lg mb-0.5 relative",
           active ? "bg-orange-500 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
         )}
       >
@@ -542,19 +545,22 @@ export function AdminSidebar({
                 <button
                   onClick={() => toggleGroup(group.key)}
                   className={cn(
+                    // TOP-LEVEL CATEGORY — small caps, bold, tracked. All
+                    // five categories share this exact style so they read
+                    // as one tier of navigation.
                     "w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-bold uppercase tracking-wider transition",
                     activeInGroup
                       ? "text-orange-400"
-                      : "text-gray-300 hover:text-white"
+                      : "text-gray-400 hover:text-white"
                   )}
                 >
-                  <span className="flex items-center gap-2">
+                  <span className="flex items-center gap-2.5">
                     <GroupIcon className="w-4 h-4" />
                     {tr(group.labelKey, group.label)}
                     {rolled && (
                       <span
                         className={cn(
-                          "text-[9px] font-bold px-1.5 py-0.5 rounded-full normal-case",
+                          "text-[9px] font-bold px-1.5 py-0.5 rounded-full normal-case tracking-normal",
                           rolled.done === rolled.total
                             ? "bg-green-500/20 text-green-400"
                             : "bg-gray-800 text-gray-400"
@@ -589,14 +595,18 @@ export function AdminSidebar({
                           <button
                             onClick={() => toggleSubGroup(sg.key)}
                             className={cn(
-                              "w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition",
+                              // SUB-GROUP HEADER — text-sm + semibold, mixed
+                              // case. All seven SETUP sub-groups (and any
+                              // future sub-groups in other categories) share
+                              // this exact style so they read as one tier.
+                              "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-semibold transition",
                               subActive
                                 ? "text-orange-300 bg-gray-800/60"
-                                : "text-gray-400 hover:bg-gray-800/40 hover:text-gray-200"
+                                : "text-gray-300 hover:bg-gray-800/40 hover:text-white"
                             )}
                           >
-                            <span className="flex items-center gap-2">
-                              <SubIcon className="w-3.5 h-3.5" />
+                            <span className="flex items-center gap-2.5">
+                              <SubIcon className="w-4 h-4" />
                               {tr(sg.labelKey, sg.label)}
                               {counts && (
                                 <span
@@ -612,11 +622,11 @@ export function AdminSidebar({
                               )}
                             </span>
                             <ChevronDown
-                              className={cn("w-3 h-3 transition-transform", !subOpen && "-rotate-90")}
+                              className={cn("w-3.5 h-3.5 transition-transform", !subOpen && "-rotate-90")}
                             />
                           </button>
                           {subOpen && (
-                            <div className="pl-2 mt-0.5">
+                            <div className="pl-3 mt-0.5">
                               {sg.items.map(renderItem)}
                             </div>
                           )}
