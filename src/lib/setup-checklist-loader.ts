@@ -12,6 +12,25 @@ import { computeSetupProgress, type SetupProgress } from "@/lib/setup-checklist"
 import { hasLiveKitchenDevice } from "@/lib/kitchen-devices";
 import { hasFeature } from "@/lib/entitlements";
 
+/** Pull the most-recent kitchen device (any freshness) so the setup
+ *  checklist can render "<device label> · <X ago>" as a live status
+ *  detail. Returns null when the restaurant has never seen a device. */
+async function getLatestKitchenDevice(restaurantId: string) {
+  const row = await prisma.kitchenDevice.findFirst({
+    where: { restaurantId },
+    orderBy: { lastSeenAt: "desc" },
+    select: { label: true, userAgent: true, lastSeenAt: true },
+  });
+  if (!row) return null;
+  // Prefer the owner-supplied label, fall back to a short user-agent excerpt,
+  // and finally to a generic "kitchen device" so we always render something.
+  const label =
+    row.label?.trim() ||
+    (row.userAgent ? row.userAgent.slice(0, 40) : null) ||
+    "Kitchen device";
+  return { label, lastSeenAt: row.lastSeenAt };
+}
+
 export async function loadSetupProgress(restaurantId: string): Promise<SetupProgress | null> {
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
@@ -45,7 +64,7 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
   });
   if (!restaurant) return null;
 
-  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive, deliveryZoneCount, hasOnlinePaymentsEntitlement, shipdayConfig, hasDriverPoolEntitlement] = await Promise.all([
+  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive, deliveryZoneCount, hasOnlinePaymentsEntitlement, shipdayConfig, hasDriverPoolEntitlement, kitchenDeviceDetail] = await Promise.all([
     prisma.openingHours.findMany({
       where: { restaurantId },
       select: { isOpen: true },
@@ -85,6 +104,10 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     // via Marketplace Monthly). Required for "shipday"/"both" sources
     // to count as a complete delivery management setup.
     hasFeature(restaurantId, "driver_pool"),
+    // Most-recent kitchen device (any freshness) for setup-step display.
+    // Freshness is judged separately by kitchenDeviceLive — this is for
+    // showing "iPhone 13 · 3m ago" detail under the step label.
+    getLatestKitchenDevice(restaurantId),
   ]);
 
   const hasKitchenDevice = kitchenDeviceLive;
@@ -133,5 +156,6 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     hasOnlinePaymentsEntitlement,
     deliverySource,
     hasDriverPoolEntitlement,
+    kitchenDeviceDetail,
   });
 }

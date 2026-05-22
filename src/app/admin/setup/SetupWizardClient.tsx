@@ -322,6 +322,11 @@ function StepRow({ step }: { step: SetupStep }) {
         <div className={`text-sm ${step.complete ? "text-gray-500 line-through" : "text-gray-900 font-medium"}`}>
           {step.label}
         </div>
+        {step.detail && (
+          <div className="text-[11px] text-gray-500 mt-0.5 truncate">
+            {step.detail}
+          </div>
+        )}
         {step.required && !step.complete && (
           <div className="text-[10px] text-amber-600 font-semibold uppercase tracking-wider mt-0.5">
             Required to publish

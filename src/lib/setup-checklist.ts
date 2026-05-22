@@ -57,6 +57,10 @@ export interface SetupStep {
   /** Where to send the owner to finish this step. */
   href: string;
   complete: boolean;
+  /** Optional dynamic detail rendered under the step label. Used to
+   *  surface live state, e.g. "iPhone 13 · 12s ago" for the kitchen
+   *  device step. Optional — most steps don't need this. */
+  detail?: string;
 }
 
 export interface SetupSection {
@@ -98,6 +102,14 @@ export interface ChecklistInput {
    *  ONLY when acceptsDelivery is enabled — pickup-only restaurants don't
    *  need zones. */
   deliveryZoneCount: number;
+  /** Detail about the most recently-seen kitchen device, for surfacing
+   *  in the "Order-taking app connected" step label. Null when no device
+   *  has ever heartbeated. The live flag is just hasKitchenDevice — this
+   *  payload is purely display. */
+  kitchenDeviceDetail?: {
+    label: string;
+    lastSeenAt: Date;
+  } | null;
   /** Accepted payment methods the owner chose. Slugs like "cash",
    *  "card_in_person", "online_card". Empty array means the owner hasn't
    *  picked yet — that's a required step. When the array includes
@@ -120,7 +132,7 @@ export interface ChecklistInput {
 
 /** Single source of truth for what "ready to publish" means. */
 export function computeSetupProgress(input: ChecklistInput): SetupProgress {
-  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount, paymentMethods, hasOnlinePaymentsEntitlement, deliverySource, hasDriverPoolEntitlement } = input;
+  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount, paymentMethods, hasOnlinePaymentsEntitlement, deliverySource, hasDriverPoolEntitlement, kitchenDeviceDetail } = input;
   // online_card is only meaningful when BOTH the owner ticked it AND they
   // have the online_payments add-on. Without the add-on, the option is
   // locked in the UI and the Stripe step shouldn't surface at all. This
@@ -280,10 +292,15 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
       id: "orders.appConnected",
       section: "orders",
       label: "Order-taking app connected",
-      // Phase 4: KitchenDevice heartbeats — required for publishing.
+      // KitchenDevice heartbeats — required for publishing. Detail shows
+      // device name + how long since the last heartbeat so the owner can
+      // tell at a glance whether the app is currently online or stale.
       required: true,
       href: "/admin/publishing",
       complete: hasKitchenDevice,
+      detail: kitchenDeviceDetail
+        ? `${kitchenDeviceDetail.label} · ${formatRelativeAgo(kitchenDeviceDetail.lastSeenAt)}`
+        : "No device has connected yet",
     },
     {
       id: "orders.notificationRecipient",
@@ -385,4 +402,17 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
     publishReady,
     requiredStepsRemaining,
   };
+}
+
+/** Compact relative-time formatter: "12s ago", "3m ago", "2h ago", "5d ago". */
+function formatRelativeAgo(when: Date, now: Date = new Date()): string {
+  const diffMs = now.getTime() - when.getTime();
+  const seconds = Math.max(0, Math.round(diffMs / 1000));
+  if (seconds < 60) return `${seconds}s ago`;
+  const minutes = Math.round(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.round(hours / 24);
+  return `${days}d ago`;
 }
