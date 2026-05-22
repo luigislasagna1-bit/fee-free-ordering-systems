@@ -137,6 +137,18 @@ export async function syncAddOnToStripe(addOnId: string): Promise<{
  * Look up the Stripe Customer for a restaurant; create one on demand
  * (Phase 5 is when this happens for the first time since signup no
  * longer eagerly creates one).
+ *
+ * RECONCILIATION: when the restaurant already has a stripeCustomerId,
+ * we also verify the Stripe-side `name`, `email`, and metadata.restaurantId
+ * still match. If they've drifted (e.g. restaurant was renamed in admin,
+ * or an old customer got reused) we patch the Stripe customer to match.
+ * Without this, Stripe Checkout pages render the wrong restaurant name
+ * at the top of the payment form — we hit this exact bug 2026-05-21
+ * when "Ristorante Test" was showing as "Luigis Lasagna & Pizzeria Inc."
+ * because that customer was originally created under a different name.
+ *
+ * Reconcile is best-effort — Stripe API failure does NOT block the
+ * billing flow. We just log and return the stale-named customer.
  */
 export async function ensureStripeCustomerForRestaurant(restaurantId: string): Promise<string> {
   const r = await prisma.restaurant.findUnique({
@@ -144,9 +156,40 @@ export async function ensureStripeCustomerForRestaurant(restaurantId: string): P
     select: { id: true, name: true, email: true, stripeCustomerId: true },
   });
   if (!r) throw new Error("Restaurant not found");
-  if (r.stripeCustomerId) return r.stripeCustomerId;
 
   const stripe = await getStripe();
+
+  if (r.stripeCustomerId) {
+    // Reconcile in the background — don't await if it slows the billing
+    // flow, but do await here because the result is on-screen immediately
+    // (Stripe Checkout pulls name from the customer object).
+    try {
+      const existing = await stripe.customers.retrieve(r.stripeCustomerId);
+      if (!("deleted" in existing) || !existing.deleted) {
+        const c = existing as { name?: string | null; email?: string | null; metadata?: Record<string, string> };
+        const expectedRestaurantId = r.id;
+        const expectedName = r.name;
+        const expectedEmail = r.email || null;
+        const nameDrift = (c.name || "") !== expectedName;
+        const emailDrift = (c.email || null) !== expectedEmail;
+        const metadataDrift = (c.metadata?.restaurantId || "") !== expectedRestaurantId;
+        if (nameDrift || emailDrift || metadataDrift) {
+          await stripe.customers.update(r.stripeCustomerId, {
+            name: expectedName,
+            email: expectedEmail || undefined,
+            metadata: { ...(c.metadata || {}), restaurantId: expectedRestaurantId },
+          });
+        }
+      }
+    } catch (e) {
+      // Reconcile failed (network, deleted customer, etc.) — don't block
+      // billing flows. Worst case: customer sees stale name on Checkout
+      // for this one session, which is what they'd see today anyway.
+      console.error(`[ensureStripeCustomerForRestaurant] reconcile failed for ${r.stripeCustomerId}`, e);
+    }
+    return r.stripeCustomerId;
+  }
+
   const c = await stripe.customers.create({
     email: r.email || undefined,
     name: r.name,
