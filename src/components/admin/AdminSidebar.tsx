@@ -70,6 +70,14 @@ const navGroups: NavGroup[] = [
     labelKey: "categorySetup",
     label: "Setup",
     icon: Rocket,
+    // The Setup Wizard is the overview/dashboard for the whole SETUP
+    // category. Rendered as a direct item at the very top of the group,
+    // above the sub-groups, so owners always have a one-click path to
+    // the "what's left to do?" view. The header "X% complete" banner
+    // (when below 100%) also links here.
+    items: [
+      { href: "/admin/setup", labelKey: "setup", label: "Setup Wizard", icon: Rocket },
+    ],
     subGroups: [
       {
         key: "setup.basics",
@@ -175,12 +183,9 @@ const navGroups: NavGroup[] = [
     label: "Reports",
     icon: BarChart3,
     items: [
-      { href: "/admin",           labelKey: "dashboard", label: "Dashboard",    icon: LayoutDashboard, exact: true },
-      // Setup wizard sits with Reports so the header "X% complete" banner
-      // (which links here) always lands on the same group.
-      { href: "/admin/setup",     labelKey: "setup",     label: "Setup Wizard", icon: Rocket },
-      { href: "/admin/reports",   labelKey: "reports",   label: "Reports",      icon: BarChart3 },
-      { href: "/admin/customers", labelKey: "customers", label: "Customers",    icon: Users },
+      { href: "/admin",           labelKey: "dashboard", label: "Dashboard",  icon: LayoutDashboard, exact: true },
+      { href: "/admin/reports",   labelKey: "reports",   label: "Reports",    icon: BarChart3 },
+      { href: "/admin/customers", labelKey: "customers", label: "Customers",  icon: Users },
     ],
   },
 
