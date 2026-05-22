@@ -42,9 +42,17 @@ export async function handlePaymentIntentEvent(event: Stripe.Event) {
     // kitchen is allowed to start cooking. fireOrderNotifications is
     // idempotent — Stripe can deliver the same webhook more than once
     // (network retry) and we'll only fan out exactly one time.
-    fireOrderNotifications(orderId).catch((e) =>
-      console.error("[payment_intent.succeeded] fireOrderNotifications:", e),
-    );
+    //
+    // IMPORTANT: we MUST `await` this call. Without await the promise is
+    // abandoned the moment this handler returns — Vercel serverless kills
+    // the lambda after the response is sent, taking the in-flight promise
+    // with it. We hit this exact bug 2026-05-22 on marketplace order
+    // ORD-529226215: payment_intent.succeeded was processed, but
+    // notifiedAt stayed null because fire-and-forget was getting cut off.
+    // Awaiting keeps the lambda alive until notifications complete (~1-2s
+    // typical) and lets exceptions propagate up so Stripe retries the
+    // whole webhook on transient Resend failures (still idempotent).
+    await fireOrderNotifications(orderId);
   } else if (event.type === "payment_intent.payment_failed") {
     await prisma.order.update({
       where: { id: orderId },
