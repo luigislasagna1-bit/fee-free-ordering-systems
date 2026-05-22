@@ -99,7 +99,7 @@ const navGroups: NavGroup[] = [
       {
         key: "setup.payments",
         labelKey: "setupPayments",
-        label: "Payment Methods & Taxes",
+        label: "Payments / Taxes",
         icon: CreditCard,
         setupSectionId: "payments",
         items: [

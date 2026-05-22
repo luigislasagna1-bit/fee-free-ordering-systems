@@ -368,7 +368,7 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
   const sectionLabels: Record<SectionId, string> = {
     basics: "Restaurant Basics",
     services: "Services & Hours",
-    payments: "Payment Methods & Taxes",
+    payments: "Payments / Taxes",
     orders: "Taking Orders",
     menu: "Menu Setup",
     publishing: "Publishing",
