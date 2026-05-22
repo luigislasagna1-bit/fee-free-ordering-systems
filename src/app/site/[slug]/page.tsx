@@ -183,46 +183,64 @@ export default async function HostedSitePage({
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(cleanJsonLd) }}
       />
-      {/* Hero */}
+
+      {/* Banner — shown as its own contained image when one exists. Used to
+          render this as a darkened hero-background, but that competed badly
+          with logo-style banners that already had text/branding baked in
+          (Luigi's banner is exactly that case). Showing it cleanly above
+          the title block works for BOTH photo and logo banners. */}
+      {r.bannerUrl && (
+        <div className="w-full bg-gray-100">
+          <div className="relative w-full aspect-[3/1] md:aspect-[4/1] max-h-[420px] overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={r.bannerUrl}
+              alt={`${r.name} banner`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Hero — solid theme-color block with logo + name + CTAs. The logo
+          straddles the banner/hero junction when both exist, giving the
+          standard restaurant-site visual (think OpenTable / Yelp). */}
       <section
         className="relative text-white"
         style={{
-          background: r.bannerUrl
-            ? `linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)), url(${r.bannerUrl}) center/cover`
-            : `linear-gradient(135deg, ${themeColor}, #1f2937)`,
+          background: `linear-gradient(135deg, ${themeColor}, ${darkenHex(themeColor, 0.25)})`,
         }}
       >
-        <div className="max-w-5xl mx-auto px-6 py-20 md:py-28">
+        <div className="max-w-5xl mx-auto px-6 pt-12 pb-14 md:pt-16 md:pb-20">
           {r.logoUrl && (
-            <div className="mb-6">
+            <div className={`${r.bannerUrl ? "-mt-20 md:-mt-24" : ""} mb-5 inline-block`}>
               <Image
                 src={r.logoUrl}
                 alt={`${r.name} logo`}
-                width={80}
-                height={80}
-                className="rounded-lg bg-white/10 p-2"
+                width={120}
+                height={120}
+                className="rounded-xl bg-white shadow-xl p-2 border-4 border-white object-contain"
               />
             </div>
           )}
-          <h1 className="text-4xl md:text-6xl font-extrabold">{r.name}</h1>
-          {r.slogan && <p className="mt-3 text-lg md:text-xl opacity-90">{r.slogan}</p>}
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">{r.name}</h1>
+          {r.slogan && <p className="mt-3 text-lg md:text-xl text-white/90">{r.slogan}</p>}
           {r.cuisineType && (
-            <p className="mt-2 text-sm uppercase tracking-wider opacity-75">
+            <p className="mt-2 text-sm uppercase tracking-wider text-white/75">
               {r.cuisineType}
             </p>
           )}
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href={orderUrl}
-              className="px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition"
-              style={{ background: themeColor, color: "white" }}
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition bg-white text-gray-900 hover:bg-gray-100"
             >
               Order Online
             </Link>
             {r.acceptsReservations && (
               <Link
                 href={`${orderUrl}?service=reservation`}
-                className="px-6 py-3 rounded-full font-semibold bg-white/10 hover:bg-white/20 border border-white/30 transition"
+                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white transition"
               >
                 Book a Table
               </Link>
@@ -400,6 +418,20 @@ export default async function HostedSitePage({
 
 function dayName(d: number) {
   return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d] || `Day ${d}`;
+}
+
+/** Darken a #rrggbb hex by a 0–1 fraction (0.25 = 25% darker).
+ *  Used to build the hero gradient from a single theme color. Falls back
+ *  to a deep slate if the input isn't parseable, so a bad theme value
+ *  doesn't break the page. */
+function darkenHex(hex: string, fraction: number): string {
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!m) return "#1f2937";
+  const clamp = (v: number) => Math.max(0, Math.min(255, Math.round(v * (1 - fraction))));
+  const r = clamp(parseInt(m[1], 16));
+  const g = clamp(parseInt(m[2], 16));
+  const b = clamp(parseInt(m[3], 16));
+  return `#${[r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")}`;
 }
 
 function Pill({ children, color }: { children: React.ReactNode; color: string }) {
