@@ -426,10 +426,12 @@ export async function POST(req: NextRequest) {
     // Marketplace counters — bump monthly orders / revenue / lifetime
     // savings. We bump on order CREATE (not on payment success) because
     // even an abandoned card order represents marketplace engagement.
-    // If the order later gets refunded/cancelled, M2.5 will add a
-    // counter-decrement on /api/orders/[id] PATCH → "cancelled".
+    // If the order later gets rejected/cancelled, the reject path calls
+    // unrecordMarketplaceOrder to roll back currentMonth counters
+    // (lifetime savings stays — it's a "what could have been" metric).
     if (viaMarketplace) {
       recordMarketplaceOrder({
+        orderId: order.id,
         restaurantId: restaurant.id,
         orderTotalCents: Math.round(serverTotal * 100),
         savedVsUberEatsCents: savedVsUberEatsCents ?? 0,

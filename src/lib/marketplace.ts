@@ -327,14 +327,15 @@ export function computeMonthlyChargeCents(monthToDateOrders: number): {
  * bump lifetime savings, and roll over the monthly counters if a new
  * calendar month has begun since `currentMonthStartedAt`.
  *
- * Called from the order POST AFTER the Order row is created — we have
- * the final order total + computed savings to record. Idempotent
- * against duplicate calls because we operate on the listing row, not
- * the Order; if the caller accidentally invokes this twice for the
- * same order, the second call just over-counts by one. Production
- * callers should guard with their own once-only semantics.
+ * Idempotency: this function is wrapped in a transaction that ALSO
+ * flips Order.marketplaceCounterApplied from false → true. If the
+ * order is already flagged true the whole transaction is a no-op,
+ * so duplicate calls don't double-count.
+ *
+ * Called from the order POST AFTER the Order row is created.
  */
 export async function recordMarketplaceOrder(args: {
+  orderId: string;
   restaurantId: string;
   orderTotalCents: number;
   savedVsUberEatsCents: number;
@@ -367,21 +368,87 @@ export async function recordMarketplaceOrder(args: {
     listing.currentMonthStartedAt.getUTCFullYear() === now.getUTCFullYear() &&
     listing.currentMonthStartedAt.getUTCMonth() === now.getUTCMonth();
 
-  await prisma.marketplaceListing.update({
-    where: { id: listing.id },
-    data: sameMonth
-      ? {
-          currentMonthOrders: { increment: 1 },
-          currentMonthRevenue: { increment: args.orderTotalCents / 100 },
-          lifetimeSavingsVsUberEatsCents: { increment: args.savedVsUberEatsCents },
-        }
-      : {
-          // New month — reset, then count this order as the first.
-          currentMonthStartedAt: new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)),
-          currentMonthOrders: 1,
-          currentMonthRevenue: args.orderTotalCents / 100,
-          lifetimeSavingsVsUberEatsCents: { increment: args.savedVsUberEatsCents },
+  await prisma.$transaction(async (tx) => {
+    // Atomic claim: only proceed if the order hasn't already been counted.
+    // If updateMany returns count=0 it means another invocation got here
+    // first (or the order doesn't exist) — either way we no-op.
+    const claimed = await tx.order.updateMany({
+      where: { id: args.orderId, marketplaceCounterApplied: false },
+      data: { marketplaceCounterApplied: true },
+    });
+    if (claimed.count === 0) return;
+
+    await tx.marketplaceListing.update({
+      where: { id: listing.id },
+      data: sameMonth
+        ? {
+            currentMonthOrders: { increment: 1 },
+            currentMonthRevenue: { increment: args.orderTotalCents / 100 },
+            lifetimeSavingsVsUberEatsCents: { increment: args.savedVsUberEatsCents },
+          }
+        : {
+            // New month — reset, then count this order as the first.
+            currentMonthStartedAt: new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)),
+            currentMonthOrders: 1,
+            currentMonthRevenue: args.orderTotalCents / 100,
+            lifetimeSavingsVsUberEatsCents: { increment: args.savedVsUberEatsCents },
+          },
+    });
+  });
+}
+
+/**
+ * Reverse a previous recordMarketplaceOrder — decrement currentMonthOrders
+ * and currentMonthRevenue by this order's contribution. Called from the
+ * reject/cancel paths so a restaurant isn't billed for an order it
+ * never fulfilled.
+ *
+ * Idempotency: we atomically clear Order.marketplaceCounterApplied from
+ * true → false. If it's already false (already decremented, or never
+ * recorded) the decrement is skipped — calling this multiple times on
+ * the same order is safe.
+ *
+ * Note on lifetimeSavingsVsUberEatsCents: we do NOT roll that back. The
+ * savings number represents what the customer would have paid in
+ * commission to UberEats — it's a "what could have been" metric, not a
+ * billing input. A rejected order still represents a moment where we
+ * saved the restaurant from a 30% kickback; reversing it would
+ * understate our value prop in reports.
+ */
+export async function unrecordMarketplaceOrder(args: {
+  orderId: string;
+  restaurantId: string;
+  orderTotalCents: number;
+}): Promise<void> {
+  const listing = await prisma.marketplaceListing.findUnique({
+    where: { restaurantId: args.restaurantId },
+    select: { id: true, currentMonthOrders: true, currentMonthRevenue: true },
+  });
+  if (!listing) return; // nothing to decrement against
+
+  await prisma.$transaction(async (tx) => {
+    // Atomic release: only decrement if the flag is currently true. Same
+    // pattern as record — updateMany returns count=0 if nothing to do.
+    const released = await tx.order.updateMany({
+      where: { id: args.orderId, marketplaceCounterApplied: true },
+      data: { marketplaceCounterApplied: false },
+    });
+    if (released.count === 0) return;
+
+    // Floor at zero. If we somehow got out of sync (e.g. a manual DB
+    // edit) we don't want to go negative on counters.
+    const revenueDecrement = args.orderTotalCents / 100;
+    await tx.marketplaceListing.update({
+      where: { id: listing.id },
+      data: {
+        currentMonthOrders: {
+          decrement: listing.currentMonthOrders > 0 ? 1 : 0,
         },
+        currentMonthRevenue: {
+          decrement: Math.min(listing.currentMonthRevenue, revenueDecrement),
+        },
+      },
+    });
   });
 }
 

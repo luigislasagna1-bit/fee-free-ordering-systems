@@ -558,6 +558,14 @@ model Order {
   /// commission-comparison rate changes later. Null for non-marketplace
   /// orders — direct orders weren't "competing" with UberEats.
   savedVsUberEatsCents Int?
+
+  /// Has this order's marketplace counter (MarketplaceListing.currentMonthOrders
+  /// + currentMonthRevenue) already been applied? Used by the decrement-on-
+  /// cancel logic to stay idempotent: when an order is rejected/cancelled, we
+  /// only subtract from the counters if the original create-time increment
+  /// actually happened. Prevents double-decrement on repeat status flips.
+  /// Only ever true on orders with viaMarketplace=true.
+  marketplaceCounterApplied Boolean @default(false)
   scheduledFor     DateTime?
   estimatedReady   DateTime?
   acceptedAt       DateTime?

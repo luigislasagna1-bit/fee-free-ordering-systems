@@ -13,6 +13,7 @@
 import prisma from "@/lib/db";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
 import { refundDestinationPayment, stripeReady } from "@/lib/stripe";
+import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 
 /** Minutes a pending order can sit before we auto-reject. Conservative
  *  default — kitchen countdown shows URGENT after 3 min, so 10 min is
@@ -56,6 +57,8 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       type: true,
       total: true,
       restaurantId: true,
+      viaMarketplace: true,
+      marketplaceCounterApplied: true,
       restaurant: { select: { id: true, name: true, defaultLanguage: true } },
     },
   });
@@ -85,6 +88,19 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
         },
       });
       result.rejected += 1;
+
+      // Marketplace counter rollback (idempotent). Auto-rejected
+      // marketplace orders shouldn't count toward the restaurant's
+      // monthly bill.
+      if (order.viaMarketplace && order.marketplaceCounterApplied) {
+        unrecordMarketplaceOrder({
+          orderId: order.id,
+          restaurantId: order.restaurantId,
+          orderTotalCents: Math.round(order.total * 100),
+        }).catch((e) =>
+          console.error("[auto-reject unrecordMarketplaceOrder]", e),
+        );
+      }
 
       // Refund if this was a card order that actually charged. Cash
       // and card_in_person orders never collected money, so no refund.

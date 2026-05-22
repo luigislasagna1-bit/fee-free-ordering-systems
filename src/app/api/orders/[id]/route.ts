@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { notifyStaff, notifyCustomer, staffAcceptEventForOrderType } from "@/lib/notifications";
 import { refundDestinationPayment, stripeReady } from "@/lib/stripe";
+import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 
 const ALLOWED_STATUSES = ["pending", "accepted", "preparing", "ready", "completed", "rejected", "cancelled"] as const;
 
@@ -60,7 +61,15 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
   const existing = await prisma.order.findUnique({
     where: { id },
-    select: { restaurantId: true, status: true, paymentStatus: true, paymentIntentId: true },
+    select: {
+      restaurantId: true,
+      status: true,
+      paymentStatus: true,
+      paymentIntentId: true,
+      viaMarketplace: true,
+      marketplaceCounterApplied: true,
+      total: true,
+    },
   });
   if (!existing) return NextResponse.json({ error: "Order not found" }, { status: 404 });
   if (existing.restaurantId !== user.restaurantId && user.role !== "superadmin") {
@@ -111,6 +120,19 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const isKilled = newStatus === "cancelled" || newStatus === "rejected";
   if (isKilled && existing.paymentStatus === "paid" && existing.paymentIntentId) {
     refundOrderAsync(id, existing.paymentIntentId).catch(() => {});
+  }
+
+  // Marketplace counter rollback. If this was a marketplace-attributed
+  // order whose counter increment landed at create time, peel it back
+  // out of the listing's monthly totals so we don't bill the restaurant
+  // for an order they never fulfilled. unrecord is idempotent — repeat
+  // status flips between cancelled/rejected won't double-decrement.
+  if (isKilled && existing.viaMarketplace && existing.marketplaceCounterApplied) {
+    unrecordMarketplaceOrder({
+      orderId: id,
+      restaurantId: existing.restaurantId,
+      orderTotalCents: Math.round(existing.total * 100),
+    }).catch((e) => console.error("[orders PATCH] unrecordMarketplaceOrder:", e));
   }
 
   // ── Notifications ──────────────────────────────────────────────────────
