@@ -43,6 +43,32 @@ const ADMIN_TO_SUPERADMIN: Array<{ match: RegExp; to: string }> = [
  */
 
 const PLATFORM_DOMAIN = process.env.PLATFORM_DOMAIN || "localtest.me";
+const MARKETPLACE_DOMAIN = process.env.MARKETPLACE_DOMAIN || "";
+
+/**
+ * Paths that ONLY make sense on the primary platform (admin/kitchen/auth/etc).
+ * If a customer somehow lands on the marketplace domain at one of these paths,
+ * we 301 them to the same path on PLATFORM_DOMAIN so they can sign in / use
+ * the admin console / etc. Customer-facing paths (/, /marketplace/*, /order/*,
+ * /api/*, /embed/*) are NOT in this list — they should work on either domain.
+ */
+const PRIMARY_ONLY_PREFIXES = [
+  "/admin",
+  "/superadmin",
+  "/kitchen",
+  "/login",
+  "/signup",
+  "/forgot-password",
+  "/reset-password",
+  "/verify-email",
+  "/reseller",
+  "/partners",
+  "/pricing",
+  "/features",
+  "/faq",
+  "/demo",
+  "/site",
+];
 
 export const config = {
   // Apply to everything EXCEPT static assets, API routes, internal Next files,
@@ -51,8 +77,12 @@ export const config = {
   // included so we can attach an x-pathname header (read by the admin layout
   // to power the subscription gate); the proxy logic itself passes admin
   // requests through without any rewrite.
+  // Excluded paths are pure infra/asset URLs that never benefit from host
+  // routing. Auth/marketing/console paths (login, signup, kitchen, etc.)
+  // DO go through the proxy so we can redirect them off the marketplace
+  // domain back to PLATFORM_DOMAIN.
   matcher: [
-    "/((?!api|_next/|_static|kitchen|login|signup|features|pricing|demo|faq|icons|manifest-order.webmanifest|manifest-kitchen.webmanifest|sw\\.js|offline\\.html|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
+    "/((?!api|_next/|_static|icons|manifest-order.webmanifest|manifest-kitchen.webmanifest|sw\\.js|offline\\.html|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
   ],
 };
 
@@ -103,11 +133,57 @@ export async function proxy(req: NextRequest) {
     return NextResponse.next({ request: { headers } });
   }
 
-  const decision = decideHost({ host, platformDomain: PLATFORM_DOMAIN });
+  const decision = decideHost({
+    host,
+    platformDomain: PLATFORM_DOMAIN,
+    marketplaceDomain: MARKETPLACE_DOMAIN || undefined,
+  });
 
+  // Marketing & passthrough — but first, on the primary platform domain we
+  // 301 any /marketplace[/...] hit over to MARKETPLACE_DOMAIN so there's one
+  // canonical URL for marketplace content (SEO + bookmark cleanliness).
   if (decision.kind === "passthrough" || decision.kind === "marketing") {
-    // Marketing decisions also pass through (the / route renders the marketing
-    // landing page). We only rewrite for tenants.
+    if (
+      decision.kind === "marketing" &&
+      MARKETPLACE_DOMAIN &&
+      pathname.startsWith("/marketplace")
+    ) {
+      const url = new URL(
+        `https://${MARKETPLACE_DOMAIN}${pathname === "/marketplace" ? "/" : pathname.replace(/^\/marketplace/, "")}${req.nextUrl.search}`
+      );
+      const res = NextResponse.redirect(url, 301);
+      res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+      res.headers.set("Pragma", "no-cache");
+      res.headers.set("Expires", "0");
+      return res;
+    }
+    return NextResponse.next();
+  }
+
+  // Marketplace domain — feefreefood.com (apex or www).
+  //
+  // Goal: customer experience is END-TO-END on this domain — discover on /,
+  // restaurant detail at /<slug-routed-through-/marketplace>, ordering on
+  // /order/<slug>/* — but admin/auth/console routes redirect to the primary
+  // platform so staff don't get lost.
+  if (decision.kind === "marketplace") {
+    // Bounce primary-only paths back to PLATFORM_DOMAIN.
+    if (PRIMARY_ONLY_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
+      const url = new URL(`https://${PLATFORM_DOMAIN}${pathname}${req.nextUrl.search}`);
+      const res = NextResponse.redirect(url, 302);
+      res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+      res.headers.set("Pragma", "no-cache");
+      res.headers.set("Expires", "0");
+      return res;
+    }
+    // Marketplace homepage — rewrite "/" to the existing /marketplace route
+    // so we don't have to duplicate the grid component.
+    if (pathname === "/" || pathname === "") {
+      return NextResponse.rewrite(new URL("/marketplace", req.url));
+    }
+    // Everything else (/marketplace/*, /order/*, /api/*, /embed/*, static)
+    // passes through. The customer sees feefreefood.com in the URL bar the
+    // whole time.
     return NextResponse.next();
   }
 

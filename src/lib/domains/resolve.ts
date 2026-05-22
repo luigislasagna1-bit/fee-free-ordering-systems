@@ -9,6 +9,7 @@ import { isReservedSubdomain } from "./reserved";
 export type RewriteDecision =
   | { kind: "passthrough"; reason: string }
   | { kind: "marketing"; reason: string }
+  | { kind: "marketplace"; reason: string }
   | { kind: "needs-lookup"; lookupBy: "subdomain" | "customDomain"; value: string };
 
 export interface ResolveContext {
@@ -18,6 +19,10 @@ export interface ResolveContext {
   platformDomain: string;
   /** Optional secondary platform suffix(es) we also recognise (e.g. preview deploys). */
   extraPlatformDomains?: string[];
+  /** Optional marketplace domain — if set, host = this domain (apex or www) returns
+   *  `kind: "marketplace"`. The proxy uses that to rewrite "/" → "/marketplace" and
+   *  redirect admin/kitchen paths back to the primary platform. */
+  marketplaceDomain?: string;
 }
 
 /**
@@ -25,9 +30,20 @@ export interface ResolveContext {
  * decision needs a tenant lookup, returns `needs-lookup` and the caller does
  * the lookup using the LRU + API resolver.
  */
-export function decideHost({ host, platformDomain, extraPlatformDomains = [] }: ResolveContext): RewriteDecision {
+export function decideHost({ host, platformDomain, extraPlatformDomains = [], marketplaceDomain }: ResolveContext): RewriteDecision {
   const normalizedHost = host.toLowerCase().split(":")[0].trim();
   if (!normalizedHost) return { kind: "passthrough", reason: "empty-host" };
+
+  // Marketplace domain (apex or www) — proxy then handles path-level routing.
+  // Checked BEFORE platform-domain matching so feefreefood.com never gets
+  // mis-classified as a tenant lookup. www → apex is handled at the Vercel
+  // domain config level (apex is canonical), so we treat both the same here.
+  if (marketplaceDomain) {
+    const mp = marketplaceDomain.toLowerCase();
+    if (normalizedHost === mp || normalizedHost === `www.${mp}`) {
+      return { kind: "marketplace", reason: "marketplace-domain" };
+    }
+  }
 
   // Treat any common dev / preview / tunnel host as passthrough so /admin etc.
   // work exactly as today. Includes ngrok / cloudflared / localtunnel so
