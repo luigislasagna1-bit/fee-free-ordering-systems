@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { ExternalLink, MapPin, Phone, Mail } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 
 /**
@@ -12,6 +14,53 @@ import { loadHostedSite } from "@/lib/hosted-site";
  * "Sales Optimized Website" add-on get a friendly "owner-only" page
  * pointing them at /admin/billing/add-ons.
  */
+
+/**
+ * Per-restaurant SEO + Open Graph metadata. Without this, every hosted site
+ * would render as "Fee Free Ordering" in search results / shared link
+ * previews — terrible for a restaurant whose hosted site is their primary
+ * web presence. With it: rich link previews on iMessage/Facebook/Twitter,
+ * Google indexes the page with the restaurant name + slogan + cuisine.
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const result = await loadHostedSite(slug);
+  if (result.kind !== "ok") {
+    return { title: "Fee Free Ordering" };
+  }
+  const r = result.data;
+  const titleParts = [r.name];
+  if (r.cuisineType) titleParts.push(r.cuisineType);
+  if (r.city) titleParts.push(r.city);
+  const title = titleParts.join(" — ");
+  const description =
+    r.slogan ||
+    r.description?.slice(0, 160) ||
+    `${r.name}${r.cuisineType ? ` · ${r.cuisineType}` : ""}${r.city ? ` · ${r.city}` : ""}. Order online directly — no delivery-app fees.`;
+  const ogImage = r.bannerUrl || r.logoUrl || undefined;
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      siteName: r.name,
+      images: ogImage ? [{ url: ogImage, alt: r.name }] : undefined,
+    },
+    twitter: {
+      card: ogImage ? "summary_large_image" : "summary",
+      title,
+      description,
+      images: ogImage ? [ogImage] : undefined,
+    },
+  };
+}
+
 export default async function HostedSitePage({
   params,
 }: {
@@ -59,8 +108,81 @@ export default async function HostedSitePage({
   const themeColor = (r.themeSettings?.primaryColor as string) || "#ef4444";
   const orderUrl = `/order/${r.slug}`;
 
+  // Build JSON-LD structured data so Google understands this page as a
+  // local business / restaurant. Powers the knowledge panel, hours table,
+  // address card, etc. in search results. Only fields we actually have
+  // are emitted — incomplete data is worse than no data for Google.
+  const jsonLd: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    name: r.name,
+    image: r.bannerUrl || r.logoUrl || undefined,
+    description: r.description || r.slogan || undefined,
+    telephone: r.phone || undefined,
+    email: r.email || undefined,
+    servesCuisine: r.cuisineType || undefined,
+    priceRange: undefined, // we don't capture this yet
+    address:
+      r.address || r.city
+        ? {
+            "@type": "PostalAddress",
+            streetAddress: r.address || undefined,
+            addressLocality: r.city || undefined,
+            addressRegion: r.state || undefined,
+            postalCode: r.zip || undefined,
+            addressCountry: r.country || undefined,
+          }
+        : undefined,
+    openingHoursSpecification: r.hours
+      .filter((h) => h.isOpen && h.openTime && h.closeTime)
+      .map((h) => ({
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "https://schema.org/Sunday",
+          "https://schema.org/Monday",
+          "https://schema.org/Tuesday",
+          "https://schema.org/Wednesday",
+          "https://schema.org/Thursday",
+          "https://schema.org/Friday",
+          "https://schema.org/Saturday",
+        ][h.dayOfWeek],
+        opens: h.openTime,
+        closes: h.closeTime,
+      })),
+    sameAs: r.socialLinks
+      ? Object.values(r.socialLinks).filter((v): v is string => typeof v === "string" && v.length > 0)
+      : undefined,
+  };
+
+  // Strip undefined recursively so the emitted JSON doesn't have "null"
+  // properties (Google ignores them but they bloat the markup).
+  const cleanJsonLd = JSON.parse(JSON.stringify(jsonLd));
+
+  // Best-effort map embed using Google Maps' free embed URL (no API key
+  // needed). Falls back to nothing if we don't have an address to query.
+  const mapQuery = [r.name, r.address, r.city, r.state, r.zip, r.country]
+    .filter((x): x is string => !!x && x.length > 0)
+    .join(", ");
+  const mapEmbedUrl = mapQuery
+    ? `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`
+    : null;
+
+  // Social link entries the page should render. Skip any with empty/null URLs
+  // so we don't emit empty buttons.
+  const socials = r.socialLinks
+    ? (["facebook", "instagram", "twitter", "youtube", "website"] as const)
+        .map((key) => ({ key, url: (r.socialLinks as Record<string, unknown>)?.[key] }))
+        .filter((s): s is { key: typeof s.key; url: string } => typeof s.url === "string" && s.url.length > 0)
+    : [];
+
   return (
     <main className="min-h-screen bg-white">
+      {/* JSON-LD structured data for Google's knowledge panel + rich snippets. */}
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(cleanJsonLd) }}
+      />
       {/* Hero */}
       <section
         className="relative text-white"
@@ -179,22 +301,27 @@ export default async function HostedSitePage({
             <h2 className="text-2xl font-bold text-gray-900">Visit</h2>
             <div className="mt-4 space-y-2 text-gray-700">
               {r.address && (
-                <p>
-                  {r.address}
-                  {r.city && `, ${r.city}`}
-                  {r.state && `, ${r.state}`}
-                  {r.zip && ` ${r.zip}`}
+                <p className="flex items-start gap-2">
+                  <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-gray-400" />
+                  <span>
+                    {r.address}
+                    {r.city && `, ${r.city}`}
+                    {r.state && `, ${r.state}`}
+                    {r.zip && ` ${r.zip}`}
+                  </span>
                 </p>
               )}
               {r.phone && (
-                <p>
+                <p className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 flex-shrink-0 text-gray-400" />
                   <a href={`tel:${r.phone}`} className="hover:underline">
                     {r.phone}
                   </a>
                 </p>
               )}
               {r.email && (
-                <p>
+                <p className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 flex-shrink-0 text-gray-400" />
                   <a href={`mailto:${r.email}`} className="hover:underline">
                     {r.email}
                   </a>
@@ -208,6 +335,24 @@ export default async function HostedSitePage({
               {r.acceptsDineIn && <Pill color={themeColor}>Dine-in</Pill>}
               {r.acceptsReservations && <Pill color={themeColor}>Reservations</Pill>}
             </div>
+            {/* Social links */}
+            {socials.length > 0 && (
+              <div className="mt-6 flex flex-wrap gap-2">
+                {socials.map((s) => (
+                  <a
+                    key={s.key}
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${s.key} link`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-xs font-semibold text-gray-700 capitalize transition"
+                  >
+                    {s.key}
+                    <ExternalLink className="w-3 h-3 opacity-60" />
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Hours</h2>
@@ -225,6 +370,20 @@ export default async function HostedSitePage({
             </ul>
           </div>
         </div>
+
+        {/* Embedded map — appears only when we have enough address to query. */}
+        {mapEmbedUrl && (
+          <div className="mt-10 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+            <iframe
+              src={mapEmbedUrl}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title={`Map to ${r.name}`}
+              className="w-full h-64 md:h-80 border-0"
+              allowFullScreen
+            />
+          </div>
+        )}
       </section>
 
       <footer className="bg-gray-900 text-gray-300 py-8 mt-10">
