@@ -179,14 +179,29 @@ export function calculatePlatformFee(amountCents: number): number {
 
 // ─── Connect (Layer C) ──────────────────────────────────────────────────────
 
-/** Create a new Stripe Connect Express account for a restaurant. */
+/**
+ * Create a new Stripe Connect STANDARD account for a restaurant.
+ *
+ * We use Standard (not Express) because:
+ *   - Restaurants who already have a Stripe account can SIGN IN during
+ *     onboarding (the "Sign in" link at the top of Stripe's hosted page).
+ *     Express forces a brand-new account every time.
+ *   - Restaurants get the FULL stripe.com dashboard for refunds, disputes,
+ *     payouts, tax reporting, etc. Express has a stripped-down dashboard.
+ *   - The restaurant owns their relationship with Stripe — they pay Stripe
+ *     fees directly and handle their own 1099 reporting. Cleaner for our
+ *     platform fee accounting too (we only see our application_fee_amount).
+ *
+ * Destination charges + transfer_data work identically on Standard and
+ * Express, so the payment flow code doesn't change.
+ */
 export async function createConnectAccount(params: {
   email?: string;
   restaurantName?: string;
 }): Promise<{ accountId: string }> {
   const stripe = await getStripe();
   const account = await stripe.accounts.create({
-    type: "express",
+    type: "standard",
     email: params.email,
     business_profile: { name: params.restaurantName },
     capabilities: {
@@ -197,7 +212,9 @@ export async function createConnectAccount(params: {
   return { accountId: account.id };
 }
 
-/** Build a Stripe-hosted Express onboarding link. */
+/** Build a Stripe-hosted Standard onboarding link. AccountLinks work for
+ *  both Standard and Express — the only difference is the dashboard the
+ *  restaurant gets afterward (full stripe.com vs Express dashboard). */
 export async function createConnectOnboardingLink(
   accountId: string,
   baseUrl: string
