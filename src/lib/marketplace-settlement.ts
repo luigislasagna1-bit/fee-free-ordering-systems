@@ -30,6 +30,7 @@ import {
 } from "@/lib/marketplace";
 import { getPlatformTax, stripeTaxRateDisplayName, type PlatformTax } from "@/lib/platform-tax";
 import { getStripe, stripeReady } from "@/lib/stripe";
+import { sendBillingNotificationEmail } from "@/lib/email";
 
 type Stripe = Awaited<ReturnType<typeof getStripe>>;
 
@@ -122,11 +123,14 @@ export async function settleMarketplaceMonth(opts: { now?: Date; monthStart?: Da
       id: true,
       restaurantId: true,
       currentMonthOrders: true,
+      currentMonthRevenue: true,
       currentMonthStartedAt: true,
+      lifetimeSavingsVsUberEatsCents: true,
       billingMode: true,
       restaurant: {
         select: {
           name: true,
+          email: true,
           stripeCustomerId: true,
           // country + state drive the per-province tax lookup. CRA
           // requires destination-based tax on Canadian supplies.
@@ -335,6 +339,29 @@ export async function settleMarketplaceMonth(opts: { now?: Date; monthStart?: Da
         reason: failureReason,
       });
     }
+
+    // Settlement summary email — fire-and-forget. Goes out for both
+    // successful and failed settlements so the restaurant always
+    // knows the cycle closed (and what to do if it failed).
+    if (c.restaurant.email) {
+      const ueEquivalent = ueEquivalentCents(c.currentMonthRevenue);
+      const savingsThisMonth = ueEquivalent - invoiced;
+      void sendMarketplaceSettlementEmail({
+        to: c.restaurant.email,
+        restaurantName: c.restaurant.name,
+        monthStart: targetMonth,
+        ordersInMonth: orders,
+        revenueInMonthCents: Math.round(c.currentMonthRevenue * 100),
+        accruedCents: accrued,
+        invoicedCents: invoiced,
+        capCents: MARKETPLACE_MONTHLY_CAP_CENTS,
+        ueEquivalentCents: ueEquivalent,
+        savingsThisMonthCents: Math.max(0, savingsThisMonth),
+        lifetimeSavingsCents: c.lifetimeSavingsVsUberEatsCents,
+        status: invoiceId ? "invoiced" : "failed",
+        failureReason,
+      }).catch((e) => console.error("[settlement] email failed", e));
+    }
   }
 
   return { monthStart: targetMonth, results };
@@ -342,4 +369,94 @@ export async function settleMarketplaceMonth(opts: { now?: Date; monthStart?: Da
 
 function monthLabel(d: Date): string {
   return d.toLocaleString("en-US", { month: "long", year: "numeric", timeZone: "UTC" });
+}
+
+/** What UberEats / DoorDash would have charged this restaurant in
+ *  commission on the period's marketplace revenue. 30% is the public
+ *  industry benchmark we compare against. Returns cents. */
+function ueEquivalentCents(revenueDollars: number): number {
+  return Math.round(revenueDollars * 100 * 0.30);
+}
+
+function formatCents(cents: number): string {
+  return `$${(cents / 100).toFixed(2)}`;
+}
+
+/**
+ * End-of-cycle "Your marketplace bill" email. Sent for both successful
+ * settlements (here's what you owe + your savings) and failed ones
+ * (heads up — we couldn't bill your card, here's why, update payment
+ * method). Idempotent at the cron level via MarketplaceSettlement
+ * (we only send once per restaurant per month).
+ */
+async function sendMarketplaceSettlementEmail(params: {
+  to: string;
+  restaurantName: string;
+  monthStart: Date;
+  ordersInMonth: number;
+  revenueInMonthCents: number;
+  accruedCents: number;
+  invoicedCents: number;
+  capCents: number;
+  ueEquivalentCents: number;
+  savingsThisMonthCents: number;
+  lifetimeSavingsCents: number;
+  status: "invoiced" | "failed";
+  failureReason?: string;
+}): Promise<void> {
+  const period = monthLabel(params.monthStart);
+  const capHit = params.accruedCents >= params.capCents;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+
+  if (params.status === "invoiced") {
+    const headline = `Your Fee Free Marketplace bill for ${period}`;
+    const body = `
+      Here's how ${period} closed for ${params.restaurantName} on the Fee Free Marketplace:
+      <br><br>
+      <strong>Orders this month:</strong> ${params.ordersInMonth}<br>
+      <strong>Revenue this month:</strong> ${formatCents(params.revenueInMonthCents)}<br>
+      <strong>Per-order fees accrued:</strong> ${formatCents(params.accruedCents)}
+      ${capHit
+        ? ` <em>(monthly cap of ${formatCents(params.capCents)} reached — additional orders were free)</em>`
+        : ""
+      }<br>
+      <strong>You're being billed:</strong> ${formatCents(params.invoicedCents)} (plus tax if applicable)
+      <br><br>
+      <strong>What you saved this month:</strong> ${formatCents(params.savingsThisMonthCents)} versus what UberEats / DoorDash would have charged (estimated 30% commission on ${formatCents(params.revenueInMonthCents)} = ${formatCents(params.ueEquivalentCents)}).<br>
+      <strong>Lifetime savings:</strong> ${formatCents(params.lifetimeSavingsCents)}.
+      <br><br>
+      The invoice will charge your card on file automatically — nothing for you to do. We'll email you again when it clears.
+    `;
+    await sendBillingNotificationEmail({
+      to: params.to,
+      restaurantName: params.restaurantName,
+      subject: `Your Fee Free Marketplace bill — ${period}`,
+      headline,
+      body,
+      ctaLabel: "View marketplace dashboard",
+      ctaUrl: `${baseUrl}/admin/marketplace`,
+    });
+  } else {
+    // status === "failed" — settlement row was created but no invoice
+    // was issued (usually no Stripe customer / no default card).
+    const headline = `Action needed on your ${period} Marketplace bill`;
+    const body = `
+      We weren't able to bill your card for the ${period} Marketplace cycle.
+      <br><br>
+      <strong>Orders this month:</strong> ${params.ordersInMonth}<br>
+      <strong>Amount due:</strong> ${formatCents(params.invoicedCents)}<br>
+      <strong>Reason:</strong> ${params.failureReason || "No default payment method on file."}
+      <br><br>
+      Please update your billing method to keep your marketplace listing active.
+    `;
+    await sendBillingNotificationEmail({
+      to: params.to,
+      restaurantName: params.restaurantName,
+      subject: `Action needed: ${period} Marketplace bill`,
+      headline,
+      body,
+      ctaLabel: "Update payment method",
+      ctaUrl: `${baseUrl}/admin/marketplace`,
+    });
+  }
 }
