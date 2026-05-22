@@ -302,10 +302,23 @@ export function OrderingPageClient({
   // Default payment method: pick the FIRST accepted method so the
   // checkout picker doesn't start on something the restaurant doesn't
   // actually take. "cash" if accepted (the most common case), otherwise
-  // whatever's first in the array, otherwise "cash" as a safety net.
+  // whatever's first in the array.
+  //
+  // CRITICAL: `acceptedMethods` uses SLUGS ("online_card") but the rest
+  // of the codebase (paymentMethod state, placeOrder() Stripe branch,
+  // server /api/orders accept check) uses the LEGACY VALUE for the
+  // online-card option — which is "card", not "online_card". Without
+  // this translation, a marketplace order (acceptedMethods=["online_card"])
+  // would default paymentMethod to "online_card" — a value the
+  // CheckoutModal summary doesn't recognize, so it falls back to
+  // "Cash on Pickup". That was visible to customers as a paradox: the
+  // picker showed online card but the summary said cash.
+  const slugToValue = (slug: string): string =>
+    slug === "online_card" ? "card" : slug;
   const defaultPaymentMethod =
-    acceptedMethods.includes("cash") ? "cash"
-    : acceptedMethods[0] ?? "cash";
+    acceptedMethods.includes("cash")
+      ? "cash"
+      : slugToValue(acceptedMethods[0] ?? "cash");
   const [customerInfo, setCustomerInfo] = useState({
     name: "", email: "", phone: "", address: "", city: "", zip: "",
     notes: "", paymentMethod: defaultPaymentMethod, scheduledFor: "",
