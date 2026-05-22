@@ -11,6 +11,7 @@ import {
   recordMarketplaceOrder,
   isOnMarketplace,
 } from "@/lib/marketplace";
+import { getCurrentCustomer } from "@/lib/customer-session";
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "catering"] as const;
 // "cash"           = pay on pickup/delivery in cash
 // "card"           = pay online by card via Stripe (gated by cardPaymentEnabled)
@@ -292,6 +293,17 @@ export async function POST(req: NextRequest) {
     const serverTotal = Math.round((taxBase + serverTax + serverTip) * 100) / 100;
 
     // ── Find or create customer ─────────────────────────────────────────────
+    //
+    // Two layers of customer identity:
+    //   1. CustomerAccount — marketplace-wide signed-in identity (Phase 1).
+    //      If the customer is logged into their account, we link this order's
+    //      per-restaurant Customer row to it, so /account/orders can later
+    //      aggregate across every restaurant they've ordered from.
+    //   2. Customer — per-restaurant ledger entry (legacy). One per email per
+    //      restaurant, tallies totalOrders + totalSpent for THAT restaurant.
+    //
+    // For guest checkouts the account link stays null and behavior is unchanged.
+    const currentAccount = await getCurrentCustomer();
     let customer = null;
     const cleanEmail = customerEmail ? sanitize(customerEmail, 254).toLowerCase() : null;
     const cleanPhone = customerPhone ? sanitize(customerPhone, 30) : null;
@@ -300,12 +312,27 @@ export async function POST(req: NextRequest) {
       if (where) customer = await prisma.customer.findFirst({ where });
       if (!customer) {
         customer = await prisma.customer.create({
-          data: { restaurantId: restaurant.id, name: sanitize(customerName, 100), email: cleanEmail, phone: cleanPhone },
+          data: {
+            restaurantId: restaurant.id,
+            name: sanitize(customerName, 100),
+            email: cleanEmail,
+            phone: cleanPhone,
+            customerAccountId: currentAccount?.id ?? null,
+          },
         });
       } else {
         await prisma.customer.update({
           where: { id: customer.id },
-          data: { totalOrders: { increment: 1 }, totalSpent: { increment: serverTotal } },
+          data: {
+            totalOrders: { increment: 1 },
+            totalSpent: { increment: serverTotal },
+            // Backfill the account link on subsequent orders from a signed-in
+            // user who originally ordered as a guest. Only set if currently null
+            // so we don't overwrite a previous link.
+            ...(currentAccount && !customer.customerAccountId
+              ? { customerAccountId: currentAccount.id }
+              : {}),
+          },
         });
       }
     }

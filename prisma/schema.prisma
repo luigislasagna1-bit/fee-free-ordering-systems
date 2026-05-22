@@ -637,14 +637,69 @@ model Customer {
   notes        String?
   totalOrders  Int      @default(0)
   totalSpent   Float    @default(0)
+  /// Link to the global CustomerAccount (if the customer has signed up
+  /// for an account). Multiple Customer rows (one per restaurant they've
+  /// ordered from) can point at the same CustomerAccount — that's the
+  /// "ordered from 5 different marketplace restaurants but one identity"
+  /// case. Null for guest checkouts that never converted to an account.
+  customerAccountId String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
-  orders     Order[]
+  restaurant      Restaurant       @relation(fields: [restaurantId], references: [id])
+  customerAccount CustomerAccount? @relation(fields: [customerAccountId], references: [id])
+  orders          Order[]
 
   @@index([restaurantId])
   @@index([restaurantId, email])
+  @@index([customerAccountId])
+}
+
+/// Marketplace-wide customer identity. One row per signup email, shared
+/// across every restaurant the customer orders from. Stores the auth
+/// credential (passwordHash) + profile fields that aren't restaurant-specific.
+/// Per-restaurant order history attribution lives on Customer (above) —
+/// CustomerAccount is the user-facing "my account" entity.
+model CustomerAccount {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  passwordHash    String?
+  /// Set when email verification succeeds. Used to gate features that
+  /// require a confirmed inbox (saved cards, certain notifications).
+  emailVerifiedAt DateTime?
+  name            String?
+  phone           String?
+  /// Last time the user successfully signed in. Helps surface stale
+  /// accounts + power "your last login" UX.
+  lastLoginAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  addresses CustomerAddress[]
+  customers Customer[]
+
+  @@index([email])
+}
+
+/// Saved delivery addresses on a customer's account. Up to a reasonable
+/// number per user (no hard cap in schema; UI enforces). isDefault flags
+/// the one we prefill at checkout.
+model CustomerAddress {
+  id                String   @id @default(cuid())
+  customerAccountId String
+  /// Human label like "Home", "Work" — optional.
+  label             String?
+  street            String
+  city              String
+  state             String?
+  zip               String?
+  country           String   @default("CA")
+  isDefault         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+
+  customerAccount CustomerAccount @relation(fields: [customerAccountId], references: [id], onDelete: Cascade)
+
+  @@index([customerAccountId])
 }
 
 model Coupon {

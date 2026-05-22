@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import { Sparkles, User } from "lucide-react";
 import { listPublicMarketplaceListings } from "@/lib/marketplace";
 import { MarketplaceGrid, type GridListing } from "./MarketplaceGrid";
+import { getCurrentCustomer } from "@/lib/customer-session";
 
 /**
  * Public marketplace browse page — the customer entry point.
@@ -24,7 +25,10 @@ export const metadata = {
 };
 
 export default async function MarketplacePage() {
-  const raw = await listPublicMarketplaceListings();
+  const [raw, currentCustomer] = await Promise.all([
+    listPublicMarketplaceListings(),
+    getCurrentCustomer(),
+  ]);
 
   // Serialise to plain JSON for the client boundary. We strip Prisma Decimal
   // / Date wrappers here so React doesn't choke at the server→client edge.
@@ -51,11 +55,22 @@ export default async function MarketplacePage() {
       {/* ─── Hero ─────────────────────────────────────────────────────── */}
       <header className="bg-gradient-to-br from-orange-500 to-pink-500 text-white">
         <div className="max-w-6xl mx-auto px-4 py-10 sm:py-14">
-          <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="w-5 h-5" />
-            <span className="text-sm font-semibold uppercase tracking-wider opacity-90">
-              Fee Free Marketplace
-            </span>
+          <div className="flex items-center justify-between mb-3 gap-3">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5" />
+              <span className="text-sm font-semibold uppercase tracking-wider opacity-90">
+                Fee Free Marketplace
+              </span>
+            </div>
+            <Link
+              href={currentCustomer ? "/account" : "/account/login"}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur text-xs font-semibold transition"
+            >
+              <User className="w-3.5 h-3.5" />
+              {currentCustomer
+                ? (currentCustomer.name?.split(" ")[0] || "My account")
+                : "Sign in"}
+            </Link>
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
             Order local. Keep more in their pockets.
