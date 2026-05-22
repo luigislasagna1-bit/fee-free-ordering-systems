@@ -4,22 +4,73 @@
 > can be reordered, scope can change, and some things will get cut. Use it
 > to know what's queued and roughly what each phase is for.
 
-## 🔬 Shipped 2026-05-21 — verify in prod
+## 🔬 Shipped 2026-05-21 — verification status
 
-This batch landed on main on 2026-05-21. Each item needs a smoke test
-against the live deployment before considering it done:
+Live verified ✅:
+- Marketplace published-only filter (`/marketplace` shows only restaurants
+  with `publishedAt != null` AND `isListed=true`)
+- Card-only enforcement on marketplace orders (defense-in-depth: server
+  rejects non-card POSTs, client UI gates to card-only)
+- Auto-reject-stale-orders cron (Vercel cron firing every 5 min, all 200s)
+- Kitchen dispatch-mode toggle endpoint deployed + auth-gated
+- Revert-to-brand-menu endpoint deployed + auth-gated
+- `feefreefood.com` marketplace domain routing (apex serves grid, admin
+  paths bounce back to PLATFORM_DOMAIN)
+- `feefreeordering.com/marketplace*` 301s to `feefreefood.com/*`
 
-- Card-only enforcement on marketplace orders
-- PAYG opt-in with Stripe SetupIntent card capture
-- Auto-reject-stale-orders cron (every 5 min)
-- Kitchen dispatch-mode toggle (`activeDispatchMode` column)
-- Revert-to-brand-menu banner for child locations
-- `/marketplace` published-only filter
-- `setup_intent.succeeded` Stripe webhook handler
+Deferred manual tests:
+- Kitchen dispatch-mode toggle UX (needs a restaurant with
+  `deliverySource="both"` + driver_pool entitlement)
+- Revert-to-brand menu banner UX (needs a multi-location setup with a
+  customized child menu)
 
-**External prerequisites:** `CRON_SECRET` set in Vercel env, Stripe
-webhook subscribes to `setup_intent.succeeded` +
-`checkout.session.completed`.
+🚨 Bugs found during verification — see task list and "Outstanding bugs"
+section below.
+
+## 🚨 Outstanding bugs (found 2026-05-21 during verification)
+
+Highest-priority fixes — discovered while testing the PAYG card-save flow.
+Each one is small but they BLOCK the PAYG opt-in flow end-to-end.
+
+1. **Stripe webhook doesn't subscribe to `setup_intent.succeeded` or
+   `checkout.session.completed`** (task #4 reopened). Code handler exists
+   but Stripe Dashboard isn't sending us those event types — confirmed by
+   inspecting `StripeWebhookEvent` table on prod (zero rows ever).
+   → Fix: Stripe Dashboard → Developers → Webhooks → add those two events
+     to the endpoint subscription list.
+
+2. **Prod Stripe is in TEST mode, not LIVE** (task #14). `STRIPE_SECRET_KEY`
+   on Vercel is `sk_test_*`. Real customer cards will be declined on
+   launch.
+   → Fix: swap to `sk_live_*` keys when ready to accept money. Re-register
+     webhook with live signing secret.
+
+3. **`NEXT_PUBLIC_APP_URL` points to `fee-free-ordering-systems.vercel.app`
+   instead of `feefreeordering.com`** (task #17). Affects Stripe
+   success/cancel URLs, email links, anywhere we use process.env to build
+   absolute URLs.
+   → Fix: Vercel → Settings → Env Vars → update to
+     `https://feefreeordering.com`. Audit `NEXTAUTH_URL` for same issue.
+
+4. **Stripe customer name shows wrong restaurant on Checkout** (task #15).
+   Impersonated "Ristorante Test", but Stripe Checkout displayed
+   "Luigis Lasagna & Pizzeria Inc." Suggests `ensureStripeCustomerForRestaurant`
+   isn't setting `customer.name` from the actual restaurant row.
+
+5. **Impersonation context lost on Stripe Checkout return** (task #16).
+   After completing Stripe Checkout, redirected to `/superadmin?card_saved=1`
+   instead of `/admin/marketplace/payg-opt-in?card_saved=1`. The
+   `sa_impersonate` cookie didn't survive the round-trip.
+   → Fix: SameSite=None+Secure on impersonation cookie OR encode in
+     success_url query string.
+
+6. **`*.feefreeordering.com` wildcard DNS still "Invalid Configuration"**.
+   Blocks tenant subdomain routing (`<slug>.feefreeordering.com`).
+   → Fix: add a wildcard CNAME at GoDaddy: `*` → `cname.vercel-dns.com`.
+
+7. **`luigispizzapastawings.com` custom domain still invalid** (long-standing
+   from earlier roadmap).
+   → User action — DNS at that registrar.
 
 ## Quick legend
 

@@ -18,20 +18,20 @@ import prisma from "@/lib/db";
 
 async function main() {
   const events = await prisma.stripeWebhookEvent.findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: { receivedAt: "desc" },
     take: 20,
     select: {
       stripeEventId: true,
       eventType: true,
       status: true,
       errorMessage: true,
-      createdAt: true,
+      receivedAt: true,
     },
   });
 
   console.log(`Last ${events.length} StripeWebhookEvent rows:\n`);
   for (const e of events) {
-    const date = e.createdAt.toISOString().slice(0, 19);
+    const date = e.receivedAt.toISOString().slice(0, 19);
     const err = e.errorMessage ? `  ⚠ ${e.errorMessage.slice(0, 80)}` : "";
     console.log(`  ${date}  ${e.status.padEnd(20)} ${e.eventType}${err}`);
   }
@@ -40,7 +40,7 @@ async function main() {
   const counts = await prisma.stripeWebhookEvent.groupBy({
     by: ["eventType"],
     _count: { _all: true },
-    where: { createdAt: { gte: since } },
+    where: { receivedAt: { gte: since } },
     orderBy: { _count: { eventType: "desc" } } as any,
   });
 
@@ -54,9 +54,9 @@ async function main() {
   for (const type of interesting) {
     const found = await prisma.stripeWebhookEvent.findFirst({
       where: { eventType: type },
-      orderBy: { createdAt: "desc" },
+      orderBy: { receivedAt: "desc" },
     });
-    console.log(`  ${type}: ${found ? `YES (last ${found.createdAt.toISOString().slice(0, 19)})` : "never"}`);
+    console.log(`  ${type}: ${found ? `YES (last ${found.receivedAt.toISOString().slice(0, 19)})` : "never"}`);
   }
 }
 
