@@ -23,13 +23,22 @@ const POSITIVE_TTL_MS = 60_000;
 const NEGATIVE_TTL_MS = 10_000;
 const MAX_ENTRIES = 500;
 
-type Entry = { slug: string | null; expiresAt: number };
+export type TenantInfo = {
+  slug: string | null;
+  /** Whether the restaurant has the `hosted_marketing_page` entitlement.
+   *  Cached together with slug so the middleware can branch the root-path
+   *  rewrite (hosted-site customers go to /site/<slug>, plain ordering
+   *  customers go to /order/<slug>). Always false when slug is null. */
+  hasHostedSite: boolean;
+};
+
+type Entry = TenantInfo & { expiresAt: number };
 
 // One Map per module load. JavaScript Maps preserve insertion order, which we
 // use to evict the oldest entry when we exceed MAX_ENTRIES.
 const cache = new Map<string, Entry>();
 
-export function getCached(host: string): { hit: true; slug: string | null } | { hit: false } {
+export function getCached(host: string): { hit: true; info: TenantInfo } | { hit: false } {
   const e = cache.get(host);
   if (!e) return { hit: false };
   if (e.expiresAt < Date.now()) {
@@ -39,12 +48,12 @@ export function getCached(host: string): { hit: true; slug: string | null } | { 
   // Refresh LRU order: re-insert so this entry becomes "most recent".
   cache.delete(host);
   cache.set(host, e);
-  return { hit: true, slug: e.slug };
+  return { hit: true, info: { slug: e.slug, hasHostedSite: e.hasHostedSite } };
 }
 
-export function setCached(host: string, slug: string | null): void {
-  const ttl = slug === null ? NEGATIVE_TTL_MS : POSITIVE_TTL_MS;
-  cache.set(host, { slug, expiresAt: Date.now() + ttl });
+export function setCached(host: string, info: TenantInfo): void {
+  const ttl = info.slug === null ? NEGATIVE_TTL_MS : POSITIVE_TTL_MS;
+  cache.set(host, { ...info, expiresAt: Date.now() + ttl });
   if (cache.size > MAX_ENTRIES) {
     // Evict the oldest (first inserted) entry. Map iteration is insertion-ordered.
     const oldestKey = cache.keys().next().value;

@@ -1,19 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
+import { hasFeature } from "@/lib/entitlements";
 
 // Force Node runtime — Prisma cannot run in edge runtime.
 export const runtime = "nodejs";
 
 /**
- * Internal-only host → slug resolver. Called by the edge middleware whose LRU
- * misses on a host. Gated by a shared secret so it cannot be enumerated from
- * the public internet (otherwise a bot could probe for tenant slugs cheaply).
+ * Internal-only host → tenant resolver. Called by the edge middleware whose
+ * LRU misses on a host. Gated by a shared secret so it cannot be enumerated
+ * from the public internet (otherwise a bot could probe for tenant slugs
+ * cheaply).
  *
  * Query params:
  *   by    = "subdomain" | "customDomain"
  *   value = the value to look up (already lowercased by caller)
  *
- * Returns: { slug: string | null }
+ * Returns: { slug: string | null, hasHostedSite: boolean }
+ * `hasHostedSite` is true when the restaurant has an active
+ * `hosted_marketing_page` entitlement (granted by the "Sales Optimized
+ * Website" add-on). The middleware uses it to decide whether
+ * `<slug>.<platform>/` rewrites to /site/<slug> (the hosted marketing page)
+ * or /order/<slug> (the ordering page) for the root path.
  */
 export async function GET(req: NextRequest) {
   const headerKey = req.headers.get("x-internal-key");
@@ -30,7 +37,7 @@ export async function GET(req: NextRequest) {
   const by = req.nextUrl.searchParams.get("by");
   const value = (req.nextUrl.searchParams.get("value") || "").toLowerCase().trim();
 
-  if (!value) return NextResponse.json({ slug: null });
+  if (!value) return NextResponse.json({ slug: null, hasHostedSite: false });
   if (by !== "subdomain" && by !== "customDomain") {
     return NextResponse.json({ error: "Bad by param" }, { status: 400 });
   }
@@ -41,10 +48,18 @@ export async function GET(req: NextRequest) {
 
   const r = await prisma.restaurant.findFirst({
     where: where as any,
-    select: { slug: true },
+    select: { id: true, slug: true },
   });
 
-  return NextResponse.json({ slug: r?.slug ?? null });
+  if (!r) return NextResponse.json({ slug: null, hasHostedSite: false });
+
+  // Resolve hosted-site entitlement so the middleware can branch the
+  // root-path rewrite. hasFeature is fast (entitlements module caches the
+  // active add-on rows per restaurant) but we still cache the result in the
+  // middleware LRU so steady-state traffic avoids ever doing this lookup.
+  const hasHostedSite = await hasFeature(r.id, "hosted_marketing_page");
+
+  return NextResponse.json({ slug: r.slug, hasHostedSite });
 }
 
 /**

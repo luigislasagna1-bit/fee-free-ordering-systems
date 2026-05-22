@@ -191,10 +191,12 @@ export async function proxy(req: NextRequest) {
   const { lookupBy, value } = decision;
   const cacheKey = `${lookupBy}:${value}`;
   let slug: string | null;
+  let hasHostedSite = false;
 
   const cached = getCached(cacheKey);
   if (cached.hit) {
-    slug = cached.slug;
+    slug = cached.info.slug;
+    hasHostedSite = cached.info.hasHostedSite;
   } else {
     try {
       const resolveUrl = new URL("/api/internal/resolve-host", req.url);
@@ -205,9 +207,10 @@ export async function proxy(req: NextRequest) {
         headers["x-internal-key"] = process.env.INTERNAL_API_SECRET;
       }
       const res = await fetch(resolveUrl, { headers });
-      const data = (await res.json()) as { slug: string | null };
+      const data = (await res.json()) as { slug: string | null; hasHostedSite?: boolean };
       slug = data.slug ?? null;
-      setCached(cacheKey, slug);
+      hasHostedSite = !!data.hasHostedSite;
+      setCached(cacheKey, { slug, hasHostedSite });
     } catch {
       // If the resolver is unreachable, fail open to the marketing page. This
       // matters because a transient resolver outage shouldn't 500 the whole
@@ -224,9 +227,39 @@ export async function proxy(req: NextRequest) {
   }
 
   const { search } = req.nextUrl;
-  const rewritten = new URL(`/order/${slug}${pathname}${search}`, req.url);
-
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set("x-tenant-slug", slug);
+
+  // Root path → hosted-site customers see their marketing page; everyone
+  // else lands directly on their order page. The hosted-site customer's
+  // marketing page renders an "Order Online" button pointing at
+  // /order/<slug>, which the next branch handles cleanly.
+  if (pathname === "/" || pathname === "") {
+    const targetPath = hasHostedSite ? `/site/${slug}` : `/order/${slug}`;
+    return NextResponse.rewrite(new URL(`${targetPath}${search}`, req.url), {
+      request: { headers: requestHeaders },
+    });
+  }
+
+  // Paths that already reference THIS tenant under our internal route
+  // structure pass through unchanged (modulo the rewrite mechanism). Without
+  // this, /order/<slug>/info on a subdomain would double-prefix to
+  // /order/<slug>/order/<slug>/info. Restricted to the SAME slug so a
+  // malicious "<tenantA>.feefreeordering.com/order/tenantB" can't be used
+  // to serve tenant B's page from tenant A's subdomain.
+  if (
+    pathname === `/order/${slug}` ||
+    pathname.startsWith(`/order/${slug}/`) ||
+    pathname === `/site/${slug}` ||
+    pathname.startsWith(`/site/${slug}/`)
+  ) {
+    return NextResponse.rewrite(new URL(`${pathname}${search}`, req.url), {
+      request: { headers: requestHeaders },
+    });
+  }
+
+  // Default for non-root paths: tenant-route by prefixing /order/<slug>.
+  // Preserves the existing behavior for sub-paths like /info, /payment, etc.
+  const rewritten = new URL(`/order/${slug}${pathname}${search}`, req.url);
   return NextResponse.rewrite(rewritten, { request: { headers: requestHeaders } });
 }
