@@ -62,6 +62,9 @@ export type PublicListing = {
   marketplaceTags: string[];
   marketplaceFeatured: boolean;
   marketplaceSortOrder: number;
+  /** When the restaurant signed up — used by the marketplace grid's
+   *  "Newest" sort mode. ISO-string serialised at the server→client boundary. */
+  createdAt: Date;
 };
 
 /**
@@ -111,6 +114,7 @@ export async function listPublicMarketplaceListings(): Promise<PublicListing[]> 
           cuisineType: true,
           bannerUrl: true,
           logoUrl: true,
+          createdAt: true,
           addOns: {
             where: { status: { in: ["active", "trialing"] } },
             include: { addOn: { select: { enabledFeatures: true } } },
@@ -161,6 +165,7 @@ export async function listPublicMarketplaceListings(): Promise<PublicListing[]> 
       marketplaceTags: safeJsonStringArray(r.marketplaceTags),
       marketplaceFeatured: r.marketplaceFeatured,
       marketplaceSortOrder: r.marketplaceSortOrder,
+      createdAt: r.restaurant.createdAt,
     });
   }
 
