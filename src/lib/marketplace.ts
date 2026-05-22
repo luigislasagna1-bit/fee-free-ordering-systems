@@ -102,14 +102,18 @@ export async function listPublicMarketplaceListings(): Promise<PublicListing[]> 
         // for restaurants that got their listing created back when
         // publishing-before-marketplace wasn't enforced.
         publishedAt: { not: null },
-        // STRIPE-CONNECT-LIVE. Marketplace orders are card-only by
-        // platform contract. A restaurant whose Connect onboarding
-        // isn't complete (or whose charges aren't enabled) can't take
-        // the customer's payment — listing them is a broken promise.
-        // We hit this exact bug 2026-05-22: Luigi's Lasagna had the
-        // marketplace add-on but Connect status was "not_connected",
-        // so customers saw "Pay online coming soon" mid-checkout.
-        stripeAccountStatus: "connected",
+        // CHARGES-ENABLED. Marketplace orders are card-only by platform
+        // contract — a restaurant whose Stripe can't take charges is a
+        // broken promise to customers (they'd see "Pay online coming
+        // soon" mid-checkout). The right gate is stripeChargesEnabled
+        // alone, NOT our derived `stripeAccountStatus`. Status strings
+        // diverge from the Stripe-side truth during the bank-payout
+        // verification window: account.charges_enabled flips to true
+        // first (account is ready to take customer money), then
+        // payouts_enabled trails by hours/days while Stripe verifies
+        // the bank. Our webhook may not always observe both flag flips
+        // in sync. Gating on chargesEnabled alone correctly admits a
+        // restaurant the moment it can actually charge customers.
         stripeChargesEnabled: true,
       },
     },

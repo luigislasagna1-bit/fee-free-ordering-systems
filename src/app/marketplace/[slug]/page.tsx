@@ -46,16 +46,14 @@ export default async function MarketplaceRestaurantPage({
     redirect("/marketplace");
   }
 
-  // STRIPE-CONNECT-LIVE gate. Marketplace orders are card-only by
-  // platform contract — if Connect isn't finished, the customer
+  // CHARGES-ENABLED gate. Marketplace orders are card-only by
+  // platform contract — if Stripe can't take charges, the customer
   // would hit "Pay online coming soon" mid-checkout. Bounce them
   // back to /marketplace where the listing is filtered out anyway.
-  // Defense-in-depth: listPublicMarketplaceListings also excludes
-  // these restaurants, so a customer would only reach this URL by
-  // direct link / bookmark / stale tab.
-  const stripeConnectLive =
-    restaurant.stripeAccountStatus === "connected" && !!restaurant.stripeChargesEnabled;
-  if (!stripeConnectLive) {
+  // Gate on stripeChargesEnabled directly (the Stripe-side truth)
+  // rather than our derived `stripeAccountStatus` label, which can
+  // lag behind during the bank-payout verification window.
+  if (!restaurant.stripeChargesEnabled) {
     redirect("/marketplace");
   }
 
