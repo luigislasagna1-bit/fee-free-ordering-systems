@@ -2,7 +2,29 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw, Sparkles, ArrowRight } from "lucide-react";
+import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw, Sparkles, ArrowRight, Settings } from "lucide-react";
+
+/**
+ * Where each add-on's settings/config live. Used to render an "Open settings"
+ * deep-link on each ACTIVE add-on card so owners don't have to hunt for the
+ * matching admin page. Keys are AddOn.slug values; missing slugs render no
+ * link (the add-on has no config surface).
+ *
+ * When adding a new add-on with config, add a row here. When the slug has
+ * no admin-side settings (e.g. a passive "unlock this feature" add-on),
+ * leave it out.
+ */
+const ADDON_SETTINGS_PATH: Record<string, { href: string; label: string }> = {
+  hosted_website:           { href: "/admin/website/editor",      label: "Open website editor" },
+  online_payments:          { href: "/admin/payments/providers",  label: "Manage Stripe Connect" },
+  marketplace:              { href: "/admin/marketplace",         label: "Manage marketplace listing" },
+  driver_pool:              { href: "/admin/delivery/pool",       label: "Configure driver pool" },
+  multi_location:           { href: "/admin/locations",           label: "Manage locations" },
+  custom_domain:            { href: "/admin/website/domain",      label: "Connect your domain" },
+  advanced_promo_marketing: { href: "/admin/promotions",          label: "Run promotions" },
+  reservation_deposits:     { href: "/admin/reservations",        label: "Configure reservations" },
+  branded_mobile_app:       { href: "/admin/publishing",          label: "Configure app" },
+};
 
 type AddOnView = {
   id: string;
@@ -213,20 +235,35 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
                     </button>
                   </div>
                 ) : active ? (
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-600">
-                      {periodEnd
-                        ? `Renews ${periodEnd.toLocaleDateString()}`
-                        : "Renews automatically"}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setCancelConfirm(a)}
-                      disabled={busy}
-                      className="text-xs font-medium text-red-600 hover:underline disabled:opacity-50"
-                    >
-                      {busy ? "Working…" : "Cancel"}
-                    </button>
+                  <div className="space-y-2.5">
+                    {/* Deep-link to whatever admin page configures this add-on.
+                        Means owners can jump straight from billing to the
+                        relevant settings rather than hunting the sidebar. */}
+                    {ADDON_SETTINGS_PATH[a.slug] && (
+                      <Link
+                        href={ADDON_SETTINGS_PATH[a.slug].href}
+                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-gray-900 text-white hover:bg-gray-800 transition"
+                      >
+                        <Settings className="w-3.5 h-3.5" />
+                        {ADDON_SETTINGS_PATH[a.slug].label}
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    )}
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-600">
+                        {periodEnd
+                          ? `Renews ${periodEnd.toLocaleDateString()}`
+                          : "Renews automatically"}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setCancelConfirm(a)}
+                        disabled={busy}
+                        className="text-xs font-medium text-red-600 hover:underline disabled:opacity-50"
+                      >
+                        {busy ? "Working…" : "Cancel"}
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <div className="space-y-2">

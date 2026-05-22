@@ -32,160 +32,243 @@ type NavItem = {
   requiresHostedSite?: boolean;
 };
 
-type NavGroup = {
+type NavSubGroup = {
   key: string;
   labelKey: string;
   /** Optional fallback label when the locale doesn't have the key. */
   label?: string;
   icon: LucideIcon;
   items: NavItem[];
-  /** When set, the group header shows "X/Y" completion counts based on SetupProgress. */
+  /** When set, the sub-group header shows "X/Y" completion counts based on SetupProgress. */
   setupSectionId?: "basics" | "services" | "payments" | "orders" | "menu" | "publishing";
 };
 
+type NavGroup = {
+  key: string;
+  labelKey: string;
+  /** Optional fallback label when the locale doesn't have the key. */
+  label?: string;
+  icon: LucideIcon;
+  /** Direct child items, shown immediately under the top-level header. */
+  items?: NavItem[];
+  /** Nested sub-groups (e.g. "Services & Hours" inside SETUP). Each sub-group
+   *  expands/collapses independently with single-open accordion behavior. */
+  subGroups?: NavSubGroup[];
+};
+
 // ─── Sidebar structure ─────────────────────────────────────────────────────
-// Phase 2 of the GloriaFood-style redesign: the Setup section is split into
-// 6 sub-sections that each track completion. Each NavItem with a `step` ID
-// gets a checkmark or open circle based on SetupProgress at render time.
+// 5 top-level categories (GloriaFood-style): SETUP / MARKETING TOOLS / REPORTS /
+// ONLINE ORDERING / OTHER. SETUP nests 7 sub-groups (the original onboarding
+// flow). Single-open accordion at both top-level and sub-level so an open
+// category forces the others closed — far less visual noise.
+//
+// Every nav item from the previous flat 10-group layout lives here. Cross-
+// check before deleting anything from this constant.
 const navGroups: NavGroup[] = [
   {
-    key: "setup.basics",
-    labelKey: "setupBasics",
-    label: "Restaurant Basics",
-    icon: Store,
-    setupSectionId: "basics",
-    items: [
-      { href: "/admin/profile", labelKey: "profile", label: "Profile", icon: Store, step: "basics.nameAddress" },
+    key: "setup",
+    labelKey: "categorySetup",
+    label: "Setup",
+    icon: Rocket,
+    subGroups: [
+      {
+        key: "setup.basics",
+        labelKey: "setupBasics",
+        label: "Restaurant Basics",
+        icon: Store,
+        setupSectionId: "basics",
+        items: [
+          { href: "/admin/profile", labelKey: "profile", label: "Profile", icon: Store, step: "basics.nameAddress" },
+        ],
+      },
+      {
+        key: "setup.services",
+        labelKey: "setupServices",
+        label: "Services & Hours",
+        icon: Layers,
+        setupSectionId: "services",
+        items: [
+          { href: "/admin/services",      labelKey: "services",      label: "Services",       icon: Layers,       step: "services.atLeastOne" },
+          { href: "/admin/hours",         labelKey: "openingHours",  label: "Opening Hours",  icon: Clock,        step: "services.openingHours" },
+          { href: "/admin/delivery",      labelKey: "deliveryZones", label: "Delivery Zones", icon: Truck,        step: "services.deliveryZones" },
+          { href: "/admin/delivery/pool", labelKey: "driverPool",    label: "Driver Pool",    icon: Truck,        step: "services.deliveryManagement" },
+          { href: "/admin/reservations",  labelKey: "reservations",  label: "Reservations",   icon: CalendarDays },
+          { href: "/admin/locations",     labelKey: "locations",     label: "Locations",      icon: MapIcon },
+        ],
+      },
+      {
+        key: "setup.payments",
+        labelKey: "setupPayments",
+        label: "Payment Methods & Taxes",
+        icon: CreditCard,
+        setupSectionId: "payments",
+        items: [
+          { href: "/admin/payments",           labelKey: "paymentMethods", label: "Accepted Methods",   icon: CreditCard, step: "payments.methodsSelected" },
+          { href: "/admin/payments/providers", labelKey: "payments",       label: "Stripe Connect",     icon: CreditCard, step: "payments.methodConfigured" },
+          { href: "/admin/service-fees",       labelKey: "serviceFees",    label: "Service Fees & Tax", icon: Wallet,     step: "payments.taxation" },
+        ],
+      },
+      {
+        key: "setup.orders",
+        labelKey: "setupOrders",
+        label: "Taking Orders",
+        icon: Bell,
+        setupSectionId: "orders",
+        items: [
+          { href: "/admin/notifications", labelKey: "notifications", label: "Notifications", icon: Bell, step: "orders.notificationRecipient" },
+        ],
+      },
+      {
+        key: "setup.menu",
+        labelKey: "setupMenu",
+        label: "Menu Setup",
+        icon: UtensilsCrossed,
+        setupSectionId: "menu",
+        items: [
+          { href: "/admin/menu",     labelKey: "menu",     label: "Menu Editor", icon: UtensilsCrossed, step: "menu.categoryExists" },
+          { href: "/admin/receipts", labelKey: "receipts", label: "Receipts",    icon: Receipt },
+        ],
+      },
+      {
+        key: "setup.publishing",
+        labelKey: "setupPublishing",
+        label: "Publishing",
+        icon: Globe,
+        setupSectionId: "publishing",
+        items: [
+          { href: "/admin/publishing",     labelKey: "publishing",   label: "Publishing",     icon: Globe },
+          { href: "/admin/website",        labelKey: "websiteTheme", label: "Website Theme",  icon: Palette },
+          // Gated on hasHostedSite — Sales Optimized Website add-on
+          // subscribers see this; non-subscribers don't even get the link.
+          { href: "/admin/website/editor", labelKey: "websiteEditor", label: "Website Editor", icon: Palette, requiresHostedSite: true },
+        ],
+      },
+      {
+        key: "setup.billing",
+        labelKey: "billing",
+        label: "Subscription & Billing",
+        icon: Wallet,
+        items: [
+          { href: "/admin/billing",         labelKey: "billing", label: "Billing", icon: Wallet },
+          { href: "/admin/billing/add-ons", labelKey: "addOns",  label: "Add-Ons", icon: Zap },
+        ],
+      },
     ],
   },
-  {
-    key: "setup.services",
-    labelKey: "setupServices",
-    label: "Services & Hours",
-    icon: Layers,
-    setupSectionId: "services",
-    items: [
-      { href: "/admin/services",     labelKey: "services",      label: "Services",       icon: Layers,       step: "services.atLeastOne" },
-      { href: "/admin/hours",        labelKey: "openingHours",  label: "Opening Hours",  icon: Clock,        step: "services.openingHours" },
-      { href: "/admin/delivery",     labelKey: "deliveryZones", label: "Delivery Zones", icon: Truck, step: "services.deliveryZones" },
-      { href: "/admin/delivery/pool", labelKey: "driverPool",   label: "Driver Pool",    icon: Truck, step: "services.deliveryManagement" },
-      { href: "/admin/reservations", labelKey: "reservations",  label: "Reservations",   icon: CalendarDays },
-      { href: "/admin/locations",    labelKey: "locations",     label: "Locations",      icon: MapIcon },
-    ],
-  },
-  {
-    key: "setup.payments",
-    labelKey: "setupPayments",
-    label: "Payment Methods & Taxes",
-    icon: CreditCard,
-    setupSectionId: "payments",
-    items: [
-      { href: "/admin/payments",           labelKey: "paymentMethods", label: "Accepted Methods", icon: CreditCard, step: "payments.methodsSelected" },
-      { href: "/admin/payments/providers", labelKey: "payments",     label: "Stripe Connect", icon: CreditCard, step: "payments.methodConfigured" },
-      { href: "/admin/service-fees",       labelKey: "serviceFees",  label: "Service Fees & Tax", icon: Wallet,   step: "payments.taxation" },
-    ],
-  },
-  {
-    key: "setup.orders",
-    labelKey: "setupOrders",
-    label: "Taking Orders",
-    icon: Bell,
-    setupSectionId: "orders",
-    items: [
-      { href: "/admin/notifications", labelKey: "notifications", label: "Notifications", icon: Bell, step: "orders.notificationRecipient" },
-    ],
-  },
-  {
-    key: "setup.menu",
-    labelKey: "setupMenu",
-    label: "Menu Setup",
-    icon: UtensilsCrossed,
-    setupSectionId: "menu",
-    items: [
-      { href: "/admin/menu",     labelKey: "menu",     label: "Menu Editor", icon: UtensilsCrossed, step: "menu.categoryExists" },
-      { href: "/admin/receipts", labelKey: "receipts", label: "Receipts",    icon: Receipt },
-    ],
-  },
-  {
-    key: "setup.publishing",
-    labelKey: "setupPublishing",
-    label: "Publishing",
-    icon: Globe,
-    setupSectionId: "publishing",
-    items: [
-      // Phase 3 builds /admin/publishing/legacy-website. We surface it now so the menu
-      // is wired and the empty page can render a "coming soon" stub if visited early.
-      { href: "/admin/publishing", labelKey: "publishing", label: "Publishing", icon: Globe },
-      { href: "/admin/website",    labelKey: "websiteTheme", label: "Website Theme", icon: Palette },
-      // Gated client-side by hasHostedSite below — owners without the
-      // Sales Optimized Website add-on simply don't see this item.
-      // Server-rendered admin layout sets `hasHostedSite` on the sidebar
-      // props so we don't even need a re-render after toggling the add-on.
-      { href: "/admin/website/editor", labelKey: "websiteEditor", label: "Website Editor", icon: Palette, requiresHostedSite: true },
-    ],
-  },
-  {
-    key: "billing",
-    labelKey: "billing",
-    label: "Subscription & Billing",
-    icon: Wallet,
-    items: [
-      { href: "/admin/billing", labelKey: "billing", label: "Billing", icon: Wallet },
-      { href: "/admin/billing/add-ons", labelKey: "addOns", label: "Add-Ons", icon: Zap },
-    ],
-  },
+
   {
     key: "marketing",
-    labelKey: "marketing",
-    label: "Marketing",
+    labelKey: "categoryMarketing",
+    label: "Marketing Tools",
     icon: Megaphone,
     items: [
-      { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",  icon: Tag },
-      { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace", icon: Sparkles },
+      { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",   icon: Tag },
+      { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles },
       { href: "/admin/social-media", labelKey: "socialMedia",  label: "Social Media", icon: Share2 },
-      { href: "/admin/autopilot",    labelKey: "autopilot",    label: "Autopilot",   icon: Zap },
+      { href: "/admin/autopilot",    labelKey: "autopilot",    label: "Autopilot",    icon: Zap },
     ],
   },
+
   {
     key: "reports",
-    labelKey: "reports",
+    labelKey: "categoryReports",
     label: "Reports",
     icon: BarChart3,
     items: [
-      { href: "/admin",           labelKey: "dashboard", label: "Dashboard", icon: LayoutDashboard, exact: true },
-      // Setup wizard — surfaces top of the Reports group so it's
-      // always reachable. The header's "Setup X% complete" banner also
-      // links here while the restaurant is unpublished.
-      { href: "/admin/setup",     labelKey: "setup",     label: "Setup",     icon: Rocket },
-      { href: "/admin/reports",   labelKey: "reports",   label: "Reports",   icon: BarChart3 },
-      { href: "/admin/customers", labelKey: "customers", label: "Customers", icon: Users },
+      { href: "/admin",           labelKey: "dashboard", label: "Dashboard",    icon: LayoutDashboard, exact: true },
+      // Setup wizard sits with Reports so the header "X% complete" banner
+      // (which links here) always lands on the same group.
+      { href: "/admin/setup",     labelKey: "setup",     label: "Setup Wizard", icon: Rocket },
+      { href: "/admin/reports",   labelKey: "reports",   label: "Reports",      icon: BarChart3 },
+      { href: "/admin/customers", labelKey: "customers", label: "Customers",    icon: Users },
     ],
   },
+
   {
     key: "online-ordering",
-    labelKey: "onlineOrdering",
+    labelKey: "categoryOnlineOrdering",
     label: "Online Ordering",
     icon: ShoppingBag,
     items: [
       { href: "/admin/orders", labelKey: "orders", label: "Orders", icon: ShoppingBag, badgeKey: "orders" },
     ],
   },
+
   {
     key: "other",
-    labelKey: "other",
+    labelKey: "categoryOther",
     label: "Other",
     icon: MoreHorizontal,
     items: [
       { href: "/admin/settings",     labelKey: "settings",    label: "Settings",     icon: Settings },
-      // Map provider config — Leaflet (free default) vs Google Maps API.
-      // Optional config, NOT a setup-progress step, so it lives under
-      // "Other" rather than the setup-flow groups (which all show
-      // checkmarks for tracked steps and would confuse owners by
-      // showing a non-checkable item alongside checkable ones).
+      // Map provider config (Leaflet free vs Google Maps API). Optional
+      // config so it lives outside the setup tracking flow.
       { href: "/admin/map-settings", labelKey: "mapSettings", label: "Map Settings", icon: MapIcon },
     ],
   },
 ];
+
+/** Flatten all NavItems across the nested structure — used by the active-path
+ *  detector. Order matches visual order so first-match-wins works as expected. */
+function allItems(): NavItem[] {
+  const out: NavItem[] = [];
+  for (const group of navGroups) {
+    if (group.items) out.push(...group.items);
+    if (group.subGroups) for (const sg of group.subGroups) out.push(...sg.items);
+  }
+  return out;
+}
+
+/** Flatten ALL items in a top-level group (direct items + items in any
+ *  sub-group). Used to compute "is anything in this group active?" and
+ *  collapsed-mode badge rollups. */
+function collectItems(group: NavGroup): NavItem[] {
+  const out: NavItem[] = [];
+  if (group.items) out.push(...group.items);
+  if (group.subGroups) for (const sg of group.subGroups) out.push(...sg.items);
+  return out;
+}
+
+/** Sum the setup-progress counts across all sub-groups of this top-level group.
+ *  Returns null when no sub-group tracks completion (so we don't render a "0/0"
+ *  chip on Marketing Tools / Reports / etc.). */
+function rollupCounts(
+  group: NavGroup,
+  perSection: Map<string, { done: number; total: number }>,
+): { done: number; total: number } | null {
+  let done = 0;
+  let total = 0;
+  let any = false;
+  for (const sg of group.subGroups ?? []) {
+    if (sg.setupSectionId) {
+      const counts = perSection.get(sg.setupSectionId);
+      if (counts) {
+        done += counts.done;
+        total += counts.total;
+        any = true;
+      }
+    }
+  }
+  return any ? { done, total } : null;
+}
+
+/** Return [groupKey, subGroupKeyOrNull] that contains the given item, or
+ *  null when the item isn't found. Used by the active-path auto-open logic. */
+function locateItem(item: NavItem): { groupKey: string; subKey: string | null } | null {
+  for (const group of navGroups) {
+    if (group.items?.some((it) => it.href === item.href)) {
+      return { groupKey: group.key, subKey: null };
+    }
+    if (group.subGroups) {
+      for (const sg of group.subGroups) {
+        if (sg.items.some((it) => it.href === item.href)) {
+          return { groupKey: group.key, subKey: sg.key };
+        }
+      }
+    }
+  }
+  return null;
+}
 
 const STORAGE_KEY = "admin-sidebar-groups-v2";
 
@@ -224,33 +307,70 @@ export function AdminSidebar({
   const [collapsed, setCollapsed] = useState(false);
   const restaurantSlug = (session.user as any)?.restaurantSlug;
 
-  const allOpen = () => Object.fromEntries(navGroups.map(g => [g.key, true]));
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => allOpen());
+  // Single-open accordion state:
+  //   openGroup    — which TOP-level category is currently expanded (one only)
+  //   openSubGroup — which sub-group under that category is expanded (one only)
+  // When a user clicks a new category, the old one collapses. Sub-groups behave
+  // the same way within their parent. null = everything in that level closed.
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const [openSubGroup, setOpenSubGroup] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setOpenGroups(prev => ({ ...prev, ...JSON.parse(raw) }));
-    } catch {}
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") {
+          if (typeof parsed.openGroup === "string" || parsed.openGroup === null) {
+            setOpenGroup(parsed.openGroup ?? null);
+          }
+          if (typeof parsed.openSubGroup === "string" || parsed.openSubGroup === null) {
+            setOpenSubGroup(parsed.openSubGroup ?? null);
+          }
+        }
+      }
+    } catch {
+      /* corrupt storage — fall back to defaults */
+    }
     setHydrated(true);
   }, []);
 
   useEffect(() => {
     if (!hydrated) return;
-    try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(openGroups)); } catch {}
-  }, [openGroups, hydrated]);
+    try {
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ openGroup, openSubGroup }),
+      );
+    } catch {}
+  }, [openGroup, openSubGroup, hydrated]);
 
+  // Auto-open the group + sub-group containing the active route. Runs on every
+  // pathname change so navigating via a direct URL or clicking from elsewhere
+  // pops the right accordion sections open without the user having to do it.
   useEffect(() => {
-    const activeGroup = navGroups.find(g => g.items.some(it => isActiveItem(it, pathname)));
-    if (activeGroup && !openGroups[activeGroup.key]) {
-      setOpenGroups(prev => ({ ...prev, [activeGroup.key]: true }));
-    }
+    const active = allItems().find((it) => isActiveItem(it, pathname));
+    if (!active) return;
+    const loc = locateItem(active);
+    if (!loc) return;
+    if (openGroup !== loc.groupKey) setOpenGroup(loc.groupKey);
+    if (loc.subKey && openSubGroup !== loc.subKey) setOpenSubGroup(loc.subKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const toggleGroup = (key: string) =>
-    setOpenGroups(prev => ({ ...prev, [key]: !prev[key] }));
+  /** Click a top-level header: toggle this one, force-close any other. */
+  const toggleGroup = (key: string) => {
+    setOpenGroup((prev) => (prev === key ? null : key));
+    // Closing the parent group collapses the sub-group too. Opening a NEW
+    // group resets the sub-group selection so the new group starts fresh.
+    setOpenSubGroup(null);
+  };
+
+  /** Click a sub-group header: toggle this one, force-close any sibling. */
+  const toggleSubGroup = (key: string) => {
+    setOpenSubGroup((prev) => (prev === key ? null : key));
+  };
 
   /** Build a quick lookup: stepId -> complete. */
   const stepComplete = (() => {
@@ -374,18 +494,21 @@ export function AdminSidebar({
 
       <nav className="flex-1 py-2 overflow-y-auto">
         {collapsed ? (
+          // Collapsed mode: show one icon per TOP-LEVEL category.
           navGroups.map((group) => {
             const GroupIcon = group.icon;
-            const activeInGroup = group.items.some(it => isActiveItem(it, pathname));
-            const groupBadge = group.items.find(it => it.badgeKey === "orders") && pendingOrders > 0
-              ? pendingOrders
-              : null;
+            const items = collectItems(group);
+            const activeInGroup = items.some((it) => isActiveItem(it, pathname));
+            const groupBadge =
+              items.some((it) => it.badgeKey === "orders") && pendingOrders > 0
+                ? pendingOrders
+                : null;
             return (
               <button
                 key={group.key}
                 onClick={() => {
                   setCollapsed(false);
-                  setOpenGroups(prev => ({ ...prev, [group.key]: true }));
+                  setOpenGroup(group.key);
                 }}
                 title={tr(group.labelKey, group.label)}
                 className={cn(
@@ -405,34 +528,101 @@ export function AdminSidebar({
             );
           })
         ) : (
+          // Expanded mode: top-level accordion with single-open behavior.
           navGroups.map((group, gi) => {
-            const isOpen = !!openGroups[group.key];
-            const counts = group.setupSectionId ? groupCounts.get(group.setupSectionId) : undefined;
-            const allDone = counts ? counts.done === counts.total : false;
+            const GroupIcon = group.icon;
+            const isOpen = openGroup === group.key;
+            const items = collectItems(group);
+            const activeInGroup = items.some((it) => isActiveItem(it, pathname));
+            // Roll up setup counts from any sub-groups that track them.
+            const rolled = rollupCounts(group, groupCounts);
+
             return (
-              <div key={group.key} className={gi > 0 ? "mt-1.5" : ""}>
+              <div key={group.key} className={gi > 0 ? "mt-2" : ""}>
                 <button
                   onClick={() => toggleGroup(group.key)}
-                  className="w-full flex items-center justify-between px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-500 hover:text-gray-300 transition"
+                  className={cn(
+                    "w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-bold uppercase tracking-wider transition",
+                    activeInGroup
+                      ? "text-orange-400"
+                      : "text-gray-300 hover:text-white"
+                  )}
                 >
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-2">
+                    <GroupIcon className="w-4 h-4" />
                     {tr(group.labelKey, group.label)}
-                    {counts && (
-                      <span className={cn(
-                        "text-[9px] font-bold px-1.5 py-0.5 rounded-full",
-                        allDone ? "bg-green-500/20 text-green-400" : "bg-gray-800 text-gray-400"
-                      )}>
-                        {counts.done}/{counts.total}
+                    {rolled && (
+                      <span
+                        className={cn(
+                          "text-[9px] font-bold px-1.5 py-0.5 rounded-full normal-case",
+                          rolled.done === rolled.total
+                            ? "bg-green-500/20 text-green-400"
+                            : "bg-gray-800 text-gray-400"
+                        )}
+                      >
+                        {rolled.done}/{rolled.total}
                       </span>
                     )}
                   </span>
                   <ChevronDown
-                    className={cn("w-3 h-3 transition-transform", !isOpen && "-rotate-90")}
+                    className={cn("w-3.5 h-3.5 transition-transform", !isOpen && "-rotate-90")}
                   />
                 </button>
+
                 {isOpen && (
-                  <div>
-                    {group.items.map(renderItem)}
+                  <div className="pb-1">
+                    {/* Direct items rendered at the same level as the group header */}
+                    {group.items?.map(renderItem)}
+
+                    {/* Nested sub-groups: each with its own accordion. Within
+                        a single parent group only ONE sub-group is open at a
+                        time (single-open). */}
+                    {group.subGroups?.map((sg) => {
+                      const SubIcon = sg.icon;
+                      const subOpen = openSubGroup === sg.key;
+                      const counts = sg.setupSectionId
+                        ? groupCounts.get(sg.setupSectionId)
+                        : undefined;
+                      const subActive = sg.items.some((it) => isActiveItem(it, pathname));
+                      return (
+                        <div key={sg.key} className="mx-2 mt-0.5">
+                          <button
+                            onClick={() => toggleSubGroup(sg.key)}
+                            className={cn(
+                              "w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition",
+                              subActive
+                                ? "text-orange-300 bg-gray-800/60"
+                                : "text-gray-400 hover:bg-gray-800/40 hover:text-gray-200"
+                            )}
+                          >
+                            <span className="flex items-center gap-2">
+                              <SubIcon className="w-3.5 h-3.5" />
+                              {tr(sg.labelKey, sg.label)}
+                              {counts && (
+                                <span
+                                  className={cn(
+                                    "text-[9px] font-bold px-1.5 py-0.5 rounded-full",
+                                    counts.done === counts.total
+                                      ? "bg-green-500/20 text-green-400"
+                                      : "bg-gray-800 text-gray-400"
+                                  )}
+                                >
+                                  {counts.done}/{counts.total}
+                                </span>
+                              )}
+                            </span>
+                            <ChevronDown
+                              className={cn("w-3 h-3 transition-transform", !subOpen && "-rotate-90")}
+                            />
+                          </button>
+                          {subOpen && (
+                            <div className="pl-2 mt-0.5">
+                              {sg.items.map(renderItem)}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
