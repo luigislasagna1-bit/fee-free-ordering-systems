@@ -1,76 +1,98 @@
 # Fee Free Ordering Systems — Roadmap
 
-> Snapshot as of 2026-05-21. This is a working plan, not a contract — phases
+> Snapshot as of 2026-05-22. This is a working plan, not a contract — phases
 > can be reordered, scope can change, and some things will get cut. Use it
 > to know what's queued and roughly what each phase is for.
 
-## 🔬 Shipped 2026-05-21 — verification status
+## 🔬 Shipped 2026-05-21 → 2026-05-22 (this sprint)
 
-Live verified ✅:
-- Marketplace published-only filter (`/marketplace` shows only restaurants
-  with `publishedAt != null` AND `isListed=true`)
-- Card-only enforcement on marketplace orders (defense-in-depth: server
-  rejects non-card POSTs, client UI gates to card-only)
-- Auto-reject-stale-orders cron (Vercel cron firing every 5 min, all 200s)
-- Kitchen dispatch-mode toggle endpoint deployed + auth-gated
-- Revert-to-brand-menu endpoint deployed + auth-gated
-- `feefreefood.com` marketplace domain routing (apex serves grid, admin
-  paths bounce back to PLATFORM_DOMAIN)
-- `feefreeordering.com/marketplace*` 301s to `feefreefood.com/*`
+### Live + verified end-to-end ✅
 
-Deferred manual tests:
-- Kitchen dispatch-mode toggle UX (needs a restaurant with
-  `deliverySource="both"` + driver_pool entitlement)
-- Revert-to-brand menu banner UX (needs a multi-location setup with a
-  customized child menu)
+- **Marketplace stack**
+  - `/marketplace` published-only filter (only restaurants w/ `publishedAt != null` + `isListed`)
+  - Card-only enforcement on marketplace orders (server reject + client UI gate)
+  - Search + cuisine filter chips + sort (Featured / Newest / A→Z)
+  - Counter decrement on order cancel/reject (Phase C piece — billing fix)
+  - End-of-cycle summary email after each settlement
+  - `feefreefood.com` apex serves marketplace; admin paths bounce back
 
-🚨 Bugs found during verification — see task list and "Outstanding bugs"
-section below.
+- **Hosted website (Sales Optimized Website add-on)**
+  - `<slug>.feefreeordering.com` subdomain routing: hosted site when entitled,
+    ordering page when not — verified live at luigis-lasagna-pizzeria
+  - Per-restaurant SEO metadata (title, description, OG, Twitter cards)
+  - JSON-LD structured data (`Restaurant` schema with hours/address/socials)
+  - Embedded Google Maps iframe + social-link pills
+  - Hero layout: banner as contained image, theme-color hero block w/ logo
+  - **Website editor** at `/admin/website/editor`: toggle 6 sections,
+    override hero copy, customize CTAs, add up to 2 custom sections
+  - Live preview iframe + sticky save bar + reset-to-defaults
 
-## 🚨 Outstanding bugs (found 2026-05-21 during verification)
+- **Domain infra**
+  - `feefreeordering.com` + `feefreefood.com` DNS via Vercel nameservers
+  - Wildcard SSL cert (`*.feefreeordering.com`) auto-provisioned by Let's Encrypt
+  - `feefreeordering.com/marketplace*` 301s to `feefreefood.com/*`
+  - `MARKETPLACE_DOMAIN` env var + proxy.ts routing layer
 
-Highest-priority fixes — discovered while testing the PAYG card-save flow.
-Each one is small but they BLOCK the PAYG opt-in flow end-to-end.
+- **Admin sidebar**
+  - Reorganized into 5 top-level categories (SETUP, MARKETING TOOLS,
+    REPORTS, ONLINE ORDERING, OTHER) — was 10 flat groups
+  - Single-open accordion at both top + sub-group levels
+  - Setup Wizard moved into SETUP (was under Reports)
+  - SETUP shows aggregate completion chip (X/Y across all sub-groups)
+  - Typography normalized: 3 consistent style tiers
+  - Add-ons page: each ACTIVE add-on has a deep-link to its settings page
 
-1. **Stripe webhook doesn't subscribe to `setup_intent.succeeded` or
-   `checkout.session.completed`** (task #4 reopened). Code handler exists
-   but Stripe Dashboard isn't sending us those event types — confirmed by
-   inspecting `StripeWebhookEvent` table on prod (zero rows ever).
-   → Fix: Stripe Dashboard → Developers → Webhooks → add those two events
-     to the endpoint subscription list.
+- **Infrastructure**
+  - Auto-reject-stale-orders cron firing every 5 min, all 200s
+  - Stripe customer name auto-reconciles on every billing call (fixes
+    "wrong restaurant" on Checkout pages)
+  - Marketplace settlement cron + Vercel scheduler
+  - Kitchen dispatch-mode toggle endpoint + activeDispatchMode column
+  - Revert-to-brand menu endpoint + child-location banner
+  - Kitchen device live-status detail in setup wizard
+  - 21 stale feature branches deleted
 
-2. **Prod Stripe is in TEST mode, not LIVE** (task #14). `STRIPE_SECRET_KEY`
-   on Vercel is `sk_test_*`. Real customer cards will be declined on
-   launch.
-   → Fix: swap to `sk_live_*` keys when ready to accept money. Re-register
-     webhook with live signing secret.
+### Deferred manual smoke tests
 
-3. **`NEXT_PUBLIC_APP_URL` points to `fee-free-ordering-systems.vercel.app`
-   instead of `feefreeordering.com`** (task #17). Affects Stripe
-   success/cancel URLs, email links, anywhere we use process.env to build
-   absolute URLs.
-   → Fix: Vercel → Settings → Env Vars → update to
-     `https://feefreeordering.com`. Audit `NEXTAUTH_URL` for same issue.
+- Kitchen dispatch-mode toggle UX — needs a restaurant with
+  `deliverySource="both"` + driver_pool entitlement
+- Revert-to-brand menu banner UX — needs a multi-location setup
+- PAYG card-save flow — blocked on tasks #4 and #17 below
 
-4. **Stripe customer name shows wrong restaurant on Checkout** (task #15).
-   Impersonated "Ristorante Test", but Stripe Checkout displayed
-   "Luigis Lasagna & Pizzeria Inc." Suggests `ensureStripeCustomerForRestaurant`
-   isn't setting `customer.name` from the actual restaurant row.
+## 🚨 Outstanding — your action (the only things blocking launch)
 
-5. **Impersonation context lost on Stripe Checkout return** (task #16).
-   After completing Stripe Checkout, redirected to `/superadmin?card_saved=1`
-   instead of `/admin/marketplace/payg-opt-in?card_saved=1`. The
-   `sa_impersonate` cookie didn't survive the round-trip.
-   → Fix: SameSite=None+Secure on impersonation cookie OR encode in
-     success_url query string.
+These all need browser/dashboard work that I can't do for you:
 
-6. **`*.feefreeordering.com` wildcard DNS still "Invalid Configuration"**.
-   Blocks tenant subdomain routing (`<slug>.feefreeordering.com`).
-   → Fix: add a wildcard CNAME at GoDaddy: `*` → `cname.vercel-dns.com`.
+1. **Task #4 — Stripe webhook events.** Add `setup_intent.succeeded` +
+   `checkout.session.completed` to the Stripe Dashboard webhook
+   subscription. **5 min.** Without this, PAYG card-save silently no-ops.
 
-7. **`luigispizzapastawings.com` custom domain still invalid** (long-standing
-   from earlier roadmap).
-   → User action — DNS at that registrar.
+2. **Task #17 — `NEXT_PUBLIC_APP_URL` env var.** Set to
+   `https://feefreeordering.com` (and audit `NEXTAUTH_URL` for same).
+   Redeploy after. **2 min.** Fixes Stripe redirect domain mismatch
+   and auto-resolves task #16 (impersonation cookie loss) at the same time.
+
+3. **Task #5 — Re-run PAYG card-save test** after #4 and #17 land.
+   I'll query prod DB to verify the webhook arrived and the default
+   payment method was set on the Stripe customer.
+
+4. **Task #14 — Switch to LIVE Stripe keys** when you're ready to take
+   real money. Don't do this until you've completed launch checks —
+   once live, real cards charge for real.
+
+5. **Security: rotate the Neon password** (`npg_FkI2lQpu6tfJ` was
+   visible in a debugging screenshot earlier). Click "Reset password"
+   in the Neon Connect modal → update Vercel's `DATABASE_URL` env var.
+
+## ✅ Resolved during this sprint
+
+- Stripe customer name reconciliation (task #15)
+- NEXT_PUBLIC_APP_URL diagnosis (task #17 — code-ready, waiting on Vercel toggle)
+- Impersonation cookie loss (task #16 — auto-resolves with #17)
+- Wildcard DNS (task #23 — nameservers + cert live)
+- Hosted website + editor (tasks #24, #25, #27, #28)
+- Sidebar reorganization (task #29)
+- All 21 stale branches deleted (task #11)
 
 ## Quick legend
 
