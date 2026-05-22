@@ -79,12 +79,12 @@ export default async function PaygOptInPage({
         </p>
       </div>
 
-      {/* Delivery-source eligibility gate. Restaurants that accept
-          delivery AND use ShipDay-managed delivery must have an active
-          Driver Pool subscription BEFORE joining PAYG marketplace.
-          Marketplace Monthly bundles Driver Pool free; PAYG does NOT.
-          Without this gate, marketplace orders requiring delivery would
-          have no way to dispatch. */}
+      {/* Eligibility gate. Several blockers can fire here — not just
+          delivery: not_published (most common for new restaurants),
+          needs_delivery_source_set, needs_driver_pool,
+          needs_online_payments, needs_stripe_connect. Heading now reflects
+          the actual reason so owners aren't misled into fixing the wrong
+          thing. */}
       {!eligibility.eligible && (
         <div className="rounded-2xl border-2 border-red-300 bg-red-50 p-4 sm:p-5">
           <div className="flex items-start gap-3">
@@ -93,7 +93,17 @@ export default async function PaygOptInPage({
             </div>
             <div className="flex-1 min-w-0">
               <h2 className="font-bold text-red-900">
-                Delivery setup blocks marketplace signup
+                {eligibility.reason === "not_published"
+                  ? "Publish your restaurant first"
+                  : eligibility.reason === "needs_online_payments"
+                  ? "Online card payments required"
+                  : eligibility.reason === "needs_stripe_connect"
+                  ? "Finish Stripe Connect setup"
+                  : eligibility.reason === "needs_driver_pool"
+                  ? "Driver Pool add-on required"
+                  : eligibility.reason === "needs_delivery_source_set"
+                  ? "Choose a delivery source"
+                  : "Setup required before marketplace signup"}
               </h2>
               <p className="text-sm text-red-800 mt-1 leading-relaxed">
                 {eligibility.blockerMessage}
@@ -207,7 +217,26 @@ export default async function PaygOptInPage({
         </p>
       </div>
 
-      <PaygOptInButton disabled={!hasCard || !eligibility.eligible} />
+      <PaygOptInButton
+        disabled={!hasCard || !eligibility.eligible}
+        blockerLabel={
+          !hasCard
+            ? "Add a payment method to continue"
+            : !eligibility.eligible
+            ? eligibility.reason === "not_published"
+              ? "Publish your restaurant first"
+              : eligibility.reason === "needs_online_payments"
+              ? "Activate Online Payments add-on first"
+              : eligibility.reason === "needs_stripe_connect"
+              ? "Finish Stripe Connect setup first"
+              : eligibility.reason === "needs_driver_pool"
+              ? "Subscribe to Driver Pool first"
+              : eligibility.reason === "needs_delivery_source_set"
+              ? "Choose a delivery source first"
+              : "Resolve the issue above to continue"
+            : undefined
+        }
+      />
 
       <div className="text-center text-xs text-gray-500">
         Prefer a flat predictable bill?{" "}

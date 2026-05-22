@@ -4,7 +4,17 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Loader2, Sparkles } from "lucide-react";
 
-export function PaygOptInButton({ disabled = false }: { disabled?: boolean }) {
+export function PaygOptInButton({
+  disabled = false,
+  blockerLabel,
+}: {
+  disabled?: boolean;
+  /** Label to show on the disabled button when the parent KNOWS why it's
+   *  disabled (e.g. "Publish your restaurant first"). Falls back to the
+   *  card-not-on-file message when not supplied — that's the original
+   *  case this button was first built for. */
+  blockerLabel?: string;
+}) {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
 
@@ -42,12 +52,12 @@ export function PaygOptInButton({ disabled = false }: { disabled?: boolean }) {
       onClick={optIn}
       disabled={isDisabled}
       className="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold px-6 py-3.5 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2"
-      title={disabled ? "Add a payment method first" : ""}
+      title={disabled ? (blockerLabel || "Add a payment method first") : ""}
     >
       {submitting ? (
         <><Loader2 className="w-4 h-4 animate-spin" /> Setting up…</>
       ) : disabled ? (
-        <>Add a payment method to continue</>
+        <>{blockerLabel || "Add a payment method to continue"}</>
       ) : (
         <><Sparkles className="w-4 h-4" /> Yes, list me on the marketplace</>
       )}
