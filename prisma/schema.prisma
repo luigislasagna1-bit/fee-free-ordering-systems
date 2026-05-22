@@ -62,6 +62,14 @@ model Restaurant {
   reviewLink         String?
   infoContent        String?  // JSON for info page custom CTAs etc
   themeSettings      String?  // JSON for customer-facing website theme
+  /// JSON for the hosted marketing site (gated on the Sales Optimized
+  /// Website add-on). Controls section visibility, hero copy overrides,
+  /// custom CTAs, and up to 2 user-defined sections. All BASE content
+  /// (menu, hours, address, logo) still flows from the canonical
+  /// restaurant fields — this column only stores layout/display choices.
+  /// Null = use defaults from the canonical fields (the current behavior).
+  /// See src/lib/hosted-site-settings.ts for the parsed shape.
+  hostedSiteSettings String?
   lat                Float?   // geocoded restaurant latitude
   lng                Float?   // geocoded restaurant longitude
   mapProvider        String   @default("leaflet")  // "leaflet" | "google"

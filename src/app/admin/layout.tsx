@@ -13,6 +13,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { loadSetupProgress } from "@/lib/setup-checklist-loader";
 import type { SetupProgress } from "@/lib/setup-checklist";
+import { hasFeature } from "@/lib/entitlements";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -38,6 +39,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   let pendingOrders = 0;
   let restaurantName = "";
   let setupProgress: SetupProgress | null = null;
+  let hasHostedSite = false;
   let ownerEmail: string | null = null;
   let ownerEmailVerified = true; // default true so we don't nag superadmins / staff
   let locationsForSwitcher: Array<{ id: string; name: string; city: string | null; isParent: boolean }> = [];
@@ -77,6 +79,16 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     } catch (err) {
       console.error("[admin-layout] loadSetupProgress failed", err);
       setupProgress = null;
+    }
+
+    // Resolve the hosted-marketing-page entitlement so the sidebar can
+    // gate the Website Editor link. Failure here is also non-fatal —
+    // the link just stays hidden, which is the safe default.
+    try {
+      hasHostedSite = await hasFeature(restaurantId, "hosted_marketing_page");
+    } catch (err) {
+      console.error("[admin-layout] hasFeature(hosted_marketing_page) failed", err);
+      hasHostedSite = false;
     }
 
     // Build the location list for the switcher. The "brand parent" is either
@@ -150,7 +162,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           />
         )}
         <div className="flex flex-1 overflow-hidden">
-          <AdminSidebar session={session} pendingOrders={pendingOrders} setupProgress={setupProgress} />
+          <AdminSidebar session={session} pendingOrders={pendingOrders} setupProgress={setupProgress} hasHostedSite={hasHostedSite} />
           <div className="flex-1 flex flex-col overflow-hidden">
             <AdminHeader
               session={session}

@@ -26,6 +26,10 @@ type NavItem = {
   badgeKey?: string;
   /** When set, the sidebar shows a checkmark/circle based on SetupProgress. */
   step?: StepId;
+  /** When true, hide this item unless the restaurant has the
+   *  `hosted_marketing_page` entitlement (Sales Optimized Website add-on).
+   *  Used to gate the Website Editor link so non-subscribers never see it. */
+  requiresHostedSite?: boolean;
 };
 
 type NavGroup = {
@@ -113,6 +117,11 @@ const navGroups: NavGroup[] = [
       // is wired and the empty page can render a "coming soon" stub if visited early.
       { href: "/admin/publishing", labelKey: "publishing", label: "Publishing", icon: Globe },
       { href: "/admin/website",    labelKey: "websiteTheme", label: "Website Theme", icon: Palette },
+      // Gated client-side by hasHostedSite below — owners without the
+      // Sales Optimized Website add-on simply don't see this item.
+      // Server-rendered admin layout sets `hasHostedSite` on the sidebar
+      // props so we don't even need a re-render after toggling the add-on.
+      { href: "/admin/website/editor", labelKey: "websiteEditor", label: "Website Editor", icon: Palette, requiresHostedSite: true },
     ],
   },
   {
@@ -199,10 +208,16 @@ export function AdminSidebar({
   session,
   pendingOrders = 0,
   setupProgress,
+  hasHostedSite = false,
 }: {
   session: Session;
   pendingOrders?: number;
   setupProgress?: SetupProgress | null;
+  /** True iff this restaurant has the `hosted_marketing_page` entitlement.
+   *  Computed in the admin layout (single Prisma round-trip), passed in so
+   *  the Website Editor link can be hidden cleanly for non-subscribers
+   *  without flashing in and out as the page renders. */
+  hasHostedSite?: boolean;
 }) {
   const tr = useSafeT();
   const pathname = usePathname();
@@ -262,6 +277,10 @@ export function AdminSidebar({
   })();
 
   const renderItem = (item: NavItem) => {
+    // Entitlement gate — hide items flagged as requiring the hosted-site
+    // add-on when the restaurant doesn't have it. Avoids surfacing dead
+    // links and the "you need to subscribe" landing for unsubscribed users.
+    if (item.requiresHostedSite && !hasHostedSite) return null;
     const { href, labelKey, label, icon: Icon, exact, badgeKey, step } = item;
     const display = tr(labelKey, label);
     const active = exact ? pathname === href : pathname.startsWith(href);

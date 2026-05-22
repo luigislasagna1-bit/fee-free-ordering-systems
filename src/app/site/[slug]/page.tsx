@@ -107,6 +107,28 @@ export default async function HostedSitePage({
   const r = result.data;
   const themeColor = (r.themeSettings?.primaryColor as string) || "#ef4444";
   const orderUrl = `/order/${r.slug}`;
+  const s = r.settings;
+
+  // Resolve hero text — owner can override the title/slogan; cuisine label
+  // can be hidden entirely. Falls back to canonical restaurant fields.
+  const heroTitle = s.header.customTitle?.trim() || r.name;
+  const heroSlogan = (s.header.customSlogan ?? r.slogan ?? "").trim();
+  const showCuisine = s.header.showCuisineLabel && !!r.cuisineType;
+
+  // Resolve CTA URLs. Owner can override href; default routes to /order.
+  const primaryCta = s.cta.primary.enabled
+    ? {
+        label: (s.cta.primary.label || "Order Online").trim(),
+        href: (s.cta.primary.href || orderUrl).trim() || orderUrl,
+      }
+    : null;
+  const secondaryCtaEnabled = s.cta.secondary.enabled && r.acceptsReservations;
+  const secondaryCta = secondaryCtaEnabled
+    ? {
+        label: (s.cta.secondary.label || "Book a Table").trim(),
+        href: (s.cta.secondary.href || `${orderUrl}?service=reservation`).trim() || `${orderUrl}?service=reservation`,
+      }
+    : null;
 
   // Build JSON-LD structured data so Google understands this page as a
   // local business / restaurant. Powers the knowledge panel, hours table,
@@ -184,12 +206,11 @@ export default async function HostedSitePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(cleanJsonLd) }}
       />
 
-      {/* Banner — shown as its own contained image when one exists. Used to
-          render this as a darkened hero-background, but that competed badly
-          with logo-style banners that already had text/branding baked in
-          (Luigi's banner is exactly that case). Showing it cleanly above
-          the title block works for BOTH photo and logo banners. */}
-      {r.bannerUrl && (
+      {/* Banner — owner can hide this in the editor. Shown as its own
+          contained image when one exists. Used to render this as a
+          darkened hero-background but that competed badly with logo-style
+          banners (Luigi's case). Cleanly above the title works for both. */}
+      {s.sections.banner && r.bannerUrl && (
         <div className="w-full bg-gray-100">
           <div className="relative w-full aspect-[3/1] md:aspect-[4/1] max-h-[420px] overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -203,8 +224,7 @@ export default async function HostedSitePage({
       )}
 
       {/* Hero — solid theme-color block with logo + name + CTAs. The logo
-          straddles the banner/hero junction when both exist, giving the
-          standard restaurant-site visual (think OpenTable / Yelp). */}
+          straddles the banner/hero junction when both are visible. */}
       <section
         className="relative text-white"
         style={{
@@ -212,8 +232,8 @@ export default async function HostedSitePage({
         }}
       >
         <div className="max-w-5xl mx-auto px-6 pt-12 pb-14 md:pt-16 md:pb-20">
-          {r.logoUrl && (
-            <div className={`${r.bannerUrl ? "-mt-20 md:-mt-24" : ""} mb-5 inline-block`}>
+          {s.header.showLogo && r.logoUrl && (
+            <div className={`${s.sections.banner && r.bannerUrl ? "-mt-20 md:-mt-24" : ""} mb-5 inline-block`}>
               <Image
                 src={r.logoUrl}
                 alt={`${r.name} logo`}
@@ -223,34 +243,44 @@ export default async function HostedSitePage({
               />
             </div>
           )}
-          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">{r.name}</h1>
-          {r.slogan && <p className="mt-3 text-lg md:text-xl text-white/90">{r.slogan}</p>}
-          {r.cuisineType && (
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">{heroTitle}</h1>
+          {heroSlogan && <p className="mt-3 text-lg md:text-xl text-white/90">{heroSlogan}</p>}
+          {showCuisine && (
             <p className="mt-2 text-sm uppercase tracking-wider text-white/75">
               {r.cuisineType}
             </p>
           )}
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href={orderUrl}
-              className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition bg-white text-gray-900 hover:bg-gray-100"
-            >
-              Order Online
-            </Link>
-            {r.acceptsReservations && (
-              <Link
-                href={`${orderUrl}?service=reservation`}
-                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white transition"
-              >
-                Book a Table
-              </Link>
-            )}
-          </div>
+          {(primaryCta || secondaryCta) && (
+            <div className="mt-8 flex flex-wrap gap-3">
+              {primaryCta && (
+                <Link
+                  href={primaryCta.href}
+                  className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition bg-white text-gray-900 hover:bg-gray-100"
+                >
+                  {primaryCta.label}
+                </Link>
+              )}
+              {secondaryCta && (
+                <Link
+                  href={secondaryCta.href}
+                  className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white transition"
+                >
+                  {secondaryCta.label}
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* About */}
-      {r.description && (
+      {/* Custom sections positioned after "banner" — rendered right after
+          the hero block, before About. */}
+      <CustomSectionsAt position="banner" sections={s.customSections} themeColor={themeColor} />
+
+      {/* About — owner can toggle off in the editor. Content always pulled
+          from Restaurant.description (no override). Section hidden when
+          description is empty OR owner disabled it. */}
+      {s.sections.about && r.description && (
         <section className="max-w-3xl mx-auto px-6 py-12">
           <h2 className="text-2xl font-bold text-gray-900">About</h2>
           <p className="mt-3 text-gray-700 leading-relaxed whitespace-pre-line">
@@ -258,9 +288,10 @@ export default async function HostedSitePage({
           </p>
         </section>
       )}
+      <CustomSectionsAt position="about" sections={s.customSections} themeColor={themeColor} />
 
-      {/* Featured menu */}
-      {r.featuredItems.length > 0 && (
+      {/* Featured menu — owner toggle. Items pulled from isFeatured menu rows. */}
+      {s.sections.featuredMenu && r.featuredItems.length > 0 && (
         <section className="bg-gray-50">
           <div className="max-w-5xl mx-auto px-6 py-14">
             <h2 className="text-2xl font-bold text-gray-900 text-center">
@@ -312,7 +343,11 @@ export default async function HostedSitePage({
         </section>
       )}
 
-      {/* Visit + Hours */}
+      <CustomSectionsAt position="featuredMenu" sections={s.customSections} themeColor={themeColor} />
+
+      {/* Visit + Hours — owner toggle on Visit; Hours are always shown when
+          the restaurant has any open day (Hours block has its own check). */}
+      {s.sections.visit && (
       <section className="max-w-5xl mx-auto px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div>
@@ -353,19 +388,20 @@ export default async function HostedSitePage({
               {r.acceptsDineIn && <Pill color={themeColor}>Dine-in</Pill>}
               {r.acceptsReservations && <Pill color={themeColor}>Reservations</Pill>}
             </div>
-            {/* Social links */}
-            {socials.length > 0 && (
+            {/* Social links — owner toggle. Skips entirely when no links
+                are set OR when the owner has hidden the section. */}
+            {s.sections.social && socials.length > 0 && (
               <div className="mt-6 flex flex-wrap gap-2">
-                {socials.map((s) => (
+                {socials.map((sl) => (
                   <a
-                    key={s.key}
-                    href={s.url}
+                    key={sl.key}
+                    href={sl.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${s.key} link`}
+                    aria-label={`${sl.key} link`}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-xs font-semibold text-gray-700 capitalize transition"
                   >
-                    {s.key}
+                    {sl.key}
                     <ExternalLink className="w-3 h-3 opacity-60" />
                   </a>
                 ))}
@@ -389,8 +425,8 @@ export default async function HostedSitePage({
           </div>
         </div>
 
-        {/* Embedded map — appears only when we have enough address to query. */}
-        {mapEmbedUrl && (
+        {/* Embedded map — owner toggle + requires an address to query. */}
+        {s.sections.map && mapEmbedUrl && (
           <div className="mt-10 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
             <iframe
               src={mapEmbedUrl}
@@ -403,6 +439,11 @@ export default async function HostedSitePage({
           </div>
         )}
       </section>
+      )}
+
+      <CustomSectionsAt position="visit" sections={s.customSections} themeColor={themeColor} />
+      <CustomSectionsAt position="map" sections={s.customSections} themeColor={themeColor} />
+      <CustomSectionsAt position="social" sections={s.customSections} themeColor={themeColor} />
 
       <footer className="bg-gray-900 text-gray-300 py-8 mt-10">
         <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
@@ -418,6 +459,51 @@ export default async function HostedSitePage({
 
 function dayName(d: number) {
   return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][d] || `Day ${d}`;
+}
+
+/**
+ * Renders all owner-defined custom sections positioned AFTER a given
+ * built-in section. Used as `<CustomSectionsAt position="banner" .../>`
+ * etc. interleaved between the built-in section markup, so custom
+ * content can land in any of 6 slots without needing array splicing.
+ *
+ * v1 renders plain-text bodies with `whitespace: pre-line` (newlines
+ * preserved). No HTML / markdown to keep XSS surface zero and the
+ * editor simple.
+ */
+function CustomSectionsAt({
+  position,
+  sections,
+  themeColor,
+}: {
+  position: string;
+  sections: Array<{ id: string; title: string; body: string; position: string }>;
+  themeColor: string;
+}) {
+  const matches = sections.filter((s) => s.position === position);
+  if (matches.length === 0) return null;
+  return (
+    <>
+      {matches.map((sec, idx) => (
+        <section
+          key={sec.id}
+          className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
+        >
+          <div className="max-w-3xl mx-auto px-6 py-12">
+            <h2
+              className="text-2xl font-bold text-gray-900"
+              style={{ borderLeft: `4px solid ${themeColor}`, paddingLeft: "0.75rem" }}
+            >
+              {sec.title}
+            </h2>
+            <p className="mt-4 text-gray-700 leading-relaxed whitespace-pre-line">
+              {sec.body}
+            </p>
+          </div>
+        </section>
+      ))}
+    </>
+  );
 }
 
 /** Darken a #rrggbb hex by a 0–1 fraction (0.25 = 25% darker).

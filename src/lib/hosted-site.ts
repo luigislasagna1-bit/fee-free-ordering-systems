@@ -8,6 +8,10 @@
 
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import {
+  parseHostedSiteSettings,
+  type HostedSiteSettings,
+} from "@/lib/hosted-site-settings";
 
 export interface HostedSiteData {
   id: string;
@@ -40,6 +44,12 @@ export interface HostedSiteData {
     price: number;
     imageUrl: string | null;
   }>;
+  /** Owner-controlled layout/copy choices from the website editor.
+   *  Always populated (defaults when the owner hasn't customized anything).
+   *  Base content (menu/hours/address) still comes from the canonical
+   *  restaurant fields — these settings only control what's visible and
+   *  what custom sections to add. */
+  settings: HostedSiteSettings;
 }
 
 export type HostedSiteResult =
@@ -60,6 +70,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       phone: true, email: true, address: true, city: true, state: true,
       zip: true, country: true, cuisineType: true, logoUrl: true,
       bannerUrl: true, socialLinks: true, themeSettings: true,
+      hostedSiteSettings: true,
       isActive: true, publishedAt: true,
       acceptsPickup: true, acceptsDelivery: true, acceptsDineIn: true,
       acceptsReservations: true,
@@ -113,6 +124,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       acceptsDineIn: restaurant.acceptsDineIn,
       acceptsReservations: restaurant.acceptsReservations,
       featuredItems: featured,
+      settings: parseHostedSiteSettings(restaurant.hostedSiteSettings),
     },
   };
 }
