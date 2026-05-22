@@ -102,6 +102,15 @@ export async function listPublicMarketplaceListings(): Promise<PublicListing[]> 
         // for restaurants that got their listing created back when
         // publishing-before-marketplace wasn't enforced.
         publishedAt: { not: null },
+        // STRIPE-CONNECT-LIVE. Marketplace orders are card-only by
+        // platform contract. A restaurant whose Connect onboarding
+        // isn't complete (or whose charges aren't enabled) can't take
+        // the customer's payment — listing them is a broken promise.
+        // We hit this exact bug 2026-05-22: Luigi's Lasagna had the
+        // marketplace add-on but Connect status was "not_connected",
+        // so customers saw "Pay online coming soon" mid-checkout.
+        stripeAccountStatus: "connected",
+        stripeChargesEnabled: true,
       },
     },
     include: {

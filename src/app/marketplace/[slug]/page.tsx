@@ -29,6 +29,8 @@ export default async function MarketplaceRestaurantPage({
       id: true,
       isActive: true,
       publishedAt: true,
+      stripeAccountStatus: true,
+      stripeChargesEnabled: true,
       marketplaceListing: { select: { isListed: true } },
     },
   });
@@ -41,6 +43,19 @@ export default async function MarketplaceRestaurantPage({
   }
 
   if (!restaurant.marketplaceListing?.isListed) {
+    redirect("/marketplace");
+  }
+
+  // STRIPE-CONNECT-LIVE gate. Marketplace orders are card-only by
+  // platform contract — if Connect isn't finished, the customer
+  // would hit "Pay online coming soon" mid-checkout. Bounce them
+  // back to /marketplace where the listing is filtered out anyway.
+  // Defense-in-depth: listPublicMarketplaceListings also excludes
+  // these restaurants, so a customer would only reach this URL by
+  // direct link / bookmark / stale tab.
+  const stripeConnectLive =
+    restaurant.stripeAccountStatus === "connected" && !!restaurant.stripeChargesEnabled;
+  if (!stripeConnectLive) {
     redirect("/marketplace");
   }
 
