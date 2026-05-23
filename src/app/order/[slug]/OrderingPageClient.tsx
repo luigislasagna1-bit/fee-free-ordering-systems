@@ -724,7 +724,7 @@ export function OrderingPageClient({
           embedded mode (the widget user came from the restaurant's own
           site, not the marketplace channel). */}
       {fromMarketplace && !isEmbedded && (
-        <div className="bg-gradient-to-r from-emerald-500 to-pink-500 text-white text-xs sm:text-sm py-2 px-4 flex items-center justify-between gap-2">
+        <div className="bg-gradient-to-r from-emerald-600 to-slate-900 text-white text-xs sm:text-sm py-2 px-4 flex items-center justify-between gap-2">
           <span className="flex items-center gap-1.5">
             <span aria-hidden="true">✨</span>
             <span>

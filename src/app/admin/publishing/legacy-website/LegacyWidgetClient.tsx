@@ -381,7 +381,7 @@ function BrowserMock({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       {/* Mock content */}
-      <div className="relative h-56 bg-gradient-to-br from-amber-50 via-emerald-50 to-rose-50 overflow-hidden">
+      <div className="relative h-56 bg-gradient-to-br from-amber-50 via-emerald-50 to-emerald-50 overflow-hidden">
         <div className="absolute inset-0 p-4 text-gray-400 text-[10px] leading-relaxed">
           <div className="h-3 w-24 bg-gray-200 rounded mb-2" />
           <div className="h-2 w-40 bg-gray-100 rounded mb-1" />

@@ -79,7 +79,7 @@ export function SignupForm({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-red-50 flex items-center justify-center p-4 relative">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-white flex items-center justify-center p-4 relative">
       <AuthLanguageSwitcher currentLocale={locale} />
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg p-8 my-8">
         <div className="text-center mb-6">

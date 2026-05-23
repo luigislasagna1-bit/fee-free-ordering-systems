@@ -3,14 +3,28 @@ import Link from "next/link";
 import { ChefHat } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+/**
+ * Public footer.
+ *
+ * Five-column layout: brand + four link groups (Product / Marketplace /
+ * Partners / Account). Luigi flagged that the previous footer was missing
+ * obvious nav targets like Marketplace and Partners — those exist as full
+ * pages on the site but had no footer entry, so visitors who scrolled to
+ * the bottom looking for them couldn't find a way back.
+ *
+ * Legal links (Privacy, Terms, Refund) intentionally OMITTED until the
+ * pages actually exist (tasks #72-74). Linking to non-existent /legal/*
+ * routes would 404 — worse for trust than no link at all. Add them in
+ * when the pages ship.
+ */
 export function PublicFooter() {
   const tF = useTranslations("marketing.footer");
   const tNav = useTranslations("marketing.nav");
   return (
     <footer className="bg-gray-900 text-gray-300 py-12 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
-          <div>
+        <div className="grid md:grid-cols-5 gap-8 mb-8">
+          <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 text-white font-bold text-lg mb-3">
               <ChefHat className="w-6 h-6 text-emerald-400" />
               Fee Free Ordering
@@ -23,20 +37,30 @@ export function PublicFooter() {
               <Link href="/features" className="block hover:text-white transition">{tNav("features")}</Link>
               <Link href="/pricing" className="block hover:text-white transition">{tNav("pricing")}</Link>
               <Link href="/demo" className="block hover:text-white transition">{tNav("demo")}</Link>
+              <Link href="/faq" className="block hover:text-white transition">{tNav("faq")}</Link>
             </div>
           </div>
           <div>
-            <div className="font-semibold text-white mb-3">{tF("support")}</div>
+            <div className="font-semibold text-white mb-3">Marketplace</div>
             <div className="space-y-2 text-sm">
-              <Link href="/faq" className="block hover:text-white transition">{tNav("faq")}</Link>
-              <a href="mailto:support@feefreeordering.com" className="block hover:text-white transition">Contact</a>
+              <Link href="/marketplace" className="block hover:text-white transition">Browse restaurants</Link>
+              <Link href="/pricing" className="block hover:text-white transition">Marketplace pricing</Link>
+            </div>
+          </div>
+          <div>
+            <div className="font-semibold text-white mb-3">Partners</div>
+            <div className="space-y-2 text-sm">
+              <Link href="/partners" className="block hover:text-white transition">Reseller program</Link>
+              <Link href="/partners/apply" className="block hover:text-white transition">Become a partner</Link>
+              <Link href="/reseller" className="block hover:text-white transition">Partner login</Link>
             </div>
           </div>
           <div>
             <div className="font-semibold text-white mb-3">{tF("account")}</div>
             <div className="space-y-2 text-sm">
-              <Link href="/login" className="block hover:text-white transition">{tNav("login")}</Link>
               <Link href="/signup" className="block hover:text-white transition">{tNav("startTrial")}</Link>
+              <Link href="/login" className="block hover:text-white transition">{tNav("login")}</Link>
+              <a href="mailto:support@feefreeordering.com" className="block hover:text-white transition">Contact</a>
             </div>
           </div>
         </div>

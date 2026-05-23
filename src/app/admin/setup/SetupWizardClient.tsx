@@ -108,7 +108,7 @@ export function SetupWizardClient({
       <div className={`rounded-2xl p-6 sm:p-8 text-white shadow-lg ${
         isPublished
           ? "bg-gradient-to-br from-emerald-500 to-teal-600"
-          : "bg-gradient-to-br from-emerald-500 to-pink-500"
+          : "bg-gradient-to-br from-emerald-500 to-emerald-700"
       }`}>
         <div className="flex items-center gap-2 mb-2">
           {isPublished ? <PartyPopper className="w-5 h-5" /> : <Rocket className="w-5 h-5" />}

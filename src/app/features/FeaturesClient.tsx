@@ -40,7 +40,7 @@ export function FeaturesClient({ locale }: { locale: string }) {
     <div className="min-h-screen flex flex-col">
       <PublicNav currentLocale={locale} />
       <main className="flex-1">
-        <section className="bg-gradient-to-br from-emerald-50 to-red-50 py-20 px-4 text-center">
+        <section className="bg-gradient-to-br from-emerald-50 to-white py-20 px-4 text-center">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">{t("title")}</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">{t("subtitle")}</p>
           <Link href="/signup" className="bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl text-lg hover:bg-emerald-600 transition">

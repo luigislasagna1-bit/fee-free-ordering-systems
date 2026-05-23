@@ -53,7 +53,7 @@ export default async function MarketplacePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* ─── Hero ─────────────────────────────────────────────────────── */}
-      <header className="bg-gradient-to-br from-emerald-500 to-pink-500 text-white">
+      <header className="bg-gradient-to-br from-emerald-600 to-slate-900 text-white">
         <div className="max-w-6xl mx-auto px-4 py-10 sm:py-14">
           <div className="flex items-center justify-between mb-3 gap-3">
             <div className="flex items-center gap-2">

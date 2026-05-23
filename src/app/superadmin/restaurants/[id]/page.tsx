@@ -147,7 +147,7 @@ export default async function SuperadminRestaurantDetail({
               // eslint-disable-next-line @next/next/no-img-element
               <img src={restaurant.logoUrl} alt="" className="w-16 h-16 rounded-2xl object-cover bg-gray-100" />
             ) : (
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-pink-500 flex items-center justify-center text-white">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white">
                 <Store className="w-7 h-7" />
               </div>
             )}

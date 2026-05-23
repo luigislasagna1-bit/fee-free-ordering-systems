@@ -279,7 +279,7 @@ function RestaurantTile({
         featured ? "border-emerald-300 ring-2 ring-emerald-100" : "border-gray-100"
       }`}
     >
-      <div className="relative h-32 sm:h-40 bg-gradient-to-br from-emerald-300 to-pink-300 overflow-hidden">
+      <div className="relative h-32 sm:h-40 bg-gradient-to-br from-emerald-200 to-emerald-100 overflow-hidden">
         {bannerUrl && (
           // eslint-disable-next-line @next/next/no-img-element
           <img

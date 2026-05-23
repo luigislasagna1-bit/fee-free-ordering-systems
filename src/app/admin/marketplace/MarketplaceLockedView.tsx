@@ -13,7 +13,7 @@ import { Sparkles, Check, TrendingUp, Users, Lock } from "lucide-react";
 export function MarketplaceLockedView() {
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6">
-      <div className="bg-gradient-to-br from-emerald-500 to-pink-500 text-white rounded-2xl p-6 sm:p-8 shadow-lg">
+      <div className="bg-gradient-to-br from-emerald-600 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg">
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="w-5 h-5" />
           <span className="text-sm font-bold uppercase tracking-wider opacity-90">Add-on</span>

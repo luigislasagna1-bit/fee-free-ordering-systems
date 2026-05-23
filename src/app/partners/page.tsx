@@ -20,7 +20,7 @@ export default async function PartnersPage() {
       <PublicNav currentLocale={locale} />
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-emerald-500 via-emerald-500 to-red-600 text-white py-24 px-4">
+      <section className="bg-gradient-to-br from-emerald-600 via-emerald-600 to-slate-900 text-white py-24 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-2 text-sm font-medium mb-6">
             <Sparkles className="w-4 h-4" /> Partner Program
@@ -306,7 +306,7 @@ function EarningsCard({
     <div
       className={`rounded-2xl border p-6 ${
         highlight
-          ? "bg-gradient-to-br from-emerald-500 to-red-500 text-white border-transparent shadow-lg"
+          ? "bg-gradient-to-br from-emerald-600 to-slate-900 text-white border-transparent shadow-lg"
           : "bg-white border-gray-200"
       }`}
     >

@@ -97,7 +97,7 @@ export function HomeClient({ locale }: { locale: string }) {
                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
                 <div className="ml-2 text-[10px] text-gray-400 truncate">marioslittleitaly.com</div>
               </div>
-              <div className="relative h-72 sm:h-80 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
+              <div className="relative h-72 sm:h-80 bg-gradient-to-br from-amber-50 via-orange-50 to-amber-50">
                 <div className="absolute inset-0 p-5 text-gray-300">
                   <div className="h-3 w-32 bg-gray-200 rounded mb-2" />
                   <div className="h-2 w-48 bg-gray-100 rounded mb-1" />
@@ -240,7 +240,7 @@ export function HomeClient({ locale }: { locale: string }) {
                 </ul>
               </div>
               <div className="rounded-xl bg-white/5 border border-white/10 p-5">
-                <div className="text-xs font-bold uppercase tracking-wider text-rose-300 mb-2">
+                <div className="text-xs font-bold uppercase tracking-wider text-amber-300 mb-2">
                   💸 The middleman loses
                 </div>
                 <ul className="text-sm text-gray-300 space-y-1.5 leading-relaxed">
@@ -318,7 +318,10 @@ export function HomeClient({ locale }: { locale: string }) {
                   {f.free ? (
                     <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">FREE</span>
                   ) : (
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">{f.addon}</span>
+                    // Paid add-on — navy treatment (matches GloriaFood's
+                    // contrast palette + visually distinguishes from the
+                    // green FREE pills at a glance).
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-slate-900 text-white px-2 py-0.5 rounded-full">{f.addon}</span>
                   )}
                 </div>
                 <p className="text-sm text-gray-600 leading-relaxed">{f.body}</p>

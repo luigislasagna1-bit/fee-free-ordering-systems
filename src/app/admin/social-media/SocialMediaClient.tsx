@@ -142,7 +142,7 @@ export function SocialMediaClient({ initialLinks, marketingTier, restaurantSlug 
 
         {/* ── Roadmap / upsell column ───────────────────────────────── */}
         <div className="space-y-4">
-          <div className="bg-gradient-to-br from-emerald-500 to-pink-500 text-white rounded-xl p-5 shadow-sm">
+          <div className="bg-gradient-to-br from-emerald-600 to-slate-900 text-white rounded-xl p-5 shadow-sm">
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="w-5 h-5" />
               <span className="text-xs font-bold uppercase tracking-wider opacity-90">{t("comingSoon")}</span>
