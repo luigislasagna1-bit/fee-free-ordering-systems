@@ -144,6 +144,14 @@ export function WebsiteEditorClient({
         {/* Header / hero */}
         <Card title="Header & hero" subtitle="Logo, title, and the buttons at the top of your page.">
           <ToggleRow
+            label="Full-screen hero"
+            help="Banner image fills the entire hero with a dark overlay, GloriaFood-style. Best for photographic banners (food shots, restaurant interior). Leave off if your banner is a logo or text graphic."
+            value={settings.header.fullScreenHero}
+            onChange={(v) =>
+              setSettings((s) => ({ ...s, header: { ...s.header, fullScreenHero: v } }))
+            }
+          />
+          <ToggleRow
             label="Show logo"
             help="Your uploaded logo overlapping the banner/hero."
             value={settings.header.showLogo}

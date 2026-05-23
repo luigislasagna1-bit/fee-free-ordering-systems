@@ -39,6 +39,13 @@ export interface HostedSiteSettings {
     /** Override the slogan/subtitle shown under the title. Empty/null →
      *  use Restaurant.slogan. */
     customSlogan: string | null;
+    /** Render the banner image as a FULL-SCREEN hero (image fills the
+     *  viewport, dark overlay underneath the title), GloriaFood-style.
+     *  When false (default), the banner shows as a contained strip
+     *  above a colored hero block — the layout we settled on for
+     *  logo-style banners. Restaurants with photographic banners
+     *  (food shots) usually want this on. */
+    fullScreenHero: boolean;
   };
   sections: {
     /** Show the banner image at the very top of the page. Disable to
@@ -89,6 +96,7 @@ export function defaultHostedSiteSettings(): HostedSiteSettings {
       showCuisineLabel: true,
       customTitle: null,
       customSlogan: null,
+      fullScreenHero: false,
     },
     sections: {
       banner: true,

@@ -207,72 +207,134 @@ export default async function HostedSitePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(cleanJsonLd) }}
       />
 
-      {/* Banner — owner can hide this in the editor. Shown as its own
-          contained image when one exists. Used to render this as a
-          darkened hero-background but that competed badly with logo-style
-          banners (Luigi's case). Cleanly above the title works for both. */}
-      {s.sections.banner && r.bannerUrl && (
-        <div className="w-full bg-gray-100">
-          <div className="relative w-full aspect-[3/1] md:aspect-[4/1] max-h-[420px] overflow-hidden">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={r.bannerUrl}
-              alt={`${r.name} banner`}
-              className="w-full h-full object-cover"
-            />
+      {/* Hero — TWO layouts based on s.header.fullScreenHero:
+       *
+       * 1. fullScreenHero=true (GloriaFood-style): the banner image fills
+       *    a full-viewport hero with a dark gradient overlay. The title,
+       *    CTAs, etc. sit centered over the image. Photographic banners
+       *    (food shots, restaurant interior) look much better this way.
+       *
+       * 2. fullScreenHero=false (default — what we shipped first): the
+       *    banner shows as a contained strip on top, with a separate
+       *    theme-color hero block below holding the title + CTAs.
+       *    Logo-style banners (Luigi's case) need this — the text
+       *    overlay would compete with the embedded logo text otherwise.
+       */}
+      {s.header.fullScreenHero && s.sections.banner && r.bannerUrl ? (
+        <section
+          className="relative text-white min-h-[75vh] flex items-center"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url(${r.bannerUrl})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="max-w-5xl mx-auto px-6 py-20 md:py-28 w-full">
+            {s.header.showLogo && r.logoUrl && (
+              <div className="mb-6 inline-block">
+                <Image
+                  src={r.logoUrl}
+                  alt={`${r.name} logo`}
+                  width={120}
+                  height={120}
+                  className="rounded-xl bg-white/10 backdrop-blur shadow-xl p-2 object-contain"
+                />
+              </div>
+            )}
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-md">{heroTitle}</h1>
+            {heroSlogan && <p className="mt-3 text-lg md:text-xl text-white/90 drop-shadow">{heroSlogan}</p>}
+            {showCuisine && (
+              <p className="mt-2 text-sm uppercase tracking-wider text-white/75">
+                {r.cuisineType}
+              </p>
+            )}
+            {(primaryCta || secondaryCta) && (
+              <div className="mt-8 flex flex-wrap gap-3">
+                {primaryCta && (
+                  <Link
+                    href={primaryCta.href}
+                    className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition text-white"
+                    style={{ background: themeColor }}
+                  >
+                    {primaryCta.label}
+                  </Link>
+                )}
+                {secondaryCta && (
+                  <Link
+                    href={secondaryCta.href}
+                    className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white transition backdrop-blur"
+                  >
+                    {secondaryCta.label}
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
-        </div>
-      )}
+        </section>
+      ) : (
+        <>
+          {s.sections.banner && r.bannerUrl && (
+            <div className="w-full bg-gray-100">
+              <div className="relative w-full aspect-[3/1] md:aspect-[4/1] max-h-[420px] overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={r.bannerUrl}
+                  alt={`${r.name} banner`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          )}
 
-      {/* Hero — solid theme-color block with logo + name + CTAs. The logo
-          straddles the banner/hero junction when both are visible. */}
-      <section
-        className="relative text-white"
-        style={{
-          background: `linear-gradient(135deg, ${themeColor}, ${darkenHex(themeColor, 0.25)})`,
-        }}
-      >
-        <div className="max-w-5xl mx-auto px-6 pt-12 pb-14 md:pt-16 md:pb-20">
-          {s.header.showLogo && r.logoUrl && (
-            <div className={`${s.sections.banner && r.bannerUrl ? "-mt-20 md:-mt-24" : ""} mb-5 inline-block`}>
-              <Image
-                src={r.logoUrl}
-                alt={`${r.name} logo`}
-                width={120}
-                height={120}
-                className="rounded-xl bg-white shadow-xl p-2 border-4 border-white object-contain"
-              />
-            </div>
-          )}
-          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">{heroTitle}</h1>
-          {heroSlogan && <p className="mt-3 text-lg md:text-xl text-white/90">{heroSlogan}</p>}
-          {showCuisine && (
-            <p className="mt-2 text-sm uppercase tracking-wider text-white/75">
-              {r.cuisineType}
-            </p>
-          )}
-          {(primaryCta || secondaryCta) && (
-            <div className="mt-8 flex flex-wrap gap-3">
-              {primaryCta && (
-                <Link
-                  href={primaryCta.href}
-                  className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition bg-white text-gray-900 hover:bg-gray-100"
-                >
-                  {primaryCta.label}
-                </Link>
+          <section
+            className="relative text-white"
+            style={{
+              background: `linear-gradient(135deg, ${themeColor}, ${darkenHex(themeColor, 0.25)})`,
+            }}
+          >
+            <div className="max-w-5xl mx-auto px-6 pt-12 pb-14 md:pt-16 md:pb-20">
+              {s.header.showLogo && r.logoUrl && (
+                <div className={`${s.sections.banner && r.bannerUrl ? "-mt-20 md:-mt-24" : ""} mb-5 inline-block`}>
+                  <Image
+                    src={r.logoUrl}
+                    alt={`${r.name} logo`}
+                    width={120}
+                    height={120}
+                    className="rounded-xl bg-white shadow-xl p-2 border-4 border-white object-contain"
+                  />
+                </div>
               )}
-              {secondaryCta && (
-                <Link
-                  href={secondaryCta.href}
-                  className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white transition"
-                >
-                  {secondaryCta.label}
-                </Link>
+              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">{heroTitle}</h1>
+              {heroSlogan && <p className="mt-3 text-lg md:text-xl text-white/90">{heroSlogan}</p>}
+              {showCuisine && (
+                <p className="mt-2 text-sm uppercase tracking-wider text-white/75">
+                  {r.cuisineType}
+                </p>
+              )}
+              {(primaryCta || secondaryCta) && (
+                <div className="mt-8 flex flex-wrap gap-3">
+                  {primaryCta && (
+                    <Link
+                      href={primaryCta.href}
+                      className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition bg-white text-gray-900 hover:bg-gray-100"
+                    >
+                      {primaryCta.label}
+                    </Link>
+                  )}
+                  {secondaryCta && (
+                    <Link
+                      href={secondaryCta.href}
+                      className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white transition"
+                    >
+                      {secondaryCta.label}
+                    </Link>
+                  )}
+                </div>
               )}
             </div>
-          )}
-        </div>
-      </section>
+          </section>
+        </>
+      )}
 
       {/* Custom sections positioned after "banner" — rendered right after
           the hero block, before About. */}
