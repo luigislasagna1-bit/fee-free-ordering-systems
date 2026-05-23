@@ -5,19 +5,30 @@ import { PublicFooter } from "@/components/layout/PublicFooter";
 import {
   ArrowRight, Check, Zap, Globe, Smartphone, ShoppingBag, CreditCard,
   Bell, MapPin, ChefHat, Languages, Sparkles, Target, Users,
-  TrendingDown, TrendingUp, Award, Phone, Megaphone,
+  TrendingUp, Award, Phone, Megaphone,
 } from "lucide-react";
 
 /**
  * Marketing homepage.
  *
- * Strategic positioning (settled with Luigi 2026-05-23):
- *   We are NOT "the cheaper alternative to UberEats." Restaurants have
- *   heard "stop using UE" 100 times and tuned it out — they need UE for
- *   discoverability. Our angle is sharper: USE UE/DD/Skip as your
- *   marketing budget, then convert those customers to your own
- *   no-commission ordering platform. The first customer order on UE
- *   is the cost of acquiring them; every reorder direct = pure margin.
+ * Strategic positioning (refined with Luigi 2026-05-23, pivoted same day):
+ *   We are NOT "the cheaper alternative to UberEats" — restaurants tuned
+ *   that pitch out years ago, and they NEED UE/Skip/DoorDash for
+ *   discoverability. We are also NOT "the anti-Uber" — that framing
+ *   forces a false either/or choice the owner doesn't actually want.
+ *
+ *   The real angle: COMBINE. UberEats / Skip / DoorDash are decent at
+ *   ONE thing — putting an independent restaurant in front of brand-new
+ *   customers. They are terrible at everything else, while taking 30%.
+ *   Fee Free is the missing piece: keep using them for reach, then
+ *   convert customers to your own no-commission ordering platform for
+ *   repeat business. Restaurant keeps more margin, customer pays less,
+ *   the middleman is the only loser.
+ *
+ *   The thesis is bigger than UE. Pair Fee Free with ANY paid channel
+ *   the owner already uses — UE, Skip, DoorDash, ChowNow, paid ads,
+ *   Google Maps listings, etc. Fee Free is the ownership layer
+ *   underneath all of them.
  *
  * Page structure (GloriaFood-inspired, single-color emerald + neutrals):
  *   1. Hero — laser-focused headline + 1 CTA + visual
@@ -49,11 +60,11 @@ export function HomeClient({ locale }: { locale: string }) {
               FOR RESTAURANT OWNERS
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.05] tracking-tight">
-              Stop letting Uber take <span className="text-emerald-600">30%</span>.{" "}
-              Use them to grow your business instead.
+              Combine UberEats&apos; reach with{" "}
+              <span className="text-emerald-600">Fee Free&apos;s ownership</span>.
             </h1>
             <p className="mt-5 text-lg text-gray-600 leading-relaxed max-w-xl">
-              Fee Free Ordering turns the platforms taking your margin into a customer-acquisition channel. Get your own ordering site, keep <strong>100% of repeat orders</strong>, and build a customer database that&apos;s actually yours.
+              Keep using UberEats, Skip and DoorDash for what they&apos;re actually good at — putting new customers in front of you. Then use <strong>Fee Free</strong> to turn those one-time orders into lifelong direct customers. <strong>You</strong> own the relationship. <strong>You</strong> keep the margin. <strong>The customer</strong> pays less. The middleman is the only loser.
             </p>
             <div className="mt-7 flex flex-col sm:flex-row gap-3">
               <Link
@@ -128,13 +139,14 @@ export function HomeClient({ locale }: { locale: string }) {
           <div className="max-w-3xl mb-12">
             <div className="inline-flex items-center gap-2 bg-emerald-500/15 text-emerald-300 rounded-full px-3 py-1.5 text-xs font-semibold mb-4">
               <Sparkles className="w-3.5 h-3.5" />
-              THE STRATEGY
+              THE STRATEGY — COMBINE, DON&apos;T CHOOSE
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
-              Turn UberEats into your $0 marketing department.
+              Pair every paid channel with Fee Free.<br className="hidden md:block" />
+              <span className="text-emerald-300">Maximize reach. Keep the margin.</span>
             </h2>
             <p className="text-gray-300 text-lg leading-relaxed">
-              Restaurants HATE losing 30% to UE/Skip/DoorDash. But those platforms are also how new customers find you. The smart play: let them bring you customers — then convert those customers to your own platform where you keep <strong>everything</strong>.
+              UberEats, Skip, DoorDash, ChowNow, paid ads, Google listings — they&apos;re all decent at <em>one</em> thing: putting your name in front of new customers. They&apos;re terrible at everything else, while taking up to 30%. <strong>Fee Free is the ownership layer underneath all of them.</strong> Keep the channels you already use for discovery, then convert customers to your own no-commission ordering platform for every order after the first.
             </p>
           </div>
 
@@ -142,26 +154,26 @@ export function HomeClient({ locale }: { locale: string }) {
             {[
               {
                 num: 1,
-                title: "Customer discovers you on Uber",
-                body: "First order comes in via UberEats. UE keeps 30%, you keep 70%. Treat this like a paid ad — the cost of customer acquisition.",
-                icon: TrendingDown,
-              },
-              {
-                num: 2,
-                title: "Slip a QR code in the bag",
-                body: "Custom-printed thank-you card: \"Free dessert next time when you order DIRECT at marios.com\". Customer scans → lands on your Fee Free ordering page.",
+                title: "Keep using UberEats (and friends)",
+                body: "Stay listed on UE/Skip/DoorDash exactly like you do today. Let them spend the marketing budget. Every first-time customer they bring you is a paid lead you didn't pay for upfront.",
                 icon: Megaphone,
               },
               {
+                num: 2,
+                title: "Bridge them with a QR code",
+                body: "Slip a thank-you card in every bag: \"Free dessert next time when you order DIRECT at marios.com\". One scan lands them on your Fee Free ordering page — owned by you, not Uber.",
+                icon: Target,
+              },
+              {
                 num: 3,
-                title: "They reorder direct",
-                body: "Customer orders again — but this time on YOUR site via Fee Free. You keep 100%. No commission, no markup, no middleman.",
+                title: "Repeat orders flow through Fee Free",
+                body: "From order #2 onward they order on YOUR site. You keep 100%, no 30% cut. Same food, same prices, way more margin — and you can even pass some savings to the customer.",
                 icon: TrendingUp,
               },
               {
                 num: 4,
-                title: "You own the relationship",
-                body: "Email, phone, order history — yours. Send promos directly. Build loyalty. Never pay another platform to talk to your own customer.",
+                title: "You own the customer — for life",
+                body: "Name, email, phone, order history — yours. Send promos. Run loyalty rewards. Re-engage them whenever you want. Never pay a platform to talk to your own customer again.",
                 icon: Award,
               },
             ].map((step) => (
@@ -186,8 +198,59 @@ export function HomeClient({ locale }: { locale: string }) {
               UberEats keeps $15. Fee Free keeps <span className="underline decoration-white/40">$0</span>.
             </p>
             <p className="text-emerald-50 mt-2 text-sm md:text-base">
-              The customer pays the same either way. The difference goes straight to your pocket.
+              The customer pays the same — or less, if you choose to share the savings. The difference goes straight to <strong>your pocket</strong>, not the middleman&apos;s.
             </p>
+          </div>
+
+          {/* Everyone wins — the broader thesis. Luigi: "endless savings and
+              benefits for everyone involved, customer, restaurant etc." The
+              point isn't just that restaurants save — it's that the middleman
+              is the ONLY entity that loses when channels are combined this way. */}
+          <div className="mt-10">
+            <div className="text-center mb-6">
+              <div className="inline-flex items-center gap-2 bg-emerald-500/15 text-emerald-300 rounded-full px-3 py-1.5 text-xs font-semibold mb-3">
+                <Users className="w-3.5 h-3.5" />
+                EVERYONE WINS — EXCEPT THE MIDDLEMAN
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                The whole point: combine channels so <em>both</em> sides come out ahead.
+              </h3>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="rounded-xl bg-white/5 border border-white/10 p-5">
+                <div className="text-xs font-bold uppercase tracking-wider text-emerald-300 mb-2">
+                  🏪 The restaurant wins
+                </div>
+                <ul className="text-sm text-gray-300 space-y-1.5 leading-relaxed">
+                  <li>• Keep 100% of every direct order (vs 70%)</li>
+                  <li>• Own the customer database forever</li>
+                  <li>• Set your own prices, hours, promos</li>
+                  <li>• Stay listed on UE/Skip for new-customer reach</li>
+                </ul>
+              </div>
+              <div className="rounded-xl bg-white/5 border border-white/10 p-5">
+                <div className="text-xs font-bold uppercase tracking-wider text-emerald-300 mb-2">
+                  🍕 The customer wins
+                </div>
+                <ul className="text-sm text-gray-300 space-y-1.5 leading-relaxed">
+                  <li>• Same food, lower checkout total (no platform markup)</li>
+                  <li>• Direct loyalty rewards from the restaurant</li>
+                  <li>• Real support from the actual restaurant — not a chatbot</li>
+                  <li>• Money stays in the local community</li>
+                </ul>
+              </div>
+              <div className="rounded-xl bg-white/5 border border-white/10 p-5">
+                <div className="text-xs font-bold uppercase tracking-wider text-rose-300 mb-2">
+                  💸 The middleman loses
+                </div>
+                <ul className="text-sm text-gray-300 space-y-1.5 leading-relaxed">
+                  <li>• Doesn&apos;t cook the food</li>
+                  <li>• Doesn&apos;t answer the phone when something goes wrong</li>
+                  <li>• Takes up to 30% per order for what — a listing?</li>
+                  <li>• Owns your customer until you take them back</li>
+                </ul>
+              </div>
+            </div>
           </div>
 
           {/* Transparency block — what we actually charge for. Luigi:
@@ -394,10 +457,10 @@ export function HomeClient({ locale }: { locale: string }) {
             DISCOVERABILITY
           </div>
           <h2 className="text-2xl md:text-3xl font-bold mb-3 leading-tight">
-            Want even more customers? List on the Fee Free Marketplace.
+            Add another discovery channel — at 5× lower cost.
           </h2>
           <p className="text-gray-300 text-base md:text-lg mb-6 max-w-2xl mx-auto leading-relaxed">
-            A growing directory of fee-free restaurants. We promote you on feefreefood.com — customers discover you, you pay at most <strong>$3/order</strong> (capped at $249.99/month) or go flat <strong>$199.99/month for unlimited orders</strong>. Still 5× cheaper than UE / DoorDash. No 30% commission. Ever.
+            The Fee Free Marketplace at <strong>feefreefood.com</strong> is one more reach channel to stack on top of UE/Skip/DoorDash. A growing directory of independent restaurants — we promote you, customers discover you. PAYG: at most <strong>$3/order</strong> capped at $249.99/month. Or go flat <strong>$199.99/month unlimited</strong>. Either way, still <strong>5× cheaper than UE / DoorDash</strong> — and zero commission on the orders that come through your own site.
           </p>
           <Link
             href="/marketplace"
@@ -492,11 +555,11 @@ export function HomeClient({ locale }: { locale: string }) {
       <section className="py-20 px-4 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
-            Your customers found you on Uber.<br />
-            Now keep them for yourself.
+            Combine your channels.<br />
+            Keep your customers. Keep your margin.
           </h2>
           <p className="text-emerald-50 text-lg mb-8">
-            Set up takes 5 minutes. No credit card. No commission. No catch.
+            Pair Fee Free with UberEats, Skip, DoorDash — whatever you already use. Set up takes 5 minutes. No credit card. No commission on direct orders. No catch.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
