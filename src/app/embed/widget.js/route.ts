@@ -50,6 +50,82 @@ const SCRIPT = `(function(){
       }
     } catch (e) { /* never block on heartbeat */ }
 
+    // ─── Sandbox detection ────────────────────────────────────────────
+    // The widget normally renders as: small launcher button + full-screen
+    // overlay modal on click. That works when our script runs in the
+    // top-level page document.
+    //
+    // BUT: Wix / Squarespace / Webflow / Shopify's "Embed HTML" or
+    // "Custom HTML" widgets wrap injected scripts in a SANDBOXED IFRAME
+    // sized to whatever the page editor's widget element was sized to
+    // (typically 200x80 — the size of the placeholder rectangle). Our
+    // 100vw/100vh overlay then collapses to 200x80 because vw/vh resolve
+    // against the iframe's viewport, NOT the parent page. The customer
+    // sees a useless tiny popup with truncated menu category names.
+    //
+    // We can't escape a cross-origin sandboxed iframe — that's a browser
+    // security boundary. The right answer is to TELL restaurants to use
+    // their CMS's site-wide custom-code injection instead (see the
+    // Legacy Website install instructions in the admin panel). But for
+    // restaurants who paste into the wrong place anyway, fall back to
+    // INLINE mode: just render the iframe directly inside the sandboxed
+    // iframe, no launcher button, no overlay. The restaurant has to
+    // resize their HTML widget to a reasonable height (e.g. 700px) for
+    // the inline menu to be usable, but at least it WORKS instead of
+    // breaking entirely.
+    var inSandbox = (function(){
+      try {
+        // window.top is cross-origin from us in any sandboxed iframe
+        // setup. Reading window.top.location throws if cross-origin.
+        if (window.top === window) return false;
+        // Attempt to touch a top-level property. Throws → cross-origin
+        // → we're in a sandboxed iframe.
+        // eslint-disable-next-line no-unused-expressions
+        window.top.location.href;
+        return false;
+      } catch (e) {
+        return true;
+      }
+    })();
+    if (inSandbox) {
+      // Inline-fallback mode. Take over the iframe's body entirely with
+      // the ordering page. No button, no overlay — there's nowhere for
+      // them to go. Restaurant should resize the host HTML widget to at
+      // least 700px tall for this to be useful (we can't enforce that
+      // from inside a sandbox).
+      try {
+        var inlineIframe = document.createElement("iframe");
+        inlineIframe.src = base + "/embed/widget/" + encodeURIComponent(publicId);
+        inlineIframe.setAttribute("allow", "payment; geolocation");
+        inlineIframe.setAttribute("title", btnLabel);
+        inlineIframe.style.cssText = [
+          "position:fixed !important",
+          "top:0 !important","left:0 !important",
+          "width:100% !important","height:100% !important",
+          "border:0 !important","margin:0 !important","padding:0 !important",
+          "display:block !important","background:#fff !important"
+        ].join(";");
+        function attachInline() {
+          if (document.body) {
+            // Clear body styling that might constrain us, then append.
+            document.body.style.margin = "0";
+            document.body.style.padding = "0";
+            document.body.appendChild(inlineIframe);
+          } else {
+            setTimeout(attachInline, 0);
+          }
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", attachInline);
+        } else {
+          attachInline();
+        }
+      } catch (err) {
+        console.error("[FeeFreeOrdering] inline-fallback failed", err);
+      }
+      return; // skip button + overlay setup
+    }
+
     // ─── Launcher button ───────────────────────────────────────────────
     // GloriaFood-style: big, bold, impossible to miss. Restaurants put
     // their own "Order Online" CTA on their site — ours has to clearly
