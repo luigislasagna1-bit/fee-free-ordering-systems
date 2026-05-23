@@ -9,13 +9,11 @@ import { useTranslations } from "next-intl";
  * Five-column layout: brand + four link groups (Product / Marketplace /
  * Partners / Account). Luigi flagged that the previous footer was missing
  * obvious nav targets like Marketplace and Partners — those exist as full
- * pages on the site but had no footer entry, so visitors who scrolled to
- * the bottom looking for them couldn't find a way back.
+ * pages on the site but had no footer entry.
  *
- * Legal links (Privacy, Terms, Refund) intentionally OMITTED until the
- * pages actually exist (tasks #72-74). Linking to non-existent /legal/*
- * routes would 404 — worse for trust than no link at all. Add them in
- * when the pages ship.
+ * Legal links (Privacy / Terms / Refunds) live in a sub-row inside the
+ * copyright strip at the bottom, GloriaFood-style. Pages live at /privacy,
+ * /terms, /refund.
  */
 export function PublicFooter() {
   const tF = useTranslations("marketing.footer");
@@ -64,8 +62,15 @@ export function PublicFooter() {
             </div>
           </div>
         </div>
-        <div className="border-t border-gray-700 pt-6 text-sm text-gray-500 text-center">
-          {tF("copyright", { year: new Date().getFullYear() })}
+        <div className="border-t border-gray-700 pt-6 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="text-center sm:text-left">
+            {tF("copyright", { year: new Date().getFullYear() })}
+          </div>
+          <div className="flex items-center gap-4 text-xs">
+            <Link href="/privacy" className="hover:text-white transition">Privacy</Link>
+            <Link href="/terms" className="hover:text-white transition">Terms</Link>
+            <Link href="/refund" className="hover:text-white transition">Refunds</Link>
+          </div>
         </div>
       </div>
     </footer>

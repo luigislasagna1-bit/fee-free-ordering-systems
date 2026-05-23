@@ -1,4 +1,27 @@
 "use client";
+/**
+ * PrinterSetupModal — PrintNode-based printer setup.
+ *
+ * ⚠️ DEPRECATION NOTE (decided 2026-05-23):
+ * This entire flow is temporary. Once the Kitchen Display native app
+ * ships (Capacitor, task #78), the kitchen display becomes strictly
+ * iOS/Android via the native app — with built-in printer support via
+ * a custom native plugin wrapping Star + Epson SDKs. At that point:
+ *
+ *   1. PrintNode disappears entirely from the product.
+ *   2. The /kitchen web URL stays online for browsers but the
+ *      official, recommended path becomes "install the Fee Free
+ *      Kitchen app from the App Store / Play Store."
+ *   3. This whole modal (PrinterSetupModal.tsx) + the PrintNode API
+ *      routes under /api/kitchen/printnode/* should be deleted, and
+ *      the native app's settings screen takes over.
+ *
+ * Keep this file functional + polished in the meantime — soft launch
+ * runs on PrintNode and restaurants need it to work for ~6-10 weeks
+ * until the native app is live. Don't rip it out before then.
+ *
+ * See ROADMAP.md Phase G for the full plan.
+ */
 import { useState, useEffect } from "react";
 import {
   X, Printer, Key, Loader2, CheckCircle, XCircle, RefreshCw,
