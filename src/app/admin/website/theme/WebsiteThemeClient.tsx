@@ -72,7 +72,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
             <a
               href={`/order/${restaurant.slug}`}
               target="_blank"
-              className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-orange-500 transition"
+              className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-emerald-500 transition"
             >
               <ExternalLink className="w-4 h-4" /> Preview
             </a>
@@ -80,7 +80,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
           <button
             onClick={save}
             disabled={saving}
-            className="flex items-center gap-2 bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition text-sm disabled:opacity-60"
+            className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition text-sm disabled:opacity-60"
           >
             <Save className="w-4 h-4" /> {saving ? "Saving..." : "Save Theme"}
           </button>
@@ -126,7 +126,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                     <button
                       key={h}
                       onClick={() => set("bannerHeight", h)}
-                      className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition ${theme.bannerHeight === h ? "border-orange-500 bg-orange-50 text-orange-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
+                      className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition ${theme.bannerHeight === h ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
                     >
                       {h === "sm" ? "Small" : h === "md" ? "Medium" : "Large"}
                     </button>
@@ -142,7 +142,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                   type="range" min={0} max={90} step={5}
                   value={theme.bannerOpacity}
                   onChange={e => set("bannerOpacity", Number(e.target.value))}
-                  className="w-full accent-orange-500"
+                  className="w-full accent-emerald-500"
                 />
                 <div className="flex justify-between text-xs text-gray-400 mt-1">
                   <span>Transparent (0%)</span>
@@ -157,7 +157,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                     <button
                       key={p}
                       onClick={() => set("bannerPosition", p)}
-                      className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition capitalize ${theme.bannerPosition === p ? "border-orange-500 bg-orange-50 text-orange-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
+                      className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition capitalize ${theme.bannerPosition === p ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
                     >
                       {p}
                     </button>
@@ -180,7 +180,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                     <button
                       key={l}
                       onClick={() => set("headerLayout", l)}
-                      className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition capitalize ${theme.headerLayout === l ? "border-orange-500 bg-orange-50 text-orange-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
+                      className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition capitalize ${theme.headerLayout === l ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
                     >
                       {l === "left" ? "Left-aligned" : "Centered"}
                     </button>
@@ -195,7 +195,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                     <button
                       key={m}
                       onClick={() => set("menuLayout", m)}
-                      className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition ${theme.menuLayout === m ? "border-orange-500 bg-orange-50 text-orange-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
+                      className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition ${theme.menuLayout === m ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
                     >
                       {m === "carousel" ? "Carousel (compact)" : "Grid (classic)"}
                     </button>
@@ -213,7 +213,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                 </div>
                 <button
                   onClick={() => set("showCategoryImages", !theme.showCategoryImages)}
-                  className={`w-12 h-6 rounded-full transition-colors ${theme.showCategoryImages ? "bg-orange-500" : "bg-gray-300"}`}
+                  className={`w-12 h-6 rounded-full transition-colors ${theme.showCategoryImages ? "bg-emerald-500" : "bg-gray-300"}`}
                 >
                   <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${theme.showCategoryImages ? "translate-x-6" : "translate-x-0"}`} />
                 </button>
@@ -308,7 +308,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
             </div>
 
             <p className="text-xs text-gray-400 mt-3 text-center">
-              This is a simplified preview. <a href={restaurant?.slug ? `/order/${restaurant.slug}` : "#"} target="_blank" className="text-orange-500 underline">View live page →</a>
+              This is a simplified preview. <a href={restaurant?.slug ? `/order/${restaurant.slug}` : "#"} target="_blank" className="text-emerald-500 underline">View live page →</a>
             </p>
           </div>
         </div>

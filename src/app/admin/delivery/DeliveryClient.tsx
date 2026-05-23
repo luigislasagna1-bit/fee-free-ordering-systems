@@ -14,13 +14,13 @@ const DeliveryMap = dynamic(() => import("./DeliveryMap"), {
   ssr: false,
   loading: () => (
     <div className="h-full w-full flex items-center justify-center bg-gray-100 rounded-xl">
-      <Loader2 className="w-6 h-6 animate-spin text-orange-400" />
+      <Loader2 className="w-6 h-6 animate-spin text-emerald-400" />
     </div>
   ),
 });
 
 const ZONE_COLORS = [
-  "#f97316", // orange
+  "#10b981", // orange
   "#22c55e", // green
   "#3b82f6", // blue
   "#a855f7", // purple
@@ -251,11 +251,11 @@ export function DeliveryClient({
             <button
               onClick={geocodeRestaurant}
               disabled={geolocating}
-              className="flex items-center gap-1.5 bg-white text-sm font-medium px-3 py-2 rounded-lg shadow-md border border-gray-200 hover:border-orange-400 transition disabled:opacity-60"
+              className="flex items-center gap-1.5 bg-white text-sm font-medium px-3 py-2 rounded-lg shadow-md border border-gray-200 hover:border-emerald-400 transition disabled:opacity-60"
             >
               {geolocating
                 ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                : <MapPin className="w-3.5 h-3.5 text-orange-500" />}
+                : <MapPin className="w-3.5 h-3.5 text-emerald-500" />}
               {geolocating ? "Locating…" : "Locate Restaurant"}
             </button>
           )}
@@ -265,7 +265,7 @@ export function DeliveryClient({
             <button
               onClick={geocodeRestaurant}
               disabled={geolocating}
-              className="flex items-center gap-1.5 bg-white text-xs px-2 py-1.5 rounded-lg shadow border border-gray-200 hover:border-orange-300 transition text-gray-600 disabled:opacity-60"
+              className="flex items-center gap-1.5 bg-white text-xs px-2 py-1.5 rounded-lg shadow border border-gray-200 hover:border-emerald-300 transition text-gray-600 disabled:opacity-60"
             >
               {geolocating
                 ? <Loader2 className="w-3 h-3 animate-spin" />
@@ -303,7 +303,7 @@ export function DeliveryClient({
               setShowAddForm(true);
               setForm({ ...emptyForm, color: nextColor() });
             }}
-            className="flex items-center gap-1.5 bg-orange-500 text-white text-sm font-semibold px-3 py-2 rounded-lg hover:bg-orange-600 transition"
+            className="flex items-center gap-1.5 bg-emerald-500 text-white text-sm font-semibold px-3 py-2 rounded-lg hover:bg-emerald-600 transition"
           >
             <Plus className="w-4 h-4" /> {t("newZone")}
           </button>
@@ -312,7 +312,7 @@ export function DeliveryClient({
         <div className="flex-1 overflow-y-auto">
           {/* Add zone form */}
           {showAddForm && (
-            <div className="border-b border-orange-100 bg-orange-50 p-4">
+            <div className="border-b border-emerald-100 bg-emerald-50 p-4">
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-sm font-bold text-gray-900">{t("newZone")}</h2>
                 <button
@@ -326,7 +326,7 @@ export function DeliveryClient({
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1">{t("zoneName")}</label>
                   <input
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.name}
                     onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   />
@@ -352,7 +352,7 @@ export function DeliveryClient({
                     <label className="block text-xs font-medium text-gray-600 mb-1">{t("radius")}</label>
                     <input
                       type="number" min="0.5" step="0.5"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                       value={form.radiusKm}
                       onChange={(e) => setForm((f) => ({ ...f, radiusKm: parseFloat(e.target.value) || 5 }))}
                     />
@@ -361,7 +361,7 @@ export function DeliveryClient({
                     <label className="block text-xs font-medium text-gray-600 mb-1">{t("deliveryFee")}</label>
                     <input
                       type="number" min="0" step="0.50"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                       value={form.deliveryFee}
                       onChange={(e) => setForm((f) => ({ ...f, deliveryFee: parseFloat(e.target.value) || 0 }))}
                     />
@@ -370,7 +370,7 @@ export function DeliveryClient({
                     <label className="block text-xs font-medium text-gray-600 mb-1">{t("minimumOrder")}</label>
                     <input
                       type="number" min="0" step="1"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                       value={form.minimumOrder}
                       onChange={(e) => setForm((f) => ({ ...f, minimumOrder: parseFloat(e.target.value) || 0 }))}
                     />
@@ -379,7 +379,7 @@ export function DeliveryClient({
                     <label className="block text-xs font-medium text-gray-600 mb-1">{t("estimatedMinutes")}</label>
                     <input
                       type="number" min="0" step="5"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                       value={form.estimatedMinutes}
                       onChange={(e) => setForm((f) => ({ ...f, estimatedMinutes: parseInt(e.target.value) || 30 }))}
                     />
@@ -390,7 +390,7 @@ export function DeliveryClient({
                   <button
                     onClick={save}
                     disabled={saving}
-                    className="flex-1 bg-orange-500 text-white text-sm font-semibold py-2 rounded-lg hover:bg-orange-600 transition disabled:opacity-60"
+                    className="flex-1 bg-emerald-500 text-white text-sm font-semibold py-2 rounded-lg hover:bg-emerald-600 transition disabled:opacity-60"
                   >
                     {saving ? tCommon("loading") : t("newZone")}
                   </button>
@@ -433,7 +433,7 @@ export function DeliveryClient({
           <div className="border-t border-gray-100 px-4 py-3 text-xs text-gray-400 bg-gray-50">
             <div className="flex items-center gap-3 flex-wrap">
               <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-orange-400 inline-block" /> Active zone
+                <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" /> Active zone
               </span>
               <span className="flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-gray-400 inline-block" /> Inactive zone
@@ -483,7 +483,7 @@ function ZoneRow({
   };
 
   return (
-    <div className={`transition ${isExpanded ? "bg-orange-50" : "hover:bg-gray-50"}`}>
+    <div className={`transition ${isExpanded ? "bg-emerald-50" : "hover:bg-gray-50"}`}>
       {/* Zone header row */}
       <div className="flex items-center gap-3 px-4 py-3 cursor-pointer" onClick={onExpand}>
         <div
@@ -517,7 +517,7 @@ function ZoneRow({
 
       {/* Expanded details */}
       {isExpanded && (
-        <div className="px-4 pb-4 border-t border-orange-100">
+        <div className="px-4 pb-4 border-t border-emerald-100">
           {!editing ? (
             <div className="pt-3 space-y-2">
               <div className="grid grid-cols-2 gap-2 text-xs">
@@ -573,7 +573,7 @@ function ZoneRow({
           ) : (
             <div className="pt-3 space-y-2">
               <input
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={draft.name}
                 onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
                 placeholder="Zone name"
@@ -583,7 +583,7 @@ function ZoneRow({
                   <label className="text-xs text-gray-500">Radius (km)</label>
                   <input
                     type="number" min="0.5" step="0.5"
-                    className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={draft.radiusKm}
                     onChange={(e) => setDraft((d) => ({ ...d, radiusKm: parseFloat(e.target.value) || 5 }))}
                   />
@@ -592,7 +592,7 @@ function ZoneRow({
                   <label className="text-xs text-gray-500">Fee ($)</label>
                   <input
                     type="number" min="0" step="0.50"
-                    className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={draft.deliveryFee}
                     onChange={(e) => setDraft((d) => ({ ...d, deliveryFee: parseFloat(e.target.value) || 0 }))}
                   />
@@ -601,7 +601,7 @@ function ZoneRow({
                   <label className="text-xs text-gray-500">Min ($)</label>
                   <input
                     type="number" min="0" step="1"
-                    className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={draft.minimumOrder}
                     onChange={(e) => setDraft((d) => ({ ...d, minimumOrder: parseFloat(e.target.value) || 0 }))}
                   />
@@ -610,7 +610,7 @@ function ZoneRow({
                   <label className="text-xs text-gray-500">Std. Time (min)</label>
                   <input
                     type="number" min="0" step="5"
-                    className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={draft.estimatedMinutes}
                     onChange={(e) => setDraft((d) => ({ ...d, estimatedMinutes: parseInt(e.target.value) || 30 }))}
                   />
@@ -620,7 +620,7 @@ function ZoneRow({
                 <button
                   onClick={saveEdit}
                   disabled={saving}
-                  className="flex-1 flex items-center justify-center gap-1.5 bg-orange-500 text-white text-xs font-semibold py-1.5 rounded-lg hover:bg-orange-600 transition disabled:opacity-60"
+                  className="flex-1 flex items-center justify-center gap-1.5 bg-emerald-500 text-white text-xs font-semibold py-1.5 rounded-lg hover:bg-emerald-600 transition disabled:opacity-60"
                 >
                   {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
                   {saving ? "Saving…" : "Save"}

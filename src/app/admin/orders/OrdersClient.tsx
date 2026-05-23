@@ -11,7 +11,7 @@ const STATUS_FILTERS = ["all", "pending", "accepted", "preparing", "ready", "com
 const statusColors: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-700",
   accepted: "bg-blue-100 text-blue-700",
-  preparing: "bg-orange-100 text-orange-700",
+  preparing: "bg-emerald-100 text-emerald-700",
   ready: "bg-green-100 text-green-700",
   completed: "bg-gray-100 text-gray-600",
   rejected: "bg-red-100 text-red-700",
@@ -92,7 +92,7 @@ export function OrdersClient({ orders }: { orders: any[] }) {
           <input
             type="text"
             placeholder={tCommon("search")}
-            className="w-full border border-gray-300 rounded-lg pl-9 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full border border-gray-300 rounded-lg pl-9 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -102,7 +102,7 @@ export function OrdersClient({ orders }: { orders: any[] }) {
             <button
               key={s}
               onClick={() => setFilter(s)}
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition ${filter === s ? "bg-orange-500 text-white" : "bg-white border border-gray-300 text-gray-600 hover:bg-gray-50"}`}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition ${filter === s ? "bg-emerald-500 text-white" : "bg-white border border-gray-300 text-gray-600 hover:bg-gray-50"}`}
             >
               {t(s as any)}
               {s === "pending" && pendingCount > 0 && (

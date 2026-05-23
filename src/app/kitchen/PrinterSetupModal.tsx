@@ -46,7 +46,7 @@ function Toggle({ label, sub, val, onChange, t }: { label: string; sub?: string;
       </div>
       <button
         onClick={() => onChange(!val)}
-        className={`flex-shrink-0 w-11 h-6 rounded-full transition-colors relative ${val ? "bg-orange-500" : "bg-gray-400"}`}
+        className={`flex-shrink-0 w-11 h-6 rounded-full transition-colors relative ${val ? "bg-emerald-500" : "bg-gray-400"}`}
       >
         <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${val ? "translate-x-5" : "translate-x-0.5"}`} />
       </button>
@@ -273,7 +273,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700 flex-shrink-0">
           <div className="flex items-center gap-2">
-            <Printer className="w-5 h-5 text-orange-400" />
+            <Printer className="w-5 h-5 text-emerald-400" />
             <h3 className="text-lg font-bold text-white">Printer Setup</h3>
             {settings.printNodeConnected && (
               <span className="ml-2 text-xs bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
@@ -292,7 +292,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
             <button
               key={key}
               onClick={() => setTab(key)}
-              className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition ${tab === key ? "border-orange-500 text-orange-400" : "border-transparent text-gray-400 hover:text-white"}`}
+              className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition ${tab === key ? "border-emerald-500 text-emerald-400" : "border-transparent text-gray-400 hover:text-white"}`}
             >
               {icon} {label}
             </button>
@@ -338,7 +338,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                         value={apiKey}
                         onChange={(e) => setApiKey(e.target.value)}
                         placeholder={settings.hasApiKey ? "API key saved — enter new value to replace" : "Your PrintNode API key"}
-                        className="w-full bg-gray-700 border border-gray-600 rounded-xl px-4 py-2.5 pr-10 text-white text-sm font-mono focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        className="w-full bg-gray-700 border border-gray-600 rounded-xl px-4 py-2.5 pr-10 text-white text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         autoComplete="off"
                         disabled={!encryptionConfigured}
                       />
@@ -370,7 +370,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                   <button
                     onClick={handleTestConnection}
                     disabled={testing || !encryptionConfigured || (!apiKey.trim() && !settings.hasApiKey)}
-                    className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition"
+                    className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition"
                   >
                     {testing ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
                     {testing ? "Testing..." : "Test Connection"}
@@ -395,13 +395,13 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                             <button
                               key={p.id}
                               onClick={() => setSettings((s) => ({ ...s, selectedPrinterId: p.id, selectedPrinterName: p.name }))}
-                              className={`w-full text-left flex items-center justify-between px-4 py-3 rounded-xl border-2 transition ${settings.selectedPrinterId === p.id ? "border-orange-500 bg-orange-500/10" : "border-gray-600 hover:border-gray-500"}`}
+                              className={`w-full text-left flex items-center justify-between px-4 py-3 rounded-xl border-2 transition ${settings.selectedPrinterId === p.id ? "border-emerald-500 bg-emerald-500/10" : "border-gray-600 hover:border-gray-500"}`}
                             >
                               <div>
                                 <div className="text-sm font-semibold text-white">{p.name}</div>
                                 <div className="text-xs text-gray-400">{p.computer} · {p.description || p.state}</div>
                               </div>
-                              {settings.selectedPrinterId === p.id && <CheckCircle className="w-4 h-4 text-orange-400 flex-shrink-0" />}
+                              {settings.selectedPrinterId === p.id && <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />}
                             </button>
                           ))}
                         </div>
@@ -448,7 +448,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                                 <div className="text-xs text-gray-500">{desc}</div>
                               </div>
                               {sendingDiag === type
-                                ? <Loader2 className="w-4 h-4 animate-spin text-orange-400 flex-shrink-0" />
+                                ? <Loader2 className="w-4 h-4 animate-spin text-emerald-400 flex-shrink-0" />
                                 : <Printer className="w-4 h-4 text-gray-500 flex-shrink-0" />}
                             </button>
                           ))}
@@ -474,7 +474,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                         <button
                           key={val}
                           onClick={() => setSettings((s) => ({ ...s, printerLanguage: val }))}
-                          className={`w-full text-left px-4 py-3 rounded-xl border-2 transition ${settings.printerLanguage === val ? "border-orange-500 bg-orange-500/10" : "border-gray-600 hover:border-gray-500"}`}
+                          className={`w-full text-left px-4 py-3 rounded-xl border-2 transition ${settings.printerLanguage === val ? "border-emerald-500 bg-emerald-500/10" : "border-gray-600 hover:border-gray-500"}`}
                         >
                           <div className="text-sm font-semibold text-white">{label}</div>
                           <div className="text-xs text-gray-400 mt-0.5">{desc}</div>
@@ -490,7 +490,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                         <button
                           key={w}
                           onClick={() => setSettings((s) => ({ ...s, paperWidth: w }))}
-                          className={`px-5 py-2 rounded-xl text-sm font-semibold border-2 transition ${settings.paperWidth === w ? "border-orange-500 bg-orange-500/10 text-orange-400" : "border-gray-600 text-gray-400 hover:border-gray-500"}`}
+                          className={`px-5 py-2 rounded-xl text-sm font-semibold border-2 transition ${settings.paperWidth === w ? "border-emerald-500 bg-emerald-500/10 text-emerald-400" : "border-gray-600 text-gray-400 hover:border-gray-500"}`}
                         >
                           {w}
                         </button>
@@ -537,7 +537,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                     </button>
                   </div>
                   {loadingLogs ? (
-                    <div className="flex justify-center py-8"><Loader2 className="w-5 h-5 animate-spin text-orange-400" /></div>
+                    <div className="flex justify-center py-8"><Loader2 className="w-5 h-5 animate-spin text-emerald-400" /></div>
                   ) : logs.length === 0 ? (
                     <div className="text-center py-10 text-gray-500 text-sm">No print jobs yet.</div>
                   ) : (
@@ -550,7 +550,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                                 {log.orderNumber ? `#${log.orderNumber}` : "Test"}
                               </span>
                               <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                                log.receiptType === "kitchen" ? "bg-orange-500/20 text-orange-300" :
+                                log.receiptType === "kitchen" ? "bg-emerald-500/20 text-emerald-300" :
                                 log.receiptType === "customer" ? "bg-blue-500/20 text-blue-300" :
                                 "bg-gray-600 text-gray-300"
                               }`}>{log.receiptType}</span>
@@ -585,7 +585,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
             <button
               onClick={handleSave}
               disabled={saving || loading}
-              className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition"
+              className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition"
             >
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
               {saving ? "Saving..." : "Save Settings"}

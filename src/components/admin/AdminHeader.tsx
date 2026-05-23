@@ -41,14 +41,14 @@ export function AdminHeader({
       // "next thing to do" button rather than a checklist dump.
       <Link
         href={setupProgress.publishReady ? "/admin/setup" : "/admin/setup/next"}
-        className="block bg-gradient-to-r from-orange-50 to-amber-50 border-b border-orange-200 px-6 py-2 hover:from-orange-100 hover:to-amber-100 transition"
+        className="block bg-gradient-to-r from-emerald-50 to-amber-50 border-b border-emerald-200 px-6 py-2 hover:from-emerald-100 hover:to-amber-100 transition"
       >
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 min-w-0">
-            <AlertCircle className="w-4 h-4 text-orange-600 flex-shrink-0" />
-            <span className="text-sm text-orange-900 truncate">
+            <AlertCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <span className="text-sm text-emerald-900 truncate">
               <span className="font-semibold">Setup {setupProgress.percent}% complete</span>
-              <span className="text-orange-700">
+              <span className="text-emerald-700">
                 {" · "}
                 {setupProgress.publishReady
                   ? "You're ready to publish"
@@ -59,13 +59,13 @@ export function AdminHeader({
             </span>
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">
-            <div className="w-32 h-1.5 bg-orange-200 rounded-full overflow-hidden">
+            <div className="w-32 h-1.5 bg-emerald-200 rounded-full overflow-hidden">
               <div
-                className="h-full bg-orange-500 transition-all"
+                className="h-full bg-emerald-500 transition-all"
                 style={{ width: `${setupProgress.percent}%` }}
               />
             </div>
-            <span className="text-xs font-medium text-orange-700 hidden sm:inline">
+            <span className="text-xs font-medium text-emerald-700 hidden sm:inline">
               Finish setup &rarr;
             </span>
           </div>
@@ -98,7 +98,7 @@ export function AdminHeader({
             <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500" />
           )}
         </div>
-        <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-sm">
+        <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-sm">
           {(user?.name || user?.email || "?")[0].toUpperCase()}
         </div>
       </div>

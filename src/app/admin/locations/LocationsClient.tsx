@@ -91,7 +91,7 @@ export function LocationsClient({
         </div>
         <button
           onClick={() => setShowAdd(true)}
-          className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
+          className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
         >
           <Plus className="w-4 h-4" /> Add another location
         </button>
@@ -115,7 +115,7 @@ export function LocationsClient({
             <div
               key={loc.id}
               className={`rounded-xl border p-4 transition ${
-                isActive ? "border-orange-300 bg-orange-50" : "border-gray-200 bg-white hover:border-gray-300"
+                isActive ? "border-emerald-300 bg-emerald-50" : "border-gray-200 bg-white hover:border-gray-300"
               }`}
             >
               <div className="flex items-center gap-4 flex-wrap">
@@ -126,7 +126,7 @@ export function LocationsClient({
                   <div className="flex items-center gap-2">
                     <div className="font-semibold text-gray-900 truncate">{loc.name}</div>
                     {loc.isParent && (
-                      <span className="text-[10px] uppercase tracking-wider text-orange-700 font-bold bg-orange-100 px-1.5 py-0.5 rounded">
+                      <span className="text-[10px] uppercase tracking-wider text-emerald-700 font-bold bg-emerald-100 px-1.5 py-0.5 rounded">
                         Brand parent
                       </span>
                     )}
@@ -192,7 +192,7 @@ export function LocationsClient({
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="e.g. Luigi's — Mississauga"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
               <Field label="Phone (optional)">
@@ -200,7 +200,7 @@ export function LocationsClient({
                   type="text"
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
               <Field label="Address (optional)">
@@ -208,7 +208,7 @@ export function LocationsClient({
                   type="text"
                   value={form.address}
                   onChange={(e) => setForm({ ...form, address: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
               <div className="grid grid-cols-3 gap-2">
@@ -217,7 +217,7 @@ export function LocationsClient({
                     type="text"
                     value={form.city}
                     onChange={(e) => setForm({ ...form, city: e.target.value })}
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   />
                 </Field>
                 <Field label="State">
@@ -225,7 +225,7 @@ export function LocationsClient({
                     type="text"
                     value={form.state}
                     onChange={(e) => setForm({ ...form, state: e.target.value })}
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   />
                 </Field>
                 <Field label="ZIP">
@@ -233,7 +233,7 @@ export function LocationsClient({
                     type="text"
                     value={form.zip}
                     onChange={(e) => setForm({ ...form, zip: e.target.value })}
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   />
                 </Field>
               </div>
@@ -242,7 +242,7 @@ export function LocationsClient({
               <button
                 onClick={submitAdd}
                 disabled={busy !== null || !form.name.trim()}
-                className="flex-1 inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition disabled:opacity-50"
+                className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition disabled:opacity-50"
               >
                 {busy === "add" && <Loader2 className="w-4 h-4 animate-spin" />}
                 Create location

@@ -61,14 +61,14 @@ export function SocialMediaClient({ initialLinks, marketingTier, restaurantSlug 
       <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Share2 className="w-6 h-6 text-orange-500" /> {t("title")}
+            <Share2 className="w-6 h-6 text-emerald-500" /> {t("title")}
           </h1>
           <p className="text-sm text-gray-500 mt-1">{t("subtitle")}</p>
         </div>
         <button
           onClick={save}
           disabled={saving}
-          className="flex items-center gap-2 bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition text-sm disabled:opacity-60"
+          className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition text-sm disabled:opacity-60"
         >
           <Save className="w-4 h-4" />
           {saving ? tCommon("loading") : tCommon("saveChanges")}
@@ -83,7 +83,7 @@ export function SocialMediaClient({ initialLinks, marketingTier, restaurantSlug 
               {t("yourAccounts")}
             </div>
             <p className="text-xs text-gray-400 mb-5">
-              {t("yourAccountsHelp")}: <span className="text-orange-600 font-medium">{filledCount}</span> / {PLATFORMS.length}
+              {t("yourAccountsHelp")}: <span className="text-emerald-600 font-medium">{filledCount}</span> / {PLATFORMS.length}
             </p>
 
             <div className="grid sm:grid-cols-2 gap-3">
@@ -101,14 +101,14 @@ export function SocialMediaClient({ initialLinks, marketingTier, restaurantSlug 
                         value={value}
                         onChange={(e) => setLink(p, e.target.value)}
                         placeholder={PLATFORM_PLACEHOLDERS[p]}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-9 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-9 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
                       />
                       {value && value.startsWith("http") && (
                         <a
                           href={value}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-600"
+                          className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-emerald-600"
                           title={t("openLink")}
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
@@ -142,7 +142,7 @@ export function SocialMediaClient({ initialLinks, marketingTier, restaurantSlug 
 
         {/* ── Roadmap / upsell column ───────────────────────────────── */}
         <div className="space-y-4">
-          <div className="bg-gradient-to-br from-orange-500 to-pink-500 text-white rounded-xl p-5 shadow-sm">
+          <div className="bg-gradient-to-br from-emerald-500 to-pink-500 text-white rounded-xl p-5 shadow-sm">
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="w-5 h-5" />
               <span className="text-xs font-bold uppercase tracking-wider opacity-90">{t("comingSoon")}</span>
@@ -170,7 +170,7 @@ export function SocialMediaClient({ initialLinks, marketingTier, restaurantSlug 
 function RoadmapItem({ icon: Icon, title, body }: { icon: any; title: string; body: string }) {
   return (
     <div className="bg-white border border-gray-100 rounded-xl p-4 flex items-start gap-3 shadow-sm">
-      <div className="w-9 h-9 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center flex-shrink-0">
+      <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
         <Icon className="w-4 h-4" />
       </div>
       <div>

@@ -60,14 +60,14 @@ function LoginFormInner({ locale }: { locale: string }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50 flex items-center justify-center p-4 relative">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-amber-50 flex items-center justify-center p-4 relative">
       <AuthLanguageSwitcher currentLocale={locale} />
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 text-orange-500 font-bold text-xl mb-5">
+          <Link href="/" className="inline-flex items-center gap-2 text-emerald-500 font-bold text-xl mb-5">
             <ChefHat className="w-7 h-7" /> Fee Free Ordering
           </Link>
-          <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-700 font-semibold px-4 py-1.5 rounded-full text-sm mb-4">
+          <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 font-semibold px-4 py-1.5 rounded-full text-sm mb-4">
             <LayoutDashboard className="w-4 h-4" /> {tAuth("adminLogin")}
           </div>
           <h1 className="text-2xl font-bold text-gray-900">{tAuth("signIn")}</h1>
@@ -86,7 +86,7 @@ function LoginFormInner({ locale }: { locale: string }) {
               type="email"
               required
               autoComplete="email"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 transition"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
               placeholder="you@restaurant.com"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -95,7 +95,7 @@ function LoginFormInner({ locale }: { locale: string }) {
           <div>
             <div className="flex items-center justify-between mb-1">
               <label className="block text-sm font-medium text-gray-700">{tAuth("password")}</label>
-              <a href="/forgot-password" className="text-xs text-orange-600 hover:text-orange-700">
+              <a href="/forgot-password" className="text-xs text-emerald-600 hover:text-emerald-700">
                 {tAuth("forgotPassword")}
               </a>
             </div>
@@ -103,7 +103,7 @@ function LoginFormInner({ locale }: { locale: string }) {
               type="password"
               required
               autoComplete="current-password"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 transition"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
@@ -112,7 +112,7 @@ function LoginFormInner({ locale }: { locale: string }) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-orange-500 text-white font-bold py-3 rounded-xl hover:bg-orange-600 transition flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
+            className="w-full bg-emerald-500 text-white font-bold py-3 rounded-xl hover:bg-emerald-600 transition flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
           >
             {loading && <Loader2 className="w-5 h-5 animate-spin" />}
             {loading ? tAuth("signingIn") : tAuth("signIn")}
@@ -122,12 +122,12 @@ function LoginFormInner({ locale }: { locale: string }) {
         <div className="mt-5 border-t border-gray-100 pt-5 text-center space-y-3">
           <p className="text-gray-500 text-sm">
             {tAuth("dontHaveAccount")}{" "}
-            <Link href="/signup" className="text-orange-500 font-medium hover:underline">{tAuth("signUp")}</Link>
+            <Link href="/signup" className="text-emerald-500 font-medium hover:underline">{tAuth("signUp")}</Link>
           </p>
           <div className="flex items-center justify-center gap-1.5 text-sm text-gray-400">
             <Link
               href="/kitchen/login"
-              className="inline-flex items-center gap-1 text-gray-600 font-medium hover:text-orange-500 transition underline underline-offset-2"
+              className="inline-flex items-center gap-1 text-gray-600 font-medium hover:text-emerald-500 transition underline underline-offset-2"
             >
               {tAuth("kitchenLogin")}
             </Link>
@@ -140,7 +140,7 @@ function LoginFormInner({ locale }: { locale: string }) {
 
 export function LoginForm({ locale }: { locale: string }) {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-orange-500" /></div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-emerald-500" /></div>}>
       <LoginFormInner locale={locale} />
     </Suspense>
   );

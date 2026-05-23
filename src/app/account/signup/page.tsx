@@ -26,7 +26,7 @@ export default async function CustomerSignupPage() {
       <SignupForm />
       <p className="mt-6 text-sm text-gray-600">
         Already have an account?{" "}
-        <Link href="/account/login" className="text-orange-600 font-semibold hover:underline">
+        <Link href="/account/login" className="text-emerald-600 font-semibold hover:underline">
           Sign in
         </Link>
       </p>

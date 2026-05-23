@@ -37,13 +37,13 @@ export function PublicNav({ currentLocale = "en" }: Props) {
   return (
     <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl text-orange-500">
+        <Link href="/" className="flex items-center gap-2 font-bold text-xl text-emerald-500">
           <ChefHat className="w-7 h-7" />
           Fee Free Ordering
         </Link>
         <div className="hidden md:flex items-center gap-8">
           {items.map(([label, href]) => (
-            <Link key={href} href={href} className="text-gray-600 hover:text-orange-500 font-medium transition">
+            <Link key={href} href={href} className="text-gray-600 hover:text-emerald-500 font-medium transition">
               {label}
             </Link>
           ))}
@@ -55,19 +55,19 @@ export function PublicNav({ currentLocale = "en" }: Props) {
               aria-label="Language"
               value={currentLocale}
               onChange={(e) => onLocaleChange(e.target.value)}
-              className="appearance-none pl-7 pr-2 py-1.5 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
+              className="appearance-none pl-7 pr-2 py-1.5 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
             >
               {LOCALES.map((o) => (
                 <option key={o.code} value={o.code}>{o.label}</option>
               ))}
             </select>
           </div>
-          <Link href="/login" className="text-gray-700 font-medium hover:text-orange-500 transition">
+          <Link href="/login" className="text-gray-700 font-medium hover:text-emerald-500 transition">
             {t("login")}
           </Link>
           <Link
             href="/signup"
-            className="bg-orange-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 transition"
+            className="bg-emerald-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-emerald-600 transition"
           >
             {t("startTrial")}
           </Link>
@@ -101,7 +101,7 @@ export function PublicNav({ currentLocale = "en" }: Props) {
               ))}
             </select>
             <Link href="/login" className="block text-gray-700 font-medium py-1">{t("login")}</Link>
-            <Link href="/signup" className="block bg-orange-500 text-white font-semibold px-5 py-2 rounded-lg text-center">
+            <Link href="/signup" className="block bg-emerald-500 text-white font-semibold px-5 py-2 rounded-lg text-center">
               {t("startTrial")}
             </Link>
           </div>

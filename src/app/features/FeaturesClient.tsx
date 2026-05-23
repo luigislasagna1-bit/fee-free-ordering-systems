@@ -40,10 +40,10 @@ export function FeaturesClient({ locale }: { locale: string }) {
     <div className="min-h-screen flex flex-col">
       <PublicNav currentLocale={locale} />
       <main className="flex-1">
-        <section className="bg-gradient-to-br from-orange-50 to-red-50 py-20 px-4 text-center">
+        <section className="bg-gradient-to-br from-emerald-50 to-red-50 py-20 px-4 text-center">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">{t("title")}</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">{t("subtitle")}</p>
-          <Link href="/signup" className="bg-orange-500 text-white font-bold px-8 py-4 rounded-xl text-lg hover:bg-orange-600 transition">
+          <Link href="/signup" className="bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl text-lg hover:bg-emerald-600 transition">
             {tNav("startTrial")}
           </Link>
         </section>
@@ -55,8 +55,8 @@ export function FeaturesClient({ locale }: { locale: string }) {
               <div className="grid md:grid-cols-3 gap-8">
                 {section.items.map((item) => (
                   <div key={item.title} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
-                      <item.icon className="w-6 h-6 text-orange-500" />
+                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
+                      <item.icon className="w-6 h-6 text-emerald-500" />
                     </div>
                     <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
                     <p className="text-gray-600">{item.desc}</p>
@@ -67,8 +67,8 @@ export function FeaturesClient({ locale }: { locale: string }) {
           </section>
         ))}
 
-        <section className="py-16 px-4 bg-orange-500 text-white text-center">
-          <Link href="/signup" className="bg-white text-orange-600 font-bold px-8 py-3 rounded-xl text-lg hover:bg-orange-50 transition">
+        <section className="py-16 px-4 bg-emerald-500 text-white text-center">
+          <Link href="/signup" className="bg-white text-emerald-600 font-bold px-8 py-3 rounded-xl text-lg hover:bg-emerald-50 transition">
             {tNav("startTrial")}
           </Link>
         </section>

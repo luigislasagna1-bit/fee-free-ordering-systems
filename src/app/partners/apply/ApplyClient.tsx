@@ -47,7 +47,7 @@ export function ApplyClient() {
         <h2 className="text-xl font-bold text-gray-900 mb-2">Application received</h2>
         <p className="text-sm text-gray-600 mb-4">
           We'll review your application within 1–2 business days and email you the result. You can also{" "}
-          <a href="/login" className="text-orange-600 font-semibold underline">log in</a> to check your status.
+          <a href="/login" className="text-emerald-600 font-semibold underline">log in</a> to check your status.
         </p>
       </div>
     );
@@ -64,7 +64,7 @@ export function ApplyClient() {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           />
         </Field>
         <Field label="Email">
@@ -73,7 +73,7 @@ export function ApplyClient() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           />
         </Field>
       </div>
@@ -83,7 +83,7 @@ export function ApplyClient() {
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
         />
         <p className="text-[11px] text-gray-400 mt-1">At least 8 characters.</p>
       </Field>
@@ -92,14 +92,14 @@ export function ApplyClient() {
           <input
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           />
         </Field>
         <Field label="Country (optional)">
           <input
             value={country}
             onChange={(e) => setCountry(e.target.value)}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           />
         </Field>
       </div>
@@ -109,7 +109,7 @@ export function ApplyClient() {
           placeholder="https://"
           value={website}
           onChange={(e) => setWebsite(e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
         />
       </Field>
       <Field label="Tell us about yourself (optional)">
@@ -118,7 +118,7 @@ export function ApplyClient() {
           onChange={(e) => setApplicationNotes(e.target.value)}
           rows={4}
           placeholder="How do you plan to bring restaurants to Fee Free Ordering? What's your sales channel?"
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
         />
       </Field>
 
@@ -129,13 +129,13 @@ export function ApplyClient() {
       <button
         type="submit"
         disabled={busy}
-        className="w-full inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-5 py-3 rounded-lg transition disabled:opacity-50"
+        className="w-full inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm px-5 py-3 rounded-lg transition disabled:opacity-50"
       >
         {busy && <Loader2 className="w-4 h-4 animate-spin" />}
         Submit application
       </button>
       <p className="text-[11px] text-gray-400 text-center">
-        Already a partner? <a href="/login" className="text-orange-600 font-semibold">Log in</a>
+        Already a partner? <a href="/login" className="text-emerald-600 font-semibold">Log in</a>
       </p>
     </form>
   );

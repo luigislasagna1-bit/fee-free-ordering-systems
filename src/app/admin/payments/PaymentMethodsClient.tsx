@@ -134,12 +134,12 @@ export function PaymentMethodsClient({
                 locked
                   ? "border-gray-200 bg-gray-50 cursor-not-allowed"
                   : selected
-                  ? "border-orange-400 bg-orange-50"
+                  ? "border-emerald-400 bg-emerald-50"
                   : "border-gray-200 bg-white hover:border-gray-300"
               }`}
             >
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                locked ? "bg-gray-200 text-gray-400" : selected ? "bg-orange-500 text-white" : "bg-gray-100 text-gray-500"
+                locked ? "bg-gray-200 text-gray-400" : selected ? "bg-emerald-500 text-white" : "bg-gray-100 text-gray-500"
               }`}>
                 <Icon className="w-6 h-6" />
               </div>
@@ -152,7 +152,7 @@ export function PaymentMethodsClient({
                     </span>
                   )}
                   {!locked && selected && (
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-orange-500 text-white uppercase tracking-wider">
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500 text-white uppercase tracking-wider">
                       Selected
                     </span>
                   )}
@@ -162,7 +162,7 @@ export function PaymentMethodsClient({
                   <Link
                     href="/admin/billing/add-ons"
                     onClick={(e) => e.stopPropagation()}
-                    className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-orange-600 hover:text-orange-700 hover:underline"
+                    className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline"
                   >
                     Subscribe to Online Payments add-on
                     <ArrowRight className="w-3 h-3" />
@@ -170,7 +170,7 @@ export function PaymentMethodsClient({
                 )}
               </div>
               <div className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition ${
-                locked ? "border-gray-300 bg-gray-100" : selected ? "border-orange-500 bg-orange-500 text-white" : "border-gray-300 bg-white"
+                locked ? "border-gray-300 bg-gray-100" : selected ? "border-emerald-500 bg-emerald-500 text-white" : "border-gray-300 bg-white"
               }`}>
                 {locked ? <Lock className="w-3 h-3 text-gray-400" /> : selected && <Check className="w-4 h-4" />}
               </div>
@@ -234,7 +234,7 @@ export function PaymentMethodsClient({
           type="button"
           onClick={save}
           disabled={saving || methods.size === 0}
-          className="bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow transition flex items-center gap-2"
+          className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow transition flex items-center gap-2"
         >
           {saving ? (
             <><Loader2 className="w-4 h-4 animate-spin" /> Saving…</>

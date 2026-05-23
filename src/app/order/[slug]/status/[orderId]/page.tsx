@@ -32,7 +32,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center">
-      <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
+      <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
     </div>
   );
 
@@ -60,7 +60,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900">{order.restaurant.name}</h1>
           <div className="text-gray-500 mt-1">Order #{order.orderNumber}</div>
-          <div className="inline-block mt-2 text-sm bg-orange-100 text-orange-600 px-3 py-1 rounded-full font-medium">
+          <div className="inline-block mt-2 text-sm bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full font-medium">
             Auto-refreshes every 10 seconds
           </div>
         </div>
@@ -73,7 +73,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <Link
                 href={cameFromMarketplace ? "/" : `/order/${slug}`}
-                className="text-orange-500 font-medium hover:underline"
+                className="text-emerald-500 font-medium hover:underline"
               >
                 {cameFromMarketplace ? "Browse other restaurants" : "Place a new order"}
               </Link>
@@ -96,11 +96,11 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 const future = idx > currentStep;
                 return (
                   <div key={step.key} className="flex items-start gap-4">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${done ? "bg-green-500" : active ? "bg-orange-500" : "bg-gray-100"}`}>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${done ? "bg-green-500" : active ? "bg-emerald-500" : "bg-gray-100"}`}>
                       <step.icon className={`w-5 h-5 ${done || active ? "text-white" : "text-gray-400"}`} />
                     </div>
                     <div className="flex-1 pt-1">
-                      <div className={`font-semibold ${active ? "text-orange-600" : done ? "text-green-600" : "text-gray-400"}`}>{step.label}</div>
+                      <div className={`font-semibold ${active ? "text-emerald-600" : done ? "text-green-600" : "text-gray-400"}`}>{step.label}</div>
                       {(active || done) && <div className={`text-sm mt-0.5 ${active ? "text-gray-600" : "text-gray-400"}`}>{step.desc}</div>}
                     </div>
                     {done && <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />}
@@ -110,9 +110,9 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
             </div>
 
             {order.estimatedReady && order.status === "accepted" && (
-              <div className="mt-6 bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
+              <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
                 <div className="text-sm text-gray-600">Estimated ready at</div>
-                <div className="text-xl font-bold text-orange-600">
+                <div className="text-xl font-bold text-emerald-600">
                   {new Date(order.estimatedReady).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
                 </div>
               </div>

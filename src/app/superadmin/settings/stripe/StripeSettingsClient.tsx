@@ -144,7 +144,7 @@ export function StripeSettingsClient({ initial }: { initial: Initial }) {
             <span className="text-sm text-gray-600">Enabled</span>
             <div
               onClick={() => setEnabled(!enabled)}
-              className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${enabled ? "bg-orange-500" : "bg-gray-300"}`}
+              className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${enabled ? "bg-emerald-500" : "bg-gray-300"}`}
             >
               <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${enabled ? "translate-x-5" : "translate-x-0.5"}`} />
             </div>
@@ -165,7 +165,7 @@ export function StripeSettingsClient({ initial }: { initial: Initial }) {
                     mode === m
                       ? m === "live"
                         ? "bg-green-500 text-white"
-                        : "bg-orange-500 text-white"
+                        : "bg-emerald-500 text-white"
                       : "bg-white text-gray-500 hover:bg-gray-50"
                   }`}
                 >
@@ -186,7 +186,7 @@ export function StripeSettingsClient({ initial }: { initial: Initial }) {
               value={publishableKey}
               onChange={(e) => setPublishableKey(e.target.value)}
               placeholder={pkPlaceholder}
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-mono focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             />
             <p className="mt-1 text-xs text-gray-400">Safe to expose to browsers. Used to render Stripe forms.</p>
           </div>
@@ -200,7 +200,7 @@ export function StripeSettingsClient({ initial }: { initial: Initial }) {
                 value={secretKey}
                 onChange={(e) => setSecretKey(e.target.value)}
                 placeholder={hasSecretKey ? "•••••• saved — paste a new one to rotate" : skPlaceholder}
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-mono focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 autoComplete="off"
               />
               <button
@@ -231,7 +231,7 @@ export function StripeSettingsClient({ initial }: { initial: Initial }) {
                 value={webhookSecret}
                 onChange={(e) => setWebhookSecret(e.target.value)}
                 placeholder={hasWebhookSecret ? "•••••• saved — paste a new one to rotate" : "whsec_..."}
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-mono focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 autoComplete="off"
               />
               <button
@@ -276,7 +276,7 @@ export function StripeSettingsClient({ initial }: { initial: Initial }) {
             <button
               onClick={handleSave}
               disabled={saving || !initial.encryptionKeyConfigured}
-              className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition disabled:opacity-50"
+              className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition disabled:opacity-50"
             >
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
               {saving ? "Saving..." : "Save"}

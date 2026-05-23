@@ -32,7 +32,7 @@ const STATUS_COLORS: Record<string, string> = {
   seated:    "bg-green-100 text-green-800 border-green-200",
   completed: "bg-gray-100 text-gray-700 border-gray-200",
   cancelled: "bg-red-100 text-red-700 border-red-200",
-  no_show:   "bg-orange-100 text-orange-700 border-orange-200",
+  no_show:   "bg-emerald-100 text-emerald-700 border-emerald-200",
 };
 
 const STATUS_LABELS: Record<string, string> = {
@@ -82,25 +82,25 @@ function TableFormModal({ table, onClose, onSaved }: {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Table Name *</label>
-              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 placeholder="e.g. Table 1, Booth A" value={form.name}
                 onChange={e => setForm(f => ({ ...f, name: e.target.value }))} autoFocus />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Table Number</label>
-              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 placeholder="e.g. 1" value={form.number}
                 onChange={e => setForm(f => ({ ...f, number: e.target.value as any }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Section</label>
-              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 placeholder="e.g. Indoor, Patio" value={form.section}
                 onChange={e => setForm(f => ({ ...f, section: e.target.value }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Capacity (guests)</label>
-              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.capacity}
                 onChange={e => setForm(f => ({ ...f, capacity: parseInt(e.target.value) || 1 }))} />
             </div>
@@ -113,7 +113,7 @@ function TableFormModal({ table, onClose, onSaved }: {
         <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
           <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">Cancel</button>
           <button onClick={save} disabled={saving}
-            className="px-6 py-2 bg-orange-500 text-white text-sm font-semibold rounded-lg hover:bg-orange-600 disabled:opacity-50">
+            className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
             {saving ? "Saving..." : isNew ? "Add Table" : "Save"}
           </button>
         </div>
@@ -173,49 +173,49 @@ function ReservationFormModal({ tables, reservation, onClose, onSaved }: {
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name *</label>
-              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 placeholder="Full name" value={form.customerName} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, customerName: e.target.value }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 placeholder="+1 (555) 000-0000" value={form.customerPhone} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, customerPhone: e.target.value }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 placeholder="email@example.com" value={form.customerEmail} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, customerEmail: e.target.value }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Date *</label>
-              <input type="date" min={today} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="date" min={today} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.date} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, date: e.target.value }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Time *</label>
-              <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.time} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, time: e.target.value }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Party Size *</label>
-              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.partySize} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, partySize: parseInt(e.target.value) || 1 }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Duration (min)</label>
-              <input type="number" min="30" step="15" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" min="30" step="15" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.durationMinutes}
                 onChange={e => setForm(f => ({ ...f, durationMinutes: parseInt(e.target.value) || 90 }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Assign Table</label>
-              <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.tableId}
                 onChange={e => setForm(f => ({ ...f, tableId: e.target.value }))}>
                 <option value="">No table assigned</option>
@@ -226,7 +226,7 @@ function ReservationFormModal({ tables, reservation, onClose, onSaved }: {
             </div>
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">Customer Notes</label>
-              <textarea rows={2} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none resize-none"
+              <textarea rows={2} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none"
                 placeholder="Any special requests..." value={form.notes}
                 onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
             </div>
@@ -235,7 +235,7 @@ function ReservationFormModal({ tables, reservation, onClose, onSaved }: {
         <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
           <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">Cancel</button>
           <button onClick={save} disabled={saving}
-            className="px-6 py-2 bg-orange-500 text-white text-sm font-semibold rounded-lg hover:bg-orange-600 disabled:opacity-50">
+            className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
             {saving ? "Saving..." : isNew ? "Create Reservation" : "Save"}
           </button>
         </div>
@@ -310,28 +310,28 @@ function ReservationsTab({ tables }: { tables: ReservationTable[] }) {
       <div className="flex-1 min-w-0 flex flex-col gap-3">
         {/* Filters */}
         <div className="flex flex-wrap gap-2 items-center">
-          <input type="date" className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+          <input type="date" className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             value={filterDate} onChange={e => setFilterDate(e.target.value)} />
           <button onClick={() => setFilterDate("")} className="text-xs text-gray-500 hover:text-gray-700 px-2">All dates</button>
-          <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+          <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
             <option value="all">All statuses</option>
             {Object.entries(STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
           </select>
           <div className="relative">
             <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
-            <input className="border border-gray-300 rounded-lg pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            <input className="border border-gray-300 rounded-lg pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               placeholder="Search name or code…" value={search} onChange={e => setSearch(e.target.value)} />
           </div>
           <button onClick={load} className="p-2 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100"><RefreshCw className="w-4 h-4" /></button>
           <button onClick={() => setModal({})}
-            className="ml-auto flex items-center gap-1.5 bg-orange-500 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-orange-600">
+            className="ml-auto flex items-center gap-1.5 bg-emerald-500 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600">
             <Plus className="w-4 h-4" /> New Reservation
           </button>
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center h-32"><Loader2 className="w-6 h-6 animate-spin text-orange-500" /></div>
+          <div className="flex items-center justify-center h-32"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-16 text-gray-400">
             <CalendarDays className="w-12 h-12 mx-auto mb-3 opacity-30" />
@@ -342,7 +342,7 @@ function ReservationsTab({ tables }: { tables: ReservationTable[] }) {
             {filtered.map(r => (
               <div key={r.id}
                 onClick={() => setDetailId(detailId === r.id ? null : r.id)}
-                className={`bg-white border rounded-xl p-4 cursor-pointer hover:border-orange-200 transition ${detailId === r.id ? "border-orange-400 shadow-sm" : "border-gray-100"}`}>
+                className={`bg-white border rounded-xl p-4 cursor-pointer hover:border-emerald-200 transition ${detailId === r.id ? "border-emerald-400 shadow-sm" : "border-gray-100"}`}>
                 <div className="flex items-start gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -401,11 +401,11 @@ function ReservationsTab({ tables }: { tables: ReservationTable[] }) {
             <p className="text-xs font-medium text-gray-500 mb-1">Staff Notes</p>
             {staffNoteEditing?.id === detail.id ? (
               <div className="space-y-1.5">
-                <textarea rows={2} className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none resize-none"
+                <textarea rows={2} className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none"
                   value={staffNoteEditing.note}
                   onChange={e => setStaffNoteEditing({ ...staffNoteEditing, note: e.target.value })} />
                 <div className="flex gap-2">
-                  <button onClick={saveStaffNote} className="px-3 py-1 bg-orange-500 text-white text-xs rounded-lg hover:bg-orange-600">Save</button>
+                  <button onClick={saveStaffNote} className="px-3 py-1 bg-emerald-500 text-white text-xs rounded-lg hover:bg-emerald-600">Save</button>
                   <button onClick={() => setStaffNoteEditing(null)} className="px-3 py-1 text-gray-500 text-xs hover:text-gray-700">Cancel</button>
                 </div>
               </div>
@@ -434,7 +434,7 @@ function ReservationsTab({ tables }: { tables: ReservationTable[] }) {
           {/* Assign table */}
           <div>
             <p className="text-xs font-medium text-gray-500 mb-1">Assign Table</p>
-            <select className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            <select className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               value={detail.table?.id ?? ""}
               onChange={async e => {
                 await fetch(`/api/admin/reservations/${detail.id}`, {
@@ -498,13 +498,13 @@ function TablesTab() {
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-500">{tables.length} table{tables.length !== 1 ? "s" : ""} configured</p>
         <button onClick={() => setModal({})}
-          className="flex items-center gap-1.5 bg-orange-500 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-orange-600">
+          className="flex items-center gap-1.5 bg-emerald-500 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600">
           <Plus className="w-4 h-4" /> Add Table
         </button>
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center h-32"><Loader2 className="w-6 h-6 animate-spin text-orange-500" /></div>
+        <div className="flex items-center justify-center h-32"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>
       ) : tables.length === 0 ? (
         <div className="text-center py-16 text-gray-400">
           <Table2 className="w-12 h-12 mx-auto mb-3 opacity-30" />
@@ -591,13 +591,13 @@ function SettingsTab() {
     setSaving(false);
   };
 
-  if (loading) return <div className="flex items-center justify-center h-32"><Loader2 className="w-6 h-6 animate-spin text-orange-500" /></div>;
+  if (loading) return <div className="flex items-center justify-center h-32"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>;
 
   return (
     <div className="max-w-2xl space-y-6">
       <div className="flex justify-end">
         <button onClick={save} disabled={saving}
-          className="flex items-center gap-2 bg-orange-500 text-white text-sm font-semibold px-5 py-2 rounded-xl hover:bg-orange-600 disabled:opacity-50">
+          className="flex items-center gap-2 bg-emerald-500 text-white text-sm font-semibold px-5 py-2 rounded-xl hover:bg-emerald-600 disabled:opacity-50">
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Save Settings
         </button>
       </div>
@@ -610,7 +610,7 @@ function SettingsTab() {
               type="checkbox"
               checked={form.autoConfirm}
               onChange={e => setForm(f => ({ ...f, autoConfirm: e.target.checked }))}
-              className="mt-1 w-4 h-4 accent-orange-500"
+              className="mt-1 w-4 h-4 accent-emerald-500"
             />
             <div className="flex-1">
               <div className="text-sm font-medium text-gray-800">Auto-confirm reservations</div>
@@ -625,7 +625,7 @@ function SettingsTab() {
               type="checkbox"
               checked={form.allowPreOrder}
               onChange={e => setForm(f => ({ ...f, allowPreOrder: e.target.checked }))}
-              className="mt-1 w-4 h-4 accent-orange-500"
+              className="mt-1 w-4 h-4 accent-emerald-500"
             />
             <div className="flex-1">
               <div className="text-sm font-medium text-gray-800">Allow guests to pre-order their food when booking</div>
@@ -651,7 +651,7 @@ function SettingsTab() {
           ] as [keyof ResSettings, string, string][]).map(([key, label, hint]) => (
             <div key={key}>
               <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-              <input type="number" min="0" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" min="0" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form[key] as number}
                 onChange={e => setForm(f => ({ ...f, [key]: parseInt(e.target.value) || 0 }))} />
               <p className="text-xs text-gray-400 mt-0.5">{hint}</p>
@@ -664,13 +664,13 @@ function SettingsTab() {
         <h3 className="font-semibold text-gray-900">Deposit</h3>
         <div className="flex items-center gap-4">
           <button onClick={() => setForm(f => ({ ...f, requireDeposit: !f.requireDeposit }))}
-            className={`px-4 py-2 rounded-lg border text-sm font-medium transition ${form.requireDeposit ? "border-orange-500 bg-orange-50 text-orange-700" : "border-gray-200 text-gray-600"}`}>
+            className={`px-4 py-2 rounded-lg border text-sm font-medium transition ${form.requireDeposit ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
             {form.requireDeposit ? "Deposit Required ✓" : "No Deposit Required"}
           </button>
           {form.requireDeposit && (
             <div className="relative w-40">
               <span className="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
-              <input type="number" min="0" step="0.01" className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" min="0" step="0.01" className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 placeholder="0.00" value={form.depositAmount}
                 onChange={e => setForm(f => ({ ...f, depositAmount: parseFloat(e.target.value) || 0 }))} />
             </div>
@@ -678,7 +678,7 @@ function SettingsTab() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Cancellation Policy</label>
-          <textarea rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none resize-none"
+          <textarea rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none"
             placeholder="e.g. Free cancellation up to 24 hours before your reservation…"
             value={form.cancellationPolicy}
             onChange={e => setForm(f => ({ ...f, cancellationPolicy: e.target.value }))} />
@@ -691,16 +691,16 @@ function SettingsTab() {
         {[0,1,2,3,4,5,6].map(d => (
           <div key={d} className="flex items-center gap-3">
             <button onClick={() => setHours(h => ({ ...h, [d]: { ...h[d], enabled: !h[d].enabled } }))}
-              className={`w-16 text-xs font-medium py-1 rounded-lg border transition ${hours[d]?.enabled ? "border-orange-500 bg-orange-50 text-orange-700" : "border-gray-200 text-gray-400"}`}>
+              className={`w-16 text-xs font-medium py-1 rounded-lg border transition ${hours[d]?.enabled ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-400"}`}>
               {DAY_NAMES[d]}
             </button>
             {hours[d]?.enabled ? (
               <>
-                <input type="time" className="border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                <input type="time" className="border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   value={hours[d]?.open ?? "10:00"}
                   onChange={e => setHours(h => ({ ...h, [d]: { ...h[d], open: e.target.value } }))} />
                 <span className="text-gray-400 text-sm">to</span>
-                <input type="time" className="border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                <input type="time" className="border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   value={hours[d]?.close ?? "22:00"}
                   onChange={e => setHours(h => ({ ...h, [d]: { ...h[d], close: e.target.value } }))} />
               </>
@@ -715,7 +715,7 @@ function SettingsTab() {
         <h3 className="font-semibold text-gray-900">Blackout Dates</h3>
         <p className="text-xs text-gray-400">Reservations cannot be made on these dates.</p>
         <div className="flex gap-2">
-          <input type="date" className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+          <input type="date" className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             value={newBlackout} onChange={e => setNewBlackout(e.target.value)} />
           <button onClick={() => { if (newBlackout && !blackouts.includes(newBlackout)) { setBlackouts(b => [...b, newBlackout].sort()); setNewBlackout(""); } }}
             className="flex items-center gap-1.5 bg-gray-800 text-white text-sm px-3 py-2 rounded-lg hover:bg-gray-700">
@@ -763,7 +763,7 @@ export function ReservationsClient() {
           ["settings",     "Settings",     Settings],
         ] as [Tab, string, any][]).map(([tab, label, Icon]) => (
           <button key={tab} onClick={() => setActiveTab(tab)}
-            className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition -mb-px ${activeTab === tab ? "border-orange-500 text-orange-600" : "border-transparent text-gray-500 hover:text-gray-700"}`}>
+            className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition -mb-px ${activeTab === tab ? "border-emerald-500 text-emerald-600" : "border-transparent text-gray-500 hover:text-gray-700"}`}>
             <Icon className="w-4 h-4" />{label}
           </button>
         ))}

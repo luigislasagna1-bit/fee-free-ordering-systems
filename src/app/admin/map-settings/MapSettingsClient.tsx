@@ -81,7 +81,7 @@ export function MapSettingsClient({ initial }: Props) {
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
                 placeholder="AIzaSy…"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 text-sm font-mono focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 text-sm font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               />
               <button
                 type="button"
@@ -101,7 +101,7 @@ export function MapSettingsClient({ initial }: Props) {
         <button
           onClick={save}
           disabled={saving}
-          className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2.5 rounded-xl transition disabled:opacity-50 inline-flex items-center gap-2"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-2.5 rounded-xl transition disabled:opacity-50 inline-flex items-center gap-2"
         >
           {saving ? tCommon("loading") : tCommon("saveChanges")}
         </button>
@@ -124,7 +124,7 @@ function ProviderCard({
       onClick={onClick}
       className={`w-full text-left p-4 rounded-2xl border-2 transition flex gap-4 ${
         active
-          ? "border-orange-500 bg-orange-50/40"
+          ? "border-emerald-500 bg-emerald-50/40"
           : "border-gray-200 hover:border-gray-300 bg-white"
       }`}
     >
@@ -133,7 +133,7 @@ function ProviderCard({
         <div className="flex items-center gap-2">
           <h3 className="font-bold text-gray-900">{title}</h3>
           {active && (
-            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-100 rounded-full px-2 py-0.5">
               <Check className="w-3 h-3" /> {activeLabel}
             </span>
           )}

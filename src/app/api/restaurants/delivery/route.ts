@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     data: {
       restaurantId,
       name,
-      color: color ?? "#f97316",
+      color: color ?? "#10b981",
       centerLat: restaurant.lat,
       centerLng: restaurant.lng,
       radiusKm: radiusKm ?? 5,

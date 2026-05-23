@@ -156,12 +156,12 @@ function ItemGroupPicker({ group, cats, onApply, onCancel }: {
             <div key={cat.id}>
               <div className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50">
                 <input type="checkbox" checked={catChecked} onChange={() => toggleCat(cat.id)}
-                  className="rounded border-gray-300 text-orange-500 focus:ring-orange-500 flex-shrink-0" />
+                  className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500 flex-shrink-0" />
                 <span className="flex-1 text-sm text-gray-800 cursor-pointer select-none" onClick={() => toggleCat(cat.id)}>
                   {cat.name}
                 </span>
                 {!catChecked && selectedInCat > 0 && (
-                  <span className="text-xs bg-orange-100 text-orange-600 px-1.5 rounded-full">{selectedInCat}</span>
+                  <span className="text-xs bg-emerald-100 text-emerald-600 px-1.5 rounded-full">{selectedInCat}</span>
                 )}
                 {cat.items.length > 0 && (
                   <button onClick={() => toggleExpand(cat.id)} className="p-0.5 text-gray-400 hover:text-gray-600 flex-shrink-0">
@@ -177,7 +177,7 @@ function ItemGroupPicker({ group, cats, onApply, onCancel }: {
                       <label key={item.id} className={`flex items-center gap-2 py-1 text-sm cursor-pointer ${catChecked ? "opacity-50" : ""}`}>
                         <input type="checkbox" checked={checked} disabled={catChecked}
                           onChange={() => !catChecked && toggleItem(item.id)}
-                          className="rounded border-gray-300 text-orange-500 focus:ring-orange-500" />
+                          className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500" />
                         <span className="flex-1 text-gray-700">{item.name}</span>
                         <span className="text-xs text-gray-400">${item.price.toFixed(2)}</span>
                       </label>
@@ -191,7 +191,7 @@ function ItemGroupPicker({ group, cats, onApply, onCancel }: {
       </div>
       <div className="flex gap-2 px-3 py-2 border-t bg-gray-50">
         <button onClick={() => onApply(draft)}
-          className="flex-1 bg-orange-500 text-white text-sm font-semibold py-1.5 rounded-lg hover:bg-orange-600 transition">
+          className="flex-1 bg-emerald-500 text-white text-sm font-semibold py-1.5 rounded-lg hover:bg-emerald-600 transition">
           Apply
         </button>
         <button onClick={onCancel}
@@ -230,7 +230,7 @@ function ItemGroupRow({ group, index, cats, onChange, onRemove, canRemove = true
       <div className="flex-1 relative" ref={ref}>
         <button
           onClick={() => setOpen(!open)}
-          className="w-full flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2 bg-white text-left hover:border-orange-300 transition"
+          className="w-full flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2 bg-white text-left hover:border-emerald-300 transition"
         >
           <div className="flex-1 min-w-0">
             <div className="text-xs font-semibold text-gray-400 mb-0.5">
@@ -279,7 +279,7 @@ function GroupsEditor({ groups, onChange, cats, defaultRole, addLabel = "Add Gro
       ))}
       <button
         onClick={() => onChange([...groups, newGroup(defaultRole)])}
-        className="mt-1 flex items-center gap-1.5 text-sm text-orange-600 hover:text-orange-700 font-medium"
+        className="mt-1 flex items-center gap-1.5 text-sm text-emerald-600 hover:text-emerald-700 font-medium"
       >
         <Plus className="w-3.5 h-3.5" /> {addLabel}
       </button>
@@ -298,7 +298,7 @@ function DiscountStrategySection({ rules, onChange }: {
       <label className="block text-sm font-medium text-gray-700">Discount Strategy</label>
       <select value={strategy}
         onChange={e => onChange({ discountStrategy: e.target.value as PromoRules["discountStrategy"] })}
-        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none">
+        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
         <option value="cheapest">Automatically set discounts (cheapest item free)</option>
         <option value="most_expensive">Automatically set discounts (most expensive item free)</option>
         <option value="fixed_percent">Fixed discount percentage</option>
@@ -308,7 +308,7 @@ function DiscountStrategySection({ rules, onChange }: {
           <span className="text-xs text-gray-500 flex-1">% off cheapest item</span>
           <input type="number" min="0" max="100" step="1" value={rules.cheapestDiscount ?? 100}
             onChange={e => onChange({ cheapestDiscount: parseFloat(e.target.value) || 100 })}
-            className="w-20 border border-gray-300 rounded px-2 py-1 text-sm text-right focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+            className="w-20 border border-gray-300 rounded px-2 py-1 text-sm text-right focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
           <span className="text-xs text-gray-400">%</span>
         </div>
       )}
@@ -317,7 +317,7 @@ function DiscountStrategySection({ rules, onChange }: {
           <span className="text-xs text-gray-500 flex-1">% off most expensive item</span>
           <input type="number" min="0" max="100" step="1" value={rules.mostExpensiveDiscount ?? 100}
             onChange={e => onChange({ mostExpensiveDiscount: parseFloat(e.target.value) || 100 })}
-            className="w-20 border border-gray-300 rounded px-2 py-1 text-sm text-right focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+            className="w-20 border border-gray-300 rounded px-2 py-1 text-sm text-right focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
           <span className="text-xs text-gray-400">%</span>
         </div>
       )}
@@ -326,7 +326,7 @@ function DiscountStrategySection({ rules, onChange }: {
           <span className="text-xs text-gray-500 flex-1">Discount %</span>
           <input type="number" min="0" max="100" step="1" value={rules.discountPercent ?? 0}
             onChange={e => onChange({ discountPercent: parseFloat(e.target.value) || 0 })}
-            className="w-20 border border-gray-300 rounded px-2 py-1 text-sm text-right focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+            className="w-20 border border-gray-300 rounded px-2 py-1 text-sm text-right focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
           <span className="text-xs text-gray-400">%</span>
         </div>
       )}
@@ -342,7 +342,7 @@ function PctInput({ label, value, onChange }: { label: string; value: number; on
       <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
       <div className="relative w-44">
         <input type="number" min="0" max="100" step="1"
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           value={value} onChange={e => onChange(parseFloat(e.target.value) || 0)} />
         <span className="absolute right-3 top-2 text-gray-400 text-sm">%</span>
       </div>
@@ -357,7 +357,7 @@ function AmtInput({ label, value, onChange }: { label: string; value: number; on
       <div className="relative w-48">
         <span className="absolute left-3 top-2 text-gray-400 text-sm">$</span>
         <input type="number" min="0" step="0.01"
-          className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+          className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           value={value} onChange={e => onChange(parseFloat(e.target.value) || 0)} />
       </div>
     </div>
@@ -445,7 +445,7 @@ function TypeConfig({ type, rules, onRules, cats }: {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
             <select value={rules.paymentMethod ?? "any"} onChange={e => onRules({ paymentMethod: e.target.value })}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none">
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
               <option value="any">Any payment method</option>
               <option value="card">Card (online)</option>
               <option value="cash">Cash on delivery</option>
@@ -549,15 +549,15 @@ function PromoTypeSelector({ onSelect }: { onSelect: (type: string) => void }) {
           const Icon = t.icon;
           return (
             <button key={t.value} onClick={() => onSelect(t.value)}
-              className="w-full flex items-center gap-3 p-3.5 border border-gray-200 rounded-xl hover:border-orange-400 hover:bg-orange-50 text-left transition group">
-              <div className="w-9 h-9 bg-orange-50 group-hover:bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Icon className="w-4 h-4 text-orange-500" />
+              className="w-full flex items-center gap-3 p-3.5 border border-gray-200 rounded-xl hover:border-emerald-400 hover:bg-emerald-50 text-left transition group">
+              <div className="w-9 h-9 bg-emerald-50 group-hover:bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Icon className="w-4 h-4 text-emerald-500" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold text-gray-800">{t.label}</div>
                 <div className="text-xs text-gray-400">{t.desc}</div>
               </div>
-              <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-orange-400 flex-shrink-0" />
+              <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-emerald-400 flex-shrink-0" />
             </button>
           );
         })}
@@ -684,7 +684,7 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
           ) : (
             <div className="p-6 space-y-5">
               {isNew && (
-                <button onClick={() => setStep("type")} className="text-sm text-orange-600 hover:text-orange-700 font-medium">
+                <button onClick={() => setStep("type")} className="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
                   ← Change type
                 </button>
               )}
@@ -692,7 +692,7 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Promotion Name *</label>
                 <input
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   value={form.name} onChange={e => setF("name", e.target.value)}
                   placeholder={typeInfo?.desc ?? "e.g. Weekend deal"}
                 />
@@ -702,16 +702,16 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
                 <label className="block text-sm font-medium text-gray-700 mb-2">How is this promotion activated?</label>
                 <div className="flex gap-2">
                   <button onClick={() => { setF("autoApply", true); setF("couponCode", ""); }}
-                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 text-sm transition ${form.autoApply ? "border-orange-500 bg-orange-50 text-orange-700 font-semibold" : "border-gray-200 text-gray-600"}`}>
+                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 text-sm transition ${form.autoApply ? "border-emerald-500 bg-emerald-50 text-emerald-700 font-semibold" : "border-gray-200 text-gray-600"}`}>
                     <Zap className="w-4 h-4" /> Auto-apply
                   </button>
                   <button onClick={() => setF("autoApply", false)}
-                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 text-sm transition ${!form.autoApply ? "border-orange-500 bg-orange-50 text-orange-700 font-semibold" : "border-gray-200 text-gray-600"}`}>
+                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 text-sm transition ${!form.autoApply ? "border-emerald-500 bg-emerald-50 text-emerald-700 font-semibold" : "border-gray-200 text-gray-600"}`}>
                     <Tag className="w-4 h-4" /> Coupon code
                   </button>
                 </div>
                 {!form.autoApply && (
-                  <input className="mt-2 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono uppercase focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  <input className="mt-2 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono uppercase focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.couponCode} onChange={e => setF("couponCode", e.target.value.toUpperCase())} placeholder="e.g. SAVE20" />
                 )}
               </div>
@@ -721,7 +721,7 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
                 <div className="relative w-48">
                   <span className="absolute left-3 top-2 text-gray-400 text-sm">$</span>
                   <input type="number" min="0" step="0.01"
-                    className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.minimumOrder} onChange={e => setF("minimumOrder", e.target.value)} />
                 </div>
               </div>
@@ -743,9 +743,9 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
                     const active = form.stackingRule === r.value;
                     return (
                       <button key={r.value} onClick={() => setF("stackingRule", r.value)}
-                        className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 text-center transition ${active ? "border-orange-500 bg-orange-50" : "border-gray-200 hover:border-orange-200"}`}>
-                        <Icon className={`w-4 h-4 ${active ? "text-orange-500" : "text-gray-400"}`} />
-                        <span className={`text-xs font-semibold ${active ? "text-orange-700" : "text-gray-600"}`}>{r.label}</span>
+                        className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 text-center transition ${active ? "border-emerald-500 bg-emerald-50" : "border-gray-200 hover:border-emerald-200"}`}>
+                        <Icon className={`w-4 h-4 ${active ? "text-emerald-500" : "text-gray-400"}`} />
+                        <span className={`text-xs font-semibold ${active ? "text-emerald-700" : "text-gray-600"}`}>{r.label}</span>
                         <span className="text-xs text-gray-400 leading-tight">{r.desc}</span>
                       </button>
                     );
@@ -756,7 +756,7 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Order Type</label>
-                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.orderType} onChange={e => setF("orderType", e.target.value)}>
                     <option value="both">Pickup & Delivery</option>
                     <option value="pickup">Pickup Only</option>
@@ -765,7 +765,7 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Customer Type</label>
-                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.customerType} onChange={e => setF("customerType", e.target.value)}>
                     <option value="any">Any Customer</option>
                     <option value="new">New Customers Only</option>
@@ -784,7 +784,7 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
                   <div className="mt-4 space-y-4 pl-2 border-l-2 border-gray-100">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Description (shown to customers)</label>
-                      <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                      <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                         value={form.description} onChange={e => setF("description", e.target.value)} placeholder="e.g. Valid before midnight" />
                     </div>
                     <div>
@@ -792,7 +792,7 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
                       <div className="flex gap-1.5 flex-wrap">
                         {DAY_NAMES.map((d, i) => (
                           <button key={i} onClick={() => toggleDay(i)}
-                            className={`w-11 h-9 rounded-lg border text-xs font-medium transition ${form.daysOfWeek.includes(i) ? "bg-orange-500 border-orange-500 text-white" : "border-gray-200 text-gray-500 hover:border-gray-400"}`}>
+                            className={`w-11 h-9 rounded-lg border text-xs font-medium transition ${form.daysOfWeek.includes(i) ? "bg-emerald-500 border-emerald-500 text-white" : "border-gray-200 text-gray-500 hover:border-gray-400"}`}>
                             {d}
                           </button>
                         ))}
@@ -802,20 +802,20 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Start Date/Time</label>
                         <input type="datetime-local"
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                           value={form.startsAt} onChange={e => setF("startsAt", e.target.value)} />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">End Date/Time</label>
                         <input type="datetime-local"
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                           value={form.endsAt} onChange={e => setF("endsAt", e.target.value)} />
                       </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Usage Limit (optional)</label>
                       <input type="number" min="1"
-                        className="w-40 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                        className="w-40 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                         value={form.usageLimit} onChange={e => setF("usageLimit", e.target.value)} placeholder="Unlimited" />
                     </div>
                   </div>
@@ -835,7 +835,7 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
             <div className="flex gap-3">
               <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800">Cancel</button>
               <button onClick={save} disabled={saving}
-                className="px-6 py-2 bg-orange-500 text-white text-sm font-semibold rounded-xl hover:bg-orange-600 disabled:opacity-50 transition shadow-sm">
+                className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-xl hover:bg-emerald-600 disabled:opacity-50 transition shadow-sm">
                 {saving ? "Saving..." : isNew ? "Create Promotion" : "Save Changes"}
               </button>
             </div>
@@ -905,12 +905,12 @@ function CouponModal({ coupon, onClose, onSaved }: { coupon?: any; onClose: () =
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Coupon Code *</label>
-              <input type="text" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none uppercase font-mono" placeholder="SAVE10"
+              <input type="text" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none uppercase font-mono" placeholder="SAVE10"
                 value={form.code} onChange={e => setForm(f => ({ ...f, code: e.target.value.toUpperCase() }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Discount Type</label>
-              <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.discountType} onChange={e => setForm(f => ({ ...f, discountType: e.target.value as "percentage" | "fixed" }))}>
                 <option value="percentage">Percentage (%)</option>
                 <option value="fixed">Fixed Amount ($)</option>
@@ -918,29 +918,29 @@ function CouponModal({ coupon, onClose, onSaved }: { coupon?: any; onClose: () =
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Value *</label>
-              <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 placeholder={form.discountType === "percentage" ? "10" : "5.00"} value={form.discountValue}
                 onChange={e => setForm(f => ({ ...f, discountValue: e.target.value }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Min. Order ($)</label>
-              <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 placeholder="0" value={form.minimumOrder} onChange={e => setForm(f => ({ ...f, minimumOrder: e.target.value }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Max Uses</label>
-              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 placeholder="Unlimited" value={form.maxUses} onChange={e => setForm(f => ({ ...f, maxUses: e.target.value }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Expires At</label>
-              <input type="date" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="date" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.expiresAt} onChange={e => setForm(f => ({ ...f, expiresAt: e.target.value }))} />
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-            <input type="text" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            <input type="text" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               placeholder="10% off your first order" value={form.description}
               onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
           </div>
@@ -948,7 +948,7 @@ function CouponModal({ coupon, onClose, onSaved }: { coupon?: any; onClose: () =
         <div className="flex items-center justify-end gap-3 px-5 py-4 border-t bg-gray-50 rounded-b-2xl">
           <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800">Cancel</button>
           <button onClick={save} disabled={saving}
-            className="px-6 py-2 bg-orange-500 text-white text-sm font-semibold rounded-xl hover:bg-orange-600 disabled:opacity-50 transition">
+            className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-xl hover:bg-emerald-600 disabled:opacity-50 transition">
             {saving ? "Saving..." : isNew ? "Create Coupon" : "Save Changes"}
           </button>
         </div>
@@ -1022,8 +1022,8 @@ function PromoCard({ promo, onEdit, onDelete, onToggle, onDuplicate }: {
   return (
     <div className={`bg-white rounded-xl border shadow-sm overflow-hidden ${promo.isActive ? "border-gray-100" : "border-gray-100 opacity-60"}`}>
       <div className="flex items-start gap-4 p-4">
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${promo.isActive ? "bg-orange-50" : "bg-gray-50"}`}>
-          <Icon className={`w-5 h-5 ${promo.isActive ? "text-orange-500" : "text-gray-400"}`} />
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${promo.isActive ? "bg-emerald-50" : "bg-gray-50"}`}>
+          <Icon className={`w-5 h-5 ${promo.isActive ? "text-emerald-500" : "text-gray-400"}`} />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -1180,7 +1180,7 @@ export function PromotionsClient({ promotions: initial, coupons: initialCoupons,
           <p className="text-sm text-gray-500 mt-0.5">Automatic deals, bundles, and coupon codes for your customers</p>
         </div>
         <button onClick={() => setModal({ kind: "choose" })}
-          className="flex items-center gap-2 bg-orange-500 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-orange-600 transition text-sm shadow-sm">
+          className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-emerald-600 transition text-sm shadow-sm">
           <Plus className="w-4 h-4" /> New Deal
         </button>
       </div>
@@ -1199,7 +1199,7 @@ export function PromotionsClient({ promotions: initial, coupons: initialCoupons,
       <div className="flex gap-2 mb-5 flex-wrap">
         {TABS.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${tab === t.id ? "bg-orange-500 text-white" : "bg-white border border-gray-200 text-gray-600 hover:border-orange-300"}`}>
+            className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${tab === t.id ? "bg-emerald-500 text-white" : "bg-white border border-gray-200 text-gray-600 hover:border-emerald-300"}`}>
             {t.label} <span className={`ml-1 text-xs ${tab === t.id ? "opacity-80" : "text-gray-400"}`}>({t.count})</span>
           </button>
         ))}
@@ -1211,7 +1211,7 @@ export function PromotionsClient({ promotions: initial, coupons: initialCoupons,
           <p className="text-gray-500 font-medium">No deals found</p>
           <p className="text-sm text-gray-400 mt-1">Create promotions or coupon codes to attract and retain customers.</p>
           <button onClick={() => setModal({ kind: "choose" })}
-            className="mt-4 bg-orange-500 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 transition">
+            className="mt-4 bg-emerald-500 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-emerald-600 transition">
             Create Deal
           </button>
         </div>
@@ -1246,9 +1246,9 @@ export function PromotionsClient({ promotions: initial, coupons: initialCoupons,
             </div>
             <div className="space-y-3">
               <button onClick={() => setModal({ kind: "promo" })}
-                className="w-full flex items-center gap-3 p-4 border-2 border-gray-100 rounded-xl hover:border-orange-400 hover:bg-orange-50 transition text-left">
-                <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Zap className="w-5 h-5 text-orange-600" />
+                className="w-full flex items-center gap-3 p-4 border-2 border-gray-100 rounded-xl hover:border-emerald-400 hover:bg-emerald-50 transition text-left">
+                <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Zap className="w-5 h-5 text-emerald-600" />
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900">Automatic Promotion</div>

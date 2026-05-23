@@ -158,7 +158,7 @@ export function BillingClient({
           <button
             onClick={() => startCheckout()}
             disabled={busy !== null || !billingConfigured}
-            className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition disabled:opacity-50"
+            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition disabled:opacity-50"
           >
             {busy === "checkout" ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
             {trialExpired || status === "cancelled" ? "Reactivate subscription" : "Add payment method"}
@@ -202,13 +202,13 @@ export function BillingClient({
               <div
                 key={plan.id}
                 className={`rounded-xl border p-5 bg-white transition ${
-                  current ? "border-orange-500 ring-2 ring-orange-200" : "border-gray-200 hover:border-gray-300"
+                  current ? "border-emerald-500 ring-2 ring-emerald-200" : "border-gray-200 hover:border-gray-300"
                 }`}
               >
                 <div className="flex items-start justify-between mb-2">
                   <h3 className="font-bold text-gray-900">{plan.name}</h3>
                   {current && (
-                    <span className="text-[10px] font-bold uppercase tracking-wide bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-bold uppercase tracking-wide bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
                       Current
                     </span>
                   )}

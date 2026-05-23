@@ -20,7 +20,7 @@ export default async function PartnersPage() {
       <PublicNav currentLocale={locale} />
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-orange-500 via-orange-500 to-red-600 text-white py-24 px-4">
+      <section className="bg-gradient-to-br from-emerald-500 via-emerald-500 to-red-600 text-white py-24 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-2 text-sm font-medium mb-6">
             <Sparkles className="w-4 h-4" /> Partner Program
@@ -28,14 +28,14 @@ export default async function PartnersPage() {
           <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
             Earn recurring revenue<br />by bringing restaurants on board.
           </h1>
-          <p className="text-xl text-orange-100 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-emerald-100 mb-10 max-w-2xl mx-auto">
             Every restaurant you sign up pays a monthly subscription. You earn up to
             10% of that — every month, for as long as they're active.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/partners/apply"
-              className="bg-white text-orange-600 font-bold px-8 py-4 rounded-xl text-lg hover:bg-orange-50 transition flex items-center justify-center gap-2"
+              className="bg-white text-emerald-600 font-bold px-8 py-4 rounded-xl text-lg hover:bg-emerald-50 transition flex items-center justify-center gap-2"
             >
               Apply now <ArrowRight className="w-5 h-5" />
             </Link>
@@ -78,7 +78,7 @@ export default async function PartnersPage() {
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-700 rounded-full px-4 py-1.5 text-xs uppercase tracking-wider font-bold mb-4">
+            <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 rounded-full px-4 py-1.5 text-xs uppercase tracking-wider font-bold mb-4">
               <Calculator className="w-3.5 h-3.5" /> Real numbers
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
@@ -162,32 +162,32 @@ export default async function PartnersPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             <Feature
-              icon={<Zap className="w-5 h-5 text-orange-500" />}
+              icon={<Zap className="w-5 h-5 text-emerald-500" />}
               title="Live partner dashboard"
               body="See active restaurants, MRR, commission balance, and your tier in real time."
             />
             <Feature
-              icon={<Globe className="w-5 h-5 text-orange-500" />}
+              icon={<Globe className="w-5 h-5 text-emerald-500" />}
               title="Your own referral link"
               body="Personal signup URL automatically attributes restaurants to you when they sign up."
             />
             <Feature
-              icon={<Users className="w-5 h-5 text-orange-500" />}
+              icon={<Users className="w-5 h-5 text-emerald-500" />}
               title="Direct restaurant invites"
               body="Skip the link — invite restaurants by email. They get an account, you get the attribution."
             />
             <Feature
-              icon={<ShieldCheck className="w-5 h-5 text-orange-500" />}
+              icon={<ShieldCheck className="w-5 h-5 text-emerald-500" />}
               title="Log in as your restaurants"
               body="Help your restaurants set up, troubleshoot, or just check on them — without sharing passwords."
             />
             <Feature
-              icon={<DollarSign className="w-5 h-5 text-orange-500" />}
+              icon={<DollarSign className="w-5 h-5 text-emerald-500" />}
               title="Transparent commissions"
               body="Every commission row shows which restaurant, which invoice, what rate, and what amount. No black boxes."
             />
             <Feature
-              icon={<TrendingUp className="w-5 h-5 text-orange-500" />}
+              icon={<TrendingUp className="w-5 h-5 text-emerald-500" />}
               title="Retroactive 5% on restaurant #6"
               body="Once you hit 6 active paying restaurants, every restaurant under you starts earning 5%, not just the new one."
             />
@@ -233,14 +233,14 @@ export default async function PartnersPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-4 bg-gradient-to-r from-orange-500 to-red-500 text-white text-center">
+      <section className="py-20 px-4 bg-gradient-to-r from-emerald-500 to-red-500 text-white text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to start earning?</h2>
-        <p className="text-orange-100 text-lg mb-8 max-w-xl mx-auto">
+        <p className="text-emerald-100 text-lg mb-8 max-w-xl mx-auto">
           Application takes 2 minutes. Review takes 1–2 business days. After that, you're live.
         </p>
         <Link
           href="/partners/apply"
-          className="bg-white text-orange-600 font-bold px-10 py-4 rounded-xl text-lg hover:bg-orange-50 transition inline-flex items-center gap-2"
+          className="bg-white text-emerald-600 font-bold px-10 py-4 rounded-xl text-lg hover:bg-emerald-50 transition inline-flex items-center gap-2"
         >
           Apply now <ArrowRight className="w-5 h-5" />
         </Link>
@@ -266,18 +266,18 @@ function TierCard({
 }) {
   const tones: Record<string, string> = {
     gray: "bg-white border-gray-200",
-    orange: "bg-orange-50 border-orange-300",
+    orange: "bg-emerald-50 border-emerald-300",
     green: "bg-green-50 border-green-300",
   };
   const accent: Record<string, string> = {
     gray: "text-gray-700",
-    orange: "text-orange-700",
+    orange: "text-emerald-700",
     green: "text-green-700",
   };
   return (
     <div
       className={`rounded-2xl border p-6 ${tones[tone]} ${
-        highlight ? "ring-2 ring-orange-400 ring-offset-2 shadow-md" : ""
+        highlight ? "ring-2 ring-emerald-400 ring-offset-2 shadow-md" : ""
       }`}
     >
       <div className={`text-5xl font-bold mb-2 ${accent[tone]}`}>{rate}</div>
@@ -306,20 +306,20 @@ function EarningsCard({
     <div
       className={`rounded-2xl border p-6 ${
         highlight
-          ? "bg-gradient-to-br from-orange-500 to-red-500 text-white border-transparent shadow-lg"
+          ? "bg-gradient-to-br from-emerald-500 to-red-500 text-white border-transparent shadow-lg"
           : "bg-white border-gray-200"
       }`}
     >
-      <div className={`text-xs uppercase tracking-wider font-bold mb-2 ${highlight ? "text-orange-100" : "text-gray-500"}`}>
+      <div className={`text-xs uppercase tracking-wider font-bold mb-2 ${highlight ? "text-emerald-100" : "text-gray-500"}`}>
         {count} restaurants
       </div>
       <div className={`text-3xl font-bold mb-1 ${highlight ? "text-white" : "text-gray-900"}`}>
-        ${monthly.toLocaleString()}<span className={`text-base font-normal ${highlight ? "text-orange-100" : "text-gray-500"}`}>/mo</span>
+        ${monthly.toLocaleString()}<span className={`text-base font-normal ${highlight ? "text-emerald-100" : "text-gray-500"}`}>/mo</span>
       </div>
-      <div className={`text-xs mb-4 ${highlight ? "text-orange-100" : "text-gray-500"}`}>
+      <div className={`text-xs mb-4 ${highlight ? "text-emerald-100" : "text-gray-500"}`}>
         ${annual.toLocaleString()}/year at {rate}% on ${mrr.toLocaleString()} MRR
       </div>
-      <div className={`flex items-center gap-1.5 text-xs ${highlight ? "text-orange-100" : "text-gray-500"}`}>
+      <div className={`flex items-center gap-1.5 text-xs ${highlight ? "text-emerald-100" : "text-gray-500"}`}>
         <CheckCircle2 className="w-3.5 h-3.5" /> Recurring monthly
       </div>
     </div>
@@ -339,10 +339,10 @@ function Step({
 }) {
   return (
     <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm relative">
-      <div className="absolute -top-3 -left-3 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow">
+      <div className="absolute -top-3 -left-3 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow">
         {n}
       </div>
-      <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center mb-3 mt-1">
+      <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-3 mt-1">
         {icon}
       </div>
       <h3 className="font-bold text-gray-900 mb-1">{title}</h3>
@@ -362,7 +362,7 @@ function Feature({
 }) {
   return (
     <div className="flex gap-3">
-      <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+      <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
         {icon}
       </div>
       <div>

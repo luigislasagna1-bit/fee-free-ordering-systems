@@ -163,7 +163,7 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub }: Pro
   return (
     <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-2xl font-bold text-gray-900 mb-1 flex items-center gap-2">
-        <Globe className="w-6 h-6 text-orange-500" /> {t("title")}
+        <Globe className="w-6 h-6 text-emerald-500" /> {t("title")}
       </h1>
       <p className="text-sm text-gray-500 mb-6">{t("subtitle")}</p>
 
@@ -206,7 +206,7 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub }: Pro
         <p className="text-xs text-gray-500 mb-4">{t("freeSubdomainBody")}</p>
 
         <div className="flex flex-col sm:flex-row gap-2">
-          <div className="flex flex-1 min-w-0 items-stretch border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-orange-500 overflow-hidden">
+          <div className="flex flex-1 min-w-0 items-stretch border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-emerald-500 overflow-hidden">
             <span className="px-3 py-2 bg-gray-50 text-gray-500 text-sm select-none">https://</span>
             <input
               value={subdomain}
@@ -220,7 +220,7 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub }: Pro
           <button
             onClick={saveSubdomain}
             disabled={savingSub || subAvail?.ok !== true || subdomain === initial.subdomain}
-            className="bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition disabled:opacity-50 text-sm flex items-center gap-2 justify-center min-w-[100px]"
+            className="bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition disabled:opacity-50 text-sm flex items-center gap-2 justify-center min-w-[100px]"
           >
             {savingSub ? <Loader2 className="w-4 h-4 animate-spin" /> : t("save")}
           </button>
@@ -247,12 +247,12 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub }: Pro
               value={customDomain}
               onChange={e => setCustomDomain(e.target.value.toLowerCase().trim())}
               placeholder="yourrestaurant.com"
-              className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
             <button
               onClick={connectCustom}
               disabled={connecting || !customDomain}
-              className="bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition disabled:opacity-50 text-sm flex items-center gap-2 justify-center min-w-[100px]"
+              className="bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition disabled:opacity-50 text-sm flex items-center gap-2 justify-center min-w-[100px]"
             >
               {connecting ? <Loader2 className="w-4 h-4 animate-spin" /> : t("connect")}
             </button>
@@ -269,7 +269,7 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub }: Pro
                   <button
                     onClick={reverify}
                     disabled={verifying}
-                    className="text-sm font-semibold text-orange-600 hover:text-orange-700 px-3 py-1.5 rounded-lg border border-orange-200 hover:bg-orange-50 disabled:opacity-50"
+                    className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 px-3 py-1.5 rounded-lg border border-emerald-200 hover:bg-emerald-50 disabled:opacity-50"
                   >
                     {verifying ? <Loader2 className="w-4 h-4 animate-spin inline" /> : t("recheck")}
                   </button>

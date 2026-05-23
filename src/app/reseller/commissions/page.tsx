@@ -112,11 +112,11 @@ function Stat({
   return (
     <div
       className={`rounded-xl p-4 border ${
-        highlight ? "bg-orange-50 border-orange-200" : "bg-white border-gray-100"
+        highlight ? "bg-emerald-50 border-emerald-200" : "bg-white border-gray-100"
       } shadow-sm`}
     >
       <div className="text-[10px] uppercase tracking-wide text-gray-500 mb-1">{label}</div>
-      <div className={`text-xl font-bold ${highlight ? "text-orange-700" : "text-gray-900"}`}>
+      <div className={`text-xl font-bold ${highlight ? "text-emerald-700" : "text-gray-900"}`}>
         {formatCurrency(cents / 100)}
       </div>
       <div className="text-[11px] text-gray-500 mt-1">{note}</div>

@@ -70,7 +70,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
     const cls: Record<string, string> = {
       pending: "bg-yellow-500 text-white",
       accepted: "bg-blue-500 text-white",
-      preparing: "bg-orange-500 text-white",
+      preparing: "bg-emerald-500 text-white",
       ready: "bg-green-500 text-white",
       completed: "bg-gray-500 text-white",
       rejected: "bg-red-500 text-white",
@@ -124,7 +124,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           <Section title={order.type === "delivery" ? tc("deliveryAddress") : tk("orderType")} t={t}>
             <div className="space-y-1">
               <div className={`flex items-center gap-2 text-sm font-semibold ${t.text}`}>
-                <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${order.type === "delivery" ? "bg-blue-500 text-white" : "bg-orange-500 text-white"}`}>
+                <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${order.type === "delivery" ? "bg-blue-500 text-white" : "bg-emerald-500 text-white"}`}>
                   {(() => { try { return tReceipt(order.type); } catch { return order.type.toUpperCase(); } })()}
                 </span>
               </div>
@@ -249,7 +249,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
             <button
               onClick={() => act(() => onUpdate(order.id, "preparing"))}
               disabled={busy}
-              className="col-span-2 flex items-center justify-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
+              className="col-span-2 flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
             >
               <ChefHat className="w-4 h-4" /> {tk("preparing")}
             </button>
@@ -364,7 +364,7 @@ function PrintBtn({ label, icon, onClick, loading, t }: { label: string; icon: R
     <button
       onClick={onClick}
       disabled={loading}
-      className={`flex flex-col items-center gap-1 py-2 rounded-xl text-xs ${t.btn} ${t.muted} hover:text-orange-500 transition disabled:opacity-50`}
+      className={`flex flex-col items-center gap-1 py-2 rounded-xl text-xs ${t.btn} ${t.muted} hover:text-emerald-500 transition disabled:opacity-50`}
     >
       {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : icon}
       {label}

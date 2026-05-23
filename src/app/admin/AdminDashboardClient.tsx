@@ -26,7 +26,7 @@ interface Props {
 const STATUS_COLORS: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-700",
   accepted: "bg-blue-100 text-blue-700",
-  preparing: "bg-orange-100 text-orange-700",
+  preparing: "bg-emerald-100 text-emerald-700",
   ready: "bg-green-100 text-green-700",
   completed: "bg-gray-100 text-gray-600",
   rejected: "bg-red-100 text-red-700",
@@ -50,7 +50,7 @@ export function AdminDashboardClient({
           <Link
             href={`/order/${restaurantSlug}`}
             target="_blank"
-            className="bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition text-sm"
+            className="bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition text-sm"
           >
             {tSidebar("viewOrderingPage")} →
           </Link>
@@ -79,14 +79,14 @@ export function AdminDashboardClient({
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="flex items-center justify-between p-5 border-b border-gray-100">
           <h2 className="font-semibold text-gray-900">{t("recentOrders")}</h2>
-          <Link href="/admin/orders" className="text-sm text-orange-500 hover:underline">{t("viewAllOrders")}</Link>
+          <Link href="/admin/orders" className="text-sm text-emerald-500 hover:underline">{t("viewAllOrders")}</Link>
         </div>
         {recentOrders.length === 0 ? (
           <div className="p-10 text-center text-gray-400">
             <ShoppingBag className="w-10 h-10 mx-auto mb-3 opacity-40" />
             <p>{t("noOrdersYet")}</p>
             {restaurantSlug && (
-              <Link href={`/order/${restaurantSlug}`} target="_blank" className="text-orange-500 mt-2 inline-block text-sm hover:underline">
+              <Link href={`/order/${restaurantSlug}`} target="_blank" className="text-emerald-500 mt-2 inline-block text-sm hover:underline">
                 /order/{restaurantSlug}
               </Link>
             )}
@@ -121,7 +121,7 @@ export function AdminDashboardClient({
           { href: "/admin/delivery", label: tSidebar("deliveryZones") },
           { href: "/admin/profile", label: tSidebar("profile") },
         ].map((item) => (
-          <Link key={item.href} href={item.href} className="bg-white border border-gray-100 rounded-xl p-4 hover:border-orange-300 hover:shadow-sm transition">
+          <Link key={item.href} href={item.href} className="bg-white border border-gray-100 rounded-xl p-4 hover:border-emerald-300 hover:shadow-sm transition">
             <div className="font-semibold text-gray-900 text-sm mb-1">{item.label}</div>
           </Link>
         ))}

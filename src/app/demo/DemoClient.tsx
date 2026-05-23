@@ -13,22 +13,22 @@ export function DemoClient({ locale }: { locale: string }) {
     <div className="min-h-screen flex flex-col">
       <PublicNav currentLocale={locale} />
       <main className="flex-1">
-        <section className="py-20 px-4 text-center bg-gradient-to-br from-orange-50 to-red-50">
+        <section className="py-20 px-4 text-center bg-gradient-to-br from-emerald-50 to-red-50">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">{t("title")}</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">{t("subtitle")}</p>
         </section>
 
         <section className="py-16 px-4">
           <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-8">
-            <div className="bg-white border-2 border-orange-100 rounded-2xl p-8 text-center hover:border-orange-400 hover:shadow-lg transition group">
-              <div className="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-5 mx-auto">
-                <ShoppingCart className="w-8 h-8 text-orange-500" />
+            <div className="bg-white border-2 border-emerald-100 rounded-2xl p-8 text-center hover:border-emerald-400 hover:shadow-lg transition group">
+              <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mb-5 mx-auto">
+                <ShoppingCart className="w-8 h-8 text-emerald-500" />
               </div>
               <h2 className="text-xl font-bold text-gray-900 mb-3">{t("cards.ordering")}</h2>
               <p className="text-gray-600 mb-6">{t("cards.orderingDesc")}</p>
               <Link
                 href="/order/demo-pizza-palace"
-                className="inline-flex items-center gap-2 bg-orange-500 text-white font-semibold px-6 py-3 rounded-xl hover:bg-orange-600 transition"
+                className="inline-flex items-center gap-2 bg-emerald-500 text-white font-semibold px-6 py-3 rounded-xl hover:bg-emerald-600 transition"
               >
                 {t("tryIt")} <ArrowRight className="w-4 h-4" />
               </Link>
@@ -65,7 +65,7 @@ export function DemoClient({ locale }: { locale: string }) {
         </section>
 
         <section className="py-16 px-4 bg-gray-50 text-center">
-          <Link href="/signup" className="bg-orange-500 text-white font-bold px-8 py-4 rounded-xl text-lg hover:bg-orange-600 transition inline-block">
+          <Link href="/signup" className="bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl text-lg hover:bg-emerald-600 transition inline-block">
             {tNav("startTrial")}
           </Link>
         </section>

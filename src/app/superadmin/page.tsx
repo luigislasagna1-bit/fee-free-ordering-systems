@@ -116,7 +116,7 @@ export default async function SuperadminDashboard() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold text-gray-900">Add-On Catalog Performance</h2>
-            <Link href="/superadmin/add-ons" className="text-xs text-orange-500 hover:underline">Manage →</Link>
+            <Link href="/superadmin/add-ons" className="text-xs text-emerald-500 hover:underline">Manage →</Link>
           </div>
           {addOns.length === 0 ? (
             <p className="text-sm text-gray-500">No add-ons in catalog yet.</p>
@@ -162,7 +162,7 @@ export default async function SuperadminDashboard() {
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="flex items-center justify-between p-5 border-b border-gray-100">
           <h2 className="font-semibold text-gray-900">Recent Restaurants</h2>
-          <Link href="/superadmin/restaurants" className="text-sm text-orange-500 hover:underline">View all</Link>
+          <Link href="/superadmin/restaurants" className="text-sm text-emerald-500 hover:underline">View all</Link>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">

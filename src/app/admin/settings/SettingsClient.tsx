@@ -35,13 +35,13 @@ export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allP
         {/* Customer Payment Processing — link to Payments page */}
         <Section title={tSidebar("payments")}>
           <div className="flex items-start gap-5">
-            <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center flex-shrink-0">
-              <CreditCard className="w-6 h-6 text-orange-500" />
+            <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center flex-shrink-0">
+              <CreditCard className="w-6 h-6 text-emerald-500" />
             </div>
             <div className="flex-1 min-w-0">
               <a
                 href="/admin/payments/providers"
-                className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition"
+                className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-4 py-2.5 rounded-lg text-sm transition"
               >
                 <CreditCard className="w-4 h-4" /> {tSidebar("payments")} <ExternalLink className="w-3.5 h-3.5" />
               </a>
@@ -52,13 +52,13 @@ export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allP
         {/* Subscription / Plan */}
         <Section title={t("account")}>
           <div className="flex items-start gap-5 mb-6">
-            <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Zap className="w-6 h-6 text-orange-500" />
+            <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Zap className="w-6 h-6 text-emerald-500" />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="font-semibold text-gray-900">Current Plan: {plan?.name || "Starter"}</h3>
-                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-orange-100 text-orange-700">
+                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
                   ${plan?.price?.toFixed(2) || "49.99"}/mo
                 </span>
               </div>
@@ -90,7 +90,7 @@ export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allP
                   <div
                     key={p.id}
                     className={`rounded-xl border-2 p-4 transition ${
-                      isCurrent ? "border-orange-400 bg-orange-50" : "border-gray-200 hover:border-orange-300"
+                      isCurrent ? "border-emerald-400 bg-emerald-50" : "border-gray-200 hover:border-emerald-300"
                     }`}
                   >
                     <div className="font-semibold text-gray-900 text-sm">{p.name}</div>
@@ -99,11 +99,11 @@ export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allP
                     </div>
                     <div className="text-xs text-gray-500 mt-1 mb-3">{p.description}</div>
                     {isCurrent ? (
-                      <div className="text-xs font-semibold text-orange-600 text-center py-1">Current Plan</div>
+                      <div className="text-xs font-semibold text-emerald-600 text-center py-1">Current Plan</div>
                     ) : (
                       <button
                         onClick={() => handleUpgrade(p.name)}
-                        className="w-full text-xs font-semibold text-orange-600 border border-orange-300 rounded-lg py-1.5 hover:bg-orange-50 transition flex items-center justify-center gap-1"
+                        className="w-full text-xs font-semibold text-emerald-600 border border-emerald-300 rounded-lg py-1.5 hover:bg-emerald-50 transition flex items-center justify-center gap-1"
                       >
                         Upgrade <ArrowUpRight className="w-3 h-3" />
                       </button>
@@ -211,7 +211,7 @@ function NotificationRow({ label, desc, defaultOn }: { label: string; desc: stri
       </div>
       <button
         onClick={() => setOn(!on)}
-        className={`w-11 h-6 rounded-full transition-colors relative flex-shrink-0 ${on ? "bg-orange-500" : "bg-gray-300"}`}
+        className={`w-11 h-6 rounded-full transition-colors relative flex-shrink-0 ${on ? "bg-emerald-500" : "bg-gray-300"}`}
       >
         <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all ${on ? "left-5" : "left-0.5"}`} />
       </button>

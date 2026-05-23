@@ -35,7 +35,7 @@ function StyleEditor({ section, onChange }: { section: Section; onChange: (s: Se
   const AlignBtn = ({ a }: { a: "left" | "center" | "right" }) => (
     <button
       onClick={() => set("align", a)}
-      className={tw("px-2.5 py-1 text-xs rounded border transition", s.align === a ? "bg-orange-500 text-white border-orange-500" : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50")}
+      className={tw("px-2.5 py-1 text-xs rounded border transition", s.align === a ? "bg-emerald-500 text-white border-emerald-500" : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50")}
     >
       {a === "left" ? "←" : a === "center" ? "↔" : "→"}
     </button>
@@ -49,7 +49,7 @@ function StyleEditor({ section, onChange }: { section: Section; onChange: (s: Se
         <div className="flex items-center gap-1.5 flex-wrap">
           {[{ l: "XS", v: 9 }, { l: "S", v: 11 }, { l: "M", v: 13 }, { l: "L", v: 16 }, { l: "XL", v: 20 }, { l: "2XL", v: 26 }, { l: "3XL", v: 32 }].map(({ l, v }) => (
             <button key={l} onClick={() => set("fontSize", v)}
-              className={tw("px-2 py-1 text-xs rounded border transition", s.fontSize === v ? "bg-orange-500 text-white border-orange-500" : "bg-white border-gray-300 hover:bg-gray-50")}>
+              className={tw("px-2 py-1 text-xs rounded border transition", s.fontSize === v ? "bg-emerald-500 text-white border-emerald-500" : "bg-white border-gray-300 hover:bg-gray-50")}>
               {l}
             </button>
           ))}
@@ -67,7 +67,7 @@ function StyleEditor({ section, onChange }: { section: Section; onChange: (s: Se
         <div>
           <div className="text-xs font-semibold text-gray-500 uppercase mb-1.5">Style</div>
           <button onClick={() => set("bold", !s.bold)}
-            className={tw("w-9 h-7 rounded border font-bold transition text-sm", s.bold ? "bg-orange-500 text-white border-orange-500" : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50")}>
+            className={tw("w-9 h-7 rounded border font-bold transition text-sm", s.bold ? "bg-emerald-500 text-white border-emerald-500" : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50")}>
             B
           </button>
         </div>
@@ -90,7 +90,7 @@ function StyleEditor({ section, onChange }: { section: Section; onChange: (s: Se
           <div className="text-xs text-gray-400">For order numbers, badges</div>
         </div>
         <button onClick={() => set("highlight", !s.highlight)}
-          className={tw("relative w-11 h-6 rounded-full transition-colors flex-shrink-0", s.highlight ? "bg-orange-500" : "bg-gray-300")}>
+          className={tw("relative w-11 h-6 rounded-full transition-colors flex-shrink-0", s.highlight ? "bg-emerald-500" : "bg-gray-300")}>
           <div className={tw("absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all", s.highlight ? "left-5" : "left-0.5")} />
         </button>
       </div>
@@ -100,11 +100,11 @@ function StyleEditor({ section, onChange }: { section: Section; onChange: (s: Se
         <div className="text-xs font-semibold text-gray-500 uppercase mb-1.5">Divider Lines</div>
         <div className="flex gap-4">
           <label className="flex items-center gap-1.5 text-xs cursor-pointer">
-            <input type="checkbox" checked={s.dividerAbove} onChange={(e) => set("dividerAbove", e.target.checked)} className="accent-orange-500" />
+            <input type="checkbox" checked={s.dividerAbove} onChange={(e) => set("dividerAbove", e.target.checked)} className="accent-emerald-500" />
             Above section
           </label>
           <label className="flex items-center gap-1.5 text-xs cursor-pointer">
-            <input type="checkbox" checked={s.dividerBelow} onChange={(e) => set("dividerBelow", e.target.checked)} className="accent-orange-500" />
+            <input type="checkbox" checked={s.dividerBelow} onChange={(e) => set("dividerBelow", e.target.checked)} className="accent-emerald-500" />
             Below section
           </label>
         </div>
@@ -192,7 +192,7 @@ function SortableSectionRow({
 
         {/* Enable toggle */}
         <button onClick={onToggleEnabled}
-          className={tw("flex-shrink-0 transition", section.enabled ? "text-orange-500" : "text-gray-300")}>
+          className={tw("flex-shrink-0 transition", section.enabled ? "text-emerald-500" : "text-gray-300")}>
           {section.enabled ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
         </button>
 
@@ -221,10 +221,10 @@ function MessagePanel({ config, onChange }: { config: CustomerConfig; onChange: 
       <div className="space-y-2">
         <input type="text" placeholder="Thank you message" value={config.thankYouMessage}
           onChange={(e) => onChange({ ...config, thankYouMessage: e.target.value })}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-orange-500" />
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500" />
         <input type="text" placeholder="Footer text" value={config.footerText}
           onChange={(e) => onChange({ ...config, footerText: e.target.value })}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-orange-500" />
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500" />
       </div>
     </div>
   );
@@ -393,7 +393,7 @@ export function ReceiptsClient({
               className={tw(
                 "flex-1 flex items-center justify-center gap-1.5 py-3 text-sm font-semibold transition border-b-2",
                 activeType === t
-                  ? "border-orange-500 text-orange-600 bg-orange-50"
+                  ? "border-emerald-500 text-emerald-600 bg-emerald-50"
                   : "border-transparent text-gray-500 hover:text-gray-700"
               )}
             >
@@ -491,7 +491,7 @@ export function ReceiptsClient({
           </button>
           <PrintNodeTestButton />
           <button onClick={() => save()} disabled={saving}
-            className="flex items-center gap-1.5 flex-1 justify-center bg-orange-500 text-white font-semibold px-3 py-2 rounded-lg hover:bg-orange-600 transition text-sm disabled:opacity-60">
+            className="flex items-center gap-1.5 flex-1 justify-center bg-emerald-500 text-white font-semibold px-3 py-2 rounded-lg hover:bg-emerald-600 transition text-sm disabled:opacity-60">
             <Save className="w-4 h-4" /> {saving ? "Saving…" : "Save"}
           </button>
         </div>

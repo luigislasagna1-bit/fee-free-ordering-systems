@@ -144,7 +144,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       <p>${t("email.orderConfirmed.typeLabel")}: ${localizeOrderType(params.orderType, t)} · ${t("email.orderConfirmed.estimatedLabel")}: ~${params.estimatedTime} ${t("email.orderConfirmed.minutesLabel")}</p>
       ${fmtItems(params.items)}
       <p style="font-size:16px; margin-top:12px;"><strong>${t("email.orderConfirmed.totalLabel")}: $${params.total.toFixed(2)}</strong></p>
-      <p><a href="${params.trackingUrl}" style="display:inline-block;background:#f97316;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.common.trackOrder")}</a></p>
+      <p><a href="${params.trackingUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.common.trackOrder")}</a></p>
     `),
   });
 }
@@ -316,7 +316,7 @@ export async function sendPasswordResetEmail(params: {
     html: wrap(t("email.passwordReset.title"), `
       <p>${t("email.common.thanks")} ${params.name || ""},</p>
       <p>${t("email.passwordReset.body")}</p>
-      <p><a href="${params.resetUrl}" style="display:inline-block;background:#f97316;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.passwordReset.button")}</a></p>
+      <p><a href="${params.resetUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.passwordReset.button")}</a></p>
       <p style="font-size:12px;color:#888;">${t("email.common.ifYouDidntRequest")}</p>
     `),
   });
@@ -351,7 +351,7 @@ export async function sendSignupConfirmationEmail(params: {
   const t = await getDict(params.locale);
   const verifyBlock = params.verifyUrl
     ? `<p>${t("email.signup.verifyBody")}</p>
-       <p><a href="${params.verifyUrl}" style="display:inline-block;background:#f97316;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.signup.verifyButton")}</a></p>
+       <p><a href="${params.verifyUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.signup.verifyButton")}</a></p>
        <p style="margin-top:24px;font-size:14px;color:#6b7280">${t("email.signup.orLogin")}</p>`
     : "";
   return send({
@@ -361,7 +361,7 @@ export async function sendSignupConfirmationEmail(params: {
       <p>${t("email.common.thanks")} ${params.name || params.restaurantName},</p>
       <p>${t("email.signup.body", { restaurant: params.restaurantName })}</p>
       ${verifyBlock}
-      <p><a href="${params.loginUrl}" style="display:inline-block;background:${params.verifyUrl ? "#6b7280" : "#f97316"};color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.signup.button")}</a></p>
+      <p><a href="${params.loginUrl}" style="display:inline-block;background:${params.verifyUrl ? "#6b7280" : "#10b981"};color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.signup.button")}</a></p>
     `),
   });
 }
@@ -382,7 +382,7 @@ export async function sendVerifyEmail(params: {
     html: wrap(t("email.verify.title"), `
       <p>${t("email.common.thanks")} ${params.name || ""},</p>
       <p>${t("email.verify.body")}</p>
-      <p><a href="${params.verifyUrl}" style="display:inline-block;background:#f97316;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.verify.button")}</a></p>
+      <p><a href="${params.verifyUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.verify.button")}</a></p>
       <p style="margin-top:24px;font-size:13px;color:#6b7280">${t("email.verify.ifYouDidntRequest")}</p>
     `),
   });
@@ -407,7 +407,7 @@ export async function sendLocationInviteEmail(params: {
       <p>Hi there,</p>
       <p>The owner of <strong>${params.brandName}</strong> has invited you to set up ${friendlyName} on Fee Free Ordering.</p>
       <p>This new location will operate independently — its own menu, orders, and payments — but will be linked to <strong>${params.brandName}</strong> as part of the chain.</p>
-      <p style="margin-top:20px"><a href="${params.inviteUrl}" style="display:inline-block;background:#f97316;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600">Set up the new location</a></p>
+      <p style="margin-top:20px"><a href="${params.inviteUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600">Set up the new location</a></p>
       <p style="font-size:12px;color:#6b7280;margin-top:24px">If the button doesn't work, paste this URL into your browser:<br/>${params.inviteUrl}</p>
       <p style="font-size:12px;color:#6b7280">This link expires in 30 days and can only be used once.</p>
     `),
@@ -432,7 +432,7 @@ export async function sendBillingNotificationEmail(params: {
   ctaUrl?: string;
 }) {
   const cta = params.ctaUrl && params.ctaLabel
-    ? `<p style="margin-top:16px"><a href="${params.ctaUrl}" style="display:inline-block;background:#f97316;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${params.ctaLabel}</a></p>`
+    ? `<p style="margin-top:16px"><a href="${params.ctaUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${params.ctaLabel}</a></p>`
     : "";
   return send({
     to: params.to,
@@ -522,7 +522,7 @@ function digestHtml(s: DigestStats, kind: "daily" | "monthly", t: Translator): s
     <p>${t("email.digest.hi")}</p>
     <p>${t("email.digest.intro", { restaurant: s.restaurantName })}</p>
 
-    <h3 style="font-size:14px; color:#f97316; margin:20px 0 8px;">${t("email.digest.salesPerformance")}
+    <h3 style="font-size:14px; color:#10b981; margin:20px 0 8px;">${t("email.digest.salesPerformance")}
       <span style="color:#888; font-weight:normal; font-size:12px;">(${s.comparisonLabel})</span>
     </h3>
     <table style="width:100%; border-collapse:collapse;">
@@ -544,7 +544,7 @@ function digestHtml(s: DigestStats, kind: "daily" | "monthly", t: Translator): s
       </tr>
     </table>
 
-    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">${t("email.digest.channels")}</h3>
+    <h3 style="font-size:14px; color:#10b981; margin:24px 0 8px;">${t("email.digest.channels")}</h3>
     <table style="width:100%; border-collapse:collapse; font-size:13px;">
       <tr>
         <td style="padding:6px 0;">${t("email.digest.pickup")}</td>
@@ -560,7 +560,7 @@ function digestHtml(s: DigestStats, kind: "daily" | "monthly", t: Translator): s
       </tr>
     </table>
 
-    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">${t("email.digest.payments")}</h3>
+    <h3 style="font-size:14px; color:#10b981; margin:24px 0 8px;">${t("email.digest.payments")}</h3>
     <table style="width:100%; border-collapse:collapse; font-size:13px;">
       <tr>
         <td style="padding:6px 0;">${t("email.digest.offlinePayments")}</td>
@@ -572,7 +572,7 @@ function digestHtml(s: DigestStats, kind: "daily" | "monthly", t: Translator): s
       </tr>
     </table>
 
-    <h3 style="font-size:14px; color:#f97316; margin:24px 0 8px;">${t("email.digest.salesBreakdown")}</h3>
+    <h3 style="font-size:14px; color:#10b981; margin:24px 0 8px;">${t("email.digest.salesBreakdown")}</h3>
     <table style="width:100%; border-collapse:collapse; font-size:13px;">
       <tr><td style="padding:6px 0;">${t("email.digest.subTotals")}</td><td style="text-align:right;">${fmtMoney(s.subTotals)}</td></tr>
       <tr><td style="padding:6px 0;">${t("email.digest.tax")}</td><td style="text-align:right;">${fmtMoney(s.taxAmount)}</td></tr>

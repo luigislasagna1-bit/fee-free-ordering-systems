@@ -64,7 +64,7 @@ export default async function SuperadminBilling() {
         <h1 className="text-2xl font-bold text-gray-900">Billing & Subscriptions</h1>
         <Link
           href="/superadmin/add-ons"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition"
         >
           <Settings className="w-4 h-4" /> Manage Add-On Catalog
         </Link>
@@ -74,10 +74,10 @@ export default async function SuperadminBilling() {
       <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 mb-6">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-orange-500" />
+            <Zap className="w-4 h-4 text-emerald-500" />
             <h2 className="text-sm font-bold text-gray-900">Stripe configuration</h2>
           </div>
-          <Link href="/superadmin/settings/stripe" className="text-xs text-orange-600 hover:text-orange-700 font-semibold">
+          <Link href="/superadmin/settings/stripe" className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold">
             Configure →
           </Link>
         </div>
@@ -175,7 +175,7 @@ export default async function SuperadminBilling() {
         {addOns.length === 0 && (
           <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 text-center text-sm text-gray-500">
             No add-ons in catalog.{" "}
-            <Link href="/superadmin/add-ons" className="text-orange-600 hover:underline font-semibold">
+            <Link href="/superadmin/add-ons" className="text-emerald-600 hover:underline font-semibold">
               Set one up →
             </Link>
           </div>

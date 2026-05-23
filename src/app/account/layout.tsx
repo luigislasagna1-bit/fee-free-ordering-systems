@@ -13,7 +13,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-100">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="text-sm font-semibold text-gray-900 hover:text-orange-600">
+          <Link href="/" className="text-sm font-semibold text-gray-900 hover:text-emerald-600">
             ← Fee Free Marketplace
           </Link>
           <Link href="/account" className="text-xs font-medium text-gray-500 hover:text-gray-900">

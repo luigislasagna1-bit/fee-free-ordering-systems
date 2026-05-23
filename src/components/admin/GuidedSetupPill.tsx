@@ -33,24 +33,55 @@ import type { SetupProgress } from "@/lib/setup-checklist";
  * with it while they explore other parts of the admin.
  */
 
-const DISMISS_KEY = "ffo:guided-setup-pill-dismissed";
+/** Stores the `completedSteps` value at the moment the owner dismissed the
+ *  pill. When `progress.completedSteps` advances past that value (because
+ *  the owner finished a step), we treat the dismissal as expired and show
+ *  the pill again — that's what makes it feel like a "guided walkthrough"
+ *  instead of a one-shot popup that disappears forever.
+ *
+ *  Also intentionally uses sessionStorage (NOT localStorage). localStorage
+ *  persists across sessions which meant if Luigi ever clicked the X during
+ *  earlier UAT testing, the pill was gone in every subsequent incognito
+ *  window too. sessionStorage clears on tab close — pill returns next visit. */
+const DISMISS_KEY = "ffo:guided-setup-pill-dismissed-at";
 
 export function GuidedSetupPill({ progress }: { progress: SetupProgress }) {
   const pathname = usePathname();
   const [dismissed, setDismissed] = useState(false);
 
+  // Re-evaluate dismissal whenever progress.completedSteps changes:
+  //   - Stored value > completedSteps → dismissal still valid (no progress made)
+  //   - Stored value < completedSteps → owner finished a step; un-dismiss
+  //   - No stored value → not dismissed
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
-      setDismissed(localStorage.getItem(DISMISS_KEY) === "1");
+      const raw = sessionStorage.getItem(DISMISS_KEY);
+      const dismissedAtCount = raw == null ? null : parseInt(raw, 10);
+      if (dismissedAtCount == null || !Number.isFinite(dismissedAtCount)) {
+        setDismissed(false);
+        return;
+      }
+      if (progress.completedSteps > dismissedAtCount) {
+        sessionStorage.removeItem(DISMISS_KEY);
+        setDismissed(false);
+      } else {
+        setDismissed(true);
+      }
     } catch {
-      // localStorage blocked (privacy mode) — just leave pill visible.
+      // sessionStorage blocked (privacy mode) — just leave pill visible.
     }
-  }, []);
+  }, [progress.completedSteps]);
 
   function dismiss() {
     setDismissed(true);
-    try { localStorage.setItem(DISMISS_KEY, "1"); } catch { /* ignore */ }
+    try {
+      // Store the current completedSteps count so we know when to re-show
+      // the pill — only after the owner ACTUALLY makes progress.
+      sessionStorage.setItem(DISMISS_KEY, String(progress.completedSteps));
+    } catch {
+      /* ignore — privacy-mode browsers */
+    }
   }
 
   // Hide on the wizard itself; it owns the setup UI there.
@@ -72,17 +103,17 @@ export function GuidedSetupPill({ progress }: { progress: SetupProgress }) {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 max-w-sm pointer-events-none">
-      <div className="bg-white border-2 border-orange-400 rounded-2xl shadow-2xl overflow-hidden pointer-events-auto">
+      <div className="bg-white border-2 border-emerald-400 rounded-2xl shadow-2xl overflow-hidden pointer-events-auto">
         <Link
           href="/admin/setup/next"
-          className="block px-4 py-3 hover:bg-orange-50 transition group"
+          className="block px-4 py-3 hover:bg-emerald-50 transition group"
         >
           <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-xl bg-orange-500 text-white flex items-center justify-center flex-shrink-0 mt-0.5">
+            <div className="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center flex-shrink-0 mt-0.5">
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div className="flex-1 min-w-0 pr-6">
-              <div className="text-[10px] font-bold uppercase tracking-wider text-orange-600">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">
                 Setup walkthrough · {progress.percent}%
               </div>
               {onCurrentStep ? (
@@ -105,7 +136,7 @@ export function GuidedSetupPill({ progress }: { progress: SetupProgress }) {
                 </>
               )}
             </div>
-            <ArrowRight className="w-4 h-4 text-orange-500 flex-shrink-0 mt-3 group-hover:translate-x-0.5 transition" />
+            <ArrowRight className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-3 group-hover:translate-x-0.5 transition" />
           </div>
         </Link>
         <button

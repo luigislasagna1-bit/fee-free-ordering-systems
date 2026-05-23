@@ -94,7 +94,7 @@ export function ResellerDetailClient({ initial }: { initial: Profile }) {
       </div>
 
       <dl className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm mb-5">
-        <Row label="Website">{profile.website ? <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:text-orange-700">{profile.website}</a> : "—"}</Row>
+        <Row label="Website">{profile.website ? <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700">{profile.website}</a> : "—"}</Row>
         <Row label="Country">{profile.country ?? "—"}</Row>
         <Row label="Referral code"><code className="text-xs">{profile.referralCode}</code></Row>
         <Row label="Approved at">{profile.approvedAt ? new Date(profile.approvedAt).toLocaleString() : "—"}</Row>
@@ -140,7 +140,7 @@ export function ResellerDetailClient({ initial }: { initial: Profile }) {
                 value={rateInput}
                 onChange={(e) => setRateInput(e.target.value)}
                 placeholder="e.g. 7"
-                className="w-32 border border-gray-200 rounded-lg px-3 py-2 pr-8 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                className="w-32 border border-gray-200 rounded-lg px-3 py-2 pr-8 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               />
               <Percent className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
@@ -270,7 +270,7 @@ function Action({
   icon: React.ReactNode;
 }) {
   const styles: Record<string, string> = {
-    primary: "bg-orange-500 hover:bg-orange-600 text-white",
+    primary: "bg-emerald-500 hover:bg-emerald-600 text-white",
     warn: "bg-yellow-500 hover:bg-yellow-600 text-white",
     danger: "bg-red-500 hover:bg-red-600 text-white",
   };

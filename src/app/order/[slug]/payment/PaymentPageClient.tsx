@@ -48,7 +48,7 @@ function CheckoutForm({ orderId, slug }: { orderId: string; slug: string }) {
       <button
         type="submit"
         disabled={!stripe || paying}
-        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50"
+        className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50"
       >
         {paying && <Loader2 className="w-5 h-5 animate-spin" />}
         {paying ? "Processing…" : "Pay Now"}

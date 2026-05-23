@@ -152,7 +152,7 @@ export function ServiceFeesClient() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
       </div>
     );
   }
@@ -166,7 +166,7 @@ export function ServiceFeesClient() {
         </div>
         <button
           onClick={openNew}
-          className="flex items-center gap-2 bg-orange-500 text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-orange-600 transition text-sm shadow-sm"
+          className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-emerald-600 transition text-sm shadow-sm"
         >
           <Plus className="w-4 h-4" /> {t("addFee")}
         </button>
@@ -203,14 +203,14 @@ export function ServiceFeesClient() {
                       : describeDays(fee.daysOfWeek, t("everyDay"), (i) => tInfo(`shortDays.${i}`))}
                   </td>
                   <td className="px-4 py-3">
-                    <button onClick={() => toggleActive(fee)} className="text-gray-500 hover:text-orange-500">
+                    <button onClick={() => toggleActive(fee)} className="text-gray-500 hover:text-emerald-500">
                       {fee.isActive
-                        ? <ToggleRight className="w-7 h-7 text-orange-500" />
+                        ? <ToggleRight className="w-7 h-7 text-emerald-500" />
                         : <ToggleLeft className="w-7 h-7" />}
                     </button>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <button onClick={() => openEdit(fee)} className="text-gray-500 hover:text-orange-500 mr-3">
+                    <button onClick={() => openEdit(fee)} className="text-gray-500 hover:text-emerald-500 mr-3">
                       <Pencil className="w-4 h-4" />
                     </button>
                     <button onClick={() => remove(fee)} className="text-gray-500 hover:text-red-600">
@@ -237,7 +237,7 @@ export function ServiceFeesClient() {
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">{t("feeName")}</label>
                 <input
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   placeholder={t("feeNamePlaceholder")}
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
@@ -248,7 +248,7 @@ export function ServiceFeesClient() {
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1">{t("feeType")}</label>
                   <select
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.feeType}
                     onChange={(e) => setForm((f) => ({ ...f, feeType: e.target.value as "fixed" | "percent" }))}
                   >
@@ -262,7 +262,7 @@ export function ServiceFeesClient() {
                     type="number"
                     min="0"
                     step="0.01"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.amount}
                     onChange={(e) => setForm((f) => ({ ...f, amount: Math.max(0, parseFloat(e.target.value) || 0) }))}
                   />
@@ -279,8 +279,8 @@ export function ServiceFeesClient() {
                       onClick={() => setForm((f) => ({ ...f, appliesTo: scope }))}
                       className={`flex-1 px-3 py-2 rounded-lg text-sm border transition ${
                         form.appliesTo === scope
-                          ? "bg-orange-500 text-white border-orange-500"
-                          : "bg-white text-gray-700 border-gray-300 hover:border-orange-400"
+                          ? "bg-emerald-500 text-white border-emerald-500"
+                          : "bg-white text-gray-700 border-gray-300 hover:border-emerald-400"
                       }`}
                     >
                       {t(scope)}
@@ -306,8 +306,8 @@ export function ServiceFeesClient() {
                           form.publicHolidaysOnly
                             ? "bg-gray-50 text-gray-300 border-gray-200 cursor-not-allowed"
                             : isSelected
-                              ? "bg-orange-500 text-white border-orange-500"
-                              : "bg-white text-gray-700 border-gray-300 hover:border-orange-400"
+                              ? "bg-emerald-500 text-white border-emerald-500"
+                              : "bg-white text-gray-700 border-gray-300 hover:border-emerald-400"
                         }`}
                       >
                         {tInfo(`shortDays.${idx}`)}
@@ -322,7 +322,7 @@ export function ServiceFeesClient() {
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
-                    className="w-4 h-4 accent-orange-500"
+                    className="w-4 h-4 accent-emerald-500"
                     checked={form.publicHolidaysOnly}
                     onChange={(e) => setForm((f) => ({ ...f, publicHolidaysOnly: e.target.checked }))}
                   />
@@ -332,7 +332,7 @@ export function ServiceFeesClient() {
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">{t("country")}</label>
                     <select
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                       value={form.countryCode}
                       onChange={(e) => setForm((f) => ({ ...f, countryCode: e.target.value }))}
                     >
@@ -346,7 +346,7 @@ export function ServiceFeesClient() {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 accent-orange-500"
+                  className="w-4 h-4 accent-emerald-500"
                   checked={form.isActive}
                   onChange={(e) => setForm((f) => ({ ...f, isActive: e.target.checked }))}
                 />
@@ -364,7 +364,7 @@ export function ServiceFeesClient() {
               <button
                 disabled={saving}
                 onClick={save}
-                className="px-4 py-2 rounded-lg text-sm bg-orange-500 text-white hover:bg-orange-600 disabled:opacity-50 flex items-center gap-2"
+                className="px-4 py-2 rounded-lg text-sm bg-emerald-500 text-white hover:bg-emerald-600 disabled:opacity-50 flex items-center gap-2"
               >
                 {saving && <Loader2 className="w-4 h-4 animate-spin" />}
                 {editing ? tCommon("save") : tCommon("create")}

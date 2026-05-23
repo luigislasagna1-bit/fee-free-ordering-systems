@@ -70,7 +70,7 @@ export default async function PaygOptInPage({
           &larr; Back
         </Link>
         <h1 className="text-2xl font-bold text-gray-900 mt-2 flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-orange-500" />
+          <Sparkles className="w-5 h-5 text-emerald-500" />
           Pay-as-you-go Marketplace
         </h1>
         <p className="text-sm text-gray-600 mt-1">
@@ -130,21 +130,21 @@ export default async function PaygOptInPage({
       <div className={`rounded-2xl border-2 p-4 sm:p-5 ${
         hasCard
           ? "border-emerald-200 bg-emerald-50"
-          : "border-orange-300 bg-orange-50"
+          : "border-emerald-300 bg-emerald-50"
       }`}>
         <div className="flex items-start gap-3">
           <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
-            hasCard ? "bg-emerald-500 text-white" : "bg-orange-500 text-white"
+            hasCard ? "bg-emerald-500 text-white" : "bg-emerald-500 text-white"
           }`}>
             {hasCard ? <CheckCircle2 className="w-5 h-5" /> : <CreditCard className="w-5 h-5" />}
           </div>
           <div className="flex-1 min-w-0">
-            <h2 className={`font-bold ${hasCard ? "text-emerald-900" : "text-orange-900"}`}>
+            <h2 className={`font-bold ${hasCard ? "text-emerald-900" : "text-emerald-900"}`}>
               {hasCard
                 ? (justSavedCard ? "Card saved — you're ready to opt in" : "Card on file ✓")
                 : "Step 1: Add a payment method"}
             </h2>
-            <p className={`text-sm mt-0.5 leading-relaxed ${hasCard ? "text-emerald-800" : "text-orange-800"}`}>
+            <p className={`text-sm mt-0.5 leading-relaxed ${hasCard ? "text-emerald-800" : "text-emerald-800"}`}>
               {hasCard
                 ? "We'll use your saved card to auto-charge the monthly PAYG bill at the end of each billing cycle. You can update it any time from your Stripe billing portal."
                 : "PAYG bills you monthly via Stripe based on the orders you got that month. We need a card on file before you can opt in — otherwise we'd have no way to collect at month-end."}
@@ -213,7 +213,7 @@ export default async function PaygOptInPage({
           By clicking the button below, you authorize Fee Free Ordering Systems
           to bill the $3-per-order fee monthly via Stripe (capped at $249.99/month
           plus any applicable tax) until you cancel. Opt out any time from
-          <Link href="/admin/marketplace" className="text-orange-600 hover:underline">{" "}/admin/marketplace</Link>.
+          <Link href="/admin/marketplace" className="text-emerald-600 hover:underline">{" "}/admin/marketplace</Link>.
         </p>
       </div>
 
@@ -240,7 +240,7 @@ export default async function PaygOptInPage({
 
       <div className="text-center text-xs text-gray-500">
         Prefer a flat predictable bill?{" "}
-        <Link href="/admin/billing/add-ons" className="text-orange-600 hover:underline font-semibold">
+        <Link href="/admin/billing/add-ons" className="text-emerald-600 hover:underline font-semibold">
           Subscribe to Marketplace Monthly ($199.99/mo)
         </Link>{" "}
         — unlimited orders, Driver Pool included, charged upfront.

@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl";
 const SERVICE_DEFS = [
   { key: "pickup",       labelKey: "pickup",       icon: ShoppingBag,     color: "text-blue-600"   },
   { key: "delivery",     labelKey: "delivery",     icon: Truck,           color: "text-green-600"  },
-  { key: "dineIn",       labelKey: "dineIn",       icon: UtensilsCrossed, color: "text-orange-600" },
+  { key: "dineIn",       labelKey: "dineIn",       icon: UtensilsCrossed, color: "text-emerald-600" },
   { key: "catering",     labelKey: "catering",     icon: PartyPopper,     color: "text-purple-600" },
   { key: "takeOut",      labelKey: "takeOut",      icon: Package,         color: "text-yellow-600" },
   { key: "reservations", labelKey: "reservations", icon: CalendarDays,    color: "text-red-600"    },
@@ -74,7 +74,7 @@ export function ServicesClient() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
       </div>
     );
   }
@@ -89,17 +89,17 @@ export function ServicesClient() {
         <button
           onClick={save}
           disabled={saving}
-          className="flex items-center gap-2 bg-orange-500 text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-orange-600 transition text-sm shadow-sm disabled:opacity-50"
+          className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-emerald-600 transition text-sm shadow-sm disabled:opacity-50"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           {tCommon("saveChanges")}
         </button>
       </div>
 
-      <div className={`bg-white rounded-2xl border shadow-sm p-5 ${autoAcceptOrders ? "border-orange-200" : "border-gray-100"}`}>
+      <div className={`bg-white rounded-2xl border shadow-sm p-5 ${autoAcceptOrders ? "border-emerald-200" : "border-gray-100"}`}>
         <div className="flex items-start gap-4">
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${autoAcceptOrders ? "bg-orange-50" : "bg-gray-50"}`}>
-            <Zap className={`w-5 h-5 ${autoAcceptOrders ? "text-orange-500" : "text-gray-400"}`} />
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${autoAcceptOrders ? "bg-emerald-50" : "bg-gray-50"}`}>
+            <Zap className={`w-5 h-5 ${autoAcceptOrders ? "text-emerald-500" : "text-gray-400"}`} />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
@@ -112,11 +112,11 @@ export function ServicesClient() {
           </div>
           <button
             onClick={() => setAutoAcceptOrders(v => !v)}
-            className="flex-shrink-0 text-gray-400 hover:text-orange-500 transition"
+            className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
             title={autoAcceptOrders ? "Disable" : "Enable"}
           >
             {autoAcceptOrders
-              ? <ToggleRight className="w-8 h-8 text-orange-500" />
+              ? <ToggleRight className="w-8 h-8 text-emerald-500" />
               : <ToggleLeft className="w-8 h-8" />
             }
           </button>
@@ -131,11 +131,11 @@ export function ServicesClient() {
           return (
             <div
               key={key}
-              className={`bg-white rounded-2xl border shadow-sm transition ${on ? "border-orange-200" : "border-gray-100"}`}
+              className={`bg-white rounded-2xl border shadow-sm transition ${on ? "border-emerald-200" : "border-gray-100"}`}
             >
               {/* Header row */}
               <div className="flex items-center gap-4 p-5">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${on ? "bg-orange-50" : "bg-gray-50"}`}>
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${on ? "bg-emerald-50" : "bg-gray-50"}`}>
                   <Icon className={`w-5 h-5 ${on ? color : "text-gray-400"}`} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -147,11 +147,11 @@ export function ServicesClient() {
                 </div>
                 <button
                   onClick={() => setEnabled(e => ({ ...e, [key]: !e[key] }))}
-                  className="flex-shrink-0 text-gray-400 hover:text-orange-500 transition"
+                  className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
                   title={on ? "Disable" : "Enable"}
                 >
                   {on
-                    ? <ToggleRight className="w-8 h-8 text-orange-500" />
+                    ? <ToggleRight className="w-8 h-8 text-emerald-500" />
                     : <ToggleLeft className="w-8 h-8" />
                   }
                 </button>
@@ -163,7 +163,7 @@ export function ServicesClient() {
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">{t("displayName")}</label>
                     <input
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                       value={settings[key].displayName}
                       onChange={e => updateSetting(key, "displayName", e.target.value)}
                     />
@@ -171,7 +171,7 @@ export function ServicesClient() {
                   <div className="sm:col-span-2">
                     <label className="block text-xs font-medium text-gray-600 mb-1">{t("shortDescription")}</label>
                     <input
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                       placeholder="e.g. Order online and pick up in 20 min"
                       value={settings[key].description}
                       onChange={e => updateSetting(key, "description", e.target.value)}
@@ -182,7 +182,7 @@ export function ServicesClient() {
                       <label className="block text-xs font-medium text-gray-600 mb-1">{t("estimatedTime")}</label>
                       <input
                         type="number" min="0" step="5"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                         value={settings[key].estimatedTime}
                         onChange={e => updateSetting(key, "estimatedTime", parseInt(e.target.value) || 0)}
                       />
@@ -192,7 +192,7 @@ export function ServicesClient() {
                     <div className="sm:col-span-3">
                       <p className="text-xs text-gray-400">
                         Configure reservation times, tables, and availability in{" "}
-                        <a href="/admin/reservations" className="text-orange-500 hover:underline font-medium">Table Reservations settings</a>.
+                        <a href="/admin/reservations" className="text-emerald-500 hover:underline font-medium">Table Reservations settings</a>.
                       </p>
                     </div>
                   )}

@@ -58,7 +58,7 @@ export function PublishToggleClient({
         type="button"
         disabled={!publishReady || busy || pending}
         onClick={() => doAction("publish")}
-        className="px-4 py-2 text-sm font-semibold rounded-lg bg-orange-500 text-white hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+        className="px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
       >
         {busy ? "Publishing…" : "Publish"}
       </button>

@@ -724,7 +724,7 @@ export function OrderingPageClient({
           embedded mode (the widget user came from the restaurant's own
           site, not the marketplace channel). */}
       {fromMarketplace && !isEmbedded && (
-        <div className="bg-gradient-to-r from-orange-500 to-pink-500 text-white text-xs sm:text-sm py-2 px-4 flex items-center justify-between gap-2">
+        <div className="bg-gradient-to-r from-emerald-500 to-pink-500 text-white text-xs sm:text-sm py-2 px-4 flex items-center justify-between gap-2">
           <span className="flex items-center gap-1.5">
             <span aria-hidden="true">✨</span>
             <span>
@@ -1001,7 +1001,7 @@ export function OrderingPageClient({
                     <div className="flex items-center gap-1.5 flex-shrink-0 text-xs text-gray-400">
                       {group.minSelect > 0 && group.maxSelect > 1 && <span>{t("pickRange", { min: group.minSelect, max: group.maxSelect })}</span>}
                       {group.minSelect === 0 && group.maxSelect > 1 && <span>{t("upToMax", { max: group.maxSelect })}</span>}
-                      {group.maxSelect > 1 && <span className={`font-medium ${atMax ? "text-orange-600" : "text-gray-500"}`}>{selectedCount}/{group.maxSelect}</span>}
+                      {group.maxSelect > 1 && <span className={`font-medium ${atMax ? "text-emerald-600" : "text-gray-500"}`}>{selectedCount}/{group.maxSelect}</span>}
                     </div>
                   </div>
                   {group.description && <p className="text-xs text-gray-400 mb-2">{group.description}</p>}
@@ -1134,7 +1134,7 @@ export function OrderingPageClient({
                     <div className="flex gap-2">
                       <div className="relative flex-1">
                         <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input type="text" className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-2.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                        <input type="text" className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                           placeholder={t("couponCode")} value={couponCode}
                           onChange={e => setCouponCode(e.target.value.toUpperCase())}
                           onKeyDown={e => e.key === "Enter" && applyCoupon()} />

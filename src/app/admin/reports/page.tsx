@@ -69,7 +69,7 @@ export default async function ReportsPage() {
           { label: "Total Revenue", value: formatCurrency(totalRevenue), icon: DollarSign, color: "text-green-500", bg: "bg-green-50" },
           { label: "Completed Orders", value: completed.length, icon: ShoppingBag, color: "text-blue-500", bg: "bg-blue-50" },
           { label: "Average Order", value: formatCurrency(avgOrder), icon: TrendingUp, color: "text-purple-500", bg: "bg-purple-50" },
-          { label: "Total Orders", value: orders.length, icon: BarChart3, color: "text-orange-500", bg: "bg-orange-50" },
+          { label: "Total Orders", value: orders.length, icon: BarChart3, color: "text-emerald-500", bg: "bg-emerald-50" },
         ].map((s) => (
           <div key={s.label} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-3">
@@ -96,7 +96,7 @@ export default async function ReportsPage() {
                     <span className="font-medium text-gray-900">{d.count} orders · {formatCurrency(d.revenue)}</span>
                   </div>
                   <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-orange-400 rounded-full" style={{ width: `${(d.revenue / maxRevenue) * 100}%` }} />
+                    <div className="h-full bg-emerald-400 rounded-full" style={{ width: `${(d.revenue / maxRevenue) * 100}%` }} />
                   </div>
                 </div>
               );
@@ -131,8 +131,8 @@ export default async function ReportsPage() {
             <div className="text-3xl font-bold text-blue-600">{pickupCount}</div>
             <div className="text-sm text-gray-600 mt-1">Pickup orders</div>
           </div>
-          <div className="text-center p-4 bg-orange-50 rounded-xl">
-            <div className="text-3xl font-bold text-orange-600">{deliveryCount}</div>
+          <div className="text-center p-4 bg-emerald-50 rounded-xl">
+            <div className="text-3xl font-bold text-emerald-600">{deliveryCount}</div>
             <div className="text-sm text-gray-600 mt-1">Delivery orders</div>
           </div>
         </div>

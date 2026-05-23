@@ -53,7 +53,7 @@ export default async function MarketplacePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* ─── Hero ─────────────────────────────────────────────────────── */}
-      <header className="bg-gradient-to-br from-orange-500 to-pink-500 text-white">
+      <header className="bg-gradient-to-br from-emerald-500 to-pink-500 text-white">
         <div className="max-w-6xl mx-auto px-4 py-10 sm:py-14">
           <div className="flex items-center justify-between mb-3 gap-3">
             <div className="flex items-center gap-2">
@@ -116,7 +116,7 @@ export default async function MarketplacePage() {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center md:justify-end">
             <Link
               href="/signup"
-              className="px-5 py-3 rounded-xl bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition text-center"
+              className="px-5 py-3 rounded-xl bg-emerald-500 text-white font-semibold text-sm hover:bg-emerald-600 transition text-center"
             >
               Get listed for free
             </Link>

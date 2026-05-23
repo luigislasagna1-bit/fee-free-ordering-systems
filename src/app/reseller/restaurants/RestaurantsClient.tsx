@@ -85,7 +85,7 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
         </div>
         <button
           onClick={() => setShowInvite(true)}
-          className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
+          className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
         >
           <Plus className="w-4 h-4" /> Invite restaurant
         </button>
@@ -197,7 +197,7 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
                   type="text"
                   value={inviteForm.restaurantName}
                   onChange={(e) => setInviteForm({ ...inviteForm, restaurantName: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
               <Field label="Owner name">
@@ -205,7 +205,7 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
                   type="text"
                   value={inviteForm.ownerName}
                   onChange={(e) => setInviteForm({ ...inviteForm, ownerName: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
               <Field label="Owner email">
@@ -213,7 +213,7 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
                   type="email"
                   value={inviteForm.ownerEmail}
                   onChange={(e) => setInviteForm({ ...inviteForm, ownerEmail: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
               <Field label="Phone (optional)">
@@ -221,7 +221,7 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
                   type="text"
                   value={inviteForm.phone}
                   onChange={(e) => setInviteForm({ ...inviteForm, phone: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
             </div>
@@ -229,7 +229,7 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
               <button
                 onClick={submitInvite}
                 disabled={busy !== null || !inviteForm.restaurantName || !inviteForm.ownerEmail}
-                className="flex-1 inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition disabled:opacity-50"
+                className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition disabled:opacity-50"
               >
                 {busy === "invite" && <Loader2 className="w-4 h-4 animate-spin" />}
                 Send invite

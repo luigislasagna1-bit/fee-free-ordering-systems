@@ -51,7 +51,7 @@ export function PaygOptInButton({
       type="button"
       onClick={optIn}
       disabled={isDisabled}
-      className="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold px-6 py-3.5 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2"
+      className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold px-6 py-3.5 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2"
       title={disabled ? (blockerLabel || "Add a payment method first") : ""}
     >
       {submitting ? (

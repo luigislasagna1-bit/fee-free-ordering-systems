@@ -42,11 +42,11 @@ function Stat({ label, value, highlight }: { label: string; value: number; highl
   return (
     <div
       className={`rounded-xl p-4 border ${
-        highlight ? "bg-orange-50 border-orange-200" : "bg-white border-gray-100"
+        highlight ? "bg-emerald-50 border-emerald-200" : "bg-white border-gray-100"
       } shadow-sm`}
     >
       <div className="text-[10px] uppercase tracking-wide text-gray-500 mb-1">{label}</div>
-      <div className={`text-2xl font-bold ${highlight ? "text-orange-700" : "text-gray-900"}`}>{value}</div>
+      <div className={`text-2xl font-bold ${highlight ? "text-emerald-700" : "text-gray-900"}`}>{value}</div>
     </div>
   );
 }
@@ -97,7 +97,7 @@ function Section({
                 <td className="px-4 py-3 text-right">
                   <Link
                     href={`/superadmin/resellers/${p.id}`}
-                    className="text-xs text-orange-600 font-semibold hover:text-orange-700"
+                    className="text-xs text-emerald-600 font-semibold hover:text-emerald-700"
                   >
                     Review →
                   </Link>

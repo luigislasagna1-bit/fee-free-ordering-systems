@@ -91,7 +91,7 @@ export default async function HostedSitePage({
 
   if (result.kind === "upgrade_required") {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-amber-50 p-8">
+      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-amber-50 p-8">
         <div className="max-w-lg text-center">
           <h1 className="text-2xl font-bold text-gray-900">
             {result.restaurantName}

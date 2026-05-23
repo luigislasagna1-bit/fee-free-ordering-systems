@@ -106,7 +106,7 @@ export function MarketplaceGrid({ listings }: { listings: GridListing[] }) {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search restaurants, cuisines, cities, dishes…"
-                className="w-full pl-10 pr-9 py-2.5 rounded-full border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:bg-white focus:border-orange-300 focus:ring-2 focus:ring-orange-100"
+                className="w-full pl-10 pr-9 py-2.5 rounded-full border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:bg-white focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
               />
               {query && (
                 <button
@@ -122,7 +122,7 @@ export function MarketplaceGrid({ listings }: { listings: GridListing[] }) {
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as SortMode)}
-              className="rounded-full border border-gray-200 bg-gray-50 text-sm px-3 py-2.5 focus:outline-none focus:bg-white focus:border-orange-300 focus:ring-2 focus:ring-orange-100"
+              className="rounded-full border border-gray-200 bg-gray-50 text-sm px-3 py-2.5 focus:outline-none focus:bg-white focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
               aria-label="Sort restaurants"
             >
               <option value="default">Sort: Featured first</option>
@@ -138,8 +138,8 @@ export function MarketplaceGrid({ listings }: { listings: GridListing[] }) {
                 onClick={() => setActiveCuisine(null)}
                 className={`flex-shrink-0 text-xs font-semibold rounded-full px-3.5 py-1.5 transition border ${
                   activeCuisine === null
-                    ? "bg-orange-500 text-white border-orange-500"
-                    : "bg-white text-gray-700 border-gray-200 hover:border-orange-300"
+                    ? "bg-emerald-500 text-white border-emerald-500"
+                    : "bg-white text-gray-700 border-gray-200 hover:border-emerald-300"
                 }`}
               >
                 All cuisines
@@ -151,8 +151,8 @@ export function MarketplaceGrid({ listings }: { listings: GridListing[] }) {
                   onClick={() => setActiveCuisine(activeCuisine === c ? null : c)}
                   className={`flex-shrink-0 text-xs font-semibold rounded-full px-3.5 py-1.5 transition border ${
                     activeCuisine?.toLowerCase() === c.toLowerCase()
-                      ? "bg-orange-500 text-white border-orange-500"
-                      : "bg-white text-gray-700 border-gray-200 hover:border-orange-300"
+                      ? "bg-emerald-500 text-white border-emerald-500"
+                      : "bg-white text-gray-700 border-gray-200 hover:border-emerald-300"
                   }`}
                 >
                   {c}
@@ -178,7 +178,7 @@ export function MarketplaceGrid({ listings }: { listings: GridListing[] }) {
             {showFeaturedSection && (
               <section className="mb-8">
                 <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 flex items-center gap-2">
-                  <Star className="w-4 h-4 text-orange-500 fill-orange-500" />
+                  <Star className="w-4 h-4 text-emerald-500 fill-emerald-500" />
                   Featured
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -220,20 +220,20 @@ function NoResults({
   if (isEmpty) {
     return (
       <div className="text-center py-16">
-        <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center mx-auto mb-4">
-          <Sparkles className="w-7 h-7 text-orange-500" />
+        <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+          <Sparkles className="w-7 h-7 text-emerald-500" />
         </div>
         <h2 className="text-xl font-bold text-gray-900 mb-2">
           We&apos;re just getting started
         </h2>
         <p className="text-sm text-gray-500 max-w-md mx-auto">
           No restaurants on the marketplace yet. If you run a restaurant, subscribe to the
-          <span className="font-semibold text-orange-600"> Marketplace Listing</span> add-on
+          <span className="font-semibold text-emerald-600"> Marketplace Listing</span> add-on
           from your admin dashboard to get listed here.
         </p>
         <Link
           href="/login"
-          className="inline-block mt-5 px-5 py-2.5 rounded-xl bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition"
+          className="inline-block mt-5 px-5 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold text-sm hover:bg-emerald-600 transition"
         >
           Restaurant log in
         </Link>
@@ -253,7 +253,7 @@ function NoResults({
         <button
           type="button"
           onClick={onClear}
-          className="inline-block px-5 py-2.5 rounded-xl bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition"
+          className="inline-block px-5 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold text-sm hover:bg-emerald-600 transition"
         >
           Clear filters
         </button>
@@ -276,10 +276,10 @@ function RestaurantTile({
     <Link
       href={`/marketplace/${listing.slug}`}
       className={`group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition border ${
-        featured ? "border-orange-300 ring-2 ring-orange-100" : "border-gray-100"
+        featured ? "border-emerald-300 ring-2 ring-emerald-100" : "border-gray-100"
       }`}
     >
-      <div className="relative h-32 sm:h-40 bg-gradient-to-br from-orange-300 to-pink-300 overflow-hidden">
+      <div className="relative h-32 sm:h-40 bg-gradient-to-br from-emerald-300 to-pink-300 overflow-hidden">
         {bannerUrl && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -289,7 +289,7 @@ function RestaurantTile({
           />
         )}
         {featured && (
-          <span className="absolute top-2 right-2 bg-orange-500 text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+          <span className="absolute top-2 right-2 bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
             <Star className="w-3 h-3 fill-white" /> Featured
           </span>
         )}

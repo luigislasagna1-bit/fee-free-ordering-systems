@@ -131,7 +131,7 @@ export default async function ResellerDashboardPage() {
         </div>
         <div className="relative h-3 bg-gray-100 rounded-full overflow-hidden mb-2">
           <div
-            className="absolute inset-y-0 left-0 bg-orange-500 transition-all"
+            className="absolute inset-y-0 left-0 bg-emerald-500 transition-all"
             style={{
               width: `${Math.min(100, (activeCount / TIER_THRESHOLDS.tier2) * 100)}%`,
             }}
@@ -139,10 +139,10 @@ export default async function ResellerDashboardPage() {
         </div>
         <div className="flex justify-between text-[11px] text-gray-500">
           <span>0% · &lt;6</span>
-          <span className={activeCount >= TIER_THRESHOLDS.tier1 ? "font-semibold text-orange-600" : ""}>
+          <span className={activeCount >= TIER_THRESHOLDS.tier1 ? "font-semibold text-emerald-600" : ""}>
             5% · 6+
           </span>
-          <span className={activeCount >= TIER_THRESHOLDS.tier2 ? "font-semibold text-orange-600" : ""}>
+          <span className={activeCount >= TIER_THRESHOLDS.tier2 ? "font-semibold text-emerald-600" : ""}>
             10% · 50+
           </span>
         </div>
@@ -163,7 +163,7 @@ export default async function ResellerDashboardPage() {
             return (
               <div
                 key={i}
-                className="flex-1 bg-orange-500 rounded-t opacity-80 hover:opacity-100 transition relative group"
+                className="flex-1 bg-emerald-500 rounded-t opacity-80 hover:opacity-100 transition relative group"
                 style={{ height: count === 0 ? "2px" : `${heightPct}%`, minHeight: "2px" }}
                 title={`${count} signup${count === 1 ? "" : "s"} · ${new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000).toLocaleDateString()}`}
               />
@@ -211,7 +211,7 @@ export default async function ResellerDashboardPage() {
           </code>
           <Link
             href="/reseller/restaurants"
-            className="mt-3 inline-flex items-center gap-1 text-sm text-orange-600 font-semibold hover:text-orange-700"
+            className="mt-3 inline-flex items-center gap-1 text-sm text-emerald-600 font-semibold hover:text-emerald-700"
           >
             Or invite directly <ArrowRight className="w-3.5 h-3.5" />
           </Link>
@@ -242,14 +242,14 @@ function Stat({
   return (
     <div
       className={`rounded-xl p-4 border ${
-        highlight ? "bg-orange-50 border-orange-200" : "bg-white border-gray-100"
+        highlight ? "bg-emerald-50 border-emerald-200" : "bg-white border-gray-100"
       } shadow-sm`}
     >
       <div className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 mb-1">
         {icon}
         {label}
       </div>
-      <div className={`text-2xl font-bold ${highlight ? "text-orange-700" : "text-gray-900"}`}>
+      <div className={`text-2xl font-bold ${highlight ? "text-emerald-700" : "text-gray-900"}`}>
         {value}
       </div>
       <div className="text-xs text-gray-500 mt-1">{hint}</div>

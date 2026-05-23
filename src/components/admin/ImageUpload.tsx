@@ -89,7 +89,7 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
         >
           {uploading ? (
             <div className="flex flex-col items-center gap-1">
-              <div className="w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
               <span className="text-xs text-gray-400">{tCommon("loading")}</span>
             </div>
           ) : (
@@ -107,7 +107,7 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
           type="button"
           disabled={uploading}
           onClick={() => inputRef.current?.click()}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-gray-200 rounded-lg text-gray-700 hover:border-orange-400 hover:text-orange-600 transition disabled:opacity-50"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-gray-200 rounded-lg text-gray-700 hover:border-emerald-400 hover:text-emerald-600 transition disabled:opacity-50"
         >
           <Upload className="w-3.5 h-3.5" />
           {uploading ? tCommon("loading") : value ? tCommon("edit") : tCommon("add")}
@@ -135,7 +135,7 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
       {showUrlInput && (
         <div className="flex gap-2 mt-2">
           <input
-            className="flex-1 border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            className="flex-1 border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             value={urlDraft}
             onChange={e => setUrlDraft(e.target.value)}
             placeholder="https://example.com/image.jpg"
@@ -144,7 +144,7 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
           <button
             type="button"
             onClick={applyUrl}
-            className="px-3 py-1.5 text-xs font-medium bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
+            className="px-3 py-1.5 text-xs font-medium bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition"
           >
             {tOrdering("apply")}
           </button>

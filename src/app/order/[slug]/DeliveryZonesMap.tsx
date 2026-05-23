@@ -107,7 +107,7 @@ function GoogleVariant({
 
 // ─── Leaflet variant ─────────────────────────────────────────────────────────
 const restaurantIcon = L.divIcon({
-  html: `<div style="width:18px;height:18px;background:#f97316;border:3px solid white;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.4)"></div>`,
+  html: `<div style="width:18px;height:18px;background:#10b981;border:3px solid white;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.4)"></div>`,
   className: "", iconSize: [18, 18], iconAnchor: [9, 9],
 });
 const customerIcon = L.divIcon({

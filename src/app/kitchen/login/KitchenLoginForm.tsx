@@ -43,10 +43,10 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
       <AuthLanguageSwitcher currentLocale={locale} />
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-500 rounded-2xl mb-4 shadow-lg shadow-orange-500/30">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-500 rounded-2xl mb-4 shadow-lg shadow-emerald-500/30">
             <ChefHat className="w-9 h-9 text-white" />
           </div>
-          <div className="inline-flex items-center gap-2 bg-gray-800 border border-gray-700 text-orange-400 font-semibold px-4 py-1.5 rounded-full text-sm mb-3">
+          <div className="inline-flex items-center gap-2 bg-gray-800 border border-gray-700 text-emerald-400 font-semibold px-4 py-1.5 rounded-full text-sm mb-3">
             <Monitor className="w-4 h-4" /> {tAuth("kitchenLogin")}
           </div>
           <h1 className="text-3xl font-bold text-white">{tAuth("kitchenLogin")}</h1>
@@ -61,7 +61,7 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
                 type="email"
                 required
                 autoComplete="email"
-                className="w-full bg-gray-700 border border-gray-600 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 placeholder-gray-500 transition"
+                className="w-full bg-gray-700 border border-gray-600 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-gray-500 transition"
                 placeholder="you@restaurant.com"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -70,7 +70,7 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="block text-sm font-medium text-gray-300">{tAuth("password")}</label>
-                <a href="/forgot-password" className="text-xs text-orange-400 hover:text-orange-300">
+                <a href="/forgot-password" className="text-xs text-emerald-400 hover:text-emerald-300">
                   {tAuth("forgotPassword")}
                 </a>
               </div>
@@ -78,7 +78,7 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
                 type="password"
                 required
                 autoComplete="current-password"
-                className="w-full bg-gray-700 border border-gray-600 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 placeholder-gray-500 transition"
+                className="w-full bg-gray-700 border border-gray-600 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-gray-500 transition"
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
               />
@@ -87,7 +87,7 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-orange-500 text-white font-bold py-3.5 rounded-xl hover:bg-orange-600 transition flex items-center justify-center gap-2 disabled:opacity-50 mt-2 text-base"
+              className="w-full bg-emerald-500 text-white font-bold py-3.5 rounded-xl hover:bg-emerald-600 transition flex items-center justify-center gap-2 disabled:opacity-50 mt-2 text-base"
             >
               {loading && <Loader2 className="w-5 h-5 animate-spin" />}
               {loading ? tAuth("signingIn") : tAuth("signIn")}
@@ -113,7 +113,7 @@ export function KitchenLoginForm({ locale }: { locale: string }) {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
       </div>
     }>
       <KitchenLoginFormInner locale={locale} />

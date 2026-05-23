@@ -181,7 +181,7 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
                         placeholder="0.00"
                         className={`w-24 border rounded px-2 py-1 ${
                           draftDiffersFromSaved
-                            ? "border-orange-300 bg-orange-50"
+                            ? "border-emerald-300 bg-emerald-50"
                             : "border-gray-200"
                         }`}
                         value={draft}
@@ -232,7 +232,7 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
                         disabled={savingId === r.id}
                         className={`px-3 py-1 text-xs font-medium rounded border ${
                           draftDiffersFromSaved
-                            ? "border-orange-400 bg-orange-100 text-orange-800 hover:bg-orange-200"
+                            ? "border-emerald-400 bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
                             : "border-gray-300 bg-white hover:bg-gray-50"
                         } disabled:opacity-50`}
                       >
@@ -249,7 +249,7 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
                             ? "Set a non-zero price first"
                             : "Push Product + Price to Stripe"
                         }
-                        className="px-3 py-1 text-xs font-medium rounded bg-orange-500 text-white hover:bg-orange-600 disabled:bg-gray-300 flex items-center gap-1"
+                        className="px-3 py-1 text-xs font-medium rounded bg-emerald-500 text-white hover:bg-emerald-600 disabled:bg-gray-300 flex items-center gap-1"
                       >
                         {syncingId === r.id ? (
                           <Loader2 className="w-3 h-3 animate-spin" />

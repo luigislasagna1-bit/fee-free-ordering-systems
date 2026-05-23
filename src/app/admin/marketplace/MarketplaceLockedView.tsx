@@ -13,7 +13,7 @@ import { Sparkles, Check, TrendingUp, Users, Lock } from "lucide-react";
 export function MarketplaceLockedView() {
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6">
-      <div className="bg-gradient-to-br from-orange-500 to-pink-500 text-white rounded-2xl p-6 sm:p-8 shadow-lg">
+      <div className="bg-gradient-to-br from-emerald-500 to-pink-500 text-white rounded-2xl p-6 sm:p-8 shadow-lg">
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="w-5 h-5" />
           <span className="text-sm font-bold uppercase tracking-wider opacity-90">Add-on</span>
@@ -73,7 +73,7 @@ export function MarketplaceLockedView() {
         <div className="mt-5 flex gap-3 flex-wrap">
           <Link
             href="/admin/billing/add-ons"
-            className="inline-flex items-center justify-center gap-2 bg-white text-orange-600 hover:bg-orange-50 font-bold px-5 py-2.5 rounded-xl text-sm shadow-md transition"
+            className="inline-flex items-center justify-center gap-2 bg-white text-emerald-600 hover:bg-emerald-50 font-bold px-5 py-2.5 rounded-xl text-sm shadow-md transition"
           >
             <Lock className="w-4 h-4" /> Subscribe to Monthly Plan
           </Link>
@@ -117,7 +117,7 @@ export function MarketplaceLockedView() {
 function FeatureCard({ icon, title, body }: { icon: React.ReactNode; title: string; body: string }) {
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-4">
-      <div className="w-9 h-9 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center mb-3">
+      <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center mb-3">
         {icon}
       </div>
       <h3 className="font-bold text-gray-900 text-sm mb-1">{title}</h3>

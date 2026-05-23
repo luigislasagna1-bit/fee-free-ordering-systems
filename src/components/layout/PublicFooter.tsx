@@ -12,7 +12,7 @@ export function PublicFooter() {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
             <Link href="/" className="flex items-center gap-2 text-white font-bold text-lg mb-3">
-              <ChefHat className="w-6 h-6 text-orange-400" />
+              <ChefHat className="w-6 h-6 text-emerald-400" />
               Fee Free Ordering
             </Link>
             <p className="text-sm text-gray-400">{tF("tagline")}</p>

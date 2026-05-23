@@ -52,9 +52,9 @@ export default async function ResellerLayout({ children }: { children: React.Rea
       <div className="flex flex-1 overflow-hidden">
         <aside className="w-60 bg-gray-900 text-white flex flex-col">
           <div className="h-16 flex items-center px-5 border-b border-gray-700">
-            <ChefHat className="w-6 h-6 text-orange-400 mr-2" />
+            <ChefHat className="w-6 h-6 text-emerald-400 mr-2" />
             <div>
-              <div className="font-bold text-orange-400 text-sm">Partner</div>
+              <div className="font-bold text-emerald-400 text-sm">Partner</div>
               <div className="text-[10px] uppercase tracking-wider text-gray-500">Reseller</div>
             </div>
           </div>

@@ -42,7 +42,7 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
           { label: "Total Revenue", value: formatCurrency(payload.totals.revenue), icon: DollarSign, color: "text-green-500", bg: "bg-green-50" },
           { label: "Completed Orders", value: payload.totals.completedCount, icon: ShoppingBag, color: "text-blue-500", bg: "bg-blue-50" },
           { label: "Average Order", value: formatCurrency(payload.totals.averageOrder), icon: TrendingUp, color: "text-purple-500", bg: "bg-purple-50" },
-          { label: "Total Orders", value: payload.totals.orderCount, icon: BarChart3, color: "text-orange-500", bg: "bg-orange-50" },
+          { label: "Total Orders", value: payload.totals.orderCount, icon: BarChart3, color: "text-emerald-500", bg: "bg-emerald-50" },
         ].map((s) => (
           <div key={s.label} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-3">

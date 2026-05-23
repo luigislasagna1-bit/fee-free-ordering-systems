@@ -27,7 +27,7 @@ export function ResellerNav() {
             href={href}
             className={cn(
               "flex items-center gap-3 px-4 py-3 text-sm font-medium mx-2 rounded-lg mb-1 transition",
-              active ? "bg-orange-500 text-white" : "text-gray-300 hover:bg-gray-800"
+              active ? "bg-emerald-500 text-white" : "text-gray-300 hover:bg-gray-800"
             )}
           >
             <Icon className="w-4 h-4" /> {label}

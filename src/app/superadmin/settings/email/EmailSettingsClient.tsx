@@ -103,7 +103,7 @@ export function EmailSettingsClient({ initial }: { initial: Initial }) {
     <div className="max-w-3xl mx-auto p-6 space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-          <Mail className="w-6 h-6 text-orange-500" /> Email Settings
+          <Mail className="w-6 h-6 text-emerald-500" /> Email Settings
         </h1>
         <p className="text-sm text-gray-500 mt-1">
           Platform-wide email transport. One API key is shared across every restaurant on the platform —
@@ -217,7 +217,7 @@ export function EmailSettingsClient({ initial }: { initial: Initial }) {
               name="resend_api_key_input"
               data-1p-ignore="true"
               data-lpignore="true"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 text-sm font-mono focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 text-sm font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             />
             <button
               type="button"
@@ -253,7 +253,7 @@ export function EmailSettingsClient({ initial }: { initial: Initial }) {
             value={emailFrom}
             onChange={e => setEmailFrom(e.target.value)}
             placeholder="Fee Free Ordering <hello@yourdomain.com>"
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           />
           <p className="text-xs text-gray-500 mt-1">
             Must be a verified domain on your Resend account (or the default{" "}
@@ -265,7 +265,7 @@ export function EmailSettingsClient({ initial }: { initial: Initial }) {
           <button
             onClick={save}
             disabled={saving}
-            className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-5 py-2.5 rounded-xl transition disabled:opacity-50 inline-flex items-center gap-2"
+            className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-5 py-2.5 rounded-xl transition disabled:opacity-50 inline-flex items-center gap-2"
           >
             {saving && <Loader2 className="w-4 h-4 animate-spin" />}
             Save settings
@@ -294,7 +294,7 @@ export function EmailSettingsClient({ initial }: { initial: Initial }) {
             value={testEmail}
             onChange={e => setTestEmail(e.target.value)}
             placeholder="your@email.com"
-            className="flex-1 min-w-[200px] border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            className="flex-1 min-w-[200px] border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           />
           <button
             onClick={sendTest}

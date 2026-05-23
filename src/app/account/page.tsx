@@ -81,7 +81,7 @@ export default async function CustomerAccountPage() {
 
       <p className="text-xs text-gray-500 text-center pt-4">
         Looking for a restaurant?{" "}
-        <Link href="/" className="text-orange-600 hover:underline">Browse the marketplace</Link>.
+        <Link href="/" className="text-emerald-600 hover:underline">Browse the marketplace</Link>.
       </p>
     </div>
   );
@@ -101,9 +101,9 @@ function Tile({
   comingSoon?: boolean;
 }) {
   const body = (
-    <div className="block bg-white rounded-2xl border border-gray-100 p-5 transition hover:border-orange-300 hover:shadow-md">
+    <div className="block bg-white rounded-2xl border border-gray-100 p-5 transition hover:border-emerald-300 hover:shadow-md">
       <div className="flex items-start justify-between">
-        <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center flex-shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
           {icon}
         </div>
         {comingSoon && (

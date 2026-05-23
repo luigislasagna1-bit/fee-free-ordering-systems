@@ -314,7 +314,7 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
                       type="button"
                       onClick={() => subscribe(a.slug)}
                       disabled={busy || notSynced || a.monthlyPriceCents <= 0}
-                      className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-orange-500 text-white hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                       title={
                         notSynced
                           ? "This add-on isn't synced to Stripe yet. Ask the platform admin."
@@ -341,7 +341,7 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
                       <>
                         <Link
                           href="/admin/marketplace/payg-opt-in"
-                          className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-white text-orange-600 border border-orange-300 hover:bg-orange-50 flex items-center justify-center gap-1.5 transition"
+                          className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-white text-emerald-600 border border-emerald-300 hover:bg-emerald-50 flex items-center justify-center gap-1.5 transition"
                         >
                           <Sparkles className="w-3.5 h-3.5" />
                           Or start Pay-As-You-Go

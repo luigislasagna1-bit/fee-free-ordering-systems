@@ -147,7 +147,7 @@ export default async function SuperadminRestaurantDetail({
               // eslint-disable-next-line @next/next/no-img-element
               <img src={restaurant.logoUrl} alt="" className="w-16 h-16 rounded-2xl object-cover bg-gray-100" />
             ) : (
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center text-white">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-pink-500 flex items-center justify-center text-white">
                 <Store className="w-7 h-7" />
               </div>
             )}
@@ -353,7 +353,7 @@ export default async function SuperadminRestaurantDetail({
                   ? <span className="text-emerald-700 font-semibold">Yes</span>
                   : <span className="text-amber-700 font-semibold">Paused (subscription active but owner toggled off)</span>}
               />
-              <Field label="Featured" value={restaurant.marketplaceListing.marketplaceFeatured ? <span className="text-orange-600 flex items-center gap-1"><Star className="w-3.5 h-3.5 fill-orange-600" /> Yes</span> : "No"} />
+              <Field label="Featured" value={restaurant.marketplaceListing.marketplaceFeatured ? <span className="text-emerald-600 flex items-center gap-1"><Star className="w-3.5 h-3.5 fill-emerald-600" /> Yes</span> : "No"} />
               <Field label="Orders this month" value={restaurant.marketplaceListing.currentMonthOrders.toString()} />
               <Field label="Revenue this month" value={formatCurrency(restaurant.marketplaceListing.currentMonthRevenue)} />
               <Field
@@ -553,7 +553,7 @@ function StatusBadge({ label, tone }: { label: string; tone: "emerald" | "amber"
     gray:    "bg-gray-100 text-gray-700",
     blue:    "bg-blue-100 text-blue-700",
     purple:  "bg-purple-100 text-purple-700",
-    orange:  "bg-orange-100 text-orange-700",
+    orange:  "bg-emerald-100 text-emerald-700",
     yellow:  "bg-yellow-100 text-yellow-800",
   };
   return (

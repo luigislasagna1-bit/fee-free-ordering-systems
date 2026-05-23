@@ -15,7 +15,7 @@ function FAQRow({ q, a }: { q: string; a: string }) {
         onClick={() => setOpen(!open)}
       >
         {q}
-        {open ? <ChevronUp className="w-5 h-5 text-orange-500 flex-shrink-0" /> : <ChevronDown className="w-5 h-5 text-gray-400 flex-shrink-0" />}
+        {open ? <ChevronUp className="w-5 h-5 text-emerald-500 flex-shrink-0" /> : <ChevronDown className="w-5 h-5 text-gray-400 flex-shrink-0" />}
       </button>
       {open && <p className="mt-3 text-gray-600 leading-relaxed">{a}</p>}
     </div>
@@ -42,8 +42,8 @@ export function FaqClient({ locale }: { locale: string }) {
             ))}
           </div>
         </section>
-        <section className="py-16 px-4 bg-orange-500 text-white text-center">
-          <Link href="/signup" className="bg-white text-orange-600 font-bold px-8 py-3 rounded-xl text-lg hover:bg-orange-50 transition inline-block">
+        <section className="py-16 px-4 bg-emerald-500 text-white text-center">
+          <Link href="/signup" className="bg-white text-emerald-600 font-bold px-8 py-3 rounded-xl text-lg hover:bg-emerald-50 transition inline-block">
             {tNav("startTrial")}
           </Link>
         </section>

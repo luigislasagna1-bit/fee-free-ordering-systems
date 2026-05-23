@@ -42,18 +42,18 @@ export default async function WebsiteEditorPage() {
   if (!entitled) {
     return (
       <div className="max-w-3xl mx-auto p-6">
-        <div className="rounded-2xl border-2 border-orange-200 bg-orange-50 p-6">
-          <h1 className="text-xl font-bold text-orange-900">
+        <div className="rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-6">
+          <h1 className="text-xl font-bold text-emerald-900">
             Sales Optimized Website add-on required
           </h1>
-          <p className="text-sm text-orange-800 mt-2 leading-relaxed">
+          <p className="text-sm text-emerald-800 mt-2 leading-relaxed">
             The website editor lets you customize the hosted marketing
             page at <code className="bg-white px-1 rounded">{restaurant.subdomain ?? restaurant.slug}.feefreeordering.com</code>.
             Activate the add-on to unlock it.
           </p>
           <Link
             href="/admin/billing/add-ons"
-            className="mt-4 inline-block px-4 py-2 rounded-lg bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition"
+            className="mt-4 inline-block px-4 py-2 rounded-lg bg-emerald-500 text-white font-semibold text-sm hover:bg-emerald-600 transition"
           >
             View add-ons
           </Link>
@@ -90,7 +90,7 @@ export default async function WebsiteEditorPage() {
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-orange-500 text-white text-sm font-semibold hover:bg-orange-600 transition"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-600 transition"
           >
             Live site <ExternalLink className="w-3.5 h-3.5" />
           </Link>

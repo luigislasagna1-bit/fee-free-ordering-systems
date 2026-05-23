@@ -42,7 +42,7 @@ export default async function PublishingHubPage() {
           isPublished
             ? "bg-green-50 border-green-200"
             : publishReady
-            ? "bg-orange-50 border-orange-200"
+            ? "bg-emerald-50 border-emerald-200"
             : "bg-gray-50 border-gray-200"
         }`}
       >
@@ -51,7 +51,7 @@ export default async function PublishingHubPage() {
         ) : (
           <AlertCircle
             className={`w-6 h-6 flex-shrink-0 mt-0.5 ${
-              publishReady ? "text-orange-600" : "text-gray-500"
+              publishReady ? "text-emerald-600" : "text-gray-500"
             }`}
           />
         )}
@@ -76,7 +76,7 @@ export default async function PublishingHubPage() {
             <ul className="mt-3 space-y-1 text-sm">
               {progress.requiredStepsRemaining.slice(0, 5).map((s) => (
                 <li key={s.id}>
-                  <Link href={s.href} className="text-orange-700 hover:underline">
+                  <Link href={s.href} className="text-emerald-700 hover:underline">
                     &rarr; {s.label}
                   </Link>
                 </li>
@@ -121,7 +121,7 @@ export default async function PublishingHubPage() {
           </div>
           <Link
             href="/kitchen"
-            className="text-sm font-medium text-orange-600 hover:underline whitespace-nowrap"
+            className="text-sm font-medium text-emerald-600 hover:underline whitespace-nowrap"
           >
             Open Kitchen &rarr;
           </Link>
@@ -158,10 +158,10 @@ export default async function PublishingHubPage() {
         {/* Legacy Website — FREE */}
         <Link
           href="/admin/publishing/legacy-website"
-          className="group rounded-xl border border-gray-200 bg-white p-5 hover:border-orange-300 hover:shadow-md transition"
+          className="group rounded-xl border border-gray-200 bg-white p-5 hover:border-emerald-300 hover:shadow-md transition"
         >
           <div className="flex items-start justify-between">
-            <Code2 className="w-8 h-8 text-orange-500" />
+            <Code2 className="w-8 h-8 text-emerald-500" />
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700">
               Free
             </span>
@@ -170,7 +170,7 @@ export default async function PublishingHubPage() {
           <p className="text-sm text-gray-600 mt-1">
             Paste a snippet into your existing website and start taking online orders.
           </p>
-          <div className="mt-3 text-sm text-orange-600 font-medium group-hover:underline">
+          <div className="mt-3 text-sm text-emerald-600 font-medium group-hover:underline">
             Get install code &rarr;
           </div>
         </Link>
@@ -181,10 +181,10 @@ export default async function PublishingHubPage() {
             href={hostedUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group rounded-xl border border-gray-200 bg-white p-5 hover:border-orange-300 hover:shadow-md transition"
+            className="group rounded-xl border border-gray-200 bg-white p-5 hover:border-emerald-300 hover:shadow-md transition"
           >
             <div className="flex items-start justify-between">
-              <Globe className="w-8 h-8 text-orange-500" />
+              <Globe className="w-8 h-8 text-emerald-500" />
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700">
                 Active
               </span>
@@ -193,7 +193,7 @@ export default async function PublishingHubPage() {
             <p className="text-sm text-gray-600 mt-1">
               Your hosted marketing page is live.
             </p>
-            <div className="mt-3 text-sm text-orange-600 font-medium group-hover:underline">
+            <div className="mt-3 text-sm text-emerald-600 font-medium group-hover:underline">
               View site &rarr;
             </div>
           </Link>

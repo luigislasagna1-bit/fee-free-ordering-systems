@@ -82,11 +82,11 @@ export function LegacyWidgetClient({
     <div className="space-y-6">
       {/* ── Not-published banner ─────────────────────────────────────── */}
       {!isPublished && (
-        <div className="rounded-lg border border-orange-200 bg-orange-50 p-4 flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
-          <div className="text-sm text-orange-900">
+        <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+          <div className="text-sm text-emerald-900">
             <p className="font-medium">Not yet published</p>
-            <p className="mt-0.5 text-orange-800">
+            <p className="mt-0.5 text-emerald-800">
               You can copy this code now, but the widget won&apos;t accept orders until you finish setup
               and click Publish on the previous page.
             </p>
@@ -99,7 +99,7 @@ export function LegacyWidgetClient({
         {/* Controls */}
         <div className="rounded-xl border border-gray-200 bg-white p-5 space-y-5">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-orange-500" />
+            <Sparkles className="w-4 h-4 text-emerald-500" />
             <h3 className="font-semibold text-gray-900">Customize</h3>
           </div>
 
@@ -114,7 +114,7 @@ export function LegacyWidgetClient({
               maxLength={40}
               onChange={(e) => setLabel(e.target.value)}
               placeholder={DEFAULT_LABEL}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
             />
             <p className="text-[11px] text-gray-500 mt-1">
               What the button says. Default: &quot;See MENU &amp; Order&quot; (the
@@ -140,7 +140,7 @@ export function LegacyWidgetClient({
                 onChange={(e) => setColor(e.target.value)}
                 placeholder="#ef4444"
                 pattern="^#[0-9a-fA-F]{6}$"
-                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition"
+                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
               />
             </div>
             <div className="flex gap-1.5 mt-2">
@@ -197,7 +197,7 @@ export function LegacyWidgetClient({
                   value={customSelector}
                   onChange={(e) => setCustomSelector(e.target.value)}
                   placeholder="#order-button"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
                 />
                 <p className="text-[11px] text-gray-500 mt-1 leading-relaxed">
                   Add an empty <code className="bg-gray-100 px-1 rounded">&lt;div id=&quot;order-button&quot;&gt;&lt;/div&gt;</code> wherever
@@ -345,7 +345,7 @@ function PosRadio({
       onClick={() => onSelect(value)}
       className={
         selected
-          ? "w-full text-left px-3 py-2 rounded-lg border-2 border-orange-400 bg-orange-50 transition"
+          ? "w-full text-left px-3 py-2 rounded-lg border-2 border-emerald-400 bg-emerald-50 transition"
           : "w-full text-left px-3 py-2 rounded-lg border-2 border-gray-200 bg-white hover:border-gray-300 transition"
       }
     >
@@ -353,7 +353,7 @@ function PosRadio({
         <div
           className={
             selected
-              ? "w-3.5 h-3.5 rounded-full border-2 border-orange-500 bg-orange-500"
+              ? "w-3.5 h-3.5 rounded-full border-2 border-emerald-500 bg-emerald-500"
               : "w-3.5 h-3.5 rounded-full border-2 border-gray-300 bg-white"
           }
         />
@@ -381,7 +381,7 @@ function BrowserMock({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       {/* Mock content */}
-      <div className="relative h-56 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 overflow-hidden">
+      <div className="relative h-56 bg-gradient-to-br from-amber-50 via-emerald-50 to-rose-50 overflow-hidden">
         <div className="absolute inset-0 p-4 text-gray-400 text-[10px] leading-relaxed">
           <div className="h-3 w-24 bg-gray-200 rounded mb-2" />
           <div className="h-2 w-40 bg-gray-100 rounded mb-1" />

@@ -431,7 +431,7 @@ export function AdminSidebar({
           // than sub-group buttons so the visual indentation reads as
           // hierarchy. All leaves share this exact style.
           "flex items-center gap-2.5 px-3 py-1.5 text-sm font-medium transition mx-2 rounded-lg mb-0.5 relative",
-          active ? "bg-orange-500 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
+          active ? "bg-emerald-500 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
         )}
       >
         <div className="relative flex-shrink-0">
@@ -469,7 +469,7 @@ export function AdminSidebar({
     )}>
       <div className="h-16 flex items-center justify-between px-4 border-b border-gray-700">
         {!collapsed && (
-          <Link href="/admin" className="flex items-center gap-2 text-orange-400 font-bold text-lg truncate">
+          <Link href="/admin" className="flex items-center gap-2 text-emerald-400 font-bold text-lg truncate">
             <ChefHat className="w-6 h-6 flex-shrink-0" />
             <span className="truncate">{tr("dashboard", "Dashboard")}</span>
           </Link>
@@ -517,15 +517,15 @@ export function AdminSidebar({
         ) : (
           <Link
             href={setupProgress.publishReady ? "/admin/setup" : "/admin/setup/next"}
-            className="mx-2 mt-3 mb-1 bg-gradient-to-r from-orange-500/20 to-orange-500/10 border border-orange-500/40 rounded-lg px-3 py-2 text-xs hover:border-orange-500/70 transition"
+            className="mx-2 mt-3 mb-1 bg-gradient-to-r from-emerald-500/20 to-emerald-500/10 border border-emerald-500/40 rounded-lg px-3 py-2 text-xs hover:border-emerald-500/70 transition"
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="font-semibold text-orange-400">Setup progress</span>
-              <span className="text-orange-300 font-bold">{setupProgress.percent}%</span>
+              <span className="font-semibold text-emerald-400">Setup progress</span>
+              <span className="text-emerald-300 font-bold">{setupProgress.percent}%</span>
             </div>
             <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
               <div
-                className="h-full bg-orange-400 transition-all"
+                className="h-full bg-emerald-400 transition-all"
                 style={{ width: `${setupProgress.percent}%` }}
               />
             </div>
@@ -558,7 +558,7 @@ export function AdminSidebar({
                 title={tr(group.labelKey, group.label)}
                 className={cn(
                   "w-full flex items-center justify-center py-3 transition mx-2 rounded-lg mb-1 relative",
-                  activeInGroup ? "bg-orange-500 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                  activeInGroup ? "bg-emerald-500 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
                 )}
               >
                 <div className="relative">
@@ -592,7 +592,7 @@ export function AdminSidebar({
                     // as one tier of navigation.
                     "w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-bold uppercase tracking-wider transition",
                     activeInGroup
-                      ? "text-orange-400"
+                      ? "text-emerald-400"
                       : "text-gray-400 hover:text-white"
                   )}
                 >
@@ -643,7 +643,7 @@ export function AdminSidebar({
                               // this exact style so they read as one tier.
                               "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-semibold transition",
                               subActive
-                                ? "text-orange-300 bg-gray-800/60"
+                                ? "text-emerald-300 bg-gray-800/60"
                                 : "text-gray-300 hover:bg-gray-800/40 hover:text-white"
                             )}
                           >

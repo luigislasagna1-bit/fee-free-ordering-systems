@@ -2,10 +2,10 @@ import { ApplyClient } from "./ApplyClient";
 
 export default function PartnersApplyPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-50">
       <div className="max-w-2xl mx-auto px-6 py-16">
         <div className="text-center mb-10">
-          <div className="inline-block bg-orange-500 text-white text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full mb-4">
+          <div className="inline-block bg-emerald-500 text-white text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full mb-4">
             Partner Program
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-3">Sell Fee Free Ordering. Get paid for it.</h1>
@@ -45,11 +45,11 @@ function Tier({
 }) {
   const tones: Record<string, string> = {
     gray: "bg-white border-gray-200 text-gray-700",
-    orange: "bg-orange-50 border-orange-200 text-orange-700",
+    orange: "bg-emerald-50 border-emerald-200 text-emerald-700",
     green: "bg-green-50 border-green-200 text-green-700",
   };
   return (
-    <div className={`rounded-xl border p-4 text-center ${tones[tone]} ${highlight ? "ring-2 ring-orange-300" : ""}`}>
+    <div className={`rounded-xl border p-4 text-center ${tones[tone]} ${highlight ? "ring-2 ring-emerald-300" : ""}`}>
       <div className="text-3xl font-bold mb-1">{rate}</div>
       <div className="text-xs uppercase tracking-wide">{range}</div>
     </div>

@@ -109,7 +109,7 @@ function ConfirmModal({ title, message, confirmLabel = "Delete", onConfirm, onCa
 function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   return (
     <button type="button" onClick={onToggle}
-      className={`relative w-11 h-6 rounded-full transition-colors flex-shrink-0 ${on ? "bg-orange-500" : "bg-gray-300"}`}>
+      className={`relative w-11 h-6 rounded-full transition-colors flex-shrink-0 ${on ? "bg-emerald-500" : "bg-gray-300"}`}>
       <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all ${on ? "left-[22px]" : "left-0.5"}`} />
     </button>
   );
@@ -222,7 +222,7 @@ function ItemModal({
             ["pizza", pizza.isPizza ? "🍕 Pizza" : "Pizza Setup"],
           ] as const).map(([t, label]) => (
             <button key={t} onClick={() => setTab(t)}
-              className={`px-4 py-3 text-sm font-medium border-b-2 transition whitespace-nowrap flex-shrink-0 ${tab === t ? "border-orange-500 text-orange-600" : "border-transparent text-gray-500 hover:text-gray-700"}`}>
+              className={`px-4 py-3 text-sm font-medium border-b-2 transition whitespace-nowrap flex-shrink-0 ${tab === t ? "border-emerald-500 text-emerald-600" : "border-transparent text-gray-500 hover:text-gray-700"}`}>
               {label}
             </button>
           ))}
@@ -234,12 +234,12 @@ function ItemModal({
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Item Name *</label>
-                  <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g. Margherita Pizza" />
                 </div>
                 <div className="col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                  <textarea className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none resize-none" rows={2}
+                  <textarea className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none" rows={2}
                     value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Describe this item..." />
                 </div>
                 {form.hasVariants ? (
@@ -252,14 +252,14 @@ function ItemModal({
                     <label className="block text-sm font-medium text-gray-700 mb-1">Base Price *</label>
                     <div className="relative">
                       <span className="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
-                      <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                      <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                         value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))} placeholder="0.00" />
                     </div>
                   </div>
                 )}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.categoryId} onChange={e => setForm(f => ({ ...f, categoryId: e.target.value }))}>
                     {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                   </select>
@@ -281,7 +281,7 @@ function ItemModal({
                   ["forDelivery", "Available for delivery", Truck],
                 ] as [keyof typeof form, string, any][]).map(([field, label, Icon]) => (
                   <button key={field} onClick={() => toggle(field)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form[field] ? "border-orange-500 bg-orange-50 text-orange-700" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}>
+                    className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form[field] ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}>
                     <Icon className="w-4 h-4" />
                     {label}
                     {form[field] ? <Check className="w-3.5 h-3.5" /> : null}
@@ -298,7 +298,7 @@ function ItemModal({
                 <div className="flex gap-2 flex-wrap">
                   {DAY_NAMES.map((d, i) => (
                     <button key={i} onClick={() => toggleDay(i)}
-                      className={`w-12 h-10 rounded-lg border text-sm font-medium transition ${form.availableDays.includes(i) ? "bg-orange-500 border-orange-500 text-white" : "border-gray-200 text-gray-500 hover:border-gray-400"}`}>
+                      className={`w-12 h-10 rounded-lg border text-sm font-medium transition ${form.availableDays.includes(i) ? "bg-emerald-500 border-emerald-500 text-white" : "border-gray-200 text-gray-500 hover:border-gray-400"}`}>
                       {d}
                     </button>
                   ))}
@@ -309,12 +309,12 @@ function ItemModal({
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Available From</label>
-                  <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.availableFrom} onChange={e => setForm(f => ({ ...f, availableFrom: e.target.value }))} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Available Until</label>
-                  <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.availableTo} onChange={e => setForm(f => ({ ...f, availableTo: e.target.value }))} />
                 </div>
               </div>
@@ -326,7 +326,7 @@ function ItemModal({
             <div className="space-y-3">
               {/* Enable-variants toggle directly on this tab — eliminates the confusion */}
               <div className="flex items-center justify-between p-3 rounded-xl border-2 transition"
-                style={form.hasVariants ? { borderColor: "#f97316", backgroundColor: "#fff7ed" } : { borderColor: "#e5e7eb", backgroundColor: "#f9fafb" }}>
+                style={form.hasVariants ? { borderColor: "#10b981", backgroundColor: "#ecfdf5" } : { borderColor: "#e5e7eb", backgroundColor: "#f9fafb" }}>
                 <div>
                   <div className="text-sm font-semibold text-gray-800">Use sizes / variants for pricing</div>
                   <div className="text-xs text-gray-500 mt-0.5">
@@ -350,13 +350,13 @@ function ItemModal({
               {variants.map((v, i) => (
                 <div key={i} className="flex items-center gap-3 bg-gray-50 rounded-lg p-3">
                   <div className="flex-1">
-                    <input className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    <input className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                       placeholder={`Size name (e.g. Small 10")`}
                       value={v.name} onChange={e => setVariants(vs => vs.map((x, j) => j === i ? { ...x, name: e.target.value } : x))} />
                   </div>
                   <div className="w-28 relative">
                     <span className="absolute left-2 top-2 text-gray-400 text-sm">$</span>
-                    <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded pl-6 pr-2 py-1.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded pl-6 pr-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                       placeholder="0.00"
                       value={v.price || ""} onChange={e => setVariants(vs => vs.map((x, j) => j === i ? { ...x, price: parseFloat(e.target.value) || 0 } : x))} />
                   </div>
@@ -371,7 +371,7 @@ function ItemModal({
                   // Auto-enable hasVariants when user adds their first custom variant
                   if (!form.hasVariants) setForm(f => ({ ...f, hasVariants: true }));
                 }}
-                className="flex items-center gap-2 text-sm text-orange-600 hover:text-orange-700 font-medium">
+                className="flex items-center gap-2 text-sm text-emerald-600 hover:text-emerald-700 font-medium">
                 <Plus className="w-4 h-4" /> Add Variant
               </button>
             </div>
@@ -380,7 +380,7 @@ function ItemModal({
           {tab === "pizza" && (
             <div className="space-y-5">
               {/* Master toggle */}
-              <div className="flex items-center justify-between p-4 bg-orange-50 rounded-xl border border-orange-100">
+              <div className="flex items-center justify-between p-4 bg-emerald-50 rounded-xl border border-emerald-100">
                 <div>
                   <div className="font-semibold text-gray-900 flex items-center gap-2">
                     <span>🍕</span> Pizza Builder
@@ -419,7 +419,7 @@ function ItemModal({
                       <div key={key}>
                         <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
                         <select
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                           value={pizza[key]}
                           onChange={e => setPizza(p => ({ ...p, [key]: e.target.value }))}
                         >
@@ -443,7 +443,7 @@ function ItemModal({
                           <label key={g.id} className="flex items-center gap-2.5 cursor-pointer hover:bg-white rounded p-1 transition">
                             <input
                               type="checkbox"
-                              className="w-4 h-4 accent-orange-500 flex-shrink-0"
+                              className="w-4 h-4 accent-emerald-500 flex-shrink-0"
                               checked={pizza.toppingGroupIds.includes(g.id)}
                               onChange={e => setPizza(p => ({
                                 ...p,
@@ -467,7 +467,7 @@ function ItemModal({
                       <div className={form.hasVariants ? "col-span-2" : ""}>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Included Toppings</label>
                         <input type="number" min="0" placeholder="0"
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                           value={pizza.includedToppings}
                           onChange={e => setPizza(p => ({ ...p, includedToppings: parseInt(e.target.value) || 0 }))} />
                         <p className="text-xs text-gray-400 mt-0.5">Free toppings in base price (0 = use each option&apos;s price)</p>
@@ -487,7 +487,7 @@ function ItemModal({
                                   <div className="relative flex-1">
                                     <span className="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
                                     <input type="number" step="0.01" min="0" placeholder="0.00"
-                                      className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                                      className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                                       value={pizza.variantToppingPrices[v.name.trim()] ?? ""}
                                       onChange={e => setPizza(p => ({
                                         ...p,
@@ -506,7 +506,7 @@ function ItemModal({
                           <div className="relative">
                             <span className="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
                             <input type="number" step="0.01" min="0" placeholder="0.00"
-                              className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                              className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                               value={pizza.extraToppingPrice}
                               onChange={e => setPizza(p => ({ ...p, extraToppingPrice: e.target.value }))} />
                           </div>
@@ -516,7 +516,7 @@ function ItemModal({
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Half-Topping Multiplier</label>
                         <input type="number" step="0.1" min="0" max="1" placeholder="0.5"
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                           value={pizza.halfToppingMultiplier}
                           onChange={e => setPizza(p => ({ ...p, halfToppingMultiplier: e.target.value }))} />
                         <p className="text-xs text-gray-400 mt-0.5">0.5 = 50% price for a half-pizza topping</p>
@@ -524,7 +524,7 @@ function ItemModal({
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">&quot;Extra&quot; Qty Upcharge</label>
                         <input type="number" step="0.1" min="0" placeholder="0"
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                           value={pizza.extraQuantityMultiplier}
                           onChange={e => setPizza(p => ({ ...p, extraQuantityMultiplier: e.target.value }))} />
                         <p className="text-xs text-gray-400 mt-0.5">0 = no extra charge for &quot;Extra&quot; quantity</p>
@@ -540,7 +540,7 @@ function ItemModal({
         <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
           <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800">Cancel</button>
           <button onClick={save} disabled={saving}
-            className="px-6 py-2 bg-orange-500 text-white text-sm font-semibold rounded-lg hover:bg-orange-600 transition disabled:opacity-50">
+            className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 transition disabled:opacity-50">
             {saving ? "Saving..." : isNew ? "Add Item" : "Save Changes"}
           </button>
         </div>
@@ -600,38 +600,38 @@ function ModifierModal({
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Group Name *</label>
-            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g. Size, Crust, Extra Toppings" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Description (optional)</label>
-            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Instructions shown to customer" />
           </div>
           <div className="grid grid-cols-3 gap-3">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Min Select</label>
-              <input type="number" min="0" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" min="0" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.minSelect} onChange={e => setForm(f => ({ ...f, minSelect: parseInt(e.target.value) || 0 }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Max Select</label>
-              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.maxSelect} onChange={e => setForm(f => ({ ...f, maxSelect: parseInt(e.target.value) || 1 }))} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Max per Option</label>
-              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.maxPerOption} onChange={e => setForm(f => ({ ...f, maxPerOption: parseInt(e.target.value) || 1 }))} />
             </div>
           </div>
           <div className="flex gap-3">
             <button onClick={() => setForm(f => ({ ...f, required: !f.required }))}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.required ? "border-orange-500 bg-orange-50 text-orange-700" : "border-gray-200 text-gray-600"}`}>
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.required ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
               <Check className="w-4 h-4" /> Required {form.required && "✓"}
             </button>
             <button onClick={() => setForm(f => ({ ...f, isHidden: !f.isHidden }))}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isHidden ? "border-orange-500 bg-orange-50 text-orange-700" : "border-gray-200 text-gray-600"}`}>
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isHidden ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
               <EyeOff className="w-4 h-4" /> Hidden {form.isHidden && "✓"}
             </button>
           </div>
@@ -640,26 +640,26 @@ function ModifierModal({
             <div className="flex items-center justify-between mb-3">
               <label className="text-sm font-semibold text-gray-700">Options / Choices</label>
               <button onClick={() => setOptions(o => [...o, { name: "", priceAdjustment: 0, isDefault: false, isAvailable: true }])}
-                className="text-sm text-orange-600 hover:text-orange-700 font-medium flex items-center gap-1">
+                className="text-sm text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-1">
                 <Plus className="w-3.5 h-3.5" /> Add option
               </button>
             </div>
             <div className="space-y-2">
               {options.map((opt, i) => (
                 <div key={i} className="flex items-center gap-2 bg-gray-50 rounded-lg p-2">
-                  <input className="flex-1 border border-gray-200 rounded px-2 py-1.5 text-sm focus:ring-1 focus:ring-orange-400 focus:outline-none bg-white"
+                  <input className="flex-1 border border-gray-200 rounded px-2 py-1.5 text-sm focus:ring-1 focus:ring-emerald-400 focus:outline-none bg-white"
                     placeholder="Option name" value={opt.name}
                     onChange={e => setOptions(os => os.map((o, j) => j === i ? { ...o, name: e.target.value } : o))} />
                   <div className="relative w-24">
                     <span className="absolute left-2 top-1.5 text-gray-400 text-xs">+$</span>
-                    <input type="number" step="0.01" min="0" className="w-full border border-gray-200 rounded pl-7 pr-2 py-1.5 text-sm focus:ring-1 focus:ring-orange-400 focus:outline-none bg-white"
+                    <input type="number" step="0.01" min="0" className="w-full border border-gray-200 rounded pl-7 pr-2 py-1.5 text-sm focus:ring-1 focus:ring-emerald-400 focus:outline-none bg-white"
                       placeholder="0.00" value={opt.priceAdjustment || ""}
                       onChange={e => setOptions(os => os.map((o, j) => j === i ? { ...o, priceAdjustment: parseFloat(e.target.value) || 0 } : o))} />
                   </div>
                   <button
                     onClick={() => setOptions(os => os.map((o, j) => j === i ? { ...o, isDefault: !o.isDefault } : o))}
                     title="Set as default"
-                    className={`p-1.5 rounded text-xs transition ${opt.isDefault ? "bg-orange-100 text-orange-600" : "text-gray-400 hover:text-gray-600"}`}>
+                    className={`p-1.5 rounded text-xs transition ${opt.isDefault ? "bg-emerald-100 text-emerald-600" : "text-gray-400 hover:text-gray-600"}`}>
                     ★
                   </button>
                   {options.length > 1 && (
@@ -674,7 +674,7 @@ function ModifierModal({
         <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
           <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">Cancel</button>
           <button onClick={save} disabled={saving}
-            className="px-6 py-2 bg-orange-500 text-white text-sm font-semibold rounded-lg hover:bg-orange-600 disabled:opacity-50">
+            className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
             {saving ? "Saving..." : isNew ? "Add Group" : "Save"}
           </button>
         </div>
@@ -690,7 +690,7 @@ function ModifierChip({ group, inherited, onRemove }: {
 }) {
   return (
     <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border font-medium ${
-      inherited ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-orange-50 border-orange-200 text-orange-700"
+      inherited ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-emerald-50 border-emerald-200 text-emerald-700"
     }`}>
       {inherited && <span className="opacity-60 text-[10px]" title="Inherited from category">↑</span>}
       {group.name}
@@ -745,7 +745,7 @@ function SortableItemRow({
       onDragOver={handleDragOver}
       onDragLeave={() => setDragOver(false)}
       onDrop={handleDrop}
-      className={`flex items-start gap-3 px-4 py-3 hover:bg-gray-50 border-b border-gray-50 last:border-0 group transition ${item.isHidden ? "opacity-50" : ""} ${dragOver ? "bg-orange-50 outline outline-2 outline-orange-400 outline-dashed" : ""}`}>
+      className={`flex items-start gap-3 px-4 py-3 hover:bg-gray-50 border-b border-gray-50 last:border-0 group transition ${item.isHidden ? "opacity-50" : ""} ${dragOver ? "bg-emerald-50 outline outline-2 outline-emerald-400 outline-dashed" : ""}`}>
       <button {...attributes} {...listeners} suppressHydrationWarning className="cursor-grab text-gray-300 hover:text-gray-400 touch-none mt-1">
         <GripVertical className="w-4 h-4" />
       </button>
@@ -763,7 +763,7 @@ function SortableItemRow({
           {item.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">Hidden</span>}
           {item.hasVariants && <span className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">Variants</span>}
           {item.pizzaConfig && (() => { try { return JSON.parse(item.pizzaConfig!)?.isPizza; } catch { return false; } })() && (
-            <span className="text-xs bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded">🍕 Pizza</span>
+            <span className="text-xs bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">🍕 Pizza</span>
           )}
         </div>
         {item.description && <div className="text-xs text-gray-400 truncate mt-0.5">{item.description}</div>}
@@ -778,7 +778,7 @@ function SortableItemRow({
             ))}
           </div>
         )}
-        {dragOver && <div className="text-xs text-orange-500 mt-1">Drop to attach modifier group</div>}
+        {dragOver && <div className="text-xs text-emerald-500 mt-1">Drop to attach modifier group</div>}
       </div>
       <div className="flex items-center gap-2 flex-shrink-0">
         {item.hasVariants
@@ -842,7 +842,7 @@ function SortableCategoryBlock({
   return (
     <div ref={setNodeRef} style={style} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
       <div
-        className={`flex items-start gap-2 p-4 cursor-pointer hover:bg-gray-50 select-none group transition ${catDragOver ? "bg-orange-50 outline outline-2 outline-orange-400 outline-dashed" : ""}`}
+        className={`flex items-start gap-2 p-4 cursor-pointer hover:bg-gray-50 select-none group transition ${catDragOver ? "bg-emerald-50 outline outline-2 outline-emerald-400 outline-dashed" : ""}`}
         onClick={onToggleExpand}
         onDragOver={e => { e.preventDefault(); if (e.dataTransfer.types.includes("librarygroupid")) { e.dataTransfer.dropEffect = "copy"; setCatDragOver(true); } }}
         onDragLeave={() => setCatDragOver(false)}
@@ -858,8 +858,8 @@ function SortableCategoryBlock({
         {cat.imageUrl ? (
           <img src={cat.imageUrl} alt={cat.name} className="w-8 h-8 rounded-lg object-cover flex-shrink-0" />
         ) : (
-          <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
-            <UtensilsCrossed className="w-4 h-4 text-orange-400" />
+          <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
+            <UtensilsCrossed className="w-4 h-4 text-emerald-400" />
           </div>
         )}
         <div className="flex-1 min-w-0">
@@ -876,10 +876,10 @@ function SortableCategoryBlock({
               ))}
             </div>
           )}
-          {catDragOver && <div className="text-xs text-orange-500 mt-1">Drop to apply to all items in this category</div>}
+          {catDragOver && <div className="text-xs text-emerald-500 mt-1">Drop to apply to all items in this category</div>}
         </div>
         <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition flex-shrink-0" onClick={e => e.stopPropagation()}>
-          <button onClick={onAddItem} className="flex items-center gap-1 text-xs text-orange-600 hover:text-orange-700 font-medium px-2 py-1 rounded hover:bg-orange-50">
+          <button onClick={onAddItem} className="flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 font-medium px-2 py-1 rounded hover:bg-emerald-50">
             <Plus className="w-3.5 h-3.5" /> Add Item
           </button>
           <button onClick={onEditCategory} className="p-1.5 text-gray-400 hover:text-blue-500 rounded"><Edit2 className="w-3.5 h-3.5" /></button>
@@ -938,13 +938,13 @@ function ModifierLibraryPanel({
           <p className="text-xs text-gray-400 mt-0.5">Modifier groups library</p>
         </div>
         <button onClick={onAddGroup}
-          className="flex items-center gap-1 bg-orange-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-orange-600">
+          className="flex items-center gap-1 bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-emerald-600">
           <Plus className="w-3.5 h-3.5" /> Add Group
         </button>
       </div>
 
-      <div className="px-3 py-2 bg-orange-50 border-b border-orange-100">
-        <p className="text-xs text-orange-700">
+      <div className="px-3 py-2 bg-emerald-50 border-b border-emerald-100">
+        <p className="text-xs text-emerald-700">
           <GripVertical className="w-3 h-3 inline mr-1 opacity-60" />
           Drag modifier groups onto items or categories to attach them.
         </p>
@@ -965,14 +965,14 @@ function ModifierLibraryPanel({
               e.dataTransfer.setData("libraryGroupId", g.id);
               e.dataTransfer.effectAllowed = "copy";
             }}
-            className="bg-white rounded-xl border border-gray-100 overflow-hidden cursor-grab active:cursor-grabbing hover:border-orange-200 hover:shadow-sm transition"
+            className="bg-white rounded-xl border border-gray-100 overflow-hidden cursor-grab active:cursor-grabbing hover:border-emerald-200 hover:shadow-sm transition"
           >
             <div className="flex items-center gap-2 p-3 hover:bg-gray-50" onClick={() => toggle(g.id)}>
               <GripVertical className="w-3.5 h-3.5 text-gray-300 flex-shrink-0" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="text-sm font-semibold text-gray-800 truncate">{g.name}</span>
-                  {g.required && <span className="text-xs bg-orange-50 text-orange-600 px-1 rounded">Required</span>}
+                  {g.required && <span className="text-xs bg-emerald-50 text-emerald-600 px-1 rounded">Required</span>}
                   {g.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1 rounded">Hidden</span>}
                 </div>
                 <div className="text-xs text-gray-400 mt-0.5">
@@ -1036,12 +1036,12 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
         <div className="p-5 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Category Name *</label>
-            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g. Pizzas" autoFocus />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+            <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Optional description" />
           </div>
           <div>
@@ -1053,13 +1053,13 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
             />
           </div>
           <button onClick={() => setForm(f => ({ ...f, isHidden: !f.isHidden }))}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isHidden ? "border-orange-500 bg-orange-50 text-orange-700" : "border-gray-200 text-gray-600"}`}>
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isHidden ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
             <EyeOff className="w-4 h-4" /> Hidden from customer menu {form.isHidden && "✓"}
           </button>
         </div>
         <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
           <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">Cancel</button>
-          <button onClick={save} disabled={saving} className="px-6 py-2 bg-orange-500 text-white text-sm font-semibold rounded-lg hover:bg-orange-600 disabled:opacity-50">
+          <button onClick={save} disabled={saving} className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
             {saving ? "Saving..." : isNew ? "Add Category" : "Save"}
           </button>
         </div>
@@ -1272,7 +1272,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between p-5 border-b">
           <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-orange-500" />
+            <FileText className="w-5 h-5 text-emerald-500" />
             <h2 className="text-lg font-bold text-gray-900">Import Menu from PDF</h2>
           </div>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600"><X className="w-5 h-5" /></button>
@@ -1281,17 +1281,17 @@ function PdfImportModal({ categories, onClose, onImported }: {
         {step === "upload" && (
           <div className="flex-1 flex flex-col items-center justify-center p-10 gap-5">
             <div
-              className="w-full border-2 border-dashed border-gray-300 rounded-2xl p-10 flex flex-col items-center gap-3 cursor-pointer hover:border-orange-400 hover:bg-orange-50 transition"
+              className="w-full border-2 border-dashed border-gray-300 rounded-2xl p-10 flex flex-col items-center gap-3 cursor-pointer hover:border-emerald-400 hover:bg-emerald-50 transition"
               onClick={() => inputRef.current?.click()}
               onDragOver={(e) => e.preventDefault()}
               onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }}
             >
-              <Upload className="w-10 h-10 text-orange-400" />
+              <Upload className="w-10 h-10 text-emerald-400" />
               <div className="text-center">
                 <div className="font-semibold text-gray-800">Drop your menu PDF here</div>
                 <div className="text-sm text-gray-500 mt-1">or click to browse — max 10 MB</div>
               </div>
-              {uploading && <Loader2 className="w-6 h-6 animate-spin text-orange-500" />}
+              {uploading && <Loader2 className="w-6 h-6 animate-spin text-emerald-500" />}
             </div>
             <input ref={(el) => { inputRef.current = el; }} type="file" accept=".pdf,application/pdf" className="hidden"
               onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
@@ -1336,12 +1336,12 @@ function PdfImportModal({ categories, onClose, onImported }: {
                     <div className="px-4 py-3 bg-gray-50 flex items-center gap-3 flex-wrap sticky top-0 z-10">
                       <button
                         onClick={() => toggleAllInCat(ci)}
-                        className="text-xs text-orange-600 hover:underline whitespace-nowrap"
+                        className="text-xs text-emerald-600 hover:underline whitespace-nowrap"
                       >
                         {allOn ? "Deselect all" : someOn ? "Select all" : "Select all"}
                       </button>
                       <input
-                        className="flex-1 min-w-[180px] text-sm font-semibold text-gray-900 border-b border-transparent hover:border-gray-300 focus:border-orange-400 focus:outline-none px-0 py-0.5 bg-transparent"
+                        className="flex-1 min-w-[180px] text-sm font-semibold text-gray-900 border-b border-transparent hover:border-gray-300 focus:border-emerald-400 focus:outline-none px-0 py-0.5 bg-transparent"
                         value={cat.name}
                         onChange={(e) => updateCatName(ci, e.target.value)}
                         disabled={!!cat.existingCategoryId}
@@ -1349,7 +1349,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
                       <div className="flex items-center gap-2">
                         <span className="text-xs text-gray-500">into:</span>
                         <select
-                          className="text-xs border border-gray-300 rounded px-2 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-orange-500"
+                          className="text-xs border border-gray-300 rounded px-2 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
                           value={cat.existingCategoryId ?? ""}
                           onChange={(e) => updateCatMerge(ci, e.target.value || null)}
                         >
@@ -1371,23 +1371,23 @@ function PdfImportModal({ categories, onClose, onImported }: {
                             type="checkbox"
                             checked={cat.selected[ii]}
                             onChange={() => toggleItem(ci, ii)}
-                            className="mt-1 w-4 h-4 rounded accent-orange-500 flex-shrink-0"
+                            className="mt-1 w-4 h-4 rounded accent-emerald-500 flex-shrink-0"
                           />
                           <div className="flex-1 grid grid-cols-[1fr_auto] gap-x-3 gap-y-1">
                             <input
-                              className="text-sm font-medium border-b border-transparent hover:border-gray-300 focus:border-orange-400 focus:outline-none px-0 py-0.5"
+                              className="text-sm font-medium border-b border-transparent hover:border-gray-300 focus:border-emerald-400 focus:outline-none px-0 py-0.5"
                               value={item.name}
                               onChange={(e) => updateItem(ci, ii, "name", e.target.value)}
                             />
                             <input
                               type="number" step="0.01" min="0"
-                              className="w-24 text-sm text-right border border-gray-200 rounded-lg px-2 py-0.5 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                              className="w-24 text-sm text-right border border-gray-200 rounded-lg px-2 py-0.5 focus:outline-none focus:ring-2 focus:ring-emerald-400"
                               value={item.price}
                               onChange={(e) => updateItem(ci, ii, "price", parseFloat(e.target.value) || 0)}
                             />
                             <input
                               placeholder="Description (optional)"
-                              className="col-span-2 text-xs text-gray-500 border-b border-transparent hover:border-gray-300 focus:border-orange-400 focus:outline-none px-0 py-0.5"
+                              className="col-span-2 text-xs text-gray-500 border-b border-transparent hover:border-gray-300 focus:border-emerald-400 focus:outline-none px-0 py-0.5"
                               value={item.description}
                               onChange={(e) => updateItem(ci, ii, "description", e.target.value)}
                             />
@@ -1408,7 +1408,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
                 <button
                   onClick={confirmImport}
                   disabled={importing || totalSelected === 0}
-                  className="px-6 py-2 bg-orange-500 text-white text-sm font-semibold rounded-lg hover:bg-orange-600 disabled:opacity-50 flex items-center gap-2"
+                  className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50 flex items-center gap-2"
                 >
                   {importing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
                   Import {totalSelected} Item{totalSelected === 1 ? "" : "s"}
@@ -1569,7 +1569,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
             <Upload className="w-4 h-4" /> Import PDF
           </button>
           <button onClick={() => setCatModal({})}
-            className="flex items-center gap-2 bg-orange-500 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-orange-600 transition text-sm shadow-sm">
+            className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-emerald-600 transition text-sm shadow-sm">
             <Plus className="w-4 h-4" /> Add Category
           </button>
         </div>

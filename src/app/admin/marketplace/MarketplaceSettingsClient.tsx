@@ -147,7 +147,7 @@ export function MarketplaceSettingsClient({
       <div className="flex items-center justify-between flex-wrap gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-orange-500" />
+            <Sparkles className="w-6 h-6 text-emerald-500" />
             Marketplace Listing
           </h1>
           <p className="text-sm text-gray-500 mt-1">
@@ -157,7 +157,7 @@ export function MarketplaceSettingsClient({
         <Link
           href={`/marketplace/${restaurant.slug}`}
           target="_blank"
-          className="text-sm font-semibold text-orange-600 hover:text-orange-700 flex items-center gap-1.5"
+          className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1.5"
         >
           View your live listing <ExternalLink className="w-3.5 h-3.5" />
         </Link>
@@ -207,7 +207,7 @@ export function MarketplaceSettingsClient({
               onChange={(e) => update("marketplaceTagline", e.target.value)}
               maxLength={200}
               placeholder={`e.g. "Authentic Italian since 1985"`}
-              className="w-full rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400"
             />
             <CharCount value={listing.marketplaceTagline} max={200} />
           </Field>
@@ -223,7 +223,7 @@ export function MarketplaceSettingsClient({
               maxLength={500}
               rows={3}
               placeholder="Family-owned pizzeria specializing in wood-fired Neapolitan-style pizzas and house-made pasta. Open late."
-              className="w-full rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
+              className="w-full rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400 resize-none"
             />
             <CharCount value={listing.marketplaceShortDesc} max={500} />
           </Field>
@@ -239,7 +239,7 @@ export function MarketplaceSettingsClient({
                 value={listing.marketplaceBanner}
                 onChange={(e) => update("marketplaceBanner", e.target.value)}
                 placeholder="https://…"
-                className="flex-1 rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="flex-1 rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400"
               />
               {listing.marketplaceBanner && (
                 <button
@@ -276,13 +276,13 @@ export function MarketplaceSettingsClient({
                 }}
                 placeholder="pizza, italian, delivery…"
                 maxLength={40}
-                className="flex-1 rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="flex-1 rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400"
                 disabled={listing.marketplaceCategories.length >= 8}
               />
               <button
                 onClick={addCategory}
                 disabled={!catDraft.trim() || listing.marketplaceCategories.length >= 8}
-                className="px-4 py-2 rounded-xl bg-orange-500 text-white text-sm font-semibold hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 rounded-xl bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Add
               </button>
@@ -312,13 +312,13 @@ export function MarketplaceSettingsClient({
                 }}
                 placeholder="late-night, vegetarian-options…"
                 maxLength={40}
-                className="flex-1 rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="flex-1 rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400"
                 disabled={listing.marketplaceTags.length >= 8}
               />
               <button
                 onClick={addTag}
                 disabled={!tagDraft.trim() || listing.marketplaceTags.length >= 8}
-                className="px-4 py-2 rounded-xl bg-orange-500 text-white text-sm font-semibold hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 rounded-xl bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Add
               </button>
@@ -336,10 +336,10 @@ export function MarketplaceSettingsClient({
                   type="checkbox"
                   checked={listing.marketplaceFeatured}
                   onChange={(e) => update("marketplaceFeatured", e.target.checked)}
-                  className="w-4 h-4 accent-orange-500"
+                  className="w-4 h-4 accent-emerald-500"
                 />
                 <span className="flex items-center gap-1.5">
-                  <Star className={`w-4 h-4 ${listing.marketplaceFeatured ? "text-orange-500 fill-orange-500" : "text-gray-300"}`} />
+                  <Star className={`w-4 h-4 ${listing.marketplaceFeatured ? "text-emerald-500 fill-emerald-500" : "text-gray-300"}`} />
                   Show as Featured
                 </span>
               </label>
@@ -354,7 +354,7 @@ export function MarketplaceSettingsClient({
             <button
               onClick={save}
               disabled={saving || !dirty}
-              className="px-5 py-2 rounded-xl bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-5 py-2 rounded-xl bg-emerald-500 text-white font-semibold text-sm hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
               {saving ? "Saving…" : "Save changes"}
@@ -370,15 +370,15 @@ export function MarketplaceSettingsClient({
             </p>
             <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200">
               <div className={`bg-white rounded-2xl overflow-hidden shadow-sm border ${
-                listing.marketplaceFeatured ? "border-orange-300 ring-2 ring-orange-100" : "border-gray-100"
+                listing.marketplaceFeatured ? "border-emerald-300 ring-2 ring-emerald-100" : "border-gray-100"
               }`}>
-                <div className="relative h-32 sm:h-40 bg-gradient-to-br from-orange-300 to-pink-300 overflow-hidden">
+                <div className="relative h-32 sm:h-40 bg-gradient-to-br from-emerald-300 to-pink-300 overflow-hidden">
                   {previewBanner && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={previewBanner} alt={restaurant.name} className="w-full h-full object-cover" />
                   )}
                   {listing.marketplaceFeatured && (
-                    <span className="absolute top-2 right-2 bg-orange-500 text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+                    <span className="absolute top-2 right-2 bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
                       <Star className="w-3 h-3 fill-white" /> Featured
                     </span>
                   )}
@@ -403,7 +403,7 @@ export function MarketplaceSettingsClient({
                   {listing.marketplaceTags.length > 0 && (
                     <div className="mt-2 flex gap-1 flex-wrap">
                       {listing.marketplaceTags.slice(0, 3).map((tag) => (
-                        <span key={tag} className="text-[10px] bg-orange-50 text-orange-700 px-2 py-0.5 rounded-full font-medium">
+                        <span key={tag} className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-medium">
                           {tag}
                         </span>
                       ))}
@@ -496,20 +496,20 @@ export function MarketplaceSettingsClient({
                 <div className={`mt-4 rounded-xl p-3 border ${
                   stats.billing.capHit
                     ? "border-emerald-300 bg-emerald-50"
-                    : "border-orange-200 bg-orange-50"
+                    : "border-emerald-200 bg-emerald-50"
                 }`}>
                   <div className="flex items-center gap-1.5 mb-1">
                     <TrendingUp className={`w-3.5 h-3.5 ${
-                      stats.billing.capHit ? "text-emerald-700" : "text-orange-700"
+                      stats.billing.capHit ? "text-emerald-700" : "text-emerald-700"
                     }`} />
                     <span className={`text-xs font-bold uppercase tracking-wider ${
-                      stats.billing.capHit ? "text-emerald-800" : "text-orange-800"
+                      stats.billing.capHit ? "text-emerald-800" : "text-emerald-800"
                     }`}>
                       Marketplace bill this month
                     </span>
                   </div>
                   <div className={`text-xl font-bold ${
-                    stats.billing.capHit ? "text-emerald-900" : "text-orange-900"
+                    stats.billing.capHit ? "text-emerald-900" : "text-emerald-900"
                   }`}>
                     {formatCurrency(stats.billing.effectiveCents / 100)}
                     <span className="text-xs font-semibold opacity-70 ml-1">
@@ -520,7 +520,7 @@ export function MarketplaceSettingsClient({
                     USD · tax by province (CA) at settlement
                   </div>
                   <p className={`text-[11px] mt-1 leading-snug ${
-                    stats.billing.capHit ? "text-emerald-800" : "text-orange-800"
+                    stats.billing.capHit ? "text-emerald-800" : "text-emerald-800"
                   }`}>
                     {stats.billing.capHit ? (
                       <>
@@ -538,7 +538,7 @@ export function MarketplaceSettingsClient({
                   </p>
                   <Link
                     href="/admin/billing/add-ons"
-                    className="mt-2 inline-block text-[11px] font-semibold text-orange-700 hover:underline"
+                    className="mt-2 inline-block text-[11px] font-semibold text-emerald-700 hover:underline"
                   >
                     Switch to Monthly ($199.99/mo, unlimited) →
                   </Link>
@@ -548,7 +548,7 @@ export function MarketplaceSettingsClient({
               {stats.currentMonthOrders === 0 && (
                 <p className="mt-3 text-[11px] text-gray-500 italic leading-relaxed">
                   No marketplace orders yet this month. Once a customer orders through{" "}
-                  <Link href="/marketplace" className="text-orange-600 hover:underline">/marketplace</Link>{" "}
+                  <Link href="/marketplace" className="text-emerald-600 hover:underline">/marketplace</Link>{" "}
                   → your listing, real numbers appear here.
                 </p>
               )}
@@ -614,7 +614,7 @@ function Chip({
 }) {
   const colors = variant === "cat"
     ? "bg-purple-100 text-purple-700"
-    : "bg-orange-100 text-orange-700";
+    : "bg-emerald-100 text-emerald-700";
   return (
     <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${colors}`}>
       {variant === "cat" ? <Tag className="w-3 h-3" /> : null}

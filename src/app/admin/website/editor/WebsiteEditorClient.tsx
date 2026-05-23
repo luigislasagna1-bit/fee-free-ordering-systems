@@ -343,7 +343,7 @@ export function WebsiteEditorClient({
             <button
               type="button"
               onClick={addCustomSection}
-              className="w-full mt-2 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border-2 border-dashed border-gray-300 text-sm font-semibold text-gray-600 hover:border-orange-300 hover:text-orange-600 transition"
+              className="w-full mt-2 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border-2 border-dashed border-gray-300 text-sm font-semibold text-gray-600 hover:border-emerald-300 hover:text-emerald-600 transition"
             >
               <Plus className="w-4 h-4" /> Add section ({settings.customSections.length}/{MAX_CUSTOM_SECTIONS})
             </button>
@@ -369,7 +369,7 @@ export function WebsiteEditorClient({
               type="button"
               onClick={save}
               disabled={saving || !dirty}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-500 text-white font-semibold text-sm shadow hover:bg-orange-600 disabled:opacity-50 transition"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500 text-white font-semibold text-sm shadow hover:bg-emerald-600 disabled:opacity-50 transition"
             >
               {saving ? (
                 <>
@@ -454,7 +454,7 @@ function ToggleRow({
         role="switch"
         aria-checked={value}
         className={`relative inline-flex h-6 w-11 flex-shrink-0 rounded-full transition ${
-          value ? "bg-orange-500" : "bg-gray-300"
+          value ? "bg-emerald-500" : "bg-gray-300"
         }`}
       >
         <span
@@ -491,7 +491,7 @@ function TextField({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         maxLength={maxLength}
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-orange-300"
+        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-100 focus:border-emerald-300"
       />
       {help && <p className="text-[11px] text-gray-500 mt-1">{help}</p>}
     </div>
@@ -521,7 +521,7 @@ function TextAreaField({
         onChange={(e) => onChange(e.target.value)}
         rows={rows}
         maxLength={maxLength}
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-orange-300 resize-y"
+        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-100 focus:border-emerald-300 resize-y"
       />
       {help && <p className="text-[11px] text-gray-500 mt-1">{help}</p>}
       {maxLength && (
@@ -550,7 +550,7 @@ function SelectField({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-orange-300"
+        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-100 focus:border-emerald-300"
       >
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>

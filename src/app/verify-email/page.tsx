@@ -38,7 +38,7 @@ export default async function VerifyEmailPage({
         </p>
         <Link
           href="/admin"
-          className="inline-block mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl transition"
+          className="inline-block mt-6 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 py-3 rounded-xl transition"
         >
           Go to admin
         </Link>
@@ -59,7 +59,7 @@ export default async function VerifyEmailPage({
         </p>
         <Link
           href="/login"
-          className="inline-block mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl transition"
+          className="inline-block mt-6 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 py-3 rounded-xl transition"
         >
           Log in
         </Link>
@@ -81,7 +81,7 @@ export default async function VerifyEmailPage({
       </p>
       <Link
         href="/login"
-        className="inline-block mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl transition"
+        className="inline-block mt-6 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 py-3 rounded-xl transition"
       >
         Log in
       </Link>
@@ -91,7 +91,7 @@ export default async function VerifyEmailPage({
 
 function Frame({ children }: { children: React.ReactNode }) {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-amber-50 px-4 py-16">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-amber-50 px-4 py-16">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8 text-center">
         {children}
       </div>

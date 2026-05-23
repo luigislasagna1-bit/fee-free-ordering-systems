@@ -54,7 +54,7 @@ export function PricingClient({ locale }: { locale: string }) {
       <PublicNav currentLocale={locale} />
       <main className="flex-1">
         {/* ─── Hero ───────────────────────────────────────────── */}
-        <section className="bg-gradient-to-br from-orange-50 via-white to-amber-50 py-20 px-4 text-center">
+        <section className="bg-gradient-to-br from-emerald-50 via-white to-amber-50 py-20 px-4 text-center">
           <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-4">
             {t("title")}
           </h1>
@@ -66,8 +66,8 @@ export function PricingClient({ locale }: { locale: string }) {
 
         {/* ─── Free core card ──────────────────────────────────── */}
         <section className="py-12 px-4">
-          <div className="max-w-3xl mx-auto rounded-3xl border-2 border-orange-500 bg-white shadow-lg p-8 md:p-12 relative overflow-hidden">
-            <div className="absolute -top-3 right-8 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+          <div className="max-w-3xl mx-auto rounded-3xl border-2 border-emerald-500 bg-white shadow-lg p-8 md:p-12 relative overflow-hidden">
+            <div className="absolute -top-3 right-8 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">
               {t("freeBadge")}
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -75,10 +75,10 @@ export function PricingClient({ locale }: { locale: string }) {
             </h2>
             <p className="text-gray-600 mt-2">{t("freeSubtitle")}</p>
             <div className="flex items-baseline mt-4">
-              <span className="text-6xl font-extrabold text-orange-500">
+              <span className="text-6xl font-extrabold text-emerald-500">
                 ${" "}
               </span>
-              <span className="text-6xl font-extrabold text-orange-500">0</span>
+              <span className="text-6xl font-extrabold text-emerald-500">0</span>
               <span className="text-gray-500 ml-2 text-lg">{t("perMonth")}</span>
             </div>
             <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-800">
@@ -91,7 +91,7 @@ export function PricingClient({ locale }: { locale: string }) {
             </ul>
             <Link
               href="/signup"
-              className="mt-8 inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3 rounded-xl transition"
+              className="mt-8 inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl transition"
             >
               {t("freeCta")}
             </Link>
@@ -154,10 +154,10 @@ export function PricingClient({ locale }: { locale: string }) {
         </section>
 
         {/* ─── CTA strip ─────────────────────────────────────── */}
-        <section className="py-16 px-4 bg-orange-500 text-white text-center">
+        <section className="py-16 px-4 bg-emerald-500 text-white text-center">
           <Link
             href="/signup"
-            className="bg-white text-orange-600 font-bold px-8 py-3 rounded-xl text-lg hover:bg-orange-50 transition inline-block"
+            className="bg-white text-emerald-600 font-bold px-8 py-3 rounded-xl text-lg hover:bg-emerald-50 transition inline-block"
           >
             {tNav("startTrial")}
           </Link>

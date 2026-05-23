@@ -496,7 +496,7 @@ function ToppingPill({
           <QtyButton
             label="Xtra"
             active={qty === "extra"}
-            activeColor="#ea580c"
+            activeColor="#059669"
             onClick={(e) => { e.stopPropagation(); onSetQuantity("extra"); }}
           />
         </div>

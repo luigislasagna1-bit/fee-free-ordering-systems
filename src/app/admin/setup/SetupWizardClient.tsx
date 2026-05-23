@@ -108,7 +108,7 @@ export function SetupWizardClient({
       <div className={`rounded-2xl p-6 sm:p-8 text-white shadow-lg ${
         isPublished
           ? "bg-gradient-to-br from-emerald-500 to-teal-600"
-          : "bg-gradient-to-br from-orange-500 to-pink-500"
+          : "bg-gradient-to-br from-emerald-500 to-pink-500"
       }`}>
         <div className="flex items-center gap-2 mb-2">
           {isPublished ? <PartyPopper className="w-5 h-5" /> : <Rocket className="w-5 h-5" />}
@@ -158,7 +158,7 @@ export function SetupWizardClient({
         {!isPublished && progress.requiredStepsRemaining.length > 0 && (
           <Link
             href="/admin/setup/next"
-            className="mt-5 inline-flex items-center gap-2 bg-white text-orange-600 hover:bg-orange-50 font-bold px-5 py-2.5 rounded-xl text-sm shadow-md transition"
+            className="mt-5 inline-flex items-center gap-2 bg-white text-emerald-600 hover:bg-emerald-50 font-bold px-5 py-2.5 rounded-xl text-sm shadow-md transition"
           >
             {progress.completedSteps === 0 ? "Start guided setup" : "Continue where you left off"}
             <ArrowRight className="w-4 h-4" />
@@ -291,7 +291,7 @@ export function SetupWizardClient({
           </h3>
           <p className="text-sm text-gray-600 leading-relaxed">
             Published {publishedAt ? new Date(publishedAt).toLocaleDateString() : "recently"}.
-            Need to take your restaurant offline temporarily? Toggle <Link href="/admin/profile" className="text-orange-600 hover:underline">Profile → Active</Link> off
+            Need to take your restaurant offline temporarily? Toggle <Link href="/admin/profile" className="text-emerald-600 hover:underline">Profile → Active</Link> off
             — that hides you from customers without losing your setup data.
           </p>
         </div>
@@ -338,7 +338,7 @@ function SectionCard({
         <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
           <div className="w-20 h-1.5 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className={`h-full transition-all ${allDone ? "bg-emerald-500" : "bg-orange-400"}`}
+              className={`h-full transition-all ${allDone ? "bg-emerald-500" : "bg-emerald-400"}`}
               style={{ width: `${sectionPercent}%` }}
             />
           </div>

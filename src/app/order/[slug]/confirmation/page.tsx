@@ -37,9 +37,9 @@ export default async function ConfirmationPage({
           Your order has been received and is waiting for confirmation from {order.restaurant.name}.
         </p>
 
-        <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-6">
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6">
           <div className="text-sm text-gray-600 mb-1">Order Number</div>
-          <div className="text-2xl font-bold text-orange-500">{order.orderNumber}</div>
+          <div className="text-2xl font-bold text-emerald-500">{order.orderNumber}</div>
         </div>
 
         <div className="text-left space-y-3 mb-6">
@@ -79,7 +79,7 @@ export default async function ConfirmationPage({
         <div className="flex flex-col gap-3">
           <Link
             href={`/order/${slug}/status/${order.id}`}
-            className="flex items-center justify-center gap-2 bg-orange-500 text-white font-semibold py-3 rounded-xl hover:bg-orange-600 transition"
+            className="flex items-center justify-center gap-2 bg-emerald-500 text-white font-semibold py-3 rounded-xl hover:bg-emerald-600 transition"
           >
             Track Order Status <ArrowRight className="w-4 h-4" />
           </Link>

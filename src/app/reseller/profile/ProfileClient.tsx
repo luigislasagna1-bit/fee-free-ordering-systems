@@ -109,7 +109,7 @@ export function ProfileClient({ initial }: { initial: Initial }) {
               type="text"
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             />
           </Field>
           <div className="grid grid-cols-2 gap-3">
@@ -119,7 +119,7 @@ export function ProfileClient({ initial }: { initial: Initial }) {
                 placeholder="https://"
                 value={website}
                 onChange={(e) => setWebsite(e.target.value)}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               />
             </Field>
             <Field label="Country">
@@ -127,7 +127,7 @@ export function ProfileClient({ initial }: { initial: Initial }) {
                 type="text"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               />
             </Field>
           </div>
@@ -145,7 +145,7 @@ export function ProfileClient({ initial }: { initial: Initial }) {
             <select
               value={payoutMethod}
               onChange={(e) => setPayoutMethod(e.target.value as any)}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             >
               <option value="">Choose…</option>
               <option value="paypal">PayPal</option>
@@ -167,7 +167,7 @@ export function ProfileClient({ initial }: { initial: Initial }) {
                 value={payoutDetails}
                 onChange={(e) => setPayoutDetails(e.target.value)}
                 rows={3}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-mono focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               />
               {initial.payoutDetails && (
                 <p className="text-[11px] text-green-600 mt-1">Details saved. Edit to overwrite.</p>
@@ -188,7 +188,7 @@ export function ProfileClient({ initial }: { initial: Initial }) {
         <button
           onClick={save}
           disabled={saving}
-          className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-2.5 rounded-lg text-sm transition disabled:opacity-50"
+          className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2.5 rounded-lg text-sm transition disabled:opacity-50"
         >
           {saving && <Loader2 className="w-4 h-4 animate-spin" />}
           Save changes

@@ -146,7 +146,7 @@ export function NotificationsClient({ initialRecipients, initialCustomer }: Prop
     <div className="max-w-3xl mx-auto p-6 space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-          <Bell className="w-6 h-6 text-orange-500" /> {t("title")}
+          <Bell className="w-6 h-6 text-emerald-500" /> {t("title")}
         </h1>
         <p className="text-sm text-gray-500 mt-1">{t("staffRecipientsHelp")}</p>
       </div>
@@ -167,7 +167,7 @@ export function NotificationsClient({ initialRecipients, initialCustomer }: Prop
         ))}
 
         {showAdd ? (
-          <div className="bg-white border border-orange-200 rounded-2xl p-4 space-y-2">
+          <div className="bg-white border border-emerald-200 rounded-2xl p-4 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-sm font-semibold text-gray-700">{t("addRecipient")}</span>
               <button onClick={() => { setShowAdd(false); setNewEmail(""); setNewName(""); }} className="text-gray-400 hover:text-gray-700">
@@ -178,17 +178,17 @@ export function NotificationsClient({ initialRecipients, initialCustomer }: Prop
               <input
                 type="email" placeholder="email@example.com" value={newEmail}
                 onChange={e => setNewEmail(e.target.value)}
-                className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               <input
                 type="text" placeholder={t("recipientName")} value={newName}
                 onChange={e => setNewName(e.target.value)}
-                className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
             <button
               onClick={addRecipient} disabled={adding || !newEmail}
-              className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
+              className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
             >
               {adding ? tCommon("loading") : t("addRecipient")}
             </button>
@@ -196,7 +196,7 @@ export function NotificationsClient({ initialRecipients, initialCustomer }: Prop
         ) : (
           <button
             onClick={() => setShowAdd(true)}
-            className="flex items-center gap-1.5 text-sm font-semibold text-orange-600 hover:text-orange-700"
+            className="flex items-center gap-1.5 text-sm font-semibold text-emerald-600 hover:text-emerald-700"
           >
             <Plus className="w-4 h-4" /> {t("addRecipient")}
           </button>

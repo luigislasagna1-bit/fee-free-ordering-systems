@@ -39,7 +39,7 @@ export function AddCardButton() {
       type="button"
       onClick={start}
       disabled={loading}
-      className="mt-3 inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-bold px-4 py-2 rounded-lg text-sm shadow transition"
+      className="mt-3 inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-bold px-4 py-2 rounded-lg text-sm shadow transition"
     >
       {loading ? (
         <><Loader2 className="w-4 h-4 animate-spin" /> Opening Stripe…</>

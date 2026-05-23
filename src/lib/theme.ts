@@ -13,8 +13,8 @@ export type ThemeSettings = {
 };
 
 export const DEFAULT_THEME: ThemeSettings = {
-  primaryColor: "#f97316",
-  accentColor: "#ea580c",
+  primaryColor: "#10b981",
+  accentColor: "#059669",
   backgroundColor: "#f9fafb",
   cardBackground: "#ffffff",
   textColor: "#111827",

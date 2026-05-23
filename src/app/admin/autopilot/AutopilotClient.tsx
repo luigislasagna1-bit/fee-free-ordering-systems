@@ -60,7 +60,7 @@ const CAMPAIGN_CONFIGS = [
 ];
 
 const COLOR_MAP: Record<string, { bg: string; icon: string; border: string; badge: string }> = {
-  orange: { bg: "bg-orange-50", icon: "text-orange-500", border: "border-orange-200", badge: "bg-orange-100 text-orange-700" },
+  orange: { bg: "bg-emerald-50", icon: "text-emerald-500", border: "border-emerald-200", badge: "bg-emerald-100 text-emerald-700" },
   blue:   { bg: "bg-blue-50",   icon: "text-blue-500",   border: "border-blue-200",   badge: "bg-blue-100 text-blue-700"   },
   purple: { bg: "bg-purple-50", icon: "text-purple-500", border: "border-purple-200", badge: "bg-purple-100 text-purple-700" },
 };
@@ -137,7 +137,7 @@ function CampaignCard({
         <div className="flex items-center gap-3 flex-shrink-0">
           <button onClick={toggle} className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition">
             {campaign.isEnabled
-              ? <ToggleRight className="w-8 h-8 text-orange-500" />
+              ? <ToggleRight className="w-8 h-8 text-emerald-500" />
               : <ToggleLeft className="w-8 h-8 text-gray-300" />}
           </button>
           <button onClick={() => setExpanded(!expanded)} className="p-2 text-gray-400 hover:text-gray-600 rounded-lg transition">
@@ -168,7 +168,7 @@ function CampaignCard({
             {config.type === "reengagement" ? (
               <div className="flex items-center gap-2">
                 <input type="number" min="1" max="365"
-                  className="w-24 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-24 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   value={Math.round(campaign.delayHours / 24)}
                   onChange={e => onChange({ delayHours: (parseInt(e.target.value) || 7) * 24 })} />
                 <span className="text-sm text-gray-500">days</span>
@@ -176,7 +176,7 @@ function CampaignCard({
             ) : (
               <div className="flex items-center gap-2">
                 <input type="number" min="1" max="168"
-                  className="w-24 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-24 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   value={campaign.delayHours}
                   onChange={e => onChange({ delayHours: parseInt(e.target.value) || 24 })} />
                 <span className="text-sm text-gray-500">hours</span>
@@ -191,7 +191,7 @@ function CampaignCard({
               Attach a Coupon (optional)
             </label>
             <select
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               value={campaign.couponId ?? ""}
               onChange={e => onChange({ couponId: e.target.value || null })}
             >
@@ -210,7 +210,7 @@ function CampaignCard({
               Email Subject
             </label>
             <input type="text"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               placeholder={config.defaultSubject}
               value={campaign.subject}
               onChange={e => onChange({ subject: e.target.value })} />
@@ -225,7 +225,7 @@ function CampaignCard({
               ))}
             </div>
             <textarea rows={8}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:ring-2 focus:ring-orange-500 focus:outline-none resize-y"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-y"
               placeholder={config.defaultBody}
               value={campaign.emailBody}
               onChange={e => onChange({ emailBody: e.target.value })} />
@@ -233,7 +233,7 @@ function CampaignCard({
 
           <div className="flex justify-end">
             <button onClick={save} disabled={saving}
-              className="flex items-center gap-2 bg-orange-500 text-white text-sm font-semibold px-5 py-2 rounded-xl hover:bg-orange-600 disabled:opacity-50 transition">
+              className="flex items-center gap-2 bg-emerald-500 text-white text-sm font-semibold px-5 py-2 rounded-xl hover:bg-emerald-600 disabled:opacity-50 transition">
               <Save className="w-4 h-4" />
               {saving ? "Saving..." : "Save Campaign"}
             </button>
@@ -277,8 +277,8 @@ export function AutopilotClient({
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-1">
-          <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
-            <Zap className="w-5 h-5 text-orange-500" />
+          <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+            <Zap className="w-5 h-5 text-emerald-500" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Autopilot</h1>
         </div>
@@ -288,24 +288,24 @@ export function AutopilotClient({
       </div>
 
       {/* Overview card */}
-      <div className="bg-gradient-to-br from-orange-50 to-orange-100 border border-orange-200 rounded-2xl p-6 mb-6">
+      <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 rounded-2xl p-6 mb-6">
         <h2 className="font-bold text-gray-900 text-lg mb-2">How Autopilot Works</h2>
         <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
           <div className="flex items-start gap-2">
-            <div className="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</div>
+            <div className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</div>
             <div><span className="font-semibold block">Configure campaigns</span>Set trigger rules, email templates, and optional coupon codes.</div>
           </div>
           <div className="flex items-start gap-2">
-            <div className="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</div>
+            <div className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</div>
             <div><span className="font-semibold block">Enable the campaigns</span>Toggle each campaign on and save your settings.</div>
           </div>
           <div className="flex items-start gap-2">
-            <div className="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</div>
+            <div className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</div>
             <div><span className="font-semibold block">Emails go out automatically</span>Customers receive emails based on their behavior — no manual work needed.</div>
           </div>
         </div>
         {activeCampaigns > 0 && (
-          <div className="mt-4 text-sm font-semibold text-orange-700">
+          <div className="mt-4 text-sm font-semibold text-emerald-700">
             {activeCampaigns} of {CAMPAIGN_CONFIGS.length} campaigns active
           </div>
         )}

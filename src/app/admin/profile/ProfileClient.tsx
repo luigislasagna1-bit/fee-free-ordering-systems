@@ -91,7 +91,7 @@ function Field({
       <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
       <input
         type={type}
-        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
         placeholder={placeholder}
         value={form[field] as string}
         onChange={(e) => setForm((f) => ({ ...f, [field]: e.target.value }))}
@@ -226,7 +226,7 @@ function LocationSection({
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
       <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4 flex items-center gap-2">
-        <MapPin className="w-4 h-4 text-orange-500" /> {tProfile("location")}
+        <MapPin className="w-4 h-4 text-emerald-500" /> {tProfile("location")}
       </div>
 
       {/* Coordinates status badge */}
@@ -259,7 +259,7 @@ function LocationSection({
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
           <input
             type="text"
-            className="w-full border border-gray-300 rounded-lg pl-8 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full border border-gray-300 rounded-lg pl-8 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             placeholder="Start typing your restaurant address…"
             value={query}
             onChange={(e) => handleQueryChange(e.target.value)}
@@ -284,11 +284,11 @@ function LocationSection({
             {suggestions.map((place) => (
               <button
                 key={place.place_id}
-                className="w-full text-left px-3 py-2.5 text-sm hover:bg-orange-50 border-b border-gray-50 last:border-0 transition"
+                className="w-full text-left px-3 py-2.5 text-sm hover:bg-emerald-50 border-b border-gray-50 last:border-0 transition"
                 onClick={() => selectPlace(place)}
               >
                 <div className="flex items-start gap-2">
-                  <MapPin className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" />
+                  <MapPin className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <span className="text-gray-800 leading-snug">{place.display_name}</span>
                 </div>
               </button>
@@ -302,7 +302,7 @@ function LocationSection({
         type="button"
         onClick={geocodeFromFields}
         disabled={geocoding}
-        className="flex items-center gap-1.5 text-xs text-orange-600 hover:text-orange-700 font-medium mb-4 disabled:opacity-60 transition"
+        className="flex items-center gap-1.5 text-xs text-emerald-600 hover:text-emerald-700 font-medium mb-4 disabled:opacity-60 transition"
       >
         {geocoding
           ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -453,7 +453,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
         <button
           onClick={save}
           disabled={loading}
-          className="flex items-center gap-2 bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition text-sm disabled:opacity-60"
+          className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition text-sm disabled:opacity-60"
         >
           <Save className="w-4 h-4" />
           {loading ? tCommon("loading") : tCommon("saveChanges")}
@@ -478,7 +478,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">{t("description")}</label>
               <textarea
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
                 rows={3}
                 value={form.description}
                 onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
@@ -524,7 +524,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">{t("country")}</label>
               <select
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
                 value={form.country}
                 onChange={(e) => setForm((f) => ({ ...f, country: e.target.value }))}
               >
@@ -564,7 +564,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
             </div>
             <NextLink
               href="/admin/services"
-              className="flex items-center gap-1.5 text-sm font-semibold text-orange-600 hover:text-orange-700 transition"
+              className="flex items-center gap-1.5 text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition"
             >
               {tCommon("edit")} →
             </NextLink>
@@ -595,7 +595,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
               {t("defaultLanguageLabel")}
             </label>
             <select
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
               value={form.defaultLanguage}
               onChange={(e) => setForm((f) => ({ ...f, defaultLanguage: e.target.value }))}
             >
@@ -621,7 +621,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
                 {t("customCta")}
               </label>
               <textarea
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm font-mono"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm font-mono"
                 rows={4}
                 value={form.infoContent}
                 onChange={(e) => setForm((f) => ({ ...f, infoContent: e.target.value }))}
@@ -635,9 +635,9 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">{t("yourLinks")}</div>
             <div className="space-y-2">
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
+              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
                 <div className="text-xs text-gray-500 mb-0.5">{t("orderingPage")}</div>
-                <div className="font-mono text-orange-700 text-sm">/order/{restaurant.slug}</div>
+                <div className="font-mono text-emerald-700 text-sm">/order/{restaurant.slug}</div>
               </div>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                 <div className="text-xs text-gray-500 mb-0.5">{t("infoPageLink")}</div>

@@ -137,7 +137,7 @@ function Countdown({ createdAt, now }: { createdAt: string; now: number }) {
   if (ms <= 0) return <span className="text-xs font-bold text-red-500 animate-pulse">URGENT</span>;
   const m = Math.floor(ms / 60000);
   const s = Math.floor((ms % 60000) / 1000);
-  const color = ms < 60000 ? "text-red-500 font-bold" : "text-orange-500 font-semibold";
+  const color = ms < 60000 ? "text-red-500 font-bold" : "text-emerald-500 font-semibold";
   return <span className={`text-xs ${color} font-mono`}>{m}:{s.toString().padStart(2, "0")}</span>;
 }
 
@@ -168,13 +168,13 @@ function OrderRow({ order, selected, onClick, t, now }: {
       <div className="flex items-center gap-3">
         <div className={`flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center ${
           isTest ? "bg-purple-500/20" :
-          order.type === "delivery" ? "bg-blue-500/20" : "bg-orange-500/20"
+          order.type === "delivery" ? "bg-blue-500/20" : "bg-emerald-500/20"
         }`}>
           {isTest
             ? <FlaskConical className="w-4 h-4 text-purple-500" />
             : order.type === "delivery"
               ? <Truck className="w-4 h-4 text-blue-500" />
-              : <ShoppingBag className="w-4 h-4 text-orange-500" />}
+              : <ShoppingBag className="w-4 h-4 text-emerald-500" />}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
@@ -720,7 +720,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       {/* ── Header ── */}
       <header className={`${t.header} px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between flex-shrink-0 gap-2`}>
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <ChefHat className="w-6 h-6 text-orange-500 flex-shrink-0" />
+          <ChefHat className="w-6 h-6 text-emerald-500 flex-shrink-0" />
           <div className="min-w-0">
             <div className={`font-bold text-sm sm:text-base ${t.text} leading-tight truncate`}>{restaurant?.name ?? "Kitchen"}</div>
             {/* Subtitle hidden on phones — they're already on the kitchen page, the chef-hat
@@ -739,8 +739,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               onClick={() => alerting ? silenceAlert() : setAcknowledged(false)}
               className={`flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full transition cursor-pointer ${
                 alerting
-                  ? "bg-orange-500 text-white animate-pulse hover:bg-orange-600"
-                  : "bg-orange-500/20 text-orange-600 hover:bg-orange-500/30"
+                  ? "bg-emerald-500 text-white animate-pulse hover:bg-emerald-600"
+                  : "bg-emerald-500/20 text-emerald-600 hover:bg-emerald-500/30"
               }`}
               title={alerting ? "Tap to silence the alarm" : "Tap to re-arm the alarm"}
               aria-label={alerting ? "Silence alarm" : "Re-arm alarm"}
@@ -776,7 +776,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             )}
             {/* Pulse dot when bell is actively ringing. */}
             {alerting && !alertMuted && alertVolume > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-orange-500 rounded-full animate-ping" aria-hidden="true" />
+              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full animate-ping" aria-hidden="true" />
             )}
           </button>
 
@@ -791,7 +791,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           <button
             onClick={() => setShowPrinterSetup(true)}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
-              printerReady ? "border-green-500/40 text-green-600" : "border-orange-500/40 text-orange-600"
+              printerReady ? "border-green-500/40 text-green-600" : "border-emerald-500/40 text-emerald-600"
             } ${t.btn}`}
             title={tk("printerSetup")}
           >
@@ -882,14 +882,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 {count > 0 && (
                   <>
                     <span className={`hidden sm:inline text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full flex-shrink-0 ${
-                      tab === "orders" && pendingCount > 0 ? "bg-orange-500 text-white" :
+                      tab === "orders" && pendingCount > 0 ? "bg-emerald-500 text-white" :
                       tab === "inprogress" ? "bg-blue-500 text-white" :
                       "bg-gray-200 text-gray-700"
                     }`}>
                       {count}
                     </span>
                     <span className={`sm:hidden inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${
-                      tab === "orders" && pendingCount > 0 ? "bg-orange-500" :
+                      tab === "orders" && pendingCount > 0 ? "bg-emerald-500" :
                       tab === "inprogress" ? "bg-blue-500" :
                       "bg-gray-400"
                     }`} aria-hidden="true" />
@@ -1025,7 +1025,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                   key={tm}
                   onClick={() => setPrepTime(tm)}
                   className={`px-3 py-2 rounded-xl text-sm font-semibold transition ${
-                    prepTime === tm ? "bg-orange-500 text-white" : `${t.btn} ${t.muted}`
+                    prepTime === tm ? "bg-emerald-500 text-white" : `${t.btn} ${t.muted}`
                   }`}
                 >
                   {tm}
@@ -1034,7 +1034,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             </div>
             <input
               type="number" min="1" max="240"
-              className={`w-full rounded-xl px-3 py-2 border ${t.input} text-sm mb-1 focus:outline-none focus:ring-2 focus:ring-orange-500`}
+              className={`w-full rounded-xl px-3 py-2 border ${t.input} text-sm mb-1 focus:outline-none focus:ring-2 focus:ring-emerald-500`}
               value={prepTime}
               onChange={e => setPrepTime(e.target.value)}
             />
@@ -1042,7 +1042,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               Customer will see estimated ready time based on this.
             </p>
             {printerSettings?.autoPrint && printerReady && (
-              <p className="text-xs text-orange-500 mb-4 flex items-center gap-1">
+              <p className="text-xs text-emerald-500 mb-4 flex items-center gap-1">
                 <Printer className="w-3 h-3" /> Receipt will print automatically.
               </p>
             )}
@@ -1124,7 +1124,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-4">
           <div className={`${t.modal} rounded-2xl w-full max-w-sm p-6 shadow-2xl`}>
             <div className="flex items-center gap-2 mb-1">
-              <Bell className="w-5 h-5 text-orange-500" />
+              <Bell className="w-5 h-5 text-emerald-500" />
               <h3 className={`text-lg font-bold ${t.text}`}>Alert Sound</h3>
             </div>
             <p className={`text-sm ${t.muted} mb-5`}>
@@ -1153,7 +1153,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                     setAlertVolume(v);
                     if (v > 0) setAlertMuted(false);
                   }}
-                  className="flex-1 accent-orange-500 cursor-pointer"
+                  className="flex-1 accent-emerald-500 cursor-pointer"
                   aria-label="Alert volume"
                 />
                 <Volume2 className={`w-4 h-4 flex-shrink-0 ${t.muted}`} />
@@ -1171,7 +1171,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                     onClick={() => { setAlertVolume(p.v); setAlertMuted(false); }}
                     className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition ${
                       !alertMuted && Math.abs(alertVolume - p.v) < 0.01
-                        ? "bg-orange-500 text-white"
+                        ? "bg-emerald-500 text-white"
                         : `${t.btn} ${t.muted}`
                     }`}
                   >
@@ -1243,7 +1243,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             <button
               onClick={testAlertSound}
               disabled={alertMuted || alertVolume === 0}
-              className="w-full mb-3 flex items-center justify-center gap-2 py-2.5 rounded-xl font-semibold text-sm bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white transition"
+              className="w-full mb-3 flex items-center justify-center gap-2 py-2.5 rounded-xl font-semibold text-sm bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white transition"
             >
               <Bell className="w-4 h-4" /> Play test sound (1 ring)
             </button>

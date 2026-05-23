@@ -145,7 +145,7 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
             value={filter.search}
             onChange={(e) => setFilter((f) => ({ ...f, search: e.target.value }))}
             placeholder="Search by name, slug, email, phone"
-            className="w-full pl-8 pr-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+            className="w-full pl-8 pr-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
           />
         </div>
 
@@ -230,7 +230,7 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
                       <>
                         <div className="font-semibold text-gray-700 mb-1">No restaurants in the database</div>
                         <p className="text-sm">New restaurants appear here automatically when an owner registers at{" "}
-                          <a href="/signup" className="text-orange-500 hover:underline">/signup</a>.
+                          <a href="/signup" className="text-emerald-500 hover:underline">/signup</a>.
                         </p>
                       </>
                     ) : (
@@ -239,7 +239,7 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
                         <button
                           type="button"
                           onClick={resetFilters}
-                          className="text-sm text-orange-600 hover:underline mt-1"
+                          className="text-sm text-emerald-600 hover:underline mt-1"
                         >
                           Reset filters
                         </button>
@@ -296,7 +296,7 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
                         {r.lastOrderAt ? formatDate(r.lastOrderAt) : <span className="text-gray-300">—</span>}
                       </td>
                       <td className="px-4 py-3">
-                        <Link href={`/order/${r.slug}`} target="_blank" className="text-orange-500 hover:underline text-xs">
+                        <Link href={`/order/${r.slug}`} target="_blank" className="text-emerald-500 hover:underline text-xs">
                           /order/{r.slug}
                         </Link>
                       </td>

@@ -57,7 +57,7 @@ export function BrandDashboardClient({ summary }: { summary: BrandSummary }) {
       {/* ─── Header ─────────────────────────────────────────────── */}
       <div className="flex items-start justify-between flex-wrap gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-semibold uppercase tracking-wide mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold uppercase tracking-wide mb-2">
             <Building2 className="w-3.5 h-3.5" /> Brand dashboard
           </div>
           <h1 className="text-2xl font-bold text-gray-900">{summary.name}</h1>
@@ -68,7 +68,7 @@ export function BrandDashboardClient({ summary }: { summary: BrandSummary }) {
         </div>
         <button
           onClick={() => setInviteOpen(true)}
-          className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-2.5 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-2"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2.5 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-2"
         >
           <Plus className="w-4 h-4" /> Invite new location
         </button>
@@ -114,14 +114,14 @@ export function BrandDashboardClient({ summary }: { summary: BrandSummary }) {
             <button
               key={loc.id}
               onClick={() => switchToLocation(loc.id)}
-              className="text-left bg-white border border-gray-200 rounded-2xl p-5 hover:border-orange-300 hover:shadow-md transition group"
+              className="text-left bg-white border border-gray-200 rounded-2xl p-5 hover:border-emerald-300 hover:shadow-md transition group"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="font-bold text-gray-900 truncate">{loc.name}</h3>
                     {loc.isParent && (
-                      <span className="text-[10px] uppercase tracking-wider text-orange-600 font-bold bg-orange-100 px-2 py-0.5 rounded">
+                      <span className="text-[10px] uppercase tracking-wider text-emerald-600 font-bold bg-emerald-100 px-2 py-0.5 rounded">
                         Brand HQ
                       </span>
                     )}
@@ -160,7 +160,7 @@ export function BrandDashboardClient({ summary }: { summary: BrandSummary }) {
                 </div>
               </div>
 
-              <div className="mt-4 text-xs font-medium text-orange-600 group-hover:underline flex items-center gap-1">
+              <div className="mt-4 text-xs font-medium text-emerald-600 group-hover:underline flex items-center gap-1">
                 Manage location <ExternalLink className="w-3 h-3" />
               </div>
             </button>
@@ -302,7 +302,7 @@ function InviteLocationModal({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="manager@brooklyn.example.com"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
                 />
               </div>
               <div>
@@ -314,7 +314,7 @@ function InviteLocationModal({
                   value={suggestedName}
                   onChange={(e) => setSuggestedName(e.target.value)}
                   placeholder="Brooklyn Branch"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
                 />
               </div>
               {error && (
@@ -364,7 +364,7 @@ function InviteLocationModal({
               <button
                 onClick={generate}
                 disabled={sending}
-                className="px-5 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg disabled:opacity-50 flex items-center gap-2"
+                className="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg disabled:opacity-50 flex items-center gap-2"
               >
                 {sending && <Loader2 className="w-4 h-4 animate-spin" />}
                 {sending ? "Creating…" : "Create invite"}
@@ -373,7 +373,7 @@ function InviteLocationModal({
           ) : (
             <button
               onClick={onSent}
-              className="px-5 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg"
+              className="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg"
             >
               Done
             </button>

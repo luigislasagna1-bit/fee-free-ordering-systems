@@ -126,15 +126,15 @@ export function ProvidersClient({
           customer-side /api/public/payment-intent rejects with 402 until
           hasFeature(card_payments) returns true. Lead with the add-on. */}
       {stripeConfigured && !hasOnlinePaymentsAddOn && (
-        <div className="bg-orange-50 border border-orange-200 rounded-xl p-5 flex gap-4">
-          <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center flex-shrink-0">
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5 flex gap-4">
+          <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
             <Lock className="w-5 h-5" />
           </div>
           <div className="flex-1">
-            <p className="font-semibold text-orange-900">
+            <p className="font-semibold text-emerald-900">
               Subscribe to Online Payments first
             </p>
-            <p className="text-sm text-orange-800 mt-1">
+            <p className="text-sm text-emerald-800 mt-1">
               Card payments are unlocked by the <strong>Online Payments</strong> add-on.
               Without it, even a connected Stripe account can&apos;t accept card charges
               from your customers — they&apos;ll get redirected to cash / pay-at-store only.
@@ -143,7 +143,7 @@ export function ProvidersClient({
             </p>
             <Link
               href="/admin/billing/add-ons"
-              className="inline-flex items-center gap-2 mt-3 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
+              className="inline-flex items-center gap-2 mt-3 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
             >
               View add-ons
               <ExternalLink className="w-3.5 h-3.5" />

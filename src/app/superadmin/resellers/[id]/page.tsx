@@ -47,7 +47,7 @@ export default async function ResellerDetailPage({ params }: { params: Promise<{
                     <div className="font-medium text-gray-900">{r.name}</div>
                     <div className="text-xs text-gray-500">{r.subscriptionStatus}</div>
                   </div>
-                  <Link href={`/order/${r.slug}`} target="_blank" className="text-xs text-orange-600 hover:text-orange-700 font-semibold">
+                  <Link href={`/order/${r.slug}`} target="_blank" className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold">
                     Open
                   </Link>
                 </li>
@@ -72,7 +72,7 @@ export default async function ResellerDetailPage({ params }: { params: Promise<{
                       {new Date(p.requestedAt).toLocaleDateString()} · {p.status}
                     </div>
                   </div>
-                  <Link href="/superadmin/payouts" className="text-xs text-orange-600 hover:text-orange-700 font-semibold">
+                  <Link href="/superadmin/payouts" className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold">
                     Manage
                   </Link>
                 </li>

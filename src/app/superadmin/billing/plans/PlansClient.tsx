@@ -75,7 +75,7 @@ export function PlansClient({ initialPlans, stripeConfigured }: Props) {
         <h1 className="text-2xl font-bold text-gray-900">Subscription Plans</h1>
         <button
           onClick={() => setCreating(true)}
-          className="inline-flex items-center gap-1.5 text-sm font-semibold bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition"
         >
           <Plus className="w-4 h-4" /> New Plan
         </button>
@@ -125,7 +125,7 @@ export function PlansClient({ initialPlans, stripeConfigured }: Props) {
                     <button
                       onClick={() => handleSync(plan.id)}
                       disabled={!stripeConfigured || syncingId === plan.id}
-                      className="text-xs font-medium text-orange-600 hover:text-orange-700 px-2 py-1 rounded hover:bg-orange-50 disabled:opacity-40 transition"
+                      className="text-xs font-medium text-emerald-600 hover:text-emerald-700 px-2 py-1 rounded hover:bg-emerald-50 disabled:opacity-40 transition"
                     >
                       {syncingId === plan.id ? <Loader2 className="w-3.5 h-3.5 animate-spin inline" /> : "Sync to Stripe"}
                     </button>
@@ -239,24 +239,24 @@ function PlanEditor({ plan, onClose, onSaved }: { plan: Plan | null; onClose: ()
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">Name</label>
             <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500" />
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" />
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">Slug (lowercase, hyphens)</label>
             <input value={form.slug} onChange={e => setForm({ ...form, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "") })}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-orange-500" />
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500" />
           </div>
           <div className="flex gap-2">
             <div className="flex-1">
               <label className="block text-xs font-medium text-gray-700 mb-1">Price (USD)</label>
               <input type="number" step="0.01" min="0" value={form.price}
                 onChange={e => setForm({ ...form, price: parseFloat(e.target.value) || 0 })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" />
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-700 mb-1">Interval</label>
               <select value={form.interval} onChange={e => setForm({ ...form, interval: e.target.value })}
-                className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
+                className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                 <option value="month">Month</option>
                 <option value="year">Year</option>
               </select>
@@ -266,14 +266,14 @@ function PlanEditor({ plan, onClose, onSaved }: { plan: Plan | null; onClose: ()
             <label className="block text-xs font-medium text-gray-700 mb-1">Description (optional)</label>
             <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })}
               rows={2}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-orange-500" />
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500" />
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">Features (one per line)</label>
             <textarea value={form.features} onChange={e => setForm({ ...form, features: e.target.value })}
               rows={4}
               placeholder="Unlimited menu items&#10;Email support&#10;Custom domain"
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-orange-500" />
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500" />
           </div>
           <label className="flex items-center gap-2 text-sm text-gray-700">
             <input type="checkbox" checked={form.isActive} onChange={e => setForm({ ...form, isActive: e.target.checked })} />
@@ -283,7 +283,7 @@ function PlanEditor({ plan, onClose, onSaved }: { plan: Plan | null; onClose: ()
 
         <div className="flex justify-end gap-2 mt-6">
           <button onClick={onClose} className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition">Cancel</button>
-          <button onClick={save} disabled={saving} className="bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition disabled:opacity-50">
+          <button onClick={save} disabled={saving} className="bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition disabled:opacity-50">
             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : (isNew ? "Create" : "Save")}
           </button>
         </div>

@@ -16,7 +16,15 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { restaurantName, ownerName, email, password, phone, ref, invite } = await req.json();
+    const {
+      restaurantName, ownerName, email, password, phone,
+      // Address + cuisine fields are now captured upfront in the signup
+      // form (Phase: better-onboarding-signup). They flow straight into
+      // the new Restaurant row so the Setup Wizard at /admin starts
+      // partway done — not from zero.
+      address, city, state, zip, country, cuisineType,
+      ref, invite,
+    } = await req.json();
 
     if (!restaurantName || !email || !password) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -103,6 +111,21 @@ export async function POST(req: NextRequest) {
     // in when the owner subscribes to a specific add-on.
     const freePlan = await prisma.subscriptionPlan.findUnique({ where: { slug: "free" } });
 
+    // Sanitize + trim address/cuisine fields. All optional — empty strings
+    // become null so the Setup Wizard doesn't think the owner has typed
+    // a single space on every field.
+    const trim = (v: unknown, max: number): string | null => {
+      if (typeof v !== "string") return null;
+      const t = v.trim().slice(0, max);
+      return t.length > 0 ? t : null;
+    };
+    const addressClean      = trim(address, 200);
+    const cityClean         = trim(city, 100);
+    const stateClean        = trim(state, 100);
+    const zipClean          = trim(zip, 20);
+    const countryClean      = trim(country, 2) ?? "CA"; // ISO-2; default Canada
+    const cuisineTypeClean  = trim(cuisineType, 60);
+
     const restaurant = await prisma.restaurant.create({
       data: {
         name: restaurantNameClean,
@@ -111,6 +134,15 @@ export async function POST(req: NextRequest) {
         // live at <slug>.<PLATFORM_DOMAIN> immediately, no admin visit needed.
         subdomain: slug,
         phone: phone ? String(phone).trim().slice(0, 30) : null,
+        // Address + cuisine from the expanded signup form. These mark the
+        // "Restaurant Basics" setup section ~complete on first /admin load,
+        // so the wizard greets owners with 30%+ progress instead of 0%.
+        address: addressClean,
+        city: cityClean,
+        state: stateClean,
+        zip: zipClean,
+        country: countryClean,
+        cuisineType: cuisineTypeClean,
         subscriptionStatus: "active",
         subscriptionPlanId: freePlan?.id || null,
         resellerProfileId,

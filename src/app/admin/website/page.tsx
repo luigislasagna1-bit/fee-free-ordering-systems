@@ -72,9 +72,9 @@ function HubTile({ href, icon: Icon, title, body }: { href: string; icon: any; t
   return (
     <Link
       href={href}
-      className="bg-white rounded-xl border border-gray-200 hover:border-orange-300 hover:shadow-md transition p-5 flex flex-col"
+      className="bg-white rounded-xl border border-gray-200 hover:border-emerald-300 hover:shadow-md transition p-5 flex flex-col"
     >
-      <div className="w-10 h-10 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center mb-3">
+      <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
         <Icon className="w-5 h-5" />
       </div>
       <div className="flex items-center justify-between">

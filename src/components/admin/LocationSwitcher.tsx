@@ -75,13 +75,13 @@ export function LocationSwitcher({
                 key={loc.id}
                 onClick={() => switchTo(loc.id)}
                 className={`w-full text-left px-3 py-2 hover:bg-gray-50 transition ${
-                  loc.id === activeId ? "bg-orange-50" : ""
+                  loc.id === activeId ? "bg-emerald-50" : ""
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <div className="font-medium text-sm text-gray-900 truncate">{loc.name}</div>
                   {loc.isParent && (
-                    <span className="text-[9px] uppercase tracking-wider text-orange-600 font-bold bg-orange-100 px-1.5 py-0.5 rounded">
+                    <span className="text-[9px] uppercase tracking-wider text-emerald-600 font-bold bg-emerald-100 px-1.5 py-0.5 rounded">
                       Brand
                     </span>
                   )}

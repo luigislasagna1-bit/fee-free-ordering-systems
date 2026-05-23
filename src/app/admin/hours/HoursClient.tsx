@@ -41,7 +41,7 @@ export function HoursClient({ hours: initial }: { hours: any[] }) {
         <button
           onClick={save}
           disabled={loading}
-          className="flex items-center gap-2 bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition text-sm"
+          className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition text-sm"
         >
           <Save className="w-4 h-4" /> {loading ? tCommon("loading") : tCommon("saveChanges")}
         </button>
@@ -57,7 +57,7 @@ export function HoursClient({ hours: initial }: { hours: any[] }) {
             <div className="w-28 font-medium text-gray-900">{tInfo(`days.${h.dayOfWeek}`)}</div>
             <button
               onClick={() => update(h.dayOfWeek, "isOpen", !h.isOpen)}
-              className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${h.isOpen ? "bg-orange-500" : "bg-gray-300"}`}
+              className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${h.isOpen ? "bg-emerald-500" : "bg-gray-300"}`}
             >
               <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${h.isOpen ? "translate-x-6" : "translate-x-0"}`} />
             </button>
@@ -67,14 +67,14 @@ export function HoursClient({ hours: initial }: { hours: any[] }) {
                   type="time"
                   value={h.openTime}
                   onChange={(e) => update(h.dayOfWeek, "openTime", e.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
                 <span className="text-gray-400">{tCommon("to")}</span>
                 <input
                   type="time"
                   value={h.closeTime}
                   onChange={(e) => update(h.dayOfWeek, "closeTime", e.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
             ) : (
