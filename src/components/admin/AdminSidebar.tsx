@@ -124,11 +124,15 @@ const navGroups: NavGroup[] = [
         setupSectionId: "orders",
         items: [
           { href: "/admin/notifications", labelKey: "notifications", label: "Notifications", icon: Bell, step: "orders.notificationRecipient" },
-          // Phone Ordering — landing page is a "Coming Soon" teaser at
-          // /admin/phone-ordering. Linked from the sidebar so the feature
-          // is discoverable even before the AI agent + Twilio plumbing
-          // is built. Doesn't count toward setup-completion (no `step`).
-          { href: "/admin/phone-ordering", labelKey: "phoneOrdering", label: "Phone Ordering", icon: Phone },
+          // NOTE: Phone Ordering used to live here. Moved to ONLINE
+          // ORDERING (operational order channels, not setup steps) — it
+          // was confusing owners about the X/Y completion count of this
+          // sub-group (Luigi during UAT: "Taking Orders says 1/2 but the
+          // AI phone orders isn't even ready yet, so I'm not sure why
+          // it's 1/2?"). The 1/2 was actually the count of the Orders
+          // setup-section's 2 real steps (kitchen device + notifications)
+          // — but with Phone Ordering visually in the sub-group, owners
+          // misread it as "1 of these 2 menu items is complete".
         ],
       },
       {
@@ -195,6 +199,11 @@ const navGroups: NavGroup[] = [
     icon: ShoppingBag,
     items: [
       { href: "/admin/orders", labelKey: "orders", label: "Orders", icon: ShoppingBag, badgeKey: "orders" },
+      // Phone Ordering placeholder page (Coming Soon). Lives in ONLINE
+      // ORDERING because it's an order-intake channel (the AI agent
+      // takes phone orders and pushes them to the same kitchen display).
+      // No `step:` prop — doesn't affect setup-completion counts.
+      { href: "/admin/phone-ordering", labelKey: "phoneOrdering", label: "Phone Ordering", icon: Phone },
     ],
   },
 

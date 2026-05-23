@@ -143,6 +143,19 @@ export async function POST(req: NextRequest) {
         zip: zipClean,
         country: countryClean,
         cuisineType: cuisineTypeClean,
+        // EXPLICITLY override the schema defaults for service flags. Schema
+        // has acceptsPickup: true by default — but that lets new restaurants
+        // pass the "at least one service" setup-check without ever
+        // visiting /admin/services. They could publish a restaurant that
+        // appears to offer pickup when they actually offer dine-in only.
+        // Forcing all to false here makes the owner ACTIVELY choose what
+        // they offer before they can publish. (Luigi caught this during
+        // UAT — "the new store didn't make me set services but marked them
+        // complete?".)
+        acceptsPickup: false,
+        acceptsDelivery: false,
+        acceptsDineIn: false,
+        acceptsReservations: false,
         subscriptionStatus: "active",
         subscriptionPlanId: freePlan?.id || null,
         resellerProfileId,
@@ -162,9 +175,18 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Pre-create the 7 day rows so the /admin/hours editor renders a clean
+    // grid out of the box. BUT default all 7 to isOpen: false — this is
+    // what forces the new owner to ACTUALLY visit /admin/hours and pick
+    // their open days. Schema-default times (09:00-21:00) survive as a
+    // hint, but the day is closed until the owner toggles it on. Without
+    // this, the "opening hours" setup-step passes automatically with
+    // bogus 9-9 every day. (Luigi caught this during UAT — "I didn't
+    // think the new store made me set hours, but it marked them
+    // complete?".)
     for (let i = 0; i < 7; i++) {
       await prisma.openingHours.create({
-        data: { restaurantId: restaurant.id, dayOfWeek: i, isOpen: true, openTime: "09:00", closeTime: "21:00" },
+        data: { restaurantId: restaurant.id, dayOfWeek: i, isOpen: false, openTime: "09:00", closeTime: "21:00" },
       });
     }
 
