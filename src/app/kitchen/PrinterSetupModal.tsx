@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import {
   X, Printer, Key, Loader2, CheckCircle, XCircle, RefreshCw,
-  Settings, List, Eye, EyeOff, AlertCircle,
+  Settings, List, Eye, EyeOff, AlertCircle, ExternalLink,
+  ChevronDown, ChevronUp, BookOpen, Download, UserPlus,
 } from "lucide-react";
 import { THEMES, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 
@@ -94,6 +95,16 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
   const [logs, setLogs] = useState<PrintLog[]>([]);
   const [loadingLogs, setLoadingLogs] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+  /** Whether the "How to set up PrintNode" walkthrough is expanded. Defaults
+   *  to OPEN if the user hasn't connected an API key yet — so first-timers
+   *  see the step-by-step immediately instead of staring at a blank API key
+   *  field with no idea where to get one from. Once they're connected,
+   *  collapses by default so the modal isn't cluttered for return visits. */
+  const [showGuide, setShowGuide] = useState(false);
+  useEffect(() => {
+    // Sync once settings load. If hasApiKey is false → show guide.
+    if (!loading) setShowGuide(!settings.hasApiKey);
+  }, [loading, settings.hasApiKey]);
 
   useEffect(() => {
     (async () => {
@@ -330,6 +341,135 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                     </div>
                   )}
 
+                  {/* ── Onboarding guide ───────────────────────────────────
+                      Step-by-step walkthrough for restaurant owners who've
+                      never used PrintNode. Auto-expanded on first visit
+                      (no API key saved yet), collapsed once connected.
+                      The whole point is that pasting an "API key" into a
+                      field is meaningless to someone who hasn't created
+                      the upstream account yet — they need a clear path:
+                      sign up → install desktop → generate key → paste. */}
+                  <div className="bg-emerald-500/5 border border-emerald-500/30 rounded-xl overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => setShowGuide(g => !g)}
+                      className="w-full flex items-center justify-between gap-3 px-4 py-3 hover:bg-emerald-500/10 transition"
+                    >
+                      <div className="flex items-center gap-2 text-left">
+                        <BookOpen className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                        <div>
+                          <div className="text-sm font-semibold text-emerald-300">
+                            First time setting up? Read this first
+                          </div>
+                          <div className="text-xs text-emerald-200/70 mt-0.5">
+                            Create a PrintNode account, install the desktop app, get your API key — 5 minute walkthrough
+                          </div>
+                        </div>
+                      </div>
+                      {showGuide
+                        ? <ChevronUp className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                        : <ChevronDown className="w-4 h-4 text-emerald-400 flex-shrink-0" />}
+                    </button>
+
+                    {showGuide && (
+                      <div className="px-4 pb-4 pt-1 space-y-3 border-t border-emerald-500/20">
+                        <p className="text-xs text-gray-300 leading-relaxed mt-3">
+                          PrintNode is the service that bridges your kitchen printer with the cloud. We send the receipt → PrintNode → your printer. You need a PrintNode account and the PrintNode Desktop app installed on the same computer your printer is connected to.
+                        </p>
+
+                        {/* Step 1 — create account */}
+                        <div className="flex gap-3">
+                          <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">1</div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-semibold text-white flex items-center gap-1.5">
+                              <UserPlus className="w-3.5 h-3.5 text-emerald-400" />
+                              Create a free PrintNode account
+                            </div>
+                            <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
+                              Sign up with the email you want PrintNode notifications to go to. The free tier includes 50 prints per month — fine for testing or small volume. Pick a paid plan when you go live (cheapest is $5/mo for 500 prints).
+                            </p>
+                            <a
+                              href="https://app.printnode.com/app/signup"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 mt-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 hover:underline"
+                            >
+                              Open PrintNode signup
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </div>
+                        </div>
+
+                        {/* Step 2 — install desktop client */}
+                        <div className="flex gap-3">
+                          <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">2</div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-semibold text-white flex items-center gap-1.5">
+                              <Download className="w-3.5 h-3.5 text-emerald-400" />
+                              Install PrintNode Desktop
+                            </div>
+                            <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
+                              Download &amp; install on the <strong>same computer your printer is plugged into</strong> (or the same one running your kitchen display, if the printer is connected there). Sign in with the account from step 1. PrintNode will auto-detect any printer the OS already knows about — including USB Star TSP143, Epson TM, network thermal printers, even regular office printers.
+                            </p>
+                            <a
+                              href="https://www.printnode.com/en/download"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 mt-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 hover:underline"
+                            >
+                              Download PrintNode Desktop
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </div>
+                        </div>
+
+                        {/* Step 3 — generate API key */}
+                        <div className="flex gap-3">
+                          <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">3</div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-semibold text-white flex items-center gap-1.5">
+                              <Key className="w-3.5 h-3.5 text-emerald-400" />
+                              Generate an API key
+                            </div>
+                            <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
+                              In the PrintNode dashboard, go to <span className="font-mono bg-gray-700 px-1 rounded text-[11px]">Account → API Keys</span>, click <strong>Create API Key</strong>, give it any name (e.g. "Fee Free Ordering"), and copy the long string that appears. <span className="text-amber-300">You only see it once</span> — save it somewhere safe before navigating away.
+                            </p>
+                            <a
+                              href="https://app.printnode.com/app/apikeys"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 mt-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 hover:underline"
+                            >
+                              Open PrintNode API Keys page
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </div>
+                        </div>
+
+                        {/* Step 4 — paste + test */}
+                        <div className="flex gap-3">
+                          <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">4</div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-semibold text-white flex items-center gap-1.5">
+                              <Printer className="w-3.5 h-3.5 text-emerald-400" />
+                              Paste the key below, click Test Connection
+                            </div>
+                            <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
+                              Paste the API key into the field below. Click <strong>Test Connection</strong>. If your account name shows up + your printer appears in the list, you&apos;re done. Pick the printer, save settings, fire a test print.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-2.5 flex gap-2 mt-2">
+                          <AlertCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0 mt-0.5" />
+                          <p className="text-xs text-amber-200/90 leading-relaxed">
+                            <strong>Heads up:</strong> the PrintNode Desktop app must stay running on the computer with the printer for receipts to print. If your tablet loses internet or the desktop app is closed, jobs queue up until it&apos;s back online.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
                   <div>
                     <label className="block text-sm font-semibold text-gray-300 mb-1">PrintNode API Key</label>
                     <div className="relative">
@@ -356,7 +496,27 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                       </p>
                     )}
                     <p className="mt-1.5 text-xs text-gray-500">
-                      Find your API key at <span className="font-mono bg-gray-700 px-1 rounded">app.printnode.com → Account → API Keys</span>
+                      Find your API key at <a
+                        href="https://app.printnode.com/app/apikeys"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono bg-gray-700 px-1 rounded text-gray-300 hover:text-emerald-400 transition inline-flex items-center gap-1"
+                      >
+                        app.printnode.com → Account → API Keys
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                      {!showGuide && (
+                        <>
+                          {" · "}
+                          <button
+                            type="button"
+                            onClick={() => setShowGuide(true)}
+                            className="text-emerald-400 hover:text-emerald-300 hover:underline"
+                          >
+                            Show full setup guide
+                          </button>
+                        </>
+                      )}
                     </p>
                   </div>
 
