@@ -180,14 +180,45 @@ export function HomeClient({ locale }: { locale: string }) {
 
           {/* The math callout */}
           <div className="mt-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 p-6 md:p-8 text-center">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-100 mb-2">DO THE MATH</div>
+            <div className="text-xs font-bold uppercase tracking-wider text-emerald-100 mb-2">DO THE MATH — DIRECT ORDERS</div>
             <p className="text-xl md:text-2xl font-bold text-white leading-tight">
-              On a $50 order: UberEats keeps $15. Fee Free keeps <span className="underline decoration-white/40">$0</span>.
+              On a $50 order placed via your own ordering page:<br className="hidden md:block" />
+              UberEats keeps $15. Fee Free keeps <span className="underline decoration-white/40">$0</span>.
             </p>
             <p className="text-emerald-50 mt-2 text-sm md:text-base">
               The customer pays the same either way. The difference goes straight to your pocket.
             </p>
           </div>
+
+          {/* Transparency block — what we actually charge for. Luigi:
+              "we should be transparent. we DO charge a little on
+              marketplace orders, and some add-ons are mandatory for
+              QR ordering like the online payments." */}
+          <div className="mt-6 grid md:grid-cols-2 gap-4 text-left">
+            <div className="rounded-xl bg-white/5 border border-white/10 p-5">
+              <div className="text-xs font-bold uppercase tracking-wider text-emerald-300 mb-2">
+                Direct orders (your website / widget)
+              </div>
+              <div className="text-2xl font-extrabold text-white">$0 forever</div>
+              <p className="text-sm text-gray-300 mt-2 leading-relaxed">
+                Every order placed through your own ordering page or hosted site. No commission, ever. The only cost is Stripe&apos;s standard card processing fee (2.9% + $0.30) — paid directly to Stripe, not to us.
+              </p>
+            </div>
+            <div className="rounded-xl bg-white/5 border border-white/10 p-5">
+              <div className="text-xs font-bold uppercase tracking-wider text-emerald-300 mb-2">
+                Marketplace orders (feefreefood.com)
+              </div>
+              <div className="text-2xl font-extrabold text-white">
+                $3 max <span className="text-sm text-gray-300 font-medium">or</span> $199.99/mo
+              </div>
+              <p className="text-sm text-gray-300 mt-2 leading-relaxed">
+                Only when a customer finds you on our public marketplace. PAYG: $3 max per order, capped at <strong>$249.99/month</strong> no matter how many orders. Or flat <strong>$199.99/month unlimited</strong> — drops your per-order cost as you scale. Either way: 5× cheaper than UberEats / DoorDash.
+              </p>
+            </div>
+          </div>
+          <p className="mt-4 text-xs text-gray-400 text-center max-w-2xl mx-auto leading-relaxed">
+            Some optional add-ons cost extra (Online Payments $29.99/mo to accept cards, Hosted Website $19.99/mo, Multi-Location $49.99/mo per child site). Everything else — admin, widget, kitchen app, customer database — is genuinely free forever. <Link href="/pricing" className="text-emerald-300 hover:underline">See full pricing →</Link>
+          </p>
         </div>
       </section>
 
@@ -197,10 +228,10 @@ export function HomeClient({ locale }: { locale: string }) {
           <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 rounded-full px-3 py-1.5 text-xs font-semibold mb-4">
               <Check className="w-3.5 h-3.5" />
-              ALL FREE FOREVER
+              CORE PLATFORM FREE FOREVER
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Everything you need, included.</h2>
-            <p className="text-gray-600 text-lg">No tiers, no per-order fees, no hidden charges. The whole platform is free forever — paid add-ons are optional.</p>
+            <p className="text-gray-600 text-lg">No tiers, no per-order fees on direct orders. The core platform is free forever — paid add-ons (cards, hosted site, multi-location) are optional, only when you need them.</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -366,7 +397,7 @@ export function HomeClient({ locale }: { locale: string }) {
             Want even more customers? List on the Fee Free Marketplace.
           </h2>
           <p className="text-gray-300 text-base md:text-lg mb-6 max-w-2xl mx-auto leading-relaxed">
-            A growing directory of fee-free restaurants. We promote you on feefreefood.com — customers discover you, you keep <strong>99%</strong> of every order (we take just $3/order to cover infrastructure). No 30% commission. Ever.
+            A growing directory of fee-free restaurants. We promote you on feefreefood.com — customers discover you, you pay at most <strong>$3/order</strong> (capped at $249.99/month) or go flat <strong>$199.99/month for unlimited orders</strong>. Still 5× cheaper than UE / DoorDash. No 30% commission. Ever.
           </p>
           <Link
             href="/marketplace"
@@ -425,10 +456,11 @@ export function HomeClient({ locale }: { locale: string }) {
           </p>
           <div className="rounded-2xl border-2 border-emerald-200 bg-gradient-to-br from-white to-emerald-50 p-8 md:p-10 shadow-md">
             <div className="text-5xl md:text-6xl font-extrabold text-emerald-600 mb-2">$0</div>
-            <div className="text-lg text-gray-600 mb-6">Forever. No credit card required.</div>
+            <div className="text-lg text-gray-600 mb-1">Core platform · forever</div>
+            <div className="text-xs text-gray-500 mb-6">No credit card to start. Add paid add-ons only when you need them.</div>
             <div className="grid sm:grid-cols-2 gap-2 text-left max-w-md mx-auto mb-7">
               {[
-                "Unlimited orders", "Unlimited menu items",
+                "Unlimited orders on your site", "Unlimited menu items",
                 "Customer database", "Kitchen + admin apps",
                 "Cash + pay-at-store", "Multi-language",
               ].map((p) => (
@@ -438,6 +470,9 @@ export function HomeClient({ locale }: { locale: string }) {
                 </div>
               ))}
             </div>
+            <p className="text-xs text-gray-500 mb-5 leading-relaxed max-w-sm mx-auto">
+              <strong>Need card payments?</strong> Online Payments add-on $29.99/mo unlocks Stripe Connect (you still keep 100% of each order). <strong>Want marketplace discovery?</strong> $3 max per order or $199.99/mo unlimited.
+            </p>
             <Link
               href="/signup"
               className="inline-flex items-center gap-2 bg-emerald-500 text-white font-bold px-7 py-3.5 rounded-xl hover:bg-emerald-600 transition shadow-md"
