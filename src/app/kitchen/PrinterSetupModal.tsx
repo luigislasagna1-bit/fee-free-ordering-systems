@@ -4,7 +4,24 @@ import {
   X, Printer, Key, Loader2, CheckCircle, XCircle, RefreshCw,
   Settings, List, Eye, EyeOff, AlertCircle, ExternalLink,
   ChevronDown, ChevronUp, BookOpen, Download, UserPlus,
+  Monitor, Apple, Server, Cpu, Smartphone, Tablet,
 } from "lucide-react";
+
+/**
+ * Operating systems on which PrintNode Desktop will run. PrintNode
+ * publishes native clients for these platforms only — there is no
+ * iOS or Android version. (The web kitchen display itself runs in
+ * any browser, so the *display* can be on a tablet — but the
+ * PrintNode bridge that talks to the printer must live on one of
+ * these desktop OSes.)
+ */
+type PNDeviceOS = "windows" | "macos" | "linux" | "rpi";
+const PN_OS_OPTIONS: { id: PNDeviceOS; label: string; icon: typeof Monitor; href: string; note: string }[] = [
+  { id: "windows", label: "Windows",      icon: Monitor,    href: "https://www.printnode.com/en/download/client/windows", note: "Win 10 / 11. Cheapest option: a $150 mini-PC stays on permanently next to the printer." },
+  { id: "macos",   label: "macOS",        icon: Apple,      href: "https://www.printnode.com/en/download/client/macos",   note: "macOS 11+. Use an old Mac mini or any spare Mac." },
+  { id: "linux",   label: "Linux",        icon: Server,     href: "https://www.printnode.com/en/download/client/linux",   note: "Debian/Ubuntu/RHEL. Headless install on a small server works fine." },
+  { id: "rpi",     label: "Raspberry Pi", icon: Cpu,        href: "https://www.printnode.com/en/download/client/raspbian", note: "Pre-built Raspbian image. ~$60 hardware, lowest-cost dedicated print bridge." },
+];
 import { THEMES, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 
 interface PrinterInfo {
@@ -105,6 +122,10 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
     // Sync once settings load. If hasApiKey is false → show guide.
     if (!loading) setShowGuide(!settings.hasApiKey);
   }, [loading, settings.hasApiKey]);
+  /** Which OS the owner intends to run PrintNode on. Drives the download
+   *  link shown in Step 3. Defaults to Windows because that's the most
+   *  common cheap-mini-PC option restaurants pick. */
+  const [pnOS, setPnOS] = useState<PNDeviceOS>("windows");
 
   useEffect(() => {
     (async () => {
@@ -373,9 +394,40 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
 
                     {showGuide && (
                       <div className="px-4 pb-4 pt-1 space-y-3 border-t border-emerald-500/20">
-                        <p className="text-xs text-gray-300 leading-relaxed mt-3">
-                          PrintNode is the service that bridges your kitchen printer with the cloud. We send the receipt → PrintNode → your printer. You need a PrintNode account and the PrintNode Desktop app installed on the same computer your printer is connected to.
-                        </p>
+                        {/* ── Architecture primer ───────────────────────────
+                            Explains the two-component reality up front so
+                            owners don't get confused later. The Kitchen
+                            Display is a web app and runs anywhere; the
+                            PrintNode bridge is a desktop app and only runs
+                            on Win/Mac/Linux/RPi. They can be the same
+                            physical device OR two devices on the same
+                            network. */}
+                        <div className="mt-3 bg-gray-900/40 border border-gray-700 rounded-lg p-3">
+                          <div className="text-xs font-semibold text-emerald-300 mb-1.5">
+                            How the kitchen printer works
+                          </div>
+                          <p className="text-xs text-gray-300 leading-relaxed mb-2">
+                            There are <strong>two</strong> pieces. They can live on the same device or on two devices that share a network — your call.
+                          </p>
+                          <ul className="text-xs text-gray-400 space-y-1.5 leading-relaxed">
+                            <li className="flex gap-2">
+                              <Tablet className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                              <span><strong className="text-gray-200">Kitchen Display</strong> — a web app. Runs in any browser on <em>any</em> device: iPad, Android tablet, iPhone, Windows tablet, laptop, desktop, even a TV with a Chromecast. Just open the site and log in. On a tablet, use <strong>Add to Home Screen</strong> to launch it like an app.</span>
+                            </li>
+                            <li className="flex gap-2">
+                              <Printer className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                              <span><strong className="text-gray-200">PrintNode</strong> — the bridge that talks to your physical receipt printer. <strong className="text-amber-300">Only runs on Windows, macOS, Linux, or Raspberry Pi.</strong> No iOS or Android version exists. Must be on a device on the same network as the printer (USB connection is fine — usually the same device).</span>
+                            </li>
+                          </ul>
+                          <div className="mt-3 pt-3 border-t border-gray-700">
+                            <div className="text-xs font-semibold text-gray-300 mb-1.5">Common setups</div>
+                            <ul className="text-xs text-gray-400 space-y-1 leading-relaxed list-disc list-inside ml-1">
+                              <li><strong className="text-gray-200">Cheapest / simplest:</strong> One Windows mini-PC (~$150) runs both — kitchen display in a browser and PrintNode + USB printer.</li>
+                              <li><strong className="text-gray-200">Tablet kitchen:</strong> iPad or Android tablet for the display + a separate Raspberry Pi (~$60) or any spare PC for PrintNode + printer on the same Wi-Fi.</li>
+                              <li><strong className="text-gray-200">Already have a Mac/PC:</strong> Use it. PrintNode runs alongside whatever else is on it. The browser can be on the same machine or a separate tablet.</li>
+                            </ul>
+                          </div>
+                        </div>
 
                         {/* Step 1 — create account */}
                         <div className="flex gap-3">
@@ -383,10 +435,10 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-semibold text-white flex items-center gap-1.5">
                               <UserPlus className="w-3.5 h-3.5 text-emerald-400" />
-                              Create a free PrintNode account
+                              Create your own PrintNode account
                             </div>
                             <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
-                              Sign up with the email you want PrintNode notifications to go to. The free tier includes 50 prints per month — fine for testing or small volume. Pick a paid plan when you go live (cheapest is $5/mo for 500 prints).
+                              Sign up with the email you want PrintNode notifications to go to. <strong className="text-amber-300">Each restaurant (and each location, if you have multiple) needs its own PrintNode account + paid plan.</strong> You can&apos;t share one account across locations because the API key only points to one set of installed printers. The free tier includes 50 prints / month for testing; production plans start around $5/mo for 500 prints.
                             </p>
                             <a
                               href="https://app.printnode.com/app/signup"
@@ -400,32 +452,84 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           </div>
                         </div>
 
-                        {/* Step 2 — install desktop client */}
+                        {/* Step 2 — set up the display device */}
                         <div className="flex gap-3">
                           <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">2</div>
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-semibold text-white flex items-center gap-1.5">
-                              <Download className="w-3.5 h-3.5 text-emerald-400" />
-                              Install PrintNode Desktop
+                              <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+                              Open the Kitchen Display on the device you want to view orders on
                             </div>
                             <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
-                              Download &amp; install on the <strong>same computer your printer is plugged into</strong> (or the same one running your kitchen display, if the printer is connected there). Sign in with the account from step 1. PrintNode will auto-detect any printer the OS already knows about — including USB Star TSP143, Epson TM, network thermal printers, even regular office printers.
+                              No install needed — it&apos;s a web app. Open your browser, navigate to <span className="font-mono bg-gray-700 px-1 rounded text-[11px]">/kitchen</span> on this site, sign in with the kitchen-staff account. On iPad / Android, use the browser&apos;s <strong>Add to Home Screen</strong> menu to pin the page — it then launches full-screen like a native app. On Windows you can do the same via Chrome / Edge → Install App.
                             </p>
-                            <a
-                              href="https://www.printnode.com/en/download"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 mt-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 hover:underline"
-                            >
-                              Download PrintNode Desktop
-                              <ExternalLink className="w-3 h-3" />
-                            </a>
                           </div>
                         </div>
 
-                        {/* Step 3 — generate API key */}
+                        {/* Step 3 — install PrintNode (per-OS picker) */}
                         <div className="flex gap-3">
                           <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">3</div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-semibold text-white flex items-center gap-1.5">
+                              <Download className="w-3.5 h-3.5 text-emerald-400" />
+                              Install PrintNode on the device connected to your printer
+                            </div>
+                            <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
+                              This device must be Windows, macOS, Linux, or Raspberry Pi (PrintNode doesn&apos;t ship for iOS or Android). It must stay powered on with PrintNode running — it&apos;s the bridge between us and your printer. Once installed, sign in with the account from step 1. PrintNode auto-detects any printer your operating system already recognizes — USB Star TSP143, Epson TM, network thermal, regular office printers, all work.
+                            </p>
+
+                            {/* OS picker */}
+                            <div className="mt-2.5 grid grid-cols-2 gap-1.5">
+                              {PN_OS_OPTIONS.map(opt => {
+                                const Icon = opt.icon;
+                                const isActive = pnOS === opt.id;
+                                return (
+                                  <button
+                                    key={opt.id}
+                                    type="button"
+                                    onClick={() => setPnOS(opt.id)}
+                                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium transition ${
+                                      isActive
+                                        ? "border-emerald-500 bg-emerald-500/15 text-emerald-300"
+                                        : "border-gray-700 bg-gray-800/40 text-gray-400 hover:border-gray-600 hover:text-gray-200"
+                                    }`}
+                                  >
+                                    <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                                    {opt.label}
+                                  </button>
+                                );
+                              })}
+                            </div>
+
+                            {/* Selected-OS detail + download link */}
+                            {(() => {
+                              const sel = PN_OS_OPTIONS.find(o => o.id === pnOS)!;
+                              const SelIcon = sel.icon;
+                              return (
+                                <div className="mt-2.5 bg-gray-900/40 border border-gray-700 rounded-lg p-2.5">
+                                  <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-200">
+                                    <SelIcon className="w-3.5 h-3.5 text-emerald-400" />
+                                    {sel.label}
+                                  </div>
+                                  <p className="text-[11px] text-gray-400 mt-1 leading-relaxed">{sel.note}</p>
+                                  <a
+                                    href={sel.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 mt-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 hover:underline"
+                                  >
+                                    Download PrintNode for {sel.label}
+                                    <ExternalLink className="w-3 h-3" />
+                                  </a>
+                                </div>
+                              );
+                            })()}
+                          </div>
+                        </div>
+
+                        {/* Step 4 — generate API key */}
+                        <div className="flex gap-3">
+                          <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">4</div>
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-semibold text-white flex items-center gap-1.5">
                               <Key className="w-3.5 h-3.5 text-emerald-400" />
@@ -446,9 +550,9 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           </div>
                         </div>
 
-                        {/* Step 4 — paste + test */}
+                        {/* Step 5 — paste + test */}
                         <div className="flex gap-3">
-                          <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">4</div>
+                          <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">5</div>
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-semibold text-white flex items-center gap-1.5">
                               <Printer className="w-3.5 h-3.5 text-emerald-400" />
@@ -463,7 +567,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                         <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-2.5 flex gap-2 mt-2">
                           <AlertCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0 mt-0.5" />
                           <p className="text-xs text-amber-200/90 leading-relaxed">
-                            <strong>Heads up:</strong> the PrintNode Desktop app must stay running on the computer with the printer for receipts to print. If your tablet loses internet or the desktop app is closed, jobs queue up until it&apos;s back online.
+                            <strong>Heads up:</strong> the PrintNode app must stay running on the device with the printer for receipts to print. If that device goes offline or PrintNode is closed, jobs queue up until it&apos;s back online. Most owners leave the PrintNode device powered on 24/7 (it sips electricity).
                           </p>
                         </div>
                       </div>
