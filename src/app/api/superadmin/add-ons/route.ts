@@ -27,6 +27,7 @@ export async function PATCH(req: NextRequest) {
   if (typeof body.yearlyPriceCents === "number") data.yearlyPriceCents = Math.max(0, Math.floor(body.yearlyPriceCents));
   if (typeof body.trialDays === "number") data.trialDays = Math.max(0, Math.floor(body.trialDays));
   if (typeof body.isActive === "boolean") data.isActive = body.isActive;
+  if (typeof body.comingSoon === "boolean") data.comingSoon = body.comingSoon;
   if (typeof body.displayOrder === "number") data.displayOrder = Math.floor(body.displayOrder);
 
   const updated = await prisma.addOn.update({ where: { id }, data });

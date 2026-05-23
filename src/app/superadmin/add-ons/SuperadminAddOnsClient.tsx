@@ -11,6 +11,10 @@ type AddOnRow = {
   yearlyPriceCents: number | null;
   trialDays: number | null;
   isActive: boolean;
+  /** Roadmap teaser flag. When true, restaurant-facing UI shows the
+   *  add-on as "Coming Soon" — visible but unsubscribable. Flip OFF
+   *  when the implementation lands. */
+  comingSoon: boolean;
   displayOrder: number;
   enabledFeatures: string;
   requiredDependencies: string;
@@ -73,6 +77,7 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
           monthlyPriceCents: cents,
           trialDays: row.trialDays ?? 0,
           isActive: row.isActive,
+          comingSoon: row.comingSoon,
           displayOrder: row.displayOrder,
         }),
       });
@@ -143,6 +148,7 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
               <th className="text-left px-3 py-2">$/mo</th>
               <th className="text-left px-3 py-2">Trial days</th>
               <th className="text-left px-3 py-2">Active</th>
+              <th className="text-left px-3 py-2" title="Show as 'Coming Soon' to restaurants — visible but unsubscribable">Coming&nbsp;Soon</th>
               <th className="text-left px-3 py-2">Stripe</th>
               <th className="text-left px-3 py-2"></th>
             </tr>
@@ -199,6 +205,14 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
                       type="checkbox"
                       checked={r.isActive}
                       onChange={(e) => updateField(r.id, "isActive", e.target.checked)}
+                    />
+                  </td>
+                  <td className="px-3 py-2">
+                    <input
+                      type="checkbox"
+                      checked={r.comingSoon}
+                      onChange={(e) => updateField(r.id, "comingSoon", e.target.checked)}
+                      title="When checked, restaurants see this add-on as 'Coming Soon' and cannot subscribe."
                     />
                   </td>
                   <td className="px-3 py-2 text-xs">

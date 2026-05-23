@@ -1128,6 +1128,13 @@ model AddOn {
   yearlyPriceCents   Int?
   trialDays       Int?
   isActive        Boolean  @default(true)
+  /// When true, the add-on is visible in the catalog as a teaser but cannot
+  /// be subscribed to. /admin/billing/add-ons renders a "Coming Soon" badge
+  /// in place of the price + a disabled CTA explaining the feature is in
+  /// development. Used for products we're advertising but haven't built yet
+  /// (POS Module, Branded Mobile App, Phone Ordering, etc.) so prospective
+  /// restaurants see the roadmap without us mis-selling vapor.
+  comingSoon      Boolean  @default(false)
   displayOrder    Int      @default(0)
   /// JSON-encoded array of feature slugs this add-on unlocks. e.g.
   /// `["card_payments","stripe_connect"]` for online_payments. Keeping this

@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle, Sparkles, Rocket,
+  Check, Circle, Sparkles, Rocket, Phone,
   type LucideIcon,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
@@ -124,6 +124,11 @@ const navGroups: NavGroup[] = [
         setupSectionId: "orders",
         items: [
           { href: "/admin/notifications", labelKey: "notifications", label: "Notifications", icon: Bell, step: "orders.notificationRecipient" },
+          // Phone Ordering — landing page is a "Coming Soon" teaser at
+          // /admin/phone-ordering. Linked from the sidebar so the feature
+          // is discoverable even before the AI agent + Twilio plumbing
+          // is built. Doesn't count toward setup-completion (no `step`).
+          { href: "/admin/phone-ordering", labelKey: "phoneOrdering", label: "Phone Ordering", icon: Phone },
         ],
       },
       {

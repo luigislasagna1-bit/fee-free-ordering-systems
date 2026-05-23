@@ -68,6 +68,12 @@ async function main() {
   }
 
   // ─── Add-on catalog ────────────────────────────────────────────────────
+  // comingSoon: true means the add-on appears in the catalog as a teaser
+  // but CANNOT be subscribed to (subscribe button disabled, "Coming Soon"
+  // badge replaces the price). Use this for features we're publicly
+  // committing to but haven't built yet — gives prospective restaurants a
+  // roadmap preview without mis-selling vapor. Flip to false the day the
+  // implementation lands + a real price is set in /superadmin/add-ons.
   const addOns: Array<{
     slug: string;
     name: string;
@@ -76,6 +82,7 @@ async function main() {
     displayOrder: number;
     enabledFeatures: string[];
     requiredDependencies?: string[];
+    comingSoon?: boolean;
   }> = [
     {
       slug: "online_payments",
@@ -104,6 +111,10 @@ async function main() {
       displayOrder: 30,
       enabledFeatures: ["custom_domain_routing"],
       requiredDependencies: ["hosted_website"],
+      // Cloudflare/Vercel domain auto-provisioning isn't fully wired yet
+      // (provider.ts:49 Cloudflare path is a stub). Keep hidden until that
+      // lands.
+      comingSoon: true,
     },
     {
       slug: "advanced_promos",
@@ -113,6 +124,9 @@ async function main() {
       monthlyPriceCents: 0,
       displayOrder: 40,
       enabledFeatures: ["customer_segmentation", "automated_campaigns"],
+      // Basic promos work. The "segmentation" + "automated campaigns" copy
+      // is aspirational until task #60 is done. First post-launch feature.
+      comingSoon: true,
     },
     {
       slug: "branded_mobile_app",
@@ -122,6 +136,8 @@ async function main() {
       monthlyPriceCents: 0,
       displayOrder: 50,
       enabledFeatures: ["app_store_listing", "branded_pwa"],
+      // Zero code. Big undertaking.
+      comingSoon: true,
     },
     {
       slug: "pos_module",
@@ -131,6 +147,20 @@ async function main() {
       monthlyPriceCents: 0,
       displayOrder: 60,
       enabledFeatures: ["in_house_pos"],
+      // Zero code. Post-launch development.
+      comingSoon: true,
+    },
+    {
+      slug: "phone_ordering",
+      name: "Automated Phone Ordering",
+      description:
+        "AI-powered phone agent takes customer orders 24/7 and pushes them straight to your kitchen — no staff time, no missed calls during the rush.",
+      monthlyPriceCents: 0,
+      displayOrder: 65,
+      enabledFeatures: ["phone_ordering_agent"],
+      // New feature. Admin sidebar entry + placeholder page added; actual
+      // implementation (Twilio voice + AI agent) is post-launch work.
+      comingSoon: true,
     },
     {
       slug: "reservation_deposits",
@@ -140,6 +170,8 @@ async function main() {
       monthlyPriceCents: 0,
       displayOrder: 70,
       enabledFeatures: ["take_reservation_deposit"],
+      // Reservations work but deposit-capture-at-booking is not implemented.
+      comingSoon: true,
     },
     {
       // Multi-location: parent restaurant pays this flat fee to unlock the
@@ -204,6 +236,9 @@ async function main() {
       monthlyPriceCents: 1999, // $19.99
       displayOrder: 100,
       enabledFeatures: ["driver_pool"],
+      // ShipDay REST wrapper + webhook handler don't exist yet (task #59).
+      // UI is there but no actual dispatch happens. Hide until built.
+      comingSoon: true,
     },
   ];
 
@@ -217,6 +252,10 @@ async function main() {
         displayOrder: a.displayOrder,
         enabledFeatures: JSON.stringify(a.enabledFeatures),
         requiredDependencies: JSON.stringify(a.requiredDependencies ?? []),
+        // comingSoon IS updated on re-seed so flipping a flag in this file
+        // and re-running the seed actually propagates the change. (Stripe
+        // price stays sticky via the omission above.)
+        comingSoon: a.comingSoon ?? false,
       },
       create: {
         slug: a.slug,
@@ -227,9 +266,10 @@ async function main() {
         enabledFeatures: JSON.stringify(a.enabledFeatures),
         requiredDependencies: JSON.stringify(a.requiredDependencies ?? []),
         isActive: true,
+        comingSoon: a.comingSoon ?? false,
       },
     });
-    console.log(`  ${a.slug.padEnd(22)} → ${row.id}`);
+    console.log(`  ${a.slug.padEnd(22)} → ${row.id}${a.comingSoon ? "  [Coming Soon]" : ""}`);
   }
 
   await prisma.$disconnect();

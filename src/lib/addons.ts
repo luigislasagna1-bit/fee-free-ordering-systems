@@ -35,6 +35,10 @@ export async function listAddOnsForRestaurant(restaurantId: string) {
     enabledFeatures: safeJsonArray(a.enabledFeatures),
     requiredDependencies: safeJsonArray(a.requiredDependencies),
     stripePriceId: a.stripePriceId,
+    /** Roadmap teaser flag. When true, the catalog card renders a
+     *  "Coming Soon" badge and the subscribe button is disabled — the
+     *  add-on is publicly committed to but not yet built. */
+    comingSoon: a.comingSoon ?? false,
     isSubscribed: !!subBySlug.get(a.slug),
     subscription: subBySlug.get(a.slug)
       ? {

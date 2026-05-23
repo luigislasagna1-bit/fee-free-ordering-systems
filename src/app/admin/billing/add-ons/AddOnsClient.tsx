@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw, Sparkles, ArrowRight, Settings } from "lucide-react";
+import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw, Sparkles, ArrowRight, Settings, Rocket } from "lucide-react";
 
 /**
  * Where each add-on's settings/config live. Used to render an "Open settings"
@@ -37,6 +37,9 @@ type AddOnView = {
   enabledFeatures: string[];
   requiredDependencies: string[];
   stripePriceId: string | null;
+  /** Roadmap teaser flag. When true, the catalog card renders as
+   *  "Coming Soon" — visible but unsubscribable. */
+  comingSoon: boolean;
   isSubscribed: boolean;
   subscription: {
     status: string;
@@ -145,7 +148,9 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
             <div
               key={a.id}
               className={`rounded-xl border bg-white p-5 ${
-                scheduled
+                a.comingSoon && !active
+                  ? "border-purple-200 bg-gradient-to-br from-white to-purple-50/40"
+                  : scheduled
                   ? "border-amber-300 ring-1 ring-amber-200"
                   : active
                   ? "border-green-300 ring-1 ring-green-200"
@@ -153,8 +158,16 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
               }`}
             >
               <div className="flex items-start justify-between">
-                <div>
-                  <h3 className="font-semibold text-gray-900">{a.name}</h3>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="font-semibold text-gray-900">{a.name}</h3>
+                    {a.comingSoon && !active && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">
+                        <Rocket className="w-2.5 h-2.5" />
+                        Coming Soon
+                      </span>
+                    )}
+                  </div>
                   <p className="text-sm text-gray-600 mt-1">{a.description}</p>
                 </div>
                 {active && !scheduled && (
@@ -166,18 +179,29 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
               </div>
 
               <div className="mt-3">
-                <span className="text-2xl font-bold text-gray-900">
-                  ${dollars}
-                </span>
-                <span className="text-sm text-gray-500"> / month</span>
-                {(a.trialDays ?? 0) > 0 && (
-                  <span className="ml-2 text-xs font-medium px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
-                    {a.trialDays}-day trial
-                  </span>
+                {a.comingSoon && !active ? (
+                  // Coming-soon card: don't show a price at all. The
+                  // ROADMAP teaser format — restaurants see the value
+                  // prop without us mis-selling vapor.
+                  <div className="text-sm text-purple-700 font-semibold">
+                    In development · pricing TBD
+                  </div>
+                ) : (
+                  <>
+                    <span className="text-2xl font-bold text-gray-900">
+                      ${dollars}
+                    </span>
+                    <span className="text-sm text-gray-500"> / month</span>
+                    {(a.trialDays ?? 0) > 0 && (
+                      <span className="ml-2 text-xs font-medium px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
+                        {a.trialDays}-day trial
+                      </span>
+                    )}
+                    <div className="text-[10px] text-gray-400 mt-0.5 uppercase tracking-wider">
+                      USD · CA tax by province · US/intl exempt
+                    </div>
+                  </>
                 )}
-                <div className="text-[10px] text-gray-400 mt-0.5 uppercase tracking-wider">
-                  USD · CA tax by province · US/intl exempt
-                </div>
               </div>
 
               {a.enabledFeatures.length > 0 && (
@@ -264,6 +288,25 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
                         {busy ? "Working…" : "Cancel"}
                       </button>
                     </div>
+                  </div>
+                ) : a.comingSoon ? (
+                  // Coming-soon: no subscribe path at all. Show a
+                  // friendly "we're building it" message + a disabled
+                  // teaser button. Restaurants can't accidentally try
+                  // to pay for vapor.
+                  <div className="space-y-2">
+                    <button
+                      type="button"
+                      disabled
+                      className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-purple-100 text-purple-600 cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      <Rocket className="w-3.5 h-3.5" />
+                      In development
+                    </button>
+                    <p className="text-[11px] text-gray-500 leading-snug text-center">
+                      We&apos;re building this. You&apos;ll see it here as
+                      soon as it&apos;s ready to subscribe to.
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-2">
