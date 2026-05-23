@@ -62,7 +62,14 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const user = await getSessionUser();
+  // preferKitchen: true — this endpoint is called from BOTH the kitchen
+  // display (accept/reject/status-update) AND the admin orders page.
+  // Without preferKitchen, kitchen-only users (no admin cookie) got 401s
+  // when clicking Accept because the session resolver returned the admin
+  // session (null) first and never reached the kitchen fallback. Setting
+  // preferKitchen=true tips the resolution toward the kitchen session;
+  // admin users still work because their session is the fallback.
+  const user = await getSessionUser({ preferKitchen: true });
   if (!user?.restaurantId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
