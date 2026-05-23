@@ -384,23 +384,34 @@ export function ReceiptsClient({
     <div className="flex h-full" style={{ minHeight: "calc(100vh - 120px)" }}>
       {/* ── LEFT PANEL ─────────────────────────────────────────────────────── */}
       <div className="w-80 flex-shrink-0 flex flex-col bg-white border-r border-gray-200 overflow-hidden">
-        {/* Type toggle */}
+        {/* Type toggle — emerald for Customer receipt (customer-facing surface),
+            navy slate-900 for Kitchen receipt (kitchen-facing surface). Mirrors
+            the demo-page card colors (emerald=customer / navy=kitchen) so the
+            mental model is consistent across the platform. */}
         <div className="flex border-b border-gray-200 flex-shrink-0">
-          {(["customer", "kitchen"] as const).map((t) => (
-            <button
-              key={t}
-              onClick={() => { setActiveType(t); setExpandedId(null); }}
-              className={tw(
-                "flex-1 flex items-center justify-center gap-1.5 py-3 text-sm font-semibold transition border-b-2",
-                activeType === t
-                  ? "border-emerald-500 text-emerald-600 bg-emerald-50"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
-              )}
-            >
-              {t === "customer" ? <Receipt className="w-4 h-4" /> : <ChefHat className="w-4 h-4" />}
-              {t === "customer" ? tR("customerReceipt") : tR("kitchenReceipt")}
-            </button>
-          ))}
+          {(["customer", "kitchen"] as const).map((t) => {
+            const isActive = activeType === t;
+            const isCustomer = t === "customer";
+            return (
+              <button
+                key={t}
+                onClick={() => { setActiveType(t); setExpandedId(null); }}
+                className={tw(
+                  "flex-1 flex items-center justify-center gap-1.5 py-3 text-sm font-semibold transition border-b-2",
+                  isActive
+                    ? (isCustomer
+                        ? "border-emerald-500 text-emerald-700 bg-emerald-50"
+                        : "border-slate-900 text-slate-900 bg-slate-100")
+                    : "border-transparent text-gray-500 hover:text-gray-700"
+                )}
+              >
+                {isCustomer
+                  ? <Receipt className={`w-4 h-4 ${isActive ? "text-emerald-700" : "text-emerald-500"}`} />
+                  : <ChefHat className={`w-4 h-4 ${isActive ? "text-slate-900" : "text-slate-600"}`} />}
+                {isCustomer ? tR("customerReceipt") : tR("kitchenReceipt")}
+              </button>
+            );
+          })}
         </div>
 
         {/* Scrollable section list */}

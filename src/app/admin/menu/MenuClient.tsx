@@ -213,16 +213,22 @@ function ItemModal({
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
         </div>
 
-        {/* Tabs */}
+        {/* Tabs — each gets its own accent color so the modal sections
+            are scannable at a glance (per Luigi's UAT feedback that all
+            same-color tabs look confusing). */}
         <div className="flex border-b px-5 overflow-x-auto">
           {([
-            ["basic", "Basic"],
-            ["availability", "Availability"],
-            ["variants", "Variants"],
-            ["pizza", pizza.isPizza ? "🍕 Pizza" : "Pizza Setup"],
-          ] as const).map(([t, label]) => (
+            ["basic",        "Basic",                                       "border-emerald-500", "text-emerald-700", "bg-emerald-50", "text-emerald-500"],
+            ["availability", "Availability",                                 "border-sky-500",     "text-sky-700",     "bg-sky-50",     "text-sky-500"    ],
+            ["variants",     "Variants",                                     "border-amber-500",   "text-amber-700",   "bg-amber-50",   "text-amber-500"  ],
+            ["pizza",        pizza.isPizza ? "🍕 Pizza" : "Pizza Setup",     "border-slate-900",   "text-slate-900",   "bg-slate-100",  "text-slate-600"  ],
+          ] as const).map(([t, label, activeBorder, activeText, activeBg]) => (
             <button key={t} onClick={() => setTab(t)}
-              className={`px-4 py-3 text-sm font-medium border-b-2 transition whitespace-nowrap flex-shrink-0 ${tab === t ? "border-emerald-500 text-emerald-600" : "border-transparent text-gray-500 hover:text-gray-700"}`}>
+              className={`px-4 py-3 text-sm font-medium border-b-2 transition whitespace-nowrap flex-shrink-0 ${
+                tab === t
+                  ? `${activeBorder} ${activeText} ${activeBg}`
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}>
               {label}
             </button>
           ))}

@@ -5,6 +5,7 @@ import {
   Bell, Printer, RefreshCw, LogOut, ChefHat, Sun, Moon,
   Package, Clock, Truck, ShoppingBag, CheckCircle, Trash2,
   FlaskConical, Loader2, Volume2, VolumeX, AlertTriangle, XCircle,
+  CalendarDays,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
@@ -246,6 +247,44 @@ function ConfirmModal({ title, message, confirmLabel, onConfirm, onCancel, t }: 
 
 // ── Main KitchenDisplay ───────────────────────────────────────────────────────
 type KTab = "orders" | "inprogress" | "complete" | "reservations";
+
+// Per-tab visual identity. Each kitchen tab gets its own accent color +
+// icon so staff can scan + identify at a glance — even the inactive
+// tabs stay color-coded by their icon. Luigi flagged "All orders /
+// In progress / Completed all looking the same is confusing" — this
+// fixes that by treating each tab as its own semantic surface:
+//   orders       = emerald (the "incoming + history" tab)
+//   inprogress   = amber   (the "doing it now" tab — eye-catching)
+//   complete     = slate   (the "done" tab — neutral, dark navy)
+//   reservations = sky     (the "future / off-floor" tab — cool blue)
+type TabStyle = {
+  /** Icon rendered to the LEFT of the tab label. */
+  Icon: typeof ShoppingBag;
+  /** Bottom-border accent when the tab is selected. */
+  activeBorder: string;
+  /** Tab label text color when selected. */
+  activeText:   string;
+  /** Subtle background fill behind the active tab so it visually pops. */
+  activeBg:     string;
+  /** Icon color when the tab is NOT selected — keeps the per-tab color
+   *  visible even when the user isn't on that tab, which is the main
+   *  scannability win. */
+  inactiveIcon: string;
+  /** Pill/dot background when count > 0. */
+  badge:        string;
+};
+const TAB_STYLES_LIGHT: Record<KTab, TabStyle> = {
+  orders:       { Icon: ShoppingBag,  activeBorder: "border-emerald-500", activeText: "text-emerald-700", activeBg: "bg-emerald-50",  inactiveIcon: "text-emerald-500", badge: "bg-emerald-500 text-white" },
+  inprogress:   { Icon: Clock,        activeBorder: "border-amber-500",   activeText: "text-amber-700",   activeBg: "bg-amber-50",    inactiveIcon: "text-amber-500",   badge: "bg-amber-500 text-white"   },
+  complete:     { Icon: CheckCircle,  activeBorder: "border-slate-900",   activeText: "text-slate-900",   activeBg: "bg-slate-100",   inactiveIcon: "text-slate-600",   badge: "bg-slate-900 text-white"   },
+  reservations: { Icon: CalendarDays, activeBorder: "border-sky-500",     activeText: "text-sky-700",     activeBg: "bg-sky-50",      inactiveIcon: "text-sky-500",     badge: "bg-sky-500 text-white"     },
+};
+const TAB_STYLES_DARK: Record<KTab, TabStyle> = {
+  orders:       { Icon: ShoppingBag,  activeBorder: "border-emerald-400", activeText: "text-emerald-300", activeBg: "bg-emerald-500/10", inactiveIcon: "text-emerald-400", badge: "bg-emerald-500 text-white" },
+  inprogress:   { Icon: Clock,        activeBorder: "border-amber-400",   activeText: "text-amber-300",   activeBg: "bg-amber-500/10",   inactiveIcon: "text-amber-400",   badge: "bg-amber-500 text-white"   },
+  complete:     { Icon: CheckCircle,  activeBorder: "border-slate-200",   activeText: "text-white",       activeBg: "bg-slate-700/40",   inactiveIcon: "text-slate-300",   badge: "bg-slate-200 text-slate-900" },
+  reservations: { Icon: CalendarDays, activeBorder: "border-sky-400",     activeText: "text-sky-300",     activeBg: "bg-sky-500/10",     inactiveIcon: "text-sky-400",     badge: "bg-sky-500 text-white"     },
+};
 
 type KitchenReservation = {
   id: string;
@@ -869,30 +908,33 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               reservations: tk("reservations"),
             };
             const count = tabCounts[tab];
+            const isActive = activeTab === tab;
+            const styles = (themeMode === "dark" ? TAB_STYLES_DARK : TAB_STYLES_LIGHT)[tab];
+            const Icon = styles.Icon;
             return (
               <button
                 key={tab}
                 type="button"
                 onClick={() => setActiveTab(tab)}
-                className={`flex-1 min-w-0 px-1.5 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-sm font-semibold flex items-center justify-center sm:justify-start gap-1 sm:gap-2 border-b-2 transition touch-manipulation cursor-pointer whitespace-nowrap ${activeTab === tab ? t.tabActive : t.tabInactive}`}
+                className={`flex-1 min-w-0 px-1.5 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-sm font-semibold flex items-center justify-center sm:justify-start gap-1 sm:gap-2 border-b-2 transition touch-manipulation cursor-pointer whitespace-nowrap ${
+                  isActive
+                    ? `${styles.activeBorder} ${styles.activeText} ${styles.activeBg}`
+                    : `border-transparent ${themeMode === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`
+                }`}
               >
+                {/* Per-tab icon — colored even when inactive so each tab
+                    has a unique scannable identity. */}
+                <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${isActive ? styles.activeText : styles.inactiveIcon}`} />
                 <span className="truncate">{labels[tab]}</span>
                 {/* Count badge: full pill on tablet+, mobile shows only a small
-                    colored dot so the full tab label has room to render. */}
+                    colored dot so the full tab label has room to render.
+                    Color matches the per-tab identity. */}
                 {count > 0 && (
                   <>
-                    <span className={`hidden sm:inline text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full flex-shrink-0 ${
-                      tab === "orders" && pendingCount > 0 ? "bg-emerald-500 text-white" :
-                      tab === "inprogress" ? "bg-blue-500 text-white" :
-                      "bg-gray-200 text-gray-700"
-                    }`}>
+                    <span className={`hidden sm:inline text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full flex-shrink-0 ${styles.badge}`}>
                       {count}
                     </span>
-                    <span className={`sm:hidden inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${
-                      tab === "orders" && pendingCount > 0 ? "bg-emerald-500" :
-                      tab === "inprogress" ? "bg-blue-500" :
-                      "bg-gray-400"
-                    }`} aria-hidden="true" />
+                    <span className={`sm:hidden inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${styles.badge}`} aria-hidden="true" />
                   </>
                 )}
               </button>

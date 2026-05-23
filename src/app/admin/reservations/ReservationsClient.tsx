@@ -756,17 +756,28 @@ export function ReservationsClient() {
         </div>
       </div>
 
+      {/* Per-tab accent colors — Luigi's UAT note: mono-color tabs are
+          confusing, each surface deserves its own scannable identity.
+          Reservations = sky (future/calendar), Tables = emerald
+          (current floor layout), Settings = slate-900 (config). */}
       <div className="flex border-b border-gray-200 mb-5">
         {([
-          ["reservations", "Reservations", CalendarDays],
-          ["tables",       "Tables",       Table2],
-          ["settings",     "Settings",     Settings],
-        ] as [Tab, string, any][]).map(([tab, label, Icon]) => (
-          <button key={tab} onClick={() => setActiveTab(tab)}
-            className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition -mb-px ${activeTab === tab ? "border-emerald-500 text-emerald-600" : "border-transparent text-gray-500 hover:text-gray-700"}`}>
-            <Icon className="w-4 h-4" />{label}
-          </button>
-        ))}
+          ["reservations", "Reservations", CalendarDays, "border-sky-500",     "text-sky-700",     "bg-sky-50",     "text-sky-500"    ],
+          ["tables",       "Tables",       Table2,       "border-emerald-500", "text-emerald-700", "bg-emerald-50", "text-emerald-500"],
+          ["settings",     "Settings",     Settings,     "border-slate-900",   "text-slate-900",   "bg-slate-100",  "text-slate-600"  ],
+        ] as [Tab, string, any, string, string, string, string][]).map(([tab, label, Icon, activeBorder, activeText, activeBg, inactiveIcon]) => {
+          const isActive = activeTab === tab;
+          return (
+            <button key={tab} onClick={() => setActiveTab(tab)}
+              className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition -mb-px ${
+                isActive
+                  ? `${activeBorder} ${activeText} ${activeBg}`
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}>
+              <Icon className={`w-4 h-4 ${isActive ? activeText : inactiveIcon}`} />{label}
+            </button>
+          );
+        })}
       </div>
 
       <div className="flex-1 overflow-y-auto min-h-0">
