@@ -40,6 +40,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   let restaurantName = "";
   let setupProgress: SetupProgress | null = null;
   let hasHostedSite = false;
+  /** True iff Restaurant.publishedAt is set — hides the "Ready to publish"
+   *  sidebar chip once the restaurant is actually live. */
+  let isPublished = false;
   let ownerEmail: string | null = null;
   let ownerEmailVerified = true; // default true so we don't nag superadmins / staff
   let locationsForSwitcher: Array<{ id: string; name: string; city: string | null; isParent: boolean }> = [];
@@ -54,11 +57,16 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           trialEndsAt: true,
           parentRestaurantId: true,
           id: true,
+          // publishedAt: drives the sidebar "Ready to publish" chip —
+          // when this is set, the chip hides because the restaurant
+          // is already live, no nudge needed.
+          publishedAt: true,
         },
       }),
     ]);
     pendingOrders = count;
     restaurantName = restaurant?.name || "";
+    isPublished = !!restaurant?.publishedAt;
 
     // Email-verification state — only relevant for restaurant_admin users
     // (the actual owner). Superadmin / reseller impersonators bypass the
@@ -162,7 +170,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           />
         )}
         <div className="flex flex-1 overflow-hidden">
-          <AdminSidebar session={session} pendingOrders={pendingOrders} setupProgress={setupProgress} hasHostedSite={hasHostedSite} />
+          <AdminSidebar
+            session={session}
+            pendingOrders={pendingOrders}
+            setupProgress={setupProgress}
+            hasHostedSite={hasHostedSite}
+            isPublished={isPublished}
+          />
           <div className="flex-1 flex flex-col overflow-hidden">
             <AdminHeader
               session={session}

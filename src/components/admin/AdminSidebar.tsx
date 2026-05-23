@@ -151,16 +151,10 @@ const navGroups: NavGroup[] = [
           { href: "/admin/website/editor", labelKey: "websiteEditor", label: "Website Editor", icon: Palette, requiresHostedSite: true },
         ],
       },
-      {
-        key: "setup.billing",
-        labelKey: "billing",
-        label: "Subscription & Billing",
-        icon: Wallet,
-        items: [
-          { href: "/admin/billing",         labelKey: "billing", label: "Billing", icon: Wallet },
-          { href: "/admin/billing/add-ons", labelKey: "addOns",  label: "Add-Ons", icon: Zap },
-        ],
-      },
+      // NOTE: "Subscription & Billing" used to live here. Moved to OTHER —
+      // billing isn't a pre-publish setup step (you can take orders without
+      // touching billing), so it polluted the SETUP rollup X/Y counter.
+      // Now SETUP contains only the 6 categories that ACTUALLY gate publishing.
     ],
   },
 
@@ -205,6 +199,12 @@ const navGroups: NavGroup[] = [
     label: "Other",
     icon: MoreHorizontal,
     items: [
+      // Subscription & Billing lives here, not under SETUP — billing isn't
+      // a pre-publish setup step. Restaurants can take orders without
+      // touching billing (free trial), so dragging it into the setup
+      // rollup gave a misleading "you're not ready to publish" feel.
+      { href: "/admin/billing",         labelKey: "billing", label: "Billing", icon: Wallet },
+      { href: "/admin/billing/add-ons", labelKey: "addOns",  label: "Add-Ons", icon: Zap },
       { href: "/admin/settings",     labelKey: "settings",    label: "Settings",     icon: Settings },
       // Map provider config (Leaflet free vs Google Maps API). Optional
       // config so it lives outside the setup tracking flow.
@@ -297,6 +297,7 @@ export function AdminSidebar({
   pendingOrders = 0,
   setupProgress,
   hasHostedSite = false,
+  isPublished = false,
 }: {
   session: Session;
   pendingOrders?: number;
@@ -306,6 +307,9 @@ export function AdminSidebar({
    *  the Website Editor link can be hidden cleanly for non-subscribers
    *  without flashing in and out as the page renders. */
   hasHostedSite?: boolean;
+  /** True iff Restaurant.publishedAt is set. Hides the "Ready to publish"
+   *  chip once the restaurant is already live — no nudge needed. */
+  isPublished?: boolean;
 }) {
   const tr = useSafeT();
   const pathname = usePathname();
@@ -473,31 +477,59 @@ export function AdminSidebar({
         </button>
       </div>
 
-      {/* Setup-progress chip just under the header (when there's an open restaurant) */}
-      {!collapsed && setupProgress && setupProgress.percent < 100 && (
-        // Drives the guided walkthrough (see /admin/setup/next).
-        // publishReady === all required done — drop the owner on the
-        // wizard page so they see the green Publish CTA. Otherwise
-        // jump straight to the first incomplete required step.
-        <Link
-          href={setupProgress.publishReady ? "/admin/setup" : "/admin/setup/next"}
-          className="mx-2 mt-3 mb-1 bg-gradient-to-r from-orange-500/20 to-orange-500/10 border border-orange-500/40 rounded-lg px-3 py-2 text-xs hover:border-orange-500/70 transition"
-        >
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="font-semibold text-orange-400">Setup progress</span>
-            <span className="text-orange-300 font-bold">{setupProgress.percent}%</span>
-          </div>
-          <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-orange-400 transition-all"
-              style={{ width: `${setupProgress.percent}%` }}
-            />
-          </div>
-          <div className="text-[10px] text-gray-400 mt-1">
-            {setupProgress.completedSteps}/{setupProgress.totalSteps} steps complete
-            {!setupProgress.publishReady && ` · ${setupProgress.requiredStepsRemaining.length} required`}
-          </div>
-        </Link>
+      {/* Setup-progress chip just under the header. Behavior across states:
+       *
+       *   percent <100, publish NOT ready  → orange chip nudging to the next
+       *                                       required step (the common state
+       *                                       for new restaurants).
+       *   percent <100, publish IS  ready  → orange chip nudging to /admin/setup
+       *                                       so the owner sees the green
+       *                                       Publish CTA (optional steps still
+       *                                       open but they could ship now).
+       *   percent =100, NOT yet published   → emerald "Ready to publish" chip
+       *                                       so the win is celebrated and the
+       *                                       owner has a one-click path to
+       *                                       the Publish button. Replaces the
+       *                                       silent "chip just disappears"
+       *                                       behavior from before.
+       *   percent =100, already published   → chip hidden entirely. SETUP
+       *                                       is done done.
+       */}
+      {!collapsed && setupProgress && !(setupProgress.percent === 100 && isPublished) && (
+        setupProgress.percent === 100 ? (
+          <Link
+            href="/admin/setup"
+            className="mx-2 mt-3 mb-1 bg-gradient-to-r from-emerald-500/20 to-emerald-500/10 border border-emerald-500/40 rounded-lg px-3 py-2 text-xs hover:border-emerald-500/70 transition"
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-emerald-400">Ready to publish</span>
+              <Rocket className="w-3.5 h-3.5 text-emerald-300" />
+            </div>
+            <div className="text-[10px] text-gray-400 mt-1">
+              All {setupProgress.totalSteps} steps complete · click to go live
+            </div>
+          </Link>
+        ) : (
+          <Link
+            href={setupProgress.publishReady ? "/admin/setup" : "/admin/setup/next"}
+            className="mx-2 mt-3 mb-1 bg-gradient-to-r from-orange-500/20 to-orange-500/10 border border-orange-500/40 rounded-lg px-3 py-2 text-xs hover:border-orange-500/70 transition"
+          >
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="font-semibold text-orange-400">Setup progress</span>
+              <span className="text-orange-300 font-bold">{setupProgress.percent}%</span>
+            </div>
+            <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-orange-400 transition-all"
+                style={{ width: `${setupProgress.percent}%` }}
+              />
+            </div>
+            <div className="text-[10px] text-gray-400 mt-1">
+              {setupProgress.completedSteps}/{setupProgress.totalSteps} steps complete
+              {!setupProgress.publishReady && ` · ${setupProgress.requiredStepsRemaining.length} required`}
+            </div>
+          </Link>
+        )
       )}
 
       <nav className="flex-1 py-2 overflow-y-auto">

@@ -40,6 +40,17 @@ export function SetupWizardClient({
 }) {
   const router = useRouter();
   const [publishing, setPublishing] = useState(false);
+  /**
+   * Race-condition guard: the Publish button only renders when
+   * progress.publishReady is true (computed at server render time), but a
+   * second tab could un-complete a required step between page load and
+   * click. In that case the API returns 412 with `requiredStepsRemaining[]`.
+   * We render those steps inline instead of a generic toast so the owner
+   * can click straight to fix them without re-loading.
+   */
+  const [publishBlock, setPublishBlock] = useState<
+    null | Array<{ id: string; label: string; href: string }>
+  >(null);
 
   // Auto-expand the FIRST incomplete section (best onboarding UX —
   // owner sees what to work on next without hunting). Completed
@@ -59,10 +70,25 @@ export function SetupWizardClient({
   async function publish() {
     if (publishing) return;
     setPublishing(true);
+    setPublishBlock(null);
     try {
       const res = await fetch("/api/admin/publish", { method: "POST" });
       const data = await res.json();
       if (!res.ok) {
+        // 412 = publish_blocked → render inline list of remaining required
+        // steps so the owner can click each one. Everything else (401/403/
+        // 500) goes through the generic toast path.
+        if (
+          res.status === 412 &&
+          Array.isArray(data?.requiredStepsRemaining) &&
+          data.requiredStepsRemaining.length > 0
+        ) {
+          setPublishBlock(data.requiredStepsRemaining);
+          // Also kick a refresh so the section list / progress bar reflect
+          // the actual current state on the next render.
+          router.refresh();
+          return;
+        }
         toast.error(data.error || "Failed to publish");
         return;
       }
@@ -210,17 +236,48 @@ export function SetupWizardClient({
           </div>
 
           {progress.publishReady && (
-            <button
-              onClick={publish}
-              disabled={publishing}
-              className="mt-5 w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white font-bold px-6 py-3 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2"
-            >
-              {publishing ? (
-                <><Loader2 className="w-4 h-4 animate-spin" /> Publishing…</>
-              ) : (
-                <><Rocket className="w-4 h-4" /> Publish my restaurant</>
+            <>
+              {publishBlock && (
+                <div className="mt-4 rounded-xl border-2 border-red-200 bg-red-50 p-4">
+                  <div className="flex items-start gap-2 mb-2">
+                    <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
+                    <div className="text-sm font-semibold text-red-900">
+                      Can&apos;t publish yet — a required step came undone
+                    </div>
+                  </div>
+                  <p className="text-xs text-red-800 mb-2 leading-snug">
+                    Looks like someone (maybe you in another tab?) just
+                    un-completed a setup step. Knock these off and try
+                    publishing again:
+                  </p>
+                  <ul className="space-y-1">
+                    {publishBlock.map((step) => (
+                      <li key={step.id}>
+                        <Link
+                          href={step.href}
+                          className="inline-flex items-center gap-1.5 text-sm text-red-900 hover:underline font-medium"
+                        >
+                          <Circle className="w-3.5 h-3.5" />
+                          {step.label}
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
-            </button>
+              <button
+                onClick={publish}
+                disabled={publishing}
+                className="mt-5 w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white font-bold px-6 py-3 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2"
+              >
+                {publishing ? (
+                  <><Loader2 className="w-4 h-4 animate-spin" /> Publishing…</>
+                ) : (
+                  <><Rocket className="w-4 h-4" /> Publish my restaurant</>
+                )}
+              </button>
+            </>
           )}
         </div>
       )}
