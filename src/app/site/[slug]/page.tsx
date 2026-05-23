@@ -538,6 +538,13 @@ export default async function HostedSitePage({
  * Each link points at the same hosted page rendered with that specific
  * keyword in the H1/title/meta (see /site/[slug]/[seoSlug]/page.tsx).
  */
+/** Visible link count on the main homepage. The rest go inside an
+ *  HTML <details> so the page stays clean but search engines still
+ *  crawl + index every link (Google explicitly supports indexing
+ *  inside <details> — content is in the DOM, just not visible until
+ *  the user expands). Sitemap.xml separately lists 100% of them. */
+const VISIBLE_LINKS_ON_HOMEPAGE = 10;
+
 function SeoLinksFooter({
   restaurantCity,
   restaurantCuisine,
@@ -556,6 +563,12 @@ function SeoLinksFooter({
   });
   if (links.length === 0) return null;
 
+  // Split visible vs hidden. Order from buildSeoLinks already puts
+  // the restaurant's own city + primary cuisine first, so the top N
+  // are the most relevant for a casual visitor.
+  const visible = links.slice(0, VISIBLE_LINKS_ON_HOMEPAGE);
+  const hidden = links.slice(VISIBLE_LINKS_ON_HOMEPAGE);
+
   // The bare `href` here is intentionally relative — when this page is
   // served via the <slug>.feefreeordering.com subdomain, /italian-...
   // resolves correctly through the proxy → /site/<slug>/italian-... .
@@ -571,7 +584,7 @@ function SeoLinksFooter({
           Service areas
         </h2>
         <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-1">
-          {links.map((l) => (
+          {visible.map((l) => (
             <li key={l.slug}>
               <a
                 href={`/${l.slug}`}
@@ -582,6 +595,28 @@ function SeoLinksFooter({
             </li>
           ))}
         </ul>
+        {hidden.length > 0 && (
+          <details className="mt-3 group">
+            <summary className="text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-300 cursor-pointer select-none transition list-none">
+              <span className="inline-flex items-center gap-1">
+                <span className="group-open:hidden">Show {hidden.length} more areas</span>
+                <span className="hidden group-open:inline">Show fewer</span>
+              </span>
+            </summary>
+            <ul className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-1">
+              {hidden.map((l) => (
+                <li key={l.slug}>
+                  <a
+                    href={`/${l.slug}`}
+                    className="text-[11px] text-gray-500 hover:text-gray-300 transition"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
       </div>
     </section>
   );
