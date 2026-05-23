@@ -64,11 +64,16 @@ export async function handleAccountEvent(event: Stripe.Event) {
     // triggers.
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
     const desiredUrl = baseUrl ? `${baseUrl.replace(/\/$/, "")}/order/${restaurant.slug}` : null;
-    syncConnectAccountProfile(account.id, {
-      name: restaurant.name,
-      url: desiredUrl,
-    }).catch((err) => {
+    // IMPORTANT: await — Vercel kills unawaited promises the moment this
+    // webhook handler returns its 200 to Stripe. We hit this exact bug
+    // with kitchen notifications in payment-intent.ts (ORD-529226215).
+    try {
+      await syncConnectAccountProfile(account.id, {
+        name: restaurant.name,
+        url: desiredUrl,
+      });
+    } catch (err) {
       console.error("[stripe/account.updated] sync business_profile failed:", err instanceof Error ? err.message : err);
-    });
+    }
   }
 }

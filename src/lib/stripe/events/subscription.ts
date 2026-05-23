@@ -59,13 +59,18 @@ export async function handleSubscriptionEvent(event: Stripe.Event) {
         ? Math.max(0, Math.ceil((trialEndSec * 1000 - Date.now()) / (24 * 60 * 60 * 1000)))
         : 3;
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
-      sendTrialExpiringEmail({
-        to: restaurant.email,
-        restaurantName: restaurant.name,
-        daysLeft,
-        upgradeUrl: `${baseUrl}/admin/billing`,
-        locale: restaurant.defaultLanguage || "en",
-      }).catch(() => {});
+      // IMPORTANT: await — Vercel kills unawaited promises after webhook 200.
+      try {
+        await sendTrialExpiringEmail({
+          to: restaurant.email,
+          restaurantName: restaurant.name,
+          daysLeft,
+          upgradeUrl: `${baseUrl}/admin/billing`,
+          locale: restaurant.defaultLanguage || "en",
+        });
+      } catch (e) {
+        console.error("[stripe/subscription.trial_will_end] trial email failed", e);
+      }
     }
     return;
   }
@@ -194,12 +199,14 @@ async function handleAddOnSubscriptionEvent(
       // This prevents the silent "I cancelled but I'm still being
       // billed per order" surprise — they can't accrue PAYG fees while
       // hidden from the marketplace (no marketplace orders → no $3 charges).
-      await prisma.marketplaceListing
-        .updateMany({
+      try {
+        await prisma.marketplaceListing.updateMany({
           where: { restaurantId },
           data: { billingMode: "payg", isListed: false },
-        })
-        .catch((e) => console.error("[stripe] marketplace deactivation failed:", e));
+        });
+      } catch (e) {
+        console.error("[stripe] marketplace deactivation failed:", e);
+      }
     }
   }
 }

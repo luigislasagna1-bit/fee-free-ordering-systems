@@ -50,9 +50,11 @@ export async function handleChargeEvent(event: Stripe.Event) {
           where: { id: sub.id },
           data: { amountRefundedCents: Math.max(sub.amountRefundedCents, refunded) },
         });
-        await reverseCommission(sub.id, "invoice refunded").catch((e) =>
-          console.error("[stripe] reverseCommission failed", e)
-        );
+        try {
+          await reverseCommission(sub.id, "invoice refunded");
+        } catch (e) {
+          console.error("[stripe] reverseCommission failed", e);
+        }
       }
       return;
     }
@@ -72,9 +74,11 @@ export async function handleChargeEvent(event: Stripe.Event) {
           where: { id: sub.id },
           data: { disputed: true },
         });
-        await reverseCommission(sub.id, "invoice disputed").catch((e) =>
-          console.error("[stripe] reverseCommission failed", e)
-        );
+        try {
+          await reverseCommission(sub.id, "invoice disputed");
+        } catch (e) {
+          console.error("[stripe] reverseCommission failed", e);
+        }
       }
     }
     // Order is being disputed by the customer. Flag for restaurant attention.
@@ -89,16 +93,21 @@ export async function handleChargeEvent(event: Stripe.Event) {
       });
       if (r?.email) {
         const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
-        sendBillingNotificationEmail({
-          to: r.email,
-          restaurantName: r.name,
-          subject: "A customer has disputed a charge",
-          headline: "Chargeback opened",
-          body: `A customer has disputed a recent payment${orderId ? ` (order ${orderId})` : ""}. Review the dispute in your Stripe dashboard and respond before the deadline to contest it.`,
-          ctaLabel: "Open Stripe dashboard",
-          ctaUrl: "https://dashboard.stripe.com/disputes",
-        }).catch(() => {});
         void baseUrl;
+        // IMPORTANT: await — see note in account.ts (Vercel lambda lifecycle).
+        try {
+          await sendBillingNotificationEmail({
+            to: r.email,
+            restaurantName: r.name,
+            subject: "A customer has disputed a charge",
+            headline: "Chargeback opened",
+            body: `A customer has disputed a recent payment${orderId ? ` (order ${orderId})` : ""}. Review the dispute in your Stripe dashboard and respond before the deadline to contest it.`,
+            ctaLabel: "Open Stripe dashboard",
+            ctaUrl: "https://dashboard.stripe.com/disputes",
+          });
+        } catch (e) {
+          console.error("[stripe/charge.dispute.created] dispute email failed", e);
+        }
       }
     }
   }

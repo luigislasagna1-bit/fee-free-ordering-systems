@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { after } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { notifyStaff, notifyCustomer, staffAcceptEventForOrderType } from "@/lib/notifications";
@@ -123,7 +124,19 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   // Stripe confirms.
   const isKilled = newStatus === "cancelled" || newStatus === "rejected";
   if (isKilled && existing.paymentStatus === "paid" && existing.paymentIntentId) {
-    refundOrderAsync(id, existing.paymentIntentId).catch(() => {});
+    // IMPORTANT: schedule via after() — bare unawaited promises get killed
+    // when Vercel returns the response. Refund silently never reaching
+    // Stripe = customer's money stuck. See note in src/app/api/orders/route.ts.
+    const piId = existing.paymentIntentId;
+    after(
+      (async () => {
+        try {
+          await refundOrderAsync(id, piId);
+        } catch (e) {
+          console.error("[orders PATCH] refundOrderAsync:", e);
+        }
+      })(),
+    );
   }
 
   // Marketplace counter rollback. If this was a marketplace-attributed
@@ -132,67 +145,113 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   // for an order they never fulfilled. unrecord is idempotent — repeat
   // status flips between cancelled/rejected won't double-decrement.
   if (isKilled && existing.viaMarketplace && existing.marketplaceCounterApplied) {
-    unrecordMarketplaceOrder({
-      orderId: id,
-      restaurantId: existing.restaurantId,
-      orderTotalCents: Math.round(existing.total * 100),
-    }).catch((e) => console.error("[orders PATCH] unrecordMarketplaceOrder:", e));
+    const totalCents = Math.round(existing.total * 100);
+    const restaurantIdForRollback = existing.restaurantId;
+    after(
+      (async () => {
+        try {
+          await unrecordMarketplaceOrder({
+            orderId: id,
+            restaurantId: restaurantIdForRollback,
+            orderTotalCents: totalCents,
+          });
+        } catch (e) {
+          console.error("[orders PATCH] unrecordMarketplaceOrder:", e);
+        }
+      })(),
+    );
   }
 
   // ── Notifications ──────────────────────────────────────────────────────
+  // All scheduled via after() so the admin's PATCH responds immediately
+  // (kitchen UI doesn't wait on Resend/SMS latency) while still
+  // guaranteeing the side effect actually runs to completion.
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+
   // Always tell the customer about status changes (toggle is per-status inside notifyCustomer).
-  notifyCustomer({
-    restaurantId: order.restaurant.id,
-    customerEmail: order.customerEmail,
-    orderType: order.type,
-    customerLocale: order.restaurant.defaultLanguage || "en",
-    payload: {
-      event: "orderStatusUpdate",
-      customerName: order.customerName,
-      orderNumber: order.orderNumber,
-      status: order.status,
-      estimatedReady: order.estimatedReady ? new Date(order.estimatedReady) : undefined,
-      rejectionReason: order.rejectionReason || undefined,
-    },
-  }).catch((e) => console.error("[notifyCustomer orderStatusUpdate]", e));
+  after(
+    (async () => {
+      try {
+        await notifyCustomer({
+          restaurantId: order.restaurant.id,
+          customerEmail: order.customerEmail,
+          orderType: order.type,
+          customerLocale: order.restaurant.defaultLanguage || "en",
+          payload: {
+            event: "orderStatusUpdate",
+            customerName: order.customerName,
+            orderNumber: order.orderNumber,
+            status: order.status,
+            estimatedReady: order.estimatedReady ? new Date(order.estimatedReady) : undefined,
+            rejectionReason: order.rejectionReason || undefined,
+          },
+        });
+      } catch (e) {
+        console.error("[notifyCustomer orderStatusUpdate]", e);
+      }
+    })(),
+  );
 
   // Fan-out to staff recipients based on the new status. Each transition maps
   // to a specific toggle so a restaurant can mute, e.g., dine-in confirmations
   // without losing delivery ones.
   if (newStatus === "accepted") {
     const acceptEvent = staffAcceptEventForOrderType(order.type, !!order.scheduledFor);
-    notifyStaff({
-      restaurantId: order.restaurant.id,
-      payload: {
-        event: acceptEvent,
-        orderNumber: order.orderNumber,
-        customerName: order.customerName,
-        total: order.total,
-        dashboardUrl: `${baseUrl}/admin/orders`,
-      },
-    }).catch((e) => console.error("[notifyStaff order accepted]", e));
+    after(
+      (async () => {
+        try {
+          await notifyStaff({
+            restaurantId: order.restaurant.id,
+            payload: {
+              event: acceptEvent,
+              orderNumber: order.orderNumber,
+              customerName: order.customerName,
+              total: order.total,
+              dashboardUrl: `${baseUrl}/admin/orders`,
+            },
+          });
+        } catch (e) {
+          console.error("[notifyStaff order accepted]", e);
+        }
+      })(),
+    );
   } else if (newStatus === "rejected") {
-    notifyStaff({
-      restaurantId: order.restaurant.id,
-      payload: {
-        event: "orderRejected",
-        orderNumber: order.orderNumber,
-        customerName: order.customerName,
-        reason: order.rejectionReason || undefined,
-        dashboardUrl: `${baseUrl}/admin/orders`,
-      },
-    }).catch((e) => console.error("[notifyStaff orderRejected]", e));
+    after(
+      (async () => {
+        try {
+          await notifyStaff({
+            restaurantId: order.restaurant.id,
+            payload: {
+              event: "orderRejected",
+              orderNumber: order.orderNumber,
+              customerName: order.customerName,
+              reason: order.rejectionReason || undefined,
+              dashboardUrl: `${baseUrl}/admin/orders`,
+            },
+          });
+        } catch (e) {
+          console.error("[notifyStaff orderRejected]", e);
+        }
+      })(),
+    );
   } else if (newStatus === "cancelled") {
-    notifyStaff({
-      restaurantId: order.restaurant.id,
-      payload: {
-        event: "orderCanceled",
-        orderNumber: order.orderNumber,
-        customerName: order.customerName,
-        dashboardUrl: `${baseUrl}/admin/orders`,
-      },
-    }).catch((e) => console.error("[notifyStaff orderCanceled]", e));
+    after(
+      (async () => {
+        try {
+          await notifyStaff({
+            restaurantId: order.restaurant.id,
+            payload: {
+              event: "orderCanceled",
+              orderNumber: order.orderNumber,
+              customerName: order.customerName,
+              dashboardUrl: `${baseUrl}/admin/orders`,
+            },
+          });
+        } catch (e) {
+          console.error("[notifyStaff orderCanceled]", e);
+        }
+      })(),
+    );
   }
 
   return NextResponse.json(order);
@@ -225,6 +284,12 @@ async function refundOrderAsync(orderId: string, paymentIntentId: string) {
     });
   } catch (err) {
     console.error("[refund]", err instanceof Error ? err.message : err);
-    await prisma.order.update({ where: { id: orderId }, data: { refundStatus: "failed" } }).catch(() => {});
+    try {
+      await prisma.order.update({ where: { id: orderId }, data: { refundStatus: "failed" } });
+    } catch (e) {
+      // Last-resort: refund AND the refundStatus="failed" write both failed.
+      // Log with the orderId so we can fix it up by hand if needed.
+      console.error(`[refund] failed to mark order ${orderId} refundStatus=failed`, e);
+    }
   }
 }

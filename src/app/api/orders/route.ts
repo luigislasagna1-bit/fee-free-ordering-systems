@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { after } from "next/server";
 import prisma from "@/lib/db";
 import { generateOrderNumber } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
@@ -445,8 +446,20 @@ export async function POST(req: NextRequest) {
     //   and the kitchen cooking food they'll never get paid for.
     const isCardOrder = (paymentMethod || "cash") === "card";
     if (!isCardOrder) {
-      fireOrderNotifications(order.id).catch((e) =>
-        console.error("[orders POST] fireOrderNotifications:", e),
+      // IMPORTANT: schedule via after() — Vercel kills bare unawaited
+      // promises the moment we return the response below. We hit this
+      // exact bug with card orders (ORD-529226215, fixed in commit 9ae4745
+      // by awaiting). Customer-facing routes can't just `await` because
+      // it adds Resend latency to the response; after() runs the work
+      // post-response but keeps the lambda alive until it completes.
+      after(
+        (async () => {
+          try {
+            await fireOrderNotifications(order.id);
+          } catch (e) {
+            console.error("[orders POST] fireOrderNotifications:", e);
+          }
+        })(),
       );
     }
 
@@ -457,13 +470,19 @@ export async function POST(req: NextRequest) {
     // unrecordMarketplaceOrder to roll back currentMonth counters
     // (lifetime savings stays — it's a "what could have been" metric).
     if (viaMarketplace) {
-      recordMarketplaceOrder({
-        orderId: order.id,
-        restaurantId: restaurant.id,
-        orderTotalCents: Math.round(serverTotal * 100),
-        savedVsUberEatsCents: savedVsUberEatsCents ?? 0,
-      }).catch((e) =>
-        console.error("[orders POST] recordMarketplaceOrder:", e),
+      after(
+        (async () => {
+          try {
+            await recordMarketplaceOrder({
+              orderId: order.id,
+              restaurantId: restaurant.id,
+              orderTotalCents: Math.round(serverTotal * 100),
+              savedVsUberEatsCents: savedVsUberEatsCents ?? 0,
+            });
+          } catch (e) {
+            console.error("[orders POST] recordMarketplaceOrder:", e);
+          }
+        })(),
       );
     }
 

@@ -78,18 +78,28 @@ export async function handleInvoiceEvent(event: Stripe.Event) {
   // settlement charge).
   const meta = (invoice.metadata ?? {}) as Record<string, string>;
   if (meta.type === "marketplace_settlement" && meta.settlementId) {
+    // NOTE: the `await` here already blocks the handler — the trailing
+    // .catch was redundant for Vercel-lifecycle purposes, but switching
+    // to try/catch makes the error visible in logs (the original silent
+    // .catch(()=>{}) on the payment_failed branch was the real bug).
     if (event.type === "invoice.paid") {
-      await prisma.marketplaceSettlement.update({
-        where: { id: meta.settlementId },
-        data: { status: "paid" },
-      }).catch((e) => {
+      try {
+        await prisma.marketplaceSettlement.update({
+          where: { id: meta.settlementId },
+          data: { status: "paid" },
+        });
+      } catch (e) {
         console.error(`[stripe] marketplace_settlement paid: failed to update row ${meta.settlementId}`, e);
-      });
+      }
     } else if (event.type === "invoice.payment_failed") {
-      await prisma.marketplaceSettlement.update({
-        where: { id: meta.settlementId },
-        data: { status: "failed", failureReason: "Stripe charge failed" },
-      }).catch(() => {});
+      try {
+        await prisma.marketplaceSettlement.update({
+          where: { id: meta.settlementId },
+          data: { status: "failed", failureReason: "Stripe charge failed" },
+        });
+      } catch (e) {
+        console.error(`[stripe] marketplace_settlement failed: failed to update row ${meta.settlementId}`, e);
+      }
     }
     return;
   }
@@ -117,28 +127,38 @@ export async function handleInvoiceEvent(event: Stripe.Event) {
     });
     if (restaurant.email) {
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
-      sendBillingNotificationEmail({
-        to: restaurant.email,
-        restaurantName: restaurant.name,
-        subject: "Your subscription payment failed",
-        headline: "Your last payment didn't go through",
-        body: "Your subscription is now past due. Update your card to keep your account active — admin tools are locked until billing is restored.",
-        ctaLabel: "Update payment method",
-        ctaUrl: invoice.hosted_invoice_url || `${baseUrl}/admin/billing`,
-      }).catch(() => {});
+      // IMPORTANT: await — Vercel kills unawaited promises after webhook 200.
+      try {
+        await sendBillingNotificationEmail({
+          to: restaurant.email,
+          restaurantName: restaurant.name,
+          subject: "Your subscription payment failed",
+          headline: "Your last payment didn't go through",
+          body: "Your subscription is now past due. Update your card to keep your account active — admin tools are locked until billing is restored.",
+          ctaLabel: "Update payment method",
+          ctaUrl: invoice.hosted_invoice_url || `${baseUrl}/admin/billing`,
+        });
+      } catch (e) {
+        console.error("[stripe/invoice.payment_failed] billing email failed", e);
+      }
     }
   } else if (event.type === "invoice.payment_action_required") {
     if (restaurant.email) {
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
-      sendBillingNotificationEmail({
-        to: restaurant.email,
-        restaurantName: restaurant.name,
-        subject: "Action required to complete your subscription payment",
-        headline: "Your bank needs you to confirm a payment",
-        body: "Your card requires extra authentication (3D Secure) to complete this charge. Complete the step below to keep your subscription active.",
-        ctaLabel: "Authenticate payment",
-        ctaUrl: invoice.hosted_invoice_url || `${baseUrl}/admin/billing`,
-      }).catch(() => {});
+      // IMPORTANT: await — Vercel kills unawaited promises after webhook 200.
+      try {
+        await sendBillingNotificationEmail({
+          to: restaurant.email,
+          restaurantName: restaurant.name,
+          subject: "Action required to complete your subscription payment",
+          headline: "Your bank needs you to confirm a payment",
+          body: "Your card requires extra authentication (3D Secure) to complete this charge. Complete the step below to keep your subscription active.",
+          ctaLabel: "Authenticate payment",
+          ctaUrl: invoice.hosted_invoice_url || `${baseUrl}/admin/billing`,
+        });
+      } catch (e) {
+        console.error("[stripe/invoice.payment_action_required] auth email failed", e);
+      }
     }
   }
 }
