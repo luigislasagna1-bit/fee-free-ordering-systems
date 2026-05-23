@@ -450,6 +450,7 @@ export default async function HostedSitePage({
         restaurantCity={r.city}
         restaurantCuisine={r.cuisineType}
         restaurantSlug={r.slug}
+        menuKeywords={r.seoKeywords}
       />
 
       <footer className="bg-gray-900 text-gray-300 py-8">
@@ -479,14 +480,17 @@ function SeoLinksFooter({
   restaurantCity,
   restaurantCuisine,
   restaurantSlug,
+  menuKeywords,
 }: {
   restaurantCity: string | null;
   restaurantCuisine: string | null;
   restaurantSlug: string;
+  menuKeywords: string[];
 }) {
   const links = buildSeoLinks({
     city: restaurantCity,
     cuisineType: restaurantCuisine,
+    menuKeywords,
   });
   if (links.length === 0) return null;
 

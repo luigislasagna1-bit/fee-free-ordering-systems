@@ -44,6 +44,11 @@ export interface HostedSiteData {
     price: number;
     imageUrl: string | null;
   }>;
+  /** Menu category names + a small set of featured item names. Fed to
+   *  the programmatic-SEO link builder so dishes like "Lava Cake" or
+   *  "Pasta" become indexable keywords paired with surrounding cities.
+   *  Capped to a sensible number to avoid spamming thin landing pages. */
+  seoKeywords: string[];
   /** Owner-controlled layout/copy choices from the website editor.
    *  Always populated (defaults when the owner hasn't customized anything).
    *  Base content (menu/hours/address) still comes from the canonical
@@ -84,7 +89,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
     return { kind: "upgrade_required", restaurantName: restaurant.name };
   }
 
-  const [hours, featured] = await Promise.all([
+  const [hours, featured, categories, popularItems] = await Promise.all([
     prisma.openingHours.findMany({
       where: { restaurantId: restaurant.id },
       orderBy: { dayOfWeek: "asc" },
@@ -96,7 +101,48 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       take: 6,
       select: { id: true, name: true, description: true, price: true, imageUrl: true },
     }),
+    // Menu categories the restaurant actually has — top SEO signal because
+    // category names line up with how customers search ("pizza delivery",
+    // "pasta delivery", "desserts near me"). Cap at 12 so we don't generate
+    // hundreds of thin pages from a 40-category menu.
+    prisma.menuCategory.findMany({
+      where: { restaurantId: restaurant.id, isActive: true, isHidden: false },
+      orderBy: { sortOrder: "asc" },
+      take: 12,
+      select: { name: true },
+    }),
+    // Featured/popular item names — restaurants featuring "Lava Cake" or
+    // "Tiramisu" can rank for those specific dish searches in the area.
+    // Cap to 8 so the link footer stays manageable.
+    prisma.menuItem.findMany({
+      where: { restaurantId: restaurant.id, isAvailable: true, isFeatured: true },
+      orderBy: { sortOrder: "asc" },
+      take: 8,
+      select: { name: true },
+    }),
   ]);
+
+  // Build the SEO-keyword pool from category names + featured item names.
+  // De-duplicated, normalized to lowercase for the dedupe, original-case
+  // preserved for display.
+  const seenKeyword = new Set<string>();
+  const seoKeywords: string[] = [];
+  const addKeyword = (raw: string | undefined | null) => {
+    if (!raw) return;
+    const trimmed = raw.trim();
+    if (!trimmed) return;
+    // Skip overly long names (>3 words) — too long-tail to rank, and
+    // they bloat URLs. "Margherita Pizza" yes, "House Special Margherita
+    // Pizza with Fresh Mozzarella" no.
+    const wordCount = trimmed.split(/\s+/).length;
+    if (wordCount > 3) return;
+    const key = trimmed.toLowerCase();
+    if (seenKeyword.has(key)) return;
+    seenKeyword.add(key);
+    seoKeywords.push(trimmed);
+  };
+  for (const c of categories) addKeyword(c.name);
+  for (const it of popularItems) addKeyword(it.name);
 
   return {
     kind: "ok",
@@ -124,6 +170,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       acceptsDineIn: restaurant.acceptsDineIn,
       acceptsReservations: restaurant.acceptsReservations,
       featuredItems: featured,
+      seoKeywords,
       settings: parseHostedSiteSettings(restaurant.hostedSiteSettings),
     },
   };

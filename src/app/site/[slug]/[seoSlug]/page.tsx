@@ -38,6 +38,7 @@ async function resolveLandingPage(slug: string, seoSlug: string) {
   const allLinks = buildSeoLinks({
     city: r.city,
     cuisineType: r.cuisineType,
+    menuKeywords: r.seoKeywords,
   });
   const matches = allLinks.some((l) => l.slug === seoSlug);
   if (!matches) return null;
@@ -117,6 +118,7 @@ export default async function SeoLandingPage({
   const allLinks = buildSeoLinks({
     city: r.city,
     cuisineType: r.cuisineType,
+    menuKeywords: r.seoKeywords,
   });
 
   return (

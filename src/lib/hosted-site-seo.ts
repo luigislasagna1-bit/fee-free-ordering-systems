@@ -155,6 +155,11 @@ export function buildSeoLinks(input: {
   city: string | null;
   cuisineType: string | null;
   marketplaceTags?: string[];
+  /** Menu-derived keywords (category names + featured item names).
+   *  Lets specific dishes like "Lava Cake" or "Tiramisu" get their own
+   *  landing pages alongside the general cuisine pages. Caller is
+   *  expected to have already pre-filtered to short, brand-safe terms. */
+  menuKeywords?: string[];
 }): SeoLink[] {
   // Resolve the metro area from the restaurant's city. Falls back to a
   // "single-city" map containing just the restaurant's own city when we
@@ -163,19 +168,33 @@ export function buildSeoLinks(input: {
   const cities = SURROUNDING_CITIES[metroKey] ?? (input.city ? [input.city] : []);
   if (cities.length === 0) return [];
 
-  // Build a deduplicated cuisine list from cuisineType + marketplaceTags.
-  const cuisineRaws: string[] = [];
-  if (input.cuisineType) cuisineRaws.push(input.cuisineType);
-  for (const t of input.marketplaceTags || []) cuisineRaws.push(t);
+  // Build a deduplicated keyword pool from cuisineType + marketplaceTags
+  // + menuKeywords. Order matters for SEO weight: cuisine first (broadest
+  // signal), then marketplace tags (curated by the restaurant), then
+  // menu-derived terms (specific dish/category names).
+  const keywordRaws: string[] = [];
+  if (input.cuisineType) keywordRaws.push(input.cuisineType);
+  for (const t of input.marketplaceTags || []) keywordRaws.push(t);
+  for (const k of input.menuKeywords || []) keywordRaws.push(k);
+
   const seenCuisine = new Set<string>();
   const cuisines: Array<{ slug: string; label: string }> = [];
-  for (const raw of cuisineRaws) {
+  for (const raw of keywordRaws) {
     const n = normalizeCuisine(raw);
     if (!n || seenCuisine.has(n.slug)) continue;
     seenCuisine.add(n.slug);
     cuisines.push(n);
   }
-  // If the restaurant has no cuisines configured, ensure at least one
+  // Cap the keyword pool. Without a cap, a restaurant with 20 menu
+  // categories × 11 cities × 2 service types = 440 landing pages —
+  // diluted authority and longer crawl budget. 12 keywords × ~7 cities
+  // × 2 = ~168 pages, which is the sweet spot for a single-location
+  // restaurant.
+  const MAX_KEYWORDS = 12;
+  if (cuisines.length > MAX_KEYWORDS) {
+    cuisines.length = MAX_KEYWORDS;
+  }
+  // If the restaurant has no keywords at all, ensure at least one
   // generic "Restaurant" / "Food" link gets generated per city.
   if (cuisines.length === 0) {
     cuisines.push({ slug: "food", label: "Food" });
