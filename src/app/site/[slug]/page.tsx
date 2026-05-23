@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ExternalLink, MapPin, Phone, Mail } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
+import { DeliveryZonesMap } from "./DeliveryZonesMap";
 
 /**
  * Public hosted marketing page. Reached two ways:
@@ -488,8 +489,28 @@ export default async function HostedSitePage({
           </div>
         </div>
 
-        {/* Embedded map — owner toggle + requires an address to query. */}
-        {s.sections.map && mapEmbedUrl && (
+        {/* Map — two modes depending on whether the restaurant accepts
+            delivery and has zones configured:
+              a) Has zones → render the interactive Leaflet map with
+                 colored zone circles + a side legend listing fees,
+                 minimums, and ETAs per zone. Replaces the static
+                 Google Maps iframe so customers can immediately tell
+                 whether they're in delivery range.
+              b) No zones → keep the simple keyless Google Maps iframe
+                 (just the restaurant pin) for the "find us" use case
+                 on a pickup-only or no-zones-configured restaurant. */}
+        {s.sections.map && r.deliveryZones.length > 0 && (
+          <div className="mt-10">
+            <DeliveryZonesMap
+              restaurantName={r.name}
+              restaurantLat={r.lat}
+              restaurantLng={r.lng}
+              zones={r.deliveryZones}
+              primaryColor={themeColor}
+            />
+          </div>
+        )}
+        {s.sections.map && r.deliveryZones.length === 0 && mapEmbedUrl && (
           <div className="mt-10 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
             <iframe
               src={mapEmbedUrl}

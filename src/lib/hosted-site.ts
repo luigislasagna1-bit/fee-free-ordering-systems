@@ -49,6 +49,23 @@ export interface HostedSiteData {
    *  "Pasta" become indexable keywords paired with surrounding cities.
    *  Capped to a sensible number to avoid spamming thin landing pages. */
   seoKeywords: string[];
+  /** Restaurant lat/lng for centering the map. Null when not set. */
+  lat: number | null;
+  lng: number | null;
+  /** Active delivery zones for the map overlay. Each zone renders as a
+   *  colored circle with a fee label in the legend. Inactive zones are
+   *  filtered out so customers don't see paused/seasonal areas. */
+  deliveryZones: Array<{
+    id: string;
+    name: string;
+    color: string;
+    centerLat: number;
+    centerLng: number;
+    radiusKm: number;
+    deliveryFee: number;
+    minimumOrder: number;
+    estimatedMinutes: number;
+  }>;
   /** Owner-controlled layout/copy choices from the website editor.
    *  Always populated (defaults when the owner hasn't customized anything).
    *  Base content (menu/hours/address) still comes from the canonical
@@ -76,6 +93,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       zip: true, country: true, cuisineType: true, logoUrl: true,
       bannerUrl: true, socialLinks: true, themeSettings: true,
       hostedSiteSettings: true,
+      lat: true, lng: true,
       isActive: true, publishedAt: true,
       acceptsPickup: true, acceptsDelivery: true, acceptsDineIn: true,
       acceptsReservations: true,
@@ -89,7 +107,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
     return { kind: "upgrade_required", restaurantName: restaurant.name };
   }
 
-  const [hours, featured, categories, popularItems] = await Promise.all([
+  const [hours, featured, categories, popularItems, deliveryZones] = await Promise.all([
     prisma.openingHours.findMany({
       where: { restaurantId: restaurant.id },
       orderBy: { dayOfWeek: "asc" },
@@ -119,6 +137,18 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       orderBy: { sortOrder: "asc" },
       take: 8,
       select: { name: true },
+    }),
+    // Active delivery zones for the map overlay. Filtered to isActive so
+    // paused/seasonal zones don't show up to customers. Order by sortOrder
+    // so the legend matches the admin's preferred order.
+    prisma.deliveryZone.findMany({
+      where: { restaurantId: restaurant.id, isActive: true },
+      orderBy: { sortOrder: "asc" },
+      select: {
+        id: true, name: true, color: true,
+        centerLat: true, centerLng: true, radiusKm: true,
+        deliveryFee: true, minimumOrder: true, estimatedMinutes: true,
+      },
     }),
   ]);
 
@@ -171,6 +201,9 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       acceptsReservations: restaurant.acceptsReservations,
       featuredItems: featured,
       seoKeywords,
+      lat: restaurant.lat,
+      lng: restaurant.lng,
+      deliveryZones,
       settings: parseHostedSiteSettings(restaurant.hostedSiteSettings),
     },
   };
