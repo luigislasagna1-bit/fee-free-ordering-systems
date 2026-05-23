@@ -63,8 +63,17 @@ export function PaymentPageClient({ slug }: { slug: string }) {
   const orderId = searchParams.get("orderId") ?? "";
   const clientSecret = searchParams.get("clientSecret") ?? "";
   const pk = searchParams.get("pk") ?? "";
+  // Direct-charge PaymentIntents live on the restaurant's connected account.
+  // Stripe.js needs the `stripeAccount` option at load time so confirmation
+  // hits the right account. Empty string means "platform charge" — kept
+  // as a fallback for legacy intents created before the cutover.
+  const stripeAccount = searchParams.get("stripeAccount") ?? "";
 
-  const [stripePromise] = useState(() => (pk ? loadStripe(pk) : null));
+  const [stripePromise] = useState(() =>
+    pk
+      ? loadStripe(pk, stripeAccount ? { stripeAccount } : undefined)
+      : null,
+  );
 
   if (!clientSecret || !pk || !orderId) {
     return (

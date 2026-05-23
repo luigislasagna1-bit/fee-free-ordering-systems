@@ -12,7 +12,7 @@
 
 import prisma from "@/lib/db";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
-import { refundDestinationPayment, stripeReady } from "@/lib/stripe";
+import { refundDirectPayment, stripeReady, voidPayment } from "@/lib/stripe";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 
 /** Minutes a pending order can sit before we auto-reject. Conservative
@@ -23,6 +23,11 @@ const DEFAULT_TIMEOUT_MINUTES = 10;
 export type AutoRejectResult = {
   scanned: number;
   rejected: number;
+  /** Authorizations released without charging (no money ever moved). The
+   *  common path under the authorize-then-capture model — most auto-
+   *  rejects happen pre-acceptance so the card was only on hold. */
+  voided: number;
+  /** Actual refunds processed (post-capture cancellations). Rare path. */
   refunded: number;
   refundFailed: number;
   errors: Array<{ orderId: string; reason: string }>;
@@ -59,13 +64,16 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       restaurantId: true,
       viaMarketplace: true,
       marketplaceCounterApplied: true,
-      restaurant: { select: { id: true, name: true, defaultLanguage: true } },
+      restaurant: {
+        select: { id: true, name: true, defaultLanguage: true, stripeAccountId: true },
+      },
     },
   });
 
   const result: AutoRejectResult = {
     scanned: candidates.length,
     rejected: 0,
+    voided: 0,
     refunded: 0,
     refundFailed: 0,
     errors: [],
@@ -102,57 +110,78 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
         );
       }
 
-      // Refund if this was a card order that actually charged. Cash
-      // and card_in_person orders never collected money, so no refund.
-      const collectedMoney =
-        order.paymentMethod === "card" &&
-        order.paymentStatus === "paid" &&
-        !!order.paymentIntentId;
+      // Card order: void the authorization (if not yet captured) or
+      // refund the captured payment (if the restaurant already accepted
+      // and then got auto-rejected somehow — very rare since auto-reject
+      // only targets `status:"pending"` orders, but possible if there's
+      // a race condition between accept + capture failure paths).
+      //
+      // Cash and card_in_person orders never collected money, skip.
+      const isCard =
+        order.paymentMethod === "card" && !!order.paymentIntentId && !!order.restaurant.stripeAccountId;
 
-      if (collectedMoney && stripeOk) {
-        try {
-          await prisma.order.update({
-            where: { id: order.id },
-            data: { refundStatus: "pending" },
-          });
-          // refundDestinationPayment auto-falls back to reverse_transfer:false
-          // if the connected account is broke — see the helper's doc comment.
-          // Customer refund is guaranteed either way; only difference is who
-          // eats the transfer-side cost.
-          const refundResult = await refundDestinationPayment({
-            paymentIntentId: order.paymentIntentId!,
-            refundApplicationFee: true,
-            reason: "requested_by_customer",
-          });
-          if (refundResult.reverseTransferDeferred) {
-            console.warn(
-              `[auto-reject] order ${order.id} refunded with deferred transfer reversal (refundId=${refundResult.id}).`,
-            );
+      if (isCard && stripeOk) {
+        const piId = order.paymentIntentId!;
+        const acctId = order.restaurant.stripeAccountId!;
+
+        if (order.paymentStatus === "authorized") {
+          // Authorization only — release the hold. No charge, no fee,
+          // no refund. The common path.
+          try {
+            await voidPayment({
+              paymentIntentId: piId,
+              restaurantStripeAccountId: acctId,
+            });
+            await prisma.order.update({
+              where: { id: order.id },
+              data: { paymentStatus: "voided" },
+            });
+            result.voided += 1;
+          } catch (e) {
+            result.errors.push({
+              orderId: order.id,
+              reason: `void failed: ${e instanceof Error ? e.message : String(e)}`,
+            });
+            // Best-effort: if void fails (auth already expired), the
+            // customer isn't charged anyway. Don't count as refundFailed.
           }
-          await prisma.order.update({
-            where: { id: order.id },
-            data: { refundStatus: "refunded", paymentStatus: "refunded" },
-          });
-          result.refunded += 1;
-        } catch (e) {
-          result.refundFailed += 1;
-          result.errors.push({
-            orderId: order.id,
-            reason: `refund failed: ${e instanceof Error ? e.message : String(e)}`,
-          });
+        } else if (order.paymentStatus === "paid") {
+          // Captured — need a real refund. Rare path.
           try {
             await prisma.order.update({
               where: { id: order.id },
-              data: { refundStatus: "failed" },
+              data: { refundStatus: "pending" },
             });
-          } catch (markErr) {
-            console.error(
-              `[auto-reject] failed to mark order ${order.id} refundStatus=failed`,
-              markErr,
-            );
+            await refundDirectPayment({
+              paymentIntentId: piId,
+              restaurantStripeAccountId: acctId,
+              reason: "requested_by_customer",
+            });
+            await prisma.order.update({
+              where: { id: order.id },
+              data: { refundStatus: "refunded", paymentStatus: "refunded" },
+            });
+            result.refunded += 1;
+          } catch (e) {
+            result.refundFailed += 1;
+            result.errors.push({
+              orderId: order.id,
+              reason: `refund failed: ${e instanceof Error ? e.message : String(e)}`,
+            });
+            try {
+              await prisma.order.update({
+                where: { id: order.id },
+                data: { refundStatus: "failed" },
+              });
+            } catch (markErr) {
+              console.error(
+                `[auto-reject] failed to mark order ${order.id} refundStatus=failed`,
+                markErr,
+              );
+            }
           }
         }
-      } else if (collectedMoney && !stripeOk) {
+      } else if (isCard && !stripeOk) {
         result.refundFailed += 1;
         result.errors.push({ orderId: order.id, reason: "Stripe not configured" });
       }
@@ -194,7 +223,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
   }
 
   console.log(
-    `[auto-reject-stale-orders] scanned=${result.scanned} rejected=${result.rejected} refunded=${result.refunded} failed=${result.refundFailed}`,
+    `[auto-reject-stale-orders] scanned=${result.scanned} rejected=${result.rejected} voided=${result.voided} refunded=${result.refunded} failed=${result.refundFailed}`,
   );
   return result;
 }

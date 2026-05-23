@@ -325,9 +325,156 @@ export function buildStatementDescriptorSuffix(restaurantName: string | null | u
 }
 
 /**
- * Create a PaymentIntent for a customer's order using **destination charge**:
- * the platform's secret key creates the intent, money lands in the restaurant's
- * connected account minus the platform application fee.
+ * Create a PaymentIntent for a customer's order — GloriaFood-style.
+ *
+ * Two key behaviors:
+ *
+ * 1. **Direct charge** (NOT destination charge). The intent is created
+ *    on the connected account via Stripe-Account header. Money goes
+ *    customer → restaurant directly, never touching the platform's
+ *    balance. The platform has zero financial involvement per order.
+ *    Card statement shows the RESTAURANT's name (their Stripe business
+ *    profile), not Fee Free Ordering.
+ *
+ * 2. **Manual capture**. The card is AUTHORIZED but not actually charged
+ *    when the customer places the order. The hold persists for up to 7
+ *    days. When the kitchen accepts the order, we call `capturePayment`
+ *    which actually moves the money. When the kitchen rejects, we call
+ *    `voidPayment` which releases the hold WITHOUT charging — no Stripe
+ *    fee, no refund needed, customer never sees a charge that needs
+ *    explaining.
+ *
+ * Webhook implications: `payment_intent.amount_capturable_updated` fires
+ * when authorization succeeds (kitchen release point). `payment_intent.
+ * succeeded` fires only AFTER capture completes (so it now means
+ * "money moved," not "card OK"). Connect events arrive on the same
+ * webhook endpoint with `event.account` set to the connected account.
+ */
+export async function createDirectPaymentIntent(params: {
+  amountCents: number;
+  currency: string;
+  restaurantStripeAccountId: string;
+  orderId: string;
+  restaurantId: string;
+  /** Restaurant display name. Used as the statement descriptor suffix
+   *  ONLY when the connected account's own business profile doesn't have
+   *  one set. Direct charges use the connected account's identity by
+   *  default — this is just a defensive fallback. */
+  restaurantName?: string | null;
+}) {
+  const stripe = await getStripe();
+  const statementDescriptorSuffix = buildStatementDescriptorSuffix(params.restaurantName);
+  const intent = await stripe.paymentIntents.create(
+    {
+      amount: params.amountCents,
+      currency: params.currency,
+      capture_method: "manual",
+      ...(statementDescriptorSuffix
+        ? { statement_descriptor_suffix: statementDescriptorSuffix }
+        : {}),
+      metadata: {
+        orderId: params.orderId,
+        restaurantId: params.restaurantId,
+      },
+    },
+    // Direct charge: API call is made AS the connected account. Funds
+    // land in their balance; no transfer needed; no application fee.
+    { stripeAccount: params.restaurantStripeAccountId },
+  );
+  return {
+    clientSecret: intent.client_secret,
+    id: intent.id,
+    /** Always 0 under the Fee Free model. Kept on the return shape so
+     *  the public route doesn't need to special-case it. */
+    platformFeeCents: 0,
+  };
+}
+
+/**
+ * Capture a previously-authorized payment. Called from the kitchen
+ * "Accept" flow — this is the moment money actually moves from the
+ * customer's card to the restaurant's Stripe balance.
+ *
+ * Direct-charge intents live on the connected account, so the capture
+ * call needs the same Stripe-Account header.
+ *
+ * If capture fails (card declined at capture, authorization expired,
+ * etc.) we throw — the caller is responsible for blocking the
+ * acceptance and surfacing the error.
+ */
+export async function capturePayment(params: {
+  paymentIntentId: string;
+  restaurantStripeAccountId: string;
+}): Promise<{ id: string; status: string | null }> {
+  const stripe = await getStripe();
+  const captured = await stripe.paymentIntents.capture(
+    params.paymentIntentId,
+    {}, // no params — capture the full authorized amount
+    { stripeAccount: params.restaurantStripeAccountId },
+  );
+  return { id: captured.id, status: captured.status };
+}
+
+/**
+ * Void an authorization (release the hold without charging). Called
+ * from the kitchen "Reject" flow BEFORE the order has been accepted —
+ * the customer's card was authorized but never captured, so the
+ * customer never sees a charge. No Stripe fee, no refund mechanics.
+ *
+ * Idempotent: cancelling an already-cancelled intent returns the same
+ * state back without error (Stripe behaviour).
+ */
+export async function voidPayment(params: {
+  paymentIntentId: string;
+  restaurantStripeAccountId: string;
+}): Promise<{ id: string; status: string | null }> {
+  const stripe = await getStripe();
+  const cancelled = await stripe.paymentIntents.cancel(
+    params.paymentIntentId,
+    { cancellation_reason: "requested_by_customer" },
+    { stripeAccount: params.restaurantStripeAccountId },
+  );
+  return { id: cancelled.id, status: cancelled.status };
+}
+
+/**
+ * Refund a CAPTURED direct-charge payment by PaymentIntent ID. Used
+ * only when an order is cancelled AFTER the kitchen has already
+ * accepted it (rare — most rejections happen before accept and go
+ * through `voidPayment` instead).
+ *
+ * Direct charges live on the connected account, so the refund call
+ * needs the Stripe-Account header. No `reverse_transfer` /
+ * `refund_application_fee` complexity — the money is already in the
+ * restaurant's balance, the refund just pulls it back out.
+ *
+ * Still possible to fail if the restaurant's available balance is too
+ * low. In that case Stripe returns a clear error and we surface it as
+ * a failed refund (the platform isn't on the hook to cover — direct
+ * charges keep platform out of the money flow entirely).
+ */
+export async function refundDirectPayment(params: {
+  paymentIntentId: string;
+  restaurantStripeAccountId: string;
+  reason?: "duplicate" | "fraudulent" | "requested_by_customer";
+}): Promise<{ id: string; status: string | null }> {
+  const stripe = await getStripe();
+  const refund = await stripe.refunds.create(
+    {
+      payment_intent: params.paymentIntentId,
+      reason: params.reason,
+    },
+    { stripeAccount: params.restaurantStripeAccountId },
+  );
+  return { id: refund.id, status: refund.status };
+}
+
+/**
+ * Legacy name kept temporarily to avoid breaking the customer-facing
+ * payment-intent route during the cutover. Same behavior as
+ * `createDirectPaymentIntent`. New code should use the new name.
+ *
+ * @deprecated Use `createDirectPaymentIntent`. Remove after Phase G.
  */
 export async function createDestinationPaymentIntent(params: {
   amountCents: number;
@@ -335,98 +482,33 @@ export async function createDestinationPaymentIntent(params: {
   restaurantStripeAccountId: string;
   orderId: string;
   restaurantId: string;
-  /** Restaurant display name — used to build the customer's bank-statement
-   *  suffix so charges read like "FEE FREE* LUIGIS LASAGNA" rather than
-   *  just the platform's brand. Optional; falls back to platform default. */
   restaurantName?: string | null;
 }) {
-  const stripe = await getStripe();
-  const platformFee = calculatePlatformFee(params.amountCents);
-  const statementDescriptorSuffix = buildStatementDescriptorSuffix(params.restaurantName);
-  // Only include application_fee_amount when it's > 0. Under the current
-  // Fee Free model the platform takes 0% per order, so omitting the
-  // parameter entirely (rather than sending `application_fee_amount: 0`)
-  // keeps the Stripe payment cleaner — no zero-value "Collected fee" row
-  // on the dashboard, restaurants see a single transparent transfer.
-  const intent = await stripe.paymentIntents.create({
-    amount: params.amountCents,
-    currency: params.currency,
-    ...(platformFee > 0 ? { application_fee_amount: platformFee } : {}),
-    transfer_data: { destination: params.restaurantStripeAccountId },
-    ...(statementDescriptorSuffix ? { statement_descriptor_suffix: statementDescriptorSuffix } : {}),
-    metadata: {
-      orderId: params.orderId,
-      restaurantId: params.restaurantId,
-    },
-  });
-  return {
-    clientSecret: intent.client_secret,
-    id: intent.id,
-    platformFeeCents: platformFee,
-  };
+  return createDirectPaymentIntent(params);
 }
 
 /**
- * Refund a Connect destination charge by PaymentIntent ID.
+ * Refund a previously-captured order payment. Thin wrapper over
+ * `refundDirectPayment` that preserves the older return shape so
+ * existing callers don't break.
  *
- * Tries the "ideal" path first: refund the customer + reverse the transfer
- * to pull the connected account's share back + refund the platform's
- * application fee. All balanced, no money owed in either direction.
- *
- * BUT: `reverse_transfer: true` requires the connected account to have
- * enough Stripe balance to give the money back. If the restaurant just
- * paid out to their bank, or issued several recent refunds, their Stripe
- * balance can be too low and the whole refund call hard-fails — leaving
- * the customer's money stuck. (We hit this 2026-05-22 with test order
- * ORD-434887346.)
- *
- * On insufficient_funds, fall back to `reverse_transfer: false`: refund
- * the customer immediately from PLATFORM balance, leave the original
- * transfer in place. The platform is temporarily "out" the transfer
- * amount, but the customer's refund is guaranteed (which is the
- * non-negotiable part). We tag the returned object so the caller can
- * record a pending transfer-reversal for later reconciliation when the
- * connected account next has a positive balance.
+ * Under the new direct-charge model the `reverseTransferDeferred`
+ * concept is meaningless (no transfer to reverse — money lives in the
+ * connected account from the start). Always returns false for that
+ * field so call sites that branch on it just hit the "normal" path.
  */
 export async function refundDestinationPayment(params: {
   paymentIntentId: string;
+  restaurantStripeAccountId: string;
+  /** Kept for back-compat with the old destination-charge signature.
+   *  Ignored — direct-charge refunds don't need this flag. */
   refundApplicationFee?: boolean;
   reason?: "duplicate" | "fraudulent" | "requested_by_customer";
 }): Promise<{ id: string; status: string | null; reverseTransferDeferred: boolean }> {
-  const stripe = await getStripe();
-  const refundFee = params.refundApplicationFee ?? true;
-  try {
-    const refund = await stripe.refunds.create({
-      payment_intent: params.paymentIntentId,
-      refund_application_fee: refundFee,
-      reverse_transfer: true,
-      reason: params.reason,
-    });
-    return { id: refund.id, status: refund.status, reverseTransferDeferred: false };
-  } catch (err) {
-    // Detect the specific Stripe error that means "connected account is
-    // broke". Any other error gets rethrown so the caller can mark the
-    // refund as failed and surface a real problem.
-    const msg = err instanceof Error ? err.message : String(err);
-    const isInsufficientFunds = /sufficient funds/i.test(msg);
-    if (!isInsufficientFunds) throw err;
-
-    console.warn(
-      `[refundDestinationPayment] connected account low balance, falling back to reverse_transfer:false for ${params.paymentIntentId}`,
-    );
-    // Retry without reverse_transfer. Customer gets their money back from
-    // platform balance; the connected account keeps the original transfer.
-    // refund_application_fee can stay true — the platform's $0.39 fee
-    // refund comes out of the platform's own balance, no connected account
-    // balance needed for that piece.
-    const refund = await stripe.refunds.create({
-      payment_intent: params.paymentIntentId,
-      refund_application_fee: refundFee,
-      // NOTE: reverse_transfer omitted (defaults to false on Standard
-      // destination charges when not specified). Platform is temporarily
-      // out the transfer amount until reconciliation.
-      reason: params.reason,
-    });
-    return { id: refund.id, status: refund.status, reverseTransferDeferred: true };
-  }
+  const result = await refundDirectPayment({
+    paymentIntentId: params.paymentIntentId,
+    restaurantStripeAccountId: params.restaurantStripeAccountId,
+    reason: params.reason,
+  });
+  return { ...result, reverseTransferDeferred: false };
 }

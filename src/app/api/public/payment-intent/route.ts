@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import {
-  createDestinationPaymentIntent,
+  createDirectPaymentIntent,
   getPublishableKey,
   stripeReady,
 } from "@/lib/stripe";
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const intent = await createDestinationPaymentIntent({
+    const intent = await createDirectPaymentIntent({
       amountCents: Math.round(amount * 100),
       currency,
       restaurantStripeAccountId: restaurant.stripeAccountId,
@@ -89,6 +89,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       clientSecret: intent.clientSecret,
       publishableKey: await getPublishableKey(),
+      // Stripe.js needs the connected account ID to confirm a direct-charge
+      // PaymentIntent. Pass it through to the client; PaymentPageClient
+      // initialises loadStripe(pk, { stripeAccount }) with it so the
+      // confirmation call hits the right account.
+      stripeAccount: restaurant.stripeAccountId,
     });
   } catch (err: unknown) {
     console.error("[payment-intent]", err instanceof Error ? err.message : err);

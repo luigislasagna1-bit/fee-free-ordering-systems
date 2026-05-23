@@ -692,6 +692,10 @@ export function OrderingPageClient({
           orderId: orderData.id,
           clientSecret: piData.clientSecret,
           pk: piData.publishableKey,
+          // Direct-charge PaymentIntents need Stripe.js to be told which
+          // connected account they belong to. piData.stripeAccount is set
+          // by /api/public/payment-intent — forward it through.
+          stripeAccount: piData.stripeAccount ?? "",
         });
         router.push(`/order/${restaurant.slug}/payment?${params.toString()}`);
       } else {

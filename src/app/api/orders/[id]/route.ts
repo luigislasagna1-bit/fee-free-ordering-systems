@@ -3,7 +3,12 @@ import { after } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { notifyStaff, notifyCustomer, staffAcceptEventForOrderType } from "@/lib/notifications";
-import { refundDestinationPayment, stripeReady } from "@/lib/stripe";
+import {
+  capturePayment,
+  refundDirectPayment,
+  stripeReady,
+  voidPayment,
+} from "@/lib/stripe";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 
 const ALLOWED_STATUSES = ["pending", "accepted", "preparing", "ready", "completed", "rejected", "cancelled"] as const;
@@ -71,9 +76,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       status: true,
       paymentStatus: true,
       paymentIntentId: true,
+      paymentMethod: true,
       viaMarketplace: true,
       marketplaceCounterApplied: true,
       total: true,
+      restaurant: { select: { stripeAccountId: true } },
     },
   });
   if (!existing) return NextResponse.json({ error: "Order not found" }, { status: 404 });
@@ -88,10 +95,61 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     return NextResponse.json({ error: "Invalid status" }, { status: 400 });
   }
 
+  // ── Capture-on-accept ────────────────────────────────────────────────────
+  // Under the authorize-then-capture model, the customer's card has only
+  // been AUTHORIZED at this point — no money has moved yet. When the
+  // kitchen clicks "Accept" we must actually capture the funds before
+  // committing the state transition. If capture fails (card declined at
+  // capture, authorization expired) we BLOCK the acceptance so the
+  // restaurant doesn't start cooking food they'll never get paid for.
+  if (
+    newStatus === "accepted" &&
+    existing.paymentMethod === "card" &&
+    existing.paymentStatus === "authorized" &&
+    existing.paymentIntentId &&
+    existing.restaurant.stripeAccountId
+  ) {
+    if (!(await stripeReady())) {
+      return NextResponse.json(
+        { error: "Online payments are not configured. Cannot capture authorization." },
+        { status: 503 },
+      );
+    }
+    try {
+      await capturePayment({
+        paymentIntentId: existing.paymentIntentId,
+        restaurantStripeAccountId: existing.restaurant.stripeAccountId,
+      });
+      // Stripe will fire payment_intent.succeeded → webhook sets
+      // paymentStatus="paid". To avoid a brief window where the kitchen
+      // shows "accepted" but paymentStatus still says "authorized" (which
+      // some UI / cron paths key off), flip it ourselves now too. The
+      // webhook update is idempotent.
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      console.error(`[orders PATCH] capturePayment failed for order ${id}:`, msg);
+      return NextResponse.json(
+        {
+          error:
+            "Couldn't charge the customer's card. The card may have been declined or the authorization expired. Reject this order to release the hold.",
+          code: "capture_failed",
+          detail: msg,
+        },
+        { status: 402 },
+      );
+    }
+  }
+
   const updates: Record<string, unknown> = { status: newStatus };
 
   if (newStatus === "accepted") {
     updates.acceptedAt = new Date();
+    // Flip paymentStatus → "paid" inline if we just captured (above) or
+    // if this is a non-card order. The webhook will land independently
+    // and re-set the same value (idempotent).
+    if (existing.paymentMethod === "card" && existing.paymentStatus === "authorized") {
+      updates.paymentStatus = "paid";
+    }
     const prepTime = parseInt(data.preparationTime, 10);
     if (!isNaN(prepTime) && prepTime > 0 && prepTime <= 240) {
       updates.preparationTime = prepTime;
@@ -116,27 +174,61 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     include: { restaurant: { select: { id: true, name: true, defaultLanguage: true } } },
   });
 
-  // Attempt Stripe refund if payment was captured and the order is being
-  // killed by the restaurant. Both "cancelled" (post-accept) and "rejected"
-  // (pre-accept) need to issue the customer's money back — the customer
-  // never receives the food, so we must never keep the money. The refund
-  // is fire-and-forget; the webhook flips paymentStatus to "refunded" once
-  // Stripe confirms.
+  // ── Kill flow: void vs refund ────────────────────────────────────────────
+  // When the restaurant rejects/cancels an order, what happens depends on
+  // whether the card was already captured:
+  //
+  //   - paymentStatus = "authorized"  → just a hold, no money moved yet.
+  //       Call voidPayment to release the authorization. Customer never
+  //       sees a charge. No Stripe fee, no refund mechanics. This is the
+  //       common path because most rejections happen BEFORE the kitchen
+  //       accepts (i.e. before we capture).
+  //
+  //   - paymentStatus = "paid"  → money already moved. Need a real refund.
+  //       This is rare (post-accept cancellation) but still has to work.
+  //
+  //   - paymentStatus = "voided" / "refunded" → already in a terminal state,
+  //       nothing more to do.
   const isKilled = newStatus === "cancelled" || newStatus === "rejected";
-  if (isKilled && existing.paymentStatus === "paid" && existing.paymentIntentId) {
-    // IMPORTANT: schedule via after() — bare unawaited promises get killed
-    // when Vercel returns the response. Refund silently never reaching
-    // Stripe = customer's money stuck. See note in src/app/api/orders/route.ts.
+  const accountId = existing.restaurant.stripeAccountId;
+  if (isKilled && existing.paymentIntentId && accountId) {
     const piId = existing.paymentIntentId;
-    after(
-      (async () => {
-        try {
-          await refundOrderAsync(id, piId);
-        } catch (e) {
-          console.error("[orders PATCH] refundOrderAsync:", e);
-        }
-      })(),
-    );
+    if (existing.paymentStatus === "authorized") {
+      // Void the authorization — no charge, no fee, no refund.
+      after(
+        (async () => {
+          try {
+            await voidPayment({
+              paymentIntentId: piId,
+              restaurantStripeAccountId: accountId,
+            });
+            // Webhook (payment_intent.canceled) will flip paymentStatus
+            // to "voided"; flip it here too so the admin UI updates
+            // immediately. Idempotent.
+            await prisma.order.update({
+              where: { id },
+              data: { paymentStatus: "voided" },
+            });
+          } catch (e) {
+            console.error("[orders PATCH] voidPayment:", e);
+            // Best-effort: if the void call fails (e.g. authorization
+            // already expired and was auto-released by Stripe), the
+            // customer is still fine — there was never a charge.
+          }
+        })(),
+      );
+    } else if (existing.paymentStatus === "paid") {
+      // Real refund — post-capture cancellation. Rare path.
+      after(
+        (async () => {
+          try {
+            await refundCapturedOrder(id, piId, accountId);
+          } catch (e) {
+            console.error("[orders PATCH] refundCapturedOrder:", e);
+          }
+        })(),
+      );
+    }
   }
 
   // Marketplace counter rollback. If this was a marketplace-attributed
@@ -257,7 +349,24 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   return NextResponse.json(order);
 }
 
-async function refundOrderAsync(orderId: string, paymentIntentId: string) {
+/**
+ * Refund a CAPTURED order. Called from the after() block when an order
+ * is killed AFTER the kitchen has already accepted (i.e. the
+ * authorize-then-capture flow has already captured). Rare path — most
+ * rejections happen before accept and go through voidPayment instead.
+ *
+ * Direct-charge refunds are simple: no transfer to reverse, no
+ * application fee to refund. The money is sitting in the restaurant's
+ * Stripe balance, the refund pulls it back out to the customer's card.
+ * Can still fail if the restaurant's available balance is insufficient,
+ * but that's their problem to resolve with Stripe — the platform isn't
+ * involved in the money flow.
+ */
+async function refundCapturedOrder(
+  orderId: string,
+  paymentIntentId: string,
+  restaurantStripeAccountId: string,
+) {
   try {
     await prisma.order.update({ where: { id: orderId }, data: { refundStatus: "pending" } });
 
@@ -266,28 +375,11 @@ async function refundOrderAsync(orderId: string, paymentIntentId: string) {
       return;
     }
 
-    // Destination charge refund — also reverses the transfer to the connected
-    // account and refunds the platform application fee so the restaurant
-    // doesn't eat the fee on a cancelled order. If the connected account's
-    // Stripe balance is too low to absorb the reversal, the helper falls
-    // back to refunding the customer from PLATFORM balance and flags the
-    // reversal as deferred. The customer's refund happens either way —
-    // that's the only thing we can't compromise on.
-    const result = await refundDestinationPayment({
+    await refundDirectPayment({
       paymentIntentId,
-      refundApplicationFee: true,
+      restaurantStripeAccountId,
       reason: "requested_by_customer",
     });
-    if (result.reverseTransferDeferred) {
-      // Connected account didn't have enough balance to reverse the transfer.
-      // Platform absorbed the refund; we now "owe" a transfer reversal back
-      // to the platform from the connected account. Log loudly so it shows
-      // up in monitoring; a future settlement cron can sweep up these owed
-      // reversals when the connected account next has a positive balance.
-      console.warn(
-        `[refund] order ${orderId} refunded with deferred transfer reversal (refundId=${result.id}). Connected account balance was insufficient; platform absorbed the reversal.`,
-      );
-    }
 
     // The actual paymentStatus → "refunded" transition is driven by the
     // charge.refunded webhook for idempotency; we mark refundStatus optimistically
