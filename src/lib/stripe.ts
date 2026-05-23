@@ -168,11 +168,29 @@ export async function getWebhookSecret(): Promise<string> {
   return cfg.webhookSecret;
 }
 
-/** Platform fee on Connect destination charges. 2.9% + $0.30 by default. */
-export const PLATFORM_FEE_PERCENT = 2.9;
-export const PLATFORM_FEE_FIXED_CENTS = 30;
+/**
+ * Platform fee on Connect destination charges.
+ *
+ * **Fee Free Ordering takes 0% of every order.** Restaurants keep 100% of
+ * the customer's payment aside from Stripe's own processing fee — that's
+ * the entire product promise and brand. We make money instead via:
+ *   1. Paid services / add-on subscriptions (Sales Optimized Website,
+ *      Multi-Location, Driver Pool, etc.)
+ *   2. Marketplace fees (PAYG $3/order OR flat $199.99/month), billed
+ *      via a separate Stripe subscription, NOT via application_fee_amount.
+ *
+ * Both constants are 0 by design. If you find yourself tempted to set
+ * them to a non-zero value, you're changing the business model — talk to
+ * Luigi first. The variable + helper survives so future per-restaurant
+ * override logic has a seam to plug into (e.g. enterprise tier).
+ */
+export const PLATFORM_FEE_PERCENT = 0;
+export const PLATFORM_FEE_FIXED_CENTS = 0;
 
-/** Compute platform application fee for a Connect destination charge. */
+/** Compute platform application fee for a Connect destination charge. Returns
+ *  0 under the current Fee Free model. Kept as a function (not just a
+ *  constant) so we can later swap to a per-restaurant override without
+ *  touching the call sites. */
 export function calculatePlatformFee(amountCents: number): number {
   return Math.round(amountCents * (PLATFORM_FEE_PERCENT / 100)) + PLATFORM_FEE_FIXED_CENTS;
 }
@@ -325,10 +343,15 @@ export async function createDestinationPaymentIntent(params: {
   const stripe = await getStripe();
   const platformFee = calculatePlatformFee(params.amountCents);
   const statementDescriptorSuffix = buildStatementDescriptorSuffix(params.restaurantName);
+  // Only include application_fee_amount when it's > 0. Under the current
+  // Fee Free model the platform takes 0% per order, so omitting the
+  // parameter entirely (rather than sending `application_fee_amount: 0`)
+  // keeps the Stripe payment cleaner — no zero-value "Collected fee" row
+  // on the dashboard, restaurants see a single transparent transfer.
   const intent = await stripe.paymentIntents.create({
     amount: params.amountCents,
     currency: params.currency,
-    application_fee_amount: platformFee,
+    ...(platformFee > 0 ? { application_fee_amount: platformFee } : {}),
     transfer_data: { destination: params.restaurantStripeAccountId },
     ...(statementDescriptorSuffix ? { statement_descriptor_suffix: statementDescriptorSuffix } : {}),
     metadata: {

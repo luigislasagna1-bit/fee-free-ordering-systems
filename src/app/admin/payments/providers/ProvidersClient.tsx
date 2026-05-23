@@ -103,7 +103,8 @@ export function ProvidersClient({
         <h1 className="text-2xl font-bold text-gray-900">Accept payments</h1>
         <p className="text-sm text-gray-500 mt-1">
           Connect your Stripe account to accept card payments from your customers.
-          Money lands directly in your Stripe balance, minus a small platform fee.
+          Money lands directly in your Stripe balance — Fee Free Ordering takes
+          0% per order. You only pay Stripe&apos;s standard processing fee.
         </p>
       </div>
 
@@ -258,7 +259,7 @@ export function ProvidersClient({
                 <Feature
                   icon={<CreditCard className="w-4 h-4" />}
                   title="Money lands in your bank"
-                  body="Stripe pays you directly. Platform fee 2.9% + $0.30 per order."
+                  body="Stripe pays you directly. Fee Free Ordering takes 0% per order — you only pay Stripe's processing fee."
                 />
               </div>
               <button
