@@ -42,6 +42,17 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
 
   const isRejected = order.status === "rejected";
   const currentStep = statusSteps.findIndex((s) => s.key === order.status);
+  // If the order originated from the marketplace, "back" should land the
+  // customer on the marketplace grid (where they were browsing) rather
+  // than the restaurant's standalone menu. On the marketplace domain
+  // (feefreefood.com) "/" rewrites to the grid via proxy.ts; on any
+  // other host "/" goes to the marketing root which still gives them a
+  // way out. The restaurant-menu link is kept as a secondary CTA when
+  // marketplace so customers can also reorder from the SAME restaurant
+  // without bouncing through the grid.
+  const cameFromMarketplace = !!order.viaMarketplace;
+  const backHref = cameFromMarketplace ? "/" : `/order/${slug}`;
+  const backLabel = cameFromMarketplace ? "← Browse other restaurants" : "← Back to menu";
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
@@ -59,7 +70,22 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
             <XCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
             <h2 className="text-xl font-bold text-gray-900 mb-2">Order Rejected</h2>
             {order.rejectionReason && <p className="text-gray-600 mb-4">Reason: {order.rejectionReason}</p>}
-            <Link href={`/order/${slug}`} className="text-orange-500 font-medium hover:underline">Place a new order</Link>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <Link
+                href={cameFromMarketplace ? "/" : `/order/${slug}`}
+                className="text-orange-500 font-medium hover:underline"
+              >
+                {cameFromMarketplace ? "Browse other restaurants" : "Place a new order"}
+              </Link>
+              {cameFromMarketplace && (
+                <Link
+                  href={`/order/${slug}`}
+                  className="text-gray-500 text-sm hover:text-gray-700"
+                >
+                  · Try {order.restaurant.name} again
+                </Link>
+              )}
+            </div>
           </div>
         ) : (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
@@ -103,8 +129,15 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
           </div>
         </div>
 
-        <div className="text-center mt-6">
-          <Link href={`/order/${slug}`} className="text-gray-500 text-sm hover:text-gray-700">← Back to menu</Link>
+        <div className="text-center mt-6 space-y-2">
+          <Link href={backHref} className="text-gray-500 text-sm hover:text-gray-700 block">
+            {backLabel}
+          </Link>
+          {cameFromMarketplace && (
+            <Link href={`/order/${slug}`} className="text-gray-400 text-xs hover:text-gray-600 block">
+              Or reorder from {order.restaurant.name}
+            </Link>
+          )}
         </div>
       </div>
     </div>

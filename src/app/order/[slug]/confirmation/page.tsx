@@ -83,9 +83,18 @@ export default async function ConfirmationPage({
           >
             Track Order Status <ArrowRight className="w-4 h-4" />
           </Link>
-          <Link href={`/order/${slug}`} className="text-gray-500 text-sm hover:text-gray-700 transition">
-            Place another order
-          </Link>
+          {/* Send marketplace customers back to the grid (where they were
+              browsing). Direct-customers get the restaurant-menu link as
+              before. Same logic as the status page. */}
+          {order.viaMarketplace ? (
+            <Link href="/" className="text-gray-500 text-sm hover:text-gray-700 transition">
+              ← Browse other restaurants
+            </Link>
+          ) : (
+            <Link href={`/order/${slug}`} className="text-gray-500 text-sm hover:text-gray-700 transition">
+              Place another order
+            </Link>
+          )}
         </div>
       </div>
     </div>

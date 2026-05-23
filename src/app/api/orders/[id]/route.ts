@@ -15,6 +15,10 @@ const PUBLIC_ORDER_SELECT = {
   acceptedAt: true, rejectedAt: true, rejectionReason: true,
   completedAt: true, preparationTime: true, createdAt: true,
   refundStatus: true,
+  // Marketplace attribution — used by the status page so the "← Back"
+  // link sends customers back to the marketplace grid (where they came
+  // from) instead of the standalone restaurant menu.
+  viaMarketplace: true,
   restaurant: {
     select: { name: true, slug: true, phone: true, estimatedPickup: true, estimatedDelivery: true },
   },
