@@ -272,22 +272,94 @@ Estimated size: ~700 lines. 1 PR.
 
 ---
 
-## Phase G — Marketplace M4: PWA + native shell + subdomain
+## Phase G — Native apps: Kitchen Display + Marketplace (Capacitor)
 
-🔵 Scope:
-- PWA manifest + service worker for `/marketplace` so customers can
-  "Add to Home Screen" and use it offline-friendly
-- React Native (or Capacitor) wrapper for iOS/Android app store
-  presence — opens the same `/marketplace` web view inside a native
-  shell with push notifications
+**Strategic decision 2026-05-23** (Luigi + Claude): build TWO native apps
+post-soft-launch, both on **Capacitor** (Ionic team's WebView wrapper),
+not React Native, not pure native Kotlin/Swift.
+
+### Why Capacitor
+
+- Thin native shell around a WebView that loads our existing web app.
+  When we deploy to Vercel, every installed app sees the new code on
+  next launch — **no App Store re-review required for content/feature
+  changes**. Only native-plugin changes require resubmission.
+- Single codebase per app, builds for iOS + Android.
+- No rewrite of kitchen/marketplace UI — they stay Next.js, we wrap.
+- Custom plugins still possible (Kotlin + Swift) for things that need
+  native — specifically our Printer plugin (see below).
+- White-label-ready — perfect base for the future `branded_mobile_app`
+  add-on where each restaurant gets their own-branded app on the store.
+
+Rejected alternatives:
+- ❌ React Native: forces UI rewrite + doubles maintenance (two parallel
+  UIs to keep in sync). Kills the auto-update story.
+- ❌ Native Kotlin + Swift × 2 apps: 4 codebases, 4× the work, marginal
+  benefit. Only justified if Capacitor printer plugin proves impossible
+  (it won't — Star + Epson both have well-documented Android + iOS SDKs
+  that wrap cleanly).
+
+### App 1: Kitchen Display (~4 weeks, tracked as task #78)
+
+Replaces PrintNode entirely on devices running the native app
+(PrintNode stays as fallback for browser kitchen-display users).
+GloriaFood-parity auto-printing.
+
+Scope:
+- Capacitor shell + WebView loading `/kitchen` on our domain
+- **Custom Printer plugin** — native code wrapping Star + Epson SDKs:
+  - mDNS / Bonjour discovery for LAN printers (auto-find)
+  - ESC/POS over raw TCP/9100 for network printing
+  - USB serial for USB-connected printers (Android; iOS USB restricted)
+  - Bluetooth Classic for BT printers
+  - Receipt content + template stay 100% unchanged — only the
+    transport layer is new. Existing `src/lib/printing/*` helpers are
+    bundled into the native side.
+- Push notifications for new orders (loud bell from native side — more
+  reliable than browser `Audio` API which Safari iOS blocks)
+- Keep-awake / screen-on while orders are pending
+- Auto-launch on device boot (Android)
+
+Supported printers at v1 (matches GloriaFood's list):
+- **Star:** TSP100ECO, TSP100U, TSP100GT, TSP100LAN, TSP143IIIW,
+  TSP650, TSP650II, TSP700II, TSP800II, FVP10, TUP500, TUP900, SP700
+- **Epson:** TM-M10, TM-T20II, TM-T70II, TM-T82II, TM-T88V, TM-T90II,
+  TM-P20/P60/P80, TM-U220, TM-U330
+
+### App 2: Marketplace (~2-3 weeks, tracked as task #79)
+
+Customer-facing browse + order app.
+
+Scope:
+- Capacitor shell + WebView loading `feefreefood.com/marketplace`
+- Push notifications for order status (\"Your order is ready\",
+  \"Driver is 5 min away\")
+- Native geolocation for \"restaurants near me\"
+- **Camera for QR code scanning** — perfect fit for the COMBINE
+  marketing pivot (customer scans QR on takeout bag → goes straight
+  to that restaurant's reorder page). Direct conversion play.
+- App icon + splash + native deep-link handling
+
+### Sequencing
+
+Decided 2026-05-23: **Soft-launch web first, THEN native apps in
+sequence.** Lowest-risk option — web platform launches in ~2-3 weeks
+on existing PrintNode path, native apps ship ~4-7 weeks after that as
+a free upgrade. The first restaurants signing up don't care which
+transport prints receipts; they care that receipts print.
+
+Pre-work (task #80): Capacitor scaffolding spike + native Printer
+plugin interface spec. Decides monorepo layout, picks Star + Epson
+SDK versions, validates bundle size and license terms before the
+4-week clock starts on the Kitchen app proper.
+
+### PWA + marketplace subdomain (still in scope)
+
 - Move marketplace to `marketplace.feefreeordering.com` subdomain so
-  it has a proper standalone identity (separate from `<restaurant>.feefreeordering.com`)
+  it has a proper standalone identity (separate from
+  `<restaurant>.feefreeordering.com`)
 - Customer accounts unified across the marketplace — sign in once,
   reorder from any restaurant you've ordered from before
-
-Estimated size: PWA is small (~200 lines), native shell is a separate
-project (~1-2 weeks of dedicated work), customer-account unification
-is medium-sized (~600 lines + new schema).
 
 ---
 
