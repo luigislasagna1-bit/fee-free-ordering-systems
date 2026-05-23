@@ -23,6 +23,9 @@ export function LoginForm() {
     setSubmitting(true);
     setError(null);
     try {
+      // Nuke any stale session cookies before authenticating — same
+      // reasoning as /login. See src/app/api/auth/clear-session/route.ts.
+      await fetch("/api/auth/clear-session", { method: "POST" }).catch(() => {});
       const res = await fetch("/api/customer/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

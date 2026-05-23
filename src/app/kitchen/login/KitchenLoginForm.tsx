@@ -18,6 +18,9 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
     e.preventDefault();
     setLoading(true);
     try {
+      // Nuke any stale session cookies before authenticating — same
+      // reasoning as /login. See src/app/api/auth/clear-session/route.ts.
+      await fetch("/api/auth/clear-session", { method: "POST" }).catch(() => {});
       const result = await signIn("credentials", {
         email: form.email,
         password: form.password,

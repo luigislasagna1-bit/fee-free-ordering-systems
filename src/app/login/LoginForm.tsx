@@ -20,6 +20,14 @@ function LoginFormInner({ locale }: { locale: string }) {
     e.preventDefault();
     setLoading(true);
     try {
+      // BEFORE signing in, nuke any stale session/impersonation cookies the
+      // browser might still be holding from a previous login. Otherwise
+      // getSessionUser() can pick up the wrong session candidate when both
+      // are present (we hit this 2026-05-22: stale superadmin cookie kept
+      // bouncing a fresh restaurant_admin login back to /superadmin).
+      // Best-effort — if this 500s for any reason, proceed anyway; the new
+      // session cookie should still overwrite the old one on most browsers.
+      await fetch("/api/auth/clear-session", { method: "POST" }).catch(() => {});
       // First check credentials with redirect:false so we can show inline
       // errors. If valid, do a full-page navigation to /admin — this is more
       // reliable than router.push() across mobile browsers (especially iOS
