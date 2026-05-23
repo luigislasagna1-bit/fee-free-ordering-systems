@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStripe, getWebhookSecret } from "@/lib/stripe";
+import { getStripe, getWebhookSecrets } from "@/lib/stripe";
 import { dispatchStripeEvent } from "@/lib/stripe/events";
 
 // Stripe's signature verification needs the raw request body — NOT the parsed
@@ -16,12 +16,28 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing stripe-signature header" }, { status: 400 });
   }
 
-  // 2. Verify signature
+  // 2. Verify signature against EACH configured secret. The platform
+  // destination and the Connect destination have different signing
+  // secrets — try them all and accept the first one that verifies.
+  // (See getWebhookSecrets() for the why.)
   let event;
   try {
     const stripe = await getStripe();
-    const secret = await getWebhookSecret();
-    event = stripe.webhooks.constructEvent(body, signature, secret);
+    const secrets = await getWebhookSecrets();
+    let lastError: unknown = null;
+    for (const secret of secrets) {
+      try {
+        event = stripe.webhooks.constructEvent(body, signature, secret);
+        lastError = null;
+        break;
+      } catch (err) {
+        lastError = err;
+        // try next secret
+      }
+    }
+    if (!event) {
+      throw lastError ?? new Error("No secrets configured");
+    }
   } catch (err: any) {
     console.error("[stripe webhook] signature verification failed:", err?.message);
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });

@@ -169,6 +169,46 @@ export async function getWebhookSecret(): Promise<string> {
 }
 
 /**
+ * Return EVERY webhook signing secret the platform should accept. The
+ * route handler tries them in order and uses whichever one verifies the
+ * incoming signature.
+ *
+ * Why multiple secrets: under the direct-charge model we have TWO Stripe
+ * webhook destinations pointing at the same endpoint URL:
+ *   1. The platform-level destination (events on the platform account —
+ *      subscriptions, invoices, account.updated, etc.). Secret comes from
+ *      STRIPE_WEBHOOK_SECRET (or /superadmin/settings/stripe in DB).
+ *   2. The Connect-level destination (events on connected accounts —
+ *      direct-charge payment_intent.* events for customer orders). Secret
+ *      comes from STRIPE_CONNECT_WEBHOOK_SECRET (env-only — there's no
+ *      per-restaurant admin page for this since it's a platform-wide
+ *      destination just like #1).
+ *
+ * The signatures Stripe generates use destination-specific secrets, so
+ * verification has to try each candidate. Wrong-secret verification fails
+ * fast and locally — no extra network call.
+ *
+ * Also useful for zero-downtime secret rotation: add the new secret as
+ * a second value, deploy, rotate the destination in Stripe, then drop
+ * the old one.
+ */
+export async function getWebhookSecrets(): Promise<string[]> {
+  const cfg = await loadConfig();
+  const secrets: string[] = [];
+  if (cfg.webhookSecret) secrets.push(cfg.webhookSecret);
+  const connectSecret = process.env.STRIPE_CONNECT_WEBHOOK_SECRET || null;
+  if (connectSecret && !secrets.includes(connectSecret)) {
+    secrets.push(connectSecret);
+  }
+  if (secrets.length === 0) {
+    throw new Error(
+      "Stripe webhook secret is not configured. Set it in /superadmin/settings/stripe or via STRIPE_WEBHOOK_SECRET / STRIPE_CONNECT_WEBHOOK_SECRET env vars."
+    );
+  }
+  return secrets;
+}
+
+/**
  * Platform fee on Connect destination charges.
  *
  * **Fee Free Ordering takes 0% of every order.** Restaurants keep 100% of
