@@ -29,21 +29,26 @@ import prisma from "@/lib/db";
  */
 export const dynamic = "force-dynamic";
 
-export async function GET(req: NextRequest) {
-  const publicId = req.nextUrl.searchParams.get("id");
+/** Shared CORS headers — the widget.js loader lives on third-party
+ *  domains and needs us to be open. The only thing exposed is "does
+ *  this widget ID exist" which is fine (the IDs are opaque/secret-by-
+ *  obscurity but not actually security-bearing). */
+const CORS_HEADERS = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET, POST, OPTIONS",
+  "cache-control": "no-store",
+};
 
-  // CORS headers for the response. The widget.js script is on a
-  // third-party domain — we need to allow it to read the response.
-  const corsHeaders = {
-    "access-control-allow-origin": "*",
-    "access-control-allow-methods": "GET, OPTIONS",
-    "cache-control": "no-store",
-  };
-
+/** Core handler shared by GET + POST. The client uses navigator.sendBeacon
+ *  which sends an HTTP POST with an empty body; older browsers fall back
+ *  to fetch() with GET. We accept both to maximise install-detection
+ *  coverage. (Earlier bug: this route was GET-only, so every sendBeacon
+ *  call landed as a 405 Method Not Allowed and widgetInstalledAt stayed
+ *  null forever — even when the widget was clearly live.) */
+async function handle(publicId: string | null) {
   if (!publicId || publicId.length > 64) {
-    return NextResponse.json({ ok: false }, { status: 400, headers: corsHeaders });
+    return NextResponse.json({ ok: false }, { status: 400, headers: CORS_HEADERS });
   }
-
   try {
     // Find the restaurant by widgetPublicId and stamp widgetInstalledAt
     // only if it's currently null. Postgres-side conditional update
@@ -52,21 +57,37 @@ export async function GET(req: NextRequest) {
       where: { widgetPublicId: publicId, widgetInstalledAt: null },
       data: { widgetInstalledAt: new Date() },
     });
-
     // Note: updated.count === 0 either means (a) no restaurant has
     // that widgetPublicId or (b) widgetInstalledAt was already set.
     // Both are valid "ok" outcomes from the client's perspective —
     // it just wanted to fire and forget. Don't 404 on unknown IDs
     // because that would leak "this widget ID doesn't exist" to
     // anyone scanning. Always return ok:true.
-    return NextResponse.json({ ok: true, recorded: updated.count > 0 }, { headers: corsHeaders });
+    return NextResponse.json(
+      { ok: true, recorded: updated.count > 0 },
+      { headers: CORS_HEADERS },
+    );
   } catch (e) {
     console.error("[widget/heartbeat]", e instanceof Error ? e.message : e);
     // Even on error, return ok:true — the heartbeat is best-effort
     // and we don't want to surface server troubles to a customer's
     // browser on a host page.
-    return NextResponse.json({ ok: true, recorded: false }, { headers: corsHeaders });
+    return NextResponse.json(
+      { ok: true, recorded: false },
+      { headers: CORS_HEADERS },
+    );
   }
+}
+
+export async function GET(req: NextRequest) {
+  return handle(req.nextUrl.searchParams.get("id"));
+}
+
+export async function POST(req: NextRequest) {
+  // sendBeacon sends POST. The publicId still comes via query string
+  // (?id=…) — sendBeacon's body would be an opaque Blob/FormData and we
+  // don't need it, the query param is the source of truth either way.
+  return handle(req.nextUrl.searchParams.get("id"));
 }
 
 export async function OPTIONS() {
@@ -74,7 +95,7 @@ export async function OPTIONS() {
     status: 204,
     headers: {
       "access-control-allow-origin": "*",
-      "access-control-allow-methods": "GET, OPTIONS",
+      "access-control-allow-methods": "GET, POST, OPTIONS",
     },
   });
 }

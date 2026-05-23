@@ -25,7 +25,7 @@ const SCRIPT = `(function(){
     var base = (function(){
       try { return new URL(s.src).origin; } catch (e) { return ""; }
     })();
-    var btnLabel = (s && s.getAttribute("data-label")) || "Order Online";
+    var btnLabel = (s && s.getAttribute("data-label")) || "See MENU & Order";
     var btnColor = (s && s.getAttribute("data-color")) || "#ef4444";
     // data-target="#some-id" lets the restaurant pin the button inline
     // wherever they want on their page (e.g. inside their nav). Without
@@ -33,77 +33,145 @@ const SCRIPT = `(function(){
     var targetSel = s && s.getAttribute("data-target");
 
     // Install-detection heartbeat. Fire exactly ONCE per page session.
-    // Server-side updateMany no-ops after the first time widgetInstalledAt
-    // is set, so this is cheap on the backend regardless of host-page
-    // traffic. Fire-and-forget — we don't care if it succeeds, the host
-    // page should never block or error on our heartbeat. Uses sendBeacon
-    // when available so the request survives a fast navigate-away;
-    // falls back to a no-cors fetch otherwise.
+    // Uses sendBeacon (which sends an HTTP POST) — the heartbeat endpoint
+    // accepts BOTH POST and GET so it survives the sendBeacon transport
+    // without 405s. Fire-and-forget; we never block on it. (Earlier bug:
+    // server was GET-only, so sendBeacon hit 405 silently and
+    // widgetInstalledAt stayed null even when the widget was clearly
+    // live on a host page.)
     try {
       var beaconUrl = base + "/api/widget/heartbeat?id=" + encodeURIComponent(publicId);
       if (navigator.sendBeacon) {
+        // sendBeacon sends POST with an empty body. Server route now
+        // handles POST + GET so this lands.
         navigator.sendBeacon(beaconUrl);
       } else {
         fetch(beaconUrl, { mode: "no-cors", keepalive: true }).catch(function(){});
       }
     } catch (e) { /* never block on heartbeat */ }
 
-    // Launcher button (style works inline OR floating)
+    // ─── Launcher button ───────────────────────────────────────────────
+    // GloriaFood-style: big, bold, impossible to miss. Restaurants put
+    // their own "Order Online" CTA on their site — ours has to clearly
+    // outcompete that visually OR pair with it as the obvious primary.
+    // Note the !important flags on layout-critical properties — host-page
+    // CSS frameworks (Wix, Squarespace, Webflow, Shopify) reset button
+    // styles aggressively, and we MUST resist those resets or the button
+    // ends up looking like a Wix default link.
     var btn = document.createElement("button");
     btn.type = "button";
     btn.textContent = btnLabel;
     var btnBase = [
-      "padding:14px 24px","font-family:system-ui,-apple-system,sans-serif",
-      "font-size:16px","font-weight:700","color:#fff","border:0","border-radius:9999px",
-      "cursor:pointer","box-shadow:0 8px 24px rgba(0,0,0,0.25)",
-      "background:"+btnColor, "transition:transform 0.15s ease, box-shadow 0.15s ease",
-      "letter-spacing:0.01em"
+      // Size: substantially bigger than the old pill. Closer to a true CTA.
+      "padding:18px 36px !important",
+      "font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif !important",
+      "font-size:18px !important",
+      "font-weight:700 !important",
+      "line-height:1.2 !important",
+      "color:#fff !important",
+      "border:0 !important",
+      "border-radius:10px !important",
+      "cursor:pointer !important",
+      "box-shadow:0 6px 20px rgba(0,0,0,0.2) !important",
+      "background:" + btnColor + " !important",
+      "transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease !important",
+      "letter-spacing:0.02em !important",
+      "text-transform:none !important",
+      "text-decoration:none !important",
+      "outline:none !important",
+      "min-width:200px !important",
+      "max-width:none !important",
+      "white-space:nowrap !important"
     ];
     var btnFloating = btnBase.concat([
-      "position:fixed","bottom:24px","right:24px","z-index:2147483646"
+      "position:fixed !important",
+      "bottom:28px !important",
+      "right:28px !important",
+      "z-index:2147483646 !important"
     ]);
     btn.style.cssText = (targetSel ? btnBase : btnFloating).join(";");
     btn.addEventListener("mouseenter", function(){
-      btn.style.transform = "translateY(-1px)";
-      btn.style.boxShadow = "0 12px 28px rgba(0,0,0,0.3)";
+      btn.style.transform = "translateY(-2px)";
+      btn.style.boxShadow = "0 10px 28px rgba(0,0,0,0.28)";
     });
     btn.addEventListener("mouseleave", function(){
       btn.style.transform = "";
-      btn.style.boxShadow = "0 8px 24px rgba(0,0,0,0.25)";
+      btn.style.boxShadow = "0 6px 20px rgba(0,0,0,0.2)";
     });
 
-    // Modal overlay — sized to feel like a real ordering page, not a
-    // cramped popup. ~1200x900 desktop max, full-bleed below 900px so
-    // the menu has actual breathing room on common laptop screens.
+    // ─── Modal overlay ─────────────────────────────────────────────────
+    // Sized using viewport units (vw/vh) NOT percentages — % is relative
+    // to the parent element which host pages can constrain in weird ways
+    // (we just lost an hour to Wix collapsing our 1200x900 modal to 200x80
+    // because something upstream was sizing the flex container down).
+    // vw/vh is always relative to the actual viewport, never the parent.
+    // All layout-critical properties get !important for the same reason
+    // the button needs them — host-page CSS resets are aggressive.
     var overlay = document.createElement("div");
     overlay.style.cssText = [
-      "position:fixed","inset:0","z-index:2147483647",
-      "background:rgba(0,0,0,0.65)","display:none","align-items:center","justify-content:center",
-      "padding:16px","box-sizing:border-box"
+      "position:fixed !important",
+      "top:0 !important","left:0 !important","right:0 !important","bottom:0 !important",
+      "width:100vw !important","height:100vh !important",
+      "z-index:2147483647 !important",
+      "background:rgba(0,0,0,0.7) !important",
+      "display:none",
+      "align-items:center !important",
+      "justify-content:center !important",
+      "padding:0 !important",
+      "margin:0 !important",
+      "box-sizing:border-box !important"
     ].join(";");
     var frameWrap = document.createElement("div");
-    // 1200x900 max, but always at least 95% of the viewport on small
-    // screens. Width 100% / height 100% on phones (no padding visible).
+    // Fill the screen with a tiny breathing margin. min() guards desktop
+    // from being absurdly stretched on 4K displays, but the floor is
+    // 95vw/95vh so on phones / small laptops it's full-bleed.
     frameWrap.style.cssText = [
-      "position:relative","width:min(1200px,100%)","height:min(900px,100%)",
-      "max-width:100%","max-height:100%",
-      "background:#fff","border-radius:16px","overflow:hidden",
-      "box-shadow:0 20px 60px rgba(0,0,0,0.45)"
+      "position:relative !important",
+      "width:min(1400px, 95vw) !important",
+      "height:min(1000px, 95vh) !important",
+      // Hard floors so host-page sizing CANNOT shrink us below this.
+      // The Wix bug was the flex item collapsing to ~200x80; min-width/
+      // min-height on the actual element shuts that down cold.
+      "min-width:320px !important",
+      "min-height:480px !important",
+      "max-width:none !important",
+      "max-height:none !important",
+      "background:#fff !important",
+      "border-radius:12px !important",
+      "overflow:hidden !important",
+      "box-shadow:0 24px 64px rgba(0,0,0,0.5) !important",
+      "padding:0 !important",
+      "margin:0 !important",
+      "box-sizing:border-box !important",
+      "flex-shrink:0 !important"
     ].join(";");
     var iframe = document.createElement("iframe");
-    iframe.style.cssText = "width:100%;height:100%;border:0;display:block";
+    iframe.style.cssText = [
+      "width:100% !important",
+      "height:100% !important",
+      "border:0 !important",
+      "display:block !important",
+      "margin:0 !important",
+      "padding:0 !important"
+    ].join(";");
     iframe.setAttribute("allow", "payment; geolocation");
-    iframe.setAttribute("loading", "lazy");
     iframe.setAttribute("title", btnLabel);
     var closeBtn = document.createElement("button");
     closeBtn.type = "button";
     closeBtn.setAttribute("aria-label", "Close");
     closeBtn.textContent = "\\u00D7";
     closeBtn.style.cssText = [
-      "position:absolute","top:12px","right:14px","z-index:1",
-      "width:40px","height:40px","border:0","border-radius:9999px",
-      "background:rgba(0,0,0,0.6)","color:#fff","font-size:24px","line-height:1",
-      "cursor:pointer","display:flex","align-items:center","justify-content:center"
+      "position:absolute !important",
+      "top:12px !important","right:14px !important",
+      "z-index:1 !important",
+      "width:44px !important","height:44px !important",
+      "border:0 !important","border-radius:9999px !important",
+      "background:rgba(0,0,0,0.65) !important",
+      "color:#fff !important","font-size:28px !important","line-height:1 !important",
+      "cursor:pointer !important",
+      "display:flex !important","align-items:center !important","justify-content:center !important",
+      "padding:0 !important","margin:0 !important",
+      "font-family:system-ui,-apple-system,sans-serif !important"
     ].join(";");
     frameWrap.appendChild(iframe);
     frameWrap.appendChild(closeBtn);
@@ -111,13 +179,15 @@ const SCRIPT = `(function(){
 
     function open() {
       iframe.src = base + "/embed/widget/" + encodeURIComponent(publicId);
-      overlay.style.display = "flex";
+      overlay.style.setProperty("display", "flex", "important");
       document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
     }
     function close() {
-      overlay.style.display = "none";
+      overlay.style.setProperty("display", "none", "important");
       iframe.src = "about:blank";
       document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
     }
     function onEsc(e) {
       if (e.key === "Escape" && overlay.style.display === "flex") close();
