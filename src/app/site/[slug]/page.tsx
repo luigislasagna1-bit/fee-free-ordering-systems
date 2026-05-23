@@ -5,7 +5,10 @@ import Image from "next/image";
 import { ExternalLink, MapPin, Phone, Mail } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
-import { DeliveryZonesMap } from "./DeliveryZonesMap";
+// Hosted-page map uses the same component as /order/[slug]/info. The
+// dynamic import (ssr:false) lives in the client wrapper because Next 16
+// doesn't allow ssr:false on next/dynamic inside server components.
+import { HostedDeliveryZonesMap } from "./HostedDeliveryZonesMap";
 
 /**
  * Public hosted marketing page. Reached two ways:
@@ -489,25 +492,46 @@ export default async function HostedSitePage({
           </div>
         </div>
 
-        {/* Map — two modes depending on whether the restaurant accepts
-            delivery and has zones configured:
-              a) Has zones → render the interactive Leaflet map with
-                 colored zone circles + a side legend listing fees,
-                 minimums, and ETAs per zone. Replaces the static
-                 Google Maps iframe so customers can immediately tell
-                 whether they're in delivery range.
-              b) No zones → keep the simple keyless Google Maps iframe
-                 (just the restaurant pin) for the "find us" use case
-                 on a pickup-only or no-zones-configured restaurant. */}
-        {s.sections.map && r.deliveryZones.length > 0 && (
+        {/* Map — two modes:
+              a) Has lat/lng + zones → render the SAME DeliveryZonesMap
+                 component that /order/[slug]/info uses. Concentric zone
+                 circles centered on the restaurant pin, with hover
+                 tooltips showing fee/minimum/ETA. Honors the restaurant's
+                 mapProvider preference (Leaflet free, or Google Maps if
+                 they've added an API key in /admin/website/map-settings).
+              b) No zones → simple keyless Google iframe for "find us"
+                 on a pickup-only or zones-not-configured restaurant. */}
+        {s.sections.map && r.lat != null && r.lng != null && r.deliveryZones.length > 0 && (
           <div className="mt-10">
-            <DeliveryZonesMap
-              restaurantName={r.name}
+            <HostedDeliveryZonesMap
               restaurantLat={r.lat}
               restaurantLng={r.lng}
               zones={r.deliveryZones}
-              primaryColor={themeColor}
+              provider={r.mapProvider}
+              googleMapsApiKey={r.googleMapsApiKey ?? undefined}
             />
+            <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {r.deliveryZones.map((z) => (
+                <li
+                  key={z.id}
+                  className="flex items-center gap-3 p-2.5 rounded-lg bg-gray-50 border border-gray-100"
+                >
+                  <span
+                    aria-hidden
+                    className="w-3 h-3 rounded-full flex-shrink-0 border border-gray-200"
+                    style={{ background: z.color }}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-gray-900 text-sm truncate">{z.name}</div>
+                    <div className="text-[11px] text-gray-500">
+                      {z.deliveryFee > 0 ? `$${z.deliveryFee.toFixed(2)} fee` : "Free delivery"}
+                      {z.minimumOrder > 0 ? ` · $${z.minimumOrder.toFixed(0)} min` : ""}
+                      {z.estimatedMinutes > 0 ? ` · ~${z.estimatedMinutes} min` : ""}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
         {s.sections.map && r.deliveryZones.length === 0 && mapEmbedUrl && (

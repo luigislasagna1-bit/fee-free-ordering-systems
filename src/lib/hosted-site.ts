@@ -52,19 +52,26 @@ export interface HostedSiteData {
   /** Restaurant lat/lng for centering the map. Null when not set. */
   lat: number | null;
   lng: number | null;
-  /** Active delivery zones for the map overlay. Each zone renders as a
-   *  colored circle with a fee label in the legend. Inactive zones are
-   *  filtered out so customers don't see paused/seasonal areas. */
+  /** Map provider preference + optional key. Same as what /order/[slug]/info
+   *  uses — Leaflet is the default and needs no key, Google Maps gives a
+   *  more polished look when the restaurant has set up an API key in
+   *  /admin/website/map-settings. */
+  mapProvider: "leaflet" | "google";
+  googleMapsApiKey: string | null;
+  /** Active delivery zones for the map overlay. Each zone is a colored
+   *  ring at the given radius from the restaurant (matches the existing
+   *  /order/[slug]/info map's data model — circles concentric on the
+   *  restaurant pin, NOT centered on each zone's own lat/lng). Inactive
+   *  zones are filtered out so customers don't see paused/seasonal areas. */
   deliveryZones: Array<{
     id: string;
     name: string;
     color: string;
-    centerLat: number;
-    centerLng: number;
     radiusKm: number;
     deliveryFee: number;
     minimumOrder: number;
     estimatedMinutes: number;
+    isActive: boolean;
   }>;
   /** Owner-controlled layout/copy choices from the website editor.
    *  Always populated (defaults when the owner hasn't customized anything).
@@ -93,7 +100,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       zip: true, country: true, cuisineType: true, logoUrl: true,
       bannerUrl: true, socialLinks: true, themeSettings: true,
       hostedSiteSettings: true,
-      lat: true, lng: true,
+      lat: true, lng: true, mapProvider: true, googleMapsApiKey: true,
       isActive: true, publishedAt: true,
       acceptsPickup: true, acceptsDelivery: true, acceptsDineIn: true,
       acceptsReservations: true,
@@ -145,9 +152,9 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       where: { restaurantId: restaurant.id, isActive: true },
       orderBy: { sortOrder: "asc" },
       select: {
-        id: true, name: true, color: true,
-        centerLat: true, centerLng: true, radiusKm: true,
+        id: true, name: true, color: true, radiusKm: true,
         deliveryFee: true, minimumOrder: true, estimatedMinutes: true,
+        isActive: true,
       },
     }),
   ]);
@@ -203,6 +210,8 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       seoKeywords,
       lat: restaurant.lat,
       lng: restaurant.lng,
+      mapProvider: (restaurant.mapProvider === "google" ? "google" : "leaflet") as "leaflet" | "google",
+      googleMapsApiKey: restaurant.googleMapsApiKey ?? null,
       deliveryZones,
       settings: parseHostedSiteSettings(restaurant.hostedSiteSettings),
     },
