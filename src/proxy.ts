@@ -258,6 +258,27 @@ export async function proxy(req: NextRequest) {
     });
   }
 
+  // For hosted-site customers, ALL single-segment paths under the
+  // subdomain that match the {cuisine}-{type}-{city} shape go to the
+  // programmatic-SEO landing page at /site/<slug>/<seoSlug>. The shape
+  // we detect: contains `-delivery-` or `-takeout-` somewhere in the
+  // path. The landing page itself validates whether the slug matches
+  // a real keyword combo for this restaurant; bogus slugs 404 cleanly.
+  // This is what turns hidden footer links like
+  // <slug>.feefreeordering.com/italian-food-delivery-mississauga
+  // into actual indexable landing pages without us having to maintain
+  // a static list of routes — every cuisine × city permutation works.
+  if (
+    hasHostedSite &&
+    /^\/[a-z0-9-]+$/.test(pathname) &&
+    (pathname.includes("-delivery-") || pathname.includes("-takeout-"))
+  ) {
+    const seoSlug = pathname.slice(1);
+    return NextResponse.rewrite(new URL(`/site/${slug}/${seoSlug}${search}`, req.url), {
+      request: { headers: requestHeaders },
+    });
+  }
+
   // Default for non-root paths: tenant-route by prefixing /order/<slug>.
   // Preserves the existing behavior for sub-paths like /info, /payment, etc.
   const rewritten = new URL(`/order/${slug}${pathname}${search}`, req.url);

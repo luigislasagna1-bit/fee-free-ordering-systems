@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ExternalLink, MapPin, Phone, Mail } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
+import { buildSeoLinks } from "@/lib/hosted-site-seo";
 
 /**
  * Public hosted marketing page. Reached two ways:
@@ -445,7 +446,13 @@ export default async function HostedSitePage({
       <CustomSectionsAt position="map" sections={s.customSections} themeColor={themeColor} />
       <CustomSectionsAt position="social" sections={s.customSections} themeColor={themeColor} />
 
-      <footer className="bg-gray-900 text-gray-300 py-8 mt-10">
+      <SeoLinksFooter
+        restaurantCity={r.city}
+        restaurantCuisine={r.cuisineType}
+        restaurantSlug={r.slug}
+      />
+
+      <footer className="bg-gray-900 text-gray-300 py-8">
         <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
           <p>&copy; {new Date().getFullYear()} {r.name}</p>
           <p className="text-xs text-gray-500">
@@ -454,6 +461,63 @@ export default async function HostedSitePage({
         </div>
       </footer>
     </main>
+  );
+}
+
+/**
+ * Programmatic-SEO footer. Renders an "Areas we deliver to" block with
+ * dozens of <a href> links — one per (cuisine × city × delivery|takeout)
+ * combination. Visually de-emphasized (small grey text, multi-column) so
+ * it doesn't clutter the real UX, but search engines crawl every link
+ * and the restaurant ranks for "italian food delivery {nearby city}"
+ * style queries.
+ *
+ * Each link points at the same hosted page rendered with that specific
+ * keyword in the H1/title/meta (see /site/[slug]/[seoSlug]/page.tsx).
+ */
+function SeoLinksFooter({
+  restaurantCity,
+  restaurantCuisine,
+  restaurantSlug,
+}: {
+  restaurantCity: string | null;
+  restaurantCuisine: string | null;
+  restaurantSlug: string;
+}) {
+  const links = buildSeoLinks({
+    city: restaurantCity,
+    cuisineType: restaurantCuisine,
+  });
+  if (links.length === 0) return null;
+
+  // The bare `href` here is intentionally relative — when this page is
+  // served via the <slug>.feefreeordering.com subdomain, /italian-...
+  // resolves correctly through the proxy → /site/<slug>/italian-... .
+  // On a direct /site/<slug> URL (preview), Next's relative resolution
+  // does the same thing.
+  return (
+    <section
+      aria-label="Service areas"
+      className="bg-gray-950 border-t border-gray-800 py-6"
+    >
+      <div className="max-w-5xl mx-auto px-6">
+        <h2 className="text-[10px] uppercase tracking-widest text-gray-500 font-semibold mb-3">
+          Service areas
+        </h2>
+        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-1">
+          {links.map((l) => (
+            <li key={l.slug}>
+              <a
+                href={`/${l.slug}`}
+                className="text-[11px] text-gray-500 hover:text-gray-300 transition"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
 
