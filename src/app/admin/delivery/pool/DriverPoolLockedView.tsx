@@ -10,7 +10,7 @@ import { Truck, Lock, Sparkles, Check } from "lucide-react";
 export function DriverPoolLockedView() {
   return (
     <div className="max-w-3xl mx-auto p-4 sm:p-6">
-      <div className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl p-6 sm:p-8 shadow-lg">
+      <div className="bg-gradient-to-br from-blue-500 to-amber-600 text-white rounded-2xl p-6 sm:p-8 shadow-lg">
         <div className="flex items-center gap-2 mb-3">
           <Truck className="w-5 h-5" />
           <span className="text-sm font-bold uppercase tracking-wider opacity-90">Add-on</span>

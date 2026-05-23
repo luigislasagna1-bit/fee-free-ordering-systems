@@ -256,7 +256,7 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
                         <Link href={`/superadmin/restaurants/${r.id}`} className="font-semibold text-blue-600 hover:underline flex items-center flex-wrap">
                           {r.name}
                           {r.isTest && (
-                            <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-purple-100 text-purple-700">TEST</span>
+                            <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">TEST</span>
                           )}
                           {!r.isActive && (
                             <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-gray-200 text-gray-600">PAUSED</span>
@@ -274,7 +274,7 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
                       <td className="px-4 py-3">
                         {isPaid ? (
                           <span
-                            className="text-[10px] font-bold px-2 py-1 rounded-full bg-purple-100 text-purple-700"
+                            className="text-[10px] font-bold px-2 py-1 rounded-full bg-amber-100 text-amber-700"
                             title={r.paidAddOnNames.join(", ")}
                           >
                             PAID

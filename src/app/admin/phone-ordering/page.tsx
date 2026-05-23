@@ -41,13 +41,13 @@ export default async function PhoneOrderingPage() {
           &larr; Back to admin
         </Link>
         <div className="flex items-center gap-3 mt-2">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 text-white flex items-center justify-center shadow-md">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white flex items-center justify-center shadow-md">
             <Phone className="w-6 h-6" />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-2xl font-bold text-gray-900">Automated Phone Ordering</h1>
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full">
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
                 <Rocket className="w-3 h-3" />
                 Coming Soon
               </span>
@@ -60,7 +60,7 @@ export default async function PhoneOrderingPage() {
       </div>
 
       {/* ── Hero pitch ────────────────────────────────────────────── */}
-      <div className="rounded-2xl bg-gradient-to-br from-purple-500 via-indigo-600 to-blue-600 text-white p-6 sm:p-8 shadow-lg">
+      <div className="rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-blue-600 text-white p-6 sm:p-8 shadow-lg">
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider opacity-90 mb-2">
           <Sparkles className="w-4 h-4" />
           In active development
@@ -115,18 +115,18 @@ export default async function PhoneOrderingPage() {
       </div>
 
       {/* ── Status / next steps ───────────────────────────────────── */}
-      <div className="rounded-xl border border-purple-200 bg-purple-50 p-5">
-        <h3 className="font-bold text-purple-900 mb-2 flex items-center gap-2">
+      <div className="rounded-xl border border-amber-200 bg-amber-50 p-5">
+        <h3 className="font-bold text-amber-900 mb-2 flex items-center gap-2">
           <Rocket className="w-4 h-4" />
           Where this stands today
         </h3>
-        <p className="text-sm text-purple-900 leading-relaxed">
+        <p className="text-sm text-amber-900 leading-relaxed">
           We&apos;re heads-down building the foundation. The voice agent, the Twilio
           integration, the kitchen handoff — all in active development. We expect
           to roll this out to early-access restaurants soon after the main platform
           launches.
         </p>
-        <p className="text-sm text-purple-900 leading-relaxed mt-2">
+        <p className="text-sm text-amber-900 leading-relaxed mt-2">
           When it&apos;s ready you&apos;ll be able to subscribe to it from your
           billing page like any other add-on. Until then this page is just a heads-up
           that it&apos;s coming.
@@ -134,7 +134,7 @@ export default async function PhoneOrderingPage() {
         <div className="mt-4">
           <Link
             href="/admin/billing/add-ons"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-purple-700 hover:text-purple-900 transition"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-700 hover:text-amber-900 transition"
           >
             See the full add-on catalog
             <ArrowRight className="w-3.5 h-3.5" />
@@ -156,7 +156,7 @@ function FeatureCard({
 }) {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-5">
-      <div className="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center">
+      <div className="w-10 h-10 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center">
         {icon}
       </div>
       <h3 className="mt-3 font-semibold text-gray-900">{title}</h3>

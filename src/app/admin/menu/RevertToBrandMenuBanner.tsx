@@ -37,16 +37,16 @@ export function RevertToBrandMenuBanner({ brandName }: { brandName: string }) {
 
   return (
     <>
-      <div className="mb-4 rounded-xl bg-purple-50 border border-purple-200 p-4 flex items-center justify-between gap-4">
+      <div className="mb-4 rounded-xl bg-amber-50 border border-amber-200 p-4 flex items-center justify-between gap-4">
         <div className="flex items-start gap-3 min-w-0">
-          <div className="w-9 h-9 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center flex-shrink-0">
+          <div className="w-9 h-9 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0">
             <ArrowLeftCircle className="w-5 h-5" />
           </div>
           <div className="min-w-0">
-            <div className="font-semibold text-purple-900 text-sm">
+            <div className="font-semibold text-amber-900 text-sm">
               You&apos;re on a <strong>custom menu</strong> for this location
             </div>
-            <div className="text-xs text-purple-800 mt-0.5 leading-snug">
+            <div className="text-xs text-amber-800 mt-0.5 leading-snug">
               Inheriting from <strong>{brandName}</strong> is off — you can
               independently edit prices, items, and availability here. Want to
               go back to using {brandName}&apos;s master menu?
@@ -56,7 +56,7 @@ export function RevertToBrandMenuBanner({ brandName }: { brandName: string }) {
         <button
           type="button"
           onClick={() => setConfirming(true)}
-          className="flex-shrink-0 text-xs font-semibold text-purple-700 hover:text-purple-900 hover:underline px-3 py-1.5"
+          className="flex-shrink-0 text-xs font-semibold text-amber-700 hover:text-amber-900 hover:underline px-3 py-1.5"
         >
           Revert to brand menu
         </button>

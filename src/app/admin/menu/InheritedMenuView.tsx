@@ -68,7 +68,7 @@ export function InheritedMenuView({
   return (
     <div className="p-4 sm:p-6 max-w-5xl mx-auto">
       {/* Header banner */}
-      <div className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-2xl p-5 sm:p-6 mb-6 shadow-lg">
+      <div className="bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl p-5 sm:p-6 mb-6 shadow-lg">
         <div className="flex items-start gap-3 mb-3">
           <Layers className="w-6 h-6 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
@@ -97,7 +97,7 @@ export function InheritedMenuView({
           <button
             onClick={handleCustomize}
             disabled={customizing}
-            className="w-full sm:w-auto bg-white text-purple-700 hover:bg-purple-50 disabled:opacity-60 disabled:cursor-wait font-bold px-5 py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2"
+            className="w-full sm:w-auto bg-white text-amber-700 hover:bg-amber-50 disabled:opacity-60 disabled:cursor-wait font-bold px-5 py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2"
           >
             {customizing ? (
               <><Loader2 className="w-4 h-4 animate-spin" /> Copying menu…</>

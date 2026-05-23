@@ -55,7 +55,7 @@ export function RunSettlementButton() {
         type="button"
         onClick={run}
         disabled={running}
-        className="bg-purple-500 hover:bg-purple-600 disabled:opacity-50 text-white font-semibold px-4 py-2 rounded-lg text-sm shadow flex items-center gap-2"
+        className="bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white font-semibold px-4 py-2 rounded-lg text-sm shadow flex items-center gap-2"
       >
         {running ? (
           <><Loader2 className="w-4 h-4 animate-spin" /> Running…</>

@@ -222,7 +222,7 @@ export default async function SuperadminRestaurantDetail({
           value={formatCurrency(today._sum.total ?? 0)}
         />
         <Stat
-          icon={<Users className="w-4 h-4 text-purple-600" />}
+          icon={<Users className="w-4 h-4 text-amber-600" />}
           label="Customers (all-time)"
           value={restaurant._count.customers.toString()}
         />
@@ -552,7 +552,7 @@ function StatusBadge({ label, tone }: { label: string; tone: "emerald" | "amber"
     red:     "bg-red-100 text-red-700",
     gray:    "bg-gray-100 text-gray-700",
     blue:    "bg-blue-100 text-blue-700",
-    purple:  "bg-purple-100 text-purple-700",
+    purple:  "bg-amber-100 text-amber-700",
     orange:  "bg-emerald-100 text-emerald-700",
     yellow:  "bg-yellow-100 text-yellow-800",
   };

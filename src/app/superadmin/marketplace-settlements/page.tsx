@@ -46,7 +46,7 @@ export default async function SettlementsPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-purple-500" />
+            <Sparkles className="w-5 h-5 text-amber-500" />
             Marketplace settlements
           </h1>
           <p className="text-sm text-gray-500 mt-1">

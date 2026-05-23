@@ -20,15 +20,15 @@ export function MasterMenuBanner({
   if (inheritingCount <= 0) return null;
 
   return (
-    <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-3.5 mb-4 flex items-start gap-3">
-      <div className="w-8 h-8 rounded-lg bg-indigo-500 text-white flex items-center justify-center flex-shrink-0">
+    <div className="bg-gradient-to-r from-amber-50 to-amber-50 border border-amber-200 rounded-xl p-3.5 mb-4 flex items-start gap-3">
+      <div className="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center flex-shrink-0">
         <Layers className="w-4 h-4" />
       </div>
       <div className="flex-1 min-w-0 text-sm">
-        <p className="font-semibold text-indigo-900">
+        <p className="font-semibold text-amber-900">
           Master menu — {inheritingCount} of {totalChildCount} location{totalChildCount === 1 ? "" : "s"} inherit{inheritingCount === 1 ? "s" : ""} this menu
         </p>
-        <p className="text-indigo-700/85 mt-0.5 text-xs leading-snug">
+        <p className="text-amber-700/85 mt-0.5 text-xs leading-snug">
           Changes you make here appear on every inheriting location instantly. Locations with a custom menu (the
           {totalChildCount - inheritingCount > 0 ? ` ${totalChildCount - inheritingCount} that customized` : " ones that customize"}) are not affected.
         </p>

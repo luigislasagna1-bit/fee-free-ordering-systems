@@ -125,7 +125,7 @@ export default async function SuperadminBilling() {
             <div key={addOn.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
               <div className="flex items-center justify-between p-5 border-b border-gray-100">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-purple-500" />
+                  <Sparkles className="w-4 h-4 text-amber-500" />
                   <div>
                     <div className="font-bold text-gray-900 text-lg">{addOn.name}</div>
                     <div className="text-sm text-gray-500">{formatCurrency((addOn.monthlyPriceCents ?? 0) / 100)}/month</div>

@@ -149,7 +149,7 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
               key={a.id}
               className={`rounded-xl border bg-white p-5 ${
                 a.comingSoon && !active
-                  ? "border-purple-200 bg-gradient-to-br from-white to-purple-50/40"
+                  ? "border-amber-200 bg-gradient-to-br from-white to-amber-50/40"
                   : scheduled
                   ? "border-amber-300 ring-1 ring-amber-200"
                   : active
@@ -162,7 +162,7 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
                   <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="font-semibold text-gray-900">{a.name}</h3>
                     {a.comingSoon && !active && (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
                         <Rocket className="w-2.5 h-2.5" />
                         Coming Soon
                       </span>
@@ -183,7 +183,7 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
                   // Coming-soon card: don't show a price at all. The
                   // ROADMAP teaser format — restaurants see the value
                   // prop without us mis-selling vapor.
-                  <div className="text-sm text-purple-700 font-semibold">
+                  <div className="text-sm text-amber-700 font-semibold">
                     In development · pricing TBD
                   </div>
                 ) : (
@@ -298,7 +298,7 @@ export function AddOnsClient({ addOns }: { addOns: AddOnView[] }) {
                     <button
                       type="button"
                       disabled
-                      className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-purple-100 text-purple-600 cursor-not-allowed flex items-center justify-center gap-2"
+                      className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-amber-100 text-amber-600 cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       <Rocket className="w-3.5 h-3.5" />
                       In development

@@ -61,7 +61,7 @@ export function AdminDashboardClient({
         {[
           { label: t("totalOrders"), value: totalOrders, icon: ShoppingBag, color: "text-blue-500", bg: "bg-blue-50" },
           { label: t("revenue"), value: formatCurrency(totalRevenue), icon: DollarSign, color: "text-green-500", bg: "bg-green-50" },
-          { label: t("customers"), value: customerCount, icon: Users, color: "text-purple-500", bg: "bg-purple-50" },
+          { label: t("customers"), value: customerCount, icon: Users, color: "text-amber-500", bg: "bg-amber-50" },
           { label: t("pending"), value: pendingOrders, icon: Clock, color: "text-yellow-500", bg: "bg-yellow-50" },
         ].map((stat) => (
           <div key={stat.label} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">

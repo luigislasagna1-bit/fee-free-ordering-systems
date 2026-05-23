@@ -154,12 +154,12 @@ export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allP
             {[
               {
                 icon: Globe,
-                iconBg: "bg-purple-50",
-                iconColor: "text-purple-500",
+                iconBg: "bg-amber-50",
+                iconColor: "text-amber-500",
                 title: "Custom Domain",
                 desc: "Serve your ordering page at yourdomain.com instead of the default URL.",
                 badge: "Growth+ Plan",
-                badgeColor: "bg-purple-100 text-purple-700",
+                badgeColor: "bg-amber-100 text-amber-700",
               },
               {
                 icon: Code2,

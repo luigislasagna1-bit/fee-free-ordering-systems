@@ -167,11 +167,11 @@ function OrderRow({ order, selected, onClick, t, now }: {
     <div onClick={onClick} className={`px-4 py-3.5 transition-colors ${rowClass}`}>
       <div className="flex items-center gap-3">
         <div className={`flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center ${
-          isTest ? "bg-purple-500/20" :
+          isTest ? "bg-amber-500/20" :
           order.type === "delivery" ? "bg-blue-500/20" : "bg-emerald-500/20"
         }`}>
           {isTest
-            ? <FlaskConical className="w-4 h-4 text-purple-500" />
+            ? <FlaskConical className="w-4 h-4 text-amber-500" />
             : order.type === "delivery"
               ? <Truck className="w-4 h-4 text-blue-500" />
               : <ShoppingBag className="w-4 h-4 text-emerald-500" />}
@@ -185,11 +185,11 @@ function OrderRow({ order, selected, onClick, t, now }: {
               // Marketplace channel attribution — purple to differentiate
               // from direct widget/walk-up orders. Staff sees at a glance
               // which orders came from /marketplace discovery.
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-300">
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-300">
                 MARKETPLACE
               </span>
             )}
-            {isTest && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-500">TEST</span>}
+            {isTest && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-500">TEST</span>}
           </div>
           <div className={`text-sm ${t.textMuted} truncate`}>
             {order.customerName.replace("[TEST] ", "")}
@@ -815,7 +815,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           <button
             onClick={createTestOrder}
             disabled={testOrdering}
-            className="flex items-center gap-1.5 text-xs sm:text-sm px-3 py-1.5 sm:py-2 rounded-lg font-bold transition disabled:opacity-60 bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white shadow-sm"
+            className="flex items-center gap-1.5 text-xs sm:text-sm px-3 py-1.5 sm:py-2 rounded-lg font-bold transition disabled:opacity-60 bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white shadow-sm"
             title={tk("testOrder")}
             aria-label={tk("testOrder")}
           >

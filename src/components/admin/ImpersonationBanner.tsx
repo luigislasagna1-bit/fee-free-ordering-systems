@@ -48,14 +48,14 @@ export function ImpersonationBanner({
 
   const config: Record<Mode, { bg: string; badge: string; icon: React.ReactNode; back: string; message: string }> = {
     superadmin: {
-      bg: "bg-indigo-600",
+      bg: "bg-amber-600",
       badge: "Superadmin",
       icon: <Eye className="w-4 h-4" />,
       back: t("backToSuperadmin"),
       message: t("banner", { restaurant: restaurantName }),
     },
     reseller: {
-      bg: "bg-purple-600",
+      bg: "bg-amber-600",
       badge: "Reseller",
       icon: <Users className="w-4 h-4" />,
       back: "Back to Reseller portal",

@@ -68,7 +68,7 @@ export default async function ReportsPage() {
         {[
           { label: "Total Revenue", value: formatCurrency(totalRevenue), icon: DollarSign, color: "text-green-500", bg: "bg-green-50" },
           { label: "Completed Orders", value: completed.length, icon: ShoppingBag, color: "text-blue-500", bg: "bg-blue-50" },
-          { label: "Average Order", value: formatCurrency(avgOrder), icon: TrendingUp, color: "text-purple-500", bg: "bg-purple-50" },
+          { label: "Average Order", value: formatCurrency(avgOrder), icon: TrendingUp, color: "text-amber-500", bg: "bg-amber-50" },
           { label: "Total Orders", value: orders.length, icon: BarChart3, color: "text-emerald-500", bg: "bg-emerald-50" },
         ].map((s) => (
           <div key={s.label} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">

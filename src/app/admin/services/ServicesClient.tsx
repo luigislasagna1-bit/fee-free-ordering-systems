@@ -11,7 +11,7 @@ const SERVICE_DEFS = [
   { key: "pickup",       labelKey: "pickup",       icon: ShoppingBag,     color: "text-blue-600"   },
   { key: "delivery",     labelKey: "delivery",     icon: Truck,           color: "text-green-600"  },
   { key: "dineIn",       labelKey: "dineIn",       icon: UtensilsCrossed, color: "text-emerald-600" },
-  { key: "catering",     labelKey: "catering",     icon: PartyPopper,     color: "text-purple-600" },
+  { key: "catering",     labelKey: "catering",     icon: PartyPopper,     color: "text-amber-600" },
   { key: "takeOut",      labelKey: "takeOut",      icon: Package,         color: "text-yellow-600" },
   { key: "reservations", labelKey: "reservations", icon: CalendarDays,    color: "text-red-600"    },
 ] as const;

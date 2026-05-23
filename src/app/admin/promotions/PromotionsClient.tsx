@@ -94,7 +94,7 @@ function groupSummary(g: IG, cats: CatEntry[]): string {
 
 function stackingBadge(rule: string) {
   if (rule === "master")    return <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 flex items-center gap-1"><Star className="w-3 h-3" />Master</span>;
-  if (rule === "exclusive") return <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 flex items-center gap-1"><Crown className="w-3 h-3" />Exclusive</span>;
+  if (rule === "exclusive") return <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 flex items-center gap-1"><Crown className="w-3 h-3" />Exclusive</span>;
   return <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">Standard</span>;
 }
 
@@ -1190,7 +1190,7 @@ export function PromotionsClient({ promotions: initial, coupons: initialCoupons,
         <p className="text-sm text-blue-800">
           <span className="font-semibold">Stacking: </span>
           <span className="font-bold text-yellow-700">Master</span> deals apply alongside everything.{" "}
-          <span className="font-bold text-purple-700">Exclusive</span> deals block all others except Masters.{" "}
+          <span className="font-bold text-amber-700">Exclusive</span> deals block all others except Masters.{" "}
           <span className="font-bold text-gray-700">Standard</span> deals stack with each other.
           Coupon codes are customer-entered and never auto-applied.
         </p>

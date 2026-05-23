@@ -233,7 +233,7 @@ export default async function PartnersPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-4 bg-gradient-to-r from-emerald-500 to-red-500 text-white text-center">
+      <section className="py-20 px-4 bg-gradient-to-r from-emerald-500 to-emerald-700 text-white text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to start earning?</h2>
         <p className="text-emerald-100 text-lg mb-8 max-w-xl mx-auto">
           Application takes 2 minutes. Review takes 1–2 business days. After that, you're live.

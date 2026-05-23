@@ -95,7 +95,7 @@ export default async function SuperadminDashboard() {
         {[
           { label: "Total Restaurants", value: restaurants.length, icon: Store, color: "text-blue-500", bg: "bg-blue-50" },
           { label: "Monthly MRR", value: formatCurrency(mrrCents / 100), icon: DollarSign, color: "text-green-500", bg: "bg-green-50", hint: "from active add-ons" },
-          { label: "Orders Processed", value: totalOrders, icon: TrendingUp, color: "text-purple-500", bg: "bg-purple-50" },
+          { label: "Orders Processed", value: totalOrders, icon: TrendingUp, color: "text-amber-500", bg: "bg-amber-50" },
           { label: "Paid Restaurants", value: paidRestaurants, icon: Zap, color: "text-amber-500", bg: "bg-amber-50", hint: ">= 1 add-on" },
         ].map((s) => (
           <div key={s.label} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
@@ -197,7 +197,7 @@ export default async function SuperadminDashboard() {
                     <td className="px-4 py-3">
                       {isPaid ? (
                         <span
-                          className="text-[10px] font-bold px-2 py-1 rounded-full bg-purple-100 text-purple-700"
+                          className="text-[10px] font-bold px-2 py-1 rounded-full bg-amber-100 text-amber-700"
                           title={r.addOns.map((a) => a.addOn.name).join(", ")}
                         >
                           PAID · {addOnCount}

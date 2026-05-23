@@ -27,7 +27,7 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
       <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Building2 className="w-6 h-6 text-indigo-500" />
+            <Building2 className="w-6 h-6 text-amber-500" />
             {payload.brandName} — Chain Reports
           </h1>
           <p className="text-sm text-gray-500 mt-0.5">
@@ -41,7 +41,7 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
         {[
           { label: "Total Revenue", value: formatCurrency(payload.totals.revenue), icon: DollarSign, color: "text-green-500", bg: "bg-green-50" },
           { label: "Completed Orders", value: payload.totals.completedCount, icon: ShoppingBag, color: "text-blue-500", bg: "bg-blue-50" },
-          { label: "Average Order", value: formatCurrency(payload.totals.averageOrder), icon: TrendingUp, color: "text-purple-500", bg: "bg-purple-50" },
+          { label: "Average Order", value: formatCurrency(payload.totals.averageOrder), icon: TrendingUp, color: "text-amber-500", bg: "bg-amber-50" },
           { label: "Total Orders", value: payload.totals.orderCount, icon: BarChart3, color: "text-emerald-500", bg: "bg-emerald-50" },
         ].map((s) => (
           <div key={s.label} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
@@ -71,7 +71,7 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
                 </div>
                 <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-indigo-500 rounded-full transition-all"
+                    className="h-full bg-amber-500 rounded-full transition-all"
                     style={{ width: `${(d.revenue / maxRevenue) * 100}%` }}
                   />
                 </div>
@@ -139,7 +139,7 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
                       <div className="flex items-center gap-2">
                         <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden min-w-[60px] max-w-[120px]">
                           <div
-                            className="h-full bg-indigo-500"
+                            className="h-full bg-amber-500"
                             style={{ width: `${(loc.revenue / maxLocationRev) * 100}%` }}
                           />
                         </div>
