@@ -52,55 +52,74 @@ export default async function MarketplacePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* ─── Hero ─────────────────────────────────────────────────────── */}
-      <header className="bg-gradient-to-br from-emerald-600 to-slate-900 text-white">
-        <div className="max-w-6xl mx-auto px-4 py-10 sm:py-14">
-          <div className="flex items-center justify-between mb-3 gap-3">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5" />
-              <span className="text-sm font-semibold uppercase tracking-wider opacity-90">
-                Fee Free Marketplace
-              </span>
-            </div>
-            <Link
-              href={currentCustomer ? "/account" : "/account/login"}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur text-xs font-semibold transition"
-            >
-              <User className="w-3.5 h-3.5" />
-              {currentCustomer
-                ? (currentCustomer.name?.split(" ")[0] || "My account")
-                : "Sign in"}
-            </Link>
-          </div>
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
-            Order local. Keep more in their pockets.
-          </h1>
-          <p className="mt-3 max-w-2xl text-base sm:text-lg text-white/90">
-            Every restaurant here pays a flat monthly subscription — never a 30% commission. That means your
-            menu prices are the menu prices. No service fees. No surge. No upsells. Just food.
-          </p>
-
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl">
-            <div className="bg-white/10 backdrop-blur rounded-xl p-3.5 text-sm">
-              <div className="font-bold text-xl">$0</div>
-              <div className="text-white/85">in extra customer fees</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-3.5 text-sm">
-              <div className="font-bold text-xl">0%</div>
-              <div className="text-white/85">commission to restaurants</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-3.5 text-sm">
-              <div className="font-bold text-xl">100%</div>
-              <div className="text-white/85">independent local restaurants</div>
+      {/* ─── Slim branded header ───────────────────────────────────────
+          Compact UberEats-style top strip — get the customer LOOKING AT
+          RESTAURANTS as fast as possible (Luigi: "we're wasting a lot of
+          space on top of the main marketplace page, it should be focused
+          on attracting customers and orders. Move that info to the bottom
+          or a separate page.").
+          The gradient is now mono-emerald (light green on the right, per
+          the same UAT note) — the navy slate-900 we had on the right was
+          "too dark, make it more of the light green color." */}
+      <header className="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-400 text-white shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 py-4 sm:py-5 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <Sparkles className="w-5 h-5 flex-shrink-0" />
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-bold leading-tight truncate">Fee Free Marketplace</div>
+              <div className="text-[11px] sm:text-xs text-white/85 leading-tight truncate">
+                0% commission · Local restaurants · No surge pricing
+              </div>
             </div>
           </div>
+          <Link
+            href={currentCustomer ? "/account" : "/account/login"}
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur text-xs font-semibold transition"
+          >
+            <User className="w-3.5 h-3.5" />
+            {currentCustomer
+              ? (currentCustomer.name?.split(" ")[0] || "My account")
+              : "Sign in"}
+          </Link>
         </div>
       </header>
 
+      {/* Restaurants come first — same priority as UberEats/DoorDash. */}
       <MarketplaceGrid listings={listings} />
 
+      {/* ─── Why-this-marketplace pitch (moved from the top hero) ──────
+          Customer-facing trust block. Was at the top eating prime real
+          estate; now lives below the grid so first-page focus stays on
+          actual restaurants. */}
+      <section className="bg-white border-t border-gray-100 mt-12">
+        <div className="max-w-6xl mx-auto px-4 py-12 sm:py-16">
+          <div className="text-center mb-8 max-w-2xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 leading-tight">
+              Order local. Keep more in their pockets.
+            </h2>
+            <p className="text-gray-600 leading-relaxed">
+              Every restaurant here pays a flat monthly subscription — never a 30% commission. Menu prices are the menu prices. No service fees. No surge. No upsells. Just food.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 text-center">
+              <div className="font-bold text-3xl text-emerald-600">$0</div>
+              <div className="text-sm text-gray-600 mt-1">in extra customer fees</div>
+            </div>
+            <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 text-center">
+              <div className="font-bold text-3xl text-emerald-600">0%</div>
+              <div className="text-sm text-gray-600 mt-1">commission to restaurants</div>
+            </div>
+            <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 text-center">
+              <div className="font-bold text-3xl text-emerald-600">100%</div>
+              <div className="text-sm text-gray-600 mt-1">independent local restaurants</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ─── Footer pitch for restaurants ─────────────────────────────── */}
-      <footer className="bg-white border-t border-gray-100 mt-12">
+      <footer className="bg-gray-50 border-t border-gray-200">
         <div className="max-w-6xl mx-auto px-4 py-10 sm:py-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
             <h3 className="text-2xl font-bold text-gray-900 mb-2">
