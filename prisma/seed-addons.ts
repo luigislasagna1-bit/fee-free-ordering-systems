@@ -252,10 +252,10 @@ async function main() {
         displayOrder: a.displayOrder,
         enabledFeatures: JSON.stringify(a.enabledFeatures),
         requiredDependencies: JSON.stringify(a.requiredDependencies ?? []),
-        // comingSoon IS updated on re-seed so flipping a flag in this file
-        // and re-running the seed actually propagates the change. (Stripe
-        // price stays sticky via the omission above.)
-        comingSoon: a.comingSoon ?? false,
+        // comingSoon deliberately NOT updated on re-seed. Superadmin sets
+        // it in /superadmin/add-ons after launch — seed-time defaults
+        // would otherwise bulldoze that. (Same sticky-once-set principle
+        // we use for monthlyPriceCents and the Stripe sync fields.)
       },
       create: {
         slug: a.slug,
