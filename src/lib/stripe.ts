@@ -343,18 +343,67 @@ export async function createDestinationPaymentIntent(params: {
   };
 }
 
-/** Refund a Connect destination charge by PaymentIntent ID. */
+/**
+ * Refund a Connect destination charge by PaymentIntent ID.
+ *
+ * Tries the "ideal" path first: refund the customer + reverse the transfer
+ * to pull the connected account's share back + refund the platform's
+ * application fee. All balanced, no money owed in either direction.
+ *
+ * BUT: `reverse_transfer: true` requires the connected account to have
+ * enough Stripe balance to give the money back. If the restaurant just
+ * paid out to their bank, or issued several recent refunds, their Stripe
+ * balance can be too low and the whole refund call hard-fails — leaving
+ * the customer's money stuck. (We hit this 2026-05-22 with test order
+ * ORD-434887346.)
+ *
+ * On insufficient_funds, fall back to `reverse_transfer: false`: refund
+ * the customer immediately from PLATFORM balance, leave the original
+ * transfer in place. The platform is temporarily "out" the transfer
+ * amount, but the customer's refund is guaranteed (which is the
+ * non-negotiable part). We tag the returned object so the caller can
+ * record a pending transfer-reversal for later reconciliation when the
+ * connected account next has a positive balance.
+ */
 export async function refundDestinationPayment(params: {
   paymentIntentId: string;
   refundApplicationFee?: boolean;
   reason?: "duplicate" | "fraudulent" | "requested_by_customer";
-}) {
+}): Promise<{ id: string; status: string | null; reverseTransferDeferred: boolean }> {
   const stripe = await getStripe();
-  const refund = await stripe.refunds.create({
-    payment_intent: params.paymentIntentId,
-    refund_application_fee: params.refundApplicationFee ?? true,
-    reverse_transfer: true,
-    reason: params.reason,
-  });
-  return { id: refund.id, status: refund.status };
+  const refundFee = params.refundApplicationFee ?? true;
+  try {
+    const refund = await stripe.refunds.create({
+      payment_intent: params.paymentIntentId,
+      refund_application_fee: refundFee,
+      reverse_transfer: true,
+      reason: params.reason,
+    });
+    return { id: refund.id, status: refund.status, reverseTransferDeferred: false };
+  } catch (err) {
+    // Detect the specific Stripe error that means "connected account is
+    // broke". Any other error gets rethrown so the caller can mark the
+    // refund as failed and surface a real problem.
+    const msg = err instanceof Error ? err.message : String(err);
+    const isInsufficientFunds = /sufficient funds/i.test(msg);
+    if (!isInsufficientFunds) throw err;
+
+    console.warn(
+      `[refundDestinationPayment] connected account low balance, falling back to reverse_transfer:false for ${params.paymentIntentId}`,
+    );
+    // Retry without reverse_transfer. Customer gets their money back from
+    // platform balance; the connected account keeps the original transfer.
+    // refund_application_fee can stay true — the platform's $0.39 fee
+    // refund comes out of the platform's own balance, no connected account
+    // balance needed for that piece.
+    const refund = await stripe.refunds.create({
+      payment_intent: params.paymentIntentId,
+      refund_application_fee: refundFee,
+      // NOTE: reverse_transfer omitted (defaults to false on Standard
+      // destination charges when not specified). Platform is temporarily
+      // out the transfer amount until reconciliation.
+      reason: params.reason,
+    });
+    return { id: refund.id, status: refund.status, reverseTransferDeferred: true };
+  }
 }

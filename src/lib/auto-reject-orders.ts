@@ -115,11 +115,20 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
             where: { id: order.id },
             data: { refundStatus: "pending" },
           });
-          await refundDestinationPayment({
+          // refundDestinationPayment auto-falls back to reverse_transfer:false
+          // if the connected account is broke — see the helper's doc comment.
+          // Customer refund is guaranteed either way; only difference is who
+          // eats the transfer-side cost.
+          const refundResult = await refundDestinationPayment({
             paymentIntentId: order.paymentIntentId!,
             refundApplicationFee: true,
             reason: "requested_by_customer",
           });
+          if (refundResult.reverseTransferDeferred) {
+            console.warn(
+              `[auto-reject] order ${order.id} refunded with deferred transfer reversal (refundId=${refundResult.id}).`,
+            );
+          }
           await prisma.order.update({
             where: { id: order.id },
             data: { refundStatus: "refunded", paymentStatus: "refunded" },
@@ -131,9 +140,17 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
             orderId: order.id,
             reason: `refund failed: ${e instanceof Error ? e.message : String(e)}`,
           });
-          await prisma.order
-            .update({ where: { id: order.id }, data: { refundStatus: "failed" } })
-            .catch(() => {});
+          try {
+            await prisma.order.update({
+              where: { id: order.id },
+              data: { refundStatus: "failed" },
+            });
+          } catch (markErr) {
+            console.error(
+              `[auto-reject] failed to mark order ${order.id} refundStatus=failed`,
+              markErr,
+            );
+          }
         }
       } else if (collectedMoney && !stripeOk) {
         result.refundFailed += 1;

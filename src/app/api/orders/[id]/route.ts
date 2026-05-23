@@ -268,12 +268,26 @@ async function refundOrderAsync(orderId: string, paymentIntentId: string) {
 
     // Destination charge refund — also reverses the transfer to the connected
     // account and refunds the platform application fee so the restaurant
-    // doesn't eat the fee on a cancelled order.
-    await refundDestinationPayment({
+    // doesn't eat the fee on a cancelled order. If the connected account's
+    // Stripe balance is too low to absorb the reversal, the helper falls
+    // back to refunding the customer from PLATFORM balance and flags the
+    // reversal as deferred. The customer's refund happens either way —
+    // that's the only thing we can't compromise on.
+    const result = await refundDestinationPayment({
       paymentIntentId,
       refundApplicationFee: true,
       reason: "requested_by_customer",
     });
+    if (result.reverseTransferDeferred) {
+      // Connected account didn't have enough balance to reverse the transfer.
+      // Platform absorbed the refund; we now "owe" a transfer reversal back
+      // to the platform from the connected account. Log loudly so it shows
+      // up in monitoring; a future settlement cron can sweep up these owed
+      // reversals when the connected account next has a positive balance.
+      console.warn(
+        `[refund] order ${orderId} refunded with deferred transfer reversal (refundId=${result.id}). Connected account balance was insufficient; platform absorbed the reversal.`,
+      );
+    }
 
     // The actual paymentStatus → "refunded" transition is driven by the
     // charge.refunded webhook for idempotency; we mark refundStatus optimistically
