@@ -415,7 +415,14 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
                     if !didComplete {
                         didComplete = true
                         timeoutWork.cancel()
-                        conn.cancel()
+                        // ⚠️ Give the printer ~750ms to drain its
+                        // input buffer BEFORE we cancel the connection.
+                        // Star TSP143IIIW (and others) treat a
+                        // too-fast close as "incomplete transmission"
+                        // and silently discard the print job.
+                        self.printerQueue.asyncAfter(deadline: .now() + .milliseconds(750)) {
+                            conn.cancel()
+                        }
                         if let sendError = sendError {
                             completion(.failure(.ioError(sendError.debugDescription)))
                         } else {

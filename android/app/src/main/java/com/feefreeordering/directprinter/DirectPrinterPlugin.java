@@ -129,9 +129,26 @@ public class DirectPrinterPlugin extends Plugin {
                 sock = new Socket();
                 sock.connect(new InetSocketAddress(ip, port), timeoutMs);
                 sock.setSoTimeout(timeoutMs);
+                // Enable TCP_NODELAY so we don't sit in the kernel
+                // waiting for Nagle to coalesce small writes. Receipt
+                // payloads are <2KB; we want them on the wire ASAP.
+                try { sock.setTcpNoDelay(true); } catch (Exception ignore) {}
                 OutputStream out = sock.getOutputStream();
                 out.write(payload);
                 out.flush();
+                // ⚠️ Critical: give the printer time to drain its
+                // input buffer BEFORE we close the socket. Some
+                // printers (Star TSP143IIIW among them) treat a
+                // socket-close-too-soon as "incomplete transmission"
+                // and silently discard the bytes. 750ms is comfortably
+                // longer than any printer's internal processing.
+                try { Thread.sleep(750); } catch (InterruptedException ignore) {}
+                // Half-close the output side cleanly before full close
+                // so the printer's TCP stack sees the FIN and finishes
+                // its read loop, vs an abrupt RST that some firmware
+                // interprets as a transmission error.
+                try { sock.shutdownOutput(); } catch (Exception ignore) {}
+                try { Thread.sleep(250); } catch (InterruptedException ignore) {}
                 Log.i(TAG, "Printed " + payload.length + " bytes to " + ip + ":" + port);
                 JSObject ret = new JSObject();
                 ret.put("ok", true);
