@@ -755,7 +755,30 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
   // Tab data — Orders = permanent history (all statuses), In Progress = operational, Complete = done
   const ordersTabItems = orders.filter(o => !clearedOrders.has(o.id));
-  const inProgressItems = orders.filter(o => IN_PROGRESS_STATUSES.includes(o.status));
+  // In-progress tab. In Simple mode (GloriaFood-style) we also apply a
+  // date filter so the tab doesn't accumulate orders forever — since
+  // simple-mode orders never transition out of "accepted" except via
+  // the daily auto-complete cron, without this filter the In Progress
+  // tab would grow indefinitely between cron runs. The filter shows:
+  //   - orders created today (regardless of scheduledFor)
+  //   - orders scheduled for today or tomorrow
+  // Tracking mode keeps the full unfiltered list because the kitchen
+  // explicitly moves orders out via the state buttons.
+  const inProgressItems = (() => {
+    const base = orders.filter(o => IN_PROGRESS_STATUSES.includes(o.status));
+    if (workflowMode !== "simple") return base;
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const dayAfterTomorrow = new Date(todayStart);
+    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+    return base.filter(o => {
+      const created = o.createdAt ? new Date(o.createdAt) : null;
+      const scheduled = (o as any).scheduledFor ? new Date((o as any).scheduledFor) : null;
+      if (created && created >= todayStart) return true;
+      if (scheduled && scheduled >= todayStart && scheduled < dayAfterTomorrow) return true;
+      return false;
+    });
+  })();
   const completeItems = orders.filter(o => COMPLETE_STATUSES.includes(o.status) && !clearedComplete.has(o.id));
 
   const tabOrders: Order[] =
