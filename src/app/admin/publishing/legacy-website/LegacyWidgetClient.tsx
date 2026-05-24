@@ -207,21 +207,34 @@ export function LegacyWidgetClient({
               />
             </div>
             {position === "inline" && (
-              <div className="mt-3">
-                <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                  Target element (CSS selector)
-                </label>
-                <input
-                  type="text"
-                  value={customSelector}
-                  onChange={(e) => setCustomSelector(e.target.value)}
-                  placeholder="#order-button"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
-                />
-                <p className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                  Add an empty <code className="bg-gray-100 px-1 rounded">&lt;div id=&quot;order-button&quot;&gt;&lt;/div&gt;</code> wherever
-                  you want the button to appear. The widget will fill it in.
-                </p>
+              <div className="mt-3 space-y-3">
+                <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900 leading-relaxed">
+                  <p className="font-bold mb-1">⚠️ Inline mode requires a placeholder element</p>
+                  <p>
+                    For inline mode to work, your website needs an empty HTML element with a matching ID
+                    (e.g. <code className="bg-white/70 px-1 rounded">&lt;div id=&quot;order-button&quot;&gt;&lt;/div&gt;</code>)
+                    placed exactly where you want the button to appear.
+                  </p>
+                  <p className="mt-2">
+                    <strong>If you&apos;re on Wix, Squarespace, or another no-code builder, this is usually
+                    hard or impossible.</strong> Those editors don&apos;t expose custom IDs. <strong>Use one of the
+                    Floating positions instead</strong> — they always work and you can pick any corner. If
+                    your inline target isn&apos;t found, the widget auto-falls-back to floating bottom-right
+                    so customers can still order.
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                    Target element (CSS selector)
+                  </label>
+                  <input
+                    type="text"
+                    value={customSelector}
+                    onChange={(e) => setCustomSelector(e.target.value)}
+                    placeholder="#order-button"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
+                  />
+                </div>
               </div>
             )}
           </div>

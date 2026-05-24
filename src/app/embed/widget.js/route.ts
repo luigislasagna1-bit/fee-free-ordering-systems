@@ -185,7 +185,16 @@ const SCRIPT = `(function(){
       "position:fixed !important",
       "z-index:2147483646 !important"
     ]).concat(positionStyles(position));
-    btn.style.cssText = (targetSel ? btnBase : btnFloating).join(";");
+    // Defer the cssText assignment to mount() — we don't know yet
+    // whether the inline target selector will resolve to a real element.
+    // If it doesn't (common on Wix, where adding a custom-ID element is
+    // not exposed in the editor), we fall back to floating styles so
+    // the button is still visible somewhere instead of rendering as an
+    // unpositioned invisible orphan at the bottom of the page.
+    // Helper used by both inline-mount and floating-mount branches.
+    function applyButtonStyles(useFloating) {
+      btn.style.cssText = (useFloating ? btnFloating : btnBase).join(";");
+    }
     btn.addEventListener("mouseenter", function(){
       btn.style.transform = "translateY(-2px)";
       btn.style.boxShadow = "0 10px 28px rgba(0,0,0,0.28)";
@@ -302,10 +311,26 @@ const SCRIPT = `(function(){
       if (targetSel) {
         try {
           var el = document.querySelector(targetSel);
-          if (el) { el.appendChild(btn); document.body.appendChild(overlay); return; }
+          if (el) {
+            applyButtonStyles(false); // inline styles (no fixed position)
+            el.appendChild(btn);
+            document.body.appendChild(overlay);
+            return;
+          }
+          // Selector valid but element doesn't exist on this page. This
+          // is the Wix gotcha — the owner picked "Inline" but never
+          // created the placeholder div (Wix doesn't expose custom IDs
+          // in the editor). Falling through to floating means the button
+          // is still visible somewhere instead of vanishing entirely.
+          console.warn(
+            "[FeeFreeOrdering] inline target '" + targetSel +
+            "' not found on this page. Falling back to floating bottom-right. " +
+            "Add an empty element with that ID, or switch to Floating in your admin."
+          );
         } catch (e) { /* invalid selector — fall through to floating */ }
       }
       // Branch 2 + 3: floating. Try popover first.
+      applyButtonStyles(true);
       var popoverWorks = (function(){
         try {
           var probe = document.createElement("div");
