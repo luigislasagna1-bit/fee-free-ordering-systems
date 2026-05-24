@@ -131,7 +131,11 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
     setDiscovering(true);
     setDiscovered([]);
     try {
-      const res = await nativeDiscover({ durationMs: 4000 });
+      // 7-second combined scan: mDNS + subnet scan run in parallel
+      // inside the native plugin. Subnet scan probes every IP on the
+      // local /24 for port 9100 — that's how we catch printers that
+      // don't advertise via mDNS (Star TSP143IIIW being one).
+      const res = await nativeDiscover({ durationMs: 7000 });
       setDiscovered(res.printers ?? []);
       setDiscoveredAtLeastOnce(true);
       // If no printers found, auto-show the manual entry box so the

@@ -1,8 +1,10 @@
 package com.feefreeordering.directprinter;
 
 import android.content.Context;
+import android.net.DhcpInfo;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,6 +27,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -232,126 +238,225 @@ public class DirectPrinterPlugin extends Plugin {
      */
     @PluginMethod
     public void discover(PluginCall call) {
-        final int discoveryDurationMs = Math.max(1000, Math.min(10000, call.getInt("durationMs", 4000)));
+        final int discoveryDurationMs = Math.max(2000, Math.min(15000, call.getInt("durationMs", 6000)));
         final Context ctx = getContext();
-        final NsdManager nsd = (NsdManager) ctx.getSystemService(Context.NSD_SERVICE);
-        if (nsd == null) {
-            call.reject("Network Service Discovery unavailable", "nsd_unavailable");
-            return;
-        }
 
-        final String[] serviceTypes = new String[] {
-            "_pdl-datastream._tcp.",
-            "_ipp._tcp.",
-            "_printer._tcp.",
-        };
-
-        // Thread-safe accumulator of found printers (de-duplicated by IP).
+        // Accumulator shared by mDNS + subnet scan, de-duped by IP.
         final Map<String, JSObject> byIp = new HashMap<>();
-        final List<NsdManager.DiscoveryListener> activeListeners = new ArrayList<>();
-        final AtomicInteger pendingResolves = new AtomicInteger(0);
-        final boolean[] finalized = new boolean[] { false };
 
-        final Runnable finishOnce = () -> {
-            synchronized (finalized) {
-                if (finalized[0]) return;
-                finalized[0] = true;
-                // Stop all active discovery listeners.
-                for (NsdManager.DiscoveryListener l : activeListeners) {
+        // Run both discovery methods in parallel and merge results.
+        // This is what makes auto-discovery actually reliable across
+        // diverse printer brands + Wi-Fi setups — mDNS alone misses
+        // printers that don't advertise (or advertise on uncommon
+        // service types), and subnet scan alone misses printers that
+        // happen to listen on a non-default port.
+        new Thread(() -> {
+            // Phase 1: kick off mDNS discovery (async)
+            MulticastLockHolder lockHolder = acquireMulticastLock(ctx);
+            List<NsdManager.DiscoveryListener> listeners = startMdnsDiscovery(ctx, byIp);
+
+            // Phase 2: subnet scan (blocking, runs while mDNS is still
+            // listening on the side). Probes every IP in the local /24
+            // on TCP port 9100 with a 400ms timeout each, 32 threads.
+            // Anything that accepts the connection is almost certainly
+            // a print server.
+            try {
+                subnetScan(ctx, byIp, 400, 32);
+            } catch (Exception e) {
+                Log.w(TAG, "subnet scan failed", e);
+            }
+
+            // Phase 3: wait for any straggling mDNS resolves
+            try { Thread.sleep(Math.max(0, discoveryDurationMs - 3500)); } catch (InterruptedException ignore) {}
+
+            // Phase 4: stop mDNS + multicast lock
+            NsdManager nsd = (NsdManager) ctx.getSystemService(Context.NSD_SERVICE);
+            if (nsd != null) {
+                for (NsdManager.DiscoveryListener l : listeners) {
                     try { nsd.stopServiceDiscovery(l); } catch (Exception ignore) {}
                 }
-                JSArray arr = new JSArray();
-                synchronized (byIp) {
-                    for (JSObject p : byIp.values()) arr.put(p);
-                }
-                JSObject ret = new JSObject();
-                ret.put("ok", true);
-                ret.put("printers", arr);
-                call.resolve(ret);
             }
-        };
+            if (lockHolder != null) lockHolder.release();
 
-        // Start a discovery listener per service type.
+            // Phase 5: return merged results
+            JSArray arr = new JSArray();
+            synchronized (byIp) {
+                for (JSObject p : byIp.values()) arr.put(p);
+            }
+            JSObject ret = new JSObject();
+            ret.put("ok", true);
+            ret.put("printers", arr);
+            call.resolve(ret);
+        }).start();
+    }
+
+    /**
+     * Subnet scan. The reliable fallback when mDNS misses a printer.
+     * Get the device's IPv4 + netmask via WifiManager. Iterate every
+     * address in the /24 (or smaller mask if the subnet is unusual),
+     * try TCP-connect on port 9100 with a short timeout. Anything
+     * that accepts is treated as a printer.
+     *
+     * Parallel: thread pool of `threads`. Default 32. A /24 subnet
+     * (254 hosts) finishes in ~2.5 seconds with this. Larger subnets
+     * are capped at /22 (1022 hosts, ~8s) — beyond that we'd take
+     * too long.
+     */
+    private void subnetScan(Context ctx, Map<String, JSObject> byIp, int timeoutMs, int threads) {
+        WifiManager wifi = (WifiManager) ctx.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if (wifi == null) return;
+        DhcpInfo dhcp = wifi.getDhcpInfo();
+        if (dhcp == null || dhcp.ipAddress == 0) return;
+
+        int ip = dhcp.ipAddress;
+        int mask = dhcp.netmask == 0 ? 0xFFFFFF00 : dhcp.netmask; // assume /24 if not reported
+        // ipAddress is little-endian; convert.
+        int localIp = Integer.reverseBytes(ip);
+        int netmask = Integer.reverseBytes(mask);
+
+        int network = localIp & netmask;
+        int broadcast = network | ~netmask;
+        int hostCount = broadcast - network - 1;
+        if (hostCount <= 0) return;
+        // Cap at /22 (~1022 hosts) so a misconfigured / unusual
+        // network can't make us scan forever.
+        if (hostCount > 1022) {
+            // Trim to /24 around the device's own IP — safer assumption
+            network = localIp & 0xFFFFFF00;
+            broadcast = network | 0xFF;
+            hostCount = 254;
+        }
+
+        ExecutorService pool = Executors.newFixedThreadPool(threads);
+        final int startIp = network + 1;
+        final int endIp = broadcast - 1;
+        final CountDownLatch latch = new CountDownLatch(endIp - startIp + 1);
+
+        for (int testIp = startIp; testIp <= endIp; testIp++) {
+            final String addr = intToIp(testIp);
+            pool.submit(() -> {
+                try (Socket s = new Socket()) {
+                    s.connect(new InetSocketAddress(addr, 9100), timeoutMs);
+                    // Got a TCP handshake on port 9100 → almost
+                    // certainly a print server. Add it.
+                    JSObject p = new JSObject();
+                    p.put("name", "Printer at " + addr);
+                    p.put("ip", addr);
+                    p.put("port", 9100);
+                    p.put("type", "subnet-scan");
+                    synchronized (byIp) {
+                        // Don't overwrite if mDNS already discovered
+                        // it with a friendlier name.
+                        if (!byIp.containsKey(addr)) byIp.put(addr, p);
+                    }
+                } catch (IOException ignore) {
+                    // Not a printer, or not reachable, or filtered.
+                    // Expected for the vast majority of subnet IPs.
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+        try {
+            latch.await(timeoutMs * 3L, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException ignore) {}
+        pool.shutdownNow();
+    }
+
+    /** Convert a 32-bit int IP (big-endian) to "a.b.c.d" string. */
+    private String intToIp(int ip) {
+        return ((ip >> 24) & 0xff) + "." +
+               ((ip >> 16) & 0xff) + "." +
+               ((ip >> 8) & 0xff) + "." +
+               (ip & 0xff);
+    }
+
+    /** Holder so the caller can release the multicast lock at the end. */
+    private static class MulticastLockHolder {
+        WifiManager.MulticastLock lock;
+        MulticastLockHolder(WifiManager.MulticastLock l) { this.lock = l; }
+        void release() {
+            try { if (lock != null && lock.isHeld()) lock.release(); } catch (Exception ignore) {}
+        }
+    }
+
+    /**
+     * Acquire a WiFi multicast lock for the duration of the scan.
+     * Without this, NsdManager's mDNS broadcasts are dropped by the
+     * Android kernel on most builds — multicast is filtered to save
+     * battery. The lock costs ~10mW for the few seconds we hold it.
+     */
+    private MulticastLockHolder acquireMulticastLock(Context ctx) {
+        try {
+            WifiManager wifi = (WifiManager) ctx.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            if (wifi == null) return null;
+            WifiManager.MulticastLock lock = wifi.createMulticastLock("ffo-printer-discovery");
+            lock.setReferenceCounted(false);
+            lock.acquire();
+            return new MulticastLockHolder(lock);
+        } catch (Exception e) {
+            Log.w(TAG, "multicast lock failed", e);
+            return null;
+        }
+    }
+
+    /**
+     * Start mDNS discovery across many service types. Star printers
+     * tend to advertise on _http._tcp + _printer._tcp; Epson on
+     * _pdl-datastream._tcp + _ipp._tcp; older models sometimes on
+     * _lpd._tcp. Scan ALL of them.
+     */
+    private List<NsdManager.DiscoveryListener> startMdnsDiscovery(Context ctx, Map<String, JSObject> byIp) {
+        List<NsdManager.DiscoveryListener> active = new ArrayList<>();
+        NsdManager nsd = (NsdManager) ctx.getSystemService(Context.NSD_SERVICE);
+        if (nsd == null) return active;
+
+        String[] serviceTypes = new String[] {
+            "_pdl-datastream._tcp.", // RAW print (Star, Epson, Bixolon)
+            "_ipp._tcp.",             // IPP (most modern printers)
+            "_ipps._tcp.",            // Secure IPP
+            "_printer._tcp.",         // LPR/LPD
+            "_lpd._tcp.",             // Some Star advertise on this
+        };
         for (final String type : serviceTypes) {
             NsdManager.DiscoveryListener disc = new NsdManager.DiscoveryListener() {
-                @Override public void onStartDiscoveryFailed(String serviceType, int errorCode) {
-                    Log.w(TAG, "discovery start failed for " + serviceType + " code=" + errorCode);
-                }
-                @Override public void onStopDiscoveryFailed(String serviceType, int errorCode) { /* ignore */ }
-                @Override public void onDiscoveryStarted(String serviceType) { /* noop */ }
-                @Override public void onDiscoveryStopped(String serviceType) { /* noop */ }
+                @Override public void onStartDiscoveryFailed(String serviceType, int errorCode) {}
+                @Override public void onStopDiscoveryFailed(String serviceType, int errorCode) {}
+                @Override public void onDiscoveryStarted(String serviceType) {}
+                @Override public void onDiscoveryStopped(String serviceType) {}
                 @Override public void onServiceFound(NsdServiceInfo info) {
-                    pendingResolves.incrementAndGet();
                     NsdManager.ResolveListener rl = new NsdManager.ResolveListener() {
-                        @Override public void onResolveFailed(NsdServiceInfo serviceInfo, int errorCode) {
-                            pendingResolves.decrementAndGet();
-                            Log.w(TAG, "resolve failed " + serviceInfo.getServiceName() + " err=" + errorCode);
-                        }
+                        @Override public void onResolveFailed(NsdServiceInfo serviceInfo, int errorCode) {}
                         @Override public void onServiceResolved(NsdServiceInfo serviceInfo) {
                             try {
                                 InetAddress host = serviceInfo.getHost();
-                                if (host == null) {
-                                    pendingResolves.decrementAndGet();
-                                    return;
-                                }
+                                if (host == null) return;
                                 String ip = host.getHostAddress();
-                                if (ip == null || ip.isEmpty()) {
-                                    pendingResolves.decrementAndGet();
-                                    return;
-                                }
-                                // For ESC/POS we always want port 9100
-                                // (the universal "RAW print" port).
-                                // Some printers advertise other ports
-                                // for IPP — overriding to 9100 here is
-                                // the consistent thing to do since the
-                                // print() method also uses 9100.
-                                int port = 9100;
+                                if (ip == null || ip.isEmpty()) return;
                                 JSObject p = new JSObject();
                                 p.put("name", serviceInfo.getServiceName());
                                 p.put("ip", ip);
-                                p.put("port", port);
+                                p.put("port", 9100); // force RAW print port
                                 p.put("type", type);
                                 synchronized (byIp) {
-                                    // Don't overwrite an existing entry that
-                                    // already got resolved from a different
-                                    // service type (e.g. _pdl-datastream's
-                                    // name is usually more printer-y).
-                                    if (!byIp.containsKey(ip)) byIp.put(ip, p);
+                                    // mDNS gives us a friendlier name —
+                                    // overwrite the subnet-scan placeholder.
+                                    byIp.put(ip, p);
                                 }
-                            } catch (Exception e) {
-                                Log.w(TAG, "resolve handler threw", e);
-                            } finally {
-                                pendingResolves.decrementAndGet();
-                            }
+                            } catch (Exception ignore) {}
                         }
                     };
-                    try {
-                        nsd.resolveService(info, rl);
-                    } catch (Exception e) {
-                        pendingResolves.decrementAndGet();
-                        Log.w(TAG, "resolveService threw", e);
-                    }
+                    try { nsd.resolveService(info, rl); } catch (Exception ignore) {}
                 }
-                @Override public void onServiceLost(NsdServiceInfo info) { /* noop */ }
+                @Override public void onServiceLost(NsdServiceInfo info) {}
             };
-            activeListeners.add(disc);
             try {
                 nsd.discoverServices(type, NsdManager.PROTOCOL_DNS_SD, disc);
+                active.add(disc);
             } catch (Exception e) {
-                Log.w(TAG, "discoverServices threw for " + type, e);
+                Log.w(TAG, "discoverServices failed for " + type, e);
             }
         }
-
-        // Time-box the discovery. After durationMs, stop discovery and
-        // wait a brief moment for in-flight resolves to finish, then
-        // return whatever we have.
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            // Stop discovery first so no NEW services arrive after this
-            // point — then give resolves up to 1 more second to complete.
-            for (NsdManager.DiscoveryListener l : activeListeners) {
-                try { nsd.stopServiceDiscovery(l); } catch (Exception ignore) {}
-            }
-            new Handler(Looper.getMainLooper()).postDelayed(finishOnce, 1000);
-        }, discoveryDurationMs);
+        return active;
     }
 }

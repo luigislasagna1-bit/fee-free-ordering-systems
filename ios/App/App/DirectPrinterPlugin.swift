@@ -62,16 +62,25 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     /// iOS requires NSLocalNetworkUsageDescription + NSBonjourServices
     /// in Info.plist — both already declared.
     @objc func discover(_ call: CAPPluginCall) {
-        let durationMs = call.getInt("durationMs") ?? 4000
-        let clampedMs = max(1000, min(10000, durationMs))
+        let durationMs = call.getInt("durationMs") ?? 6000
+        let clampedMs = max(2000, min(15000, durationMs))
 
-        // Map IP → printer dict, de-duping in case the same printer
-        // shows up across multiple service types.
+        // Shared accumulator (de-duped by IP) used by both mDNS and
+        // subnet scan. mDNS alone misses printers that don't advertise
+        // (or advertise on uncommon service types) — Star TSP143IIIW
+        // is a known offender. Subnet scan picks up any device that
+        // accepts a TCP connection on port 9100 = print server.
         var byIp: [String: [String: Any]] = [:]
         let lock = NSLock()
         var didComplete = false
 
-        let serviceTypes = ["_pdl-datastream._tcp", "_ipp._tcp", "_printer._tcp"]
+        let serviceTypes = [
+            "_pdl-datastream._tcp", // RAW print (Star, Epson, Bixolon)
+            "_ipp._tcp",             // IPP (most modern printers)
+            "_ipps._tcp",            // Secure IPP
+            "_printer._tcp",         // LPR/LPD
+            "_lpd._tcp",             // Some Star advertise on this
+        ]
         var browsers: [NWBrowser] = []
 
         let finish = {
@@ -90,16 +99,13 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
             ])
         }
 
+        // Start all mDNS browsers in parallel.
         for type in serviceTypes {
             let descriptor = NWBrowser.Descriptor.bonjour(type: type, domain: nil)
             let browser = NWBrowser(for: descriptor, using: .tcp)
             browser.browseResultsChangedHandler = { results, _ in
                 for result in results {
                     if case let .service(name, _, _, _) = result.endpoint {
-                        // Resolve the service via a one-shot connection
-                        // to learn its IP. NWBrowser gives us the
-                        // service name + endpoint metadata but not the
-                        // raw IP until we open a connection.
                         let conn = NWConnection(to: result.endpoint, using: .tcp)
                         conn.stateUpdateHandler = { state in
                             if case .ready = state {
@@ -107,25 +113,21 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
                                    case let .hostPort(host, _) = remote {
                                     let ip: String
                                     switch host {
-                                    case .ipv4(let addr):
-                                        ip = "\(addr)"
-                                    case .ipv6(let addr):
-                                        ip = "\(addr)"
-                                    case .name(let n, _):
-                                        ip = n
-                                    @unknown default:
-                                        ip = ""
+                                    case .ipv4(let addr): ip = "\(addr)"
+                                    case .ipv6(let addr): ip = "\(addr)"
+                                    case .name(let n, _): ip = n
+                                    @unknown default: ip = ""
                                     }
                                     if !ip.isEmpty {
                                         lock.lock()
-                                        if byIp[ip] == nil {
-                                            byIp[ip] = [
-                                                "name": name,
-                                                "ip": ip,
-                                                "port": 9100, // always RAW print port for ESC/POS
-                                                "type": type,
-                                            ]
-                                        }
+                                        // mDNS name overwrites subnet-scan
+                                        // placeholder because it's friendlier
+                                        byIp[ip] = [
+                                            "name": name,
+                                            "ip": ip,
+                                            "port": 9100,
+                                            "type": type,
+                                        ]
                                         lock.unlock()
                                     }
                                 }
@@ -142,12 +144,150 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
             browser.start(queue: printerQueue)
         }
 
-        // Time-box the discovery.
+        // Kick off subnet scan in parallel with mDNS — same accumulator,
+        // de-duped by IP. Most printers will be found by both methods;
+        // the merge is harmless.
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.subnetScan(byIp: &byIp, lock: lock, timeoutMs: 400)
+        }
+
+        // Time-box the whole discovery.
         printerQueue.asyncAfter(deadline: .now() + .milliseconds(clampedMs)) {
-            // Give in-flight resolves a moment to land, then finish.
-            self.printerQueue.asyncAfter(deadline: .now() + .seconds(1)) {
-                finish()
+            finish()
+        }
+    }
+
+    /// Subnet scan — probe every IP in the device's local /24 subnet
+    /// for port 9100 responders. Parallel via DispatchGroup. ~3 seconds
+    /// for a typical /24 with concurrent connections.
+    ///
+    /// IMPORTANT: byIp is passed inout but accessed under `lock`. Swift
+    /// inout doesn't synchronize — the lock does.
+    private func subnetScan(byIp: inout [String: [String: Any]], lock: NSLock, timeoutMs: Int) {
+        // Get the device's IPv4 address on the active Wi-Fi interface
+        // via getifaddrs. Network.framework doesn't expose the local
+        // IP directly so we use the BSD socket helpers.
+        guard let localIp = getLocalIPv4() else { return }
+        let parts = localIp.split(separator: ".")
+        guard parts.count == 4 else { return }
+        let prefix = "\(parts[0]).\(parts[1]).\(parts[2])."
+
+        let group = DispatchGroup()
+        let scanQueue = DispatchQueue(label: "ffo.subnet-scan", attributes: .concurrent)
+        let semaphore = DispatchSemaphore(value: 32) // cap concurrent connects
+
+        for i in 1...254 {
+            let target = "\(prefix)\(i)"
+            group.enter()
+            scanQueue.async {
+                semaphore.wait()
+                defer {
+                    semaphore.signal()
+                    group.leave()
+                }
+                if self.tcpProbe(host: target, port: 9100, timeoutMs: timeoutMs) {
+                    lock.lock()
+                    if byIp[target] == nil {
+                        byIp[target] = [
+                            "name": "Printer at \(target)",
+                            "ip": target,
+                            "port": 9100,
+                            "type": "subnet-scan",
+                        ]
+                    }
+                    lock.unlock()
+                }
             }
+        }
+        group.wait()
+    }
+
+    /// Synchronous TCP probe — returns true if the target accepts a
+    /// connection on the given port within the timeout. Uses
+    /// CFSocket-style POSIX since Network.framework's API is
+    /// callback-only and we want to wait inline.
+    private func tcpProbe(host: String, port: UInt16, timeoutMs: Int) -> Bool {
+        var hints = addrinfo(
+            ai_flags: AI_NUMERICHOST,
+            ai_family: AF_INET,
+            ai_socktype: SOCK_STREAM,
+            ai_protocol: IPPROTO_TCP,
+            ai_addrlen: 0,
+            ai_canonname: nil,
+            ai_addr: nil,
+            ai_next: nil
+        )
+        var res: UnsafeMutablePointer<addrinfo>? = nil
+        let portStr = "\(port)"
+        guard getaddrinfo(host, portStr, &hints, &res) == 0, let info = res else { return false }
+        defer { freeaddrinfo(res) }
+
+        let sock = socket(info.pointee.ai_family, info.pointee.ai_socktype, info.pointee.ai_protocol)
+        if sock < 0 { return false }
+        defer { close(sock) }
+
+        // Non-blocking + select() for the timeout.
+        let flags = fcntl(sock, F_GETFL, 0)
+        _ = fcntl(sock, F_SETFL, flags | O_NONBLOCK)
+        let connectRet = connect(sock, info.pointee.ai_addr, info.pointee.ai_addrlen)
+        if connectRet == 0 { return true } // immediate success (unlikely)
+        if errno != EINPROGRESS { return false }
+
+        var writeSet = fd_set()
+        fdZero(&writeSet); fdSet(sock, &writeSet)
+        var tv = timeval(tv_sec: __darwin_time_t(timeoutMs / 1000), tv_usec: __darwin_suseconds_t((timeoutMs % 1000) * 1000))
+        let ready = select(sock + 1, nil, &writeSet, nil, &tv)
+        if ready <= 0 { return false }
+        var soError: Int32 = 0
+        var len = socklen_t(MemoryLayout<Int32>.size)
+        let optRet = getsockopt(sock, SOL_SOCKET, SO_ERROR, &soError, &len)
+        return optRet == 0 && soError == 0
+    }
+
+    /// Find the device's IPv4 address on the active Wi-Fi interface
+    /// ("en0" on iOS). Returns nil if not on Wi-Fi or no v4 address.
+    private func getLocalIPv4() -> String? {
+        var addr: UnsafeMutablePointer<ifaddrs>? = nil
+        guard getifaddrs(&addr) == 0, let firstAddr = addr else { return nil }
+        defer { freeifaddrs(addr) }
+        var ptr: UnsafeMutablePointer<ifaddrs>? = firstAddr
+        while let cur = ptr {
+            defer { ptr = cur.pointee.ifa_next }
+            let interface = cur.pointee
+            let family = interface.ifa_addr.pointee.sa_family
+            if family == UInt8(AF_INET) {
+                let name = String(cString: interface.ifa_name)
+                if name == "en0" || name == "en1" { // Wi-Fi
+                    var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
+                    getnameinfo(
+                        interface.ifa_addr, socklen_t(interface.ifa_addr.pointee.sa_len),
+                        &hostname, socklen_t(hostname.count),
+                        nil, 0,
+                        NI_NUMERICHOST
+                    )
+                    return String(cString: hostname)
+                }
+            }
+        }
+        return nil
+    }
+
+    // fd_set bitwise helpers — Swift doesn't bridge the C macros so
+    // we do it manually. These cover the bytes for fd values up to
+    // FD_SETSIZE (typically 1024) which is more than enough for one
+    // socket per probe.
+    private func fdZero(_ set: inout fd_set) {
+        set.fds_bits = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    }
+    private func fdSet(_ fd: Int32, _ set: inout fd_set) {
+        let index = Int(fd) / 32
+        let mask = Int32(1 << (Int(fd) % 32))
+        switch index {
+        case 0: set.fds_bits.0 = set.fds_bits.0 | mask
+        case 1: set.fds_bits.1 = set.fds_bits.1 | mask
+        case 2: set.fds_bits.2 = set.fds_bits.2 | mask
+        case 3: set.fds_bits.3 = set.fds_bits.3 | mask
+        default: break
         }
     }
 
