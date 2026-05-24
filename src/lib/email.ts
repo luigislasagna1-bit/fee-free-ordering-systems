@@ -1,13 +1,38 @@
 // Email transport via Resend.
+//
 // The Resend API key + From address are stored in the PlatformSettings table
 // (managed by the super-admin at /superadmin/settings/email) and AES-encrypted
 // at rest. Fallback to RESEND_API_KEY / EMAIL_FROM env vars for backward
 // compatibility. When neither is configured, every helper logs to console.
+//
+// Templates: all email bodies render through React Email components in
+// src/emails/templates/. The visual design (emerald status / navy
+// transactional / navy digest headers, GloriaFood-inspired layouts) lives
+// in src/emails/components/. The wrappers below are thin — they marshal
+// params, render the template, and hand HTML to send().
 
 import { Resend } from "resend";
 import prisma from "@/lib/db";
 import { decrypt } from "@/lib/encrypt";
 import { getDict, type Translator } from "@/lib/i18n-dict";
+import { renderEmail } from "@/emails/render";
+import OrderConfirmation         from "@/emails/templates/OrderConfirmation";
+import KitchenNotification       from "@/emails/templates/KitchenNotification";
+import OrderStatusUpdate         from "@/emails/templates/OrderStatusUpdate";
+import OrderRejected             from "@/emails/templates/OrderRejected";
+import OrderCanceled             from "@/emails/templates/OrderCanceled";
+import ReservationConfirmation   from "@/emails/templates/ReservationConfirmation";
+import NewReservationNotification from "@/emails/templates/NewReservationNotification";
+import PasswordReset             from "@/emails/templates/PasswordReset";
+import EmailSettingsTest         from "@/emails/templates/EmailSettingsTest";
+import SignupConfirmation        from "@/emails/templates/SignupConfirmation";
+import VerifyEmail               from "@/emails/templates/VerifyEmail";
+import LocationInvite            from "@/emails/templates/LocationInvite";
+import BillingNotification       from "@/emails/templates/BillingNotification";
+import TrialExpiring             from "@/emails/templates/TrialExpiring";
+import DigestEmail               from "@/emails/templates/DigestEmail";
+import ScheduledOrderReminder    from "@/emails/templates/ScheduledOrderReminder";
+import type { EmailOrderItem } from "@/emails/components/EmailParts";
 
 // Cached transport so we don't query PlatformSettings on every call.
 // Invalidate by calling `resetEmailTransport()` after the super-admin saves.
@@ -27,13 +52,15 @@ async function getTransport(): Promise<{ client: Resend | null; from: string }> 
     if (settings?.resendApiKeyEnc && settings.resendApiKeyIv && settings.resendApiKeyTag && process.env.ENCRYPTION_KEY) {
       try {
         apiKey = decrypt(settings.resendApiKeyEnc, settings.resendApiKeyIv, settings.resendApiKeyTag);
-      } catch (e: any) {
-        console.error("[Email transport] Decryption of saved Resend key FAILED:", e?.message);
+      } catch (e: unknown) {
+        const msg = e instanceof Error ? e.message : String(e);
+        console.error("[Email transport] Decryption of saved Resend key FAILED:", msg);
       }
     }
     if (settings?.emailFrom) from = settings.emailFrom;
-  } catch (e: any) {
-    console.error("[Email transport] PlatformSettings query failed:", e?.message);
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error("[Email transport] PlatformSettings query failed:", msg);
   }
 
   if (!apiKey && process.env.RESEND_API_KEY) {
@@ -71,17 +98,17 @@ async function send({ to, subject, html, text }: { to: string; subject: string; 
     }
     console.log("[Email sent]", { to, from, id: data?.id });
     return { success: true };
-  } catch (e: any) {
-    console.error("[Email transport error]", { to, from, message: e?.message ?? String(e) });
-    return { success: false, error: e?.message ?? "Transport error" };
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error("[Email transport error]", { to, from, message: msg });
+    return { success: false, error: msg };
   }
 }
 
-// ─── Layout helper ────────────────────────────────────────────────────────────
 /**
  * Module-scoped imprint override. Set this per-send via `setEmailImprint()`
  * (called by `src/lib/notifications.ts` when the restaurant is under a
- * whitelabel reseller) so the wrap() footer shows the reseller's brand instead
+ * whitelabel reseller) so the footer shows the reseller's brand instead
  * of "Fee Free Ordering Systems". Always cleared in a finally block so one
  * send's override never leaks to the next.
  */
@@ -89,24 +116,8 @@ let activeImprint: string | null = null;
 export function setEmailImprint(imprint: string | null) {
   activeImprint = imprint;
 }
-
-function wrap(title: string, body: string) {
-  const footer = activeImprint ?? "Fee Free Ordering Systems";
-  return `<!doctype html><html><body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#f6f6f6; padding:24px; color:#111;">
-  <div style="max-width:560px; margin:0 auto; background:#fff; border-radius:12px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.06);">
-    <h1 style="margin:0 0 12px; font-size:20px; color:#111;">${title}</h1>
-    ${body}
-    <hr style="border:none; border-top:1px solid #eee; margin:24px 0">
-    <p style="font-size:12px; color:#888; margin:0;">${footer}</p>
-  </div>
-</body></html>`;
-}
-
-function fmtItems(items?: { name: string; quantity: number; price: number }[]) {
-  if (!items?.length) return "";
-  return `<ul style="padding-left:18px; margin:8px 0;">${items.map(i =>
-    `<li>${i.quantity}× ${i.name} — $${i.price.toFixed(2)}</li>`,
-  ).join("")}</ul>`;
+function currentImprint(): string | undefined {
+  return activeImprint ?? undefined;
 }
 
 // Translates the canonical order-type slug ("delivery"/"pickup"/etc) for use
@@ -130,23 +141,49 @@ interface OrderEmailParams {
   trackingUrl: string;
   /** Restaurant defaultLanguage. Defaults to "en". */
   locale?: string;
+  /** Optional rich-data passthrough. When the caller already has these
+   *  fields handy, we render the GloriaFood-style detailed confirmation
+   *  with delivery address + payment status + tax breakdown. Otherwise
+   *  the template falls back to the minimal version. */
+  subtotal?: number;
+  taxAmount?: number;
+  deliveryFee?: number;
+  tip?: number;
+  discount?: number;
+  paidOnline?: boolean;
+  deliveryAddress?: string | null;
+  restaurantUrl?: string;
+  restaurantEmail?: string;
+  restaurantPhone?: string;
 }
 
 export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
   const t = await getDict(params.locale);
   const subject = t("email.orderConfirmed.subject", { orderNumber: params.orderNumber });
-  return send({
-    to: params.to,
-    subject,
-    html: wrap(t("email.orderConfirmed.greeting", { customer: params.customerName }), `
-      <p>${t("email.orderConfirmed.body", { restaurant: params.restaurantName })}</p>
-      <p>${t("receipt.customer.orderNumber")} <strong>${params.orderNumber}</strong></p>
-      <p>${t("email.orderConfirmed.typeLabel")}: ${localizeOrderType(params.orderType, t)} · ${t("email.orderConfirmed.estimatedLabel")}: ~${params.estimatedTime} ${t("email.orderConfirmed.minutesLabel")}</p>
-      ${fmtItems(params.items)}
-      <p style="font-size:16px; margin-top:12px;"><strong>${t("email.orderConfirmed.totalLabel")}: $${params.total.toFixed(2)}</strong></p>
-      <p><a href="${params.trackingUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.common.trackOrder")}</a></p>
-    `),
-  });
+  const html = await renderEmail(
+    OrderConfirmation({
+      customerName: params.customerName,
+      orderNumber: params.orderNumber,
+      restaurantName: params.restaurantName,
+      orderType: localizeOrderType(params.orderType, t),
+      paidOnline: params.paidOnline ?? false,
+      estimatedMinutes: params.estimatedTime,
+      items: params.items as EmailOrderItem[],
+      subtotal: params.subtotal ?? params.total,
+      taxAmount: params.taxAmount,
+      deliveryFee: params.deliveryFee,
+      tip: params.tip,
+      discount: params.discount,
+      total: params.total,
+      deliveryAddress: params.deliveryAddress,
+      trackingUrl: params.trackingUrl,
+      restaurantUrl: params.restaurantUrl,
+      restaurantEmail: params.restaurantEmail,
+      restaurantPhone: params.restaurantPhone,
+      imprint: currentImprint(),
+    })
+  );
+  return send({ to: params.to, subject, html });
 }
 
 export async function sendNewOrderNotificationEmail(params: {
@@ -157,17 +194,47 @@ export async function sendNewOrderNotificationEmail(params: {
   total: number;
   dashboardUrl: string;
   locale?: string;
+  // Optional rich extras — when the caller has them, we render the
+  // GloriaFood-style itemized kitchen notification instead of the minimal
+  // version.
+  customerPhone?: string | null;
+  customerEmail?: string | null;
+  orderType?: string;
+  paidOnline?: boolean;
+  items?: EmailOrderItem[];
+  subtotal?: number;
+  taxAmount?: number;
+  deliveryFee?: number;
+  tip?: number;
+  discount?: number;
+  deliveryAddress?: string | null;
+  customerNotes?: string | null;
 }) {
   const t = await getDict(params.locale);
   const subject = t("email.newOrder.subject", { orderNumber: params.orderNumber, restaurant: params.restaurantName });
-  return send({
-    to: params.to,
-    subject,
-    html: wrap(t("email.newOrder.title"), `
-      <p>${t("email.newOrder.body", { customer: params.customerName, orderNumber: params.orderNumber, total: `$${params.total.toFixed(2)}` })}</p>
-      <p><a href="${params.dashboardUrl}" style="display:inline-block;background:#111;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.newOrder.openAdmin")}</a></p>
-    `),
-  });
+  const html = await renderEmail(
+    KitchenNotification({
+      restaurantName: params.restaurantName,
+      orderNumber: params.orderNumber,
+      customerName: params.customerName,
+      customerPhone: params.customerPhone,
+      customerEmail: params.customerEmail,
+      orderType: params.orderType,
+      paidOnline: params.paidOnline,
+      items: params.items,
+      subtotal: params.subtotal,
+      taxAmount: params.taxAmount,
+      deliveryFee: params.deliveryFee,
+      tip: params.tip,
+      discount: params.discount,
+      total: params.total,
+      deliveryAddress: params.deliveryAddress,
+      customerNotes: params.customerNotes,
+      dashboardUrl: params.dashboardUrl,
+      imprint: currentImprint(),
+    })
+  );
+  return send({ to: params.to, subject, html });
 }
 
 export async function sendOrderStatusUpdateEmail(params: {
@@ -178,21 +245,25 @@ export async function sendOrderStatusUpdateEmail(params: {
   restaurantName: string;
   estimatedReady?: Date;
   rejectionReason?: string;
+  trackingUrl?: string;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
-  const localizedStatus = t(`kitchen.${params.status}`);
-  const statusText = localizedStatus.startsWith("kitchen.") ? params.status : localizedStatus;
   const subject = t("email.orderStatus.subject", { orderNumber: params.orderNumber });
-  return send({
-    to: params.to,
-    subject,
-    html: wrap(t("email.orderStatus.title"), `
-      <p>${t("email.orderStatus.body", { orderNumber: params.orderNumber, status: statusText })}</p>
-      ${params.estimatedReady ? `<p>${t("email.orderStatus.estimatedReady")}: ${params.estimatedReady.toLocaleString()}</p>` : ""}
-      ${params.rejectionReason ? `<p>${t("email.orderStatus.reason")}: ${params.rejectionReason}</p>` : ""}
-    `),
-  });
+  const html = await renderEmail(
+    OrderStatusUpdate({
+      customerName: params.customerName,
+      orderNumber: params.orderNumber,
+      restaurantName: params.restaurantName,
+      status: params.status,
+      statusMessage: params.estimatedReady
+        ? `${t("email.orderStatus.body", { orderNumber: params.orderNumber, status: params.status })} Estimated ready: ${params.estimatedReady.toLocaleString()}.`
+        : undefined,
+      trackingUrl: params.trackingUrl ?? "#",
+      imprint: currentImprint(),
+    })
+  );
+  return send({ to: params.to, subject, html });
 }
 
 export async function sendOrderRejectedEmail(params: {
@@ -202,17 +273,24 @@ export async function sendOrderRejectedEmail(params: {
   customerName: string;
   reason?: string;
   dashboardUrl: string;
+  paidOnline?: boolean;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const html = await renderEmail(
+    OrderRejected({
+      customerName: params.customerName,
+      orderNumber: params.orderNumber,
+      restaurantName: params.restaurantName,
+      reason: params.reason ?? null,
+      paidOnline: params.paidOnline ?? false,
+      imprint: currentImprint(),
+    })
+  );
   return send({
     to: params.to,
     subject: t("email.orderRejected.subject", { orderNumber: params.orderNumber }),
-    html: wrap(t("email.orderRejected.title"), `
-      <p>${t("email.orderRejected.body", { orderNumber: params.orderNumber })}</p>
-      ${params.reason ? `<p>${t("email.orderRejected.reason")}: ${params.reason}</p>` : ""}
-      <p><a href="${params.dashboardUrl}">${t("email.common.viewInAdmin")}</a></p>
-    `),
+    html,
   });
 }
 
@@ -222,16 +300,25 @@ export async function sendOrderCanceledEmail(params: {
   orderNumber: string;
   customerName: string;
   dashboardUrl: string;
+  paidOnline?: boolean;
+  reason?: string;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const html = await renderEmail(
+    OrderCanceled({
+      customerName: params.customerName,
+      orderNumber: params.orderNumber,
+      restaurantName: params.restaurantName,
+      reason: params.reason ?? null,
+      paidOnline: params.paidOnline ?? false,
+      imprint: currentImprint(),
+    })
+  );
   return send({
     to: params.to,
     subject: t("email.orderCanceled.subject", { orderNumber: params.orderNumber }),
-    html: wrap(t("email.orderCanceled.title"), `
-      <p>${t("email.orderCanceled.body", { orderNumber: params.orderNumber })}</p>
-      <p><a href="${params.dashboardUrl}">${t("email.common.viewInAdmin")}</a></p>
-    `),
+    html,
   });
 }
 
@@ -252,25 +339,20 @@ export async function sendReservationConfirmation(params: {
   locale?: string;
 }) {
   const t = await getDict(params.locale);
-  const title = params.status === "confirmed"
-    ? t("email.reservationConfirmed.titleConfirmed")
-    : t("email.reservationConfirmed.titlePending");
-  const body = params.status === "confirmed"
-    ? t("email.reservationConfirmed.bodyConfirmed", { restaurant: params.restaurantName })
-    : t("email.reservationConfirmed.bodyPending", { restaurant: params.restaurantName });
+  const html = await renderEmail(
+    ReservationConfirmation({
+      customerName: params.customerName,
+      reservationNumber: params.confirmationCode,
+      restaurantName: params.restaurantName,
+      dateTime: `${params.date} at ${params.time}`,
+      partySize: params.partySize,
+      imprint: currentImprint(),
+    })
+  );
   return send({
     to: params.to,
     subject: t("email.reservationConfirmed.subject"),
-    html: wrap(title, `
-      <p>${t("email.common.thanks")} ${params.customerName},</p>
-      <p>${body}</p>
-      <ul style="padding-left:18px;">
-        <li>${t("email.reservationConfirmed.partySize")}: ${params.partySize}</li>
-        <li>${t("email.reservationConfirmed.date")}: ${params.date} · ${t("email.reservationConfirmed.time")}: ${params.time}</li>
-        <li>${t("email.reservationConfirmed.confirmationCode")}: <strong style="font-family:monospace;letter-spacing:2px">${params.confirmationCode}</strong></li>
-        ${params.depositAmount ? `<li>${t("email.reservationConfirmed.deposit")}: $${params.depositAmount.toFixed(2)} ${params.depositPaid ? "✓" : "—"}</li>` : ""}
-      </ul>
-    `),
+    html,
   });
 }
 
@@ -284,20 +366,28 @@ export async function sendNewReservationNotification(params: {
   confirmationCode: string;
   status: "pending" | "confirmed";
   dashboardUrl: string;
+  customerPhone?: string | null;
+  customerEmail?: string | null;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
-  const localizedStatus = params.status === "confirmed"
-    ? t("kitchen.confirmed")
-    : t("kitchen.pending");
+  const html = await renderEmail(
+    NewReservationNotification({
+      restaurantName: params.restaurantName,
+      reservationNumber: params.confirmationCode,
+      customerName: params.customerName,
+      customerPhone: params.customerPhone,
+      customerEmail: params.customerEmail,
+      dateTime: `${params.date} at ${params.time}`,
+      partySize: params.partySize,
+      dashboardUrl: params.dashboardUrl,
+      imprint: currentImprint(),
+    })
+  );
   return send({
     to: params.to,
     subject: t("email.newReservation.subject", { restaurant: params.restaurantName }),
-    html: wrap(t("email.newReservation.title", { status: localizedStatus }), `
-      <p>${t("email.newReservation.body", { customer: params.customerName, party: params.partySize, date: params.date, time: params.time })}</p>
-      <p>${t("email.newReservation.confirmationCode")}: <strong style="font-family:monospace">${params.confirmationCode}</strong></p>
-      <p><a href="${params.dashboardUrl}">${t("email.common.viewInAdmin")}</a></p>
-    `),
+    html,
   });
 }
 
@@ -310,15 +400,17 @@ export async function sendPasswordResetEmail(params: {
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const html = await renderEmail(
+    PasswordReset({
+      name: params.name ?? undefined,
+      resetUrl: params.resetUrl,
+      imprint: currentImprint(),
+    })
+  );
   return send({
     to: params.to,
     subject: t("email.passwordReset.subject"),
-    html: wrap(t("email.passwordReset.title"), `
-      <p>${t("email.common.thanks")} ${params.name || ""},</p>
-      <p>${t("email.passwordReset.body")}</p>
-      <p><a href="${params.resetUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.passwordReset.button")}</a></p>
-      <p style="font-size:12px;color:#888;">${t("email.common.ifYouDidntRequest")}</p>
-    `),
+    html,
   });
 }
 
@@ -326,12 +418,11 @@ export async function sendPasswordResetEmail(params: {
 
 export async function sendEmailSettingsTest(params: { to: string; locale?: string }) {
   const t = await getDict(params.locale);
+  const html = await renderEmail(EmailSettingsTest({ imprint: currentImprint() }));
   return send({
     to: params.to,
     subject: t("email.settingsTest.subject"),
-    html: wrap(t("email.settingsTest.title"), `
-      <p>${t("email.settingsTest.body")}</p>
-    `),
+    html,
   });
 }
 
@@ -343,32 +434,32 @@ export async function sendSignupConfirmationEmail(params: {
   restaurantName: string;
   loginUrl: string;
   /** When provided, the welcome email leads with a "Verify your email"
-   *  button instead of (or in addition to) the Log in CTA. Phase 1 of the
-   *  free-core redesign requires email verification before publishing. */
+   *  button instead of (or in addition to) the Log in CTA. */
   verifyUrl?: string;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
-  const verifyBlock = params.verifyUrl
-    ? `<p>${t("email.signup.verifyBody")}</p>
-       <p><a href="${params.verifyUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.signup.verifyButton")}</a></p>
-       <p style="margin-top:24px;font-size:14px;color:#6b7280">${t("email.signup.orLogin")}</p>`
-    : "";
+  // If no verifyUrl supplied, fall back to login as the primary CTA in both
+  // slots — the template wants both URLs.
+  const verifyUrl = params.verifyUrl ?? params.loginUrl;
+  const html = await renderEmail(
+    SignupConfirmation({
+      name: params.name ?? params.restaurantName,
+      restaurantName: params.restaurantName,
+      loginUrl: params.loginUrl,
+      verifyUrl,
+      imprint: currentImprint(),
+    })
+  );
   return send({
     to: params.to,
     subject: t("email.signup.subject"),
-    html: wrap(t("email.signup.title"), `
-      <p>${t("email.common.thanks")} ${params.name || params.restaurantName},</p>
-      <p>${t("email.signup.body", { restaurant: params.restaurantName })}</p>
-      ${verifyBlock}
-      <p><a href="${params.loginUrl}" style="display:inline-block;background:${params.verifyUrl ? "#6b7280" : "#10b981"};color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.signup.button")}</a></p>
-    `),
+    html,
   });
 }
 
 /** Standalone "verify your email" email — used by the resend-verification
- *  button in the admin layout banner. Same template as the signup version
- *  but without the welcome copy. */
+ *  button in the admin layout banner. */
 export async function sendVerifyEmail(params: {
   to: string;
   name: string | null;
@@ -376,23 +467,21 @@ export async function sendVerifyEmail(params: {
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const html = await renderEmail(
+    VerifyEmail({
+      name: params.name ?? undefined,
+      verifyUrl: params.verifyUrl,
+      imprint: currentImprint(),
+    })
+  );
   return send({
     to: params.to,
     subject: t("email.verify.subject"),
-    html: wrap(t("email.verify.title"), `
-      <p>${t("email.common.thanks")} ${params.name || ""},</p>
-      <p>${t("email.verify.body")}</p>
-      <p><a href="${params.verifyUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${t("email.verify.button")}</a></p>
-      <p style="margin-top:24px;font-size:13px;color:#6b7280">${t("email.verify.ifYouDidntRequest")}</p>
-    `),
+    html,
   });
 }
 
-/** Invite-a-new-location email. Sent when a brand owner generates an invite
- *  link from the brand dashboard and supplies a recipient email address.
- *  The recipient gets a one-click button that lands at /signup?invite=token,
- *  which our invite-aware signup flow turns into a fresh Restaurant + User
- *  linked to the brand via parentRestaurantId. */
+/** Invite-a-new-location email — multi-location brand expansion. */
 export async function sendLocationInviteEmail(params: {
   to: string;
   brandName: string;
@@ -400,27 +489,26 @@ export async function sendLocationInviteEmail(params: {
   inviteUrl: string;
 }) {
   const friendlyName = params.suggestedName ? `the new ${params.suggestedName} location` : "a new location";
+  const html = await renderEmail(
+    LocationInvite({
+      parentRestaurantName: params.brandName,
+      inviteUrl: params.inviteUrl,
+      imprint: currentImprint(),
+    })
+  );
   return send({
     to: params.to,
     subject: `You've been invited to set up ${friendlyName} on Fee Free Ordering`,
-    html: wrap(`Set up ${friendlyName}`, `
-      <p>Hi there,</p>
-      <p>The owner of <strong>${params.brandName}</strong> has invited you to set up ${friendlyName} on Fee Free Ordering.</p>
-      <p>This new location will operate independently — its own menu, orders, and payments — but will be linked to <strong>${params.brandName}</strong> as part of the chain.</p>
-      <p style="margin-top:20px"><a href="${params.inviteUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600">Set up the new location</a></p>
-      <p style="font-size:12px;color:#6b7280;margin-top:24px">If the button doesn't work, paste this URL into your browser:<br/>${params.inviteUrl}</p>
-      <p style="font-size:12px;color:#6b7280">This link expires in 30 days and can only be used once.</p>
-    `),
+    html,
   });
 }
 
-// ─── Trial expiring ──────────────────────────────────────────────────────────
+// ─── Billing + trial ──────────────────────────────────────────────────────────
 
 /**
  * Generic billing notification — used by Stripe webhook handlers when a
  * subscription event needs to be surfaced to the restaurant owner
- * (payment failed, 3DS auth needed, dispute, etc.). Plain wording so we
- * don't need a new translation key per scenario.
+ * (payment failed, 3DS auth needed, dispute, etc.).
  */
 export async function sendBillingNotificationEmail(params: {
   to: string;
@@ -431,18 +519,17 @@ export async function sendBillingNotificationEmail(params: {
   ctaLabel?: string;
   ctaUrl?: string;
 }) {
-  const cta = params.ctaUrl && params.ctaLabel
-    ? `<p style="margin-top:16px"><a href="${params.ctaUrl}" style="display:inline-block;background:#10b981;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600">${params.ctaLabel}</a></p>`
-    : "";
-  return send({
-    to: params.to,
-    subject: params.subject,
-    html: wrap(params.headline, `
-      <p>Hi ${params.restaurantName},</p>
-      <p>${params.body}</p>
-      ${cta}
-    `),
-  });
+  const html = await renderEmail(
+    BillingNotification({
+      recipientName: params.restaurantName,
+      title: params.headline,
+      body: params.body,
+      buttonLabel: params.ctaLabel,
+      buttonUrl: params.ctaUrl,
+      imprint: currentImprint(),
+    })
+  );
+  return send({ to: params.to, subject: params.subject, html });
 }
 
 export async function sendTrialExpiringEmail(params: {
@@ -450,23 +537,34 @@ export async function sendTrialExpiringEmail(params: {
   restaurantName: string;
   daysLeft: number;
   upgradeUrl: string;
+  /** Add-on name for the trial expiring — defaults to a generic phrase. */
+  addonName?: string;
+  /** Post-trial price label like "$29.99". */
+  priceAfterTrial?: string;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const html = await renderEmail(
+    TrialExpiring({
+      recipientName: params.restaurantName,
+      addonName: params.addonName ?? "subscription",
+      daysRemaining: params.daysLeft,
+      priceAfterTrial: params.priceAfterTrial ?? "the regular price",
+      manageUrl: params.upgradeUrl,
+      imprint: currentImprint(),
+    })
+  );
   return send({
     to: params.to,
     subject: t("email.trialExpiring.subject", { days: params.daysLeft }),
-    html: wrap(t("email.trialExpiring.title"), `
-      <p>${t("email.trialExpiring.body", { restaurant: params.restaurantName, days: params.daysLeft })}</p>
-      <p><a href="${params.upgradeUrl}">${t("email.common.viewInAdmin")}</a></p>
-    `),
+    html,
   });
 }
 
-// ─── Digest / report emails (Phase E4) ─────────────────────────────────────
+// ─── Digest / report emails ─────────────────────────────────────
 
 /** Stats payload shared by both daily and monthly digests. All money values
- *  are in dollars (not cents) — this template formats them. */
+ *  are in dollars (not cents) — the template formats them. */
 export interface DigestStats {
   restaurantName: string;
   periodLabel: string;            // e.g. "Friday, May 15, 2026" or "May 2026"
@@ -501,109 +599,103 @@ export interface DigestStats {
   total: number;
 }
 
-/** Number formatter for delta percentages: -23 → "−23%", 5 → "+5%", 0 → "—". */
-function fmtDelta(n: number): string {
-  if (!Number.isFinite(n) || Math.abs(n) < 0.5) return "—";
-  const sign = n > 0 ? "+" : "";
-  const color = n > 0 ? "#16a34a" : "#dc2626";
-  return `<span style="color:${color}">${sign}${Math.round(n)}%</span>`;
-}
-
 function fmtMoney(n: number): string {
   return `$${(n ?? 0).toFixed(2)}`;
 }
 
-function digestHtml(s: DigestStats, kind: "daily" | "monthly", t: Translator): string {
-  const headline =
-    kind === "daily" ? t("email.digest.headlineDaily") : t("email.digest.headlineMonthly");
-  return `
-    <h2 style="font-size:14px; color:#666; margin:0 0 8px;">${headline}</h2>
-    <p style="margin:0 0 16px; color:#999;">${s.periodLabel}</p>
-    <p>${t("email.digest.hi")}</p>
-    <p>${t("email.digest.intro", { restaurant: s.restaurantName })}</p>
-
-    <h3 style="font-size:14px; color:#10b981; margin:20px 0 8px;">${t("email.digest.salesPerformance")}
-      <span style="color:#888; font-weight:normal; font-size:12px;">(${s.comparisonLabel})</span>
-    </h3>
-    <table style="width:100%; border-collapse:collapse;">
-      <tr>
-        <td style="padding:8px 0; width:50%;"><strong>${t("email.digest.sales")}</strong><br>
-          <span style="font-size:18px;">${fmtMoney(s.sales)}</span> ${fmtDelta(s.salesDelta)}
-        </td>
-        <td style="padding:8px 0;"><strong>${t("email.digest.orders")}</strong><br>
-          <span style="font-size:18px;">${s.orders}</span> ${fmtDelta(s.ordersDelta)}
-        </td>
-      </tr>
-      <tr>
-        <td style="padding:8px 0;"><strong>${t("email.digest.avgOrderValue")}</strong><br>
-          <span style="font-size:18px;">${fmtMoney(s.avgOrderValue)}</span> ${fmtDelta(s.avgOrderValueDelta)}
-        </td>
-        <td style="padding:8px 0;"><strong>${t("email.digest.tableReservations")}</strong><br>
-          <span style="font-size:18px;">${s.tableReservations}</span> ${fmtDelta(s.reservationsDelta)}
-        </td>
-      </tr>
-    </table>
-
-    <h3 style="font-size:14px; color:#10b981; margin:24px 0 8px;">${t("email.digest.channels")}</h3>
-    <table style="width:100%; border-collapse:collapse; font-size:13px;">
-      <tr>
-        <td style="padding:6px 0;">${t("email.digest.pickup")}</td>
-        <td style="text-align:right;">${s.pickupOrders} · ${fmtMoney(s.pickupSales)}</td>
-      </tr>
-      <tr>
-        <td style="padding:6px 0;">${t("email.digest.delivery")}</td>
-        <td style="text-align:right;">${s.deliveryOrders} · ${fmtMoney(s.deliverySales)}</td>
-      </tr>
-      <tr>
-        <td style="padding:6px 0;">${t("email.digest.dineIn")}</td>
-        <td style="text-align:right;">${s.dineInOrders} · ${fmtMoney(s.dineInSales)}</td>
-      </tr>
-    </table>
-
-    <h3 style="font-size:14px; color:#10b981; margin:24px 0 8px;">${t("email.digest.payments")}</h3>
-    <table style="width:100%; border-collapse:collapse; font-size:13px;">
-      <tr>
-        <td style="padding:6px 0;">${t("email.digest.offlinePayments")}</td>
-        <td style="text-align:right;">${s.offlinePayments} · ${fmtMoney(s.offlinePaymentsAmount)}</td>
-      </tr>
-      <tr>
-        <td style="padding:6px 0;">${t("email.digest.onlinePayments")}</td>
-        <td style="text-align:right;">${s.onlinePayments} · ${fmtMoney(s.onlinePaymentsAmount)}</td>
-      </tr>
-    </table>
-
-    <h3 style="font-size:14px; color:#10b981; margin:24px 0 8px;">${t("email.digest.salesBreakdown")}</h3>
-    <table style="width:100%; border-collapse:collapse; font-size:13px;">
-      <tr><td style="padding:6px 0;">${t("email.digest.subTotals")}</td><td style="text-align:right;">${fmtMoney(s.subTotals)}</td></tr>
-      <tr><td style="padding:6px 0;">${t("email.digest.tax")}</td><td style="text-align:right;">${fmtMoney(s.taxAmount)}</td></tr>
-      <tr><td style="padding:6px 0;">${t("email.digest.deliveryFees")}</td><td style="text-align:right;">${fmtMoney(s.deliveryFees)}</td></tr>
-      <tr><td style="padding:6px 0;">${t("email.digest.tips")}</td><td style="text-align:right;">${fmtMoney(s.tips)}</td></tr>
-      <tr><td style="padding:6px 0;">${t("email.digest.otherFees")}</td><td style="text-align:right;">${fmtMoney(s.otherFees)}</td></tr>
-      <tr style="border-top:1px solid #eee;"><td style="padding:8px 0;"><strong>${t("email.digest.total")}</strong></td><td style="text-align:right;"><strong>${fmtMoney(s.total)}</strong></td></tr>
-    </table>
-  `;
+function deltaPair(n: number): { delta?: string; deltaDirection?: "up" | "down" | "flat" } {
+  if (!Number.isFinite(n) || Math.abs(n) < 0.5) return { delta: undefined, deltaDirection: "flat" };
+  const sign = n > 0 ? "+" : "−";
+  return {
+    delta: `${sign}${Math.abs(Math.round(n))}%`,
+    deltaDirection: n > 0 ? "up" : "down",
+  };
 }
 
-export async function sendDailyDigestEmail(params: { to: string; stats: DigestStats; locale?: string }) {
-  const t = await getDict(params.locale);
+async function sendDigestEmail(
+  to: string,
+  stats: DigestStats,
+  kind: "daily" | "monthly",
+  dashboardUrl: string,
+  t: Translator,
+) {
+  const html = await renderEmail(
+    DigestEmail({
+      period: kind,
+      periodLabel: stats.periodLabel,
+      comparisonLabel: stats.comparisonLabel,
+      restaurantName: stats.restaurantName,
+      sales:         { value: fmtMoney(stats.sales),         ...deltaPair(stats.salesDelta) },
+      orders:        { value: String(stats.orders),          ...deltaPair(stats.ordersDelta) },
+      avgOrderValue: { value: fmtMoney(stats.avgOrderValue), ...deltaPair(stats.avgOrderValueDelta) },
+      reservations:  { value: String(stats.tableReservations), ...deltaPair(stats.reservationsDelta) },
+      pickup:    { count: stats.pickupOrders,   value: fmtMoney(stats.pickupSales) },
+      delivery:  { count: stats.deliveryOrders, value: fmtMoney(stats.deliverySales) },
+      onPremise: { count: stats.dineInOrders,   value: fmtMoney(stats.dineInSales) },
+      offlinePayments: { count: stats.offlinePayments, value: fmtMoney(stats.offlinePaymentsAmount) },
+      onlinePayments:  { count: stats.onlinePayments,  value: fmtMoney(stats.onlinePaymentsAmount) },
+      noMissedOrders: true,   // tracked elsewhere; until we wire the real signal we say "you're good"
+      noCanceledOrders: true,
+      dashboardUrl,
+      imprint: currentImprint(),
+    })
+  );
   return send({
-    to: params.to,
-    subject: t("email.digest.subjectDaily", {
-      restaurant: params.stats.restaurantName,
-      period: params.stats.periodLabel,
-    }),
-    html: wrap("", digestHtml(params.stats, "daily", t)),
+    to,
+    subject: kind === "daily"
+      ? t("email.digest.subjectDaily",   { restaurant: stats.restaurantName, period: stats.periodLabel })
+      : t("email.digest.subjectMonthly", { restaurant: stats.restaurantName, period: stats.periodLabel }),
+    html,
   });
 }
 
-export async function sendMonthlyDigestEmail(params: { to: string; stats: DigestStats; locale?: string }) {
+export async function sendDailyDigestEmail(params: { to: string; stats: DigestStats; dashboardUrl?: string; locale?: string }) {
   const t = await getDict(params.locale);
+  return sendDigestEmail(params.to, params.stats, "daily", params.dashboardUrl ?? "#", t);
+}
+
+export async function sendMonthlyDigestEmail(params: { to: string; stats: DigestStats; dashboardUrl?: string; locale?: string }) {
+  const t = await getDict(params.locale);
+  return sendDigestEmail(params.to, params.stats, "monthly", params.dashboardUrl ?? "#", t);
+}
+
+// ─── Scheduled-order friendly reminder (NEW) ─────────────────────────────────
+// 15-min-before-pickup/delivery nudge for scheduled-for-later orders.
+// GloriaFood has this; we didn't. Template is ready; the cron that triggers
+// it (looking for orders.scheduledFor within the next 15±2 minutes) is a
+// follow-up.
+
+export async function sendScheduledOrderReminderEmail(params: {
+  to: string;
+  customerName: string;
+  orderNumber: string;
+  restaurantName: string;
+  /** Pre-formatted, e.g. "Wednesday, Dec 24, 04:00 – 04:15 PM" */
+  scheduledWindow: string;
+  orderType: string;
+  deliveryAddress?: string | null;
+  restaurantUrl?: string;
+  restaurantEmail?: string;
+  restaurantPhone?: string;
+  locale?: string;
+}) {
+  const html = await renderEmail(
+    ScheduledOrderReminder({
+      customerName: params.customerName,
+      orderNumber: params.orderNumber,
+      restaurantName: params.restaurantName,
+      scheduledWindow: params.scheduledWindow,
+      orderType: params.orderType,
+      deliveryAddress: params.deliveryAddress,
+      restaurantUrl: params.restaurantUrl,
+      restaurantEmail: params.restaurantEmail,
+      restaurantPhone: params.restaurantPhone,
+      imprint: currentImprint(),
+    })
+  );
   return send({
     to: params.to,
-    subject: t("email.digest.subjectMonthly", {
-      restaurant: params.stats.restaurantName,
-      period: params.stats.periodLabel,
-    }),
-    html: wrap("", digestHtml(params.stats, "monthly", t)),
+    subject: `Friendly reminder — your order #${params.orderNumber} is on the way`,
+    html,
   });
 }
