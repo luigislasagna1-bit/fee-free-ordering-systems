@@ -32,6 +32,7 @@ import BillingNotification       from "@/emails/templates/BillingNotification";
 import TrialExpiring             from "@/emails/templates/TrialExpiring";
 import DigestEmail               from "@/emails/templates/DigestEmail";
 import ScheduledOrderReminder    from "@/emails/templates/ScheduledOrderReminder";
+import MarketplaceSettlement     from "@/emails/templates/MarketplaceSettlement";
 import type { EmailOrderItem } from "@/emails/components/EmailParts";
 
 // Cached transport so we don't query PlatformSettings on every call.
@@ -664,6 +665,58 @@ export async function sendMonthlyDigestEmail(params: { to: string; stats: Digest
 // GloriaFood has this; we didn't. Template is ready; the cron that triggers
 // it (looking for orders.scheduledFor within the next 15±2 minutes) is a
 // follow-up.
+
+// ─── Marketplace settlement summary ──────────────────────────────────
+// Sent at end of every monthly marketplace billing cycle by
+// src/lib/marketplace-settlement.ts. Stat-card layout via the dedicated
+// MarketplaceSettlement template (NOT the generic BillingNotification —
+// that one renders body as plain text, which would mangle this rich
+// breakdown).
+
+export async function sendMarketplaceSettlementSummaryEmail(params: {
+  to: string;
+  restaurantName: string;
+  /** Pre-formatted month, e.g. "May 2026" */
+  period: string;
+  status: "invoiced" | "failed";
+  ordersInMonth: number;
+  revenueDollars: number;
+  accruedDollars: number;
+  invoicedDollars: number;
+  capDollars: number;
+  capHit: boolean;
+  ueEquivalentDollars: number;
+  savingsThisMonthDollars: number;
+  lifetimeSavingsDollars: number;
+  failureReason?: string;
+  dashboardUrl: string;
+  billingUrl?: string;
+}) {
+  const html = await renderEmail(
+    MarketplaceSettlement({
+      restaurantName: params.restaurantName,
+      period: params.period,
+      status: params.status,
+      ordersInMonth: params.ordersInMonth,
+      revenueDollars: params.revenueDollars,
+      accruedDollars: params.accruedDollars,
+      invoicedDollars: params.invoicedDollars,
+      capDollars: params.capDollars,
+      capHit: params.capHit,
+      ueEquivalentDollars: params.ueEquivalentDollars,
+      savingsThisMonthDollars: params.savingsThisMonthDollars,
+      lifetimeSavingsDollars: params.lifetimeSavingsDollars,
+      failureReason: params.failureReason,
+      dashboardUrl: params.dashboardUrl,
+      billingUrl: params.billingUrl,
+      imprint: currentImprint(),
+    })
+  );
+  const subject = params.status === "invoiced"
+    ? `Your Fee Free Marketplace bill — ${params.period}`
+    : `Action needed: ${params.period} Marketplace bill`;
+  return send({ to: params.to, subject, html });
+}
 
 export async function sendScheduledOrderReminderEmail(params: {
   to: string;
