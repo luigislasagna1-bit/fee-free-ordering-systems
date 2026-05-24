@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react";
 import {
   Copy, Check, AlertCircle, Info, Sparkles, Printer,
-  ChevronDown, ChevronRight,
+  ChevronDown, ChevronRight, Code2, MousePointerClick,
 } from "lucide-react";
 
 /**
@@ -24,9 +24,24 @@ import {
  */
 
 type Position = "br" | "bl" | "tr" | "tl" | "inline";
+/**
+ * Snippet types:
+ *   - "popup_js":  the JavaScript widget that injects a launcher button +
+ *                  opens a full-screen modal on click. Most polished UX,
+ *                  but requires pasting into the host site's site-wide
+ *                  Custom Code area (NOT a per-page HTML embed widget).
+ *   - "iframe":    plain `<iframe>` HTML snippet that embeds the entire
+ *                  ordering UI inline. No JavaScript, no modal, no fancy
+ *                  stuff — just a rectangle of menu where the snippet is
+ *                  pasted. Works in any builder's "HTML embed" widget
+ *                  (Wix's "Embed HTML", Squarespace's "Code Block", etc.)
+ *                  because it's just HTML. Same approach GloriaFood uses.
+ */
+type SnippetType = "popup_js" | "iframe";
 
 const DEFAULT_LABEL = "See MENU & Order";
 const DEFAULT_COLOR = "#ef4444";
+const DEFAULT_IFRAME_HEIGHT = 700;
 
 export function LegacyWidgetClient({
   publicId,
@@ -37,10 +52,12 @@ export function LegacyWidgetClient({
   baseUrl: string;
   isPublished: boolean;
 }) {
+  const [snippetType, setSnippetType] = useState<SnippetType>("popup_js");
   const [label, setLabel] = useState(DEFAULT_LABEL);
   const [color, setColor] = useState(DEFAULT_COLOR);
   const [position, setPosition] = useState<Position>("br");
   const [customSelector, setCustomSelector] = useState("#order-button");
+  const [iframeHeight, setIframeHeight] = useState(DEFAULT_IFRAME_HEIGHT);
   const [platform, setPlatform] = useState<string>("wix");
   const [copied, setCopied] = useState(false);
 
@@ -48,6 +65,22 @@ export function LegacyWidgetClient({
    *  defaults so the paste stays minimal — fewer things for restaurants
    *  to fat-finger. */
   const snippet = useMemo(() => {
+    if (snippetType === "iframe") {
+      // GloriaFood-style plain HTML embed. Renders the full ordering UI
+      // inline wherever pasted — works in any builder's HTML widget.
+      // Height is configurable because the right value depends on how
+      // much menu content there is and how the page flows around it.
+      return [
+        `<!-- Fee Free Ordering — HTML embed (paste anywhere) -->`,
+        `<iframe`,
+        `  src="${baseUrl}/embed/widget/${publicId}"`,
+        `  style="width:100%;height:${iframeHeight}px;border:0;display:block;"`,
+        `  allow="payment; geolocation"`,
+        `  title="${escapeHtml(label || DEFAULT_LABEL)}"`,
+        `></iframe>`,
+      ].join("\n");
+    }
+    // JS popup widget
     const lines = [
       `<!-- Fee Free Ordering widget -->`,
       `<script src="${baseUrl}/embed/widget.js"`,
@@ -64,7 +97,7 @@ export function LegacyWidgetClient({
     }
     lines.push(`        async defer></script>`);
     return lines.join("\n");
-  }, [baseUrl, publicId, label, color, position, customSelector]);
+  }, [snippetType, baseUrl, publicId, label, color, position, customSelector, iframeHeight]);
 
   async function copy() {
     try {
@@ -92,6 +125,35 @@ export function LegacyWidgetClient({
         </div>
       )}
 
+      {/* ── Snippet type picker ──────────────────────────────────────── */}
+      {/* Two fundamentally different install patterns:
+            1) Popup button (recommended for most) — slick UX, but
+               must paste into site-wide Custom Code area.
+            2) HTML Embed — plain iframe, works in any HTML widget
+               anywhere on your page. Same as GloriaFood. Less slick
+               (no full-screen modal) but lets you put the menu in
+               any specific location you want. */}
+      <div className="grid sm:grid-cols-2 gap-3">
+        <SnippetTypeCard
+          active={snippetType === "popup_js"}
+          onClick={() => setSnippetType("popup_js")}
+          icon={<MousePointerClick className="w-5 h-5" />}
+          title="Popup button (recommended)"
+          description="Floating button on every page that opens a full-screen ordering modal. Polished UX. Must be pasted into your site's site-wide custom code area."
+          tag="BEST UX"
+          tagColor="emerald"
+        />
+        <SnippetTypeCard
+          active={snippetType === "iframe"}
+          onClick={() => setSnippetType("iframe")}
+          icon={<Code2 className="w-5 h-5" />}
+          title="HTML Embed (paste anywhere)"
+          description="Plain iframe that embeds the menu inline. Paste into any HTML widget on your page — works in Wix's 'Embed HTML', Squarespace's 'Code Block', etc. Same approach GloriaFood uses."
+          tag="WORKS EVERYWHERE"
+          tagColor="blue"
+        />
+      </div>
+
       {/* ── Customizer (controls + live preview) ─────────────────────── */}
       <div className="grid lg:grid-cols-2 gap-5">
         {/* Controls */}
@@ -101,6 +163,39 @@ export function LegacyWidgetClient({
             <h3 className="font-semibold text-gray-900">Customize</h3>
           </div>
 
+          {snippetType === "iframe" && (
+            <>
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                  Embed height (pixels)
+                </label>
+                <input
+                  type="number"
+                  min={300}
+                  max={2000}
+                  step={50}
+                  value={iframeHeight}
+                  onChange={(e) => setIframeHeight(Math.max(300, Math.min(2000, parseInt(e.target.value) || DEFAULT_IFRAME_HEIGHT)))}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
+                />
+                <p className="text-[11px] text-gray-500 mt-1 leading-relaxed">
+                  Height of the embedded menu in your page. <strong>700px</strong> is a good default — fits most menus without scrolling inside the iframe. Increase if you have many categories.
+                </p>
+              </div>
+              <div className="rounded-lg border border-blue-200 bg-blue-50 p-3 text-xs text-blue-900 leading-relaxed">
+                <p className="font-bold mb-1">📝 Where to paste this</p>
+                <ol className="list-decimal pl-4 space-y-1">
+                  <li>In Wix: drag in an <strong>&quot;Embed HTML&quot;</strong> element wherever you want the menu</li>
+                  <li>Paste the code below into it</li>
+                  <li>Resize the Wix element to roughly match the height above</li>
+                </ol>
+                <p className="mt-2">Works the same on Squarespace (Code Block), WordPress (Custom HTML block), Webflow (Embed widget), etc.</p>
+              </div>
+            </>
+          )}
+
+          {snippetType === "popup_js" && (
+            <>
           {/* Label */}
           <div>
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
@@ -238,6 +333,8 @@ export function LegacyWidgetClient({
               </div>
             )}
           </div>
+            </>
+          )}
         </div>
 
         {/* Live preview */}
@@ -249,36 +346,54 @@ export function LegacyWidgetClient({
             </span>
           </div>
           <BrowserMock>
-            <div
-              className={previewContainerClass(position)}
-              style={position === "inline" ? { padding: "12px" } : undefined}
-            >
-              <button
-                type="button"
-                disabled
-                style={{
-                  background: color,
-                  padding: "18px 36px",
-                  fontSize: "18px",
-                  fontWeight: 700,
-                  color: "#fff",
-                  border: 0,
-                  borderRadius: "10px",
-                  cursor: "pointer",
-                  boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
-                  minWidth: "200px",
-                  letterSpacing: "0.02em",
-                  whiteSpace: "nowrap",
-                }}
+            {snippetType === "iframe" ? (
+              <div className="absolute inset-2 bg-white border border-emerald-200 rounded shadow-inner flex flex-col items-center justify-center p-2 gap-1.5">
+                <div className="text-[9px] font-bold uppercase tracking-wider text-emerald-700">
+                  Embedded menu
+                </div>
+                <div className="text-[10px] text-gray-500 text-center leading-tight">
+                  The whole ordering UI renders right here, inline on your page.
+                </div>
+                <div className="mt-1 px-2 py-1 bg-emerald-500 text-white text-[10px] rounded">
+                  Pickup · 20 min
+                </div>
+                <div className="flex gap-1 mt-1">
+                  <span className="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 text-[8px] rounded">Pizzas</span>
+                  <span className="px-1.5 py-0.5 bg-gray-100 text-gray-500 text-[8px] rounded">Drinks</span>
+                </div>
+              </div>
+            ) : (
+              <div
+                className={previewContainerClass(position)}
+                style={position === "inline" ? { padding: "12px" } : undefined}
               >
-                {label || DEFAULT_LABEL}
-              </button>
-            </div>
+                <button
+                  type="button"
+                  disabled
+                  style={{
+                    background: color,
+                    padding: "18px 36px",
+                    fontSize: "18px",
+                    fontWeight: 700,
+                    color: "#fff",
+                    border: 0,
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
+                    minWidth: "200px",
+                    letterSpacing: "0.02em",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {label || DEFAULT_LABEL}
+                </button>
+              </div>
+            )}
           </BrowserMock>
           <p className="text-[11px] text-gray-500 leading-relaxed">
-            Clicking the real button on your site opens a full-screen modal
-            with your complete ordering UI — pickup/delivery toggle, menu
-            categories, cart, checkout. Not previewed here.
+            {snippetType === "iframe"
+              ? "The embed renders the menu inline — no popup, no overlay. Customers stay on your page while they order."
+              : "Clicking the real button on your site opens a full-screen modal with your complete ordering UI — pickup/delivery toggle, menu categories, cart, checkout. Not previewed here."}
           </p>
         </div>
       </div>
@@ -356,6 +471,61 @@ export function LegacyWidgetClient({
 }
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
+
+function SnippetTypeCard({
+  active,
+  onClick,
+  icon,
+  title,
+  description,
+  tag,
+  tagColor,
+}: {
+  active: boolean;
+  onClick: () => void;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  tag: string;
+  tagColor: "emerald" | "blue";
+}) {
+  const tagClass =
+    tagColor === "emerald"
+      ? "bg-emerald-100 text-emerald-800"
+      : "bg-blue-100 text-blue-800";
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={
+        active
+          ? "text-left rounded-xl border-2 border-emerald-400 bg-emerald-50/40 p-4 transition"
+          : "text-left rounded-xl border-2 border-gray-200 bg-white hover:border-gray-300 p-4 transition"
+      }
+    >
+      <div className="flex items-start gap-3">
+        <div
+          className={
+            active
+              ? "w-10 h-10 rounded-lg bg-emerald-500 text-white flex items-center justify-center flex-shrink-0"
+              : "w-10 h-10 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center flex-shrink-0"
+          }
+        >
+          {icon}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h4 className="font-bold text-gray-900 text-sm">{title}</h4>
+            <span className={`inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider rounded px-1.5 py-0.5 ${tagClass}`}>
+              {tag}
+            </span>
+          </div>
+          <p className="text-xs text-gray-600 mt-1 leading-relaxed">{description}</p>
+        </div>
+      </div>
+    </button>
+  );
+}
 
 function PosRadio({
   value,

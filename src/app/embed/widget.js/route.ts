@@ -338,8 +338,30 @@ const SCRIPT = `(function(){
         } catch (e) { return false; }
       })();
       if (popoverWorks) {
+        // ── Backdrop + UA-default neutralizer ─────────────────────────
+        // Popover elements get a default ::backdrop pseudo when shown,
+        // which renders as a dim/black overlay (UA stylesheet sets
+        // background:rgba(0,0,0,0.1) or similar — varies by browser).
+        // For a passthrough launcher container we want ZERO visible
+        // chrome. Inject a <style> tag once that neutralizes:
+        //   - The backdrop (transparent)
+        //   - Any UA default border/padding/background on the popover
+        //     itself (we also set these inline below as belt-and-
+        //     suspenders, but the stylesheet covers cases where the UA
+        //     style was injected with higher specificity).
+        // Targeted via class so we don't trash unrelated popovers on
+        // the host page (some sites use popover for their own modals).
+        if (!document.getElementById("ffo-widget-styles")) {
+          var styleEl = document.createElement("style");
+          styleEl.id = "ffo-widget-styles";
+          styleEl.textContent =
+            ".ffo-launcher-popover{border:0!important;background:transparent!important;padding:0!important;margin:0!important;overflow:visible!important;max-width:none!important;max-height:none!important;}" +
+            ".ffo-launcher-popover::backdrop{background:transparent!important;display:none!important;}";
+          document.head.appendChild(styleEl);
+        }
         var popHost = document.createElement("div");
         popHost.setAttribute("popover", "manual");
+        popHost.className = "ffo-launcher-popover";
         // Override the popover UA defaults — by default popovers are
         // centered with margin:auto and have border/background. We want
         // an invisible passthrough container so our button + overlay
