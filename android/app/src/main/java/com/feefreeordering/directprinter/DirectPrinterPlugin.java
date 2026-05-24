@@ -99,9 +99,12 @@ public class DirectPrinterPlugin extends Plugin {
             return;
         }
 
-        // Run the socket work on Capacitor's background executor — never
-        // do networking on the main thread (Android throws on contact).
-        getBridge().getExecutor().execute(() -> {
+        // Run socket work on a background thread — Android throws
+        // NetworkOnMainThreadException if we touch sockets from the
+        // UI thread. A plain Thread is fine here; the JS bridge
+        // resolves the PluginCall whenever we call resolve()/reject(),
+        // regardless of which thread we're on.
+        new Thread(() -> {
             Socket sock = null;
             try {
                 sock = new Socket();
@@ -134,7 +137,7 @@ public class DirectPrinterPlugin extends Plugin {
                     try { sock.close(); } catch (IOException ignore) { /* shutting down */ }
                 }
             }
-        });
+        }).start();
     }
 
     /**
@@ -175,6 +178,6 @@ public class DirectPrinterPlugin extends Plugin {
                     try { sock.close(); } catch (IOException ignore) {}
                 }
             }
-        });
+        }).start();
     }
 }
