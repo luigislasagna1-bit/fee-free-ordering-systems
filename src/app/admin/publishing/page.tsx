@@ -31,8 +31,10 @@ export default async function PublishingHubPage() {
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Publishing</h1>
         <p className="text-sm text-gray-600 mt-1">
-          Choose how customers can place orders. Every restaurant starts with the free
-          Legacy Website widget — paid surfaces unlock as you subscribe to add-ons.
+          Where customers can place orders. <strong>Use any combination of these at the same time</strong> —
+          they&apos;re independent surfaces that all feed into the same kitchen, menu, and payment system. Most
+          restaurants run the free widget on their existing website AND the hosted Sales Optimized site
+          in parallel for maximum reach.
         </p>
       </div>
 
