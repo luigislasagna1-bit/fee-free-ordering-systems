@@ -33,6 +33,11 @@ export default async function WebsiteEditorPage() {
         slogan: true,
         cuisineType: true,
         hostedSiteSettings: true,
+        // bannerUrl + logoUrl shown by inline ImageUpload controls in
+        // the Header & hero card — owner can swap the hero photo
+        // without leaving the editor.
+        bannerUrl: true,
+        logoUrl: true,
       },
     }),
     hasFeature(user.restaurantId, "hosted_marketing_page"),
@@ -103,6 +108,8 @@ export default async function WebsiteEditorPage() {
           name: restaurant.name,
           slogan: restaurant.slogan,
           cuisineType: restaurant.cuisineType,
+          bannerUrl: restaurant.bannerUrl,
+          logoUrl: restaurant.logoUrl,
         }}
         previewUrl={previewUrl}
       />

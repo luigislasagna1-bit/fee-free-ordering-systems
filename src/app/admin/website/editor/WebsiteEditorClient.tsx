@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { Plus, Trash2, Loader2, RotateCcw, Save, Eye, EyeOff, Check } from "lucide-react";
+import { Plus, Trash2, Loader2, RotateCcw, Save, Eye, EyeOff, Check, ImageIcon } from "lucide-react";
 import type {
   HostedSiteSettings,
   BuiltInSection,
@@ -13,9 +13,12 @@ import {
   MAX_CUSTOM_SECTION_BODY_LEN,
   MAX_CTA_LABEL_LEN,
 } from "@/lib/hosted-site-settings";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 const SECTION_LABELS: Record<BuiltInSection, string> = {
   banner: "Banner image",
+  serviceSummary: "Service summary card (We offer X · Order button)",
+  specialOffers: "Special Offers (auto-pulled from active promotions)",
   about: "About",
   featuredMenu: "Featured menu",
   visit: "Visit (address, phone, hours)",
@@ -25,6 +28,8 @@ const SECTION_LABELS: Record<BuiltInSection, string> = {
 
 const POSITION_OPTIONS: Array<{ value: BuiltInSection; label: string }> = [
   { value: "banner", label: "After the banner / hero" },
+  { value: "serviceSummary", label: "After the service summary card" },
+  { value: "specialOffers", label: "After Special Offers" },
   { value: "about", label: "After About" },
   { value: "featuredMenu", label: "After Featured menu" },
   { value: "visit", label: "After Visit + Hours" },
@@ -44,13 +49,57 @@ export function WebsiteEditorClient({
   previewUrl,
 }: {
   initial: HostedSiteSettings;
-  restaurantDefaults: { name: string; slogan: string | null; cuisineType: string | null };
+  restaurantDefaults: {
+    name: string;
+    slogan: string | null;
+    cuisineType: string | null;
+    /** Current hero photo. Editable inline — uploads save immediately
+     *  (separate endpoint from the settings PATCH because bannerUrl
+     *  lives on the Restaurant row, not in hostedSiteSettings JSON). */
+    bannerUrl: string | null;
+    /** Current restaurant logo. Same inline-save pattern as banner. */
+    logoUrl: string | null;
+  };
   previewUrl: string;
 }) {
   const [settings, setSettings] = useState<HostedSiteSettings>(initial);
   const [saving, setSaving] = useState(false);
   const [resetting, setResetting] = useState(false);
   const [previewKey, setPreviewKey] = useState(0); // bumps the iframe to refresh on save
+  // Banner + logo state — separate from `settings` because they save
+  // through /api/restaurants/profile (not /api/admin/website/settings).
+  // We track current value so the upload component can show the existing
+  // photo + so we can mutate it without a full page reload.
+  const [bannerUrl, setBannerUrl] = useState(restaurantDefaults.bannerUrl ?? "");
+  const [logoUrl, setLogoUrl] = useState(restaurantDefaults.logoUrl ?? "");
+
+  /** Persist a single Restaurant field via /api/restaurants/profile.
+   *  Used by the banner + logo uploads inside the website editor so
+   *  the owner doesn't have to navigate to /admin/profile to change
+   *  the hero photo — Luigi's UAT call-out 2026-05-24. */
+  const saveProfileField = useCallback(
+    async (field: "bannerUrl" | "logoUrl", value: string) => {
+      try {
+        const res = await fetch("/api/restaurants/profile", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ [field]: value }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          toast.error(data?.error || "Failed to save photo");
+          return false;
+        }
+        setPreviewKey((k) => k + 1); // refresh the iframe preview
+        toast.success(field === "bannerUrl" ? "Hero photo updated" : "Logo updated");
+        return true;
+      } catch (e: any) {
+        toast.error(e?.message || "Failed to save photo");
+        return false;
+      }
+    },
+    [],
+  );
 
   // Track if the in-memory settings differ from the last-saved baseline so
   // the Save button can show a "no changes" disabled state.
@@ -143,6 +192,51 @@ export function WebsiteEditorClient({
       <div className="space-y-5">
         {/* Header / hero */}
         <Card title="Header & hero" subtitle="Logo, title, and the buttons at the top of your page.">
+          {/* Hero photo — uploads save immediately via /api/restaurants/profile.
+              Lives at the top of the section so it's the first thing the
+              owner sees — matches the visual prominence of the photo on
+              the live page. */}
+          <div className="border-b border-gray-100 pb-4 mb-4">
+            <div className="flex items-center gap-2 mb-2">
+              <ImageIcon className="w-4 h-4 text-gray-500" />
+              <label className="text-sm font-semibold text-gray-800">Hero photo</label>
+              <span className="text-xs text-gray-500">(the big banner image filling the top of your page)</span>
+            </div>
+            <ImageUpload
+              value={bannerUrl}
+              aspectRatio="wide"
+              onChange={async (url) => {
+                setBannerUrl(url);
+                await saveProfileField("bannerUrl", url);
+              }}
+            />
+            <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
+              Recommended: 1600×900 (or larger), JPG/WebP, &lt; 1MB. Food photography
+              with good lighting beats a stock photo every time. The image is
+              auto-cropped to fit the hero so center the most important content.
+            </p>
+          </div>
+
+          {/* Logo — saved the same way as banner */}
+          <div className="border-b border-gray-100 pb-4 mb-4">
+            <div className="flex items-center gap-2 mb-2">
+              <ImageIcon className="w-4 h-4 text-gray-500" />
+              <label className="text-sm font-semibold text-gray-800">Logo</label>
+              <span className="text-xs text-gray-500">(shown in the top-left nav + over the hero)</span>
+            </div>
+            <ImageUpload
+              value={logoUrl}
+              aspectRatio="square"
+              onChange={async (url) => {
+                setLogoUrl(url);
+                await saveProfileField("logoUrl", url);
+              }}
+            />
+            <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
+              Square format works best (e.g. 400×400). PNG with transparency renders cleanly over the photo hero.
+            </p>
+          </div>
+
           <ToggleRow
             label="Full-screen hero"
             help="Banner image fills the entire hero with a dark overlay, GloriaFood-style. Best for photographic banners (food shots, restaurant interior). Leave off if your banner is a logo or text graphic."

@@ -10,7 +10,15 @@
 
 /** Built-in section identifiers used both for visibility toggles and
  *  for positioning custom sections relative to them. */
-export type BuiltInSection = "banner" | "about" | "featuredMenu" | "visit" | "map" | "social";
+export type BuiltInSection =
+  | "banner"
+  | "serviceSummary"
+  | "specialOffers"
+  | "about"
+  | "featuredMenu"
+  | "visit"
+  | "map"
+  | "social";
 
 export interface CustomSection {
   /** Stable id so the admin UI can edit/reorder/delete. Generated client-side
