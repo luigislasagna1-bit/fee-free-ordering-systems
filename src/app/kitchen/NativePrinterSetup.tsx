@@ -503,6 +503,36 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
               <span>{testState.message}</span>
             </div>
           )}
+
+          {/* Star printer help notice. Star TSP143III/IV/mPOP ship in
+              Star Line Mode and silently ignore ESC/POS commands —
+              user sees "Test Print sent" but no paper. The fix is a
+              one-time emulation-mode switch via Star's PC utility. */}
+          <details className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
+            <summary className="cursor-pointer font-bold flex items-center gap-1.5">
+              <AlertCircle className="w-3.5 h-3.5" />
+              Test Print said success but no paper came out?
+            </summary>
+            <div className="mt-2 space-y-2 leading-relaxed">
+              <p>
+                <strong>If you have a Star TSP143III, TSP100, or mPOP printer:</strong> these models ship in &quot;Star Line Mode&quot; by default and ignore the standard print commands our app sends. The TCP connection works (Test Connection passes) but the printer silently discards the print job. You&apos;ll need to switch the printer to &quot;ESC/POS Mode&quot; one time — takes ~5 minutes.
+              </p>
+              <ol className="list-decimal pl-5 space-y-1">
+                <li>Download <strong>Star Printer Utility</strong> from <a href="https://www.starmicronics.com/support/" target="_blank" rel="noopener noreferrer" className="underline">starmicronics.com/support</a> (Windows or Mac)</li>
+                <li>Connect the printer to your computer via USB cable</li>
+                <li>Open the utility → <strong>Printer Settings</strong> → change <strong>Emulation</strong> from &quot;Star Line Mode&quot; to <strong>&quot;Standard ESC/POS Mode&quot;</strong></li>
+                <li>Save + unplug + plug in the printer (power-cycle)</li>
+                <li>Verify: hold the FEED button while powering on. The self-test page should show &quot;Emulation: ESC/POS&quot;</li>
+                <li>Try Test Print again — receipt should come out</li>
+              </ol>
+              <p>
+                <strong>Other printer brands</strong> (Epson, Bixolon, Citizen): these usually work without configuration. If still no paper, check paper roll + cover + power LED.
+              </p>
+              <p className="text-amber-700">
+                We&apos;re adding native Star SDK support in a future update so this manual step won&apos;t be needed.
+              </p>
+            </div>
+          </details>
         </div>
 
         <div className="sticky bottom-0 bg-gray-50 border-t border-gray-100 px-6 py-3 flex items-center justify-end gap-2">
