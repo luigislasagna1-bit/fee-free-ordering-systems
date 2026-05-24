@@ -23,6 +23,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
+import { COMPETITORS } from "@/data/competitors";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -99,7 +100,8 @@ export async function GET(req: NextRequest) {
   return xmlResponse(urlsetXml([]));
 }
 
-/** Platform marketing sitemap. Static-ish list. */
+/** Platform marketing sitemap. Static-ish list + every /vs/{competitor}
+ *  page so search engines discover them on first crawl. */
 function buildPlatformSitemap(host: string): string {
   const base = `https://${host}`;
   const urls: UrlEntry[] = [
@@ -110,7 +112,16 @@ function buildPlatformSitemap(host: string): string {
     { loc: `${base}/partners`, changefreq: "monthly", priority: 0.5 },
     { loc: `${base}/signup`, changefreq: "monthly", priority: 0.6 },
     { loc: `${base}/login`, changefreq: "yearly", priority: 0.3 },
+    { loc: `${base}/privacy`, changefreq: "yearly", priority: 0.3 },
+    { loc: `${base}/terms`, changefreq: "yearly", priority: 0.3 },
+    { loc: `${base}/refund`, changefreq: "yearly", priority: 0.3 },
   ];
+  // SEO comparison pages — high-value organic + AI-agent targets
+  // ("X alternative" searches, ChatGPT answers, etc.). Priority 0.6
+  // — below the marketing chrome but above utility pages.
+  for (const c of COMPETITORS) {
+    urls.push({ loc: `${base}/vs/${c.slug}`, changefreq: "monthly", priority: 0.6 });
+  }
   return urlsetXml(urls);
 }
 
