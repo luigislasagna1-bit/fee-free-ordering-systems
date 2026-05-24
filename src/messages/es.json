@@ -351,7 +351,9 @@
     "noNotes": "Sin notas",
     "locatingAddress": "Localizando tu dirección…",
     "youreIn": "Estás en {zone} — Coste {fee}, ~{minutes} min.",
-    "outsideStandard": "Fuera de nuestras zonas de entrega estándar."
+    "outsideStandard": "Fuera de nuestras zonas de entrega estándar.",
+    "cardOnPickup": "Pago con tarjeta al recoger",
+    "cardOnDelivery": "Pago con tarjeta en la entrega"
   },
   "reservation": {
     "title": "Reservar mesa",

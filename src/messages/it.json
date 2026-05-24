@@ -351,7 +351,9 @@
     "noNotes": "Nessuna nota",
     "locatingAddress": "Localizzazione del tuo indirizzo…",
     "youreIn": "Sei in {zone} — Costo {fee}, ~{minutes} min.",
-    "outsideStandard": "Fuori dalla nostra zona di consegna standard."
+    "outsideStandard": "Fuori dalla nostra zona di consegna standard.",
+    "cardOnPickup": "Carta al ritiro",
+    "cardOnDelivery": "Carta alla consegna"
   },
   "reservation": {
     "title": "Prenota un tavolo",
