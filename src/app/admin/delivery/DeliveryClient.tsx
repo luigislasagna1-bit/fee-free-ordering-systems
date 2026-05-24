@@ -283,6 +283,16 @@ export function DeliveryClient({
           selectedZoneId={expandedZone}
           onZoneClick={(id) => setExpandedZone((prev) => (prev === id ? null : id))}
           onRestaurantMove={handleRestaurantMove}
+          /** Drag-to-resize via the edge handle. Optimistically updates
+           *  the local zone state for immediate visual feedback while
+           *  the PATCH request flies; if the PATCH fails (network blip),
+           *  the next updateZone refresh corrects it on the server side. */
+          onZoneResize={(id, newRadiusKm) => {
+            setZones((current) =>
+              current.map((z) => (z.id === id ? { ...z, radiusKm: newRadiusKm } : z))
+            );
+            updateZone(id, { radiusKm: newRadiusKm });
+          }}
           provider={restaurant?.mapProvider ?? "leaflet"}
           googleMapsApiKey={restaurant?.googleMapsApiKey ?? undefined}
         />
