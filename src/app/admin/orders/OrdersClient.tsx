@@ -66,15 +66,15 @@ export function OrdersClient({ orders }: { orders: any[] }) {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <div>
+      <div className="flex items-start justify-between mb-6 gap-3 flex-wrap">
+        <div className="min-w-0">
           <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
           <p className="text-xs text-gray-400 mt-0.5 flex items-center gap-1">
             <RefreshCw className="w-3 h-3" />
             {lastRefresh.toLocaleTimeString()}
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
           {pendingCount > 0 && (
             <div className="flex items-center gap-1.5 bg-yellow-50 border border-yellow-200 text-yellow-800 text-xs font-semibold px-3 py-1.5 rounded-full animate-pulse">
               <span className="w-2 h-2 rounded-full bg-yellow-500" />
@@ -125,22 +125,22 @@ export function OrdersClient({ orders }: { orders: any[] }) {
             {filtered.map((order) => (
               <div key={order.id} className={order.status === "pending" ? "border-l-4 border-l-yellow-400" : ""}>
                 <div
-                  className="p-4 flex items-center justify-between cursor-pointer hover:bg-gray-50"
+                  className="p-3 sm:p-4 flex items-center justify-between gap-3 cursor-pointer hover:bg-gray-50"
                   onClick={() => setExpanded(expanded === order.id ? null : order.id)}
                 >
-                  <div className="flex items-center gap-4">
-                    <div>
-                      <div className="font-semibold text-gray-900">{order.customerName}</div>
-                      <div className="text-sm text-gray-500">
-                        {order.orderNumber} · {order.type} · {formatDate(order.createdAt)}
-                      </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="font-semibold text-gray-900 truncate">{order.customerName}</div>
+                    <div className="text-xs sm:text-sm text-gray-500 truncate">
+                      <span className="font-mono">{order.orderNumber}</span> · {order.type} ·{" "}
+                      <span className="hidden sm:inline">{formatDate(order.createdAt)}</span>
+                      <span className="sm:hidden">{new Date(order.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <span className={`text-xs font-medium px-2 py-1 rounded-full ${statusColors[order.status] || "bg-gray-100 text-gray-600"}`}>
+                  <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-3 flex-shrink-0">
+                    <span className="font-bold text-gray-900 text-sm sm:text-base whitespace-nowrap">{formatCurrency(order.total)}</span>
+                    <span className={`text-[10px] sm:text-xs font-medium px-2 py-0.5 sm:py-1 rounded-full whitespace-nowrap ${statusColors[order.status] || "bg-gray-100 text-gray-600"}`}>
                       {(() => { try { return t(order.status as any); } catch { return order.status; } })()}
                     </span>
-                    <span className="font-bold text-gray-900">{formatCurrency(order.total)}</span>
                   </div>
                 </div>
 

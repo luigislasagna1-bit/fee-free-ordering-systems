@@ -737,7 +737,7 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Stacking Rule</label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   {STACKING_RULES.map(r => {
                     const Icon = r.icon;
                     const active = form.stackingRule === r.value;
@@ -753,7 +753,7 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Order Type</label>
                   <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
@@ -798,7 +798,7 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
                         ))}
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Start Date/Time</label>
                         <input type="datetime-local"

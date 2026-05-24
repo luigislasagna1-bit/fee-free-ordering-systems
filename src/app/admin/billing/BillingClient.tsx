@@ -259,7 +259,53 @@ export function BillingClient({
         <div className="mt-10">
           <h2 className="text-lg font-bold text-gray-900 mb-4">Recent invoices</h2>
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <table className="w-full text-sm">
+            {/* Mobile: card layout — invoice table has 4 columns including
+                a tiny action button; way easier to read as stacked cards
+                on a phone. */}
+            <ul className="divide-y divide-gray-100 sm:hidden">
+              {invoices.map((inv) => (
+                <li key={inv.id} className="p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <div className="text-sm font-medium text-gray-900">
+                        {new Date(inv.paidAt || inv.createdAt).toLocaleDateString()}
+                      </div>
+                      <div className="mt-1">
+                        <span
+                          className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                            inv.status === "paid"
+                              ? "bg-green-100 text-green-700"
+                              : inv.status === "open"
+                                ? "bg-yellow-100 text-yellow-700"
+                                : "bg-gray-100 text-gray-600"
+                          }`}
+                        >
+                          {inv.status}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <div className="font-bold text-gray-900">
+                        {formatCurrency(inv.amountPaid / 100)}
+                      </div>
+                      {inv.hostedInvoiceUrl && (
+                        <a
+                          href={inv.hostedInvoiceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-700 text-xs font-semibold inline-flex items-center gap-1 mt-1"
+                        >
+                          View <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            {/* Desktop: traditional table */}
+            <table className="w-full text-sm hidden sm:table">
               <thead className="bg-gray-50 text-xs uppercase text-gray-500">
                 <tr>
                   <th className="px-4 py-3 text-left">Date</th>
