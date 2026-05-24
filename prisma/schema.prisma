@@ -667,6 +667,11 @@ model CustomerAccount {
   /// Set when email verification succeeds. Used to gate features that
   /// require a confirmed inbox (saved cards, certain notifications).
   emailVerifiedAt DateTime?
+  /// One-time verification token. Generated on signup + on "resend
+  /// verification" requests. Consumed by GET /api/customer/verify-email
+  /// which flips emailVerifiedAt and clears this back to null. Indexed
+  /// unique so lookups by token are O(1).
+  emailVerifyToken String?  @unique
   name            String?
   phone           String?
   /// Last time the user successfully signed in. Helps surface stale

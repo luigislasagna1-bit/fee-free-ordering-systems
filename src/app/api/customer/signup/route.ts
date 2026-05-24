@@ -11,8 +11,10 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import prisma from "@/lib/db";
 import { signCustomerToken, customerCookieOptions } from "@/lib/customer-session";
+import { sendVerifyEmail } from "@/lib/email";
 
 const MIN_PASSWORD_LENGTH = 8;
 
@@ -48,6 +50,12 @@ export async function POST(req: NextRequest) {
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
+  // Email-verification token — generated at signup, persisted, and emailed
+  // to the new customer. Clicking the link consumes the token and flips
+  // emailVerifiedAt. Customers can use the account immediately without
+  // verifying (verification gates only enhanced features like saved
+  // cards + certain marketing notifications), so this is non-blocking.
+  const emailVerifyToken = crypto.randomBytes(32).toString("base64url");
 
   const account = await prisma.customerAccount.create({
     data: {
@@ -56,8 +64,20 @@ export async function POST(req: NextRequest) {
       name,
       phone,
       lastLoginAt: new Date(),
+      emailVerifyToken,
     },
     select: { id: true, email: true, name: true, phone: true, emailVerifiedAt: true },
+  });
+
+  // Fire-and-forget the verification email. Signup completes even if
+  // mail delivery fails — the customer can request a resend from /account.
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+  sendVerifyEmail({
+    to: email,
+    name,
+    verifyUrl: `${baseUrl}/api/customer/verify-email?token=${emailVerifyToken}`,
+  }).catch((err) => {
+    console.error("[customer signup] verify email send failed", err);
   });
 
   // BACKFILL: if Customer rows already exist for this email across any

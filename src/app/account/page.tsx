@@ -3,7 +3,8 @@ import Link from "next/link";
 import prisma from "@/lib/db";
 import { getCurrentCustomer } from "@/lib/customer-session";
 import { AccountActions } from "./AccountActions";
-import { ShoppingBag, MapPin, User as UserIcon } from "lucide-react";
+import { ResendVerifyButton } from "./ResendVerifyButton";
+import { ShoppingBag, MapPin, User as UserIcon, MailCheck, MailWarning, CheckCircle2 } from "lucide-react";
 
 /**
  * /account — customer dashboard. Auth-gated. Shows the basics and links
@@ -11,7 +12,11 @@ import { ShoppingBag, MapPin, User as UserIcon } from "lucide-react";
  */
 export const metadata = { title: "My account — Fee Free Marketplace" };
 
-export default async function CustomerAccountPage() {
+export default async function CustomerAccountPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ verified?: string }>;
+}) {
   const account = await getCurrentCustomer();
   if (!account) redirect("/account/login?next=/account");
 
@@ -23,6 +28,10 @@ export default async function CustomerAccountPage() {
     prisma.customerAddress.count({ where: { customerAccountId: account.id } }),
   ]);
 
+  // Verification toast — set by GET /api/customer/verify-email after consuming
+  // the token. "ok" = success, "invalid" = token bad/expired/already-used.
+  const { verified } = await searchParams;
+
   return (
     <div className="space-y-6">
       <div>
@@ -31,6 +40,51 @@ export default async function CustomerAccountPage() {
         </h1>
         <p className="text-sm text-gray-600 mt-1">{account.email}</p>
       </div>
+
+      {/* Just-verified success toast */}
+      {verified === "ok" && (
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 flex items-start gap-3">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-bold text-emerald-900">Email verified!</p>
+            <p className="text-xs text-emerald-800 mt-0.5">
+              Your email address is now confirmed. Enhanced features like saved cards + order-status notifications are unlocked.
+            </p>
+          </div>
+        </div>
+      )}
+      {verified === "invalid" && (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 flex items-start gap-3">
+          <MailWarning className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-bold text-amber-900">That verification link didn&apos;t work</p>
+            <p className="text-xs text-amber-800 mt-0.5">
+              It may have expired or been used already. Click <strong>Resend verification email</strong> below to get a fresh link.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Verification prompt — only when the account is not yet verified.
+          Hidden once they verify, so the dashboard isn't cluttered for
+          returning customers. */}
+      {!account.emailVerifiedAt && verified !== "ok" && (
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+          <div className="flex items-start gap-3 mb-3">
+            <MailCheck className="w-5 h-5 text-emerald-700 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-bold text-emerald-900">Verify your email</p>
+              <p className="text-xs text-emerald-800 mt-0.5 leading-relaxed">
+                We sent a verification link to <strong>{account.email}</strong> when you signed up. Click the button in that email to confirm it&apos;s really you — it unlocks saved cards and order-status notifications.
+              </p>
+              <p className="text-xs text-emerald-800 mt-2">
+                Didn&apos;t receive it? Check your spam folder, or click below to send a new one.
+              </p>
+            </div>
+          </div>
+          <ResendVerifyButton />
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Tile
@@ -71,8 +125,8 @@ export default async function CustomerAccountPage() {
           <dt className="text-gray-500">Verified</dt>
           <dd className="col-span-2 text-gray-900">
             {account.emailVerifiedAt
-              ? <span className="text-green-700">Verified</span>
-              : <span className="text-gray-500">Not yet (we&apos;ll add this soon)</span>}
+              ? <span className="text-emerald-700 font-semibold">✓ Verified</span>
+              : <span className="text-amber-700">Not yet — check your inbox</span>}
           </dd>
         </dl>
       </div>
