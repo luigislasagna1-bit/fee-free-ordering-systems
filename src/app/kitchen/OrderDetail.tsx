@@ -18,6 +18,12 @@ interface Props {
   onUpdate: (orderId: string, status: string, extra?: Record<string, unknown>) => Promise<void>;
   onPrint: (orderId: string, type: "kitchen" | "customer" | "both") => Promise<void>;
   printerReady: boolean;
+  /** Kitchen workflow mode — drives whether the Preparing/Ready/
+   *  Complete buttons render after Accept. In "simple" mode (default,
+   *  GloriaFood-style) the kitchen only accepts/rejects orders; no
+   *  further transitions are surfaced. In "tracking" mode the full
+   *  state machine is visible. */
+  workflowMode?: "simple" | "tracking";
 }
 
 const STATUS_LABEL: Record<string, string> = {
@@ -35,7 +41,8 @@ function fmtTime(d: string | Date | null | undefined) {
   return new Date(d).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true });
 }
 
-export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady }: Props) {
+export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple" }: Props) {
+  const isSimpleMode = workflowMode === "simple";
   const tk = useTranslations("kitchen");
   const tc = useTranslations("checkout");
   const tCommon = useTranslations("common");
@@ -245,7 +252,13 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               </button>
             </>
           )}
-          {order.status === "accepted" && (
+          {/* Transition buttons after Accept — only render in "tracking"
+              workflow mode. In "simple" mode (default, GloriaFood-style)
+              the kitchen just accepts and is done; the order stays in
+              "In Progress" with no further state changes until end-of-
+              day cleanup. Restaurants choose their mode in admin
+              Services & Hours settings. */}
+          {!isSimpleMode && order.status === "accepted" && (
             <button
               onClick={() => act(() => onUpdate(order.id, "preparing"))}
               disabled={busy}
@@ -254,7 +267,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               <ChefHat className="w-4 h-4" /> {tk("preparing")}
             </button>
           )}
-          {order.status === "preparing" && (
+          {!isSimpleMode && order.status === "preparing" && (
             <button
               onClick={() => act(() => onUpdate(order.id, "ready"))}
               disabled={busy}
@@ -263,7 +276,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               <Package className="w-4 h-4" /> {tk("markReady")}
             </button>
           )}
-          {order.status === "ready" && (
+          {!isSimpleMode && order.status === "ready" && (
             <button
               onClick={() => act(() => onUpdate(order.id, "completed"))}
               disabled={busy}

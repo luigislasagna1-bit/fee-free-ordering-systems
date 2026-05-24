@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
@@ -42,13 +40,18 @@ const TEST_NOTES = [
 
 export async function POST() {
   try {
-    const session = await getServerSession(authOptions);
-    const role = (session?.user as any)?.role;
-    if (!["restaurant_admin", "kitchen_staff", "superadmin"].includes(role)) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    // The "Test Order" button is most commonly clicked from the kitchen
+    // display — both in the web browser and (now) inside the Capacitor
+    // native app. The previous getServerSession(authOptions) call only
+    // recognized the ADMIN session, so kitchen-side clicks failed with
+    // 401. Use getSessionUser with preferKitchen so the same endpoint
+    // works for both contexts. The downstream role check is still strict.
     const user = await getSessionUser({ preferKitchen: true });
     const restaurantId = user?.restaurantId;
+    const role = user?.role;
+    if (!user || !["restaurant_admin", "kitchen_staff", "superadmin"].includes(role ?? "")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     if (!restaurantId) return NextResponse.json({ error: "No restaurant" }, { status: 400 });
 
     const restaurant = await prisma.restaurant.findUnique({
@@ -88,9 +91,7 @@ export async function POST() {
     // domain reputation) and we DO want the owner to see what their real
     // customers receive. session.user.email is set by next-auth from the
     // owner User row.
-    const ownerEmail = (session?.user as any)?.email
-      || (user as any)?.email
-      || null;
+    const ownerEmail = (user as any)?.email || null;
 
     // Build item totals
     const orderItems = picked.map(item => ({

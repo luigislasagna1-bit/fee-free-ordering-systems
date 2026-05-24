@@ -1,18 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { getSessionUser } from "@/lib/session";
 import { recordHeartbeat } from "@/lib/kitchen-devices";
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    const role = (session?.user as any)?.role;
-    if (!["restaurant_admin", "kitchen_staff", "superadmin"].includes(role)) {
+    // Accept BOTH kitchen and admin sessions — same fix as test-order
+    // and orders endpoints (tasks #92 / #93 related). Previously failed
+    // 401 when called from inside the native app on the kitchen session.
+    const user = await getSessionUser({ preferKitchen: true });
+    const role = user?.role;
+    if (!user || !["restaurant_admin", "kitchen_staff", "superadmin"].includes(role ?? "")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const user = await getSessionUser({ preferKitchen: true });
-    const restaurantId = user?.restaurantId;
+    const restaurantId = user.restaurantId;
     if (!restaurantId) {
       return NextResponse.json({ error: "no_restaurant" }, { status: 400 });
     }

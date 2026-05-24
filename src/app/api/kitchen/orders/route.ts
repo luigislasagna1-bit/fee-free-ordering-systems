@@ -1,18 +1,22 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
-    const role = (session?.user as any)?.role;
-    if (!["restaurant_admin", "kitchen_staff", "superadmin"].includes(role)) {
+    // Kitchen polling — must accept BOTH the kitchen session (tablet /
+    // native app) AND the admin session (when an owner opens /kitchen
+    // in the same browser tab as /admin). Using getServerSession with
+    // admin authOptions only recognized admin sessions, so the native
+    // app's poll silently failed with 401 and new orders never showed
+    // up — caught during UAT, see task #92 for the matching bug fix on
+    // /api/kitchen/test-order.
+    const user = await getSessionUser({ preferKitchen: true });
+    const role = user?.role;
+    if (!user || !["restaurant_admin", "kitchen_staff", "superadmin"].includes(role ?? "")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const user = await getSessionUser({ preferKitchen: true });
-    const restaurantId = user?.restaurantId;
+    const restaurantId = user.restaurantId;
     if (!restaurantId) return NextResponse.json({ error: "No restaurant associated" }, { status: 400 });
 
     const thirtyDaysAgo = new Date();
@@ -38,7 +42,21 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json(orders);
+    // Also include the restaurant's kitchen workflow mode so the
+    // client can render the right UI (simple = Accept/Reject only,
+    // tracking = full state machine). Cheap extra round-trip — the
+    // restaurant row is small and the kitchen polls every 4 seconds
+    // so we want it cached. The client only re-reads the mode when
+    // the response shape changes; otherwise it stays the same.
+    const restaurant = await prisma.restaurant.findUnique({
+      where: { id: restaurantId },
+      select: { kitchenWorkflowMode: true },
+    });
+
+    return NextResponse.json({
+      orders,
+      kitchenWorkflowMode: restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple",
+    });
   } catch (err: any) {
     console.error("[kitchen/orders GET]", err);
     return NextResponse.json({ error: err.message ?? "Failed to load orders" }, { status: 500 });

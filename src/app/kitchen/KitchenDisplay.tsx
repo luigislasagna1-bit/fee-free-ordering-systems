@@ -326,6 +326,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const [activeTab, setActiveTab] = useState<KTab>("orders");
   const [reservations, setReservations] = useState<KitchenReservation[]>([]);
+  // Kitchen workflow mode — drives whether the order detail panel shows
+  // the full state-machine buttons (Preparing/Ready/Out for delivery/
+  // Complete) or just Accept + Reject. Hydrated from /api/kitchen/orders
+  // response so admin can toggle it without restarting the kitchen.
+  // Default "simple" matches the server default + the GloriaFood pattern
+  // Luigi specified as the main flow.
+  const [workflowMode, setWorkflowMode] = useState<"simple" | "tracking">(
+    (restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple"),
+  );
 
   // Poll upcoming reservations whenever the Reservations OR Orders tab is open
   // (Orders tab shows reservations alongside the order list).
@@ -560,7 +569,16 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     try {
       const res = await fetch("/api/kitchen/orders");
       if (!res.ok) return;
-      const fresh: Order[] = await res.json();
+      const body = await res.json();
+      // Response shape evolved 2026-05-24: was Order[]; is now
+      //   { orders: Order[]; kitchenWorkflowMode: "simple" | "tracking" }
+      // Be tolerant of both — older deployments may still emit the
+      // bare array, and tablets running a cached SW from a previous
+      // build will keep reading the array shape for a few minutes
+      // after deploy.
+      const fresh: Order[] = Array.isArray(body) ? body : (body?.orders ?? []);
+      const mode: "simple" | "tracking" =
+        Array.isArray(body) ? "simple" : (body?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple");
 
       const newPending = fresh.filter(o => o.status === "pending" && !seenIdsRef.current.has(o.id));
       if (newPending.length > 0) {
@@ -573,6 +591,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       }
 
       setOrders(fresh);
+      setWorkflowMode(mode);
     } catch {}
   }, []);
 
@@ -1043,6 +1062,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               }}
               onPrint={doPrint}
               printerReady={printerReady}
+              workflowMode={workflowMode}
             />
           </div>
         ) : (

@@ -28,6 +28,22 @@ model Restaurant {
   // launch markets (Canada, EU); North-American restaurants typically
   // flip this to 12h on day-one.
   hoursFormat        String   @default("24h")
+  // Kitchen workflow mode:
+  //   "simple"   → GloriaFood-style. Kitchen only sees Accept + Reject.
+  //                Once accepted, the order stays in "In Progress" with
+  //                no further state transitions until end-of-day. The
+  //                customer is notified at Accept and again at the
+  //                scheduled-ready time (or after a buffer). This is
+  //                the DEFAULT — busy restaurants don't have time to
+  //                click Preparing/Ready/Complete on every order.
+  //   "tracking" → Full state machine. Kitchen clicks Preparing → Ready
+  //                → (Out for delivery) → Complete. Each click fires
+  //                a separate customer notification. Best when a
+  //                restaurant wants to give precise status updates.
+  //
+  // Toggle is per-restaurant on the admin Services & Hours page.
+  // Default = "simple" to match GloriaFood's well-tested model.
+  kitchenWorkflowMode String  @default("simple")
   cuisineType        String?
   logoUrl            String?
   bannerUrl          String?

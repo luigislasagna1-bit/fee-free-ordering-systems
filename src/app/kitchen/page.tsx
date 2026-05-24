@@ -20,6 +20,10 @@ export default async function KitchenPage() {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
+    // We need the full restaurant row so the kitchen can know the
+    // workflow mode (simple vs tracking) on first paint — without this
+    // there's a 4-second flicker between the SSR render and the first
+    // poll where the wrong buttons show.
     [restaurant, orders] = await Promise.all([
       prisma.restaurant.findUnique({ where: { id: restaurantId } }),
       prisma.order.findMany({

@@ -17,6 +17,7 @@ export async function PUT(req: NextRequest) {
     lat, lng,
     mapProvider, googleMapsApiKey,
     defaultLanguage,
+    kitchenWorkflowMode,
   } = data;
 
   const ALLOWED_LOCALES = ["en", "fr", "es", "it", "pt"];
@@ -61,6 +62,14 @@ export async function PUT(req: NextRequest) {
   if (googleMapsApiKey !== undefined) updateData.googleMapsApiKey = googleMapsApiKey || null;
   if (defaultLanguage !== undefined && ALLOWED_LOCALES.includes(defaultLanguage)) {
     updateData.defaultLanguage = defaultLanguage;
+  }
+  if (kitchenWorkflowMode !== undefined) {
+    // Validate against the two valid values — anything else is a
+    // client bug; reject loudly rather than silently storing garbage.
+    if (kitchenWorkflowMode !== "simple" && kitchenWorkflowMode !== "tracking") {
+      return NextResponse.json({ error: "Invalid kitchenWorkflowMode" }, { status: 400 });
+    }
+    updateData.kitchenWorkflowMode = kitchenWorkflowMode;
   }
 
   await prisma.restaurant.update({ where: { id: restaurantId }, data: updateData });
