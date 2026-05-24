@@ -33,6 +33,7 @@ import TrialExpiring             from "@/emails/templates/TrialExpiring";
 import DigestEmail               from "@/emails/templates/DigestEmail";
 import ScheduledOrderReminder    from "@/emails/templates/ScheduledOrderReminder";
 import MarketplaceSettlement     from "@/emails/templates/MarketplaceSettlement";
+import AutopilotEmail            from "@/emails/templates/AutopilotEmail";
 import type { EmailOrderItem } from "@/emails/components/EmailParts";
 
 // Cached transport so we don't query PlatformSettings on every call.
@@ -761,6 +762,56 @@ export async function sendMarketplaceSettlementSummaryEmail(params: {
     ? `Your Fee Free Marketplace bill — ${params.period}`
     : `Action needed: ${params.period} Marketplace bill`;
   return send({ to: params.to, subject, html });
+}
+
+// ─── Autopilot marketing emails ──────────────────────────────────────
+// Sent by /api/cron/autopilot for second-order / reengagement campaigns.
+// Bulk-class email → ships with List-Unsubscribe (RFC 8058) so Gmail/
+// Yahoo deliverability rules are satisfied. Reply-To set to the
+// restaurant's own contact email so customer replies go to the
+// restaurant, not us.
+
+export async function sendAutopilotEmail(params: {
+  to: string;
+  customerName: string;
+  restaurantName: string;
+  subject: string;
+  body: string;
+  couponCode?: string | null;
+  couponLabel?: string | null;
+  ctaUrl: string;
+  ctaLabel?: string;
+  restaurantUrl?: string;
+  restaurantEmail?: string;
+  restaurantPhone?: string;
+  /** When set, drives the List-Unsubscribe + footer unsubscribe link.
+   *  Typically points at the restaurant's customer-database UI where
+   *  staff can flag the recipient as do-not-contact. */
+  unsubscribeUrl?: string;
+}) {
+  const html = await renderEmail(
+    AutopilotEmail({
+      customerName: params.customerName,
+      restaurantName: params.restaurantName,
+      subject: params.subject,
+      body: params.body,
+      couponCode: params.couponCode,
+      couponLabel: params.couponLabel,
+      ctaUrl: params.ctaUrl,
+      ctaLabel: params.ctaLabel,
+      restaurantUrl: params.restaurantUrl,
+      restaurantEmail: params.restaurantEmail,
+      restaurantPhone: params.restaurantPhone,
+      imprint: currentImprint(),
+    })
+  );
+  return send({
+    to: params.to,
+    subject: params.subject,
+    html,
+    replyTo: params.restaurantEmail,
+    listUnsubscribeUrl: params.unsubscribeUrl,
+  });
 }
 
 export async function sendScheduledOrderReminderEmail(params: {

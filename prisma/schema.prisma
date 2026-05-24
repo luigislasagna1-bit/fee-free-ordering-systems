@@ -894,9 +894,32 @@ model AutopilotCampaign {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @default(now()) @updatedAt
 
-  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant Restaurant       @relation(fields: [restaurantId], references: [id])
+  sends      AutopilotSend[]
 
   @@unique([restaurantId, campaignType])
+}
+
+/// Tracks which autopilot emails have been sent to which customers, so
+/// the cron doesn't double-send when it runs every hour. Unique on
+/// (campaignId, customerEmail) makes attempted double-sends a constraint
+/// violation that the runner catches + ignores — defense-in-depth in
+/// case two cron instances fire close together. Email is the de-dup key
+/// rather than customerId because a customer may have multiple Customer
+/// rows (one per restaurant they've ordered from) but only one inbox.
+model AutopilotSend {
+  id            String   @id @default(cuid())
+  campaignId    String
+  customerEmail String
+  /// Optional FK to a specific Customer row for the restaurant — handy
+  /// for analytics but not the de-dup key (see comment above).
+  customerId    String?
+  sentAt        DateTime @default(now())
+
+  campaign AutopilotCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, customerEmail])
+  @@index([campaignId])
 }
 
 model ReservationSettings {
