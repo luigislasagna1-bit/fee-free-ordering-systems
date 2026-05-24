@@ -6,6 +6,7 @@ import { AdminHeader } from "@/components/admin/AdminHeader";
 import { ImpersonationBanner } from "@/components/admin/ImpersonationBanner";
 import { EmailVerificationBanner } from "@/components/admin/EmailVerificationBanner";
 import { GuidedSetupPill } from "@/components/admin/GuidedSetupPill";
+import { SetupProgressProvider } from "@/components/admin/SetupProgressProvider";
 import { getSessionUser } from "@/lib/session";
 import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import prisma from "@/lib/db";
@@ -169,27 +170,34 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             }
           />
         )}
-        <div className="flex flex-1 overflow-hidden">
-          <AdminSidebar
-            session={session}
-            pendingOrders={pendingOrders}
-            setupProgress={setupProgress}
-            hasHostedSite={hasHostedSite}
-            isPublished={isPublished}
-          />
-          <div className="flex-1 flex flex-col overflow-hidden">
-            <AdminHeader
+        {/* SetupProgressProvider wraps everything that displays progress
+            so the percentage / checkmarks update in real time after the
+            owner completes a step. Seeded from server-rendered value;
+            polls /api/admin/setup-progress on route change + every 30s.
+            Fixes task #77. */}
+        <SetupProgressProvider initial={setupProgress}>
+          <div className="flex flex-1 overflow-hidden">
+            <AdminSidebar
               session={session}
               pendingOrders={pendingOrders}
-              restaurantName={restaurantName}
-              locations={locationsForSwitcher}
-              activeLocationId={restaurantId}
               setupProgress={setupProgress}
+              hasHostedSite={hasHostedSite}
+              isPublished={isPublished}
             />
-            <main className="flex-1 overflow-y-auto p-6">{children}</main>
+            <div className="flex-1 flex flex-col overflow-hidden">
+              <AdminHeader
+                session={session}
+                pendingOrders={pendingOrders}
+                restaurantName={restaurantName}
+                locations={locationsForSwitcher}
+                activeLocationId={restaurantId}
+                setupProgress={setupProgress}
+              />
+              <main className="flex-1 overflow-y-auto p-6">{children}</main>
+            </div>
           </div>
-        </div>
-        {setupProgress && <GuidedSetupPill progress={setupProgress} />}
+          {setupProgress && <GuidedSetupPill progress={setupProgress} />}
+        </SetupProgressProvider>
       </div>
     </NextIntlClientProvider>
   );

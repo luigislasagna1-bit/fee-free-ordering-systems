@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import type { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import type { SetupProgress, StepId } from "@/lib/setup-checklist";
+import { useSetupProgress } from "@/components/admin/SetupProgressProvider";
 
 type NavItem = {
   href: string;
@@ -309,7 +310,7 @@ function useSafeT() {
 export function AdminSidebar({
   session,
   pendingOrders = 0,
-  setupProgress,
+  setupProgress: setupProgressProp,
   hasHostedSite = false,
   isPublished = false,
 }: {
@@ -329,6 +330,12 @@ export function AdminSidebar({
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const restaurantSlug = (session.user as any)?.restaurantSlug;
+  // Prefer the live progress from the SetupProgressProvider context (polls +
+  // refetches on route change). Fall back to the prop for callsites that
+  // haven't been wired through the provider yet, and for the initial paint
+  // before the context hydrates.
+  const livesetupProgress = useSetupProgress();
+  const setupProgress = livesetupProgress ?? setupProgressProp;
 
   // Single-open accordion state:
   //   openGroup    — which TOP-level category is currently expanded (one only)

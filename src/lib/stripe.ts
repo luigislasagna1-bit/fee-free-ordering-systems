@@ -396,22 +396,31 @@ export async function createDirectPaymentIntent(params: {
   restaurantStripeAccountId: string;
   orderId: string;
   restaurantId: string;
-  /** Restaurant display name. Used as the statement descriptor suffix
-   *  ONLY when the connected account's own business profile doesn't have
-   *  one set. Direct charges use the connected account's identity by
-   *  default — this is just a defensive fallback. */
+  /** Restaurant display name. Kept on the params for backwards-compat
+   *  with callers but NO LONGER used as a statement-descriptor suffix.
+   *  See note below — direct charges inherit the descriptor from the
+   *  connected account's business profile; adding a suffix doubled it
+   *  up on the bank statement. */
   restaurantName?: string | null;
 }) {
   const stripe = await getStripe();
-  const statementDescriptorSuffix = buildStatementDescriptorSuffix(params.restaurantName);
+  // ⚠️ Do NOT set statement_descriptor_suffix on direct charges.
+  // The connected restaurant's Stripe profile already defines the
+  // statement descriptor (e.g. "LUIGIS LASAGNA & PIZZE"). Adding a
+  // suffix here used to produce "LUIGIS LA* LUIGIS LASAGNA" because
+  // Stripe prepends the profile-truncated prefix AND appends our
+  // suffix — both derived from the restaurant name. Task #71 fix.
+  //
+  // If a restaurant ever shows a bad descriptor it's because their
+  // connected account's business profile is misconfigured — they need
+  // to fix it in their Stripe dashboard (Connect → Account → Branding
+  // → Statement descriptor). Don't paper over it here.
+  void params.restaurantName; // retained on the API for callsite compat
   const intent = await stripe.paymentIntents.create(
     {
       amount: params.amountCents,
       currency: params.currency,
       capture_method: "manual",
-      ...(statementDescriptorSuffix
-        ? { statement_descriptor_suffix: statementDescriptorSuffix }
-        : {}),
       metadata: {
         orderId: params.orderId,
         restaurantId: params.restaurantId,

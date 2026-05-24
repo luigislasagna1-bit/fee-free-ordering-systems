@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, X } from "lucide-react";
 import type { SetupProgress } from "@/lib/setup-checklist";
+import { useSetupProgress } from "@/components/admin/SetupProgressProvider";
 
 /**
  * Floating bottom-right pill that turns the admin into a true step-by-step
@@ -45,7 +46,13 @@ import type { SetupProgress } from "@/lib/setup-checklist";
  *  window too. sessionStorage clears on tab close — pill returns next visit. */
 const DISMISS_KEY = "ffo:guided-setup-pill-dismissed-at";
 
-export function GuidedSetupPill({ progress }: { progress: SetupProgress }) {
+export function GuidedSetupPill({ progress: progressProp }: { progress: SetupProgress }) {
+  // Prefer the live SetupProgressProvider value (polls + refetches on
+  // route change) so the pill auto-advances to the next incomplete step
+  // the moment the owner saves the current one. Falls back to the prop
+  // for the initial paint before context hydrates.
+  const liveProgress = useSetupProgress();
+  const progress = liveProgress ?? progressProp;
   const pathname = usePathname();
   const [dismissed, setDismissed] = useState(false);
 

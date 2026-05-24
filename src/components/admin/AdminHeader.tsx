@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { LocationSwitcher, type LocationOption } from "./LocationSwitcher";
 import type { SetupProgress } from "@/lib/setup-checklist";
+import { useSetupProgress } from "@/components/admin/SetupProgressProvider";
 
 export function AdminHeader({
   session,
@@ -12,7 +13,7 @@ export function AdminHeader({
   restaurantName,
   locations,
   activeLocationId,
-  setupProgress,
+  setupProgress: setupProgressProp,
 }: {
   session: Session;
   pendingOrders?: number;
@@ -27,6 +28,11 @@ export function AdminHeader({
   const tOrders = useTranslations("admin.orders");
   const user = session.user as any;
   const displayName = restaurantName || user?.name || user?.email;
+
+  // Prefer the live SetupProgressProvider value so the percent in the
+  // sticky banner updates in real-time after the owner saves a step.
+  const liveSetupProgress = useSetupProgress();
+  const setupProgress = liveSetupProgress ?? setupProgressProp;
 
   const showSetupBanner = !!setupProgress && setupProgress.percent < 100;
 
