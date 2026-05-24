@@ -74,9 +74,24 @@ export default async function PartnersPage() {
         </div>
       </section>
 
-      {/* Earnings example */}
+      {/* Earnings matrix — shows commission across both axes the partner
+          actually controls: how many restaurants they bring + how many
+          paid add-ons each restaurant ends up subscribing to. Luigi
+          flagged that a single $99/mo sample was misleading — partners
+          want to see "what if my restaurants only buy 1 add-on?" and
+          "what if they go all-in?" both. So we show 3 spend tiers and
+          3 portfolio sizes, all 9 cells visible at once.
+
+          Spend tiers (per restaurant per month):
+            - 1 add-on   = ~$29.99 (Online Payments alone — the most-common
+                                    first add-on, required for card orders)
+            - 3 add-ons  = ~$59.97 (OP $29.99 + Hosted Website $19.99 +
+                                    Custom Domain $9.99 — typical sweet spot)
+            - All add-ons = ~$149.95 (the above + Multi-Location $49.99 +
+                                    Advanced Promos $29.99 + Reservation
+                                    Deposits $9.99 — power user) */}
       <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 rounded-full px-4 py-1.5 text-xs uppercase tracking-wider font-bold mb-4">
               <Calculator className="w-3.5 h-3.5" /> Real numbers
@@ -84,34 +99,86 @@ export default async function PartnersPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
               What does this actually pay?
             </h2>
-            <p className="text-gray-600">Sample math assuming $99/mo average paid-add-on spend per restaurant (e.g. Online Payments + Hosted Website + Custom Domain combined).</p>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Your commission depends on two things: how many active restaurants you&apos;ve referred, and how many paid add-ons each one subscribes to. Here&apos;s how the math works out across realistic scenarios.
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-4">
-            <EarningsCard
-              count={6}
-              mrr={594}
-              monthly={30}
-              annual={357}
-              rate={5}
+
+          {/* Restaurant-count tier headers */}
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
+            <EarningsTierCard
+              count="10 restaurants"
+              rate="5%"
+              note="Once you cross the 6-restaurant threshold, your commission rate kicks in retroactively across your whole roster."
             />
-            <EarningsCard
-              count={20}
-              mrr={1980}
-              monthly={99}
-              annual={1188}
-              rate={5}
+            <EarningsTierCard
+              count="25 restaurants"
+              rate="5%"
+              note="Still in the 5% tier — but more restaurants means more recurring revenue with the same effort."
               highlight
             />
-            <EarningsCard
-              count={50}
-              mrr={4950}
-              monthly={495}
-              annual={5940}
-              rate={10}
+            <EarningsTierCard
+              count="50+ restaurants"
+              rate="10%"
+              note="Hit 50 active restaurants and your rate DOUBLES. Power-partner territory."
             />
           </div>
-          <p className="text-center text-xs text-gray-500 mt-6">
-            Commission is paid on net subscription revenue (excluding taxes, Stripe fees, refunds, and chargebacks).
+
+          {/* The actual scenarios matrix. 3 spend tiers × 3 portfolio sizes. */}
+          <div className="overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
+            <table className="w-full text-sm border-collapse bg-white">
+              <thead>
+                <tr className="bg-gray-50 border-b border-gray-200">
+                  <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-bold text-gray-500">
+                    Per-restaurant add-on spend
+                  </th>
+                  <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-bold text-gray-500">
+                    10 restaurants<br /><span className="font-normal text-gray-400">(5%)</span>
+                  </th>
+                  <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-bold text-emerald-700 bg-emerald-50">
+                    25 restaurants<br /><span className="font-normal text-emerald-600">(5%)</span>
+                  </th>
+                  <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-bold text-gray-500">
+                    50+ restaurants<br /><span className="font-normal text-gray-400">(10%)</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <EarningsRow
+                  scenario="1 add-on"
+                  scenarioDetail="e.g. just Online Payments — $29.99/mo per restaurant"
+                  perRestaurant={29.99}
+                />
+                <EarningsRow
+                  scenario="3 add-ons"
+                  scenarioDetail="e.g. Online Payments + Hosted Website + Custom Domain — $59.97/mo per restaurant"
+                  perRestaurant={59.97}
+                  highlightMid
+                />
+                <EarningsRow
+                  scenario="All paid add-ons"
+                  scenarioDetail="OP + Hosted Site + Custom Domain + Multi-Location + Promos + Reservations — $149.95/mo per restaurant"
+                  perRestaurant={149.95}
+                />
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-6 grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+            <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4">
+              <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">Best case in the table</div>
+              <div className="text-2xl font-extrabold text-emerald-700">$1,499/mo</div>
+              <div className="text-xs text-emerald-800 mt-1">50 restaurants × all add-ons × 10% = <strong>$17,994/year</strong> recurring.</div>
+            </div>
+            <div className="rounded-xl bg-gray-50 border border-gray-200 p-4">
+              <div className="text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Common scenario</div>
+              <div className="text-2xl font-extrabold text-gray-900">$74.96/mo</div>
+              <div className="text-xs text-gray-700 mt-1">25 restaurants × 3 add-ons × 5% = <strong>$899/year</strong>, on autopilot.</div>
+            </div>
+          </div>
+
+          <p className="text-center text-xs text-gray-500 mt-6 max-w-2xl mx-auto">
+            Commission is paid on net subscription revenue (excluding taxes, Stripe fees, refunds, and chargebacks). Marketplace per-order fees and any commissions you earn through restaurants&apos; own usage are separate from add-on subscription commission. <strong>Below 6 active paying restaurants, commission is 0%</strong> — once you cross the threshold, it kicks in retroactively across your whole roster.
           </p>
         </div>
       </section>
@@ -287,19 +354,16 @@ function TierCard({
   );
 }
 
-function EarningsCard({
-  count,
-  mrr,
-  monthly,
-  annual,
-  rate,
-  highlight,
+/**
+ * Restaurant-count tier card. Shown above the earnings matrix to set
+ * expectations for what commission rate applies at each portfolio size.
+ */
+function EarningsTierCard({
+  count, rate, note, highlight,
 }: {
-  count: number;
-  mrr: number;
-  monthly: number;
-  annual: number;
-  rate: number;
+  count: string;
+  rate: string;
+  note: string;
   highlight?: boolean;
 }) {
   return (
@@ -311,18 +375,58 @@ function EarningsCard({
       }`}
     >
       <div className={`text-xs uppercase tracking-wider font-bold mb-2 ${highlight ? "text-emerald-100" : "text-gray-500"}`}>
-        {count} restaurants
+        {count}
       </div>
-      <div className={`text-3xl font-bold mb-1 ${highlight ? "text-white" : "text-gray-900"}`}>
-        ${monthly.toLocaleString()}<span className={`text-base font-normal ${highlight ? "text-emerald-100" : "text-gray-500"}`}>/mo</span>
+      <div className={`text-4xl font-extrabold mb-1 ${highlight ? "text-white" : "text-emerald-600"}`}>
+        {rate}
       </div>
-      <div className={`text-xs mb-4 ${highlight ? "text-emerald-100" : "text-gray-500"}`}>
-        ${annual.toLocaleString()}/year at {rate}% on ${mrr.toLocaleString()} MRR
+      <div className={`text-xs ${highlight ? "text-emerald-100" : "text-gray-500"} mb-3`}>
+        commission rate
       </div>
-      <div className={`flex items-center gap-1.5 text-xs ${highlight ? "text-emerald-100" : "text-gray-500"}`}>
-        <CheckCircle2 className="w-3.5 h-3.5" /> Recurring monthly
-      </div>
+      <p className={`text-xs leading-relaxed ${highlight ? "text-emerald-50" : "text-gray-600"}`}>{note}</p>
     </div>
+  );
+}
+
+/**
+ * Single row of the earnings matrix. Computes monthly commission for each
+ * portfolio size (10/25/50+) given a per-restaurant add-on spend. Rates are
+ * hardcoded: 5% at <50 active restaurants, 10% at 50+. Numbers update auto
+ * if the constants ever change — no manual recalculation per row.
+ */
+function EarningsRow({
+  scenario, scenarioDetail, perRestaurant, highlightMid,
+}: {
+  scenario: string;
+  scenarioDetail: string;
+  perRestaurant: number;
+  highlightMid?: boolean;
+}) {
+  const fmt = (n: number) => `$${n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const row = (n: number, rate: number) => fmt(perRestaurant * n * rate);
+  return (
+    <tr className="border-b border-gray-100 last:border-0">
+      <td className="px-4 py-4 align-top">
+        <div className="font-bold text-gray-900">{scenario}</div>
+        <div className="text-xs text-gray-500 mt-1 leading-relaxed">{scenarioDetail}</div>
+      </td>
+      <td className="px-4 py-4 text-right align-top text-gray-900">
+        <div className="text-lg font-bold">{row(10, 0.05)}<span className="text-xs font-normal text-gray-500">/mo</span></div>
+        <div className="text-xs text-gray-400">{fmt(perRestaurant * 10 * 0.05 * 12)}/yr</div>
+      </td>
+      <td className={`px-4 py-4 text-right align-top ${highlightMid ? "bg-emerald-50" : ""}`}>
+        <div className={`text-lg font-bold ${highlightMid ? "text-emerald-700" : "text-gray-900"}`}>
+          {row(25, 0.05)}<span className="text-xs font-normal text-gray-500">/mo</span>
+        </div>
+        <div className={`text-xs ${highlightMid ? "text-emerald-600" : "text-gray-400"}`}>
+          {fmt(perRestaurant * 25 * 0.05 * 12)}/yr
+        </div>
+      </td>
+      <td className="px-4 py-4 text-right align-top">
+        <div className="text-lg font-bold text-emerald-700">{row(50, 0.10)}<span className="text-xs font-normal text-gray-500">/mo</span></div>
+        <div className="text-xs text-emerald-600">{fmt(perRestaurant * 50 * 0.10 * 12)}/yr</div>
+      </td>
+    </tr>
   );
 }
 

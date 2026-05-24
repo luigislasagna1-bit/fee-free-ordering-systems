@@ -487,7 +487,7 @@ export function HomeClient({ locale }: { locale: string }) {
               Already help restaurants with their tech?
             </h2>
             <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-5">
-              If you set up websites, POS systems, or run a restaurant-tech agency — sign up as a partner. Refer restaurants, earn recurring commissions on every paid add-on they subscribe to. Up to 30% lifetime revenue share.
+              If you set up websites, POS systems, or run a restaurant-tech agency — sign up as a partner. Refer restaurants, earn recurring commissions on every paid add-on they subscribe to. <strong>Up to 10% lifetime revenue share</strong>, stacking across your whole portfolio.
             </p>
             <Link
               href="/partners"
@@ -498,10 +498,10 @@ export function HomeClient({ locale }: { locale: string }) {
             </Link>
           </div>
           <div className="bg-white rounded-2xl border-2 border-emerald-200 p-6 shadow-md">
-            <div className="text-4xl font-extrabold text-emerald-600">30%</div>
+            <div className="text-4xl font-extrabold text-emerald-600">10%</div>
             <div className="text-sm text-gray-500 mb-3">Lifetime commission</div>
             <div className="text-xs text-gray-600 leading-relaxed">
-              On every paying restaurant you refer — for as long as they stay subscribed. Stacks across your whole portfolio.
+              5% baseline once you hit 6 active paying restaurants. <strong>10% at 50+</strong>. Recurring — for as long as they stay subscribed. Stacks across your whole portfolio.
             </div>
           </div>
         </div>
