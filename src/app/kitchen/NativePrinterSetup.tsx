@@ -353,9 +353,16 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
                   <input
                     type="text"
                     value={ip}
-                    onChange={(e) => setIp(e.target.value.trim())}
+                    onChange={(e) => setIp(e.target.value.replace(/[^0-9.]/g, ""))}
                     placeholder="192.168.1.50"
-                    inputMode="numeric"
+                    // inputMode="text" shows the full keyboard with the
+                    // period key — required for IP entry. We use
+                    // type="text" so the field accepts dots; the
+                    // onChange strips anything that's NOT a digit or
+                    // dot so users can't fat-finger letters.
+                    inputMode="text"
+                    autoCapitalize="off"
+                    autoCorrect="off"
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
