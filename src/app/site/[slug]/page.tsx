@@ -241,6 +241,42 @@ export default async function HostedSitePage({
         .filter((s): s is { key: typeof s.key; url: string } => typeof s.url === "string" && s.url.length > 0)
     : [];
 
+  // Sticky-nav anchor link list — only emit links for sections that will
+  // actually render so the nav doesn't promise a destination we don't
+  // deliver. Order matches expected user scroll path. "Menu" always
+  // points at /order (the real menu lives there, not on the marketing
+  // page); the rest are #anchor scrolls on the marketing page itself.
+  const navLinks: Array<{ label: string; href: string }> = [
+    { label: "Menu", href: `${orderUrl}` },
+  ];
+  if (s.sections.featuredMenu && r.featuredItems.length > 0) {
+    navLinks.push({ label: "Featured", href: "#featured-menu" });
+  }
+  if (s.sections.about && r.description) {
+    navLinks.push({ label: "About", href: "#about" });
+  }
+  if (s.sections.visit) {
+    // Hours + Contact both live inside the "Visit" section so one anchor
+    // covers both. We use "Contact" as the label because that's what
+    // GloriaFood-style nav conventions use and it tests better with
+    // restaurant customers than "Hours" or "Visit".
+    navLinks.push({ label: "Contact", href: "#contact" });
+  }
+
+  // Service-summary card copy — assembled from the restaurant's enabled
+  // services. Matches "We offer Takeout and Food Delivery" (GloriaFood
+  // style) pattern Luigi flagged. Skips dine-in/reservations from the
+  // copy line (they're not "order online" oriented) but the underlying
+  // pills below the visit section still list them.
+  const serviceCopy = (() => {
+    const parts: string[] = [];
+    if (r.acceptsPickup) parts.push("Takeout");
+    if (r.acceptsDelivery) parts.push("Food Delivery");
+    if (parts.length === 0) return null; // no online services → skip the card
+    if (parts.length === 1) return `We offer ${parts[0]}`;
+    return `We offer ${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`;
+  })();
+
   return (
     <main className="min-h-screen bg-white">
       {/* JSON-LD structured data for Google's knowledge panel + rich snippets. */}
@@ -250,70 +286,111 @@ export default async function HostedSitePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(cleanJsonLd) }}
       />
 
+      {/* ── Sticky top nav ───────────────────────────────────────────────
+          Logo on left, anchor links in middle (desktop only), Order CTA
+          on right. Pure CSS sticky — no JS. backdrop-blur + slight
+          opacity so it doesn't feel like a hard band when scrolled over
+          the photo hero. */}
+      {s.header.stickyNav && (
+        <nav
+          className="sticky top-0 z-40 bg-black/85 backdrop-blur-sm border-b border-white/10"
+          aria-label="Site navigation"
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+            {/* Left: logo (image OR name fallback) */}
+            <a href="#top" className="flex items-center gap-3 min-w-0">
+              {s.header.showLogo && r.logoUrl ? (
+                <Image
+                  src={r.logoUrl}
+                  alt={`${r.name} logo`}
+                  width={44}
+                  height={44}
+                  className="rounded-md object-contain bg-white/10 p-0.5 flex-shrink-0"
+                />
+              ) : (
+                <span className="text-white font-bold truncate text-base sm:text-lg">{r.name}</span>
+              )}
+            </a>
+            {/* Middle: anchor links (hidden on mobile to save space) */}
+            <div className="hidden md:flex items-center gap-1">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="px-3 py-1.5 text-sm font-semibold uppercase tracking-wider text-white/80 hover:text-white hover:bg-white/10 rounded transition"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+            {/* Right: Order CTA (always visible, theme color) */}
+            {primaryCta && (
+              <Link
+                href={primaryCta.href}
+                className="inline-flex items-center justify-center px-4 sm:px-5 py-2 rounded-md font-bold text-xs sm:text-sm shadow text-white transition hover:brightness-110"
+                style={{ background: themeColor }}
+              >
+                {primaryCta.label}
+              </Link>
+            )}
+          </div>
+        </nav>
+      )}
+
+      {/* Anchor target for the logo "back to top" link */}
+      <div id="top" />
+
       {/* Hero — TWO layouts based on s.header.fullScreenHero:
        *
-       * 1. fullScreenHero=true (GloriaFood-style): the banner image fills
-       *    a full-viewport hero with a dark gradient overlay. The title,
-       *    CTAs, etc. sit centered over the image. Photographic banners
-       *    (food shots, restaurant interior) look much better this way.
+       * 1. fullScreenHero=true (default — GloriaFood-style): full-viewport
+       *    photo hero with centered title + subtitle over a darkening
+       *    overlay. CTAs are intentionally NOT in the hero — they live
+       *    in the service-summary card directly below where they're
+       *    easier to find than another button competing with the title.
        *
-       * 2. fullScreenHero=false (default — what we shipped first): the
-       *    banner shows as a contained strip on top, with a separate
+       * 2. fullScreenHero=false: contained banner strip on top with a
        *    theme-color hero block below holding the title + CTAs.
-       *    Logo-style banners (Luigi's case) need this — the text
-       *    overlay would compete with the embedded logo text otherwise.
+       *    Logo-style banners (text-in-image logos) need this so the
+       *    overlay doesn't fight the embedded logo text.
        */}
       {s.header.fullScreenHero && s.sections.banner && r.bannerUrl ? (
         <section
-          className="relative text-white min-h-[75vh] flex items-center"
+          className="relative text-white min-h-[88vh] flex items-center justify-center text-center"
           style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url(${r.bannerUrl})`,
+            // Configurable overlay opacity. Lower = food photo shows
+            // through more clearly. Default 0.4 vs GloriaFood's ~0.35.
+            backgroundImage: `linear-gradient(rgba(0,0,0,${s.header.heroOverlayOpacity}), rgba(0,0,0,${s.header.heroOverlayOpacity})), url(${r.bannerUrl})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          <div className="max-w-5xl mx-auto px-6 py-20 md:py-28 w-full">
+          <div className="max-w-4xl mx-auto px-6 py-20 md:py-28 w-full">
             {s.header.showLogo && r.logoUrl && (
               <div className="mb-6 inline-block">
                 <Image
                   src={r.logoUrl}
                   alt={`${r.name} logo`}
-                  width={120}
-                  height={120}
+                  width={140}
+                  height={140}
                   className="rounded-xl bg-white/10 backdrop-blur shadow-xl p-2 object-contain"
                 />
               </div>
             )}
-            <div className="mb-3">
+            <div className="mb-4 flex justify-center">
               <OpenNowBadge status={openStatus} />
             </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-md">{heroTitle}</h1>
-            {heroSlogan && <p className="mt-3 text-lg md:text-xl text-white/90 drop-shadow">{heroSlogan}</p>}
-            {showCuisine && (
-              <p className="mt-2 text-sm uppercase tracking-wider text-white/75">
-                {r.cuisineType}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight drop-shadow-lg">
+              {heroTitle}
+            </h1>
+            {heroSlogan && (
+              <p className="mt-5 text-lg md:text-xl lg:text-2xl text-white/95 drop-shadow-md max-w-2xl mx-auto">
+                {heroSlogan}
               </p>
             )}
-            {(primaryCta || secondaryCta) && (
-              <div className="mt-8 flex flex-wrap gap-3">
-                {primaryCta && (
-                  <Link
-                    href={primaryCta.href}
-                    className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition text-white"
-                    style={{ background: themeColor }}
-                  >
-                    {primaryCta.label}
-                  </Link>
-                )}
-                {secondaryCta && (
-                  <Link
-                    href={secondaryCta.href}
-                    className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white transition backdrop-blur"
-                  >
-                    {secondaryCta.label}
-                  </Link>
-                )}
-              </div>
+            {showCuisine && (
+              <p className="mt-3 text-sm uppercase tracking-[0.25em] text-white/80">
+                {r.cuisineType}
+              </p>
             )}
           </div>
         </section>
@@ -385,6 +462,40 @@ export default async function HostedSitePage({
         </>
       )}
 
+      {/* ── Service summary CTA card ──────────────────────────────────
+          Big, centered, white card with "We offer X" + a prominent
+          theme-colored "See MENU & Order" button. Positioned to overlap
+          slightly with the hero (-mt) so it feels visually anchored to
+          it, like the GloriaFood pattern. Only renders when there's a
+          service to advertise (pickup/delivery enabled). */}
+      {s.sections.serviceSummary && serviceCopy && primaryCta && (
+        <section className="relative -mt-12 md:-mt-16 z-10 max-w-3xl mx-auto px-4 sm:px-6">
+          <div className="bg-white rounded-xl shadow-2xl border border-gray-100 px-6 py-8 md:py-10 text-center">
+            <p className="text-xl md:text-2xl font-semibold text-gray-900">
+              {serviceCopy}
+            </p>
+            <div className="mt-5 flex flex-wrap justify-center gap-3">
+              <Link
+                href={primaryCta.href}
+                className="inline-flex items-center justify-center px-8 py-4 rounded-md font-bold text-base md:text-lg shadow-lg hover:shadow-xl transition text-white"
+                style={{ background: themeColor }}
+              >
+                {primaryCta.label}
+              </Link>
+              {secondaryCta && (
+                <Link
+                  href={secondaryCta.href}
+                  className="inline-flex items-center justify-center px-8 py-4 rounded-md font-bold text-base md:text-lg border-2 text-gray-800 hover:bg-gray-50 transition"
+                  style={{ borderColor: themeColor, color: themeColor }}
+                >
+                  {secondaryCta.label}
+                </Link>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Custom sections positioned after "banner" — rendered right after
           the hero block, before About. */}
       <CustomSectionsAt position="banner" sections={s.customSections} themeColor={themeColor} />
@@ -393,9 +504,12 @@ export default async function HostedSitePage({
           from Restaurant.description (no override). Section hidden when
           description is empty OR owner disabled it. */}
       {s.sections.about && r.description && (
-        <section className="max-w-3xl mx-auto px-6 py-12">
-          <h2 className="text-2xl font-bold text-gray-900">About</h2>
-          <p className="mt-3 text-gray-700 leading-relaxed whitespace-pre-line">
+        <section id="about" className="max-w-3xl mx-auto px-6 py-12 scroll-mt-20">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">About</h2>
+          <div className="mt-2 flex justify-center">
+            <span className="inline-block w-12 h-1 rounded" style={{ background: themeColor }} />
+          </div>
+          <p className="mt-6 text-gray-700 leading-relaxed whitespace-pre-line text-center md:text-left">
             {r.description}
           </p>
         </section>
@@ -404,11 +518,14 @@ export default async function HostedSitePage({
 
       {/* Featured menu — owner toggle. Items pulled from isFeatured menu rows. */}
       {s.sections.featuredMenu && r.featuredItems.length > 0 && (
-        <section className="bg-gray-50">
+        <section id="featured-menu" className="bg-gray-50 scroll-mt-20">
           <div className="max-w-5xl mx-auto px-6 py-14">
-            <h2 className="text-2xl font-bold text-gray-900 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">
               Featured menu
             </h2>
+            <div className="mt-2 flex justify-center">
+              <span className="inline-block w-12 h-1 rounded" style={{ background: themeColor }} />
+            </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {r.featuredItems.map((item) => (
                 <div
@@ -460,10 +577,11 @@ export default async function HostedSitePage({
       {/* Visit + Hours — owner toggle on Visit; Hours are always shown when
           the restaurant has any open day (Hours block has its own check). */}
       {s.sections.visit && (
-      <section className="max-w-5xl mx-auto px-6 py-14">
+      <section id="contact" className="max-w-5xl mx-auto px-6 py-14 scroll-mt-20">
+        <h2 className="sr-only">Contact and hours</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Visit</h2>
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900">Visit</h3>
             <div className="mt-4 space-y-2 text-gray-700">
               {r.address && (
                 <p className="flex items-start gap-2">
@@ -512,10 +630,10 @@ export default async function HostedSitePage({
             )}
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-2">
               Hours
               <OpenNowBadge status={openStatus} />
-            </h2>
+            </h3>
             {/* Today's row is highlighted with the theme color + "Today"
                 pill so visitors can instantly see when this restaurant
                 is open relative to now. */}

@@ -41,16 +41,34 @@ export interface HostedSiteSettings {
     customSlogan: string | null;
     /** Render the banner image as a FULL-SCREEN hero (image fills the
      *  viewport, dark overlay underneath the title), GloriaFood-style.
-     *  When false (default), the banner shows as a contained strip
-     *  above a colored hero block — the layout we settled on for
-     *  logo-style banners. Restaurants with photographic banners
-     *  (food shots) usually want this on. */
+     *  When false, the banner shows as a contained strip above a colored
+     *  hero block — the layout we settled on for logo-style banners.
+     *  Default true as of 2026-05-24 revamp; food-photography banners
+     *  are by far the most common case and look dramatically better
+     *  full-bleed. Restaurants with logo-only banners can flip this off. */
     fullScreenHero: boolean;
+    /** Sticky top nav (logo on the left, section anchor links in the
+     *  middle, "Order Online" CTA on the right). Always visible as the
+     *  user scrolls. Matches GloriaFood's top-bar pattern that Luigi
+     *  flagged during UAT as missing. */
+    stickyNav: boolean;
+    /** Darkening overlay on the full-screen hero photo, 0..1. Lower =
+     *  food photo shows through more clearly. 0.4 is the GloriaFood
+     *  default and balances legibility against letting the photo do
+     *  its job. 0 = no overlay (use only with very dark photos);
+     *  0.7 = strong overlay (use when title contrast really matters). */
+    heroOverlayOpacity: number;
   };
   sections: {
     /** Show the banner image at the very top of the page. Disable to
      *  start with a clean color-only hero. */
     banner: boolean;
+    /** Show the prominent service-summary card right under the hero —
+     *  "We offer Takeout & Food Delivery" + a big centered "See MENU
+     *  & Order" button. Mirrors GloriaFood's pattern; gives customers
+     *  a clear, impossible-to-miss CTA without having to scroll past
+     *  the hero. */
+    serviceSummary: boolean;
     /** Show the About section pulled from Restaurant.description. */
     about: boolean;
     /** Show the Featured Menu grid (auto-pulled from isFeatured items). */
@@ -96,10 +114,13 @@ export function defaultHostedSiteSettings(): HostedSiteSettings {
       showCuisineLabel: true,
       customTitle: null,
       customSlogan: null,
-      fullScreenHero: false,
+      fullScreenHero: true,
+      stickyNav: true,
+      heroOverlayOpacity: 0.4,
     },
     sections: {
       banner: true,
+      serviceSummary: true,
       about: true,
       featuredMenu: true,
       visit: true,
