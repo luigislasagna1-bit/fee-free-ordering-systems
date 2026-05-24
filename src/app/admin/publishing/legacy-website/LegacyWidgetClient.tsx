@@ -25,26 +25,23 @@ import {
 
 type Position = "br" | "bl" | "tr" | "tl" | "inline";
 /**
- * Snippet types — three different install patterns:
+ * Snippet types — two primary patterns + one advanced:
  *
- *   - "popup_js":  JS widget that injects a floating button + opens a
- *                  full-screen modal on click. Most polished UX. Requires
- *                  pasting into the host site's site-wide Custom Code area.
+ *   - "popup_js":   JS widget that injects a floating button + opens a
+ *                   full-screen modal on click. Most polished UX. Requires
+ *                   pasting into the host site's site-wide Custom Code area.
  *
  *   - "button_link": plain HTML <a> styled as a button. Opens the full
- *                  /order/<slug> page in a new tab on click. Works in
- *                  any "Embed HTML" widget on any site builder because
- *                  it's just HTML — no JavaScript, no Custom Code area
- *                  required. The most-portable button install. Trade-off
- *                  vs popup_js: opens in a new tab instead of an overlay
- *                  modal, so customers leave the host page momentarily.
+ *                   /order/<slug> page in a new tab on click. Works in
+ *                   ANY HTML widget on ANY site builder because it's just
+ *                   HTML — no JavaScript, no Custom Code area required.
+ *                   The GloriaFood-equivalent install pattern.
  *
- *   - "iframe":    plain <iframe> snippet that embeds the entire ordering
- *                  UI inline. No JavaScript, no button, no modal — just
- *                  a rectangle of menu where the snippet is pasted. Same
- *                  approach GloriaFood uses. Best when the restaurant
- *                  wants a dedicated "Order Online" page that shows the
- *                  menu directly without an intermediate button click.
+ *   - "iframe":     advanced. Plain <iframe> snippet that embeds the entire
+ *                   ordering UI inline. Hidden behind an "advanced" disclosure
+ *                   in the UI because most restaurants find the button pattern
+ *                   simpler to reason about and they're surprised when an
+ *                   iframe doesn't show a button. (UAT feedback round 3.)
  */
 type SnippetType = "popup_js" | "button_link" | "iframe";
 
@@ -169,7 +166,7 @@ export function LegacyWidgetClient({
                anywhere on your page. Same as GloriaFood. Less slick
                (no full-screen modal) but lets you put the menu in
                any specific location you want. */}
-      <div className="grid sm:grid-cols-3 gap-3">
+      <div className="grid sm:grid-cols-2 gap-3">
         <SnippetTypeCard
           active={snippetType === "popup_js"}
           onClick={() => setSnippetType("popup_js")}
@@ -183,21 +180,53 @@ export function LegacyWidgetClient({
           active={snippetType === "button_link"}
           onClick={() => setSnippetType("button_link")}
           icon={<ExternalLink className="w-5 h-5" />}
-          title="Button (opens in new tab)"
-          description="A styled HTML button you paste anywhere on your page. Click opens the full ordering page in a new browser tab. Works in any HTML widget — no Custom Code area needed."
-          tag="ANY WIX HTML BOX"
+          title="HTML Button (paste anywhere)"
+          description="A styled HTML button you paste into any HTML widget on your page. Click opens the full ordering page in a new tab. Works in any builder. Same approach GloriaFood uses."
+          tag="WORKS EVERYWHERE"
           tagColor="amber"
         />
-        <SnippetTypeCard
-          active={snippetType === "iframe"}
-          onClick={() => setSnippetType("iframe")}
-          icon={<Code2 className="w-5 h-5" />}
-          title="HTML Embed (inline menu)"
-          description="Plain iframe that embeds the entire menu directly inline — no button, no popup. Same approach GloriaFood uses for their 'Order Online' page section."
-          tag="INLINE MENU"
-          tagColor="blue"
-        />
       </div>
+
+      {/* Advanced: inline iframe embed. Tucked behind a disclosure
+          because most restaurants find it confusing — they expect a
+          button and get an inline menu instead. Still useful when the
+          owner wants a dedicated "Order Online" page that shows the
+          menu directly with no intermediate click, so we don't drop
+          it entirely. */}
+      <details className="rounded-lg border border-gray-200 bg-white">
+        <summary className="cursor-pointer px-4 py-2.5 text-xs font-medium text-gray-600 hover:text-gray-900 flex items-center gap-2">
+          <Code2 className="w-3.5 h-3.5" />
+          Advanced: embed the entire menu inline (instead of a button)
+          {snippetType === "iframe" && (
+            <span className="ml-auto text-[10px] font-bold text-blue-700 bg-blue-100 rounded-full px-2 py-0.5">
+              ACTIVE
+            </span>
+          )}
+        </summary>
+        <div className="border-t border-gray-200 p-4">
+          <button
+            type="button"
+            onClick={() => setSnippetType(snippetType === "iframe" ? "button_link" : "iframe")}
+            className={
+              snippetType === "iframe"
+                ? "w-full text-left rounded-xl border-2 border-blue-400 bg-blue-50/40 p-4 transition"
+                : "w-full text-left rounded-xl border-2 border-gray-200 hover:border-gray-300 bg-white p-4 transition"
+            }
+          >
+            <div className="flex items-start gap-3">
+              <div className={snippetType === "iframe" ? "w-10 h-10 rounded-lg bg-blue-500 text-white flex items-center justify-center flex-shrink-0" : "w-10 h-10 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center flex-shrink-0"}>
+                <Code2 className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4 className="font-bold text-gray-900 text-sm">HTML Embed (inline menu, no button)</h4>
+                <p className="text-xs text-gray-600 mt-1 leading-relaxed">
+                  Plain iframe that renders the entire menu directly inline. No button, no popup — customers browse and order without clicking anything first. Best for a dedicated &quot;Order Online&quot; page.
+                </p>
+              </div>
+            </div>
+          </button>
+        </div>
+      </details>
 
       {/* ── Customizer (controls + live preview) ─────────────────────── */}
       <div className="grid lg:grid-cols-2 gap-5">
