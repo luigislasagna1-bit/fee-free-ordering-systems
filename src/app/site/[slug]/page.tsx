@@ -5,6 +5,19 @@ import Image from "next/image";
 import { MapPin, Phone, Mail, Globe, Clock, ShoppingBag } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
+
+/**
+ * Force this route dynamic on every request — restaurant owners expect
+ * changes made in /admin/website/editor (banner photo, logo, hours,
+ * theme color, etc.) to show up on the live hosted site immediately.
+ * Without this, Next.js's full-route cache could serve a stale render
+ * for minutes after an upload. Luigi flagged this during UAT —
+ * uploaded a new banner, didn't see it on the live site.
+ *
+ * Cost is trivial since the DB queries are small and the page is
+ * server-rendered on a request that's already roundtripping anyway.
+ */
+export const dynamic = "force-dynamic";
 import {
   liveOpenStatus,
   formatHour,

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 
@@ -63,5 +64,21 @@ export async function PUT(req: NextRequest) {
   }
 
   await prisma.restaurant.update({ where: { id: restaurantId }, data: updateData });
+
+  // Bust the Next.js full-route cache for any customer-facing page that
+  // renders restaurant profile data. Without this, owners hit "Save"
+  // and don't see their banner / logo / hours change on the live site
+  // until the next deploy or natural cache expiry. We revalidate the
+  // hosted-site routes specifically (path-scoped — no app-wide bust).
+  // Best-effort: if revalidatePath throws (rare; runtime quirks),
+  // we still return success since the DB write succeeded.
+  const slug = (await prisma.restaurant
+    .findUnique({ where: { id: restaurantId }, select: { slug: true } })
+    .catch(() => null))?.slug;
+  if (slug) {
+    try { revalidatePath(`/site/${slug}`); } catch { /* noop */ }
+    try { revalidatePath(`/order/${slug}`); } catch { /* noop */ }
+  }
+
   return NextResponse.json({ success: true });
 }
