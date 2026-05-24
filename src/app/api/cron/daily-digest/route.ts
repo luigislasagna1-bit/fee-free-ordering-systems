@@ -71,6 +71,16 @@ export async function GET(req: NextRequest) {
         ? r.resellerProfile.companyName
         : null;
 
+    // Deep-link URLs used by the new GloriaFood-style digest template:
+    //   dashboardUrl   → "View full report" CTA
+    //   unsubscribeUrl → drives the List-Unsubscribe header (RFC 8058)
+    //                    required by Gmail/Yahoo bulk-sender rules. Points
+    //                    at /admin/notifications where staff can toggle
+    //                    endOfDayReport/endOfMonthReport off.
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+    const dashboardUrl = `${baseUrl}/admin`;
+    const unsubscribeUrl = `${baseUrl}/admin/notifications`;
+
     // Daily digest
     if (dailyRecipients.length > 0) {
       let stats: DigestStats | null = null;
@@ -86,7 +96,13 @@ export async function GET(req: NextRequest) {
         try {
           await Promise.all(
             dailyRecipients.map((recipient) =>
-              sendDailyDigestEmail({ to: recipient.email, stats: stats!, locale: recipient.emailLanguage }).catch((err) => {
+              sendDailyDigestEmail({
+                to: recipient.email,
+                stats: stats!,
+                dashboardUrl,
+                unsubscribeUrl,
+                locale: recipient.emailLanguage,
+              }).catch((err) => {
                 console.error(`[daily-digest] send to ${recipient.email} failed:`, err);
                 errors++;
               })
@@ -113,7 +129,13 @@ export async function GET(req: NextRequest) {
         try {
           await Promise.all(
             monthlyRecipients.map((recipient) =>
-              sendMonthlyDigestEmail({ to: recipient.email, stats: stats!, locale: recipient.emailLanguage }).catch((err) => {
+              sendMonthlyDigestEmail({
+                to: recipient.email,
+                stats: stats!,
+                dashboardUrl,
+                unsubscribeUrl,
+                locale: recipient.emailLanguage,
+              }).catch((err) => {
                 console.error(`[daily-digest] monthly send to ${recipient.email} failed:`, err);
                 errors++;
               })
