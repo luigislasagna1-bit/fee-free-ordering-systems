@@ -96,7 +96,6 @@ export default async function CustomerAccountPage({
               : `${orderCount} order${orderCount === 1 ? "" : "s"} placed`
           }
           href="/account/orders"
-          comingSoon
         />
         <Tile
           icon={<MapPin className="w-5 h-5" />}
@@ -107,7 +106,6 @@ export default async function CustomerAccountPage({
               : `${addressCount} address${addressCount === 1 ? "" : "es"} on file`
           }
           href="/account/addresses"
-          comingSoon
         />
       </div>
 
