@@ -584,6 +584,17 @@ model Order {
   deliveryZoneId           String?
   deliveryEstimatedMinutes Int?
   appliedServiceFees String?  // JSON: [{ name, amount }] frozen at order time
+
+  /// ShipDay dispatch tracking. Set when an order is dispatched to the
+  /// ShipDay third-party driver pool — populated by the dispatch call
+  /// in PATCH /api/orders/[id] (order acceptance). Status is updated
+  /// asynchronously by the ShipDay webhook at /api/webhooks/shipday as
+  /// drivers pick up + deliver. Null on orders that were never sent to
+  /// ShipDay (in-house delivery, pickup, dine-in).
+  shipdayOrderId   String?
+  shipdayStatus    String?    // assigned | picked_up | delivered | failed | cancelled
+  dispatchedAt     DateTime?
+
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 

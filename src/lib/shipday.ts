@@ -1,0 +1,246 @@
+/**
+ * ShipDay third-party driver pool integration.
+ *
+ * Restaurants who subscribed to the Driver Pool or Marketplace Monthly
+ * add-on can dispatch delivery orders to ShipDay's network of contracted
+ * drivers instead of handling delivery in-house. This module wraps the
+ * ShipDay REST API.
+ *
+ * Per-restaurant credentials live in ShipdayConfig (apiKey encrypted at
+ * rest with the platform's ENCRYPTION_KEY). We never send a raw API key
+ * in any log line.
+ *
+ * Webhook status updates land at /api/webhooks/shipday and update the
+ * Order.shipdayStatus + status fields.
+ *
+ * Docs: https://docs.shipday.com/reference/integration
+ */
+
+import prisma from "@/lib/db";
+import { decrypt } from "@/lib/encrypt";
+
+const SHIPDAY_BASE_URL = "https://api.shipday.com";
+
+/**
+ * Fetch the decrypted ShipDay API key for a restaurant. Returns null if
+ * the restaurant doesn't have credentials configured.
+ */
+async function getShipdayApiKey(restaurantId: string): Promise<string | null> {
+  const config = await prisma.shipdayConfig.findUnique({
+    where: { restaurantId },
+    select: { apiKeyEnc: true, apiKeyIv: true, apiKeyTag: true },
+  });
+  if (!config?.apiKeyEnc || !config.apiKeyIv || !config.apiKeyTag) return null;
+  if (!process.env.ENCRYPTION_KEY) {
+    console.error("[shipday] ENCRYPTION_KEY missing; cannot decrypt API key");
+    return null;
+  }
+  try {
+    return decrypt(config.apiKeyEnc, config.apiKeyIv, config.apiKeyTag);
+  } catch (e) {
+    console.error("[shipday] failed to decrypt API key for", restaurantId, e);
+    return null;
+  }
+}
+
+/**
+ * Resolve whether a restaurant is currently configured to dispatch via
+ * ShipDay. Used in PATCH /api/orders/[id] to decide whether to call
+ * dispatchOrder() on acceptance.
+ *
+ * Returns true when:
+ *   - ShipdayConfig.enabled = true
+ *   - The restaurant has stored credentials
+ *   - deliverySource is "shipday" OR ("both" AND activeDispatchMode = "shipday")
+ *
+ * A restaurant with deliverySource="own" or who flipped activeDispatchMode
+ * back to "own" mid-shift returns false — their in-house drivers handle it.
+ */
+export async function shouldDispatchToShipday(restaurantId: string): Promise<boolean> {
+  const config = await prisma.shipdayConfig.findUnique({
+    where: { restaurantId },
+    select: {
+      enabled: true,
+      apiKeyEnc: true,
+      deliverySource: true,
+      activeDispatchMode: true,
+    },
+  });
+  if (!config?.enabled || !config.apiKeyEnc) return false;
+  if (config.deliverySource === "own") return false;
+  if (config.deliverySource === "shipday") return true;
+  if (config.deliverySource === "both" && config.activeDispatchMode === "shipday") return true;
+  return false;
+}
+
+type DispatchInput = {
+  orderId: string;
+  orderNumber: string;
+  customerName: string;
+  customerEmail: string | null;
+  customerPhone: string | null;
+  customerAddress: string;
+  customerLat?: number | null;
+  customerLng?: number | null;
+  restaurantName: string;
+  restaurantAddress: string;
+  restaurantPhone: string | null;
+  restaurantLat?: number | null;
+  restaurantLng?: number | null;
+  /** Pre-tax subtotal in dollars. */
+  subtotal: number;
+  /** Tax in dollars. */
+  taxAmount: number;
+  /** Delivery fee in dollars (what the customer paid). */
+  deliveryFee: number;
+  /** Tip in dollars. */
+  tip: number;
+  /** Order total in dollars. */
+  total: number;
+  /** Restaurant-set prep time in minutes. Used to compute expectedPickupTime. */
+  preparationMinutes: number;
+  deliveryInstruction: string | null;
+};
+
+type ShipdayCreateResponse = {
+  orderId?: number;
+  orderNumber?: string;
+  success?: boolean;
+  response?: string;
+};
+
+/**
+ * Create a delivery order in ShipDay for the given restaurant. Returns
+ * the ShipDay order ID (numeric, as a string) on success or null on
+ * failure (logs the failure reason).
+ *
+ * The expectedPickupTime is set to (now + preparationMinutes). ShipDay
+ * uses this to time driver dispatch — driver shows up roughly when the
+ * food's ready.
+ */
+export async function dispatchOrderToShipday(
+  restaurantId: string,
+  input: DispatchInput,
+): Promise<{ ok: boolean; shipdayOrderId?: string; error?: string }> {
+  const apiKey = await getShipdayApiKey(restaurantId);
+  if (!apiKey) {
+    return { ok: false, error: "No ShipDay API key configured" };
+  }
+
+  const pickupAt = new Date(Date.now() + input.preparationMinutes * 60_000);
+  const pickupAtIso = pickupAt.toISOString();
+  const pickupDate = pickupAtIso.slice(0, 10);
+  const pickupTime = pickupAtIso.slice(11, 19);
+
+  const body: Record<string, unknown> = {
+    orderNumber: input.orderNumber,
+    customerName: input.customerName,
+    customerAddress: input.customerAddress,
+    customerEmail: input.customerEmail ?? undefined,
+    customerPhoneNumber: input.customerPhone ?? undefined,
+    restaurantName: input.restaurantName,
+    restaurantAddress: input.restaurantAddress,
+    restaurantPhoneNumber: input.restaurantPhone ?? undefined,
+    expectedPickupTime: pickupAtIso,
+    expectedDeliveryDate: pickupDate,
+    expectedDeliveryTime: pickupTime,
+    pickupLatitude: input.restaurantLat ?? undefined,
+    pickupLongitude: input.restaurantLng ?? undefined,
+    deliveryLatitude: input.customerLat ?? undefined,
+    deliveryLongitude: input.customerLng ?? undefined,
+    tips: input.tip,
+    tax: input.taxAmount,
+    deliveryFee: input.deliveryFee,
+    totalOrderCost: input.total,
+    deliveryInstruction: input.deliveryInstruction ?? undefined,
+    orderSource: "Fee Free Ordering",
+    additionalId: input.orderId,
+  };
+
+  try {
+    const res = await fetch(`${SHIPDAY_BASE_URL}/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Basic ${apiKey}`,
+      },
+      body: JSON.stringify(body),
+    });
+    const text = await res.text();
+    let json: ShipdayCreateResponse = {};
+    try { json = JSON.parse(text); } catch { /* non-JSON response */ }
+
+    if (!res.ok) {
+      console.error("[shipday] dispatch failed", { restaurantId, orderId: input.orderId, status: res.status, body: text.slice(0, 500) });
+      return { ok: false, error: `ShipDay returned ${res.status}: ${text.slice(0, 200)}` };
+    }
+    const shipdayOrderId = json.orderId != null ? String(json.orderId) : input.orderNumber;
+    return { ok: true, shipdayOrderId };
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error("[shipday] dispatch network error", { restaurantId, orderId: input.orderId, msg });
+    return { ok: false, error: msg };
+  }
+}
+
+/**
+ * Cancel a previously-dispatched ShipDay order. Idempotent: a 404 from
+ * ShipDay (order already cancelled or never existed) is treated as ok.
+ * Used when a restaurant rejects/cancels an order AFTER dispatch.
+ */
+export async function cancelShipdayOrder(
+  restaurantId: string,
+  shipdayOrderId: string,
+): Promise<{ ok: boolean; error?: string }> {
+  const apiKey = await getShipdayApiKey(restaurantId);
+  if (!apiKey) {
+    return { ok: false, error: "No ShipDay API key configured" };
+  }
+  try {
+    const res = await fetch(`${SHIPDAY_BASE_URL}/orders/${shipdayOrderId}`, {
+      method: "DELETE",
+      headers: { Authorization: `Basic ${apiKey}` },
+    });
+    if (res.ok || res.status === 404) {
+      return { ok: true };
+    }
+    const text = await res.text();
+    console.error("[shipday] cancel failed", { restaurantId, shipdayOrderId, status: res.status, body: text.slice(0, 500) });
+    return { ok: false, error: `ShipDay returned ${res.status}: ${text.slice(0, 200)}` };
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error("[shipday] cancel network error", { restaurantId, shipdayOrderId, msg });
+    return { ok: false, error: msg };
+  }
+}
+
+/**
+ * Map a ShipDay webhook event type to our internal Order.status value.
+ * ShipDay sends events as strings like "ORDER_ONTHEWAY_STATUS" or
+ * "ORDER_COMPLETED" — we collapse them into our status taxonomy.
+ *
+ * Returns null when the event doesn't translate (e.g. driver-assigned
+ * which we track in shipdayStatus but doesn't change Order.status).
+ */
+export function translateShipdayEvent(event: string): {
+  shipdayStatus: string | null;
+  orderStatus: string | null;
+} {
+  switch (event) {
+    case "ORDER_ASSIGNED":
+    case "ORDER_DRIVER_ASSIGNED":
+      return { shipdayStatus: "assigned", orderStatus: null };
+    case "ORDER_ONTHEWAY_STATUS":
+    case "ORDER_PICKED_UP":
+      return { shipdayStatus: "picked_up", orderStatus: "ready" };
+    case "ORDER_COMPLETED":
+      return { shipdayStatus: "delivered", orderStatus: "completed" };
+    case "ORDER_FAILED_DELIVERY":
+      return { shipdayStatus: "failed", orderStatus: null };
+    case "ORDER_DELETED":
+    case "ORDER_CANCELLED":
+      return { shipdayStatus: "cancelled", orderStatus: null };
+    default:
+      return { shipdayStatus: null, orderStatus: null };
+  }
+}
