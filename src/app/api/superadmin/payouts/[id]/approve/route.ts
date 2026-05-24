@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { isSuperadmin } from "@/lib/roles";
+import { notifyResellerOfPayoutChange } from "@/lib/reseller-payout-notify";
 
 /**
  * POST /api/superadmin/payouts/[id]/approve
@@ -25,5 +26,10 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
     where: { id },
     data: { status: "approved", approvedAt: new Date(), approvedBy: user!.id },
   });
+
+  // Fire-and-forget — email failure doesn't roll back the approval.
+  // The reseller can still see the new state on their dashboard.
+  void notifyResellerOfPayoutChange(id, "approved");
+
   return NextResponse.json({ ok: true });
 }

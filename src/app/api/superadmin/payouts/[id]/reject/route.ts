@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { isSuperadmin } from "@/lib/roles";
+import { notifyResellerOfPayoutChange } from "@/lib/reseller-payout-notify";
 
 /**
  * POST /api/superadmin/payouts/[id]/reject
@@ -36,5 +37,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       data: { payoutRequestId: null, status: "available" },
     }),
   ]);
+
+  // Fire-and-forget — notification with the rejection reason so the
+  // reseller can fix the issue and re-request.
+  void notifyResellerOfPayoutChange(id, "rejected");
+
   return NextResponse.json({ ok: true });
 }

@@ -34,6 +34,7 @@ import DigestEmail               from "@/emails/templates/DigestEmail";
 import ScheduledOrderReminder    from "@/emails/templates/ScheduledOrderReminder";
 import MarketplaceSettlement     from "@/emails/templates/MarketplaceSettlement";
 import AutopilotEmail            from "@/emails/templates/AutopilotEmail";
+import ResellerPayoutNotification from "@/emails/templates/ResellerPayoutNotification";
 import type { EmailOrderItem } from "@/emails/components/EmailParts";
 
 // Cached transport so we don't query PlatformSettings on every call.
@@ -812,6 +813,43 @@ export async function sendAutopilotEmail(params: {
     replyTo: params.restaurantEmail,
     listUnsubscribeUrl: params.unsubscribeUrl,
   });
+}
+
+// ─── Reseller payout notifications ───────────────────────────────────
+// Sent at every PayoutRequest status transition (approved / paid /
+// rejected). Closes the communication loop — without this, the reseller
+// has to refresh the dashboard to find out their payout state.
+
+export async function sendResellerPayoutNotificationEmail(params: {
+  to: string;
+  variant: "approved" | "paid" | "rejected";
+  recipientName: string;
+  /** Pre-formatted amount string with currency, e.g. "$427.50". */
+  amount: string;
+  payoutMethod?: string | null;
+  payoutReference?: string | null;
+  rejectionReason?: string | null;
+  notes?: string | null;
+  dashboardUrl: string;
+}) {
+  const html = await renderEmail(
+    ResellerPayoutNotification({
+      variant: params.variant,
+      recipientName: params.recipientName,
+      amount: params.amount,
+      payoutMethod: params.payoutMethod,
+      payoutReference: params.payoutReference,
+      rejectionReason: params.rejectionReason,
+      notes: params.notes,
+      dashboardUrl: params.dashboardUrl,
+      imprint: currentImprint(),
+    })
+  );
+  const subject =
+    params.variant === "approved" ? `Your payout was approved — ${params.amount}`
+    : params.variant === "paid"   ? `Your payout has been sent — ${params.amount}`
+    :                                "Your payout request couldn't be processed";
+  return send({ to: params.to, subject, html });
 }
 
 export async function sendScheduledOrderReminderEmail(params: {

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { isSuperadmin } from "@/lib/roles";
+import { notifyResellerOfPayoutChange } from "@/lib/reseller-payout-notify";
 
 /**
  * POST /api/superadmin/payouts/[id]/mark-paid
@@ -53,6 +54,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       data: { totalPaidCents: { increment: payout.amountCents } },
     }),
   ]);
+
+  // Fire-and-forget — the celebratory "your money has been sent" email
+  // with the payout reference for matching to their own records.
+  void notifyResellerOfPayoutChange(id, "paid");
 
   return NextResponse.json({ ok: true });
 }
