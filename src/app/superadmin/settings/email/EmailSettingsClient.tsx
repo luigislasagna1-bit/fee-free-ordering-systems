@@ -3,6 +3,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import {
   Mail, Eye, EyeOff, ExternalLink, AlertTriangle, CheckCircle2, Loader2, Trash2, Send,
+  Shield, FileText,
 } from "lucide-react";
 
 interface Initial {
@@ -138,6 +139,54 @@ export function EmailSettingsClient({ initial }: { initial: Initial }) {
           </div>
         </div>
       </div>
+
+      {/* ── Deliverability prerequisite (#76) ──────────────────────────
+          Before soft launch this MUST be done — without verified DNS,
+          every email goes to spam. The full walkthrough lives at
+          docs/EMAIL_DELIVERABILITY.md. This card surfaces the prerequisite
+          prominently so the operator can't miss it. */}
+      {emailFrom.includes("@resend.dev") && (
+        <div className="rounded-2xl border-2 border-amber-300 bg-amber-50 p-5">
+          <div className="flex items-start gap-3 mb-3">
+            <Shield className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="text-sm font-bold text-amber-900">
+                You&apos;re sending from the Resend sandbox domain — verify your real domain before launch
+              </p>
+              <p className="text-xs mt-1 text-amber-800 leading-relaxed">
+                The current From address (<code className="font-mono bg-amber-100 px-1 rounded">{emailFrom}</code>) uses Resend&apos;s shared sandbox.
+                Sandbox emails only deliver to your own Resend account inbox — every other recipient bounces.
+                Verify <strong>feefreeordering.com</strong> as a sending domain to send real mail.
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-2 text-xs">
+            <Step n="1" title="Add domain in Resend" body="Open resend.com/domains" />
+            <Step n="2" title="Paste DNS records at GoDaddy" body="SPF + DKIM + DMARC" />
+            <Step n="3" title="Click Verify in Resend" body="Wait 5-30 min for DNS" />
+            <Step n="4" title="Update From address" body="To @feefreeordering.com" />
+          </div>
+          <div className="mt-4 flex items-center gap-3 text-xs">
+            <a
+              href="https://resend.com/domains"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-amber-700 text-white font-bold px-3 py-1.5 rounded-lg hover:bg-amber-800 transition"
+            >
+              Open resend.com/domains <ExternalLink className="w-3 h-3" />
+            </a>
+            <a
+              href="https://github.com/luigislasagna1-bit/fee-free-ordering-systems/blob/main/docs/EMAIL_DELIVERABILITY.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-amber-700 font-semibold hover:text-amber-900 hover:underline"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              Read the full walkthrough
+            </a>
+          </div>
+        </div>
+      )}
 
       {/* Encryption key warning */}
       {!initial.encryptionKeyConfigured && (
@@ -317,6 +366,18 @@ export function EmailSettingsClient({ initial }: { initial: Initial }) {
           and set the From address above to that domain (e.g. <code className="font-mono">noreply@yourdomain.com</code>).
         </div>
       </div>
+    </div>
+  );
+}
+
+function Step({ n, title, body }: { n: string; title: string; body: string }) {
+  return (
+    <div className="bg-white border border-amber-200 rounded-lg p-2.5">
+      <div className="flex items-center gap-1.5 mb-1">
+        <span className="w-5 h-5 rounded-full bg-amber-600 text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">{n}</span>
+        <span className="text-xs font-bold text-amber-900">{title}</span>
+      </div>
+      <div className="text-[11px] text-amber-800 ml-6.5">{body}</div>
     </div>
   );
 }

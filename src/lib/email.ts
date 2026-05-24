@@ -84,7 +84,25 @@ export async function isEmailEnabled(): Promise<boolean> {
 
 export const EMAIL_ENABLED = true;
 
-async function send({ to, subject, html, text }: { to: string; subject: string; html: string; text?: string }): Promise<{ success: boolean; error?: string }> {
+async function send({
+  to, subject, html, text, replyTo, listUnsubscribeUrl,
+}: {
+  to: string;
+  subject: string;
+  html: string;
+  text?: string;
+  /** Reply-To header. Customer-order emails set this to the restaurant's
+   *  contact email so when a customer hits Reply, the response goes to
+   *  the restaurant, not to our generic support inbox. Huge deliverability
+   *  win too — Reply-To being a real-domain address matching the email's
+   *  content makes inbox providers trust the sender more. */
+  replyTo?: string | null;
+  /** When set, we add RFC-8058 List-Unsubscribe + List-Unsubscribe-Post
+   *  headers. Required by Gmail / Yahoo bulk sender rules (Feb 2024) for
+   *  any email that's transactional-bulk (digest, marketing). Order
+   *  receipts are exempt — they're 1:1 transactional. */
+  listUnsubscribeUrl?: string | null;
+}): Promise<{ success: boolean; error?: string }> {
   if (!to) return { success: false, error: "no recipient" };
   const { client, from } = await getTransport();
   if (!client) {
@@ -92,7 +110,22 @@ async function send({ to, subject, html, text }: { to: string; subject: string; 
     return { success: true };
   }
   try {
-    const { data, error } = await client.emails.send({ from, to, subject, html, text });
+    const headers: Record<string, string> = {};
+    if (listUnsubscribeUrl) {
+      // RFC 2369 + RFC 8058: List-Unsubscribe + List-Unsubscribe-Post.
+      // Both required for Gmail/Yahoo's one-click unsubscribe button.
+      headers["List-Unsubscribe"] = `<${listUnsubscribeUrl}>`;
+      headers["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click";
+    }
+    const { data, error } = await client.emails.send({
+      from,
+      to,
+      subject,
+      html,
+      text,
+      ...(replyTo ? { replyTo } : {}),
+      ...(Object.keys(headers).length > 0 ? { headers } : {}),
+    });
     if (error) {
       console.error("[Email send error]", { to, from, name: error.name, message: error.message });
       return { success: false, error: error.message };
@@ -184,7 +217,11 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       imprint: currentImprint(),
     })
   );
-  return send({ to: params.to, subject, html });
+  // Reply-To: the restaurant's own email. Customer hits Reply → response
+  // goes to the restaurant directly, not to our platform inbox. Deliverability
+  // bonus too — Reply-To matching the visible "from this restaurant" content
+  // is a positive signal for Gmail/Outlook trust scoring.
+  return send({ to: params.to, subject, html, replyTo: params.restaurantEmail });
 }
 
 export async function sendNewOrderNotificationEmail(params: {
@@ -619,6 +656,7 @@ async function sendDigestEmail(
   kind: "daily" | "monthly",
   dashboardUrl: string,
   t: Translator,
+  unsubscribeUrl?: string,
 ) {
   const html = await renderEmail(
     DigestEmail({
@@ -638,26 +676,33 @@ async function sendDigestEmail(
       noMissedOrders: true,   // tracked elsewhere; until we wire the real signal we say "you're good"
       noCanceledOrders: true,
       dashboardUrl,
+      unsubscribeUrl,
       imprint: currentImprint(),
     })
   );
+  // Digest emails are technically transactional-bulk — they're sent on a
+  // schedule to all opted-in recipients. Gmail/Yahoo's Feb 2024 bulk-
+  // sender rules require List-Unsubscribe headers for anything that
+  // ships to >5K recipients/day. We add it on every digest send so we're
+  // compliant by default and not tripping spam filters at scale.
   return send({
     to,
     subject: kind === "daily"
       ? t("email.digest.subjectDaily",   { restaurant: stats.restaurantName, period: stats.periodLabel })
       : t("email.digest.subjectMonthly", { restaurant: stats.restaurantName, period: stats.periodLabel }),
     html,
+    listUnsubscribeUrl: unsubscribeUrl,
   });
 }
 
-export async function sendDailyDigestEmail(params: { to: string; stats: DigestStats; dashboardUrl?: string; locale?: string }) {
+export async function sendDailyDigestEmail(params: { to: string; stats: DigestStats; dashboardUrl?: string; unsubscribeUrl?: string; locale?: string }) {
   const t = await getDict(params.locale);
-  return sendDigestEmail(params.to, params.stats, "daily", params.dashboardUrl ?? "#", t);
+  return sendDigestEmail(params.to, params.stats, "daily", params.dashboardUrl ?? "#", t, params.unsubscribeUrl);
 }
 
-export async function sendMonthlyDigestEmail(params: { to: string; stats: DigestStats; dashboardUrl?: string; locale?: string }) {
+export async function sendMonthlyDigestEmail(params: { to: string; stats: DigestStats; dashboardUrl?: string; unsubscribeUrl?: string; locale?: string }) {
   const t = await getDict(params.locale);
-  return sendDigestEmail(params.to, params.stats, "monthly", params.dashboardUrl ?? "#", t);
+  return sendDigestEmail(params.to, params.stats, "monthly", params.dashboardUrl ?? "#", t, params.unsubscribeUrl);
 }
 
 // ─── Scheduled-order friendly reminder (NEW) ─────────────────────────────────
