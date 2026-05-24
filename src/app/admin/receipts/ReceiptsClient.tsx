@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import {
   DndContext, closestCenter, KeyboardSensor, PointerSensor,
   useSensor, useSensors, DragEndEvent,
@@ -14,7 +14,7 @@ import {
   Save, Printer, GripVertical, ChevronDown, ChevronRight,
   Eye, EyeOff, Receipt, ChefHat, Loader2,
 } from "lucide-react";
-import { ReceiptRenderer, PAPER_WIDTH_PX, SAMPLE_ORDER } from "./ReceiptRenderer";
+import { ReceiptRenderer, PAPER_WIDTH_PX, PAPER_WIDTH_58_PX, SAMPLE_ORDER, makeSampleOrder } from "./ReceiptRenderer";
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "@/lib/receipt-schema";
 import { parseReceiptConfig } from "@/lib/receipt-schema";
 import { useTranslations } from "next-intl";
@@ -262,6 +262,18 @@ export function ReceiptsClient({
   const [saving, setSaving]         = useState(false);
 
   const previewRef = useRef<HTMLDivElement>(null);
+  // Preview-only state: which paper width + which sample-order type
+  // to render in the live preview. Doesn't affect saved templates or
+  // actual prints — just lets the owner test how their receipt looks
+  // in different scenarios (58mm vs 80mm paper, delivery vs pickup vs
+  // dine-in). Seeded from the saved printer setting so it matches what
+  // the kitchen actually has on the shelf.
+  const [previewWidth, setPreviewWidth] = useState<"58mm" | "80mm">(
+    printerSettings?.paperWidth === "58mm" ? "58mm" : "80mm"
+  );
+  const [previewOrderType, setPreviewOrderType] = useState<"pickup" | "delivery" | "dine_in">("pickup");
+  const previewOrder = useMemo(() => makeSampleOrder(previewOrderType), [previewOrderType]);
+  const previewWidthPx = previewWidth === "58mm" ? PAPER_WIDTH_58_PX : PAPER_WIDTH_PX;
 
   const activeConfig = activeType === "customer" ? custConfig : kitConfig;
   const setActiveConfig = activeType === "customer"
@@ -516,7 +528,50 @@ export function ReceiptsClient({
             Live Preview — {activeType === "customer" ? "Customer Receipt" : "Kitchen Receipt"}
           </div>
           <div className="text-xs text-gray-400">
-            80mm thermal format · {PAPER_WIDTH_PX}px wide · Preview = Print
+            {previewWidth} thermal · {previewWidthPx}px wide · Preview = Print
+          </div>
+        </div>
+
+        {/* Preview controls — paper width + order type toggle pills so the
+            owner can preview every realistic combination without placing
+            a real test order. Doesn't affect saved templates or what
+            actually prints; purely a viewing convenience. */}
+        <div className="mb-4 flex flex-wrap items-center justify-center gap-3 text-xs">
+          <div className="inline-flex rounded-lg border border-gray-300 bg-white p-0.5">
+            {(["58mm", "80mm"] as const).map((w) => (
+              <button
+                key={w}
+                type="button"
+                onClick={() => setPreviewWidth(w)}
+                className={`px-3 py-1.5 rounded-md font-semibold transition ${
+                  previewWidth === w
+                    ? "bg-emerald-500 text-white"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                {w}
+              </button>
+            ))}
+          </div>
+          <div className="inline-flex rounded-lg border border-gray-300 bg-white p-0.5">
+            {([
+              { val: "pickup",   label: "Pickup" },
+              { val: "delivery", label: "Delivery" },
+              { val: "dine_in",  label: "Dine-In" },
+            ] as const).map((opt) => (
+              <button
+                key={opt.val}
+                type="button"
+                onClick={() => setPreviewOrderType(opt.val)}
+                className={`px-3 py-1.5 rounded-md font-semibold transition ${
+                  previewOrderType === opt.val
+                    ? "bg-slate-900 text-white"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -536,7 +591,8 @@ export function ReceiptsClient({
               type="customer"
               config={custConfig}
               restaurant={restaurant}
-              order={SAMPLE_ORDER}
+              order={previewOrder}
+              widthPx={previewWidthPx}
             />
           ) : (
             <ReceiptRenderer
@@ -544,13 +600,14 @@ export function ReceiptsClient({
               type="kitchen"
               config={kitConfig}
               restaurant={restaurant}
-              order={SAMPLE_ORDER}
+              order={previewOrder}
+              widthPx={previewWidthPx}
             />
           )}
         </div>
 
         <div className="mt-4 text-xs text-gray-400 text-center max-w-xs">
-          All styles are inline — the printed receipt is an exact copy of this preview.
+          All styles are inline — the printed receipt is an exact copy of this preview. Switch between paper widths and order types to test how each variant looks.
         </div>
       </div>
     </div>

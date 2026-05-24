@@ -2,8 +2,14 @@
 import { forwardRef } from "react";
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "@/lib/receipt-schema";
 
-// 80 mm thermal = 302 px at 96 dpi
+// Paper widths in px at 96 dpi:
+//   80 mm thermal = 302 px (default — by far the most common)
+//   58 mm thermal = 220 px (small handheld receipt printers)
+// ReceiptRenderer accepts an optional `widthPx` prop to switch the
+// preview — preserving PAPER_WIDTH_PX as the default for backwards
+// compat with the existing print pipeline.
 export const PAPER_WIDTH_PX = 302;
+export const PAPER_WIDTH_58_PX = 220;
 
 // ─── Sample order for live preview ───────────────────────────────────────────
 
@@ -34,6 +40,44 @@ export const SAMPLE_ORDER = {
 };
 
 export type SampleOrder = typeof SAMPLE_ORDER;
+
+/**
+ * Returns a sample order varied by type — used by the live preview's
+ * order-type toggle so restaurants can see what a Delivery receipt
+ * looks like (with the address block) vs a Pickup vs a Dine-In one,
+ * without having to place a real test order.
+ *
+ * Delivery: keeps the address fields populated so the "Delivery to:"
+ *   block renders.
+ * Pickup: clears the address fields — pickup receipts shouldn't have
+ *   a delivery section even if data is present.
+ * Dine-In: clears address + sets a table-style note so the kitchen
+ *   knows where to deliver food.
+ */
+export function makeSampleOrder(orderType: "pickup" | "delivery" | "dine_in"): SampleOrder {
+  if (orderType === "delivery") {
+    return { ...SAMPLE_ORDER, type: "delivery", deliveryFee: 4.99, total: SAMPLE_ORDER.total + 4.99 };
+  }
+  if (orderType === "dine_in") {
+    return {
+      ...SAMPLE_ORDER,
+      type: "pickup" as const, // schema-wise dine_in shares pickup's type field
+      deliveryAddress: "",
+      deliveryCity: "",
+      deliveryZip: "",
+      notes: "Table 7 · " + SAMPLE_ORDER.notes,
+    };
+  }
+  // default = pickup
+  return {
+    ...SAMPLE_ORDER,
+    type: "pickup",
+    deliveryAddress: "",
+    deliveryCity: "",
+    deliveryZip: "",
+    deliveryFee: 0,
+  };
+}
 
 // ─── Shared helpers ───────────────────────────────────────────────────────────
 
@@ -277,17 +321,18 @@ function renderKitchen(section: Section, order: SampleOrder, config: KitchenConf
 
 // ─── Main renderer component ──────────────────────────────────────────────────
 
-interface CustomerProps { type: "customer"; config: CustomerConfig; order?: SampleOrder; restaurant?: any }
-interface KitchenProps  { type: "kitchen";  config: KitchenConfig;  order?: SampleOrder; restaurant?: any }
+interface CustomerProps { type: "customer"; config: CustomerConfig; order?: SampleOrder; restaurant?: any; widthPx?: number }
+interface KitchenProps  { type: "kitchen";  config: KitchenConfig;  order?: SampleOrder; restaurant?: any; widthPx?: number }
 type Props = CustomerProps | KitchenProps;
 
 export const ReceiptRenderer = forwardRef<HTMLDivElement, Props>(
-  function ReceiptRenderer({ type, config, order = SAMPLE_ORDER, restaurant }, ref) {
+  function ReceiptRenderer({ type, config, order = SAMPLE_ORDER, restaurant, widthPx }, ref) {
+    const w = widthPx ?? PAPER_WIDTH_PX;
     return (
       <div
         ref={ref}
         style={{
-          width: `${PAPER_WIDTH_PX}px`,
+          width: `${w}px`,
           minHeight: "200px",
           fontFamily: "'Courier New', Courier, monospace",
           backgroundColor: "#ffffff",
