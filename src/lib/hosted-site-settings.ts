@@ -69,6 +69,12 @@ export interface HostedSiteSettings {
      *  a clear, impossible-to-miss CTA without having to scroll past
      *  the hero. */
     serviceSummary: boolean;
+    /** Show a "Special Offers" grid of currently-active promotions.
+     *  Pulls from the Promotion model (auto-apply, within startsAt/
+     *  endsAt window, isActive=true). Hidden when no active promos
+     *  match. Each card shows name + description + a CTA to the
+     *  order page (no code needed since these are auto-apply). */
+    specialOffers: boolean;
     /** Show the About section pulled from Restaurant.description. */
     about: boolean;
     /** Show the Featured Menu grid (auto-pulled from isFeatured items). */
@@ -121,6 +127,7 @@ export function defaultHostedSiteSettings(): HostedSiteSettings {
     sections: {
       banner: true,
       serviceSummary: true,
+      specialOffers: true,
       about: true,
       featuredMenu: true,
       visit: true,

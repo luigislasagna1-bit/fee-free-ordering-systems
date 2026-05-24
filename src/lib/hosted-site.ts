@@ -50,6 +50,17 @@ export interface HostedSiteData {
    *  date matches one of these, the restaurant is treated as closed
    *  regardless of the weekly schedule. */
   holidays: Array<{ id: string; date: string; name: string | null }>;
+  /** Active "special offer" promotions — auto-apply promos within their
+   *  startsAt/endsAt window. Rendered as marketing cards on the hosted
+   *  site. Same source-of-truth as the order-page promo engine; the
+   *  hosted site is read-only. Capped at 6 (any more crowds the page).
+   */
+  specialOffers: Array<{
+    id: string;
+    name: string;
+    description: string | null;
+    promotionType: string;
+  }>;
   acceptsPickup: boolean;
   acceptsDelivery: boolean;
   acceptsDineIn: boolean;
@@ -145,7 +156,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
   // ticked over to the next day yet but UTC has.
   const yesterdayStartUtc = new Date(todayStartUtc.getTime() - 24 * 60 * 60 * 1000);
 
-  const [hours, featured, categories, popularItems, deliveryZones, holidays] = await Promise.all([
+  const [hours, featured, categories, popularItems, deliveryZones, holidays, specialOffers] = await Promise.all([
     prisma.openingHours.findMany({
       where: { restaurantId: restaurant.id },
       orderBy: { dayOfWeek: "asc" },
@@ -204,6 +215,35 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       orderBy: { date: "asc" },
       select: { id: true, date: true, name: true },
     }),
+    // Active auto-apply promotions to surface as marketing cards on
+    // the hosted site. We filter to autoApply=true so customers see
+    // ONLY offers they can actually use without typing a code (code-
+    // based coupons would feel like a trick if surfaced here — "20%
+    // off!" with no way for the customer to figure out how to claim).
+    // Date window filter: include only promos whose startsAt has
+    // passed AND endsAt is in the future (or null). Cap at 6 so a
+    // restaurant running 20 promos doesn't crowd the page.
+    prisma.promotion.findMany({
+      where: {
+        restaurantId: restaurant.id,
+        isActive: true,
+        autoApply: true,
+        OR: [{ startsAt: null }, { startsAt: { lte: new Date() } }],
+        AND: [
+          {
+            OR: [{ endsAt: null }, { endsAt: { gte: new Date() } }],
+          },
+        ],
+      },
+      orderBy: { createdAt: "desc" },
+      take: 6,
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        promotionType: true,
+      },
+    }),
   ]);
 
   // Build the SEO-keyword pool from category names + featured item names.
@@ -258,6 +298,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
         date: h.date.toISOString().slice(0, 10),
         name: h.name,
       })),
+      specialOffers,
       acceptsPickup: restaurant.acceptsPickup,
       acceptsDelivery: restaurant.acceptsDelivery,
       acceptsDineIn: restaurant.acceptsDineIn,

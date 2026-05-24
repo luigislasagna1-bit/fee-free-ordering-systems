@@ -249,6 +249,9 @@ export default async function HostedSitePage({
   const navLinks: Array<{ label: string; href: string }> = [
     { label: "Menu", href: `${orderUrl}` },
   ];
+  if (s.sections.specialOffers && r.specialOffers.length > 0) {
+    navLinks.push({ label: "Offers", href: "#special-offers" });
+  }
   if (s.sections.featuredMenu && r.featuredItems.length > 0) {
     navLinks.push({ label: "Featured", href: "#featured-menu" });
   }
@@ -515,6 +518,65 @@ export default async function HostedSitePage({
         </section>
       )}
       <CustomSectionsAt position="about" sections={s.customSections} themeColor={themeColor} />
+
+      {/* ── Special Offers ───────────────────────────────────────────────
+          Auto-pulled from active Promotion rows (autoApply=true, within
+          their startsAt/endsAt window). Rendered as a grid of cards
+          with a CTA pointing to /order — promos auto-apply so customers
+          don't need to type a code. Section hidden when no active
+          auto-apply promos. Matches the GloriaFood "Special Offers"
+          card pattern Luigi flagged in UAT. */}
+      {s.sections.specialOffers && r.specialOffers.length > 0 && (
+        <section id="special-offers" className="bg-gray-50 scroll-mt-20">
+          <div className="max-w-5xl mx-auto px-6 py-14">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">
+              Special Offers
+            </h2>
+            <div className="mt-2 flex justify-center">
+              <span className="inline-block w-12 h-1 rounded" style={{ background: themeColor }} />
+            </div>
+            <div className={`mt-8 grid gap-5 ${
+              r.specialOffers.length === 1
+                ? "grid-cols-1 max-w-md mx-auto"
+                : r.specialOffers.length === 2
+                ? "grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto"
+                : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            }`}>
+              {r.specialOffers.map((promo) => (
+                <Link
+                  key={promo.id}
+                  href={orderUrl}
+                  className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition overflow-hidden border border-gray-100 p-5 block"
+                >
+                  {/* Theme-colored "deal" tag at top of card */}
+                  <div className="flex items-center gap-1.5 mb-3">
+                    <span
+                      className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full text-white"
+                      style={{ background: themeColor }}
+                    >
+                      Special Offer
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 group-hover:underline">
+                    {promo.name}
+                  </h3>
+                  {promo.description && (
+                    <p className="mt-2 text-sm text-gray-600 leading-relaxed line-clamp-3">
+                      {promo.description}
+                    </p>
+                  )}
+                  <p
+                    className="mt-4 text-sm font-bold inline-flex items-center gap-1"
+                    style={{ color: themeColor }}
+                  >
+                    Order now <span aria-hidden>→</span>
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Featured menu — owner toggle. Items pulled from isFeatured menu rows. */}
       {s.sections.featuredMenu && r.featuredItems.length > 0 && (
