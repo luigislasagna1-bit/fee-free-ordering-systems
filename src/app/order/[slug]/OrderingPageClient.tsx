@@ -241,6 +241,7 @@ export function OrderingPageClient({
   locale = "en",
   isEmbedded = false,
   acceptedMethods = ["cash"],
+  fromHostedSite = false,
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
@@ -259,6 +260,11 @@ export function OrderingPageClient({
    *  enabled Online Payments won't see a "Pay Online (Card)" button
    *  on their customer page. */
   acceptedMethods?: string[];
+  /** Customer arrived via ?from=hosted — they clicked an "Order Online"
+   *  link on this restaurant's Sales Optimized Website (subdomain
+   *  marketing page). Show a "Back to <restaurant>'s site" breadcrumb
+   *  at the top so they're not stuck on /order with no way back. */
+  fromHostedSite?: boolean;
 }) {
   const t = useTranslations("ordering");
   const tT = useTranslations("ordering.toasts");
@@ -733,6 +739,25 @@ export function OrderingPageClient({
           </span>
           <a href="/marketplace" className="hidden sm:inline underline opacity-90 hover:opacity-100 whitespace-nowrap">
             ← Browse other restaurants
+          </a>
+        </div>
+      )}
+
+      {/* Hosted-site breadcrumb — visible only when the customer arrived
+          via ?from=hosted (a click on "Order Online" from the restaurant's
+          Sales Optimized Website). Without this they hit a dead-end on
+          /order with no obvious way back to the marketing page they were
+          on. Hidden in embedded mode (the iframe widget has its own
+          close-overlay UX) and in marketplace mode (those customers came
+          from /marketplace which has its own ribbon above). */}
+      {fromHostedSite && !isEmbedded && !fromMarketplace && (
+        <div className="bg-white border-b border-gray-200 px-4 py-2 flex items-center gap-2 text-xs sm:text-sm">
+          <a
+            href={`/site/${restaurant.slug}`}
+            className="inline-flex items-center gap-1.5 text-gray-700 hover:text-gray-900 hover:underline font-medium"
+          >
+            <span aria-hidden="true">←</span>
+            <span>Back to {restaurant.name}&apos;s site</span>
           </a>
         </div>
       )}

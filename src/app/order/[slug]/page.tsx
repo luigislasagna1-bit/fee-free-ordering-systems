@@ -29,6 +29,11 @@ export default async function OrderingPage({
   // contractually accept card-only orders. This flag is what flips the
   // checkout payment picker to "online card only" mode below.
   const fromMarketplace = sp.from === "marketplace";
+  // ?from=hosted marks the customer as arriving from this restaurant's
+  // Sales Optimized Website (subdomain marketing page). Used to render
+  // a "Back to <Restaurant>'s site" breadcrumb so the customer isn't
+  // stuck on /order with no way back to the page they were just on.
+  const fromHostedSite = sp.from === "hosted";
 
   // 1) Load the restaurant the customer is ordering FROM (the location).
   // Hours, delivery zones, fees etc. are always per-location — never inherited.
@@ -175,6 +180,7 @@ export default async function OrderingPage({
         locale={locale}
         isEmbedded={isEmbedded}
         acceptedMethods={acceptedMethods}
+        fromHostedSite={fromHostedSite}
       />
     </NextIntlClientProvider>
   );

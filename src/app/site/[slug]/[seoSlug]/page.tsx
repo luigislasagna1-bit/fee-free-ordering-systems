@@ -88,7 +88,7 @@ export default async function SeoLandingPage({
   if (!data) notFound();
   const { r, parsed } = data;
   const themeColor = (r.themeSettings?.primaryColor as string) || "#ef4444";
-  const orderUrl = `/order/${r.slug}`;
+  const orderUrl = `/order/${r.slug}?from=hosted`;
   const homeUrl = `/`; // back to the main hosted page on the same subdomain
 
   // JSON-LD focused on the keyword combo.

@@ -146,7 +146,11 @@ export default async function HostedSitePage({
     r.hoursFormat,
     todayHoliday ? { name: todayHoliday.name ?? undefined } : undefined,
   );
-  const orderUrl = `/order/${r.slug}`;
+  // ?from=hosted tells the ordering page to render a "Back to <Restaurant>"
+  // breadcrumb at the top so customers who arrived from the marketing site
+  // can return to it. Without this they hit a dead-end on /order with no
+  // way back to the hero/about/etc. they were browsing.
+  const orderUrl = `/order/${r.slug}?from=hosted`;
   const s = r.settings;
 
   // Resolve hero text — owner can override the title/slogan; cuisine label
