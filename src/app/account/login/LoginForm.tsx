@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { Loader2 } from "lucide-react";
 
 export function LoginForm() {
@@ -60,9 +61,17 @@ export function LoginForm() {
         />
       </label>
       <label className="block">
-        <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
-          Password <span className="text-red-500">*</span>
-        </span>
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+            Password <span className="text-red-500">*</span>
+          </span>
+          <Link
+            href="/account/forgot-password"
+            className="text-xs text-emerald-600 font-semibold hover:underline"
+          >
+            Forgot password?
+          </Link>
+        </div>
         <input
           type="password"
           required

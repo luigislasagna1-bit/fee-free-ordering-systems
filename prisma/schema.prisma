@@ -677,8 +677,26 @@ model CustomerAccount {
 
   addresses CustomerAddress[]
   customers Customer[]
+  passwordResetTokens CustomerPasswordResetToken[]
 
   @@index([email])
+}
+
+/// Customer-side password reset token. Separate from `PasswordResetToken`
+/// (which is for restaurant-owner `User` accounts) because Customer auth
+/// is a distinct identity layer with its own login at /account/login.
+/// Single-use, expires in 1 hour. Cascades on account deletion.
+model CustomerPasswordResetToken {
+  id                String          @id @default(cuid())
+  token             String          @unique
+  customerAccountId String
+  expiresAt         DateTime
+  usedAt            DateTime?
+  createdAt         DateTime        @default(now())
+
+  customerAccount CustomerAccount @relation(fields: [customerAccountId], references: [id], onDelete: Cascade)
+
+  @@index([customerAccountId])
 }
 
 /// Saved delivery addresses on a customer's account. Up to a reasonable
