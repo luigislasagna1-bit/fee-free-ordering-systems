@@ -31,6 +31,7 @@ type CapacitorGlobal = {
     DirectPrinter?: {
       print: (opts: NativePrintOpts) => Promise<NativePrintResult>;
       ping: (opts: NativePingOpts) => Promise<NativePingResult>;
+      discover?: (opts: NativeDiscoverOpts) => Promise<NativeDiscoverResult>;
     };
   };
 };
@@ -66,6 +67,32 @@ export interface NativePingOpts {
 export interface NativePingResult {
   ok: true;
   reachable: true;
+}
+
+export interface NativeDiscoverOpts {
+  /** How long to scan, in milliseconds. Default 4000. Clamped 1000-10000
+   *  by the native side. Most printers respond within 2-3 seconds; we
+   *  pad to 4 to handle stragglers on busy Wi-Fi. */
+  durationMs?: number;
+}
+
+export interface DiscoveredPrinter {
+  /** Service name advertised by the printer ("Star_TSP143IIIW_xxxx"). */
+  name: string;
+  /** IP address on the local subnet. */
+  ip: string;
+  /** Print port — always 9100 for the RAW print path we use. */
+  port: number;
+  /** mDNS service type that found it (_pdl-datastream._tcp etc.).
+   *  Mostly diagnostic; you usually want printers found via
+   *  _pdl-datastream since those explicitly advertise ESC/POS over
+   *  raw TCP. The native plugins overrride port to 9100 regardless. */
+  type: string;
+}
+
+export interface NativeDiscoverResult {
+  ok: true;
+  printers: DiscoveredPrinter[];
 }
 
 /** Specific failure modes the plugin emits, matching both the Android
@@ -126,4 +153,30 @@ export async function nativePing(opts: NativePingOpts): Promise<NativePingResult
   }
   const plugin = window.Capacitor!.Plugins.DirectPrinter!;
   return plugin.ping(opts);
+}
+
+/**
+ * Scan the local Wi-Fi network for receipt printers via mDNS / Bonjour.
+ * GloriaFood-style auto-discovery — the kitchen operator clicks "Find
+ * printers", we scan for 4 seconds, return a list of detected devices.
+ *
+ * Returns an empty list when:
+ *   - No printers on the network are advertising (powered off, wrong VLAN)
+ *   - The Wi-Fi router has multicast filtering (common on enterprise
+ *     routers) blocking mDNS broadcasts
+ *   - Discovery API itself is unavailable (rare; ancient Android pre-API 24)
+ *
+ * Caller should fall back to manual IP entry in any of those cases.
+ */
+export async function nativeDiscover(opts: NativeDiscoverOpts = {}): Promise<NativeDiscoverResult> {
+  if (!isNativePrinterAvailable()) {
+    throw new Error("Native printer plugin not available — running in browser?");
+  }
+  const plugin = window.Capacitor!.Plugins.DirectPrinter!;
+  if (typeof plugin.discover !== "function") {
+    // Older plugin shipped without discovery — graceful empty result so
+    // the UI can render its manual-entry fallback without breaking.
+    return { ok: true, printers: [] };
+  }
+  return plugin.discover(opts);
 }

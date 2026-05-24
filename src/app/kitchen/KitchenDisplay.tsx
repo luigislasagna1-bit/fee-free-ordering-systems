@@ -341,6 +341,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const [workflowMode, setWorkflowMode] = useState<"simple" | "tracking">(
     (restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple"),
   );
+  // PrintNode opt-in flag. When false (default), the PrintNode setup
+  // UI is hidden from the kitchen header — Direct LAN printer is the
+  // main path. Admin enables PrintNode from /admin/orders as an
+  // explicit backup option.
+  const [printNodeEnabled, setPrintNodeEnabled] = useState<boolean>(
+    !!restaurant?.printNodeEnabled,
+  );
 
   // Poll upcoming reservations whenever the Reservations OR Orders tab is open
   // (Orders tab shows reservations alongside the order list).
@@ -590,6 +597,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       const fresh: Order[] = Array.isArray(body) ? body : (body?.orders ?? []);
       const mode: "simple" | "tracking" =
         Array.isArray(body) ? "simple" : (body?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple");
+      const pnEnabled: boolean =
+        Array.isArray(body) ? false : !!body?.printNodeEnabled;
 
       const newPending = fresh.filter(o => o.status === "pending" && !seenIdsRef.current.has(o.id));
       if (newPending.length > 0) {
@@ -603,6 +612,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
       setOrders(fresh);
       setWorkflowMode(mode);
+      setPrintNodeEnabled(pnEnabled);
     } catch {}
   }, []);
 
@@ -941,14 +951,20 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
           <button
             onClick={() => {
-              // In the native app, Direct Printer is the main and
-              // recommended path — open that modal first. In a regular
-              // browser, fall back to PrintNode. Both modals link to
-              // the other one in their copy so the user can switch.
+              // Routing logic for the printer setup button:
+              //   1. Running in native app → Direct WiFi/LAN setup
+              //      (main path, mDNS auto-discovery)
+              //   2. Running in browser AND admin has enabled PrintNode
+              //      backup → PrintNode setup (legacy/backup path)
+              //   3. Running in browser AND PrintNode NOT enabled →
+              //      Direct setup modal too, which surfaces the "install
+              //      the native app" hint
               if (isNativePrinterAvailable()) {
                 setShowDirectPrinterSetup(true);
-              } else {
+              } else if (printNodeEnabled) {
                 setShowPrinterSetup(true);
+              } else {
+                setShowDirectPrinterSetup(true);
               }
             }}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${

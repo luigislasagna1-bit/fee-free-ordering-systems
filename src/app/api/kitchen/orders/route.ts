@@ -50,12 +50,17 @@ export async function GET() {
     // the response shape changes; otherwise it stays the same.
     const restaurant = await prisma.restaurant.findUnique({
       where: { id: restaurantId },
-      select: { kitchenWorkflowMode: true },
+      select: { kitchenWorkflowMode: true, printNodeEnabled: true },
     });
 
     return NextResponse.json({
       orders,
       kitchenWorkflowMode: restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple",
+      // Surface whether PrintNode backup is enabled so the kitchen UI
+      // can hide the PrintNode setup option entirely when the admin
+      // has not turned it on. Default false — Direct LAN printer is
+      // the main path; PrintNode is opt-in backup only.
+      printNodeEnabled: !!restaurant?.printNodeEnabled,
     });
   } catch (err: any) {
     console.error("[kitchen/orders GET]", err);

@@ -44,6 +44,13 @@ model Restaurant {
   // Toggle is per-restaurant on the admin Services & Hours page.
   // Default = "simple" to match GloriaFood's well-tested model.
   kitchenWorkflowMode String  @default("simple")
+  // PrintNode backup printer enabled? Default false. Now that the
+  // Direct LAN printer (native app, mDNS auto-discovery) is the main
+  // printing path, PrintNode is opt-in only — restaurants on Windows
+  // browsers or with unusual network setups can enable it as a
+  // backup. When false, the PrintNode setup UI is hidden from the
+  // kitchen settings to keep the default experience clean.
+  printNodeEnabled    Boolean @default(false)
   cuisineType        String?
   logoUrl            String?
   bannerUrl          String?

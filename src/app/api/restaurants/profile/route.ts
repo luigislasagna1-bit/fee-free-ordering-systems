@@ -18,6 +18,7 @@ export async function PUT(req: NextRequest) {
     mapProvider, googleMapsApiKey,
     defaultLanguage,
     kitchenWorkflowMode,
+    printNodeEnabled,
   } = data;
 
   const ALLOWED_LOCALES = ["en", "fr", "es", "it", "pt"];
@@ -71,6 +72,7 @@ export async function PUT(req: NextRequest) {
     }
     updateData.kitchenWorkflowMode = kitchenWorkflowMode;
   }
+  if (printNodeEnabled !== undefined) updateData.printNodeEnabled = !!printNodeEnabled;
 
   await prisma.restaurant.update({ where: { id: restaurantId }, data: updateData });
 

@@ -42,11 +42,114 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     public let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "print", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "ping", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "discover", returnType: CAPPluginReturnPromise),
     ]
 
     private static let DEFAULT_PORT: UInt16 = 9100
     private static let DEFAULT_TIMEOUT_MS: Int = 5000
     private let printerQueue = DispatchQueue(label: "com.feefreeordering.directprinter")
+
+    /// Search the local network for receipt printers via mDNS / Bonjour
+    /// using Network.framework's NWBrowser. Same return shape as the
+    /// Android plugin: { printers: [{name, ip, port, type}, ...] }.
+    ///
+    /// We browse _pdl-datastream._tcp (the raw port-9100 service that
+    /// Star/Epson/etc advertise). _ipp._tcp and _printer._tcp could be
+    /// added too but the JSON declared in Info.plist already includes
+    /// all three; in practice 95% of receipt printers advertise on
+    /// _pdl-datastream so we keep the scan focused.
+    ///
+    /// iOS requires NSLocalNetworkUsageDescription + NSBonjourServices
+    /// in Info.plist — both already declared.
+    @objc func discover(_ call: CAPPluginCall) {
+        let durationMs = call.getInt("durationMs") ?? 4000
+        let clampedMs = max(1000, min(10000, durationMs))
+
+        // Map IP → printer dict, de-duping in case the same printer
+        // shows up across multiple service types.
+        var byIp: [String: [String: Any]] = [:]
+        let lock = NSLock()
+        var didComplete = false
+
+        let serviceTypes = ["_pdl-datastream._tcp", "_ipp._tcp", "_printer._tcp"]
+        var browsers: [NWBrowser] = []
+
+        let finish = {
+            lock.lock()
+            if didComplete {
+                lock.unlock()
+                return
+            }
+            didComplete = true
+            for b in browsers { b.cancel() }
+            let printers = Array(byIp.values)
+            lock.unlock()
+            call.resolve([
+                "ok": true,
+                "printers": printers,
+            ])
+        }
+
+        for type in serviceTypes {
+            let descriptor = NWBrowser.Descriptor.bonjour(type: type, domain: nil)
+            let browser = NWBrowser(for: descriptor, using: .tcp)
+            browser.browseResultsChangedHandler = { results, _ in
+                for result in results {
+                    if case let .service(name, _, _, _) = result.endpoint {
+                        // Resolve the service via a one-shot connection
+                        // to learn its IP. NWBrowser gives us the
+                        // service name + endpoint metadata but not the
+                        // raw IP until we open a connection.
+                        let conn = NWConnection(to: result.endpoint, using: .tcp)
+                        conn.stateUpdateHandler = { state in
+                            if case .ready = state {
+                                if let remote = conn.currentPath?.remoteEndpoint,
+                                   case let .hostPort(host, _) = remote {
+                                    let ip: String
+                                    switch host {
+                                    case .ipv4(let addr):
+                                        ip = "\(addr)"
+                                    case .ipv6(let addr):
+                                        ip = "\(addr)"
+                                    case .name(let n, _):
+                                        ip = n
+                                    @unknown default:
+                                        ip = ""
+                                    }
+                                    if !ip.isEmpty {
+                                        lock.lock()
+                                        if byIp[ip] == nil {
+                                            byIp[ip] = [
+                                                "name": name,
+                                                "ip": ip,
+                                                "port": 9100, // always RAW print port for ESC/POS
+                                                "type": type,
+                                            ]
+                                        }
+                                        lock.unlock()
+                                    }
+                                }
+                                conn.cancel()
+                            } else if case .failed = state {
+                                conn.cancel()
+                            }
+                        }
+                        conn.start(queue: self.printerQueue)
+                    }
+                }
+            }
+            browsers.append(browser)
+            browser.start(queue: printerQueue)
+        }
+
+        // Time-box the discovery.
+        printerQueue.asyncAfter(deadline: .now() + .milliseconds(clampedMs)) {
+            // Give in-flight resolves a moment to land, then finish.
+            self.printerQueue.asyncAfter(deadline: .now() + .seconds(1)) {
+                finish()
+            }
+        }
+    }
 
     /// Send raw bytes to a network printer over TCP.
     /// Required params: ip, bytes (base64). Optional: port, timeoutMs.

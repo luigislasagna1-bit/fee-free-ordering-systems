@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Zap, Activity, ChevronDown, ChevronUp, Info } from "lucide-react";
+import { Zap, Activity, ChevronDown, ChevronUp, Info, Printer, ServerCrash } from "lucide-react";
 
 /**
  * Kitchen workflow mode toggle for the Orders page.
@@ -25,14 +25,45 @@ import { Zap, Activity, ChevronDown, ChevronUp, Info } from "lucide-react";
  * the Orders page (visible but not always expanded), with explainer
  * copy on each option. Default collapsed once configured.
  */
-export function KitchenWorkflowToggle({ initialMode }: { initialMode: "simple" | "tracking" }) {
+export function KitchenWorkflowToggle({
+  initialMode,
+  initialPrintNodeEnabled = false,
+}: {
+  initialMode: "simple" | "tracking";
+  initialPrintNodeEnabled?: boolean;
+}) {
   const [mode, setMode] = useState<"simple" | "tracking">(initialMode);
+  const [printNodeEnabled, setPrintNodeEnabled] = useState<boolean>(initialPrintNodeEnabled);
+  const [savingPrintNode, setSavingPrintNode] = useState(false);
   const [saving, setSaving] = useState(false);
   // Auto-expand when the choice is the non-default ("tracking") so an
   // existing customer who already picked tracking sees their setting
   // at a glance. Default-simple users see the card collapsed since
   // there's nothing they need to change.
   const [expanded, setExpanded] = useState(initialMode === "tracking");
+
+  async function togglePrintNode(enabled: boolean) {
+    setSavingPrintNode(true);
+    setPrintNodeEnabled(enabled); // optimistic
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ printNodeEnabled: enabled }),
+      });
+      if (!res.ok) throw new Error("Failed to save");
+      toast.success(
+        enabled
+          ? "PrintNode backup enabled — kitchen now shows PrintNode setup option"
+          : "PrintNode backup disabled — only direct WiFi/LAN printing shown",
+      );
+    } catch {
+      setPrintNodeEnabled(!enabled);
+      toast.error("Failed to save — please try again");
+    } finally {
+      setSavingPrintNode(false);
+    }
+  }
 
   async function change(newMode: "simple" | "tracking") {
     if (newMode === mode) return;
@@ -60,7 +91,8 @@ export function KitchenWorkflowToggle({ initialMode }: { initialMode: "simple" |
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+    <div className="space-y-3">
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
       <button
         type="button"
         onClick={() => setExpanded(!expanded)}
@@ -132,6 +164,62 @@ export function KitchenWorkflowToggle({ initialMode }: { initialMode: "simple" |
           </div>
         </div>
       )}
+      </div>
+
+      {/* ── PrintNode backup toggle ─────────────────────────────────
+          Direct WiFi/LAN printing (via the native kitchen app) is the
+          main + recommended path. PrintNode is a legacy backup for
+          restaurants on Windows browsers, unusual networks, or those
+          who already have it set up. Default OFF — restaurants enable
+          here to make the PrintNode setup option visible in the
+          kitchen settings. */}
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+        <div className="px-5 py-3.5 flex items-center gap-3">
+          <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
+            printNodeEnabled ? "bg-amber-100 text-amber-700" : "bg-gray-100 text-gray-400"
+          }`}>
+            <ServerCrash className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                PrintNode backup printer
+              </div>
+              <span className="text-[9px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 rounded px-1.5 py-0.5">
+                OPTIONAL · BACKUP
+              </span>
+            </div>
+            <div className="text-sm text-gray-900 mt-0.5 leading-snug">
+              {printNodeEnabled
+                ? "ON — kitchen also shows PrintNode setup as a backup option"
+                : "OFF — direct WiFi/LAN printing only (recommended)"}
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => togglePrintNode(!printNodeEnabled)}
+            disabled={savingPrintNode}
+            aria-label="Toggle PrintNode backup"
+            className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
+              printNodeEnabled ? "bg-amber-500" : "bg-gray-300"
+            } ${savingPrintNode ? "opacity-50" : ""}`}
+          >
+            <div
+              className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${
+                printNodeEnabled ? "translate-x-6" : "translate-x-0"
+              }`}
+            />
+          </button>
+        </div>
+        <div className="border-t border-gray-100 px-5 py-3 bg-gray-50/50">
+          <p className="text-[11px] text-gray-600 leading-relaxed flex items-start gap-2">
+            <Printer className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-gray-400" />
+            <span>
+              <strong>Direct WiFi/LAN printing</strong> (via the Fee Free Kitchen native app on Android/iOS tablet) is the main printer connection — it auto-discovers your printer on the network, no PrintNode account or monthly fee needed. Enable PrintNode only as a backup if you can&apos;t install the native app or are running the kitchen on a Windows browser.
+            </span>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

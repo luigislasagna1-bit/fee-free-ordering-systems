@@ -24,14 +24,16 @@
 
 import { useEffect, useState } from "react";
 import {
-  X, Printer, CheckCircle2, XCircle, Loader2, Wifi, AlertCircle, Sparkles,
+  X, Printer, CheckCircle2, XCircle, Loader2, Wifi, AlertCircle, Sparkles, Search,
 } from "lucide-react";
 import {
   isNativePrinterAvailable,
   nativePing,
   nativePrint,
+  nativeDiscover,
   nativePrinterErrorCopy,
   type NativePrinterReason,
+  type DiscoveredPrinter,
 } from "@/lib/native-printer";
 import { EscPosBuilder } from "@/lib/escpos";
 
@@ -85,6 +87,18 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
   const [paperWidth, setPaperWidth] = useState<"58" | "80">("80");
   const [autoprint, setAutoprint] = useState(true);
   const [testState, setTestState] = useState<TestState>({ kind: "idle" });
+  // Auto-discovery state. The "Find Printers" button kicks off a 4-second
+  // mDNS scan; results populate `discovered`. When the list has entries,
+  // they appear as cards above the manual IP input. Empty list +
+  // discoveredAtLeastOnce=true → show "No printers found, enter IP below".
+  const [discovered, setDiscovered] = useState<DiscoveredPrinter[]>([]);
+  const [discovering, setDiscovering] = useState(false);
+  const [discoveredAtLeastOnce, setDiscoveredAtLeastOnce] = useState(false);
+  // Manual IP entry is hidden by default — the auto-discovery is the
+  // GloriaFood-style intended path. Expand only when the operator
+  // clicks the "Enter IP manually" link (or auto-expand if discovery
+  // came up empty).
+  const [showManualEntry, setShowManualEntry] = useState(false);
 
   // Load current settings on mount
   useEffect(() => {
@@ -110,6 +124,38 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
       localStorage.setItem(LS_KEYS.paperWidth, paperWidth);
       localStorage.setItem(LS_KEYS.autoprint, autoprint ? "1" : "0");
     } catch { /* noop */ }
+  }
+
+  async function findPrinters() {
+    if (!native) return;
+    setDiscovering(true);
+    setDiscovered([]);
+    try {
+      const res = await nativeDiscover({ durationMs: 4000 });
+      setDiscovered(res.printers ?? []);
+      setDiscoveredAtLeastOnce(true);
+      // If no printers found, auto-show the manual entry box so the
+      // user has somewhere to enter the IP.
+      if (!res.printers || res.printers.length === 0) {
+        setShowManualEntry(true);
+      }
+    } catch {
+      // Plugin error — silent degradation; fall back to manual entry.
+      setDiscovered([]);
+      setDiscoveredAtLeastOnce(true);
+      setShowManualEntry(true);
+    } finally {
+      setDiscovering(false);
+    }
+  }
+
+  function selectDiscovered(p: DiscoveredPrinter) {
+    setIp(p.ip);
+    setPort(String(p.port || 9100));
+    setEnabled(true);
+    // Auto-test the selected printer so the operator sees the green
+    // "Reachable" confirmation immediately without another tap.
+    setTimeout(() => testConnection(), 100);
   }
 
   async function testConnection() {
@@ -211,40 +257,122 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
             </div>
           </label>
 
-          {/* IP + port */}
+          {/* Auto-discovery — primary path (GloriaFood-style). */}
           <div className={enabled ? "" : "opacity-40 pointer-events-none"}>
-            <div className="grid grid-cols-[1fr_120px] gap-3">
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                  Printer IP address
-                </label>
-                <input
-                  type="text"
-                  value={ip}
-                  onChange={(e) => setIp(e.target.value.trim())}
-                  placeholder="192.168.1.50"
-                  inputMode="numeric"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                  Port
-                </label>
-                <input
-                  type="text"
-                  value={port}
-                  onChange={(e) => setPort(e.target.value.replace(/\D/g, ""))}
-                  inputMode="numeric"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-              </div>
-            </div>
+            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+              Find your printer
+            </label>
+            <button
+              type="button"
+              onClick={findPrinters}
+              disabled={discovering || !native}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-semibold text-sm transition"
+            >
+              {discovering ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Searching for printers on your Wi-Fi…
+                </>
+              ) : (
+                <>
+                  <Search className="w-4 h-4" />
+                  {discoveredAtLeastOnce ? "Search again" : "Find printers on my Wi-Fi"}
+                </>
+              )}
+            </button>
             <p className="text-[11px] text-gray-500 mt-1.5 leading-relaxed">
-              Find your printer's IP: power-cycle the printer while holding the <strong>FEED</strong> button —
-              it prints a self-test page with the IP near the bottom. Default port for Star/Epson is <code>9100</code>.
+              Make sure the printer is powered on and connected to the same Wi-Fi network as this tablet.
             </p>
+
+            {/* Discovered printers list */}
+            {discovered.length > 0 && (
+              <div className="mt-3 space-y-2">
+                <p className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">
+                  Found {discovered.length} printer{discovered.length === 1 ? "" : "s"}
+                </p>
+                {discovered.map((p) => (
+                  <button
+                    key={p.ip}
+                    type="button"
+                    onClick={() => selectDiscovered(p)}
+                    className={
+                      ip === p.ip
+                        ? "w-full text-left p-3 rounded-lg border-2 border-emerald-500 bg-emerald-50 transition"
+                        : "w-full text-left p-3 rounded-lg border-2 border-gray-200 bg-white hover:border-emerald-300 transition"
+                    }
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                        ip === p.ip ? "bg-emerald-500 text-white" : "bg-gray-100 text-gray-500"
+                      }`}>
+                        <Printer className="w-4 h-4" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-bold text-gray-900 truncate">{p.name || "Receipt printer"}</div>
+                        <div className="text-xs text-gray-500 font-mono">{p.ip}:{p.port}</div>
+                      </div>
+                      {ip === p.ip && <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {discoveredAtLeastOnce && discovered.length === 0 && (
+              <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900 leading-relaxed">
+                <p className="font-bold mb-1">No printers found on Wi-Fi</p>
+                <p>
+                  Make sure the printer is powered on and on the same Wi-Fi as the tablet. Some routers (especially business Wi-Fi) block printer broadcasts — in that case, enter the IP manually below.
+                </p>
+              </div>
+            )}
+
+            {/* Manual entry — hidden by default, shown after empty
+                discovery OR when the user explicitly opts in. */}
+            <button
+              type="button"
+              onClick={() => setShowManualEntry(!showManualEntry)}
+              className="mt-3 text-xs text-gray-500 hover:text-gray-700 underline"
+            >
+              {showManualEntry ? "Hide manual IP entry" : "Or enter IP manually"}
+            </button>
           </div>
+
+          {/* Manual IP + port — collapsed by default */}
+          {showManualEntry && (
+            <div className={enabled ? "" : "opacity-40 pointer-events-none"}>
+              <div className="grid grid-cols-[1fr_120px] gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                    Printer IP address
+                  </label>
+                  <input
+                    type="text"
+                    value={ip}
+                    onChange={(e) => setIp(e.target.value.trim())}
+                    placeholder="192.168.1.50"
+                    inputMode="numeric"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                    Port
+                  </label>
+                  <input
+                    type="text"
+                    value={port}
+                    onChange={(e) => setPort(e.target.value.replace(/\D/g, ""))}
+                    inputMode="numeric"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
+              </div>
+              <p className="text-[11px] text-gray-500 mt-1.5 leading-relaxed">
+                Power-cycle the printer while holding the <strong>FEED</strong> button — it prints a self-test page with the IP near the bottom. Default port for Star/Epson is <code>9100</code>.
+              </p>
+            </div>
+          )}
 
           {/* Paper width */}
           <div className={enabled ? "" : "opacity-40 pointer-events-none"}>
