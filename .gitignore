@@ -54,3 +54,14 @@ next-env.d.ts
 
 # Local backup snapshots (e.g. GOLDEN-printer-pipeline-*)
 /.revert-staging/
+
+# Capacitor native build artifacts (not source — keep these out of git)
+android/.gradle
+android/local.properties
+android/app/build
+android/.idea
+ios/App/build
+ios/App/Pods
+ios/DerivedData
+ios/App/App/public/
+android/app/src/main/assets/public/

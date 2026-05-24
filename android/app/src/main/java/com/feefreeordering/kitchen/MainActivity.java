@@ -1,0 +1,27 @@
+package com.feefreeordering.kitchen;
+
+import android.os.Bundle;
+
+import com.getcapacitor.BridgeActivity;
+import com.feefreeordering.directprinter.DirectPrinterPlugin;
+
+/**
+ * MainActivity — Capacitor's host Activity that owns the WebView.
+ *
+ * Override onCreate() to register our custom DirectPrinter plugin
+ * BEFORE super.onCreate() runs the bridge init. Otherwise the bridge
+ * starts the WebView without knowing the plugin exists and JS calls
+ * to `Capacitor.Plugins.DirectPrinter.print()` would resolve undefined.
+ *
+ * Plugin registration order is irrelevant for built-in plugins (those
+ * are auto-registered via the @CapacitorPlugin annotation scanner),
+ * but custom plugins in a non-default package need this explicit
+ * registerPlugin() call.
+ */
+public class MainActivity extends BridgeActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        registerPlugin(DirectPrinterPlugin.class);
+        super.onCreate(savedInstanceState);
+    }
+}

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CAPACITOR_DEBUG</key>
+	<string>$(CAPACITOR_DEBUG)</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+        <string>Fee Free Kitchen</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
+	<!-- Local Network usage description.
+	     Required by iOS 14+ when the app opens a TCP socket to a
+	     device on the local subnet (our DirectPrinter plugin talking
+	     to a receipt printer at e.g. 192.168.1.50:9100). Without this
+	     key the first connection attempt triggers a permission prompt
+	     that App Store reviewers expect to see a human-readable
+	     reason for. Phrase the message so a non-technical reviewer
+	     understands what we need to do and why. -->
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>This kitchen app sends print jobs directly to your receipt printer on your local network. Allow Local Network access so we can deliver receipts to your printer without an internet round-trip.</string>
+	<!-- Bonjour service types we may browse for. Star/Epson printers
+	     advertise these — declaring them now lets a future feature
+	     auto-discover printers on the network without another
+	     Info.plist update. _pdl-datastream is the standard for raw
+	     port-9100 print services; _ipp is for IPP-capable printers. -->
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_pdl-datastream._tcp</string>
+		<string>_ipp._tcp</string>
+		<string>_printer._tcp</string>
+	</array>
+</dict>
+</plist>
