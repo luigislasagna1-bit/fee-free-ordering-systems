@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react";
 import {
   Copy, Check, AlertCircle, Info, Sparkles, Printer,
-  ChevronDown, ChevronRight, Code2, MousePointerClick,
+  ChevronDown, ChevronRight, Code2, MousePointerClick, ExternalLink,
 } from "lucide-react";
 
 /**
@@ -25,19 +25,28 @@ import {
 
 type Position = "br" | "bl" | "tr" | "tl" | "inline";
 /**
- * Snippet types:
- *   - "popup_js":  the JavaScript widget that injects a launcher button +
- *                  opens a full-screen modal on click. Most polished UX,
- *                  but requires pasting into the host site's site-wide
- *                  Custom Code area (NOT a per-page HTML embed widget).
- *   - "iframe":    plain `<iframe>` HTML snippet that embeds the entire
- *                  ordering UI inline. No JavaScript, no modal, no fancy
- *                  stuff — just a rectangle of menu where the snippet is
- *                  pasted. Works in any builder's "HTML embed" widget
- *                  (Wix's "Embed HTML", Squarespace's "Code Block", etc.)
- *                  because it's just HTML. Same approach GloriaFood uses.
+ * Snippet types — three different install patterns:
+ *
+ *   - "popup_js":  JS widget that injects a floating button + opens a
+ *                  full-screen modal on click. Most polished UX. Requires
+ *                  pasting into the host site's site-wide Custom Code area.
+ *
+ *   - "button_link": plain HTML <a> styled as a button. Opens the full
+ *                  /order/<slug> page in a new tab on click. Works in
+ *                  any "Embed HTML" widget on any site builder because
+ *                  it's just HTML — no JavaScript, no Custom Code area
+ *                  required. The most-portable button install. Trade-off
+ *                  vs popup_js: opens in a new tab instead of an overlay
+ *                  modal, so customers leave the host page momentarily.
+ *
+ *   - "iframe":    plain <iframe> snippet that embeds the entire ordering
+ *                  UI inline. No JavaScript, no button, no modal — just
+ *                  a rectangle of menu where the snippet is pasted. Same
+ *                  approach GloriaFood uses. Best when the restaurant
+ *                  wants a dedicated "Order Online" page that shows the
+ *                  menu directly without an intermediate button click.
  */
-type SnippetType = "popup_js" | "iframe";
+type SnippetType = "popup_js" | "button_link" | "iframe";
 
 const DEFAULT_LABEL = "See MENU & Order";
 const DEFAULT_COLOR = "#ef4444";
@@ -45,10 +54,16 @@ const DEFAULT_IFRAME_HEIGHT = 700;
 
 export function LegacyWidgetClient({
   publicId,
+  orderSlug,
   baseUrl,
   isPublished,
 }: {
   publicId: string;
+  /** Public restaurant slug used in /order/<slug> URLs — passed alongside
+   *  publicId because the button_link snippet links to the real order
+   *  page (slug-based, shareable) while popup_js + iframe use the
+   *  widget-token URLs. */
+  orderSlug: string;
   baseUrl: string;
   isPublished: boolean;
 }) {
@@ -80,6 +95,27 @@ export function LegacyWidgetClient({
         `></iframe>`,
       ].join("\n");
     }
+    if (snippetType === "button_link") {
+      // Plain HTML button styled with inline CSS so it renders identically
+      // anywhere (no external stylesheet needed). Opens /order/<slug>
+      // (NOT the embed iframe URL — we want the customer to land on
+      // a real shareable page, not an iframe-mode UI). target="_blank"
+      // + rel for security/perf. Inline styles match the JS popup button's
+      // visual treatment so the brand stays consistent across patterns.
+      const safeColor = color || DEFAULT_COLOR;
+      const safeLabel = escapeHtml(label || DEFAULT_LABEL);
+      // We embed the slug-based public order URL. publicId is the wgt_
+      // token used by the JS widget; for the public-facing order page
+      // we use the restaurant's slug, passed in as a prop.
+      const orderUrl = `${baseUrl}/order/${orderSlug}`;
+      return [
+        `<!-- Fee Free Ordering — button link (opens menu in new tab) -->`,
+        `<a href="${orderUrl}"`,
+        `   target="_blank"`,
+        `   rel="noopener noreferrer"`,
+        `   style="display:inline-block;background:${safeColor};color:#fff;padding:18px 36px;font-family:system-ui,-apple-system,sans-serif;font-size:18px;font-weight:700;text-decoration:none;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.2);letter-spacing:0.02em;white-space:nowrap;">${safeLabel}</a>`,
+      ].join("\n");
+    }
     // JS popup widget
     const lines = [
       `<!-- Fee Free Ordering widget -->`,
@@ -97,7 +133,7 @@ export function LegacyWidgetClient({
     }
     lines.push(`        async defer></script>`);
     return lines.join("\n");
-  }, [snippetType, baseUrl, publicId, label, color, position, customSelector, iframeHeight]);
+  }, [snippetType, baseUrl, publicId, label, color, position, customSelector, iframeHeight, orderSlug]);
 
   async function copy() {
     try {
@@ -133,23 +169,32 @@ export function LegacyWidgetClient({
                anywhere on your page. Same as GloriaFood. Less slick
                (no full-screen modal) but lets you put the menu in
                any specific location you want. */}
-      <div className="grid sm:grid-cols-2 gap-3">
+      <div className="grid sm:grid-cols-3 gap-3">
         <SnippetTypeCard
           active={snippetType === "popup_js"}
           onClick={() => setSnippetType("popup_js")}
           icon={<MousePointerClick className="w-5 h-5" />}
-          title="Popup button (recommended)"
-          description="Floating button on every page that opens a full-screen ordering modal. Polished UX. Must be pasted into your site's site-wide custom code area."
+          title="Popup button"
+          description="Floating button on every page that opens a full-screen ordering modal. Most polished UX. Must be pasted into your site's site-wide custom code area."
           tag="BEST UX"
           tagColor="emerald"
+        />
+        <SnippetTypeCard
+          active={snippetType === "button_link"}
+          onClick={() => setSnippetType("button_link")}
+          icon={<ExternalLink className="w-5 h-5" />}
+          title="Button (opens in new tab)"
+          description="A styled HTML button you paste anywhere on your page. Click opens the full ordering page in a new browser tab. Works in any HTML widget — no Custom Code area needed."
+          tag="ANY WIX HTML BOX"
+          tagColor="amber"
         />
         <SnippetTypeCard
           active={snippetType === "iframe"}
           onClick={() => setSnippetType("iframe")}
           icon={<Code2 className="w-5 h-5" />}
-          title="HTML Embed (paste anywhere)"
-          description="Plain iframe that embeds the menu inline. Paste into any HTML widget on your page — works in Wix's 'Embed HTML', Squarespace's 'Code Block', etc. Same approach GloriaFood uses."
-          tag="WORKS EVERYWHERE"
+          title="HTML Embed (inline menu)"
+          description="Plain iframe that embeds the entire menu directly inline — no button, no popup. Same approach GloriaFood uses for their 'Order Online' page section."
+          tag="INLINE MENU"
           tagColor="blue"
         />
       </div>
@@ -194,71 +239,87 @@ export function LegacyWidgetClient({
             </>
           )}
 
+          {snippetType === "button_link" && (
+            <>
+              <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900 leading-relaxed">
+                <p className="font-bold mb-1">📝 Where to paste this</p>
+                <ol className="list-decimal pl-4 space-y-1">
+                  <li>In Wix: drag in an <strong>&quot;Embed HTML&quot;</strong> element wherever you want the button to appear (a section header, your &quot;Order Online&quot; page, anywhere)</li>
+                  <li>Paste the code below into it</li>
+                  <li>Wix shows a small white box — that&apos;s the button, click <strong>Preview</strong> or <strong>Publish</strong> to see it styled</li>
+                </ol>
+                <p className="mt-2">Click opens the full ordering experience in a new tab. Customer can browse, add to cart, and checkout there.</p>
+              </div>
+            </>
+          )}
+
+          {/* Label + color — shared by popup_js AND button_link */}
+          {snippetType !== "iframe" && (
+            <>
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                  Button text
+                </label>
+                <input
+                  type="text"
+                  value={label}
+                  maxLength={40}
+                  onChange={(e) => setLabel(e.target.value)}
+                  placeholder={DEFAULT_LABEL}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
+                />
+                <p className="text-[11px] text-gray-500 mt-1">
+                  What the button says. Default: &quot;See MENU &amp; Order&quot; (the
+                  proven highest-clicked version).
+                </p>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                  Button color
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="color"
+                    value={color}
+                    onChange={(e) => setColor(e.target.value)}
+                    className="w-12 h-10 border border-gray-300 rounded-lg cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={color}
+                    onChange={(e) => setColor(e.target.value)}
+                    placeholder="#ef4444"
+                    pattern="^#[0-9a-fA-F]{6}$"
+                    className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
+                  />
+                </div>
+                <div className="flex gap-1.5 mt-2">
+                  {[
+                    { name: "Red",     value: "#ef4444" },
+                    { name: "Orange",  value: "#f97316" },
+                    { name: "Yellow",  value: "#eab308" },
+                    { name: "Green",   value: "#10b981" },
+                    { name: "Blue",    value: "#3b82f6" },
+                    { name: "Purple",  value: "#8b5cf6" },
+                    { name: "Pink",    value: "#ec4899" },
+                    { name: "Black",   value: "#111827" },
+                  ].map((c) => (
+                    <button
+                      key={c.value}
+                      type="button"
+                      onClick={() => setColor(c.value)}
+                      title={c.name}
+                      className="w-6 h-6 rounded-full border-2 border-white shadow ring-1 ring-gray-200 hover:scale-110 transition"
+                      style={{ background: c.value }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
           {snippetType === "popup_js" && (
             <>
-          {/* Label */}
-          <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-              Button text
-            </label>
-            <input
-              type="text"
-              value={label}
-              maxLength={40}
-              onChange={(e) => setLabel(e.target.value)}
-              placeholder={DEFAULT_LABEL}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
-            />
-            <p className="text-[11px] text-gray-500 mt-1">
-              What the button says. Default: &quot;See MENU &amp; Order&quot; (the
-              proven highest-clicked version).
-            </p>
-          </div>
-
-          {/* Color */}
-          <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-              Button color
-            </label>
-            <div className="flex items-center gap-2">
-              <input
-                type="color"
-                value={color}
-                onChange={(e) => setColor(e.target.value)}
-                className="w-12 h-10 border border-gray-300 rounded-lg cursor-pointer"
-              />
-              <input
-                type="text"
-                value={color}
-                onChange={(e) => setColor(e.target.value)}
-                placeholder="#ef4444"
-                pattern="^#[0-9a-fA-F]{6}$"
-                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
-              />
-            </div>
-            <div className="flex gap-1.5 mt-2">
-              {[
-                { name: "Red",     value: "#ef4444" },
-                { name: "Orange",  value: "#f97316" },
-                { name: "Yellow",  value: "#eab308" },
-                { name: "Green",   value: "#10b981" },
-                { name: "Blue",    value: "#3b82f6" },
-                { name: "Purple",  value: "#8b5cf6" },
-                { name: "Pink",    value: "#ec4899" },
-                { name: "Black",   value: "#111827" },
-              ].map((c) => (
-                <button
-                  key={c.value}
-                  type="button"
-                  onClick={() => setColor(c.value)}
-                  title={c.name}
-                  className="w-6 h-6 rounded-full border-2 border-white shadow ring-1 ring-gray-200 hover:scale-110 transition"
-                  style={{ background: c.value }}
-                />
-              ))}
-            </div>
-          </div>
-
           {/* Position */}
           <div>
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
@@ -362,6 +423,29 @@ export function LegacyWidgetClient({
                   <span className="px-1.5 py-0.5 bg-gray-100 text-gray-500 text-[8px] rounded">Drinks</span>
                 </div>
               </div>
+            ) : snippetType === "button_link" ? (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <button
+                  type="button"
+                  disabled
+                  style={{
+                    background: color,
+                    padding: "18px 36px",
+                    fontSize: "18px",
+                    fontWeight: 700,
+                    color: "#fff",
+                    border: 0,
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
+                    minWidth: "200px",
+                    letterSpacing: "0.02em",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {label || DEFAULT_LABEL}
+                </button>
+              </div>
             ) : (
               <div
                 className={previewContainerClass(position)}
@@ -393,6 +477,8 @@ export function LegacyWidgetClient({
           <p className="text-[11px] text-gray-500 leading-relaxed">
             {snippetType === "iframe"
               ? "The embed renders the menu inline — no popup, no overlay. Customers stay on your page while they order."
+              : snippetType === "button_link"
+              ? "Clicking the button opens the full ordering page in a new browser tab. Customer browses, orders, checks out there — your original page stays open in their other tab."
               : "Clicking the real button on your site opens a full-screen modal with your complete ordering UI — pickup/delivery toggle, menu categories, cart, checkout. Not previewed here."}
           </p>
         </div>
@@ -487,11 +573,13 @@ function SnippetTypeCard({
   title: string;
   description: string;
   tag: string;
-  tagColor: "emerald" | "blue";
+  tagColor: "emerald" | "blue" | "amber";
 }) {
   const tagClass =
     tagColor === "emerald"
       ? "bg-emerald-100 text-emerald-800"
+      : tagColor === "amber"
+      ? "bg-amber-100 text-amber-800"
       : "bg-blue-100 text-blue-800";
   return (
     <button

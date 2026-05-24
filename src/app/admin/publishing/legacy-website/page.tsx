@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getSessionUser } from "@/lib/session";
 import { ensureWidgetPublicId, getPublishState } from "@/lib/publishing";
+import prisma from "@/lib/db";
 import { LegacyWidgetClient } from "./LegacyWidgetClient";
 
 export default async function LegacyWebsitePage() {
@@ -13,8 +14,16 @@ export default async function LegacyWebsitePage() {
   // Always make sure we have a widgetPublicId so the snippet is copy-pastable
   // even before the owner clicks Publish. Owner can paste it now; orders won't
   // accept until publishedAt is set.
-  const widgetPublicId = await ensureWidgetPublicId(user.restaurantId);
-  const state = await getPublishState(user.restaurantId);
+  const [widgetPublicId, state, restaurant] = await Promise.all([
+    ensureWidgetPublicId(user.restaurantId),
+    getPublishState(user.restaurantId),
+    // slug needed by the button_link snippet (which links to /order/<slug>,
+    // not /embed/widget/<widgetPublicId> — we want a real shareable URL).
+    prisma.restaurant.findUnique({
+      where: { id: user.restaurantId },
+      select: { slug: true },
+    }),
+  ]);
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
 
@@ -37,6 +46,7 @@ export default async function LegacyWebsitePage() {
 
       <LegacyWidgetClient
         publicId={widgetPublicId}
+        orderSlug={restaurant?.slug ?? ""}
         baseUrl={baseUrl}
         isPublished={!!state.publishedAt}
       />
