@@ -253,61 +253,65 @@ public class DirectPrinterPlugin extends Plugin {
      */
     private boolean tryStarPrint(String ip, byte[] payload, int timeoutMs, PluginCall call) {
         StarIOPort port = null;
-        try {
-            Log.i(TAG, "tryStarPrint: opening TCP:" + ip + " portSettings=mini timeout=" + timeoutMs);
-            // Connect via Star's protocol on top of TCP:9100. The
-            // "mini" portSettings string maps to Mini Receipt Printer
-            // mode which covers the entire TSP100/143/200/650/700/
-            // 800/mPOP/mC-Print line.
-            port = StarIOPort.getPort("TCP:" + ip, "mini", timeoutMs, getContext());
-            Log.i(TAG, "tryStarPrint: port opened, writing " + payload.length + " bytes");
-
-            // Minimal write path — no beginCheckedBlock/endCheckedBlock
-            // because those require the printer's Auto-Status-Back
-            // mode to be enabled. ASB is on by default on most Star
-            // models but TSP143IIIW with CloudPRNT can have it
-            // disabled. Skipping ASB means we can't auto-detect "out
-            // of paper" / "cover open" but we DON'T hang/fail when
-            // ASB is off. UI shows "check printer if no paper" as
-            // generic guidance instead.
-            port.writePort(payload, 0, payload.length);
-            Log.i(TAG, "tryStarPrint: writePort returned, sleeping for printer drain");
-
-            // Give the printer ~750ms to process bytes BEFORE we
-            // release the port. Star's IPort.releasePort() closes
-            // the underlying TCP connection; close-too-soon is the
-            // same "incomplete transmission" trap that raw TCP hit.
-            try { Thread.sleep(750); } catch (InterruptedException ignore) {}
-
-            Log.i(TAG, "tryStarPrint: SUCCESS (Star SDK path)");
-            JSObject ret = new JSObject();
-            ret.put("ok", true);
-            ret.put("bytesWritten", payload.length);
-            ret.put("method", "star");
-            call.resolve(ret);
-            return true;
-        } catch (StarIOPortException e) {
-            String msg = e.getMessage() != null ? e.getMessage() : "(no message)";
-            Log.w(TAG, "tryStarPrint: StarIOPortException — " + msg);
-            // Treat ANY Star SDK error as "printer isn't a Star OR
-            // had a connection issue" and fall through to raw TCP.
-            // We deliberately don't try to interpret the message
-            // because Star's error strings vary by firmware/SDK
-            // version. The raw TCP path will either succeed (if the
-            // printer is generic ESC/POS) or fail with a clear error
-            // (if the printer is genuinely unreachable).
-            return false;
-        } catch (Exception e) {
-            Log.w(TAG, "tryStarPrint: unexpected exception", e);
-            return false;
-        } finally {
-            if (port != null) {
-                try {
-                    StarIOPort.releasePort(port);
-                    Log.i(TAG, "tryStarPrint: port released");
-                } catch (Exception ignore) {}
+        // ⚠️ portSettings choice is CRITICAL:
+        //   "mini"   = Mini Receipt Printer profile. Expects Auto-
+        //              Status-Back (ASB) mode ON. TSP143IIIW with
+        //              CloudPRNT has ASB off → getPort() throws
+        //              "call-version timeout" after waiting for an
+        //              ASB response that never comes. This is the
+        //              failure Luigi saw in adb logcat.
+        //   "escpos" = ESC/POS-emulating Star printer. Skips ASB
+        //              handshake but assumes printer is in ESC/POS
+        //              mode (rare).
+        //   ""       = Default / no-protocol port. SKIPS the version
+        //              handshake entirely, just opens TCP + writes
+        //              bytes through Star's connection layer. This
+        //              is what works on TSP143IIIW with CloudPRNT
+        //              enabled, and matches the behavior of Star's
+        //              own setup utility.
+        // Try empty FIRST (works on the broadest range of printer
+        // configs), fall back to "mini" if that fails (works on
+        // printers with ASB on but in some edge cases).
+        final String[] portSettingsCandidates = new String[] { "", "mini", "escpos" };
+        StarIOPortException lastError = null;
+        for (String portSettings : portSettingsCandidates) {
+            try {
+                Log.i(TAG, "tryStarPrint: opening TCP:" + ip + " portSettings='" + portSettings + "' timeout=" + timeoutMs);
+                port = StarIOPort.getPort("TCP:" + ip, portSettings, timeoutMs, getContext());
+                Log.i(TAG, "tryStarPrint: port opened (portSettings='" + portSettings + "'), writing " + payload.length + " bytes");
+                port.writePort(payload, 0, payload.length);
+                Log.i(TAG, "tryStarPrint: writePort returned, draining for 750ms");
+                try { Thread.sleep(750); } catch (InterruptedException ignore) {}
+                Log.i(TAG, "tryStarPrint: SUCCESS via portSettings='" + portSettings + "'");
+                JSObject ret = new JSObject();
+                ret.put("ok", true);
+                ret.put("bytesWritten", payload.length);
+                ret.put("method", "star:" + (portSettings.isEmpty() ? "default" : portSettings));
+                call.resolve(ret);
+                return true;
+            } catch (StarIOPortException e) {
+                lastError = e;
+                Log.w(TAG, "tryStarPrint: portSettings='" + portSettings + "' failed: " + e.getMessage());
+                if (port != null) {
+                    try { StarIOPort.releasePort(port); } catch (Exception ignore) {}
+                    port = null;
+                }
+                // Continue to next portSettings candidate.
+            } catch (Exception e) {
+                Log.w(TAG, "tryStarPrint: portSettings='" + portSettings + "' unexpected error", e);
+                if (port != null) {
+                    try { StarIOPort.releasePort(port); } catch (Exception ignore) {}
+                    port = null;
+                }
+                // Bail to raw TCP for non-Star-SDK exceptions.
+                return false;
             }
         }
+        // All Star portSettings exhausted — printer likely isn't Star OR
+        // is in a weird config. Fall through to raw TCP path.
+        Log.w(TAG, "tryStarPrint: all portSettings failed; last error: " +
+            (lastError != null ? lastError.getMessage() : "unknown"));
+        return false;
     }
 
     /**
