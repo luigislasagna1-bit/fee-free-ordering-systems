@@ -14,6 +14,12 @@ import { DispatchModeToggle } from "./DispatchModeToggle";
 import { OrderDetail } from "./OrderDetail";
 import { RejectOrderModal } from "./RejectOrderModal";
 import { KitchenFirstRunTour } from "./KitchenFirstRunTour";
+import {
+  isNativePrinterAvailable,
+  nativePrint,
+  nativePrinterErrorCopy,
+} from "@/lib/native-printer";
+import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 import { useTranslations } from "next-intl";
 
@@ -383,7 +389,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     setReservations(prev => prev.map(r => r.id === id ? { ...r, status } : r));
   };
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Two separate printer setup modals — DirectPrinter (LAN, primary)
+  // and PrintNode (legacy / Windows-bridge / backup). One settings
+  // button in the header opens the right one based on platform; the
+  // user can switch between them from within either modal.
   const [showPrinterSetup, setShowPrinterSetup] = useState(false);
+  const [showDirectPrinterSetup, setShowDirectPrinterSetup] = useState(false);
   const [printerSettings, setPrinterSettings] = useState<PrinterSettings | null>(null);
   // Acknowledged = user pressed "Silence" while the bell was ringing. Bell
   // stays quiet until a *new* pending order arrives (detected in
@@ -661,9 +672,30 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // bell-loop effect (they have to be in scope before that effect runs).
 
   const autoPrint = useCallback(async (orderId: string) => {
-    if (!printerSettings?.autoPrint || !printerSettings.printNodeConnected || !printerSettings.selectedPrinterId) return;
     if (autoPrintedRef.current.has(orderId)) return;
     autoPrintedRef.current.add(orderId);
+    // Preference order:
+    //   1. Direct LAN printer (native app) — fastest, no third-party
+    //      dependency, no monthly fee. The "main" path going forward.
+    //   2. PrintNode — fallback for browser / desktop / non-native
+    //      installs. Still works for restaurants who haven't installed
+    //      the native app yet.
+    // We deliberately try the direct printer FIRST regardless of any
+    // "autoPrint" toggle from PrintNode settings — if the operator
+    // configured the direct printer, that's an explicit opt-in.
+    const direct = getDirectPrinterConfig();
+    if (direct && direct.autoprint) {
+      try {
+        await doPrintDirect(orderId);
+        return;
+      } catch (err) {
+        // Direct printer failed — fall through to PrintNode (if also
+        // configured) so the restaurant isn't stuck without a print.
+        console.warn("[kitchen/autoPrint] direct printer failed, trying PrintNode", err);
+      }
+    }
+    // PrintNode path (legacy / backup)
+    if (!printerSettings?.autoPrint || !printerSettings.printNodeConnected || !printerSettings.selectedPrinterId) return;
     const type = printerSettings.printKitchen && printerSettings.printCustomer ? "both"
       : printerSettings.printKitchen ? "kitchen"
       : printerSettings.printCustomer ? "customer"
@@ -672,7 +704,44 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     await doPrint(orderId, type);
   }, [printerSettings]);
 
+  /** Direct-printer path: fetch ESC/POS bytes from server, send to
+   *  printer via native plugin. Used when the kitchen operator
+   *  configured a Direct LAN printer in NativePrinterSetup.
+   *
+   *  Errors get user-friendly copy via nativePrinterErrorCopy() so
+   *  the kitchen staff sees "Printer didn't respond — check Wi-Fi"
+   *  rather than a stack trace. */
+  const doPrintDirect = async (orderId: string) => {
+    if (!isNativePrinterAvailable()) throw new Error("Native plugin missing");
+    const cfg = getDirectPrinterConfig();
+    if (!cfg) throw new Error("Direct printer not configured");
+    const res = await fetch(`/api/kitchen/print-job/${orderId}?width=${cfg.paperWidth}`);
+    if (!res.ok) throw new Error("Failed to fetch print job");
+    const { bytes } = await res.json();
+    if (!bytes) throw new Error("Empty print payload");
+    try {
+      await nativePrint({ ip: cfg.ip, port: cfg.port, bytes, timeoutMs: 8000 });
+      toast.success("Receipt printed ✓");
+    } catch (err: any) {
+      const reason = (err?.code || err?.message || "") as string;
+      const copy = nativePrinterErrorCopy(reason);
+      toast.error(copy);
+      throw err;
+    }
+  };
+
   const doPrint = async (orderId: string, type: "kitchen" | "customer" | "both") => {
+    // Direct LAN printer takes precedence when configured. Falls back
+    // to PrintNode only when direct printing isn't set up or fails.
+    const direct = getDirectPrinterConfig();
+    if (direct) {
+      try {
+        await doPrintDirect(orderId);
+        return;
+      } catch {
+        // fall through to PrintNode if also configured
+      }
+    }
     if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
       toast.error("No printer configured. Open Printer Setup to connect.");
       setShowPrinterSetup(true);
@@ -871,7 +940,17 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           </button>
 
           <button
-            onClick={() => setShowPrinterSetup(true)}
+            onClick={() => {
+              // In the native app, Direct Printer is the main and
+              // recommended path — open that modal first. In a regular
+              // browser, fall back to PrintNode. Both modals link to
+              // the other one in their copy so the user can switch.
+              if (isNativePrinterAvailable()) {
+                setShowDirectPrinterSetup(true);
+              } else {
+                setShowPrinterSetup(true);
+              }
+            }}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
               printerReady ? "border-green-500/40 text-green-600" : "border-emerald-500/40 text-emerald-600"
             } ${t.btn}`}
@@ -1344,7 +1423,16 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         </div>
       )}
 
-      {/* ── Printer Setup Modal ── */}
+      {/* ── Printer Setup: Direct LAN (primary, native app only) ── */}
+      {showDirectPrinterSetup && (
+        <NativePrinterSetup onClose={() => setShowDirectPrinterSetup(false)} />
+      )}
+
+      {/* ── Printer Setup: PrintNode (legacy / browser / Windows bridge) ──
+          Direct LAN printing via the native app is the recommended
+          path. This modal stays available as a backup for restaurants
+          who can't (or don't want to) install the native app + for
+          existing PrintNode-configured setups. */}
       {showPrinterSetup && (
         <PrinterSetupModal
           onClose={() => setShowPrinterSetup(false)}

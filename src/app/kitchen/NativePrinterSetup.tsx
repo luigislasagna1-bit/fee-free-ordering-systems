@@ -24,7 +24,7 @@
 
 import { useEffect, useState } from "react";
 import {
-  X, Printer, CheckCircle2, XCircle, Loader2, Wifi, AlertCircle,
+  X, Printer, CheckCircle2, XCircle, Loader2, Wifi, AlertCircle, Sparkles,
 } from "lucide-react";
 import {
   isNativePrinterAvailable,
@@ -162,15 +162,18 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
       aria-modal="true"
     >
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Printer className="w-5 h-5 text-emerald-600" />
-            <h2 className="text-lg font-bold text-gray-900">Direct Printer (no PrintNode)</h2>
+        <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <Printer className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+            <h2 className="text-lg font-bold text-gray-900 truncate">Direct Printer (LAN)</h2>
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 rounded-full px-2 py-0.5 flex-shrink-0">
+              <Sparkles className="w-3 h-3" /> RECOMMENDED
+            </span>
           </div>
           <button
             type="button"
             onClick={() => { save(); onClose(); }}
-            className="text-gray-400 hover:text-gray-700 p-1"
+            className="text-gray-400 hover:text-gray-700 p-1 flex-shrink-0"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
