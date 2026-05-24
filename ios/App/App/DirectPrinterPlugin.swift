@@ -2,6 +2,16 @@ import Foundation
 import Capacitor
 import Network
 
+// TODO(post-MVP): integrate Star's iOS SDK (StarIO_Extension SPM)
+// for the same "Star printers just work" behavior the Android plugin
+// now has via the StarIOPort path. Until then, iOS users with Star
+// printers will need to manually switch the printer's emulation
+// mode to ESC/POS via Star's PC utility. SPM dependency:
+//   https://github.com/star-micronics/StarIO10-SDK-iOS
+// The integration is analogous to the Android tryStarPrint() helper
+// in DirectPrinterPlugin.java — try Star SDK first, fall back to
+// raw TCP on non-Star printers.
+
 /**
  * DirectPrinter — iOS counterpart to the Android plugin.
  *

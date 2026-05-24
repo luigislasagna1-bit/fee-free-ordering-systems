@@ -40,6 +40,19 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
+    // Star Micronics StarIO SDK — gives us native Star Line Mode +
+    // ESC/POS support so the printer works regardless of which
+    // emulation it ships in. This is what GloriaFood and Square use
+    // under the hood for Star receipt printers. Without this we have
+    // to ask restaurants to manually switch their printer's emulation
+    // mode via Star's PC utility — non-starter for our launch UX.
+    //
+    // Maven Central: com.starmicronics:stario:2.13.0
+    // Supports: TSP143III/IV, TSP100ECO, TSP650II, TSP700II, TSP800II,
+    //           mC-Print2/3, mPOP, SM-S210i, BSC10II, and more
+    implementation 'com.starmicronics:stario:2.13.0'
+    // Coroutines for clean async print handling alongside Star SDK
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 }
 
 apply from: 'capacitor.build.gradle'

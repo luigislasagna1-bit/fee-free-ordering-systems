@@ -18,6 +18,14 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
+// Star Micronics SDK — see build.gradle for the dependency note.
+// We use IPort for raw byte send-over-Star-protocol, which handles
+// the connection-level handshake that vanilla TCP doesn't, so Star
+// printers in Star Line Mode actually receive + execute commands.
+import com.starmicronics.stario.StarIOPort;
+import com.starmicronics.stario.StarIOPortException;
+import com.starmicronics.stario.StarPrinterStatus;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
@@ -118,12 +126,25 @@ public class DirectPrinterPlugin extends Plugin {
             return;
         }
 
-        // Run socket work on a background thread — Android throws
+        // Run print work on a background thread — Android throws
         // NetworkOnMainThreadException if we touch sockets from the
-        // UI thread. A plain Thread is fine here; the JS bridge
-        // resolves the PluginCall whenever we call resolve()/reject(),
-        // regardless of which thread we're on.
+        // UI thread.
+        //
+        // Strategy: try Star's IPort FIRST. The Star SDK handles
+        // the connection-level handshake required by Star printers
+        // in Star Line Mode (TSP143III/IV, TSP100, mPOP, etc.) so
+        // they actually accept + print our ESC/POS payload — vanilla
+        // raw TCP gets accepted but silently discarded.
+        //
+        // If Star IPort throws (printer is NOT a Star — e.g. Epson
+        // or Bixolon), fall back to raw TCP which the non-Star
+        // printers respond to natively.
         new Thread(() -> {
+            // Phase 1 — try Star IPort (works on Star printers)
+            if (tryStarPrint(ip, payload, timeoutMs, call)) {
+                return;
+            }
+            // Phase 2 — raw TCP fallback for Epson/Bixolon/Citizen
             Socket sock = null;
             try {
                 sock = new Socket();
@@ -137,22 +158,16 @@ public class DirectPrinterPlugin extends Plugin {
                 out.write(payload);
                 out.flush();
                 // ⚠️ Critical: give the printer time to drain its
-                // input buffer BEFORE we close the socket. Some
-                // printers (Star TSP143IIIW among them) treat a
-                // socket-close-too-soon as "incomplete transmission"
-                // and silently discard the bytes. 750ms is comfortably
-                // longer than any printer's internal processing.
+                // input buffer BEFORE we close the socket.
                 try { Thread.sleep(750); } catch (InterruptedException ignore) {}
-                // Half-close the output side cleanly before full close
-                // so the printer's TCP stack sees the FIN and finishes
-                // its read loop, vs an abrupt RST that some firmware
-                // interprets as a transmission error.
+                // Half-close so the printer's TCP stack sees a clean FIN.
                 try { sock.shutdownOutput(); } catch (Exception ignore) {}
                 try { Thread.sleep(250); } catch (InterruptedException ignore) {}
-                Log.i(TAG, "Printed " + payload.length + " bytes to " + ip + ":" + port);
+                Log.i(TAG, "Printed (raw TCP) " + payload.length + " bytes to " + ip + ":" + port);
                 JSObject ret = new JSObject();
                 ret.put("ok", true);
                 ret.put("bytesWritten", payload.length);
+                ret.put("method", "raw");
                 call.resolve(ret);
             } catch (java.net.SocketTimeoutException e) {
                 call.reject("Printer did not respond in " + timeoutMs + "ms", "timeout");
@@ -215,6 +230,90 @@ public class DirectPrinterPlugin extends Plugin {
                 }
             }
         }).start();
+    }
+
+    /**
+     * Try printing via Star's StarIO library. Returns true if the
+     * print succeeded (in which case we've already resolved the
+     * PluginCall and the caller should bail). Returns false if the
+     * printer isn't a Star — caller should fall back to raw TCP.
+     *
+     * StarIO is the magic that makes Star printers actually accept
+     * print data. The raw TCP path opens port 9100 and writes bytes,
+     * but Star printers in Star Line Mode silently discard ESC/POS
+     * commands sent that way. StarIOPort wraps the connection with
+     * Star's expected protocol-level handshake AND auto-translates
+     * the command stream to match the printer's emulation mode.
+     *
+     * The portName format is "TCP:<ip>" and portSettings "mini"
+     * indicates a Star Mini receipt printer (TSP100 family) —
+     * which is the right setting for TSP143III/IV. Star's port
+     * accepts this for all their thermal POS printers including
+     * mPOP, TSP650, TSP700, TSP800, mC-Print*.
+     */
+    private boolean tryStarPrint(String ip, byte[] payload, int timeoutMs, PluginCall call) {
+        StarIOPort port = null;
+        try {
+            // Connect via Star's protocol on top of TCP:9100. The
+            // "mini" portSettings string maps to Mini Receipt Printer
+            // mode which covers the entire TSP100/143/200/650/700/
+            // 800/mPOP/mC-Print line. Timeout is in milliseconds.
+            port = StarIOPort.getPort("TCP:" + ip, "mini", timeoutMs, getContext());
+
+            // begin/endCheckedBlock pattern from Star's sample code:
+            // verifies the printer is online and ready BEFORE we
+            // attempt a write. Without it, a printer with the cover
+            // open or out of paper would silently swallow our bytes.
+            StarPrinterStatus status = port.beginCheckedBlock();
+            if (status.offline) {
+                throw new StarIOPortException("printer offline");
+            }
+            port.writePort(payload, 0, payload.length);
+            port.setEndCheckedBlockTimeoutMillis(timeoutMs);
+            status = port.endCheckedBlock();
+            if (status.coverOpen) {
+                throw new StarIOPortException("printer cover open");
+            } else if (status.receiptPaperEmpty) {
+                throw new StarIOPortException("printer out of paper");
+            } else if (status.offline) {
+                throw new StarIOPortException("printer offline after write");
+            }
+            Log.i(TAG, "Printed (Star SDK) " + payload.length + " bytes to " + ip);
+            JSObject ret = new JSObject();
+            ret.put("ok", true);
+            ret.put("bytesWritten", payload.length);
+            ret.put("method", "star");
+            call.resolve(ret);
+            return true;
+        } catch (StarIOPortException e) {
+            // Two failure modes here, distinguished by the message:
+            //   1. Not a Star printer — Star SDK reports connection
+            //      protocol mismatch. Return false to fall back.
+            //   2. Was a Star printer but had a real error (offline,
+            //      cover open, etc.) — propagate to user.
+            String msg = e.getMessage() != null ? e.getMessage().toLowerCase() : "";
+            // Heuristic: Star printer errors mention "printer";
+            // protocol/connection errors are about sockets/getStatus.
+            // When in doubt, return false so raw TCP gets a shot.
+            if (msg.contains("cover open") || msg.contains("out of paper") || msg.contains("offline")) {
+                // Definitely a Star printer, but in an error state.
+                String reason = msg.contains("cover") ? "cover_open"
+                    : msg.contains("paper") ? "out_of_paper"
+                    : "offline";
+                call.reject("Star printer: " + msg, reason);
+                return true; // we handled it (failed but reported)
+            }
+            // Otherwise probably not a Star printer; let raw TCP try.
+            Log.i(TAG, "Star SDK couldn't reach " + ip + " (probably not a Star printer): " + msg);
+            return false;
+        } catch (Exception e) {
+            Log.w(TAG, "Star SDK threw unexpected error, falling back to raw TCP", e);
+            return false;
+        } finally {
+            if (port != null) {
+                try { StarIOPort.releasePort(port); } catch (Exception ignore) {}
+            }
+        }
     }
 
     /**
