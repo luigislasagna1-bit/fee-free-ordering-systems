@@ -874,7 +874,19 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
   // pendingCount is declared above next to `alerting`.
   const selectedOrder = orders.find(o => o.id === selectedId) ?? null;
-  const printerReady = !!(printerSettings?.printNodeConnected && printerSettings.selectedPrinterId);
+  // Direct LAN printer takes precedence — when configured, it's the
+  // primary print path and the header should reflect ITS status, not
+  // a leftover PrintNode setting from before the switch. Falls back
+  // to PrintNode status only if Direct isn't configured at all.
+  const directCfg = getDirectPrinterConfig();
+  const directReady = !!directCfg;
+  const printNodeReady = !!(printerSettings?.printNodeConnected && printerSettings.selectedPrinterId);
+  const printerReady = directReady || printNodeReady;
+  const printerLabel = directReady
+    ? `Direct: ${directCfg!.ip}`
+    : printNodeReady
+    ? (printerSettings!.selectedPrinterName ?? "Connected")
+    : null;
 
   return (
     <div className={`h-screen flex flex-col ${t.base}`}>
@@ -974,7 +986,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           >
             <Printer className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">
-              {printerReady ? (printerSettings!.selectedPrinterName ?? tk("printerConnected")) : tk("printerSetup")}
+              {printerLabel ?? tk("printerSetup")}
             </span>
           </button>
 

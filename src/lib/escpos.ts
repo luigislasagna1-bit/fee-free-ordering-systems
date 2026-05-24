@@ -40,9 +40,16 @@ const ESC = 0x1b;
 const GS = 0x1d;
 const LF = 0x0a;
 
-/** Reusable byte sequences for the commands we use. */
+/**
+ * Command byte sequences. Most commands are SHARED between ESC/POS
+ * (Epson standard) and Star Line Mode (Star's default emulation) —
+ * but the cut command differs. We emit BOTH cut sequences at the end
+ * so the receipt cuts on either kind of printer without the operator
+ * having to switch the printer's emulation mode. The "wrong" cut
+ * sequence is ignored as unknown by the other printer.
+ */
 const CMD = {
-  // ESC @ — initialize printer (resets formatting state)
+  // ESC @ — initialize printer (both ESC/POS and Star use this)
   INIT: [ESC, 0x40],
   // ESC a n — text alignment: 0=left, 1=center, 2=right
   ALIGN_LEFT:   [ESC, 0x61, 0x00],
@@ -55,10 +62,15 @@ const CMD = {
   // nibble = height multiplier. 0x00 = normal, 0x11 = 2x both, etc.
   SIZE_NORMAL: [GS, 0x21, 0x00],
   SIZE_DOUBLE: [GS, 0x21, 0x11],
-  // ESC d n — feed n lines
+  // ESC d n — feed n lines (both emulations)
   FEED_3: [ESC, 0x64, 0x03],
-  // GS V m — paper cut: 0=full cut, 1=partial cut (leaves a small tab)
-  CUT_PARTIAL: [GS, 0x56, 0x01],
+  // GS V m — paper cut: 0=full cut, 1=partial cut. ESC/POS standard.
+  CUT_PARTIAL_ESCPOS: [GS, 0x56, 0x01],
+  // ESC d n — paper cut + feed n lines. Star Line Mode dialect.
+  // Sending BOTH cut sequences at the end makes the receipt cut on
+  // Star printers in default mode AND Epson/Bixolon in ESC/POS mode
+  // without needing the operator to switch emulation.
+  CUT_PARTIAL_STAR: [ESC, 0x64, 0x02],
 } as const;
 
 /**
@@ -162,9 +174,18 @@ export class EscPosBuilder {
   // ── Finishing ──────────────────────────────────────────────────
 
   /** Add some bottom whitespace + cut. Call once at the very end
-   *  of the receipt — cutting mid-print discards remaining bytes. */
+   *  of the receipt — cutting mid-print discards remaining bytes.
+   *
+   *  Emits BOTH ESC/POS and Star Line Mode cut sequences so the
+   *  receipt cuts regardless of which emulation the printer is in.
+   *  The "wrong" sequence is silently ignored by each printer:
+   *    - ESC/POS printer sees GS V 1 → cut; ESC d 2 → unknown, ignored
+   *    - Star printer sees ESC d 2 → cut; GS V 1 → unknown, ignored
+   *  This lets us ship one binary that works on both Epson-family
+   *  and Star-family printers without configuration.
+   */
   cut(): this {
-    return this.raw(CMD.FEED_3).raw(CMD.CUT_PARTIAL);
+    return this.raw(CMD.FEED_3).raw(CMD.CUT_PARTIAL_ESCPOS).raw(CMD.CUT_PARTIAL_STAR);
   }
 
   /** Materialize the collected bytes. */

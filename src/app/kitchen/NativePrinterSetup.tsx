@@ -154,25 +154,57 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
   }
 
   function selectDiscovered(p: DiscoveredPrinter) {
-    setIp(p.ip);
-    setPort(String(p.port || 9100));
+    const newIp = p.ip;
+    const newPort = String(p.port || 9100);
+    setIp(newIp);
+    setPort(newPort);
     setEnabled(true);
-    // Auto-test the selected printer so the operator sees the green
-    // "Reachable" confirmation immediately without another tap.
-    setTimeout(() => testConnection(), 100);
+    // Persist IMMEDIATELY so closing the modal without clicking
+    // "Save & Close" still keeps the selection. (Bug: previously
+    // selecting a discovered printer + closing X lost the IP.)
+    try {
+      localStorage.setItem(LS_KEYS.enabled, "1");
+      localStorage.setItem(LS_KEYS.ip, newIp);
+      localStorage.setItem(LS_KEYS.port, newPort);
+    } catch { /* ignore */ }
+    // Auto-test the selected printer using the explicit IP (NOT via
+    // state because setIp is async and testConnection() reading state
+    // would see the OLD value). Fixes the "Can't reach printer"
+    // immediately followed by manual Test Connection working bug.
+    runConnectivityTest(newIp, parseInt(newPort, 10) || 9100);
   }
 
-  async function testConnection() {
+  async function runConnectivityTest(testIp: string, testPort: number) {
     if (!native) return;
     setTestState({ kind: "testing" });
     try {
-      await nativePing({ ip, port: parseInt(port, 10) || 9100, timeoutMs: 4000 });
-      setTestState({ kind: "success", message: "Reachable ✓ — printer responding on port " + port });
+      await nativePing({ ip: testIp, port: testPort, timeoutMs: 4000 });
+      setTestState({ kind: "success", message: `Reachable ✓ — printer responding at ${testIp}:${testPort}` });
     } catch (err: any) {
       const reason = (err?.code || err?.message || "") as NativePrinterReason | string;
       setTestState({ kind: "error", message: nativePrinterErrorCopy(reason) });
     }
   }
+
+  async function testConnection() {
+    if (!native) return;
+    await runConnectivityTest(ip, parseInt(port, 10) || 9100);
+  }
+
+  // Persist any state change immediately so localStorage stays in sync.
+  // Previously we saved only on close; if the user closed via the X
+  // OR the app was force-closed, recent changes were lost. Now every
+  // toggle / input change syncs through to localStorage.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      localStorage.setItem(LS_KEYS.enabled, enabled ? "1" : "0");
+      localStorage.setItem(LS_KEYS.ip, ip);
+      localStorage.setItem(LS_KEYS.port, port);
+      localStorage.setItem(LS_KEYS.paperWidth, paperWidth);
+      localStorage.setItem(LS_KEYS.autoprint, autoprint ? "1" : "0");
+    } catch { /* ignore */ }
+  }, [enabled, ip, port, paperWidth, autoprint]);
 
   async function testPrint() {
     if (!native) return;
