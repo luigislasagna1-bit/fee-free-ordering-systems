@@ -56,6 +56,12 @@ export interface NativePrintOpts {
 export interface NativePrintResult {
   ok: true;
   bytesWritten: number;
+  /** Which underlying transport actually printed:
+   *    "star" — Star SDK / IPort (used for Star-family printers)
+   *    "raw"  — raw TCP socket (Epson/Bixolon/Citizen + fallback)
+   *  Surfaced so the Test Print UI can show which path worked,
+   *  helps diagnose printer-compatibility issues. */
+  method?: "star" | "raw";
 }
 
 export interface NativePingOpts {

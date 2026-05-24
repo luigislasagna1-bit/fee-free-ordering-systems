@@ -210,27 +210,49 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
     if (!native) return;
     setTestState({ kind: "testing" });
     try {
-      // Build a tiny self-contained test receipt entirely client-side.
-      // Doesn't need to hit the server — proves the printer link works.
-      const widthChars = paperWidth === "58" ? 32 : 48;
-      const b = new EscPosBuilder(widthChars);
-      b.align("center").bold(true).doubleSize(true).textln("FEE FREE");
-      b.doubleSize(false).textln("TEST PRINT");
-      b.bold(false).newline();
-      b.align("left").textln(new Date().toLocaleString());
-      b.divider();
-      b.textln("If you can read this, your printer is");
-      b.textln("connected and ready to receive orders.");
-      b.divider();
-      b.align("center").bold(true).textln("✓ SUCCESS");
-      b.feed(2).cut();
-      await nativePrint({
+      // Minimal test print — bare ASCII text + line feeds + cut.
+      // We deliberately AVOID the EscPosBuilder helpers (bold,
+      // double-size, alignment) because those use commands that
+      // differ between ESC/POS and Star Line Mode. If we can't
+      // print this absolute baseline, the issue is connection-
+      // level, not command-level. Iterating on formatting comes
+      // after the bytes physically come out.
+      //
+      // Bytes:
+      //   0x1B 0x40         = ESC @ (init printer — both modes)
+      //   ASCII text + LF   = plain text content
+      //   0x0A x3           = three line feeds (whitespace before cut)
+      //   0x1B 0x64 0x02    = Star Line Mode partial cut
+      //   0x1D 0x56 0x01    = ESC/POS partial cut (Star ignores)
+      const bytes: number[] = [];
+      const push = (s: string) => { for (let i = 0; i < s.length; i++) bytes.push(s.charCodeAt(i)); bytes.push(0x0a); };
+      bytes.push(0x1b, 0x40); // ESC @ init
+      push("FEE FREE TEST PRINT");
+      push("");
+      push(new Date().toLocaleString());
+      push("");
+      push("If you can read this,");
+      push("the printer is working!");
+      push("");
+      bytes.push(0x0a, 0x0a, 0x0a); // feed
+      bytes.push(0x1b, 0x64, 0x02); // Star partial cut
+      bytes.push(0x1d, 0x56, 0x01); // ESC/POS partial cut
+      const b64 = typeof Buffer !== "undefined"
+        ? Buffer.from(new Uint8Array(bytes)).toString("base64")
+        : btoa(String.fromCharCode(...bytes));
+      const result = await nativePrint({
         ip,
         port: parseInt(port, 10) || 9100,
-        bytes: b.buildBase64(),
-        timeoutMs: 6000,
+        bytes: b64,
+        timeoutMs: 8000,
       });
-      setTestState({ kind: "success", message: "Test print sent! Check your printer." });
+      // Surface WHICH method actually printed (Star SDK vs raw TCP)
+      // so we know which path is working. Huge debugging signal.
+      const method = (result as any)?.method || "unknown";
+      setTestState({
+        kind: "success",
+        message: `Test print sent via ${method === "star" ? "Star SDK ✓" : method === "raw" ? "raw TCP" : method}. Check your printer for paper.`,
+      });
     } catch (err: any) {
       const reason = (err?.code || err?.message || "") as NativePrinterReason | string;
       setTestState({ kind: "error", message: nativePrinterErrorCopy(reason) });

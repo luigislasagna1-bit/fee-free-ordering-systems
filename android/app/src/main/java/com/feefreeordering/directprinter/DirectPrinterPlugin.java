@@ -254,31 +254,32 @@ public class DirectPrinterPlugin extends Plugin {
     private boolean tryStarPrint(String ip, byte[] payload, int timeoutMs, PluginCall call) {
         StarIOPort port = null;
         try {
+            Log.i(TAG, "tryStarPrint: opening TCP:" + ip + " portSettings=mini timeout=" + timeoutMs);
             // Connect via Star's protocol on top of TCP:9100. The
             // "mini" portSettings string maps to Mini Receipt Printer
             // mode which covers the entire TSP100/143/200/650/700/
-            // 800/mPOP/mC-Print line. Timeout is in milliseconds.
+            // 800/mPOP/mC-Print line.
             port = StarIOPort.getPort("TCP:" + ip, "mini", timeoutMs, getContext());
+            Log.i(TAG, "tryStarPrint: port opened, writing " + payload.length + " bytes");
 
-            // begin/endCheckedBlock pattern from Star's sample code:
-            // verifies the printer is online and ready BEFORE we
-            // attempt a write. Without it, a printer with the cover
-            // open or out of paper would silently swallow our bytes.
-            StarPrinterStatus status = port.beginCheckedBlock();
-            if (status.offline) {
-                throw new StarIOPortException("printer offline");
-            }
+            // Minimal write path — no beginCheckedBlock/endCheckedBlock
+            // because those require the printer's Auto-Status-Back
+            // mode to be enabled. ASB is on by default on most Star
+            // models but TSP143IIIW with CloudPRNT can have it
+            // disabled. Skipping ASB means we can't auto-detect "out
+            // of paper" / "cover open" but we DON'T hang/fail when
+            // ASB is off. UI shows "check printer if no paper" as
+            // generic guidance instead.
             port.writePort(payload, 0, payload.length);
-            port.setEndCheckedBlockTimeoutMillis(timeoutMs);
-            status = port.endCheckedBlock();
-            if (status.coverOpen) {
-                throw new StarIOPortException("printer cover open");
-            } else if (status.receiptPaperEmpty) {
-                throw new StarIOPortException("printer out of paper");
-            } else if (status.offline) {
-                throw new StarIOPortException("printer offline after write");
-            }
-            Log.i(TAG, "Printed (Star SDK) " + payload.length + " bytes to " + ip);
+            Log.i(TAG, "tryStarPrint: writePort returned, sleeping for printer drain");
+
+            // Give the printer ~750ms to process bytes BEFORE we
+            // release the port. Star's IPort.releasePort() closes
+            // the underlying TCP connection; close-too-soon is the
+            // same "incomplete transmission" trap that raw TCP hit.
+            try { Thread.sleep(750); } catch (InterruptedException ignore) {}
+
+            Log.i(TAG, "tryStarPrint: SUCCESS (Star SDK path)");
             JSObject ret = new JSObject();
             ret.put("ok", true);
             ret.put("bytesWritten", payload.length);
@@ -286,32 +287,25 @@ public class DirectPrinterPlugin extends Plugin {
             call.resolve(ret);
             return true;
         } catch (StarIOPortException e) {
-            // Two failure modes here, distinguished by the message:
-            //   1. Not a Star printer — Star SDK reports connection
-            //      protocol mismatch. Return false to fall back.
-            //   2. Was a Star printer but had a real error (offline,
-            //      cover open, etc.) — propagate to user.
-            String msg = e.getMessage() != null ? e.getMessage().toLowerCase() : "";
-            // Heuristic: Star printer errors mention "printer";
-            // protocol/connection errors are about sockets/getStatus.
-            // When in doubt, return false so raw TCP gets a shot.
-            if (msg.contains("cover open") || msg.contains("out of paper") || msg.contains("offline")) {
-                // Definitely a Star printer, but in an error state.
-                String reason = msg.contains("cover") ? "cover_open"
-                    : msg.contains("paper") ? "out_of_paper"
-                    : "offline";
-                call.reject("Star printer: " + msg, reason);
-                return true; // we handled it (failed but reported)
-            }
-            // Otherwise probably not a Star printer; let raw TCP try.
-            Log.i(TAG, "Star SDK couldn't reach " + ip + " (probably not a Star printer): " + msg);
+            String msg = e.getMessage() != null ? e.getMessage() : "(no message)";
+            Log.w(TAG, "tryStarPrint: StarIOPortException — " + msg);
+            // Treat ANY Star SDK error as "printer isn't a Star OR
+            // had a connection issue" and fall through to raw TCP.
+            // We deliberately don't try to interpret the message
+            // because Star's error strings vary by firmware/SDK
+            // version. The raw TCP path will either succeed (if the
+            // printer is generic ESC/POS) or fail with a clear error
+            // (if the printer is genuinely unreachable).
             return false;
         } catch (Exception e) {
-            Log.w(TAG, "Star SDK threw unexpected error, falling back to raw TCP", e);
+            Log.w(TAG, "tryStarPrint: unexpected exception", e);
             return false;
         } finally {
             if (port != null) {
-                try { StarIOPort.releasePort(port); } catch (Exception ignore) {}
+                try {
+                    StarIOPort.releasePort(port);
+                    Log.i(TAG, "tryStarPrint: port released");
+                } catch (Exception ignore) {}
             }
         }
     }
