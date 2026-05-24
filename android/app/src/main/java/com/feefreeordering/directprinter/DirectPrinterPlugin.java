@@ -158,7 +158,7 @@ public class DirectPrinterPlugin extends Plugin {
             return;
         }
 
-        getBridge().getExecutor().execute(() -> {
+        new Thread(() -> {
             Socket sock = null;
             try {
                 sock = new Socket();
