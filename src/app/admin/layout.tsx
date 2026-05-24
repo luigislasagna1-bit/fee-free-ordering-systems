@@ -193,7 +193,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 activeLocationId={restaurantId}
                 setupProgress={setupProgress}
               />
-              <main className="flex-1 overflow-y-auto p-6">{children}</main>
+              <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
             </div>
           </div>
           {setupProgress && <GuidedSetupPill progress={setupProgress} />}

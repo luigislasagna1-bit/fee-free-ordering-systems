@@ -329,6 +329,11 @@ export function AdminSidebar({
   const tr = useSafeT();
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  // Mobile drawer state (separate from collapsed). On screens < md the
+  // sidebar is hidden by default; a hamburger button in AdminHeader
+  // toggles it via window event. Tap the backdrop or pick a link to
+  // close. Desktop ignores this — sidebar always visible.
+  const [mobileOpen, setMobileOpen] = useState(false);
   const restaurantSlug = (session.user as any)?.restaurantSlug;
   // Prefer the live progress from the SetupProgressProvider context (polls +
   // refetches on route change). Fall back to the prop for callsites that
@@ -388,6 +393,30 @@ export function AdminSidebar({
     if (loc.subKey && openSubGroup !== loc.subKey) setOpenSubGroup(loc.subKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  // Mobile drawer wiring:
+  //  - Listen for the hamburger button's window event (dispatched by
+  //    AdminHeader so we don't have to drill a setter prop through the
+  //    server-rendered layout boundary)
+  //  - Close the drawer automatically on route change so a tap on any
+  //    nav link doesn't leave the overlay open covering the destination
+  //  - Lock body scroll while the drawer is open so the page behind
+  //    doesn't scroll under the user's thumb
+  useEffect(() => {
+    const onToggle = () => setMobileOpen((v) => !v);
+    window.addEventListener("admin-sidebar-toggle", onToggle);
+    return () => window.removeEventListener("admin-sidebar-toggle", onToggle);
+  }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (mobileOpen) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
 
   /** Click a top-level header: toggle this one, force-close any other. */
   const toggleGroup = (key: string) => {
@@ -479,9 +508,30 @@ export function AdminSidebar({
   };
 
   return (
+    <>
+      {/* Mobile backdrop — only shown while the drawer is open on small
+          screens. Tap to dismiss. Hidden on md+ since the sidebar is
+          always visible there. */}
+      {mobileOpen && (
+        <button
+          type="button"
+          aria-label="Close sidebar"
+          onClick={() => setMobileOpen(false)}
+          className="md:hidden fixed inset-0 z-30 bg-black/50 backdrop-blur-sm"
+        />
+      )}
     <aside className={cn(
-      "bg-gray-900 text-white flex flex-col transition-all duration-300",
-      collapsed ? "w-16" : "w-64"
+      "bg-gray-900 text-white flex flex-col transition-transform duration-300",
+      // Width: same on desktop, but on mobile we ignore the collapsed
+      // toggle and always use the full-width (256px) drawer when open.
+      collapsed ? "md:w-16" : "md:w-64",
+      "w-64",
+      // Position: static on desktop (lives inside flex layout),
+      // fixed-overlay on mobile (slides in from the left). Translate-x
+      // is the drawer-style hide/show animation.
+      "md:static md:translate-x-0",
+      "fixed inset-y-0 left-0 z-40",
+      mobileOpen ? "translate-x-0" : "-translate-x-full",
     )}>
       <div className="h-16 flex items-center justify-between px-4 border-b border-gray-700">
         {!collapsed && (
@@ -727,5 +777,6 @@ export function AdminSidebar({
         </button>
       </div>
     </aside>
+    </>
   );
 }
