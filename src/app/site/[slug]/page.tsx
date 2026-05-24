@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ExternalLink, MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, Globe, Clock, ShoppingBag } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
 // Hosted-page map uses the same component as /order/[slug]/info. The
@@ -78,12 +78,18 @@ export default async function HostedSitePage({
 
   if (result.kind === "not_published") {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-gray-50 p-8">
+      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-white p-8">
         <div className="max-w-md text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Coming soon</h1>
-          <p className="text-gray-600 mt-2">
-            This restaurant hasn't launched yet. Check back shortly.
+          <div className="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-5">
+            <Clock className="w-8 h-8" />
+          </div>
+          <h1 className="text-3xl font-extrabold text-gray-900">Coming soon</h1>
+          <p className="text-gray-600 mt-3 leading-relaxed">
+            This restaurant is putting the finishing touches on their site. Check back shortly — they&apos;ll be ready to take your order soon.
           </p>
+          <div className="mt-8 text-[11px] text-gray-400 uppercase tracking-wider">
+            Powered by Fee Free Ordering
+          </div>
         </div>
       </main>
     );
@@ -92,17 +98,18 @@ export default async function HostedSitePage({
   if (result.kind === "upgrade_required") {
     return (
       <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-amber-50 p-8">
-        <div className="max-w-lg text-center">
-          <h1 className="text-2xl font-bold text-gray-900">
+        <div className="max-w-lg text-center bg-white rounded-3xl shadow-sm border border-gray-100 p-10">
+          <div className="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-5">
+            <Globe className="w-8 h-8" />
+          </div>
+          <h1 className="text-3xl font-extrabold text-gray-900">
             {result.restaurantName}
           </h1>
-          <p className="text-gray-600 mt-3">
-            This restaurant accepts orders directly through their existing
-            website. Use their ordering link or visit them in person.
+          <p className="text-gray-600 mt-3 leading-relaxed">
+            This restaurant accepts orders directly through their own website. Use their ordering link or visit them in person.
           </p>
-          <div className="mt-6 text-xs text-gray-400">
-            Restaurant owner? Upgrade to the Sales Optimized Website add-on to
-            unlock this page.
+          <div className="mt-6 pt-6 border-t border-gray-100 text-xs text-gray-500 leading-relaxed">
+            <strong className="text-gray-700">Restaurant owner?</strong> Subscribe to the Sales Optimized Website add-on inside your admin to unlock a full hosted marketing page at this URL.
           </div>
         </div>
       </main>
@@ -110,7 +117,20 @@ export default async function HostedSitePage({
   }
 
   const r = result.data;
-  const themeColor = (r.themeSettings?.primaryColor as string) || "#ef4444";
+  // Default theme color: emerald (matches the platform brand). Was red
+  // (#ef4444) which clashed with the rest of the Fee Free identity for
+  // restaurants who hadn't set their own theme color yet.
+  const themeColor = (r.themeSettings?.primaryColor as string) || "#10b981";
+
+  // ── Open-now status calculation ────────────────────────────────────
+  // Used in the hero badge ("Open now" / "Opens at 11:00" / "Closed
+  // today") and to highlight today's row in the hours table. Pure
+  // server-side computation — no client JS needed, the page re-renders
+  // on every request anyway.
+  const now = new Date();
+  const todayDow = now.getDay();
+  const todayHours = r.hours.find((h) => h.dayOfWeek === todayDow);
+  const openStatus = computeOpenStatus(now, todayHours);
   const orderUrl = `/order/${r.slug}`;
   const s = r.settings;
 
@@ -245,6 +265,9 @@ export default async function HostedSitePage({
                 />
               </div>
             )}
+            <div className="mb-3">
+              <OpenNowBadge status={openStatus} />
+            </div>
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-md">{heroTitle}</h1>
             {heroSlogan && <p className="mt-3 text-lg md:text-xl text-white/90 drop-shadow">{heroSlogan}</p>}
             {showCuisine && (
@@ -308,6 +331,9 @@ export default async function HostedSitePage({
                   />
                 </div>
               )}
+              <div className="mb-3">
+                <OpenNowBadge status={openStatus} />
+              </div>
               <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">{heroTitle}</h1>
               {heroSlogan && <p className="mt-3 text-lg md:text-xl text-white/90">{heroSlogan}</p>}
               {showCuisine && (
@@ -455,39 +481,49 @@ export default async function HostedSitePage({
               {r.acceptsDineIn && <Pill color={themeColor}>Dine-in</Pill>}
               {r.acceptsReservations && <Pill color={themeColor}>Reservations</Pill>}
             </div>
-            {/* Social links — owner toggle. Skips entirely when no links
-                are set OR when the owner has hidden the section. */}
+            {/* Social links — circular brand-icon buttons (Lucide's
+                Facebook/Instagram/Twitter/Youtube/Globe). Owner toggle
+                + skipped entirely when no links are set. */}
             {s.sections.social && socials.length > 0 && (
               <div className="mt-6 flex flex-wrap gap-2">
                 {socials.map((sl) => (
-                  <a
-                    key={sl.key}
-                    href={sl.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${sl.key} link`}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-xs font-semibold text-gray-700 capitalize transition"
-                  >
-                    {sl.key}
-                    <ExternalLink className="w-3 h-3 opacity-60" />
-                  </a>
+                  <SocialIconLink key={sl.key} url={sl.url} kind={sl.key} />
                 ))}
               </div>
             )}
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Hours</h2>
+            <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+              Hours
+              <OpenNowBadge status={openStatus} />
+            </h2>
+            {/* Today's row is highlighted with the theme color + "Today"
+                pill so visitors can instantly see when this restaurant
+                is open relative to now. */}
             <ul className="mt-4 divide-y divide-gray-100 border-t border-b border-gray-100">
-              {r.hours.map((h) => (
-                <li key={h.dayOfWeek} className="flex justify-between py-2 text-sm">
-                  <span className="font-medium text-gray-800">{dayName(h.dayOfWeek)}</span>
-                  <span className="text-gray-600">
-                    {h.isOpen && h.openTime && h.closeTime
-                      ? `${h.openTime} – ${h.closeTime}`
-                      : "Closed"}
-                  </span>
-                </li>
-              ))}
+              {r.hours.map((h) => {
+                const isToday = h.dayOfWeek === todayDow;
+                return (
+                  <li
+                    key={h.dayOfWeek}
+                    className={`flex justify-between items-center py-2.5 text-sm ${isToday ? "bg-emerald-50/60 -mx-3 px-3 rounded-md" : ""}`}
+                  >
+                    <span className={`font-medium ${isToday ? "text-emerald-900 font-bold" : "text-gray-800"}`}>
+                      {dayName(h.dayOfWeek)}
+                      {isToday && (
+                        <span className="ml-2 text-[10px] font-bold uppercase tracking-wider bg-emerald-600 text-white px-1.5 py-0.5 rounded">
+                          Today
+                        </span>
+                      )}
+                    </span>
+                    <span className={isToday ? "text-emerald-900 font-semibold" : "text-gray-600"}>
+                      {h.isOpen && h.openTime && h.closeTime
+                        ? `${h.openTime} – ${h.closeTime}`
+                        : "Closed"}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
@@ -560,7 +596,7 @@ export default async function HostedSitePage({
         menuKeywords={r.seoKeywords}
       />
 
-      <footer className="bg-gray-900 text-gray-300 py-8">
+      <footer className="bg-gray-900 text-gray-300 py-8 pb-24 md:pb-8">
         <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
           <p>&copy; {new Date().getFullYear()} {r.name}</p>
           <p className="text-xs text-gray-500">
@@ -568,6 +604,18 @@ export default async function HostedSitePage({
           </p>
         </div>
       </footer>
+
+      {/* Sticky mobile "Order Online" CTA — appears once the user scrolls
+          past the hero. Only renders when there's a primary CTA. Footer
+          gets extra bottom padding (pb-24 md:pb-8) so the sticky bar
+          doesn't cover the copyright on mobile. */}
+      {primaryCta && (
+        <StickyOrderCta
+          href={primaryCta.href}
+          label={primaryCta.label}
+          themeColor={themeColor}
+        />
+      )}
     </main>
   );
 }
@@ -738,5 +786,172 @@ function Pill({ children, color }: { children: React.ReactNode; color: string })
     >
       {children}
     </span>
+  );
+}
+
+/**
+ * Computes today's open-now status for the hero badge + today-highlighted
+ * hours row. Pure-function — no side effects, takes `now` so tests/SSR
+ * stay deterministic.
+ *
+ * Returns:
+ *   - "open"          currently open (between openTime and closeTime today)
+ *   - "opens_at"      closed now but opens later today (e.g. opens at 17:00)
+ *   - "closed_today"  not open at all today (isOpen=false OR past closing)
+ *
+ * Times are compared as HH:MM strings — works because input format is
+ * always 24-hour HH:MM (validated server-side at save).
+ */
+type OpenStatus =
+  | { kind: "open"; closesAt: string }
+  | { kind: "opens_at"; opensAt: string }
+  | { kind: "closed_today" };
+
+function computeOpenStatus(
+  now: Date,
+  today: { isOpen: boolean; openTime: string | null; closeTime: string | null } | undefined,
+): OpenStatus {
+  if (!today || !today.isOpen || !today.openTime || !today.closeTime) {
+    return { kind: "closed_today" };
+  }
+  const nowHHMM = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+  if (nowHHMM >= today.openTime && nowHHMM < today.closeTime) {
+    return { kind: "open", closesAt: today.closeTime };
+  }
+  if (nowHHMM < today.openTime) {
+    return { kind: "opens_at", opensAt: today.openTime };
+  }
+  return { kind: "closed_today" };
+}
+
+/**
+ * Open-now status pill. Shown in the hero so visitors instantly see if
+ * the restaurant is taking orders right now. The label uses the
+ * restaurant-set theme color when open (positive signal) and a neutral
+ * slate when closed (no need to alarm — just informative).
+ */
+function OpenNowBadge({ status }: { status: OpenStatus }) {
+  if (status.kind === "open") {
+    return (
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500 text-white text-xs font-bold shadow-sm">
+        <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+        Open now · until {status.closesAt}
+      </span>
+    );
+  }
+  if (status.kind === "opens_at") {
+    return (
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-bold shadow-sm">
+        <Clock className="w-3 h-3" />
+        Opens at {status.opensAt}
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800 text-white text-xs font-bold shadow-sm">
+      Closed today
+    </span>
+  );
+}
+
+/**
+ * Sticky "Order Online" bar that pins to the bottom of the viewport on
+ * mobile once the user has scrolled past the hero. Massive conversion
+ * win on phones — the primary CTA stays in reach no matter how far they
+ * scroll down the menu/visit/hours sections.
+ *
+ * Hidden by default (translate-y-full) and revealed via a small inline
+ * script that flips a CSS class when window.scrollY > 600px. We avoid
+ * a full client component because that would add a useEffect + state
+ * + hydration roundtrip just for a single CSS class toggle.
+ *
+ * Hidden on tablet+ since the hero CTA stays visible there.
+ */
+function StickyOrderCta({ href, label, themeColor }: { href: string; label: string; themeColor: string }) {
+  return (
+    <>
+      <div
+        id="sticky-order-cta"
+        className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 shadow-lg p-3 md:hidden translate-y-full transition-transform duration-300"
+        // Padding-bottom adapts to iOS home-bar safe area.
+        style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+      >
+        <Link
+          href={href}
+          className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-white shadow-md"
+          style={{ background: themeColor }}
+        >
+          <ShoppingBag className="w-4 h-4" />
+          {label}
+        </Link>
+      </div>
+      <script
+        // Toggle the sticky CTA via scroll position. Inline because shipping a
+        // full client component for one classList flip is overkill.
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function () {
+              var bar = document.getElementById('sticky-order-cta');
+              if (!bar) return;
+              function update() {
+                if (window.scrollY > 500) bar.classList.remove('translate-y-full');
+                else bar.classList.add('translate-y-full');
+              }
+              window.addEventListener('scroll', update, { passive: true });
+              update();
+            })();
+          `,
+        }}
+      />
+    </>
+  );
+}
+
+/**
+ * Brand-themed monogram button for a social link.
+ *
+ * Lucide-react removed the actual brand glyphs (Facebook/Instagram/Twitter/
+ * YouTube) in v0.474+ for trademark reasons, and depending on a separate
+ * @lucide/lab package just for these is overkill. Instead we render a
+ * circular badge with the platform's recognizable color + a monogram
+ * letter (f for Facebook, Ig for Instagram, X for Twitter, YT for
+ * YouTube). Website uses the Lucide Globe (no trademark).
+ *
+ * Works visually because the colors carry the brand recognition:
+ * everyone knows Facebook blue + IG gradient + Twitter/X dark + YouTube
+ * red on sight.
+ */
+function SocialIconLink({ url, kind }: { url: string; kind: "facebook" | "instagram" | "twitter" | "youtube" | "website" }) {
+  const labels: Record<typeof kind, string> = {
+    facebook: "Facebook",
+    instagram: "Instagram",
+    twitter: "Twitter / X",
+    youtube: "YouTube",
+    website: "Website",
+  };
+  // Per-platform recognizable styling. Background colors mirror each
+  // brand's primary color so the badges are instantly identifiable
+  // without literal logos.
+  const style: Record<typeof kind, { bg: string; fg: string; label: React.ReactNode }> = {
+    facebook:  { bg: "#1877F2", fg: "#ffffff", label: <span className="font-extrabold text-[15px]" style={{ fontFamily: "Georgia, serif" }}>f</span> },
+    instagram: { bg: "linear-gradient(135deg,#FCAF45 0%,#E1306C 50%,#833AB4 100%)", fg: "#ffffff", label: <span className="font-bold text-[10px] tracking-tight">IG</span> },
+    twitter:   { bg: "#0F1419", fg: "#ffffff", label: <span className="font-extrabold text-[14px]">𝕏</span> },
+    youtube:   { bg: "#FF0000", fg: "#ffffff", label: <span className="font-bold text-[10px] tracking-tight">▶</span> },
+    website:   { bg: "#1F2937", fg: "#ffffff", label: <Globe className="w-4 h-4" /> },
+  };
+  const s = style[kind];
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${labels[kind]} link`}
+      title={labels[kind]}
+      className="inline-flex items-center justify-center w-10 h-10 rounded-full hover:scale-110 transition-transform shadow-sm"
+      style={{ background: s.bg, color: s.fg }}
+    >
+      {s.label}
+    </a>
   );
 }
