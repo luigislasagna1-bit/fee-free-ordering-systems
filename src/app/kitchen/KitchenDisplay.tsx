@@ -13,6 +13,7 @@ import { PrinterSetupModal } from "./PrinterSetupModal";
 import { DispatchModeToggle } from "./DispatchModeToggle";
 import { OrderDetail } from "./OrderDetail";
 import { RejectOrderModal } from "./RejectOrderModal";
+import { KitchenFirstRunTour } from "./KitchenFirstRunTour";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 import { useTranslations } from "next-intl";
 
@@ -1308,6 +1309,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           themeMode={themeMode}
         />
       )}
+
+      {/* First-run guided tour. Renders nothing if the operator has
+          previously skipped or completed it on this device for this
+          restaurant. Scoped per restaurant.id so chain staff who pick
+          a different location see the tour fresh. */}
+      <KitchenFirstRunTour restaurantId={restaurant?.id ?? null} />
     </div>
   );
 }

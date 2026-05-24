@@ -31,7 +31,25 @@ export interface HostedSiteData {
   bannerUrl: string | null;
   socialLinks: Record<string, string> | null;
   themeSettings: Record<string, unknown> | null;
-  hours: Array<{ dayOfWeek: number; isOpen: boolean; openTime: string | null; closeTime: string | null }>;
+  hours: Array<{
+    dayOfWeek: number;
+    isOpen: boolean;
+    openTime: string | null;
+    closeTime: string | null;
+    closesNextDay?: boolean;
+  }>;
+  /** Display format for hours — affects both the hero "Open now" badge
+   *  and the weekly hours table render. Stored as 24h regardless; this
+   *  is purely cosmetic. */
+  hoursFormat: "12h" | "24h";
+  /** IANA timezone of the restaurant. Used to match real-world "today"
+   *  to holiday rows so a Dec 25 holiday closes the restaurant when
+   *  the LOCAL clock says Dec 25, not when UTC does. */
+  timezone: string;
+  /** Upcoming holiday closures (60-day forward window). When today's
+   *  date matches one of these, the restaurant is treated as closed
+   *  regardless of the weekly schedule. */
+  holidays: Array<{ id: string; date: string; name: string | null }>;
   acceptsPickup: boolean;
   acceptsDelivery: boolean;
   acceptsDineIn: boolean;
@@ -104,6 +122,10 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       isActive: true, publishedAt: true,
       acceptsPickup: true, acceptsDelivery: true, acceptsDineIn: true,
       acceptsReservations: true,
+      // hoursFormat controls 12h vs 24h rendering across the hosted site.
+      // timezone determines which calendar day is "today" for holiday
+      // matching.
+      hoursFormat: true, timezone: true,
     },
   });
   if (!restaurant || !restaurant.isActive) return { kind: "not_found" };
@@ -114,11 +136,20 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
     return { kind: "upgrade_required", restaurantName: restaurant.name };
   }
 
-  const [hours, featured, categories, popularItems, deliveryZones] = await Promise.all([
+  // Compute today's calendar date in the restaurant's local timezone so
+  // a holiday set for "Dec 25" matches when the local clock says Dec 25
+  // regardless of the server's UTC midnight crossing.
+  const todayStartUtc = new Date();
+  todayStartUtc.setUTCHours(0, 0, 0, 0);
+  // Reach back 1 day too, in case the restaurant's local zone hasn't
+  // ticked over to the next day yet but UTC has.
+  const yesterdayStartUtc = new Date(todayStartUtc.getTime() - 24 * 60 * 60 * 1000);
+
+  const [hours, featured, categories, popularItems, deliveryZones, holidays] = await Promise.all([
     prisma.openingHours.findMany({
       where: { restaurantId: restaurant.id },
       orderBy: { dayOfWeek: "asc" },
-      select: { dayOfWeek: true, isOpen: true, openTime: true, closeTime: true },
+      select: { dayOfWeek: true, isOpen: true, openTime: true, closeTime: true, closesNextDay: true },
     }),
     prisma.menuItem.findMany({
       where: { restaurantId: restaurant.id, isAvailable: true, isFeatured: true },
@@ -156,6 +187,22 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
         deliveryFee: true, minimumOrder: true, estimatedMinutes: true,
         isActive: true,
       },
+    }),
+    // Holidays near today (yesterday + today + a small forward window).
+    // Forward window keeps the customer-facing schema.org block honest
+    // ("we'll be closed Dec 25"). We grab a generous 60-day forward
+    // slice — cheap, and covers vacation closures planned a couple
+    // months ahead.
+    prisma.restaurantHoliday.findMany({
+      where: {
+        restaurantId: restaurant.id,
+        date: {
+          gte: yesterdayStartUtc,
+          lte: new Date(todayStartUtc.getTime() + 60 * 24 * 60 * 60 * 1000),
+        },
+      },
+      orderBy: { date: "asc" },
+      select: { id: true, date: true, name: true },
     }),
   ]);
 
@@ -202,6 +249,15 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       socialLinks: safeJson(restaurant.socialLinks),
       themeSettings: safeJson(restaurant.themeSettings),
       hours,
+      hoursFormat: (restaurant.hoursFormat === "12h" ? "12h" : "24h") as "12h" | "24h",
+      timezone: restaurant.timezone,
+      // Date is serialized to YYYY-MM-DD so the client doesn't have to
+      // mess with timezones — the date is the date, period.
+      holidays: holidays.map((h) => ({
+        id: h.id,
+        date: h.date.toISOString().slice(0, 10),
+        name: h.name,
+      })),
       acceptsPickup: restaurant.acceptsPickup,
       acceptsDelivery: restaurant.acceptsDelivery,
       acceptsDineIn: restaurant.acceptsDineIn,

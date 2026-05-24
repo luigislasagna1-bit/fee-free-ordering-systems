@@ -21,6 +21,13 @@ model Restaurant {
   zip                String?
   country            String   @default("US")
   timezone           String   @default("America/New_York")
+  // Display format for hours throughout the admin UI and customer-facing
+  // surfaces. "12h" → "9:00 PM"; "24h" → "21:00". Stored hours data is
+  // always 24-hour HH:MM in the DB regardless — this only controls
+  // RENDERING. Default 24h is the regional convention for most of our
+  // launch markets (Canada, EU); North-American restaurants typically
+  // flip this to 12h on day-one.
+  hoursFormat        String   @default("24h")
   cuisineType        String?
   logoUrl            String?
   bannerUrl          String?
@@ -101,6 +108,7 @@ model Restaurant {
   coupons          Coupon[]
   deliveryZones    DeliveryZone[]
   openingHours     OpeningHours[]
+  holidays         RestaurantHoliday[]
   receiptTemplates ReceiptTemplate[]
   promotions         Promotion[]
   printerSettings    PrinterSettings?
@@ -829,10 +837,40 @@ model OpeningHours {
   isOpen       Boolean @default(true)
   openTime     String  @default("09:00")
   closeTime    String  @default("21:00")
+  // When true, closeTime is interpreted as belonging to the NEXT
+  // calendar day (e.g. Fri row with openTime=17:00, closeTime=02:00,
+  // closesNextDay=true means "open Friday 5pm through Saturday 2am").
+  // The customer-side openness check uses this to keep showing "Open"
+  // through midnight rather than flipping to "Closed" at 23:59. Added
+  // 2026-05-24 after UAT — Luigi noted bars/late-night spots couldn't
+  // express their real hours without this.
+  closesNextDay Boolean @default(false)
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
 
   @@unique([restaurantId, dayOfWeek])
+}
+
+// One-off holiday closures (Christmas Day, July 4th, owner vacation,
+// etc.). When today's date matches a row here, the restaurant is
+// considered closed regardless of the weekly OpeningHours schedule.
+// Date stored as @db.Date so timezone shifts don't smear a holiday
+// across two adjacent calendar days.
+model RestaurantHoliday {
+  id           String   @id @default(cuid())
+  restaurantId String
+  date         DateTime @db.Date
+  // Optional human label ("Christmas Day", "Owner vacation"). Shown to
+  // customers on the hosted site / order page when the restaurant is
+  // closed for this reason. Falls back to a generic "Closed today" if
+  // empty.
+  name         String?
+  createdAt    DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  @@unique([restaurantId, date])
+  @@index([restaurantId, date])
 }
 
 model ReceiptTemplate {

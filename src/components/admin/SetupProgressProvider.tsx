@@ -21,6 +21,14 @@ import type { SetupProgress } from "@/lib/setup-checklist";
  *   3. Refetches on every client-side route change (immediate freshness
  *      when the user navigates to a different admin page — that's when
  *      they've usually JUST completed a step)
+ *   4. Refetches on window focus + visibility change (catches the
+ *      "save → keep looking at the page" pattern Luigi flagged in UAT —
+ *      the user saves opening hours, doesn't navigate, but expects the
+ *      walkthrough pill to advance to the next step within seconds).
+ *   5. Listens for a custom `"ffo:setup-progress-changed"` window event
+ *      that save handlers can dispatch for instant refresh. Belt-and-
+ *      suspenders alongside the focus trigger so even an active-tab save
+ *      gets immediate feedback.
  *
  * Consumers call `useSetupProgress()` to read the latest value.
  *
@@ -66,9 +74,23 @@ export function SetupProgressProvider({
     }
 
     const id = setInterval(refresh, POLL_INTERVAL_MS);
+
+    // Focus + visibility — the user just saved on this page and is now
+    // looking at the toast / pill. We want the pill to advance to the
+    // next step within ~1s of save, not 30s.
+    const onFocus = () => refresh();
+    const onVisibility = () => { if (!document.hidden) refresh(); };
+    const onCustom = () => refresh();
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("ffo:setup-progress-changed", onCustom);
+
     return () => {
       cancelled = true;
       clearInterval(id);
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("ffo:setup-progress-changed", onCustom);
     };
   }, [pathname]);
 

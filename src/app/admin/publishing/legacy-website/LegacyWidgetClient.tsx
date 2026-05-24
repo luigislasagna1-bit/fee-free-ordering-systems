@@ -57,13 +57,11 @@ export function LegacyWidgetClient({
     if (color.toLowerCase() !== DEFAULT_COLOR) lines.push(`        data-color="${color}"`);
     if (position === "inline" && customSelector.trim()) {
       lines.push(`        data-target="${escapeHtml(customSelector.trim())}"`);
+    } else if (position !== "br" && position !== "inline") {
+      // Only emit data-position when it differs from the default ("br").
+      // Keeps the paste short for the common case.
+      lines.push(`        data-position="${position}"`);
     }
-    // Position presets (br/bl/tr/tl) aren't supported by widget.js yet —
-    // only floating-br is the default and data-target overrides to
-    // inline. We surface bl/tr/tl in the UI as "Coming soon" so the user
-    // sees the option but can't pick a broken combo. Note: for now they
-    // collapse to BR if selected (no data attribute emitted).
-    lines[lines.length - 1] = lines[lines.length - 1] + "";
     lines.push(`        async defer></script>`);
     return lines.join("\n");
   }, [baseUrl, publicId, label, color, position, customSelector]);
@@ -177,7 +175,28 @@ export function LegacyWidgetClient({
                 current={position}
                 onSelect={setPosition}
                 label="Floating, bottom-right"
-                hint="Default. Always visible no matter how far the customer scrolls."
+                hint="Default. Always visible. ⚠️ May overlap with chat widgets (Tidio, Intercom, Wix Chat) which also default here — try bottom-left if you have a chat bubble."
+              />
+              <PosRadio
+                value="bl"
+                current={position}
+                onSelect={setPosition}
+                label="Floating, bottom-left"
+                hint="Avoids the bottom-right corner where most chat widgets live."
+              />
+              <PosRadio
+                value="tr"
+                current={position}
+                onSelect={setPosition}
+                label="Floating, top-right"
+                hint="High visibility on first scroll. Good when your hero section already has a CTA at the bottom."
+              />
+              <PosRadio
+                value="tl"
+                current={position}
+                onSelect={setPosition}
+                label="Floating, top-left"
+                hint="Least common — usually conflicts with the site logo. Use only if other corners are taken."
               />
               <PosRadio
                 value="inline"
@@ -441,6 +460,9 @@ function PlatformGuide({ platform }: { platform: string }) {
           <Step n={7}>Click <strong>Apply</strong>, then publish your Wix site.</Step>
           <WarnBox>
             ⚠️ Do <strong>NOT</strong> paste this code into an &quot;Embed HTML&quot; element on a page. Wix sandboxes those in iframes and the ordering modal won&apos;t open full-size.
+          </WarnBox>
+          <WarnBox>
+            <strong>Don&apos;t see the button on your live site?</strong> If you have Wix Chat enabled it sits in the bottom-right corner and can cover our button. Switch the <em>Button position</em> above to &quot;Floating, bottom-left&quot; (or top-right) and re-copy the code. You don&apos;t need to re-paste into Wix — just edit the existing snippet to add <code className="bg-gray-100 px-1 rounded text-[10px]">data-position=&quot;bl&quot;</code>.
           </WarnBox>
         </Steps>
       );

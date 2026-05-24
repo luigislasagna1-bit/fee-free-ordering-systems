@@ -8,6 +8,35 @@
  * that opens the ordering iframe at `/embed/widget/<publicId>`.
  *
  * Returned as plain JS (text/javascript) — no Next.js page wrapper.
+ *
+ * ──────────────────────────────────────────────────────────────────────
+ * TOP-LAYER RENDERING (the "Wix problem" fix)
+ * ──────────────────────────────────────────────────────────────────────
+ * Background: when a restaurant pastes our script into Wix's "Custom
+ * Code" (the correct install path — NOT the sandboxed Embed HTML), the
+ * script runs in the top-level document. BUT Wix's DOM uses wrapper
+ * divs (#SITE_CONTAINER, #site-root, .masterPage, etc.) and many of
+ * those wrappers have CSS `transform`, `will-change`, or `filter`
+ * declared somewhere up the tree. Any ancestor with a transform
+ * creates a new CONTAINING BLOCK for descendant `position: fixed`
+ * elements, which means our "fixed bottom-right" launcher button is
+ * actually positioned relative to that transformed ancestor — and
+ * since Wix layouts often clip overflow, the button gets hidden or
+ * appears in the wrong place.
+ *
+ * Fix: wrap the launcher button + modal overlay in a `<div popover>`
+ * element and call `.showPopover()`. The HTML Popover API renders the
+ * element in the browser's TOP LAYER, which sits above ALL stacking
+ * contexts and is unaffected by ancestor transforms. The launcher
+ * button's `position: fixed` resolves against the viewport (where it
+ * should), and z-index becomes irrelevant because top-layer is
+ * categorically above everything else.
+ *
+ * Popover API support: Chrome 114+ (2023), Safari 17+ (2023),
+ * Firefox 125+ (2024). Anything older gracefully degrades to the
+ * legacy `position: fixed; z-index: 2147483647` path which works for
+ * most sites but can still hit the Wix issue. ~98% browser coverage
+ * as of 2026.
  */
 
 import { NextResponse } from "next/server";
@@ -29,21 +58,26 @@ const SCRIPT = `(function(){
     var btnColor = (s && s.getAttribute("data-color")) || "#ef4444";
     // data-target="#some-id" lets the restaurant pin the button inline
     // wherever they want on their page (e.g. inside their nav). Without
-    // it, we fall back to the floating bottom-right launcher.
+    // it, we fall back to the floating launcher.
     var targetSel = s && s.getAttribute("data-target");
+    // data-position controls the floating launcher's corner. One of:
+    //   "br" (default — bottom-right)
+    //   "bl" (bottom-left — useful when a chat widget already occupies
+    //        the bottom-right corner; Tidio, Intercom, Wix Chat all
+    //        default to bottom-right)
+    //   "tr" (top-right)
+    //   "tl" (top-left)
+    // Ignored when data-target is set (inline mode picks its own spot).
+    var posRaw = (s && s.getAttribute("data-position")) || "br";
+    var position = (posRaw === "bl" || posRaw === "tr" || posRaw === "tl") ? posRaw : "br";
 
     // Install-detection heartbeat. Fire exactly ONCE per page session.
     // Uses sendBeacon (which sends an HTTP POST) — the heartbeat endpoint
     // accepts BOTH POST and GET so it survives the sendBeacon transport
-    // without 405s. Fire-and-forget; we never block on it. (Earlier bug:
-    // server was GET-only, so sendBeacon hit 405 silently and
-    // widgetInstalledAt stayed null even when the widget was clearly
-    // live on a host page.)
+    // without 405s. Fire-and-forget; we never block on it.
     try {
       var beaconUrl = base + "/api/widget/heartbeat?id=" + encodeURIComponent(publicId);
       if (navigator.sendBeacon) {
-        // sendBeacon sends POST with an empty body. Server route now
-        // handles POST + GET so this lands.
         navigator.sendBeacon(beaconUrl);
       } else {
         fetch(beaconUrl, { mode: "no-cors", keepalive: true }).catch(function(){});
@@ -51,35 +85,18 @@ const SCRIPT = `(function(){
     } catch (e) { /* never block on heartbeat */ }
 
     // ─── Sandbox detection ────────────────────────────────────────────
-    // The widget normally renders as: small launcher button + full-screen
-    // overlay modal on click. That works when our script runs in the
-    // top-level page document.
-    //
-    // BUT: Wix / Squarespace / Webflow / Shopify's "Embed HTML" or
-    // "Custom HTML" widgets wrap injected scripts in a SANDBOXED IFRAME
-    // sized to whatever the page editor's widget element was sized to
-    // (typically 200x80 — the size of the placeholder rectangle). Our
-    // 100vw/100vh overlay then collapses to 200x80 because vw/vh resolve
-    // against the iframe's viewport, NOT the parent page. The customer
-    // sees a useless tiny popup with truncated menu category names.
-    //
-    // We can't escape a cross-origin sandboxed iframe — that's a browser
-    // security boundary. The right answer is to TELL restaurants to use
-    // their CMS's site-wide custom-code injection instead (see the
-    // Legacy Website install instructions in the admin panel). But for
-    // restaurants who paste into the wrong place anyway, fall back to
-    // INLINE mode: just render the iframe directly inside the sandboxed
-    // iframe, no launcher button, no overlay. The restaurant has to
-    // resize their HTML widget to a reasonable height (e.g. 700px) for
-    // the inline menu to be usable, but at least it WORKS instead of
-    // breaking entirely.
+    // Wix / Squarespace / Webflow / Shopify's "Embed HTML" widgets wrap
+    // injected scripts in a SANDBOXED IFRAME. Our 100vw/100vh overlay
+    // collapses to the iframe's tiny viewport. We can't escape — that's
+    // a browser security boundary. The right answer is to use the host
+    // CMS's site-wide custom-code injection (documented in admin
+    // panel). For restaurants who paste into the wrong place, fall
+    // back to INLINE mode: render the iframe directly inside the
+    // sandbox, no launcher, no overlay.
     var inSandbox = (function(){
       try {
-        // window.top is cross-origin from us in any sandboxed iframe
-        // setup. Reading window.top.location throws if cross-origin.
         if (window.top === window) return false;
-        // Attempt to touch a top-level property. Throws → cross-origin
-        // → we're in a sandboxed iframe.
+        // Touching a top-level property throws if cross-origin → sandboxed.
         // eslint-disable-next-line no-unused-expressions
         window.top.location.href;
         return false;
@@ -88,11 +105,6 @@ const SCRIPT = `(function(){
       }
     })();
     if (inSandbox) {
-      // Inline-fallback mode. Take over the iframe's body entirely with
-      // the ordering page. No button, no overlay — there's nowhere for
-      // them to go. Restaurant should resize the host HTML widget to at
-      // least 700px tall for this to be useful (we can't enforce that
-      // from inside a sandbox).
       try {
         var inlineIframe = document.createElement("iframe");
         inlineIframe.src = base + "/embed/widget/" + encodeURIComponent(publicId);
@@ -107,7 +119,6 @@ const SCRIPT = `(function(){
         ].join(";");
         function attachInline() {
           if (document.body) {
-            // Clear body styling that might constrain us, then append.
             document.body.style.margin = "0";
             document.body.style.padding = "0";
             document.body.appendChild(inlineIframe);
@@ -126,19 +137,30 @@ const SCRIPT = `(function(){
       return; // skip button + overlay setup
     }
 
+    // ─── Position resolver ─────────────────────────────────────────────
+    // Build the corner-anchoring CSS for the floating launcher. 28px
+    // margin from the page edges — feels intentional, doesn't crowd.
+    function positionStyles(p) {
+      switch (p) {
+        case "bl": return ["bottom:28px !important","left:28px !important","top:auto !important","right:auto !important"];
+        case "tr": return ["top:28px !important","right:28px !important","bottom:auto !important","left:auto !important"];
+        case "tl": return ["top:28px !important","left:28px !important","bottom:auto !important","right:auto !important"];
+        case "br":
+        default:   return ["bottom:28px !important","right:28px !important","top:auto !important","left:auto !important"];
+      }
+    }
+
     // ─── Launcher button ───────────────────────────────────────────────
     // GloriaFood-style: big, bold, impossible to miss. Restaurants put
     // their own "Order Online" CTA on their site — ours has to clearly
     // outcompete that visually OR pair with it as the obvious primary.
     // Note the !important flags on layout-critical properties — host-page
-    // CSS frameworks (Wix, Squarespace, Webflow, Shopify) reset button
-    // styles aggressively, and we MUST resist those resets or the button
-    // ends up looking like a Wix default link.
+    // CSS frameworks reset button styles aggressively, and we MUST resist
+    // those resets or the button ends up looking like a default link.
     var btn = document.createElement("button");
     btn.type = "button";
     btn.textContent = btnLabel;
     var btnBase = [
-      // Size: substantially bigger than the old pill. Closer to a true CTA.
       "padding:18px 36px !important",
       "font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif !important",
       "font-size:18px !important",
@@ -161,10 +183,8 @@ const SCRIPT = `(function(){
     ];
     var btnFloating = btnBase.concat([
       "position:fixed !important",
-      "bottom:28px !important",
-      "right:28px !important",
       "z-index:2147483646 !important"
-    ]);
+    ]).concat(positionStyles(position));
     btn.style.cssText = (targetSel ? btnBase : btnFloating).join(";");
     btn.addEventListener("mouseenter", function(){
       btn.style.transform = "translateY(-2px)";
@@ -177,12 +197,8 @@ const SCRIPT = `(function(){
 
     // ─── Modal overlay ─────────────────────────────────────────────────
     // Sized using viewport units (vw/vh) NOT percentages — % is relative
-    // to the parent element which host pages can constrain in weird ways
-    // (we just lost an hour to Wix collapsing our 1200x900 modal to 200x80
-    // because something upstream was sizing the flex container down).
+    // to the parent element which host pages can constrain in weird ways.
     // vw/vh is always relative to the actual viewport, never the parent.
-    // All layout-critical properties get !important for the same reason
-    // the button needs them — host-page CSS resets are aggressive.
     var overlay = document.createElement("div");
     overlay.style.cssText = [
       "position:fixed !important",
@@ -198,16 +214,10 @@ const SCRIPT = `(function(){
       "box-sizing:border-box !important"
     ].join(";");
     var frameWrap = document.createElement("div");
-    // Fill the screen with a tiny breathing margin. min() guards desktop
-    // from being absurdly stretched on 4K displays, but the floor is
-    // 95vw/95vh so on phones / small laptops it's full-bleed.
     frameWrap.style.cssText = [
       "position:relative !important",
       "width:min(1400px, 95vw) !important",
       "height:min(1000px, 95vh) !important",
-      // Hard floors so host-page sizing CANNOT shrink us below this.
-      // The Wix bug was the flex item collapsing to ~200x80; min-width/
-      // min-height on the actual element shuts that down cold.
       "min-width:320px !important",
       "min-height:480px !important",
       "max-width:none !important",
@@ -273,39 +283,85 @@ const SCRIPT = `(function(){
     overlay.addEventListener("click", function(e){ if (e.target === overlay) close(); });
     document.addEventListener("keydown", onEsc);
 
-    // Mount strategy:
-    //   - If data-target="#some-id" is set, replace that placeholder with
-    //     the button (inline mount — lets the restaurant control where
-    //     the button appears in their page flow, e.g. inside the nav).
-    //   - Otherwise, append the button as a floating fixed-position
-    //     bottom-right pill.
-    // Overlay (the modal layer) is always appended to <body> so it can
-    // float above everything regardless of where the button lives.
+    // ─── Mount strategy ────────────────────────────────────────────────
+    //
+    // Three branches:
+    //   1) data-target set → inline-mount the button into that element,
+    //      append overlay to body. Button styling has no fixed positioning.
+    //   2) Popover API available → wrap button + overlay in <div popover>
+    //      and call showPopover(). Top-layer rendering bypasses ALL
+    //      ancestor stacking contexts and transforms. This is the path
+    //      most users hit on modern browsers (Wix included) and the
+    //      reason this rewrite happened.
+    //   3) Popover API absent (old browsers) → legacy path: append button
+    //      + overlay to body. Relies on z-index. May still hit the Wix
+    //      "transformed ancestor" issue on very old browsers, but ~2%
+    //      of traffic.
     function mount() {
-      var mounted = false;
+      // Branch 1: inline-mounted
       if (targetSel) {
         try {
           var el = document.querySelector(targetSel);
-          if (el) { el.appendChild(btn); mounted = true; }
+          if (el) { el.appendChild(btn); document.body.appendChild(overlay); return; }
         } catch (e) { /* invalid selector — fall through to floating */ }
       }
-      if (!mounted) document.body.appendChild(btn);
+      // Branch 2 + 3: floating. Try popover first.
+      var popoverWorks = (function(){
+        try {
+          var probe = document.createElement("div");
+          return "popover" in probe && typeof probe.showPopover === "function";
+        } catch (e) { return false; }
+      })();
+      if (popoverWorks) {
+        var popHost = document.createElement("div");
+        popHost.setAttribute("popover", "manual");
+        // Override the popover UA defaults — by default popovers are
+        // centered with margin:auto and have border/background. We want
+        // an invisible passthrough container so our button + overlay
+        // render as themselves.
+        popHost.style.cssText = [
+          "border:0 !important",
+          "background:transparent !important",
+          "padding:0 !important",
+          "margin:0 !important",
+          "inset:auto !important",
+          "width:auto !important","height:auto !important",
+          "max-width:none !important","max-height:none !important",
+          "overflow:visible !important",
+          // The popover itself should not capture clicks anywhere
+          // except on its children. pointer-events:none on host,
+          // pointer-events:auto on direct children.
+          "pointer-events:none !important"
+        ].join(";");
+        btn.style.cssText += ";pointer-events:auto !important";
+        overlay.style.cssText += ";pointer-events:auto !important";
+        popHost.appendChild(btn);
+        popHost.appendChild(overlay);
+        document.body.appendChild(popHost);
+        try {
+          popHost.showPopover();
+        } catch (e) {
+          // showPopover can throw if the element isn't connected (we
+          // just appended it, but defensive). Fall back to legacy mount.
+          console.warn("[FeeFreeOrdering] popover.showPopover() threw, falling back", e);
+          document.body.appendChild(btn);
+          document.body.appendChild(overlay);
+        }
+        return;
+      }
+      // Branch 3: legacy path
+      document.body.appendChild(btn);
       document.body.appendChild(overlay);
     }
+
     // Fast path: if <body> already exists (true on virtually any host
     // page since this script is typically loaded near </body>), mount
-    // synchronously. Otherwise wait for DOMContentLoaded. This is the
-    // delta vs the old loader, which always waited — that meant on
-    // pages where our script loaded AFTER DOM ready (Wix, Squarespace,
-    // etc.) the button still didn't appear until the next animation
-    // frame, which feels like a delay on a slow page.
+    // synchronously. Otherwise wait for DOMContentLoaded.
     if (document.body) {
       mount();
     } else if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", mount);
     } else {
-      // readyState is "interactive" or "complete" but body somehow
-      // still null — defer one tick.
       setTimeout(mount, 0);
     }
   } catch (err) {
@@ -315,11 +371,7 @@ const SCRIPT = `(function(){
 
 export async function GET() {
   // Cache short. The loader script is a public embed pasted onto third-party
-  // sites (Wix, Squarespace, etc.) — when we ship a fix, we need it live in
-  // minutes, not hours. The previous s-maxage=3600 left Wix sandboxes
-  // serving an old script for up to an hour after deploy, even on
-  // hard-refresh (CDN doesn't honor browser bypass). Keep TTLs tight; the
-  // file is ~6KB so refetch cost is negligible vs. update latency.
+  // sites — when we ship a fix, we need it live in minutes, not hours.
   return new NextResponse(SCRIPT, {
     status: 200,
     headers: {

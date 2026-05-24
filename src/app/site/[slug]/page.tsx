@@ -5,6 +5,12 @@ import Image from "next/image";
 import { MapPin, Phone, Mail, Globe, Clock, ShoppingBag } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
+import {
+  liveOpenStatus,
+  formatHour,
+  dateKeyInTimezone,
+  type LiveOpenStatus,
+} from "@/lib/restaurant-hours";
 // Hosted-page map uses the same component as /order/[slug]/info. The
 // dynamic import (ssr:false) lives in the client wrapper because Next 16
 // doesn't allow ssr:false on next/dynamic inside server components.
@@ -124,13 +130,22 @@ export default async function HostedSitePage({
 
   // ── Open-now status calculation ────────────────────────────────────
   // Used in the hero badge ("Open now" / "Opens at 11:00" / "Closed
-  // today") and to highlight today's row in the hours table. Pure
-  // server-side computation — no client JS needed, the page re-renders
-  // on every request anyway.
+  // today") and to highlight today's row in the hours table.
+  //
+  // Centralized in src/lib/restaurant-hours so the order page and the
+  // hosted site agree on overnight handling + holidays + 12h/24h
+  // formatting. Pure server-side computation — no client JS needed,
+  // the page re-renders on every request anyway.
   const now = new Date();
   const todayDow = now.getDay();
-  const todayHours = r.hours.find((h) => h.dayOfWeek === todayDow);
-  const openStatus = computeOpenStatus(now, todayHours);
+  const todayKey = dateKeyInTimezone(now, r.timezone);
+  const todayHoliday = r.holidays.find((h) => h.date === todayKey);
+  const openStatus: LiveOpenStatus = liveOpenStatus(
+    r.hours,
+    now,
+    r.hoursFormat,
+    todayHoliday ? { name: todayHoliday.name ?? undefined } : undefined,
+  );
   const orderUrl = `/order/${r.slug}`;
   const s = r.settings;
 
@@ -518,7 +533,7 @@ export default async function HostedSitePage({
                     </span>
                     <span className={isToday ? "text-emerald-900 font-semibold" : "text-gray-600"}>
                       {h.isOpen && h.openTime && h.closeTime
-                        ? `${h.openTime} – ${h.closeTime}`
+                        ? `${formatHour(h.openTime, r.hoursFormat)} – ${formatHour(h.closeTime, r.hoursFormat)}${h.closesNextDay ? " (next day)" : ""}`
                         : "Closed"}
                     </span>
                   </li>
@@ -802,40 +817,24 @@ function Pill({ children, color }: { children: React.ReactNode; color: string })
  * Times are compared as HH:MM strings — works because input format is
  * always 24-hour HH:MM (validated server-side at save).
  */
-type OpenStatus =
-  | { kind: "open"; closesAt: string }
-  | { kind: "opens_at"; opensAt: string }
-  | { kind: "closed_today" };
-
-function computeOpenStatus(
-  now: Date,
-  today: { isOpen: boolean; openTime: string | null; closeTime: string | null } | undefined,
-): OpenStatus {
-  if (!today || !today.isOpen || !today.openTime || !today.closeTime) {
-    return { kind: "closed_today" };
-  }
-  const nowHHMM = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
-  if (nowHHMM >= today.openTime && nowHHMM < today.closeTime) {
-    return { kind: "open", closesAt: today.closeTime };
-  }
-  if (nowHHMM < today.openTime) {
-    return { kind: "opens_at", opensAt: today.openTime };
-  }
-  return { kind: "closed_today" };
-}
-
 /**
  * Open-now status pill. Shown in the hero so visitors instantly see if
  * the restaurant is taking orders right now. The label uses the
  * restaurant-set theme color when open (positive signal) and a neutral
  * slate when closed (no need to alarm — just informative).
+ *
+ * Receives the four-state LiveOpenStatus from src/lib/restaurant-hours;
+ * the computation lives there so the order page + hosted site agree.
  */
-function OpenNowBadge({ status }: { status: OpenStatus }) {
+function OpenNowBadge({ status }: { status: LiveOpenStatus }) {
   if (status.kind === "open") {
     return (
       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500 text-white text-xs font-bold shadow-sm">
         <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
         Open now · until {status.closesAt}
+        {status.spansMidnight && (
+          <span className="text-emerald-100 font-normal">(next day)</span>
+        )}
       </span>
     );
   }
@@ -844,6 +843,13 @@ function OpenNowBadge({ status }: { status: OpenStatus }) {
       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-bold shadow-sm">
         <Clock className="w-3 h-3" />
         Opens at {status.opensAt}
+      </span>
+    );
+  }
+  if (status.kind === "holiday") {
+    return (
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-700 text-white text-xs font-bold shadow-sm">
+        Closed · {status.name || "Holiday"}
       </span>
     );
   }

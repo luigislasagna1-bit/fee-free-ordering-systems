@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Map, Globe2, Eye, EyeOff, Check, ExternalLink } from "lucide-react";
+import { Map, Globe2, Eye, EyeOff, Check, ExternalLink, Info, DollarSign, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 type Provider = "leaflet" | "google";
@@ -52,6 +52,12 @@ export function MapSettingsClient({ initial }: Props) {
           icon={<Map className="w-6 h-6 text-emerald-600" />}
           title={t("leaflet")}
           activeLabel={tCommon("active")}
+          badge={
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-100 rounded-full px-2 py-0.5">
+              <Sparkles className="w-3 h-3" /> FREE — RECOMMENDED
+            </span>
+          }
+          description="Standard map (OpenStreetMap data). No account, no API key, no cost. Looks great and works everywhere. Most restaurants use this and never look back."
         />
         <ProviderCard
           active={provider === "google"}
@@ -59,19 +65,65 @@ export function MapSettingsClient({ initial }: Props) {
           icon={<Globe2 className="w-6 h-6 text-blue-600" />}
           title={t("google")}
           activeLabel={tCommon("active")}
+          badge={
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-100 rounded-full px-2 py-0.5">
+              <DollarSign className="w-3 h-3" /> NEEDS YOUR OWN API KEY
+            </span>
+          }
+          description="More polished look + Street View. You sign up at Google Cloud, get an API key, paste it below. Google gives a $200/month free credit (≈ 28,000 map loads). Past that: ~$7 per additional 1,000 loads. For a small restaurant page, you'll almost certainly stay within the free tier."
         />
       </div>
 
       {provider === "google" && (
         <div className="bg-white border border-gray-200 rounded-2xl p-5 space-y-4 shadow-sm">
-          <a
-            href="https://console.cloud.google.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:underline inline-flex items-center gap-1 text-sm"
-          >
-            Google Cloud Console <ExternalLink className="w-3 h-3" />
-          </a>
+          {/* Inline how-to-get-an-API-key guide. Most restaurant owners
+              have never touched Google Cloud Console so we walk them
+              through it instead of just dropping a link. */}
+          <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <Info className="w-4 h-4 text-blue-600" />
+              <h4 className="text-sm font-bold text-blue-900">How to get your Google Maps API key (≈ 5 min)</h4>
+            </div>
+            <ol className="text-xs text-blue-900 leading-relaxed space-y-2 list-decimal pl-5">
+              <li>
+                Go to <a href="https://console.cloud.google.com/" target="_blank" rel="noopener noreferrer" className="font-semibold underline">console.cloud.google.com</a> and sign in with a Google account.
+              </li>
+              <li>
+                Top bar → click the project dropdown → <strong>New Project</strong>. Name it whatever (&quot;My Restaurant Maps&quot;).
+              </li>
+              <li>
+                Left menu (≡) → <strong>APIs &amp; Services → Library</strong>. Search for and enable: <strong>Maps JavaScript API</strong>, <strong>Geocoding API</strong>, and <strong>Places API</strong>.
+              </li>
+              <li>
+                Left menu → <strong>APIs &amp; Services → Credentials → + Create Credentials → API key</strong>. Copy the key (starts with <code className="bg-white/60 px-1 rounded">AIzaSy…</code>).
+              </li>
+              <li>
+                Click the key, then under <strong>Application restrictions</strong> choose <em>HTTP referrers</em> and add your restaurant&apos;s domain (e.g. <code className="bg-white/60 px-1 rounded">*.yourrestaurant.com/*</code>). This prevents anyone else from using your key. <strong>Important</strong> — without restrictions, a leaked key can run up your bill.
+              </li>
+              <li>
+                Google requires a billing account on file even for the free tier. Add a credit card under <strong>Billing</strong>. You won&apos;t be charged unless you exceed the $200/month free credit — and they email you long before that happens.
+              </li>
+              <li>Paste the key below and click Save.</li>
+            </ol>
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <a
+                href="https://console.cloud.google.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded-lg transition"
+              >
+                Open Google Cloud Console <ExternalLink className="w-3 h-3" />
+              </a>
+              <a
+                href="https://mapsplatform.google.com/pricing/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs font-medium text-blue-700 hover:underline"
+              >
+                See current pricing <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          </div>
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">{t("googleApiKey")}</label>
@@ -111,13 +163,15 @@ export function MapSettingsClient({ initial }: Props) {
 }
 
 function ProviderCard({
-  active, onClick, icon, title, activeLabel,
+  active, onClick, icon, title, activeLabel, badge, description,
 }: {
   active: boolean;
   onClick: () => void;
   icon: React.ReactNode;
   title: string;
   activeLabel: string;
+  badge?: React.ReactNode;
+  description?: string;
 }) {
   return (
     <button
@@ -130,14 +184,18 @@ function ProviderCard({
     >
       <div className="flex-shrink-0">{icon}</div>
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <h3 className="font-bold text-gray-900">{title}</h3>
+          {badge}
           {active && (
             <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-100 rounded-full px-2 py-0.5">
               <Check className="w-3 h-3" /> {activeLabel}
             </span>
           )}
         </div>
+        {description && (
+          <p className="mt-1.5 text-xs text-gray-600 leading-relaxed">{description}</p>
+        )}
       </div>
     </button>
   );
