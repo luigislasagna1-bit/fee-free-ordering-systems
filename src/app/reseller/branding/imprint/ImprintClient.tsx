@@ -58,9 +58,14 @@ export function ImprintClient({
         </div>
         <h1 className="text-2xl font-bold text-gray-900 mb-1">Imprint</h1>
         <p className="text-sm text-gray-500">
-          One line of contact info that appears at the bottom of receipts + customer emails
-          for every restaurant you bring on. Gives you visibility on every receipt that prints
-          and every email that goes out.
+          Small line of text added to the footer of <strong>transactional emails</strong>
+          (order confirmations, password resets, customer account emails) sent on behalf of
+          every restaurant attributed to you. Gives you visibility without intruding on the
+          restaurant&apos;s brand.
+        </p>
+        <p className="text-xs text-gray-400 mt-2">
+          <strong>Not</strong> applied to physical thermal receipts — those stay 100% the
+          restaurant&apos;s brand. Your imprint only appears on outgoing emails.
         </p>
       </div>
 
@@ -93,16 +98,26 @@ export function ImprintClient({
           </button>
         )}
 
+        {/* Preview matches the actual EmailFooter rendering:
+            11px font, muted grey, "Powered by <bold imprint>".
+            Receipts intentionally not previewed — they don't show the
+            imprint at all. */}
         <div className="mt-6 rounded-xl bg-gray-50 border border-gray-200 p-4">
-          <div className="text-[10px] uppercase tracking-wider font-bold text-gray-500 mb-2">
-            Preview — receipt footer
+          <div className="text-[10px] uppercase tracking-wider font-bold text-gray-500 mb-3">
+            Preview — appears at the bottom of every transactional email
           </div>
-          <pre className="text-[11px] font-mono text-gray-700 whitespace-pre-wrap leading-relaxed">
-{`──────────────────────────────
-  Thank you for your order!
-  ${imprint || suggested}
-──────────────────────────────`}
-          </pre>
+          <div className="bg-white border border-gray-100 rounded-md p-4">
+            <div className="text-sm text-gray-700 mb-3">[ email body content here … ]</div>
+            <hr className="border-gray-200 mb-3" />
+            <div className="text-[11px] text-gray-400 leading-relaxed">
+              Powered by{" "}
+              <strong className="text-gray-500">{imprint || suggested}</strong>
+            </div>
+          </div>
+          <p className="text-[10px] text-gray-400 mt-2 leading-relaxed">
+            Tiny, muted, doesn&apos;t overshadow the restaurant&apos;s own contact info that appears
+            above this line in real emails.
+          </p>
         </div>
 
         {error && (
@@ -128,9 +143,10 @@ export function ImprintClient({
       </div>
 
       <div className="mt-4 rounded-xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-900">
-        <strong>Heads up:</strong> imprint applies to all restaurants attributed to you. If you
-        want different imprints per restaurant, that&apos;ll be a future feature. For now, keep
-        it generic to your brand.
+        <strong>Scope:</strong> applies to <em>outgoing emails only</em> for every restaurant
+        attributed to you — order confirmations, password resets, reservation confirmations,
+        etc. Per-restaurant overrides aren&apos;t supported yet, so keep this line generic to
+        your brand.
       </div>
     </div>
   );
