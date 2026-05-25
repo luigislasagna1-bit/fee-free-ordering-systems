@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { CheckCircle, Clock, MapPin, ArrowRight } from "lucide-react";
+import { OrderPlacedTracker } from "@/components/order/OrderPlacedTracker";
 
 export default async function ConfirmationPage({
   params,
@@ -27,6 +28,11 @@ export default async function ConfirmationPage({
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      {/* Funnel-terminal beacon. Fires "order_placed" so /admin/reports/
+          online-ordering/funnel can compute a real session→order
+          conversion rate. The order page already fires "visit"; this
+          closes the loop. */}
+      <OrderPlacedTracker restaurantId={order.restaurantId} orderId={order.id} />
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg p-8 text-center">
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
           <CheckCircle className="w-10 h-10 text-green-500" />

@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { OrderingPageClient } from "./OrderingPageClient";
+import { VisitTracker } from "@/components/order/VisitTracker";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { stripeReady, getPublishableKey } from "@/lib/stripe";
 import { hasFeature } from "@/lib/entitlements";
@@ -172,6 +173,10 @@ export default async function OrderingPage({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
+      {/* Analytics beacon — fires /api/track/visit once on mount so
+          Website Visits + Website Funnel reports have data to render.
+          Renders null; safe to mount alongside the order client. */}
+      <VisitTracker restaurantId={restaurant.id} />
       <OrderingPageClient
         restaurant={restaurant as any}
         cardPaymentEnabled={cardPaymentEnabled}

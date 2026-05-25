@@ -1,0 +1,128 @@
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/lib/db";
+import { detectChannel, classifyDevice } from "@/lib/reports/channel-detection";
+
+/**
+ * POST /api/track/visit
+ *
+ * Lightweight beacon called once per session by the customer order
+ * page (and any other public-facing surface — hosted site, widget).
+ *
+ * Body: {
+ *   restaurantId: string,
+ *   sessionHash:  string,   // 32-char hex, generated client-side
+ *   landingPath?: string,   // pathname only, no query string
+ *   utm?: { source?, medium?, campaign? },
+ *   fromMarketplace?: boolean,
+ * }
+ *
+ * Writes ONE WebsiteVisit row + ONE WebsiteFunnelEvent (step="visit")
+ * row. Both have indexes on (restaurantId, createdAt) so they don't
+ * slow inserts and the reports can scan a date range efficiently.
+ *
+ * Privacy: We do NOT log IP, email, phone, or any personally
+ * identifying detail. The sessionHash is client-generated and
+ * deliberately opaque so it can't be reversed into an identity. The
+ * country code (when available) comes from the Vercel geolocation
+ * header — never derived from raw IP at our layer.
+ *
+ * Idempotency: the client sends one beacon per session start; if the
+ * client retries (transient network failure) we accept the duplicate
+ * — there's no unique constraint, and a duplicate visit row in the
+ * reports is acceptable noise (rare + small).
+ *
+ * Performance: This endpoint is on the customer hot path — every
+ * order-page load hits it. We do the minimum work synchronously
+ * (validate + 2 inserts) and bail with 204 No Content fast. No
+ * email sends, no Stripe calls, no notifications.
+ */
+export async function POST(req: NextRequest) {
+  let body: {
+    restaurantId?: string;
+    sessionHash?: string;
+    landingPath?: string;
+    utm?: { source?: string; medium?: string; campaign?: string };
+    fromMarketplace?: boolean;
+  };
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  const { restaurantId, sessionHash } = body;
+  if (typeof restaurantId !== "string" || restaurantId.length < 1 || restaurantId.length > 50) {
+    return NextResponse.json({ error: "restaurantId required" }, { status: 400 });
+  }
+  if (typeof sessionHash !== "string" || !/^[a-f0-9]{16,64}$/i.test(sessionHash)) {
+    return NextResponse.json({ error: "Invalid sessionHash" }, { status: 400 });
+  }
+
+  // Verify the restaurant exists + look up the configured domain for
+  // internal-vs-referral detection. ONE small indexed query.
+  const restaurant = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    // Pull the published primary domain we use elsewhere for internal-
+    // referrer detection. `customDomain` may not exist on every schema
+    // — defensive optional access in TS.
+    select: { id: true, slug: true },
+  });
+  if (!restaurant) {
+    // 204 — don't leak which IDs are valid via different status codes.
+    // The visit just doesn't get logged.
+    return new NextResponse(null, { status: 204 });
+  }
+
+  const referrer = req.headers.get("referer");
+  const userAgent = req.headers.get("user-agent");
+  const country = req.headers.get("x-vercel-ip-country") || null;
+  const channel = detectChannel({
+    utm: body.utm,
+    referrer,
+    restaurantDomain: null, // TODO: wire restaurant.customDomain once that field is read here
+    fromMarketplace: body.fromMarketplace,
+  });
+  const deviceType = classifyDevice(userAgent);
+  const landingPath = (body.landingPath ?? "").slice(0, 255) || null;
+
+  // Build the utm string for storage — opaque, max 255 chars.
+  const utmString = body.utm
+    ? [
+        body.utm.source && `s:${body.utm.source}`,
+        body.utm.medium && `m:${body.utm.medium}`,
+        body.utm.campaign && `c:${body.utm.campaign}`,
+      ].filter(Boolean).join("|").slice(0, 255) || null
+    : null;
+
+  try {
+    // Two inserts — same restaurant + sessionHash, related logically
+    // but no DB-level enforcement (they're append-only logs).
+    await prisma.$transaction([
+      prisma.websiteVisit.create({
+        data: {
+          restaurantId: restaurant.id,
+          sessionHash,
+          channel,
+          referrer: referrer?.slice(0, 255) ?? null,
+          utm: utmString,
+          landingPath,
+          deviceType,
+          country,
+        },
+      }),
+      prisma.websiteFunnelEvent.create({
+        data: {
+          restaurantId: restaurant.id,
+          sessionHash,
+          step: "visit",
+        },
+      }),
+    ]);
+  } catch (err) {
+    // Log + swallow — analytics failures must NEVER break the order
+    // page. The 204 keeps the client happy.
+    console.error("[track/visit] failed", { restaurantId: restaurant.id, err: err instanceof Error ? err.message : String(err) });
+  }
+
+  return new NextResponse(null, { status: 204 });
+}
