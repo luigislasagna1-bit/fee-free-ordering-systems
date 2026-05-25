@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { isSuperadmin } from "@/lib/roles";
+import { notifyResellerOfApplicationChange } from "@/lib/reseller-application-notify";
 
 /**
  * POST /api/superadmin/resellers/[id]/reject
@@ -19,9 +20,13 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const body = await req.json().catch(() => ({}));
   const reason: string | null = body?.reason ? String(body.reason).slice(0, 500) : null;
 
-  const profile = await prisma.resellerProfile.findUnique({ where: { id }, select: { id: true } });
+  const profile = await prisma.resellerProfile.findUnique({
+    where: { id },
+    select: { id: true, status: true },
+  });
   if (!profile) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
+  const wasAlreadyRejected = profile.status === "rejected";
   await prisma.resellerProfile.update({
     where: { id },
     data: {
@@ -29,6 +34,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       suspendedReason: reason,
     },
   });
+
+  // Notify on real state transition only — same idempotency reasoning
+  // as the approve endpoint.
+  if (!wasAlreadyRejected) {
+    void notifyResellerOfApplicationChange(id, "rejected", reason);
+  }
 
   return NextResponse.json({ ok: true });
 }

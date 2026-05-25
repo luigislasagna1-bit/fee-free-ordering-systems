@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { isSuperadmin, ROLES } from "@/lib/roles";
+import { notifyResellerOfApplicationChange } from "@/lib/reseller-application-notify";
 
 /**
  * POST /api/superadmin/resellers/[id]/approve
@@ -22,6 +23,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
   });
   if (!profile) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
+  const wasAlreadyApproved = profile.status === "approved";
   await prisma.$transaction([
     prisma.resellerProfile.update({
       where: { id },
@@ -38,6 +40,14 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
       data: { role: ROLES.RESELLER_PARTNER },
     }),
   ]);
+
+  // Notify the partner — but only if this is a real state change. The
+  // endpoint is idempotent so the superadmin could click Approve on an
+  // already-approved row; we don't want to spam them with a second
+  // welcome email in that case.
+  if (!wasAlreadyApproved) {
+    void notifyResellerOfApplicationChange(id, "approved");
+  }
 
   return NextResponse.json({ ok: true });
 }

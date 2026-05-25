@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { validatePassword } from "@/lib/password";
 import { ROLES } from "@/lib/roles";
+import { notifyResellerOfApplicationChange } from "@/lib/reseller-application-notify";
 
 /**
  * Public reseller application endpoint.
@@ -71,7 +72,7 @@ export async function POST(req: NextRequest) {
 
   const passwordHash = await bcrypt.hash(password, 12);
 
-  await prisma.user.create({
+  const created = await prisma.user.create({
     data: {
       email: emailClean,
       name: nameClean,
@@ -89,7 +90,14 @@ export async function POST(req: NextRequest) {
         },
       },
     },
+    include: { resellerProfile: { select: { id: true } } },
   });
+
+  // Fire-and-forget the "we got your application" email so the applicant
+  // gets confirmation without us blocking on Resend's response.
+  if (created.resellerProfile?.id) {
+    void notifyResellerOfApplicationChange(created.resellerProfile.id, "received");
+  }
 
   return NextResponse.json({ ok: true, status: "submitted" });
 }

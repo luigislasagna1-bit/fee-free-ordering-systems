@@ -35,6 +35,7 @@ import ScheduledOrderReminder    from "@/emails/templates/ScheduledOrderReminder
 import MarketplaceSettlement     from "@/emails/templates/MarketplaceSettlement";
 import AutopilotEmail            from "@/emails/templates/AutopilotEmail";
 import ResellerPayoutNotification from "@/emails/templates/ResellerPayoutNotification";
+import ResellerApplicationStatus from "@/emails/templates/ResellerApplicationStatus";
 import type { EmailOrderItem } from "@/emails/components/EmailParts";
 
 // Cached transport so we don't query PlatformSettings on every call.
@@ -819,6 +820,35 @@ export async function sendAutopilotEmail(params: {
 // Sent at every PayoutRequest status transition (approved / paid /
 // rejected). Closes the communication loop — without this, the reseller
 // has to refresh the dashboard to find out their payout state.
+
+export async function sendResellerApplicationStatusEmail(params: {
+  to: string;
+  variant: "received" | "approved" | "rejected";
+  recipientName: string;
+  companyName?: string | null;
+  referralCode?: string | null;
+  referralUrl?: string | null;
+  rejectionReason?: string | null;
+  dashboardUrl: string;
+}) {
+  const html = await renderEmail(
+    ResellerApplicationStatus({
+      variant: params.variant,
+      recipientName: params.recipientName,
+      companyName: params.companyName,
+      referralCode: params.referralCode,
+      referralUrl: params.referralUrl,
+      rejectionReason: params.rejectionReason,
+      dashboardUrl: params.dashboardUrl,
+      imprint: currentImprint(),
+    })
+  );
+  const subject =
+    params.variant === "received" ? "We got your partner application"
+    : params.variant === "approved" ? "You're in — your Fee Free Ordering partner account is active"
+    :                                  "Your reseller application — update";
+  return send({ to: params.to, subject, html });
+}
 
 export async function sendResellerPayoutNotificationEmail(params: {
   to: string;
