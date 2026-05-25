@@ -1,0 +1,154 @@
+import { getSessionUser } from "@/lib/session";
+import prisma from "@/lib/db";
+import { formatCurrency } from "@/lib/utils";
+import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
+import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
+import { ExportMenu } from "@/components/admin/reports/ExportMenu";
+import Link from "next/link";
+
+/**
+ * /admin/reports/list/orders
+ *
+ * Flat paginated list of orders within the selected date range —
+ * mirrors the GloriaFood "List View → Orders" screenshot. 20 rows
+ * per page, query-paginated via `?page=`.
+ *
+ * Stays distinct from /admin/orders (operational queue showing
+ * today's pending/in-progress orders) — this is the historical /
+ * reporting view that scans 4 years deep.
+ */
+const PAGE_SIZE = 20;
+
+export default async function ListOrdersPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const sp = await searchParams;
+  const user = await getSessionUser();
+  const restaurantId = user?.restaurantId;
+  const range = parseDateRange(sp);
+  const page = Math.max(1, Number(Array.isArray(sp.page) ? sp.page[0] : sp.page) || 1);
+
+  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+
+  // Run count + page query in parallel. count is cheap (uses the
+  // composite index) so we get the total in the same round-trip.
+  const where = { restaurantId, createdAt: { gte: range.from, lte: range.to } };
+  const [total, orders] = await Promise.all([
+    prisma.order.count({ where }),
+    prisma.order.findMany({
+      where,
+      select: {
+        id: true,
+        orderNumber: true,
+        status: true,
+        type: true,
+        customerName: true,
+        total: true,
+        paymentMethod: true,
+        createdAt: true,
+      },
+      orderBy: { createdAt: "desc" },
+      take: PAGE_SIZE,
+      skip: (page - 1) * PAGE_SIZE,
+    }),
+  ]);
+
+  const pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  return (
+    <div>
+      <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">List View — Orders</h1>
+          <p className="text-sm text-gray-500 mt-0.5">{total.toLocaleString()} order(s) · {formatRangeLabel(range)}</p>
+        </div>
+        <DateRangePicker />
+      </header>
+
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden relative">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
+              <th className="py-2.5 px-4 font-semibold">#</th>
+              <th className="py-2.5 px-4 font-semibold">Date</th>
+              <th className="py-2.5 px-4 font-semibold">Customer</th>
+              <th className="py-2.5 px-4 font-semibold">Type</th>
+              <th className="py-2.5 px-4 font-semibold">Payment</th>
+              <th className="py-2.5 px-4 font-semibold">Status</th>
+              <th className="py-2.5 px-4 font-semibold text-right">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.length === 0 && (
+              <tr><td colSpan={7} className="py-6 px-4 text-center text-gray-400 italic">No orders in this range.</td></tr>
+            )}
+            {orders.map((o) => (
+              <tr key={o.id} className="border-b border-gray-50 hover:bg-gray-50/50">
+                <td className="py-2.5 px-4">
+                  <Link href={`/admin/orders/${o.id}`} className="font-mono text-xs text-emerald-600 hover:text-emerald-800">
+                    #{o.orderNumber}
+                  </Link>
+                </td>
+                <td className="py-2.5 px-4 text-gray-600 text-xs">{o.createdAt.toLocaleString()}</td>
+                <td className="py-2.5 px-4 text-gray-800">{o.customerName}</td>
+                <td className="py-2.5 px-4 text-gray-600">{o.type === "dine_in" ? "Dine-in" : o.type.charAt(0).toUpperCase() + o.type.slice(1)}</td>
+                <td className="py-2.5 px-4 text-gray-600 capitalize">{o.paymentMethod}</td>
+                <td className="py-2.5 px-4"><StatusBadge status={o.status} /></td>
+                <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(o.total)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="absolute bottom-3 right-3">
+          <ExportMenu exportUrl="/api/admin/reports/list/orders/export" currentQuery={buildQuery(sp)} />
+        </div>
+      </div>
+
+      {pageCount > 1 && (
+        <Pagination current={page} total={pageCount} sp={sp} />
+      )}
+    </div>
+  );
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const palette: Record<string, string> = {
+    completed: "bg-emerald-50 text-emerald-700",
+    pending:   "bg-amber-50   text-amber-700",
+    accepted:  "bg-blue-50    text-blue-700",
+    rejected:  "bg-red-50     text-red-700",
+    cancelled: "bg-gray-100   text-gray-600",
+  };
+  const cls = palette[status] ?? "bg-gray-100 text-gray-600";
+  return (
+    <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${cls}`}>
+      {status}
+    </span>
+  );
+}
+
+function Pagination({ current, total, sp }: { current: number; total: number; sp: Record<string, string | string[] | undefined> }) {
+  const mk = (p: number) => { const u = new URLSearchParams(buildQuery(sp)); u.set("page", String(p)); return `?${u.toString()}`; };
+  return (
+    <div className="flex items-center justify-between mt-4 text-xs text-gray-600">
+      <span>Page {current} of {total}</span>
+      <div className="flex gap-1">
+        {current > 1 && <a href={mk(current - 1)} className="px-3 py-1.5 rounded border border-gray-200 hover:bg-gray-50">Previous</a>}
+        {current < total && <a href={mk(current + 1)} className="px-3 py-1.5 rounded border border-gray-200 hover:bg-gray-50">Next</a>}
+      </div>
+    </div>
+  );
+}
+
+function buildQuery(sp: Record<string, string | string[] | undefined>): string {
+  const u = new URLSearchParams();
+  for (const [k, v] of Object.entries(sp)) {
+    if (v === undefined || k === "page") continue;
+    if (Array.isArray(v)) v.forEach((x) => u.append(k, x));
+    else u.set(k, v);
+  }
+  return u.toString();
+}

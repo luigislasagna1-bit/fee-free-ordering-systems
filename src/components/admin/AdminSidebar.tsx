@@ -7,6 +7,10 @@ import {
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
   Check, Circle, Sparkles, Rocket, Phone,
+  // Reports sub-section icons — match GloriaFood's iconography by purpose:
+  // TrendingUp for Sales (line going up), PieChart for Menu Insights (mix
+  // breakdown), Globe2 for Online Ordering family, ListChecks for List View.
+  TrendingUp, PieChart, Globe2, ListChecks, Wifi, MousePointerClick,
   type LucideIcon,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
@@ -181,15 +185,86 @@ const navGroups: NavGroup[] = [
     ],
   },
 
+  // ─── REPORTS ──────────────────────────────────────────────────────────
+  // GloriaFood-style information architecture: one top-level "Reports"
+  // category with 5 sections — Dashboard (direct item, the landing) +
+  // 4 sub-groups: Sales / Menu Insights / Online Ordering / List View.
+  //
+  // Every leaf is a real page under /admin/reports/**. Pages are server
+  // components that share the DateRangePicker + Chart/Table + Export
+  // components from `src/components/admin/reports/`.
+  //
+  // The legacy /admin/customers route stays linked under Online Ordering
+  // → Clients (matches GloriaFood; "customers" and "clients" are the
+  // same concept).
+  //
+  // 4-YEAR DATA RETENTION on every backing table — see schema.prisma
+  // REPORTS section. Do not add any cleanup job that touches Order,
+  // OrderItem, Customer, ReportDailySnapshot, WebsiteVisit, etc.
   {
     key: "reports",
     labelKey: "categoryReports",
     label: "Reports",
     icon: BarChart3,
     items: [
-      { href: "/admin",           labelKey: "dashboard", label: "Dashboard",  icon: LayoutDashboard, exact: true },
-      { href: "/admin/reports",   labelKey: "reports",   label: "Reports",    icon: BarChart3 },
-      { href: "/admin/customers", labelKey: "customers", label: "Customers",  icon: Users },
+      // Dashboard is the landing — direct item at the top of the group
+      // so owners always have one click to "the headline numbers." Same
+      // pattern we use for /admin/setup (Setup Wizard) at the top of the
+      // SETUP category.
+      { href: "/admin/reports", labelKey: "reportsDashboard", label: "Dashboard", icon: LayoutDashboard, exact: true },
+    ],
+    subGroups: [
+      {
+        key: "reports.sales",
+        labelKey: "reportsSales",
+        label: "Sales",
+        icon: TrendingUp,
+        items: [
+          { href: "/admin/reports/sales/trend",   labelKey: "reportsSalesTrend",   label: "Trend",   icon: TrendingUp },
+          { href: "/admin/reports/sales/summary", labelKey: "reportsSalesSummary", label: "Summary", icon: BarChart3 },
+        ],
+      },
+      {
+        key: "reports.menu-insights",
+        labelKey: "reportsMenuInsights",
+        label: "Menu Insights",
+        icon: PieChart,
+        items: [
+          { href: "/admin/reports/menu-insights/categories", labelKey: "reportsMenuInsightsCategories", label: "By Category", icon: Layers },
+          { href: "/admin/reports/menu-insights/items",      labelKey: "reportsMenuInsightsItems",      label: "By Item",     icon: UtensilsCrossed },
+        ],
+      },
+      {
+        key: "reports.online-ordering",
+        labelKey: "reportsOnlineOrdering",
+        label: "Online Ordering",
+        icon: Globe2,
+        items: [
+          { href: "/admin/reports/online-ordering/funnel",       labelKey: "reportsFunnel",       label: "Website Funnel",    icon: MousePointerClick },
+          // Reuses the existing /admin/customers page conceptually but
+          // under the Reports IA. The clients-dashboard page (with
+          // returning/new cohort split + add-on upsells) lives at
+          // /admin/reports/online-ordering/clients. /admin/customers
+          // stays as the editable list (different concern).
+          { href: "/admin/reports/online-ordering/clients",      labelKey: "reportsClients",      label: "Clients",           icon: Users },
+          { href: "/admin/reports/online-ordering/reservations", labelKey: "reportsReservations", label: "Table Reservations", icon: CalendarDays },
+          { href: "/admin/reports/online-ordering/google-rank",  labelKey: "reportsGoogleRank",   label: "Google Ranking",    icon: Sparkles },
+          { href: "/admin/reports/online-ordering/visits",       labelKey: "reportsVisits",       label: "Website Visits",    icon: BarChart3 },
+          { href: "/admin/reports/online-ordering/heatmap",      labelKey: "reportsHeatmap",      label: "Delivery Heatmap",  icon: MapIcon },
+          { href: "/admin/reports/online-ordering/connectivity", labelKey: "reportsConnectivity", label: "Connectivity Health", icon: Wifi },
+          { href: "/admin/reports/online-ordering/promotions",   labelKey: "reportsPromotions",   label: "Promotions Stats",  icon: Tag },
+        ],
+      },
+      {
+        key: "reports.list",
+        labelKey: "reportsListView",
+        label: "List View",
+        icon: ListChecks,
+        items: [
+          { href: "/admin/reports/list/orders",  labelKey: "reportsListOrders",  label: "Orders",  icon: ShoppingBag },
+          { href: "/admin/reports/list/clients", labelKey: "reportsListClients", label: "Clients", icon: Users },
+        ],
+      },
     ],
   },
 

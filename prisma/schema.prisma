@@ -8,26 +8,26 @@ datasource db {
 }
 
 model Restaurant {
-  id                 String   @id @default(cuid())
-  name               String
-  slug               String   @unique
-  slogan             String?
-  description        String?
-  phone              String?
-  email              String?
-  address            String?
-  city               String?
-  state              String?
-  zip                String?
-  country            String   @default("US")
-  timezone           String   @default("America/New_York")
+  id                   String  @id @default(cuid())
+  name                 String
+  slug                 String  @unique
+  slogan               String?
+  description          String?
+  phone                String?
+  email                String?
+  address              String?
+  city                 String?
+  state                String?
+  zip                  String?
+  country              String  @default("US")
+  timezone             String  @default("America/New_York")
   // Display format for hours throughout the admin UI and customer-facing
   // surfaces. "12h" → "9:00 PM"; "24h" → "21:00". Stored hours data is
   // always 24-hour HH:MM in the DB regardless — this only controls
   // RENDERING. Default 24h is the regional convention for most of our
   // launch markets (Canada, EU); North-American restaurants typically
   // flip this to 12h on day-one.
-  hoursFormat        String   @default("24h")
+  hoursFormat          String  @default("24h")
   // Kitchen workflow mode:
   //   "simple"   → GloriaFood-style. Kitchen only sees Accept + Reject.
   //                Once accepted, the order stays in "In Progress" with
@@ -43,35 +43,35 @@ model Restaurant {
   //
   // Toggle is per-restaurant on the admin Services & Hours page.
   // Default = "simple" to match GloriaFood's well-tested model.
-  kitchenWorkflowMode String  @default("simple")
+  kitchenWorkflowMode  String  @default("simple")
   // PrintNode backup printer enabled? Default false. Now that the
   // Direct LAN printer (native app, mDNS auto-discovery) is the main
   // printing path, PrintNode is opt-in only — restaurants on Windows
   // browsers or with unusual network setups can enable it as a
   // backup. When false, the PrintNode setup UI is hidden from the
   // kitchen settings to keep the default experience clean.
-  printNodeEnabled    Boolean @default(false)
-  cuisineType        String?
-  logoUrl            String?
-  bannerUrl          String?
-  isActive           Boolean  @default(true)
-  acceptsPickup      Boolean  @default(true)
-  acceptsDelivery    Boolean  @default(false)
-  acceptsDineIn      Boolean  @default(false)
-  acceptsCatering    Boolean  @default(false)
-  acceptsTakeOut     Boolean  @default(false)
-  acceptsReservations Boolean  @default(false)
-  serviceSettings    String?  // JSON: per-service { displayName, description, estimatedTime }
-  minimumOrder       Float    @default(0)
-  deliveryFee        Float    @default(0)
-  estimatedPickup    Int      @default(20)
-  estimatedDelivery  Int      @default(45)
-  taxRate            Float    @default(0)
+  printNodeEnabled     Boolean @default(false)
+  cuisineType          String?
+  logoUrl              String?
+  bannerUrl            String?
+  isActive             Boolean @default(true)
+  acceptsPickup        Boolean @default(true)
+  acceptsDelivery      Boolean @default(false)
+  acceptsDineIn        Boolean @default(false)
+  acceptsCatering      Boolean @default(false)
+  acceptsTakeOut       Boolean @default(false)
+  acceptsReservations  Boolean @default(false)
+  serviceSettings      String? // JSON: per-service { displayName, description, estimatedTime }
+  minimumOrder         Float   @default(0)
+  deliveryFee          Float   @default(0)
+  estimatedPickup      Int     @default(20)
+  estimatedDelivery    Int     @default(45)
+  taxRate              Float   @default(0)
   // Stripe Connect (Layer C — restaurant collects payments from customers)
-  stripeAccountId       String?
-  stripeAccountStatus   String? @default("not_connected")
-  stripeChargesEnabled  Boolean @default(false)
-  stripePayoutsEnabled  Boolean @default(false)
+  stripeAccountId      String?
+  stripeAccountStatus  String? @default("not_connected")
+  stripeChargesEnabled Boolean @default(false)
+  stripePayoutsEnabled Boolean @default(false)
 
   /// JSON array of accepted payment methods chosen by the owner.
   /// Allowed values today: "cash" | "card_in_person" | "online_card".
@@ -79,19 +79,19 @@ model Restaurant {
   /// array includes "online_card", the Stripe Connect step also becomes
   /// required to publish (you can't promise online card and have no
   /// processor wired up). Empty array means "not yet configured".
-  paymentMethods        String   @default("[]")
+  paymentMethods String @default("[]")
 
   // Platform subscription (Layer B — restaurant pays you monthly via Stripe Checkout)
-  subscriptionPlanId      String?
-  trialEndsAt             DateTime?
-  subscriptionStatus      String   @default("trialing")   // trialing | active | past_due | cancelled | incomplete | expired
-  stripeCustomerId        String?   @unique
-  stripeSubscriptionId    String?   @unique
-  currentPeriodEnd        DateTime?
-  cancelAtPeriodEnd       Boolean   @default(false)
-  reviewLink         String?
-  infoContent        String?  // JSON for info page custom CTAs etc
-  themeSettings      String?  // JSON for customer-facing website theme
+  subscriptionPlanId   String?
+  trialEndsAt          DateTime?
+  subscriptionStatus   String    @default("trialing") // trialing | active | past_due | cancelled | incomplete | expired
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean   @default(false)
+  reviewLink           String?
+  infoContent          String? // JSON for info page custom CTAs etc
+  themeSettings        String? // JSON for customer-facing website theme
   /// JSON for the hosted marketing site (gated on the Sales Optimized
   /// Website add-on). Controls section visibility, hero copy overrides,
   /// custom CTAs, and up to 2 user-defined sections. All BASE content
@@ -99,69 +99,69 @@ model Restaurant {
   /// restaurant fields — this column only stores layout/display choices.
   /// Null = use defaults from the canonical fields (the current behavior).
   /// See src/lib/hosted-site-settings.ts for the parsed shape.
-  hostedSiteSettings String?
-  lat                Float?   // geocoded restaurant latitude
-  lng                Float?   // geocoded restaurant longitude
-  mapProvider        String   @default("leaflet")  // "leaflet" | "google"
-  googleMapsApiKey   String?  // only used when mapProvider = "google"
-  autoAcceptOrders   Boolean  @default(false)
-  defaultLanguage    String   @default("en")
-  socialLinks        String?  // JSON: { instagram, facebook, tiktok, x, youtube, linkedin, pinterest, snapchat, threads, whatsapp, yelp, googleBusiness, tripadvisor, website }
-  marketingTier      String   @default("free") // "free" | "social_basic" | "social_pro" | "social_managed" — gates AI-post / scheduling features
+  hostedSiteSettings   String?
+  lat                  Float? // geocoded restaurant latitude
+  lng                  Float? // geocoded restaurant longitude
+  mapProvider          String    @default("leaflet") // "leaflet" | "google"
+  googleMapsApiKey     String? // only used when mapProvider = "google"
+  autoAcceptOrders     Boolean   @default(false)
+  defaultLanguage      String    @default("en")
+  socialLinks          String? // JSON: { instagram, facebook, tiktok, x, youtube, linkedin, pinterest, snapchat, threads, whatsapp, yelp, googleBusiness, tripadvisor, website }
+  marketingTier        String    @default("free") // "free" | "social_basic" | "social_pro" | "social_managed" — gates AI-post / scheduling features
 
   // Domain routing: "subdomain" → <sub>.<PLATFORM_DOMAIN>, "customDomain" → bring-your-own.
   // slug stays internal-stable (used by /order/[slug] paths and order references);
   // subdomain is the marketing-changeable label the customer sees in their address bar.
-  subdomain            String?  @unique
-  customDomain         String?  @unique
-  customDomainStatus   String   @default("none")  // none | pending | verifying | verified | error
-  customDomainAddedAt  DateTime?
-  customDomainError    String?
+  subdomain           String?   @unique
+  customDomain        String?   @unique
+  customDomainStatus  String    @default("none") // none | pending | verifying | verified | error
+  customDomainAddedAt DateTime?
+  customDomainError   String?
 
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  subscriptionPlan SubscriptionPlan?  @relation(fields: [subscriptionPlanId], references: [id])
-  users            User[]
-  menuCategories   MenuCategory[]
-  menuItems        MenuItem[]
-  modifierGroups   ModifierGroup[]
-  orders           Order[]
-  customers        Customer[]
-  coupons          Coupon[]
-  deliveryZones    DeliveryZone[]
-  openingHours     OpeningHours[]
-  holidays         RestaurantHoliday[]
-  receiptTemplates ReceiptTemplate[]
-  promotions         Promotion[]
-  printerSettings    PrinterSettings?
-  autopilotCampaigns   AutopilotCampaign[]
-  paymentProvider      PaymentProvider?
-  printLogs            PrintLog[]
-  reservationSettings  ReservationSettings?
-  reservationTables    ReservationTable[]
-  reservations         Reservation[]
+  subscriptionPlan       SubscriptionPlan?       @relation(fields: [subscriptionPlanId], references: [id])
+  users                  User[]
+  menuCategories         MenuCategory[]
+  menuItems              MenuItem[]
+  modifierGroups         ModifierGroup[]
+  orders                 Order[]
+  customers              Customer[]
+  coupons                Coupon[]
+  deliveryZones          DeliveryZone[]
+  openingHours           OpeningHours[]
+  holidays               RestaurantHoliday[]
+  receiptTemplates       ReceiptTemplate[]
+  promotions             Promotion[]
+  printerSettings        PrinterSettings?
+  autopilotCampaigns     AutopilotCampaign[]
+  paymentProvider        PaymentProvider?
+  printLogs              PrintLog[]
+  reservationSettings    ReservationSettings?
+  reservationTables      ReservationTable[]
+  reservations           Reservation[]
   notificationRecipients NotificationRecipient[]
-  serviceFees          ServiceFee[]
-  subscriptionInvoices SubscriptionInvoice[]
+  serviceFees            ServiceFee[]
+  subscriptionInvoices   SubscriptionInvoice[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
   // restaurants are direct, not reseller-sourced. Only superadmin can reassign
   // (support cases). On reseller deletion → SetNull so the restaurant stays.
-  resellerProfileId    String?
-  resellerProfile      ResellerProfile? @relation(fields: [resellerProfileId], references: [id], onDelete: SetNull)
-  restaurantAccess     RestaurantAccess[]
-  commissions          CommissionTransaction[]
+  resellerProfileId String?
+  resellerProfile   ResellerProfile?        @relation(fields: [resellerProfileId], references: [id], onDelete: SetNull)
+  restaurantAccess  RestaurantAccess[]
+  commissions       CommissionTransaction[]
 
   // Multi-location: a child Restaurant points its parentRestaurantId at the
   // brand's "primary" Restaurant. Nullable — existing restaurants stay
   // top-level (parent = null). Each location bills/operates independently;
   // the parent link only drives UX (location switcher, "add another location"
   // button in the admin sidebar).
-  parentRestaurantId   String?
-  parentRestaurant     Restaurant?  @relation("Locations", fields: [parentRestaurantId], references: [id], onDelete: SetNull)
-  childLocations       Restaurant[] @relation("Locations")
+  parentRestaurantId String?
+  parentRestaurant   Restaurant?  @relation("Locations", fields: [parentRestaurantId], references: [id], onDelete: SetNull)
+  childLocations     Restaurant[] @relation("Locations")
   /// Multi-location menu inheritance. Only meaningful for child locations
   /// (parentRestaurantId != null). When true, this location SERVES the
   /// parent's menu — both the customer order page and the admin's menu
@@ -171,7 +171,7 @@ model Restaurant {
   /// inherit by default — the brand sets up the menu once, every new
   /// location adopts it. Toggling false copies the parent's menu rows
   /// into this location so the owner has something to edit.
-  useBrandMenu         Boolean      @default(true)
+  useBrandMenu       Boolean      @default(true)
 
   // Customer-side email toggles (single set per restaurant)
   customerEmailPickupReady   Boolean @default(true)
@@ -197,12 +197,19 @@ model Restaurant {
   /// their actual site, no manual confirm required.
   widgetInstalledAt    DateTime?
 
-  addOns               RestaurantAddOn[]
-  kitchenDevices       KitchenDevice[]
-  locationInvites      LocationInvite[]
+  addOns                 RestaurantAddOn[]
+  kitchenDevices         KitchenDevice[]
+  locationInvites        LocationInvite[]
   marketplaceListing     MarketplaceListing?
   marketplaceSettlements MarketplaceSettlement[]
   shipdayConfig          ShipdayConfig?
+
+  // Reports — see "REPORTS" section at bottom of file. 4-year retention.
+  reportDailySnapshots ReportDailySnapshot[]
+  websiteVisits        WebsiteVisit[]
+  websiteFunnelEvents  WebsiteFunnelEvent[]
+  menuItemViews        MenuItemView[]
+  connectivityEvents   ConnectivityEvent[]
 
   @@index([resellerProfileId])
   @@index([parentRestaurantId])
@@ -215,18 +222,18 @@ model Restaurant {
 /// containing `?invite=<token>`. Completing signup creates a fresh
 /// Restaurant + User, parented under the brand. Tokens are single-use.
 model LocationInvite {
-  id                   String   @id @default(cuid())
+  id                   String     @id @default(cuid())
   brandId              String
   brand                Restaurant @relation(fields: [brandId], references: [id], onDelete: Cascade)
-  token                String   @unique
-  email                String?  // pre-fill on signup form (optional, owner's choice)
-  suggestedName        String?  // suggested location name (e.g. "Brooklyn Branch")
-  createdByUserId      String   // userId of the brand admin who created the invite
+  token                String     @unique
+  email                String? // pre-fill on signup form (optional, owner's choice)
+  suggestedName        String? // suggested location name (e.g. "Brooklyn Branch")
+  createdByUserId      String // userId of the brand admin who created the invite
   acceptedAt           DateTime?
-  acceptedRestaurantId String?  // restaurant created by accepting this invite
+  acceptedRestaurantId String? // restaurant created by accepting this invite
   expiresAt            DateTime // 30 days from creation by default
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
 
   @@index([brandId])
   @@index([token])
@@ -241,7 +248,7 @@ model LocationInvite {
 /// localStorage on every poll — not an authoritative identity, just a
 /// best-effort presence signal.
 model KitchenDevice {
-  id           String   @id @default(cuid())
+  id           String     @id @default(cuid())
   restaurantId String
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   /// Stable random ID generated by the kitchen page on first load and
@@ -251,10 +258,10 @@ model KitchenDevice {
   /// Free-form label the owner sets in the admin (e.g. "Front counter").
   label        String?
   userAgent    String?
-  lastSeenAt   DateTime @default(now())
-  firstSeenAt  DateTime @default(now())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  lastSeenAt   DateTime   @default(now())
+  firstSeenAt  DateTime   @default(now())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 
   @@unique([restaurantId, deviceHash])
   @@index([restaurantId])
@@ -262,12 +269,12 @@ model KitchenDevice {
 }
 
 model NotificationRecipient {
-  id            String   @id @default(cuid())
+  id            String  @id @default(cuid())
   restaurantId  String
   email         String
   name          String?
-  isActive      Boolean  @default(true)
-  emailLanguage String   @default("en")
+  isActive      Boolean @default(true)
+  emailLanguage String  @default("en")
 
   // Confirmation events
   deliveryConfirmed         Boolean @default(true)
@@ -299,27 +306,27 @@ model NotificationRecipient {
 }
 
 model SubscriptionPlan {
-  id          String   @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
-  slug        String   @unique
-  price       Float    // monthly USD price; cents on Stripe side
-  interval    String   @default("month")  // month | year
+  slug        String  @unique
+  price       Float // monthly USD price; cents on Stripe side
+  interval    String  @default("month") // month | year
   description String?
-  features    String   // JSON-encoded array of feature bullets
-  isActive    Boolean  @default(true)
+  features    String // JSON-encoded array of feature bullets
+  isActive    Boolean @default(true)
 
   // Stripe sync state — Product is reused across price changes; Prices are
   // immutable so any `price` edit creates a NEW stripePriceId. Old Prices
   // stay archived (active=false on Stripe) so existing subscribers keep
   // their grandfathered rate until we explicitly migrate them.
-  stripeProductId String? @unique
-  stripePriceId   String? @unique
-  syncStatus      String  @default("not_synced") // not_synced | syncing | synced | error
+  stripeProductId String?   @unique
+  stripePriceId   String?   @unique
+  syncStatus      String    @default("not_synced") // not_synced | syncing | synced | error
   syncError       String?
   syncedAt        DateTime?
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   restaurants Restaurant[]
 }
@@ -332,10 +339,10 @@ model SubscriptionInvoice {
   restaurantId         String
   stripeInvoiceId      String    @unique
   stripeSubscriptionId String?
-  amountPaid           Int       // in cents
+  amountPaid           Int // in cents
   amountDue            Int       @default(0) // in cents
   currency             String    @default("usd")
-  status               String    // paid | open | uncollectible | void | draft
+  status               String // paid | open | uncollectible | void | draft
   paidAt               DateTime?
   periodStart          DateTime?
   periodEnd            DateTime?
@@ -348,10 +355,10 @@ model SubscriptionInvoice {
   // Refund/dispute tracking — read by the commission engine. Initially 0/false
   // on creation; updated by charge.refunded / charge.dispute.created webhook
   // handlers when the underlying charge is reversed.
-  amountRefundedCents  Int       @default(0)
-  disputed             Boolean   @default(false)
+  amountRefundedCents Int     @default(0)
+  disputed            Boolean @default(false)
 
-  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurant Restaurant             @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   commission CommissionTransaction?
 
   @@index([restaurantId])
@@ -361,13 +368,13 @@ model SubscriptionInvoice {
 // Idempotency log — every Stripe webhook event we've successfully processed.
 // On retry, we look up by stripeEventId and short-circuit.
 model StripeWebhookEvent {
-  id              String   @id @default(cuid())
-  stripeEventId   String   @unique
-  eventType       String
-  receivedAt      DateTime @default(now())
-  processedAt     DateTime?
-  status          String   @default("received") // received | processed | failed | ignored
-  errorMessage    String?
+  id            String    @id @default(cuid())
+  stripeEventId String    @unique
+  eventType     String
+  receivedAt    DateTime  @default(now())
+  processedAt   DateTime?
+  status        String    @default("received") // received | processed | failed | ignored
+  errorMessage  String?
 
   @@index([eventType])
   @@index([receivedAt])
@@ -391,25 +398,25 @@ model User {
   emailVerifiedAt  DateTime?
   emailVerifyToken String?   @unique
 
-  restaurant  Restaurant?           @relation(fields: [restaurantId], references: [id])
-  resetTokens PasswordResetToken[]
-  resellerProfile  ResellerProfile?     // present only on reseller_partner users
-  restaurantAccess RestaurantAccess[]   // non-owner restaurant grants
+  restaurant       Restaurant?          @relation(fields: [restaurantId], references: [id])
+  resetTokens      PasswordResetToken[]
+  resellerProfile  ResellerProfile? // present only on reseller_partner users
+  restaurantAccess RestaurantAccess[] // non-owner restaurant grants
 }
 
 // Singleton row holding platform-wide settings (Resend API key, etc.).
 // Only the super admin can read/write. Secrets are AES-256-GCM encrypted at rest.
 model PlatformSettings {
-  id              String   @id @default("singleton")
+  id                     String   @id @default("singleton")
   // Resend (email) — encrypted key, plain envelope (iv + auth tag)
-  resendApiKeyEnc String?
-  resendApiKeyIv  String?
-  resendApiKeyTag String?
-  emailFrom       String?  // e.g. "Fee Free Ordering <hello@yourdomain.com>"
+  resendApiKeyEnc        String?
+  resendApiKeyIv         String?
+  resendApiKeyTag        String?
+  emailFrom              String? // e.g. "Fee Free Ordering <hello@yourdomain.com>"
   // Stripe — secret key + webhook secret encrypted at rest. Publishable key
   // is stored plain (safe to expose to clients). When any of these are null
   // we fall back to the matching env var (STRIPE_SECRET_KEY etc.).
-  stripeMode             String?  // "test" | "live"
+  stripeMode             String? // "test" | "live"
   stripeEnabled          Boolean  @default(false)
   stripePublishableKey   String?
   stripeSecretKeyEnc     String?
@@ -418,8 +425,8 @@ model PlatformSettings {
   stripeWebhookSecretEnc String?
   stripeWebhookSecretIv  String?
   stripeWebhookSecretTag String?
-  updatedAt       DateTime @updatedAt
-  updatedBy       String?
+  updatedAt              DateTime @updatedAt
+  updatedBy              String?
 }
 
 model PasswordResetToken {
@@ -455,35 +462,37 @@ model MenuCategory {
 }
 
 model MenuItem {
-  id             String   @id @default(cuid())
-  restaurantId   String
-  categoryId     String
-  name           String
-  description    String?
-  price          Float
-  imageUrl       String?
-  isAvailable    Boolean  @default(true)
-  isFeatured     Boolean  @default(false)
-  isSoldOut      Boolean  @default(false)
-  isHidden       Boolean  @default(false)
-  hasVariants    Boolean  @default(false)
-  forPickup      Boolean  @default(true)
-  forDelivery    Boolean  @default(true)
-  availableDays  String?  // JSON: [0,1,2,3,4,5,6] — null = all days
-  availableFrom  String?  // "HH:MM"
-  availableTo    String?  // "HH:MM"
-  sortOrder      Int      @default(0)
-  calories       Int?
-  allergens      String?
-  pizzaConfig    String?  // JSON: PizzaConfig — marks item as a pizza builder item
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id            String   @id @default(cuid())
+  restaurantId  String
+  categoryId    String
+  name          String
+  description   String?
+  price         Float
+  imageUrl      String?
+  isAvailable   Boolean  @default(true)
+  isFeatured    Boolean  @default(false)
+  isSoldOut     Boolean  @default(false)
+  isHidden      Boolean  @default(false)
+  hasVariants   Boolean  @default(false)
+  forPickup     Boolean  @default(true)
+  forDelivery   Boolean  @default(true)
+  availableDays String? // JSON: [0,1,2,3,4,5,6] — null = all days
+  availableFrom String? // "HH:MM"
+  availableTo   String? // "HH:MM"
+  sortOrder     Int      @default(0)
+  calories      Int?
+  allergens     String?
+  pizzaConfig   String? // JSON: PizzaConfig — marks item as a pizza builder item
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   restaurant     Restaurant      @relation(fields: [restaurantId], references: [id])
   category       MenuCategory    @relation(fields: [categoryId], references: [id])
   variants       ItemVariant[]
   modifierGroups ModifierGroup[]
   orderItems     OrderItem[]
+  // Reports — MenuItemView log for Menu Insights "Views" column.
+  views          MenuItemView[]
 
   @@index([restaurantId, isAvailable])
   @@index([categoryId, sortOrder])
@@ -493,7 +502,7 @@ model MenuItem {
 model ItemVariant {
   id         String   @id @default(cuid())
   menuItemId String
-  name       String   // e.g., "Small (6 Slice - 10 inch)"
+  name       String // e.g., "Small (6 Slice - 10 inch)"
   price      Float
   sortOrder  Int      @default(0)
   isDefault  Boolean  @default(false)
@@ -509,27 +518,27 @@ model ItemVariant {
 // - category-level: categoryId set, menuItemId null
 // - library (reusable): restaurantId set, menuItemId null, categoryId null
 model ModifierGroup {
-  id            String   @id @default(cuid())
-  restaurantId  String?  // null = item-scoped, set = library group
-  menuItemId    String?
-  variantId     String?
-  categoryId    String?
-  name          String
-  description   String?
-  required      Boolean  @default(false)
-  minSelect     Int      @default(0)
-  maxSelect     Int      @default(1)
-  maxPerOption  Int      @default(1)  // how many times same option can be picked
-  isHidden      Boolean  @default(false)
-  sortOrder     Int      @default(0)
+  id             String   @id @default(cuid())
+  restaurantId   String? // null = item-scoped, set = library group
+  menuItemId     String?
+  variantId      String?
+  categoryId     String?
+  name           String
+  description    String?
+  required       Boolean  @default(false)
+  minSelect      Int      @default(0)
+  maxSelect      Int      @default(1)
+  maxPerOption   Int      @default(1) // how many times same option can be picked
+  isHidden       Boolean  @default(false)
+  sortOrder      Int      @default(0)
   libraryGroupId String? // if attached from a library group (points to the source library ModifierGroup id)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  restaurant Restaurant?  @relation(fields: [restaurantId], references: [id])
-  menuItem   MenuItem?    @relation(fields: [menuItemId], references: [id])
-  variant    ItemVariant? @relation(fields: [variantId], references: [id])
-  category   MenuCategory? @relation(fields: [categoryId], references: [id])
+  restaurant Restaurant?      @relation(fields: [restaurantId], references: [id])
+  menuItem   MenuItem?        @relation(fields: [menuItemId], references: [id])
+  variant    ItemVariant?     @relation(fields: [variantId], references: [id])
+  category   MenuCategory?    @relation(fields: [categoryId], references: [id])
   options    ModifierOption[]
 }
 
@@ -548,38 +557,38 @@ model ModifierOption {
 }
 
 model Order {
-  id               String   @id @default(cuid())
-  restaurantId     String
-  customerId       String?
-  orderNumber      String
-  status           String   @default("pending")
-  type             String   @default("pickup")
-  customerName     String
-  customerEmail    String?
-  customerPhone    String?
-  deliveryAddress  String?
-  deliveryCity     String?
-  deliveryZip      String?
-  notes            String?
-  couponId         String?
-  couponDiscount   Float    @default(0)
-  promoDiscount    Float    @default(0)
-  subtotal         Float
-  taxAmount        Float    @default(0)
-  deliveryFee      Float    @default(0)
-  tip              Float    @default(0)
-  total            Float
-  paymentMethod    String   @default("cash")
-  paymentStatus    String   @default("pending")
-  paymentIntentId  String?
-  refundStatus     String?   // null | "pending" | "refunded" | "failed"
+  id              String    @id @default(cuid())
+  restaurantId    String
+  customerId      String?
+  orderNumber     String
+  status          String    @default("pending")
+  type            String    @default("pickup")
+  customerName    String
+  customerEmail   String?
+  customerPhone   String?
+  deliveryAddress String?
+  deliveryCity    String?
+  deliveryZip     String?
+  notes           String?
+  couponId        String?
+  couponDiscount  Float     @default(0)
+  promoDiscount   Float     @default(0)
+  subtotal        Float
+  taxAmount       Float     @default(0)
+  deliveryFee     Float     @default(0)
+  tip             Float     @default(0)
+  total           Float
+  paymentMethod   String    @default("cash")
+  paymentStatus   String    @default("pending")
+  paymentIntentId String?
+  refundStatus    String? // null | "pending" | "refunded" | "failed"
   /// Set when the order has been "released" to the kitchen + customer
   /// (i.e. notifications fired, kitchen display picks it up). For cash
   /// orders this is set immediately in /api/orders POST. For online-card
   /// orders this stays null until the payment_intent.succeeded webhook
   /// fires — preventing the kitchen from starting cook before payment
   /// clears. Kitchen GET filters on `notifiedAt IS NOT NULL`.
-  notifiedAt       DateTime?
+  notifiedAt      DateTime?
 
   /// Marketplace channel attribution. True when the customer came from
   /// our /marketplace browse page (detected via ?from=marketplace at
@@ -589,7 +598,7 @@ model Order {
   ///     direct orders — those would have happened on the restaurant's
   ///     own widget, not UberEats)
   ///   - Reports showing marketplace vs direct revenue split
-  viaMarketplace   Boolean  @default(false)
+  viaMarketplace Boolean @default(false)
 
   /// Snapshot of what UberEats / DoorDash would have charged THIS restaurant
   /// in commission on this specific order (30% of order total, in cents).
@@ -604,17 +613,17 @@ model Order {
   /// only subtract from the counters if the original create-time increment
   /// actually happened. Prevents double-decrement on repeat status flips.
   /// Only ever true on orders with viaMarketplace=true.
-  marketplaceCounterApplied Boolean @default(false)
-  scheduledFor     DateTime?
-  estimatedReady   DateTime?
-  acceptedAt       DateTime?
-  rejectedAt       DateTime?
-  rejectionReason  String?
-  completedAt      DateTime?
-  preparationTime  Int?
-  deliveryZoneId           String?
-  deliveryEstimatedMinutes Int?
-  appliedServiceFees String?  // JSON: [{ name, amount }] frozen at order time
+  marketplaceCounterApplied Boolean   @default(false)
+  scheduledFor              DateTime?
+  estimatedReady            DateTime?
+  acceptedAt                DateTime?
+  rejectedAt                DateTime?
+  rejectionReason           String?
+  completedAt               DateTime?
+  preparationTime           Int?
+  deliveryZoneId            String?
+  deliveryEstimatedMinutes  Int?
+  appliedServiceFees        String? // JSON: [{ name, amount }] frozen at order time
 
   /// ShipDay dispatch tracking. Set when an order is dispatched to the
   /// ShipDay third-party driver pool — populated by the dispatch call
@@ -622,40 +631,70 @@ model Order {
   /// asynchronously by the ShipDay webhook at /api/webhooks/shipday as
   /// drivers pick up + deliver. Null on orders that were never sent to
   /// ShipDay (in-house delivery, pickup, dine-in).
-  shipdayOrderId   String?
-  shipdayStatus    String?    // assigned | picked_up | delivered | failed | cancelled
-  dispatchedAt     DateTime?
+  shipdayOrderId String?
+  shipdayStatus  String? // assigned | picked_up | delivered | failed | cancelled
+  dispatchedAt   DateTime?
 
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  /// Geocoded coordinates of `deliveryAddress`. Populated by a background
+  /// reverse-geocode at order creation (Nominatim for Leaflet restaurants,
+  /// Google Geocoding API when the restaurant has mapProvider="google").
+  /// Null on pickup/dine-in orders and on rows created before the
+  /// geocoding job shipped. Powers /admin/reports/online-ordering/heatmap.
+  /// Backfill is optional — historical orders without coords just don't
+  /// appear in the heatmap, which is acceptable.
+  deliveryLat Float?
+  deliveryLng Float?
 
-  restaurant    Restaurant     @relation(fields: [restaurantId], references: [id])
-  customer      Customer?      @relation(fields: [customerId], references: [id])
-  coupon        Coupon?        @relation(fields: [couponId], references: [id])
-  deliveryZone  DeliveryZone?  @relation(fields: [deliveryZoneId], references: [id])
-  items         OrderItem[]
+  /// Marketing channel attribution. Set at order creation from the
+  /// inbound `?utm_source=` / `?ref=` / Referer header. Values come from
+  /// a small enum kept in `src/lib/reports/channels.ts` to keep the
+  /// Website Visits + Sales reports' "by channel" breakdown stable:
+  ///   "direct" | "marketplace" | "email" | "organic" | "paid_ads"
+  ///   | "social_media" | "referral" | "affiliate" | "internal" | null
+  /// Null = unknown (rendered as "Direct" in reports for back-compat).
+  /// Note: `viaMarketplace` Boolean is the legacy single-source flag — it
+  /// stays for billing rollup compatibility; `channel` is the new
+  /// multi-value field reports read from.
+  channel String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
+  customer     Customer?     @relation(fields: [customerId], references: [id])
+  coupon       Coupon?       @relation(fields: [couponId], references: [id])
+  deliveryZone DeliveryZone? @relation(fields: [deliveryZoneId], references: [id])
+  items        OrderItem[]
 
   @@index([restaurantId, createdAt])
   @@index([restaurantId, status])
   @@index([restaurantId, orderNumber])
+  // Reports: filter by channel within a date range. Used by the
+  // /admin/reports/sales/summary "by payment type / by channel" pivot.
+  @@index([restaurantId, channel, createdAt])
+  // Reports: filter completed orders within a date range. The default
+  // (restaurantId, createdAt) index covers the date scan but Postgres
+  // still has to filter status afterward; this composite makes the
+  // dashboard "completed orders last 7 days" query a true index-only.
+  @@index([restaurantId, status, createdAt])
 }
 
 model OrderItem {
-  id         String   @id @default(cuid())
-  orderId    String
-  menuItemId String?
-  variantId  String?
+  id          String   @id @default(cuid())
+  orderId     String
+  menuItemId  String?
+  variantId   String?
   variantName String?
-  name       String
-  price      Float
-  quantity   Int
-  notes      String?
-  subtotal   Float
-  createdAt  DateTime @default(now())
+  name        String
+  price       Float
+  quantity    Int
+  notes       String?
+  subtotal    Float
+  createdAt   DateTime @default(now())
 
-  order      Order               @relation(fields: [orderId], references: [id])
-  menuItem   MenuItem?           @relation(fields: [menuItemId], references: [id], onDelete: SetNull)
-  modifiers  OrderItemModifier[]
+  order     Order               @relation(fields: [orderId], references: [id])
+  menuItem  MenuItem?           @relation(fields: [menuItemId], references: [id], onDelete: SetNull)
+  modifiers OrderItemModifier[]
 }
 
 model OrderItemModifier {
@@ -670,23 +709,31 @@ model OrderItemModifier {
 }
 
 model Customer {
-  id           String   @id @default(cuid())
-  restaurantId String
-  name         String
-  email        String?
-  phone        String?
-  address      String?
-  notes        String?
-  totalOrders  Int      @default(0)
-  totalSpent   Float    @default(0)
+  id                String    @id @default(cuid())
+  restaurantId      String
+  name              String
+  email             String?
+  phone             String?
+  address           String?
+  notes             String?
+  totalOrders       Int       @default(0)
+  totalSpent        Float     @default(0)
+  /// Timestamp of this customer's most recent order at this restaurant.
+  /// Maintained by the order-create webhook. Powers:
+  ///   - Reports → Clients dashboard ("returning vs new" cohort split)
+  ///   - List View → Clients sort-by-recency
+  ///   - Marketing → re-engagement campaigns (lapsed-customer filter)
+  /// Null for Customer rows created before this field shipped (back-
+  /// compat); the lazy backfill happens the next time they order.
+  lastOrderAt       DateTime?
   /// Link to the global CustomerAccount (if the customer has signed up
   /// for an account). Multiple Customer rows (one per restaurant they've
   /// ordered from) can point at the same CustomerAccount — that's the
   /// "ordered from 5 different marketplace restaurants but one identity"
   /// case. Null for guest checkouts that never converted to an account.
   customerAccountId String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
   restaurant      Restaurant       @relation(fields: [restaurantId], references: [id])
   customerAccount CustomerAccount? @relation(fields: [customerAccountId], references: [id])
@@ -703,27 +750,27 @@ model Customer {
 /// Per-restaurant order history attribution lives on Customer (above) —
 /// CustomerAccount is the user-facing "my account" entity.
 model CustomerAccount {
-  id              String    @id @default(cuid())
-  email           String    @unique
-  passwordHash    String?
+  id               String    @id @default(cuid())
+  email            String    @unique
+  passwordHash     String?
   /// Set when email verification succeeds. Used to gate features that
   /// require a confirmed inbox (saved cards, certain notifications).
-  emailVerifiedAt DateTime?
+  emailVerifiedAt  DateTime?
   /// One-time verification token. Generated on signup + on "resend
   /// verification" requests. Consumed by GET /api/customer/verify-email
   /// which flips emailVerifiedAt and clears this back to null. Indexed
   /// unique so lookups by token are O(1).
-  emailVerifyToken String?  @unique
-  name            String?
-  phone           String?
+  emailVerifyToken String?   @unique
+  name             String?
+  phone            String?
   /// Last time the user successfully signed in. Helps surface stale
   /// accounts + power "your last login" UX.
-  lastLoginAt     DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  lastLoginAt      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
-  addresses CustomerAddress[]
-  customers Customer[]
+  addresses           CustomerAddress[]
+  customers           Customer[]
   passwordResetTokens CustomerPasswordResetToken[]
 
   @@index([email])
@@ -734,12 +781,12 @@ model CustomerAccount {
 /// is a distinct identity layer with its own login at /account/login.
 /// Single-use, expires in 1 hour. Cascades on account deletion.
 model CustomerPasswordResetToken {
-  id                String          @id @default(cuid())
-  token             String          @unique
+  id                String    @id @default(cuid())
+  token             String    @unique
   customerAccountId String
   expiresAt         DateTime
   usedAt            DateTime?
-  createdAt         DateTime        @default(now())
+  createdAt         DateTime  @default(now())
 
   customerAccount CustomerAccount @relation(fields: [customerAccountId], references: [id], onDelete: Cascade)
 
@@ -768,17 +815,17 @@ model CustomerAddress {
 }
 
 model Coupon {
-  id             String    @id @default(cuid())
-  restaurantId   String
-  code           String
-  description    String?
-  discountType   String    @default("percentage")
-  discountValue  Float
-  minimumOrder   Float     @default(0)
-  maxUses        Int?
-  usedCount      Int       @default(0)
-  isActive       Boolean   @default(true)
-  expiresAt      DateTime?
+  id            String    @id @default(cuid())
+  restaurantId  String
+  code          String
+  description   String?
+  discountType  String    @default("percentage")
+  discountValue Float
+  minimumOrder  Float     @default(0)
+  maxUses       Int?
+  usedCount     Int       @default(0)
+  isActive      Boolean   @default(true)
+  expiresAt     DateTime?
   /// Scope of this coupon:
   ///   "location" — only valid at the owning restaurant (default; matches
   ///                existing single-location behavior)
@@ -786,9 +833,9 @@ model Coupon {
   ///                under it. Only meaningful when the owning restaurant is
   ///                a brand parent. The order POST in /api/orders also
   ///                checks the parent's brand-scoped coupons.
-  scope          String    @default("location")
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  scope         String    @default("location")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
   orders     Order[]
@@ -832,20 +879,20 @@ model Promotion {
 }
 
 model DeliveryZone {
-  id           String   @id @default(cuid())
-  restaurantId String
-  name         String
-  color        String   @default("#f97316")
-  centerLat    Float    @default(0)
-  centerLng    Float    @default(0)
-  radiusKm     Float    @default(5)
-  deliveryFee  Float    @default(0)
-  minimumOrder Float    @default(0)
-  estimatedMinutes Int  @default(30)
-  isActive     Boolean  @default(true)
-  sortOrder    Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt
+  id               String   @id @default(cuid())
+  restaurantId     String
+  name             String
+  color            String   @default("#f97316")
+  centerLat        Float    @default(0)
+  centerLng        Float    @default(0)
+  radiusKm         Float    @default(5)
+  deliveryFee      Float    @default(0)
+  minimumOrder     Float    @default(0)
+  estimatedMinutes Int      @default(30)
+  isActive         Boolean  @default(true)
+  sortOrder        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now()) @updatedAt
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
   orders     Order[]
@@ -854,12 +901,12 @@ model DeliveryZone {
 }
 
 model OpeningHours {
-  id           String  @id @default(cuid())
-  restaurantId String
-  dayOfWeek    Int
-  isOpen       Boolean @default(true)
-  openTime     String  @default("09:00")
-  closeTime    String  @default("21:00")
+  id            String  @id @default(cuid())
+  restaurantId  String
+  dayOfWeek     Int
+  isOpen        Boolean @default(true)
+  openTime      String  @default("09:00")
+  closeTime     String  @default("21:00")
   // When true, closeTime is interpreted as belonging to the NEXT
   // calendar day (e.g. Fri row with openTime=17:00, closeTime=02:00,
   // closesNextDay=true means "open Friday 5pm through Saturday 2am").
@@ -918,8 +965,8 @@ model PrinterSettings {
   printNodeApiKeyTag   String?
   printNodeConnected   Boolean  @default(false)
   printNodeAccountName String?
-  selectedPrinterId    Int?     // PrintNode printer ID
-  selectedPrinterName  String?  // Cached printer display name
+  selectedPrinterId    Int? // PrintNode printer ID
+  selectedPrinterName  String? // Cached printer display name
   // Print options
   autoPrint            Boolean  @default(false)
   printKitchen         Boolean  @default(true)
@@ -942,9 +989,9 @@ model PrintLog {
   restaurantId   String
   orderId        String?
   orderNumber    String?
-  receiptType    String           // kitchen | customer | test
+  receiptType    String // kitchen | customer | test
   printerName    String?
-  printNodeJobId BigInt?  // PrintNode job IDs have outgrown int32; BigInt is safe
+  printNodeJobId BigInt? // PrintNode job IDs have outgrown int32; BigInt is safe
   status         String   @default("sent") // sent | failed
   errorMessage   String?
   createdAt      DateTime @default(now())
@@ -957,7 +1004,7 @@ model PrintLog {
 model AutopilotCampaign {
   id           String   @id @default(cuid())
   restaurantId String
-  campaignType String   // second_order | cart_abandonment | reengagement
+  campaignType String // second_order | cart_abandonment | reengagement
   isEnabled    Boolean  @default(false)
   subject      String   @default("")
   emailBody    String   @default("")
@@ -966,7 +1013,7 @@ model AutopilotCampaign {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @default(now()) @updatedAt
 
-  restaurant Restaurant       @relation(fields: [restaurantId], references: [id])
+  restaurant Restaurant      @relation(fields: [restaurantId], references: [id])
   sends      AutopilotSend[]
 
   @@unique([restaurantId, campaignType])
@@ -995,24 +1042,24 @@ model AutopilotSend {
 }
 
 model ReservationSettings {
-  id                   String   @id @default(cuid())
-  restaurantId         String   @unique
-  minNoticeHours       Int      @default(2)
-  maxAdvanceDays       Int      @default(30)
-  slotLengthMinutes    Int      @default(30)
-  maxPerSlot           Int      @default(10)
-  minGuests            Int      @default(1)
-  maxGuests            Int      @default(20)
-  autoConfirm          Boolean  @default(true)
-  allowPreOrder        Boolean  @default(false)
-  holdMinutes          Int      @default(15)
-  requireDeposit       Boolean  @default(false)
-  depositAmount        Float    @default(0)
-  cancellationPolicy   String   @default("")
-  reservationHours     String   @default("{}") // JSON: { "0": { open: "10:00", close: "22:00", enabled: true } }
-  blackoutDates        String   @default("[]") // JSON: ["2024-12-25"]
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  id                 String   @id @default(cuid())
+  restaurantId       String   @unique
+  minNoticeHours     Int      @default(2)
+  maxAdvanceDays     Int      @default(30)
+  slotLengthMinutes  Int      @default(30)
+  maxPerSlot         Int      @default(10)
+  minGuests          Int      @default(1)
+  maxGuests          Int      @default(20)
+  autoConfirm        Boolean  @default(true)
+  allowPreOrder      Boolean  @default(false)
+  holdMinutes        Int      @default(15)
+  requireDeposit     Boolean  @default(false)
+  depositAmount      Float    @default(0)
+  cancellationPolicy String   @default("")
+  reservationHours   String   @default("{}") // JSON: { "0": { open: "10:00", close: "22:00", enabled: true } }
+  blackoutDates      String   @default("[]") // JSON: ["2024-12-25"]
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
 }
@@ -1045,8 +1092,8 @@ model Reservation {
   customerEmail    String?
   customerPhone    String?
   partySize        Int
-  date             String   // "YYYY-MM-DD"
-  time             String   // "HH:MM"
+  date             String // "YYYY-MM-DD"
+  time             String // "HH:MM"
   durationMinutes  Int      @default(90)
   notes            String?
   staffNotes       String?
@@ -1068,10 +1115,10 @@ model ServiceFee {
   id                 String   @id @default(cuid())
   restaurantId       String
   name               String
-  feeType            String   // "fixed" | "percent"
+  feeType            String // "fixed" | "percent"
   amount             Float
-  appliesTo          String   @default("both")  // "pickup" | "delivery" | "both"
-  daysOfWeek         String?  // CSV "0,5,6" — null = every day
+  appliesTo          String   @default("both") // "pickup" | "delivery" | "both"
+  daysOfWeek         String? // CSV "0,5,6" — null = every day
   publicHolidaysOnly Boolean  @default(false)
   countryCode        String   @default("US")
   isActive           Boolean  @default(true)
@@ -1085,21 +1132,21 @@ model ServiceFee {
 }
 
 model PaymentProvider {
-  id                String   @id @default(cuid())
-  restaurantId      String   @unique
-  provider          String   @default("stripe")      // stripe
-  mode              String   @default("test")         // test | live
-  publishableKey    String   @default("")
-  secretKeyEnc      String   @default("")             // AES-256-GCM encrypted
-  secretKeyIv       String   @default("")
-  secretKeyTag      String   @default("")
-  isActive          Boolean  @default(false)
-  connectMethod     String   @default("direct")       // direct | connect
-  stripeAccountId   String?
-  lastTestedAt      DateTime?
-  lastTestStatus    String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id              String    @id @default(cuid())
+  restaurantId    String    @unique
+  provider        String    @default("stripe") // stripe
+  mode            String    @default("test") // test | live
+  publishableKey  String    @default("")
+  secretKeyEnc    String    @default("") // AES-256-GCM encrypted
+  secretKeyIv     String    @default("")
+  secretKeyTag    String    @default("")
+  isActive        Boolean   @default(false)
+  connectMethod   String    @default("direct") // direct | connect
+  stripeAccountId String?
+  lastTestedAt    DateTime?
+  lastTestStatus  String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
 }
@@ -1111,37 +1158,37 @@ model PaymentProvider {
 // (/signup?ref=<code>) so attribution is set at restaurant creation time —
 // see src/app/api/auth/register/route.ts.
 model ResellerProfile {
-  id                String   @id @default(cuid())
-  userId            String   @unique
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Application + approval lifecycle
-  status            String   @default("pending") // pending | approved | suspended | rejected
-  companyName       String?
-  website           String?
-  country           String?
-  applicationNotes  String?  // what they wrote on the application form
-  approvedAt        DateTime?
-  approvedBy        String?  // superadmin User.id
-  suspendedAt       DateTime?
-  suspendedReason   String?
+  status           String    @default("pending") // pending | approved | suspended | rejected
+  companyName      String?
+  website          String?
+  country          String?
+  applicationNotes String? // what they wrote on the application form
+  approvedAt       DateTime?
+  approvedBy       String? // superadmin User.id
+  suspendedAt      DateTime?
+  suspendedReason  String?
 
   // Payout preferences. Money is sent manually by the superadmin per the
   // chosen method; payoutDetails is an encrypted JSON blob (PayPal email,
   // bank routing info, etc.) using the same AES-GCM envelope as Stripe keys.
-  payoutMethod      String?
-  payoutDetails     String?
-  payoutDetailsIv   String?
-  payoutDetailsTag  String?
+  payoutMethod     String?
+  payoutDetails    String?
+  payoutDetailsIv  String?
+  payoutDetailsTag String?
 
-  referralCode      String   @unique @default(cuid())
-  totalEarnedCents  Int      @default(0) // lifetime gross
-  totalPaidCents    Int      @default(0) // lifetime payouts marked paid
+  referralCode     String @unique @default(cuid())
+  totalEarnedCents Int    @default(0) // lifetime gross
+  totalPaidCents   Int    @default(0) // lifetime payouts marked paid
 
   // Superadmin can pin a custom flat rate that overrides the default tier
   // table (0/5/10%). When non-null, recordCommissionForInvoice uses this
   // value regardless of active-paying count. Useful for VIP partners.
-  customCommissionRate Float?   // percent, e.g. 7 means 7%
+  customCommissionRate Float? // percent, e.g. 7 means 7%
 
   /// White-label / branding fields. When populated and the reseller has
   /// an active white-label add-on subscription (status check + currentPeriodEnd
@@ -1151,15 +1198,15 @@ model ResellerProfile {
   /// Receipts: receipt-lines builder reads imprint via setEmailImprint().
   /// Phase 1 ships with imprint+logoUrl persistence; Phase 2 wires the
   /// paid add-on subscription + custom domain handling.
-  imprint           String?  // e.g. "Supported by Partner LLC | contact@partner.com | +1 234"
-  brandLogoUrl      String?  // optional uploaded logo (S3 URL)
-  brandLoginTitle   String?  // custom title shown on the reseller-branded login page (Phase 2)
+  imprint         String? // e.g. "Supported by Partner LLC | contact@partner.com | +1 234"
+  brandLogoUrl    String? // optional uploaded logo (S3 URL)
+  brandLoginTitle String? // custom title shown on the reseller-branded login page (Phase 2)
 
   /// Stripe Customer for this reseller. Created lazily the first time
   /// the reseller starts a white-label Checkout. Reused across renewals
   /// + future add-on subscriptions so the reseller has one cohesive
   /// billing identity in Stripe.
-  stripeCustomerId  String?  @unique
+  stripeCustomerId String? @unique
 
   /// White-label add-on subscription state. Two tiers:
   ///   "basic" — imprint + logo on emails. Currently $9.99/mo.
@@ -1167,14 +1214,14 @@ model ResellerProfile {
   /// Set when the reseller completes Stripe Checkout. Reset to null
   /// when subscription cancels/expires. Restaurant.imprint + brandLogo
   /// only flow into emails when whiteLabelStatus === "active".
-  whiteLabelTier              String?   // "basic" | "full" | null
-  whiteLabelStatus            String?   // "active" | "past_due" | "cancelled" | null
-  whiteLabelStripeSubscriptionId String?  @unique
-  whiteLabelCurrentPeriodEnd  DateTime?
-  whiteLabelCancelAtPeriodEnd Boolean   @default(false)
+  whiteLabelTier                 String? // "basic" | "full" | null
+  whiteLabelStatus               String? // "active" | "past_due" | "cancelled" | null
+  whiteLabelStripeSubscriptionId String?   @unique
+  whiteLabelCurrentPeriodEnd     DateTime?
+  whiteLabelCancelAtPeriodEnd    Boolean   @default(false)
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   restaurants Restaurant[]
   commissions CommissionTransaction[]
@@ -1189,14 +1236,14 @@ model ResellerProfile {
 // shared staff, future delegation) goes here. accessRole bounds what they can
 // do at the route level.
 model RestaurantAccess {
-  id           String   @id @default(cuid())
+  id           String     @id @default(cuid())
   userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   restaurantId String
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  accessRole   String   // owner | reseller_manager | manager | staff | readonly
-  grantedBy    String?  // user id of who granted this access
-  grantedAt    DateTime @default(now())
+  accessRole   String // owner | reseller_manager | manager | staff | readonly
+  grantedBy    String? // user id of who granted this access
+  grantedAt    DateTime   @default(now())
 
   @@unique([userId, restaurantId])
   @@index([restaurantId])
@@ -1207,27 +1254,27 @@ model RestaurantAccess {
 // (activePayingCount, ratePercent, netRevenueCents) are frozen at recording
 // time so we can audit how each amount was derived.
 model CommissionTransaction {
-  id                    String   @id @default(cuid())
+  id                    String              @id @default(cuid())
   resellerProfileId     String
-  resellerProfile       ResellerProfile @relation(fields: [resellerProfileId], references: [id], onDelete: Cascade)
+  resellerProfile       ResellerProfile     @relation(fields: [resellerProfileId], references: [id], onDelete: Cascade)
   restaurantId          String
-  restaurant            Restaurant @relation(fields: [restaurantId], references: [id])
-  subscriptionInvoiceId String   @unique
+  restaurant            Restaurant          @relation(fields: [restaurantId], references: [id])
+  subscriptionInvoiceId String              @unique
   subscriptionInvoice   SubscriptionInvoice @relation(fields: [subscriptionInvoiceId], references: [id])
 
-  netRevenueCents       Int
-  activePayingCount     Int
-  ratePercent           Float
-  commissionCents       Int
+  netRevenueCents   Int
+  activePayingCount Int
+  ratePercent       Float
+  commissionCents   Int
 
-  status            String   @default("pending") // pending | available | paid | reversed
-  reversedAt        DateTime?
-  reversedReason    String?
-  payoutRequestId   String?
-  payoutRequest     PayoutRequest? @relation(fields: [payoutRequestId], references: [id])
+  status          String         @default("pending") // pending | available | paid | reversed
+  reversedAt      DateTime?
+  reversedReason  String?
+  payoutRequestId String?
+  payoutRequest   PayoutRequest? @relation(fields: [payoutRequestId], references: [id])
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([resellerProfileId, status])
   @@index([restaurantId])
@@ -1236,25 +1283,25 @@ model CommissionTransaction {
 // A reseller's request to be paid out. Includes one or more commissions.
 // Superadmin approves and then marks paid after sending money out-of-band.
 model PayoutRequest {
-  id                String   @id @default(cuid())
+  id                String          @id @default(cuid())
   resellerProfileId String
   resellerProfile   ResellerProfile @relation(fields: [resellerProfileId], references: [id], onDelete: Cascade)
 
-  amountCents       Int
-  currency          String   @default("usd")
-  status            String   @default("requested") // requested | approved | paid | rejected | cancelled
-  requestedAt       DateTime @default(now())
-  approvedAt        DateTime?
-  approvedBy        String?
-  paidAt            DateTime?
-  paidBy            String?
-  rejectedAt        DateTime?
-  rejectedReason    String?
+  amountCents    Int
+  currency       String    @default("usd")
+  status         String    @default("requested") // requested | approved | paid | rejected | cancelled
+  requestedAt    DateTime  @default(now())
+  approvedAt     DateTime?
+  approvedBy     String?
+  paidAt         DateTime?
+  paidBy         String?
+  rejectedAt     DateTime?
+  rejectedReason String?
 
-  payoutReference   String?
-  notes             String?
+  payoutReference String?
+  notes           String?
 
-  commissions       CommissionTransaction[]
+  commissions CommissionTransaction[]
 
   @@index([resellerProfileId, status])
 }
@@ -1268,36 +1315,36 @@ model PayoutRequest {
 // each with its own Stripe Price.
 
 model AddOn {
-  id              String   @id @default(cuid())
-  slug            String   @unique
-  name            String
-  description     String?
-  monthlyPriceCents  Int   @default(0)
-  yearlyPriceCents   Int?
-  trialDays       Int?
-  isActive        Boolean  @default(true)
+  id                   String  @id @default(cuid())
+  slug                 String  @unique
+  name                 String
+  description          String?
+  monthlyPriceCents    Int     @default(0)
+  yearlyPriceCents     Int?
+  trialDays            Int?
+  isActive             Boolean @default(true)
   /// When true, the add-on is visible in the catalog as a teaser but cannot
   /// be subscribed to. /admin/billing/add-ons renders a "Coming Soon" badge
   /// in place of the price + a disabled CTA explaining the feature is in
   /// development. Used for products we're advertising but haven't built yet
   /// (POS Module, Branded Mobile App, Phone Ordering, etc.) so prospective
   /// restaurants see the roadmap without us mis-selling vapor.
-  comingSoon      Boolean  @default(false)
-  displayOrder    Int      @default(0)
+  comingSoon           Boolean @default(false)
+  displayOrder         Int     @default(0)
   /// JSON-encoded array of feature slugs this add-on unlocks. e.g.
   /// `["card_payments","stripe_connect"]` for online_payments. Keeping this
   /// as a JSON string instead of a relation table keeps Phase 1 simple; we
   /// can split to a relation later if the list gets unwieldy.
-  enabledFeatures String   @default("[]")
+  enabledFeatures      String  @default("[]")
   /// JSON-encoded array of other add-on slugs that must be active for this
   /// to work (e.g. custom_domain requires hosted_website).
-  requiredDependencies String @default("[]")
+  requiredDependencies String  @default("[]")
   /// Stripe wiring — populated when the superadmin syncs an add-on (Phase 5).
-  stripePriceId   String?  @unique
-  stripeProductId String?  @unique
+  stripePriceId        String? @unique
+  stripeProductId      String? @unique
 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   restaurantAddOns RestaurantAddOn[]
 
@@ -1305,27 +1352,26 @@ model AddOn {
 }
 
 model RestaurantAddOn {
-  id              String   @id @default(cuid())
-  restaurantId    String
-  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  addOnId         String
-  addOn           AddOn    @relation(fields: [addOnId], references: [id])
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  addOnId      String
+  addOn        AddOn      @relation(fields: [addOnId], references: [id])
 
-  status          String   @default("active") // active | trialing | past_due | cancelled | incomplete
-  stripeSubscriptionId String?  @unique
-  currentPeriodEnd DateTime?
-  cancelAtPeriodEnd Boolean @default(false)
-  trialEndsAt     DateTime?
-  activatedAt     DateTime @default(now())
+  status               String    @default("active") // active | trialing | past_due | cancelled | incomplete
+  stripeSubscriptionId String?   @unique
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean   @default(false)
+  trialEndsAt          DateTime?
+  activatedAt          DateTime  @default(now())
 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([restaurantId, addOnId])
   @@index([restaurantId])
   @@index([status])
 }
-
 
 /// Marketplace Listing — per-restaurant settings for the public
 /// Fee Free Ordering Marketplace at /marketplace. A row is created
@@ -1339,16 +1385,16 @@ model RestaurantAddOn {
 /// (e.g. while they fix a menu issue) without canceling the
 /// subscription.
 model MarketplaceListing {
-  id                       String   @id @default(cuid())
-  restaurantId             String   @unique
-  restaurant               Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  id           String     @id @default(cuid())
+  restaurantId String     @unique
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 
   /// User-controllable "pause" toggle. Distinct from the entitlement
   /// (which is controlled by subscription status). When false, the
   /// restaurant is hidden from /marketplace but still pays for the
   /// add-on — they're just temporarily not accepting new customers
   /// from the marketplace channel.
-  isListed                 Boolean  @default(true)
+  isListed Boolean @default(true)
 
   /// Marketplace billing mode the restaurant chose:
   ///   "payg"    — pay-as-you-go: $3 per marketplace order, capped at
@@ -1362,51 +1408,51 @@ model MarketplaceListing {
   /// Defaults to "payg" because that's the friction-free opt-in path —
   /// no card required to start, no surprises until they actually drive
   /// orders through the marketplace.
-  billingMode              String   @default("payg")
+  billingMode String @default("payg")
 
   /// JSON string array — categories the customer can filter by on
   /// the marketplace browse page. e.g. ["pizza", "italian", "delivery"].
   /// Defaulted from restaurant.cuisineType at creation time but
   /// fully overridable.
-  marketplaceCategories    String   @default("[]")
+  marketplaceCategories String @default("[]")
 
   /// JSON string array — short visual tags shown on the tile.
   /// e.g. ["family-friendly", "late-night", "vegetarian-options"].
-  marketplaceTags          String   @default("[]")
+  marketplaceTags String @default("[]")
 
   /// Banner image for the marketplace tile. Defaults to restaurant.bannerUrl
   /// at creation time, but admins can upload a different one tuned for
   /// the marketplace context (e.g. a wider crop showing more food).
-  marketplaceBanner        String?
+  marketplaceBanner String?
 
   /// One-line hook shown on the marketplace tile. Falls back to
   /// restaurant.slogan, then restaurant.description first sentence.
-  marketplaceTagline       String?
+  marketplaceTagline String?
 
   /// 1-2 sentence description shown on the restaurant detail page in
   /// the marketplace context. Falls back to restaurant.description.
-  marketplaceShortDesc     String?
+  marketplaceShortDesc String?
 
   /// Superadmin-only flag — promotes the restaurant to the top of the
   /// browse grid + a "Featured" badge. Used for paid promotion within
   /// the marketplace (a future revenue stream) or to spotlight new
   /// restaurants during their first month.
-  marketplaceFeatured      Boolean  @default(false)
+  marketplaceFeatured Boolean @default(false)
 
   /// Manual ordering — when null, sort alphabetically. Admins can
   /// drag-and-drop to reorder; superadmins can pin specific
   /// restaurants to the top of the chain-wide grid.
-  marketplaceSortOrder     Int      @default(0)
+  marketplaceSortOrder Int @default(0)
 
   /// Smart-billing counters (M2 will use these). On every order placed
   /// through the marketplace channel, increment these so we can show
   /// "this month so far: 42 orders / $1,247 in revenue / paid $X via
   /// marketplace, would have paid $Y on UberEats".
-  currentMonthOrders       Int      @default(0)
-  currentMonthRevenue      Float    @default(0)
+  currentMonthOrders    Int      @default(0)
+  currentMonthRevenue   Float    @default(0)
   /// When the current billing month started (rolled forward by the
   /// monthly billing cron). Used to know when to reset the counters.
-  currentMonthStartedAt    DateTime @default(now())
+  currentMonthStartedAt DateTime @default(now())
 
   /// Cumulative savings vs UberEats's 30% commission, in cents.
   /// Computed as: sum over all marketplace orders of (order_total * 0.30)
@@ -1414,8 +1460,8 @@ model MarketplaceListing {
   /// the admin dashboard as the headline "value delivered" number.
   lifetimeSavingsVsUberEatsCents Int @default(0)
 
-  createdAt                DateTime @default(now())
-  updatedAt                DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([isListed])
   @@index([marketplaceFeatured])
@@ -1431,22 +1477,22 @@ model MarketplaceListing {
 /// row to decide whether the "send to driver pool" picker is enabled
 /// for each order.
 model ShipdayConfig {
-  id              String   @id @default(cuid())
-  restaurantId    String   @unique
-  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  id           String     @id @default(cuid())
+  restaurantId String     @unique
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 
   /// Master enable. Off by default even after the add-on activates —
   /// the restaurant has to enter their ShipDay credentials AND flip
   /// this before any orders route to the pool. Prevents accidentally
   /// dispatching to a misconfigured ShipDay account.
-  enabled         Boolean  @default(false)
+  enabled Boolean @default(false)
 
   /// ShipDay API key, encrypted with the platform's ENCRYPTION_KEY
   /// (same scheme as PlatformSettings.stripeSecretKey). Null until
   /// the restaurant pastes their key in /admin/delivery/pool.
-  apiKeyEnc       String?
-  apiKeyIv        String?
-  apiKeyTag       String?
+  apiKeyEnc String?
+  apiKeyIv  String?
+  apiKeyTag String?
 
   /// How the per-delivery fee flows:
   ///   "pass_through" — customer pays the entire ShipDay fee (most common)
@@ -1454,11 +1500,11 @@ model ShipdayConfig {
   ///                    the difference if ShipDay charges more
   ///   "tiered"       — `tieredRules` JSON defines fee by order total
   ///                    (e.g. free over $50). Restaurant absorbs gap.
-  deliveryFeeMode  String  @default("pass_through")
-  flatDeliveryFee  Float?
+  deliveryFeeMode String @default("pass_through")
+  flatDeliveryFee Float?
   /// JSON: [{ minOrderTotal: 0, customerFee: 5 }, { minOrderTotal: 50, customerFee: 0 }]
   /// Evaluated bottom-up: highest matching minOrderTotal wins.
-  tieredRules      String   @default("[]")
+  tieredRules     String @default("[]")
 
   /// Driver-pool opt-in. Separate from `enabled` because the
   /// "marketplace" add-on grants access to the pool feature but the
@@ -1477,7 +1523,7 @@ model ShipdayConfig {
   ///                the day based on staff availability.
   /// Default "own" so brand-new restaurants stay safe — they can flip
   /// to shipday/both after entering credentials.
-  deliverySource    String   @default("own")
+  deliverySource String @default("own")
 
   /// When deliverySource = "both", which mode is ACTIVE right now?
   ///   "own"     — currently sending new orders to in-house drivers
@@ -1486,10 +1532,10 @@ model ShipdayConfig {
   /// Toggled from the kitchen display so staff can swap mid-shift
   /// (e.g. "we're slammed in-house, route to pool for the next 2 hours").
   /// Defaults to "own" — safer to keep new orders in-house by default.
-  activeDispatchMode String  @default("own")
+  activeDispatchMode String @default("own")
 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([enabled])
 }
@@ -1506,20 +1552,20 @@ model ShipdayConfig {
 /// listing's counters reset on month rollover, so we lose the historical
 /// per-month detail otherwise. This is the audit trail.
 model MarketplaceSettlement {
-  id              String   @id @default(cuid())
-  restaurantId    String
-  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 
   /// First moment of the billed month (UTC). e.g. 2026-05-01T00:00:00Z
   /// for the May 2026 settlement. The cron computes settlements for
   /// the month that just CLOSED, not the current one.
-  monthStart      DateTime
+  monthStart    DateTime
   /// Order count that month, copied from the listing's counter before reset.
-  ordersInMonth   Int
+  ordersInMonth Int
   /// $3 × ordersInMonth, uncapped. For audit / "why was I charged X".
-  accruedCents    Int
+  accruedCents  Int
   /// What we actually invoiced: min(accruedCents, MARKETPLACE_MONTHLY_CAP_CENTS).
-  invoicedCents   Int
+  invoicedCents Int
 
   /// Lifecycle:
   ///   "pending"  — row created, no Stripe call yet (e.g. cron in flight)
@@ -1527,14 +1573,230 @@ model MarketplaceSettlement {
   ///   "paid"     — webhook flipped this once Stripe collected the funds
   ///   "void"     — accruedCents was 0; nothing to bill, recorded for completeness
   ///   "failed"   — Stripe call errored; safe to retry by re-running cron
-  status          String   @default("pending")
-  stripeInvoiceId String?  @unique
+  status          String  @default("pending")
+  stripeInvoiceId String? @unique
   failureReason   String?
 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([restaurantId, monthStart])
   @@index([status])
   @@index([monthStart])
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// REPORTS — GloriaFood-style analytics
+// ════════════════════════════════════════════════════════════════════════
+//
+// All models in this section are part of the Reports system at
+// /admin/reports/**. They have a HARD DATA RETENTION REQUIREMENT:
+//
+//   ╔══════════════════════════════════════════════════════════════════╗
+//   ║ 4-YEAR RETENTION — DO NOT DELETE any row in these tables that    ║
+//   ║ is less than 4 years old. No cron job, manual cleanup, or        ║
+//   ║ migration is permitted to truncate / deleteMany / drop these     ║
+//   ║ tables until that horizon has passed. Restaurants legally need   ║
+//   ║ 4 years of sales reporting available, set by Luigi 2026-05-25.   ║
+//   ╚══════════════════════════════════════════════════════════════════╝
+//
+// Order + OrderItem + Customer are ALSO subject to the same retention.
+// Any future cleanup job that touches them must check createdAt is older
+// than 4 years before deleting. There is no such job today; this comment
+// exists to prevent one from being added carelessly.
+//
+// Archival (year 5+) goes to cold storage (Neon branch dump → S3 Glacier),
+// not delete. Out of scope for the current build.
+// ────────────────────────────────────────────────────────────────────────
+
+/// Daily pre-aggregated rollup of report metrics, one row per restaurant
+/// per local-calendar day. Populated by `scripts/cron/reports-snapshot.ts`
+/// at 3am restaurant-local time. The Reports Dashboard reads from this
+/// table for the headline cards (Today / Last 7 / Last 28) so the page
+/// hits ONE row per day instead of scanning millions of Orders.
+///
+/// Raw Order / OrderItem tables are still the source of truth for the
+/// detail views (Sales Trend chart, List View, etc) — this is purely a
+/// performance layer for the dashboard summary widgets.
+///
+/// When `Order.deletedAt` semantics ever ship (they don't today), the
+/// snapshot rebuilder must respect them. Until then, "completed orders"
+/// is the canonical metric — rejected / pending exclude.
+model ReportDailySnapshot {
+  id               String   @id @default(cuid())
+  restaurantId     String
+  /// Local-calendar date for this rollup. Stored at midnight UTC of the
+  /// restaurant's TZ-adjusted day so equality checks are simple. The
+  /// cron job is responsible for the TZ conversion.
+  date             DateTime
+  /// Sum of `Order.total` for orders with status="completed" on this day.
+  revenueCents     Int      @default(0)
+  /// Count of orders placed (regardless of status) on this day.
+  orderCount       Int      @default(0)
+  /// Count of orders that reached status="completed" on this day.
+  completedCount   Int      @default(0)
+  /// Count of orders that were rejected/cancelled on this day.
+  rejectedCount    Int      @default(0)
+  /// Distinct customer count (by Customer.id) ordering on this day.
+  customerCount    Int      @default(0)
+  /// Of `customerCount`, how many are first-time (no prior Order in
+  /// this restaurant). Returning = customerCount - newCustomerCount.
+  newCustomerCount Int      @default(0)
+  /// Average order value in cents (revenueCents / completedCount,
+  /// stored pre-computed to skip the divide-by-zero guard at read time).
+  avgOrderCents    Int      @default(0)
+  /// JSON breakdown: { "delivery": 12, "pickup": 8, "dine_in": 0 }
+  typeBreakdown    String?
+  /// JSON breakdown: { "direct": 15, "marketplace": 5, "email": 0, ... }
+  channelBreakdown String?
+  /// JSON breakdown: { "card": 18, "cash": 2 }
+  paymentBreakdown String?
+  /// Timestamp the cron last (re)built this row. Used for "stale"
+  /// detection — if a snapshot is older than 25 hours and today's date
+  /// is newer, we trigger an on-demand rebuild.
+  builtAt          DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  // One row per restaurant per day.
+  @@unique([restaurantId, date])
+  // Dashboard reads: "last N days for restaurant X".
+  @@index([restaurantId, date])
+}
+
+/// Append-only log of website visits to the customer-facing order page,
+/// hosted marketing site, and widget embeds. Powers:
+///   - Reports → Online Ordering → Website Funnel
+///   - Reports → Online Ordering → Website Visits
+///   - Conversion-rate calculation (visits ÷ orders)
+///
+/// Written by a lightweight beacon endpoint `/api/track/visit` called
+/// once per session-start. Sessions are identified by an httpOnly
+/// cookie set on first hit. NO PII — we don't store name/email/IP;
+/// just the channel/referrer/landing-path + a hashed session id.
+///
+/// Retention: same 4-year rule as the rest of Reports.
+model WebsiteVisit {
+  id           String   @id @default(cuid())
+  restaurantId String
+  /// Hashed session identifier. Same hash across all events in one
+  /// session so we can build the funnel. Reset on new tab / cleared
+  /// cookies.
+  sessionHash  String
+  /// Marketing channel, from the same enum as `Order.channel`:
+  /// "direct" | "marketplace" | "email" | "organic" | "paid_ads"
+  /// | "social_media" | "referral" | "affiliate" | "internal"
+  /// Defaults "direct" when no source signal is present.
+  channel      String   @default("direct")
+  /// Document.referrer at landing time, truncated to 255 chars.
+  /// Powers the "From inside your website" segmentation when the
+  /// referrer hostname matches the restaurant's own domain.
+  referrer     String?
+  /// utm_campaign / utm_source / utm_medium combined, opaque.
+  /// 255-char cap. Optional.
+  utm          String?
+  /// First page hit in the session ("/order/luigis", "/about", etc).
+  landingPath  String?
+  /// "desktop" | "mobile" | "tablet". Derived from user-agent.
+  deviceType   String?
+  /// ISO 3166-1 alpha-2 country code if we can derive it from the
+  /// Vercel geolocation header. Null in dev / unknown.
+  country      String?
+  createdAt    DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  // Date-range scans (the heavy report query).
+  @@index([restaurantId, createdAt])
+  // Funnel join from event to visit.
+  @@index([sessionHash])
+  // "By channel" pivot.
+  @@index([restaurantId, channel, createdAt])
+}
+
+/// Append-only log of meaningful customer-journey events that pair with
+/// `WebsiteVisit`. Each event references a `sessionHash` so the funnel
+/// query joins by session. Events we track:
+///
+///   "visit"          — entered the ordering page (same trigger as
+///                      WebsiteVisit; logged for funnel uniformity)
+///   "menu_browsed"   — scrolled past the menu fold OR clicked any item
+///   "item_added"     — first item added to cart
+///   "checkout_open"  — opened the checkout drawer
+///   "checkout_info"  — filled customer details
+///   "payment_open"   — reached the payment step
+///   "order_placed"   — successfully POSTed /api/orders (terminal)
+///
+/// The funnel report renders these as a sankey-ish bar chart with
+/// drop-off percentages.
+model WebsiteFunnelEvent {
+  id           String   @id @default(cuid())
+  restaurantId String
+  sessionHash  String
+  step         String
+  /// Optional: the menuItemId / orderId being acted on for item_added
+  /// and order_placed events. Lets the Menu Insights report cross-ref
+  /// which items are reached but never purchased ("abandoned" items).
+  targetId     String?
+  createdAt    DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  @@index([restaurantId, createdAt])
+  @@index([sessionHash])
+  @@index([restaurantId, step, createdAt])
+}
+
+/// Append-only log of individual menu-item views (when the customer
+/// scrolls past or clicks into a menu item on the order page). Powers
+/// Reports → Menu Insights → Items "Views" column, which lets owners
+/// see which items are seen-but-not-ordered (= bad copy / photo / price).
+///
+/// Volume is higher than WebsiteVisit (one row per item per session
+/// roughly), so we expect this to be the biggest reports table. The
+/// (restaurantId, createdAt) index keeps date-range scans fast; without
+/// it a busy restaurant's 4-year history would be unsearchable.
+model MenuItemView {
+  id           String   @id @default(cuid())
+  restaurantId String
+  menuItemId   String
+  sessionHash  String
+  createdAt    DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  menuItem   MenuItem   @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId, createdAt])
+  @@index([menuItemId, createdAt])
+  @@index([sessionHash])
+}
+
+/// Append-only log of online/offline transitions for kitchen devices.
+/// SPARSE — only writes when state changes (offline→online or online→
+/// offline), not every heartbeat tick. The Reports Connectivity Health
+/// chart replays these events to compute per-minute coverage.
+///
+/// Trade-off vs the obvious "log every heartbeat" approach: at 4-second
+/// poll × 10,000 restaurants × 4 years that's ~32 BILLION rows. Logging
+/// transitions only puts it at ~10 rows/restaurant/day worst case —
+/// orders of magnitude smaller and the visualization is identical.
+///
+/// The "current state" lives on KitchenDevice.lastSeenAt (already there);
+/// this table is the audit trail. Writer logic lives in
+/// `src/lib/kitchen/heartbeat.ts:recordHeartbeat()` and only inserts a
+/// row when (now - lastSeenAt) crosses the offline threshold (60s).
+model ConnectivityEvent {
+  id           String   @id @default(cuid())
+  restaurantId String
+  /// Device-stable hash from KitchenDevice.deviceHash. Multiple devices
+  /// per restaurant supported (kitchen + bar + drive-thru terminals).
+  deviceHash   String
+  /// "offline" | "online"
+  eventType    String
+  occurredAt   DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  @@index([restaurantId, occurredAt])
+  @@index([restaurantId, deviceHash, occurredAt])
 }
