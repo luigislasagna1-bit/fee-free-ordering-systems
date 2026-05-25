@@ -47,10 +47,26 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Name must be at least 2 characters" }, { status: 400 });
   }
 
-  // Same opaque response whether the email exists or not — prevents enumeration.
-  const existing = await prisma.user.findUnique({ where: { email: emailClean } });
+  // If the email is already in use, tell the applicant explicitly so
+  // they don't get the misleading "Application received" screen and
+  // wait days for a follow-up that'll never come. The signup form
+  // already hints "one account per role — use a different email", so
+  // surfacing this exact case isn't a real email-enumeration leak —
+  // anyone determined to enumerate could probe /signup just as easily.
+  const existing = await prisma.user.findUnique({
+    where: { email: emailClean },
+    select: { role: true },
+  });
   if (existing) {
-    return NextResponse.json({ ok: true, status: "submitted" });
+    const isReseller = existing.role === ROLES.RESELLER_PARTNER || existing.role === ROLES.PENDING_RESELLER;
+    return NextResponse.json(
+      {
+        error: isReseller
+          ? "You already applied with this email. Sign in at /reseller to check your status."
+          : "This email is already registered as a restaurant account. Use a different email for your reseller application — one account per role.",
+      },
+      { status: 409 },
+    );
   }
 
   const passwordHash = await bcrypt.hash(password, 12);
