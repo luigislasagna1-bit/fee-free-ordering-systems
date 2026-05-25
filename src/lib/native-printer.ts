@@ -44,21 +44,26 @@ declare global {
 
 /** A single styled line in a structured receipt. Sent to Star printers
  *  via the StarXpand bitmap renderer, which produces a properly
- *  formatted receipt regardless of the printer's emulation mode. */
+ *  formatted receipt regardless of the printer's emulation mode.
+ *  Mirror of ReceiptLine from `@/lib/receipt-lines` so the JS bridge
+ *  and the server share a single contract. */
 export type ReceiptLine =
   | {
       kind: "text";
       text: string;
+      fontSize?: number;
       bold?: boolean;
-      doubleSize?: boolean;
       align?: "left" | "center" | "right";
+      /** Black background, white text — used for kitchen "DELIVERY" badge. */
+      highlight?: boolean;
     }
   | {
       kind: "twoCol";
       left: string;
       right: string;
+      fontSize?: number;
       bold?: boolean;
-      doubleSize?: boolean;
+      highlight?: boolean;
     }
   | { kind: "divider" }
   | { kind: "feed"; count: number }

@@ -136,33 +136,32 @@ object StarXpandBridge {
     }
 
     /**
-     * Render structured receipt lines to a single bitmap. Different
-     * line styles (bold, doubleSize, alignment, dividers, two-column)
-     * are handled here.
+     * Render structured receipt lines to a single bitmap. Each line
+     * carries its own style (fontSize, bold, align, highlight).
+     *
+     * fontSize semantics: the server emits the px size from the per-
+     * restaurant template (9..32 typically). We treat 12px as the
+     * baseline "normal" size and scale linearly into bitmap text size.
+     * Highlighting is rendered as white text on a black background bar
+     * spanning the full paper width — matches the HTML preview style
+     * for the kitchen ORDER TYPE badge.
      */
     private fun renderReceiptBitmap(lines: org.json.JSONArray, widthDots: Int): Bitmap {
-        // Pre-compute total height by walking lines once with the same
-        // metrics we'll use for actual drawing. This avoids a second
-        // bitmap allocation + copy.
-        val normalPaint = textPaint(28f, false)
-        val boldPaint = textPaint(28f, true)
-        val doublePaint = textPaint(48f, false)
-        val doubleBoldPaint = textPaint(48f, true)
+        val defaultLineHeight = lineHeightForFont(12)
 
-        val normalLineHeight = lineHeight(normalPaint)
-        val doubleLineHeight = lineHeight(doublePaint)
-
+        // Pre-compute total height by walking lines with the same
+        // metrics we'll use for drawing. Avoids a second allocation.
         var totalHeight = 16 // top margin
         for (i in 0 until lines.length()) {
             val item = lines.optJSONObject(i) ?: continue
             when (item.optString("kind")) {
                 "text", "twoCol" -> {
-                    val isDouble = item.optBoolean("doubleSize", false)
-                    totalHeight += if (isDouble) doubleLineHeight else normalLineHeight
+                    val fontSize = item.optInt("fontSize", 12)
+                    totalHeight += lineHeightForFont(fontSize)
                 }
-                "divider" -> totalHeight += normalLineHeight
-                "feed" -> totalHeight += normalLineHeight * item.optInt("count", 1)
-                "cut" -> { /* handled by SDK action, not bitmap */ }
+                "divider" -> totalHeight += defaultLineHeight
+                "feed" -> totalHeight += defaultLineHeight * item.optInt("count", 1)
+                "cut" -> { /* SDK action, no bitmap height */ }
             }
         }
         totalHeight += 16 // bottom margin
@@ -177,16 +176,18 @@ object StarXpandBridge {
             when (item.optString("kind")) {
                 "text" -> {
                     val text = item.optString("text", "")
+                    val fontSize = item.optInt("fontSize", 12)
                     val bold = item.optBoolean("bold", false)
-                    val isDouble = item.optBoolean("doubleSize", false)
+                    val highlight = item.optBoolean("highlight", false)
                     val align = item.optString("align", "left")
-                    val paint = when {
-                        isDouble && bold -> doubleBoldPaint
-                        isDouble -> doublePaint
-                        bold -> boldPaint
-                        else -> normalPaint
-                    }
+                    val paint = textPaint(scaledTextSize(fontSize), bold)
                     val lh = lineHeight(paint)
+                    if (highlight) {
+                        // Black bar across full width; white text on top.
+                        val bg = Paint().apply { color = Color.BLACK }
+                        canvas.drawRect(0f, y, widthDots.toFloat(), y + lh, bg)
+                        paint.color = Color.WHITE
+                    }
                     val baseline = y + (-paint.ascent())
                     val x = when (align) {
                         "center" -> (widthDots - paint.measureText(text)) / 2f
@@ -199,15 +200,16 @@ object StarXpandBridge {
                 "twoCol" -> {
                     val left = item.optString("left", "")
                     val right = item.optString("right", "")
+                    val fontSize = item.optInt("fontSize", 12)
                     val bold = item.optBoolean("bold", false)
-                    val isDouble = item.optBoolean("doubleSize", false)
-                    val paint = when {
-                        isDouble && bold -> doubleBoldPaint
-                        isDouble -> doublePaint
-                        bold -> boldPaint
-                        else -> normalPaint
-                    }
+                    val highlight = item.optBoolean("highlight", false)
+                    val paint = textPaint(scaledTextSize(fontSize), bold)
                     val lh = lineHeight(paint)
+                    if (highlight) {
+                        val bg = Paint().apply { color = Color.BLACK }
+                        canvas.drawRect(0f, y, widthDots.toFloat(), y + lh, bg)
+                        paint.color = Color.WHITE
+                    }
                     val baseline = y + (-paint.ascent())
                     canvas.drawText(left, 8f, baseline, paint)
                     val rightX = widthDots - paint.measureText(right) - 8f
@@ -215,7 +217,7 @@ object StarXpandBridge {
                     y += lh
                 }
                 "divider" -> {
-                    val baseline = y + normalLineHeight / 2f
+                    val baseline = y + defaultLineHeight / 2f
                     val dashPaint = Paint().apply {
                         color = Color.BLACK
                         strokeWidth = 2f
@@ -225,15 +227,33 @@ object StarXpandBridge {
                         canvas.drawLine(dx, baseline, dx + 8f, baseline, dashPaint)
                         dx += 16f
                     }
-                    y += normalLineHeight
+                    y += defaultLineHeight
                 }
                 "feed" -> {
-                    y += normalLineHeight * item.optInt("count", 1)
+                    y += defaultLineHeight * item.optInt("count", 1)
                 }
-                "cut" -> { /* handled by SDK action */ }
+                "cut" -> { /* SDK action */ }
             }
         }
         return bitmap
+    }
+
+    /**
+     * Map a template `fontSize` (px from the HTML preview) to a
+     * thermal-printer text size (Android Canvas units). Empirically
+     * tuned so 12px ≈ baseline 28px on the bitmap which prints at a
+     * comfortable receipt-text size on TSP143IIIW at 576 dots/80mm.
+     */
+    private fun scaledTextSize(templatePx: Int): Float {
+        val baseline = 28f
+        // Scale linearly, clamping to a sane range so a runaway value
+        // in the template can't blow up the bitmap height.
+        return (baseline * (templatePx / 12f)).coerceIn(18f, 96f)
+    }
+
+    private fun lineHeightForFont(templatePx: Int): Int {
+        val tmp = textPaint(scaledTextSize(templatePx), false)
+        return lineHeight(tmp)
     }
 
     private fun textPaint(size: Float, bold: Boolean): Paint {
