@@ -148,14 +148,25 @@ object StarXpandBridge {
      */
     private fun renderReceiptBitmap(lines: org.json.JSONArray, widthDots: Int): Bitmap {
         val defaultLineHeight = lineHeightForFont(12)
+        val leftMargin = 8f
+        val rightMargin = 8f
+        val drawableWidth = widthDots - leftMargin - rightMargin
 
-        // Pre-compute total height by walking lines with the same
-        // metrics we'll use for drawing. Avoids a second allocation.
+        // Pre-compute total height by walking lines once. Word-wrapping
+        // is done here too so multi-line wraps allocate enough space.
         var totalHeight = 16 // top margin
         for (i in 0 until lines.length()) {
             val item = lines.optJSONObject(i) ?: continue
             when (item.optString("kind")) {
-                "text", "twoCol" -> {
+                "text" -> {
+                    val fontSize = item.optInt("fontSize", 12)
+                    val bold = item.optBoolean("bold", false)
+                    val text = item.optString("text", "")
+                    val paint = textPaint(scaledTextSize(fontSize), bold)
+                    val wrapped = wrapText(text, paint, drawableWidth)
+                    totalHeight += lineHeight(paint) * wrapped.size.coerceAtLeast(1)
+                }
+                "twoCol" -> {
                     val fontSize = item.optInt("fontSize", 12)
                     totalHeight += lineHeightForFont(fontSize)
                 }
@@ -182,20 +193,26 @@ object StarXpandBridge {
                     val align = item.optString("align", "left")
                     val paint = textPaint(scaledTextSize(fontSize), bold)
                     val lh = lineHeight(paint)
-                    if (highlight) {
-                        // Black bar across full width; white text on top.
-                        val bg = Paint().apply { color = Color.BLACK }
-                        canvas.drawRect(0f, y, widthDots.toFloat(), y + lh, bg)
-                        paint.color = Color.WHITE
+                    val wrapped = wrapText(text, paint, drawableWidth)
+                    for (line in wrapped) {
+                        if (highlight) {
+                            // Black bar spans full paper width.
+                            val bg = Paint().apply { color = Color.BLACK }
+                            canvas.drawRect(0f, y, widthDots.toFloat(), y + lh, bg)
+                            paint.color = Color.WHITE
+                        } else {
+                            paint.color = Color.BLACK
+                        }
+                        val baseline = y + (-paint.ascent())
+                        val measured = paint.measureText(line)
+                        val x = when (align) {
+                            "center" -> leftMargin + (drawableWidth - measured) / 2f
+                            "right" -> widthDots - rightMargin - measured
+                            else -> leftMargin
+                        }
+                        canvas.drawText(line, x, baseline, paint)
+                        y += lh
                     }
-                    val baseline = y + (-paint.ascent())
-                    val x = when (align) {
-                        "center" -> (widthDots - paint.measureText(text)) / 2f
-                        "right" -> widthDots - paint.measureText(text) - 8f
-                        else -> 8f
-                    }
-                    canvas.drawText(text, x, baseline, paint)
-                    y += lh
                 }
                 "twoCol" -> {
                     val left = item.optString("left", "")
@@ -211,8 +228,14 @@ object StarXpandBridge {
                         paint.color = Color.WHITE
                     }
                     val baseline = y + (-paint.ascent())
-                    canvas.drawText(left, 8f, baseline, paint)
-                    val rightX = widthDots - paint.measureText(right) - 8f
+                    // Right-side price is the priority — measure it
+                    // first then truncate the left side if the two
+                    // would collide. Avoids item name overlapping price.
+                    val rightWidth = paint.measureText(right)
+                    val rightX = widthDots - rightMargin - rightWidth
+                    val maxLeftWidth = rightX - leftMargin - 16f // 16px gap
+                    val truncatedLeft = truncateToWidth(left, paint, maxLeftWidth)
+                    canvas.drawText(truncatedLeft, leftMargin, baseline, paint)
                     canvas.drawText(right, rightX, baseline, paint)
                     y += lh
                 }
@@ -222,8 +245,8 @@ object StarXpandBridge {
                         color = Color.BLACK
                         strokeWidth = 2f
                     }
-                    var dx = 8f
-                    while (dx < widthDots - 8f) {
+                    var dx = leftMargin
+                    while (dx < widthDots - rightMargin) {
                         canvas.drawLine(dx, baseline, dx + 8f, baseline, dashPaint)
                         dx += 16f
                     }
@@ -236,6 +259,67 @@ object StarXpandBridge {
             }
         }
         return bitmap
+    }
+
+    /**
+     * Word-wrap text to fit within the given pixel width. Splits on
+     * spaces; if a single word exceeds maxWidth (rare on receipts —
+     * usually URLs or long order IDs), breaks the word character-by-
+     * character so nothing gets clipped off the right edge.
+     */
+    private fun wrapText(text: String, paint: Paint, maxWidth: Float): List<String> {
+        if (text.isEmpty()) return listOf("")
+        if (paint.measureText(text) <= maxWidth) return listOf(text)
+
+        val result = mutableListOf<String>()
+        // Preserve leading whitespace so indented modifier lines stay
+        // indented after wrapping ("  + Extra Cheese, 5 ranches" wraps
+        // to two lines, both starting with the indent).
+        val indent = text.takeWhile { it == ' ' }
+        val body = text.substring(indent.length)
+
+        var current = indent
+        for (word in body.split(" ")) {
+            val attempt = if (current.length > indent.length) "$current $word" else "$current$word"
+            if (paint.measureText(attempt) <= maxWidth) {
+                current = attempt
+            } else {
+                if (current.length > indent.length) {
+                    result.add(current)
+                    current = indent
+                }
+                // The word itself doesn't fit — character-split it.
+                if (paint.measureText(indent + word) > maxWidth) {
+                    var chunk = indent
+                    for (ch in word) {
+                        val tryAdd = chunk + ch
+                        if (paint.measureText(tryAdd) > maxWidth && chunk.length > indent.length) {
+                            result.add(chunk)
+                            chunk = indent + ch
+                        } else {
+                            chunk = tryAdd
+                        }
+                    }
+                    current = chunk
+                } else {
+                    current = indent + word
+                }
+            }
+        }
+        if (current.length > indent.length) result.add(current)
+        return result.ifEmpty { listOf("") }
+    }
+
+    /** Truncate text to fit within maxWidth, appending "..." when cut. */
+    private fun truncateToWidth(text: String, paint: Paint, maxWidth: Float): String {
+        if (paint.measureText(text) <= maxWidth) return text
+        val ellipsis = "..."
+        val ellipsisW = paint.measureText(ellipsis)
+        var cut = text
+        while (cut.isNotEmpty() && paint.measureText(cut) + ellipsisW > maxWidth) {
+            cut = cut.dropLast(1)
+        }
+        return cut + ellipsis
     }
 
     /**

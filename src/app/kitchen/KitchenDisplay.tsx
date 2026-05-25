@@ -693,25 +693,27 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     // We deliberately try the direct printer FIRST regardless of any
     // "autoPrint" toggle from PrintNode settings — if the operator
     // configured the direct printer, that's an explicit opt-in.
+    // Pick which receipt(s) to print based on the kitchen's PrintNode
+    // settings (those settings double as the source of truth for direct
+    // printer too — if "Print Kitchen" + "Print Customer" are both on,
+    // print both; if only kitchen, print kitchen; etc.).
+    const printType: "kitchen" | "customer" | "both" =
+      printerSettings?.printKitchen && printerSettings?.printCustomer ? "both"
+      : printerSettings?.printCustomer ? "customer"
+      : "kitchen"; // default — chef always wants the ticket
+
     const direct = getDirectPrinterConfig();
     if (direct && direct.autoprint) {
       try {
-        await doPrintDirect(orderId);
+        await doPrintDirect(orderId, printType);
         return;
       } catch (err) {
-        // Direct printer failed — fall through to PrintNode (if also
-        // configured) so the restaurant isn't stuck without a print.
         console.warn("[kitchen/autoPrint] direct printer failed, trying PrintNode", err);
       }
     }
     // PrintNode path (legacy / backup)
     if (!printerSettings?.autoPrint || !printerSettings.printNodeConnected || !printerSettings.selectedPrinterId) return;
-    const type = printerSettings.printKitchen && printerSettings.printCustomer ? "both"
-      : printerSettings.printKitchen ? "kitchen"
-      : printerSettings.printCustomer ? "customer"
-      : null;
-    if (!type) return;
-    await doPrint(orderId, type);
+    await doPrint(orderId, printType);
   }, [printerSettings]);
 
   /** Direct-printer path: fetch ESC/POS bytes from server, send to
@@ -721,27 +723,38 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
    *  Errors get user-friendly copy via nativePrinterErrorCopy() so
    *  the kitchen staff sees "Printer didn't respond — check Wi-Fi"
    *  rather than a stack trace. */
-  const doPrintDirect = async (orderId: string) => {
+  /** Fetch + print a single receipt type (kitchen OR customer) via
+   *  the native plugin. Caller is responsible for sequencing when
+   *  both are requested. */
+  const doPrintDirectOne = async (orderId: string, type: "kitchen" | "customer") => {
     if (!isNativePrinterAvailable()) throw new Error("Native plugin missing");
     const cfg = getDirectPrinterConfig();
     if (!cfg) throw new Error("Direct printer not configured");
-    const res = await fetch(`/api/kitchen/print-job/${orderId}?width=${cfg.paperWidth}`);
+    const res = await fetch(`/api/kitchen/print-job/${orderId}?width=${cfg.paperWidth}&type=${type}`);
     if (!res.ok) throw new Error("Failed to fetch print job");
     const { bytes, lines } = await res.json();
     if (!bytes && !lines) throw new Error("Empty print payload");
-    // 80mm paper = 576 dots, 58mm = 384. Used by StarXpand bitmap renderer.
     const paperWidthDots = cfg.paperWidth === 58 ? 384 : 576;
+    await nativePrint({
+      ip: cfg.ip,
+      port: cfg.port,
+      bytes,
+      lines,
+      paperWidthDots,
+      timeoutMs: 15000,
+    });
+  };
+
+  /** Print one or more receipt types in sequence. "both" prints kitchen
+   *  first (chef needs to see it ASAP), then customer. */
+  const doPrintDirect = async (orderId: string, type: "kitchen" | "customer" | "both" = "kitchen") => {
     try {
-      await nativePrint({
-        ip: cfg.ip,
-        port: cfg.port,
-        bytes,
-        lines,
-        paperWidthDots,
-        // Bitmap render + StarXpand connection + print can take ~5-10s
-        // on first run; give it headroom so we don't timeout-then-print.
-        timeoutMs: 15000,
-      });
+      if (type === "both" || type === "kitchen") {
+        await doPrintDirectOne(orderId, "kitchen");
+      }
+      if (type === "both" || type === "customer") {
+        await doPrintDirectOne(orderId, "customer");
+      }
       toast.success("Receipt printed ✓");
     } catch (err: any) {
       const reason = (err?.code || err?.message || "") as string;
@@ -757,7 +770,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     const direct = getDirectPrinterConfig();
     if (direct) {
       try {
-        await doPrintDirect(orderId);
+        await doPrintDirect(orderId, type);
         return;
       } catch {
         // fall through to PrintNode if also configured
