@@ -178,13 +178,15 @@ export default async function PartnersPage() {
           <div className="mt-6 grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
             <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4">
               <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">Best case in the table</div>
-              <div className="text-2xl font-extrabold text-emerald-700">$2,249/mo</div>
-              <div className="text-xs text-emerald-800 mt-1">50 restaurants × all add-ons × 15% = <strong>$26,991/year</strong> recurring.</div>
+              {/* 50 × $149.95/mo × 15% = $1,124.625/mo → $13,495.50/yr */}
+              <div className="text-2xl font-extrabold text-emerald-700">$1,124.62/mo</div>
+              <div className="text-xs text-emerald-800 mt-1">50 restaurants × all add-ons × 15% = <strong>$13,495.50/year</strong> recurring.</div>
             </div>
             <div className="rounded-xl bg-gray-50 border border-gray-200 p-4">
               <div className="text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Common scenario</div>
+              {/* 30 × $59.97/mo × 10% = $179.91/mo → $2,158.92/yr */}
               <div className="text-2xl font-extrabold text-gray-900">$179.91/mo</div>
-              <div className="text-xs text-gray-700 mt-1">30 restaurants × 3 add-ons × 10% = <strong>$2,159/year</strong>, on autopilot.</div>
+              <div className="text-xs text-gray-700 mt-1">30 restaurants × 3 add-ons × 10% = <strong>$2,158.92/year</strong>, on autopilot.</div>
             </div>
           </div>
 
