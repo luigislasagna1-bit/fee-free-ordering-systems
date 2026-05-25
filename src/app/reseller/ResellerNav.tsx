@@ -88,7 +88,12 @@ const groups: Group[] = [
     id: "branding",
     label: "Branding",
     icon: Palette,
-    comingSoon: true,
+    items: [
+      { href: "/reseller/branding/imprint", label: "Imprint" },
+      { href: "/reseller/branding/logo", label: "Logo" },
+      { href: "/reseller/branding/generic-domain", label: "Generic domain" },
+      { href: "/reseller/branding/custom-domain", label: "Custom domain" },
+    ],
   },
   {
     id: "payouts",

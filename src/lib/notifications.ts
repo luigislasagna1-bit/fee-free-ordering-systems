@@ -46,13 +46,19 @@ async function resolveImprint(restaurantId: string): Promise<string | null> {
     where: { id: restaurantId },
     select: {
       resellerProfile: {
-        select: { status: true, companyName: true },
+        select: { status: true, companyName: true, imprint: true },
       },
     },
   });
   const p = restaurant?.resellerProfile;
-  if (!p || p.status !== "approved" || !p.companyName) return null;
-  return p.companyName;
+  if (!p || p.status !== "approved") return null;
+  // Explicit imprint text from /reseller/branding/imprint wins. This is
+  // the full one-liner the reseller wrote ("Supported by X | email | phone").
+  // Falls back to plain companyName for resellers who haven't filled in
+  // the field yet, so old behavior is preserved during the rollout.
+  if (p.imprint && p.imprint.trim().length > 0) return p.imprint.trim();
+  if (p.companyName) return p.companyName;
+  return null;
 }
 
 /** Run a send inside an imprint scope, then always clear it. The setter is

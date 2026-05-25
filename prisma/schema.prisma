@@ -1143,6 +1143,18 @@ model ResellerProfile {
   // value regardless of active-paying count. Useful for VIP partners.
   customCommissionRate Float?   // percent, e.g. 7 means 7%
 
+  /// White-label / branding fields. When populated and the reseller has
+  /// an active white-label add-on subscription (status check + currentPeriodEnd
+  /// in the future), these values flow into the imprint footer of
+  /// receipts + transactional emails for every restaurant attributed
+  /// to this reseller. Free for the moment — Stripe paywall is Phase 2.
+  /// Receipts: receipt-lines builder reads imprint via setEmailImprint().
+  /// Phase 1 ships with imprint+logoUrl persistence; Phase 2 wires the
+  /// paid add-on subscription + custom domain handling.
+  imprint           String?  // e.g. "Supported by Partner LLC | contact@partner.com | +1 234"
+  brandLogoUrl      String?  // optional uploaded logo (S3 URL)
+  brandLoginTitle   String?  // custom title shown on the reseller-branded login page (Phase 2)
+
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
