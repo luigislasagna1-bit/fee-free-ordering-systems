@@ -2,9 +2,10 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import prisma from "@/lib/db";
 import { getSessionUser, isResellerView } from "@/lib/session";
-import { Tag, Image as ImageIcon, Link2, Globe, CheckCircle2, Sparkles } from "lucide-react";
+import { Tag, Image as ImageIcon, Link2, Globe, CheckCircle2, Sparkles, Info } from "lucide-react";
 import { SubscribeButton } from "./SubscribeButton";
 import { ManageBillingButton } from "./ManageBillingButton";
+import { WHITE_LABEL_BILLING_POLICY } from "@/lib/reseller-billing-policy";
 
 /**
  * /reseller/branding (index)
@@ -182,14 +183,75 @@ export default async function ResellerBrandingPage({
               ]}
             />
           </div>
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Charged monthly. No trial — cancel anytime from your Stripe receipt or by contacting
-            support. The custom-domain piece of Full is still in active development; subscribing
-            today gets you the email-side branding immediately + custom domain the moment it
-            ships.
-          </p>
+          <BillingPolicyPanel />
         </>
       )}
+
+      {/* Active state — show billing policy near the manage-billing button so it's
+          visible when they're considering cancel/upgrade. */}
+      {isActive && <BillingPolicyPanel />}
+    </div>
+  );
+}
+
+/**
+ * Plain-English explanation of the billing policy. Shown in both
+ * subscribed + non-subscribed states so the reseller can see exactly
+ * what they're committing to. Reads from the central policy config so
+ * if the rules change, the displayed copy automatically follows.
+ */
+function BillingPolicyPanel() {
+  const p = WHITE_LABEL_BILLING_POLICY;
+  return (
+    <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-5">
+      <div className="flex items-center gap-2 mb-3">
+        <Info className="w-4 h-4 text-gray-700" />
+        <h3 className="text-sm font-bold text-gray-900">How billing works</h3>
+      </div>
+      <ul className="space-y-2 text-xs text-gray-700 leading-relaxed">
+        <li className="flex gap-2">
+          <span className="text-gray-400">•</span>
+          <span>
+            <strong>Monthly recurring billing.</strong> Your card is charged once
+            today and then every {p.billingInterval} on the same date. Prices in {p.displayCurrency}.
+          </span>
+        </li>
+        <li className="flex gap-2">
+          <span className="text-gray-400">•</span>
+          <span>
+            <strong>Cancel anytime, no refunds.</strong> If you cancel mid-period,
+            your branding stays live through the end of the period you&apos;ve already paid for —
+            we don&apos;t issue refunds for the unused portion.
+          </span>
+        </li>
+        <li className="flex gap-2">
+          <span className="text-gray-400">•</span>
+          <span>
+            <strong>Upgrades are immediate + prorated.</strong> If you upgrade Basic →
+            Full mid-period, you&apos;re only charged the prorated difference for the days
+            remaining. Your next renewal is at the new tier&apos;s full price.
+          </span>
+        </li>
+        {!p.allowSelfServeDowngrade && (
+          <li className="flex gap-2">
+            <span className="text-gray-400">•</span>
+            <span>
+              <strong>Switching down a tier?</strong> Cancel your current subscription
+              (you&apos;ll keep it through the period you paid for), then subscribe to the
+              lower tier on the next billing cycle. This keeps the no-refund rule
+              consistent — no partial billing or credit games.
+            </span>
+          </li>
+        )}
+        <li className="flex gap-2">
+          <span className="text-gray-400">•</span>
+          <span>
+            <strong>Update payment, view invoices, or cancel</strong> any time via the
+            &ldquo;Manage billing&rdquo; button when you&apos;re subscribed — opens Stripe&apos;s secure
+            customer portal.
+          </span>
+        </li>
+      </ul>
     </div>
   );
 }
