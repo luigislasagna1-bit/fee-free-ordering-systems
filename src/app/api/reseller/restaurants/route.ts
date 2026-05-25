@@ -39,6 +39,19 @@ export async function GET(req: NextRequest) {
       currentPeriodEnd: true,
       createdAt: true,
       email: true,
+      // Active add-ons drive the per-restaurant service icons in the
+      // reseller's Restaurants list (and full detail view). Only include
+      // "active" or "trialing" — cancelled rows are noise the partner
+      // doesn't need to see. The relation is named `addOns` on
+      // Restaurant (see schema.prisma:200) — the join model itself is
+      // `RestaurantAddOn`, easy to confuse.
+      addOns: {
+        where: { status: { in: ["active", "trialing"] } },
+        select: {
+          status: true,
+          addOn: { select: { slug: true, name: true, monthlyPriceCents: true } },
+        },
+      },
     },
     orderBy: { createdAt: "desc" },
   });

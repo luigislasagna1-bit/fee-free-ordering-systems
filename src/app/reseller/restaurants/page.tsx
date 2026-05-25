@@ -27,6 +27,17 @@ export default async function ResellerRestaurantsPage() {
       currentPeriodEnd: true,
       createdAt: true,
       subscriptionPlan: { select: { name: true, price: true } },
+      // Active + trialing add-ons drive the row's service-icon column.
+      // Cancelled rows are excluded so the partner sees only what their
+      // restaurant is currently paying for. NB: relation is `addOns` on
+      // Restaurant; the model itself is `RestaurantAddOn`.
+      addOns: {
+        where: { status: { in: ["active", "trialing"] } },
+        select: {
+          status: true,
+          addOn: { select: { slug: true, name: true, monthlyPriceCents: true } },
+        },
+      },
     },
     orderBy: { createdAt: "desc" },
   });
