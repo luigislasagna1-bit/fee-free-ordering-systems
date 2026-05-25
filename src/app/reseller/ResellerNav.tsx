@@ -71,6 +71,7 @@ const groups: Group[] = [
     icon: Store,
     items: [
       { href: "/reseller/restaurants", label: "Management" },
+      { href: "/reseller/restaurants/pending", label: "Pending" },
     ],
   },
   {
@@ -194,7 +195,21 @@ export function ResellerNav() {
             {isOpen && group.items && (
               <div className="ml-4 mt-0.5 border-l border-gray-800 pl-2">
                 {group.items.map((leaf) => {
-                  const leafActive = path.startsWith(leaf.href);
+                  // Active-state rule: a leaf is active when the URL
+                  // matches its href OR is a sub-path of it. Sibling
+                  // leaves that are more-specific must win — i.e.
+                  // "/reseller/restaurants/pending" should NOT activate
+                  // "/reseller/restaurants" Management. We compute that
+                  // by checking whether any OTHER leaf has a deeper
+                  // match for the current path.
+                  const matches = path === leaf.href || path.startsWith(leaf.href + "/");
+                  const otherLonger = group.items!.some(
+                    (other) =>
+                      other.href !== leaf.href &&
+                      other.href.length > leaf.href.length &&
+                      (path === other.href || path.startsWith(other.href + "/")),
+                  );
+                  const leafActive = matches && !otherLonger;
                   return (
                     <Link
                       key={leaf.href}
