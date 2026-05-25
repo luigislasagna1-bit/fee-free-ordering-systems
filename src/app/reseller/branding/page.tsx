@@ -22,7 +22,7 @@ import { ManageBillingButton } from "./ManageBillingButton";
 export default async function ResellerBrandingPage({
   searchParams,
 }: {
-  searchParams: Promise<{ subscribed?: string }>;
+  searchParams: Promise<{ subscribed?: string; upgraded?: string }>;
 }) {
   const sp = await searchParams;
 
@@ -78,6 +78,20 @@ export default async function ResellerBrandingPage({
                 </>
               )}
               .
+            </div>
+          </div>
+        </div>
+      )}
+
+      {sp.upgraded === "1" && (
+        <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4 mb-4 flex items-start gap-3">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+          <div className="text-sm text-emerald-900">
+            <div className="font-bold mb-0.5">Tier changed.</div>
+            <div className="text-xs">
+              Your subscription has been updated. Stripe credited you for unused time on the
+              previous tier and charged the prorated difference for the new one. Next renewal
+              will be at the new rate.
             </div>
           </div>
         </div>

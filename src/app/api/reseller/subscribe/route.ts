@@ -54,6 +54,9 @@ export async function POST(req: NextRequest) {
       status: true,
       companyName: true,
       stripeCustomerId: true,
+      whiteLabelStatus: true,
+      whiteLabelTier: true,
+      whiteLabelStripeSubscriptionId: true,
       user: { select: { email: true, name: true } },
     },
   });
@@ -63,6 +66,56 @@ export async function POST(req: NextRequest) {
   }
 
   const stripe = await getStripe();
+
+  // ── TIER CHANGE (upgrade or downgrade) ─────────────────────────────
+  // If the reseller already has an active subscription, don't create a
+  // SECOND one — that double-charges them. Instead, swap the existing
+  // subscription's price item to the new tier, with proration so they
+  // get credited for unused time on the old tier + charged the diff
+  // immediately. Stripe handles the math.
+  if (
+    profile.whiteLabelStripeSubscriptionId &&
+    profile.whiteLabelStatus === "active" &&
+    profile.whiteLabelTier !== tier
+  ) {
+    try {
+      const existing = await stripe.subscriptions.retrieve(profile.whiteLabelStripeSubscriptionId);
+      const firstItem = existing.items.data[0];
+      if (!firstItem) {
+        return NextResponse.json({ error: "Existing subscription has no items" }, { status: 500 });
+      }
+      await stripe.subscriptions.update(profile.whiteLabelStripeSubscriptionId, {
+        items: [{ id: firstItem.id, price: priceId }],
+        proration_behavior: "create_prorations",
+        metadata: {
+          resellerProfileId: profile.id,
+          whiteLabelTier: tier,
+        },
+      });
+      // Webhook (customer.subscription.updated) will set
+      // whiteLabelTier=new tier on the profile via the existing
+      // handleResellerWhiteLabelEvent path.
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin;
+      return NextResponse.json({
+        url: `${baseUrl}/reseller/branding?upgraded=1`,
+        swapped: true,
+      });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error("[reseller-subscribe] tier swap failed", { err: msg });
+      return NextResponse.json({ error: `Could not change tier: ${msg}` }, { status: 500 });
+    }
+  }
+
+  // If they're trying to subscribe to the tier they already have,
+  // bounce them back without creating anything.
+  if (profile.whiteLabelStatus === "active" && profile.whiteLabelTier === tier) {
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin;
+    return NextResponse.json({
+      url: `${baseUrl}/reseller/branding`,
+      noop: true,
+    });
+  }
 
   // Lazily create the Stripe Customer the first time the reseller
   // checks out. Same pattern as the restaurant billing endpoint.
