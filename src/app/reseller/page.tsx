@@ -92,6 +92,8 @@ export default async function ResellerDashboardPage() {
       ? { count: TIER_THRESHOLDS.tier1, rate: 5 }
       : activeCount < TIER_THRESHOLDS.tier2
       ? { count: TIER_THRESHOLDS.tier2, rate: 10 }
+      : activeCount < TIER_THRESHOLDS.tier3
+      ? { count: TIER_THRESHOLDS.tier3, rate: 15 }
       : null;
 
   return (
@@ -133,17 +135,20 @@ export default async function ResellerDashboardPage() {
           <div
             className="absolute inset-y-0 left-0 bg-emerald-500 transition-all"
             style={{
-              width: `${Math.min(100, (activeCount / TIER_THRESHOLDS.tier2) * 100)}%`,
+              width: `${Math.min(100, (activeCount / TIER_THRESHOLDS.tier3) * 100)}%`,
             }}
           />
         </div>
         <div className="flex justify-between text-[11px] text-gray-500">
-          <span>0% · &lt;6</span>
+          <span>0% · &lt;5</span>
           <span className={activeCount >= TIER_THRESHOLDS.tier1 ? "font-semibold text-emerald-600" : ""}>
-            5% · 6+
+            5% · 5+
           </span>
           <span className={activeCount >= TIER_THRESHOLDS.tier2 ? "font-semibold text-emerald-600" : ""}>
-            10% · 50+
+            10% · 26+
+          </span>
+          <span className={activeCount >= TIER_THRESHOLDS.tier3 ? "font-semibold text-emerald-600" : ""}>
+            15% · 50+
           </span>
         </div>
       </div>

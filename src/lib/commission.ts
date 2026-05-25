@@ -6,13 +6,20 @@
  * webhook is a no-op.
  *
  * Rate tiers (commissions only apply to net subscription revenue):
- *   <6 active-paying restaurants  → 0%
- *   6–49                           → 5%
- *   50+                            → 10%
+ *    0–4   active-paying restaurants  → 0%
+ *    5–25  active-paying              → 5%
+ *   26–50  active-paying              → 10%
+ *    51+   active-paying              → 15%
  *
- * The rate is snapshotted at SubscriptionInvoice.paidAt — when the 6th
+ * "Active-paying" means: linked to this reseller, subscription status =
+ * "active", AND has at least one paid SubscriptionInvoice in the last 35
+ * days. In practice this is equivalent to "signed up + at least one paid
+ * add-on or plan in the current billing cycle".
+ *
+ * The rate is snapshotted at SubscriptionInvoice.paidAt — when the 5th
  * restaurant pays, that invoice and every subsequent paid invoice earn 5%.
- * Past commissions stay at the rate they were recorded with.
+ * Past commissions keep the rate they were recorded with (the snapshot is
+ * the audit record).
  *
  * Lifecycle: pending → available (after 7-day hold) → paid (after payout)
  *                  ↘ reversed (refund/chargeback)
@@ -24,11 +31,14 @@
 import prisma from "@/lib/db";
 
 export const COMMISSION_HOLD_DAYS = 7;
-export const TIER_THRESHOLDS = { tier1: 6, tier2: 50 } as const;
-export const TIER_RATES = { below: 0, tier1: 5, tier2: 10 } as const;
+/** Thresholds where each tier kicks in (inclusive lower bound). */
+export const TIER_THRESHOLDS = { tier1: 5, tier2: 26, tier3: 51 } as const;
+/** Commission rate percentage at each tier. */
+export const TIER_RATES = { below: 0, tier1: 5, tier2: 10, tier3: 15 } as const;
 
 /** Tier rate by active-paying count. Pure function — easy to unit test. */
 export function rateForActiveCount(count: number): number {
+  if (count >= TIER_THRESHOLDS.tier3) return TIER_RATES.tier3;
   if (count >= TIER_THRESHOLDS.tier2) return TIER_RATES.tier2;
   if (count >= TIER_THRESHOLDS.tier1) return TIER_RATES.tier1;
   return TIER_RATES.below;

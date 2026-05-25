@@ -30,7 +30,7 @@ export default async function PartnersPage() {
           </h1>
           <p className="text-xl text-emerald-100 mb-10 max-w-2xl mx-auto">
             Every restaurant you sign up pays a monthly subscription. You earn up to
-            10% of that — every month, for as long as they're active.
+            15% of that — every month, for as long as they're active.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -57,19 +57,30 @@ export default async function PartnersPage() {
               The more you sell, the more you earn.
             </h2>
             <p className="text-gray-600">
-              Hit 6 active paying restaurants and every one of them starts earning you commission — retroactively.
+              Hit 5 active paying restaurants and every one of them starts earning you commission — retroactively. Scale to 50+ and you triple your rate to 15%.
             </p>
           </div>
-          <div className="grid sm:grid-cols-3 gap-4">
-            <TierCard rate="0%" range="0–5 active" tone="gray" body="Building your portfolio. You're growing — keep going." />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <TierCard rate="0%" range="0–4 active" tone="gray" body="Building your portfolio. You're growing — keep going." />
             <TierCard
               rate="5%"
-              range="6–49 active"
+              range="5–25 active"
               tone="orange"
               highlight
-              body="Hit 6 restaurants and you start earning commission on every one of them — including the first 5 retroactively."
+              body="Hit 5 restaurants (each with at least one paid add-on) and you start earning commission on every one of them — retroactively."
             />
-            <TierCard rate="10%" range="50+ active" tone="green" body="Hit 50 active restaurants and your rate doubles. Power-partner tier." />
+            <TierCard
+              rate="10%"
+              range="26–50 active"
+              tone="green"
+              body="At 26 restaurants your rate doubles to 10%. Real recurring revenue territory."
+            />
+            <TierCard
+              rate="15%"
+              range="50+ active"
+              tone="green"
+              body="Cross 50 active paying restaurants and you unlock our top tier. Power-partner status."
+            />
           </div>
         </div>
       </section>
@@ -109,18 +120,18 @@ export default async function PartnersPage() {
             <EarningsTierCard
               count="10 restaurants"
               rate="5%"
-              note="Once you cross the 6-restaurant threshold, your commission rate kicks in retroactively across your whole roster."
+              note="Once you cross the 5-restaurant threshold, your commission rate kicks in retroactively across your whole roster."
             />
             <EarningsTierCard
-              count="25 restaurants"
-              rate="5%"
-              note="Still in the 5% tier — but more restaurants means more recurring revenue with the same effort."
+              count="30 restaurants"
+              rate="10%"
+              note="Cross 26 active restaurants and your rate doubles to 10%. Now you're scaling."
               highlight
             />
             <EarningsTierCard
               count="50+ restaurants"
-              rate="10%"
-              note="Hit 50 active restaurants and your rate DOUBLES. Power-partner territory."
+              rate="15%"
+              note="At 50+ active paying restaurants you unlock the top 15% tier. Power-partner territory."
             />
           </div>
 
@@ -136,10 +147,10 @@ export default async function PartnersPage() {
                     10 restaurants<br /><span className="font-normal text-gray-400">(5%)</span>
                   </th>
                   <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-bold text-emerald-700 bg-emerald-50">
-                    25 restaurants<br /><span className="font-normal text-emerald-600">(5%)</span>
+                    30 restaurants<br /><span className="font-normal text-emerald-600">(10%)</span>
                   </th>
                   <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-bold text-gray-500">
-                    50+ restaurants<br /><span className="font-normal text-gray-400">(10%)</span>
+                    50+ restaurants<br /><span className="font-normal text-gray-400">(15%)</span>
                   </th>
                 </tr>
               </thead>
@@ -167,18 +178,18 @@ export default async function PartnersPage() {
           <div className="mt-6 grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
             <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4">
               <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">Best case in the table</div>
-              <div className="text-2xl font-extrabold text-emerald-700">$1,499/mo</div>
-              <div className="text-xs text-emerald-800 mt-1">50 restaurants × all add-ons × 10% = <strong>$17,994/year</strong> recurring.</div>
+              <div className="text-2xl font-extrabold text-emerald-700">$2,249/mo</div>
+              <div className="text-xs text-emerald-800 mt-1">50 restaurants × all add-ons × 15% = <strong>$26,991/year</strong> recurring.</div>
             </div>
             <div className="rounded-xl bg-gray-50 border border-gray-200 p-4">
               <div className="text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Common scenario</div>
-              <div className="text-2xl font-extrabold text-gray-900">$74.96/mo</div>
-              <div className="text-xs text-gray-700 mt-1">25 restaurants × 3 add-ons × 5% = <strong>$899/year</strong>, on autopilot.</div>
+              <div className="text-2xl font-extrabold text-gray-900">$179.91/mo</div>
+              <div className="text-xs text-gray-700 mt-1">30 restaurants × 3 add-ons × 10% = <strong>$2,159/year</strong>, on autopilot.</div>
             </div>
           </div>
 
           <p className="text-center text-xs text-gray-500 mt-6 max-w-2xl mx-auto">
-            Commission is paid on net subscription revenue (excluding taxes, Stripe fees, refunds, and chargebacks). Marketplace per-order fees and any commissions you earn through restaurants&apos; own usage are separate from add-on subscription commission. <strong>Below 6 active paying restaurants, commission is 0%</strong> — once you cross the threshold, it kicks in retroactively across your whole roster.
+            Commission is paid on net subscription revenue (excluding taxes, Stripe fees, refunds, and chargebacks). Marketplace per-order fees and any commissions you earn through restaurants&apos; own usage are separate from add-on subscription commission. <strong>Below 5 active paying restaurants, commission is 0%</strong> — once you cross the threshold (and each restaurant has at least one paid add-on), it kicks in retroactively across your whole roster.
           </p>
         </div>
       </section>
@@ -255,8 +266,8 @@ export default async function PartnersPage() {
             />
             <Feature
               icon={<TrendingUp className="w-5 h-5 text-emerald-500" />}
-              title="Retroactive 5% on restaurant #6"
-              body="Once you hit 6 active paying restaurants, every restaurant under you starts earning 5%, not just the new one."
+              title="Retroactive at every tier"
+              body="Hit 5 restaurants — every restaurant under you starts earning 5%, not just the new one. Same retroactive jump at 26 (10%) and 50 (15%)."
             />
           </div>
         </div>
@@ -270,8 +281,15 @@ export default async function PartnersPage() {
           </h2>
           <div className="space-y-3">
             <Faq q="What counts as an 'active paying' restaurant?">
-              A restaurant whose subscription is currently <strong>active</strong> AND has paid at least one invoice in
-              the last 35 days. Trials don't count until they convert to a paid subscription.
+              A restaurant whose subscription is currently <strong>active</strong> AND has paid at least one invoice
+              (plan or paid add-on) in the last 35 days. Trials and free-only restaurants don&apos;t count toward your
+              tier until they pay for at least one add-on or plan.
+            </Faq>
+            <Faq q="How do the tiers work?">
+              Four tiers: <strong>0% (0–4 active)</strong>, <strong>5% (5–25)</strong>, <strong>10% (26–50)</strong>,
+              <strong> 15% (51+)</strong>. Each restaurant needs at least one paid add-on to count toward your tier.
+              When you cross a threshold, the new rate applies retroactively to every restaurant in your roster — not
+              just the new one.
             </Faq>
             <Faq q="When do I start earning?">
               Commissions are calculated on each paid subscription invoice your restaurants generate. There's a 7-day
@@ -389,10 +407,13 @@ function EarningsTierCard({
 }
 
 /**
- * Single row of the earnings matrix. Computes monthly commission for each
- * portfolio size (10/25/50+) given a per-restaurant add-on spend. Rates are
- * hardcoded: 5% at <50 active restaurants, 10% at 50+. Numbers update auto
- * if the constants ever change — no manual recalculation per row.
+ * Single row of the earnings matrix. Computes monthly commission across
+ * three portfolio sizes given per-restaurant add-on spend.
+ *
+ * Column rates mirror the 4-tier system but only 3 columns are shown
+ * (10 / 30 / 50+ restaurants) — 10 falls in tier1 (5%), 30 in tier2
+ * (10%), 50+ in tier3 (15%). The 0% tier (0-4 restaurants) isn't shown
+ * since those resellers don't earn commission yet.
  */
 function EarningsRow({
   scenario, scenarioDetail, perRestaurant, highlightMid,
@@ -416,15 +437,15 @@ function EarningsRow({
       </td>
       <td className={`px-4 py-4 text-right align-top ${highlightMid ? "bg-emerald-50" : ""}`}>
         <div className={`text-lg font-bold ${highlightMid ? "text-emerald-700" : "text-gray-900"}`}>
-          {row(25, 0.05)}<span className="text-xs font-normal text-gray-500">/mo</span>
+          {row(30, 0.10)}<span className="text-xs font-normal text-gray-500">/mo</span>
         </div>
         <div className={`text-xs ${highlightMid ? "text-emerald-600" : "text-gray-400"}`}>
-          {fmt(perRestaurant * 25 * 0.05 * 12)}/yr
+          {fmt(perRestaurant * 30 * 0.10 * 12)}/yr
         </div>
       </td>
       <td className="px-4 py-4 text-right align-top">
-        <div className="text-lg font-bold text-emerald-700">{row(50, 0.10)}<span className="text-xs font-normal text-gray-500">/mo</span></div>
-        <div className="text-xs text-emerald-600">{fmt(perRestaurant * 50 * 0.10 * 12)}/yr</div>
+        <div className="text-lg font-bold text-emerald-700">{row(50, 0.15)}<span className="text-xs font-normal text-gray-500">/mo</span></div>
+        <div className="text-xs text-emerald-600">{fmt(perRestaurant * 50 * 0.15 * 12)}/yr</div>
       </td>
     </tr>
   );

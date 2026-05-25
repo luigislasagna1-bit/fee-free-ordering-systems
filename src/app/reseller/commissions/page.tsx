@@ -61,7 +61,7 @@ export default async function ResellerCommissionsPage() {
               <tr>
                 <td colSpan={6} className="px-4 py-10 text-center text-gray-500 text-sm">
                   No commissions yet. You'll earn on each restaurant's paid subscription invoice once you have
-                  6 or more active paying restaurants.
+                  5 or more active paying restaurants (each with at least one paid add-on).
                 </td>
               </tr>
             )}

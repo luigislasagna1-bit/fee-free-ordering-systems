@@ -15,10 +15,11 @@ export default function PartnersApplyPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 mb-10">
-          <Tier rate="0%" range="0–5 active" tone="gray" />
-          <Tier rate="5%" range="6–49 active" tone="orange" highlight />
-          <Tier rate="10%" range="50+ active" tone="green" />
+        <div className="grid grid-cols-4 gap-2 mb-10">
+          <Tier rate="0%" range="0–4 active" tone="gray" />
+          <Tier rate="5%" range="5–25 active" tone="orange" highlight />
+          <Tier rate="10%" range="26–50 active" tone="green" />
+          <Tier rate="15%" range="50+ active" tone="green" />
         </div>
 
         <ApplyClient />

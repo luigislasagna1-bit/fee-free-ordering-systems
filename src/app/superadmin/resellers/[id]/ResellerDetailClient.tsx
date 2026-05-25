@@ -119,7 +119,7 @@ export function ResellerDetailClient({ initial }: { initial: Profile }) {
         <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700 mb-4">{error}</div>
       )}
 
-      {/* Custom commission rate — overrides the default 0/5/10% tier table when set. */}
+      {/* Custom commission rate — overrides the default 4-tier table when set. */}
       {profile.status === "approved" && (
         <div className="bg-gray-50 rounded-xl border border-gray-200 p-4 mb-4">
           <div className="flex items-center gap-2 mb-1">
@@ -127,8 +127,8 @@ export function ResellerDetailClient({ initial }: { initial: Profile }) {
             <h3 className="text-sm font-bold text-gray-900">Custom commission rate</h3>
           </div>
           <p className="text-xs text-gray-500 mb-3">
-            Leave blank to use the default tiers (0% &lt; 6, 5% 6–49, 10% 50+). Setting a value here
-            pins this reseller to that flat rate on every paid invoice going forward.
+            Leave blank to use the default tiers (0% &lt; 5, 5% 5–25, 10% 26–50, 15% 51+).
+            Setting a value here pins this reseller to that flat rate on every paid invoice going forward.
           </p>
           <div className="flex items-center gap-2 flex-wrap">
             <div className="relative">
