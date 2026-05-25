@@ -77,7 +77,12 @@ const groups: Group[] = [
     id: "sales-marketing",
     label: "Sales & Marketing",
     icon: GraduationCap,
-    comingSoon: true,
+    items: [
+      { href: "/reseller/sales/preamble", label: "Preamble" },
+      { href: "/reseller/sales/way-to-go", label: "Way to go" },
+      { href: "/reseller/sales/partner-resources", label: "Partner Resources" },
+      { href: "/reseller/sales/restaurant-resources", label: "Restaurant Resources" },
+    ],
   },
   {
     id: "branding",
