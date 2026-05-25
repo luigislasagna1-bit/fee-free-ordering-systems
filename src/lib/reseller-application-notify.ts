@@ -10,7 +10,7 @@
  * the underlying state change still succeeds; we just log and move on.
  */
 import prisma from "@/lib/db";
-import { sendResellerApplicationStatusEmail, setEmailImprint } from "@/lib/email";
+import { sendResellerApplicationStatusEmail, setEmailImprint, setEmailLogoUrl } from "@/lib/email";
 
 type Variant = "received" | "approved" | "rejected";
 
@@ -66,6 +66,10 @@ export async function notifyResellerOfApplicationChange(
   } catch (err) {
     console.error("[reseller-application-notify] failed", { resellerProfileId, variant, err });
   } finally {
+    // Defensive reset — even though we never SET imprint/logo for
+    // application-status emails, clearing is cheap insurance against
+    // module-state leakage from any prior whitelabel send.
     setEmailImprint(null);
+    setEmailLogoUrl(null);
   }
 }

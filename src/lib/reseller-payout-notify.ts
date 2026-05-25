@@ -11,7 +11,7 @@
  * Resellers can still see the new state on their dashboard.
  */
 import prisma from "@/lib/db";
-import { sendResellerPayoutNotificationEmail, setEmailImprint } from "@/lib/email";
+import { sendResellerPayoutNotificationEmail, setEmailImprint, setEmailLogoUrl } from "@/lib/email";
 
 const PAYOUT_METHOD_LABELS: Record<string, string> = {
   paypal: "PayPal",
@@ -84,5 +84,6 @@ export async function notifyResellerOfPayoutChange(
     // since we don't currently use whitelabel imprints for reseller
     // emails, but if we ever do this prevents leakage to the next send.
     setEmailImprint(null);
+    setEmailLogoUrl(null);
   }
 }

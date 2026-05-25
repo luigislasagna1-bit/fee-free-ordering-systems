@@ -28,6 +28,11 @@
 import {
   Html, Head, Preview, Body, Container, Section, Img,
 } from "@react-email/components";
+// Logo URL is pulled from email.ts module state at render time so we
+// don't have to thread the prop through every email template. See
+// `setEmailLogoUrl()` / `getCurrentImprintLogoUrl()` for the setter +
+// getter, and `notifications.ts` `withImprint()` for the scoping.
+import { getCurrentImprintLogoUrl } from "@/lib/email";
 
 export type HeaderVariant = "status" | "transactional" | "digest" | "neutral";
 
@@ -227,6 +232,29 @@ export function EmailFooter({
           lineHeight: 1.5,
         }}
       >
+        {/* Whitelabel reseller logo, when set. Pulled directly from
+            module state in email.ts rather than threaded as a prop —
+            keeps every template untouched while letting the logo
+            appear in their rendered output. Sized small (~22px tall)
+            so it complements the imprint line rather than dominating. */}
+        {(() => {
+          const logoUrl = getCurrentImprintLogoUrl();
+          if (!logoUrl) return null;
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={logoUrl}
+              alt=""
+              style={{
+                display: "block",
+                maxHeight: 22,
+                maxWidth: 120,
+                marginBottom: 6,
+                opacity: 0.85,
+              }}
+            />
+          );
+        })()}
         Powered by <strong style={{ color: COLORS.muted }}>{imprint}</strong>
         {unsubscribeUrl && (
           <>

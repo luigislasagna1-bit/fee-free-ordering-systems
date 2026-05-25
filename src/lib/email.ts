@@ -143,18 +143,29 @@ async function send({
 }
 
 /**
- * Module-scoped imprint override. Set this per-send via `setEmailImprint()`
- * (called by `src/lib/notifications.ts` when the restaurant is under a
- * whitelabel reseller) so the footer shows the reseller's brand instead
- * of "Fee Free Ordering Systems". Always cleared in a finally block so one
+ * Module-scoped imprint + logo override. Set per-send via the
+ * `setEmailImprint()` / `setEmailLogoUrl()` setters (called by
+ * `src/lib/notifications.ts` when the restaurant is under a whitelabel
+ * reseller) so the footer shows the reseller's brand instead of
+ * "Fee Free Ordering Systems". Always cleared in a finally block so one
  * send's override never leaks to the next.
  */
 let activeImprint: string | null = null;
+let activeLogoUrl: string | null = null;
 export function setEmailImprint(imprint: string | null) {
   activeImprint = imprint;
 }
+export function setEmailLogoUrl(url: string | null) {
+  activeLogoUrl = url;
+}
 function currentImprint(): string | undefined {
   return activeImprint ?? undefined;
+}
+/** Public getter — imported by `EmailFooter` so the rendered HTML can
+ *  pick up the per-send logo override without every individual email
+ *  template needing a new prop threaded through. */
+export function getCurrentImprintLogoUrl(): string | undefined {
+  return activeLogoUrl ?? undefined;
 }
 
 // Translates the canonical order-type slug ("delivery"/"pickup"/etc) for use
