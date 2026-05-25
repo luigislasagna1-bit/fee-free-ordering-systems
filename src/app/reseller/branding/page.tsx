@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { getSessionUser, isResellerView } from "@/lib/session";
 import { Tag, Image as ImageIcon, Link2, Globe, CheckCircle2, Sparkles } from "lucide-react";
 import { SubscribeButton } from "./SubscribeButton";
+import { ManageBillingButton } from "./ManageBillingButton";
 
 /**
  * /reseller/branding (index)
@@ -101,9 +102,12 @@ export default async function ResellerBrandingPage({
                 </p>
               )}
             </div>
-            {tier === "basic" && (
-              <SubscribeButton tier="full" label="Upgrade to Full ($29/mo)" />
-            )}
+            <div className="flex items-center gap-2 flex-wrap">
+              {tier === "basic" && (
+                <SubscribeButton tier="full" label="Upgrade to Full ($29/mo)" />
+              )}
+              <ManageBillingButton />
+            </div>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
