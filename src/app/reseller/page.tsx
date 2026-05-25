@@ -38,6 +38,7 @@ export default async function ResellerDashboardPage() {
     availableCents,
     pendingAgg,
     recentSignups,
+    whiteLabel,
   ] = await Promise.all([
     prisma.restaurant.count({ where: { resellerProfileId: user.resellerProfileId } }),
     prisma.restaurant.groupBy({
@@ -61,6 +62,11 @@ export default async function ResellerDashboardPage() {
         createdAt: { gte: thirtyDaysAgo },
       },
       select: { createdAt: true },
+    }),
+    // White-label subscription state — drives the past-due banner.
+    prisma.resellerProfile.findUnique({
+      where: { id: user.resellerProfileId },
+      select: { whiteLabelStatus: true, whiteLabelTier: true },
     }),
   ]);
 
@@ -98,6 +104,34 @@ export default async function ResellerDashboardPage() {
 
   return (
     <div className="max-w-5xl">
+      {/* White-label past-due banner — when the reseller's branding
+          subscription is in past_due, their imprint + logo are silently
+          NOT flowing into emails (the active-status gate in
+          notifications.ts blocks it). Surface this prominently so they
+          can update their card before customer emails go out unbranded
+          for too long. */}
+      {whiteLabel?.whiteLabelStatus === "past_due" && (
+        <div className="mb-6 rounded-xl bg-rose-50 border border-rose-200 p-4 flex items-start gap-3">
+          <Clock className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-bold text-rose-900 mb-0.5">
+              Your White-Label subscription is past due
+            </div>
+            <div className="text-xs text-rose-800 leading-relaxed">
+              Your last invoice didn&apos;t clear. Until it&apos;s paid, your imprint and logo
+              won&apos;t appear on customer emails — they&apos;ll show the default platform footer
+              instead.
+            </div>
+          </div>
+          <Link
+            href="/reseller/branding"
+            className="inline-flex items-center gap-1 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex-shrink-0 transition"
+          >
+            Fix billing
+          </Link>
+        </div>
+      )}
+
       <div className="flex items-start justify-between gap-3 mb-6 flex-wrap">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 mb-1">Dashboard</h1>
