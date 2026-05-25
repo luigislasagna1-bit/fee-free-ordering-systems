@@ -1155,6 +1155,24 @@ model ResellerProfile {
   brandLogoUrl      String?  // optional uploaded logo (S3 URL)
   brandLoginTitle   String?  // custom title shown on the reseller-branded login page (Phase 2)
 
+  /// Stripe Customer for this reseller. Created lazily the first time
+  /// the reseller starts a white-label Checkout. Reused across renewals
+  /// + future add-on subscriptions so the reseller has one cohesive
+  /// billing identity in Stripe.
+  stripeCustomerId  String?  @unique
+
+  /// White-label add-on subscription state. Two tiers:
+  ///   "basic" — imprint + logo on emails. Currently $9.99/mo.
+  ///   "full"  — basic + custom domain. Currently $29/mo.
+  /// Set when the reseller completes Stripe Checkout. Reset to null
+  /// when subscription cancels/expires. Restaurant.imprint + brandLogo
+  /// only flow into emails when whiteLabelStatus === "active".
+  whiteLabelTier              String?   // "basic" | "full" | null
+  whiteLabelStatus            String?   // "active" | "past_due" | "cancelled" | null
+  whiteLabelStripeSubscriptionId String?  @unique
+  whiteLabelCurrentPeriodEnd  DateTime?
+  whiteLabelCancelAtPeriodEnd Boolean   @default(false)
+
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 

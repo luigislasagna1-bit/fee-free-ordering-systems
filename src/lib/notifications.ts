@@ -49,17 +49,31 @@ async function resolveImprint(
     where: { id: restaurantId },
     select: {
       resellerProfile: {
-        select: { status: true, companyName: true, imprint: true, brandLogoUrl: true },
+        select: {
+          status: true,
+          companyName: true,
+          imprint: true,
+          brandLogoUrl: true,
+          whiteLabelStatus: true,
+          whiteLabelTier: true,
+        },
       },
     },
   });
   const p = restaurant?.resellerProfile;
   if (!p || p.status !== "approved") return { text: null, logoUrl: null };
 
+  // White-label flowing into emails is GATED on an active subscription.
+  // Reseller must have whiteLabelStatus="active" with a tier set
+  // (basic = imprint+logo, full = imprint+logo+custom domain). Without
+  // a sub, the imprint + logo they've configured don't render.
+  const wlActive = p.whiteLabelStatus === "active" && (p.whiteLabelTier === "basic" || p.whiteLabelTier === "full");
+  if (!wlActive) return { text: null, logoUrl: null };
+
   // Explicit imprint text from /reseller/branding/imprint wins. This is
   // the full one-liner the reseller wrote ("Supported by X | email | phone").
   // Falls back to plain companyName for resellers who haven't filled in
-  // the field yet, so old behavior is preserved during the rollout.
+  // the field yet.
   let text: string | null = null;
   if (p.imprint && p.imprint.trim().length > 0) text = p.imprint.trim();
   else if (p.companyName) text = p.companyName;

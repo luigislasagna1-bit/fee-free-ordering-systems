@@ -29,6 +29,17 @@ export async function handleSubscriptionEvent(event: Stripe.Event) {
     return;
   }
 
+  // Branch 1b: reseller white-label subscription — /api/reseller/subscribe
+  // stamps subscription_data.metadata.whiteLabelTier + resellerProfileId.
+  // Identified via metadata rather than customer-lookup because reseller
+  // stripeCustomerId lives on ResellerProfile, not Restaurant.
+  const whiteLabelTier = (sub.metadata as any)?.whiteLabelTier as string | undefined;
+  const whiteLabelResellerProfileId = (sub.metadata as any)?.resellerProfileId as string | undefined;
+  if (whiteLabelTier && whiteLabelResellerProfileId) {
+    await handleResellerWhiteLabelEvent(event, sub, whiteLabelTier, whiteLabelResellerProfileId);
+    return;
+  }
+
   const restaurant = await prisma.restaurant.findUnique({
     where: { stripeCustomerId: customerId },
     select: { id: true, email: true, name: true, defaultLanguage: true },
@@ -209,6 +220,69 @@ async function handleAddOnSubscriptionEvent(
       }
     }
   }
+}
+
+/**
+ * Reseller white-label subscription handler. Mirrors the AddOn path but
+ * targets ResellerProfile instead of Restaurant. Sub identified by
+ * metadata.resellerProfileId + metadata.whiteLabelTier (set in
+ * /api/reseller/subscribe).
+ *
+ * State transitions we care about:
+ *   created/updated.status=active   → set tier + status="active"
+ *   created/updated.status=past_due → set status="past_due" (keep tier)
+ *   deleted                          → clear tier + status="cancelled"
+ *
+ * Once status != "active", the imprint + logo stop flowing into emails
+ * (gate is in notifications.ts resolveImprint, added in a separate edit).
+ */
+async function handleResellerWhiteLabelEvent(
+  event: Stripe.Event,
+  sub: Stripe.Subscription,
+  whiteLabelTier: string,
+  resellerProfileId: string,
+) {
+  const profile = await prisma.resellerProfile.findUnique({
+    where: { id: resellerProfileId },
+    select: { id: true },
+  });
+  if (!profile) {
+    console.warn(`[stripe] white-label event for unknown reseller ${resellerProfileId}`);
+    return;
+  }
+
+  if (event.type === "customer.subscription.deleted") {
+    await prisma.resellerProfile.update({
+      where: { id: resellerProfileId },
+      data: {
+        whiteLabelTier: null,
+        whiteLabelStatus: "cancelled",
+        whiteLabelStripeSubscriptionId: null,
+        whiteLabelCancelAtPeriodEnd: false,
+      },
+    });
+    return;
+  }
+
+  // created / updated → upsert state
+  const status = mapStripeStatus(sub.status);
+  // Period end: newer Stripe API versions put it inside items.data[0].
+  // Read both to be safe across versions.
+  const periodEndSec =
+    (sub as any).current_period_end ??
+    (sub as any).items?.data?.[0]?.current_period_end;
+  await prisma.resellerProfile.update({
+    where: { id: resellerProfileId },
+    data: {
+      whiteLabelTier: whiteLabelTier === "basic" || whiteLabelTier === "full" ? whiteLabelTier : null,
+      whiteLabelStatus: status,
+      whiteLabelStripeSubscriptionId: sub.id,
+      whiteLabelCurrentPeriodEnd: periodEndSec
+        ? new Date(periodEndSec * 1000)
+        : null,
+      whiteLabelCancelAtPeriodEnd: (sub as any).cancel_at_period_end ?? false,
+    },
+  });
 }
 
 /** Map Stripe's subscription.status enum onto our local string set. */

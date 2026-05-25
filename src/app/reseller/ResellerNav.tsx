@@ -89,6 +89,7 @@ const groups: Group[] = [
     label: "Branding",
     icon: Palette,
     items: [
+      { href: "/reseller/branding", label: "Overview" },
       { href: "/reseller/branding/imprint", label: "Imprint" },
       { href: "/reseller/branding/logo", label: "Logo" },
       { href: "/reseller/branding/generic-domain", label: "Generic domain" },

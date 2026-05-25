@@ -25,9 +25,19 @@ export default async function ResellerLogoPage() {
 
   const profile = await prisma.resellerProfile.findUnique({
     where: { id: user.resellerProfileId },
-    select: { status: true, brandLogoUrl: true },
+    select: {
+      status: true,
+      brandLogoUrl: true,
+      whiteLabelStatus: true,
+      whiteLabelTier: true,
+    },
   });
   if (profile?.status !== "approved") redirect("/reseller/holding");
+
+  // Paywall — needs an active White-Label subscription (basic or full).
+  const wlActive = profile.whiteLabelStatus === "active" &&
+    (profile.whiteLabelTier === "basic" || profile.whiteLabelTier === "full");
+  if (!wlActive) redirect("/reseller/branding");
 
   return <LogoClient initialLogoUrl={profile.brandLogoUrl ?? null} />;
 }
