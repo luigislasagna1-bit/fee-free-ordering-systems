@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     namespace = "com.feefreeordering.kitchen"
@@ -51,8 +52,18 @@ dependencies {
     // Supports: TSP143III/IV, TSP100ECO, TSP650II, TSP700II, TSP800II,
     //           mC-Print2/3, mPOP, SM-S210i, BSC10II, and more
     implementation 'com.starmicronics:stario:2.13.0'
-    // Coroutines for clean async print handling alongside Star SDK
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation 'com.starmicronics:starioextension:1.17.0'
+    // StarXpand SDK (stario10) — Star's MODERN recommended SDK.
+    // Classic stario was exhaustively tested and proven non-functional
+    // for this printer. stario10 uses a different connection mechanism
+    // (StarConnectionSettings + StarPrinter) and is what Star's own
+    // utilities use under the hood. Kotlin-coroutine-based.
+    implementation 'com.starmicronics:stario10:1.9.0'
+    // Coroutines runtime — required by stario10. The -android variant
+    // provides the Main dispatcher. We use runBlocking from a Kotlin
+    // bridge file to expose suspend fns to Java.
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.24'
 }
 
 apply from: 'capacitor.build.gradle'

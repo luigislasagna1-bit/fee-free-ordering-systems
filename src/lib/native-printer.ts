@@ -42,13 +42,43 @@ declare global {
   }
 }
 
+/** A single styled line in a structured receipt. Sent to Star printers
+ *  via the StarXpand bitmap renderer, which produces a properly
+ *  formatted receipt regardless of the printer's emulation mode. */
+export type ReceiptLine =
+  | {
+      kind: "text";
+      text: string;
+      bold?: boolean;
+      doubleSize?: boolean;
+      align?: "left" | "center" | "right";
+    }
+  | {
+      kind: "twoCol";
+      left: string;
+      right: string;
+      bold?: boolean;
+      doubleSize?: boolean;
+    }
+  | { kind: "divider" }
+  | { kind: "feed"; count: number }
+  | { kind: "cut" };
+
 export interface NativePrintOpts {
   /** Printer IP on the local network, e.g. "192.168.1.50". */
   ip: string;
   /** TCP port. Default 9100 (RAW print). */
   port?: number;
-  /** ESC/POS payload, base64-encoded. */
+  /** ESC/POS payload, base64-encoded. Used as fallback for non-Star
+   *  printers (Epson, Bixolon, etc.) via raw TCP. */
   bytes: string;
+  /** Structured receipt for Star printers. Native plugin prefers this
+   *  when present — bitmap-renders via StarXpand SDK, which is the
+   *  only path that reliably prints on Star TSP-series printers. */
+  lines?: ReceiptLine[];
+  /** Paper width in dots. Default 576 (80mm). 384 for 58mm paper.
+   *  Determines bitmap rendering width on the native side. */
+  paperWidthDots?: number;
   /** Connection + send timeout. Default 5000ms. */
   timeoutMs?: number;
 }

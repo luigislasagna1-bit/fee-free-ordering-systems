@@ -727,10 +727,21 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     if (!cfg) throw new Error("Direct printer not configured");
     const res = await fetch(`/api/kitchen/print-job/${orderId}?width=${cfg.paperWidth}`);
     if (!res.ok) throw new Error("Failed to fetch print job");
-    const { bytes } = await res.json();
-    if (!bytes) throw new Error("Empty print payload");
+    const { bytes, lines } = await res.json();
+    if (!bytes && !lines) throw new Error("Empty print payload");
+    // 80mm paper = 576 dots, 58mm = 384. Used by StarXpand bitmap renderer.
+    const paperWidthDots = cfg.paperWidth === 58 ? 384 : 576;
     try {
-      await nativePrint({ ip: cfg.ip, port: cfg.port, bytes, timeoutMs: 8000 });
+      await nativePrint({
+        ip: cfg.ip,
+        port: cfg.port,
+        bytes,
+        lines,
+        paperWidthDots,
+        // Bitmap render + StarXpand connection + print can take ~5-10s
+        // on first run; give it headroom so we don't timeout-then-print.
+        timeoutMs: 15000,
+      });
       toast.success("Receipt printed ✓");
     } catch (err: any) {
       const reason = (err?.code || err?.message || "") as string;
