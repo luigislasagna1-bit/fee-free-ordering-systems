@@ -90,6 +90,19 @@ export async function POST(req: NextRequest) {
   const ownerName: string = String(body.ownerName ?? "").trim().slice(0, 100);
   const ownerEmail: string = String(body.ownerEmail ?? "").trim().toLowerCase().slice(0, 254);
   const phone: string | null = body.phone ? String(body.phone).trim().slice(0, 30) : null;
+  // Optional address fields — captured upfront when the reseller fills
+  // them in (mirrors GloriaFood PartnerNet's Add Restaurant form) so the
+  // restaurant has working address data from day one. Restaurant owner
+  // can still edit anything in /admin/settings later.
+  const address: string | null = body.address ? String(body.address).trim().slice(0, 200) : null;
+  const city: string | null = body.city ? String(body.city).trim().slice(0, 100) : null;
+  const state: string | null = body.state ? String(body.state).trim().slice(0, 100) : null;
+  const zip: string | null = body.zip ? String(body.zip).trim().slice(0, 20) : null;
+  // Country defaults to "US" matching the schema default. Restricted to
+  // a 2-letter ISO code; longer values get trimmed.
+  const country: string = body.country
+    ? String(body.country).trim().slice(0, 2).toUpperCase() || "US"
+    : "US";
 
   if (restaurantName.length < 2) return NextResponse.json({ error: "Restaurant name required" }, { status: 400 });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ownerEmail)) return NextResponse.json({ error: "Invalid owner email" }, { status: 400 });
@@ -123,6 +136,11 @@ export async function POST(req: NextRequest) {
       slug,
       subdomain: slug,
       phone,
+      address,
+      city,
+      state,
+      zip,
+      country,
       email: ownerEmail,
       subscriptionStatus: "trialing",
       trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   Plus, ExternalLink, Loader2, Eye, X,
   CreditCard, Globe, Link2, Megaphone, Smartphone, Store,
@@ -75,11 +76,31 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
   const [showInvite, setShowInvite] = useState(false);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+
+  // Auto-open the Add Restaurant modal when arriving with ?add=1.
+  // Lets the dashboard CTA (and any other surface) deep-link straight
+  // into the create flow without needing a duplicate modal component.
+  useEffect(() => {
+    if (searchParams?.get("add") === "1") {
+      setShowInvite(true);
+    }
+  }, [searchParams]);
+  // Expanded form fields mirror GloriaFood/PartnerNet's Add Restaurant
+  // dialog — capture address upfront so the restaurant has working
+  // delivery + receipt data on day one. Owner can edit anything in
+  // /admin/settings later. All address fields are optional except
+  // the restaurant name + owner email.
   const [inviteForm, setInviteForm] = useState({
     restaurantName: "",
     ownerName: "",
     ownerEmail: "",
     phone: "",
+    country: "US",
+    state: "",
+    city: "",
+    zip: "",
+    address: "",
   });
 
   async function submitInvite() {
@@ -100,7 +121,10 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
       const list = await fetch("/api/reseller/restaurants").then((r) => r.json());
       setRestaurants(list.restaurants ?? []);
       setShowInvite(false);
-      setInviteForm({ restaurantName: "", ownerName: "", ownerEmail: "", phone: "" });
+      setInviteForm({
+        restaurantName: "", ownerName: "", ownerEmail: "", phone: "",
+        country: "US", state: "", city: "", zip: "", address: "",
+      });
     } catch {
       setError("Could not send invite");
     } finally {
@@ -141,7 +165,7 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
           onClick={() => setShowInvite(true)}
           className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
         >
-          <Plus className="w-4 h-4" /> Invite restaurant
+          <Plus className="w-4 h-4" /> Add restaurant
         </button>
       </div>
 
@@ -166,8 +190,8 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
             {restaurants.length === 0 && (
               <tr>
                 <td colSpan={5} className="px-4 py-10 text-center text-sm text-gray-500">
-                  No restaurants yet. Click "Invite restaurant" to add your first one — or share your referral
-                  link from the dashboard.
+                  No restaurants yet. Click &quot;Add restaurant&quot; to set up your first one — or share your referral
+                  link from the dashboard to let restaurants sign themselves up.
                 </td>
               </tr>
             )}
@@ -235,18 +259,19 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
 
       {showInvite && (
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+          <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-gray-900">Invite a restaurant</h2>
+              <h2 className="text-lg font-bold text-gray-900">Add a restaurant</h2>
               <button onClick={() => setShowInvite(false)} className="text-gray-400 hover:text-gray-600">
                 <X className="w-5 h-5" />
               </button>
             </div>
             <p className="text-sm text-gray-500 mb-4">
-              We'll create the account and email the owner a link to set their password.
+              We&apos;ll create the account, attribute it to you, and email the owner a link to set their password.
+              Use this to set up clients yourself or to create a test account.
             </p>
             <div className="space-y-3">
-              <Field label="Restaurant name">
+              <Field label="Restaurant name *">
                 <input
                   type="text"
                   value={inviteForm.restaurantName}
@@ -254,23 +279,7 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
-              <Field label="Owner name">
-                <input
-                  type="text"
-                  value={inviteForm.ownerName}
-                  onChange={(e) => setInviteForm({ ...inviteForm, ownerName: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                />
-              </Field>
-              <Field label="Owner email">
-                <input
-                  type="email"
-                  value={inviteForm.ownerEmail}
-                  onChange={(e) => setInviteForm({ ...inviteForm, ownerEmail: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                />
-              </Field>
-              <Field label="Phone (optional)">
+              <Field label="Restaurant phone (optional)">
                 <input
                   type="text"
                   value={inviteForm.phone}
@@ -278,6 +287,86 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
+
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Owner name">
+                  <input
+                    type="text"
+                    value={inviteForm.ownerName}
+                    onChange={(e) => setInviteForm({ ...inviteForm, ownerName: e.target.value })}
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  />
+                </Field>
+                <Field label="Owner email *">
+                  <input
+                    type="email"
+                    value={inviteForm.ownerEmail}
+                    onChange={(e) => setInviteForm({ ...inviteForm, ownerEmail: e.target.value })}
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  />
+                </Field>
+              </div>
+
+              <div className="border-t border-gray-100 pt-3">
+                <p className="text-xs text-gray-500 mb-2">
+                  Address (optional) — saves the owner from filling this in during their setup wizard.
+                </p>
+                <Field label="Street address">
+                  <input
+                    type="text"
+                    value={inviteForm.address}
+                    onChange={(e) => setInviteForm({ ...inviteForm, address: e.target.value })}
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  />
+                </Field>
+                <div className="grid grid-cols-2 gap-3 mt-2">
+                  <Field label="City">
+                    <input
+                      type="text"
+                      value={inviteForm.city}
+                      onChange={(e) => setInviteForm({ ...inviteForm, city: e.target.value })}
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                    />
+                  </Field>
+                  <Field label="State / Province">
+                    <input
+                      type="text"
+                      value={inviteForm.state}
+                      onChange={(e) => setInviteForm({ ...inviteForm, state: e.target.value })}
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                    />
+                  </Field>
+                </div>
+                <div className="grid grid-cols-2 gap-3 mt-2">
+                  <Field label="ZIP / Postal code">
+                    <input
+                      type="text"
+                      value={inviteForm.zip}
+                      onChange={(e) => setInviteForm({ ...inviteForm, zip: e.target.value })}
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                    />
+                  </Field>
+                  <Field label="Country">
+                    <select
+                      value={inviteForm.country}
+                      onChange={(e) => setInviteForm({ ...inviteForm, country: e.target.value })}
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"
+                    >
+                      <option value="US">United States</option>
+                      <option value="CA">Canada</option>
+                      <option value="GB">United Kingdom</option>
+                      <option value="AU">Australia</option>
+                      <option value="IE">Ireland</option>
+                      <option value="NZ">New Zealand</option>
+                      <option value="FR">France</option>
+                      <option value="DE">Germany</option>
+                      <option value="ES">Spain</option>
+                      <option value="IT">Italy</option>
+                      <option value="PT">Portugal</option>
+                    </select>
+                  </Field>
+                </div>
+              </div>
             </div>
             <div className="flex gap-2 mt-5">
               <button
@@ -286,7 +375,7 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
                 className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition disabled:opacity-50"
               >
                 {busy === "invite" && <Loader2 className="w-4 h-4 animate-spin" />}
-                Send invite
+                Add restaurant
               </button>
               <button
                 onClick={() => setShowInvite(false)}
