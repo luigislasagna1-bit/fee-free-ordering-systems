@@ -1,10 +1,10 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import dynamic from "next/dynamic";
 import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { haversineKm } from "@/lib/geocode";
 import { ComingSoonPlaceholder } from "@/components/admin/reports/ComingSoonPlaceholder";
+import { HeatmapLoader } from "./HeatmapLoader";
 
 /**
  * /admin/reports/online-ordering/heatmap
@@ -30,13 +30,9 @@ import { ComingSoonPlaceholder } from "@/components/admin/reports/ComingSoonPlac
  * is honest about "this populates going forward."
  */
 
-// Leaflet pokes at window/document on import; dynamic + ssr:false
-// keeps the RSC tree clean. The fallback is the placeholder text so
-// the layout doesn't jump while the bundle loads.
-const HeatmapClient = dynamic(
-  () => import("./HeatmapClient").then((m) => m.HeatmapClient),
-  { ssr: false, loading: () => <div className="w-full h-[600px] rounded-xl bg-gray-50 flex items-center justify-center text-sm text-gray-400">Loading map…</div> },
-);
+// Leaflet pokes at window/document on import; the lazy-import +
+// ssr:false lives inside HeatmapLoader (a Client Component) because
+// Next 16 forbids `dynamic(..., { ssr: false })` in Server Components.
 
 export default async function HeatmapReportPage({
   searchParams,
@@ -129,7 +125,7 @@ export default async function HeatmapReportPage({
       </header>
 
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 mb-4">
-        <HeatmapClient
+        <HeatmapLoader
           restaurantLat={restaurant.lat}
           restaurantLng={restaurant.lng}
           restaurantName={restaurant.name}
