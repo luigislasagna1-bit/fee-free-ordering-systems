@@ -43,6 +43,12 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
   const [verifying, setVerifying] = useState(false);
   const [dnsRecords, setDnsRecords] = useState<DnsRecord[] | null>(null);
   const [disconnecting, setDisconnecting] = useState(false);
+  // Pre-flight warning modal. Click "Connect" shows the modal; only
+  // when the user confirms do we actually fire the API call.
+  // Prevents accidental DNS takedowns of the restaurant's existing
+  // website. They have to click through a clear warning explaining
+  // what's about to happen.
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const liveUrl =
     initial.customDomain && customStatus === "verified"
@@ -337,7 +343,7 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
               className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
             <button
-              onClick={connectCustom}
+              onClick={() => setShowConfirm(true)}
               disabled={connecting || !customDomain}
               className="bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition disabled:opacity-50 text-sm flex items-center gap-2 justify-center min-w-[100px]"
             >
@@ -440,6 +446,91 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
           </div>
         )}
       </section>
+
+      {/* Pre-flight confirmation modal — shown after the user clicks
+          Connect but BEFORE we fire the Vercel API call. Restaurant
+          owners often don't realize that pointing a domain at us means
+          the domain stops pointing wherever it currently points (e.g.
+          an existing WordPress / Wix / Square site goes offline). The
+          modal forces an explicit acknowledgment of this trade-off
+          + reassures them that email is unaffected.
+
+          Plain fixed-position overlay; no portal lib needed. Backdrop
+          click cancels; Esc-to-close handled by the X button only
+          for simplicity. */}
+      {showConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => !connecting && setShowConfirm(false)}>
+          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-start gap-3 mb-4">
+              <div className="w-10 h-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h2 className="text-lg font-bold text-gray-900">Before we connect this domain</h2>
+                <p className="text-xs text-gray-500 mt-0.5">Heads up — connecting <code className="font-mono text-gray-700 bg-gray-100 px-1 rounded">{customDomain}</code> means:</p>
+              </div>
+            </div>
+
+            <ul className="space-y-2.5 text-sm text-gray-700 mb-5">
+              <li className="flex gap-2">
+                <span className="text-amber-500 flex-shrink-0">⚠️</span>
+                <span>
+                  <strong>If this domain currently points to another website</strong> (your old
+                  ordering site, a WordPress page, a Squarespace site, etc.), that site will go
+                  offline within 5-30 minutes as DNS propagates. You&apos;ll need to update DNS
+                  records at your registrar — we&apos;ll give you the exact records to add.
+                </span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-emerald-500 flex-shrink-0">✓</span>
+                <span>
+                  <strong>Your email is safe.</strong> If you have email on this domain
+                  (e.g. <code className="font-mono text-gray-600 bg-gray-100 px-1 rounded">orders@{customDomain || "yourdomain.com"}</code>),
+                  it keeps working. We only update the records that route web traffic — not the
+                  ones that route email.
+                </span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-emerald-500 flex-shrink-0">✓</span>
+                <span>
+                  <strong>SSL is included.</strong> We auto-provision a free Let&apos;s Encrypt
+                  certificate the moment DNS verifies. Nothing to install.
+                </span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-gray-400 flex-shrink-0">ℹ️</span>
+                <span className="text-gray-600">
+                  Already on Vercel for another project? Remove it from there first or we&apos;ll
+                  get a &ldquo;domain already in use&rdquo; error.
+                </span>
+              </li>
+            </ul>
+
+            <div className="flex gap-2 justify-end">
+              <button
+                type="button"
+                onClick={() => setShowConfirm(false)}
+                disabled={connecting}
+                className="px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 rounded-lg transition disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  setShowConfirm(false);
+                  await connectCustom();
+                }}
+                disabled={connecting}
+                className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg transition disabled:opacity-50 inline-flex items-center gap-2"
+              >
+                {connecting && <Loader2 className="w-4 h-4 animate-spin" />}
+                Yes, connect it
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
