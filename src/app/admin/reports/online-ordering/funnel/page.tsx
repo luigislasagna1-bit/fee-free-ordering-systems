@@ -33,14 +33,19 @@ import { Info } from "lucide-react";
  */
 const FUNNEL_STEPS = [
   { id: "visit",          label: "Visited order page",   wired: true },
-  { id: "menu_browsed",   label: "Browsed the menu",     wired: false },
-  { id: "item_added",     label: "Added an item to cart", wired: false },
-  { id: "checkout_open",  label: "Opened checkout",      wired: false },
-  { id: "checkout_info",  label: "Filled customer info", wired: false },
-  { id: "payment_open",   label: "Reached payment",      wired: false },
-  // order_placed is wired via OrderPlacedTracker on the confirmation
-  // page — fires once per successful order. The middle steps still
-  // need cart/checkout instrumentation (next iteration).
+  // scroll past 200px on the order page
+  { id: "menu_browsed",   label: "Browsed the menu",     wired: true },
+  // cart.length goes 0 → 1+
+  { id: "item_added",     label: "Added an item to cart", wired: true },
+  // checkout modal opens (post-cart-review)
+  { id: "checkout_open",  label: "Opened checkout",      wired: true },
+  // name + phone both validated client-side
+  { id: "checkout_info",  label: "Filled customer info", wired: true },
+  // fired right before navigating to /payment for card orders only
+  // (cash / in-person orders skip the payment step entirely)
+  { id: "payment_open",   label: "Reached payment",      wired: true },
+  // OrderPlacedTracker on the confirmation page — fires once per
+  // successful order regardless of payment method.
   { id: "order_placed",   label: "Placed an order",      wired: true },
 ] as const;
 
@@ -90,14 +95,15 @@ export default async function FunnelReportPage({
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
           <FunnelBars steps={stepCounts} />
 
-          <div className="mt-5 pt-4 border-t border-gray-100 bg-amber-50/40 -m-5 mt-5 p-4 rounded-b-xl">
-            <div className="flex items-start gap-2 text-xs text-amber-800">
+          <div className="mt-5 pt-4 border-t border-gray-100 bg-emerald-50/40 -m-5 mt-5 p-4 rounded-b-xl">
+            <div className="flex items-start gap-2 text-xs text-emerald-800">
               <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
               <p>
-                Visit-to-order conversion is fully tracked. The intermediate
-                steps (menu browse, item add, checkout open, info filled,
-                payment open) are wired in the order page in the next iteration
-                — until then they show as 0.
+                All seven funnel steps are tracked. Note: &ldquo;Reached payment&rdquo;
+                fires only on card-payment orders; cash and in-person orders
+                skip straight to &ldquo;Placed an order&rdquo;, so the drop between
+                those last two steps is expected for restaurants with mixed
+                payment methods.
               </p>
             </div>
           </div>

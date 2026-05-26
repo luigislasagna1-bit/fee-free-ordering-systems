@@ -24,6 +24,10 @@
     {
       "path": "/api/cron/auto-complete-orders",
       "schedule": "15 * * * *"
+    },
+    {
+      "path": "/api/cron/reports-snapshot",
+      "schedule": "0 3 * * *"
     }
   ]
 }

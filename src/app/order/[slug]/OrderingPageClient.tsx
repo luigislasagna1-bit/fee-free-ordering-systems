@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect, useCallback } from "react";
+import { trackEvent } from "@/lib/visit-tracker";
 import {
   ShoppingCart, MapPin, Phone, Clock, Plus, Minus, X,
   AlertCircle, Tag, Loader2, ChevronDown, Star, Info, Calendar,
@@ -331,6 +332,58 @@ export function OrderingPageClient({
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
   const [tipPercent, setTipPercent] = useState<number>(0); // 0/10/15/20 or custom amount
+
+  // ── Reports funnel-step tracking ─────────────────────────────────────
+  //
+  // PURE SIDE EFFECTS — these useEffect blocks observe existing state
+  // and fire fire-and-forget /api/track/event calls. trackEvent never
+  // throws (catches internally) and the checkout/order logic is NOT
+  // touched. If any of this code is buggy, the worst case is missing
+  // analytics rows — the user can still place orders normally.
+  //
+  // Each step fires at most ONCE per session. The `firedSteps` ref
+  // stores which steps have already been logged so re-renders don't
+  // duplicate.
+  const firedSteps = useRef(new Set<string>());
+  const fireStep = useCallback((step: "menu_browsed" | "item_added" | "checkout_open" | "checkout_info" | "payment_open") => {
+    if (firedSteps.current.has(step)) return;
+    firedSteps.current.add(step);
+    trackEvent({ restaurantId: restaurant.id, step });
+  }, [restaurant.id]);
+
+  // menu_browsed — fire on first meaningful scroll. 200px past the top
+  // is a heuristic for "the customer engaged with the menu, not just
+  // bounced." Listener self-removes once fired to avoid wasted work.
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.scrollY > 200) {
+        fireStep("menu_browsed");
+        window.removeEventListener("scroll", onScroll);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [fireStep]);
+
+  // item_added — first time cart goes from 0 → 1+.
+  useEffect(() => {
+    if (cart.length > 0) fireStep("item_added");
+  }, [cart.length, fireStep]);
+
+  // checkout_open — when the checkout modal opens (post-cart-review).
+  useEffect(() => {
+    if (checkoutOpen) fireStep("checkout_open");
+  }, [checkoutOpen, fireStep]);
+
+  // checkout_info — once name + phone are minimally valid. Lightweight
+  // validation matches the server's required fields without redoing
+  // the regex (saves needing to import a validator).
+  useEffect(() => {
+    if (customerInfo.name.trim().length >= 2 && customerInfo.phone.trim().length >= 7) {
+      fireStep("checkout_info");
+    }
+  }, [customerInfo.name, customerInfo.phone, fireStep]);
+  // ────────────────────────────────────────────────────────────────────
 
   // Delivery-zone resolution for the customer's address.
   const deliveryZones: ZoneLike[] = (restaurant.deliveryZones ?? []) as ZoneLike[];
@@ -690,6 +743,11 @@ export function OrderingPageClient({
       if (!orderRes.ok) throw new Error(orderData.error || tT("orderFailed"));
 
       if (customerInfo.paymentMethod === "card" && cardPaymentEnabled) {
+        // Reports funnel — fire payment_open just before we navigate
+        // to the payment screen. Fires on card orders only; cash /
+        // in-person orders skip straight to confirmation and never
+        // see a payment surface, so this step doesn't apply to them.
+        fireStep("payment_open");
         // Create payment intent and go to payment page
         const piRes = await fetch("/api/public/payment-intent", {
           method: "POST",
