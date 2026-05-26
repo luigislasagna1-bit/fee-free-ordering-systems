@@ -114,7 +114,15 @@ export async function extractMenuWithClaude(pdfBuffer: Buffer): Promise<Extracte
 
   const response = await client.messages.create({
     model: MODEL,
-    max_tokens: 8000,
+    // 32k tokens is enough for ~600 menu items. The old 8k cap was
+    // truncating the tool-use JSON mid-output on big menus, which
+    // surfaced as "Claude returned malformed extraction" + a silent
+    // fall-through to the regex parser (useless on photo-heavy
+    // menus). Confirmed by Luigi's UAT 2026-05-26 against a 60-page
+    // / ~200-item Italian menu that returned 0 items at the old cap.
+    // Claude Sonnet 4.5 supports up to 64k; 32k keeps latency
+    // bounded while accommodating realistic huge menus.
+    max_tokens: 32000,
     tools: [TOOL_DEFINITION],
     tool_choice: { type: "tool", name: "save_menu_extraction" },
     system: SYSTEM_PROMPT,
@@ -139,18 +147,35 @@ export async function extractMenuWithClaude(pdfBuffer: Buffer): Promise<Extracte
     ],
   });
 
+  // Diagnostic: if Claude hit max_tokens we want a clear log line so
+  // we can correlate failed UAT uploads to truncation rather than
+  // chasing phantom "Claude is broken" reports. We DON'T throw on
+  // max_tokens — Claude often gets through 80%+ of the items before
+  // truncating; partial extraction is far better than zero.
+  if (response.stop_reason === "max_tokens") {
+    console.warn(
+      "[menu-extractor] Claude hit max_tokens — extraction may be incomplete. " +
+      "Input usage:", response.usage,
+    );
+  }
+
   // Find the tool_use block in the response. With tool_choice forced, Claude
   // should always produce one — but defensive parsing in case Claude refuses.
   const toolBlock = response.content.find(
     (block): block is Anthropic.ToolUseBlock => block.type === "tool_use" && block.name === "save_menu_extraction"
   );
   if (!toolBlock) {
-    throw new Error("Claude did not call the extraction tool");
+    throw new Error(
+      `Claude did not call the extraction tool (stop_reason=${response.stop_reason ?? "unknown"}). ` +
+      "If the menu is very large, try uploading a smaller PDF or splitting it.",
+    );
   }
 
   const input = toolBlock.input as { categories?: ExtractedCategory[] };
   if (!input.categories || !Array.isArray(input.categories)) {
-    throw new Error("Claude returned malformed extraction (no categories array)");
+    throw new Error(
+      `Claude returned malformed extraction (no categories array; stop_reason=${response.stop_reason ?? "unknown"})`,
+    );
   }
 
   // Sanitize: drop empty categories, trim names/descriptions. Items with
