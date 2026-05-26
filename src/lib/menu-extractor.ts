@@ -112,16 +112,24 @@ export async function extractMenuWithClaude(pdfBuffer: Buffer): Promise<Extracte
 
   const pdfBase64 = pdfBuffer.toString("base64");
 
-  const response = await client.messages.create({
+  // Streaming is REQUIRED by the Anthropic SDK when max_tokens is
+  // high enough that the request could theoretically run >10 min.
+  // Our bumped 32k cap crosses that threshold, so we use
+  // client.messages.stream(...).finalMessage() which gives us the
+  // same shape as create() but tells the API to stream tokens
+  // server-side (we still wait for the complete result client-side
+  // before parsing). Confirmed via Anthropic's 2026-05-26 error
+  // surfaced during UAT: "Streaming is required for operations that
+  // may take longer than 10 minutes."
+  //
+  // 32k tokens is enough for ~600 menu items. The old 8k cap was
+  // truncating the tool-use JSON mid-output on big menus, which
+  // surfaced as "Claude returned malformed extraction" + a silent
+  // fall-through to the regex parser (useless on photo-heavy
+  // menus). Claude Sonnet 4.5 supports up to 64k; 32k keeps
+  // latency bounded while accommodating realistic huge menus.
+  const stream = client.messages.stream({
     model: MODEL,
-    // 32k tokens is enough for ~600 menu items. The old 8k cap was
-    // truncating the tool-use JSON mid-output on big menus, which
-    // surfaced as "Claude returned malformed extraction" + a silent
-    // fall-through to the regex parser (useless on photo-heavy
-    // menus). Confirmed by Luigi's UAT 2026-05-26 against a 60-page
-    // / ~200-item Italian menu that returned 0 items at the old cap.
-    // Claude Sonnet 4.5 supports up to 64k; 32k keeps latency
-    // bounded while accommodating realistic huge menus.
     max_tokens: 32000,
     tools: [TOOL_DEFINITION],
     tool_choice: { type: "tool", name: "save_menu_extraction" },
@@ -146,6 +154,7 @@ export async function extractMenuWithClaude(pdfBuffer: Buffer): Promise<Extracte
       },
     ],
   });
+  const response = await stream.finalMessage();
 
   // Diagnostic: if Claude hit max_tokens we want a clear log line so
   // we can correlate failed UAT uploads to truncation rather than
