@@ -104,6 +104,35 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // ─── Pre-flight page count check ────────────────────────────────────
+  // Anthropic's PDF API has a HARD 100-page limit. A bigger PDF gets
+  // rejected at the API layer with an unhelpful error, we fall through
+  // to regex, regex returns 0 items on a photo-heavy menu, and the
+  // user sees "No menu items detected" with no clue that the real
+  // problem is page count. Confirmed by Luigi's UAT 2026-05-26:
+  // 125-page menu silently failed three different times.
+  //
+  // We count pages BEFORE the expensive Claude call so the error
+  // message is specific + actionable: "split your PDF and import the
+  // halves separately."
+  let pageCount: number | null = null;
+  try {
+    const { getDocumentProxy } = await import("unpdf");
+    const doc = await getDocumentProxy(new Uint8Array(buffer));
+    pageCount = doc.numPages;
+  } catch {
+    // Couldn't parse page count — proceed anyway, Claude will reject if too big.
+  }
+  if (pageCount !== null && pageCount > 100) {
+    return NextResponse.json(
+      {
+        error:
+          `Your PDF has ${pageCount} pages. Our menu reader can handle up to 100 pages at a time (we use Anthropic Claude under the hood, which caps PDFs at 100 pages). Please split your menu into smaller files and import each part separately — most restaurants find this works well: one file for food, one for drinks, etc. Free PDF splitters like smallpdf.com or ilovepdf.com take ~10 seconds.`,
+      },
+      { status: 422 },
+    );
+  }
+
   // ─── Try Claude first ───────────────────────────────────────────────
   let categories: ExtractedCategory[] | null = null;
   let method: "claude" | "regex_fallback" = "claude";
@@ -145,9 +174,18 @@ export async function POST(req: NextRequest) {
   }
 
   if (!categories || categories.length === 0 || categories.every((c) => c.items.length === 0)) {
+    // Surface the diagnostic note (Claude's actual error if it failed,
+    // or "Claude returned no items" if it ran cleanly but extracted
+    // nothing). Without this, the toast just says "no items detected"
+    // and the owner has no path forward; with it, support sees
+    // "Claude extraction failed (Error 400: image too large)" or
+    // similar and knows what to do.
+    const detail = note ? ` Details: ${note}` : "";
     return NextResponse.json({
       error:
-        "No menu items detected. This usually means: (a) the PDF is a scanned image (we can't read pixel text — try a text-based PDF), (b) the layout is unusual enough that our reader can't find dish names, or (c) the menu uses photo-only design with no readable text. You can still add items manually below.",
+        "No menu items detected. This usually means: (a) the PDF is a scanned image (we can't read pixel text — try a text-based PDF), (b) the layout is unusual enough that our reader can't find dish names, or (c) the menu uses photo-only design with no readable text. You can still add items manually below." + detail,
+      note,
+      pageCount,
     }, { status: 422 });
   }
 
