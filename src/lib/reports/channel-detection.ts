@@ -23,10 +23,13 @@ export interface ChannelInputs {
     campaign?: string | null;
   };
   referrer?: string | null;
-  /** The restaurant's published primary domain (e.g. "luigis.com") —
-   *  used to detect internal-vs-external referrers. Optional; without
+  /** Hosts that count as "internal" referrers — typically the
+   *  restaurant's custom domain, its platform subdomain, and the
+   *  platform's own apex (so clicks from /admin → /order are
+   *  classified as "internal" instead of "referral"). Accepts a
+   *  single string for back-compat or an array. Optional; without
    *  it, "internal" routing is skipped. */
-  restaurantDomain?: string | null;
+  restaurantDomain?: string | string[] | null;
   /** True when the visit came from the platform marketplace
    *  (?from=marketplace in the URL). Pre-computed by the caller
    *  because it's a known platform contract, not a heuristic. */
@@ -53,9 +56,12 @@ export function detectChannel(inputs: ChannelInputs): ChannelSlug {
   const referrerHost = parseHostname(inputs.referrer);
   if (referrerHost) {
     // 3. Internal referrer first (a click from the restaurant's
-    //    hosted marketing site to /order should be "internal", not
-    //    "referral").
-    if (inputs.restaurantDomain && hostMatches(referrerHost, inputs.restaurantDomain)) {
+    //    hosted marketing site OR the platform's own admin to
+    //    /order should be "internal", not "referral").
+    const internalHosts = Array.isArray(inputs.restaurantDomain)
+      ? inputs.restaurantDomain
+      : inputs.restaurantDomain ? [inputs.restaurantDomain] : [];
+    if (internalHosts.some((h) => hostMatches(referrerHost, h))) {
       return "internal";
     }
 

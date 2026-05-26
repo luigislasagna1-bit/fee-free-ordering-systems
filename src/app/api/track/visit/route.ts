@@ -74,10 +74,10 @@ export async function POST(req: NextRequest) {
   // internal-vs-referral detection. ONE small indexed query.
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    // Pull the published primary domain we use elsewhere for internal-
-    // referrer detection. `customDomain` may not exist on every schema
-    // — defensive optional access in TS.
-    select: { id: true, slug: true },
+    // Pull the published domains so we can classify referrers from the
+    // restaurant's own hosted site / subdomain / custom domain as
+    // "internal" instead of "referral".
+    select: { id: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true },
   });
   if (!restaurant) {
     // 204 — don't leak which IDs are valid via different status codes.
@@ -88,10 +88,17 @@ export async function POST(req: NextRequest) {
   const referrer = req.headers.get("referer");
   const userAgent = req.headers.get("user-agent");
   const country = req.headers.get("x-vercel-ip-country") || null;
+  // For "internal vs referral" classification we treat the platform's
+  // own host (feefreeordering.com) as internal. A customer clicking
+  // through from /admin's "View ordering page" link would otherwise
+  // be miscategorized as "Referral". We pass the platform domain
+  // (derived from NEXT_PUBLIC_APP_URL or hardcoded fallback) AND the
+  // restaurant's own hosted-site host so both flow as "internal."
+  const restaurantHosts = buildInternalHosts(restaurant);
   const channel = detectChannel({
     utm: body.utm,
     referrer,
-    restaurantDomain: null, // TODO: wire restaurant.customDomain once that field is read here
+    restaurantDomain: restaurantHosts,
     fromMarketplace: body.fromMarketplace,
   });
   const deviceType = classifyDevice(userAgent);
@@ -137,4 +144,49 @@ export async function POST(req: NextRequest) {
   }
 
   return new NextResponse(null, { status: 204 });
+}
+
+/**
+ * Compose the list of hostnames that count as "internal" for channel
+ * attribution — referrals from these are tagged "internal" instead
+ * of "referral":
+ *
+ *   - The platform's own host (from NEXT_PUBLIC_APP_URL or
+ *     NEXT_PUBLIC_PLATFORM_DOMAIN, with sensible fallback). Clicks
+ *     from /admin or /superadmin into /order/<slug> hit this branch.
+ *   - The restaurant's hosted-site subdomain (slug.platform).
+ *   - The restaurant's verified custom domain, if any.
+ *
+ * Returns an array of hostnames (no protocol, no path).
+ */
+function buildInternalHosts(restaurant: {
+  slug: string;
+  subdomain: string | null;
+  customDomain: string | null;
+  customDomainStatus: string;
+}): string[] {
+  const hosts: string[] = [];
+  const platform =
+    parseHostname(process.env.NEXT_PUBLIC_APP_URL) ||
+    process.env.NEXT_PUBLIC_PLATFORM_DOMAIN ||
+    "feefreeordering.com";
+  hosts.push(platform);
+  if (restaurant.subdomain) {
+    hosts.push(`${restaurant.subdomain}.${platform}`);
+  }
+  if (restaurant.customDomain && restaurant.customDomainStatus === "verified") {
+    hosts.push(restaurant.customDomain);
+  }
+  return hosts;
+}
+
+/** Pull just the hostname from a full URL string. Returns null on
+ *  unparseable input so the caller can fall through to defaults. */
+function parseHostname(url: string | undefined): string | null {
+  if (!url) return null;
+  try {
+    return new URL(url).hostname.toLowerCase();
+  } catch {
+    return null;
+  }
 }

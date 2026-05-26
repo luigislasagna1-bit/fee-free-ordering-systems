@@ -104,23 +104,47 @@ export default async function ConnectivityReportPage({
     }
   }
 
-  // Per-day rollup: count of online ms across all devices, summed.
-  // For the "% online" we treat each device's daily 24h as a
-  // denominator and sum across devices. With N devices the max is
-  // N × 24h per day.
+  // Per-day rollup — UNION of online intervals across all devices.
+  //
+  // Correct semantic: the kitchen is "online" iff at least one device
+  // can receive orders. So we take the UNION of every device's online
+  // interval and compare to a single 24-hour day.
+  //
+  // Earlier draft divided by (numDevices × 24h) — that was wrong: a
+  // restaurant with 6 stale device registrations would show 16.7%
+  // even when their single live tablet was up 100% of the day.
+  // Confirmed by Luigi during UAT 2026-05-26: "should only require
+  // 1 active device to be considered healthy."
   const days = eachDay(range);
-  const numDevices = Math.max(devices.length, 1);
   const dayStats = days.map((d) => {
     const dayStart = d.getTime();
     const dayEnd = dayStart + DAY_MS;
-    let onlineMs = 0;
+
+    // Clip + collect every device's interval slice that overlaps this day.
+    const slices: Array<[number, number]> = [];
     for (const iv of intervals) {
       const s = Math.max(iv.start, dayStart);
       const e = Math.min(iv.end, dayEnd);
-      if (e > s) onlineMs += e - s;
+      if (e > s) slices.push([s, e]);
     }
-    const denominatorMs = numDevices * DAY_MS;
-    const pct = denominatorMs > 0 ? (onlineMs / denominatorMs) * 100 : 0;
+    // Merge overlapping / adjacent intervals to get the union span.
+    slices.sort((a, b) => a[0] - b[0]);
+    let onlineMs = 0;
+    let curStart = -1;
+    let curEnd = -1;
+    for (const [s, e] of slices) {
+      if (s > curEnd) {
+        if (curStart >= 0) onlineMs += curEnd - curStart;
+        curStart = s;
+        curEnd = e;
+      } else {
+        // Overlap or touching — extend the current run.
+        if (e > curEnd) curEnd = e;
+      }
+    }
+    if (curStart >= 0) onlineMs += curEnd - curStart;
+
+    const pct = (onlineMs / DAY_MS) * 100;
     return { date: d, onlineMs, pct: Math.min(100, pct) };
   });
   const overallPct = dayStats.length > 0
@@ -156,7 +180,7 @@ export default async function ConnectivityReportPage({
             {overallPct.toFixed(1)}% Connectivity health
           </div>
           <p className="text-xs text-gray-600 mt-0.5">
-            Average across all kitchen devices over {dayStats.length} day(s). Target: 95% or higher.
+            Kitchen reachable (at least one device online) over {dayStats.length} day(s). Target: 95% or higher.
             {events.length === 0 && (
               <span className="italic block mt-1">
                 The transition log is empty — the timeline below populates as devices come and go.

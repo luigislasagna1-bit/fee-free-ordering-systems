@@ -366,8 +366,17 @@ export function OrderingPageClient({
   }, [fireStep]);
 
   // item_added — first time cart goes from 0 → 1+.
+  // Also retroactively fires menu_browsed, since adding an item is
+  // proof the customer browsed the menu even if our scroll listener
+  // didn't trigger (e.g. menu fit on screen, or the page uses an
+  // inner scroll container that doesn't bubble window.scroll). This
+  // keeps the funnel internally consistent: item_added > menu_browsed
+  // would otherwise be visually nonsensical.
   useEffect(() => {
-    if (cart.length > 0) fireStep("item_added");
+    if (cart.length > 0) {
+      fireStep("menu_browsed");
+      fireStep("item_added");
+    }
   }, [cart.length, fireStep]);
 
   // checkout_open — when the checkout modal opens (post-cart-review).
