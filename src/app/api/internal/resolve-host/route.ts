@@ -49,9 +49,21 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Bad by param" }, { status: 400 });
   }
 
+  // Canonicalize the host for custom-domain lookups: treat
+  // www.luigis.com and luigis.com as the same tenant. Vercel
+  // registers BOTH versions automatically when you add a domain,
+  // so both hit our app — but we only store one canonical version
+  // in Restaurant.customDomain (whatever the user typed). Strip
+  // the leading "www." before the DB lookup so either hostname
+  // resolves to the same restaurant row.
+  const candidates =
+    by === "customDomain"
+      ? Array.from(new Set([value, value.replace(/^www\./, ""), `www.${value.replace(/^www\./, "")}`]))
+      : [value];
+
   const where = by === "subdomain"
     ? { subdomain: value, isActive: true }
-    : { customDomain: value, isActive: true, customDomainStatus: "verified" };
+    : { customDomain: { in: candidates }, isActive: true, customDomainStatus: "verified" };
 
   const r = await prisma.restaurant.findFirst({
     where: where as any,
@@ -78,7 +90,9 @@ export async function GET(req: NextRequest) {
   if (by === "customDomain") {
     const reseller = await prisma.resellerProfile.findFirst({
       where: {
-        customDomain: value,
+        // Same www/apex normalization as the restaurant lookup above —
+        // Vercel routes both versions to our app; we match either.
+        customDomain: { in: candidates },
         customDomainStatus: "verified",
         status: "approved",
         whiteLabelStatus: "active",
