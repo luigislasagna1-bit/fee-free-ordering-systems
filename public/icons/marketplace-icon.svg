@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#10B981"/>
+  <g transform="translate(80, 96)" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Storefront roof -->
+    <path d="M16 96 L176 16 L336 96 V128 H16 Z"/>
+    <!-- Awning bands -->
+    <line x1="16" y1="128" x2="336" y2="128"/>
+    <line x1="76" y1="96" x2="76" y2="128"/>
+    <line x1="136" y1="80" x2="136" y2="128"/>
+    <line x1="216" y1="80" x2="216" y2="128"/>
+    <line x1="276" y1="96" x2="276" y2="128"/>
+    <!-- Storefront body -->
+    <rect x="32" y="128" width="288" height="192" rx="8"/>
+    <!-- Door -->
+    <rect x="144" y="208" width="64" height="112" rx="4"/>
+    <!-- Star (marketplace = top pick) -->
+    <path d="M256 192 L264 208 L282 210 L268 222 L272 240 L256 232 L240 240 L244 222 L230 210 L248 208 Z" fill="#fff" stroke="none"/>
+  </g>
+</svg>

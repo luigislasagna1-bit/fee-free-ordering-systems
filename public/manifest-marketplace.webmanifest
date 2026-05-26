@@ -1,0 +1,25 @@
+{
+  "name": "Fee Free Marketplace",
+  "short_name": "Marketplace",
+  "description": "Browse fee-free restaurants near you. Order direct, save money, support local.",
+  "start_url": "/marketplace",
+  "scope": "/marketplace",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#10B981",
+  "icons": [
+    {
+      "src": "/icons/marketplace-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/marketplace-icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
