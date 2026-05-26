@@ -17,6 +17,23 @@ import { hasFeature } from "@/lib/entitlements";
 const DOMAIN_RE = /^([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i;
 
 export async function POST(req: NextRequest) {
+  try {
+    return await handle(req);
+  } catch (err) {
+    // Catch-all so the client never sees "Unexpected end of JSON input"
+    // from an empty 500 body. Any uncaught error here means our code
+    // or the Vercel API misbehaved — bubble the message up so the
+    // owner has SOMETHING to paste into a support ticket.
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[connect-custom] unhandled", { err: message });
+    return NextResponse.json(
+      { error: `Internal error: ${message}` },
+      { status: 500 },
+    );
+  }
+}
+
+async function handle(req: NextRequest) {
   const user = await getSessionUser();
   if (!user?.restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
@@ -90,3 +107,4 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ ok: true, domain, dnsRecords, providerIsDevStub: provider.isDevStub });
 }
+

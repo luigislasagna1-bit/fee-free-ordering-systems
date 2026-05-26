@@ -116,8 +116,19 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ domain: customDomain }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || t("connectFailed"));
+      // Read as text first so empty-body 5xx responses don't crash with
+      // "Unexpected end of JSON input" — we still get an error message,
+      // just a less specific one.
+      const raw = await res.text();
+      let data: any = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch { /* leave data empty */ }
+      if (!res.ok) {
+        throw new Error(
+          data.error
+            || (raw && raw.slice(0, 200))
+            || `${t("connectFailed")} (HTTP ${res.status})`,
+        );
+      }
       setDnsRecords(data.dnsRecords ?? []);
       setCustomStatus("pending");
       toast.success(t("customConnected"));
