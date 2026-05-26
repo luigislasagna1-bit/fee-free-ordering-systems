@@ -192,11 +192,13 @@ export async function proxy(req: NextRequest) {
   const cacheKey = `${lookupBy}:${value}`;
   let slug: string | null;
   let hasHostedSite = false;
+  let resellerProfileId: string | null = null;
 
   const cached = getCached(cacheKey);
   if (cached.hit) {
     slug = cached.info.slug;
     hasHostedSite = cached.info.hasHostedSite;
+    resellerProfileId = cached.info.resellerProfileId ?? null;
   } else {
     try {
       const resolveUrl = new URL("/api/internal/resolve-host", req.url);
@@ -207,16 +209,39 @@ export async function proxy(req: NextRequest) {
         headers["x-internal-key"] = process.env.INTERNAL_API_SECRET;
       }
       const res = await fetch(resolveUrl, { headers });
-      const data = (await res.json()) as { slug: string | null; hasHostedSite?: boolean };
+      const data = (await res.json()) as { slug: string | null; hasHostedSite?: boolean; resellerProfileId?: string | null };
       slug = data.slug ?? null;
       hasHostedSite = !!data.hasHostedSite;
-      setCached(cacheKey, { slug, hasHostedSite });
+      resellerProfileId = data.resellerProfileId ?? null;
+      setCached(cacheKey, { slug, hasHostedSite, resellerProfileId });
     } catch {
       // If the resolver is unreachable, fail open to the marketing page. This
       // matters because a transient resolver outage shouldn't 500 the whole
       // platform — a user landing on the marketing page is recoverable.
       return NextResponse.next();
     }
+  }
+
+  // ── Reseller custom domain branch ──────────────────────────────────
+  // The host matched a reseller's verified+active customDomain (no
+  // restaurant). The reseller white-label Full tier promise: the login
+  // screen is branded with the reseller's logo + title.
+  //
+  // We rewrite ALL paths on the reseller domain to /login?reseller=<id>
+  // so any URL someone types on `partner.com/...` lands on the branded
+  // login. After login Next-Auth redirects to /admin or /reseller as
+  // usual on the platform domain — we don't keep the reseller domain
+  // sticky after auth (deliberate: admin pages stay on the canonical
+  // platform host for cookie-scope reasons).
+  if (resellerProfileId && !slug) {
+    const targetUrl = new URL(`/login`, req.url);
+    targetUrl.searchParams.set("reseller", resellerProfileId);
+    // Preserve any callbackUrl the caller wanted (so a deep-link works).
+    const original = req.nextUrl.searchParams.get("callbackUrl");
+    if (original) targetUrl.searchParams.set("callbackUrl", original);
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set("x-reseller-profile-id", resellerProfileId);
+    return NextResponse.rewrite(targetUrl, { request: { headers: requestHeaders } });
   }
 
   if (!slug) {

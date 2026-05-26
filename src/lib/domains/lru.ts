@@ -30,6 +30,11 @@ export type TenantInfo = {
    *  rewrite (hosted-site customers go to /site/<slug>, plain ordering
    *  customers go to /order/<slug>). Always false when slug is null. */
   hasHostedSite: boolean;
+  /** When the host matched a reseller's verified+active customDomain
+   *  (Full tier white-label), this is the ResellerProfile.id and `slug`
+   *  is null. The middleware rewrites all paths on that host to
+   *  /login?reseller=<id> for the branded login screen. */
+  resellerProfileId?: string | null;
 };
 
 type Entry = TenantInfo & { expiresAt: number };
@@ -48,7 +53,7 @@ export function getCached(host: string): { hit: true; info: TenantInfo } | { hit
   // Refresh LRU order: re-insert so this entry becomes "most recent".
   cache.delete(host);
   cache.set(host, e);
-  return { hit: true, info: { slug: e.slug, hasHostedSite: e.hasHostedSite } };
+  return { hit: true, info: { slug: e.slug, hasHostedSite: e.hasHostedSite, resellerProfileId: e.resellerProfileId ?? null } };
 }
 
 export function setCached(host: string, info: TenantInfo): void {

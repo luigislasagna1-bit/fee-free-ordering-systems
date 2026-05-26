@@ -8,7 +8,13 @@ import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
 
-function LoginFormInner({ locale }: { locale: string }) {
+export interface ResellerBranding {
+  logoUrl: string | null;
+  title: string | null;
+  companyName: string | null;
+}
+
+function LoginFormInner({ locale, branding }: { locale: string; branding: ResellerBranding | null }) {
   const tAuth = useTranslations("auth");
   const tToasts = useTranslations("admin.toasts");
   const router = useRouter();
@@ -64,9 +70,29 @@ function LoginFormInner({ locale }: { locale: string }) {
       <AuthLanguageSwitcher currentLocale={locale} />
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 text-emerald-500 font-bold text-xl mb-5">
-            <ChefHat className="w-7 h-7" /> Fee Free Ordering
-          </Link>
+          {/* Header: reseller-branded when accessed via a verified Full-tier
+              custom domain, default platform branding otherwise. The reseller's
+              logo + title come from ResellerProfile (server-resolved via the
+              ?reseller= query param the proxy sets on its custom-domain rewrite). */}
+          {branding ? (
+            <div className="inline-flex flex-col items-center gap-2 mb-5">
+              {branding.logoUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={branding.logoUrl}
+                  alt={branding.companyName ?? "Partner logo"}
+                  className="max-h-12 max-w-[200px] object-contain"
+                />
+              )}
+              <span className="text-gray-700 font-bold text-xl text-center">
+                {branding.title ?? branding.companyName ?? ""}
+              </span>
+            </div>
+          ) : (
+            <Link href="/" className="inline-flex items-center gap-2 text-emerald-500 font-bold text-xl mb-5">
+              <ChefHat className="w-7 h-7" /> Fee Free Ordering
+            </Link>
+          )}
           <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 font-semibold px-4 py-1.5 rounded-full text-sm mb-4">
             <LayoutDashboard className="w-4 h-4" /> {tAuth("adminLogin")}
           </div>
@@ -138,10 +164,10 @@ function LoginFormInner({ locale }: { locale: string }) {
   );
 }
 
-export function LoginForm({ locale }: { locale: string }) {
+export function LoginForm({ locale, branding = null }: { locale: string; branding?: ResellerBranding | null }) {
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-emerald-500" /></div>}>
-      <LoginFormInner locale={locale} />
+      <LoginFormInner locale={locale} branding={branding} />
     </Suspense>
   );
 }

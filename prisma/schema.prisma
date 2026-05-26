@@ -1220,6 +1220,27 @@ model ResellerProfile {
   whiteLabelCurrentPeriodEnd     DateTime?
   whiteLabelCancelAtPeriodEnd    Boolean   @default(false)
 
+  /// Custom domain for the reseller's white-label landing + login.
+  /// Only meaningful when whiteLabelTier === "full" (the $29 tier promises
+  /// custom-domain branding; Basic doesn't). Parallel to Restaurant's
+  /// customDomain fields but scoped to the reseller, so a partner can use
+  /// their own apex like `mypartner.com` for the login screen / future
+  /// reseller marketing landing while their restaurants stay on their own
+  /// subdomains / domains as configured separately.
+  ///
+  /// Lifecycle states (customDomainStatus):
+  ///   "none"      — no domain configured (default)
+  ///   "pending"   — domain registered with our domain provider (Vercel),
+  ///                 awaiting customer to update DNS at their registrar
+  ///   "verifying" — DNS present, SSL / propagation still in progress
+  ///   "verified"  — fully live + SSL provisioned; proxy routes the host
+  ///   "error"     — provider reported a problem; details in
+  ///                 customDomainError. Caller may retry verify.
+  customDomain        String?   @unique
+  customDomainStatus  String    @default("none")
+  customDomainAddedAt DateTime?
+  customDomainError   String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -1229,6 +1250,9 @@ model ResellerProfile {
 
   @@index([status])
   @@index([referralCode])
+  // Proxy lookup: "is this hostname a reseller's verified custom domain?"
+  // Filtered to verified so unverified domains don't leak access.
+  @@index([customDomainStatus])
 }
 
 // Many-to-many between User and Restaurant for non-owner access. The owning

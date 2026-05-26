@@ -15,12 +15,19 @@ export const runtime = "nodejs";
  *   by    = "subdomain" | "customDomain"
  *   value = the value to look up (already lowercased by caller)
  *
- * Returns: { slug: string | null, hasHostedSite: boolean }
+ * Returns: { slug: string | null, hasHostedSite: boolean, resellerProfileId?: string | null }
  * `hasHostedSite` is true when the restaurant has an active
  * `hosted_marketing_page` entitlement (granted by the "Sales Optimized
  * Website" add-on). The middleware uses it to decide whether
  * `<slug>.<platform>/` rewrites to /site/<slug> (the hosted marketing page)
  * or /order/<slug> (the ordering page) for the root path.
+ *
+ * For `by=customDomain` only: when no Restaurant matches but a
+ * ResellerProfile's verified customDomain does, we return
+ * { slug: null, resellerProfileId: "..." }. The proxy then rewrites to
+ * /login?reseller=<id> (the branded login screen) instead of /order/<slug>.
+ * This is the "Full tier" white-label domain experience — partners get
+ * their own login URL with their logo + title.
  */
 export async function GET(req: NextRequest) {
   const headerKey = req.headers.get("x-internal-key");
@@ -51,15 +58,44 @@ export async function GET(req: NextRequest) {
     select: { id: true, slug: true },
   });
 
-  if (!r) return NextResponse.json({ slug: null, hasHostedSite: false });
+  if (r) {
+    // Resolve hosted-site entitlement so the middleware can branch the
+    // root-path rewrite. hasFeature is fast (entitlements module caches the
+    // active add-on rows per restaurant) but we still cache the result in the
+    // middleware LRU so steady-state traffic avoids ever doing this lookup.
+    const hasHostedSite = await hasFeature(r.id, "hosted_marketing_page");
+    return NextResponse.json({ slug: r.slug, hasHostedSite });
+  }
 
-  // Resolve hosted-site entitlement so the middleware can branch the
-  // root-path rewrite. hasFeature is fast (entitlements module caches the
-  // active add-on rows per restaurant) but we still cache the result in the
-  // middleware LRU so steady-state traffic avoids ever doing this lookup.
-  const hasHostedSite = await hasFeature(r.id, "hosted_marketing_page");
+  // ── Reseller custom domain fallback ────────────────────────────────
+  // Only applies when looking up by customDomain (resellers don't get
+  // subdomains — that's a restaurant-only feature). We require BOTH the
+  // custom domain to be verified AND the reseller's white-label
+  // subscription to be active + on the Full tier (the $29 tier that
+  // promises custom domain). If the subscription lapses, the domain
+  // simply stops routing — they keep the Vercel binding but the proxy
+  // 404s until they reactivate.
+  if (by === "customDomain") {
+    const reseller = await prisma.resellerProfile.findFirst({
+      where: {
+        customDomain: value,
+        customDomainStatus: "verified",
+        status: "approved",
+        whiteLabelStatus: "active",
+        whiteLabelTier: "full",
+      },
+      select: { id: true },
+    });
+    if (reseller) {
+      return NextResponse.json({
+        slug: null,
+        hasHostedSite: false,
+        resellerProfileId: reseller.id,
+      });
+    }
+  }
 
-  return NextResponse.json({ slug: r.slug, hasHostedSite });
+  return NextResponse.json({ slug: null, hasHostedSite: false });
 }
 
 /**
