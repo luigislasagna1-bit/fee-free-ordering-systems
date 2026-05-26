@@ -2,9 +2,11 @@
 import { useEffect, useRef, useState } from "react";
 import {
   Globe, Copy, Check, ExternalLink, Loader2, AlertTriangle, ShieldCheck, Trash2,
+  Clock, Mail,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
+import { RegistrarGuide } from "./RegistrarGuide";
 
 interface InitialState {
   slug: string;
@@ -138,18 +140,55 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
     setConnecting(false);
   };
 
+  /** Hit /verify-custom ONCE. Used by both the manual button + the
+   *  background auto-poll. Returns whether the domain is now verified.
+   *  Silent (no toast) — the caller decides whether to toast. */
+  const pollVerifyOnce = async (): Promise<boolean> => {
+    const res = await fetch("/api/admin/domain/verify-custom", { method: "POST" });
+    const raw = await res.text();
+    let data: any = {};
+    try { data = raw ? JSON.parse(raw) : {}; } catch { /* leave empty */ }
+    if (data?.status?.verified) {
+      setCustomStatus("verified");
+      return true;
+    }
+    return false;
+  };
+
+  // Auto-poll while status is pending/verifying so the user doesn't
+  // have to manually click "Re-check" every 30 seconds. Polls every
+  // 20s and stops on verified, on disconnect, or after 20 minutes
+  // (the typical max DNS propagation window we tell people about).
+  useEffect(() => {
+    if (!initial.customDomain) return;
+    if (customStatus === "verified" || customStatus === "none") return;
+    const start = Date.now();
+    const MAX_MS = 20 * 60_000; // 20 minutes
+    const interval = setInterval(async () => {
+      if (Date.now() - start > MAX_MS) {
+        clearInterval(interval);
+        return;
+      }
+      try {
+        const verified = await pollVerifyOnce();
+        if (verified) clearInterval(interval);
+      } catch {
+        // Swallow transient errors — next tick will retry.
+      }
+    }, 20_000);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initial.customDomain, customStatus]);
+
+  /** Manual re-check (button-driven). Toasts the result so the user
+   *  knows the click worked. */
   const reverify = async () => {
     setVerifying(true);
     try {
-      const res = await fetch("/api/admin/domain/verify-custom", { method: "POST" });
-      const data = await res.json();
-      if (data?.status?.verified) {
-        setCustomStatus("verified");
-        toast.success(t("verified"));
-      } else {
-        toast(t("notYetVerified"), { icon: "⏳" });
-      }
-    } catch (e: any) {
+      const verified = await pollVerifyOnce();
+      if (verified) toast.success(t("verified"));
+      else toast(t("notYetVerified"), { icon: "⏳" });
+    } catch {
       toast.error(t("verifyFailed"));
     }
     setVerifying(false);
@@ -334,34 +373,69 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
             </div>
 
             {dnsRecords && dnsRecords.length > 0 && customStatus !== "verified" && (
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mt-3">
-                <p className="text-xs font-semibold text-gray-700 mb-2">{t("dnsInstructions")}</p>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs">
-                    <thead className="text-left text-gray-500">
-                      <tr>
-                        <th className="py-1 pr-3 font-medium">{t("dnsType")}</th>
-                        <th className="py-1 pr-3 font-medium">{t("dnsName")}</th>
-                        <th className="py-1 font-medium">{t("dnsValue")}</th>
-                      </tr>
-                    </thead>
-                    <tbody className="font-mono text-gray-800">
-                      {dnsRecords.map((r, i) => (
-                        <tr key={i} className="border-t border-gray-200">
-                          <td className="py-1.5 pr-3">{r.type}</td>
-                          <td className="py-1.5 pr-3">{r.name}</td>
-                          <td className="py-1.5 break-all">
-                            {r.value}
-                            <button onClick={() => copy(r.value)} className="ml-2 text-gray-400 hover:text-gray-700">
-                              <Copy className="w-3 h-3 inline" />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+              <>
+                {/* ETA banner — sets the right expectation BEFORE the
+                    user starts the DNS dance. Without this, owners
+                    panic 90 seconds after adding records when
+                    "Re-check" still says pending. */}
+                <div className="mt-3 rounded-lg bg-blue-50 border border-blue-200 p-3 flex items-start gap-2">
+                  <Clock className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <div className="text-xs text-blue-900 leading-relaxed">
+                    <strong>How long does this take?</strong> Usually 5-30 minutes after you add
+                    the records below at your registrar. Occasionally up to 24 hours if your
+                    DNS provider is slow or you had old records cached. We&apos;ll check automatically
+                    every 20 seconds while you wait — no need to refresh.
+                  </div>
                 </div>
-              </div>
+
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mt-3">
+                  <p className="text-xs font-semibold text-gray-700 mb-2">{t("dnsInstructions")}</p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead className="text-left text-gray-500">
+                        <tr>
+                          <th className="py-1 pr-3 font-medium">{t("dnsType")}</th>
+                          <th className="py-1 pr-3 font-medium">{t("dnsName")}</th>
+                          <th className="py-1 font-medium">{t("dnsValue")}</th>
+                        </tr>
+                      </thead>
+                      <tbody className="font-mono text-gray-800">
+                        {dnsRecords.map((r, i) => (
+                          <tr key={i} className="border-t border-gray-200">
+                            <td className="py-1.5 pr-3">{r.type}</td>
+                            <td className="py-1.5 pr-3">{r.name}</td>
+                            <td className="py-1.5 break-all">
+                              {r.value}
+                              <button onClick={() => copy(r.value)} className="ml-2 text-gray-400 hover:text-gray-700">
+                                <Copy className="w-3 h-3 inline" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Per-registrar step-by-step guide. Collapsed by default;
+                    expand → pick GoDaddy / Namecheap / Cloudflare / etc.
+                    Removes the most common support question we'd get
+                    from non-technical restaurant owners. */}
+                <RegistrarGuide />
+
+                {/* Support escalation. If they're stuck, we want them to
+                    email us BEFORE they give up + churn. The mailto
+                    pre-fills the domain so we have context immediately. */}
+                <div className="mt-3 flex items-center justify-between text-xs">
+                  <span className="text-gray-500">Stuck? We&apos;ll walk you through it.</span>
+                  <a
+                    href={`mailto:support@feefreeordering.com?subject=Custom%20domain%20help%20for%20${encodeURIComponent(initial.customDomain ?? "")}&body=Hi%20%2D%20I%27m%20trying%20to%20connect%20${encodeURIComponent(initial.customDomain ?? "")}%20but%20%5Bdescribe%20the%20issue%5D.`}
+                    className="inline-flex items-center gap-1 text-emerald-600 font-semibold hover:text-emerald-700"
+                  >
+                    <Mail className="w-3 h-3" /> Email support
+                  </a>
+                </div>
+              </>
             )}
           </div>
         )}
