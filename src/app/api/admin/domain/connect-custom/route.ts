@@ -28,11 +28,22 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid domain format" }, { status: 400 });
   }
 
-  const taken = await prisma.restaurant.findFirst({
-    where: { customDomain: domain, NOT: { id: user.restaurantId } },
-    select: { id: true },
-  });
-  if (taken) return NextResponse.json({ error: "Domain is already connected to another restaurant" }, { status: 409 });
+  // Uniqueness across BOTH restaurant + reseller tables. Reseller
+  // custom domains live on ResellerProfile (the White-Label Full tier
+  // feature); double-binding a domain to a restaurant + a reseller
+  // would create ambiguous proxy resolution.
+  const [restaurantClash, resellerClash] = await Promise.all([
+    prisma.restaurant.findFirst({
+      where: { customDomain: domain, NOT: { id: user.restaurantId } },
+      select: { id: true },
+    }),
+    prisma.resellerProfile.findFirst({
+      where: { customDomain: domain },
+      select: { id: true },
+    }),
+  ]);
+  if (restaurantClash) return NextResponse.json({ error: "Domain is already connected to another restaurant" }, { status: 409 });
+  if (resellerClash) return NextResponse.json({ error: "Domain is already in use by a reseller white-label account" }, { status: 409 });
 
   const provider = getDomainProvider();
   let dnsRecords;
