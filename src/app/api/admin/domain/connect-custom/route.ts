@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { getDomainProvider } from "@/lib/domains/provider";
+import { hasFeature } from "@/lib/entitlements";
 
 /**
  * POST /api/admin/domain/connect-custom { domain: "luigis.ca" }
@@ -18,6 +19,22 @@ const DOMAIN_RE = /^([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i;
 export async function POST(req: NextRequest) {
   const user = await getSessionUser();
   if (!user?.restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  // Paid feature gate — Custom Domain add-on at $9.99/mo grants the
+  // `custom_domain_routing` entitlement. Without it we reject before
+  // touching the Vercel API (no point burning a registration call on
+  // a request that wouldn't be billed for). UI mirrors this with an
+  // "Activate add-on" CTA in place of the connect input.
+  const allowed = await hasFeature(user.restaurantId, "custom_domain_routing");
+  if (!allowed) {
+    return NextResponse.json(
+      {
+        error:
+          "Custom Domain requires the $9.99/mo Custom Domain add-on. Activate it at /admin/billing/add-ons to continue.",
+      },
+      { status: 402 },
+    );
+  }
 
   const body = await req.json().catch(() => ({}));
   const raw = String(body?.domain || "").trim().toLowerCase();

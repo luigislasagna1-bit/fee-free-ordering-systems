@@ -163,6 +163,13 @@ const navGroups: NavGroup[] = [
           // Gated on hasHostedSite — Sales Optimized Website add-on
           // subscribers see this; non-subscribers don't even get the link.
           { href: "/admin/website/editor", labelKey: "websiteEditor", label: "Website Editor", icon: Palette, requiresHostedSite: true },
+          // Custom Domain — direct sidebar link to the bring-your-own-
+          // domain page. Always visible; the page itself surfaces the
+          // $9.99/mo Custom Domain add-on upgrade CTA when the
+          // entitlement (custom_domain_routing) isn't active. Visible
+          // even without the add-on because the page doubles as a
+          // conversion surface explaining what the upgrade unlocks.
+          { href: "/admin/website/domain", labelKey: "customDomain", label: "Custom Domain",  icon: Globe },
         ],
       },
       // NOTE: "Subscription & Billing" used to live here. Moved to OTHER —

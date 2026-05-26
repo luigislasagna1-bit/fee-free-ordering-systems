@@ -19,11 +19,16 @@ interface Props {
   initial: InitialState;
   platformDomain: string;
   providerIsDevStub: boolean;
+  /** True when the restaurant has the `custom_domain_routing` feature
+   *  granted by an active "Custom Domain" add-on subscription ($9.99/mo).
+   *  Without it, the custom-domain section shows an upgrade CTA
+   *  instead of the connect input. */
+  hasCustomDomainAddOn: boolean;
 }
 
 type SubAvailability = { ok: true } | { ok: false; reason: string } | null;
 
-export function DomainClient({ initial, platformDomain, providerIsDevStub }: Props) {
+export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCustomDomainAddOn }: Props) {
   const t = useTranslations("admin.domain");
   const [subdomain, setSubdomain] = useState(initial.subdomain);
   const [subAvail, setSubAvail] = useState<SubAvailability>(null);
@@ -238,10 +243,42 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub }: Pro
 
       {/* ── Custom domain ────────────────────────────────────────────────── */}
       <section className="bg-white rounded-xl border border-gray-200 p-5">
-        <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-1">{t("customDomainTitle")}</h2>
+        <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-1">
+          {t("customDomainTitle")}
+          <span className="ml-2 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 rounded-full px-2 py-0.5">
+            $9.99/mo add-on
+          </span>
+        </h2>
         <p className="text-xs text-gray-500 mb-4">{t("customDomainBody")}</p>
 
-        {!initial.customDomain ? (
+        {/* Paid feature gate. Without the add-on we replace the connect
+            form with an upgrade CTA. If a customDomain is already
+            connected (active subscription that later lapsed), we still
+            show the existing status so the owner can disconnect — but
+            we never let them ADD a new domain without the add-on. */}
+        {!hasCustomDomainAddOn && !initial.customDomain ? (
+          <div className="rounded-lg border-2 border-emerald-200 bg-emerald-50/40 p-4">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
+                <Globe className="w-5 h-5" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-sm font-bold text-emerald-900 mb-1">Custom Domain — $9.99/mo add-on</h3>
+                <p className="text-xs text-emerald-900 leading-relaxed mb-3">
+                  Point your own domain (e.g. <code className="bg-emerald-100 px-1 rounded">yourrestaurant.com</code>) at
+                  your ordering page. Includes free SSL, automatic DNS verification, and unlimited
+                  domain changes. Cancel anytime.
+                </p>
+                <a
+                  href="/admin/billing/add-ons"
+                  className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition"
+                >
+                  Activate add-on →
+                </a>
+              </div>
+            </div>
+          </div>
+        ) : !initial.customDomain ? (
           <div className="flex flex-col sm:flex-row gap-2">
             <input
               value={customDomain}
