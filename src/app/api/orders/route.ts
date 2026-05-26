@@ -40,6 +40,12 @@ export async function POST(req: NextRequest) {
       // verify the restaurant is currently entitled before stamping, so
       // a tampered client can't fake-stamp a direct order as marketplace.
       from,
+      // Reports attribution: client forwards the same sessionHash the
+      // visit-beacon already used so we can join Order.channel to the
+      // WebsiteVisit's already-server-validated channel value (no need
+      // to trust a `channel` field in the body — we compute it from
+      // the sessionHash). Optional; null sessionHash → null channel.
+      sessionHash,
     } = body;
 
     // ── Basic input validation ──────────────────────────────────────────────
@@ -234,6 +240,11 @@ export async function POST(req: NextRequest) {
     let resolvedZoneMinutes: number | null = null;
     let zoneDeliveryFee = restaurant.deliveryFee;
     let zoneMinimumOrder = restaurant.minimumOrder ?? 0;
+    // Captured here so it survives past the zone-resolution block and
+    // can be stamped onto the Order for the Delivery Heatmap report.
+    // We already pay the geocode cost once for zone resolution — reusing
+    // the result is free.
+    let deliveryCoords: { lat: number; lng: number } | null = null;
 
     if (type === "delivery") {
       const zones = await prisma.deliveryZone.findMany({
@@ -242,6 +253,7 @@ export async function POST(req: NextRequest) {
       if (zones.length > 0 && restaurant.lat != null && restaurant.lng != null && deliveryAddress) {
         const addrParts = [deliveryAddress, deliveryCity, deliveryZip].filter(Boolean).join(", ");
         const coords = await geocodeAddress(addrParts);
+        deliveryCoords = coords;
         if (coords) {
           const resolved = findZoneForPoint(
             zones as unknown as ZoneLike[],
@@ -357,6 +369,29 @@ export async function POST(req: NextRequest) {
       ? computeUberEatsEquivalentCents(Math.round(serverTotal * 100))
       : null;
 
+    // ── Channel attribution (Reports) ──────────────────────────────────────
+    // Look up the channel from the WebsiteVisit row written when the
+    // session started. Server-validated values only — we never trust a
+    // client-provided channel slug. Falls back to "marketplace" when
+    // the order is genuinely a marketplace order (the WebsiteVisit row
+    // may not exist for older sessions / bots), then to null when
+    // there's no sessionHash at all.
+    //
+    // The query is indexed (sessionHash unique-ish), cheap. We
+    // limit + order by createdAt DESC because a long session could
+    // have multiple visit rows across re-navigations — the most
+    // recent one is the truest attribution.
+    let resolvedChannel: string | null = null;
+    if (typeof sessionHash === "string" && /^[a-f0-9]{16,64}$/i.test(sessionHash)) {
+      const visit = await prisma.websiteVisit.findFirst({
+        where: { restaurantId: restaurant.id, sessionHash },
+        select: { channel: true },
+        orderBy: { createdAt: "desc" },
+      });
+      if (visit) resolvedChannel = visit.channel;
+    }
+    if (!resolvedChannel && viaMarketplace) resolvedChannel = "marketplace";
+
     // Marketplace orders are online-card-only by platform contract.
     // The customer-side checkout forces "card" as the only option when
     // ?from=marketplace, but a tampered client could POST cash. Reject
@@ -419,6 +454,12 @@ export async function POST(req: NextRequest) {
         deliveryEstimatedMinutes: resolvedZoneMinutes,
         viaMarketplace,
         savedVsUberEatsCents,
+        channel: resolvedChannel,
+        // Reports — coordinates already resolved during zone lookup
+        // (delivery orders only). Heatmap report uses these directly;
+        // null for pickup / dine-in / unresolved-address orders.
+        deliveryLat: deliveryCoords?.lat ?? null,
+        deliveryLng: deliveryCoords?.lng ?? null,
         items: {
           create: validatedItems.map((item) => ({
             menuItemId: item.menuItemId,

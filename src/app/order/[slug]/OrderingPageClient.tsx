@@ -639,6 +639,14 @@ export function OrderingPageClient({
     notes: customerInfo.notes, paymentMethod: customerInfo.paymentMethod,
     scheduledFor: customerInfo.scheduledFor || null,
     from: fromMarketplace ? "marketplace" : undefined,
+    // Reports attribution — server-side join from this hash back to
+    // the WebsiteVisit row written when the session started. Server
+    // validates format + ignores unknown sessions; safe to include
+    // unconditionally. Read directly from sessionStorage (the visit
+    // beacon already populated it) to avoid plumbing through props.
+    sessionHash: typeof window !== "undefined"
+      ? (window.sessionStorage.getItem("ff_session_hash") || undefined)
+      : undefined,
     couponId, couponDiscount, subtotal, taxAmount, deliveryFee, tip: tipAmount, total,
     items: cart.map(ci => ({
       menuItemId: ci.menuItem.id,
