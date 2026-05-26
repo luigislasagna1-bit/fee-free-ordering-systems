@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { detectChannel, classifyDevice } from "@/lib/reports/channel-detection";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 /**
  * POST /api/track/visit
@@ -37,6 +38,17 @@ import { detectChannel, classifyDevice } from "@/lib/reports/channel-detection";
  * email sends, no Stripe calls, no notifications.
  */
 export async function POST(req: NextRequest) {
+  // ── Rate limit ───────────────────────────────────────────────────────
+  // Cap visit beacons at 60 per IP per minute. A genuine user fires
+  // ONE per session-start so 60/min is a 60× margin; a bot scraper or
+  // misbehaving script gets clipped before it can pollute the visit
+  // count. We respond 204 (success) on limit hits so attackers can't
+  // distinguish our limiter — they just see "writes silently dropped."
+  const ip = getClientIp(req);
+  if (!rateLimit(`visit:${ip}`, 60, 60_000)) {
+    return new NextResponse(null, { status: 204 });
+  }
+
   let body: {
     restaurantId?: string;
     sessionHash?: string;

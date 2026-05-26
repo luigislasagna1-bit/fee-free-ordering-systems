@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 /**
  * POST /api/track/event
@@ -33,6 +34,16 @@ const VALID_STEPS = new Set([
 ]);
 
 export async function POST(req: NextRequest) {
+  // Rate limit per IP — a real customer fires at most 6 funnel events
+  // (menu_browsed / item_added / checkout_open / checkout_info /
+  // payment_open / order_placed) per session. 120/min is the soft cap
+  // — enough for legitimate "user reopens cart 20× in a session" but
+  // far below what a spammer needs to skew the funnel meaningfully.
+  const ip = getClientIp(req);
+  if (!rateLimit(`event:${ip}`, 120, 60_000)) {
+    return new NextResponse(null, { status: 204 });
+  }
+
   let body: { restaurantId?: string; sessionHash?: string; step?: string; targetId?: string };
   try {
     body = await req.json();
