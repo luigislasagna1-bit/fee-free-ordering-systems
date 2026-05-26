@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MapPin, Phone, Mail, Globe, Clock, ShoppingBag } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
+import { VisitTracker } from "@/components/order/VisitTracker";
 
 /**
  * Force this route dynamic on every request — restaurant owners expect
@@ -295,6 +296,12 @@ export default async function HostedSitePage({
 
   return (
     <main className="min-h-screen bg-white">
+      {/* Reports — fire the visit beacon on the hosted marketing site
+          too, not just /order/<slug>. Hosted-site visitors who never
+          progress to the ordering page still count as "visits" in
+          Reports → Website Visits + the funnel's top step. */}
+      <VisitTracker restaurantId={r.id} />
+
       {/* JSON-LD structured data for Google's knowledge panel + rich snippets. */}
       <script
         type="application/ld+json"

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MapPin, Phone, ArrowRight } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks, parseSeoSlug } from "@/lib/hosted-site-seo";
+import { VisitTracker } from "@/components/order/VisitTracker";
 
 /**
  * Programmatic-SEO landing page. Reached when a customer (or search
@@ -123,6 +124,9 @@ export default async function SeoLandingPage({
 
   return (
     <main className="min-h-screen bg-white">
+      {/* Visit beacon — SEO landing pages count as visits too. */}
+      <VisitTracker restaurantId={r.id} />
+
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

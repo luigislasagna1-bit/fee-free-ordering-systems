@@ -149,6 +149,22 @@ export default async function ReportsDashboardPage({
   }));
   const maxRevenue = Math.max(...days.map((d) => d.revenue), 1);
 
+  // Detect "brand-new restaurant" state — zero orders in BOTH the
+  // current AND the previous period. We render a welcoming first-order
+  // state instead of a wall of zeros + awkward "—" deltas.
+  const isBrandNew = curOrders === 0 && prevOrders === 0;
+  if (isBrandNew) {
+    return (
+      <div>
+        <ReportHeader
+          title="Dashboard"
+          subtitle="Reports light up as soon as your first orders come in."
+        />
+        <FirstOrderWelcome />
+      </div>
+    );
+  }
+
   return (
     <div>
       <ReportHeader
@@ -395,6 +411,72 @@ function ActionCard({
 function pctChange(curr: number, prev: number): number | null {
   if (prev === 0) return null;
   return ((curr - prev) / prev) * 100;
+}
+
+/**
+ * Welcome banner shown when the restaurant has ZERO orders in both the
+ * current and previous period. Without this, brand-new restaurants
+ * see a wall of zeros + grey "— vs prev" deltas that feels broken.
+ *
+ * Layout mirrors the GloriaFood "you're about to take off" copy — a
+ * single emerald banner + a checklist of "what to do next" pointing
+ * at the existing publish/share surfaces. We deliberately don't show
+ * KPI cards or charts here; with no data they're noise, and pre-
+ * launch owners don't need to learn the chart UI before their first
+ * order.
+ */
+function FirstOrderWelcome() {
+  return (
+    <div className="space-y-4">
+      <div className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-6">
+        <div className="flex items-start gap-3">
+          <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0 text-2xl">
+            🎉
+          </div>
+          <div className="flex-1">
+            <h2 className="text-lg font-bold text-gray-900 mb-1">Your reports are ready — waiting for the first order.</h2>
+            <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+              The moment a customer places their first order, every report on this
+              page lights up: revenue + completed orders + average order value, top
+              selling items, channel breakdown, the funnel, the delivery heatmap. No
+              setup needed beyond what you&apos;ve already done.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <Link
+                href="/admin/publishing"
+                className="block bg-white rounded-lg border border-gray-200 p-3 hover:border-emerald-300 hover:shadow-sm transition"
+              >
+                <div className="flex items-start gap-2">
+                  <div className="text-emerald-500 mt-0.5">→</div>
+                  <div>
+                    <div className="text-sm font-semibold text-gray-900">Share your order link</div>
+                    <div className="text-xs text-gray-500 mt-0.5">Open the publishing page to grab QR codes + a social share kit.</div>
+                  </div>
+                </div>
+              </Link>
+              <Link
+                href="/admin/promotions"
+                className="block bg-white rounded-lg border border-gray-200 p-3 hover:border-emerald-300 hover:shadow-sm transition"
+              >
+                <div className="flex items-start gap-2">
+                  <div className="text-emerald-500 mt-0.5">→</div>
+                  <div>
+                    <div className="text-sm font-semibold text-gray-900">Launch a first-order promo</div>
+                    <div className="text-xs text-gray-500 mt-0.5">Set up "$5 off first order" or a free-delivery coupon to convert visitors.</div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="text-xs text-gray-400 italic">
+        Once orders start flowing, this page becomes the GloriaFood-style dashboard with
+        KPI cards, trend charts, and a "Grow your restaurant" panel of deep-link reports.
+      </div>
+    </div>
+  );
 }
 
 // ── Aggregate query helpers ──────────────────────────────────────────

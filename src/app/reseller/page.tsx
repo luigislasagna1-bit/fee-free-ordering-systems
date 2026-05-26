@@ -63,10 +63,16 @@ export default async function ResellerDashboardPage() {
       },
       select: { createdAt: true },
     }),
-    // White-label subscription state — drives the past-due banner.
+    // White-label subscription state — drives the past-due banner +
+    // the active-tier status badge on the dashboard.
     prisma.resellerProfile.findUnique({
       where: { id: user.resellerProfileId },
-      select: { whiteLabelStatus: true, whiteLabelTier: true },
+      select: {
+        whiteLabelStatus: true,
+        whiteLabelTier: true,
+        customDomain: true,
+        customDomainStatus: true,
+      },
     }),
   ]);
 
@@ -129,6 +135,54 @@ export default async function ResellerDashboardPage() {
           >
             Fix billing
           </Link>
+        </div>
+      )}
+
+      {/* Active white-label banner — confirms the reseller's branding is
+          live + flags any custom-domain action items so they don't have
+          to click into /reseller/branding to learn the status. Hidden
+          when past-due (the rose banner takes priority) or when the
+          subscription is inactive. */}
+      {whiteLabel?.whiteLabelStatus === "active" && whiteLabel.whiteLabelTier && (
+        <div className="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 p-4 flex items-start gap-3">
+          <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 text-xs font-bold">
+            {whiteLabel.whiteLabelTier === "full" ? "FULL" : "BASIC"}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-bold text-emerald-900 mb-0.5">
+              White-Label {whiteLabel.whiteLabelTier === "full" ? "Full" : "Basic"} — active
+            </div>
+            <div className="text-xs text-emerald-800 leading-relaxed">
+              {whiteLabel.whiteLabelTier === "basic" && (
+                <>Your imprint + logo are live on customer emails. Upgrade to Full to add a custom domain + branded login.</>
+              )}
+              {whiteLabel.whiteLabelTier === "full" && !whiteLabel.customDomain && (
+                <>Your imprint + logo are live on emails. Connect a custom domain to finish the white-label setup.</>
+              )}
+              {whiteLabel.whiteLabelTier === "full" && whiteLabel.customDomain && whiteLabel.customDomainStatus === "verified" && (
+                <>Branding live on emails · custom domain <span className="font-mono font-semibold">{whiteLabel.customDomain}</span> verified.</>
+              )}
+              {whiteLabel.whiteLabelTier === "full" && whiteLabel.customDomain && whiteLabel.customDomainStatus !== "verified" && (
+                <>Branding live on emails · custom domain <span className="font-mono font-semibold">{whiteLabel.customDomain}</span> waiting on DNS ({whiteLabel.customDomainStatus}).</>
+              )}
+            </div>
+          </div>
+          {/* Quick-action link tuned to current state */}
+          {whiteLabel.whiteLabelTier === "basic" && (
+            <Link href="/reseller/branding" className="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex-shrink-0 transition">
+              Upgrade
+            </Link>
+          )}
+          {whiteLabel.whiteLabelTier === "full" && !whiteLabel.customDomain && (
+            <Link href="/reseller/branding/custom-domain" className="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex-shrink-0 transition">
+              Add domain
+            </Link>
+          )}
+          {whiteLabel.whiteLabelTier === "full" && whiteLabel.customDomain && whiteLabel.customDomainStatus !== "verified" && (
+            <Link href="/reseller/branding/custom-domain" className="inline-flex items-center gap-1 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex-shrink-0 transition">
+              Check status
+            </Link>
+          )}
         </div>
       )}
 
