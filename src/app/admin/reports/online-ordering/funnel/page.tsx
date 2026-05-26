@@ -93,6 +93,24 @@ export default async function FunnelReportPage({
         <EmptyState />
       ) : (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+          {/* Headline conversion rate — the single number owners want
+              from this report. Visits to orders, end-to-end. */}
+          {(() => {
+            const orderPlaced = stepCounts.find((s) => s.id === "order_placed")?.count ?? 0;
+            const rate = visitCount > 0 ? (orderPlaced / visitCount) * 100 : 0;
+            return (
+              <div className="grid grid-cols-3 gap-3 mb-5 pb-5 border-b border-gray-100">
+                <SummaryStat label="Visits" value={visitCount.toLocaleString()} />
+                <SummaryStat label="Orders placed" value={orderPlaced.toLocaleString()} />
+                <SummaryStat
+                  label="Conversion rate"
+                  value={`${rate.toFixed(2)}%`}
+                  accent={rate >= 5 ? "good" : rate >= 1 ? "ok" : "low"}
+                />
+              </div>
+            );
+          })()}
+
           <FunnelBars steps={stepCounts} />
 
           <div className="mt-5 pt-4 border-t border-gray-100 bg-emerald-50/40 -m-5 mt-5 p-4 rounded-b-xl">
@@ -123,6 +141,23 @@ function EmptyState() {
         link — the analytics beacon fires automatically and this view will populate
         within a few minutes.
       </p>
+    </div>
+  );
+}
+
+/** Headline summary stat at the top of the funnel report. Three of
+ *  these sit in a grid above the bar chart so owners get visits +
+ *  orders + conversion rate at a glance without reading the bars. */
+function SummaryStat({ label, value, accent }: { label: string; value: string; accent?: "good" | "ok" | "low" }) {
+  const color =
+    accent === "good" ? "text-emerald-700" :
+    accent === "ok"   ? "text-amber-700" :
+    accent === "low"  ? "text-red-600" :
+    "text-gray-900";
+  return (
+    <div className="text-center">
+      <div className="text-xs uppercase tracking-wider font-semibold text-gray-500 mb-1">{label}</div>
+      <div className={`text-2xl font-bold ${color}`}>{value}</div>
     </div>
   );
 }

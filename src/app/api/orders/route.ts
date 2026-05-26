@@ -331,6 +331,9 @@ export async function POST(req: NextRequest) {
             email: cleanEmail,
             phone: cleanPhone,
             customerAccountId: currentAccount?.id ?? null,
+            // Reports — populated at create so first-time customers are
+            // captured in the lapsed-customer / cohort queries.
+            lastOrderAt: new Date(),
           },
         });
       } else {
@@ -339,6 +342,9 @@ export async function POST(req: NextRequest) {
           data: {
             totalOrders: { increment: 1 },
             totalSpent: { increment: serverTotal },
+            // Reports — refresh the last-order timestamp so the "Clients"
+            // dashboard + lapsed-customer segments stay accurate.
+            lastOrderAt: new Date(),
             // Backfill the account link on subsequent orders from a signed-in
             // user who originally ordered as a guest. Only set if currently null
             // so we don't overwrite a previous link.
