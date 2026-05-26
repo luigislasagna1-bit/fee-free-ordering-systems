@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import {
-  extractMenuWithClaude,
   extractMenuWithRegex,
   type ExtractedCategory,
 } from "@/lib/menu-extractor";
+import { extractMenuWithSplitting } from "@/lib/menu-pdf-splitter";
 import { blockIfInheritingMenu } from "@/lib/brand";
 
 // PDF parsing is slow — large print-designed menus can take 60-90 seconds
@@ -104,45 +104,32 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // ─── Pre-flight page count check ────────────────────────────────────
-  // Anthropic's PDF API has a HARD 100-page limit. A bigger PDF gets
-  // rejected at the API layer with an unhelpful error, we fall through
-  // to regex, regex returns 0 items on a photo-heavy menu, and the
-  // user sees "No menu items detected" with no clue that the real
-  // problem is page count. Confirmed by Luigi's UAT 2026-05-26:
-  // 125-page menu silently failed three different times.
-  //
-  // We count pages BEFORE the expensive Claude call so the error
-  // message is specific + actionable: "split your PDF and import the
-  // halves separately."
-  let pageCount: number | null = null;
-  try {
-    const { getDocumentProxy } = await import("unpdf");
-    const doc = await getDocumentProxy(new Uint8Array(buffer));
-    pageCount = doc.numPages;
-  } catch {
-    // Couldn't parse page count — proceed anyway, Claude will reject if too big.
-  }
-  if (pageCount !== null && pageCount > 100) {
-    return NextResponse.json(
-      {
-        error:
-          `Your PDF has ${pageCount} pages. Our menu reader can handle up to 100 pages at a time (we use Anthropic Claude under the hood, which caps PDFs at 100 pages). Please split your menu into smaller files and import each part separately — most restaurants find this works well: one file for food, one for drinks, etc. Free PDF splitters like smallpdf.com or ilovepdf.com take ~10 seconds.`,
-      },
-      { status: 422 },
-    );
-  }
-
-  // ─── Try Claude first ───────────────────────────────────────────────
+  // ─── Try Claude first (with auto-splitting for big PDFs) ───────────
+  // extractMenuWithSplitting handles the Anthropic 100-page limit
+  // server-side: it counts pages, and if > 80 (a safe margin under
+  // the 100 cap) it splits the PDF into chunks via pdf-lib, calls
+  // Claude once per chunk sequentially, then merges the categories
+  // de-duping by name. Owner gets a seamless one-upload experience
+  // regardless of menu size. Confirmed during Luigi's UAT 2026-05-26
+  // — a 125-page Italian AYCE menu that previously bounced now
+  // imports cleanly in ~2 chunks.
   let categories: ExtractedCategory[] | null = null;
   let method: "claude" | "regex_fallback" = "claude";
   let note: string | undefined;
+  let pageCount: number | null = null;
+  let chunkCount = 1;
 
   if (process.env.ANTHROPIC_API_KEY) {
     try {
-      categories = await extractMenuWithClaude(buffer);
+      const result = await extractMenuWithSplitting(buffer);
+      categories = result.categories;
+      pageCount = result.pageCount;
+      chunkCount = result.chunkCount;
+      if (chunkCount > 1) {
+        note = `Menu was ${pageCount} pages — split into ${chunkCount} chunks for processing, then merged.`;
+      }
       if (categories.length === 0) {
-        note = "Claude returned no items — falling back to regex parser.";
+        note = (note ? note + " " : "") + "Claude returned no items — falling back to regex parser.";
         categories = null;
       }
     } catch (err: any) {
@@ -204,6 +191,8 @@ export async function POST(req: NextRequest) {
     note,
     categories,
     existingCategories,
+    pageCount,
+    chunkCount,
   });
 }
 
