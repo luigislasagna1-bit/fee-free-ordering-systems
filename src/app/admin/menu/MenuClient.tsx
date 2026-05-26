@@ -1229,7 +1229,10 @@ function PdfImportModal({ categories, onClose, onImported }: {
       const catMsg = data.categoriesCreated > 0
         ? `${data.categoriesCreated} new categor${data.categoriesCreated === 1 ? "y" : "ies"} + `
         : "";
-      toast.success(`${catMsg}${data.itemsCreated} item${data.itemsCreated !== 1 ? "s" : ""} imported!`);
+      const dupMsg = data.itemsSkippedDuplicate > 0
+        ? ` (${data.itemsSkippedDuplicate} duplicate${data.itemsSkippedDuplicate === 1 ? "" : "s"} skipped)`
+        : "";
+      toast.success(`${catMsg}${data.itemsCreated} item${data.itemsCreated !== 1 ? "s" : ""} imported!${dupMsg}`);
       onImported();
     } catch (e: any) {
       toast.error(e.message || "Import failed");
@@ -1295,7 +1298,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
               <Upload className="w-10 h-10 text-emerald-400" />
               <div className="text-center">
                 <div className="font-semibold text-gray-800">Drop your menu PDF here</div>
-                <div className="text-sm text-gray-500 mt-1">or click to browse — max 10 MB</div>
+                <div className="text-sm text-gray-500 mt-1">or click to browse — max 25 MB</div>
               </div>
               {uploading && <Loader2 className="w-6 h-6 animate-spin text-emerald-500" />}
             </div>

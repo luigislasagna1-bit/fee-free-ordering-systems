@@ -146,7 +146,8 @@ export async function POST(req: NextRequest) {
 
   if (!categories || categories.length === 0 || categories.every((c) => c.items.length === 0)) {
     return NextResponse.json({
-      error: "No menu items detected. The PDF may be a scanned image or use an unusual layout. You can still add items manually below.",
+      error:
+        "No menu items detected. This usually means: (a) the PDF is a scanned image (we can't read pixel text — try a text-based PDF), (b) the layout is unusual enough that our reader can't find dish names, or (c) the menu uses photo-only design with no readable text. You can still add items manually below.",
     }, { status: 422 });
   }
 
@@ -210,6 +211,7 @@ export async function PUT(req: NextRequest) {
 
   let categoriesCreated = 0;
   let itemsCreated = 0;
+  let itemsSkippedDuplicate = 0;
 
   // Pre-fetch the max sortOrder among existing categories so newly-created
   // ones append at the end.
@@ -247,22 +249,36 @@ export async function PUT(req: NextRequest) {
         categoriesCreated++;
       }
 
-      // Find current max item sort for that category
-      const itemMaxSort = await tx.menuItem.aggregate({
+      // De-dup against items ALREADY in this category (case-insensitive
+      // name match, trimmed). Without this, re-importing the same menu
+      // — or merging a new menu into an existing category that already
+      // has overlapping dishes — produces silent duplicates that the
+      // owner then has to clean up by hand. Confirmed by Luigi during
+      // UAT 2026-05-26.
+      const existingItems = await tx.menuItem.findMany({
         where: { restaurantId, categoryId },
-        _max: { sortOrder: true },
+        select: { name: true, sortOrder: true },
       });
-      let nextItemSort = (itemMaxSort._max.sortOrder ?? -1) + 1;
+      const existingNames = new Set(existingItems.map((it) => it.name.trim().toLowerCase()));
+      let nextItemSort = existingItems.reduce((max, it) => Math.max(max, it.sortOrder), -1) + 1;
 
       for (const item of cat.items) {
-        if (!item?.name || typeof item.price !== "number" || item.price <= 0) continue;
+        if (!item?.name) continue;
+        // Accept price = 0 (AYCE menus etc.); reject negatives + obviously bad numbers
+        const price = typeof item.price === "number" && Number.isFinite(item.price) && item.price >= 0 && item.price <= 10000 ? item.price : 0;
+        const normalizedName = item.name.trim().toLowerCase();
+        if (existingNames.has(normalizedName)) {
+          itemsSkippedDuplicate++;
+          continue;
+        }
+        existingNames.add(normalizedName);
         await tx.menuItem.create({
           data: {
             restaurantId,
             categoryId,
             name: item.name.slice(0, 120),
             description: (item.description ?? "").slice(0, 500),
-            price: item.price,
+            price,
             sortOrder: nextItemSort++,
           },
         });
@@ -271,5 +287,5 @@ export async function PUT(req: NextRequest) {
     }
   });
 
-  return NextResponse.json({ categoriesCreated, itemsCreated });
+  return NextResponse.json({ categoriesCreated, itemsCreated, itemsSkippedDuplicate });
 }

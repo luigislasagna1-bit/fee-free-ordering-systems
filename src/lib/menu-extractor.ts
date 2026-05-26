@@ -52,7 +52,9 @@ Your job: read it carefully and call the \`save_menu_extraction\` tool with EVER
 
 Rules:
 - Group items by the category headings shown on the menu (e.g. "Pizzas", "Appetizers", "Pasta", "Desserts"). If there are no visible categories, put everything in a single category called "Menu".
-- Each item must have a numeric \`price\` in dollars (e.g. 14.99). If a price isn't visible or you can't read it, OMIT THAT ITEM rather than guess.
+- Each item should include a numeric \`price\` in dollars (e.g. 14.99). If a price IS visible on the menu next to the item, ALWAYS extract it.
+- If the menu is "All You Can Eat" / "Buffet" / "Prix Fixe" style where individual items don't have prices (only a single overall price like "$19.99 / person"), set price to 0 for those items — DON'T omit them. Restaurant owners need the item names + descriptions even when they'll set prices manually later. ALSO extract any items that DO have visible prices on the same menu (e.g. beverages, wines, desserts often have prices even when the food is AYCE).
+- If a price genuinely isn't visible AND the menu isn't AYCE-style, set price to 0 — the owner will fill it in. It's better to surface the item than drop it.
 - If an item has size variants like S/M/L or 10"/14" with different prices, pick the smallest size + price as the primary item and append the variants to the description (e.g. "10\\" $14.99 | 14\\" $19.99"). Do not create duplicate item entries for each size.
 - Descriptions should be the ingredient list / blurb shown on the menu, NOT marketing copy from headers. Empty string is fine if there's no description.
 - Names should be the dish name as printed — keep capitalization natural. Trim to under 80 characters.
@@ -151,16 +153,21 @@ export async function extractMenuWithClaude(pdfBuffer: Buffer): Promise<Extracte
     throw new Error("Claude returned malformed extraction (no categories array)");
   }
 
-  // Sanitize: drop empty categories, drop items with non-positive prices,
-  // trim names/descriptions.
+  // Sanitize: drop empty categories, trim names/descriptions. Items with
+  // price = 0 are KEPT (AYCE / no-price menus — see prompt). We still
+  // reject obviously bad numbers (negative, NaN, >$10k) but a missing/
+  // zero price now means "owner sets it later" rather than "drop this
+  // item entirely." Confirmed during UAT 2026-05-26 against a 60-page
+  // Italian Asian-fusion AYCE menu whose ~200 dishes had no per-item
+  // prices — the old "omit if no price" rule silently lost everything.
   const clean: ExtractedCategory[] = [];
   for (const cat of input.categories) {
     if (!cat || typeof cat.name !== "string" || !cat.name.trim()) continue;
     const items: ExtractedItem[] = [];
     for (const item of cat.items ?? []) {
       if (!item || typeof item.name !== "string") continue;
-      const price = typeof item.price === "number" ? item.price : parseFloat(String(item.price));
-      if (!Number.isFinite(price) || price <= 0 || price > 10000) continue;
+      const rawPrice = typeof item.price === "number" ? item.price : parseFloat(String(item.price));
+      const price = Number.isFinite(rawPrice) && rawPrice >= 0 && rawPrice <= 10000 ? rawPrice : 0;
       items.push({
         name: item.name.trim().slice(0, 120),
         description: (item.description ?? "").trim().slice(0, 500),
@@ -191,7 +198,7 @@ export function extractMenuWithRegex(text: string): ExtractedCategory[] {
     if (priceMatch) {
       const priceStr = (priceMatch[1] ?? priceMatch[2]).replace(/,/g, "");
       const price = parseFloat(priceStr);
-      if (price > 0 && price < 1000) {
+      if (price >= 0 && price < 10000) {
         const name = line.replace(priceRe, "").replace(/\.{2,}/g, "").trim();
         if (name.length >= 2 && name.length <= 120) {
           items.push({ name, description: pendingDescription.trim(), price });
