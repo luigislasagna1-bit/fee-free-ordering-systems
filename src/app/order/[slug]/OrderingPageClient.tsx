@@ -237,6 +237,7 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
 export function OrderingPageClient({
   restaurant,
   cardPaymentEnabled = false,
+  paypalEnabled = false,
   stripePublishableKey = null,
   themeSettings = null,
   locale = "en",
@@ -246,6 +247,10 @@ export function OrderingPageClient({
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
+  /** True when the restaurant has connected PayPal AND has the
+   *  card_payments entitlement. Drives whether PayPal works at
+   *  checkout vs. shows a "not yet ready" notice. */
+  paypalEnabled?: boolean;
   stripePublishableKey?: string | null;
   themeSettings?: string | null;
   locale?: string;
@@ -256,8 +261,8 @@ export function OrderingPageClient({
    *  differentiator. */
   isEmbedded?: boolean;
   /** Payment method slugs the restaurant has selected in /admin/payments.
-   *  Possible values: "cash", "card_in_person", "online_card". The
-   *  checkout picker renders ONLY these options — owners who haven't
+   *  Possible values: "cash", "card_in_person", "online_card", "paypal".
+   *  The checkout picker renders ONLY these options — owners who haven't
    *  enabled Online Payments won't see a "Pay Online (Card)" button
    *  on their customer page. */
   acceptedMethods?: string[];
@@ -779,6 +784,29 @@ export function OrderingPageClient({
           stripeAccount: piData.stripeAccount ?? "",
         });
         router.push(`/order/${restaurant.slug}/payment?${params.toString()}`);
+      } else if (customerInfo.paymentMethod === "paypal" && paypalEnabled) {
+        // PayPal flow — create a PayPal Order, get the approve URL,
+        // redirect customer there. Customer signs in + approves on
+        // PayPal, then PayPal redirects them back to /order/<slug>/paypal/return
+        // which authorizes + flips status. Fire funnel step before
+        // redirect (mirrors the card branch above).
+        fireStep("payment_open");
+        const ppRes = await fetch("/api/public/paypal-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            restaurantSlug: restaurant.slug,
+            amount: total,
+            currency: "USD",
+            orderId: orderData.id,
+          }),
+        });
+        const ppData = await ppRes.json();
+        if (!ppRes.ok || !ppData.approveUrl) {
+          throw new Error(ppData.error || "PayPal setup failed");
+        }
+        // Full-page redirect — PayPal doesn't render inside an iframe.
+        window.location.href = ppData.approveUrl;
       } else {
         router.push(`/order/${restaurant.slug}/confirmation?orderId=${orderData.id}`);
       }
@@ -1385,6 +1413,7 @@ export function OrderingPageClient({
           placeOrder={placeOrder}
           cardPaymentEnabled={cardPaymentEnabled}
           acceptedMethods={acceptedMethods}
+          paypalEnabled={paypalEnabled}
           couponCode={couponCode}
           setCouponCode={setCouponCode}
           couponId={couponId}

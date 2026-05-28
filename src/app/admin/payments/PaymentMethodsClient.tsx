@@ -17,7 +17,7 @@ import { Banknote, CreditCard, Globe, Check, Loader2, ArrowRight, AlertCircle, L
  * so the layout re-runs and the floating GuidedSetupPill auto-advances.
  */
 
-type Method = "cash" | "card_in_person" | "online_card";
+type Method = "cash" | "card_in_person" | "online_card" | "paypal";
 
 const METHOD_CARDS: Array<{
   id: Method;
@@ -43,6 +43,12 @@ const METHOD_CARDS: Array<{
     description: "Customers pay by card on the ordering page. Money lands in your Stripe account, minus a small processor fee. Requires Stripe Connect setup.",
     icon: Globe,
   },
+  {
+    id: "paypal",
+    label: "PayPal",
+    description: "Customers pay with PayPal. Money lands directly in your PayPal Business account. Requires your PayPal REST app credentials (paste them on the Providers page).",
+    icon: Globe,
+  },
 ];
 
 export function PaymentMethodsClient({
@@ -61,13 +67,13 @@ export function PaymentMethodsClient({
   const router = useRouter();
   const [methods, setMethods] = useState<Set<Method>>(
     new Set(initialMethods.filter((m): m is Method =>
-      m === "cash" || m === "card_in_person" || m === "online_card"
+      m === "cash" || m === "card_in_person" || m === "online_card" || m === "paypal"
     ))
   );
   const [saving, setSaving] = useState(false);
 
   function toggle(m: Method) {
-    if (m === "online_card" && !onlinePaymentsUnlocked) {
+    if ((m === "online_card" || m === "paypal") && !onlinePaymentsUnlocked) {
       toast.error("Subscribe to the Online Payments add-on first.");
       return;
     }
@@ -124,7 +130,7 @@ export function PaymentMethodsClient({
         {METHOD_CARDS.map((m) => {
           const Icon = m.icon;
           const selected = methods.has(m.id);
-          const locked = m.id === "online_card" && !onlinePaymentsUnlocked;
+          const locked = (m.id === "online_card" || m.id === "paypal") && !onlinePaymentsUnlocked;
           return (
             <button
               key={m.id}

@@ -50,11 +50,16 @@ interface Props {
    *    "cash"           → Cash on pickup / delivery
    *    "card_in_person" → Card at pickup / door (POS / mobile reader)
    *    "online_card"    → Stripe-charged card on the checkout page
-   *  When "online_card" is in this set but cardPaymentEnabled is false
-   *  (no Stripe Connect / no card_payments entitlement), the button
-   *  renders but selecting it shows the "coming soon" notice and the
-   *  order can't actually be placed on card. */
+   *    "paypal"         → PayPal Smart Buttons → external approval flow
+   *  When "online_card" or "paypal" is in this set but the corresponding
+   *  account isn't connected, the button still renders but selecting it
+   *  shows a "coming soon" notice. */
   acceptedMethods: string[];
+  /** True when the restaurant has connected their PayPal REST app
+   *  credentials (paypalAccountStatus = "connected") AND has the
+   *  card_payments entitlement. Drives whether the PayPal button works
+   *  vs. shows "coming soon". */
+  paypalEnabled: boolean;
   couponCode: string;
   setCouponCode: (s: string) => void;
   couponId: string | null;
@@ -80,6 +85,7 @@ export function CheckoutModal({
   orderLoading, placeOrder,
   cardPaymentEnabled,
   acceptedMethods,
+  paypalEnabled,
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
   hasZones, geocoding, geocodeError, resolvedZone,
@@ -139,9 +145,11 @@ export function CheckoutModal({
   const paymentSummary =
     customerInfo.paymentMethod === "card"
       ? tc("payOnlineCard")
-      : customerInfo.paymentMethod === "card_in_person"
-        ? (orderType === "pickup" ? tc("cardOnPickup") : tc("cardOnDelivery"))
-        : (orderType === "pickup" ? tc("cashOnPickup") : tc("cashOnDelivery"));
+      : customerInfo.paymentMethod === "paypal"
+        ? "PayPal"
+        : customerInfo.paymentMethod === "card_in_person"
+          ? (orderType === "pickup" ? tc("cardOnPickup") : tc("cardOnDelivery"))
+          : (orderType === "pickup" ? tc("cashOnPickup") : tc("cashOnDelivery"));
 
   const tipsSummary = tipAmount > 0
     ? `${tipPercent}% (${formatCurrency(tipAmount)})`
@@ -345,9 +353,14 @@ export function CheckoutModal({
                       value: "card", // legacy slug used by the Stripe branch in placeOrder()
                       label: tc("payOnlineCard"),
                     },
+                    {
+                      slug: "paypal",
+                      value: "paypal",
+                      label: "PayPal",
+                    },
                   ];
                   const visible = all.filter((p) => acceptedMethods.includes(p.slug));
-                  const cols = visible.length >= 3 ? "grid-cols-3" : "grid-cols-2";
+                  const cols = visible.length >= 4 ? "grid-cols-2 sm:grid-cols-4" : visible.length === 3 ? "grid-cols-3" : "grid-cols-2";
                   return (
                     <div className={`pt-3 grid ${cols} gap-2`}>
                       {visible.map((pm) => (
@@ -370,6 +383,18 @@ export function CheckoutModal({
                   <div className="mt-2 p-2.5 bg-blue-50 rounded-lg text-xs text-blue-700 flex items-start gap-2">
                     <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
                     {tc("cardComingSoon", { type: orderType === "pickup" ? tOrd("pickup").toLowerCase() : tOrd("delivery").toLowerCase() })}
+                  </div>
+                )}
+                {customerInfo.paymentMethod === "paypal" && !paypalEnabled && (
+                  <div className="mt-2 p-2.5 bg-amber-50 rounded-lg text-xs text-amber-700 flex items-start gap-2">
+                    <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
+                    This restaurant hasn&apos;t finished PayPal setup yet. Pick another payment method.
+                  </div>
+                )}
+                {customerInfo.paymentMethod === "paypal" && paypalEnabled && (
+                  <div className="mt-2 p-2.5 bg-blue-50 rounded-lg text-xs text-blue-700 flex items-start gap-2">
+                    <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
+                    You&apos;ll be redirected to PayPal to approve the payment after placing your order.
                   </div>
                 )}
               </SectionCard>

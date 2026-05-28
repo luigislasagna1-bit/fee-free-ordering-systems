@@ -9,6 +9,11 @@ import {
   stripeReady,
   voidPayment,
 } from "@/lib/stripe";
+import {
+  capturePaypalAuthorization,
+  voidPaypalAuthorization,
+  refundPaypalCapture,
+} from "@/lib/paypal";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { dispatchOrderToShipday, cancelShipdayOrder, shouldDispatchToShipday } from "@/lib/shipday";
 
@@ -84,6 +89,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       status: true,
       paymentStatus: true,
       paymentIntentId: true,
+      paypalOrderId: true,
+      paypalAuthorizationId: true,
+      paypalCaptureId: true,
       paymentMethod: true,
       viaMarketplace: true,
       marketplaceCounterApplied: true,
@@ -152,6 +160,38 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     }
   }
 
+  // Same dance for PayPal — capture the authorization on accept. If
+  // PayPal declines (auth expired, funding source revoked) we block
+  // acceptance so the kitchen isn't cooking food we can't collect on.
+  let paypalCaptureIdJustSet: string | null = null;
+  if (
+    newStatus === "accepted" &&
+    existing.paymentMethod === "paypal" &&
+    existing.paymentStatus === "authorized" &&
+    existing.paypalAuthorizationId
+  ) {
+    try {
+      const cap = await capturePaypalAuthorization({
+        restaurantId: existing.restaurantId,
+        authorizationId: existing.paypalAuthorizationId,
+        orderId: id,
+      });
+      paypalCaptureIdJustSet = cap.captureId;
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      console.error(`[orders PATCH] capturePaypalAuthorization failed for order ${id}:`, msg);
+      return NextResponse.json(
+        {
+          error:
+            "Couldn't capture the PayPal payment. The customer's authorization may have expired. Reject this order to release the hold.",
+          code: "paypal_capture_failed",
+          detail: msg,
+        },
+        { status: 402 },
+      );
+    }
+  }
+
   const updates: Record<string, unknown> = { status: newStatus };
 
   if (newStatus === "accepted") {
@@ -161,6 +201,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     // and re-set the same value (idempotent).
     if (existing.paymentMethod === "card" && existing.paymentStatus === "authorized") {
       updates.paymentStatus = "paid";
+    }
+    if (existing.paymentMethod === "paypal" && existing.paymentStatus === "authorized") {
+      updates.paymentStatus = "paid";
+      if (paypalCaptureIdJustSet) updates.paypalCaptureId = paypalCaptureIdJustSet;
     }
     const prepTime = parseInt(data.preparationTime, 10);
     if (!isNaN(prepTime) && prepTime > 0 && prepTime <= 240) {
@@ -237,6 +281,69 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
             await refundCapturedOrder(id, piId, accountId);
           } catch (e) {
             console.error("[orders PATCH] refundCapturedOrder:", e);
+          }
+        })(),
+      );
+    }
+  }
+
+  // PayPal kill flow — same shape: void if authorized, refund if captured.
+  // Idempotent on PayPal's side via PayPal-Request-Id keyed by orderId.
+  if (
+    isKilled &&
+    existing.paymentMethod === "paypal" &&
+    existing.paypalAuthorizationId
+  ) {
+    const restaurantId = existing.restaurantId;
+    const authId = existing.paypalAuthorizationId;
+    const captureId = existing.paypalCaptureId;
+    if (existing.paymentStatus === "authorized") {
+      after(
+        (async () => {
+          try {
+            await voidPaypalAuthorization({
+              restaurantId,
+              authorizationId: authId,
+              orderId: id,
+            });
+            await prisma.order.update({
+              where: { id },
+              data: { paymentStatus: "voided" },
+            });
+          } catch (e) {
+            console.error("[orders PATCH] voidPaypalAuthorization:", e);
+            // Best-effort. If PayPal already auto-voided the auth (24h+
+            // expiry) the customer is still fine — no money moved.
+          }
+        })(),
+      );
+    } else if (existing.paymentStatus === "paid" && captureId) {
+      after(
+        (async () => {
+          try {
+            await prisma.order.update({
+              where: { id },
+              data: { refundStatus: "pending" },
+            });
+            const r = await refundPaypalCapture({
+              restaurantId,
+              captureId,
+              orderId: id,
+              reason: "Restaurant cancelled after acceptance",
+            });
+            await prisma.order.update({
+              where: { id },
+              data: {
+                paymentStatus: "refunded",
+                refundStatus: r.status === "COMPLETED" || r.status === "PENDING" ? "refunded" : "failed",
+              },
+            });
+          } catch (e) {
+            console.error("[orders PATCH] refundPaypalCapture:", e);
+            await prisma.order.update({
+              where: { id },
+              data: { refundStatus: "failed" },
+            }).catch(() => {});
           }
         })(),
       );

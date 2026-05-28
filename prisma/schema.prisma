@@ -73,12 +73,32 @@ model Restaurant {
   stripeChargesEnabled Boolean @default(false)
   stripePayoutsEnabled Boolean @default(false)
 
+  // PayPal direct charges (Layer C alternative — same model as Stripe Connect:
+  // restaurant owns the merchant account, money lands directly in their PayPal
+  // balance, platform never touches funds). Credentials encrypted via encrypt.ts.
+  // Owner pastes their REST app client ID + secret from
+  // https://developer.paypal.com/dashboard/applications into our admin; we
+  // never see the raw secret again after the initial encrypt.
+  paypalAccountStatus   String?   @default("not_connected") // not_connected | connected | error
+  paypalEnvironment     String?   @default("live")          // sandbox | live
+  paypalClientIdEnc     String?
+  paypalClientIdIv      String?
+  paypalClientIdTag     String?
+  paypalSecretEnc       String?
+  paypalSecretIv        String?
+  paypalSecretTag       String?
+  paypalMerchantEmail   String?   // shown in admin so owner sees which account is wired
+  paypalWebhookId       String?   // webhook ID registered on PayPal for this restaurant
+  paypalConnectedAt     DateTime?
+
   /// JSON array of accepted payment methods chosen by the owner.
-  /// Allowed values today: "cash" | "card_in_person" | "online_card".
+  /// Allowed values today: "cash" | "card_in_person" | "online_card" | "paypal".
   /// Required for publishing — owner must pick at least one. When the
   /// array includes "online_card", the Stripe Connect step also becomes
   /// required to publish (you can't promise online card and have no
-  /// processor wired up). Empty array means "not yet configured".
+  /// processor wired up). Same constraint applies to "paypal" — must
+  /// have a connected PayPal account to publish with paypal in the list.
+  /// Empty array means "not yet configured".
   paymentMethods String @default("[]")
 
   // Platform subscription (Layer B — restaurant pays you monthly via Stripe Checkout)
@@ -380,6 +400,24 @@ model StripeWebhookEvent {
   @@index([receivedAt])
 }
 
+// Idempotency log for PayPal webhooks. Same shape as StripeWebhookEvent —
+// PayPal retries on failure for up to 25 attempts over 3 days, so dedup
+// by event id is non-negotiable.
+model PaypalWebhookEvent {
+  id            String    @id @default(cuid())
+  paypalEventId String    @unique
+  eventType     String
+  resourceId    String?   // PayPal order / authorization / capture id, when present
+  receivedAt    DateTime  @default(now())
+  processedAt   DateTime?
+  status        String    @default("received") // received | processed | failed | ignored
+  errorMessage  String?
+
+  @@index([eventType])
+  @@index([receivedAt])
+  @@index([resourceId])
+}
+
 model User {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -580,7 +618,14 @@ model Order {
   total           Float
   paymentMethod   String    @default("cash")
   paymentStatus   String    @default("pending")
-  paymentIntentId String?
+  paymentIntentId String?   // Stripe PaymentIntent id (when paymentMethod = "card")
+  // PayPal lineage (when paymentMethod = "paypal"). We capture all three
+  // ids so we can refund/void against the right resource. PayPal's flow:
+  //   order → authorize → captures[]. We treat capture like Stripe's
+  //   payment_intent.succeeded — only then is `paymentStatus = paid`.
+  paypalOrderId         String?
+  paypalAuthorizationId String?
+  paypalCaptureId       String?
   refundStatus    String? // null | "pending" | "refunded" | "failed"
   /// Set when the order has been "released" to the kitchen + customer
   /// (i.e. notifications fired, kitchen display picks it up). For cash

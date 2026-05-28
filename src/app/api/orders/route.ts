@@ -486,13 +486,17 @@ export async function POST(req: NextRequest) {
     // ── Release the order to kitchen + customer (or defer if paying card) ──
     // Cash / pay-at-store → fire notifications NOW. The order goes straight
     //   to the kitchen display and the customer gets the confirmation email.
-    // Online card → DO NOT fire. The order exists in the DB but `notifiedAt`
-    //   stays null, so the kitchen GET filters it out. We release in the
-    //   payment_intent.succeeded webhook once Stripe confirms payment cleared.
-    //   This prevents a customer from "placing" a card order, never paying,
-    //   and the kitchen cooking food they'll never get paid for.
-    const isCardOrder = (paymentMethod || "cash") === "card";
-    if (!isCardOrder) {
+    // Online card or PayPal → DO NOT fire. The order exists in the DB but
+    //   `notifiedAt` stays null, so the kitchen GET filters it out. We release
+    //   only after the payment is actually authorized:
+    //     - Stripe: payment_intent.succeeded webhook
+    //     - PayPal: /api/public/paypal-order/[id]/authorize endpoint hits
+    //       fireOrderNotifications after the customer approves on PayPal.
+    //   This prevents a customer from "placing" an online order, never paying,
+    //   and the kitchen cooking food we'll never get paid for.
+    const method = paymentMethod || "cash";
+    const deferKitchenRelease = method === "card" || method === "paypal";
+    if (!deferKitchenRelease) {
       // IMPORTANT: schedule via after() — Vercel kills bare unawaited
       // promises the moment we return the response below. We hit this
       // exact bug with card orders (ORD-529226215, fixed in commit 9ae4745
@@ -538,9 +542,9 @@ export async function POST(req: NextRequest) {
       orderNumber: order.orderNumber,
       total: serverTotal,
       // Client uses this to decide whether to redirect straight to the
-      // status page (cash) or first take the customer through Stripe
-      // Elements (card).
-      requiresPayment: isCardOrder,
+      // status page (cash / pay-in-person) or first take the customer
+      // through a payment surface (Stripe Elements or PayPal approval).
+      requiresPayment: deferKitchenRelease,
     }, { status: 201 });
   } catch (err) {
     console.error("[orders POST]", err);

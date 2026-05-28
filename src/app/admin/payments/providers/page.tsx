@@ -17,6 +17,9 @@ export default async function ProvidersPage() {
             stripeAccountStatus: true,
             stripeChargesEnabled: true,
             stripePayoutsEnabled: true,
+            paypalAccountStatus: true,
+            paypalEnvironment: true,
+            paypalMerchantEmail: true,
             paymentMethods: true,
           },
         })
@@ -34,11 +37,15 @@ export default async function ProvidersPage() {
   // shouldn't push Stripe onboarding on them. The page treats this as
   // "online card payment is dormant; enable in Accepted Methods to use".
   let onlineCardEnabled = false;
+  let paypalEnabled = false;
   if (restaurant?.paymentMethods) {
     try {
       const arr = JSON.parse(restaurant.paymentMethods);
-      onlineCardEnabled = Array.isArray(arr) && arr.includes("online_card");
-    } catch { /* malformed JSON — treat as not enabled */ }
+      if (Array.isArray(arr)) {
+        onlineCardEnabled = arr.includes("online_card");
+        paypalEnabled = arr.includes("paypal");
+      }
+    } catch { /* malformed JSON — treat as nothing enabled */ }
   }
 
   return (
@@ -47,6 +54,7 @@ export default async function ProvidersPage() {
       stripeConfigured={stripeConfigured}
       hasOnlinePaymentsAddOn={hasOnlinePayments}
       onlineCardEnabled={onlineCardEnabled}
+      paypalEnabled={paypalEnabled}
     />
   );
 }

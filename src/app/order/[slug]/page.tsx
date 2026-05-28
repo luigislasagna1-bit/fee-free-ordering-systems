@@ -123,6 +123,13 @@ export default async function OrderingPage({
   );
   const cardPaymentEnabled = platformReady && connectReady && hasCardPayments;
 
+  // PayPal mirrors the card-payments gate but uses the per-restaurant
+  // PayPal connection instead of platform Stripe + restaurant Connect.
+  // Shares the `card_payments` entitlement so restaurants paying for
+  // Online Payments get both processors for the same subscription.
+  const paypalEnabled =
+    (restaurant as any).paypalAccountStatus === "connected" && hasCardPayments;
+
   // Pull the PLATFORM publishable key — destination-charge model means the
   // platform's key (not the restaurant's) is what the Stripe Elements
   // confirms the PaymentIntent with.
@@ -180,6 +187,7 @@ export default async function OrderingPage({
       <OrderingPageClient
         restaurant={restaurant as any}
         cardPaymentEnabled={cardPaymentEnabled}
+        paypalEnabled={paypalEnabled}
         stripePublishableKey={stripePublishableKey}
         themeSettings={(restaurant as any).themeSettings ?? null}
         locale={locale}

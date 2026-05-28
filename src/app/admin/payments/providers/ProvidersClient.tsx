@@ -13,6 +13,9 @@ type RestaurantState = {
   stripeAccountStatus: string | null;
   stripeChargesEnabled: boolean;
   stripePayoutsEnabled: boolean;
+  paypalAccountStatus: string | null;
+  paypalEnvironment: string | null;
+  paypalMerchantEmail: string | null;
 } | null;
 
 interface Props {
@@ -28,6 +31,8 @@ interface Props {
    *  surface online card payment to customers — Stripe onboarding shouldn't
    *  feel mandatory in that case. */
   onlineCardEnabled: boolean;
+  /** True when "paypal" is currently in the restaurant's Accepted Methods. */
+  paypalEnabled: boolean;
 }
 
 export function ProvidersClient({
@@ -35,6 +40,7 @@ export function ProvidersClient({
   stripeConfigured,
   hasOnlinePaymentsAddOn,
   onlineCardEnabled,
+  paypalEnabled,
 }: Props) {
   const params = useSearchParams();
   const justConnected = params.get("status") === "connected";
@@ -46,6 +52,66 @@ export function ProvidersClient({
   const charges = !!restaurant?.stripeChargesEnabled;
   const payouts = !!restaurant?.stripePayoutsEnabled;
   const status = restaurant?.stripeAccountStatus || "not_connected";
+
+  // ── PayPal state ────────────────────────────────────────────────────────
+  const paypalConnected = restaurant?.paypalAccountStatus === "connected";
+  const paypalStatus = restaurant?.paypalAccountStatus || "not_connected";
+  const [ppForm, setPpForm] = useState({
+    clientId: "",
+    secret: "",
+    environment: "live" as "sandbox" | "live",
+    merchantEmail: "",
+  });
+  const [ppError, setPpError] = useState<string | null>(null);
+  const [ppSuccess, setPpSuccess] = useState<string | null>(null);
+  const [showSecret, setShowSecret] = useState(false);
+
+  async function connectPaypal() {
+    if (!ppForm.clientId.trim() || !ppForm.secret.trim()) {
+      setPpError("Both Client ID and Secret are required.");
+      return;
+    }
+    setBusy("paypal-connect");
+    setPpError(null);
+    setPpSuccess(null);
+    try {
+      const res = await fetch("/api/paypal/connect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(ppForm),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPpError(data.error || "Could not connect PayPal");
+        return;
+      }
+      setPpSuccess(`Connected${data.merchantEmail ? ` (${data.merchantEmail})` : ""}.`);
+      // Clear creds out of the in-memory form so they don't sit in
+      // React state. The server has them encrypted now.
+      setPpForm({ clientId: "", secret: "", environment: ppForm.environment, merchantEmail: "" });
+      setTimeout(() => window.location.reload(), 700);
+    } catch {
+      setPpError("Network error connecting PayPal.");
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  async function disconnectPaypal() {
+    if (!confirm("Disconnect your PayPal account? Customers won't be able to pay with PayPal until you reconnect.")) return;
+    setBusy("paypal-disconnect");
+    try {
+      const res = await fetch("/api/paypal/connect", { method: "DELETE" });
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        setPpError(d.error || "Could not disconnect");
+        return;
+      }
+      window.location.reload();
+    } finally {
+      setBusy(null);
+    }
+  }
 
   async function startOnboarding() {
     setBusy("onboard");
@@ -324,6 +390,200 @@ export function ProvidersClient({
                   className="flex items-center gap-2 bg-white border border-red-200 hover:bg-red-50 text-red-600 font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
                 >
                   {busy === "disconnect" ? <Loader2 className="w-4 h-4 animate-spin" /> : "Disconnect"}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* ── PayPal ──────────────────────────────────────────────────────── */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-[#003087] rounded-xl flex items-center justify-center font-bold text-white text-lg">
+              P
+            </div>
+            <div>
+              <div className="font-semibold text-gray-900">PayPal</div>
+              <div className="text-xs text-gray-500">REST app · Direct charge</div>
+            </div>
+          </div>
+          {paypalConnected && (
+            <div className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-green-100 text-green-700">
+              <CheckCircle className="w-3.5 h-3.5" />
+              Connected
+            </div>
+          )}
+          {paypalStatus === "error" && (
+            <div className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-rose-100 text-rose-700">
+              <AlertCircle className="w-3.5 h-3.5" />
+              Error
+            </div>
+          )}
+        </div>
+
+        <div className="p-6 space-y-5">
+          {ppError && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex gap-2 text-sm text-red-700">
+              <XCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              {ppError}
+            </div>
+          )}
+          {ppSuccess && (
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex gap-2 text-sm text-emerald-700">
+              <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              {ppSuccess}
+            </div>
+          )}
+
+          {!paypalConnected && (
+            <>
+              <div className="text-sm text-gray-600 space-y-2">
+                <p>
+                  <strong>One-time setup</strong> — paste credentials from your PayPal Business
+                  account&apos;s REST app. We encrypt them at rest; PayPal money flows directly
+                  to your account, Fee Free Ordering takes 0% per order.
+                </p>
+                <p className="text-xs text-gray-500">
+                  Need credentials? Sign in at{" "}
+                  <a
+                    href="https://developer.paypal.com/dashboard/applications/live"
+                    target="_blank" rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline inline-flex items-center gap-1"
+                  >
+                    developer.paypal.com → Apps &amp; Credentials
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                  {" "}→ create a REST app → copy Client ID and Secret.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Environment</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {(["live", "sandbox"] as const).map((env) => (
+                      <button
+                        key={env}
+                        type="button"
+                        onClick={() => setPpForm({ ...ppForm, environment: env })}
+                        className={`py-2 px-3 rounded-lg border-2 text-xs font-semibold transition ${
+                          ppForm.environment === env
+                            ? "border-blue-500 bg-blue-50 text-blue-700"
+                            : "border-gray-200 text-gray-600 hover:border-gray-300"
+                        }`}
+                      >
+                        {env === "live" ? "Live (Production)" : "Sandbox (Testing)"}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-[11px] text-gray-500 mt-1">
+                    Use Sandbox to test with PayPal&apos;s fake-money accounts. Switch to Live when ready to take real payments.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Client ID</label>
+                  <input
+                    type="text"
+                    autoComplete="off"
+                    spellCheck={false}
+                    value={ppForm.clientId}
+                    onChange={(e) => setPpForm({ ...ppForm, clientId: e.target.value })}
+                    placeholder="AeA1QIZXiflr1_-r0U2HZsa..."
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Secret</label>
+                  <div className="relative">
+                    <input
+                      type={showSecret ? "text" : "password"}
+                      autoComplete="off"
+                      spellCheck={false}
+                      value={ppForm.secret}
+                      onChange={(e) => setPpForm({ ...ppForm, secret: e.target.value })}
+                      placeholder="ELXxIfXdcDvWyEz4Yvqu..."
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 pr-20 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowSecret(!showSecret)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-500 hover:text-gray-700 font-semibold"
+                    >
+                      {showSecret ? "Hide" : "Show"}
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-gray-500 mt-1">
+                    We encrypt this with AES-256-GCM before storing. It&apos;s never sent back to your browser after this.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">PayPal account email (optional)</label>
+                  <input
+                    type="email"
+                    autoComplete="off"
+                    value={ppForm.merchantEmail}
+                    onChange={(e) => setPpForm({ ...ppForm, merchantEmail: e.target.value })}
+                    placeholder="payments@yourrestaurant.com"
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <p className="text-[11px] text-gray-500 mt-1">
+                    Shown back to you here so you can tell at a glance which PayPal account is wired up.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={connectPaypal}
+                disabled={busy !== null || !ppForm.clientId.trim() || !ppForm.secret.trim()}
+                className="w-full flex items-center justify-center gap-2 bg-[#003087] hover:bg-[#001f5c] text-white font-semibold px-5 py-3 rounded-xl text-sm transition disabled:opacity-50"
+              >
+                {busy === "paypal-connect" ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Shield className="w-4 h-4" />
+                )}
+                Verify &amp; Connect PayPal
+              </button>
+            </>
+          )}
+
+          {paypalConnected && (
+            <>
+              <div className="grid grid-cols-2 gap-3">
+                <StatusTile label="Status" ok hint="Connected" />
+                <StatusTile
+                  label="Environment"
+                  ok={restaurant?.paypalEnvironment === "live"}
+                  hint={restaurant?.paypalEnvironment === "live" ? "Live" : "Sandbox (test)"}
+                />
+              </div>
+              {restaurant?.paypalMerchantEmail && (
+                <p className="text-xs text-gray-500">
+                  PayPal account: <span className="font-mono">{restaurant.paypalMerchantEmail}</span>
+                </p>
+              )}
+              {!paypalEnabled && (
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-800">
+                  PayPal is connected but not yet listed in <strong>Accepted Methods</strong> —
+                  customers won&apos;t see it as a payment option.{" "}
+                  <Link href="/admin/payments" className="underline font-semibold">
+                    Enable it here
+                  </Link>
+                  .
+                </div>
+              )}
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={disconnectPaypal}
+                  disabled={busy !== null}
+                  className="flex items-center gap-2 bg-white border border-red-200 hover:bg-red-50 text-red-600 font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
+                >
+                  {busy === "paypal-disconnect" ? <Loader2 className="w-4 h-4 animate-spin" /> : "Disconnect"}
                 </button>
               </div>
             </>
