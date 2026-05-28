@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   CreditCard, CheckCircle, XCircle, AlertCircle, Loader2,
-  ExternalLink, Shield, Zap, Lock,
+  ExternalLink, Shield, Zap, Lock, HelpCircle, ChevronDown, ChevronUp,
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
@@ -65,6 +65,7 @@ export function ProvidersClient({
   const [ppError, setPpError] = useState<string | null>(null);
   const [ppSuccess, setPpSuccess] = useState<string | null>(null);
   const [showSecret, setShowSecret] = useState(false);
+  const [showPpInstructions, setShowPpInstructions] = useState(false);
 
   async function connectPaypal() {
     if (!ppForm.clientId.trim() || !ppForm.secret.trim()) {
@@ -445,19 +446,131 @@ export function ProvidersClient({
                   account&apos;s REST app. We encrypt them at rest; PayPal money flows directly
                   to your account, Fee Free Ordering takes 0% per order.
                 </p>
-                <p className="text-xs text-gray-500">
-                  Need credentials? Sign in at{" "}
-                  <a
-                    href="https://developer.paypal.com/dashboard/applications/live"
-                    target="_blank" rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline inline-flex items-center gap-1"
-                  >
-                    developer.paypal.com → Apps &amp; Credentials
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                  {" "}→ create a REST app → copy Client ID and Secret.
-                </p>
+                <button
+                  type="button"
+                  onClick={() => setShowPpInstructions((v) => !v)}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700"
+                >
+                  <HelpCircle className="w-3.5 h-3.5" />
+                  {showPpInstructions
+                    ? "Hide step-by-step instructions"
+                    : "Don't know where to find these? Show step-by-step instructions"}
+                  {showPpInstructions ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                </button>
               </div>
+
+              {showPpInstructions && (
+                <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 space-y-3">
+                  <h3 className="text-sm font-bold text-blue-900 flex items-center gap-2">
+                    <Shield className="w-4 h-4" />
+                    How to get your PayPal credentials (about 5 minutes)
+                  </h3>
+
+                  {/* Step 1 — Business account */}
+                  <div className="flex gap-3">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">1</div>
+                    <div className="flex-1 text-xs text-blue-900 leading-relaxed">
+                      <strong>Make sure you have a PayPal Business account</strong> (not a
+                      personal one). Personal accounts can&apos;t take payments via the API.{" "}
+                      <a
+                        href="https://www.paypal.com/us/business"
+                        target="_blank" rel="noopener noreferrer"
+                        className="underline font-semibold inline-flex items-center gap-0.5"
+                      >
+                        Upgrade or create one
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                      . It&apos;s free to open and there&apos;s nothing to pay monthly — PayPal
+                      only charges per transaction, same as their normal rates.
+                    </div>
+                  </div>
+
+                  {/* Step 2 — Developer dashboard */}
+                  <div className="flex gap-3">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">2</div>
+                    <div className="flex-1 text-xs text-blue-900 leading-relaxed">
+                      Sign in to the PayPal Developer Dashboard with the SAME credentials
+                      as your Business account:{" "}
+                      <a
+                        href="https://developer.paypal.com/dashboard/applications/live"
+                        target="_blank" rel="noopener noreferrer"
+                        className="underline font-semibold inline-flex items-center gap-0.5"
+                      >
+                        developer.paypal.com → Apps &amp; Credentials
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                      . You&apos;ll land on the Live tab by default — that&apos;s the one
+                      you want for real customer payments.
+                    </div>
+                  </div>
+
+                  {/* Step 3 — Create REST app */}
+                  <div className="flex gap-3">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">3</div>
+                    <div className="flex-1 text-xs text-blue-900 leading-relaxed">
+                      Click <strong>&quot;Create App&quot;</strong>. Give it a name like
+                      <em> &quot;Fee Free Ordering&quot;</em> so you remember what it&apos;s
+                      for. Choose <strong>&quot;Merchant&quot;</strong> when asked what
+                      type. Submit. PayPal will land you on the app&apos;s detail page.
+                    </div>
+                  </div>
+
+                  {/* Step 4 — Copy creds */}
+                  <div className="flex gap-3">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">4</div>
+                    <div className="flex-1 text-xs text-blue-900 leading-relaxed">
+                      Near the top of the app page you&apos;ll see <strong>&quot;Client ID&quot;</strong>{" "}
+                      and <strong>&quot;Secret&quot;</strong>. Click <em>Show</em> next to the
+                      Secret to reveal it, then copy both. Paste them into the fields
+                      below.{" "}
+                      <span className="text-blue-700/80">
+                        Tip: the Client ID is the long alphanumeric string starting with{" "}
+                        <code className="font-mono bg-white px-1 rounded">A...</code>. The
+                        Secret usually starts with <code className="font-mono bg-white px-1 rounded">E...</code>.
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Step 5 — Live vs Sandbox */}
+                  <div className="flex gap-3">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">5</div>
+                    <div className="flex-1 text-xs text-blue-900 leading-relaxed">
+                      Pick the matching <strong>Environment</strong> below — pick
+                      <strong> Live</strong> for real customer payments, or
+                      <strong> Sandbox</strong> if you want to test with PayPal&apos;s fake-money
+                      accounts first. (If you grabbed the credentials from the
+                      developer dashboard&apos;s &quot;Sandbox&quot; tab, you MUST pick
+                      Sandbox — Live credentials won&apos;t work as Sandbox and vice versa.)
+                    </div>
+                  </div>
+
+                  {/* Step 6 — Verify */}
+                  <div className="flex gap-3">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center">6</div>
+                    <div className="flex-1 text-xs text-blue-900 leading-relaxed">
+                      Click <strong>&quot;Verify &amp; Connect PayPal&quot;</strong>. We&apos;ll
+                      test the credentials by asking PayPal for an OAuth token. If it
+                      works, the panel switches to &quot;Connected&quot; and customers
+                      can immediately pay with PayPal at checkout.
+                    </div>
+                  </div>
+
+                  <div className="border-t border-blue-200 pt-3 mt-3 text-[11px] text-blue-800 leading-relaxed">
+                    <strong>Security note:</strong> We encrypt your Client ID and Secret
+                    with AES-256-GCM before storing. They&apos;re never visible in your
+                    browser or any log file again after the initial save. If you ever
+                    rotate them in PayPal&apos;s dashboard, just come back here and
+                    paste the new ones.
+                  </div>
+                  <div className="text-[11px] text-blue-800 leading-relaxed">
+                    <strong>Stuck?</strong> Email{" "}
+                    <a href="mailto:support@feefreeordering.com" className="underline font-semibold">
+                      support@feefreeordering.com
+                    </a>{" "}
+                    with a screenshot of where you&apos;re stuck — we&apos;ll walk you through.
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-3">
                 <div>
