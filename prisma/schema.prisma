@@ -1501,6 +1501,22 @@ model MarketplaceListing {
   /// orders through the marketplace.
   billingMode String @default("payg")
 
+  /// True when the restaurant has explicitly clicked "Switch to PAYG"
+  /// on /admin/marketplace/payg-opt-in (or the billing page). We set
+  /// Stripe's `cancel_at_period_end = true` on their Monthly subscription
+  /// so they keep Monthly benefits until the current cycle ends, then
+  /// the subscription.deleted webhook reads this flag to decide what to
+  /// do at cancellation:
+  ///   - flag TRUE  → preserve listing (isListed stays true), flip
+  ///                  billingMode to "payg", reset this flag. PAYG
+  ///                  billing kicks in seamlessly.
+  ///   - flag FALSE → existing behavior — hide listing (isListed=false),
+  ///                  reset billingMode="payg" as the safe default. The
+  ///                  restaurant has to re-opt-in manually.
+  /// Cleared whenever the listing comes back online or the user undoes
+  /// the switch (by clicking "Stay on Monthly").
+  switchToPaygOnCancel Boolean @default(false)
+
   /// JSON string array — categories the customer can filter by on
   /// the marketplace browse page. e.g. ["pizza", "italian", "delivery"].
   /// Defaulted from restaurant.cuisineType at creation time but

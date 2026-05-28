@@ -8,6 +8,7 @@ import { restaurantHasCardOnFile } from "@/lib/addons";
 import { getMarketplaceEligibility } from "@/lib/marketplace-eligibility";
 import { PaygOptInButton } from "./PaygOptInButton";
 import { AddCardButton } from "./AddCardButton";
+import { SwitchToPaygButton } from "./SwitchToPaygButton";
 
 /**
  * /admin/marketplace/payg-opt-in — restaurant opts into the marketplace
@@ -36,10 +37,33 @@ export default async function PaygOptInPage({
   const params = await searchParams;
   const justSavedCard = params.card_saved === "1";
 
+  // Pull the marketplace add-on subscription too — needed to detect
+  // Monthly subscribers and surface the switch-to-PAYG confirmation
+  // view instead of redirecting them away.
+  const marketplaceAddOn = await prisma.addOn.findUnique({
+    where: { slug: "marketplace" },
+    select: { id: true },
+  });
+  const monthlySub = marketplaceAddOn
+    ? await prisma.restaurantAddOn.findUnique({
+        where: {
+          restaurantId_addOnId: {
+            restaurantId: user.restaurantId,
+            addOnId: marketplaceAddOn.id,
+          },
+        },
+        select: {
+          status: true,
+          cancelAtPeriodEnd: true,
+          currentPeriodEnd: true,
+        },
+      })
+    : null;
+
   const [listing, restaurant, hasCard, eligibility] = await Promise.all([
     prisma.marketplaceListing.findUnique({
       where: { restaurantId: user.restaurantId },
-      select: { id: true, billingMode: true, isListed: true },
+      select: { id: true, billingMode: true, isListed: true, switchToPaygOnCancel: true },
     }),
     prisma.restaurant.findUnique({
       where: { id: user.restaurantId },
@@ -49,12 +73,24 @@ export default async function PaygOptInPage({
     getMarketplaceEligibility(user.restaurantId, "payg"),
   ]);
 
-  // Already actively listed → no need to re-opt-in. Two cases redirect:
-  //   - billingMode "monthly" + listed → they're already on the paid plan
-  //   - billingMode "payg" + listed → they already opted in
-  // A HIDDEN listing (isListed=false, e.g. post-cancellation) falls
-  // through so they can re-confirm PAYG.
-  if (listing && listing.isListed) {
+  const isOnMonthly = !!monthlySub && (monthlySub.status === "active" || monthlySub.status === "trialing");
+
+  // Monthly subscriber → render the SWITCH-TO-PAYG confirmation view.
+  // Don't redirect them away (the old behaviour) — they explicitly
+  // clicked "Switch to Pay-As-You-Go" on the billing page and expect
+  // to land somewhere actionable.
+  if (isOnMonthly) {
+    return (
+      <SwitchFromMonthlyView
+        switchPending={!!monthlySub.cancelAtPeriodEnd && !!listing?.switchToPaygOnCancel}
+        switchAt={monthlySub.currentPeriodEnd}
+      />
+    );
+  }
+
+  // Already on PAYG and listed → no need to re-opt-in. Send them to
+  // the marketplace settings page where they can manage their listing.
+  if (listing && listing.isListed && listing.billingMode === "payg") {
     redirect("/admin/marketplace");
   }
 
@@ -244,6 +280,144 @@ export default async function PaygOptInPage({
           Subscribe to Marketplace Monthly ($199.99/mo)
         </Link>{" "}
         — unlimited orders, Driver Pool included, charged upfront.
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Renders the switch-from-Monthly confirmation view. Two states:
+ *
+ *   - No switch pending → big "Switch to Pay-As-You-Go" button. Click
+ *     triggers POST /api/admin/marketplace/switch-to-payg which sets
+ *     Stripe's cancel_at_period_end=true on the Monthly sub and
+ *     writes a flag on MarketplaceListing for the webhook to read.
+ *
+ *   - Switch already pending → green "Switch scheduled" panel showing
+ *     the exact date the transition will happen, plus an "Undo / stay
+ *     on Monthly" button that DELETEs to the same endpoint.
+ *
+ * In both states the user stays on Monthly until the period ends —
+ * unlimited orders, Driver Pool bundled. PAYG ($3/order) only kicks
+ * in after the cycle closes; no proration, no surprise charges.
+ */
+function SwitchFromMonthlyView({
+  switchPending,
+  switchAt,
+}: {
+  switchPending: boolean;
+  switchAt: Date | null;
+}) {
+  const switchDateLabel = switchAt
+    ? new Date(switchAt).toLocaleDateString(undefined, {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    : null;
+
+  return (
+    <div className="max-w-2xl mx-auto p-4 sm:p-6 space-y-6">
+      <div>
+        <Link href="/admin/billing" className="text-sm text-gray-600 hover:text-gray-900">
+          &larr; Back to billing
+        </Link>
+        <h1 className="text-2xl font-bold text-gray-900 mt-2 flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-emerald-500" />
+          Switch to Pay-As-You-Go
+        </h1>
+        <p className="text-sm text-gray-600 mt-1">
+          You&apos;re currently on the <strong>Monthly Unlimited</strong> plan.
+          Here&apos;s what happens when you switch.
+        </p>
+      </div>
+
+      {switchPending && (
+        <div className="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-4 sm:p-5">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center flex-shrink-0">
+              <CheckCircle2 className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="font-bold text-emerald-900">Switch scheduled</h2>
+              <p className="text-sm text-emerald-800 mt-1 leading-relaxed">
+                Your Monthly plan continues until <strong>{switchDateLabel ?? "the end of your current cycle"}</strong>.
+                On that date, Pay-As-You-Go kicks in automatically — $3 per
+                marketplace order, capped at $249.99/month. Your listing stays
+                live throughout; no gap in service.
+              </p>
+              <p className="text-xs text-emerald-700 mt-2 italic">
+                Driver Pool benefit ends with the Monthly plan. If you need
+                overflow drivers under PAYG, subscribe to Driver Pool ($19.99/mo)
+                separately before the switch date.
+              </p>
+            </div>
+          </div>
+          <SwitchToPaygButton mode="undo" />
+        </div>
+      )}
+
+      {!switchPending && (
+        <>
+          <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 space-y-4">
+            <h2 className="font-bold text-gray-900">What happens when you switch</h2>
+            <ul className="space-y-3 text-sm text-gray-700">
+              <li className="flex items-start gap-3">
+                <span className="text-emerald-500 font-bold flex-shrink-0 w-16">Now</span>
+                <span>
+                  We schedule your Monthly subscription to cancel at the end
+                  of the current cycle. <strong>You keep Monthly benefits
+                  (unlimited orders, Driver Pool bundled) until then.</strong>
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-emerald-500 font-bold flex-shrink-0 w-16">
+                  {switchDateLabel ?? "Cycle end"}
+                </span>
+                <span>
+                  PAYG kicks in. From this date forward you&apos;re billed
+                  $3 per marketplace order (capped at $249.99/month). Your
+                  listing stays live — no gap in service.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-amber-500 font-bold flex-shrink-0 w-16">After</span>
+                <span>
+                  Driver Pool is no longer included. If you rely on it,
+                  subscribe to the standalone Driver Pool add-on
+                  ($19.99/mo) before the switch date.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-blue-500 font-bold flex-shrink-0 w-16">Undo</span>
+                <span>
+                  You can undo the switch any time before the cycle ends
+                  — just click the &quot;Stay on Monthly&quot; button that
+                  appears after you confirm.
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 flex gap-2 text-xs text-amber-900">
+            <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <strong>Reminder:</strong> PAYG starts billing $3 per marketplace
+              order from the switch date forward. Direct orders (your own
+              ordering page, widget, or branded mobile app) stay FREE forever
+              — PAYG only charges for the marketplace channel.
+            </div>
+          </div>
+
+          <SwitchToPaygButton mode="schedule" />
+        </>
+      )}
+
+      <div className="text-center text-xs text-gray-500">
+        Changed your mind?{" "}
+        <Link href="/admin/billing" className="text-emerald-600 hover:underline font-semibold">
+          Back to billing
+        </Link>
       </div>
     </div>
   );

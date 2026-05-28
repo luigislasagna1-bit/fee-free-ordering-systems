@@ -53,6 +53,7 @@ type MarketplaceListing = {
   currentMonthRevenue: number;
   currentMonthStartedAt: string;
   isListed: boolean;
+  switchToPaygOnCancel: boolean;
 };
 
 const PAYG_PER_ORDER_CENTS = 300;
@@ -619,6 +620,12 @@ function MarketplaceAddOnRow({
   const monthlyActive = !!mine && (mine.status === "active" || mine.status === "trialing");
   const paygActive = !monthlyActive && listing?.billingMode === "payg" && !!listing;
   const subscribedAnyMode = monthlyActive || paygActive;
+  // Pending switch from Monthly to PAYG (set when the user clicks
+  // "Switch to PAYG" on /admin/marketplace/payg-opt-in). Stripe sub
+  // has cancel_at_period_end=true; the listing's flag mirrors that.
+  // At period end the webhook flips billingMode to "payg" + clears
+  // the flag. Surface "Switching to PAYG on <date>" in the meantime.
+  const switchPending = monthlyActive && !!mine?.cancelAtPeriodEnd && !!listing?.switchToPaygOnCancel;
 
   const renewDate = mine?.currentPeriodEnd ? new Date(mine.currentPeriodEnd) : null;
   const activatedDate = mine?.activatedAt ? new Date(mine.activatedAt) : null;
@@ -630,16 +637,20 @@ function MarketplaceAddOnRow({
   const paygOrdersThisPeriod = listing?.currentMonthOrders ?? 0;
   const paygChargeCents = Math.min(paygOrdersThisPeriod * PAYG_PER_ORDER_CENTS, PAYG_MONTHLY_CAP_CENTS);
 
-  // Status pill at the header level. Surfaces which plan is active OR
-  // a "Not subscribed — 2 plans available" hint when neither is active.
-  const headerPillLabel = monthlyActive
-    ? "Active — Monthly"
-    : paygActive
-      ? "Active — Pay-As-You-Go"
-      : "Not subscribed";
-  const headerPillClass = subscribedAnyMode
-    ? "bg-emerald-100 text-emerald-700"
-    : "bg-gray-100 text-gray-500";
+  // Status pill at the header level. Surfaces which plan is active,
+  // whether a switch is pending, or "Not subscribed — 2 plans available".
+  const headerPillLabel = switchPending
+    ? "Switching to PAYG"
+    : monthlyActive
+      ? "Active — Monthly"
+      : paygActive
+        ? "Active — Pay-As-You-Go"
+        : "Not subscribed";
+  const headerPillClass = switchPending
+    ? "bg-amber-100 text-amber-800"
+    : subscribedAnyMode
+      ? "bg-emerald-100 text-emerald-700"
+      : "bg-gray-100 text-gray-500";
 
   return (
     <li className="p-4 sm:p-5">

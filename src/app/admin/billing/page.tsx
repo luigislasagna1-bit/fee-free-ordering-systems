@@ -63,6 +63,7 @@ export default async function AdminBillingPage() {
         currentMonthRevenue: true,
         currentMonthStartedAt: true,
         isListed: true,
+        switchToPaygOnCancel: true,
       },
     }),
     prisma.subscriptionInvoice.findMany({

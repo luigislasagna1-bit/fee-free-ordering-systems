@@ -184,23 +184,43 @@ async function handleAddOnSubscriptionEvent(
         console.error("[stripe] marketplace activation side-effects failed:", e);
       }
     } else {
-      // Monthly subscription ended (cancelled / past-due / expired). The
-      // listing row stays for historical / counter data, but we:
-      //   - HIDE it (isListed=false) so it disappears from the public
-      //     marketplace immediately — no surprise discovery while the
-      //     restaurant figures out their next step.
-      //   - Flip billingMode back to "payg" as the safe default. The
-      //     restaurant has to RE-VISIT /admin/marketplace to re-list:
-      //     they'll see the locked view with both plan choices and
-      //     either re-subscribe to monthly or explicitly opt into PAYG.
-      // This prevents the silent "I cancelled but I'm still being
-      // billed per order" surprise — they can't accrue PAYG fees while
-      // hidden from the marketplace (no marketplace orders → no $3 charges).
+      // Monthly subscription ended. TWO paths:
+      //
+      //   1. switchToPaygOnCancel=true — the restaurant explicitly
+      //      clicked "Switch to PAYG" via /admin/marketplace/payg-opt-in
+      //      (which sets the flag + Stripe cancel_at_period_end). At
+      //      cycle end Stripe fires this event; we PRESERVE the listing
+      //      (isListed stays true), flip billingMode to "payg", and
+      //      reset the flag. PAYG settlement takes over with no gap.
+      //
+      //   2. switchToPaygOnCancel=false (default) — cancellation due
+      //      to a real exit (card declined, manual unsubscribe without
+      //      a switch intent, etc.). HIDE the listing (isListed=false)
+      //      so it disappears from /marketplace immediately, and reset
+      //      billingMode to "payg" as a safe default. The restaurant
+      //      has to re-visit /admin/marketplace to re-list — prevents
+      //      the silent "I cancelled but I'm still being billed per
+      //      order" surprise.
       try {
-        await prisma.marketplaceListing.updateMany({
+        const listing = await prisma.marketplaceListing.findUnique({
           where: { restaurantId },
-          data: { billingMode: "payg", isListed: false },
+          select: { switchToPaygOnCancel: true },
         });
+        if (listing?.switchToPaygOnCancel) {
+          await prisma.marketplaceListing.update({
+            where: { restaurantId },
+            data: {
+              billingMode: "payg",
+              switchToPaygOnCancel: false, // reset — the switch has happened
+              // isListed left as-is (stays true)
+            },
+          });
+        } else {
+          await prisma.marketplaceListing.updateMany({
+            where: { restaurantId },
+            data: { billingMode: "payg", isListed: false },
+          });
+        }
       } catch (e) {
         console.error("[stripe] marketplace deactivation failed:", e);
       }
