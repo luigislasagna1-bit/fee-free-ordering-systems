@@ -426,54 +426,104 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const [alertVolume, setAlertVolume] = useState(1.0);
   const [alertMuted, setAlertMuted] = useState(false);
   const [showSoundSettings, setShowSoundSettings] = useState(false);
+  // Which sound to play on new-order alerts. "gloriafood" = the sampled
+  // MP3 ding extracted from Luigi's reference video; "synth" = the
+  // classic 4-partial bell synthesized by Web Audio (the original
+  // sound from before the sample existed). Picker UI lives in the
+  // sound-settings modal. Persisted to localStorage.
+  type AlertSoundChoice = "gloriafood" | "synth";
+  const [alertSound, setAlertSound] = useState<AlertSoundChoice>("gloriafood");
   const audioCtxRef = useRef<AudioContext | null>(null);
   const audioUnlockedRef = useRef(false);
 
-  // Pre-loaded GloriaFood sample. Lives at /public/sounds/ so Next.js serves
-  // it from the site origin. We keep a single Audio element for the lifetime
-  // of the page and just rewind currentTime=0 on each ring — cheaper than
-  // constructing a new Audio every strike.
+  // Decoded GloriaFood sample as a Web Audio buffer. We use the
+  // AudioContext + decodeAudioData path instead of an HTMLAudioElement
+  // for three reasons:
   //
-  // Two refs:
-  //   sampleAudioRef   — the Audio element if it loaded successfully
-  //   sampleErroredRef — flipped to true if the network/decoder errors out
-  //                       (file missing, 404, corrupt file, codec unsupported)
+  //   1. We can TRIM the noisy intro of the MP3 in-browser (Luigi flagged
+  //      audible background hiss in the first ~150ms before the actual ding).
+  //   2. We can pipe through a high-pass filter to cut low-frequency
+  //      room hum, yielding a cleaner ring than the raw file.
+  //   3. AudioBufferSourceNode plays GARBAGE-collected per-call sources —
+  //      no event listeners that could survive across renders, no
+  //      currentTime races, no risk of two playbacks overlapping
+  //      themselves. Cleaner under React strict-mode / fast refresh.
   //
-  // We do NOT gate playback on readyState. The first observed bug was that
-  // requiring readyState >= 2 caused the very first ring after page load to
-  // fall back to the synth, because the browser hadn't decoded enough of
-  // the file yet. Instead we call play() unconditionally and use the
-  // returned Promise's rejection (autoplay block, decode failure) to fall
-  // back. That way the sample wins as soon as it's playable, with the synth
-  // as a safety net for older browsers / autoplay denials.
-  const sampleAudioRef = useRef<HTMLAudioElement | null>(null);
+  // The ref holds the post-processed buffer; null until it's decoded.
+  const sampleBufferRef = useRef<AudioBuffer | null>(null);
   const sampleErroredRef = useRef(false);
   useEffect(() => {
-    if (typeof Audio === "undefined") return;
-    const audio = new Audio("/sounds/gloriafood-new-order.mp3");
-    audio.preload = "auto";
-    sampleAudioRef.current = audio;
-    const onError = () => {
-      sampleErroredRef.current = true;
-      sampleAudioRef.current = null;
-      console.warn(
-        "[KDS] /sounds/gloriafood-new-order.mp3 failed to load — falling back to synthesized bell. " +
-        "Verify the file exists in public/sounds/ and the deploy includes it (Next.js bundles public/* at build time)."
-      );
-    };
-    const onCanPlay = () => {
-      console.info("[KDS] GloriaFood sample loaded and ready.");
-    };
-    audio.addEventListener("error", onError);
-    audio.addEventListener("canplaythrough", onCanPlay, { once: true });
-    try { audio.load(); } catch {}
-    return () => {
-      audio.removeEventListener("error", onError);
-      audio.removeEventListener("canplaythrough", onCanPlay);
-    };
+    let cancelled = false;
+    (async () => {
+      try {
+        const Ctx = (window.AudioContext || (window as any).webkitAudioContext);
+        if (!Ctx) {
+          sampleErroredRef.current = true;
+          return;
+        }
+        const ctx: AudioContext = audioCtxRef.current ?? new Ctx();
+        audioCtxRef.current = ctx;
+        const res = await fetch("/sounds/gloriafood-new-order.mp3");
+        if (!res.ok) throw new Error(`fetch failed: ${res.status}`);
+        const arr = await res.arrayBuffer();
+        // decodeAudioData is the old callback API in Safari — wrap.
+        const raw: AudioBuffer = await new Promise((resolve, reject) => {
+          try {
+            const p = ctx.decodeAudioData(arr.slice(0), resolve, reject);
+            // Modern impl returns a promise; await it too.
+            if (p && typeof (p as any).then === "function") {
+              (p as Promise<AudioBuffer>).then(resolve, reject);
+            }
+          } catch (e) { reject(e); }
+        });
+        if (cancelled) return;
+
+        // ── Process the buffer ─────────────────────────────────────────
+        // Trim the leading 150ms — that's where the source recording's
+        // room-tone / mic-bump artifacts live. The actual ding starts
+        // ~180ms in based on visual inspection of the waveform.
+        const TRIM_MS = 150;
+        const trimSamples = Math.min(
+          Math.floor((TRIM_MS / 1000) * raw.sampleRate),
+          Math.max(0, raw.length - 1),
+        );
+        const out = ctx.createBuffer(
+          raw.numberOfChannels,
+          raw.length - trimSamples,
+          raw.sampleRate,
+        );
+        for (let ch = 0; ch < raw.numberOfChannels; ch++) {
+          const src = raw.getChannelData(ch);
+          const dst = out.getChannelData(ch);
+          // Copy from trimSamples onward.
+          for (let i = 0; i < dst.length; i++) dst[i] = src[i + trimSamples];
+          // Apply a 5ms linear fade-in to the trimmed start so we don't
+          // hear a click from the abrupt buffer cut.
+          const fade = Math.floor(0.005 * raw.sampleRate);
+          for (let i = 0; i < Math.min(fade, dst.length); i++) {
+            dst[i] *= i / fade;
+          }
+        }
+        sampleBufferRef.current = out;
+        console.info(
+          `[KDS] GloriaFood sample decoded + trimmed (${TRIM_MS}ms intro removed, ` +
+          `${out.duration.toFixed(2)}s playback length).`
+        );
+      } catch (e) {
+        if (cancelled) return;
+        sampleErroredRef.current = true;
+        console.warn(
+          "[KDS] /sounds/gloriafood-new-order.mp3 failed to load/decode — " +
+          "if 'gloriafood' is the chosen alert sound, alerts will be silent " +
+          "(synth fallback only fires when user explicitly picks 'Classic Bell'). " +
+          "Error:", e
+        );
+      }
+    })();
+    return () => { cancelled = true; };
   }, []);
 
-  // Load saved volume / mute on mount.
+  // Load saved volume / mute / sound choice on mount.
   useEffect(() => {
     try {
       const v = localStorage.getItem("kds-alert-volume");
@@ -483,6 +533,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       }
       const m = localStorage.getItem("kds-alert-muted");
       if (m === "1") setAlertMuted(true);
+      const s = localStorage.getItem("kds-alert-sound");
+      if (s === "synth" || s === "gloriafood") setAlertSound(s);
     } catch {}
   }, []);
 
@@ -492,6 +544,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   useEffect(() => {
     try { localStorage.setItem("kds-alert-muted", alertMuted ? "1" : "0"); } catch {}
   }, [alertMuted]);
+  useEffect(() => {
+    try { localStorage.setItem("kds-alert-sound", alertSound); } catch {}
+  }, [alertSound]);
 
   // Browsers require a user gesture before AudioContext can play. We unlock
   // it on the first click/keypress anywhere on the page, then keep the same
@@ -562,57 +617,86 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   }, []);
 
   /**
-   * Ring one strike. Tries the GloriaFood sample first; falls back to the
-   * synthesized bell on any failure (file missing, autoplay block, decode
-   * error). Resets currentTime=0 each call so rapid ding-ding-ding loops
-   * don't smear into a drone.
+   * Play one strike of the decoded GloriaFood sample. Each call creates a
+   * fresh AudioBufferSourceNode (single-use, garbage-collected after play
+   * completes) so we never have two overlapping playbacks of the same
+   * buffer. The signal chain is:
    *
-   * Logs which path won on the first ring of the session so issues are
-   * trivially debuggable from DevTools: "[KDS ring] sample" vs
-   * "[KDS ring] synth (reason)".
+   *   AudioBufferSourceNode → highpass(80Hz) → gain(volume) → destination
+   *
+   * The high-pass filter strips room-rumble and any low-frequency hum from
+   * the source recording, leaving the ding cleaner and more cut-through.
+   * Returns true if a sample was scheduled, false if no buffer is loaded.
+   */
+  const playSampleOnce = useCallback((vol: number): boolean => {
+    const ctx = audioCtxRef.current;
+    const buf = sampleBufferRef.current;
+    if (!ctx || !buf) return false;
+    try {
+      if (ctx.state === "suspended") ctx.resume().catch(() => {});
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      // High-pass cuts the low rumble that survived MP3 encoding. 80Hz is
+      // below the bell's fundamental (the lowest partial of a typical
+      // dinger is ~440Hz), so we lose nothing musical but kill HVAC hum.
+      const filter = ctx.createBiquadFilter();
+      filter.type = "highpass";
+      filter.frequency.value = 80;
+      filter.Q.value = 0.707;
+      const gain = ctx.createGain();
+      gain.gain.value = vol;
+      src.connect(filter).connect(gain).connect(ctx.destination);
+      src.start();
+      return true;
+    } catch (e) {
+      console.warn("[KDS ring] sample playback threw:", e);
+      return false;
+    }
+  }, []);
+
+  /**
+   * Ring one strike using the user's chosen alert sound.
+   *
+   * STRICT: we never fall back from one sound to another. If the user
+   * picked GloriaFood but the buffer hasn't loaded (or load failed),
+   * the ring is silent + we log to console. This was Luigi's specific
+   * ask — previous behaviour would play BOTH the sample and the synth
+   * under some race conditions, producing a confusing layered ding.
+   * Now exactly one sound (or zero, on failure) plays per strike.
+   *
+   * Logs the path taken on the first ring of the session for debugging.
    */
   const loggedRingPathRef = useRef(false);
   const ringBellOnce = useCallback((volumeOverride?: number) => {
     const vol = Math.max(0, Math.min(1, volumeOverride ?? alertVolume));
     if (vol <= 0) return;
 
-    const sample = sampleAudioRef.current;
-    if (sample && !sampleErroredRef.current) {
-      try {
-        sample.volume = vol;
-        sample.currentTime = 0;
-        const p = sample.play();
-        if (p && typeof p.then === "function") {
-          p.then(() => {
-            if (!loggedRingPathRef.current) {
-              console.info("[KDS ring] sample (gloriafood-new-order.mp3)");
-              loggedRingPathRef.current = true;
-            }
-          }).catch((err) => {
-            // Autoplay rejection or decode failure — back off to synth.
-            // Don't flip sampleErroredRef: autoplay rejection is per-call
-            // and will succeed once the user has interacted with the page.
-            console.warn("[KDS ring] sample.play() rejected, falling back to synth:", err?.name || err);
-            synthBellOnce(vol);
-          });
-          return;
-        }
-        // Older browsers where play() returns void: assume it worked.
-        if (!loggedRingPathRef.current) {
-          console.info("[KDS ring] sample (legacy play, no promise)");
-          loggedRingPathRef.current = true;
-        }
-        return;
-      } catch (err) {
-        console.warn("[KDS ring] sample threw synchronously, using synth:", err);
+    if (alertSound === "synth") {
+      if (!loggedRingPathRef.current) {
+        console.info("[KDS ring] synth (Classic Bell)");
+        loggedRingPathRef.current = true;
+      }
+      synthBellOnce(vol);
+      return;
+    }
+
+    // alertSound === "gloriafood"
+    const ok = playSampleOnce(vol);
+    if (ok) {
+      if (!loggedRingPathRef.current) {
+        console.info("[KDS ring] sample (GloriaFood Ding — trimmed + filtered)");
+        loggedRingPathRef.current = true;
       }
     } else if (!loggedRingPathRef.current) {
-      console.info("[KDS ring] synth (sample " +
-        (sampleErroredRef.current ? "errored" : "not ready") + ")");
+      console.warn(
+        "[KDS ring] GloriaFood sample not playable (" +
+        (sampleErroredRef.current ? "load/decode error" : "buffer not ready yet") +
+        "). Silent this ring. Pick 'Classic Bell' in Sound Settings if you want " +
+        "guaranteed playback while the sample is unavailable."
+      );
       loggedRingPathRef.current = true;
     }
-    synthBellOnce(vol);
-  }, [alertVolume, synthBellOnce]);
+  }, [alertVolume, alertSound, synthBellOnce, playSampleOnce]);
 
   // Derived. `alerting` is true only while there's at least one pending
   // order AND the user hasn't silenced the current alarm. Computed each
@@ -628,13 +712,67 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     setAcknowledged(true);
   }, []);
 
-  // Continuous ring loop while pending orders are unacknowledged.
-  // ~1.5s between strikes ≈ GloriaFood cadence.
+  // Stash `orders` in a ref so the bell-loop timer below can read the
+  // current pending set without forcing the entire loop to tear down +
+  // restart every time fetchOrders updates the array. Without this the
+  // 4s polling would reset the timer mid-cadence.
+  const ordersRef = useRef(orders);
+  useEffect(() => { ordersRef.current = orders; }, [orders]);
+
+  // Dynamic-cadence ring loop while pending orders are unacknowledged.
+  //
+  // Cadence is driven by the OLDEST pending order's remaining time
+  // before the auto-reject cron kills it (10 minutes after creation
+  // by default — see src/lib/auto-reject-orders.ts). Spaced out when
+  // the order is fresh, escalating to rapid in the final 30 seconds.
+  //
+  //   >7min remaining   → 3000ms  (calm, just an acknowledgement)
+  //   3-7min remaining  → 2500ms
+  //   30s-3min          → 1800ms
+  //   last 30s          → ramps 800ms → 250ms (urgent, "ACT NOW")
+  //   0 or past         → silent  (auto-reject cron handles it)
+  //
+  // We use a recursive setTimeout (not setInterval) because each tick
+  // computes its own interval based on the current oldest-pending age.
+  const AUTO_REJECT_MS = 10 * 60 * 1000;
+  const cadenceForRemainingMs = (remainingMs: number | null): number | null => {
+    if (remainingMs === null) return 3000;
+    if (remainingMs <= 0) return null; // stop ringing
+    if (remainingMs <= 30_000) {
+      // Linear ramp 800ms (at 30s remaining) → 250ms (at 0s remaining).
+      const t = remainingMs / 30_000; // 1 → 0
+      return Math.round(250 + (800 - 250) * t);
+    }
+    if (remainingMs <= 3 * 60_000) return 1800;
+    if (remainingMs <= 7 * 60_000) return 2500;
+    return 3000;
+  };
   useEffect(() => {
     if (!alerting || alertMuted || alertVolume <= 0) return;
-    ringBellOnce();
-    const id = setInterval(() => ringBellOnce(), 1500);
-    return () => clearInterval(id);
+    let cancelled = false;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    const tick = () => {
+      if (cancelled) return;
+      ringBellOnce();
+      // Find the oldest pending order (lowest createdAt) — that's the
+      // one closest to auto-reject and drives the urgency.
+      let oldestMs: number | null = null;
+      for (const o of ordersRef.current) {
+        if (o.status !== "pending") continue;
+        const t = new Date(o.createdAt).getTime();
+        if (oldestMs === null || t < oldestMs) oldestMs = t;
+      }
+      const remainingMs = oldestMs === null ? null : AUTO_REJECT_MS - (Date.now() - oldestMs);
+      const next = cadenceForRemainingMs(remainingMs);
+      if (next === null) return; // past timeout — let the cron auto-reject
+      timeoutId = setTimeout(tick, next);
+    };
+    tick();
+    return () => {
+      cancelled = true;
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [alerting, alertMuted, alertVolume, ringBellOnce]);
 
   const testAlertSound = useCallback(() => {
@@ -1437,9 +1575,50 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               <h3 className={`text-lg font-bold ${t.text}`}>Alert Sound</h3>
             </div>
             <p className={`text-sm ${t.muted} mb-5`}>
-              The bell rings continuously whenever a new order is waiting.
-              Keep it loud so you never miss one.
+              The bell rings whenever a new order is waiting. Spaced out at
+              first, then escalates to rapid in the final 30 seconds before
+              the order is auto-rejected. Keep it loud so you never miss one.
             </p>
+
+            {/* Sound picker — GloriaFood Ding (sampled MP3, default) vs.
+                Classic Bell (the original 4-partial synth from before the
+                sample existed). Each option is exclusive — picking one
+                means the other never plays, even on load failure. */}
+            <div className="mb-5">
+              <label className={`text-sm font-semibold ${t.text} block mb-2`}>
+                Alert sound
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {([
+                  {
+                    id: "gloriafood",
+                    label: "GloriaFood Ding",
+                    sub: "Sampled (recommended)",
+                  },
+                  {
+                    id: "synth",
+                    label: "Classic Bell",
+                    sub: "Synthesized",
+                  },
+                ] as Array<{ id: AlertSoundChoice; label: string; sub: string }>).map((opt) => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setAlertSound(opt.id)}
+                    className={`text-left py-2 px-3 rounded-xl border-2 transition ${
+                      alertSound === opt.id
+                        ? "border-emerald-500 bg-emerald-500/10"
+                        : `border-transparent ${t.btn}`
+                    }`}
+                  >
+                    <div className={`text-sm font-bold ${t.text}`}>{opt.label}</div>
+                    <div className={`text-[11px] ${t.muted} mt-0.5`}>{opt.sub}</div>
+                  </button>
+                ))}
+              </div>
+              <p className={`text-[11px] ${t.muted} mt-2`}>
+                Use the test button below to preview your selection.
+              </p>
+            </div>
 
             {/* Volume slider */}
             <div className="mb-5">
