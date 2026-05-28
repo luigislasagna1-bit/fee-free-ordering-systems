@@ -39,23 +39,31 @@ Bonus work shipped 2026-05-28 (became necessary as Luigi tested):
 
 ### 1.2 — User work (only Luigi can do these) — **THE FULL DAY PLAN**
 
-Ordered for a focused day: blockers first, then verification of recent work, then UATs.
+**Stripe TEST → LIVE switch is deferred to T-minus 1 hour before launch.** All UATs below run fine on TEST keys (Stripe's test cards `4242 4242 4242 4242` etc. behave identically to real ones for our flow). The switch is a 30-min mechanical operation we do right before flipping the sign on.
+
+Ordered for a focused day: verify recent work first, then UATs, then the optional/post-launch items.
 
 | # | Item | Est | Status | Notes |
 |---|---|---|---|---|
-| **A** | **Stripe payouts verification** (blocker for real money) | ~15-30 min with Stripe | Pending | Stripe's flagged your account as `payouts: pending` — they want bank-verification docs (utility bill, ID, business registration, etc.) before they'll send money to your bank. Email from Stripe was sent during onboarding. Open Stripe Express dashboard → Settings → Verification → upload what they ask for. Charges already work; this just unlocks payouts. |
-| **B** | **Stripe TEST → LIVE switch** (task #14) | 30 min | Pending | If still on test mode: flip toggle in Stripe dashboard → recreate Products + Prices → paste new `price_xxx` into Vercel env → re-register webhook in live mode → test $1 transaction + refund. |
-| **C** | **Verify Task #5 on prod** (just shipped) | 10 min | Pending | Walk the full per-restaurant account flow in incognito: signup → admin assigns a personal coupon → customer dashboard shows it → place order with code → place another order LOGGED OUT with same code (should silently not apply). |
-| **D** | **UAT: new-account E2E** (task #47) | 30 min | In progress | Fresh signup at a new email → setup wizard 100% complete → publish → place a first order from a guest browser. |
+| **A** | **Verify Task #5 on prod** (just shipped) | 10 min | Pending | Walk the full per-restaurant account flow in incognito: signup → admin assigns a personal coupon → customer dashboard shows it → place order with code → place another order LOGGED OUT with same code (should silently not apply). |
+| **B** | **Verify earlier work** (quick skim) | 10 min | Pending | Stripe Refresh-status flip, PayPal save, billing rewrite, marketplace dual-billing, trial-days gone, etc. — see the checklist below. |
+| **C** | **UAT: new-account E2E** (task #47) | 30 min | In progress | Fresh signup at a new email → setup wizard 100% complete → publish → first order from a guest browser. |
+| **D** | **UAT: kitchen printer** (task #67) | 30 min | In progress | Real order → StarXpand → physical TSP143IIIW receipt. |
 | **E** | **UAT: reseller flow** (task #48) | 30 min | In progress | Apply → approve → add restaurants → commission rollup → payout. |
-| **F** | **UAT: kitchen printer** (task #67) | 30 min | In progress | Real prod order → StarXpand → physical TSP143IIIW receipt. |
-| **G** | **UAT: multi-location** (task #68) | 30 min | Pending | Parent → child location → menu inheritance → revert-to-brand. Customer signup at parent should now auto-create a Customer row at the child (new this session — Task #5). |
-| **H** | **UAT: reservations E2E** (task #69) | 30 min | Pending | Customer books → admin pending → confirm → seated. |
-| **I** | **UAT: Reports smoke-test** | 15 min | Pending | Incognito order → Funnel + Visits + Heatmap populate. |
-| **J** | **UAT: Custom Domain flow** | 30 min | Pending | One reseller subscribes to Full → connects domain → DNS verification → branded login renders. |
-| **K** | **UAT: Menu PDF import** | 10 min | Pending | Upload a real menu (AYCE-style or 100+ pages) → items + categories appear. |
+| **F** | **UAT: multi-location** (task #68) | 30 min | Pending | Parent → child → menu inheritance → revert-to-brand. **Plus new:** sign up a customer at the parent → check `/admin/customers` at the child — should appear with a "Multi-location" pill (Task #5 chain replication). |
+| **G** | **UAT: reservations E2E** (task #69) | 30 min | Pending | Customer books → admin pending → confirm → seated. |
+| **H** | **UAT: Reports smoke-test** | 15 min | Pending | Incognito order → Funnel + Visits + Heatmap populate. |
+| **I** | **UAT: Custom Domain flow** | 30 min | Pending | One reseller subscribes to Full → connects domain → DNS verification → branded login renders. |
+| **J** | **UAT: Menu PDF import** | 10 min | Pending | Upload a real menu (AYCE-style or 100+ pages) → items + categories appear. |
 
-**Total Luigi-side: ~4-5 hours.** Fits in one focused day with breaks.
+**Total today: ~3.5-4 hours.**
+
+### 1.3 — Reserved for T-minus 1 hour before launch
+
+| Item | Est | Notes |
+|---|---|---|
+| **Stripe TEST → LIVE switch** (task #14) | 30 min | Flip Stripe dashboard toggle to Live → recreate Products+Prices in Live → paste new `price_xxx` IDs into Vercel env → re-register webhook URL in Live → test one $1 transaction + refund through `/order/<slug>` |
+| **Stripe payouts verification** | ~15 min with Stripe (Luigi can start anytime — Stripe takes 1-2 business days to clear) | Stripe Express dashboard → Settings → Verification → upload ID + bank docs. Doesn't block UATs or launch announcement. Just blocks money actually leaving Stripe to land in Luigi's bank — recoverable any time after launch. |
 
 ---
 
