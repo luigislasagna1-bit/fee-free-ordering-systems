@@ -47,10 +47,22 @@ type RestaurantAddOnRow = {
   stripeSubscriptionId: string | null;
 };
 
+type MarketplaceListing = {
+  billingMode: string; // "payg" | "monthly"
+  currentMonthOrders: number;
+  currentMonthRevenue: number;
+  currentMonthStartedAt: string;
+  isListed: boolean;
+};
+
+const PAYG_PER_ORDER_CENTS = 300;
+const PAYG_MONTHLY_CAP_CENTS = 24999;
+
 export function BillingClient({
   restaurant,
   addOnCatalog,
   restaurantAddOns,
+  marketplaceListing,
   invoices,
   billingConfigured,
   orderCapUsage,
@@ -58,6 +70,7 @@ export function BillingClient({
   restaurant: Restaurant;
   addOnCatalog: AddOnRow[];
   restaurantAddOns: RestaurantAddOnRow[];
+  marketplaceListing: MarketplaceListing | null;
   invoices: Invoice[];
   billingConfigured: boolean;
   orderCapUsage: {
@@ -178,13 +191,22 @@ export function BillingClient({
 
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <ul className="divide-y divide-gray-100">
-            {mergedAddOns.map(({ catalog, mine }) => (
-              <AddOnRowItem
-                key={catalog.id}
-                catalog={catalog}
-                mine={mine}
-              />
-            ))}
+            {mergedAddOns.map(({ catalog, mine }) =>
+              catalog.slug === "marketplace" ? (
+                <MarketplaceAddOnRow
+                  key={catalog.id}
+                  catalog={catalog}
+                  mine={mine}
+                  listing={marketplaceListing}
+                />
+              ) : (
+                <AddOnRowItem
+                  key={catalog.id}
+                  catalog={catalog}
+                  mine={mine}
+                />
+              ),
+            )}
             {mergedAddOns.length === 0 && (
               <li className="px-4 py-6 text-center text-sm text-gray-500">
                 No add-ons configured on the platform yet.
@@ -564,6 +586,194 @@ function AddOnRowItem({
           <ExternalLink className="w-3 h-3" />
         </Link>
       </div>
+    </li>
+  );
+}
+
+/**
+ * Marketplace add-on row — special-cased because Marketplace has TWO
+ * billing modes (PAYG and Monthly) that need to be visible side-by-side
+ * regardless of which one the restaurant is on. The generic AddOnRowItem
+ * can't capture that — it assumes one price + one status per add-on.
+ *
+ * Layout: header (icon + name + active-plan pill) on top, then two
+ * plan-card columns below — one for Monthly, one for PAYG. The active
+ * plan is highlighted; the other shows as available with a switch link.
+ *
+ * Detection rules:
+ *   - On Monthly:   has a RestaurantAddOn(slug=marketplace, status=active)
+ *                   AND MarketplaceListing.billingMode = "monthly"
+ *   - On PAYG:      NO RestaurantAddOn but MarketplaceListing exists
+ *                   with billingMode = "payg" (typically when isListed=true)
+ *   - Not on:       neither path active
+ */
+function MarketplaceAddOnRow({
+  catalog,
+  mine,
+  listing,
+}: {
+  catalog: AddOnRow;
+  mine: RestaurantAddOnRow | null;
+  listing: MarketplaceListing | null;
+}) {
+  const monthlyActive = !!mine && (mine.status === "active" || mine.status === "trialing");
+  const paygActive = !monthlyActive && listing?.billingMode === "payg" && !!listing;
+  const subscribedAnyMode = monthlyActive || paygActive;
+
+  const renewDate = mine?.currentPeriodEnd ? new Date(mine.currentPeriodEnd) : null;
+  const activatedDate = mine?.activatedAt ? new Date(mine.activatedAt) : null;
+  const monthStartDate = listing?.currentMonthStartedAt
+    ? new Date(listing.currentMonthStartedAt)
+    : null;
+
+  // PAYG current-period spend: orders this period × $3, capped at $249.99.
+  const paygOrdersThisPeriod = listing?.currentMonthOrders ?? 0;
+  const paygChargeCents = Math.min(paygOrdersThisPeriod * PAYG_PER_ORDER_CENTS, PAYG_MONTHLY_CAP_CENTS);
+
+  // Status pill at the header level. Surfaces which plan is active OR
+  // a "Not subscribed — 2 plans available" hint when neither is active.
+  const headerPillLabel = monthlyActive
+    ? "Active — Monthly"
+    : paygActive
+      ? "Active — Pay-As-You-Go"
+      : "Not subscribed";
+  const headerPillClass = subscribedAnyMode
+    ? "bg-emerald-100 text-emerald-700"
+    : "bg-gray-100 text-gray-500";
+
+  return (
+    <li className="p-4 sm:p-5">
+      {/* Header */}
+      <div className="flex items-start gap-4 mb-4">
+        <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
+          subscribedAnyMode ? "bg-emerald-100 text-emerald-700" : "bg-gray-100 text-gray-500"
+        }`}>
+          {subscribedAnyMode ? <CheckCircle2 className="w-5 h-5" /> : <ShoppingBag className="w-5 h-5" />}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="font-bold text-gray-900">{catalog.name}</div>
+            <span className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${headerPillClass}`}>
+              {subscribedAnyMode && <CheckCircle2 className="w-2.5 h-2.5" />}
+              {headerPillLabel}
+            </span>
+          </div>
+          <p className="text-xs text-gray-600 mt-1 leading-snug">
+            List your restaurant on the public Fee Free Marketplace.
+            Choose the plan that fits your volume — switch any time.
+          </p>
+        </div>
+      </div>
+
+      {/* Two plan cards side-by-side. */}
+      <div className="grid sm:grid-cols-2 gap-3">
+        {/* Monthly plan */}
+        <div className={`rounded-lg border p-3 ${
+          monthlyActive ? "border-emerald-300 bg-emerald-50/50" : "border-gray-200 bg-white"
+        }`}>
+          <div className="flex items-center gap-2 mb-1">
+            <div className="text-sm font-bold text-gray-900">Monthly Unlimited</div>
+            {monthlyActive && (
+              <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-500 text-white px-1.5 py-0.5 rounded">
+                Current
+              </span>
+            )}
+          </div>
+          <div className="text-lg font-bold text-gray-900">
+            $199.99<span className="text-xs font-normal text-gray-500">/mo</span>
+          </div>
+          <p className="text-[11px] text-gray-600 mt-1 leading-snug">
+            Unlimited marketplace orders. ShipDay Driver Pool included. Predictable bill, no surprises.
+          </p>
+          {monthlyActive ? (
+            <div className="mt-2 space-y-1 text-[11px] text-gray-600">
+              {activatedDate && (
+                <div>
+                  <strong className="text-gray-700 font-semibold">Activated:</strong>{" "}
+                  {activatedDate.toLocaleDateString()}
+                </div>
+              )}
+              {renewDate && !mine?.cancelAtPeriodEnd && (
+                <div>
+                  <strong className="text-gray-700 font-semibold">Renews:</strong>{" "}
+                  {renewDate.toLocaleDateString()}
+                </div>
+              )}
+              {renewDate && mine?.cancelAtPeriodEnd && (
+                <div className="text-amber-700">
+                  <strong className="font-semibold">Ends:</strong>{" "}
+                  {renewDate.toLocaleDateString()}
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              href="/admin/billing/add-ons?addon=marketplace"
+              className="inline-block mt-2 text-xs font-semibold text-blue-600 hover:text-blue-700"
+            >
+              {paygActive ? "Switch to Monthly →" : "Subscribe →"}
+            </Link>
+          )}
+        </div>
+
+        {/* PAYG plan */}
+        <div className={`rounded-lg border p-3 ${
+          paygActive ? "border-emerald-300 bg-emerald-50/50" : "border-gray-200 bg-white"
+        }`}>
+          <div className="flex items-center gap-2 mb-1">
+            <div className="text-sm font-bold text-gray-900">Pay-As-You-Go</div>
+            {paygActive && (
+              <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-500 text-white px-1.5 py-0.5 rounded">
+                Current
+              </span>
+            )}
+          </div>
+          <div className="text-lg font-bold text-gray-900">
+            $3<span className="text-xs font-normal text-gray-500">/order</span>
+          </div>
+          <p className="text-[11px] text-gray-600 mt-1 leading-snug">
+            Pay only when you get a marketplace order. Capped at $249.99/month — past that, the rest is free. Driver Pool sold separately.
+          </p>
+          {paygActive ? (
+            <div className="mt-2 space-y-1 text-[11px] text-gray-600">
+              <div>
+                <strong className="text-gray-700 font-semibold">This period:</strong>{" "}
+                {paygOrdersThisPeriod} order{paygOrdersThisPeriod === 1 ? "" : "s"}{" "}
+                · <strong>{formatCurrency(paygChargeCents / 100)}</strong>
+                {paygChargeCents >= PAYG_MONTHLY_CAP_CENTS && (
+                  <span className="text-emerald-700 font-semibold"> (cap reached — free from here)</span>
+                )}
+              </div>
+              {monthStartDate && (
+                <div>
+                  <strong className="text-gray-700 font-semibold">Period started:</strong>{" "}
+                  {monthStartDate.toLocaleDateString()}
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              href="/admin/marketplace/payg-opt-in"
+              className="inline-block mt-2 text-xs font-semibold text-blue-600 hover:text-blue-700"
+            >
+              {monthlyActive ? "Switch to Pay-As-You-Go →" : "Start Pay-As-You-Go →"}
+            </Link>
+          )}
+        </div>
+      </div>
+
+      {/* Manage marketplace listing link when subscribed in any mode. */}
+      {subscribedAnyMode && (
+        <div className="mt-3 text-right">
+          <Link
+            href="/admin/marketplace"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700"
+          >
+            Manage marketplace listing
+            <ExternalLink className="w-3 h-3" />
+          </Link>
+        </div>
+      )}
     </li>
   );
 }

@@ -479,35 +479,76 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         if (cancelled) return;
 
         // ── Process the buffer ─────────────────────────────────────────
-        // Trim the leading 150ms — that's where the source recording's
-        // room-tone / mic-bump artifacts live. The actual ding starts
-        // ~180ms in based on visual inspection of the waveform.
-        const TRIM_MS = 150;
-        const trimSamples = Math.min(
-          Math.floor((TRIM_MS / 1000) * raw.sampleRate),
+        // Three cleanup passes:
+        //   1. Trim the leading 200ms — Luigi flagged audible room
+        //      tone / echo-tail in the lead-in. 200ms aligns past the
+        //      end of the source's reverb buildup and into the clean
+        //      sustain of the actual bell strike.
+        //   2. Trim the trailing silence — scan backwards from the end
+        //      to find the last sample where amplitude exceeds a
+        //      noise-floor threshold. Anything past that is just dead
+        //      air or recorder hiss; ditch it and let our explicit
+        //      fade-out handle the end shape.
+        //   3. Apply linear fade-in (8ms) + fade-out (25ms). The fade-
+        //      out is the perceptual fix for Luigi's "cuts off too
+        //      early" complaint — without it the abrupt buffer end
+        //      sounds clipped; with it the ending tapers smoothly so
+        //      the perceived stop matches the natural bell decay.
+        const TRIM_START_MS = 200;
+        const NOISE_FLOOR = 0.012; // peak amp below this counts as "silence"
+        const FADE_IN_MS = 8;
+        const FADE_OUT_MS = 25;
+
+        const startSamples = Math.min(
+          Math.floor((TRIM_START_MS / 1000) * raw.sampleRate),
           Math.max(0, raw.length - 1),
         );
-        const out = ctx.createBuffer(
-          raw.numberOfChannels,
-          raw.length - trimSamples,
-          raw.sampleRate,
-        );
+
+        // Find the END of the audible content. Search backwards from
+        // the end and find the last sample where ANY channel exceeds
+        // the noise floor. Keep a 30ms tail past that for the natural
+        // decay, then we'll fade it out.
+        let lastAudibleSample = raw.length - 1;
+        for (let i = raw.length - 1; i >= startSamples; i--) {
+          let peak = 0;
+          for (let ch = 0; ch < raw.numberOfChannels; ch++) {
+            const v = Math.abs(raw.getChannelData(ch)[i]);
+            if (v > peak) peak = v;
+          }
+          if (peak > NOISE_FLOOR) {
+            lastAudibleSample = i;
+            break;
+          }
+        }
+        const tailSamples = Math.floor(0.030 * raw.sampleRate);
+        const endSamples = Math.min(raw.length, lastAudibleSample + tailSamples);
+
+        const newLength = endSamples - startSamples;
+        const out = ctx.createBuffer(raw.numberOfChannels, newLength, raw.sampleRate);
+        const fadeInSamples = Math.floor((FADE_IN_MS / 1000) * raw.sampleRate);
+        const fadeOutSamples = Math.floor((FADE_OUT_MS / 1000) * raw.sampleRate);
         for (let ch = 0; ch < raw.numberOfChannels; ch++) {
           const src = raw.getChannelData(ch);
           const dst = out.getChannelData(ch);
-          // Copy from trimSamples onward.
-          for (let i = 0; i < dst.length; i++) dst[i] = src[i + trimSamples];
-          // Apply a 5ms linear fade-in to the trimmed start so we don't
-          // hear a click from the abrupt buffer cut.
-          const fade = Math.floor(0.005 * raw.sampleRate);
-          for (let i = 0; i < Math.min(fade, dst.length); i++) {
-            dst[i] *= i / fade;
+          for (let i = 0; i < newLength; i++) dst[i] = src[i + startSamples];
+          // Fade in
+          for (let i = 0; i < Math.min(fadeInSamples, newLength); i++) {
+            dst[i] *= i / fadeInSamples;
+          }
+          // Fade out — apply at the very end so we never hear the
+          // raw buffer boundary as a click.
+          const fadeOutStart = Math.max(0, newLength - fadeOutSamples);
+          for (let i = fadeOutStart; i < newLength; i++) {
+            const t = (newLength - i) / fadeOutSamples; // 1 → 0
+            dst[i] *= t;
           }
         }
         sampleBufferRef.current = out;
         console.info(
-          `[KDS] GloriaFood sample decoded + trimmed (${TRIM_MS}ms intro removed, ` +
-          `${out.duration.toFixed(2)}s playback length).`
+          `[KDS] GloriaFood sample decoded + cleaned: trimmed ${TRIM_START_MS}ms from start, ` +
+          `${((raw.length - endSamples) / raw.sampleRate * 1000).toFixed(0)}ms of trailing ` +
+          `silence/noise from end, fade-in ${FADE_IN_MS}ms + fade-out ${FADE_OUT_MS}ms. ` +
+          `Playback length ${out.duration.toFixed(2)}s.`
         );
       } catch (e) {
         if (cancelled) return;
@@ -636,16 +677,35 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (ctx.state === "suspended") ctx.resume().catch(() => {});
       const src = ctx.createBufferSource();
       src.buffer = buf;
-      // High-pass cuts the low rumble that survived MP3 encoding. 80Hz is
-      // below the bell's fundamental (the lowest partial of a typical
-      // dinger is ~440Hz), so we lose nothing musical but kill HVAC hum.
-      const filter = ctx.createBiquadFilter();
-      filter.type = "highpass";
-      filter.frequency.value = 80;
-      filter.Q.value = 0.707;
+
+      // Signal chain:
+      //   src → highpass(150Hz) → peakingEQ(1kHz +4dB) → gain → destination
+      //
+      // The high-pass at 150Hz (bumped from 80Hz on 2026-05-28 after
+      // Luigi reported "background static") kills low-frequency room
+      // hum more aggressively. A typical bell's lowest partial is
+      // 400-800Hz so we lose nothing musical — only HVAC, traffic
+      // rumble, and tape-style preamp noise. Q=0.707 is a Butterworth
+      // response (no resonance bump at the corner).
+      //
+      // The peaking EQ at 1kHz +4dB lifts the brightness of the bell
+      // strike, making it cut through whatever ambient noise is
+      // floating around the broader recording. Net effect: the bell
+      // sounds CLEANER and more PRESENT, masking the noise relatively.
+      const highpass = ctx.createBiquadFilter();
+      highpass.type = "highpass";
+      highpass.frequency.value = 150;
+      highpass.Q.value = 0.707;
+
+      const presence = ctx.createBiquadFilter();
+      presence.type = "peaking";
+      presence.frequency.value = 1000;
+      presence.Q.value = 1.0;
+      presence.gain.value = 4;
+
       const gain = ctx.createGain();
       gain.gain.value = vol;
-      src.connect(filter).connect(gain).connect(ctx.destination);
+      src.connect(highpass).connect(presence).connect(gain).connect(ctx.destination);
       src.start();
       return true;
     } catch (e) {
