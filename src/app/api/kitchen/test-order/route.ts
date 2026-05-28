@@ -7,36 +7,22 @@ import { notifyCustomer, notifyStaff } from "@/lib/notifications";
  * Test-order endpoint — kitchen "Test Order" button.
  *
  * Goal: behaviorally indistinguishable from a real customer order so the
- * restaurant can see exactly what happens when one comes in:
+ * restaurant can see exactly what happens when one comes in. Uses the
+ * RESTAURANT'S OWN info (owner's name, restaurant phone + address, real
+ * menu items) for every field so the test order is fully grounded in the
+ * restaurant's reality — receipts print with familiar info, the email
+ * arrives in the owner's inbox addressed to them, delivery test orders
+ * route to the restaurant's own address.
+ *
  *   - Real DB Order row, with [TEST] prefix on the customer name so it's
  *     visually flagged but otherwise identical
- *   - Customer-confirmation email is sent to the LOGGED-IN OWNER's email
- *     (not a fake @test.com address) so the owner sees what a real
- *     customer would receive in their inbox
- *   - Staff notification email goes through the SAME notifyStaff fan-out
- *     to all configured NotificationRecipient rows, exactly like a real
- *     order — so the kitchen team verifies their notification chain works
- *   - Kitchen Display picks it up via its 4s poll → new-order detection
- *     fires → bell rings → auto-print on accept (same as real flow)
+ *   - Customer-confirmation email goes to the LOGGED-IN OWNER's email
+ *     (real send → real receipt visible in owner's inbox)
+ *   - Staff notification fans out through the SAME notifyStaff path as a
+ *     real order, exercising the full notification chain
+ *   - Kitchen Display picks it up via the 4s poll, bell rings, auto-print
+ *     on accept fires — same as a real flow
  */
-
-const TEST_CUSTOMERS = [
-  { name: "Alex Johnson",   phone: "(555) 012-3456", type: "pickup"   },
-  { name: "Maria Garcia",   phone: "(555) 987-6543", type: "delivery" },
-  { name: "Sam Chen",       phone: "(555) 456-7890", type: "pickup"   },
-  { name: "Taylor Brown",   phone: "(555) 321-0987", type: "delivery" },
-  { name: "Jordan Williams",phone: "(555) 654-3210", type: "pickup"   },
-];
-
-const TEST_NOTES = [
-  "Extra napkins please",
-  "Allergy: no nuts",
-  "Ring doorbell twice",
-  "",
-  "Leave at door",
-  "",
-  "Extra hot sauce on the side",
-];
 
 export async function POST() {
   try {
@@ -59,6 +45,13 @@ export async function POST() {
       select: {
         id: true,
         slug: true,
+        name: true,
+        phone: true,
+        address: true,
+        city: true,
+        zip: true,
+        acceptsPickup: true,
+        acceptsDelivery: true,
         taxRate: true,
         deliveryFee: true,
         estimatedPickup: true,
@@ -66,6 +59,15 @@ export async function POST() {
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+
+    // Pull the owner's User row so we can use THEIR name as the customer
+    // name on the test order. Falls back to the restaurant name if the
+    // owner hasn't set a name on their profile (rare — signup form
+    // captures it).
+    const owner = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { name: true, email: true },
+    });
 
     // Find available menu items to make a realistic order
     const menuItems = await prisma.menuItem.findMany({
@@ -82,16 +84,24 @@ export async function POST() {
     const shuffled = [...menuItems].sort(() => Math.random() - 0.5);
     const picked = shuffled.slice(0, Math.min(3, Math.ceil(Math.random() * 3)));
 
-    const customer = TEST_CUSTOMERS[Math.floor(Math.random() * TEST_CUSTOMERS.length)];
-    const orderType = customer.type as "pickup" | "delivery";
-    const note = TEST_NOTES[Math.floor(Math.random() * TEST_NOTES.length)];
+    // Resolve customer-side fields from the RESTAURANT'S OWN data, not
+    // hardcoded fake records. The order looks like it came from the
+    // owner ordering from their own restaurant — most-realistic test
+    // because every field on the receipt is something the owner recognises.
+    const customerName = owner?.name?.trim() || restaurant.name;
+    const customerPhone = restaurant.phone || null;
+    const ownerEmail = owner?.email || (user as any)?.email || null;
 
-    // Use the logged-in owner's email as the "customer email" for this test
-    // order. We do NOT want to send to @test.com addresses (bounces hurt our
-    // domain reputation) and we DO want the owner to see what their real
-    // customers receive. session.user.email is set by next-auth from the
-    // owner User row.
-    const ownerEmail = (user as any)?.email || null;
+    // Order type: prefer pickup when accepted (most common; no address
+    // required), fall back to delivery if that's the only option.
+    const orderType: "pickup" | "delivery" =
+      restaurant.acceptsPickup ? "pickup"
+      : restaurant.acceptsDelivery ? "delivery"
+      : "pickup";
+
+    // Optional friendly note so the receipt isn't bare. Empty string
+    // works fine; we only set it when there's a non-trivial value.
+    const note = "Test order from kitchen panel";
 
     // Build item totals
     const orderItems = picked.map(item => ({
@@ -122,11 +132,17 @@ export async function POST() {
         orderNumber,
         status: "pending",
         type: orderType,
-        customerName: `[TEST] ${customer.name}`,
-        customerPhone: customer.phone,
+        customerName: `[TEST] ${customerName}`,
+        customerPhone: customerPhone,
         customerEmail: ownerEmail,
-        deliveryAddress: orderType === "delivery" ? "123 Test Street" : null,
-        deliveryCity: orderType === "delivery" ? "Testville" : null,
+        // For a delivery test order we route to the RESTAURANT'S OWN
+        // address — owner ordering from their own restaurant. If the
+        // restaurant doesn't have an address on file yet (rare), the
+        // delivery fields stay null and the order still goes through
+        // as a pickup-style row.
+        deliveryAddress: orderType === "delivery" ? (restaurant.address ?? null) : null,
+        deliveryCity:    orderType === "delivery" ? (restaurant.city ?? null) : null,
+        deliveryZip:     orderType === "delivery" ? (restaurant.zip ?? null) : null,
         notes: note || null,
         subtotal,
         taxAmount,
@@ -169,7 +185,7 @@ export async function POST() {
       orderType,
       payload: {
         event: "orderConfirmed",
-        customerName: `[TEST] ${customer.name}`,
+        customerName: `[TEST] ${customerName}`,
         orderNumber: order.orderNumber,
         items: orderItems.map((i) => ({ name: i.name, quantity: i.quantity, price: i.price })),
         total,
@@ -186,7 +202,7 @@ export async function POST() {
       payload: {
         event: "orderPlaced",
         orderNumber: order.orderNumber,
-        customerName: `[TEST] ${customer.name}`,
+        customerName: `[TEST] ${customerName}`,
         total,
         dashboardUrl: `${baseUrl}/admin/orders`,
       },
