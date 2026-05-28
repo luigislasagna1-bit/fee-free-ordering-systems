@@ -27,6 +27,20 @@ type CartLine = {
 interface Props {
   theme: Theme;
   orderType: "pickup" | "delivery";
+  /** Switcher between Pickup and Delivery inside the checkout modal.
+   *  Lets the customer change their order type without closing the
+   *  modal and scrolling back to the page-level toggle. Null when the
+   *  restaurant only accepts one of the two (no switching needed). */
+  onChangeOrderType?: (next: "pickup" | "delivery") => void;
+  acceptsPickup: boolean;
+  acceptsDelivery: boolean;
+  /** Restaurant slug — for building the sign-in / signup link in the
+   *  contact section. */
+  restaurantSlug: string;
+  /** True when the per-restaurant customer session is active. Hides the
+   *  "Sign in" CTA when set; contact info is auto-populated from the
+   *  customer's saved profile by the parent. */
+  isSignedIn: boolean;
   cart: CartLine[];
   subtotal: number;
   totalDiscount: number;
@@ -78,7 +92,9 @@ interface Props {
 }
 
 export function CheckoutModal({
-  theme, orderType, cart, subtotal, totalDiscount, deliveryFee, appliedServiceFees, taxAmount,
+  theme, orderType, onChangeOrderType, acceptsPickup, acceptsDelivery,
+  restaurantSlug, isSignedIn,
+  cart, subtotal, totalDiscount, deliveryFee, appliedServiceFees, taxAmount,
   tipAmount, tipPercent, setTipPercent, total, taxRate,
   customerInfo, setCustomerInfo,
   editingSection, setEditingSection,
@@ -190,6 +206,23 @@ export function CheckoutModal({
                 expanded={editingSection === "contact"}
                 primary={theme.primaryColor}
               >
+                {/* Sign-in CTA for guest customers — saves re-typing
+                    contact info on every order. Hidden when already
+                    signed in (contact fields are auto-populated by the
+                    parent in that case). */}
+                {!isSignedIn && (
+                  <div className="pt-3 -mb-1 text-xs text-gray-500">
+                    Already have an account at this restaurant?{" "}
+                    <a
+                      href={`/order/${restaurantSlug}/account/login?next=${encodeURIComponent(`/order/${restaurantSlug}`)}`}
+                      className="font-semibold underline hover:no-underline"
+                      style={{ color: theme.primaryColor }}
+                    >
+                      Sign in
+                    </a>{" "}
+                    to skip re-typing your details.
+                  </div>
+                )}
                 <div className="grid grid-cols-2 gap-2 pt-3">
                   <input
                     required
@@ -220,15 +253,45 @@ export function CheckoutModal({
                 </div>
               </SectionCard>
 
-              {/* ORDERING METHOD (address only — order-type toggle stays on the main page) */}
+              {/* ORDERING METHOD — pickup ↔ delivery toggle PLUS the
+                  delivery address fields when delivery is selected. The
+                  toggle was previously only on the page-level header,
+                  forcing customers to close the modal to switch between
+                  pickup and delivery. Now it lives here too. */}
               <SectionCard
                 icon={orderType === "delivery" ? <Truck className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
                 label={tc("orderingMethod")}
                 summary={orderingSummary}
-                onEdit={orderType === "delivery" ? () => toggleEdit("ordering") : undefined}
-                expanded={editingSection === "ordering" && orderType === "delivery"}
+                onEdit={() => toggleEdit("ordering")}
+                expanded={editingSection === "ordering"}
                 primary={theme.primaryColor}
               >
+                {/* Pickup vs Delivery selector — only render when the
+                    restaurant actually accepts BOTH. A pickup-only or
+                    delivery-only restaurant gets no choice; we just
+                    show the address fields below (for delivery). */}
+                {acceptsPickup && acceptsDelivery && onChangeOrderType && (
+                  <div className="pt-3 grid grid-cols-2 gap-2">
+                    {([
+                      { value: "pickup" as const, icon: <ShoppingBag className="w-4 h-4" />, label: tOrd("pickup") },
+                      { value: "delivery" as const, icon: <Truck className="w-4 h-4" />, label: tOrd("delivery") },
+                    ]).map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => onChangeOrderType(opt.value)}
+                        className="flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 text-sm font-semibold transition"
+                        style={orderType === opt.value
+                          ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}12`, color: theme.primaryColor }
+                          : { borderColor: "#e5e7eb", color: "#4b5563" }
+                        }
+                      >
+                        {opt.icon}
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
                 {orderType === "delivery" && (
                   <div className="pt-3 space-y-2">
                     {googleEnabled && gmapsLoaded ? (

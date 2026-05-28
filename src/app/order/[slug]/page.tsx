@@ -205,7 +205,12 @@ export default async function OrderingPage({
         acceptedMethods={acceptedMethods}
         fromHostedSite={fromHostedSite}
         currentCustomer={currentCustomer
-          ? { id: currentCustomer.id, name: currentCustomer.name, email: currentCustomer.email }
+          ? {
+              id: currentCustomer.id,
+              name: currentCustomer.name,
+              email: currentCustomer.email,
+              phone: currentCustomer.phone,
+            }
           : null}
       />
     </NextIntlClientProvider>

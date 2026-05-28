@@ -253,7 +253,7 @@ export function OrderingPageClient({
    *  Server-resolved via getCurrentRestaurantCustomer in page.tsx and
    *  passed in so the header can render the right Sign-in vs. Hi-name
    *  state without a client-side fetch flash. Null = guest visitor. */
-  currentCustomer?: { id: string; name: string; email: string | null } | null;
+  currentCustomer?: { id: string; name: string; email: string | null; phone: string | null } | null;
   /** True when the restaurant has connected PayPal AND has the
    *  card_payments entitlement. Drives whether PayPal works at
    *  checkout vs. shows a "not yet ready" notice. */
@@ -339,11 +339,70 @@ export function OrderingPageClient({
       ? "cash"
       : slugToValue(acceptedMethods[0] ?? "cash");
   const [customerInfo, setCustomerInfo] = useState({
-    name: "", email: "", phone: "", address: "", city: "", zip: "",
+    // Auto-fill from the per-restaurant signed-in customer (set by
+    // page.tsx via getCurrentRestaurantCustomer). Avoids retyping
+    // name/email/phone on every order if they're logged in.
+    name: currentCustomer?.name ?? "",
+    email: currentCustomer?.email ?? "",
+    phone: currentCustomer?.phone ?? "",
+    address: "", city: "", zip: "",
     notes: "", paymentMethod: defaultPaymentMethod, scheduledFor: "",
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
   const [tipPercent, setTipPercent] = useState<number>(0); // 0/10/15/20 or custom amount
+
+  // ── Cart persistence ────────────────────────────────────────────────
+  // Save the cart to localStorage scoped per-restaurant-slug so a refresh
+  // (or navigating to /account and back) doesn't blow away the in-progress
+  // order. Each restaurant has its own cart key — a customer with carts
+  // at two restaurants doesn't lose either by visiting the other.
+  //
+  // We persist on every change (small payload, fast write) and restore
+  // once on mount. The cart can hold stale references if the menu
+  // changes between save and restore, but order placement already
+  // re-validates against the live menu server-side, so stale items would
+  // be caught at /api/orders POST. We don't aggressively prune on
+  // restore — if a restaurant edits their menu while a customer has
+  // items in the cart, that customer sees the items they remembered
+  // adding (and gets a clean error at checkout if anything's truly gone).
+  //
+  // 7-day implicit expiry via cart-stamp: we tag each save with `t`
+  // and ignore saves older than 7d on restore. Stops a forgotten cart
+  // from a year ago from popping up.
+  const CART_STORAGE_KEY = `ff_cart_${restaurant.slug}`;
+  const CART_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+  // Restore once on mount. Done via a one-shot effect with an empty
+  // dep array — we deliberately skip the persistence effect's first
+  // run by gating on `cartRestoredRef` so we don't immediately overwrite
+  // the just-restored cart with the empty initial state.
+  const cartRestoredRef = useRef(false);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(CART_STORAGE_KEY);
+      if (!raw) { cartRestoredRef.current = true; return; }
+      const parsed = JSON.parse(raw);
+      if (
+        parsed && typeof parsed === "object" &&
+        Array.isArray(parsed.items) &&
+        typeof parsed.t === "number" &&
+        (Date.now() - parsed.t) < CART_TTL_MS
+      ) {
+        setCart(parsed.items);
+      }
+    } catch { /* malformed — drop silently */ }
+    cartRestoredRef.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    if (!cartRestoredRef.current) return;
+    try {
+      if (cart.length === 0) {
+        localStorage.removeItem(CART_STORAGE_KEY);
+      } else {
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({ items: cart, t: Date.now() }));
+      }
+    } catch {}
+  }, [cart, CART_STORAGE_KEY]);
 
   // ── Reports funnel-step tracking ─────────────────────────────────────
   //
@@ -762,6 +821,12 @@ export function OrderingPageClient({
       });
       const orderData = await orderRes.json();
       if (!orderRes.ok) throw new Error(orderData.error || tT("orderFailed"));
+
+      // Order accepted by the API → clear the persisted cart so a return
+      // visit doesn't show the same items they just ordered. The in-memory
+      // `cart` state stays as-is (the next route owns the UI) — only the
+      // localStorage copy is wiped.
+      try { localStorage.removeItem(CART_STORAGE_KEY); } catch {}
 
       if (customerInfo.paymentMethod === "card" && cardPaymentEnabled) {
         // Reports funnel — fire payment_open just before we navigate
@@ -1430,6 +1495,11 @@ export function OrderingPageClient({
         <CheckoutModal
           theme={theme}
           orderType={orderType}
+          onChangeOrderType={(next) => setOrderType(next)}
+          acceptsPickup={!!restaurant.acceptsPickup}
+          acceptsDelivery={!!restaurant.acceptsDelivery}
+          restaurantSlug={restaurant.slug}
+          isSignedIn={!!currentCustomer}
           cart={cart}
           subtotal={subtotal}
           totalDiscount={totalDiscount}
