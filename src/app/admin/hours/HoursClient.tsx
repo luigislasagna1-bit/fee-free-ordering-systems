@@ -1,9 +1,120 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Save, Clock, Copy, Calendar, Plus, Trash2, Moon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { formatHour } from "@/lib/restaurant-hours";
+
+/**
+ * Text-based time input that honors the page's 12h/24h preference.
+ *
+ * Why not <input type="time">: the native time picker's display format is
+ * bound to the browser's OS locale (Windows en-US → AM/PM) regardless of
+ * any attribute we set on the element. We can't actually honor the user's
+ * 12h/24h toggle with the native widget — the lang trick doesn't reliably
+ * override the OS setting. So we replace it with a controlled text input.
+ *
+ * Internal storage stays HH:MM 24h (the same format Restaurant.openTime
+ * persists), so nothing downstream changes. The component normalizes the
+ * user's typed string on blur:
+ *   - "9"        → "09:00"
+ *   - "9:5"      → "09:05"
+ *   - "21:30"    → "21:30"
+ *   - "9pm"      → "21:00" (12h mode)
+ *   - "9 pm"     → "21:00"
+ *   - garbage    → leaves the previous value
+ */
+function TimeTextInput({
+  value,
+  format,
+  onChange,
+}: {
+  value: string;           // HH:MM 24h (canonical)
+  format: "12h" | "24h";
+  onChange: (next: string) => void;
+}) {
+  // Local draft so the user can type freely without us re-normalizing
+  // their keystroke. Normalized on blur via parseToHHMM.
+  const [draft, setDraft] = useState<string>(() => display(value, format));
+
+  // When the canonical value or format flips externally (e.g. user
+  // changed days, saved, or toggled 12h↔24h), refresh the draft so
+  // we show the right thing.
+  useEffect(() => { setDraft(display(value, format)); }, [value, format]);
+
+  function commit() {
+    const parsed = parseToHHMM(draft);
+    if (parsed) {
+      onChange(parsed);
+      setDraft(display(parsed, format));
+    } else {
+      // Bad input — snap back to whatever's saved.
+      setDraft(display(value, format));
+    }
+  }
+
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      value={draft}
+      placeholder={format === "24h" ? "HH:MM" : "9:00 AM"}
+      onChange={(e) => setDraft(e.target.value)}
+      onBlur={commit}
+      onKeyDown={(e) => { if (e.key === "Enter") (e.target as HTMLInputElement).blur(); }}
+      className="w-24 sm:w-28 border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+    />
+  );
+}
+
+/** Render canonical HH:MM 24h for display in either format. */
+function display(canonical: string, format: "12h" | "24h"): string {
+  const m = /^(\d{1,2}):(\d{2})$/.exec(canonical);
+  if (!m) return canonical;
+  let h = parseInt(m[1], 10);
+  const min = m[2];
+  if (format === "24h") {
+    return `${String(h).padStart(2, "0")}:${min}`;
+  }
+  const ampm = h >= 12 ? "PM" : "AM";
+  if (h === 0) h = 12;
+  else if (h > 12) h = h - 12;
+  return `${h}:${min} ${ampm}`;
+}
+
+/**
+ * Parse a free-form time string into HH:MM 24h. Returns null if no
+ * confident parse. Accepts:
+ *   "9"       → 09:00
+ *   "21"      → 21:00
+ *   "9:30"    → 09:30
+ *   "21:30"   → 21:30
+ *   "9pm"     → 21:00
+ *   "9:00 PM" → 21:00
+ *   "12am"    → 00:00
+ *   "12pm"    → 12:00
+ */
+function parseToHHMM(input: string): string | null {
+  const raw = input.trim().toUpperCase().replace(/\s+/g, "");
+  if (!raw) return null;
+  const m = /^(\d{1,2})(?::(\d{1,2}))?\s*(AM|PM)?$/i.exec(raw);
+  if (!m) return null;
+  let h = parseInt(m[1], 10);
+  const min = m[2] ? parseInt(m[2], 10) : 0;
+  const ampm = m[3] as "AM" | "PM" | undefined;
+  if (Number.isNaN(h) || Number.isNaN(min)) return null;
+  if (min < 0 || min > 59) return null;
+  if (ampm) {
+    // 12h mode
+    if (h < 1 || h > 12) return null;
+    if (ampm === "AM") h = h === 12 ? 0 : h;
+    else h = h === 12 ? 12 : h + 12;
+  } else {
+    // 24h mode (no AM/PM)
+    if (h < 0 || h > 23) return null;
+  }
+  return `${String(h).padStart(2, "0")}:${String(min).padStart(2, "0")}`;
+}
 
 /**
  * Opening Hours admin.
@@ -252,28 +363,24 @@ export function HoursClient({
               </button>
               {h.isOpen ? (
                 <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-                  {/* <input type="time"> shows AM/PM or 24h based on the
-                      browser's locale, not anything the page can directly
-                      control. The cleanest cross-browser nudge is the
-                      `lang` attribute — Chromium honors en-GB to force
-                      24h display, and en-US to force 12h. The internal
-                      VALUE is always 24h HH:MM regardless (HTML spec).
-                      Safari is locale-bound and ignores lang here, which
-                      we accept until we move to a custom picker. */}
-                  <input
-                    type="time"
-                    lang={format === "24h" ? "en-GB" : "en-US"}
+                  {/* Custom-controlled text inputs instead of the native
+                      <input type="time">. The native picker's display
+                      format is hard-bound to the OS locale (Windows in
+                      en-US → AM/PM) and ignores the lang hint reliably,
+                      so we can't actually honor the "24h" toggle with
+                      the native widget. Text inputs give us full
+                      control: store HH:MM 24h internally, display in
+                      the chosen format, normalize on blur. */}
+                  <TimeTextInput
                     value={h.openTime}
-                    onChange={(e) => update(h.dayOfWeek, "openTime", e.target.value)}
-                    className="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    format={format}
+                    onChange={(v) => update(h.dayOfWeek, "openTime", v)}
                   />
                   <span className="text-gray-400 text-sm">{tCommon("to")}</span>
-                  <input
-                    type="time"
-                    lang={format === "24h" ? "en-GB" : "en-US"}
+                  <TimeTextInput
                     value={h.closeTime}
-                    onChange={(e) => update(h.dayOfWeek, "closeTime", e.target.value)}
-                    className="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    format={format}
+                    onChange={(v) => update(h.dayOfWeek, "closeTime", v)}
                   />
                   {/* Format hint — show what they typed in the current display format */}
                   <span className="text-[11px] text-gray-400 hidden sm:inline">
