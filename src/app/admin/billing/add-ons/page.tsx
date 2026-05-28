@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getSessionUser } from "@/lib/session";
 import { listAddOnsForRestaurant } from "@/lib/addons";
+import prisma from "@/lib/db";
 import { AddOnsClient } from "./AddOnsClient";
 
 export default async function AddOnsPage({
@@ -23,7 +24,22 @@ export default async function AddOnsPage({
   if (!user.restaurantId) redirect("/superadmin");
 
   const params = await searchParams;
-  const addOns = await listAddOnsForRestaurant(user.restaurantId);
+  // Pull marketplace listing data so the marketplace add-on card can show
+  // dual-plan info: which mode the restaurant is on (Monthly vs PAYG),
+  // whether a Monthly→PAYG switch is currently scheduled, and surface
+  // the correct "Switch to" CTAs. AddOnsClient ignores this prop for
+  // every other slug; marketplace is the only one with two billing modes.
+  const [addOns, marketplaceListing] = await Promise.all([
+    listAddOnsForRestaurant(user.restaurantId),
+    prisma.marketplaceListing.findUnique({
+      where: { restaurantId: user.restaurantId },
+      select: {
+        billingMode: true,
+        isListed: true,
+        switchToPaygOnCancel: true,
+      },
+    }),
+  ]);
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -49,7 +65,10 @@ export default async function AddOnsPage({
         </div>
       )}
 
-      <AddOnsClient addOns={addOns} />
+      <AddOnsClient
+        addOns={addOns}
+        marketplaceListing={marketplaceListing ? JSON.parse(JSON.stringify(marketplaceListing)) : null}
+      />
     </div>
   );
 }

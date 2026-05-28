@@ -491,6 +491,12 @@ export function MarketplaceSettingsClient({
                     orders included — no per-order charges. {stats.currentMonthOrders} order
                     {stats.currentMonthOrders === 1 ? "" : "s"} this month, all free.
                   </p>
+                  <Link
+                    href="/admin/marketplace/payg-opt-in"
+                    className="mt-2 inline-block text-[11px] font-semibold text-emerald-700 hover:underline"
+                  >
+                    Switch to Pay-As-You-Go ($3/order, capped at $249.99/mo) →
+                  </Link>
                 </div>
               ) : (
                 <div className={`mt-4 rounded-xl p-3 border ${
