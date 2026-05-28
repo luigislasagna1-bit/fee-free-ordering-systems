@@ -50,16 +50,30 @@ function apiBase(env: PaypalEnv): string {
     : "https://api-m.sandbox.paypal.com";
 }
 
-/** Looks up + decrypts a restaurant's PayPal credentials. Throws if
- *  the restaurant hasn't connected PayPal. Callers should let the
- *  error bubble — every caller path is one a customer-facing route
- *  that should 4xx if PayPal isn't wired. */
-export async function getRestaurantPaypalCreds(restaurantId: string): Promise<{
+/** Looks up + decrypts a restaurant's PayPal credentials.
+ *
+ *  `requireConnected` (default: true) controls the status gate:
+ *    - true  → throws unless paypalAccountStatus === "connected". Used by
+ *              customer-facing paths (createPaypalOrder, capture, refund, ...)
+ *              where we MUST refuse to process payments against a not-yet-
+ *              verified connection.
+ *    - false → throws ONLY if the credentials themselves are missing. Used
+ *              by the verify-during-onboarding path, where the WHOLE POINT
+ *              of the call is to test creds whose status is still "pending"
+ *              and decide whether to flip it to "connected". Without this
+ *              flag, the verify call would always 4xx with "not connected"
+ *              before ever reaching PayPal — chicken and egg.
+ */
+export async function getRestaurantPaypalCreds(
+  restaurantId: string,
+  opts: { requireConnected?: boolean } = {},
+): Promise<{
   clientId: string;
   secret: string;
   env: PaypalEnv;
   merchantEmail: string | null;
 }> {
+  const requireConnected = opts.requireConnected !== false;
   const r = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
     select: {
@@ -75,14 +89,14 @@ export async function getRestaurantPaypalCreds(restaurantId: string): Promise<{
     },
   });
   if (!r) throw new Error(`Restaurant ${restaurantId} not found`);
-  if (r.paypalAccountStatus !== "connected") {
-    throw new Error(`Restaurant ${restaurantId} has not connected PayPal`);
-  }
   if (
     !r.paypalClientIdEnc || !r.paypalClientIdIv || !r.paypalClientIdTag ||
     !r.paypalSecretEnc || !r.paypalSecretIv || !r.paypalSecretTag
   ) {
     throw new Error(`Restaurant ${restaurantId} PayPal credentials are incomplete`);
+  }
+  if (requireConnected && r.paypalAccountStatus !== "connected") {
+    throw new Error(`Restaurant ${restaurantId} has not connected PayPal`);
   }
   const env = (r.paypalEnvironment ?? "live") as PaypalEnv;
   const clientId = decrypt(r.paypalClientIdEnc, r.paypalClientIdIv, r.paypalClientIdTag);
@@ -170,7 +184,11 @@ export async function verifyPaypalCredentials(restaurantId: string): Promise<{
   errorMessage?: string;
 }> {
   try {
-    const creds = await getRestaurantPaypalCreds(restaurantId);
+    // IMPORTANT: don't require status=="connected" — this function IS
+    // what flips it. During onboarding the row is "pending" with creds
+    // freshly stored; we need to OAuth-test the freshly-saved creds
+    // and only then mark the restaurant connected.
+    const creds = await getRestaurantPaypalCreds(restaurantId, { requireConnected: false });
     await getAccessToken(restaurantId, creds);
     return { ok: true };
   } catch (e) {
