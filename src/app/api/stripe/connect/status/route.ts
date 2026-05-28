@@ -22,11 +22,29 @@ export async function GET() {
   }
 
   try {
-    // getConnectAccountStatus now throws on failure (instead of returning {error}).
+    // getConnectAccountStatus throws on failure (instead of returning {error}).
     const acct = await getConnectAccountStatus(restaurant.stripeAccountId);
 
+    // Status semantics MUST match the webhook handler in
+    // src/lib/stripe/events/account.ts:
+    //   - "connected"        — charges are live (can take orders)
+    //   - "action_required"  — Stripe wants more info before charges go live
+    //   - "pending"          — onboarding submitted but Stripe is still
+    //                          verifying / payouts not yet enabled
+    //
+    // CRITICAL: do NOT also require payoutsEnabled. Payouts being pending
+    // is a separate Stripe bank-verification step the restaurant resolves
+    // out-of-band — it doesn't block taking orders, and the platform
+    // should consider the connection "live" once charges are enabled.
+    //
+    // The previous logic (require both) caused a feedback bug: the webhook
+    // would correctly flip status to "connected" on charges_enabled, then
+    // any later UI refresh would call this endpoint, see payouts still
+    // pending, and overwrite status back to "pending". Setup wizard then
+    // showed the Stripe step incomplete forever even though charges were
+    // live. Same gate now means refresh re-affirms what the webhook set.
     let status = "pending";
-    if (acct.chargesEnabled && acct.payoutsEnabled) status = "connected";
+    if (acct.chargesEnabled) status = "connected";
     else if (acct.requiresAction) status = "action_required";
 
     await prisma.restaurant.update({
