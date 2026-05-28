@@ -91,6 +91,18 @@ model Restaurant {
   paypalWebhookId       String?   // webhook ID registered on PayPal for this restaurant
   paypalConnectedAt     DateTime?
 
+  // FREE-plan order cap tracking. Every restaurant on the FREE plan
+  // (subscriptionStatus="free" AND no active paid add-ons) is limited
+  // to 100 orders/month. See src/lib/order-cap.ts — `currentMonthOrderCount`
+  // increments on every /api/orders POST; `currentMonthResetAt` is the
+  // start of the NEXT calendar month. When `now >= currentMonthResetAt`
+  // we lazy-reset the counter to 0 and bump resetAt forward. No cron
+  // needed — rollover happens organically on the first order of a new
+  // month. Restaurants with any active paid add-on are exempt
+  // (counter still increments for analytics but isn't enforced).
+  currentMonthOrderCount Int       @default(0)
+  currentMonthResetAt    DateTime?
+
   /// JSON array of accepted payment methods chosen by the owner.
   /// Allowed values today: "cash" | "card_in_person" | "online_card" | "paypal".
   /// Required for publishing — owner must pick at least one. When the

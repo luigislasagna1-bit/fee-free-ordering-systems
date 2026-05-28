@@ -1,7 +1,7 @@
 "use client";
 import { formatCurrency } from "@/lib/utils";
 import Link from "next/link";
-import { ShoppingBag, Users, DollarSign, Clock } from "lucide-react";
+import { ShoppingBag, Users, DollarSign, Clock, AlertTriangle, Zap } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface RecentOrder {
@@ -21,6 +21,17 @@ interface Props {
   customerCount: number;
   pendingOrders: number;
   recentOrders: RecentOrder[];
+  /** FREE-plan order cap usage. Drives the warning banner above the
+   *  stats grid. `level` is "ok" (no banner), "warning" (amber, you're
+   *  at 80+ this month), or "cap_reached" (red, blocked from accepting
+   *  new orders until they upgrade or it's a new month). */
+  orderCapUsage: {
+    count: number;
+    cap: number;
+    exempt: boolean;
+    resetAt: string | null;
+    level: "ok" | "warning" | "cap_reached";
+  };
 }
 
 const STATUS_COLORS: Record<string, string> = {
@@ -35,10 +46,15 @@ const STATUS_COLORS: Record<string, string> = {
 export function AdminDashboardClient({
   restaurantName, restaurantSlug,
   totalOrders, totalRevenue, customerCount, pendingOrders, recentOrders,
+  orderCapUsage,
 }: Props) {
   const t = useTranslations("admin.dashboard");
   const tSidebar = useTranslations("admin.sidebar");
   const tStatuses = useTranslations("admin.orders");
+
+  const resetDateLabel = orderCapUsage.resetAt
+    ? new Date(orderCapUsage.resetAt).toLocaleDateString(undefined, { month: "short", day: "numeric" })
+    : null;
 
   return (
     <div>
@@ -56,6 +72,56 @@ export function AdminDashboardClient({
           </Link>
         )}
       </div>
+
+      {/* FREE-plan order cap banner — surfaces when usage is approaching
+          or has hit the 100/month cap. Hidden entirely when level="ok"
+          (under 80%) or when the restaurant has a cap-exempting paid
+          add-on. Links straight to the FREE Unlimited Orders add-on
+          for one-click upgrade. */}
+      {orderCapUsage.level === "cap_reached" && (
+        <div className="mb-6 rounded-xl bg-rose-50 border border-rose-200 p-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <h2 className="font-bold text-rose-900 mb-1">
+              Monthly order cap reached ({orderCapUsage.count}/{orderCapUsage.cap})
+            </h2>
+            <p className="text-sm text-rose-800">
+              Your FREE plan limit resets {resetDateLabel ? `on ${resetDateLabel}` : "next month"}.
+              Until then, new orders are paused. Upgrade to <strong>FREE Unlimited Orders</strong>{" "}
+              ($14.99/mo) — or subscribe to any other paid add-on — to remove the cap immediately.
+            </p>
+            <Link
+              href="/admin/billing/add-ons?addon=unlimited_orders"
+              className="inline-flex items-center gap-1.5 mt-3 bg-rose-600 hover:bg-rose-700 text-white px-3.5 py-2 rounded-lg font-semibold text-xs transition"
+            >
+              <Zap className="w-3.5 h-3.5" />
+              Upgrade now
+            </Link>
+          </div>
+        </div>
+      )}
+      {orderCapUsage.level === "warning" && (
+        <div className="mb-6 rounded-xl bg-amber-50 border border-amber-200 p-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <h2 className="font-bold text-amber-900 mb-1">
+              Approaching your monthly cap ({orderCapUsage.count}/{orderCapUsage.cap})
+            </h2>
+            <p className="text-sm text-amber-800">
+              You&apos;re close to the FREE plan&apos;s 100 orders/month limit. New orders will
+              be paused once you hit {orderCapUsage.cap}. Subscribe to <strong>FREE Unlimited Orders</strong>{" "}
+              ($14.99/mo) — or any other paid add-on — to keep accepting orders without interruption.
+            </p>
+            <Link
+              href="/admin/billing/add-ons?addon=unlimited_orders"
+              className="inline-flex items-center gap-1.5 mt-3 bg-amber-600 hover:bg-amber-700 text-white px-3.5 py-2 rounded-lg font-semibold text-xs transition"
+            >
+              <Zap className="w-3.5 h-3.5" />
+              Upgrade to Unlimited
+            </Link>
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         {[

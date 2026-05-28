@@ -53,6 +53,27 @@ export async function hasFeature(restaurantId: string, feature: Feature): Promis
   return features.has(feature);
 }
 
+/** Returns true iff the restaurant has ANY active paid add-on row,
+ *  regardless of what features that add-on unlocks. Used by the FREE
+ *  plan order cap (src/lib/order-cap.ts) — any paying customer is
+ *  exempt from the 100/month cap. We only check status, not
+ *  monthlyPriceCents, because:
+ *    - Free / promo / zero-cost add-ons still represent a paying
+ *      relationship in our books once the owner subscribed.
+ *    - Filtering by price would require an extra join + most add-ons
+ *      cost more than $0 anyway.
+ *  If we ever want to distinguish "actually paid > 0" from "free
+ *  add-on," we'd add a separate `hasAnyBillableAddOn` helper. */
+export async function hasAnyPaidAddOn(restaurantId: string): Promise<boolean> {
+  const count = await prisma.restaurantAddOn.count({
+    where: {
+      restaurantId,
+      status: { in: [...GRANTING_STATUSES] },
+    },
+  });
+  return count > 0;
+}
+
 /** Returns the full set of features this restaurant has unlocked. Useful
  *  for rendering UI (e.g. "all add-ons you have" page) and for bulk gating. */
 export async function getEntitlements(restaurantId: string): Promise<Set<Feature>> {

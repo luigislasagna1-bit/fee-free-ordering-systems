@@ -7,6 +7,7 @@ import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
+import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
 import {
   computeUberEatsEquivalentCents,
   recordMarketplaceOrder,
@@ -414,6 +415,28 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // ── FREE-plan order cap ─────────────────────────────────────────────────
+    // Restaurants on the FREE plan are limited to 100 orders/month. Any
+    // active paid add-on (Online Payments, Marketplace, Unlimited Orders,
+    // etc.) exempts them. The check also handles the lazy monthly
+    // rollover — if we've crossed into a new calendar month the counter
+    // resets to 0 first. Failing here is a 402 — the customer-side UX
+    // should display a friendly "this restaurant has paused new orders
+    // until next month" message rather than a generic error.
+    const cap = await checkOrderCap(restaurant.id);
+    if (!cap.allowed) {
+      return NextResponse.json(
+        {
+          error:
+            "This restaurant has reached its monthly order limit. Please try again next month, or contact the restaurant directly.",
+          code: "monthly_cap_reached",
+          monthlyOrderCount: cap.currentCount,
+          monthlyOrderCap: cap.cap,
+        },
+        { status: 402 },
+      );
+    }
+
     // ── Auto-accept handling ────────────────────────────────────────────────
     const wantsAutoAccept = !!restaurant.autoAcceptOrders;
     const fulfillmentMinutes = type === "delivery"
@@ -482,6 +505,20 @@ export async function POST(req: NextRequest) {
       },
       include: { items: { include: { modifiers: true } } },
     });
+
+    // Bump the monthly counter. Fire-and-forget — if this fails we'd
+    // rather take the order than lose it. The increment is racy under
+    // simultaneous orders, but the worst case is an occasional +1 over
+    // the cap which is fine. See src/lib/order-cap.ts.
+    after(
+      (async () => {
+        try {
+          await incrementOrderCount(restaurant.id);
+        } catch (e) {
+          console.error("[orders POST] incrementOrderCount:", e);
+        }
+      })(),
+    );
 
     // ── Release the order to kitchen + customer (or defer if paying card) ──
     // Cash / pay-at-store → fire notifications NOW. The order goes straight

@@ -53,12 +53,20 @@ export function BillingClient({
   restaurantAddOns,
   invoices,
   billingConfigured,
+  orderCapUsage,
 }: {
   restaurant: Restaurant;
   addOnCatalog: AddOnRow[];
   restaurantAddOns: RestaurantAddOnRow[];
   invoices: Invoice[];
   billingConfigured: boolean;
+  orderCapUsage: {
+    count: number;
+    cap: number;
+    exempt: boolean;
+    resetAt: string | null;
+    level: "ok" | "warning" | "cap_reached";
+  };
 }) {
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -115,6 +123,12 @@ export function BillingClient({
       )}
 
       <StatusCard status={status} periodEnd={periodEnd} cancelAtPeriodEnd={restaurant.cancelAtPeriodEnd} />
+
+      {/* Monthly order usage. Always visible (not just when the
+          warning level fires) so owners can self-monitor. When exempt
+          via a paid add-on, we surface that explicitly instead of a
+          progress bar — there's no cap to track. */}
+      <OrderCapUsageCard usage={orderCapUsage} />
 
       <div className="mt-6 flex flex-wrap gap-3">
         {status === "past_due" && (
@@ -278,6 +292,85 @@ export function BillingClient({
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function OrderCapUsageCard({
+  usage,
+}: {
+  usage: {
+    count: number;
+    cap: number;
+    exempt: boolean;
+    resetAt: string | null;
+    level: "ok" | "warning" | "cap_reached";
+  };
+}) {
+  const resetDate = usage.resetAt
+    ? new Date(usage.resetAt).toLocaleDateString(undefined, { month: "long", day: "numeric" })
+    : null;
+
+  if (usage.exempt) {
+    return (
+      <div className="mt-4 rounded-xl bg-emerald-50 border border-emerald-100 p-4">
+        <div className="flex items-start gap-3">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+          <div>
+            <h3 className="font-bold text-emerald-900 text-sm mb-1">Unlimited orders</h3>
+            <p className="text-xs text-emerald-800">
+              You have an active paid add-on, so the 100-orders/month FREE-plan cap doesn&apos;t
+              apply. This month so far: <strong>{usage.count} orders</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // FREE plan, no exemption — show the progress bar.
+  const pct = Math.min(100, Math.round((usage.count / Math.max(1, usage.cap)) * 100));
+  const barColor =
+    usage.level === "cap_reached" ? "bg-rose-500" :
+    usage.level === "warning" ? "bg-amber-500" :
+    "bg-emerald-500";
+  const cardClass =
+    usage.level === "cap_reached" ? "bg-rose-50 border-rose-200" :
+    usage.level === "warning" ? "bg-amber-50 border-amber-200" :
+    "bg-white border-gray-200";
+
+  return (
+    <div className={`mt-4 rounded-xl border p-4 ${cardClass}`}>
+      <div className="flex items-baseline justify-between mb-2">
+        <h3 className="font-bold text-gray-900 text-sm">This month&apos;s orders</h3>
+        <div className="text-xs text-gray-600">
+          <span className="font-bold text-gray-900">{usage.count}</span>
+          <span className="text-gray-500"> / {usage.cap} included</span>
+        </div>
+      </div>
+      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div
+          className={`h-full rounded-full transition-all ${barColor}`}
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <div className="mt-2 flex items-center justify-between gap-2">
+        <p className="text-[11px] text-gray-600">
+          {usage.level === "cap_reached"
+            ? `Cap reached — new orders paused until ${resetDate ?? "next month"}.`
+            : usage.level === "warning"
+              ? `Heads up — you'll hit the cap soon. Resets ${resetDate ?? "next month"}.`
+              : `Resets ${resetDate ?? "next month"}. Subscribe to any paid add-on for unlimited orders.`}
+        </p>
+        {usage.level !== "ok" && (
+          <Link
+            href="/admin/billing/add-ons?addon=unlimited_orders"
+            className="text-[11px] font-semibold text-blue-600 hover:text-blue-700 whitespace-nowrap"
+          >
+            Upgrade →
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

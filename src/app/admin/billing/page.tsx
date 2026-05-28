@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { stripeReady } from "@/lib/stripe";
+import { getOrderCapUsage } from "@/lib/order-cap";
 import { BillingClient } from "./BillingClient";
 
 export default async function AdminBillingPage() {
@@ -61,7 +62,10 @@ export default async function AdminBillingPage() {
 
   if (!restaurant) redirect("/login");
 
-  const billingConfigured = await stripeReady();
+  const [billingConfigured, capUsage] = await Promise.all([
+    stripeReady(),
+    getOrderCapUsage(user.restaurantId),
+  ]);
 
   return (
     <BillingClient
@@ -70,6 +74,13 @@ export default async function AdminBillingPage() {
       restaurantAddOns={JSON.parse(JSON.stringify(restaurantAddOns))}
       invoices={JSON.parse(JSON.stringify(invoices))}
       billingConfigured={billingConfigured}
+      orderCapUsage={{
+        count: capUsage.count,
+        cap: capUsage.cap,
+        exempt: capUsage.exempt,
+        resetAt: capUsage.resetAt ? capUsage.resetAt.toISOString() : null,
+        level: capUsage.level,
+      }}
     />
   );
 }

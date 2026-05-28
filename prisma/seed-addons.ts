@@ -85,6 +85,23 @@ async function main() {
     comingSoon?: boolean;
   }> = [
     {
+      // The FREE-plan order cap exemption. Every restaurant lands on
+      // the FREE plan with 100 orders/month included. This add-on
+      // lifts the cap WITHOUT bundling any feature — useful for
+      // high-volume cash-only restaurants who don't need card payments
+      // but still need unlimited throughput. Any OTHER paid add-on
+      // also exempts them from the cap (see src/lib/order-cap.ts), so
+      // restaurants who already pay for Online Payments / Marketplace
+      // / etc. don't need this one too.
+      slug: "unlimited_orders",
+      name: "FREE Unlimited Orders",
+      description:
+        "Removes the 100-orders/month FREE-plan cap. Includes unlimited monthly order volume — no per-order fees. Skip this if you already have any other paid add-on (they include unlimited orders).",
+      monthlyPriceCents: 1499,
+      displayOrder: 5,
+      enabledFeatures: [],
+    },
+    {
       slug: "online_payments",
       name: "Online Payments",
       description:

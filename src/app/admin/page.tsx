@@ -4,6 +4,7 @@ import { AdminDashboardClient } from "./AdminDashboardClient";
 import { isBrandParent, loadBrandSummary } from "@/lib/brand";
 import { BrandDashboardClient } from "./BrandDashboardClient";
 import { loadSetupProgress } from "@/lib/setup-checklist-loader";
+import { getOrderCapUsage } from "@/lib/order-cap";
 
 export default async function AdminDashboard() {
   const user = await getSessionUser();
@@ -67,6 +68,7 @@ export default async function AdminDashboard() {
   const totalRevenue = orderStats.reduce((s, g) => s + (g._sum.total || 0), 0);
   const pendingOrders = orderStats.find((g) => g.status === "pending")?._count || 0;
   const customerCount = await prisma.customer.count({ where: { restaurantId } });
+  const orderCapUsage = await getOrderCapUsage(restaurantId!);
 
   return (
     <AdminDashboardClient
@@ -84,6 +86,13 @@ export default async function AdminDashboard() {
         total: o.total,
         itemsCount: o.items.length,
       }))}
+      orderCapUsage={{
+        count: orderCapUsage.count,
+        cap: orderCapUsage.cap,
+        exempt: orderCapUsage.exempt,
+        resetAt: orderCapUsage.resetAt ? orderCapUsage.resetAt.toISOString() : null,
+        level: orderCapUsage.level,
+      }}
     />
   );
 }
