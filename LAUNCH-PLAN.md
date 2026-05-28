@@ -14,9 +14,11 @@ These are the only things between us and inviting the first batch of real restau
 
 | # | Item | Est | Status | Notes |
 |---|---|---|---|---|
-| 1 | **Kitchen notification sounds** (task #116) | 2-3h | Partially built — needs sample-audio swap | **Correction to prior plan:** a notification sound DOES exist today (KitchenDisplay.tsx:425-554 — Web Audio API synthesized 4-partial bell at 880 Hz, 1.2s decay, 1500ms loop cadence, volume slider + mute + autoplay-unlock + test button, all persisted to localStorage). Luigi previously asked for this to match GloriaFood's recorded ding and it still doesn't — because synthesis can't replicate a sampled recording. **Real task:** drop GloriaFood-style audio file(s) into `public/sounds/`, replace the oscillator path in `ringBellOnce` with `new Audio(url).play()`, and add a sound-picker dropdown (soft chime / classic ring / **loud GloriaFood ding** / kitchen alarm). Keep ALL existing infrastructure (volume slider, mute, loop, autoplay unlock, test button). **Need from Luigi: source audio extracted from his GloriaFood reference video.** |
-| 2 | **PayPal integration** (task #117) | 1 day | Not started | Same GloriaFood-style model as Stripe (per-restaurant accounts, direct charges, we never hold funds). Adds option alongside Stripe at checkout. |
-| 3 | **Coming Soon badging audit** (task #118) | 2-3h | Not started | Mark every unwired feature consistently so nothing pretends to work. Full list in Part 3. |
+| 1 | **Kitchen notification sounds** (task #116) | 2-3h | ✅ **Shipped 2026-05-28** | GloriaFood sample MP3 (`public/sounds/gloriafood-new-order.mp3`) preloads on page mount and is preferred over the synthesized 4-partial bell on every ring. Falls back to synth only on autoplay-block / decode failure (logged to DevTools as `[KDS ring] synth (reason)`). The readyState-gated approach was scrapped — first ring after page load was falling back to synth because the browser hadn't decoded enough yet. Synth path preserved as the safety net. |
+| 2 | **PayPal integration** (task #117) | 1 day | ✅ **Shipped 2026-05-28** | Per-restaurant REST app model (each restaurant pastes their own PayPal Business REST app's Client ID + Secret into `/admin/payments/providers`; we encrypt with AES-256-GCM and verify via OAuth before flipping status=connected). Direct charges — money lands in the restaurant's PayPal balance, platform takes 0%. Same authorize-then-capture lifecycle as Stripe Connect: kitchen accept captures funds, reject voids the hold. Webhook receiver at `/api/webhooks/paypal` is the safety-net; synchronous customer-flow path is the authoritative one. **Schema needs `npx tsx scripts/push-schema-to-both.ts` before deploy lands cleanly.** |
+| 3 | **Coming Soon badging audit** (task #118) | 2-3h | ✅ **Shipped 2026-05-27** | Coming-Soon banners added to Autopilot (segment-based campaigns), Brand Reports (chain-wide funnel/heatmap), Marketplace home (native iOS/Android apps). Audit table in Part 3.2 below confirms every unwired feature is now honestly badged. |
+
+**All Claude-side pre-launch work is complete.** Only Luigi-side UATs + Stripe LIVE switch remain.
 
 ### 1.2 — User work (only Luigi can do these)
 
@@ -32,7 +34,9 @@ These are the only things between us and inviting the first batch of real restau
 | 11 | **UAT: Custom Domain flow** | 30 min | Pending | One reseller subscribes to Full → connects domain → DNS verification → branded login renders. |
 | 12 | **UAT: Menu PDF import** | 10 min | Pending | Upload a real menu (incl. AYCE-style or 100+ pages) → items + categories appear. |
 
-**Total Claude-side work to soft-launch-ready:** ~2 days. Luigi-side: ~4 hours of testing across 9 walkthroughs.
+**Total Claude-side work to soft-launch-ready:** ~~~2 days~~ **DONE (commits 80df889, 299124a, 42646a7, 75e1281).** Luigi-side: ~4 hours of testing across 9 walkthroughs.
+
+**Order-confirmation email semantics fix** (bonus, 2026-05-28): the placement-time email used to say "Order Confirmed" before the kitchen had actually accepted — leading to a contradictory "Confirmed then Rejected" sequence when restaurants declined orders. Now it says "Order Received — awaiting confirmation"; the real "Order Confirmed" email fires when the kitchen accepts. The rejection email also got an upgrade: previously fell through to a generic "Order update" placeholder; now has dedicated copy with the restaurant's reason surfaced in a rose-colored callout. (Commit 42646a7.)
 
 ---
 
