@@ -367,11 +367,25 @@ export async function notifyCustomer(args: {
     select: {
       name: true,
       defaultLanguage: true,
+      // Per-toggle email switches — let owners mute individual status
+      // notifications without affecting the others.
       customerEmailOrderConfirm: true,
       customerEmailPickupReady: true,
       customerEmailDeliveryReady: true,
       customerEmailDineInReady: true,
       customerEmailOrderRejected: true,
+      // Kitchen workflow mode — drives whether the intermediate
+      // status-update emails (preparing / ready) actually fire.
+      // In "simple" mode the kitchen never transitions through those
+      // states by user action, and even if a status accidentally
+      // moved through them (admin override / API), the customer
+      // shouldn't get "your order is being made" mid-stream emails
+      // because the workflow we're selling them is "you'll hear back
+      // once it's confirmed." See src/app/order/[slug]/status/[orderId]
+      // — the customer-side status page already collapses
+      // preparing/ready onto "accepted" in simple mode; emails now
+      // do the same.
+      kitchenWorkflowMode: true,
     },
   });
   if (!restaurant) return { sent: false, reason: "restaurant not found" };
@@ -403,6 +417,20 @@ export async function notifyCustomer(args: {
       const type = (orderType ?? "").toLowerCase();
       const isReadyish = status === "ready" || status === "preparing" || status === "completed";
       const isRejectedish = status === "rejected" || status === "cancelled" || status === "canceled";
+
+      // Kitchen workflow mode gate — simple-mode restaurants don't
+      // surface intermediate "preparing" or "ready" transitions to
+      // their customers. The kitchen accept email already went out
+      // ("Order confirmed — kitchen is starting on it"); a follow-up
+      // "your order is being made" mid-stream would be redundant +
+      // confusing. completed/rejected/cancelled emails still fire
+      // because those are terminal states the customer DOES need to
+      // know about regardless of mode.
+      const mode = restaurant.kitchenWorkflowMode ?? "simple";
+      if (mode === "simple" && (status === "preparing" || status === "ready")) {
+        return { sent: false, reason: "simple workflow mode skips intermediate updates" };
+      }
+
       let toggle = true;
       if (isReadyish) {
         if (type === "delivery") toggle = restaurant.customerEmailDeliveryReady;
