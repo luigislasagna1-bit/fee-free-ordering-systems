@@ -582,7 +582,15 @@ export function CheckoutModal({
                     <span>{formatCurrency(f.amount)}</span>
                   </div>
                 ))}
-                <div className="flex justify-between text-gray-600"><span>Tax ({taxRate}%)</span><span>{formatCurrency(taxAmount)}</span></div>
+                {/* Hide the Tax row when there's no actual tax to charge
+                    (taxRate set to 0% in /admin/payments). A restaurant
+                    that handles tax via a "Tax" service-fee row would
+                    otherwise display BOTH that line AND a confusing
+                    "Tax (0%) $0.00" sibling. Only render when there's
+                    a real tax amount to show. */}
+                {taxAmount > 0 && (
+                  <div className="flex justify-between text-gray-600"><span>Tax ({taxRate}%)</span><span>{formatCurrency(taxAmount)}</span></div>
+                )}
                 {tipAmount > 0 && (
                   <div className="flex justify-between text-gray-600"><span>{tc("tip")}</span><span>{formatCurrency(tipAmount)}</span></div>
                 )}

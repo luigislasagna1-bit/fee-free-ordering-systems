@@ -32,7 +32,11 @@ const PUBLIC_ORDER_SELECT = {
   // from) instead of the standalone restaurant menu.
   viaMarketplace: true,
   restaurant: {
-    select: { name: true, slug: true, phone: true, estimatedPickup: true, estimatedDelivery: true },
+    // kitchenWorkflowMode lets the customer status page render the
+    // RIGHT step count: "simple" mode just shows Received → Confirmed →
+    // Complete (the kitchen never transitions through Preparing / Ready),
+    // while "tracking" mode shows the full 5-step flow.
+    select: { name: true, slug: true, phone: true, estimatedPickup: true, estimatedDelivery: true, kitchenWorkflowMode: true },
   },
   items: {
     select: {
@@ -51,7 +55,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const order = await prisma.order.findUnique({
       where: { id },
       include: {
-        restaurant: { select: { name: true, slug: true, phone: true, estimatedPickup: true, estimatedDelivery: true } },
+        restaurant: { select: { name: true, slug: true, phone: true, estimatedPickup: true, estimatedDelivery: true, kitchenWorkflowMode: true } },
         items: { include: { modifiers: true } },
       },
     });

@@ -1400,7 +1400,12 @@ export function OrderingPageClient({
                       <span>{formatCurrency(f.amount)}</span>
                     </div>
                   ))}
-                  <div className="flex justify-between text-gray-600"><span>{t("tax")} ({restaurant.taxRate}%)</span><span>{formatCurrency(taxAmount)}</span></div>
+                  {/* Hide when taxRate is 0% — avoids a confusing
+                      "Tax (0%) $0.00" sibling underneath any service
+                      fee the owner may have named "Tax". */}
+                  {taxAmount > 0 && (
+                    <div className="flex justify-between text-gray-600"><span>{t("tax")} ({restaurant.taxRate}%)</span><span>{formatCurrency(taxAmount)}</span></div>
+                  )}
                   <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-100 mt-1"><span>{t("total")}</span><span>{formatCurrency(total)}</span></div>
                 </div>
 

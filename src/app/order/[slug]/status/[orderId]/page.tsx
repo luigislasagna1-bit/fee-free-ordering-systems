@@ -5,12 +5,24 @@ import { CheckCircle, Clock, ChefHat, Package, XCircle, Loader2 } from "lucide-r
 import Link from "next/link";
 import { use } from "react";
 
-const statusSteps = [
+// Two step sets based on the restaurant's kitchen workflow mode. The
+// "simple" mode (GloriaFood-style) just has accept/reject in the kitchen —
+// there's no Preparing/Ready/Complete transition. The customer status
+// page should reflect that: showing Preparing→Ready→Complete steps that
+// the kitchen never visibly transitions through is confusing and makes
+// the order look stuck. "tracking" restaurants use the full state
+// machine and see all 5 steps.
+const TRACKING_STEPS = [
   { key: "pending", label: "Order Received", icon: Clock, desc: "Your order is waiting for confirmation" },
   { key: "accepted", label: "Accepted", icon: CheckCircle, desc: "The restaurant confirmed your order" },
   { key: "preparing", label: "Preparing", icon: ChefHat, desc: "Your food is being prepared" },
   { key: "ready", label: "Ready!", icon: Package, desc: "Your order is ready for pickup/delivery" },
   { key: "completed", label: "Completed", icon: CheckCircle, desc: "Order complete. Enjoy your meal!" },
+];
+const SIMPLE_STEPS = [
+  { key: "pending", label: "Order Received", icon: Clock, desc: "Your order is waiting for confirmation" },
+  { key: "accepted", label: "Confirmed — being prepared", icon: ChefHat, desc: "The restaurant is preparing your order" },
+  { key: "completed", label: "Complete", icon: CheckCircle, desc: "Order complete. Enjoy your meal!" },
 ];
 
 export default function OrderStatusPage({ params }: { params: Promise<{ slug: string; orderId: string }> }) {
@@ -41,7 +53,19 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   );
 
   const isRejected = order.status === "rejected";
-  const currentStep = statusSteps.findIndex((s) => s.key === order.status);
+  // Pick the step set based on the restaurant's kitchenWorkflowMode.
+  // Status values not present in the chosen set (e.g. "preparing" on a
+  // simple-mode restaurant — shouldn't happen, but defensive) collapse
+  // onto the nearest valid step.
+  const workflowMode = order.restaurant?.kitchenWorkflowMode ?? "simple";
+  const statusSteps = workflowMode === "tracking" ? TRACKING_STEPS : SIMPLE_STEPS;
+  // Map intermediate statuses onto the simple-mode set: "preparing"
+  // and "ready" both fall into the "accepted" bucket visually.
+  const effectiveStatus =
+    workflowMode === "simple" && (order.status === "preparing" || order.status === "ready")
+      ? "accepted"
+      : order.status;
+  const currentStep = statusSteps.findIndex((s) => s.key === effectiveStatus);
   // If the order originated from the marketplace, "back" should land the
   // customer on the marketplace grid (where they were browsing) rather
   // than the restaurant's standalone menu. On the marketplace domain
