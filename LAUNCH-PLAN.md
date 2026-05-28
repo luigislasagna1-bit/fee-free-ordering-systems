@@ -1,6 +1,6 @@
 # Fee Free Ordering Systems — Soft Launch Plan
 
-_Compiled 2026-05-26 after the post-Reports / post-WhiteLabel / post-PDF-import session._
+_Originally compiled 2026-05-26. Heavily updated 2026-05-28 after the full Claude-side cleanup pass._
 
 This document is the **single source of truth** for what ships at soft launch vs. what's marked "Coming Soon." Read top-to-bottom before launch day.
 
@@ -10,33 +10,52 @@ This document is the **single source of truth** for what ships at soft launch vs
 
 These are the only things between us and inviting the first batch of real restaurants. Everything else either works or is correctly badged as Coming Soon.
 
-### 1.1 — Code work still needed (Claude can build)
+### 1.1 — Code work — **ALL CLAUDE-SIDE COMPLETE ✅**
+
+Original task list (ships at soft launch):
 
 | # | Item | Est | Status | Notes |
 |---|---|---|---|---|
-| 1 | **Kitchen notification sounds** (task #116) | 2-3h | ✅ **Shipped 2026-05-28** | GloriaFood sample MP3 (`public/sounds/gloriafood-new-order.mp3`) preloads on page mount and is preferred over the synthesized 4-partial bell on every ring. Falls back to synth only on autoplay-block / decode failure (logged to DevTools as `[KDS ring] synth (reason)`). The readyState-gated approach was scrapped — first ring after page load was falling back to synth because the browser hadn't decoded enough yet. Synth path preserved as the safety net. |
-| 2 | **PayPal integration** (task #117) | 1 day | ✅ **Shipped 2026-05-28** | Per-restaurant REST app model (each restaurant pastes their own PayPal Business REST app's Client ID + Secret into `/admin/payments/providers`; we encrypt with AES-256-GCM and verify via OAuth before flipping status=connected). Direct charges — money lands in the restaurant's PayPal balance, platform takes 0%. Same authorize-then-capture lifecycle as Stripe Connect: kitchen accept captures funds, reject voids the hold. Webhook receiver at `/api/webhooks/paypal` is the safety-net; synchronous customer-flow path is the authoritative one. **Schema needs `npx tsx scripts/push-schema-to-both.ts` before deploy lands cleanly.** |
-| 3 | **Coming Soon badging audit** (task #118) | 2-3h | ✅ **Shipped 2026-05-27** | Coming-Soon banners added to Autopilot (segment-based campaigns), Brand Reports (chain-wide funnel/heatmap), Marketplace home (native iOS/Android apps). Audit table in Part 3.2 below confirms every unwired feature is now honestly badged. |
+| 1 | **Kitchen notification sounds** (task #116) | 2-3h | ✅ **Shipped 2026-05-28** | GloriaFood sample MP3 — Web Audio decoded buffer, leading-150ms trim, high-pass @ 80Hz to cut hum. Strict "no auto-fallback" mode after Luigi reported hearing both sample + synth layered. Dynamic ring cadence: 3s when fresh, escalating to 250ms in the last 30s before auto-reject. Sound picker in settings (GloriaFood Ding vs. Classic Bell). Commits 299124a, 05e4c17. |
+| 2 | **PayPal integration** (task #117) | 1 day | ✅ **Shipped 2026-05-28** | Per-restaurant REST app model — each restaurant pastes their own PayPal Business REST app's Client ID + Secret, encrypted at rest with AES-256-GCM. Direct charges: money flows to restaurant's PayPal balance, platform takes 0%. Same authorize-then-capture lifecycle as Stripe Connect. Webhook receiver at `/api/webhooks/paypal`. Expandable step-by-step instructions in admin for non-developer owners. Commits 75e1281, 3efdaa8, 90151b5. |
+| 3 | **Coming Soon badging audit** (task #118) | 2-3h | ✅ **Shipped 2026-05-27** | Banners on Autopilot, Brand Reports, Marketplace home. Every unwired feature honestly badged. Commit 80df889. |
 
-**All Claude-side pre-launch work is complete.** Only Luigi-side UATs + Stripe LIVE switch remain.
+Bonus work shipped 2026-05-28 (became necessary as Luigi tested):
 
-### 1.2 — User work (only Luigi can do these)
+| Item | Notes |
+|---|---|
+| ✅ **Order email semantics** | Placement-time email said "Order Confirmed" before kitchen accepted, then "Rejected" if declined — contradictory. Now: "Order Received — awaiting confirmation" on placement; "Order Confirmed" only after kitchen accepts; "Order Not Accepted" with rejection reason in rose callout on reject. Commit 42646a7. |
+| ✅ **Kill all "Free Trial" wording** | Trial concept removed entirely. All new restaurants land on FREE plan (no countdown, no card required). Schema default + all signup flows + Stripe checkout + admin/reseller UI + email templates + 5 i18n files + sales pages updated. Commit faaf9d8. |
+| ✅ **100-order/month cap enforcement** | The promise the new FREE-plan copy made now actually exists. Counter on Restaurant, lazy monthly rollover, hard-block at 100 unless restaurant has any active paid add-on (or upgrades to FREE Unlimited Orders, the new $14.99/mo SKU). Soft-warning banner at 80, urgent banner at 100. Always-visible progress bar on /admin/billing. Commit 98a16b4. |
+| ✅ **Billing page rewrite** | Removed legacy "Available plans / Switch to this plan" picker. New Add-ons overview listing every catalog item with this restaurant's status + activation/renewal dates + Subscribe/Manage links. Commit 4eb452e. |
+| ✅ **Marketplace dual-billing surface** | Both PAYG ($3/order) and Monthly ($199.99 unlimited) shown wherever marketplace appears. Current plan highlighted. Switch link to the other. Commit 157ab23. |
+| ✅ **Marketplace Monthly→PAYG switch flow** | "Switch to Pay-As-You-Go" now actually works (was redirecting Monthly subscribers to settings page with no actionable PAYG option). Schedules Stripe cancel-at-period-end + a flag on MarketplaceListing the webhook reads to preserve the listing across the transition. Undo button. Commit 44f406e. |
+| ✅ **Stripe Connect status semantics aligned** | The status-poll endpoint required both `chargesEnabled && payoutsEnabled` for "connected" — but the webhook used only `chargesEnabled`. The disagreement caused Luigi's setup wizard to show "1 step left" forever even with charges live. Fixed: polling endpoint + the /admin/payments banner + the setup-checklist now key off `stripeChargesEnabled` (the actual Stripe truth) rather than the lossy local status field. Commits ebac206, 65aaf98. |
+| ✅ **PayPal saved in payment methods** | The PUT /api/restaurants/payment-methods whitelist was stripping "paypal" out before save. Added it. Commit 65aaf98. |
+| ✅ **Trial-days column removed from /superadmin/add-ons** | Cosmetic leftover from the killed-trial system. Commit 640a4ff. |
+| ✅ **Per-restaurant customer accounts + admin-assigned coupons** (Task #5) | NEW FEATURE. Restaurants now offer customers a per-restaurant signup (separate from marketplace identity) bundled with the platform — free for everyone. Customers sign up at `/order/<slug>/account/signup`, get a dashboard showing their personal coupons + order history. Admins assign personal coupons from `/admin/customers/<id>`. Multi-location chains: signup at any location auto-replicates Customer rows across siblings so one set of creds works chain-wide. Commit c002816. |
+
+**Total Claude-side work: ~~~2 days~~ DONE.** Luigi-side: see Part 1.2 below.
+
+### 1.2 — User work (only Luigi can do these) — **THE FULL DAY PLAN**
+
+Ordered for a focused day: blockers first, then verification of recent work, then UATs.
 
 | # | Item | Est | Status | Notes |
 |---|---|---|---|---|
-| 4 | **Stripe LIVE mode switch** (task #14) | 30 min | Pending | Toggle to live mode → recreate Products/Prices → paste new `price_xxx` IDs into Vercel env → re-register webhook in live mode → test $1 transaction + refund. |
-| 5 | **UAT: new-account E2E** (task #47) | 30 min | In progress | Fresh signup → setup wizard → first published order. |
-| 6 | **UAT: reseller flow** (task #48) | 30 min | In progress | Apply → approve → add restaurants → commission rollup → payout. |
-| 7 | **UAT: kitchen printer** (task #67) | 30 min | In progress | Real order → StarXpand → physical TSP143IIIW receipt. |
-| 8 | **UAT: multi-location** (task #68) | 30 min | Pending | Parent → child location → menu inheritance → revert-to-brand. |
-| 9 | **UAT: reservations E2E** (task #69) | 30 min | Pending | Customer books → admin pending → confirm → seated. |
-| 10 | **UAT: Reports smoke-test** | 15 min | Pending | Incognito order → Funnel + Visits + Heatmap populate. |
-| 11 | **UAT: Custom Domain flow** | 30 min | Pending | One reseller subscribes to Full → connects domain → DNS verification → branded login renders. |
-| 12 | **UAT: Menu PDF import** | 10 min | Pending | Upload a real menu (incl. AYCE-style or 100+ pages) → items + categories appear. |
+| **A** | **Stripe payouts verification** (blocker for real money) | ~15-30 min with Stripe | Pending | Stripe's flagged your account as `payouts: pending` — they want bank-verification docs (utility bill, ID, business registration, etc.) before they'll send money to your bank. Email from Stripe was sent during onboarding. Open Stripe Express dashboard → Settings → Verification → upload what they ask for. Charges already work; this just unlocks payouts. |
+| **B** | **Stripe TEST → LIVE switch** (task #14) | 30 min | Pending | If still on test mode: flip toggle in Stripe dashboard → recreate Products + Prices → paste new `price_xxx` into Vercel env → re-register webhook in live mode → test $1 transaction + refund. |
+| **C** | **Verify Task #5 on prod** (just shipped) | 10 min | Pending | Walk the full per-restaurant account flow in incognito: signup → admin assigns a personal coupon → customer dashboard shows it → place order with code → place another order LOGGED OUT with same code (should silently not apply). |
+| **D** | **UAT: new-account E2E** (task #47) | 30 min | In progress | Fresh signup at a new email → setup wizard 100% complete → publish → place a first order from a guest browser. |
+| **E** | **UAT: reseller flow** (task #48) | 30 min | In progress | Apply → approve → add restaurants → commission rollup → payout. |
+| **F** | **UAT: kitchen printer** (task #67) | 30 min | In progress | Real prod order → StarXpand → physical TSP143IIIW receipt. |
+| **G** | **UAT: multi-location** (task #68) | 30 min | Pending | Parent → child location → menu inheritance → revert-to-brand. Customer signup at parent should now auto-create a Customer row at the child (new this session — Task #5). |
+| **H** | **UAT: reservations E2E** (task #69) | 30 min | Pending | Customer books → admin pending → confirm → seated. |
+| **I** | **UAT: Reports smoke-test** | 15 min | Pending | Incognito order → Funnel + Visits + Heatmap populate. |
+| **J** | **UAT: Custom Domain flow** | 30 min | Pending | One reseller subscribes to Full → connects domain → DNS verification → branded login renders. |
+| **K** | **UAT: Menu PDF import** | 10 min | Pending | Upload a real menu (AYCE-style or 100+ pages) → items + categories appear. |
 
-**Total Claude-side work to soft-launch-ready:** ~~~2 days~~ **DONE (commits 80df889, 299124a, 42646a7, 75e1281).** Luigi-side: ~4 hours of testing across 9 walkthroughs.
-
-**Order-confirmation email semantics fix** (bonus, 2026-05-28): the placement-time email used to say "Order Confirmed" before the kitchen had actually accepted — leading to a contradictory "Confirmed then Rejected" sequence when restaurants declined orders. Now it says "Order Received — awaiting confirmation"; the real "Order Confirmed" email fires when the kitchen accepts. The rejection email also got an upgrade: previously fell through to a generic "Order update" placeholder; now has dedicated copy with the restaurant's reason surfaced in a rose-colored callout. (Commit 42646a7.)
+**Total Luigi-side: ~4-5 hours.** Fits in one focused day with breaks.
 
 ---
 
