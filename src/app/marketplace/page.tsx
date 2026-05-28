@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles, User } from "lucide-react";
+import { Sparkles, User, Smartphone, Rocket } from "lucide-react";
 import { listPublicMarketplaceListings } from "@/lib/marketplace";
 import { MarketplaceGrid, type GridListing } from "./MarketplaceGrid";
 import { getCurrentCustomer } from "@/lib/customer-session";
@@ -127,6 +127,35 @@ export default async function MarketplacePage() {
             <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 text-center">
               <div className="font-bold text-3xl text-emerald-600">100%</div>
               <div className="text-sm text-gray-600 mt-1">independent local restaurants</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Native apps Coming Soon notice ───────────────────────────────
+          PWA install works on iOS Safari + Android Chrome today (Add to
+          Home Screen). Native wrappers via Capacitor are scaffolded but
+          not yet in either store — call that out honestly so visitors
+          aren't searching the App Store and coming up empty. */}
+      <section className="bg-white border-t border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8">
+          <div className="flex items-start gap-3 rounded-xl bg-amber-50 border border-amber-200 p-4 sm:p-5 max-w-3xl mx-auto">
+            <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center">
+              <Smartphone className="w-5 h-5 text-amber-700" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap mb-1">
+                <h3 className="text-sm font-bold text-amber-900">Native iOS &amp; Android apps</h3>
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full">
+                  <Rocket className="w-2.5 h-2.5" />
+                  Coming Soon
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-amber-900/90 leading-relaxed">
+                The full-fat native apps are in the pipeline. In the meantime, tap your browser&apos;s
+                <span className="font-semibold"> share menu</span> and choose
+                <span className="font-semibold"> &ldquo;Add to Home Screen&rdquo;</span> — you&apos;ll get the marketplace as a real app icon, splash screen and full-screen experience. No App Store required.
+              </p>
             </div>
           </div>
         </div>

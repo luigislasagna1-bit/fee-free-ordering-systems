@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import {
   Zap, ShoppingBag, ShoppingCart, Users, Mail, Clock, Tag,
   ChevronDown, ChevronUp, ToggleLeft, ToggleRight, Save, AlertTriangle,
+  Target, Rocket,
 } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -309,6 +310,33 @@ export function AutopilotClient({
             {activeCampaigns} of {CAMPAIGN_CONFIGS.length} campaigns active
           </div>
         )}
+      </div>
+
+      {/* Segment-based targeting — Coming Soon ────────────────────────────
+          Today's Autopilot sends the same email to every customer who
+          matches a campaign trigger (e.g. all first-time buyers, all
+          abandoned-cart visitors). The next iteration will let you target
+          by segment — VIPs, lapsed regulars, big spenders, allergy
+          preferences, etc. The schema field exists (`customer_segmentation`)
+          but the UI + matching engine ships post-launch. */}
+      <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+        <div className="flex items-start gap-3">
+          <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+            <Target className="w-5 h-5 text-amber-700" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap mb-1">
+              <h3 className="text-sm font-bold text-amber-900">Segment-based targeting</h3>
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full">
+                <Rocket className="w-2.5 h-2.5" />
+                Coming Soon
+              </span>
+            </div>
+            <p className="text-xs sm:text-sm text-amber-900/90 leading-relaxed">
+              Right now Autopilot sends the same email to everyone who matches a campaign trigger. Soon you&apos;ll be able to target specific groups — VIP regulars, lapsed customers, big spenders, dietary preferences — and tune the message for each. The campaigns below still run today; segmentation is purely additive when it lands.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Campaign cards */}

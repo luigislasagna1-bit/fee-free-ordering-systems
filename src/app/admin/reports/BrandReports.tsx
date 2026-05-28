@@ -2,7 +2,7 @@
 import Link from "next/link";
 import {
   BarChart3, TrendingUp, ShoppingBag, DollarSign,
-  Building2, ArrowUpRight,
+  Building2, ArrowUpRight, Rocket,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import type { BrandReportPayload } from "@/lib/brand-reports";
@@ -32,6 +32,30 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
           </h1>
           <p className="text-sm text-gray-500 mt-0.5">
             Last 30 days · {payload.totals.locations} location{payload.totals.locations === 1 ? "" : "s"}
+          </p>
+        </div>
+      </div>
+
+      {/* Chain-wide deeper reports — Coming Soon ─────────────────────────
+          Revenue, orders, top items and per-location breakdown are wired
+          today. The rest of the per-location Reports suite (Funnel,
+          Visits, Heatmap, Connectivity Health, Promotions Stats) is not
+          yet aggregated chain-wide — owners can drill into a single
+          location's reports for those. Custom date ranges also land in
+          the post-launch pass. */}
+      <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4 flex items-start gap-3">
+        <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-amber-100 flex items-center justify-center">
+          <Rocket className="w-4 h-4 text-amber-700" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap mb-0.5">
+            <h3 className="text-sm font-bold text-amber-900">Deeper chain-wide reports</h3>
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full">
+              Coming Soon
+            </span>
+          </div>
+          <p className="text-xs sm:text-sm text-amber-900/90 leading-relaxed">
+            What you see today: revenue, orders, top items and per-location breakdown for the last 30 days. Coming next: chain-wide Funnel, Website Visits, Delivery Heatmap, Connectivity Health and custom date ranges. For those reports today, click into any single location below.
           </p>
         </div>
       </div>

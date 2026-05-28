@@ -14,7 +14,7 @@ These are the only things between us and inviting the first batch of real restau
 
 | # | Item | Est | Status | Notes |
 |---|---|---|---|---|
-| 1 | **Kitchen notification sounds** (task #116) | 2-3h | Not started | ZERO sound code exists. Multiple ring options (soft chime, classic ring, **loud GloriaFood-style ding that auto-repeats**), settings UI to pick + volume, autoplay-unlock on first interaction. Luigi flagged the prior attempt didn't match the GloriaFood reference — **need the original sound file from his video to use as source**. |
+| 1 | **Kitchen notification sounds** (task #116) | 2-3h | Partially built — needs sample-audio swap | **Correction to prior plan:** a notification sound DOES exist today (KitchenDisplay.tsx:425-554 — Web Audio API synthesized 4-partial bell at 880 Hz, 1.2s decay, 1500ms loop cadence, volume slider + mute + autoplay-unlock + test button, all persisted to localStorage). Luigi previously asked for this to match GloriaFood's recorded ding and it still doesn't — because synthesis can't replicate a sampled recording. **Real task:** drop GloriaFood-style audio file(s) into `public/sounds/`, replace the oscillator path in `ringBellOnce` with `new Audio(url).play()`, and add a sound-picker dropdown (soft chime / classic ring / **loud GloriaFood ding** / kitchen alarm). Keep ALL existing infrastructure (volume slider, mute, loop, autoplay unlock, test button). **Need from Luigi: source audio extracted from his GloriaFood reference video.** |
 | 2 | **PayPal integration** (task #117) | 1 day | Not started | Same GloriaFood-style model as Stripe (per-restaurant accounts, direct charges, we never hold funds). Adds option alongside Stripe at checkout. |
 | 3 | **Coming Soon badging audit** (task #118) | 2-3h | Not started | Mark every unwired feature consistently so nothing pretends to work. Full list in Part 3. |
 
@@ -36,11 +36,19 @@ These are the only things between us and inviting the first batch of real restau
 
 ---
 
-## Part 2 — What's Already Ready
+## Part 2 — What's Built (and how far it's actually been tested)
 
-These shipped during this session or earlier and are production-ready:
+**Important framing:** Nothing in this section is "100% tested." Everything below is **built and works in the happy path I or Luigi clicked through**, but until each subsystem has (a) a Luigi UAT on prod and (b) at least one real-customer transaction, it is not trusted for launch. Use the status column to see the honest gap between "shipped" and "trusted."
 
-### Reports system (16 sub-pages, all wired)
+**Verification levels:**
+- 🔵 **Built** — code exists, deployed, compiles, no known errors
+- 🟡 **Dev-tested** — Claude or Luigi clicked through the happy path once in dev/staging
+- 🟠 **Prod-UAT'd** — Luigi ran the full walkthrough on production (this is what Part 1.2 unblocks)
+- 🟢 **Real-customer-verified** — an actual paying customer / restaurant used it end-to-end without intervention
+
+**Today, almost nothing is past 🟡. Zero subsystems are 🟢 because Stripe LIVE hasn't been switched on yet.** That's the work Part 1.2 + the first batch of soft-launch restaurants will do.
+
+### Reports system (16 sub-pages, all wired) — 🟡 Dev-tested
 - Dashboard with KPI cards + vs-prev-period deltas + first-order welcome state
 - Sales → Trend + Summary (with chart/table toggle + previous-period overlay)
 - Menu Insights → Categories + Items (with revenue % column)
@@ -49,87 +57,122 @@ These shipped during this session or earlier and are production-ready:
 - All 7 reports have working CSV/XLS export with active filters preserved
 - 4-year data retention enforced in schema
 - Daily ReportDailySnapshot rollup cron scheduled at 3am UTC
+- _Gap to 🟢: needs a real order to flow through Funnel + Visits + Heatmap on prod (UAT #10)_
 
-### White-label Phase 1 + 2 + 2c (complete)
+### White-label Phase 1 + 2 + 2c — 🟡 Dev-tested
 - Basic ($9.99/mo) — imprint + logo on emails
 - Full ($29/mo) — adds custom domain + branded login
 - Custom domain end-to-end: connect, Vercel API, DNS records, registrar guides (GoDaddy/Namecheap/Cloudflare/etc), auto-poll every 20s, ETA banner, support escalation mailto, pre-flight modal, www/apex normalization, SSL via Let's Encrypt
 - Superadmin audit panel at `/superadmin/resellers/<id>`
+- _Gap to 🟢: needs a reseller to subscribe to Full → connect a real domain → DNS → branded login render (UAT #11)_
 
-### Custom Domain for Restaurants ($9.99 add-on)
+### Custom Domain for Restaurants ($9.99 add-on) — 🔵 Built, not yet UAT'd in prod
 - Same Vercel-backed flow as reseller domain
 - Pre-flight modal explaining DNS takedown risk + email safety
 - Registrar guides (per-registrar steps)
 - Auto-polling, ETA banner, support link
 - www / apex matching
+- _Gap to 🟢: same as reseller domain — needs a real restaurant to connect a real domain end-to-end_
 
-### Menu PDF Import
+### Menu PDF Import — 🟡 Dev-tested (one real menu)
 - Claude Sonnet 4.5 extraction with streaming (32k max_tokens)
 - Auto-splits PDFs over 80 pages, merges results (deduped by category + item name)
 - AYCE / fixed-price menus supported (items with $0 prices come through)
 - Dedup on re-import (won't duplicate existing items)
-- Pre-launch validated by Luigi: 125-page Italian menu → 239 items in one upload
+- Pre-launch validated by Luigi: 125-page Italian menu → 239 items in one upload (one test, one menu, one language)
+- _Gap to 🟢: needs 2-3 more menus (different cuisines, AYCE, drinks-heavy, multilingual) to confirm extraction quality holds (UAT #12)_
 
-### Kitchen Printer (Direct LAN)
+### Kitchen Printer (Direct LAN) — 🟡 Dev-tested (verified working 2026-05-24)
 - StarXpand SDK with native bitmap printing (TSP143IIIW verified working)
 - mDNS auto-discovery + subnet scan
 - Per-template receipt customization (live preview)
 - Two workflow modes: Simple (GloriaFood-style accept-only) + Tracking (full state machine)
 - Kitchen first-time tour
 - PrintNode demoted to opt-in backup
+- _Gap to 🟢: prod UAT — real order placed online → printer in Luigi's kitchen physically prints (UAT #7). The pipeline is locked GOLDEN but has never run against a real prod order on the live Stripe path_
 
-### Capacitor Native Apps (foundations)
+### Capacitor Native Apps (foundations) — 🔵 Built (kitchen) / 🔵 Scaffolded (marketplace)
 - **Kitchen Display app** — fully working, ready for store submission (commit 78)
 - **Marketplace app** — Capacitor config scaffolded, awaits `npx cap add ios/android` + cert setup (commit 694d374)
+- _Gap to 🟢: neither app is in any store yet; kitchen app needs a TestFlight build at minimum before launch_
 
-### Marketing surfaces
+### Marketing surfaces — 🟡 Dev-tested
 - Hosted marketing site at `/site/<slug>` (Sales Optimized Website add-on)
 - Programmatic SEO landing pages (`/{cuisine}-delivery-{city}`)
 - Sticky nav + full-screen hero + Special Offers section pulling from active promotions
 - Embed widget (3 modes: button, iframe, popup) with 4 position options
 - Subdomain routing (`<slug>.feefreeordering.com`)
 - Custom domain routing per restaurant
+- _Gap to 🟢: SEO landing pages have never been indexed by Google in prod; embed widget has never been dropped into a real third-party site_
 
-### Visit + Funnel Tracking
+### Visit + Funnel Tracking — 🔵 Built, 🟡 partial in dev
 - Beacon on `/order/<slug>` AND `/site/<slug>` AND SEO landing pages
 - Channel detection (utm + referrer + Vercel geo → direct/marketplace/email/organic/paid_ads/social/referral/affiliate/internal)
 - 7-step funnel: visit → menu_browsed → item_added → checkout_open → checkout_info → payment_open → order_placed
 - Rate-limited beacons (60/min visit, 120/min event)
 - 4-year retention
+- _Gap to 🟢: intermediate funnel steps (menu_browsed / item_added / checkout_open / checkout_info / payment_open) are only partially wired — only visit → order_placed is confirmed end-to-end. Listed in Phase 3 post-launch fixes_
 
-### Stripe Connect (= GloriaFood model)
+### Stripe Connect (= GloriaFood model) — 🟡 Dev-tested on TEST mode only
 - Direct charges, restaurant owns the Stripe account, funds go directly to them
 - Authorize-then-capture for delayed orders
 - Marketplace settlement cron with monthly summary emails
 - Refund handling including insufficient balance edge case
 - White-label tier subscription with prorated tier-swap
+- _Gap to 🟢: **THE BIG ONE.** Stripe is still in TEST mode. Until task #14 (LIVE key swap + $1 real transaction + refund) happens, nothing here is trusted. Every other "ready" subsystem depends on this working for end-to-end customer flow_
 
-### Marketplace platform (`feefreefood.com`)
+### Marketplace platform (`feefreefood.com`) — 🟡 Dev-tested
 - Browse page with search + cuisine filters + sort
 - Per-restaurant tiles linking to order pages
 - `?from=marketplace` attribution + card-only enforcement
 - $3/order billing with monthly cap
 - PWA manifest installable on phones (poor-man's native app)
+- _Gap to 🟢: zero restaurants live on it yet, so the browse page is empty and search has never been hit with real traffic_
 
-### Customer Accounts
+### Customer Accounts — 🔵 Built
 - Signup, login, password reset, email verification
 - Address book + order history
 - Cross-restaurant identity via CustomerAccount
+- _Gap to 🟢: needs a real customer to sign up, place an order, log back in, repeat (covered by UAT #5)_
 
-### Reseller Program (commission tiers 0/5/10/15%)
+### Reseller Program (commission tiers 0/5/10/15%) — 🔵 Built (one full session of UI work, no real reseller yet)
 - 4-tier commission table by active-paying count
 - Application → approval → onboarding emails
 - Pending Restaurants page, Performance, Sales & Marketing kits
 - Per-restaurant detail with service icons
 - Payout request → manual transfer → webhook updates
+- _Gap to 🟢: needs UAT #6 — real apply → approve → add restaurants → commission rollup → payout. No real payout has ever been issued_
 
-### Compliance + Operational
+### Compliance + Operational — 🟡 Mostly dev-tested
 - Privacy Policy, Terms of Service, Refund Policy pages
 - Sentry error monitoring
 - Email deliverability (SPF / DKIM / DMARC)
 - i18n: en / fr / es / it / pt translations
 - Mobile admin responsiveness
 - 16 GloriaFood-style React Email templates
+- _Gap to 🟢: email deliverability only proven for transactional templates that have actually fired in dev; the unused templates (ScheduledOrderReminder etc.) have never sent. Sentry has logged dev errors but no prod incident has tested the alerting loop yet_
+
+---
+
+### Summary table — verification status at a glance
+
+| Subsystem | Status | What unlocks 🟢 |
+|---|---|---|
+| Reports (16 sub-pages) | 🟡 Dev-tested | UAT #10 — real order populates Funnel + Visits + Heatmap |
+| White-label Phase 1/2/2c | 🟡 Dev-tested | UAT #11 — reseller subscribes Full → real domain → branded login |
+| Custom Domain (restaurant) | 🔵 Built | Real restaurant connects a real domain |
+| Menu PDF Import | 🟡 Dev-tested (1 menu) | UAT #12 — 2-3 more menus, different cuisines |
+| Kitchen Printer (LAN) | 🟡 Dev-tested | UAT #7 — real prod order prints physically |
+| Capacitor apps | 🔵 Built / Scaffolded | TestFlight + Play Console builds |
+| Marketing surfaces | 🟡 Dev-tested | Google indexes a landing page; embed lives on a real site |
+| Visit + Funnel Tracking | 🔵/🟡 partial | Wire intermediate funnel steps (Phase 3 post-launch) |
+| Stripe Connect | 🟡 TEST mode only | **Task #14 — LIVE switch + real $1 + refund** |
+| Marketplace platform | 🟡 Dev-tested | First real restaurant goes live and gets browsed |
+| Customer Accounts | 🔵 Built | UAT #5 — real customer signs up + orders + returns |
+| Reseller Program | 🔵 Built | UAT #6 — real apply → approve → payout |
+| Compliance / Email / Sentry | 🟡 Partial | First prod incident tests the alerting loop |
+
+**Until Stripe LIVE is on and one real order has flowed all the way through Customer Account → Stripe → Kitchen Printer → Reports, treat the entire system as 🟡 at best.** That single end-to-end run is what flips everything connected by it from 🟡 → 🟠 → 🟢.
 
 ---
 
@@ -144,19 +187,24 @@ These show up in the product today but **don't actually work**. They need consis
 
 These have UI surfaces or add-on entries but **no working backend**:
 
-| Feature | Entitlement Slug | Where It Appears | Action |
+**Audit complete 2026-05-27** — task #118 closed. Status of every row below:
+
+| Feature | Entitlement Slug | Where It Appears | Status |
 |---|---|---|---|
-| **POS Module** | `in_house_pos` | Add-on catalog | Already flagged in task #66; verify Coming Soon copy is current |
-| **App Store Listing** | `app_store_listing` | Add-on catalog | Add Coming Soon badge — no implementation exists |
-| **Branded PWA** | `branded_pwa` | Add-on catalog | Add Coming Soon — separate from hosted site; never wired |
-| **Branded Mobile App** (per restaurant) | `branded_mobile_app` | Add-on catalog (`AddOnsClient.tsx:26`) | Add Coming Soon — needs task #120 to build |
-| **Customer Segmentation** | `customer_segmentation` | Entitlement only, no UI | Build minimal "Coming Soon" UI in Marketing Tools area |
-| **Automated Campaigns** (segment-based) | `automated_campaigns` | Autopilot exists but no segmentation | Add note: "Segment-based targeting coming soon" |
-| **SerpAPI Rank Tracking** | (env-gated) | Google Ranking report (chart) | Already gracefully degrades with amber banner — leave as-is, mark task #121 for post-launch |
-| **Marketplace iOS/Android Apps** | n/a | Marketplace page footer? Marketing site? | Until task #119 ships, add "Native apps coming soon" mention. PWA install works today. |
-| **Per-restaurant Branded Mobile App** | n/a | Add-on catalog | Until task #120 ships, "Coming soon" treatment |
-| **Cross-location Reports** | n/a | Reports area | Brand-parent dashboard works for single chain; multi-location aggregation referenced in `src/lib/brand.ts:234` as Phase 2 — defer or label |
-| **Scheduled-order Email Reminders** | n/a | Email templates exist (`ScheduledOrderReminder.tsx`); cron not enabled | Either enable the cron or mark "scheduled-order reminders coming soon" in scheduling UI |
+| **POS Module** | `in_house_pos` | Add-on catalog | ✅ Already flagged `comingSoon: true` in seed-addons.ts |
+| **App Store Listing** | `app_store_listing` | Add-on catalog | ✅ Covered — bundled under `branded_mobile_app` parent (`comingSoon: true`) |
+| **Branded PWA** | `branded_pwa` | Add-on catalog | ✅ Covered — bundled under `branded_mobile_app` parent (`comingSoon: true`) |
+| **Branded Mobile App** (per restaurant) | `branded_mobile_app` | Add-on catalog (`AddOnsClient.tsx:26`) | ✅ Already flagged `comingSoon: true` |
+| **Customer Segmentation** | `customer_segmentation` | Entitlement only, no UI | ✅ Covered by `advanced_promos` parent + banner on Autopilot page |
+| **Automated Campaigns** (segment-based) | `automated_campaigns` | Autopilot | ✅ Amber "Segment-based targeting — Coming Soon" banner added to `AutopilotClient.tsx` above the campaign cards |
+| **SerpAPI Rank Tracking** | (env-gated) | Google Ranking report | ✅ Already gracefully degrades with amber banner. Post-launch task #121 |
+| **Marketplace iOS/Android Apps** | n/a | Marketplace page | ✅ Amber "Native iOS & Android apps — Coming Soon" section added to `src/app/marketplace/page.tsx` with PWA Add-to-Home-Screen instructions |
+| **Per-restaurant Branded Mobile App** | n/a | Add-on catalog | ✅ Covered — `branded_mobile_app` add-on already `comingSoon: true` |
+| **Cross-location Reports** | n/a | Reports area | ✅ Chain-wide revenue/orders/top-items/per-location breakdown **already shipped** in `BrandReports.tsx`. Added amber "Deeper chain-wide reports (Funnel, Visits, Heatmap, Connectivity, custom date ranges) — Coming Soon" banner. Original launch-plan claim was incorrect — basic chain reports work today |
+| **Scheduled-order Email Reminders** | n/a | Internal template only | ✅ No badge needed — the checkout scheduling UI never promises a reminder email, so there's no false expectation. Wire the cron post-launch (Phase 4) |
+| **Reservation Deposits** | `reservation_deposits` | Add-on catalog | ✅ Already flagged `comingSoon: true` |
+| **Custom Domain via Cloudflare** | `custom_domain` (Cloudflare path) | Add-on catalog | ✅ Already flagged `comingSoon: true`. Vercel-backed path ships today |
+| **Driver Pool** | (n/a) | Add-on catalog | ✅ Already flagged `comingSoon: true` (ShipDay REST not wired) |
 
 ### 3.3 — Suggested Coming Soon UI pattern
 
@@ -211,28 +259,41 @@ After soft launch lands and we have first-customer feedback, ship these in this 
 
 ---
 
-## Part 5 — The Notification Sound Issue (Luigi's specific callout)
+## Part 5 — The Notification Sound Issue (Luigi's specific callout) — CORRECTED
 
-You mentioned the previous GloriaFood-style ring attempt didn't copy correctly. Here's what I found:
+I previously claimed in this doc that "there is literally no notification sound code in the codebase." **That was wrong.** Luigi corrected me: the kitchen display has always had a sound. I had grepped for the wrong patterns (`Audio(` / `.mp3`) and missed the actual implementation, which uses the Web Audio API instead.
 
-**Status:** There is **literally no notification sound code in the codebase**. The kitchen page polls `/api/kitchen/orders` every 4 seconds via `KitchenDisplay.tsx` but never plays audio when newOrderCount goes up. No `.mp3` or `.wav` files in `/public`. No `Audio` constructor calls anywhere. **The prior "attempt" must have been a discussion that never got built.**
+### What actually exists today
 
-When task #116 is implemented, we need:
-1. **The actual GloriaFood reference sound file from your video** — please save a copy and drop it in this repo at `public/sounds/gloriafood-style-ding.mp3` (or similar). Without that source, I'd be picking a stock notification chime that won't match.
-2. **Multiple options to offer** so each restaurant picks their preferred ring:
-   - Soft chime (single bell, ~1s)
-   - Classic phone ring (telephone bell, ~2s)
-   - **Loud ding (GloriaFood-style — the one you want)**: short, sharp, **repeats every 3 seconds until acknowledged**
-   - Restaurant alert (long alarm-style, kitchen-loud)
-3. **Settings UI** under `/admin/notifications` or `/admin/services`:
-   - Dropdown: "When a new order arrives, play:" → pick sound
-   - Slider: volume (0-100%)
-   - Toggle: "Repeat until I tap Acknowledge"
-   - Test button: plays the chosen sound now so the owner can preview
-4. **Browser autoplay handling**: the first user interaction with the kitchen page unlocks audio. Show a small "Click anywhere to enable order sounds" banner until they do.
-5. **Per-device persistence** via localStorage so each kitchen tablet remembers its setting independently.
+File: `src/app/admin/kitchen/KitchenDisplay.tsx` lines 425-554.
 
-Implementation: ~2-3 hours once we have the source audio.
+- **Synthesizer**, not a sample. `ringBellOnce()` builds a struck-bell tone from 4 sine partials at harmonic ratios 1.000 / 2.756 / 5.404 / 8.933, fundamental 880 Hz (A5), exponential decay 1.2s.
+- **Loop** every 1500ms until silenced (comment says "≈ GloriaFood cadence").
+- **Volume slider + mute toggle**, persisted in localStorage (`kds-alert-volume`, `kds-alert-muted`).
+- **Autoplay unlock** on first pointer/keypress.
+- **Test button** to preview one strike.
+- **`silenceAlert()`** stops the loop on Acknowledge.
+
+So the infrastructure is solid. The problem is that a synthesized 4-partial bell can't sound like the specific recorded ding from the GloriaFood video Luigi referenced — Luigi already flagged that one attempt to "match it" didn't actually improve anything.
+
+### The real task #116
+
+**Swap the synthesis for sample playback. Keep everything else.**
+
+1. **Source audio from Luigi.** Extract the ding from his GloriaFood reference video, save as `public/sounds/gloriafood-ding.mp3`. Without the actual file, any picked-from-stock ding will miss again.
+2. **Add additional options** for restaurants to choose from:
+   - `gloriafood-ding.mp3` — loud, sharp, the one Luigi wants by default
+   - `soft-chime.mp3` — single bell ~1s
+   - `classic-ring.mp3` — telephone bell ~2s
+   - `kitchen-alarm.mp3` — long alarm-style, kitchen-loud
+3. **Replace the oscillator path in `ringBellOnce`** with `new Audio(selectedUrl).play()` — preserve the existing volume scaling (multiply `audio.volume` by the slider value), mute check, and loop scheduler.
+4. **Sound-picker UI** in the kitchen settings panel (right next to the existing volume slider):
+   - Dropdown: "Notification sound" → list of options
+   - Test button (already exists — just point it at the new playback function)
+   - Persist selection to localStorage (`kds-alert-sound`)
+5. **Autoplay unlock and loop cadence stay as-is** — they already work.
+
+Implementation: ~2 hours once the source audio file is in `public/sounds/`. No new dependencies needed — browser-native `Audio` element is enough.
 
 ---
 
@@ -362,7 +423,7 @@ Pulled from various session discussions, recorded so we don't lose them:
 3. Coming Soon badges everywhere ✓
 4. You complete 9 UATs + Stripe LIVE switch ✓
 
-**Everything else** in the product either works today, gracefully degrades, or will be honestly labeled "Coming Soon" so no one expects what isn't there.
+**Everything else** in the product is either 🔵 Built or 🟡 Dev-tested — meaning it works in the happy path I or you have clicked through, but nothing is 🟢 Real-customer-verified yet. The 9 UATs + first batch of soft-launch restaurants are what move it from 🟡 to 🟢. Unwired features are honestly labeled "Coming Soon" so no one expects what isn't there.
 
 **Post-launch priorities** in order:
 1. Marketplace native apps to stores
