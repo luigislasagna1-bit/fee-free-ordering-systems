@@ -252,8 +252,17 @@ export function HoursClient({
               </button>
               {h.isOpen ? (
                 <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                  {/* <input type="time"> shows AM/PM or 24h based on the
+                      browser's locale, not anything the page can directly
+                      control. The cleanest cross-browser nudge is the
+                      `lang` attribute — Chromium honors en-GB to force
+                      24h display, and en-US to force 12h. The internal
+                      VALUE is always 24h HH:MM regardless (HTML spec).
+                      Safari is locale-bound and ignores lang here, which
+                      we accept until we move to a custom picker. */}
                   <input
                     type="time"
+                    lang={format === "24h" ? "en-GB" : "en-US"}
                     value={h.openTime}
                     onChange={(e) => update(h.dayOfWeek, "openTime", e.target.value)}
                     className="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
@@ -261,6 +270,7 @@ export function HoursClient({
                   <span className="text-gray-400 text-sm">{tCommon("to")}</span>
                   <input
                     type="time"
+                    lang={format === "24h" ? "en-GB" : "en-US"}
                     value={h.closeTime}
                     onChange={(e) => update(h.dayOfWeek, "closeTime", e.target.value)}
                     className="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"

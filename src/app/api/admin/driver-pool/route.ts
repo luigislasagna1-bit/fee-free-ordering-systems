@@ -68,17 +68,28 @@ export async function PUT(req: NextRequest) {
     update.deliverySource = body.deliverySource;
   }
 
-  // ShipDay-credentials / fee-mode fields are also gated — no point
-  // saving a ShipDay API key for a restaurant that can't actually use
-  // ShipDay. Reject the whole request if they try to write any of these
-  // without entitlement.
-  const usesShipdayFields =
-    typeof body.apiKey === "string" ||
-    typeof body.enabled === "boolean" && body.enabled === true ||
-    typeof body.deliveryFeeMode === "string" ||
-    typeof body.flatDeliveryFee === "number" ||
-    Array.isArray(body.tieredRules);
-  if (usesShipdayFields && !entitled) {
+  // ShipDay-credentials / fee-mode fields are gated — no point saving
+  // a ShipDay API key for a restaurant that can't actually use ShipDay.
+  //
+  // BUT: the client always sends the full ShipdayConfig payload (enabled,
+  // deliveryFeeMode, flatDeliveryFee, tieredRules) regardless of which
+  // delivery source is chosen, because the form has all the fields on
+  // screen. Treating ALL of those as "trying to configure ShipDay" was
+  // rejecting saves where the user picked "Own drivers" and just hit
+  // Save — they hadn't touched any ShipDay-specific config but the
+  // payload still carried the default values. Luigi hit this exact bug
+  // during setup.
+  //
+  // The fix: only enforce the entitlement gate when the user is ACTUALLY
+  // trying to enable ShipDay (deliverySource != "own" OR enabled=true OR
+  // they typed a new API key). Pure "Own drivers" saves with leftover
+  // ShipDay defaults in the payload pass through.
+  const effectiveSource = typeof body.deliverySource === "string" ? body.deliverySource : null;
+  const wantsShipday =
+    (effectiveSource && effectiveSource !== "own") ||
+    body.enabled === true ||
+    (typeof body.apiKey === "string" && body.apiKey.trim() !== "");
+  if (wantsShipday && !entitled) {
     return NextResponse.json(
       {
         error: "Subscribe to Driver Pool or Marketplace Monthly to configure ShipDay dispatch.",

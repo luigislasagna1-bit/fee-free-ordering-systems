@@ -128,11 +128,18 @@ export interface ChecklistInput {
   /** True iff active/trialing driver_pool entitlement. Required for
    *  shipday/both deliverySource to count as "set up". */
   hasDriverPoolEntitlement: boolean;
+  /** True iff the restaurant has the Sales Optimized Website add-on
+   *  (`hosted_marketing_page` entitlement). When true, customers have
+   *  a place to order from (the hosted SOW page); they don't need to
+   *  install the widget on their own website. When false, the widget
+   *  install becomes the only way customers can reach the order page,
+   *  so it's required-to-publish. */
+  hasSalesOptimizedWebsite: boolean;
 }
 
 /** Single source of truth for what "ready to publish" means. */
 export function computeSetupProgress(input: ChecklistInput): SetupProgress {
-  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount, paymentMethods, hasOnlinePaymentsEntitlement, deliverySource, hasDriverPoolEntitlement, kitchenDeviceDetail } = input;
+  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount, paymentMethods, hasOnlinePaymentsEntitlement, deliverySource, hasDriverPoolEntitlement, kitchenDeviceDetail, hasSalesOptimizedWebsite } = input;
   // online_card is only meaningful when BOTH the owner ticked it AND they
   // have the online_payments add-on. Without the add-on, the option is
   // locked in the UI and the Stripe step shouldn't surface at all. This
@@ -343,14 +350,24 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
       id: "publish.widgetReady",
       section: "publishing",
       label: "Install the widget on your website",
-      // Optional — restaurants who don't have their own external website
-      // (or who just use the marketplace / hosted-site add-on) don't need
-      // to install this. Tracked via Restaurant.widgetInstalledAt, which
-      // gets stamped when the embed widget.js script fires its install
-      // heartbeat from any third-party host page (see /api/widget/heartbeat).
-      required: false,
+      // REQUIRED when the restaurant doesn't have a Sales Optimized
+      // Website (our hosted ordering page). One of the two MUST be
+      // present before publish, otherwise customers have nowhere to
+      // actually place orders from:
+      //
+      //   - SOW active                  → hosted page exists; widget is optional
+      //   - Widget installed on a site  → embed exists; SOW is optional
+      //   - Neither                     → no ordering surface, can't publish
+      //
+      // Tracked via Restaurant.widgetInstalledAt, which gets stamped
+      // when the embed widget.js script fires its install heartbeat
+      // from any third-party host page (see /api/widget/heartbeat).
+      required: !hasSalesOptimizedWebsite,
       href: "/admin/publishing/legacy-website",
-      complete: !!restaurant.widgetInstalledAt,
+      complete: !!restaurant.widgetInstalledAt || hasSalesOptimizedWebsite,
+      detail: hasSalesOptimizedWebsite
+        ? "Your Sales Optimized Website is your ordering page — widget is optional."
+        : "Customers need somewhere to order. Either install the widget here, or subscribe to the Sales Optimized Website add-on.",
     },
   ];
 

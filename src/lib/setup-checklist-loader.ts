@@ -64,7 +64,7 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
   });
   if (!restaurant) return null;
 
-  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive, deliveryZoneCount, hasOnlinePaymentsEntitlement, shipdayConfig, hasDriverPoolEntitlement, kitchenDeviceDetail] = await Promise.all([
+  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive, deliveryZoneCount, hasOnlinePaymentsEntitlement, shipdayConfig, hasDriverPoolEntitlement, kitchenDeviceDetail, hasSalesOptimizedWebsite] = await Promise.all([
     prisma.openingHours.findMany({
       where: { restaurantId },
       select: { isOpen: true },
@@ -108,6 +108,13 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     // Freshness is judged separately by kitchenDeviceLive — this is for
     // showing "iPhone 13 · 3m ago" detail under the step label.
     getLatestKitchenDevice(restaurantId),
+    // Sales Optimized Website entitlement. When TRUE, the restaurant
+    // has our hosted ordering page (under their slug.feefreeordering.com
+    // subdomain) so customers always have somewhere to order from;
+    // installing the embed widget on their own website becomes optional.
+    // When FALSE, the widget install becomes the only ordering surface
+    // and is required-to-publish. See computeSetupProgress publish.widgetReady.
+    hasFeature(restaurantId, "hosted_marketing_page"),
   ]);
 
   const hasKitchenDevice = kitchenDeviceLive;
@@ -160,5 +167,6 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     deliverySource,
     hasDriverPoolEntitlement,
     kitchenDeviceDetail,
+    hasSalesOptimizedWebsite,
   });
 }
