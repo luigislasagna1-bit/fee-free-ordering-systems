@@ -108,6 +108,19 @@ export function BillingClient({
     const cat = addOnCatalog.find((c) => c.id === r.addOnId);
     return cat && cat.slug !== "unlimited_orders";
   });
+  // Marketplace Monthly bundles driver_pool (see prisma/seed-addons.ts
+  // marketplace.enabledFeatures = ["marketplace_listing", "driver_pool"]).
+  // PAYG does NOT bundle it — PAYG users don't have a RestaurantAddOn row
+  // for marketplace, so this check naturally excludes them. We use this
+  // flag to render driver_pool as "Already included via Marketplace"
+  // instead of offering a $19.99/mo subscribe link that would be a
+  // duplicate purchase.
+  const hasMarketplaceMonthly = restaurantAddOns.some((r) => {
+    const isLive = r.status === "active" || r.status === "trialing";
+    if (!isLive) return false;
+    const cat = addOnCatalog.find((c) => c.id === r.addOnId);
+    return cat?.slug === "marketplace";
+  });
   const mergedAddOns = addOnCatalog.map((cat) => ({
     catalog: cat,
     mine: addOnsByMyId.get(cat.id) ?? null,
@@ -217,6 +230,7 @@ export function BillingClient({
                   catalog={catalog}
                   mine={mine}
                   hasOtherPaidAddOn={hasOtherPaidAddOn}
+                  hasMarketplaceMonthly={hasMarketplaceMonthly}
                 />
               ),
             )}
@@ -508,6 +522,7 @@ function AddOnRowItem({
   catalog,
   mine,
   hasOtherPaidAddOn,
+  hasMarketplaceMonthly,
 }: {
   catalog: AddOnRow;
   mine: RestaurantAddOnRow | null;
@@ -515,6 +530,9 @@ function AddOnRowItem({
    *  by the unlimited_orders row to mark itself "Already included"
    *  instead of offering a redundant subscribe CTA. */
   hasOtherPaidAddOn: boolean;
+  /** True iff Marketplace Monthly is active. Drives the "Already
+   *  included via Marketplace" state for the driver_pool row. */
+  hasMarketplaceMonthly: boolean;
 }) {
   // Normalize legacy "trialing" status to "active" — trial concept is dead.
   const status = mine && mine.status === "trialing" ? "active" : mine?.status ?? null;
@@ -526,6 +544,13 @@ function AddOnRowItem({
   const activatedDate = mine?.activatedAt ? new Date(mine.activatedAt) : null;
   const unlimitedRedundant =
     catalog.slug === "unlimited_orders" && !isActive && hasOtherPaidAddOn;
+  const driverPoolRedundant =
+    catalog.slug === "driver_pool" && !isActive && hasMarketplaceMonthly;
+  const includedNote = unlimitedRedundant
+    ? "Your other paid add-on already includes unlimited orders. Subscribing here would buy nothing extra."
+    : driverPoolRedundant
+      ? "Marketplace Monthly already includes the ShipDay Driver Pool. Subscribing here would be a duplicate purchase."
+      : null;
 
   return (
     <li className="p-4 sm:p-5 flex items-start gap-4">
@@ -598,10 +623,10 @@ function AddOnRowItem({
             <>{formatCurrency(catalog.monthlyPriceCents / 100)}<span className="text-xs font-normal text-gray-500">/mo</span></>
           )}
         </div>
-        {unlimitedRedundant ? (
+        {includedNote ? (
           <span
             className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 mt-1"
-            title="Your other paid add-on already includes unlimited orders. Subscribing here would buy nothing extra."
+            title={includedNote}
           >
             <CheckCircle2 className="w-3 h-3" />
             Already included

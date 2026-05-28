@@ -162,6 +162,14 @@ export function AddOnsClient({
             x.isSubscribed &&
             ["active", "trialing"].includes(x.subscription?.status || "")
           );
+          // Marketplace Monthly bundles driver_pool (see seed-addons.ts).
+          // PAYG does NOT — PAYG users don't have a RestaurantAddOn row
+          // so the isSubscribed flag is false for them here.
+          const hasMarketplaceMonthly = addOns.some((x) =>
+            x.slug === "marketplace" &&
+            x.isSubscribed &&
+            ["active", "trialing"].includes(x.subscription?.status || "")
+          );
           return addOns.map((a) => {
           const dollars = (a.monthlyPriceCents / 100).toFixed(2);
           const active =
@@ -176,6 +184,15 @@ export function AddOnsClient({
           // have ANY other paid add-on (they're already cap-exempt).
           const unlimitedRedundant =
             a.slug === "unlimited_orders" && !active && hasOtherPaidAddOn;
+          // Driver Pool is redundant when Marketplace Monthly is active
+          // (Marketplace bundles driver_pool via enabledFeatures).
+          const driverPoolRedundant =
+            a.slug === "driver_pool" && !active && hasMarketplaceMonthly;
+          const includedNote = unlimitedRedundant
+            ? "Your other paid add-on already includes unlimited orders — you don't need this one."
+            : driverPoolRedundant
+              ? "Marketplace Monthly already includes the ShipDay Driver Pool — you don't need this one."
+              : null;
           // Marketplace-specific: is the user mid-switch from Monthly to
           // PAYG? When both Stripe's cancel_at_period_end AND our local
           // switchToPaygOnCancel flag are set, the "scheduled cancellation"
@@ -401,18 +418,18 @@ export function AddOnsClient({
                       soon as it&apos;s ready to subscribe to.
                     </p>
                   </div>
-                ) : unlimitedRedundant ? (
-                  // Restaurant already has another paid add-on, so the
-                  // 100-orders/month cap doesn't apply to them. Subscribing
-                  // here would buy nothing they don't already have.
+                ) : includedNote ? (
+                  // Redundant subscribe: feature already bundled with
+                  // another active add-on. Surfaced "Already included"
+                  // with explanatory caption so the owner doesn't
+                  // accidentally pay for a duplicate.
                   <div className="space-y-2">
                     <div className="w-full px-4 py-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center justify-center gap-2">
                       <CheckCircle2 className="w-4 h-4" />
                       Already included
                     </div>
                     <p className="text-[11px] text-emerald-700 leading-snug text-center">
-                      Your other paid add-on already includes unlimited orders —
-                      you don&apos;t need this one.
+                      {includedNote}
                     </p>
                   </div>
                 ) : (
