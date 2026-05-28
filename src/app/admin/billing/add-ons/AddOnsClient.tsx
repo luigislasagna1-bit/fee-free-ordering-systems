@@ -146,8 +146,23 @@ export function AddOnsClient({
         </div>
       )}
 
+      {/* FREE Unlimited Orders is only useful for restaurants on the
+          FREE plan with no other paid add-on (every paid add-on already
+          includes unlimited orders via the hasAnyPaidAddOn cap exemption
+          in src/lib/order-cap.ts). If they have at least one OTHER paid
+          add-on active, subscribing to Unlimited Orders is buying nothing
+          new — we surface it as "Already included" and disable the
+          Subscribe button so they can't accidentally pay $14.99/mo for
+          nothing. The card stays visible (rather than being hidden) so
+          owners can see what's in the catalog. */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {addOns.map((a) => {
+        {(() => {
+          const hasOtherPaidAddOn = addOns.some((x) =>
+            x.slug !== "unlimited_orders" &&
+            x.isSubscribed &&
+            ["active", "trialing"].includes(x.subscription?.status || "")
+          );
+          return addOns.map((a) => {
           const dollars = (a.monthlyPriceCents / 100).toFixed(2);
           const active =
             a.isSubscribed && ["active", "trialing"].includes(a.subscription?.status || "");
@@ -157,6 +172,10 @@ export function AddOnsClient({
           const periodEnd = a.subscription?.currentPeriodEnd
             ? new Date(a.subscription.currentPeriodEnd)
             : null;
+          // Unlimited Orders is redundant for restaurants who already
+          // have ANY other paid add-on (they're already cap-exempt).
+          const unlimitedRedundant =
+            a.slug === "unlimited_orders" && !active && hasOtherPaidAddOn;
           // Marketplace-specific: is the user mid-switch from Monthly to
           // PAYG? When both Stripe's cancel_at_period_end AND our local
           // switchToPaygOnCancel flag are set, the "scheduled cancellation"
@@ -382,6 +401,20 @@ export function AddOnsClient({
                       soon as it&apos;s ready to subscribe to.
                     </p>
                   </div>
+                ) : unlimitedRedundant ? (
+                  // Restaurant already has another paid add-on, so the
+                  // 100-orders/month cap doesn't apply to them. Subscribing
+                  // here would buy nothing they don't already have.
+                  <div className="space-y-2">
+                    <div className="w-full px-4 py-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center justify-center gap-2">
+                      <CheckCircle2 className="w-4 h-4" />
+                      Already included
+                    </div>
+                    <p className="text-[11px] text-emerald-700 leading-snug text-center">
+                      Your other paid add-on already includes unlimited orders —
+                      you don&apos;t need this one.
+                    </p>
+                  </div>
                 ) : (
                   <div className="space-y-2">
                     <button
@@ -433,7 +466,8 @@ export function AddOnsClient({
               </div>
             </div>
           );
-        })}
+          });
+        })()}
       </div>
 
       {/* Cancel-confirmation modal — replaces window.confirm() so owners

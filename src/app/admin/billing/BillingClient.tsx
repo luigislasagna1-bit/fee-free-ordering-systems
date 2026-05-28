@@ -97,6 +97,17 @@ export function BillingClient({
   // in the catalog gets a row in the displayed list — subscribed or not —
   // so the owner can see at a glance what's available + what they have.
   const addOnsByMyId = new Map(restaurantAddOns.map((r) => [r.addOnId, r]));
+  // Cap-exempt detection: any active paid add-on EXCEPT unlimited_orders
+  // itself bundles unlimited orders. Used to dim the "FREE Unlimited
+  // Orders" subscribe CTA when subscribing would buy nothing — the
+  // restaurant is already exempt from the 100/mo cap. Logic mirrors
+  // src/lib/order-cap.ts hasAnyPaidAddOn.
+  const hasOtherPaidAddOn = restaurantAddOns.some((r) => {
+    const isLive = r.status === "active" || r.status === "trialing";
+    if (!isLive) return false;
+    const cat = addOnCatalog.find((c) => c.id === r.addOnId);
+    return cat && cat.slug !== "unlimited_orders";
+  });
   const mergedAddOns = addOnCatalog.map((cat) => ({
     catalog: cat,
     mine: addOnsByMyId.get(cat.id) ?? null,
@@ -205,6 +216,7 @@ export function BillingClient({
                   key={catalog.id}
                   catalog={catalog}
                   mine={mine}
+                  hasOtherPaidAddOn={hasOtherPaidAddOn}
                 />
               ),
             )}
@@ -495,9 +507,14 @@ function StatusCard({
 function AddOnRowItem({
   catalog,
   mine,
+  hasOtherPaidAddOn,
 }: {
   catalog: AddOnRow;
   mine: RestaurantAddOnRow | null;
+  /** True iff the restaurant has any other paid add-on active. Used
+   *  by the unlimited_orders row to mark itself "Already included"
+   *  instead of offering a redundant subscribe CTA. */
+  hasOtherPaidAddOn: boolean;
 }) {
   // Normalize legacy "trialing" status to "active" — trial concept is dead.
   const status = mine && mine.status === "trialing" ? "active" : mine?.status ?? null;
@@ -507,6 +524,8 @@ function AddOnRowItem({
   const cancelsAtPeriodEnd = !!mine?.cancelAtPeriodEnd;
   const renewDate = mine?.currentPeriodEnd ? new Date(mine.currentPeriodEnd) : null;
   const activatedDate = mine?.activatedAt ? new Date(mine.activatedAt) : null;
+  const unlimitedRedundant =
+    catalog.slug === "unlimited_orders" && !isActive && hasOtherPaidAddOn;
 
   return (
     <li className="p-4 sm:p-5 flex items-start gap-4">
@@ -579,13 +598,23 @@ function AddOnRowItem({
             <>{formatCurrency(catalog.monthlyPriceCents / 100)}<span className="text-xs font-normal text-gray-500">/mo</span></>
           )}
         </div>
-        <Link
-          href={`/admin/billing/add-ons${mine ? `?addon=${catalog.slug}` : ""}`}
-          className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 mt-1"
-        >
-          {isActive || isPastDue ? "Manage" : isCancelled ? "Re-subscribe" : catalog.comingSoon ? "Learn more" : "Subscribe"}
-          <ExternalLink className="w-3 h-3" />
-        </Link>
+        {unlimitedRedundant ? (
+          <span
+            className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 mt-1"
+            title="Your other paid add-on already includes unlimited orders. Subscribing here would buy nothing extra."
+          >
+            <CheckCircle2 className="w-3 h-3" />
+            Already included
+          </span>
+        ) : (
+          <Link
+            href={`/admin/billing/add-ons${mine ? `?addon=${catalog.slug}` : ""}`}
+            className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 mt-1"
+          >
+            {isActive || isPastDue ? "Manage" : isCancelled ? "Re-subscribe" : catalog.comingSoon ? "Learn more" : "Subscribe"}
+            <ExternalLink className="w-3 h-3" />
+          </Link>
+        )}
       </div>
     </li>
   );
