@@ -75,7 +75,10 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
           name: row.name,
           description: row.description,
           monthlyPriceCents: cents,
-          trialDays: row.trialDays ?? 0,
+          // trialDays removed — we no longer offer trials. The column
+          // is still on the AddOn schema for legacy data but ignored
+          // everywhere (see commit faaf9d8 + the Stripe add-on
+          // checkout route which no longer passes trial_period_days).
           isActive: row.isActive,
           comingSoon: row.comingSoon,
           displayOrder: row.displayOrder,
@@ -146,7 +149,6 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
               <th className="text-left px-3 py-2">Slug</th>
               <th className="text-left px-3 py-2">Name</th>
               <th className="text-left px-3 py-2">$/mo</th>
-              <th className="text-left px-3 py-2">Trial days</th>
               <th className="text-left px-3 py-2">Active</th>
               <th className="text-left px-3 py-2" title="Show as 'Coming Soon' to restaurants — visible but unsubscribable">Coming&nbsp;Soon</th>
               <th className="text-left px-3 py-2">Stripe</th>
@@ -190,15 +192,6 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
                         }
                       />
                     </div>
-                  </td>
-                  <td className="px-3 py-2">
-                    <input
-                      type="number"
-                      min={0}
-                      className="w-20 border border-gray-200 rounded px-2 py-1"
-                      value={r.trialDays ?? 0}
-                      onChange={(e) => updateField(r.id, "trialDays", parseInt(e.target.value || "0", 10))}
-                    />
                   </td>
                   <td className="px-3 py-2">
                     <input
