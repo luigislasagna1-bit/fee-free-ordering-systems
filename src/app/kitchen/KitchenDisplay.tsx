@@ -494,8 +494,16 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         //      early" complaint — without it the abrupt buffer end
         //      sounds clipped; with it the ending tapers smoothly so
         //      the perceived stop matches the natural bell decay.
-        const TRIM_START_MS = 200;
-        const NOISE_FLOOR = 0.012; // peak amp below this counts as "silence"
+        // 2026-05-28: bumped trim + noise floor more aggressively after
+        // Luigi reported persistent background noise. TRIM_START_MS=250
+        // cuts past most of the source's lead-in artifact. NOISE_FLOOR
+        // raised to 0.025 — surfaces of the bell wave that fall below
+        // that are treated as silence-with-noise rather than signal,
+        // which trims more aggressively from the tail. Side effect: a
+        // very-quiet bell ring would be over-trimmed, but the source
+        // clip is loud enough that this is fine.
+        const TRIM_START_MS = 250;
+        const NOISE_FLOOR = 0.025;
         const FADE_IN_MS = 8;
         const FADE_OUT_MS = 25;
 
@@ -678,24 +686,32 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       const src = ctx.createBufferSource();
       src.buffer = buf;
 
-      // Signal chain:
-      //   src → highpass(150Hz) → peakingEQ(1kHz +4dB) → gain → destination
+      // Signal chain (heavier processing as of 2026-05-28 after Luigi
+      // reported lingering background noise):
+      //   src
+      //     → highpass(220Hz)   kills low-frequency hum (HVAC, traffic)
+      //     → lowpass(4500Hz)   kills high-frequency hiss / tape noise
+      //     → peakingEQ(1kHz+4) lifts bell-strike brightness so it cuts
+      //                          through what noise remains
+      //     → gain(volume)
+      //     → destination
       //
-      // The high-pass at 150Hz (bumped from 80Hz on 2026-05-28 after
-      // Luigi reported "background static") kills low-frequency room
-      // hum more aggressively. A typical bell's lowest partial is
-      // 400-800Hz so we lose nothing musical — only HVAC, traffic
-      // rumble, and tape-style preamp noise. Q=0.707 is a Butterworth
-      // response (no resonance bump at the corner).
-      //
-      // The peaking EQ at 1kHz +4dB lifts the brightness of the bell
-      // strike, making it cut through whatever ambient noise is
-      // floating around the broader recording. Net effect: the bell
-      // sounds CLEANER and more PRESENT, masking the noise relatively.
+      // The bell's important partials live ~440Hz–3.5kHz. Cutting outside
+      // that band sacrifices nothing musical and excises most of the
+      // noise spectrum (hum is <100Hz, hiss is >5kHz). If the source
+      // MP3 still sounds noisy after this, the noise lives INSIDE the
+      // bell's frequency band — at that point only a cleaner source
+      // file can help (filters can't surgically remove noise that
+      // overlaps the signal's spectrum without distorting the signal).
       const highpass = ctx.createBiquadFilter();
       highpass.type = "highpass";
-      highpass.frequency.value = 150;
+      highpass.frequency.value = 220;
       highpass.Q.value = 0.707;
+
+      const lowpass = ctx.createBiquadFilter();
+      lowpass.type = "lowpass";
+      lowpass.frequency.value = 4500;
+      lowpass.Q.value = 0.707;
 
       const presence = ctx.createBiquadFilter();
       presence.type = "peaking";
@@ -705,7 +721,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
       const gain = ctx.createGain();
       gain.gain.value = vol;
-      src.connect(highpass).connect(presence).connect(gain).connect(ctx.destination);
+      src.connect(highpass).connect(lowpass).connect(presence).connect(gain).connect(ctx.destination);
       src.start();
       return true;
     } catch (e) {
