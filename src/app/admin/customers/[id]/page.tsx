@@ -20,6 +20,7 @@ import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { AssignCouponForm } from "./AssignCouponForm";
+import { CustomerActionsCard } from "./CustomerActionsCard";
 
 export const dynamic = "force-dynamic";
 
@@ -38,12 +39,18 @@ export default async function CustomerDetailPage({
     where: { id },
     select: {
       id: true, restaurantId: true, name: true, email: true, phone: true,
-      address: true, totalOrders: true, totalSpent: true, createdAt: true,
-      lastOrderAt: true, passwordHash: true, emailVerifiedAt: true,
-      lastLoginAt: true, chainCustomerId: true,
+      address: true, notes: true, totalOrders: true, totalSpent: true,
+      createdAt: true, lastOrderAt: true, passwordHash: true,
+      emailVerifiedAt: true, lastLoginAt: true, chainCustomerId: true,
     },
   });
   if (!customer || customer.restaurantId !== restaurantId) notFound();
+
+  // Restaurant name — needed for the mailto template subject.
+  const restaurantRow = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { name: true },
+  });
 
   const hasAccount = !!customer.passwordHash;
   const now = new Date();
@@ -142,6 +149,15 @@ export default async function CustomerDetailPage({
           )}
         </div>
       </div>
+
+      {/* Notes & quick actions (email button + private notes) */}
+      <CustomerActionsCard
+        customerId={customer.id}
+        customerName={customer.name}
+        customerEmail={customer.email}
+        restaurantName={restaurantRow?.name ?? "us"}
+        initialNotes={customer.notes ?? ""}
+      />
 
       {/* Assign coupon */}
       <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
