@@ -198,7 +198,28 @@ export async function POST(req: NextRequest) {
         },
       });
       if (coupon) {
-        if (!coupon.expiresAt || new Date(coupon.expiresAt) > new Date()) {
+        // Personal-assignment gate. When `customerId` is set on the coupon,
+        // it's only redeemable by that specific Customer — the per-restaurant
+        // signed-in customer. We resolve the logged-in customer via the
+        // session cookie + match against the coupon's customerId.
+        //
+        // Quiet skip (no error response) if the gate fails — keeps the
+        // existing UX of "invalid coupon = applied as 0 discount" rather
+        // than throwing a hard error mid-checkout. The customer just
+        // doesn't get the discount and can pick a different code.
+        let personalCouponOk = true;
+        if (coupon.customerId) {
+          try {
+            const { getCurrentRestaurantCustomer } = await import("@/lib/restaurant-customer-session");
+            const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
+            if (!me || me.id !== coupon.customerId) {
+              personalCouponOk = false;
+            }
+          } catch {
+            personalCouponOk = false;
+          }
+        }
+        if (personalCouponOk && (!coupon.expiresAt || new Date(coupon.expiresAt) > new Date())) {
           if (!coupon.maxUses || coupon.usedCount < coupon.maxUses) {
             if (serverSubtotal >= coupon.minimumOrder) {
               serverCouponDiscount = coupon.discountType === "percentage"

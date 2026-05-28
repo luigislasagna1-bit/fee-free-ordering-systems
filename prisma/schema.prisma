@@ -783,6 +783,23 @@ model Customer {
   phone             String?
   address           String?
   notes             String?
+  // Per-restaurant signup credentials. Null = guest-order row that never
+  // signed up. Set = customer has a per-restaurant account on this
+  // restaurant (separate from the marketplace-wide CustomerAccount).
+  // See src/lib/restaurant-customer-session.ts for the auth flow.
+  passwordHash      String?
+  emailVerifiedAt   DateTime?
+  emailVerifyToken  String?
+  passwordResetToken String?
+  passwordResetExpiresAt DateTime?
+  lastLoginAt       DateTime?
+  // Chain identity for multi-location restaurants. When a customer signs
+  // up at any restaurant in a chain (parent or any child), we generate
+  // a chainCustomerId and create a Customer row at EVERY restaurant in
+  // the chain, all sharing the same chainCustomerId + passwordHash. The
+  // customer's one set of credentials then authenticates at any
+  // location in the chain. Null for accounts at standalone restaurants.
+  chainCustomerId   String?
   totalOrders       Int       @default(0)
   totalSpent        Float     @default(0)
   /// Timestamp of this customer's most recent order at this restaurant.
@@ -802,13 +819,17 @@ model Customer {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 
-  restaurant      Restaurant       @relation(fields: [restaurantId], references: [id])
-  customerAccount CustomerAccount? @relation(fields: [customerAccountId], references: [id])
-  orders          Order[]
+  restaurant       Restaurant       @relation(fields: [restaurantId], references: [id])
+  customerAccount  CustomerAccount? @relation(fields: [customerAccountId], references: [id])
+  orders           Order[]
+  assignedCoupons  Coupon[]         @relation("CouponAssignedCustomer")
 
   @@index([restaurantId])
   @@index([restaurantId, email])
   @@index([customerAccountId])
+  @@index([chainCustomerId])
+  @@index([emailVerifyToken])
+  @@index([passwordResetToken])
 }
 
 /// Marketplace-wide customer identity. One row per signup email, shared
@@ -893,6 +914,13 @@ model Coupon {
   usedCount     Int       @default(0)
   isActive      Boolean   @default(true)
   expiresAt     DateTime?
+  // Personal coupon assignment. When set, this coupon is ONLY redeemable
+  // by the specified customer (gated at order-create time). Null = open-
+  // redeem (anyone with the code can use it — the legacy behaviour).
+  // Used by the admin "Assign coupon to customer" action on the
+  // customer detail page.
+  customerId    String?
+  customer      Customer? @relation("CouponAssignedCustomer", fields: [customerId], references: [id], onDelete: SetNull)
   /// Scope of this coupon:
   ///   "location" — only valid at the owning restaurant (default; matches
   ///                existing single-location behavior)
@@ -909,6 +937,7 @@ model Coupon {
 
   @@unique([restaurantId, code])
   @@index([restaurantId, isActive])
+  @@index([customerId])
 }
 
 model Promotion {

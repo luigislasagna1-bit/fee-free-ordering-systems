@@ -1,7 +1,8 @@
+import Link from "next/link";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import { Users, Mail, Phone } from "lucide-react";
+import { Users, Mail, Phone, KeyRound, ChevronRight } from "lucide-react";
 
 export default async function CustomersPage() {
   const user = await getSessionUser();
@@ -9,6 +10,15 @@ export default async function CustomersPage() {
   const customers = await prisma.customer.findMany({
     where: { restaurantId },
     orderBy: { totalSpent: "desc" },
+    // Select passwordHash presence so the row can show a "has account"
+    // pill — owners want to see at a glance which customers signed up
+    // (and therefore can receive personal coupons) vs. guest-order
+    // customers (drop-in orders without an account).
+    select: {
+      id: true, name: true, email: true, phone: true,
+      totalOrders: true, totalSpent: true, createdAt: true,
+      passwordHash: true,
+    },
   });
 
   return (
@@ -33,35 +43,44 @@ export default async function CustomersPage() {
                 up top. */}
             <ul className="divide-y divide-gray-100 md:hidden">
               {customers.map((c) => (
-                <li key={c.id} className="p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0 flex-1">
-                      <div className="font-semibold text-gray-900 truncate">{c.name}</div>
-                      <div className="text-xs text-gray-500 mt-0.5">
-                        {c.totalOrders} order{c.totalOrders === 1 ? "" : "s"} · since {formatDate(c.createdAt)}
+                <li key={c.id}>
+                  <Link href={`/admin/customers/${c.id}`} className="block p-4 hover:bg-gray-50 transition">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-gray-900 truncate">{c.name}</span>
+                          {c.passwordHash && (
+                            <span className="inline-flex items-center gap-0.5 text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">
+                              <KeyRound className="w-2.5 h-2.5" />Account
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-0.5">
+                          {c.totalOrders} order{c.totalOrders === 1 ? "" : "s"} · since {formatDate(c.createdAt)}
+                        </div>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <div className="font-bold text-gray-900">{formatCurrency(c.totalSpent)}</div>
+                        <div className="text-[10px] text-gray-400 uppercase tracking-wider">total spent</div>
                       </div>
                     </div>
-                    <div className="text-right flex-shrink-0">
-                      <div className="font-bold text-gray-900">{formatCurrency(c.totalSpent)}</div>
-                      <div className="text-[10px] text-gray-400 uppercase tracking-wider">total spent</div>
-                    </div>
-                  </div>
-                  {(c.email || c.phone) && (
-                    <div className="mt-2 flex flex-col gap-1 text-xs text-gray-600">
-                      {c.email && (
-                        <a href={`mailto:${c.email}`} className="inline-flex items-center gap-1.5 hover:text-emerald-700 truncate">
-                          <Mail className="w-3 h-3 flex-shrink-0 text-gray-400" />
-                          <span className="truncate">{c.email}</span>
-                        </a>
-                      )}
-                      {c.phone && (
-                        <a href={`tel:${c.phone.replace(/[^0-9+]/g, "")}`} className="inline-flex items-center gap-1.5 hover:text-emerald-700">
-                          <Phone className="w-3 h-3 flex-shrink-0 text-gray-400" />
-                          {c.phone}
-                        </a>
-                      )}
-                    </div>
-                  )}
+                    {(c.email || c.phone) && (
+                      <div className="mt-2 flex flex-col gap-1 text-xs text-gray-600">
+                        {c.email && (
+                          <span className="inline-flex items-center gap-1.5 truncate">
+                            <Mail className="w-3 h-3 flex-shrink-0 text-gray-400" />
+                            <span className="truncate">{c.email}</span>
+                          </span>
+                        )}
+                        {c.phone && (
+                          <span className="inline-flex items-center gap-1.5">
+                            <Phone className="w-3 h-3 flex-shrink-0 text-gray-400" />
+                            {c.phone}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -72,20 +91,34 @@ export default async function CustomersPage() {
               <table className="w-full text-sm">
                 <thead className="bg-gray-50 border-b border-gray-100">
                   <tr>
-                    {["Name", "Email", "Phone", "Orders", "Total Spent", "First Order"].map((h) => (
+                    {["Name", "Email", "Phone", "Orders", "Total Spent", "First Order", ""].map((h) => (
                       <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {customers.map((c) => (
-                    <tr key={c.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3 font-medium text-gray-900">{c.name}</td>
+                    <tr key={c.id} className="hover:bg-gray-50 cursor-pointer" onClick={undefined}>
+                      <td className="px-4 py-3 font-medium text-gray-900">
+                        <Link href={`/admin/customers/${c.id}`} className="flex items-center gap-2 hover:text-emerald-700">
+                          {c.name}
+                          {c.passwordHash && (
+                            <span className="inline-flex items-center gap-0.5 text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">
+                              <KeyRound className="w-2.5 h-2.5" />Account
+                            </span>
+                          )}
+                        </Link>
+                      </td>
                       <td className="px-4 py-3 text-gray-600">{c.email || "—"}</td>
                       <td className="px-4 py-3 text-gray-600">{c.phone || "—"}</td>
                       <td className="px-4 py-3 text-gray-600">{c.totalOrders}</td>
                       <td className="px-4 py-3 font-semibold text-gray-900">{formatCurrency(c.totalSpent)}</td>
                       <td className="px-4 py-3 text-gray-500">{formatDate(c.createdAt)}</td>
+                      <td className="px-4 py-3 text-right">
+                        <Link href={`/admin/customers/${c.id}`} className="text-emerald-600 hover:text-emerald-700">
+                          <ChevronRight className="w-4 h-4" />
+                        </Link>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
