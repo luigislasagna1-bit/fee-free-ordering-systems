@@ -429,6 +429,50 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const audioCtxRef = useRef<AudioContext | null>(null);
   const audioUnlockedRef = useRef(false);
 
+  // Pre-loaded GloriaFood sample. Lives at /public/sounds/ so Next.js serves
+  // it from the site origin. We keep a single Audio element for the lifetime
+  // of the page and just rewind currentTime=0 on each ring — cheaper than
+  // constructing a new Audio every strike.
+  //
+  // Two refs:
+  //   sampleAudioRef   — the Audio element if it loaded successfully
+  //   sampleErroredRef — flipped to true if the network/decoder errors out
+  //                       (file missing, 404, corrupt file, codec unsupported)
+  //
+  // We do NOT gate playback on readyState. The first observed bug was that
+  // requiring readyState >= 2 caused the very first ring after page load to
+  // fall back to the synth, because the browser hadn't decoded enough of
+  // the file yet. Instead we call play() unconditionally and use the
+  // returned Promise's rejection (autoplay block, decode failure) to fall
+  // back. That way the sample wins as soon as it's playable, with the synth
+  // as a safety net for older browsers / autoplay denials.
+  const sampleAudioRef = useRef<HTMLAudioElement | null>(null);
+  const sampleErroredRef = useRef(false);
+  useEffect(() => {
+    if (typeof Audio === "undefined") return;
+    const audio = new Audio("/sounds/gloriafood-new-order.mp3");
+    audio.preload = "auto";
+    sampleAudioRef.current = audio;
+    const onError = () => {
+      sampleErroredRef.current = true;
+      sampleAudioRef.current = null;
+      console.warn(
+        "[KDS] /sounds/gloriafood-new-order.mp3 failed to load — falling back to synthesized bell. " +
+        "Verify the file exists in public/sounds/ and the deploy includes it (Next.js bundles public/* at build time)."
+      );
+    };
+    const onCanPlay = () => {
+      console.info("[KDS] GloriaFood sample loaded and ready.");
+    };
+    audio.addEventListener("error", onError);
+    audio.addEventListener("canplaythrough", onCanPlay, { once: true });
+    try { audio.load(); } catch {}
+    return () => {
+      audio.removeEventListener("error", onError);
+      audio.removeEventListener("canplaythrough", onCanPlay);
+    };
+  }, []);
+
   // Load saved volume / mute on mount.
   useEffect(() => {
     try {
@@ -473,12 +517,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   }, []);
 
   /**
-   * Synthesize one bell strike. We stack four sine partials at classic
-   * struck-bell harmonic ratios (1, 2.756, 5.404, 8.933) with an
-   * exponential decay envelope — produces a much warmer, more "alarm bell"
-   * sound than a single square wave.
+   * Synthesized fallback — four sine partials at classic struck-bell
+   * harmonic ratios (1, 2.756, 5.404, 8.933) with exponential decay.
+   * Used only when the GloriaFood sample isn't loaded.
    */
-  const ringBellOnce = useCallback((volumeOverride?: number) => {
+  const synthBellOnce = useCallback((vol: number) => {
     try {
       const Ctx = (window.AudioContext || (window as any).webkitAudioContext);
       if (!Ctx) return;
@@ -488,9 +531,6 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         audioCtxRef.current = ctx;
       }
       if (ctx.state === "suspended") ctx.resume().catch(() => {});
-
-      const vol = Math.max(0, Math.min(1, volumeOverride ?? alertVolume));
-      if (vol <= 0) return;
 
       const t0 = ctx.currentTime;
       const fundamental = 880; // A5 — bright, attention-grabbing
@@ -502,8 +542,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       ];
 
       const master = ctx.createGain();
-      // Scale 0.0–1.0 slider → final amplitude. 0.6 peak at full volume
-      // is loud-but-safe over typical kitchen tablets / TVs.
+      // 0.6 peak at full volume is loud-but-safe over kitchen tablets / TVs.
       master.gain.setValueAtTime(0.0001, t0);
       master.gain.exponentialRampToValueAtTime(0.6 * vol, t0 + 0.005);
       master.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.2);
@@ -520,7 +559,60 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         osc.stop(t0 + 1.3);
       });
     } catch {}
-  }, [alertVolume]);
+  }, []);
+
+  /**
+   * Ring one strike. Tries the GloriaFood sample first; falls back to the
+   * synthesized bell on any failure (file missing, autoplay block, decode
+   * error). Resets currentTime=0 each call so rapid ding-ding-ding loops
+   * don't smear into a drone.
+   *
+   * Logs which path won on the first ring of the session so issues are
+   * trivially debuggable from DevTools: "[KDS ring] sample" vs
+   * "[KDS ring] synth (reason)".
+   */
+  const loggedRingPathRef = useRef(false);
+  const ringBellOnce = useCallback((volumeOverride?: number) => {
+    const vol = Math.max(0, Math.min(1, volumeOverride ?? alertVolume));
+    if (vol <= 0) return;
+
+    const sample = sampleAudioRef.current;
+    if (sample && !sampleErroredRef.current) {
+      try {
+        sample.volume = vol;
+        sample.currentTime = 0;
+        const p = sample.play();
+        if (p && typeof p.then === "function") {
+          p.then(() => {
+            if (!loggedRingPathRef.current) {
+              console.info("[KDS ring] sample (gloriafood-new-order.mp3)");
+              loggedRingPathRef.current = true;
+            }
+          }).catch((err) => {
+            // Autoplay rejection or decode failure — back off to synth.
+            // Don't flip sampleErroredRef: autoplay rejection is per-call
+            // and will succeed once the user has interacted with the page.
+            console.warn("[KDS ring] sample.play() rejected, falling back to synth:", err?.name || err);
+            synthBellOnce(vol);
+          });
+          return;
+        }
+        // Older browsers where play() returns void: assume it worked.
+        if (!loggedRingPathRef.current) {
+          console.info("[KDS ring] sample (legacy play, no promise)");
+          loggedRingPathRef.current = true;
+        }
+        return;
+      } catch (err) {
+        console.warn("[KDS ring] sample threw synchronously, using synth:", err);
+      }
+    } else if (!loggedRingPathRef.current) {
+      console.info("[KDS ring] synth (sample " +
+        (sampleErroredRef.current ? "errored" : "not ready") + ")");
+      loggedRingPathRef.current = true;
+    }
+    synthBellOnce(vol);
+  }, [alertVolume, synthBellOnce]);
 
   // Derived. `alerting` is true only while there's at least one pending
   // order AND the user hasn't silenced the current alarm. Computed each
