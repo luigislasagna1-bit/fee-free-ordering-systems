@@ -1091,8 +1091,8 @@
       "ifYouDidntRequest": "Si no hiciste esta solicitud, puedes ignorar este correo."
     },
     "orderConfirmed": {
-      "subject": "Pedido #{orderNumber} confirmado",
-      "title": "Pedido confirmado",
+      "subject": "Pedido #{orderNumber} recibido — pendiente de confirmación",
+      "title": "Pedido recibido",
       "greeting": "¡Gracias, {customer}!",
       "body": "Hemos recibido tu pedido en {restaurant}.",
       "typeLabel": "Tipo",

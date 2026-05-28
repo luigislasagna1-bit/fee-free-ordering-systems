@@ -1,20 +1,21 @@
 /**
- * Customer-facing order confirmation email.
+ * Customer-facing "Order Received" email.
  *
- * GloriaFood-inspired layout:
- *   - Emerald status header with order # + "Order confirmed" + delivery
- *     time prominently displayed (you saw the "Delivery time: 45 MIN"
- *     example — same vibe)
- *   - Greeting
- *   - Order-type / payment status badges
- *   - Itemized order table with modifiers
- *   - Subtotal / tax / total breakdown
- *   - Delivery address card (only for delivery orders)
- *   - Primary CTA "Track your order"
- *   - Restaurant signature footer (name / website / email / phone)
+ * Fires immediately when the customer places an order (or when the card
+ * payment intent succeeds). At this point the restaurant has NOT yet
+ * accepted the order — so the copy must be careful: we tell the customer
+ * we have their order and the restaurant will confirm shortly. The actual
+ * confirmation email (with locked-in prep time) is the OrderStatusUpdate
+ * email fired when the kitchen flips status → "accepted".
  *
- * Sent to: customer email
- * Triggered by: order accepted by restaurant kitchen
+ * This was historically named OrderConfirmation and titled "Order confirmed",
+ * which produced the confusing flow: customer got "Order confirmed" at
+ * placement, then "Order rejected" if the kitchen declined — two contradictory
+ * emails. Now the placement email says "received / awaiting confirmation"
+ * and the kitchen-accept email is the real confirmation.
+ *
+ * Layout: emerald status header, awaiting-confirmation messaging, itemized
+ * receipt, totals breakdown, delivery address (if delivery), tracking CTA.
  */
 import { EmailLayout, EmailHeader } from "../components/EmailLayout";
 import {
@@ -65,20 +66,23 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
     restaurantEmail, restaurantPhone, imprint, currency,
   } = props;
   const orderTypeLabel = ORDER_TYPE_LABEL[orderType] ?? orderType;
-  const timeLabel = orderType === "delivery" ? "Delivery time" : "Ready in";
+  const timeLabel = orderType === "delivery" ? "Estimated delivery" : "Estimated ready";
 
   return (
-    <EmailLayout preview={`Order #${orderNumber} confirmed — ${timeLabel.toLowerCase()} ${estimatedMinutes} min`}>
+    <EmailLayout preview={`Order #${orderNumber} received — awaiting restaurant confirmation`}>
       <EmailHeader
         variant="status"
-        title="Order confirmed"
-        subtitle={`${timeLabel}: ${estimatedMinutes} min`}
+        title="Order received"
+        subtitle="Awaiting restaurant confirmation"
       />
       <EmailBody>
         <P>Hello {customerName},</P>
         <P>
-          Thank you for your order at <strong>{restaurantName}</strong>!
-          We are glad to confirm your order <strong>#{orderNumber}</strong>.
+          Thanks for your order at <strong>{restaurantName}</strong>! We&apos;ve
+          received order <strong>#{orderNumber}</strong> and the restaurant
+          will confirm it shortly. You&apos;ll get a follow-up email the moment
+          they accept &mdash; with the final {timeLabel.toLowerCase()} time
+          (currently estimated at <strong>{estimatedMinutes} min</strong>).
         </P>
 
         <div style={{ margin: "8px 0 16px" }}>

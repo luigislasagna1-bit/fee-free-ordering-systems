@@ -311,6 +311,10 @@ export async function sendOrderStatusUpdateEmail(params: {
       statusMessage: params.estimatedReady
         ? `${t("email.orderStatus.body", { orderNumber: params.orderNumber, status: params.status })} Estimated ready: ${params.estimatedReady.toLocaleString()}.`
         : undefined,
+      // Forward the rejection reason (if any) so the template can surface
+      // it. Previously dropped on the floor — customer never saw WHY their
+      // order was declined.
+      rejectionReason: params.rejectionReason,
       trackingUrl: params.trackingUrl ?? "#",
       imprint: currentImprint(),
     })

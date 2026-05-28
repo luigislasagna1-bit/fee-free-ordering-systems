@@ -104,17 +104,19 @@ export function InfoCard({
 }: {
   label?: string;
   children: React.ReactNode;
-  accent?: "neutral" | "emerald" | "amber" | "slate";
+  accent?: "neutral" | "emerald" | "amber" | "slate" | "rose";
 }) {
   const bg =
     accent === "emerald" ? "#ecfdf5" :
     accent === "amber" ? "#fffbeb" :
     accent === "slate" ? "#f1f5f9" :
+    accent === "rose" ? "#fff1f2" :
     "#f9fafb";
   const borderColor =
     accent === "emerald" ? "#a7f3d0" :
     accent === "amber" ? "#fde68a" :
     accent === "slate" ? "#cbd5e1" :
+    accent === "rose" ? "#fecdd3" :
     COLORS.border;
   return (
     <div
