@@ -282,17 +282,19 @@ function SummaryStat({ label, value, tone }: { label: string; value: string; ton
 }
 
 function StatusBadge({ status }: { status: string }) {
+  const normalized = status === "trialing" ? "free" : status;
   const styles: Record<string, string> = {
     active: "bg-green-100 text-green-700",
-    trialing: "bg-yellow-100 text-yellow-700",
+    free: "bg-amber-100 text-amber-800",
     past_due: "bg-red-100 text-red-700",
     cancelled: "bg-gray-100 text-gray-600",
     incomplete: "bg-gray-100 text-gray-600",
     paused: "bg-gray-100 text-gray-600",
   };
+  const label = normalized === "free" ? "FREE plan" : normalized;
   return (
-    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${styles[status] ?? "bg-gray-100 text-gray-600"}`}>
-      {status}
+    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${styles[normalized] ?? "bg-gray-100 text-gray-600"}`}>
+      {label}
     </span>
   );
 }

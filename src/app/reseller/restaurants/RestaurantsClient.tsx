@@ -220,9 +220,6 @@ export function RestaurantsClient({ initial }: { initial: Restaurant[] }) {
                   </td>
                   <td className="px-4 py-3 text-gray-700">
                     {billingDate ? billingDate.toLocaleDateString() : "—"}
-                    {r.subscriptionStatus === "trialing" && (
-                      <div className="text-xs text-gray-500">trial ends</div>
-                    )}
                   </td>
                   <td className="px-4 py-3 text-right">
                     <div className="flex items-center justify-end gap-1">
@@ -401,17 +398,21 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 function StatusBadge({ status }: { status: string }) {
+  // Legacy "trialing" rows surface as "free" — see /admin/billing
+  // BillingClient for the same normalization.
+  const normalized = status === "trialing" ? "free" : status;
   const styles: Record<string, string> = {
     active: "bg-green-100 text-green-700",
-    trialing: "bg-yellow-100 text-yellow-700",
+    free: "bg-amber-100 text-amber-800",
     past_due: "bg-red-100 text-red-700",
     cancelled: "bg-gray-100 text-gray-600",
     incomplete: "bg-gray-100 text-gray-600",
     paused: "bg-gray-100 text-gray-600",
   };
+  const label = normalized === "free" ? "FREE plan" : normalized;
   return (
-    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${styles[status] ?? "bg-gray-100 text-gray-600"}`}>
-      {status}
+    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${styles[normalized] ?? "bg-gray-100 text-gray-600"}`}>
+      {label}
     </span>
   );
 }

@@ -129,8 +129,12 @@ export async function POST(req: NextRequest) {
       ...(country ? { country } : {}),
       parentRestaurantId: parentId,
       resellerProfileId: parent?.resellerProfileId ?? null,
-      subscriptionStatus: "trialing",
-      trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+      // Every new restaurant lands on the FREE plan. No trial — they
+      // stay on free forever unless they (a) hit the 100 orders/month
+      // soft cap and upgrade to Unlimited Orders, or (b) subscribe to
+      // any paid add-on, both of which flip subscriptionStatus to
+      // "active". trialEndsAt is intentionally not set.
+      subscriptionStatus: "free",
       subscriptionPlanId: starterPlan?.id || null,
     },
   });

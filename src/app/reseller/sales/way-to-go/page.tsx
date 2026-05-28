@@ -66,9 +66,10 @@ export default function ResellerWayToGoPage() {
           delivery business that&apos;s clearly bleeding margin. Skip chains and franchises — corporate-controlled.
         </Detail>
         <Detail label="Easy first ask">
-          Most restaurants will agree to a free 14-day trial just to see what it looks like. No commitment
-          on day one. Get them set up, walk them through accepting their first order, and the
-          decision becomes obvious once they see the difference.
+          Every restaurant gets a FREE plan forever — up to 100 orders/month at no cost. No
+          credit card to start, no commitment, no expiration. Get them set up, walk them through
+          accepting their first order, and the decision to add a paid add-on (Online Payments,
+          Marketplace listing, etc.) becomes obvious once they see the difference.
         </Detail>
       </Step>
 

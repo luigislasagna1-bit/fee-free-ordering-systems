@@ -101,9 +101,9 @@ export async function POST(req: NextRequest) {
         addOnId: addOn.id,
         restaurantId: user.restaurantId,
       },
-      ...(addOn.trialDays && addOn.trialDays > 0
-        ? { trial_period_days: addOn.trialDays }
-        : {}),
+      // No trial_period_days — we no longer offer add-on trials. The
+      // trialDays column on AddOn is kept for legacy compatibility but
+      // is intentionally ignored here.
     },
     metadata: {
       addOnSlug: addOn.slug,

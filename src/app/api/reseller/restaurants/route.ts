@@ -142,8 +142,10 @@ export async function POST(req: NextRequest) {
       zip,
       country,
       email: ownerEmail,
-      subscriptionStatus: "trialing",
-      trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+      // Every new restaurant lands on the FREE plan. No trial. See
+      // src/app/api/restaurants/locations/route.ts for the same rule
+      // — kept in sync.
+      subscriptionStatus: "free",
       subscriptionPlanId: starterPlan?.id || null,
       resellerProfileId: user.resellerProfileId,
     },

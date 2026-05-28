@@ -127,20 +127,17 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     }
 
     // Gate admin access on subscription state. Past-due restaurants — or
-    // expired trials with no card on file — get redirected to /admin/billing
-    // until they fix the issue. Superadmin impersonators bypass the gate so
-    // support can still fix things. /admin/billing itself is exempt to avoid
-    // a redirect loop. Customer-facing ordering and the kitchen display
-    // remain accessible regardless.
-    // Reseller impersonators also bypass the billing gate — they need to see the
-    // billing surface to help their restaurants fix it.
+    // Billing gate: only restaurants whose PAID subscription is in a
+    // problem state (past_due / cancelled) get redirected to /admin/billing.
+    // "free" is the default for every restaurant — no gating. We removed
+    // the legacy "trial expired" branch because trials no longer exist;
+    // free has no expiry. Superadmin + reseller impersonators bypass the
+    // gate so support can still fix things; /admin/billing itself is
+    // exempt to avoid a redirect loop. Customer-facing ordering and
+    // the kitchen display remain accessible regardless.
     if (role !== "superadmin" && role !== "reseller_partner") {
       const status = restaurant?.subscriptionStatus;
-      const trialExpired =
-        status === "trialing" &&
-        !!restaurant?.trialEndsAt &&
-        restaurant.trialEndsAt.getTime() < Date.now();
-      const needsBilling = status === "past_due" || status === "cancelled" || trialExpired;
+      const needsBilling = status === "past_due" || status === "cancelled";
       if (needsBilling) {
         const h = await headers();
         const pathname = h.get("x-pathname") || "";

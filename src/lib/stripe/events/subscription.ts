@@ -1,6 +1,5 @@
 import type Stripe from "stripe";
 import prisma from "@/lib/db";
-import { sendTrialExpiringEmail } from "@/lib/email";
 import { ensureMarketplaceListing } from "@/lib/marketplace";
 
 /**
@@ -8,9 +7,10 @@ import { ensureMarketplaceListing } from "@/lib/marketplace";
  *
  * Stripe sends:
  *   - customer.subscription.created       (signup → first subscription row)
- *   - customer.subscription.updated       (plan change, trial → active, etc.)
+ *   - customer.subscription.updated       (plan change, status flip, etc.)
  *   - customer.subscription.deleted       (cancelled)
- *   - customer.subscription.trial_will_end (3 days before trial ends — email reminder)
+ *   - customer.subscription.trial_will_end (legacy — we drop these now; we
+ *                                           no longer create trials)
  *
  * We map status → Restaurant.subscriptionStatus and stash period end + cancel flag.
  */
@@ -63,26 +63,12 @@ export async function handleSubscriptionEvent(event: Stripe.Event) {
   }
 
   if (event.type === "customer.subscription.trial_will_end") {
-    // Stripe fires this 3 days before trial end. Nudge the owner to add a card.
-    if (restaurant.email) {
-      const trialEndSec = (sub as any).trial_end as number | undefined;
-      const daysLeft = trialEndSec
-        ? Math.max(0, Math.ceil((trialEndSec * 1000 - Date.now()) / (24 * 60 * 60 * 1000)))
-        : 3;
-      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
-      // IMPORTANT: await — Vercel kills unawaited promises after webhook 200.
-      try {
-        await sendTrialExpiringEmail({
-          to: restaurant.email,
-          restaurantName: restaurant.name,
-          daysLeft,
-          upgradeUrl: `${baseUrl}/admin/billing`,
-          locale: restaurant.defaultLanguage || "en",
-        });
-      } catch (e) {
-        console.error("[stripe/subscription.trial_will_end] trial email failed", e);
-      }
-    }
+    // We no longer create trials, so this event shouldn't fire for any
+    // subscription we created. Drop on the floor — kept here only so the
+    // webhook handler explicitly acknowledges the event type instead of
+    // logging "unhandled". Legacy subscriptions that still emit this
+    // were grandfathered: they're still on the platform but their
+    // "trial" is effectively a FREE plan now.
     return;
   }
 
@@ -285,10 +271,15 @@ async function handleResellerWhiteLabelEvent(
   });
 }
 
-/** Map Stripe's subscription.status enum onto our local string set. */
+/** Map Stripe's subscription.status enum onto our local string set.
+ *  Note: Stripe "trialing" is mapped to "active" — we no longer have a
+ *  trial concept; any subscription Stripe says is trialing is treated
+ *  as paying. Legacy rows whose subscriptionStatus column is still
+ *  literally "trialing" are handled by the GRANTING_STATUSES list in
+ *  src/lib/entitlements.ts and read as equivalent to "active". */
 function mapStripeStatus(stripeStatus: Stripe.Subscription.Status): string {
   switch (stripeStatus) {
-    case "trialing": return "trialing";
+    case "trialing": return "active";
     case "active": return "active";
     case "past_due": return "past_due";
     case "canceled": return "cancelled";

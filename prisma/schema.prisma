@@ -103,8 +103,18 @@ model Restaurant {
 
   // Platform subscription (Layer B — restaurant pays you monthly via Stripe Checkout)
   subscriptionPlanId   String?
+  // Deprecated: trialEndsAt was used during the trial-as-default era. We
+  // no longer create trials — every restaurant lands on the FREE plan
+  // directly. Column kept (nullable, unused on new rows) so we don't
+  // need a destructive migration to drop it.
   trialEndsAt          DateTime?
-  subscriptionStatus   String    @default("trialing") // trialing | active | past_due | cancelled | incomplete | expired
+  // Status values: "free" (default — every new restaurant lands here),
+  // "active" (paid plan), "past_due" | "cancelled" | "incomplete" |
+  // "expired" (Stripe-driven). "trialing" is no longer set on new
+  // restaurants but may exist on legacy rows — treated equivalently to
+  // "free" everywhere it's checked (see GRANTING_STATUSES in
+  // src/lib/entitlements.ts).
+  subscriptionStatus   String    @default("free")
   stripeCustomerId     String?   @unique
   stripeSubscriptionId String?   @unique
   currentPeriodEnd     DateTime?

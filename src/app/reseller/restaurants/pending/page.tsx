@@ -10,14 +10,18 @@ import { Clock, AlertCircle, ChevronRight } from "lucide-react";
  * Restaurants the reseller has brought on that AREN'T yet contributing
  * to their commission tier. Three categories of "pending":
  *
- *   1. trialing       — restaurant is on the free trial, hasn't paid
- *                       a subscription invoice yet.
+ *   1. on_free       — restaurant landed on the FREE plan (every new
+ *                       restaurant does). They haven't subscribed to any
+ *                       paid add-on yet, so they're not generating
+ *                       commission. This is the most common bucket —
+ *                       the reseller's job is to nudge them onto a paid
+ *                       add-on or the Unlimited Orders upgrade.
  *   2. past_due       — was paying, last invoice failed; commission
  *                       would resume if they update their card.
- *   3. no paid add-on — subscription active but no active add-on rows.
- *                       New per Luigi's tier definition: restaurants
- *                       need at least one paid add-on to count toward
- *                       commission tier even if their plan is paid.
+ *   3. no paid add-on — subscription "active" (Unlimited Orders or
+ *                       similar) but no actual paid add-on rows. Still
+ *                       counts toward tier per Luigi's rule: need at
+ *                       least one paid add-on for commission.
  *
  * Restaurants in "active+at least one paid add-on" status live on the
  * main Management page — those are the ones earning commission.
@@ -45,7 +49,6 @@ export default async function ResellerPendingRestaurantsPage() {
       slug: true,
       email: true,
       subscriptionStatus: true,
-      trialEndsAt: true,
       currentPeriodEnd: true,
       createdAt: true,
       _count: {
@@ -59,23 +62,26 @@ export default async function ResellerPendingRestaurantsPage() {
     orderBy: { createdAt: "desc" },
   });
 
-  // Bucket: "trialing", "past_due", "no_addon", "complete" (excluded).
+  // Bucket. "trialing" is a legacy status — treated as "free" for
+  // categorization. The actual fix to stop creating trial statuses
+  // lives in src/app/api/auth/register and the reseller signup route.
   const buckets = {
-    trialing: [] as typeof restaurants,
+    on_free: [] as typeof restaurants,
     past_due: [] as typeof restaurants,
     no_addon: [] as typeof restaurants,
   };
   for (const r of restaurants) {
-    if (r.subscriptionStatus === "trialing") {
-      buckets.trialing.push(r);
-    } else if (r.subscriptionStatus === "past_due" || r.subscriptionStatus === "incomplete") {
+    const s = r.subscriptionStatus;
+    if (s === "free" || s === "trialing") {
+      buckets.on_free.push(r);
+    } else if (s === "past_due" || s === "incomplete") {
       buckets.past_due.push(r);
-    } else if (r.subscriptionStatus === "active" && r._count.addOns === 0) {
+    } else if (s === "active" && r._count.addOns === 0) {
       buckets.no_addon.push(r);
     }
   }
 
-  const total = buckets.trialing.length + buckets.past_due.length + buckets.no_addon.length;
+  const total = buckets.on_free.length + buckets.past_due.length + buckets.no_addon.length;
 
   return (
     <div className="max-w-5xl">
@@ -83,8 +89,8 @@ export default async function ResellerPendingRestaurantsPage() {
         <h1 className="text-2xl font-bold text-gray-900 mb-1">Pending</h1>
         <p className="text-sm text-gray-500">
           Restaurants you&apos;ve brought on that aren&apos;t yet earning you commission.
-          Each restaurant needs to be on an active subscription <strong>AND</strong> have at
-          least one paid add-on to count toward your tier.
+          Each restaurant needs at least one <strong>paid add-on</strong> (or an
+          Unlimited Orders upgrade) to count toward your tier.
         </p>
       </div>
 
@@ -93,22 +99,22 @@ export default async function ResellerPendingRestaurantsPage() {
           <Clock className="w-10 h-10 text-gray-300 mx-auto mb-3" />
           <h2 className="text-sm font-bold text-gray-900 mb-1">All caught up</h2>
           <p className="text-xs text-gray-500 max-w-md mx-auto">
-            Every restaurant attributed to you is either fully active + paying for at least one
+            Every restaurant attributed to you is either paying for at least one
             add-on, or you haven&apos;t brought any on yet. New signups show up here first while
             they ramp up.
           </p>
         </div>
       )}
 
-      {buckets.trialing.length > 0 && (
+      {buckets.on_free.length > 0 && (
         <Section
-          title="On free trial"
-          subtitle="Trial converts to a paid subscription automatically unless they cancel. Reach out before their trial ends to lock them in."
+          title="On FREE plan"
+          subtitle="These restaurants are signed up but haven't activated any paid add-on yet — they're using the FREE tier (up to 100 orders/month). Reach out to help them pick the right add-on so they start earning you commission."
           icon={<Clock className="w-4 h-4" />}
           tone="amber"
-          restaurants={buckets.trialing}
-          dateLabel="Trial ends"
-          getDate={(r) => r.trialEndsAt}
+          restaurants={buckets.on_free}
+          dateLabel="Signed up"
+          getDate={(r) => r.createdAt}
         />
       )}
 

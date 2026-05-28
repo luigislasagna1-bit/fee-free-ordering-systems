@@ -283,9 +283,10 @@ export default async function PartnersPage() {
           </h2>
           <div className="space-y-3">
             <Faq q="What counts as an 'active paying' restaurant?">
-              A restaurant whose subscription is currently <strong>active</strong> AND has paid at least one invoice
-              (plan or paid add-on) in the last 35 days. Trials and free-only restaurants don&apos;t count toward your
-              tier until they pay for at least one add-on or plan.
+              A restaurant that has paid at least one invoice (plan or paid add-on) in the
+              last 35 days. Restaurants on the FREE plan don&apos;t count toward your tier
+              until they upgrade to FREE Unlimited Orders or subscribe to at least one
+              paid add-on.
             </Faq>
             <Faq q="How do the tiers work?">
               Four tiers: <strong>0% (0–4 active)</strong>, <strong>5% (5–25)</strong>, <strong>10% (26–50)</strong>,

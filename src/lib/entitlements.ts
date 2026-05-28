@@ -41,10 +41,12 @@ export type Feature =
 
 /** Statuses on RestaurantAddOn that grant entitlements. past_due / cancelled
  *  / incomplete subscriptions do NOT grant access — the feature drops the
- *  moment Stripe flips the status. */
+ *  moment Stripe flips the status. "trialing" is kept on this list for
+ *  legacy rows only; we no longer create trial subscriptions and our
+ *  Stripe handler maps incoming "trialing" → "active" on receipt. */
 const GRANTING_STATUSES = ["active", "trialing"] as const;
 
-/** Returns true iff the restaurant has an active or trialing add-on whose
+/** Returns true iff the restaurant has an active add-on whose
  *  enabledFeatures array contains the requested feature slug. */
 export async function hasFeature(restaurantId: string, feature: Feature): Promise<boolean> {
   const features = await getEntitlements(restaurantId);

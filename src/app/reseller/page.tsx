@@ -87,7 +87,11 @@ export default async function ResellerDashboardPage() {
 
   const statusCounts: Record<string, number> = {};
   for (const row of statusBreakdown) statusCounts[row.subscriptionStatus] = row._count._all;
+  // Pending = restaurants not currently generating commission. FREE-plan
+  // restaurants are pending until they upgrade. "trialing" is legacy —
+  // counted here too so historical rows still display in the bucket.
   const pendingRestaurants =
+    (statusCounts["free"] ?? 0) +
     (statusCounts["trialing"] ?? 0) +
     (statusCounts["past_due"] ?? 0) +
     (statusCounts["incomplete"] ?? 0);

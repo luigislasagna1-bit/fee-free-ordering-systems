@@ -83,7 +83,7 @@ Most restaurants don't realize they're losing 25-30% commission on every
 order. I help restaurants switch to a no-commission platform that lets
 them keep the full ticket: Fee Free Ordering.
 
-It's $30/month flat. No per-order fees. Free 14-day trial.
+It's free to start (100 orders/month included on the FREE plan, forever). Add paid services like Online Payments only if/when you want them.
 
 If you're curious: [your referral link]
 Or reply to this and I'll set up a 10-minute walkthrough.

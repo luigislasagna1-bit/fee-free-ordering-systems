@@ -51,7 +51,7 @@ export default function ResellerPartnerResourcesPage() {
           icon={<FileText className="w-5 h-5" />}
           title="Email templates"
           status="coming-soon"
-          body="Cold outreach, follow-up after a meeting, post-trial check-in. Lift the subject lines + body, swap the restaurant name + your name, send."
+          body="Cold outreach, follow-up after a meeting, post-signup check-in. Lift the subject lines + body, swap the restaurant name + your name, send."
         />
       </div>
 

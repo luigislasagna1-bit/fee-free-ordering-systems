@@ -63,14 +63,8 @@ export async function POST(req: NextRequest) {
     customer: customerId,
     mode: "subscription",
     line_items: [{ price: plan.stripePriceId, quantity: 1 }],
-    // If the local trial is still active, honor it on Stripe's side too —
-    // otherwise the subscription starts billing immediately.
-    subscription_data:
-      restaurant.subscriptionStatus === "trialing" &&
-      restaurant.trialEndsAt &&
-      restaurant.trialEndsAt.getTime() > Date.now()
-        ? { trial_end: Math.floor(restaurant.trialEndsAt.getTime() / 1000) }
-        : undefined,
+    // No trial. Every restaurant is on the FREE plan by default — when
+    // they upgrade through Checkout, billing starts immediately.
     success_url: `${baseUrl}/admin/billing?success=1`,
     cancel_url: `${baseUrl}/admin/billing`,
     allow_promotion_codes: true,

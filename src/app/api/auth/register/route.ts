@@ -156,7 +156,11 @@ export async function POST(req: NextRequest) {
         acceptsDelivery: false,
         acceptsDineIn: false,
         acceptsReservations: false,
-        subscriptionStatus: "active",
+        // FREE plan is the default for every new restaurant. They stay
+        // on free forever unless they hit the 100 orders/month soft cap
+        // and upgrade to Unlimited Orders, or subscribe to any paid
+        // add-on — both of which flip status to "active". No trial.
+        subscriptionStatus: "free",
         subscriptionPlanId: freePlan?.id || null,
         resellerProfileId,
         // Multi-location: when signup carries a valid invite token, link the

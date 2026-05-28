@@ -54,14 +54,12 @@ export function BillingClient({
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const status = restaurant.subscriptionStatus;
-  const trialEndsAt = restaurant.trialEndsAt ? new Date(restaurant.trialEndsAt) : null;
+  // Legacy "trialing" rows are treated as "free" — we no longer offer
+  // a trial concept. Normalize at the top so all the branches below
+  // only have to think about: free | active | past_due | cancelled.
+  const rawStatus = restaurant.subscriptionStatus;
+  const status = rawStatus === "trialing" ? "free" : rawStatus;
   const periodEnd = restaurant.currentPeriodEnd ? new Date(restaurant.currentPeriodEnd) : null;
-  const now = Date.now();
-  const trialDaysLeft = trialEndsAt
-    ? Math.max(0, Math.ceil((trialEndsAt.getTime() - now) / (24 * 60 * 60 * 1000)))
-    : 0;
-  const trialExpired = status === "trialing" && trialEndsAt && trialEndsAt.getTime() < now;
 
   async function startCheckout(planId?: string) {
     setBusy("checkout");
@@ -145,8 +143,6 @@ export function BillingClient({
 
       <StatusCard
         status={status}
-        trialDaysLeft={trialDaysLeft}
-        trialExpired={!!trialExpired}
         periodEnd={periodEnd}
         cancelAtPeriodEnd={restaurant.cancelAtPeriodEnd}
         planName={restaurant.subscriptionPlan?.name}
@@ -154,14 +150,14 @@ export function BillingClient({
       />
 
       <div className="mt-6 flex flex-wrap gap-3">
-        {(status === "trialing" || status === "cancelled" || trialExpired) && (
+        {(status === "free" || status === "cancelled") && (
           <button
             onClick={() => startCheckout()}
             disabled={busy !== null || !billingConfigured}
             className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition disabled:opacity-50"
           >
             {busy === "checkout" ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
-            {trialExpired || status === "cancelled" ? "Reactivate subscription" : "Add payment method"}
+            {status === "cancelled" ? "Reactivate subscription" : "Upgrade to a paid plan"}
           </button>
         )}
         {status === "past_due" && (
@@ -246,7 +242,7 @@ export function BillingClient({
                     disabled={busy !== null || !plan.stripePriceId}
                     className="w-full bg-gray-900 hover:bg-gray-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition disabled:opacity-50"
                   >
-                    Subscribe
+                    {status === "free" ? "Upgrade" : "Subscribe"}
                   </button>
                 )}
               </div>
@@ -361,50 +357,28 @@ export function BillingClient({
 
 function StatusCard({
   status,
-  trialDaysLeft,
-  trialExpired,
   periodEnd,
   cancelAtPeriodEnd,
   planName,
   planPrice,
 }: {
   status: string;
-  trialDaysLeft: number;
-  trialExpired: boolean;
   periodEnd: Date | null;
   cancelAtPeriodEnd: boolean;
   planName: string | undefined;
   planPrice: number | undefined;
 }) {
-  if (status === "trialing" && !trialExpired) {
+  if (status === "free") {
     return (
-      <div className="rounded-xl bg-blue-50 border border-blue-200 p-5">
+      <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-5">
         <div className="flex items-start gap-3">
-          <Clock className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
           <div>
-            <h2 className="font-bold text-blue-900 mb-1">
-              {trialDaysLeft} day{trialDaysLeft === 1 ? "" : "s"} left in your free trial
-            </h2>
-            <p className="text-sm text-blue-800">
-              You're on the <strong>{planName || "Starter"}</strong> plan
-              {planPrice ? ` (${formatCurrency(planPrice)}/month)` : ""}. Add a payment method
-              before the trial ends to keep your account active.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  if (trialExpired) {
-    return (
-      <div className="rounded-xl bg-red-50 border border-red-200 p-5">
-        <div className="flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-          <div>
-            <h2 className="font-bold text-red-900 mb-1">Your trial has ended</h2>
-            <p className="text-sm text-red-800">
-              Add a payment method to reactivate your account. Customer ordering is still
-              live, but admin tools are locked until you subscribe.
+            <h2 className="font-bold text-emerald-900 mb-1">FREE plan</h2>
+            <p className="text-sm text-emerald-800">
+              You&apos;re on the <strong>FREE plan</strong> — accept up to 100 orders/month at no cost.
+              Need more? Subscribe to any paid add-on, or upgrade to FREE Unlimited Orders
+              for $14.99/month to take the cap off.
             </p>
           </div>
         </div>

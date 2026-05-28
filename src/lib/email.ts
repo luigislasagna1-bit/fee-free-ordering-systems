@@ -29,7 +29,10 @@ import SignupConfirmation        from "@/emails/templates/SignupConfirmation";
 import VerifyEmail               from "@/emails/templates/VerifyEmail";
 import LocationInvite            from "@/emails/templates/LocationInvite";
 import BillingNotification       from "@/emails/templates/BillingNotification";
-import TrialExpiring             from "@/emails/templates/TrialExpiring";
+// TrialExpiring template was removed when the trial concept was killed —
+// every restaurant lands on the FREE plan instead of a 14-day trial.
+// Legacy import retained as a comment in case we ever need the layout
+// to repurpose for a "you're approaching your 100-order cap" nudge.
 import DigestEmail               from "@/emails/templates/DigestEmail";
 import ScheduledOrderReminder    from "@/emails/templates/ScheduledOrderReminder";
 import MarketplaceSettlement     from "@/emails/templates/MarketplaceSettlement";
@@ -588,34 +591,8 @@ export async function sendBillingNotificationEmail(params: {
   return send({ to: params.to, subject: params.subject, html });
 }
 
-export async function sendTrialExpiringEmail(params: {
-  to: string;
-  restaurantName: string;
-  daysLeft: number;
-  upgradeUrl: string;
-  /** Add-on name for the trial expiring — defaults to a generic phrase. */
-  addonName?: string;
-  /** Post-trial price label like "$29.99". */
-  priceAfterTrial?: string;
-  locale?: string;
-}) {
-  const t = await getDict(params.locale);
-  const html = await renderEmail(
-    TrialExpiring({
-      recipientName: params.restaurantName,
-      addonName: params.addonName ?? "subscription",
-      daysRemaining: params.daysLeft,
-      priceAfterTrial: params.priceAfterTrial ?? "the regular price",
-      manageUrl: params.upgradeUrl,
-      imprint: currentImprint(),
-    })
-  );
-  return send({
-    to: params.to,
-    subject: t("email.trialExpiring.subject", { days: params.daysLeft }),
-    html,
-  });
-}
+// sendTrialExpiringEmail() was removed along with the trial concept —
+// see the import comment above.
 
 // ─── Digest / report emails ─────────────────────────────────────
 
