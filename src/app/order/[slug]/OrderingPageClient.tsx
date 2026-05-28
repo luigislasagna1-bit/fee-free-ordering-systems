@@ -5,6 +5,7 @@ import {
   ShoppingCart, MapPin, Phone, Clock, Plus, Minus, X,
   AlertCircle, Tag, Loader2, ChevronDown, Star, Info, Calendar,
   Truck, ShoppingBag, Image as ImageIcon, ChevronLeft, ChevronRight,
+  UserCircle, LogIn,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -244,9 +245,15 @@ export function OrderingPageClient({
   isEmbedded = false,
   acceptedMethods = ["cash"],
   fromHostedSite = false,
+  currentCustomer = null,
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
+  /** The logged-in per-restaurant customer at this restaurant, if any.
+   *  Server-resolved via getCurrentRestaurantCustomer in page.tsx and
+   *  passed in so the header can render the right Sign-in vs. Hi-name
+   *  state without a client-side fetch flash. Null = guest visitor. */
+  currentCustomer?: { id: string; name: string; email: string | null } | null;
   /** True when the restaurant has connected PayPal AND has the
    *  card_payments entitlement. Drives whether PayPal works at
    *  checkout vs. shows a "not yet ready" notice. */
@@ -951,6 +958,35 @@ export function OrderingPageClient({
             )}
             <div className="ml-auto flex items-center gap-2">
               <LanguageSwitcher currentLocale={locale} />
+              {/* Per-restaurant customer account link. Logged-in: "Hi, <first
+                  name>" → dashboard. Logged-out: "Sign in" → login page,
+                  signup is a link from there. We render this whenever the
+                  page isn't in marketplace mode (marketplace orders use the
+                  cross-restaurant CustomerAccount flow at /account, not
+                  the per-restaurant one). */}
+              {!fromMarketplace && (
+                currentCustomer ? (
+                  <a
+                    href={`/order/${restaurant.slug}/account`}
+                    className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full border-2 transition hover:bg-gray-50"
+                    style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
+                    title="View your account, coupons, and order history"
+                  >
+                    <UserCircle className="w-4 h-4" />
+                    Hi, {currentCustomer.name.split(/\s+/)[0]}
+                  </a>
+                ) : (
+                  <a
+                    href={`/order/${restaurant.slug}/account/login`}
+                    className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full border-2 transition hover:bg-gray-50"
+                    style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
+                    title="Sign in or create an account to track coupons and order history"
+                  >
+                    <LogIn className="w-4 h-4" />
+                    Sign in
+                  </a>
+                )
+              )}
               {restaurant.acceptsReservations && (
                 <button
                   onClick={() => setReservationOpen(true)}

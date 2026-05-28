@@ -178,6 +178,16 @@ export default async function OrderingPage({
     acceptedMethods = ["online_card"];
   }
 
+  // Resolve the per-restaurant customer session (if any) so the header
+  // can render "Sign in" vs "Hi, <name>" without a client-side fetch
+  // flash. Imported here to keep page.tsx as the single entrypoint that
+  // talks to the session lib — the client component doesn't need to
+  // know about cookies.
+  const { getCurrentRestaurantCustomer } = await import("@/lib/restaurant-customer-session");
+  const currentCustomer = await getCurrentRestaurantCustomer({
+    expectedRestaurantId: restaurant.id,
+  });
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       {/* Analytics beacon — fires /api/track/visit once on mount so
@@ -194,6 +204,9 @@ export default async function OrderingPage({
         isEmbedded={isEmbedded}
         acceptedMethods={acceptedMethods}
         fromHostedSite={fromHostedSite}
+        currentCustomer={currentCustomer
+          ? { id: currentCustomer.id, name: currentCustomer.name, email: currentCustomer.email }
+          : null}
       />
     </NextIntlClientProvider>
   );
