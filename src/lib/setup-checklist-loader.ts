@@ -114,13 +114,16 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
 
   // "Has online card payments wired up" — true when EITHER
   //   - the legacy PaymentProvider row is active (older direct-charge setups), OR
-  //   - the modern Stripe Connect onboarding completed (charges enabled on the
-  //     destination account). This is what the dashboard "Connected · Live"
-  //     badge reflects, so the checkmark must follow the same signal — otherwise
-  //     owners see "Connected" on /admin/payments/providers but the setup step
-  //     stays unchecked forever (the bug Luigi hit).
-  const stripeConnectLive =
-    restaurant.stripeAccountStatus === "connected" && restaurant.stripeChargesEnabled === true;
+  //   - Stripe Connect has charges enabled on the destination account.
+  //
+  // We key off Stripe's chargesEnabled capability flag (synced via the
+  // account.updated webhook from `account.charges_enabled`) — that's the
+  // actual boolean Stripe gave us. We deliberately do NOT compound with
+  // `stripeAccountStatus === "connected"` because the status field is a
+  // UX label that could lag or be overwritten by a refresh-polling
+  // endpoint with stricter semantics, leaving the setup step unchecked
+  // forever even with charges live (Luigi hit this).
+  const stripeConnectLive = restaurant.stripeChargesEnabled === true;
   const hasOnlineCardPayments = !!paymentProvider || stripeConnectLive;
 
   // Parse accepted payment methods. Empty array / null = owner hasn't picked

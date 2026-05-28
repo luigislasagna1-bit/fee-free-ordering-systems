@@ -5,7 +5,7 @@ import { hasFeature } from "@/lib/entitlements";
 
 /**
  * PUT /api/restaurants/payment-methods
- * Body: { methods: Array<"cash" | "card_in_person" | "online_card"> }
+ * Body: { methods: Array<"cash" | "card_in_person" | "online_card" | "paypal"> }
  *
  * Updates Restaurant.paymentMethods. Owner must be authed and own the
  * restaurant (session restaurantId is the only ID we trust — body never
@@ -14,7 +14,12 @@ import { hasFeature } from "@/lib/entitlements";
  * Idempotent: writing the same array twice is a no-op. Empty array is
  * rejected so an accidental clear can't quietly break publishing.
  */
-const ALLOWED = new Set(["cash", "card_in_person", "online_card"]);
+const ALLOWED = new Set(["cash", "card_in_person", "online_card", "paypal"]);
+/** Methods that require the Online Payments add-on (card_payments
+ *  entitlement). Mirrors the toggle-gate in
+ *  src/app/admin/payments/PaymentMethodsClient.tsx so a tampered client
+ *  POSTing direct can't bypass the add-on requirement. */
+const ENTITLED_METHODS = new Set(["online_card", "paypal"]);
 
 export async function PUT(req: NextRequest) {
   const user = await getSessionUser();
@@ -42,16 +47,17 @@ export async function PUT(req: NextRequest) {
     );
   }
 
-  // Gate: online_card requires the online_payments add-on. Tampered
-  // clients can't bypass the UI lock by POSTing direct — re-check
-  // entitlement server-side. If they don't have it, return 412
+  // Gate: online_card / paypal both require the online_payments add-on.
+  // Tampered clients can't bypass the UI lock by POSTing direct —
+  // re-check entitlement server-side. If they don't have it, return 412
   // (Precondition Failed) so the client UI can show the right path.
-  if (clean.includes("online_card")) {
+  const wantsEntitled = clean.some((m) => ENTITLED_METHODS.has(m));
+  if (wantsEntitled) {
     const entitled = await hasFeature(restaurantId, "card_payments");
     if (!entitled) {
       return NextResponse.json(
         {
-          error: "Subscribe to the Online Payments add-on to enable online card payments.",
+          error: "Subscribe to the Online Payments add-on to enable online payment methods.",
           code: "addon_required",
           addOnSlug: "online_payments",
         },

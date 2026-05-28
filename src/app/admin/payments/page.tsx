@@ -42,8 +42,15 @@ export default async function PaymentMethodsPage() {
     if (Array.isArray(parsed)) methods = parsed.filter((s) => typeof s === "string");
   } catch { /* ignore */ }
 
-  const stripeReady =
-    restaurant.stripeAccountStatus === "connected" && restaurant.stripeChargesEnabled === true;
+  // "Stripe is ready to accept charges" is determined by Stripe's actual
+  // chargesEnabled capability flag (synced from `account.charges_enabled`
+  // via the account.updated webhook), NOT by our local string status
+  // field. The status field is a UX label that can lag or drift if a
+  // refresh-polling endpoint disagrees about what "connected" means;
+  // chargesEnabled is the boolean Stripe gave us. Mismatch between the
+  // two used to leave restaurants seeing the yellow "Finish Stripe setup"
+  // banner forever even with charges live (Luigi flagged this).
+  const stripeReady = restaurant.stripeChargesEnabled === true;
 
   // Online card payment is gated by the `online_payments` add-on. Without
   // an active subscription, the tile is locked and the API rejects writes.
