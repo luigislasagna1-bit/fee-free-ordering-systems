@@ -185,6 +185,12 @@ const navGroups: NavGroup[] = [
     label: "Marketing Tools",
     icon: Megaphone,
     items: [
+      // Customers — the editable CRM hub. Different from the analytical
+      // surfaces under Reports → Clients: this is where the owner reaches
+      // out to customers, assigns personal coupons, leaves internal notes.
+      // The comment block above the Reports section promises this is
+      // linked here; for a long time it wasn't. Now it is.
+      { href: "/admin/customers",    labelKey: "customers",    label: "Customers",    icon: Users },
       { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",   icon: Tag },
       { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles },
       { href: "/admin/social-media", labelKey: "socialMedia",  label: "Social Media", icon: Share2 },

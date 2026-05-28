@@ -95,9 +95,21 @@ export default async function ListClientsPage({
             {grouped.map((g) => {
               const c = byId.get(g.customerId!);
               if (!c) return null;
+              // Customer name links into the editable CRM detail page —
+              // /admin/customers/[id] — so an owner can jump straight
+              // from "this customer spent $X this month" to assigning
+              // them a coupon / adding internal notes / contacting them.
               return (
                 <tr key={c.id} className="border-b border-gray-50 hover:bg-gray-50/50">
-                  <td className="py-2.5 px-4 font-medium text-gray-800">{c.name}</td>
+                  <td className="py-2.5 px-4 font-medium text-gray-800">
+                    <a
+                      href={`/admin/customers/${c.id}`}
+                      className="hover:text-emerald-700 hover:underline"
+                      title="Open in Customers (CRM) — assign coupons, notes, contact"
+                    >
+                      {c.name}
+                    </a>
+                  </td>
                   <td className="py-2.5 px-4 text-gray-500 text-xs">
                     {c.email && <div>{c.email}</div>}
                     {c.phone && <div>{c.phone}</div>}
