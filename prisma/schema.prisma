@@ -1140,7 +1140,16 @@ model AutopilotSend {
 model ReservationSettings {
   id                 String   @id @default(cuid())
   restaurantId       String   @unique
+  /// Deprecated: prefer minNoticeMinutes for new code. Kept as a fallback
+  /// for legacy rows where minNoticeMinutes is null. The UI saves both
+  /// fields in sync (minNoticeMinutes = source of truth; minNoticeHours
+  /// = floor(minutes / 60) for older readers).
   minNoticeHours     Int      @default(2)
+  /// Minimum time (in minutes) a reservation must be booked in advance.
+  /// GloriaFood-style booking rules use minutes precision (e.g. "15 min,
+  /// 30 min, 1 hr") rather than the integer hours the original schema
+  /// supported. Default 120 min = 2 hours = the legacy default.
+  minNoticeMinutes   Int      @default(120)
   maxAdvanceDays     Int      @default(30)
   slotLengthMinutes  Int      @default(30)
   maxPerSlot         Int      @default(10)

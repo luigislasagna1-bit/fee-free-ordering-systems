@@ -552,184 +552,264 @@ function TablesTab() {
 }
 
 // ─── Settings Tab ─────────────────────────────────────────────────────────────
+//
+// GloriaFood-style settings panel (per Luigi's 2026-05-28 redesign). Owners
+// configure reservations with seven knobs and nothing else:
+//
+//   1. Do you offer table reservation?              (Yes / No)
+//   2. Minimum guests                               (party size)
+//   3. Maximum guests                               (party size)
+//   4. Minimum time in advance                      (minutes)
+//   5. Maximum time in advance                      (days)
+//   6. When guests are late, hold table for         (minutes)
+//   7. Allow guests to pre-order their food         (toggle)
+//
+// Everything else that was on the old panel (auto-confirm logic, slot
+// length, max per slot, deposits, cancellation policy, per-day reservation
+// hours, blackout dates, custom table layout) has been intentionally
+// removed from the SETTINGS surface. Tables are still managed in the
+// Tables tab; the rest is GloriaFood-equivalent (they don't expose those
+// controls either).
+//
+// Defaults match the screenshot Luigi sent:
+//   minGuests=2, maxGuests=8, minNoticeMinutes=15, maxAdvanceDays=8,
+//   holdMinutes=15, allowPreOrder=false.
+
+interface SimpleSettingsForm {
+  acceptsReservations: boolean;
+  minGuests: number;
+  maxGuests: number;
+  minNoticeMinutes: number;
+  maxAdvanceDays: number;
+  holdMinutes: number;
+  allowPreOrder: boolean;
+}
 
 function SettingsTab() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState<ResSettings>({
-    minNoticeHours: 2, maxAdvanceDays: 30, slotLengthMinutes: 30,
-    maxPerSlot: 10, minGuests: 1, maxGuests: 20,
-    autoConfirm: true, allowPreOrder: false, holdMinutes: 15,
-    requireDeposit: false, depositAmount: 0,
-    cancellationPolicy: "", reservationHours: "{}", blackoutDates: "[]",
+  const [form, setForm] = useState<SimpleSettingsForm>({
+    acceptsReservations: true,
+    minGuests: 2,
+    maxGuests: 8,
+    minNoticeMinutes: 15,
+    maxAdvanceDays: 8,
+    holdMinutes: 15,
+    allowPreOrder: false,
   });
-  const [hours, setHours] = useState<Record<number, { enabled: boolean; open: string; close: string }>>(
-    Object.fromEntries([0,1,2,3,4,5,6].map(d => [d, { enabled: d >= 1 && d <= 5, open: "10:00", close: "22:00" }]))
-  );
-  const [blackouts, setBlackouts] = useState<string[]>([]);
-  const [newBlackout, setNewBlackout] = useState("");
 
   useEffect(() => {
-    fetch("/api/admin/reservation-settings").then(r => r.json()).then(d => {
-      setForm(d);
-      try { const h = JSON.parse(d.reservationHours || "{}"); if (Object.keys(h).length) setHours(h); } catch {}
-      try { setBlackouts(JSON.parse(d.blackoutDates || "[]")); } catch {}
+    // Pull current values from the existing /api/admin/reservation-settings
+    // endpoint (which still serves the full row) + the restaurant-level
+    // acceptsReservations toggle. Only map the fields we still surface.
+    Promise.all([
+      fetch("/api/admin/reservation-settings").then(r => r.ok ? r.json() : null),
+      fetch("/api/restaurants/profile").then(r => r.ok ? r.json() : null),
+    ]).then(([s, r]) => {
+      setForm(f => ({
+        acceptsReservations: r?.acceptsReservations ?? f.acceptsReservations,
+        minGuests: s?.minGuests ?? f.minGuests,
+        maxGuests: s?.maxGuests ?? f.maxGuests,
+        // Prefer minNoticeMinutes when present; fall back to legacy
+        // minNoticeHours * 60 for older rows.
+        minNoticeMinutes: s?.minNoticeMinutes ?? (s?.minNoticeHours != null ? s.minNoticeHours * 60 : f.minNoticeMinutes),
+        maxAdvanceDays: s?.maxAdvanceDays ?? f.maxAdvanceDays,
+        holdMinutes: s?.holdMinutes ?? f.holdMinutes,
+        allowPreOrder: s?.allowPreOrder ?? f.allowPreOrder,
+      }));
     }).finally(() => setLoading(false));
   }, []);
 
   const save = async () => {
     setSaving(true);
     try {
-      const res = await fetch("/api/admin/reservation-settings", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, reservationHours: hours, blackoutDates: blackouts }),
-      });
-      if (!res.ok) throw new Error("Failed");
-      toast.success("Settings saved");
-    } catch { toast.error("Failed to save"); }
-    setSaving(false);
+      // Save BOTH settings rows in parallel:
+      //   - ReservationSettings row for the GloriaFood-style booking
+      //     rules (min/max guests, notice, hold, pre-order, etc).
+      //   - Restaurant row for the master acceptsReservations toggle.
+      //
+      // We also write minNoticeHours = floor(minutes / 60) for
+      // backward-compat with any legacy code that still reads the
+      // hours field. minNoticeMinutes is the source of truth.
+      const minNoticeHours = Math.floor(form.minNoticeMinutes / 60);
+      const [resA, resB] = await Promise.all([
+        fetch("/api/admin/reservation-settings", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            minGuests: form.minGuests,
+            maxGuests: form.maxGuests,
+            minNoticeMinutes: form.minNoticeMinutes,
+            minNoticeHours,
+            maxAdvanceDays: form.maxAdvanceDays,
+            holdMinutes: form.holdMinutes,
+            allowPreOrder: form.allowPreOrder,
+          }),
+        }),
+        fetch("/api/restaurants/profile", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ acceptsReservations: form.acceptsReservations }),
+        }),
+      ]);
+      if (!resA.ok || !resB.ok) throw new Error("Failed");
+      toast.success("Reservation settings saved");
+    } catch {
+      toast.error("Failed to save");
+    } finally {
+      setSaving(false);
+    }
   };
 
-  if (loading) return <div className="flex items-center justify-center h-32"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-32">
+        <Loader2 className="w-6 h-6 animate-spin text-emerald-500" />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl space-y-6">
       <div className="flex justify-end">
-        <button onClick={save} disabled={saving}
-          className="flex items-center gap-2 bg-emerald-500 text-white text-sm font-semibold px-5 py-2 rounded-xl hover:bg-emerald-600 disabled:opacity-50">
-          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Save Settings
+        <button
+          onClick={save}
+          disabled={saving}
+          className="flex items-center gap-2 bg-emerald-500 text-white text-sm font-semibold px-5 py-2 rounded-xl hover:bg-emerald-600 disabled:opacity-50"
+        >
+          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+          Save Settings
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
-        <h3 className="font-semibold text-gray-900">Reservation Behavior</h3>
-        <div className="space-y-3">
-          <label className="flex items-start gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={form.autoConfirm}
-              onChange={e => setForm(f => ({ ...f, autoConfirm: e.target.checked }))}
-              className="mt-1 w-4 h-4 accent-emerald-500"
-            />
-            <div className="flex-1">
-              <div className="text-sm font-medium text-gray-800">Auto-confirm reservations</div>
-              <p className="text-xs text-gray-500 mt-0.5">
-                When ON: bookings that fit your rules confirm instantly. When OFF: you accept or reject each one from the Reservations tab.
-              </p>
-            </div>
-          </label>
-
-          <label className="flex items-start gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={form.allowPreOrder}
-              onChange={e => setForm(f => ({ ...f, allowPreOrder: e.target.checked }))}
-              className="mt-1 w-4 h-4 accent-emerald-500"
-            />
-            <div className="flex-1">
-              <div className="text-sm font-medium text-gray-800">Allow guests to pre-order their food when booking</div>
-              <p className="text-xs text-gray-500 mt-0.5">
-                Customers can add menu items to their reservation. Their items appear on the kitchen display when they arrive.
-              </p>
-            </div>
-          </label>
-        </div>
-      </div>
-
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
-        <h3 className="font-semibold text-gray-900">Booking Rules</h3>
-        <div className="grid grid-cols-2 gap-4">
-          {([
-            ["minNoticeHours", "Min Notice (hours)", "How many hours in advance reservations must be made"],
-            ["maxAdvanceDays", "Max Advance (days)", "How many days ahead customers can book"],
-            ["slotLengthMinutes", "Time Slot (min)", "Length of each booking slot"],
-            ["maxPerSlot", "Max per Slot", "Maximum reservations per time slot"],
-            ["minGuests", "Min Guests", "Smallest party size customers can book"],
-            ["maxGuests", "Max Guests", "Largest party size customers can book"],
-            ["holdMinutes", "Hold table when late (min)", "How long the table is held past the reservation time"],
-          ] as [keyof ResSettings, string, string][]).map(([key, label, hint]) => (
-            <div key={key}>
-              <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-              <input type="number" min="0" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                value={form[key] as number}
-                onChange={e => setForm(f => ({ ...f, [key]: parseInt(e.target.value) || 0 }))} />
-              <p className="text-xs text-gray-400 mt-0.5">{hint}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
-        <h3 className="font-semibold text-gray-900">Deposit</h3>
-        <div className="flex items-center gap-4">
-          <button onClick={() => setForm(f => ({ ...f, requireDeposit: !f.requireDeposit }))}
-            className={`px-4 py-2 rounded-lg border text-sm font-medium transition ${form.requireDeposit ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
-            {form.requireDeposit ? "Deposit Required ✓" : "No Deposit Required"}
-          </button>
-          {form.requireDeposit && (
-            <div className="relative w-40">
-              <span className="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
-              <input type="number" min="0" step="0.01" className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                placeholder="0.00" value={form.depositAmount}
-                onChange={e => setForm(f => ({ ...f, depositAmount: parseFloat(e.target.value) || 0 }))} />
-            </div>
-          )}
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Cancellation Policy</label>
-          <textarea rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none"
-            placeholder="e.g. Free cancellation up to 24 hours before your reservation…"
-            value={form.cancellationPolicy}
-            onChange={e => setForm(f => ({ ...f, cancellationPolicy: e.target.value }))} />
-        </div>
-      </div>
-
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">
-        <h3 className="font-semibold text-gray-900">Reservation Hours</h3>
-        <p className="text-xs text-gray-400">Set which hours reservations can be made each day.</p>
-        {[0,1,2,3,4,5,6].map(d => (
-          <div key={d} className="flex items-center gap-3">
-            <button onClick={() => setHours(h => ({ ...h, [d]: { ...h[d], enabled: !h[d].enabled } }))}
-              className={`w-16 text-xs font-medium py-1 rounded-lg border transition ${hours[d]?.enabled ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-400"}`}>
-              {DAY_NAMES[d]}
-            </button>
-            {hours[d]?.enabled ? (
-              <>
-                <input type="time" className="border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                  value={hours[d]?.open ?? "10:00"}
-                  onChange={e => setHours(h => ({ ...h, [d]: { ...h[d], open: e.target.value } }))} />
-                <span className="text-gray-400 text-sm">to</span>
-                <input type="time" className="border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                  value={hours[d]?.close ?? "22:00"}
-                  onChange={e => setHours(h => ({ ...h, [d]: { ...h[d], close: e.target.value } }))} />
-              </>
-            ) : (
-              <span className="text-sm text-gray-400">Closed</span>
-            )}
+      {/* Master enable toggle */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h3 className="font-semibold text-gray-900">Do you offer table reservation?</h3>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Show the Table Reservation button on your customer ordering page.
+            </p>
           </div>
-        ))}
+          <div className="flex items-center gap-1 rounded-lg border border-gray-200 overflow-hidden flex-shrink-0">
+            <button
+              type="button"
+              onClick={() => setForm(f => ({ ...f, acceptsReservations: true }))}
+              className={`px-4 py-1.5 text-sm font-semibold transition ${
+                form.acceptsReservations
+                  ? "bg-emerald-500 text-white"
+                  : "bg-white text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              onClick={() => setForm(f => ({ ...f, acceptsReservations: false }))}
+              className={`px-4 py-1.5 text-sm font-semibold transition ${
+                !form.acceptsReservations
+                  ? "bg-rose-500 text-white"
+                  : "bg-white text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              No
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">
-        <h3 className="font-semibold text-gray-900">Blackout Dates</h3>
-        <p className="text-xs text-gray-400">Reservations cannot be made on these dates.</p>
-        <div className="flex gap-2">
-          <input type="date" className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            value={newBlackout} onChange={e => setNewBlackout(e.target.value)} />
-          <button onClick={() => { if (newBlackout && !blackouts.includes(newBlackout)) { setBlackouts(b => [...b, newBlackout].sort()); setNewBlackout(""); } }}
-            className="flex items-center gap-1.5 bg-gray-800 text-white text-sm px-3 py-2 rounded-lg hover:bg-gray-700">
-            <Plus className="w-4 h-4" /> Add
-          </button>
+      {/* Booking rules — six numeric knobs + the pre-order toggle. Greyed
+          out when acceptsReservations is OFF (still editable so an owner
+          can configure first, flip the master switch on later). */}
+      <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-5 transition-opacity ${
+        form.acceptsReservations ? "" : "opacity-60"
+      }`}>
+        <h3 className="font-semibold text-gray-900 mb-4">Settings</h3>
+        <div className="space-y-4">
+          <NumberRow
+            label="Minimum guests"
+            unit="guests"
+            value={form.minGuests}
+            min={1}
+            onChange={(v) => setForm(f => ({ ...f, minGuests: v }))}
+          />
+          <NumberRow
+            label="Maximum guests"
+            unit="guests"
+            value={form.maxGuests}
+            min={1}
+            onChange={(v) => setForm(f => ({ ...f, maxGuests: v }))}
+          />
+          <NumberRow
+            label="Minimum time in advance"
+            unit="min"
+            value={form.minNoticeMinutes}
+            min={0}
+            onChange={(v) => setForm(f => ({ ...f, minNoticeMinutes: v }))}
+          />
+          <NumberRow
+            label="Maximum time in advance"
+            unit="days"
+            value={form.maxAdvanceDays}
+            min={1}
+            onChange={(v) => setForm(f => ({ ...f, maxAdvanceDays: v }))}
+          />
+          <NumberRow
+            label="When guests are late, hold table for"
+            unit="min"
+            value={form.holdMinutes}
+            min={0}
+            onChange={(v) => setForm(f => ({ ...f, holdMinutes: v }))}
+          />
+          <div className="pt-2 border-t border-gray-100">
+            <label className="flex items-center justify-between gap-4 cursor-pointer">
+              <span className="text-sm text-gray-800">
+                Allow guests to pre-order their food when booking a table
+              </span>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={form.allowPreOrder}
+                onClick={() => setForm(f => ({ ...f, allowPreOrder: !f.allowPreOrder }))}
+                className={`relative inline-flex h-6 w-11 rounded-full transition ${
+                  form.allowPreOrder ? "bg-emerald-500" : "bg-gray-300"
+                }`}
+              >
+                <span
+                  className={`inline-block w-5 h-5 bg-white rounded-full shadow transform transition mt-0.5 ${
+                    form.allowPreOrder ? "translate-x-5" : "translate-x-0.5"
+                  }`}
+                />
+              </button>
+            </label>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {blackouts.map(d => (
-            <span key={d} className="flex items-center gap-1.5 bg-red-50 border border-red-200 text-red-700 text-xs px-3 py-1 rounded-full">
-              {d}
-              <button onClick={() => setBlackouts(b => b.filter(x => x !== d))} className="hover:text-red-900"><X className="w-3 h-3" /></button>
-            </span>
-          ))}
-        </div>
+      </div>
+    </div>
+  );
+}
+
+function NumberRow({
+  label, unit, value, min, onChange,
+}: {
+  label: string;
+  unit: string;
+  value: number;
+  min?: number;
+  onChange: (v: number) => void;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4">
+      <label className="text-sm text-gray-800">{label}:</label>
+      <div className="flex items-center gap-2">
+        <input
+          type="number"
+          min={min}
+          value={value}
+          onChange={(e) => onChange(Math.max(min ?? 0, parseInt(e.target.value) || 0))}
+          className="w-20 border border-gray-300 rounded-lg px-3 py-1.5 text-sm text-right focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+        />
+        <span className="text-xs text-gray-500 w-12">{unit}</span>
       </div>
     </div>
   );

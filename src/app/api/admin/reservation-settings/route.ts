@@ -26,7 +26,7 @@ export async function PUT(req: NextRequest) {
 
     const body = await req.json();
     const {
-      minNoticeHours, maxAdvanceDays, slotLengthMinutes,
+      minNoticeHours, minNoticeMinutes, maxAdvanceDays, slotLengthMinutes,
       maxPerSlot, minGuests, maxGuests, autoConfirm, allowPreOrder, holdMinutes,
       requireDeposit, depositAmount,
       cancellationPolicy, reservationHours, blackoutDates,
@@ -36,6 +36,7 @@ export async function PUT(req: NextRequest) {
       where: { restaurantId },
       update: {
         ...(minNoticeHours     !== undefined && { minNoticeHours:     parseInt(minNoticeHours) }),
+        ...(minNoticeMinutes   !== undefined && { minNoticeMinutes:   parseInt(minNoticeMinutes) }),
         ...(maxAdvanceDays     !== undefined && { maxAdvanceDays:     parseInt(maxAdvanceDays) }),
         ...(slotLengthMinutes  !== undefined && { slotLengthMinutes:  parseInt(slotLengthMinutes) }),
         ...(maxPerSlot         !== undefined && { maxPerSlot:         parseInt(maxPerSlot) }),
