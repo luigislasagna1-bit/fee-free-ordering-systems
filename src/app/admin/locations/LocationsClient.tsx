@@ -33,6 +33,9 @@ export function LocationsClient({
     city: "",
     state: "",
     zip: "",
+    // Default to CA — same default the profile page uses. Owners adding
+    // a US/UK/etc. location pick from the dropdown.
+    country: "CA",
   });
 
   async function submitAdd() {
@@ -221,7 +224,7 @@ export function LocationsClient({
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   />
                 </Field>
-                <Field label="State">
+                <Field label="State / Province">
                   <input
                     type="text"
                     value={form.state}
@@ -229,7 +232,7 @@ export function LocationsClient({
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   />
                 </Field>
-                <Field label="ZIP">
+                <Field label="ZIP / Postal">
                   <input
                     type="text"
                     value={form.zip}
@@ -238,6 +241,25 @@ export function LocationsClient({
                   />
                 </Field>
               </div>
+              {/* Country picker — required for accurate Stripe Connect
+                  onboarding, ShipDay region routing, and tax-rate defaults
+                  per location. Mirrors the list on /admin/profile. */}
+              <Field label="Country">
+                <select
+                  value={form.country}
+                  onChange={(e) => setForm({ ...form, country: e.target.value })}
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"
+                >
+                  <option value="CA">Canada</option>
+                  <option value="US">United States</option>
+                  <option value="GB">United Kingdom</option>
+                  <option value="AU">Australia</option>
+                  <option value="NZ">New Zealand</option>
+                  <option value="IE">Ireland</option>
+                  <option value="MX">Mexico</option>
+                  <option value="OTHER">Other</option>
+                </select>
+              </Field>
             </div>
             <div className="flex gap-2 mt-5">
               <button
