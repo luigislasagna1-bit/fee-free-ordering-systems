@@ -310,13 +310,65 @@ This is a quick-scan affordance for owners managing many promos — they don't h
 
 ---
 
-## Promo Type 6: Payment method reward 🔒 LOCKED   ⏳ AWAITING SCREENSHOTS
+## Promo Type 6: Payment method reward 🔒 LOCKED  ✅ CAPTURED
 
-> % off if paid via specific payment method (e.g. credit card online)
+> % off cart when customer pays via a specific payment method (e.g. online card)
 
-What I need:
-- All 3 steps
-- Specifically Step 2: payment-method picker
+### Structural insight
+Promo 6 is **architecturally identical to Promo 1** (% discount on cart). The only difference:
+- **Default title**: "Online payment discount" (vs "5% off total")
+- **Default restriction**: `Only for selected payment methods` pre-checked with the restaurant's `Online payments` method auto-selected
+- Step 2: just `Discount: [N] %` + optional min order (same as Type 1)
+
+So this isn't a new RULE — it's a **preset template** of Type 1 with restrictions pre-populated. Internally we can use:
+```
+ruleConfig: { kind: "discount_percent_cart", discountPercent: 5 }
+restrictions: [{ kind: "payment", methods: ["online_card"] }]
+```
+
+Per Luigi: *"depending on the restaurants enabled payment options, you will see more options available here to pick from"* — payment method picker dynamically pulls from `Restaurant.paymentMethods` (the JSON list configured in /admin/payments). E.g. Cash, Card in person, Online card, PayPal all show as checkboxes when enabled.
+
+### Why it's a separate template at all
+**Marketing/discoverability** — when an owner thinks "I want to incentivize customers to pay online (saves the staff from handling cash, faster checkout)", they can find a purpose-built template called "Payment method reward" rather than having to know that's just "% off cart" with a payment restriction.
+
+### Universal NEW reveals from Promo 6's screenshots — Limited showtime sub-config
+
+When `Display Time = "Limited showtime"`, two sub-config groups appear:
+
+**1. Days & time of the week** (checkbox to enable, can have MULTIPLE entries):
+- 7 day-of-week checkboxes (Mon, Tue, Wed, Thu, Fri, Sat, Sun — multi-select)
+- Time range: `[HH:MM AM/PM]` — `[HH:MM AM/PM]`
+- Save / Cancel buttons
+- After save, displays as e.g. "Tuesday-Wednesday, Friday-Saturday: 10:00 AM - 08:00 PM" with X (delete) + edit pencil
+- **Add** button creates another window → owner can configure multiple schedules
+  - E.g. "Mon-Fri 12:00-15:00 (lunch) + Sat-Sun 18:00-22:00 (dinner)"
+
+**2. Available between:** (checkbox to enable):
+- Single date-range picker (2-month calendar, Cancel/Apply)
+- E.g. "10 Jun 2026 - 21 Jun 2026"
+- Functions as the OVERALL campaign window — combines with day/time schedule
+
+**Both can be combined:** "Available June 10-21, but only on Tue-Wed-Fri-Sat from 10am-8pm" → both must pass for the promo to be visible.
+
+### Schema implication for Display Time
+```json
+"displayMode": "limited_showtime",
+"showtimeConfig": {
+  "schedules": [
+    { "daysOfWeek": [1, 2, 4, 5], "startMinute": 600, "endMinute": 1200 },
+    { "daysOfWeek": [6, 0], "startMinute": 1080, "endMinute": 1320 }
+  ],
+  "availableBetween": { "startDate": "2026-06-10", "endDate": "2026-06-21" }
+}
+```
+
+Multiple `schedules` entries means we need an array; `availableBetween` is optional.
+
+### Open questions for Promo 6
+1. Should we expose Promo 6 as a separate "type" in the picker, or just have Promo 1 with a "preset: payment-method-reward" auto-populated config? Marketing argument says SEPARATE TYPE (easier to discover).
+2. If the restaurant has multiple online payment options (Stripe + PayPal) — does the promo apply to BOTH, or owner picks one?
+
+---
 
 ---
 
