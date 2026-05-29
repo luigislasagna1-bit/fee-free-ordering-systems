@@ -713,13 +713,51 @@ Importantly: **no walkthrough needed**. Coupon entered → items added → match
 
 ---
 
-## Promo Type 12: % discount on combo deal 🔒 LOCKED   ⏳ AWAITING SCREENSHOTS
+## Promo Type 12: % discount on combo deal 🔒 LOCKED  ✅ CAPTURED
 
-> 10% off main + dessert combo
+> % off the qualifying combo's total — identical to Promo 11 but percentage-based
 
-What I need:
-- All 3 steps
-- Step 2: combo composer + % off (likely identical UX to Type 11 with % instead of $)
+### Difference from Promo 11
+Single field change: **Discount:** `[N]` `%` instead of `CAD`. Everything else identical:
+- Same N-group structure (3+)
+- Same auto-apply behavior per Universal Principle
+- Same separate-line-items cart display
+- Same "Hide from menu (redeem with coupon code)" option
+
+### Schema additions
+```json
+"ruleConfig": {
+  "kind": "percent_discount_combo",
+  "itemGroups": [...],
+  "discountPercent": 10,
+  "extraChargesPolicy": "none"
+}
+```
+
+### Universal NEW reveal — full "No extra charges" tooltip text
+
+The info icon on the dropdown reveals the precise semantics of the 3 options (applies to ALL promo types that have this dropdown — Promos 2, 4, 7, 8, 9, 10, 11, 12, 13):
+
+- **No extra charges** — *"Any 'Choices / Addons' or 'Sizes' selection will not increase the price."*
+  - Everything is discounted, including modifiers + size upgrades
+- **Charge extra for "Choices / Addons"** — *"Only 'Choices / Addons' will preserve their prices (if any) unaffected of the promo logic."*
+  - Base item discounted, modifiers/addons charge full price
+  - Sizes ARE still discounted (only addons are exempted)
+- **Charge extra for "Choices / Addons" & "Sizes"** — *"'Choices / Addons' or 'Sizes' will preserve their prices (if any) unaffected of the promo logic."*
+  - Base item discounted, BOTH addons AND size upgrades charge full price
+  - Maximum modifier-revenue preservation
+
+This is important for the promo engine — the discount is applied to a subset of the line item's total price depending on this setting.
+
+### Universal NEW reveal — Self-made promos list 3-dot menu
+
+Hovering or clicking the ⋮ icon on a promo row in `/admin/promotions/self-made` reveals a context menu:
+- **Duplicate** — clone the promo as a starting point for a similar one (useful for "create a Tuesday lunch promo, then duplicate for Wednesday")
+- **Delete** — remove the promo (probably with a confirm dialog)
+
+Worth building both — Duplicate especially is a strong owner UX.
+
+---
 
 ---
 
