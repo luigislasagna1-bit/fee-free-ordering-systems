@@ -497,13 +497,66 @@ Cart-line schema needs a **`bundleItems` Json field** (or similar) on OrderItem 
 
 ---
 
-## Promo Type 9: Buy N, get one free 🔒 LOCKED   ⏳ AWAITING SCREENSHOTS
+## Promo Type 9: Buy 2, 3,... get one free 🔒 LOCKED  ✅ CAPTURED
 
-> Generalization of Type 4 — buy 2 → free, buy 3 → free, etc.
+> Customer adds N matching items, gets a position-based discount on each — typically cheapest = 100% off (free)
 
-What I need:
-- All 3 steps
-- Step 2: how many of which, and which one becomes free (cheapest? specific?)
+### Key difference from Type 8 (Meal bundle)
+- Type 8: flat $ price for the whole bundle (replaces all individual prices)
+- Type 9: **position-based % discounts** — items are sorted by price, then % applied to each
+- Type 9 doesn't introduce a "bundle line item" — it discounts the individual cart lines
+
+### Step 2 — N item groups + dual-mode discount
+
+**Eligible items:** N item groups (3+ — Luigi tested with 5)
+- For "Buy 2, get 1 free" → 3 groups
+- For "Buy 4, get 1 free" → 5 groups
+- All groups typically populated with the SAME items (e.g. all pizzas) for classic same-item BOGO++
+- Groups CAN differ for "complete a meal" variants (Group 1=appetizers, Group 2=mains, Group 3=desserts)
+
+Tooltip: *"Buy 2 Pizzas and get the 3rd Pizza free would require you to select all Pizzas for 'Items Group 1', 'Items Group 2' and the same for 'Items Group 3'. By default the ordering system discounts the cheapest item by 100%."*
+
+**Discount mode dropdown** (NEW: dropdown with 2 options):
+- **Automatically set discounts** (default) — only shows 2 inputs:
+  - Discount for cheapest item: 100% (locked)
+  - Discount for most expensive item: 0% (locked)
+  - Middle group(s) implicit 0%
+- **Manually set discounts** — shows one % input per group:
+  - Items Group 1: [N]%
+  - Items Group 2: [N]%
+  - ... per group
+  - Owner can build a ladder e.g. 100/80/70/60/50% — staircase discount
+
+**No extra charges** dropdown (same 3-option as other types)
+
+### Evaluation algorithm
+1. Cart contains items matching the N groups (at least 1 per group)
+2. System sorts the qualifying items by price (cheapest → expensive)
+3. Apply discount % per position:
+   - In **automatic** mode: cheapest gets cheapestPercent%, expensive gets expensivePercent%, middles get 0%
+   - In **manual** mode: each position gets its own configured %
+
+### Schema additions
+```json
+"ruleConfig": {
+  "kind": "buy_n_get_one_free",
+  "itemGroups": [
+    { "id": 1, "categoryIds": [...], "menuItemIds": [...] },
+    { "id": 2, "categoryIds": [...], "menuItemIds": [...] },
+    { "id": 3, "categoryIds": [...], "menuItemIds": [...] }
+  ],
+  "discountMode": "automatic",
+  "discountPercentages": [100, 0, 0],     // index = position (0 = cheapest)
+  "extraChargesPolicy": "none"
+}
+```
+
+### Open questions for Promo 9
+1. If the customer adds 6 qualifying items in cart and the promo is "buy 2 get 1 free" (3 groups) — does the discount fire ONCE (cheapest of 3) or TWICE (cheapest of each set of 3)? Toast-style usually fires multiple times; need to confirm.
+2. Can the customer combine this with Promo 7 (free item choice) on the same cart? Universal exclusivity setting governs.
+3. Does discount apply to the BASE item price only, or include modifiers? (extra charges dropdown handles this — same as other types)
+
+---
 
 ---
 
