@@ -12,11 +12,23 @@ class LocalProvider implements DomainProvider {
 
   async addDomain(host: string): Promise<{ dnsRecords: DnsRecord[]; status: DomainStatus }> {
     console.log(`[domains/local] addDomain ${host} — would have registered with provider`);
+    // Mirror the apex-vs-subdomain distinction the real Vercel provider
+    // makes so dev stub output is realistic. Apex (host.tld) → A record
+    // at @ (CNAME forbidden by RFC 1035). Subdomain → CNAME at the
+    // relative subdomain name.
+    const isApex = host.split(".").length === 2;
+    const apex = host.split(".").slice(-2).join(".");
+    const relativeName = host === apex ? "@" : host.slice(0, -(apex.length + 1));
     return {
-      dnsRecords: [
-        { type: "CNAME", name: "@", value: `cname.<your-host-provider>.example` },
-        { type: "TXT", name: "_verify", value: `feefree-verify-${host}` },
-      ],
+      dnsRecords: isApex
+        ? [
+            { type: "A", name: "@", value: "76.76.21.21" },
+            { type: "TXT", name: "_verify", value: `feefree-verify-${host}` },
+          ]
+        : [
+            { type: "CNAME", name: relativeName, value: "cname.<your-host-provider>.example" },
+            { type: "TXT", name: "_verify", value: `feefree-verify-${host}` },
+          ],
       status: { verified: false, ssl: "unknown" },
     };
   }

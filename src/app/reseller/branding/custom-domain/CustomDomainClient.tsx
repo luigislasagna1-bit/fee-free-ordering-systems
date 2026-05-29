@@ -296,6 +296,25 @@ function DnsRecordsPanel({ records, stub }: { records: DnsRecord[]; stub: boolea
           </tbody>
         </table>
       </div>
+      {/* Help text — most owners don't know what "@" means in DNS, and
+          we've seen registrars silently reject CNAME-at-apex (RFC 1035).
+          Surface both rules inline so a confused owner can self-correct
+          without contacting support. */}
+      {records.some((r) => r.name === "@") && (
+        <p className="mt-3 text-[11px] text-gray-500 leading-relaxed">
+          <strong>Note:</strong> <code className="bg-gray-100 px-1 rounded font-mono">@</code> means
+          your root domain. Most registrars (GoDaddy, Namecheap, Cloudflare) accept{" "}
+          <code className="bg-gray-100 px-1 rounded font-mono">@</code> directly in the Name field.
+          If yours doesn&apos;t, leave Name blank or type the full apex.
+        </p>
+      )}
+      {records.some((r) => r.type === "CNAME" && r.name === "@") && (
+        <p className="mt-2 text-[11px] text-amber-700 leading-relaxed">
+          ⚠️ A CNAME at the root (<code className="bg-amber-100 px-1 rounded font-mono">@</code>) is forbidden
+          by DNS spec — registrars will reject it. Use a subdomain (e.g.{" "}
+          <code className="bg-amber-100 px-1 rounded font-mono">login.yourbrand.com</code>) instead.
+        </p>
+      )}
     </div>
   );
 }
