@@ -845,7 +845,72 @@ Like Promo 8 it's a single "bundle" line, but with an itemized fee breakdown:
 
 ---
 
-## Restrictions Modal   ⏳ AWAITING SCREENSHOTS
+## Restrictions ✅ NOT A SEPARATE MODAL — embedded in Step 3 wizard
+
+Luigi 2026-05-29 clarified: the 8 named restrictions are NOT a separate modal/feature. They are knobs already built into the promotion creation wizard itself. The "Rules and restrictions" popup I screenshot-ed early on was an explanatory tooltip listing what kinds of behaviors are possible, NOT a distinct config UI.
+
+Below is the master cross-reference mapping each named restriction to where it's configured.
+
+### Restriction → Wizard location
+
+| # | Named Restriction | Where it lives | Captured in |
+|---|---|---|---|
+| 1 | **Happy Hour** (day-of-week + hour range) | Step 3 → Display Time = "Limited showtime" → Days & time of the week (multi-schedule support) | Promo 6 |
+| 2 | **Delivery Area** (zone-restricted) | Step 3 → Order type (multi-select), and "Only for selected delivery zones" checkbox revealing zone picker from Restaurant.DeliveryZone | Promos 1, 3 |
+| 3 | **Cart Value** (min/max thresholds) | Step 2 → Minimum order amount (when present), PLUS Step 3 → Highlight promo → "Custom selection: Cart value exceeds" | Promos 1, 5 |
+| 4 | **Payment Method** | Step 3 → "Only for selected payment methods" checkbox revealing dynamic picker (pulls from Restaurant.paymentMethods config) | Promos 5, 6 |
+| 5 | **Expiration** (campaign-level date range) | Step 3 → Display Time = "Limited showtime" → Available between: (date-range picker) | Promo 6 |
+| 6 | **Client Type** | Step 3 → Client type dropdown (Any / New / Returning / Member) | Promo 5 |
+| 7 | **Frequency** (once per client) | Step 3 → "Only once per client" checkbox (with anonymous-clients-excluded behavior) | Promo 5 |
+| 8 | **Exclusivity** (stacking rules) | Step 3 → Mark promo as dropdown (Not exclusive / Exclusive / Master promo deal) | Promo 1 |
+
+### Schema implication
+All 8 restrictions are NOT separate JSON entries in a `restrictions[]` array. They are FIRST-CLASS fields on the Promotion row (or derived from existing fields we already have). The Phase 1 schema's `restrictions Json @default("[]")` is therefore unnecessary — we can drop it.
+
+**Schema cleanup needed in Phase 2:**
+- Drop `Promotion.restrictions` JSON field (added in Phase 1) — not needed
+- Use existing/standard fields instead:
+  - `customerType` (extended with `member`)
+  - `daysOfWeek` (Promo 1 work)
+  - `usableHourStart` / `usableHourEnd` (Promo 1 work)
+  - `startsAt` / `endsAt` (existing)
+  - `stackingRule` (extended with `master`)
+  - `orderType` (extended to multi-select)
+  - NEW: `displayMode` enum (`always_visible` / `limited_showtime` / `hidden_until_coupon_entered`)
+  - NEW: `paymentMethodRestrictions` String? (JSON array of method slugs)
+  - NEW: `deliveryZoneRestrictions` String? (JSON array of zone IDs)
+  - NEW: `onceLifetimePerClient` Boolean
+  - NEW: `limitedShowtimeSchedules` Json (multi-window schedule)
+  - NEW: `highlightThreshold` Float (cart-value triggered banner highlight)
+
+### Customer-facing evaluation
+The promo engine evaluates ALL these constraints in a single pass:
+```
+function isPromoActiveForCart(promo, cart, customer, time):
+  if promo.startsAt > now: return false       // Expiration
+  if promo.endsAt < now: return false         // Expiration
+  if not promo.daysOfWeek.includes(today): return false  // Happy Hour day
+  if not insideUsableHourWindow(now): return false       // Happy Hour time
+  if not promo.orderType.includes(cart.type): return false  // Order type
+  if promo.deliveryZoneRestrictions and not cart.zone in restrictions: return false  // Delivery area
+  if promo.paymentMethodRestrictions and not cart.payment in restrictions: return false  // Payment
+  if promo.customerType == 'new' and customer.totalOrders > 0: return false  // Client type
+  if promo.customerType == 'returning' and customer.totalOrders == 0: return false
+  if promo.customerType == 'member' and not customer.isRegistered: return false
+  if promo.onceLifetimePerClient and alreadyUsedByCustomer(promo, customer): return false  // Frequency
+  if cart.subtotal < promo.minimumOrder: return false  // Cart value
+  // ruleConfig-specific check
+  if not promo.ruleConfig.cartQualifies(cart): return false
+  return true
+```
+
+Exclusivity (`stackingRule`) doesn't gate eligibility — it gates HOW MULTIPLE eligible promos compose. Evaluated AFTER per-promo eligibility.
+
+---
+
+## 🎉 CATALOG COMPLETE
+
+All 13 promo types + 8 restrictions + universal patterns captured. Build phase ready to start.
 
 The 8 restriction types from Screenshot 4 of earlier set. Need detail on each:
 
