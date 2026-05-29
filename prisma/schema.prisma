@@ -938,6 +938,11 @@ model Coupon {
   @@unique([restaurantId, code])
   @@index([restaurantId, isActive])
   @@index([customerId])
+  // Order POST evaluates personally-assigned coupons by filtering on
+  // BOTH customerId AND isActive. Composite index lets Postgres satisfy
+  // the filter without a separate scan. Added 2026-05-28 during the
+  // pre-launch scale sweep.
+  @@index([customerId, isActive])
 }
 
 model Promotion {
@@ -1387,6 +1392,12 @@ model ResellerProfile {
   // Proxy lookup: "is this hostname a reseller's verified custom domain?"
   // Filtered to verified so unverified domains don't leak access.
   @@index([customDomainStatus])
+  // Reseller dashboard + admin pages frequently filter by whiteLabelStatus
+  // to find active subscribers vs lapsed ones. Added 2026-05-28 during
+  // the pre-launch scale sweep — the `status` index already covers the
+  // "approved vs pending" filter, this covers the white-label tier
+  // queries.
+  @@index([whiteLabelStatus])
 }
 
 // Many-to-many between User and Restaurant for non-owner access. The owning

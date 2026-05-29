@@ -8,9 +8,14 @@ export async function GET() {
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const [recipients, restaurant] = await Promise.all([
+    // Hard cap at 200 — a restaurant would never sensibly need that many
+    // recipients (most have 1-3). Cap protects against runaway DB load
+    // if a buggy import accidentally creates thousands of rows. If we
+    // ever hit the cap in the wild, build proper pagination in the UI.
     prisma.notificationRecipient.findMany({
       where: { restaurantId },
       orderBy: { createdAt: "asc" },
+      take: 200,
     }),
     prisma.restaurant.findUnique({
       where: { id: restaurantId },

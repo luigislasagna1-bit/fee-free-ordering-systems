@@ -41,7 +41,6 @@ export async function GET() {
   const [
     totalRestaurants,
     statusBreakdown,
-    activeRestaurantsWithPlans,
     availableCents,
     pendingAgg,
   ] = await Promise.all([
@@ -50,13 +49,6 @@ export async function GET() {
       by: ["subscriptionStatus"],
       where: { resellerProfileId: user.resellerProfileId },
       _count: { _all: true },
-    }),
-    prisma.restaurant.findMany({
-      where: {
-        resellerProfileId: user.resellerProfileId,
-        subscriptionStatus: "active",
-      },
-      include: { subscriptionPlan: { select: { price: true } } },
     }),
     availableBalanceCents(user.resellerProfileId),
     prisma.commissionTransaction.aggregate({
@@ -75,10 +67,17 @@ export async function GET() {
     (statusCounts["past_due"] ?? 0) +
     (statusCounts["incomplete"] ?? 0);
 
-  const monthlyRecurringCents = activeRestaurantsWithPlans.reduce((sum, r) => {
-    const price = r.subscriptionPlan?.price ?? 0;
-    return sum + Math.round(price * 100);
-  }, 0);
+  // monthlyRecurringCents removed 2026-05-28: previously summed
+  // subscription_plan.price across active restaurants, but
+  // subscriptionPlanId is a dead FK under the FREE-by-default + add-ons
+  // model — most restaurants have it null, and the few legacy rows that
+  // still link to a plan have stale $49.99 / $149.99 prices that don't
+  // reflect real recurring revenue. Replacing this with a real
+  // add-on-revenue rollup is post-launch (need to aggregate active add-on
+  // subscription prices from Stripe). Until then we omit the field
+  // rather than show misleading numbers — reseller dashboard already
+  // shows lifetime + pending commission which are the trustworthy
+  // metrics.
 
   return NextResponse.json({
     status: profile.status,
@@ -87,7 +86,6 @@ export async function GET() {
     totalRestaurants,
     statusCounts,
     currentRatePercent,
-    monthlyRecurringCents,
     commissionBalanceCents: availableCents,
     pendingCommissionCents: pendingAgg._sum.commissionCents ?? 0,
     lifetimeEarnedCents: profile.totalEarnedCents,
