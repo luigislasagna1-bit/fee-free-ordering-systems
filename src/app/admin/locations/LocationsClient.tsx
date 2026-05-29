@@ -104,8 +104,9 @@ export function LocationsClient({
       )}
 
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 text-sm text-blue-800">
-        <strong>Heads up:</strong> each location bills as its own monthly subscription. Each location has its
-        own menu, hours, payment provider, and Stripe Connect account — they don't share data.
+        <strong>Heads up:</strong> each location is its own FREE plan (100 orders/month). Each location has its
+        own menu, hours, payment provider, and Stripe Connect account — they don't share data. Paid add-ons
+        (Unlimited Orders, Marketplace, etc.) are subscribed per location.
       </div>
 
       <div className="space-y-3">
@@ -182,8 +183,8 @@ export function LocationsClient({
               </button>
             </div>
             <p className="text-sm text-gray-500 mb-4">
-              The new location starts with a 14-day trial and its own admin panel. You can switch into it
-              from the header dropdown after creating.
+              The new location starts on the FREE plan (100 orders/month, no card required) and gets its own
+              admin panel. You can switch into it from the header dropdown after creating.
             </p>
             <div className="space-y-3">
               <Field label="Location name">

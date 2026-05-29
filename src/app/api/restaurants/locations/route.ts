@@ -65,8 +65,9 @@ export async function GET() {
  * location:
  *   - Inherits no menu/hours/etc. (each location is independent — owners can
  *     duplicate from the parent later if they want).
- *   - Starts in `trialing` for 14 days like any new restaurant.
- *   - Each location has its own Stripe subscription (per locked decision).
+ *   - Lands on the FREE plan ($0/mo, 100 orders/month cap). No trial.
+ *   - Each location subscribes to paid add-ons independently (Unlimited
+ *     Orders, Marketplace, etc.).
  *   - Owner gains owner-level RestaurantAccess on the new location so the
  *     access helper admits them there.
  */
