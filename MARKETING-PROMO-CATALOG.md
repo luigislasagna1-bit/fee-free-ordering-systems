@@ -101,15 +101,58 @@ Universal targeting + advanced settings.
 
 ---
 
-## Promo Type 2: % discount on selected items   ⏳ AWAITING SCREENSHOTS
+## Promo Type 2: % discount on selected items  ✅ CAPTURED
 
-> Apply a % off specific items (e.g. 30% off any dessert or drink)
+> Apply a % off specific items chosen by the restaurant (e.g. 30% off any dessert or drink)
 
-What I need to see:
-- Step 1: basic info (likely identical to Type 1 — just send the screenshot to confirm)
-- Step 2: **the item picker** — categories vs items? Multi-select? Search?
-- Step 3: targeting + advanced (will be identical to Type 1, just confirm)
-- (Optional) Tooltip on the picker explaining what's selectable
+### Step 1 — Basic info
+Universal (headline, description, picture).
+Picture default: same pizza image with "30% off" overlay + "Get it now" CTA.
+
+### Step 2 — Eligible items + Discount + Charges
+This is the type's signature config:
+
+- **Eligible items** picker (info tooltip: *"Select one or more items. When clients add an item from your selection to the cart, the discount set below will be applied automatically."*)
+  - Labeled **Items Group 1:** with `[N selected]` summary + edit pencil
+  - Opens a MODAL with:
+    - Tree view: categories expandable, each containing items
+    - Category-level checkbox (selects all items in category — partial state shows count, e.g. `SPECIALS (1)`)
+    - Item-level checkbox
+    - Cancel / Apply buttons
+  - The "Items Group 1" naming pattern means **multi-group is supported** — for Meal Bundle (Type 8) we'll have Group 1, 2, 3, etc.
+
+- **Discount:** Items Group 1: `[N]` `%` — % off applied to the selected items only
+
+- **No extra charges** (dropdown with info tooltip):
+  - **No extra charges** (default) — discount applies to base item price only
+  - **Charge extra for "Choices / Addons"** — discount on base item, modifiers/addons still charge full price
+  - **Charge extra for "Choices / Addons" & "Sizes"** — discount on base item, modifiers + size upgrades still charge full price
+
+  Powerful upsell knob — owner can offer a discount but keep modifier revenue.
+
+### Step 3 — Universal targeting (IMPORTANT new finding)
+Same as Type 1, **plus** Display Time has a SECOND option revealed by Screenshot 5 tooltip:
+
+- **Display Time**:
+  - **Always show to eligible clients** (default)
+  - **Hide from menu** — promo NOT visible in the menu; only redeemable when the matching coupon code is typed at checkout
+
+  Tooltip: *"You may consider marking this promo as 'Hide from menu'. This way only clients who know the coupon code can unlock this promo."* Pairs with `Use custom coupon code` for flyer-printed campaigns.
+
+- **Use custom coupon code** validation: **4-20 characters** when checked
+
+### Schema additions (incremental on top of Type 1's scope)
+| GloriaFood field | FFOS storage |
+|---|---|
+| Eligible items (multi-group ready) | `ruleConfig.itemGroups = [{ id: 1, categoryIds: [], menuItemIds: [], discountPercent: 30 }]` |
+| Extra charges policy | `ruleConfig.extraChargesPolicy = "none" \| "addons" \| "addons_sizes"` |
+| Display Time = Hide from menu | `displayMode = "always" \| "hidden_until_coupon_entered"` |
+| Coupon code length validation | server-side 4-20 char enforcement |
+
+### Open questions for Promo 2
+1. For restaurants with hundreds of items — does the picker have a search box? Pagination?
+2. Does selecting a CATEGORY include items added later (dynamic) or only items present at save time (snapshot)?
+3. What does "Items Group 1:" suggest about adding Group 2, 3, etc.? Is there an "Add Group" button on screens for more complex promo types?
 
 ---
 
