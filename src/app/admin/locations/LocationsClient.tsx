@@ -109,8 +109,12 @@ export function LocationsClient({
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 text-sm text-blue-800">
         <strong>Heads up:</strong> each location is billed independently. Every new location starts on its own
         FREE plan (100 orders/month, no card required) and chooses which add-ons and features it wants to
-        subscribe to — Unlimited Orders, Marketplace, Driver Pool, Sales-Optimized Website, and more. Locations
-        do not share menus, hours, payment providers, or Stripe Connect accounts.
+        subscribe to — Unlimited Orders, Marketplace, Driver Pool, Sales-Optimized Website, and more. Each
+        location has its own hours, payment provider, and Stripe Connect account.
+        {" "}
+        <strong>Menus can optionally be shared:</strong> new locations inherit the brand parent&apos;s menu by
+        default — open <em>Menu Setup</em> on a child location and click <em>&ldquo;Customize this
+        location&apos;s menu&rdquo;</em> to opt out and run an independent menu.
       </div>
 
       <div className="space-y-3">
