@@ -8,13 +8,32 @@ import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
 
+// Sentinel that mirrors RESELLER_SCOPE_ERROR from src/lib/auth.ts. Kept
+// here as a string literal so the client doesn't import server-only
+// modules. If you change one, change both.
+const RESELLER_SCOPE_ERROR = "reseller-scope-mismatch";
+
 export interface ResellerBranding {
   logoUrl: string | null;
   title: string | null;
   companyName: string | null;
 }
 
-function LoginFormInner({ locale, branding }: { locale: string; branding: ResellerBranding | null }) {
+function LoginFormInner({
+  locale,
+  branding,
+  resellerScopeId,
+}: {
+  locale: string;
+  branding: ResellerBranding | null;
+  // Non-null when sign-in is happening on a reseller's branded domain
+  // (resolved server-side from the ?reseller= query param the proxy
+  // sets). We pass it into NextAuth's credentials so the authorize()
+  // hook can enforce that only users belonging to this reseller's
+  // scope (their own admin / their restaurants / their staff) can
+  // authenticate here.
+  resellerScopeId: string | null;
+}) {
   const tAuth = useTranslations("auth");
   const tToasts = useTranslations("admin.toasts");
   const router = useRouter();
@@ -42,9 +61,27 @@ function LoginFormInner({ locale, branding }: { locale: string; branding: Resell
       const result = await signIn("credentials", {
         email: form.email,
         password: form.password,
+        // Pass the scope id when present so the server can enforce
+        // reseller-scoped login. When null/empty, no scope is enforced
+        // (canonical platform-domain sign-in).
+        ...(resellerScopeId ? { resellerProfileId: resellerScopeId } : {}),
         redirect: false,
       });
-      if (!result || result.error) throw new Error(tAuth("invalidCredentials"));
+      if (!result || result.error) {
+        // The sentinel returned by authorize() arrives in result.error as
+        // the literal string we threw. Detect it so we can show a
+        // scope-specific message instead of the generic creds error —
+        // "this is X's sign-in" is far less confusing than "wrong
+        // password" when the issue is actually wrong portal.
+        if (result?.error === RESELLER_SCOPE_ERROR) {
+          const brandName = branding?.companyName ?? branding?.title ?? "this partner";
+          throw new Error(
+            `This sign-in is for ${brandName} customers only. ` +
+            `If you're a direct Fee Free Ordering restaurant, sign in at feefreeordering.com.`,
+          );
+        }
+        throw new Error(tAuth("invalidCredentials"));
+      }
       toast.success(tToasts("saved"));
       // Route by role. Pending/approved resellers go to /reseller (the layout +
       // page handle holding vs dashboard). Superadmins land on the superadmin
@@ -164,10 +201,18 @@ function LoginFormInner({ locale, branding }: { locale: string; branding: Resell
   );
 }
 
-export function LoginForm({ locale, branding = null }: { locale: string; branding?: ResellerBranding | null }) {
+export function LoginForm({
+  locale,
+  branding = null,
+  resellerScopeId = null,
+}: {
+  locale: string;
+  branding?: ResellerBranding | null;
+  resellerScopeId?: string | null;
+}) {
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-emerald-500" /></div>}>
-      <LoginFormInner locale={locale} branding={branding} />
+      <LoginFormInner locale={locale} branding={branding} resellerScopeId={resellerScopeId} />
     </Suspense>
   );
 }

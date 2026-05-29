@@ -57,15 +57,21 @@ export default async function LoginPage({
   const messages = await loadMessages(locale);
 
   let branding: { logoUrl: string | null; title: string | null; companyName: string | null } | null = null;
+  let resellerScopeId: string | null = null;
   if (sp.reseller && /^[a-z0-9-]{20,40}$/i.test(sp.reseller)) {
+    // Branding shows for ANY active white-label tier — both Basic and
+    // Full unlock the imprint/logo. (Custom domains require Full at
+    // the proxy level; Generic subdomains work on either tier. So a
+    // Basic-tier reseller's generic subdomain MUST still resolve to
+    // branding here — previously we filtered on whiteLabelTier: "full"
+    // which silently broke Basic-tier branding.)
     const r = await prisma.resellerProfile.findFirst({
       where: {
         id: sp.reseller,
         whiteLabelStatus: "active",
-        whiteLabelTier: "full",
         status: "approved",
       },
-      select: { brandLogoUrl: true, brandLoginTitle: true, companyName: true },
+      select: { id: true, brandLogoUrl: true, brandLoginTitle: true, companyName: true },
     });
     if (r) {
       branding = {
@@ -73,12 +79,22 @@ export default async function LoginPage({
         title: r.brandLoginTitle,
         companyName: r.companyName,
       };
+      // We pass the resellerProfileId to the form so it can include it
+      // as a credential on sign-in. The NextAuth authorize() hook uses
+      // it to enforce scope: only users belonging to this reseller
+      // (their own admin, their restaurants, staff under them) can
+      // authenticate here.
+      resellerScopeId = r.id;
     }
   }
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <LoginForm locale={locale} branding={branding} />
+      <LoginForm
+        locale={locale}
+        branding={branding}
+        resellerScopeId={resellerScopeId}
+      />
     </NextIntlClientProvider>
   );
 }

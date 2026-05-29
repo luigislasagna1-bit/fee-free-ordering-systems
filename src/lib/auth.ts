@@ -2,6 +2,19 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import prisma from "./db";
+import { userBelongsToReseller } from "./reseller-membership";
+
+/**
+ * Sentinel error string the credentials authorize() throws when a valid
+ * user tries to sign in via a reseller's branded login page but doesn't
+ * belong to that reseller's scope. The LoginForm catches this exact
+ * string and shows a "this is X's sign-in — go to feefreeordering.com"
+ * message rather than the generic "invalid credentials" toast.
+ *
+ * Exported so the client can match against it without hardcoding the
+ * string in two places.
+ */
+export const RESELLER_SCOPE_ERROR = "reseller-scope-mismatch";
 
 // Cookie strictness. Use NextAuth's `__Host-`/`__Secure-` prefixed cookies
 // only on a real production domain — NOT on dev tunnels (ngrok-free.dev,
@@ -50,6 +63,14 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        // Branded-login scope hint. The LoginForm sets this to the
+        // resellerProfileId when sign-in is happening on a reseller's
+        // generic or custom domain. When present, we ENFORCE that the
+        // authenticating user belongs to that reseller's scope —
+        // restaurants under them, their own admin account, or staff
+        // with access. Mismatch throws RESELLER_SCOPE_ERROR so the
+        // client can show a clear "wrong sign-in page" message.
+        resellerProfileId: { label: "Reseller profile (internal)", type: "text" },
       },
       async authorize(credentials) {
         // NextAuth converts any throw or null return from authorize() into
@@ -58,6 +79,10 @@ export const authOptions: NextAuthOptions = {
         // a clean rejection rather than crashing the request — but verbose
         // diagnostic logging was removed once the channel_binding=require
         // connection-string issue was traced and fixed.
+        //
+        // Exception: a thrown Error whose message === RESELLER_SCOPE_ERROR
+        // is deliberate — we re-throw it instead of swallowing so the
+        // LoginForm can detect it via result.error and show specific copy.
         try {
           if (!credentials?.email || !credentials?.password) return null;
           const emailLower = String(credentials.email).trim().toLowerCase();
@@ -72,6 +97,24 @@ export const authOptions: NextAuthOptions = {
           const valid = await bcrypt.compare(credentials.password, user.passwordHash);
           if (!valid) return null;
 
+          // Reseller-scope enforcement. Only runs when the LoginForm
+          // included a resellerProfileId in the credentials payload —
+          // i.e. when sign-in is happening on a reseller branded
+          // domain. Outside that context (direct sign-in on
+          // feefreeordering.com), no scope is enforced.
+          const resellerScopeId = credentials.resellerProfileId
+            ? String(credentials.resellerProfileId).trim()
+            : null;
+          if (resellerScopeId) {
+            const allowed = await userBelongsToReseller(user.id, resellerScopeId);
+            if (!allowed) {
+              // Throw a sentinel so the form can switch the error toast
+              // to a scope-specific message. NextAuth turns this into
+              // result.error on the client.
+              throw new Error(RESELLER_SCOPE_ERROR);
+            }
+          }
+
           return {
             id: user.id,
             email: user.email,
@@ -82,6 +125,8 @@ export const authOptions: NextAuthOptions = {
             resellerProfileId: user.resellerProfile?.id ?? undefined,
           };
         } catch (err: any) {
+          // Re-throw the scope sentinel so the client can detect it.
+          if (err?.message === RESELLER_SCOPE_ERROR) throw err;
           // One concise log line so a real outage is visible without
           // spamming the runtime logs on every failed login attempt.
           console.error(`[authorize] ${err?.code ?? err?.name ?? "error"}: ${err?.message ?? err}`);

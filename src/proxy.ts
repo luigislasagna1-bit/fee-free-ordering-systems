@@ -222,18 +222,47 @@ export async function proxy(req: NextRequest) {
     }
   }
 
-  // ── Reseller custom domain branch ──────────────────────────────────
-  // The host matched a reseller's verified+active customDomain (no
-  // restaurant). The reseller white-label Full tier promise: the login
-  // screen is branded with the reseller's logo + title.
+  // ── Reseller branded domain branch ─────────────────────────────────
+  // The host matched a reseller's verified+active customDomain OR
+  // genericSubdomain (no restaurant). Two cases:
   //
-  // We rewrite ALL paths on the reseller domain to /login?reseller=<id>
-  // so any URL someone types on `partner.com/...` lands on the branded
-  // login. After login Next-Auth redirects to /admin or /reseller as
-  // usual on the platform domain — we don't keep the reseller domain
-  // sticky after auth (deliberate: admin pages stay on the canonical
-  // platform host for cookie-scope reasons).
+  //   a) UNAUTHENTICATED → rewrite ALL paths to /login?reseller=<id>
+  //      so any URL someone types on `partner.com/...` lands on the
+  //      branded login. The login form then enforces strict scope —
+  //      only users belonging to this reseller (their admin / their
+  //      restaurants / their staff) can authenticate.
+  //
+  //   b) AUTHENTICATED → pass through so the reseller's admin and
+  //      their restaurants' admin/kitchen/etc. work fully on the
+  //      branded domain. Without this branch, post-login navigation
+  //      would bounce back to /login (because we'd rewrite /admin →
+  //      /login), making the branded domain login-only and effectively
+  //      unusable. We trust the JWT we just decoded — the scope check
+  //      happened during sign-in.
+  //
+  // Note: the auth check uses the same getToken() we already imported
+  // for the superadmin admin→superadmin remap above, so no extra
+  // dependency added.
   if (resellerProfileId && !slug) {
+    let isAuthed = false;
+    try {
+      const t = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+      isAuthed = !!t;
+    } catch {
+      // Treat JWT decode failure as unauthenticated — safer to show the
+      // login than to silently let through someone with a malformed
+      // session cookie.
+    }
+
+    if (isAuthed) {
+      // Pass through, tagging the request with the branded host's reseller
+      // id so downstream layouts (admin sidebar, headers) can keep the
+      // branding cohesive across the full app surface.
+      const requestHeaders = new Headers(req.headers);
+      requestHeaders.set("x-reseller-profile-id", resellerProfileId);
+      return NextResponse.next({ request: { headers: requestHeaders } });
+    }
+
     const targetUrl = new URL(`/login`, req.url);
     targetUrl.searchParams.set("reseller", resellerProfileId);
     // Preserve any callbackUrl the caller wanted (so a deep-link works).
