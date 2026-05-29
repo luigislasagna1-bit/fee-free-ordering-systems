@@ -1,6 +1,29 @@
 // ─── Promotion Engine ──────────────────────────────────────────────────────────
 // Rules-based promotion calculation engine
 // Each promotionType has its own rules JSON structure and calculation logic.
+//
+// UNIVERSAL AUTO-APPLY PRINCIPLE (Luigi 2026-05-29):
+//   "As long as the customer enters the coupon (if necessary), it shouldn't
+//    matter if they do it first or after — the coupon should be applied. Or
+//    if no coupon is necessary, it should be applied if eligible."
+//
+// Translation for the engine:
+//   1. Every cart change → re-run applyPromotions().
+//   2. A promo with no couponCode auto-applies whenever isEligible() is true.
+//   3. A promo with a couponCode applies whenever:
+//        - the customer has entered that code, AND
+//        - isEligible() is true
+//      regardless of whether the code was entered before or after the items.
+//
+// Restrictions are evaluated inside isEligible():
+//   Happy Hour     → daysOfWeek + usableHourStart/End  (already wired)
+//   Delivery Area  → deliveryZoneIds (NEW)
+//   Cart Value     → minimumOrder
+//   Payment        → paymentMethodSlugs (NEW)
+//   Expiration     → startsAt/endsAt
+//   Client Type    → customerType: any | new | returning | member (NEW: member)
+//   Frequency      → usageLimit + onceLifetimePerClient (NEW)
+//   Exclusivity    → stackingRule: standard | exclusive | master
 
 export type ItemGroup = {
   id: string;
@@ -57,10 +80,20 @@ export type PromoInput = {
   promotionType: string;
   isActive: boolean;
   stackingRule: string;
+  /** Either "pickup", "delivery", "both", or a JSON-stringified array
+   *  of types (e.g. `'["pickup","delivery","dine_in"]'`). The engine
+   *  normalises to a Set for the membership check. */
   orderType: string;
+  /** "any" | "new" | "returning" | "member" — Client Type restriction. */
   customerType: string;
   minimumOrder: number;
+  /** Legacy: type-specific config as a JSON-encoded string. New code
+   *  should populate `ruleConfig` (object/JSON) instead. The engine
+   *  reads `ruleConfig` first, then falls back to `rules`. */
   rules: string;
+  /** New (Phase 2a): type-specific config as a JSON object. When set,
+   *  takes precedence over `rules`. Same shape contract as `PromoRules`. */
+  ruleConfig?: unknown;
   daysOfWeek?: string | null;
   /** Minutes-since-midnight inclusive lower bound for when the promo
    *  becomes USABLE today. NULL = no lower bound (00:00). */
@@ -75,15 +108,55 @@ export type PromoInput = {
   usedCount: number;
   autoApply: boolean;
   couponCode?: string | null;
+
+  // ── Restriction columns (Phase 2a, 2026-05-29) ───────────────────────
+  /** JSON-stringified array of payment-method slugs allowed. Null = all
+   *  enabled methods are allowed (no payment restriction). Slugs match
+   *  Restaurant.paymentMethods values: "cash" | "card_in_person" |
+   *  "online_card" | "paypal". */
+  paymentMethodSlugs?: string | null;
+  /** JSON-stringified array of DeliveryZone IDs the promo applies to.
+   *  Null = no zone restriction. Only enforced when ctx.deliveryZoneId
+   *  is provided (i.e. delivery orders that landed in a known zone). */
+  deliveryZoneIds?: string | null;
+  /** Frequency restriction: once-per-client-FOREVER. Caller must
+   *  pre-compute `ctx.hasUsedLifetime` for this promo+customer pair. */
+  onceLifetimePerClient?: boolean;
+  /** Display Time → Limited showtime sub-config. Render-side concern
+   *  (gates whether the promo CARD shows on the menu). NOT enforced in
+   *  `isEligible` — if the customer has the coupon code, they can still
+   *  apply it outside the visibility window. Engine only carries the
+   *  field through so consumers can read it. */
+  limitedShowtimeSchedules?: unknown;
+  /** When set, the promo type is gated behind an add-on the restaurant
+   *  must have active. Engine itself doesn't check this — the caller
+   *  must filter promos by entitlement BEFORE invoking the engine
+   *  (typically with `restaurant.hasFeature(slug)`). The field is
+   *  carried here for traceability + safety nets. */
+  requiredAddOnSlug?: string | null;
 };
 
 export type ApplyContext = {
-  orderType: "pickup" | "delivery";
+  /** Order channel. Multi-select promos match any of their listed types. */
+  orderType: "pickup" | "delivery" | "dine_in" | "catering" | "takeout";
+  /** True when this is the customer's first order ever at the restaurant. */
   isNewCustomer: boolean;
+  /** True when the customer has a registered account (CustomerAccount).
+   *  Distinct from `isNewCustomer` — a member could be brand-new (just
+   *  signed up) or a returning customer with order history. */
+  isMember?: boolean;
   subtotal: number;
   items: CartItem[];
   couponCode?: string;
   paymentMethod?: string;
+  /** Delivery zone the order is being delivered to (for delivery orders
+   *  that resolved to a known zone). Used for the Delivery Area
+   *  restriction. */
+  deliveryZoneId?: string;
+  /** Per-promo "has this customer used this promo before (lifetime)?"
+   *  map. Keyed by promotion id. Caller pre-computes via Order rows
+   *  filtered to this customer + this promotion. */
+  hasUsedLifetime?: Record<string, boolean>;
   now?: Date;
 };
 
@@ -93,7 +166,48 @@ function safeJson<T>(s: string | null | undefined, fallback: T): T {
 }
 
 function getRules(promo: PromoInput): PromoRules {
+  // Phase 2a: `ruleConfig` (Json column) takes precedence over `rules`
+  // (legacy String). Migration path: new wizards write ruleConfig only;
+  // existing promos with `rules` populated continue to work unchanged.
+  if (promo.ruleConfig && typeof promo.ruleConfig === "object") {
+    return promo.ruleConfig as PromoRules;
+  }
   return safeJson<PromoRules>(promo.rules, {});
+}
+
+/** Parse a list-or-scalar JSON-string into a Set. Null/empty → null
+ *  (meaning "no restriction; everything passes"). Used for the payment
+ *  and delivery-area restrictions. */
+function jsonStringList(s: string | null | undefined): Set<string> | null {
+  if (!s) return null;
+  try {
+    const parsed = JSON.parse(s);
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      return new Set(parsed.map(String));
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/** orderType can be a single value ("pickup", "delivery", "both") or a
+ *  JSON-stringified array (multi-select). Returns a Set of allowed
+ *  channels, or null when the promo accepts any channel ("both"). */
+function parseOrderTypes(raw: string): Set<string> | null {
+  if (!raw || raw === "both") return null;
+  if (raw.startsWith("[")) {
+    try {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        if (parsed.length === 0) return null;
+        return new Set(parsed.map(String));
+      }
+    } catch {
+      // fall through
+    }
+  }
+  return new Set([raw]);
 }
 
 // ── Schedule / eligibility checks ─────────────────────────────────────────────
@@ -125,12 +239,63 @@ function isScheduledNow(promo: PromoInput, now: Date): boolean {
 
 function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
   if (!promo.isActive) return false;
+
+  // ── Frequency restriction ──────────────────────────────────────────
+  // Global usage cap.
   if (promo.usageLimit != null && promo.usedCount >= promo.usageLimit) return false;
+  // Lifetime per-customer cap. Caller pre-computes
+  // `ctx.hasUsedLifetime[promo.id]` from order history.
+  if (
+    promo.onceLifetimePerClient &&
+    ctx.hasUsedLifetime?.[promo.id] === true
+  ) {
+    return false;
+  }
+
+  // ── Cart Value restriction ─────────────────────────────────────────
   if (promo.minimumOrder > 0 && ctx.subtotal < promo.minimumOrder) return false;
-  if (promo.orderType !== "both" && promo.orderType !== ctx.orderType) return false;
+
+  // ── Order channel (multi-select) ───────────────────────────────────
+  const allowedOrderTypes = parseOrderTypes(promo.orderType);
+  if (allowedOrderTypes && !allowedOrderTypes.has(ctx.orderType)) return false;
+
+  // ── Client Type restriction ────────────────────────────────────────
+  // "any"       → no client-type restriction
+  // "new"       → first order ever at this restaurant
+  // "returning" → has ordered before (i.e. NOT a new customer)
+  // "member"    → has a registered CustomerAccount (orthogonal to order
+  //               history; a brand-new member who's never ordered IS a
+  //               member, while a 10-order guest is NOT)
   if (promo.customerType === "new" && !ctx.isNewCustomer) return false;
   if (promo.customerType === "returning" && ctx.isNewCustomer) return false;
+  if (promo.customerType === "member" && !ctx.isMember) return false;
+
+  // ── Payment restriction ────────────────────────────────────────────
+  // Promo only valid when paid via one of the allowed methods. If the
+  // ctx hasn't selected a payment method yet (early in the cart flow),
+  // we let the promo pass — the order-create endpoint runs the engine
+  // again at submit time with the real payment method, which catches
+  // any mismatch then.
+  const allowedPaymentMethods = jsonStringList(promo.paymentMethodSlugs);
+  if (allowedPaymentMethods && ctx.paymentMethod) {
+    if (!allowedPaymentMethods.has(ctx.paymentMethod)) return false;
+  }
+
+  // ── Delivery Area restriction ──────────────────────────────────────
+  // Only meaningful for delivery orders that resolved to a known zone.
+  // Pickup/dine-in orders skip this check (no zone applies).
+  const allowedZones = jsonStringList(promo.deliveryZoneIds);
+  if (allowedZones) {
+    // Pickup/dine-in carts have no zone — restriction implicitly fails
+    // for them. (Owners who want a delivery-only promo should ALSO
+    // restrict orderType to "delivery".)
+    if (ctx.orderType !== "delivery") return false;
+    if (!ctx.deliveryZoneId || !allowedZones.has(ctx.deliveryZoneId)) return false;
+  }
+
+  // ── Happy Hour + Expiration ────────────────────────────────────────
   if (!isScheduledNow(promo, ctx.now ?? new Date())) return false;
+
   return true;
 }
 
