@@ -6,14 +6,11 @@ export default async function SettingsPage() {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
 
+  // FREE-by-default model: we no longer fetch SubscriptionPlan here. The
+  // legacy 4-tier upgrade grid was retired and add-ons live at /admin/billing.
   const restaurant = restaurantId
-    ? await prisma.restaurant.findUnique({
-        where: { id: restaurantId },
-        include: { subscriptionPlan: true },
-      })
+    ? await prisma.restaurant.findUnique({ where: { id: restaurantId } })
     : null;
 
-  const allPlans = await prisma.subscriptionPlan.findMany({ orderBy: { price: "asc" } });
-
-  return <SettingsClient restaurant={restaurant} allPlans={allPlans} />;
+  return <SettingsClient restaurant={restaurant} />;
 }

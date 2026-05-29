@@ -1,20 +1,14 @@
 "use client";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import {
   CreditCard, Zap, Bell, Globe, Code2, CheckCircle2,
   ChevronRight, Shield, Building2, ArrowUpRight, ExternalLink,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allPlans: any[] }) {
+export function SettingsClient({ restaurant }: { restaurant: any }) {
   const t = useTranslations("admin.settings");
   const tSidebar = useTranslations("admin.sidebar");
-  const plan = restaurant?.subscriptionPlan;
-
-  const handleUpgrade = (planName: string) => {
-    toast(`To upgrade to ${planName}, please contact support. We'll get you set up right away.`, { icon: "ℹ️", duration: 5000 });
-  };
 
   const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -49,7 +43,12 @@ export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allP
           </div>
         </Section>
 
-        {/* Subscription / Plan */}
+        {/* Subscription / Plan
+            FREE-by-default model (2026-05 redesign): every restaurant is on
+            the FREE plan ($0/mo, 100 orders/month cap) unless they explicitly
+            subscribe to a paid add-on. The legacy 4-tier "Starter / Growth /
+            Pro / Enterprise" grid was retired — add-ons are managed at
+            /admin/billing and /admin/billing/add-ons. */}
         <Section title={t("account")}>
           <div className="flex items-start gap-5 mb-6">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -57,60 +56,47 @@ export function SettingsClient({ restaurant, allPlans }: { restaurant: any; allP
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-semibold text-gray-900">Current Plan: {plan?.name || "Starter"}</h3>
+                <h3 className="font-semibold text-gray-900">Current Plan: FREE</h3>
                 <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
-                  ${plan?.price?.toFixed(2) || "49.99"}/mo
+                  $0.00/mo
                 </span>
               </div>
               <p className="text-sm text-gray-500">
-                {plan?.description || "Perfect for getting started with online ordering."}
+                Ordering widget, admin, menu, kitchen app — no card required.
+                Accept up to 100 orders/month forever. Add paid features any
+                time from the Billing page.
               </p>
-              {plan && (
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {(typeof plan.features === "string"
-                    ? JSON.parse(plan.features)
-                    : plan.features || []
-                  ).map((f: string) => (
-                    <div key={f} className="flex items-center gap-1 text-xs text-gray-600 bg-green-50 border border-green-100 rounded-full px-2.5 py-1">
-                      <CheckCircle2 className="w-3 h-3 text-green-500" />
-                      {f}
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="flex flex-wrap gap-2 mt-3">
+                {[
+                  "100 orders/month",
+                  "Unlimited menu items",
+                  "Kitchen display",
+                  "Customer accounts",
+                ].map((f) => (
+                  <div key={f} className="flex items-center gap-1 text-xs text-gray-600 bg-green-50 border border-green-100 rounded-full px-2.5 py-1">
+                    <CheckCircle2 className="w-3 h-3 text-green-500" />
+                    {f}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
           <div className="border-t border-gray-100 pt-5">
-            <div className="text-sm font-medium text-gray-700 mb-3">Upgrade your plan</div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              {allPlans.map((p) => {
-                const isCurrent = p.id === plan?.id;
-                return (
-                  <div
-                    key={p.id}
-                    className={`rounded-xl border-2 p-4 transition ${
-                      isCurrent ? "border-emerald-400 bg-emerald-50" : "border-gray-200 hover:border-emerald-300"
-                    }`}
-                  >
-                    <div className="font-semibold text-gray-900 text-sm">{p.name}</div>
-                    <div className="text-xl font-bold text-gray-900 mt-1">
-                      ${p.price.toFixed(0)}<span className="text-xs font-normal text-gray-500">/mo</span>
-                    </div>
-                    <div className="text-xs text-gray-500 mt-1 mb-3">{p.description}</div>
-                    {isCurrent ? (
-                      <div className="text-xs font-semibold text-emerald-600 text-center py-1">Current Plan</div>
-                    ) : (
-                      <button
-                        onClick={() => handleUpgrade(p.name)}
-                        className="w-full text-xs font-semibold text-emerald-600 border border-emerald-300 rounded-lg py-1.5 hover:bg-emerald-50 transition flex items-center justify-center gap-1"
-                      >
-                        Upgrade <ArrowUpRight className="w-3 h-3" />
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
+            <div className="text-sm font-medium text-gray-700 mb-3">Upgrade with paid add-ons</div>
+            <div className="flex flex-wrap gap-2">
+              <a
+                href="/admin/billing"
+                className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
+              >
+                Manage Billing <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="/admin/billing/add-ons"
+                className="inline-flex items-center gap-2 border border-emerald-300 text-emerald-600 hover:bg-emerald-50 font-semibold px-4 py-2 rounded-lg text-sm transition"
+              >
+                Browse Add-ons <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
             <p className="text-xs text-gray-400 mt-3 flex items-center gap-1">
               <Shield className="w-3.5 h-3.5" />
