@@ -42,6 +42,9 @@ export default async function ResellerBrandingPage({
       whiteLabelCancelAtPeriodEnd: true,
       imprint: true,
       brandLogoUrl: true,
+      genericSubdomain: true,
+      customDomain: true,
+      customDomainStatus: true,
     },
   });
   if (profile?.status !== "approved") redirect("/reseller/holding");
@@ -72,6 +75,8 @@ export default async function ResellerBrandingPage({
               <Link href="/reseller/branding/imprint" className="font-bold underline">Imprint</Link>
               {" · "}
               <Link href="/reseller/branding/logo" className="font-bold underline">Logo</Link>
+              {" · "}
+              <Link href="/reseller/branding/generic-domain" className="font-bold underline">Generic subdomain</Link>
               {tier === "full" && (
                 <>
                   {" · "}
@@ -141,13 +146,19 @@ export default async function ResellerBrandingPage({
             <FeatureLink
               icon={<Globe className="w-4 h-4" />}
               title="Generic domain"
-              status="coming-soon"
+              status={profile.genericSubdomain ? "configured" : "not-configured"}
               href="/reseller/branding/generic-domain"
             />
             <FeatureLink
               icon={<Link2 className="w-4 h-4" />}
               title="Custom domain"
-              status={tier === "full" ? "coming-soon" : "locked"}
+              status={
+                tier !== "full"
+                  ? "locked"
+                  : profile.customDomain && profile.customDomainStatus === "verified"
+                    ? "configured"
+                    : "not-configured"
+              }
               href="/reseller/branding/custom-domain"
               lockedHint={tier !== "full" ? "Requires Full tier" : undefined}
             />

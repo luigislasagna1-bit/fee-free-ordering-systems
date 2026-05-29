@@ -1346,6 +1346,17 @@ model ResellerProfile {
   customDomainAddedAt DateTime?
   customDomainError   String?
 
+  /// Generic platform subdomain (e.g. "acme" → acme.feefreeordering.com).
+  /// Free with any white-label tier (Basic OR Full). No DNS needed —
+  /// we run a wildcard cert on the platform domain. Validated against
+  /// the same RESERVED_SUBDOMAINS list restaurants use (so resellers
+  /// can't claim "www" / "app" / etc.). Unique across both ResellerProfile
+  /// and Restaurant.subdomain (enforced application-side at write time —
+  /// Prisma can't @@unique across two tables, but the proxy resolves
+  /// restaurants FIRST then falls back to resellers, so a collision
+  /// silently routes to the restaurant).
+  genericSubdomain    String?   @unique
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

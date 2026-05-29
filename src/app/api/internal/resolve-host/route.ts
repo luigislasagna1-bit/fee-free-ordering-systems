@@ -79,6 +79,32 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ slug: r.slug, hasHostedSite });
   }
 
+  // ── Reseller GENERIC subdomain fallback ────────────────────────────
+  // Restaurants take precedence — if no restaurant matched the subdomain
+  // label, we then check whether a reseller has claimed it as their
+  // generic-subdomain branded login URL (e.g. acme.feefreeordering.com).
+  // Requires an active white-label sub on EITHER tier — once they stop
+  // paying, the branded URL stops resolving even though the row stays
+  // (so resubscribing instantly restores it without re-claiming the
+  // slug).
+  if (by === "subdomain") {
+    const reseller = await prisma.resellerProfile.findFirst({
+      where: {
+        genericSubdomain: value,
+        status: "approved",
+        whiteLabelStatus: "active",
+      },
+      select: { id: true },
+    });
+    if (reseller) {
+      return NextResponse.json({
+        slug: null,
+        hasHostedSite: false,
+        resellerProfileId: reseller.id,
+      });
+    }
+  }
+
   // ── Reseller custom domain fallback ────────────────────────────────
   // Only applies when looking up by customDomain (resellers don't get
   // subdomains — that's a restaurant-only feature). We require BOTH the
