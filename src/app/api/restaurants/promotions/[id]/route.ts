@@ -2,6 +2,25 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { isBrandParent } from "@/lib/brand";
+import { hasFeature } from "@/lib/entitlements";
+import {
+  ADVANCED_PROMO_ADDON_SLUG,
+  ADVANCED_PROMO_FEATURE,
+  isLockedType,
+} from "@/lib/promo-types";
+import {
+  clampMin,
+  normalizeBannerHeadline,
+  normalizeCustomerType,
+  normalizeDisplayMode,
+  normalizeImageUrl,
+  normalizeJsonStringList,
+  normalizeLimitedShowtime,
+  normalizeNonNegativeFloat,
+  normalizeOrderType,
+  normalizeRuleConfig,
+  normalizeStackingRule,
+} from "@/lib/promo-fields";
 
 async function getRestaurantId() {
   const user = await getSessionUser();
@@ -16,23 +35,44 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const body = await req.json();
   const {
     name, description, promotionType, isActive, stackingRule, orderType, customerType,
-    minimumOrder, rules, daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
+    minimumOrder, rules, ruleConfig,
+    daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
     scope,
     usableHourStart, usableHourEnd, showOnBanner, bannerHeadline,
+    paymentMethodSlugs, deliveryZoneIds, onceLifetimePerClient, limitedShowtimeSchedules,
+    imageUrl, displayMode, highlightThreshold,
   } = body;
 
-  const clampMin = (v: unknown): number | null => {
-    if (v === null || v === undefined || v === "") return null;
-    const n = Number(v);
-    if (!Number.isFinite(n)) return null;
-    return Math.max(0, Math.min(1440, Math.floor(n)));
-  };
+  // ── Entitlement gate (Types 6-13) ──────────────────────────────────
+  // If the patch changes the promotionType to a locked one (or already
+  // locked promo is being edited), verify the add-on is active. We
+  // ALSO check on edit-without-type-change so a restaurant who lapses
+  // their advanced_promos subscription can't continue editing locked
+  // promos. (They can still toggle isActive — that's handled below.)
+  let requiredAddOnSlugUpdate: string | null | undefined = undefined;
+  if (promotionType !== undefined) {
+    if (isLockedType(promotionType)) {
+      const ok = await hasFeature(restaurantId, ADVANCED_PROMO_FEATURE);
+      if (!ok) {
+        return NextResponse.json(
+          {
+            error: "Advanced Promo Marketing add-on required for this promo type.",
+            requiredAddOnSlug: ADVANCED_PROMO_ADDON_SLUG,
+            requiredFeature: ADVANCED_PROMO_FEATURE,
+          },
+          { status: 403 },
+        );
+      }
+      requiredAddOnSlugUpdate = ADVANCED_PROMO_ADDON_SLUG;
+    } else {
+      // Switching from a locked type to a free one — clear the gate.
+      requiredAddOnSlugUpdate = null;
+    }
+  }
 
   // If trying to flip scope to/from "brand", verify this restaurant is
-  // actually a brand parent. We don't want a child-location admin
-  // promoting one of their own promos to "brand" — there's nothing to
-  // inherit it.
-  let scopeUpdate: { scope: string } | {} = {};
+  // actually a brand parent.
+  let scopeUpdate: { scope: string } | Record<string, never> = {};
   if (scope === "brand" || scope === "location") {
     if (scope === "brand" && !(await isBrandParent(restaurantId))) {
       return NextResponse.json(
@@ -60,11 +100,12 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       ...(description !== undefined && { description }),
       ...(promotionType !== undefined && { promotionType }),
       ...(isActive !== undefined && { isActive }),
-      ...(stackingRule !== undefined && { stackingRule }),
-      ...(orderType !== undefined && { orderType }),
-      ...(customerType !== undefined && { customerType }),
+      ...(stackingRule !== undefined && { stackingRule: normalizeStackingRule(stackingRule) }),
+      ...(orderType !== undefined && { orderType: normalizeOrderType(orderType) }),
+      ...(customerType !== undefined && { customerType: normalizeCustomerType(customerType) }),
       ...(minimumOrder !== undefined && { minimumOrder }),
       ...(rules !== undefined && { rules: typeof rules === "string" ? rules : JSON.stringify(rules) }),
+      ...(ruleConfig !== undefined && { ruleConfig: normalizeRuleConfig(ruleConfig) as object }),
       ...(daysOfWeek !== undefined && { daysOfWeek: daysOfWeek ? JSON.stringify(daysOfWeek) : null }),
       ...(startsAt !== undefined && { startsAt: startsAt ? new Date(startsAt) : null }),
       ...(endsAt !== undefined && { endsAt: endsAt ? new Date(endsAt) : null }),
@@ -74,11 +115,18 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       ...(usableHourStart !== undefined && { usableHourStart: clampMin(usableHourStart) }),
       ...(usableHourEnd !== undefined && { usableHourEnd: clampMin(usableHourEnd) }),
       ...(showOnBanner !== undefined && { showOnBanner: !!showOnBanner }),
-      ...(bannerHeadline !== undefined && {
-        bannerHeadline: typeof bannerHeadline === "string" && bannerHeadline.trim()
-          ? bannerHeadline.trim().slice(0, 80)
-          : null,
+      ...(bannerHeadline !== undefined && { bannerHeadline: normalizeBannerHeadline(bannerHeadline) }),
+      // Phase 2a restrictions + display fields
+      ...(paymentMethodSlugs !== undefined && { paymentMethodSlugs: normalizeJsonStringList(paymentMethodSlugs, 8) }),
+      ...(deliveryZoneIds !== undefined && { deliveryZoneIds: normalizeJsonStringList(deliveryZoneIds, 64) }),
+      ...(onceLifetimePerClient !== undefined && { onceLifetimePerClient: !!onceLifetimePerClient }),
+      ...(limitedShowtimeSchedules !== undefined && {
+        limitedShowtimeSchedules: normalizeLimitedShowtime(limitedShowtimeSchedules) as object,
       }),
+      ...(imageUrl !== undefined && { imageUrl: normalizeImageUrl(imageUrl) }),
+      ...(displayMode !== undefined && { displayMode: normalizeDisplayMode(displayMode) }),
+      ...(highlightThreshold !== undefined && { highlightThreshold: normalizeNonNegativeFloat(highlightThreshold) }),
+      ...(requiredAddOnSlugUpdate !== undefined && { requiredAddOnSlug: requiredAddOnSlugUpdate }),
       ...scopeUpdate,
     },
   });

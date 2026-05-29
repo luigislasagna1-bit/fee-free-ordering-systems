@@ -2,6 +2,25 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { isBrandParent } from "@/lib/brand";
+import { hasFeature } from "@/lib/entitlements";
+import {
+  ADVANCED_PROMO_ADDON_SLUG,
+  ADVANCED_PROMO_FEATURE,
+  isLockedType,
+} from "@/lib/promo-types";
+import {
+  clampMin,
+  normalizeBannerHeadline,
+  normalizeCustomerType,
+  normalizeDisplayMode,
+  normalizeImageUrl,
+  normalizeJsonStringList,
+  normalizeLimitedShowtime,
+  normalizeNonNegativeFloat,
+  normalizeOrderType,
+  normalizeRuleConfig,
+  normalizeStackingRule,
+} from "@/lib/promo-fields";
 
 export async function GET() {
   const user = await getSessionUser();
@@ -38,24 +57,38 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const {
     name, description, promotionType, isActive, stackingRule, orderType, customerType,
-    minimumOrder, rules, daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
+    minimumOrder, rules, ruleConfig,
+    daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
     scope,
-    // Fabrizio 2026-05-28: hour-of-day usability window + customer-banner
-    // display. Server-side clamp + null pass-through so the form can
-    // leave them blank without provoking a constraint error.
     usableHourStart, usableHourEnd, showOnBanner, bannerHeadline,
+    paymentMethodSlugs, deliveryZoneIds, onceLifetimePerClient, limitedShowtimeSchedules,
+    imageUrl, displayMode, highlightThreshold,
   } = body;
 
-  const clampMin = (v: unknown): number | null => {
-    if (v === null || v === undefined || v === "") return null;
-    const n = Number(v);
-    if (!Number.isFinite(n)) return null;
-    return Math.max(0, Math.min(1440, Math.floor(n)));
-  };
+  if (!name || !promotionType) {
+    return NextResponse.json({ error: "name and promotionType required" }, { status: 400 });
+  }
 
-  // Only brand parents can create "brand"-scoped promotions. A standalone
-  // restaurant or a child location asking for brand scope is rejected —
-  // brand scope is meaningless when there are no children to inherit it.
+  // ── Entitlement gate (Types 6-13) ──────────────────────────────────
+  // The 8 locked types require the Advanced Promo Marketing add-on.
+  // Fail-fast 403 so the wizard can render an upgrade CTA.
+  let requiredAddOnSlug: string | null = null;
+  if (isLockedType(promotionType)) {
+    const ok = await hasFeature(restaurantId, ADVANCED_PROMO_FEATURE);
+    if (!ok) {
+      return NextResponse.json(
+        {
+          error: "Advanced Promo Marketing add-on required for this promo type.",
+          requiredAddOnSlug: ADVANCED_PROMO_ADDON_SLUG,
+          requiredFeature: ADVANCED_PROMO_FEATURE,
+        },
+        { status: 403 },
+      );
+    }
+    requiredAddOnSlug = ADVANCED_PROMO_ADDON_SLUG;
+  }
+
+  // Only brand parents can create "brand"-scoped promotions.
   let resolvedScope: "location" | "brand" = "location";
   if (scope === "brand") {
     if (!(await isBrandParent(restaurantId))) {
@@ -65,10 +98,6 @@ export async function POST(req: NextRequest) {
       );
     }
     resolvedScope = "brand";
-  }
-
-  if (!name || !promotionType) {
-    return NextResponse.json({ error: "name and promotionType required" }, { status: 400 });
   }
 
   // Unique coupon code per restaurant
@@ -88,11 +117,14 @@ export async function POST(req: NextRequest) {
       description: description || null,
       promotionType,
       isActive: isActive ?? true,
-      stackingRule: stackingRule ?? "standard",
-      orderType: orderType ?? "both",
-      customerType: customerType ?? "any",
+      stackingRule: normalizeStackingRule(stackingRule),
+      orderType: normalizeOrderType(orderType),
+      customerType: normalizeCustomerType(customerType),
       minimumOrder: minimumOrder ?? 0,
+      // Legacy `rules` String — empty {} default. New wizards write
+      // `ruleConfig` (Json) instead.
       rules: typeof rules === "string" ? rules : JSON.stringify(rules ?? {}),
+      ruleConfig: normalizeRuleConfig(ruleConfig) as object,
       daysOfWeek: daysOfWeek ? JSON.stringify(daysOfWeek) : null,
       startsAt: startsAt ? new Date(startsAt) : null,
       endsAt: endsAt ? new Date(endsAt) : null,
@@ -103,9 +135,16 @@ export async function POST(req: NextRequest) {
       usableHourStart: clampMin(usableHourStart),
       usableHourEnd: clampMin(usableHourEnd),
       showOnBanner: showOnBanner === undefined ? true : !!showOnBanner,
-      bannerHeadline: typeof bannerHeadline === "string" && bannerHeadline.trim()
-        ? bannerHeadline.trim().slice(0, 80)
-        : null,
+      bannerHeadline: normalizeBannerHeadline(bannerHeadline),
+      // Phase 2a restrictions + display fields
+      paymentMethodSlugs: normalizeJsonStringList(paymentMethodSlugs, 8),
+      deliveryZoneIds: normalizeJsonStringList(deliveryZoneIds, 64),
+      onceLifetimePerClient: !!onceLifetimePerClient,
+      limitedShowtimeSchedules: normalizeLimitedShowtime(limitedShowtimeSchedules) as object,
+      imageUrl: normalizeImageUrl(imageUrl),
+      displayMode: normalizeDisplayMode(displayMode),
+      highlightThreshold: normalizeNonNegativeFloat(highlightThreshold),
+      requiredAddOnSlug,
     },
   });
 
