@@ -107,9 +107,10 @@ export function LocationsClient({
       )}
 
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 text-sm text-blue-800">
-        <strong>Heads up:</strong> each location is its own FREE plan (100 orders/month). Each location has its
-        own menu, hours, payment provider, and Stripe Connect account — they don't share data. Paid add-ons
-        (Unlimited Orders, Marketplace, etc.) are subscribed per location.
+        <strong>Heads up:</strong> each location is billed independently. Every new location starts on its own
+        FREE plan (100 orders/month, no card required) and chooses which add-ons and features it wants to
+        subscribe to — Unlimited Orders, Marketplace, Driver Pool, Sales-Optimized Website, and more. Locations
+        do not share menus, hours, payment providers, or Stripe Connect accounts.
       </div>
 
       <div className="space-y-3">
