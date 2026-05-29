@@ -256,13 +256,57 @@ This is a quick-scan affordance for owners managing many promos — they don't h
 
 ---
 
-## Promo Type 5: Fixed discount amount on cart   ⏳ AWAITING SCREENSHOTS
+## Promo Type 5: Fixed discount amount on cart  ✅ CAPTURED
 
-> $X off the cart value with optional minimum order
+> $X off cart total with required minimum order amount
 
-What I need:
-- Step 1 + Step 3 (universal)
-- Step 2: **fixed $ amount input + min order toggle** (likely mirror of Type 1 but $ instead of %)
+### Step 2 — Fixed discount + Min order
+- **Discount:** `[N]` `CAD` (default 5)
+- **Minimum order amount:** `[N]` `CAD` (default 10)
+  - No "Set a minimum order value" toggle here — min order is implicit/required for fixed-amount discounts (otherwise the math could result in free items)
+
+### Reveals from Promo 5's Step 3 screenshots (universal, apply to ALL types)
+
+**Client Type dropdown options (full list now confirmed)**:
+- **Any client, new or returning** (default)
+- **Only new clients**
+- **Only returning clients**
+- **NEW per Luigi 2026-05-29: Only members (signed up + have an account)** ← TO ADD
+
+  Distinction:
+  - Returning client = any customer who's placed ≥1 order before (matched by email)
+  - Member = has registered an account at this restaurant (RestaurantCustomerAccount row exists)
+  - A guest who's ordered twice is "returning" but not a "member"
+  - A new sign-up who hasn't ordered yet is a "member" but not "returning"
+
+**Display Time dropdown options (full list now confirmed)**:
+- **Always show to eligible clients** (default)
+- **Limited showtime** — time-window scheduled visibility (need to capture the sub-config: probably "show between X:XX and Y:YY on days Z")
+- **Hide from menu (redeem with coupon code)** — invisible until matching coupon code typed
+
+**"Only once per client" tooltip**: *"If this option is enabled, anonymous clients will not be eligible for the promotion."*
+- Anonymous (guest) customers can't redeem once-per-client promos because we have no way to track them across sessions
+- Practical consequence: enabling this restriction silently filters out guest orderers; only matched customers (by email) or members can use it
+- Need a UI hint when this is checked + "Any client" type — warn the owner
+
+**"Only for selected payment methods" expanded form**:
+- Shows checkbox list of payment methods the restaurant has enabled (e.g. `Online payments`)
+- Customer must use the selected method(s) for the promo to apply
+
+### Schema additions
+| GloriaFood field | FFOS storage |
+|---|---|
+| Fixed cart discount | `ruleConfig.fixedDiscountAmount = 5` |
+| Required min order | `minimumOrder = 10` (existing field) |
+| Client Type = members | `customerType = "member"` (CHANGE: extend enum) |
+| Display Time = Limited showtime | `displayMode = "limited_showtime"` (need sub-config) |
+
+### Open questions for Promo 5
+1. What's the **Limited showtime** sub-configuration UI? (Day-of-week + hour range like Order time, or just a single window?)
+2. Should we extend `customerType` enum to `member` OR add a separate `requiresMembership` boolean? Enum is simpler.
+3. When `Only once per client` + `customerType = any` is set + a guest tries to order: do we (a) silently skip the promo, (b) show "sign in to use this promo" CTA, or (c) reject the order? GloriaFood likely just silently skips.
+
+---
 
 ---
 
