@@ -1505,6 +1505,7 @@ export function OrderingPageClient({
           acceptsDelivery={!!restaurant.acceptsDelivery}
           restaurantSlug={restaurant.slug}
           isSignedIn={!!currentCustomer}
+          fromMarketplace={fromMarketplace}
           cart={cart}
           subtotal={subtotal}
           totalDiscount={totalDiscount}

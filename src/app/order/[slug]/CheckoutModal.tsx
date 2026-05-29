@@ -41,6 +41,13 @@ interface Props {
    *  "Sign in" CTA when set; contact info is auto-populated from the
    *  customer's saved profile by the parent. */
   isSignedIn: boolean;
+  /** True when the customer arrived via the public marketplace
+   *  (?from=marketplace). Switches the sign-in CTA from "this
+   *  restaurant" wording to "marketplace" wording — the two account
+   *  systems are fully separate (separate cookies, separate tables,
+   *  separate signup paths), so the sign-in link points at the right
+   *  one based on context. */
+  fromMarketplace: boolean;
   cart: CartLine[];
   subtotal: number;
   totalDiscount: number;
@@ -93,7 +100,7 @@ interface Props {
 
 export function CheckoutModal({
   theme, orderType, onChangeOrderType, acceptsPickup, acceptsDelivery,
-  restaurantSlug, isSignedIn,
+  restaurantSlug, isSignedIn, fromMarketplace,
   cart, subtotal, totalDiscount, deliveryFee, appliedServiceFees, taxAmount,
   tipAmount, tipPercent, setTipPercent, total, taxRate,
   customerInfo, setCustomerInfo,
@@ -206,22 +213,42 @@ export function CheckoutModal({
                 expanded={editingSection === "contact"}
                 primary={theme.primaryColor}
               >
-                {/* Sign-in CTA for guest customers — saves re-typing
-                    contact info on every order. Hidden when already
-                    signed in (contact fields are auto-populated by the
-                    parent in that case). */}
+                {/* Sign-in CTA for guest customers. Branches on whether
+                    the customer arrived via the marketplace channel: the
+                    marketplace account (CustomerAccount, `ff_customer`
+                    cookie) and the per-restaurant account (Customer,
+                    `ff_rest_account` cookie) are fully separate systems,
+                    so the sign-in link MUST point at the right one for
+                    the customer's current context — otherwise we'd send
+                    a marketplace shopper to a per-restaurant login they
+                    don't have, or vice versa. Hidden when already signed
+                    in (contact fields are auto-populated by the parent). */}
                 {!isSignedIn && (
-                  <div className="pt-3 -mb-1 text-xs text-gray-500">
-                    Already have an account at this restaurant?{" "}
-                    <a
-                      href={`/order/${restaurantSlug}/account/login?next=${encodeURIComponent(`/order/${restaurantSlug}`)}`}
-                      className="font-semibold underline hover:no-underline"
-                      style={{ color: theme.primaryColor }}
-                    >
-                      Sign in
-                    </a>{" "}
-                    to skip re-typing your details.
-                  </div>
+                  fromMarketplace ? (
+                    <div className="pt-3 -mb-1 text-xs text-gray-500">
+                      Already have a marketplace account?{" "}
+                      <a
+                        href={`/login?next=${encodeURIComponent(`/order/${restaurantSlug}?from=marketplace`)}`}
+                        className="font-semibold underline hover:no-underline"
+                        style={{ color: theme.primaryColor }}
+                      >
+                        Sign in
+                      </a>{" "}
+                      to skip re-typing your details.
+                    </div>
+                  ) : (
+                    <div className="pt-3 -mb-1 text-xs text-gray-500">
+                      Already have an account at this restaurant?{" "}
+                      <a
+                        href={`/order/${restaurantSlug}/account/login?next=${encodeURIComponent(`/order/${restaurantSlug}`)}`}
+                        className="font-semibold underline hover:no-underline"
+                        style={{ color: theme.primaryColor }}
+                      >
+                        Sign in
+                      </a>{" "}
+                      to skip re-typing your details.
+                    </div>
+                  )
                 )}
                 <div className="grid grid-cols-2 gap-2 pt-3">
                   <input
