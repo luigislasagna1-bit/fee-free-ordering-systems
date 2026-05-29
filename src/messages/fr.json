@@ -1196,11 +1196,6 @@
       "button": "Vérifier mon e-mail",
       "ifYouDidntRequest": "Si vous n'avez pas demandé cela, vous pouvez ignorer cet e-mail."
     },
-    "trialExpiring": {
-      "subject": "Votre essai se termine dans {days} jour(s)",
-      "title": "Essai bientôt terminé",
-      "body": "Votre essai gratuit pour {restaurant} se termine dans {days} jour(s)."
-    }
   },
   "marketing": {
     "nav": {

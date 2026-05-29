@@ -1196,11 +1196,6 @@
       "button": "Verificar meu e-mail",
       "ifYouDidntRequest": "Se você não solicitou isso, pode ignorar este e-mail."
     },
-    "trialExpiring": {
-      "subject": "Sua avaliação termina em {days} dia(s)",
-      "title": "Avaliação prestes a terminar",
-      "body": "Sua avaliação gratuita para {restaurant} termina em {days} dia(s)."
-    }
   },
   "marketing": {
     "nav": {

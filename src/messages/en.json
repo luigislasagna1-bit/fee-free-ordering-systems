@@ -1196,11 +1196,6 @@
       "button": "Verify my email",
       "ifYouDidntRequest": "If you didn't request this, you can safely ignore this email."
     },
-    "trialExpiring": {
-      "subject": "Your trial ends in {days} day(s)",
-      "title": "Trial ending soon",
-      "body": "Your free trial for {restaurant} ends in {days} day(s)."
-    }
   },
   "marketing": {
     "nav": {

@@ -34,18 +34,25 @@ const CAMPAIGN_CONFIGS = [
     defaultSubject: "Thanks for your order! Here's a little something for next time 🍽️",
     defaultBody: "Hi {customer_name},\n\nThank you so much for your recent order from {restaurant_name}! We hope you enjoyed it.\n\nAs a thank-you, here's a special offer just for you:\n\n{coupon_section}\n\nWe'd love to see you back soon!\n\n– The {restaurant_name} team",
   },
-  {
-    type: "cart_abandonment",
-    icon: ShoppingCart,
-    color: "blue",
-    title: "Cart Abandonment",
-    tagline: "Recover orders that didn't make it through checkout",
-    description: "Sends a reminder to customers who added items to their cart but didn't complete their order.",
-    triggerLabel: "Send this many hours after cart abandoned:",
-    defaultDelay: 2,
-    defaultSubject: "You left something behind! 🛒",
-    defaultBody: "Hi {customer_name},\n\nYou started an order from {restaurant_name} but didn't finish it. No worries — it happens!\n\nYour cart is still saved. Come back and complete your order:\n\n{restaurant_link}\n\n{coupon_section}\n\n– The {restaurant_name} team",
-  },
+  // Cart Abandonment campaign is hidden for soft launch. The backend
+  // returns [] for cart_abandonment types (src/lib/autopilot.ts) because
+  // we don't yet track cart state server-side (carts live only in the
+  // customer's localStorage). Surfacing this campaign in the UI before
+  // wiring up CartSession tracking would let owners enable a campaign
+  // that silently never fires — worse UX than not offering it at all.
+  // Reintroduce after the post-launch cart-tracking buildout.
+  // {
+  //   type: "cart_abandonment",
+  //   icon: ShoppingCart,
+  //   color: "blue",
+  //   title: "Cart Abandonment",
+  //   tagline: "Recover orders that didn't make it through checkout",
+  //   description: "Sends a reminder to customers who added items to their cart but didn't complete their order.",
+  //   triggerLabel: "Send this many hours after cart abandoned:",
+  //   defaultDelay: 2,
+  //   defaultSubject: "You left something behind! 🛒",
+  //   defaultBody: "Hi {customer_name},\n\nYou started an order from {restaurant_name} but didn't finish it. No worries — it happens!\n\nYour cart is still saved. Come back and complete your order:\n\n{restaurant_link}\n\n{coupon_section}\n\n– The {restaurant_name} team",
+  // },
   {
     type: "reengagement",
     icon: Users,

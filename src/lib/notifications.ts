@@ -295,11 +295,14 @@ async function dispatchStaffEvent(
       return;
     case "endOfDayReport":
     case "endOfMonthReport":
-      // Reports use the generic billing notification shape with custom HTML —
-      // gives us a quick path before we build dedicated digest templates.
-      // Phase E4 will replace this with proper digest emails.
-      // For now, just log so we know when reports are dispatched.
-      console.log(`[notifyStaff] ${payload.event} for ${restaurantName} — digest not yet implemented`);
+      // Digest emails do NOT flow through notifyStaff() — they're sent
+      // directly by the daily/monthly cron handlers (see
+      // /api/cron/daily-digest) using sendDailyDigestEmail /
+      // sendMonthlyDigestEmail with the DigestEmail template. The
+      // endOfDayReport / endOfMonthReport boolean toggles on
+      // NotificationRecipient are read by the CRON (not here) to decide
+      // who gets the email. This branch exists only so the exhaustive
+      // union check passes.
       return;
   }
 }

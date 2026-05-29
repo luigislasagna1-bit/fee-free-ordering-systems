@@ -1196,11 +1196,6 @@
       "button": "Verifica la mia e-mail",
       "ifYouDidntRequest": "Se non hai richiesto questo, puoi ignorare questa e-mail."
     },
-    "trialExpiring": {
-      "subject": "La tua prova finisce tra {days} giorno/i",
-      "title": "Prova in scadenza",
-      "body": "La tua prova gratuita per {restaurant} finisce tra {days} giorno/i."
-    }
   },
   "marketing": {
     "nav": {
