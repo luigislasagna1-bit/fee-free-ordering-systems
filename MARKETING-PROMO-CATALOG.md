@@ -422,13 +422,78 @@ This is the **first customer-facing modal we have to add** for any promo type. W
 
 ---
 
-## Promo Type 8: Meal bundle 🔒 LOCKED   ⏳ AWAITING SCREENSHOTS
+## Promo Type 8: Meal bundle 🔒 LOCKED  ✅ CAPTURED
 
-> Any 2 appetizers + 2 mains + 2 desserts for $55
+> N items at a flat price, where the customer picks ONE item from each of N curated groups (e.g. 1 appetizer + 1 main + 1 dessert = $25)
 
-What I need:
-- All 3 steps  
-- Step 2: **the multi-slot bundle composer** — slots for category + count + final price. This is the most complex type.
+### Architectural insight
+This is the most complex type. It introduces a **bundle line item** in the cart — not a simple "$N off" computed on existing items. Instead, the customer is guided through a modal that builds the bundle one slot at a time. The cart line item carries the sub-items but charges only the flat price.
+
+### Step 2 — Multi-group composer + flat price
+- **Eligible items** — supports **N item groups** (no upper bound seen — Luigi configured 5 in test)
+  - Each group = ONE slot in the bundle
+  - To do "Any 2 appetizers + 2 mains + 2 desserts," owner creates 6 groups (2 of each), since each group = 1 slot
+  - **`Add` link** at the bottom appends a new group
+  - **`X` button** next to each group removes it
+- **Flat price:** `[N]` `CAD` — single price for the entire bundle
+- **Extra charges policy** (same 3-option dropdown):
+  - No extra charges → flat price covers EVERYTHING including modifiers
+  - Charge extra for "Choices / Addons" → flat price covers base items, addons add to total
+  - Charge extra for "Choices / Addons" & "Sizes" → flat covers base, modifiers + size upgrades add
+
+### Flat price tooltip (critical detail)
+*"The client will be guided through this promo deal contextually in order to complete his preferences on this meal bundle deal. He can only choose items from the items groups selected above. Any free or paid add-ons associated to any of these items will also be included in the same flat price. If you want specific extra-toppings or add-ons not to be included in this price please remove the association between items and add-ons from the menu and list them as stand-alone selectable dish items."*
+
+So flat price normally **includes modifiers** (when policy = "No extra charges"). If owner wants modifiers excluded, they must list those items as **separate menu items** rather than addons.
+
+### Customer-facing flow (Screenshot 5)
+1. Customer triggers the bundle (clicks the promo banner, or types the coupon code, or auto-applies if cart qualifies)
+2. Modal appears titled "Special offer" with N slots labeled `Item:` `[Please select...]`
+3. Right side shows: "Special offer for $10 CAD (excluding addons and size)"
+4. Customer clicks Item 1 → relevant category items appear BELOW the modal
+5. Customer picks an item → progression advances to Item 2
+6. Repeat for all N slots
+7. After completing all slots → bundle added to cart as ONE line item at the flat price
+
+The **menu category panel renders below the modal** so the customer can browse the full category for each slot. Once they pick, modal advances.
+
+### Cart line item shape (new)
+```
+[Bundle: Special Offer] — $10.00
+  • Item 1: Beef Lasagna (Take & Bake)
+  • Item 2: Vegetable Lasagna (Take & Bake)
+  • Item 3: Make Your Own Pizza Kit
+  • Item 4: ...
+  • Item 5: ...
+```
+
+Receipt + kitchen ticket need to render bundle nicely too.
+
+### Schema additions
+```json
+"ruleConfig": {
+  "kind": "meal_bundle",
+  "itemGroups": [
+    { "id": 1, "categoryIds": [...], "menuItemIds": [...] },
+    { "id": 2, "categoryIds": [...], "menuItemIds": [...] },
+    ...
+  ],
+  "flatPrice": 10.00,
+  "extraChargesPolicy": "addons_sizes"
+}
+```
+
+Cart-line schema needs a **`bundleItems` Json field** (or similar) on OrderItem to carry the bundle composition.
+
+### Open questions for Promo 8
+1. Can the customer go BACK in the modal to change Item 1 after picking Item 2? (UX expectation: yes)
+2. What if one of the eligible items requires a modifier choice (e.g. pizza needs crust selection)? Does the modifier picker open during slot selection?
+3. Bundle items with VARIANTS (sizes) — customer picks size during slot selection too? Yes per the "excluding size" hint in the modal.
+4. Can a bundle item be added to cart multiple times? (e.g. "2x Special Offer = $20") Probably yes.
+5. If a bundle item is out of stock, does the bundle become unavailable, or does the slot exclude it?
+6. **Modifier price-coverage edge case**: extra charges = "No extra charges" means modifiers are FREE during bundle build, but customer expects them to behave normally outside the bundle. Need clear UX hints.
+
+---
 
 ---
 
