@@ -40,12 +40,29 @@ import { localProvider } from "./local";
 import { vercelProvider } from "./vercel";
 
 export function getDomainProvider(): DomainProvider {
-  const which = (process.env.DOMAIN_PROVIDER || "local").toLowerCase();
+  const raw = process.env.DOMAIN_PROVIDER;
+  const which = (raw || "local").toLowerCase();
+
+  // In production we REFUSE to silently use the local stub. Missing the
+  // env var or having a typo would otherwise mean customers / partners
+  // think their domains are live (UI shows "verified") but Vercel was
+  // never told about them — visitors get ERR_CONNECTION_CLOSED. This is
+  // an actual production bug we hit 2026-05-28 (Luigi's reseller UAT).
+  // Now we throw at the route handler level instead, surfacing a clear
+  // 502/500 to the admin/reseller UI rather than the silent fake.
+  if (process.env.NODE_ENV === "production" && which !== "vercel" && which !== "cloudflare") {
+    throw new Error(
+      `Domain provider misconfigured in production: DOMAIN_PROVIDER=${raw ?? "(unset)"}. ` +
+      `Set it to "vercel" + provide VERCEL_TOKEN + VERCEL_PROJECT_ID.`,
+    );
+  }
+
   switch (which) {
     case "vercel":
       return vercelProvider;
     case "cloudflare":
-      // Not yet implemented — fall back to local stub for safety.
+      // Not yet implemented — fall back to local stub for safety in dev.
+      // In prod we already threw above, so this branch is dev-only.
       console.warn("[domains] DOMAIN_PROVIDER=cloudflare requested but not implemented; using local stub");
       return localProvider;
     case "local":
