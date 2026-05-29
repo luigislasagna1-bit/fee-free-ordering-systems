@@ -16,6 +16,60 @@ import { userBelongsToReseller } from "./reseller-membership";
  */
 export const RESELLER_SCOPE_ERROR = "reseller-scope-mismatch";
 
+/**
+ * Given a request host, return the resellerProfileId if it matches an
+ * active reseller's branded domain (custom domain OR generic subdomain).
+ * Returns null when the host isn't a reseller-branded domain.
+ *
+ * Mirrors the lookup logic in /api/internal/resolve-host but lives here
+ * (no shared module) so the credentials provider doesn't depend on a
+ * route-handler import. Same WHERE constraints:
+ *   - generic subdomain: active white-label sub on either tier
+ *   - custom domain:     verified + active white-label sub on Full tier
+ *
+ * Used during sign-in to enforce reseller-scoped login.
+ */
+async function resolveResellerByHost(host: string): Promise<string | null> {
+  if (!host) return null;
+
+  const platformDomain = (process.env.PLATFORM_DOMAIN || "feefreeordering.com").toLowerCase();
+
+  // Apex / www on platform domain → not a reseller branded host
+  if (host === platformDomain || host === `www.${platformDomain}`) return null;
+
+  // <slug>.<platform> → check genericSubdomain
+  if (host.endsWith(`.${platformDomain}`)) {
+    const label = host.slice(0, host.length - platformDomain.length - 1);
+    if (label.includes(".")) return null; // deep-nested, not a reseller slug
+    const reseller = await prisma.resellerProfile.findFirst({
+      where: {
+        genericSubdomain: label,
+        status: "approved",
+        whiteLabelStatus: "active",
+      },
+      select: { id: true },
+    });
+    return reseller?.id ?? null;
+  }
+
+  // Otherwise → custom domain. Apply www-canonicalization the same way
+  // resolve-host does.
+  const candidates = Array.from(
+    new Set([host, host.replace(/^www\./, ""), `www.${host.replace(/^www\./, "")}`]),
+  );
+  const reseller = await prisma.resellerProfile.findFirst({
+    where: {
+      customDomain: { in: candidates },
+      customDomainStatus: "verified",
+      status: "approved",
+      whiteLabelStatus: "active",
+      whiteLabelTier: "full",
+    },
+    select: { id: true },
+  });
+  return reseller?.id ?? null;
+}
+
 // Cookie strictness. Use NextAuth's `__Host-`/`__Secure-` prefixed cookies
 // only on a real production domain — NOT on dev tunnels (ngrok-free.dev,
 // trycloudflare.com, loca.lt, etc.). iOS Safari treats those shared wildcard
@@ -72,7 +126,7 @@ export const authOptions: NextAuthOptions = {
         // client can show a clear "wrong sign-in page" message.
         resellerProfileId: { label: "Reseller profile (internal)", type: "text" },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         // NextAuth converts any throw or null return from authorize() into
         // a generic "Invalid email or password" error. The try/catch is kept
         // so a thrown exception (e.g. transient DB outage) still surfaces as
@@ -97,14 +151,38 @@ export const authOptions: NextAuthOptions = {
           const valid = await bcrypt.compare(credentials.password, user.passwordHash);
           if (!valid) return null;
 
-          // Reseller-scope enforcement. Only runs when the LoginForm
-          // included a resellerProfileId in the credentials payload —
-          // i.e. when sign-in is happening on a reseller branded
-          // domain. Outside that context (direct sign-in on
-          // feefreeordering.com), no scope is enforced.
-          const resellerScopeId = credentials.resellerProfileId
+          // Reseller-scope enforcement — derived SERVER-SIDE from the
+          // request host header. We can't trust the client-passed
+          // resellerProfileId credential alone because:
+          //   (a) the proxy matcher excludes /api/*, so the proxy-set
+          //       x-reseller-profile-id header isn't present on the
+          //       sign-in POST anyway; and
+          //   (b) a malicious user could strip the credential from the
+          //       form payload to bypass scope. Host header on the
+          //       other hand is set by the browser and arrives on every
+          //       request regardless of proxy or client tampering.
+          // The client-passed resellerProfileId is kept as a defensive
+          // cross-check — if both resolve and don't match, we treat it
+          // as suspicious and reject.
+          const hostHeader = String(
+            (req?.headers as Record<string, string | undefined> | undefined)?.host ?? "",
+          ).toLowerCase().split(":")[0].trim();
+
+          const resellerByHost = await resolveResellerByHost(hostHeader);
+          const clientPassedId = credentials.resellerProfileId
             ? String(credentials.resellerProfileId).trim()
             : null;
+
+          // Cross-check: if the client passed a different id than the
+          // server resolved, that's tampered input — reject with the
+          // scope error. (If both are null, we're on a non-branded
+          // host: no enforcement.)
+          if (clientPassedId && resellerByHost && clientPassedId !== resellerByHost) {
+            throw new Error(RESELLER_SCOPE_ERROR);
+          }
+
+          // Server-resolved id wins. Authoritative.
+          const resellerScopeId = resellerByHost ?? clientPassedId;
           if (resellerScopeId) {
             const allowed = await userBelongsToReseller(user.id, resellerScopeId);
             if (!allowed) {
