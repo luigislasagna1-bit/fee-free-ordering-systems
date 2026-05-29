@@ -761,13 +761,87 @@ Worth building both — Duplicate especially is a strong owner UX.
 
 ---
 
-## Promo Type 13: Meal bundle with speciality 🔒 LOCKED   ⏳ AWAITING SCREENSHOTS
+## Promo Type 13: Meal bundle with speciality 🔒 LOCKED  ✅ CAPTURED
 
-> Meal bundle but a subset of selected items has an upcharge
+> Meal bundle (Promo 8) + speciality fees: a subset of items inside the bundle add a per-item upcharge on top of the flat price
 
-What I need:
-- All 3 steps
-- Step 2: bundle composer with "speciality items" sub-section + upcharge fee
+### Step 2 — Same as Promo 8 + a new "Charge a speciality fee for" section
+
+**Bundle composition (identical to Promo 8):**
+- N item groups (each = 1 slot)
+- Flat price for the bundle
+- Extra charges policy dropdown (no extra / addons / addons+sizes)
+
+**NEW: Speciality fees** (below the flat price config):
+- **Speciality Fee 1:** `[N selected]` item picker (tree-view modal, same as elsewhere)
+- **Fee:** `[N]` `CAD`
+- **Add** link → creates Speciality Fee 2, Speciality Fee 3, ...
+- Each tier has its own item picker + fee amount
+- Items in different tiers are MUTUALLY EXCLUSIVE (an item can be in Tier 1 OR Tier 2, not both)
+
+### Example
+A "Family Meal Bundle $25" with two upgrade tiers:
+- Bundle: 2 mains + 2 sides for $25
+- Speciality Fee 1: Premium mains (Lobster, Wagyu) → +$10 each
+- Speciality Fee 2: Ultra-premium (Truffle Pasta) → +$20 each
+
+Customer builds bundle:
+- Picks regular pasta + regular salad + regular bread + diet coke → $25
+- Picks Lobster + regular salad + regular bread + diet coke → $25 + $10 = $35
+- Picks Lobster + Truffle Pasta + ... → $25 + $10 + $20 = $55
+
+### Customer-facing flow
+Same as Promo 8 (slot-by-slot guided picker), BUT items in speciality tiers show their upcharge inline:
+- During slot browsing: each item card shows base price OR `+$15` etc. for speciality items
+- Bundle total updates as customer picks speciality items
+- Final cart line: `Bundle: $25 + $15 speciality = $40`
+
+### Schema additions
+```json
+"ruleConfig": {
+  "kind": "meal_bundle_with_speciality",
+  "itemGroups": [
+    { "id": 1, "categoryIds": [...], "menuItemIds": [...] },
+    { "id": 2, "categoryIds": [...], "menuItemIds": [...] },
+    { "id": 3, "categoryIds": [...], "menuItemIds": [...] }
+  ],
+  "flatPrice": 25.00,
+  "extraChargesPolicy": "addons",
+  "specialityFees": [
+    {
+      "tier": 1,
+      "categoryIds": [...],
+      "menuItemIds": [...],
+      "fee": 10.00
+    },
+    {
+      "tier": 2,
+      "categoryIds": [...],
+      "menuItemIds": [...],
+      "fee": 20.00
+    }
+  ]
+}
+```
+
+### Cart line item shape
+Like Promo 8 it's a single "bundle" line, but with an itemized fee breakdown:
+```
+[Bundle: Meal with Speciality] — $40.00
+  • Item 1: Lobster (+ $10 speciality)
+  • Item 2: Caesar salad (regular)
+  • Item 3: Garlic bread (regular)
+  • Item 4: Coke (regular)
+  Bundle base: $25.00
+  Speciality upgrades: $15.00
+```
+
+### Open questions for Promo 13
+1. Can an item appear in BOTH a regular group AND a speciality fee tier? (Probably yes — when picked from the regular slot, the system checks which tier it's in and adds the fee.)
+2. If the bundle has 4 slots and the customer picks 2 speciality items from the same tier — do both fees stack? (Yes — per-item.)
+3. Edge: what if the eligible items in a slot include BOTH regular and speciality items — does the modal mark which is which? (Yes — `+$10` chip on speciality cards.)
+
+---
 
 ---
 
