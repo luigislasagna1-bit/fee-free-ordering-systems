@@ -137,13 +137,18 @@ async function main() {
       slug: "advanced_promos",
       name: "Advanced Promo Marketing",
       description:
-        "Customer segmentation, automated campaigns, loyalty-style promos.",
-      monthlyPriceCents: 0,
+        "Unlocks 8 advanced promo types: payment-method reward, free item, meal bundle, buy-N-get-free, free dish as part of meal, fixed/percentage discount on combo, meal bundle with speciality. Plus customer segmentation and automated marketing campaigns (Kickstarter + Autopilot).",
+      monthlyPriceCents: 1999, // $19.99/mo
       displayOrder: 40,
-      enabledFeatures: ["customer_segmentation", "automated_campaigns"],
-      // Basic promos work. The "segmentation" + "automated campaigns" copy
-      // is aspirational until task #60 is done. First post-launch feature.
-      comingSoon: true,
+      enabledFeatures: [
+        "customer_segmentation",
+        "automated_campaigns",
+        "advanced_promo_types",
+      ],
+      // Marketing suite (2026-05-29 rebuild) replaces the old aspirational
+      // copy. The 8 locked promo types ship in Phase 2c, segmentation +
+      // campaigns ship in Phase 3 (Autopilot rebuild). comingSoon stays
+      // false from here on.
     },
     {
       slug: "branded_mobile_app",
