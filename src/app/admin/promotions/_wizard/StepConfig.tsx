@@ -28,6 +28,7 @@ export function StepConfig({
   rules,
   onRules,
   cats,
+  paymentMethods,
 }: {
   promotionType: string;
   name: string;
@@ -37,6 +38,11 @@ export function StepConfig({
   rules: PromoRules;
   onRules: (r: Partial<PromoRules>) => void;
   cats: CatEntry[];
+  /** Restaurant's enabled payment-method slugs (from Restaurant.paymentMethods).
+   *  Used by Type 6 (Payment method reward) to limit the dropdown to
+   *  methods the restaurant actually accepts. Empty array → fall back
+   *  to the full list. */
+  paymentMethods?: string[];
 }) {
   const gUp = (groups: IG[]) => onRules({ groups });
 
@@ -81,6 +87,7 @@ export function StepConfig({
           onRules={onRules}
           gUp={gUp}
           cats={cats}
+          paymentMethods={paymentMethods}
         />
       </div>
     </div>
@@ -93,15 +100,18 @@ function TypeSpecific({
   onRules,
   gUp,
   cats,
+  paymentMethods,
 }: {
   type: string;
   rules: PromoRules;
   onRules: (r: Partial<PromoRules>) => void;
   gUp: (groups: IG[]) => void;
   cats: CatEntry[];
+  paymentMethods?: string[];
 }) {
   switch (type) {
-    case "percentage_off":
+    case "percentage_off": {
+      const wholeCart = (rules.groups?.length ?? 0) === 0;
       return (
         <div className="space-y-4">
           <PctInput
@@ -110,19 +120,57 @@ function TypeSpecific({
             onChange={(v) => onRules({ discountPercent: v })}
           />
           <div>
-            <SL
-              label="Eligible items"
-              sub="Leave empty to apply the discount to the entire cart."
-            />
-            <GroupsEditor
-              groups={rules.groups ?? []}
-              onChange={gUp}
-              cats={cats}
-              addLabel="Add item group"
-            />
+            <SL label="What does this apply to?" />
+            <div className="space-y-2">
+              <label className="flex items-start gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-50">
+                <input
+                  type="radio"
+                  name="appliesTo"
+                  checked={wholeCart}
+                  onChange={() => onRules({ groups: [] })}
+                  className="mt-1"
+                />
+                <div>
+                  <div className="text-sm font-medium text-gray-800">Whole cart</div>
+                  <div className="text-xs text-gray-500">
+                    The discount applies to every item the customer adds.
+                  </div>
+                </div>
+              </label>
+              <label className="flex items-start gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-50">
+                <input
+                  type="radio"
+                  name="appliesTo"
+                  checked={!wholeCart}
+                  onChange={() => {
+                    if ((rules.groups?.length ?? 0) === 0) {
+                      onRules({ groups: [{ id: `g${Date.now()}`, label: "", categoryIds: [], itemIds: [] }] });
+                    }
+                  }}
+                  className="mt-1"
+                />
+                <div>
+                  <div className="text-sm font-medium text-gray-800">Specific items / categories only</div>
+                  <div className="text-xs text-gray-500">
+                    Limit the discount to the items or categories you pick below.
+                  </div>
+                </div>
+              </label>
+            </div>
+            {!wholeCart && (
+              <div className="mt-3">
+                <GroupsEditor
+                  groups={rules.groups ?? []}
+                  onChange={gUp}
+                  cats={cats}
+                  addLabel="Add item group"
+                />
+              </div>
+            )}
           </div>
         </div>
       );
+    }
 
     case "free_delivery":
       return (
@@ -255,7 +303,20 @@ function TypeSpecific({
         />
       );
 
-    case "payment_reward":
+    case "payment_reward": {
+      // Pull the dropdown options from the restaurant's enabled payment
+      // methods so the owner can't accidentally promise a PayPal discount
+      // when PayPal isn't even turned on. Falls back to the full list
+      // when the restaurant hasn't configured any (defensive).
+      const PAYMENT_LABELS: Record<string, string> = {
+        cash: "Cash on delivery / pickup",
+        card_in_person: "Card in person (tap / chip / swipe)",
+        online_card: "Card online (Stripe)",
+        paypal: "PayPal",
+      };
+      const enabled = paymentMethods && paymentMethods.length > 0
+        ? paymentMethods
+        : ["cash", "card_in_person", "online_card", "paypal"];
       return (
         <div className="space-y-4">
           <div>
@@ -268,13 +329,14 @@ function TypeSpecific({
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             >
               <option value="any">Any payment method</option>
-              <option value="card">Card (online)</option>
-              <option value="cash">Cash on delivery</option>
-              <option value="paypal">PayPal</option>
+              {enabled.map((slug) => (
+                <option key={slug} value={slug}>
+                  {PAYMENT_LABELS[slug] ?? slug}
+                </option>
+              ))}
             </select>
             <p className="text-xs text-gray-400 mt-1">
-              You can ALSO restrict by specific configured payment slugs on
-              Step 3 (Payment restriction).
+              Only payment methods you&apos;ve enabled in Settings appear here.
             </p>
           </div>
           <PctInput
@@ -284,6 +346,7 @@ function TypeSpecific({
           />
         </div>
       );
+    }
 
     case "free_item": {
       const fG: IG =
@@ -330,15 +393,16 @@ function TypeSpecific({
           <div>
             <SL
               label="Bundle item groups"
-              sub="Customer must have items from each group for the bundle price."
+              sub="Customer picks items from each group. Use the per-slot
+                   counts below to set how many of each they pick
+                   (e.g. 1 pizza + 2 sides + 1 drink)."
             />
-            {/* TODO follow-up: surface minCount/maxCount per group for true
-                mix-and-match slots (catalog #8). v1 uses 1 per group. */}
             <GroupsEditor
               groups={rules.groups ?? []}
               onChange={gUp}
               cats={cats}
               addLabel="Add group"
+              showSlotConfig
             />
           </div>
         </div>
@@ -355,14 +419,16 @@ function TypeSpecific({
           <div>
             <SL
               label="Bundle item groups"
-              sub="Premium groups can carry an extra upsell fee (e.g. lobster +$5)."
+              sub="Premium groups can carry a speciality fee that's added
+                   per item on top of the bundle base (e.g. lobster +$5)."
             />
-            {/* TODO follow-up: per-group extraFee input — catalog #13. */}
             <GroupsEditor
               groups={rules.groups ?? []}
               onChange={gUp}
               cats={cats}
               addLabel="Add group"
+              showSlotConfig
+              showSpecialityFee
             />
           </div>
         </div>

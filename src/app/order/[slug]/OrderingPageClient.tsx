@@ -1788,7 +1788,11 @@ export function OrderingPageClient({
                         <span>-{formatCurrency(r.discount)}</span>
                       </div>
                     ))}
-                    {hasFreeDelivery && <div className="text-sm text-green-700 font-medium">🚚 {t("freeDeliveryApplied")}</div>}
+                    {/* Hide the "Free delivery applied" badge when the
+                        base delivery fee was already zero — nothing to
+                        discount, so the badge would be confusing.
+                        Audit polish #64. */}
+                    {hasFreeDelivery && baseDeliveryFee > 0 && <div className="text-sm text-green-700 font-medium">🚚 {t("freeDeliveryApplied")}</div>}
                   </div>
                 )}
 

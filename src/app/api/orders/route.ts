@@ -398,19 +398,80 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // ── Promo engine evaluation (now has resolved zone in context) ──────────
+    // ── Customer context for restriction enforcement ────────────────────────
+    // Restrictions like Client Type "new"/"returning"/"member" and
+    // Frequency "once per client lifetime" need to know who's ordering.
+    // We look up the Customer row (per-restaurant order history) AND
+    // the CustomerAccount row (marketplace-wide membership) by email.
+    // Both are nullable — guest checkouts with no email match nothing
+    // and fall through to defaults (isNewCustomer=true, isMember=false,
+    // hasUsedLifetime={}). Pickup/dine-in carts without email also
+    // fall through.
+    const promoCustomerEmail = customerEmail
+      ? String(customerEmail).trim().toLowerCase()
+      : null;
+    let isNewCustomerForPromo = true; // optimistic: no email → treat as new
+    let isMemberForPromo = false;
+    const hasUsedLifetimeForPromo: Record<string, boolean> = {};
+    if (promoCustomerEmail) {
+      // Per-restaurant Customer — drives isNewCustomer (count of prior
+      // orders) and feeds hasUsedLifetime lookup.
+      const existingCustomer = await prisma.customer.findFirst({
+        where: { restaurantId: restaurant.id, email: promoCustomerEmail },
+        select: { id: true, totalOrders: true },
+      });
+      if (existingCustomer && existingCustomer.totalOrders > 0) {
+        isNewCustomerForPromo = false;
+        // For each promo with onceLifetimePerClient, check if this
+        // customer has ever applied it before. We bulk-query OrderItem-
+        // free aggregates by Order so a customer can't redeem the same
+        // once-per-lifetime promo twice. We match via the campaign
+        // sequence (recorded on Order via the deprecated `couponId`
+        // field for legacy promos, or via promoDiscount + name for
+        // newer pre-made campaigns). For now we approximate: any
+        // prior Order with a non-zero promoDiscount that matches the
+        // promo's campaignRef.
+        const lifetimePromos = activePromos.filter((p) => p.onceLifetimePerClient);
+        if (lifetimePromos.length > 0) {
+          // Quick approximation: did this customer ever place an order
+          // where ANY promo with the lifetime flag was active? We mark
+          // them all "used". This is conservative — it errs toward
+          // not-applying the promo on a 2nd order, which is the safer
+          // failure mode (vs. over-redeeming). Future enhancement:
+          // track promoId on Order directly.
+          const priorOrderCount = await prisma.order.count({
+            where: {
+              restaurantId: restaurant.id,
+              customerId: existingCustomer.id,
+              status: { notIn: ["cancelled", "rejected"] },
+              promoDiscount: { gt: 0 },
+            },
+          });
+          if (priorOrderCount > 0) {
+            for (const p of lifetimePromos) hasUsedLifetimeForPromo[p.id] = true;
+          }
+        }
+      }
+      // Marketplace-wide CustomerAccount — drives isMember (true iff a
+      // CustomerAccount exists for this email, regardless of whether
+      // they've ordered here before).
+      const account = await prisma.customerAccount.findUnique({
+        where: { email: promoCustomerEmail },
+        select: { id: true },
+      });
+      if (account) isMemberForPromo = true;
+    }
+
+    // ── Promo engine evaluation (now has resolved zone + customer context) ──
     // Run AFTER zone resolution so Delivery Area-restricted promos (Phase 2a)
     // see the deliveryZoneId and can fire correctly. Server-authoritative —
     // the client's hasFreeDelivery flag from /api/public/apply-promos is not
     // trusted; we recompute here with the same engine + same restrictions.
     const promoResults = applyPromotions(activePromos as any, {
       orderType: type,
-      isNewCustomer: false,
-      // TODO: thread `isMember` through from session — for now defaults to
-      // false on the server, so "member-only" promos won't fire here even
-      // when the customer is signed in. Low-impact bug; client-side
-      // hasFreeDelivery already shows the right preview.
-      isMember: false,
+      isNewCustomer: isNewCustomerForPromo,
+      isMember: isMemberForPromo,
+      hasUsedLifetime: hasUsedLifetimeForPromo,
       subtotal: serverSubtotal,
       // Bundle line items (menuItemId === null) are EXCLUDED from the
       // promo engine — their price is already the discounted bundle

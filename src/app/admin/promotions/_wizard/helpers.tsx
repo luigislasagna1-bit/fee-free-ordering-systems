@@ -270,6 +270,8 @@ function ItemGroupRow({
   onChange,
   onRemove,
   canRemove = true,
+  showSlotConfig = false,
+  showSpecialityFee = false,
 }: {
   group: IG;
   index: number;
@@ -277,6 +279,14 @@ function ItemGroupRow({
   onChange: (g: IG) => void;
   onRemove: () => void;
   canRemove?: boolean;
+  /** Show inline min/max-per-slot inputs. Used by meal-bundle types
+   *  (catalog #8, #13) so the owner can configure "1 pizza + 2 sides
+   *  + 1 drink" instead of the v1 hardcoded 1-per-group. */
+  showSlotConfig?: boolean;
+  /** Show inline speciality-fee input (catalog #13 only). Lets a slot
+   *  carry a per-item upcharge ("lobster +$5") on top of the bundle
+   *  base price. */
+  showSpecialityFee?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -298,42 +308,98 @@ function ItemGroupRow({
   };
 
   return (
-    <div className="flex items-center gap-2 py-1.5">
-      <div className="flex-1 relative" ref={ref}>
-        <button
-          onClick={() => setOpen(!open)}
-          className="w-full flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2 bg-white text-left hover:border-emerald-300 transition"
-        >
-          <div className="flex-1 min-w-0">
-            <div className="text-xs font-semibold text-gray-400 mb-0.5">
-              Items Group {index + 1}
-              {group.role ? roleLabel[group.role] ?? "" : ""}
+    <div className="py-1.5 space-y-1.5">
+      <div className="flex items-center gap-2">
+        <div className="flex-1 relative" ref={ref}>
+          <button
+            onClick={() => setOpen(!open)}
+            className="w-full flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2 bg-white text-left hover:border-emerald-300 transition"
+          >
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-semibold text-gray-400 mb-0.5">
+                Items Group {index + 1}
+                {group.role ? roleLabel[group.role] ?? "" : ""}
+              </div>
+              <div className="text-sm text-gray-700 truncate">
+                {groupSummary(group, cats)}
+              </div>
             </div>
-            <div className="text-sm text-gray-700 truncate">
-              {groupSummary(group, cats)}
-            </div>
-          </div>
-          <Edit2 className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
-        </button>
-        {open && (
-          <ItemGroupPicker
-            group={group}
-            cats={cats}
-            onApply={(g) => {
-              onChange(g);
-              setOpen(false);
-            }}
-            onCancel={() => setOpen(false)}
-          />
+            <Edit2 className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+          </button>
+          {open && (
+            <ItemGroupPicker
+              group={group}
+              cats={cats}
+              onApply={(g) => {
+                onChange(g);
+                setOpen(false);
+              }}
+              onCancel={() => setOpen(false)}
+            />
+          )}
+        </div>
+        {canRemove && (
+          <button
+            onClick={onRemove}
+            className="p-1.5 text-gray-300 hover:text-red-500 transition"
+          >
+            <X className="w-4 h-4" />
+          </button>
         )}
       </div>
-      {canRemove && (
-        <button
-          onClick={onRemove}
-          className="p-1.5 text-gray-300 hover:text-red-500 transition"
-        >
-          <X className="w-4 h-4" />
-        </button>
+      {(showSlotConfig || showSpecialityFee) && (
+        <div className="flex items-center gap-3 pl-1 pr-9 flex-wrap">
+          {showSlotConfig && (
+            <>
+              <label className="flex items-center gap-1.5 text-xs text-gray-500">
+                <span>Pick at least</span>
+                <input
+                  type="number"
+                  min={0}
+                  max={20}
+                  value={group.minCount ?? 1}
+                  onChange={(e) => {
+                    const v = Math.max(0, Math.min(20, parseInt(e.target.value || "1", 10) || 1));
+                    onChange({ ...group, minCount: v });
+                  }}
+                  className="w-14 border border-gray-200 rounded px-2 py-1 text-xs text-gray-700"
+                />
+              </label>
+              <label className="flex items-center gap-1.5 text-xs text-gray-500">
+                <span>up to</span>
+                <input
+                  type="number"
+                  min={1}
+                  max={20}
+                  value={group.maxCount ?? group.minCount ?? 1}
+                  onChange={(e) => {
+                    const v = Math.max(1, Math.min(20, parseInt(e.target.value || "1", 10) || 1));
+                    onChange({ ...group, maxCount: v });
+                  }}
+                  className="w-14 border border-gray-200 rounded px-2 py-1 text-xs text-gray-700"
+                />
+                <span>items</span>
+              </label>
+            </>
+          )}
+          {showSpecialityFee && (
+            <label className="flex items-center gap-1.5 text-xs text-gray-500">
+              <span>Speciality fee per item +$</span>
+              <input
+                type="number"
+                min={0}
+                step={0.01}
+                value={group.extraFee ?? 0}
+                onChange={(e) => {
+                  const v = Math.max(0, parseFloat(e.target.value) || 0);
+                  onChange({ ...group, extraFee: v });
+                }}
+                className="w-20 border border-gray-200 rounded px-2 py-1 text-xs text-gray-700"
+                placeholder="0.00"
+              />
+            </label>
+          )}
+        </div>
       )}
     </div>
   );
@@ -348,6 +414,8 @@ export function GroupsEditor({
   defaultRole,
   addLabel = "Add Group",
   minGroups = 0,
+  showSlotConfig = false,
+  showSpecialityFee = false,
 }: {
   groups: IG[];
   onChange: (groups: IG[]) => void;
@@ -355,6 +423,9 @@ export function GroupsEditor({
   defaultRole?: IG["role"];
   addLabel?: string;
   minGroups?: number;
+  /** Forwarded to ItemGroupRow — see ItemGroupRow's docstring. */
+  showSlotConfig?: boolean;
+  showSpecialityFee?: boolean;
 }) {
   return (
     <div>
@@ -369,6 +440,8 @@ export function GroupsEditor({
           }
           onRemove={() => onChange(groups.filter((_, j) => j !== i))}
           canRemove={groups.length > minGroups}
+          showSlotConfig={showSlotConfig}
+          showSpecialityFee={showSpecialityFee}
         />
       ))}
       <button
