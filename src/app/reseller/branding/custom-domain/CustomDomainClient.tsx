@@ -194,20 +194,18 @@ export function CustomDomainClient({ initial }: { initial: InitialState }) {
           </div>
         </div>
 
-        {!verified && dnsRecords && (
-          <DnsRecordsPanel records={dnsRecords} stub={providerStub} />
-        )}
-
-        {!verified && !dnsRecords && (
-          <div className="bg-white rounded-2xl border border-gray-200 p-5 text-sm text-gray-600">
-            <p className="font-semibold text-gray-900 mb-1">DNS records</p>
-            <p className="text-xs text-gray-500">
-              We don&apos;t persist the DNS values across page reloads. If you need to see them again,
-              copy them from your registrar dashboard, or disconnect + reconnect the domain to
-              regenerate them.
-            </p>
-          </div>
-        )}
+        {/* DNS records panel — always shown when there's a connected domain.
+            We used to hide it on verified, and we used to lose it on page
+            reload (records were React-state-only). Now we deterministically
+            recompute the expected record from the saved domain so it's
+            always visible as reference — useful when troubleshooting a
+            verified-then-broken state, when DNS gets edited at the
+            registrar, or when reconnecting after a disconnect. */}
+        <DnsRecordsPanel
+          records={dnsRecords ?? expectedRecordsFor(state.domain)}
+          stub={providerStub}
+          verified={verified}
+        />
       </div>
     );
   }
@@ -248,16 +246,48 @@ export function CustomDomainClient({ initial }: { initial: InitialState }) {
   );
 }
 
-function DnsRecordsPanel({ records, stub }: { records: DnsRecord[]; stub: boolean }) {
+/**
+ * Deterministic expected DNS record(s) for a connected domain.
+ *
+ * Mirrors what `src/lib/domains/vercel.ts:addDomain` returns in the
+ * "no-specific-verification" fallback branch. Used by the UI to ALWAYS
+ * show the records that should exist at the registrar, even on a page
+ * reload where the live Vercel response is no longer cached.
+ *
+ *   apex (luigiswings.com)       → A @ → 76.76.21.21
+ *   subdomain (login.luigiswings.com) → CNAME login → cname.vercel-dns.com
+ *
+ * Known limitation: same 2-label heuristic as the server — mis-classifies
+ * .co.uk-style multi-label TLDs. Acceptable for our launch base.
+ */
+function expectedRecordsFor(domain: string | null): DnsRecord[] {
+  if (!domain) return [];
+  const parts = domain.split(".");
+  if (parts.length === 2) {
+    // Apex
+    return [{ type: "A", name: "@", value: "76.76.21.21" }];
+  }
+  // Subdomain — strip the last two labels to get the relative name
+  const apex = parts.slice(-2).join(".");
+  const relativeName = domain.endsWith(`.${apex}`)
+    ? domain.slice(0, -(apex.length + 1))
+    : domain;
+  return [{ type: "CNAME", name: relativeName, value: "cname.vercel-dns.com" }];
+}
+
+function DnsRecordsPanel({ records, stub, verified }: { records: DnsRecord[]; stub: boolean; verified?: boolean }) {
   const copy = (v: string) => {
     navigator.clipboard.writeText(v).then(() => toast.success("Copied"));
   };
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-5">
-      <h3 className="text-sm font-bold text-gray-900 mb-2">Add these DNS records at your registrar</h3>
+      <h3 className="text-sm font-bold text-gray-900 mb-2">
+        {verified ? "DNS records at your registrar (reference)" : "Add these DNS records at your registrar"}
+      </h3>
       <p className="text-xs text-gray-500 mb-3">
-        Log in to your domain registrar (GoDaddy, Namecheap, Cloudflare, etc.) and add the
-        records below. Propagation usually takes 5-30 minutes; longer in extreme cases.
+        {verified
+          ? "These are the records that should be live at your registrar. Shown for reference — useful if your domain stops resolving and you need to double-check what's configured."
+          : "Log in to your domain registrar (GoDaddy, Namecheap, Cloudflare, etc.) and add the records below. Propagation usually takes 5-30 minutes; longer in extreme cases."}
       </p>
       {stub && (
         <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded p-2 mb-3">
