@@ -194,6 +194,10 @@ const navGroups: NavGroup[] = [
       { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",   icon: Tag },
       { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles },
       { href: "/admin/social-media", labelKey: "socialMedia",  label: "Social Media", icon: Share2 },
+      // Kickstarter — Marketing Suite Phase 4 (First Buy Promo + Invite Prospects).
+      // Sits above Autopilot because it acquires NEW customers (the funnel
+      // step before retention/reactivation that Autopilot handles).
+      { href: "/admin/kickstarter",  labelKey: "kickstarter",  label: "Kickstarter",  icon: Rocket },
       { href: "/admin/autopilot",    labelKey: "autopilot",    label: "Autopilot",    icon: Zap },
     ],
   },
