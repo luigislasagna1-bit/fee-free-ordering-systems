@@ -28,6 +28,8 @@ import {
 import { geocodeAddress, findZoneForPoint, type ZoneLike } from "@/lib/geocode";
 import { CheckoutModal } from "./CheckoutModal";
 import { ReservationModal } from "./ReservationModal";
+import { PromoDetailModal } from "./PromoDetailModal";
+import type { BundleCartItem } from "./BundleComposerModal";
 import { evaluateApplicableFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -55,6 +57,24 @@ interface CartItem {
   pizzaCustomization?: PizzaCustomization;
   /** Unit price for a qty-1 pizza item; used by updateQty */
   unitPrice?: number;
+  /** Bundle line item (Promo Type 8 / 13) — when true, `bundleItems`
+   *  carries the child picks and the cart UI renders this as ONE
+   *  consolidated parent row with indented children. Quantity is
+   *  always 1 for bundles (re-adding the bundle = build it again). */
+  isBundle?: boolean;
+  bundleItems?: Array<{
+    menuItemId: string;
+    variantId?: string;
+    name: string;
+    variantName?: string;
+    modifiers?: Array<{ name: string; priceAdjustment?: number }>;
+    notes?: string;
+    specialityFee?: number;
+  }>;
+  /** Source promo id + name — preserved so the receipt + kitchen ticket
+   *  can label the parent row with the bundle's promo name. */
+  bundlePromoId?: string;
+  bundlePromoName?: string;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -148,6 +168,7 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
     : item.price;
   return (
     <button
+      id={`menu-item-${item.id}`}
       onClick={() => !isSold && onOpen(item)}
       disabled={isSold}
       className={`flex-shrink-0 text-left rounded-2xl overflow-hidden shadow-sm transition group ${isSold ? "opacity-60 cursor-not-allowed" : "hover:shadow-md"}`}
@@ -197,6 +218,7 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
     : item.price;
   return (
     <button
+      id={`menu-item-${item.id}`}
       onClick={() => !isSold && onOpen(item)}
       disabled={isSold}
       className={`text-left rounded-2xl border overflow-hidden shadow-sm transition group ${isSold ? "opacity-60 cursor-not-allowed border-gray-100" : "hover:shadow-lg"}`}
@@ -278,6 +300,11 @@ export function OrderingPageClient({
     minimumOrder: number;
     orderType: string;
     couponCode: string | null;
+    /** Type-specific config (Phase 2a). Drives the PromoDetailModal's
+     *  per-type panel (eligible items, bundle slots, freebie pool). */
+    ruleConfig?: unknown;
+    /** Legacy stringified config — fallback when ruleConfig is empty. */
+    rules?: string | null;
   }>;
   /** The logged-in per-restaurant customer at this restaurant, if any.
    *  Server-resolved via getCurrentRestaurantCustomer in page.tsx and
@@ -325,6 +352,10 @@ export function OrderingPageClient({
   }, [searchParams]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
+  /** When non-null, the customer has tapped a promo banner card and the
+   *  detail modal is showing. The promo object is the same shape we
+   *  receive on the `promoBanners` prop (passed through verbatim). */
+  const [activePromoModal, setActivePromoModal] = useState<typeof promoBanners[number] | null>(null);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [mods, setMods] = useState<Record<string, string[]>>({});
   const [selectedVariant, setSelectedVariant] = useState<ItemVariant | null>(null);
@@ -433,6 +464,76 @@ export function OrderingPageClient({
       }
     } catch {}
   }, [cart, CART_STORAGE_KEY]);
+
+  // ── Cart-abandonment heartbeat ───────────────────────────────────────
+  //
+  // Pings /api/public/cart-session every time the cart changes (debounced
+  // 3s). The server upserts a CartSession row keyed on sessionToken,
+  // which the hourly autopilot cron sweeps for stale carts to recover
+  // via email.
+  //
+  // Fire-and-forget — failures are silently dropped (the worst case is
+  // a missed recovery email, never a broken cart). The token is stamped
+  // into localStorage so a refresh keeps the same identity.
+  const CART_SESSION_KEY = `ff_cart_session_${restaurant.slug}`;
+  const sessionTokenRef = useRef<string | null>(null);
+  const reachedCheckoutRef = useRef(false);
+  // Read token on mount (preserved across refresh until order success).
+  useEffect(() => {
+    try {
+      const existing = localStorage.getItem(CART_SESSION_KEY);
+      if (existing) sessionTokenRef.current = existing;
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // Ensure a token exists once the cart goes from empty to non-empty.
+  useEffect(() => {
+    if (cart.length === 0) return;
+    if (sessionTokenRef.current) return;
+    // Generate a token. crypto.randomUUID is broadly available in
+    // modern browsers; fall back to Math.random for ancient ones.
+    const token =
+      typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+        ? crypto.randomUUID()
+        : `ff-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+    sessionTokenRef.current = token;
+    try { localStorage.setItem(CART_SESSION_KEY, token); } catch {}
+  }, [cart.length, CART_SESSION_KEY]);
+  // Debounced ping. Re-arms 3 seconds after the LAST cart change.
+  useEffect(() => {
+    if (cart.length === 0) return;
+    if (!sessionTokenRef.current) return;
+    const token = sessionTokenRef.current;
+    const timer = setTimeout(() => {
+      // Snapshot of identity + cart shape — keep payload small so we
+      // don't blow out request size on big carts.
+      const itemCount = cart.reduce((s, i) => s + i.quantity, 0);
+      const cartTotal = cart.reduce((s, i) => s + i.lineTotal, 0);
+      const cartJson = cart.map(ci => ({
+        name: ci.menuItem.name,
+        variant: ci.variant?.name,
+        quantity: ci.quantity,
+        lineTotal: ci.lineTotal,
+      }));
+      // Fire-and-forget; never await, never block UI.
+      void fetch("/api/public/cart-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          restaurantSlug: restaurant.slug,
+          sessionToken: token,
+          customerEmail: customerInfo.email || null,
+          customerPhone: customerInfo.phone || null,
+          itemCount,
+          cartTotal,
+          cartJson,
+          reachedCheckout: reachedCheckoutRef.current,
+        }),
+        keepalive: true,
+      }).catch(() => {});
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [cart, customerInfo.email, customerInfo.phone, restaurant.slug]);
 
   // ── Reports funnel-step tracking ─────────────────────────────────────
   //
@@ -551,7 +652,20 @@ export function OrderingPageClient({
     fetch("/api/public/apply-promos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ restaurantSlug: restaurant.slug, orderType, subtotal: sub, items: cart.map(ci => ({ menuItemId: ci.menuItem.id, categoryId: ci.menuItem.categoryId, price: ci.menuItem.price, quantity: ci.quantity, subtotal: ci.lineTotal })) }),
+      body: JSON.stringify({
+        restaurantSlug: restaurant.slug, orderType, subtotal: sub,
+        // Skip bundle line items — their price is the owner's fixed bundle
+        // price, and feeding the synthetic `bundle:<id>` menuItemId into
+        // the public promo engine would either no-op (lookup fails) or
+        // double-discount. Bundles are self-contained discounts.
+        items: cart.filter(ci => !ci.isBundle).map(ci => ({
+          menuItemId: ci.menuItem.id,
+          categoryId: ci.menuItem.categoryId,
+          price: ci.menuItem.price,
+          quantity: ci.quantity,
+          subtotal: ci.lineTotal,
+        })),
+      }),
     })
       .then(r => r.json())
       .then(data => {
@@ -828,10 +942,22 @@ export function OrderingPageClient({
               return { modifierOptionId: opt.id, name: opt.name, priceAdjustment: opt.priceAdjustment };
             })
           ),
+      // Bundle line items (Promo Type 8 / 13) carry their child picks
+      // through to the server, which persists them on OrderItem.bundleItems
+      // (Json column). Null for normal items — server treats null as a
+      // standard line and re-validates price from the menu.
+      isBundle: ci.isBundle ? true : undefined,
+      bundlePromoId: ci.bundlePromoId ?? undefined,
+      bundlePromoName: ci.bundlePromoName ?? undefined,
+      bundleItems: ci.bundleItems ?? null,
     })),
   });
 
   const placeOrder = async () => {
+    // Mark the cart-session as having reached checkout — the next
+    // heartbeat will persist this flag so cart-abandonment reporting
+    // can distinguish "browsed only" vs "entered details but didn't pay."
+    reachedCheckoutRef.current = true;
     if (!customerInfo.name || !customerInfo.phone) { toast.error(tT("nameAndPhone")); return; }
     // Email is required — customers need it for order confirmation, receipts,
     // refund handling, and disputes. We also use it as the unique key in our
@@ -855,8 +981,11 @@ export function OrderingPageClient({
       // Order accepted by the API → clear the persisted cart so a return
       // visit doesn't show the same items they just ordered. The in-memory
       // `cart` state stays as-is (the next route owns the UI) — only the
-      // localStorage copy is wiped.
+      // localStorage copy is wiped. Also drop the cart-session token —
+      // a fresh visit starts a fresh CartSession.
       try { localStorage.removeItem(CART_STORAGE_KEY); } catch {}
+      try { localStorage.removeItem(CART_SESSION_KEY); } catch {}
+      sessionTokenRef.current = null;
 
       if (customerInfo.paymentMethod === "card" && cardPaymentEnabled) {
         // Reports funnel — fire payment_open just before we navigate
@@ -924,6 +1053,99 @@ export function OrderingPageClient({
 
   const cartCount = cart.reduce((s, i) => s + i.quantity, 0);
   const infoLink = `/order/${restaurant.slug}/info`;
+
+  // ── Promo modal helpers ─────────────────────────────────────────────
+  // Flatten the visible menu so the PromoDetailModal can look up items
+  // by id (eligible-items rows + bundle slot pools) without re-walking
+  // the category tree. Cheap; menu sizes are bounded.
+  const flatMenuItems = visibleCategories.flatMap((c) =>
+    c.menuItems.map((mi) => ({
+      id: mi.id,
+      name: mi.name,
+      price: mi.price,
+      imageUrl: mi.imageUrl,
+      categoryId: mi.categoryId,
+    })),
+  );
+
+  /** Add a freebie item (Promo Type 7) to the cart at $0. The engine
+   *  re-validates eligibility on every cart change — if the customer
+   *  drops below the trigger threshold the discount falls off, but the
+   *  line item stays (charged at the freebie's normal price). */
+  const addFreebieToCart = (
+    item: { id: string; name: string; price: number; imageUrl?: string; categoryId?: string },
+    promoName: string,
+  ) => {
+    const fullItem = visibleCategories
+      .flatMap((c) => c.menuItems)
+      .find((mi) => mi.id === item.id);
+    if (!fullItem) {
+      toast.error(tT("itemUnavailable") ?? "Item unavailable");
+      return;
+    }
+    setCart((prev) => [
+      ...prev,
+      {
+        menuItem: fullItem,
+        variant: undefined,
+        quantity: 1,
+        selectedMods: {},
+        notes: `Free with promo: ${promoName}`,
+        lineTotal: 0,
+        unitPrice: 0,
+      },
+    ]);
+    toast.success(`Added ${fullItem.name} (free)`);
+  };
+
+  /** Add a fully-built bundle (Promo Type 8 / 13) to the cart as ONE
+   *  consolidated parent line item. The bundle's price is the owner's
+   *  fixed bundlePrice + summed speciality fees (computed by the
+   *  composer). Server validates the bundle composition at /api/orders. */
+  const addBundleToCart = (bundle: BundleCartItem) => {
+    // Synthesize a minimal MenuItem so the existing CartItem.menuItem
+    // shape is satisfied. The id is prefixed `bundle:` so backend +
+    // receipt rendering can detect it.
+    const syntheticMenuItem: MenuItem = {
+      id: bundle.syntheticMenuItemId,
+      name: bundle.promoName,
+      description: "",
+      price: bundle.bundlePrice,
+      imageUrl: undefined,
+      isFeatured: false,
+      isSoldOut: false,
+      isHidden: false,
+      hasVariants: false,
+      forPickup: true,
+      forDelivery: true,
+      modifierGroups: [],
+      variants: [],
+    };
+    setCart((prev) => [
+      ...prev,
+      {
+        menuItem: syntheticMenuItem,
+        variant: undefined,
+        quantity: 1,
+        selectedMods: {},
+        notes: "",
+        lineTotal: bundle.lineTotal,
+        unitPrice: bundle.lineTotal,
+        isBundle: true,
+        bundlePromoId: bundle.promoId,
+        bundlePromoName: bundle.promoName,
+        bundleItems: bundle.children.map((c) => ({
+          menuItemId: c.menuItemId,
+          variantId: c.variantId,
+          name: c.name,
+          variantName: c.variantName,
+          notes: c.notes,
+          specialityFee: c.specialityFee,
+        })),
+      },
+    ]);
+    toast.success(`Added bundle: ${bundle.promoName}`);
+  };
 
   const bannerH = bannerHeightPx(theme.bannerHeight);
 
@@ -1162,7 +1384,16 @@ export function OrderingPageClient({
               return (
                 <div
                   key={promo.id}
-                  className="flex-shrink-0 w-72 rounded-xl p-4 text-white shadow-sm relative overflow-hidden"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setActivePromoModal(promo)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setActivePromoModal(promo);
+                    }
+                  }}
+                  className="flex-shrink-0 w-72 rounded-xl p-4 text-white shadow-sm relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
                   style={{
                     background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)`,
                   }}
@@ -1394,15 +1625,46 @@ export function OrderingPageClient({
                     <div key={idx} className="p-4">
                       <div className="flex items-start justify-between gap-2">
                         <div
-                          className="flex-1 min-w-0 cursor-pointer"
-                          onClick={() => setPendingEditIndex(idx)}
-                          role="button"
-                          aria-label={t("editItem")}
+                          className="flex-1 min-w-0"
+                          // Bundles aren't editable from the cart (the
+                          // composer would need to re-open with state
+                          // restoration — TODO). Normal items still open
+                          // the edit confirmation.
+                          onClick={() => { if (!ci.isBundle) setPendingEditIndex(idx); }}
+                          role={ci.isBundle ? undefined : "button"}
+                          aria-label={ci.isBundle ? undefined : t("editItem")}
+                          style={{ cursor: ci.isBundle ? "default" : "pointer" }}
                         >
-                          <div className="font-semibold text-gray-900 text-sm">{ci.menuItem.name}</div>
+                          <div className="font-semibold text-gray-900 text-sm">
+                            {ci.isBundle && (
+                              <span
+                                className="inline-block text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded mr-1.5 align-middle"
+                                style={{ backgroundColor: `${theme.primaryColor}22`, color: theme.primaryColor }}
+                              >
+                                Bundle
+                              </span>
+                            )}
+                            {ci.bundlePromoName ?? ci.menuItem.name}
+                          </div>
                           {ci.variant && <div className="text-xs mt-0.5 font-medium" style={{ color: theme.primaryColor }}>{ci.variant.name}</div>}
+                          {/* Bundle child rows — indented under the parent. */}
+                          {ci.isBundle && ci.bundleItems && ci.bundleItems.length > 0 && (
+                            <div className="mt-1 pl-4 border-l-2 border-gray-100 space-y-0.5">
+                              {ci.bundleItems.map((child, i) => (
+                                <div key={i} className="text-xs text-gray-500">
+                                  • {child.name}
+                                  {child.variantName ? ` (${child.variantName})` : ""}
+                                  {child.specialityFee && child.specialityFee > 0 ? (
+                                    <span className="ml-1" style={{ color: theme.primaryColor }}>
+                                      (+{formatCurrency(child.specialityFee)})
+                                    </span>
+                                  ) : null}
+                                </div>
+                              ))}
+                            </div>
+                          )}
                           {/* Pizza customization details */}
-                          {ci.pizzaCustomization
+                          {!ci.isBundle && (ci.pizzaCustomization
                             ? pizzaCustomizationToModifiers(ci.pizzaCustomization, ci.menuItem.modifierGroups as any)
                                 .map((m, i) => (
                                   <div key={i} className="text-xs text-gray-400">+ {m.name}</div>
@@ -1413,17 +1675,33 @@ export function OrderingPageClient({
                                   const opt = g?.options.find(o => o.id === optId);
                                   return opt ? <div key={optId} className="text-xs text-gray-400">+ {opt.name}</div> : null;
                                 });
-                              })
+                              }))
                           }
-                          {ci.notes && <div className="text-xs text-gray-400 italic mt-0.5">"{ci.notes}"</div>}
+                          {ci.notes && <div className="text-xs text-gray-400 italic mt-0.5">&ldquo;{ci.notes}&rdquo;</div>}
                         </div>
                         <div className="text-sm font-bold text-gray-900 flex-shrink-0">{formatCurrency(ci.lineTotal)}</div>
                       </div>
-                      <div className="flex items-center gap-3 mt-2">
-                        <button onClick={() => updateQty(idx, -1)} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition"><Minus className="w-3 h-3" /></button>
-                        <span className="text-sm font-semibold w-4 text-center">{ci.quantity}</span>
-                        <button onClick={() => updateQty(idx, 1)} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition"><Plus className="w-3 h-3" /></button>
-                      </div>
+                      {/* Bundles are quantity-1 only — multiple bundles
+                          should be built separately so the customer can
+                          customise each. Hide the qty stepper to avoid
+                          confusing "what does Bundle x2 mean?" UX. */}
+                      {!ci.isBundle && (
+                        <div className="flex items-center gap-3 mt-2">
+                          <button onClick={() => updateQty(idx, -1)} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition"><Minus className="w-3 h-3" /></button>
+                          <span className="text-sm font-semibold w-4 text-center">{ci.quantity}</span>
+                          <button onClick={() => updateQty(idx, 1)} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition"><Plus className="w-3 h-3" /></button>
+                        </div>
+                      )}
+                      {ci.isBundle && (
+                        <button
+                          onClick={() => {
+                            setCart((prev) => prev.filter((_, i) => i !== idx));
+                          }}
+                          className="text-xs mt-2 text-red-600 hover:text-red-700 underline"
+                        >
+                          Remove bundle
+                        </button>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -1634,6 +1912,27 @@ export function OrderingPageClient({
           mapProvider={restaurant.mapProvider ?? "leaflet"}
           googleMapsApiKey={restaurant.googleMapsApiKey ?? null}
           onClose={() => setCheckoutOpen(false)}
+        />
+      )}
+
+      {/* ── Promo walkthrough modal ───────────────────────────────────
+          Opens when the customer clicks a promo banner card above the
+          menu. Dispatches to type-specific panels (info / eligible items
+          / freebie picker / bundle composer). Per the auto-apply
+          principle, this is a DISCOVERY UX only — the engine handles
+          the actual discount whether or not the customer used the
+          walkthrough. */}
+      {activePromoModal && (
+        <PromoDetailModal
+          promo={activePromoModal as any}
+          allMenuItems={flatMenuItems}
+          deliveryZones={(restaurant.deliveryZones ?? []).map((z: any) => ({ id: z.id, name: z.name }))}
+          cartSubtotal={subtotal}
+          primaryColor={theme.primaryColor}
+          onAddFreebie={addFreebieToCart}
+          onAddBundle={addBundleToCart}
+          onSwitchOrderType={(next) => setOrderType(next)}
+          onClose={() => setActivePromoModal(null)}
         />
       )}
 

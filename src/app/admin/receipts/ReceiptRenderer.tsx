@@ -171,22 +171,39 @@ function renderCustomer(
         : undefined;
       return (
         <span>
-          {order.items.map((item, i) => (
-            <span key={i} style={{ display: "block", marginBottom: "6px" }}>
-              <span style={row}>
-                <span style={{ fontWeight: "inherit" }}>{item.quantity}× {item.name}</span>
-                <span style={{ fontWeight: "inherit" }}>{fmt(item.subtotal)}</span>
-              </span>
-              {modsEnabled && item.modifiers.map((m, j) => (
-                <span key={j} style={{ display: "block", paddingLeft: "14px", ...(modCSS ?? small) }}>+ {m.name}</span>
-              ))}
-              {item.notes && (
-                <span style={{ display: "block", paddingLeft: "14px", fontSize: `${Math.max(9, s.fontSize - 2)}px`, color: s.highlight ? "#ffd" : "#b45309", fontStyle: "italic" }}>
-                  Note: {item.notes}
+          {order.items.map((item, i) => {
+            const bundle = Array.isArray((item as any).bundleItems)
+              ? ((item as any).bundleItems as Array<{
+                  name: string;
+                  variantName?: string | null;
+                  specialityFee?: number;
+                  modifiers?: Array<{ name: string }>;
+                }>)
+              : null;
+            return (
+              <span key={i} style={{ display: "block", marginBottom: "6px" }}>
+                <span style={row}>
+                  <span style={{ fontWeight: "inherit" }}>{item.quantity}× {item.name}</span>
+                  <span style={{ fontWeight: "inherit" }}>{fmt(item.subtotal)}</span>
                 </span>
-              )}
-            </span>
-          ))}
+                {bundle && bundle.length > 0 && bundle.map((child, j) => (
+                  <span key={`b${j}`} style={{ display: "block", paddingLeft: "14px", ...(modCSS ?? small) }}>
+                    - {child.name}
+                    {child.variantName ? ` (${child.variantName})` : ""}
+                    {child.specialityFee && child.specialityFee > 0 ? ` (+${fmt(child.specialityFee)})` : ""}
+                  </span>
+                ))}
+                {modsEnabled && item.modifiers.map((m, j) => (
+                  <span key={j} style={{ display: "block", paddingLeft: "14px", ...(modCSS ?? small) }}>+ {m.name}</span>
+                ))}
+                {item.notes && (
+                  <span style={{ display: "block", paddingLeft: "14px", fontSize: `${Math.max(9, s.fontSize - 2)}px`, color: s.highlight ? "#ffd" : "#b45309", fontStyle: "italic" }}>
+                    Note: {item.notes}
+                  </span>
+                )}
+              </span>
+            );
+          })}
         </span>
       );
     }
@@ -278,9 +295,23 @@ function renderKitchen(section: Section, order: SampleOrder, config: KitchenConf
         : undefined;
       return (
         <span>
-          {order.items.map((item, i) => (
+          {order.items.map((item, i) => {
+            const bundle = Array.isArray((item as any).bundleItems)
+              ? ((item as any).bundleItems as Array<{
+                  name: string;
+                  variantName?: string | null;
+                  specialityFee?: number;
+                }>)
+              : null;
+            return (
             <span key={i} style={{ display: "block", marginBottom: "10px" }}>
               <span style={{ display: "block" }}>{item.quantity}× {item.name}</span>
+              {bundle && bundle.length > 0 && bundle.map((child, j) => (
+                <span key={`b${j}`} style={{ display: "block", paddingLeft: "16px", ...(modCSS ?? { ...small, fontSize: `${Math.max(10, s.fontSize - 4)}px` }) }}>
+                  - {child.name}
+                  {child.variantName ? ` (${child.variantName})` : ""}
+                </span>
+              ))}
               {modsEnabled && item.modifiers.map((m, j) => (
                 <span key={j} style={{ display: "block", paddingLeft: "16px", ...(modCSS ?? { ...small, fontSize: `${Math.max(10, s.fontSize - 4)}px` }) }}>
                   → {m.name}
@@ -292,7 +323,8 @@ function renderKitchen(section: Section, order: SampleOrder, config: KitchenConf
                 </span>
               )}
             </span>
-          ))}
+            );
+          })}
         </span>
       );
     }

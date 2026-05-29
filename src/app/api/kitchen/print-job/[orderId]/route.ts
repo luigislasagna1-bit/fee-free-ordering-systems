@@ -139,6 +139,9 @@ export async function GET(
         name: m.name,
         priceAdjustment: m.priceAdjustment ?? 0,
       })),
+      // Bundle children (Promo Type 8 / 13) — passed through to the
+      // receipt renderer so kitchen + customer copies print parent + indented children.
+      bundleItems: Array.isArray(it.bundleItems) ? it.bundleItems : null,
     })),
   };
 

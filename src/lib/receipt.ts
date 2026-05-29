@@ -509,6 +509,18 @@ export interface ReceiptItem {
   subtotal: number;
   notes?: string | null;
   modifiers: { name: string; priceAdjustment: number }[];
+  /** Promo Type 8 / 13 bundle line item. When present + non-empty the
+   *  renderer prints the parent name + bundle price ONCE, then for each
+   *  child indents the child's name (+variant +modifiers +speciality
+   *  fee) underneath. Per-child prices are NOT printed — the bundle
+   *  price covers them. */
+  bundleItems?: Array<{
+    name: string;
+    variantName?: string | null;
+    notes?: string | null;
+    modifiers?: Array<{ name: string; priceAdjustment?: number }>;
+    specialityFee?: number;
+  }> | null;
 }
 
 export interface ReceiptRestaurant {
@@ -587,11 +599,36 @@ async function renderKitchenSection(
       // Item names use this section's style.  Modifier lines use the separate
       // "k_modifiers" section's style if present and enabled, otherwise fall
       // back to this section's style.  Notes use this section's style.
+      //
+      // Bundle line items (Promo Type 8 / 13) print the parent name once
+      // followed by each child indented underneath. No per-child price —
+      // the bundle price covers them.
       const modStyle = findStyleSection(config, "k_modifiers");
       const modsEnabled = modStyle !== null;
       for (const item of order.items) {
         applyStyle(r, s);
         r.line(`${item.quantity}x ${item.name}`);
+        if (Array.isArray(item.bundleItems) && item.bundleItems.length > 0) {
+          for (const child of item.bundleItems) {
+            applyStyle(r, s);
+            const variantPart = child.variantName ? ` (${child.variantName})` : "";
+            const specPart =
+              child.specialityFee && child.specialityFee > 0
+                ? ` (+${fmt(child.specialityFee)})`
+                : "";
+            r.wrapped(`  - 1x ${child.name}${variantPart}${specPart}`, 4);
+            if (modsEnabled && Array.isArray(child.modifiers)) {
+              for (const mod of child.modifiers) {
+                applyStyle(r, modStyle);
+                r.wrapped(`    -> ${mod.name}`, 7);
+              }
+            }
+            if (child.notes) {
+              applyStyle(r, s);
+              r.wrapped(`    !! ${child.notes}`, 7);
+            }
+          }
+        }
         if (modsEnabled) {
           for (const mod of item.modifiers) {
             applyStyle(r, modStyle);
@@ -688,11 +725,31 @@ async function renderCustomerSection(
       // Item lines use this section's style.  Modifier lines use the separate
       // "modifiers" section's style if present and enabled, otherwise fall back
       // to this section's style.  Notes use this section's style.
+      //
+      // Bundle line items print as: parent (with bundle subtotal),
+      // then indented children without per-child prices.
       const modStyle = findStyleSection(config, "modifiers");
       const modsEnabled = modStyle !== null;
       for (const item of order.items) {
         applyStyle(r, s);
         r.columns(`${item.quantity}× ${item.name}`, fmt(item.subtotal));
+        if (Array.isArray(item.bundleItems) && item.bundleItems.length > 0) {
+          for (const child of item.bundleItems) {
+            applyStyle(r, s);
+            const variantPart = child.variantName ? ` (${child.variantName})` : "";
+            const specPart =
+              child.specialityFee && child.specialityFee > 0
+                ? ` (+${fmt(child.specialityFee)})`
+                : "";
+            r.wrapped(`  - ${child.name}${variantPart}${specPart}`, 2);
+            if (modsEnabled && Array.isArray(child.modifiers)) {
+              for (const mod of child.modifiers) {
+                applyStyle(r, modStyle);
+                r.wrapped(`    + ${mod.name}`, 4);
+              }
+            }
+          }
+        }
         if (modsEnabled) {
           for (const mod of item.modifiers) {
             const p = mod.priceAdjustment !== 0 ? ` (+${fmt(mod.priceAdjustment)})` : "";

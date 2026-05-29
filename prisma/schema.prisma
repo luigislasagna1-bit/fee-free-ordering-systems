@@ -79,17 +79,17 @@ model Restaurant {
   // Owner pastes their REST app client ID + secret from
   // https://developer.paypal.com/dashboard/applications into our admin; we
   // never see the raw secret again after the initial encrypt.
-  paypalAccountStatus   String?   @default("not_connected") // not_connected | connected | error
-  paypalEnvironment     String?   @default("live")          // sandbox | live
-  paypalClientIdEnc     String?
-  paypalClientIdIv      String?
-  paypalClientIdTag     String?
-  paypalSecretEnc       String?
-  paypalSecretIv        String?
-  paypalSecretTag       String?
-  paypalMerchantEmail   String?   // shown in admin so owner sees which account is wired
-  paypalWebhookId       String?   // webhook ID registered on PayPal for this restaurant
-  paypalConnectedAt     DateTime?
+  paypalAccountStatus String?   @default("not_connected") // not_connected | connected | error
+  paypalEnvironment   String?   @default("live") // sandbox | live
+  paypalClientIdEnc   String?
+  paypalClientIdIv    String?
+  paypalClientIdTag   String?
+  paypalSecretEnc     String?
+  paypalSecretIv      String?
+  paypalSecretTag     String?
+  paypalMerchantEmail String? // shown in admin so owner sees which account is wired
+  paypalWebhookId     String? // webhook ID registered on PayPal for this restaurant
+  paypalConnectedAt   DateTime?
 
   // FREE-plan order cap tracking. Every restaurant on the FREE plan
   // (subscriptionStatus="free" AND no active paid add-ons) is limited
@@ -186,6 +186,11 @@ model Restaurant {
   notificationRecipients NotificationRecipient[]
   serviceFees            ServiceFee[]
   subscriptionInvoices   SubscriptionInvoice[]
+  // GloriaFood-parity marketing suite (2026-05-29)
+  autopilotState         AutopilotState?
+  kickstarterState       KickstarterState?
+  cartSessions           CartSession[]
+  prospectImports        ProspectImport[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
@@ -429,7 +434,7 @@ model PaypalWebhookEvent {
   id            String    @id @default(cuid())
   paypalEventId String    @unique
   eventType     String
-  resourceId    String?   // PayPal order / authorization / capture id, when present
+  resourceId    String? // PayPal order / authorization / capture id, when present
   receivedAt    DateTime  @default(now())
   processedAt   DateTime?
   status        String    @default("received") // received | processed | failed | ignored
@@ -617,30 +622,30 @@ model ModifierOption {
 }
 
 model Order {
-  id              String    @id @default(cuid())
-  restaurantId    String
-  customerId      String?
-  orderNumber     String
-  status          String    @default("pending")
-  type            String    @default("pickup")
-  customerName    String
-  customerEmail   String?
-  customerPhone   String?
-  deliveryAddress String?
-  deliveryCity    String?
-  deliveryZip     String?
-  notes           String?
-  couponId        String?
-  couponDiscount  Float     @default(0)
-  promoDiscount   Float     @default(0)
-  subtotal        Float
-  taxAmount       Float     @default(0)
-  deliveryFee     Float     @default(0)
-  tip             Float     @default(0)
-  total           Float
-  paymentMethod   String    @default("cash")
-  paymentStatus   String    @default("pending")
-  paymentIntentId String?   // Stripe PaymentIntent id (when paymentMethod = "card")
+  id                    String    @id @default(cuid())
+  restaurantId          String
+  customerId            String?
+  orderNumber           String
+  status                String    @default("pending")
+  type                  String    @default("pickup")
+  customerName          String
+  customerEmail         String?
+  customerPhone         String?
+  deliveryAddress       String?
+  deliveryCity          String?
+  deliveryZip           String?
+  notes                 String?
+  couponId              String?
+  couponDiscount        Float     @default(0)
+  promoDiscount         Float     @default(0)
+  subtotal              Float
+  taxAmount             Float     @default(0)
+  deliveryFee           Float     @default(0)
+  tip                   Float     @default(0)
+  total                 Float
+  paymentMethod         String    @default("cash")
+  paymentStatus         String    @default("pending")
+  paymentIntentId       String? // Stripe PaymentIntent id (when paymentMethod = "card")
   // PayPal lineage (when paymentMethod = "paypal"). We capture all three
   // ids so we can refund/void against the right resource. PayPal's flow:
   //   order → authorize → captures[]. We treat capture like Stripe's
@@ -648,14 +653,14 @@ model Order {
   paypalOrderId         String?
   paypalAuthorizationId String?
   paypalCaptureId       String?
-  refundStatus    String? // null | "pending" | "refunded" | "failed"
+  refundStatus          String? // null | "pending" | "refunded" | "failed"
   /// Set when the order has been "released" to the kitchen + customer
   /// (i.e. notifications fired, kitchen display picks it up). For cash
   /// orders this is set immediately in /api/orders POST. For online-card
   /// orders this stays null until the payment_intent.succeeded webhook
   /// fires — preventing the kitchen from starting cook before payment
   /// clears. Kitchen GET filters on `notifiedAt IS NOT NULL`.
-  notifiedAt      DateTime?
+  notifiedAt            DateTime?
 
   /// Marketplace channel attribution. True when the customer came from
   /// our /marketplace browse page (detected via ?from=marketplace at
@@ -759,6 +764,26 @@ model OrderItem {
   subtotal    Float
   createdAt   DateTime @default(now())
 
+  // ── Meal-bundle line item (Promo Types 8 + 13) ──────────────────────
+  //
+  // When a customer completes a meal bundle (e.g. "Family Pack: 1 Pizza
+  // + 2 Sides + 1 Dessert for $25"), the entire bundle is persisted as
+  // ONE OrderItem (the parent / bundle wrapper) with `bundleItems` set
+  // to the JSON array of the child picks. Kitchen displays the bundle
+  // as a grouped block; the receipt prints the parent line + indented
+  // children. The fixed bundle price lives on the parent's `price` and
+  // `subtotal` fields; child entries here carry their menu metadata
+  // (name, modifiers) for fulfilment only — no pricing.
+  //
+  // Shape (TypeScript):
+  //   { menuItemId: string; variantId?: string; name: string;
+  //     variantName?: string;
+  //     modifiers?: { name: string; priceAdjustment?: number }[];
+  //     notes?: string }[]
+  //
+  // Null for non-bundle items (all order items pre-2026-05-29).
+  bundleItems Json?
+
   order     Order               @relation(fields: [orderId], references: [id])
   menuItem  MenuItem?           @relation(fields: [menuItemId], references: [id], onDelete: SetNull)
   modifiers OrderItemModifier[]
@@ -776,32 +801,32 @@ model OrderItemModifier {
 }
 
 model Customer {
-  id                String    @id @default(cuid())
-  restaurantId      String
-  name              String
-  email             String?
-  phone             String?
-  address           String?
-  notes             String?
+  id                     String    @id @default(cuid())
+  restaurantId           String
+  name                   String
+  email                  String?
+  phone                  String?
+  address                String?
+  notes                  String?
   // Per-restaurant signup credentials. Null = guest-order row that never
   // signed up. Set = customer has a per-restaurant account on this
   // restaurant (separate from the marketplace-wide CustomerAccount).
   // See src/lib/restaurant-customer-session.ts for the auth flow.
-  passwordHash      String?
-  emailVerifiedAt   DateTime?
-  emailVerifyToken  String?
-  passwordResetToken String?
+  passwordHash           String?
+  emailVerifiedAt        DateTime?
+  emailVerifyToken       String?
+  passwordResetToken     String?
   passwordResetExpiresAt DateTime?
-  lastLoginAt       DateTime?
+  lastLoginAt            DateTime?
   // Chain identity for multi-location restaurants. When a customer signs
   // up at any restaurant in a chain (parent or any child), we generate
   // a chainCustomerId and create a Customer row at EVERY restaurant in
   // the chain, all sharing the same chainCustomerId + passwordHash. The
   // customer's one set of credentials then authenticates at any
   // location in the chain. Null for accounts at standalone restaurants.
-  chainCustomerId   String?
-  totalOrders       Int       @default(0)
-  totalSpent        Float     @default(0)
+  chainCustomerId        String?
+  totalOrders            Int       @default(0)
+  totalSpent             Float     @default(0)
   /// Timestamp of this customer's most recent order at this restaurant.
   /// Maintained by the order-create webhook. Powers:
   ///   - Reports → Clients dashboard ("returning vs new" cohort split)
@@ -809,20 +834,20 @@ model Customer {
   ///   - Marketing → re-engagement campaigns (lapsed-customer filter)
   /// Null for Customer rows created before this field shipped (back-
   /// compat); the lazy backfill happens the next time they order.
-  lastOrderAt       DateTime?
+  lastOrderAt            DateTime?
   /// Link to the global CustomerAccount (if the customer has signed up
   /// for an account). Multiple Customer rows (one per restaurant they've
   /// ordered from) can point at the same CustomerAccount — that's the
   /// "ordered from 5 different marketplace restaurants but one identity"
   /// case. Null for guest checkouts that never converted to an account.
-  customerAccountId String?
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  customerAccountId      String?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
 
-  restaurant       Restaurant       @relation(fields: [restaurantId], references: [id])
-  customerAccount  CustomerAccount? @relation(fields: [customerAccountId], references: [id])
-  orders           Order[]
-  assignedCoupons  Coupon[]         @relation("CouponAssignedCustomer")
+  restaurant      Restaurant       @relation(fields: [restaurantId], references: [id])
+  customerAccount CustomerAccount? @relation(fields: [customerAccountId], references: [id])
+  orders          Order[]
+  assignedCoupons Coupon[]         @relation("CouponAssignedCustomer")
 
   @@index([restaurantId])
   @@index([restaurantId, email])
@@ -946,20 +971,20 @@ model Coupon {
 }
 
 model Promotion {
-  id            String    @id @default(cuid())
-  restaurantId  String
-  name          String
-  description   String?
-  promotionType String    @default("percentage_off")
-  isActive      Boolean   @default(true)
-  stackingRule  String    @default("standard")
-  orderType     String    @default("both")
-  customerType  String    @default("any")
-  minimumOrder  Float     @default(0)
-  rules         String    @default("{}")
-  daysOfWeek    String?
-  startsAt      DateTime?
-  endsAt        DateTime?
+  id              String    @id @default(cuid())
+  restaurantId    String
+  name            String
+  description     String?
+  promotionType   String    @default("percentage_off")
+  isActive        Boolean   @default(true)
+  stackingRule    String    @default("standard")
+  orderType       String    @default("both")
+  customerType    String    @default("any")
+  minimumOrder    Float     @default(0)
+  rules           String    @default("{}")
+  daysOfWeek      String?
+  startsAt        DateTime?
+  endsAt          DateTime?
   /// Hour-of-day USABILITY window (separate from daysOfWeek visibility).
   /// Per Fabrizio's 2026-05-28 feedback: a "lunch promo" should be
   /// VISIBLE all day (so customers can pre-order tomorrow's lunch) but
@@ -973,28 +998,255 @@ model Promotion {
   /// — like GloriaFood's promo cards. When false, it's still applied
   /// at checkout but doesn't get prime real estate. Owners choose per
   /// promo; defaults to true for new promos.
-  showOnBanner    Boolean @default(true)
+  showOnBanner    Boolean   @default(true)
   /// Banner display copy override. When NULL, we render the promo's
   /// `name` + `description`. When set, the owner gets a tighter
   /// banner-only headline (e.g. "20% off lunch — today only!").
   bannerHeadline  String?
-  usageLimit    Int?
-  usedCount     Int       @default(0)
-  autoApply     Boolean   @default(true)
-  couponCode    String?
+  usageLimit      Int?
+  usedCount       Int       @default(0)
+  autoApply       Boolean   @default(true)
+  couponCode      String?
   /// Scope of this promotion. Same semantics as Coupon.scope above —
   ///   "location" → only applies at the owning restaurant (default)
   ///   "brand"    → applies at the owning restaurant AND every child
   ///                location under it. The order POST in /api/orders
   ///                evaluates both location-scoped and parent-brand-scoped
   ///                active promos for each cart.
-  scope         String    @default("location")
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  scope           String    @default("location")
+
+  // ── GloriaFood-parity marketing suite (2026-05-29) ───────────────────
+  //
+  // Pre-made promos are auto-generated by Kickstarter + Autopilot
+  // campaigns and listed under /admin/promotions Pre-made tab. The
+  // owning campaign's enable/disable cascades to its child promos.
+  //
+  //   campaignRef       = "autopilot_2nd_order" | "autopilot_reengage_winN" |
+  //                       "autopilot_cart_recovery" | "kickstarter_first_buy" |
+  //                       "kickstarter_invite_prospects" | etc.
+  //   campaignSequence  = 1-5 for the WIN1..WIN5 progressive ladder under
+  //                       the re-engage cohort. NULL for single-promo campaigns.
+  //
+  // Self-made promos have BOTH fields NULL.
+  campaignRef      String?
+  campaignSequence Int?
+
+  // ── Restrictions (embedded wizard knobs, NOT a separate modal) ───────
+  //
+  // Per Luigi's 2026-05-29 clarification: the 8 GloriaFood "restrictions"
+  // (Happy Hour, Delivery Area, Cart Value, Payment, Expiration, Client
+  // Type, Frequency, Exclusivity) are NOT a polymorphic JSON blob — they
+  // are individual fields embedded across the promo creation wizard.
+  // Most map to existing columns:
+  //   Happy Hour    → daysOfWeek + usableHourStart/End
+  //   Cart Value    → minimumOrder
+  //   Expiration    → startsAt + endsAt
+  //   Client Type   → customerType ("any" | "new" | "returning" | "member")
+  //   Frequency     → usageLimit + onceLifetimePerClient + once-per-order-via-engine
+  //   Exclusivity   → stackingRule ("standard" | "exclusive" | "master")
+  // The two restrictions that need new dedicated columns:
+  //   Delivery Area → deliveryZoneIds (JSON array of zone IDs; null = all)
+  //   Payment       → paymentMethodSlugs (JSON array; null = all)
+  paymentMethodSlugs       String? // JSON array; null = all enabled payment methods allowed
+  deliveryZoneIds          String? // JSON array of DeliveryZone IDs; null = all zones
+  onceLifetimePerClient    Boolean @default(false) // Frequency: once-per-client-forever
+  // Limited showtime is a Display Time sub-mode (separate from Happy Hour
+  // usableHour above): the promo is only VISIBLE at scheduled times.
+  // Stored as JSON array: [{ dayOfWeek: 0-6, hourStart: 0-1440, hourEnd: 0-1440 }, ...]
+  limitedShowtimeSchedules Json    @default("[]")
+
+  // ── Display ──────────────────────────────────────────────────────────
+  imageUrl           String?
+  // menu_visible       → promo card shows alongside menu items (default)
+  // hidden_coupon_only → promo only activates when the customer types the
+  //                      coupon code (never shown in the menu)
+  // popup              → modal pops up when the customer lands on /order/[slug]
+  displayMode        String  @default("menu_visible")
+  // When set: customer-facing "Add $X more to unlock!" tooltip on cart
+  // when cart subtotal is within ($highlightThreshold) of the eligibility
+  // minimum. Null = no nudge.
+  highlightThreshold Float?
+
+  // ── Type-specific config (all 13 promo types reuse this) ─────────────
+  //
+  // ruleConfig is the type-specific config for the 13 promotion types
+  // (meal bundle slots, combo deal pairings, payment method slug,
+  // freebie pick, buy-N positions, free-dish slot, etc). Shape is
+  // dictated by promotionType. Empty {} for the simple % off types.
+  // See src/lib/promo-engine.ts for the per-type shape contract.
+  ruleConfig Json @default("{}")
+
+  // ── Entitlement gate ─────────────────────────────────────────────────
+  //
+  // For promo types 6-13 (locked behind Advanced Promo Marketing add-on
+  // @ $19.99/mo). NULL means free-tier type (no entitlement needed).
+  // Set on POST; server checks restaurant.hasFeature(slug) on every
+  // create/update so an owner can't bypass the paywall via direct API.
+  requiredAddOnSlug String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
 
   @@index([restaurantId, isActive])
+  @@index([campaignRef])
+}
+
+// ─── Marketing Suite (GloriaFood parity, 2026-05-29) ───────────────────
+//
+// Three pillars under /admin/marketing-tools, each with its own state row
+// per restaurant: Kickstarter (acquire), Autopilot (retain), and the
+// Promotions catalog. Pre-made promos auto-generated by Kickstarter and
+// Autopilot live as Promotion rows with campaignRef set; they cascade
+// active/inactive with their owning campaign's toggle.
+
+/// Per-restaurant Autopilot state. ONE row per restaurant — upserted on
+/// first /admin/autopilot visit.
+///
+/// `masterEnabled` is the GloriaFood "Activate Autopilot Selling? Yes/No"
+/// gate at the top of the page. When OFF, no campaign sends regardless of
+/// the individual toggles. When ON, each campaign-specific boolean below
+/// gates whether THAT campaign fires.
+///
+/// Last-run timestamps are CRON dedup — prevent the hourly cron from
+/// re-processing the same restaurant within a campaign-specific window
+/// (re-engage runs at most once per day, cart-abandonment can run every
+/// hour, second-order daily).
+model AutopilotState {
+  id           String     @id @default(cuid())
+  restaurantId String     @unique
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  // Master gate
+  masterEnabled Boolean @default(false)
+
+  // Individual campaign toggles
+  secondOrderEnabled     Boolean @default(false)
+  reEngageEnabled        Boolean @default(false)
+  cartAbandonmentEnabled Boolean @default(false)
+
+  // Cron dedup
+  lastSecondOrderRun DateTime?
+  lastReEngageRun    DateTime?
+  lastCartAbandonRun DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// Per-restaurant Kickstarter state. ONE row per restaurant — upserted
+/// on first /admin/kickstarter visit. No master gate at the Kickstarter
+/// level (the 2 products toggle independently).
+model KickstarterState {
+  id           String     @id @default(cuid())
+  restaurantId String     @unique
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  firstBuyPromoEnabled   Boolean @default(false)
+  inviteProspectsEnabled Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// Customer cart session. Created on first cart-touch (heartbeat from
+/// /order/[slug] when the customer adds an item). Updated as the cart
+/// changes. Becomes "abandoned" when no activity for 1-2 hours (config
+/// per restaurant via Autopilot settings). Cart-abandonment cron then
+/// fires the recovery email + suppresses if `recoveredAt` set (any
+/// order from same email within window — Luigi-confirmed).
+///
+/// Anonymous sessions (sessionToken-only, no email/phone) are tracked but
+/// CAN'T be emailed. Once the customer reaches the checkout form, we
+/// capture email and the session becomes addressable.
+model CartSession {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  /// Anonymous browser identifier (set in localStorage on first visit).
+  /// Unique across the platform so we can dedup if the same user opens
+  /// multiple tabs.
+  sessionToken String @unique
+
+  /// Customer identity — null until checkout form filled.
+  customerEmail String?
+  customerPhone String?
+  customerId    String? // FK to Customer if matched on save
+
+  /// Cart state — snapshot for personalizing the recovery email
+  /// ("come back for your Margherita Pizza!"). cartJson is denormalized
+  /// since menu items can change after the abandonment.
+  itemCount Int   @default(0)
+  cartTotal Float @default(0)
+  cartJson  Json  @default("[]")
+
+  /// Lifecycle
+  lastTouchedAt   DateTime  @default(now()) @updatedAt
+  reachedCheckout Boolean   @default(false) // entered email/phone
+  abandonedAt     DateTime? // set by sweep when stale
+  recoveredAt     DateTime? // set when order found
+  emailSentAt     DateTime? // recovery email dispatched
+
+  createdAt DateTime @default(now())
+
+  // Cart-abandonment cron filter — find recently-abandoned, not-yet-
+  // recovered, not-yet-emailed sessions.
+  @@index([restaurantId, abandonedAt])
+  // Suppression lookup — "any order from this email since abandonment?"
+  @@index([customerEmail])
+}
+
+/// CSV import batch for Kickstarter → Invite Prospects. One per upload.
+/// Holds aggregate stats + lifecycle so the owner can see "47 of 100
+/// emails sent, 2 bounced, 1 unsubscribed."
+model ProspectImport {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  filename    String
+  totalRows   Int
+  successRows Int    @default(0) // parsed + persisted
+  errorRows   Int    @default(0) // invalid email / dup / etc.
+
+  /// Send state — set as the throttled send batch progresses.
+  emailsSent     Int       @default(0)
+  emailsLastSent DateTime?
+  isComplete     Boolean   @default(false)
+
+  uploadedAt DateTime   @default(now())
+  prospects  Prospect[]
+
+  @@index([restaurantId, uploadedAt])
+}
+
+/// Individual prospect from a CSV import. Each is a candidate to receive
+/// one invite email with a pre-made Kickstarter coupon code.
+model Prospect {
+  id       String         @id @default(cuid())
+  importId String
+  import   ProspectImport @relation(fields: [importId], references: [id], onDelete: Cascade)
+
+  name  String?
+  email String
+  phone String?
+
+  /// Email lifecycle — null fields mean "hasn't happened yet."
+  emailSentAt    DateTime?
+  emailBouncedAt DateTime?
+  unsubscribedAt DateTime?
+
+  /// Conversion tracking — set if this prospect later created a Customer
+  /// row (e.g. signed up + ordered). Lets the owner see ROI of the
+  /// invite campaign.
+  convertedToCustomerId String?
+
+  createdAt DateTime @default(now())
+
+  @@index([importId])
+  @@index([email])
 }
 
 model DeliveryZone {
@@ -1378,7 +1630,7 @@ model ResellerProfile {
   /// Prisma can't @@unique across two tables, but the proxy resolves
   /// restaurants FIRST then falls back to resellers, so a collision
   /// silently routes to the restaurant).
-  genericSubdomain    String?   @unique
+  genericSubdomain String? @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

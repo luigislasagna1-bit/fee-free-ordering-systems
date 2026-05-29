@@ -84,7 +84,27 @@ export async function POST(req: NextRequest) {
     // before validating — otherwise inherited-menu locations would reject
     // every order with "menu item not found".
     const menuRestaurantId = await resolveMenuRestaurantId(restaurant.id);
-    const menuItemIds = [...new Set(items.map((i: any) => String(i.menuItemId)))];
+    // Collect ids from BOTH the top-level items AND each item's bundleItems
+    // children (the child menuItemIds are real menu items that we must
+    // validate live on this restaurant). The bundle parent's own
+    // `menuItemId` is a synthetic `bundle:<promoId>` string and is
+    // skipped from the menu lookup.
+    const menuItemIds = [...new Set(
+      items.flatMap((i: any) => {
+        const ids: string[] = [];
+        if (typeof i.menuItemId === "string" && !i.menuItemId.startsWith("bundle:")) {
+          ids.push(i.menuItemId);
+        }
+        if (Array.isArray(i.bundleItems)) {
+          for (const child of i.bundleItems) {
+            if (child && typeof child.menuItemId === "string") {
+              ids.push(child.menuItemId);
+            }
+          }
+        }
+        return ids;
+      })
+    )];
     const menuItems = await prisma.menuItem.findMany({
       where: { id: { in: menuItemIds }, restaurantId: menuRestaurantId, isAvailable: true },
       include: {
@@ -96,12 +116,95 @@ export async function POST(req: NextRequest) {
 
     let serverSubtotal = 0;
     const validatedItems: Array<{
-      menuItemId: string; variantId: string | null; variantName: string | null;
+      menuItemId: string | null; variantId: string | null; variantName: string | null;
       name: string; price: number; quantity: number; notes: string | null; subtotal: number;
       modifiers: Array<{ modifierOptionId: string; name: string; priceAdjustment: number }>;
+      bundleItems: unknown | null;
     }> = [];
 
     for (const raw of items) {
+      // ── Bundle line item branch ────────────────────────────────────
+      // Promo Type 8 / 13 bundles arrive with a synthetic menuItemId
+      // ("bundle:<promoId>") + a non-empty bundleItems array. We do NOT
+      // look these up in the menu (the parent isn't a real MenuItem);
+      // we trust the client-supplied bundle price (the promo engine
+      // enforces eligibility; recomputing the price here would clobber
+      // the owner's fixed bundlePrice). We DO validate every child
+      // menuItemId belongs to this restaurant — that's the only way a
+      // tampered client could sneak unauthorized items into a free
+      // bundle wrapper.
+      const isBundleLine =
+        (typeof raw.menuItemId === "string" && raw.menuItemId.startsWith("bundle:")) ||
+        (raw.isBundle === true && Array.isArray(raw.bundleItems) && raw.bundleItems.length > 0);
+      if (isBundleLine) {
+        if (!Array.isArray(raw.bundleItems) || raw.bundleItems.length === 0) {
+          return NextResponse.json({ error: "Bundle item missing children" }, { status: 400 });
+        }
+        const sanitisedChildren: Array<{
+          menuItemId: string; variantId?: string | null;
+          name: string; variantName?: string | null;
+          modifiers?: Array<{ name: string; priceAdjustment?: number }>;
+          notes?: string | null;
+          specialityFee?: number;
+        }> = [];
+        for (const child of raw.bundleItems) {
+          if (!child || typeof child !== "object") {
+            return NextResponse.json({ error: "Invalid bundle child" }, { status: 400 });
+          }
+          const cid = String(child.menuItemId ?? "");
+          const childMenuItem = menuItemMap.get(cid);
+          if (!childMenuItem) {
+            return NextResponse.json(
+              { error: `Bundle item references unknown menu item: ${cid}` },
+              { status: 400 },
+            );
+          }
+          sanitisedChildren.push({
+            menuItemId: cid,
+            variantId: child.variantId ? String(child.variantId) : null,
+            name: sanitize(child.name ?? childMenuItem.name, 200),
+            variantName: child.variantName ? sanitize(child.variantName, 100) : null,
+            modifiers: Array.isArray(child.modifiers)
+              ? child.modifiers.slice(0, 20).map((m: any) => ({
+                  name: sanitize(m?.name ?? "", 200),
+                  priceAdjustment:
+                    typeof m?.priceAdjustment === "number" ? m.priceAdjustment : 0,
+                }))
+              : undefined,
+            notes: child.notes ? sanitize(child.notes, 200) : null,
+            specialityFee:
+              typeof child.specialityFee === "number" && child.specialityFee >= 0
+                ? Math.round(child.specialityFee * 100) / 100
+                : undefined,
+          });
+        }
+        const bundleQty = Math.max(1, Math.min(99, parseInt(raw.quantity, 10) || 1));
+        // Bundle price = client's lineTotal divided by quantity (always 1
+        // in the current UX, but we tolerate >1 in case we change that).
+        const clientSubtotal =
+          typeof raw.subtotal === "number" ? raw.subtotal : Number(raw.price ?? 0) * bundleQty;
+        const bundleLineTotal = Math.max(0, Math.round(clientSubtotal * 100) / 100);
+        const bundleUnitPrice = Math.round((bundleLineTotal / bundleQty) * 100) / 100;
+        serverSubtotal += bundleLineTotal;
+
+        validatedItems.push({
+          menuItemId: null, // synthetic bundle wrapper — not a real MenuItem
+          variantId: null,
+          variantName: null,
+          name: sanitize(
+            raw.bundlePromoName ?? raw.name ?? "Bundle",
+            200,
+          ),
+          price: bundleUnitPrice,
+          quantity: bundleQty,
+          notes: raw.notes ? sanitize(raw.notes, 200) : null,
+          subtotal: bundleLineTotal,
+          modifiers: [],
+          bundleItems: sanitisedChildren,
+        });
+        continue;
+      }
+
       const menuItem = menuItemMap.get(String(raw.menuItemId));
       if (!menuItem) {
         return NextResponse.json({ error: `Menu item not found: ${raw.menuItemId}` }, { status: 400 });
@@ -168,6 +271,7 @@ export async function POST(req: NextRequest) {
         notes: raw.notes ? sanitize(raw.notes, 200) : null,
         subtotal: lineTotal,
         modifiers: validatedMods,
+        bundleItems: null,
       });
     }
 
@@ -251,7 +355,13 @@ export async function POST(req: NextRequest) {
       orderType: type,
       isNewCustomer: false,
       subtotal: serverSubtotal,
-      items: validatedItems.map((i) => ({ menuItemId: i.menuItemId, price: i.price, quantity: i.quantity, subtotal: i.subtotal })),
+      // Bundle line items (menuItemId === null) are EXCLUDED from the
+      // promo engine — their price is already the discounted bundle
+      // total and applying further per-item promos would double-dip.
+      // Normal items still flow through.
+      items: validatedItems
+        .filter((i) => i.menuItemId !== null)
+        .map((i) => ({ menuItemId: i.menuItemId as string, price: i.price, quantity: i.quantity, subtotal: i.subtotal })),
       paymentMethod,
     });
     const serverPromoDiscount = Math.round(totalPromoDiscount(promoResults, serverSubtotal) * 100) / 100;
@@ -521,6 +631,9 @@ export async function POST(req: NextRequest) {
             notes: item.notes,
             subtotal: item.subtotal,
             modifiers: { create: item.modifiers },
+            // Bundle line items carry their child picks here. Null for
+            // normal line items. See prisma/schema.prisma `OrderItem.bundleItems`.
+            bundleItems: item.bundleItems ?? undefined,
           })),
         },
       },

@@ -37,7 +37,14 @@ export type Feature =
    *  the "marketplace" add-on (included) or the standalone "driver_pool"
    *  add-on. Surfaces the per-order "send to driver pool" option in
    *  the kitchen display. */
-  | "driver_pool";
+  | "driver_pool"
+  /** Unlocks promo types 6-13 in the admin promotion wizard
+   *  (Payment method reward, Free item, Meal bundle, Buy N get free,
+   *  Free dish as part of meal, Fixed/Percentage discount on combo,
+   *  Meal bundle with speciality). Granted by the `advanced_promos`
+   *  add-on. Types 1-5 are FREE for every restaurant regardless of
+   *  this entitlement. */
+  | "advanced_promo_types";
 
 /** Statuses on RestaurantAddOn that grant entitlements. past_due / cancelled
  *  / incomplete subscriptions do NOT grant access — the feature drops the
@@ -132,4 +139,5 @@ export const ALL_FEATURES: readonly Feature[] = [
   "multi_location_management",
   "marketplace_listing",
   "driver_pool",
+  "advanced_promo_types",
 ];

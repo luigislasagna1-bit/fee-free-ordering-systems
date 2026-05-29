@@ -194,6 +194,10 @@ const navGroups: NavGroup[] = [
       { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",   icon: Tag },
       { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles },
       { href: "/admin/social-media", labelKey: "socialMedia",  label: "Social Media", icon: Share2 },
+      // Kickstarter — Marketing Suite Phase 4 (First Buy Promo + Invite Prospects).
+      // Sits above Autopilot because it acquires NEW customers (the funnel
+      // step before retention/reactivation that Autopilot handles).
+      { href: "/admin/kickstarter",  labelKey: "kickstarter",  label: "Kickstarter",  icon: Rocket },
       { href: "/admin/autopilot",    labelKey: "autopilot",    label: "Autopilot",    icon: Zap },
     ],
   },
@@ -390,8 +394,16 @@ function isActiveItem(item: NavItem, pathname: string): boolean {
 function useSafeT() {
   const t = useTranslations("admin.sidebar");
   return (key: string, fallback?: string) => {
-    const v = t(key);
-    return v.startsWith("admin.sidebar.") || v === key ? fallback ?? key : v;
+    // next-intl's t() throws in dev mode when a key is missing — that
+    // takes down the whole sidebar and blocks navigation. Wrap in a
+    // try/catch so a missing translation degrades gracefully to the
+    // hardcoded English fallback (which every NavItem already carries).
+    try {
+      const v = t(key);
+      return v.startsWith("admin.sidebar.") || v === key ? fallback ?? key : v;
+    } catch {
+      return fallback ?? key;
+    }
   };
 }
 

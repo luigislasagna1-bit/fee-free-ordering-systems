@@ -114,6 +114,12 @@ export default async function OrderingPage({
       minimumOrder: true,
       orderType: true,
       couponCode: true,
+      // ruleConfig + rules feed the customer-facing PromoDetailModal so
+      // it can render type-specific panels (eligible items, bundle slots,
+      // freebie pool). ruleConfig is the new Phase 2a JSON column; rules
+      // is the legacy string fallback the engine also reads.
+      ruleConfig: true,
+      rules: true,
     },
     orderBy: { createdAt: "desc" },
     take: 10, // hard cap — UI is a horizontal scroller anyway
