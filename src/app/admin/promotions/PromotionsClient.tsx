@@ -712,24 +712,11 @@ export function PromotionsClient({
       {isEmpty ? (
         <div className="bg-white rounded-2xl p-16 text-center border border-gray-100 shadow-sm">
           <Tag className="w-12 h-12 mx-auto mb-3 text-gray-200" />
-          <p className="text-gray-500 font-medium">No deals found</p>
+          <p className="text-gray-500 font-medium">No deals yet</p>
           <p className="text-sm text-gray-400 mt-1">
-            Create promotions or coupon codes to attract and retain customers.
+            Click <span className="font-semibold text-emerald-600">&ldquo;+ New Promo&rdquo;</span> at the top to create a promotion,
+            or <span className="font-semibold text-blue-600">&ldquo;+ New coupon code&rdquo;</span> above to create a coupon.
           </p>
-          <div className="mt-4 flex items-center justify-center gap-2">
-            <Link
-              href="/admin/promotions/new"
-              className="bg-emerald-500 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-emerald-600 transition"
-            >
-              Create Promotion
-            </Link>
-            <button
-              onClick={() => setCouponModal({ kind: "coupon" })}
-              className="bg-blue-500 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-blue-600 transition"
-            >
-              Create Coupon
-            </button>
-          </div>
         </div>
       ) : (
         <div className="space-y-3">
