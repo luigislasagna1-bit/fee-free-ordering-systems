@@ -351,23 +351,10 @@ export async function POST(req: NextRequest) {
         ],
       },
     });
-    const promoResults = applyPromotions(activePromos as any, {
-      orderType: type,
-      isNewCustomer: false,
-      subtotal: serverSubtotal,
-      // Bundle line items (menuItemId === null) are EXCLUDED from the
-      // promo engine — their price is already the discounted bundle
-      // total and applying further per-item promos would double-dip.
-      // Normal items still flow through.
-      items: validatedItems
-        .filter((i) => i.menuItemId !== null)
-        .map((i) => ({ menuItemId: i.menuItemId as string, price: i.price, quantity: i.quantity, subtotal: i.subtotal })),
-      paymentMethod,
-    });
-    const serverPromoDiscount = Math.round(totalPromoDiscount(promoResults, serverSubtotal) * 100) / 100;
-    const hasFreeDelivery = promoResults.some((r: any) => r.type === "free_delivery");
-
     // ── Delivery fee + zone resolution ──────────────────────────────────────
+    // Resolved BEFORE applyPromotions() so the engine can evaluate the
+    // Delivery Area restriction (Phase 2a) — free-delivery promos with
+    // `deliveryZoneIds` need this context to fire.
     let resolvedZoneId: string | null = null;
     let resolvedZoneMinutes: number | null = null;
     let zoneDeliveryFee = restaurant.deliveryFee;
@@ -410,6 +397,35 @@ export async function POST(req: NextRequest) {
         );
       }
     }
+
+    // ── Promo engine evaluation (now has resolved zone in context) ──────────
+    // Run AFTER zone resolution so Delivery Area-restricted promos (Phase 2a)
+    // see the deliveryZoneId and can fire correctly. Server-authoritative —
+    // the client's hasFreeDelivery flag from /api/public/apply-promos is not
+    // trusted; we recompute here with the same engine + same restrictions.
+    const promoResults = applyPromotions(activePromos as any, {
+      orderType: type,
+      isNewCustomer: false,
+      // TODO: thread `isMember` through from session — for now defaults to
+      // false on the server, so "member-only" promos won't fire here even
+      // when the customer is signed in. Low-impact bug; client-side
+      // hasFreeDelivery already shows the right preview.
+      isMember: false,
+      subtotal: serverSubtotal,
+      // Bundle line items (menuItemId === null) are EXCLUDED from the
+      // promo engine — their price is already the discounted bundle
+      // total and applying further per-item promos would double-dip.
+      items: validatedItems
+        .filter((i) => i.menuItemId !== null)
+        .map((i) => ({ menuItemId: i.menuItemId as string, price: i.price, quantity: i.quantity, subtotal: i.subtotal })),
+      paymentMethod,
+      // Phase 2a: the Delivery Area restriction needs this. Undefined
+      // for pickup/dine-in (the engine short-circuits zone-restricted
+      // promos via the orderType check).
+      deliveryZoneId: resolvedZoneId ?? undefined,
+    });
+    const serverPromoDiscount = Math.round(totalPromoDiscount(promoResults, serverSubtotal) * 100) / 100;
+    const hasFreeDelivery = promoResults.some((r: any) => r.type === "free_delivery");
 
     const serverDeliveryFee = (type === "delivery" && !hasFreeDelivery)
       ? Math.max(0, zoneDeliveryFee)

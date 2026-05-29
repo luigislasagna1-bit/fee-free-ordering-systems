@@ -654,38 +654,6 @@ export function OrderingPageClient({
     if (visibleCategories.length && !activeCategory) setActiveCategory(visibleCategories[0].id);
   }, [visibleCategories.length]);
 
-  // Auto-apply promos when cart changes
-  useEffect(() => {
-    if (cart.length === 0) { setPromoDiscount(0); setPromoResults([]); setHasFreeDelivery(false); return; }
-    const sub = cart.reduce((s, i) => s + i.lineTotal, 0);
-    fetch("/api/public/apply-promos", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        restaurantSlug: restaurant.slug, orderType, subtotal: sub,
-        // Skip bundle line items — their price is the owner's fixed bundle
-        // price, and feeding the synthetic `bundle:<id>` menuItemId into
-        // the public promo engine would either no-op (lookup fails) or
-        // double-discount. Bundles are self-contained discounts.
-        items: cart.filter(ci => !ci.isBundle).map(ci => ({
-          menuItemId: ci.menuItem.id,
-          categoryId: ci.menuItem.categoryId,
-          price: ci.menuItem.price,
-          quantity: ci.quantity,
-          subtotal: ci.lineTotal,
-        })),
-      }),
-    })
-      .then(r => r.json())
-      .then(data => {
-        setPromoResults(data.applied ?? []);
-        setPromoDiscount(data.totalDiscount ?? 0);
-        setHasFreeDelivery(data.hasFreeDelivery ?? false);
-      })
-      .catch(() => {});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, orderType]);
-
   // Debounced geocode + zone lookup whenever the delivery address changes.
   useEffect(() => {
     if (orderType !== "delivery" || !hasZones) {
@@ -718,6 +686,48 @@ export function OrderingPageClient({
   const resolvedZone = hasZones && customerCoords
     ? findZoneForPoint(deliveryZones, restaurant.lat, restaurant.lng, customerCoords.lat, customerCoords.lng)
     : null;
+
+  // Auto-apply promos when cart changes (or when the resolved delivery
+  // zone changes — a delivery-area-restricted promo only activates once
+  // we know which zone the address is in, which happens after the
+  // geocode lookup above).
+  useEffect(() => {
+    if (cart.length === 0) { setPromoDiscount(0); setPromoResults([]); setHasFreeDelivery(false); return; }
+    const sub = cart.reduce((s, i) => s + i.lineTotal, 0);
+    fetch("/api/public/apply-promos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        restaurantSlug: restaurant.slug, orderType, subtotal: sub,
+        // Skip bundle line items — their price is the owner's fixed bundle
+        // price, and feeding the synthetic `bundle:<id>` menuItemId into
+        // the public promo engine would either no-op (lookup fails) or
+        // double-discount. Bundles are self-contained discounts.
+        items: cart.filter(ci => !ci.isBundle).map(ci => ({
+          menuItemId: ci.menuItem.id,
+          categoryId: ci.menuItem.categoryId,
+          price: ci.menuItem.price,
+          quantity: ci.quantity,
+          subtotal: ci.lineTotal,
+        })),
+        // Phase 2a restriction inputs — forward the resolved delivery
+        // zone (so Delivery Area-restricted promos like "Free delivery
+        // in Zone 1-7" trigger) and the member flag (so member-only
+        // promos resolve). Both undefined when not applicable —
+        // e.g. pickup orders skip deliveryZoneId.
+        deliveryZoneId: orderType === "delivery" && resolvedZone?.inside ? resolvedZone.zone.id : undefined,
+        isMember: !!currentCustomer,
+      }),
+    })
+      .then(r => r.json())
+      .then(data => {
+        setPromoResults(data.applied ?? []);
+        setPromoDiscount(data.totalDiscount ?? 0);
+        setHasFreeDelivery(data.hasFreeDelivery ?? false);
+      })
+      .catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
   const zoneFee = resolvedZone?.zone.deliveryFee;
