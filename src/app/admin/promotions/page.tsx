@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { Plus } from "lucide-react";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { PromotionsClient } from "./PromotionsClient";
@@ -6,7 +8,12 @@ export default async function PromotionsPage() {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) {
-    return <PromotionsClient promotions={[] as any} coupons={[] as any} categories={[]} menuItems={[]} />;
+    return (
+      <div>
+        <HeaderBar />
+        <PromotionsClient promotions={[] as any} coupons={[] as any} categories={[]} menuItems={[]} />
+      </div>
+    );
   }
 
   // Resolve owner-id set for promo/coupon lookups. A child location's
@@ -51,11 +58,33 @@ export default async function PromotionsPage() {
   ]);
 
   return (
-    <PromotionsClient
-      promotions={promotions as any}
-      coupons={coupons as any}
-      categories={categories}
-      menuItems={menuItems}
-    />
+    <div>
+      <HeaderBar />
+      <PromotionsClient
+        promotions={promotions as any}
+        coupons={coupons as any}
+        categories={categories}
+        menuItems={menuItems}
+      />
+    </div>
+  );
+}
+
+function HeaderBar() {
+  return (
+    <div className="flex items-center justify-between mb-5">
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900">Promotions &amp; Coupons</h1>
+        <p className="text-sm text-gray-500 mt-0.5">
+          Automatic deals, bundles, and coupon codes for your customers
+        </p>
+      </div>
+      <Link
+        href="/admin/promotions/new"
+        className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-emerald-600 transition text-sm shadow-sm"
+      >
+        <Plus className="w-4 h-4" /> New Promo
+      </Link>
+    </div>
   );
 }
