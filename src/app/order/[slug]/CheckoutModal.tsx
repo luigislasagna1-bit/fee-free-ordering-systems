@@ -22,6 +22,16 @@ type CartLine = {
   variant?: { name: string };
   quantity: number;
   lineTotal: number;
+  /** Bundle line item (Promo Type 8 / 13) — when true the summary
+   *  renders this as a parent row + indented children instead of a
+   *  single line. The child names come from `bundleItems[]`. */
+  isBundle?: boolean;
+  bundlePromoName?: string;
+  bundleItems?: Array<{
+    name: string;
+    variantName?: string;
+    specialityFee?: number;
+  }>;
 };
 
 interface Props {
@@ -548,10 +558,25 @@ export function CheckoutModal({
                 <div className="divide-y divide-gray-100">
                   {cart.map((ci, i) => (
                     <div key={i} className="grid grid-cols-[40px_1fr_70px] gap-3 py-2.5 text-sm items-start">
-                      <span className="font-semibold text-gray-700">{ci.quantity}×</span>
+                      <span className="font-semibold text-gray-700">{ci.isBundle ? "1×" : `${ci.quantity}×`}</span>
                       <span className="text-gray-700">
-                        {ci.menuItem.name}
+                        <span className="font-semibold">
+                          {ci.isBundle ? (ci.bundlePromoName ?? ci.menuItem.name) : ci.menuItem.name}
+                        </span>
                         {ci.variant && <span className="block text-xs text-gray-400">{ci.variant.name}</span>}
+                        {ci.isBundle && ci.bundleItems && ci.bundleItems.length > 0 && (
+                          <span className="block mt-1 pl-3 border-l-2 border-gray-100 text-xs text-gray-500 space-y-0.5">
+                            {ci.bundleItems.map((child, ci2) => (
+                              <span key={ci2} className="block">
+                                • {child.name}
+                                {child.variantName ? ` (${child.variantName})` : ""}
+                                {child.specialityFee && child.specialityFee > 0
+                                  ? ` (+${formatCurrency(child.specialityFee)})`
+                                  : ""}
+                              </span>
+                            ))}
+                          </span>
+                        )}
                       </span>
                       <span className="text-right text-gray-700 font-medium">{formatCurrency(ci.lineTotal)}</span>
                     </div>

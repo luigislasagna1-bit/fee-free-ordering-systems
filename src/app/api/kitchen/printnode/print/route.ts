@@ -428,6 +428,8 @@ export async function POST(req: NextRequest) {
         subtotal:  item.subtotal,
         notes:     item.notes,
         modifiers: item.modifiers.map((m) => ({ name: m.name, priceAdjustment: m.priceAdjustment })),
+        // Bundle children pass-through for receipt rendering.
+        bundleItems: Array.isArray((item as any).bundleItems) ? (item as any).bundleItems : null,
       })),
     };
 

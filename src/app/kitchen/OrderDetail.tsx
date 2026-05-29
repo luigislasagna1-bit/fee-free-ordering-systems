@@ -167,21 +167,56 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           {/* Items */}
           <Section title={tk("items")} t={t}>
             <div className="space-y-3">
-              {order.items.map((item) => (
-                <div key={item.id} className={`border-b ${t.border} pb-3 last:border-0 last:pb-0`}>
-                  <div className="flex justify-between">
-                    <span className={`font-semibold text-sm ${t.text}`}>{item.quantity}× {item.name}</span>
-                    <span className={`text-sm font-medium ${t.text}`}>{formatCurrency(item.subtotal)}</span>
-                  </div>
-                  {item.variantName && <div className={`text-xs ${t.muted} pl-3`}>{item.variantName}</div>}
-                  {item.modifiers.map((m, i) => (
-                    <div key={i} className={`text-xs ${t.muted} pl-3`}>
-                      + {m.name}{m.priceAdjustment !== 0 && ` (${m.priceAdjustment > 0 ? "+" : ""}${formatCurrency(m.priceAdjustment)})`}
+              {order.items.map((item) => {
+                // Promo Type 8 / 13 bundle line item — render parent +
+                // indented children. `bundleItems` is a JSON column on
+                // OrderItem; Prisma returns it as `unknown`.
+                const bundle = Array.isArray((item as any).bundleItems)
+                  ? ((item as any).bundleItems as Array<{
+                      name: string;
+                      variantName?: string | null;
+                      modifiers?: Array<{ name: string; priceAdjustment?: number }>;
+                      notes?: string | null;
+                      specialityFee?: number;
+                    }>)
+                  : null;
+                return (
+                  <div key={item.id} className={`border-b ${t.border} pb-3 last:border-0 last:pb-0`}>
+                    <div className="flex justify-between">
+                      <span className={`font-semibold text-sm ${t.text}`}>{item.quantity}× {item.name}</span>
+                      <span className={`text-sm font-medium ${t.text}`}>{formatCurrency(item.subtotal)}</span>
                     </div>
-                  ))}
-                  {item.notes && <div className="text-xs text-yellow-600 pl-3 italic">{item.notes}</div>}
-                </div>
-              ))}
+                    {item.variantName && <div className={`text-xs ${t.muted} pl-3`}>{item.variantName}</div>}
+                    {bundle && bundle.length > 0 && (
+                      <div className={`mt-1 pl-3 border-l-2 ${t.border} space-y-0.5`}>
+                        {bundle.map((child, i) => (
+                          <div key={i} className={`text-xs ${t.muted}`}>
+                            • 1× {child.name}
+                            {child.variantName ? ` (${child.variantName})` : ""}
+                            {child.specialityFee && child.specialityFee > 0
+                              ? ` (+${formatCurrency(child.specialityFee)})`
+                              : ""}
+                            {Array.isArray(child.modifiers) && child.modifiers.length > 0 && (
+                              <div className={`pl-3 ${t.muted}`}>
+                                {child.modifiers.map((m, mi) => (
+                                  <div key={mi}>+ {m.name}</div>
+                                ))}
+                              </div>
+                            )}
+                            {child.notes && <div className="pl-3 italic text-yellow-600">{child.notes}</div>}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {item.modifiers.map((m, i) => (
+                      <div key={i} className={`text-xs ${t.muted} pl-3`}>
+                        + {m.name}{m.priceAdjustment !== 0 && ` (${m.priceAdjustment > 0 ? "+" : ""}${formatCurrency(m.priceAdjustment)})`}
+                      </div>
+                    ))}
+                    {item.notes && <div className="text-xs text-yellow-600 pl-3 italic">{item.notes}</div>}
+                  </div>
+                );
+              })}
             </div>
           </Section>
 

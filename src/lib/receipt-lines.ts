@@ -246,6 +246,28 @@ function renderKitchenSection(
       for (const item of order.items) {
         applyStyle(r, s);
         r.line(`${item.quantity}x ${item.name}`);
+        // Bundle children: indented under the parent, no per-child price.
+        if (Array.isArray(item.bundleItems) && item.bundleItems.length > 0) {
+          for (const child of item.bundleItems) {
+            applyStyle(r, s);
+            const variantPart = child.variantName ? ` (${child.variantName})` : "";
+            const specPart =
+              child.specialityFee && child.specialityFee > 0
+                ? ` (+$${child.specialityFee.toFixed(2)})`
+                : "";
+            r.wrapped(`  - 1x ${child.name}${variantPart}${specPart}`, 4);
+            if (modsEnabled && Array.isArray(child.modifiers)) {
+              for (const mod of child.modifiers) {
+                applyStyle(r, modStyle);
+                r.wrapped(`    -> ${mod.name}`, 7);
+              }
+            }
+            if (child.notes) {
+              applyStyle(r, s);
+              r.wrapped(`    !! ${child.notes}`, 7);
+            }
+          }
+        }
         if (modsEnabled) {
           for (const mod of item.modifiers) {
             applyStyle(r, modStyle);
@@ -334,6 +356,23 @@ function renderCustomerSection(
       for (const item of order.items) {
         applyStyle(r, s);
         r.columns(`${item.quantity}x ${item.name}`, fmt(item.subtotal));
+        if (Array.isArray(item.bundleItems) && item.bundleItems.length > 0) {
+          for (const child of item.bundleItems) {
+            applyStyle(r, s);
+            const variantPart = child.variantName ? ` (${child.variantName})` : "";
+            const specPart =
+              child.specialityFee && child.specialityFee > 0
+                ? ` (+$${child.specialityFee.toFixed(2)})`
+                : "";
+            r.wrapped(`  - ${child.name}${variantPart}${specPart}`, 2);
+            if (modsEnabled && Array.isArray(child.modifiers)) {
+              for (const mod of child.modifiers) {
+                applyStyle(r, modStyle);
+                r.wrapped(`    + ${mod.name}`, 4);
+              }
+            }
+          }
+        }
         if (modsEnabled) {
           for (const mod of item.modifiers) {
             const p = mod.priceAdjustment !== 0 ? ` (+${fmt(mod.priceAdjustment)})` : "";

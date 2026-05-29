@@ -67,12 +67,36 @@ export default async function ConfirmationPage({
         <div className="border border-gray-100 rounded-xl p-4 mb-6 text-left">
           <div className="text-sm font-semibold text-gray-700 mb-3">Order Summary</div>
           <div className="space-y-2">
-            {order.items.map((item) => (
-              <div key={item.id} className="flex justify-between text-sm">
-                <span className="text-gray-700">{item.quantity}× {item.name}</span>
-                <span className="text-gray-600">{formatCurrency(item.subtotal)}</span>
-              </div>
-            ))}
+            {order.items.map((item) => {
+              const bundle = Array.isArray((item as any).bundleItems)
+                ? ((item as any).bundleItems as Array<{
+                    name: string;
+                    variantName?: string | null;
+                    specialityFee?: number;
+                  }>)
+                : null;
+              return (
+                <div key={item.id} className="text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">{item.quantity}× {item.name}</span>
+                    <span className="text-gray-600">{formatCurrency(item.subtotal)}</span>
+                  </div>
+                  {bundle && bundle.length > 0 && (
+                    <div className="mt-1 pl-3 border-l-2 border-gray-100 space-y-0.5 text-xs text-gray-500">
+                      {bundle.map((child, i) => (
+                        <div key={i}>
+                          • {child.name}
+                          {child.variantName ? ` (${child.variantName})` : ""}
+                          {child.specialityFee && child.specialityFee > 0
+                            ? ` (+${formatCurrency(child.specialityFee)})`
+                            : ""}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
           <div className="border-t border-gray-100 mt-3 pt-3 space-y-1 text-sm">
             <div className="flex justify-between text-gray-600"><span>Subtotal</span><span>{formatCurrency(order.subtotal)}</span></div>
