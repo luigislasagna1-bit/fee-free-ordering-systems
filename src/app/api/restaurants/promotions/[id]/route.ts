@@ -18,7 +18,15 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     name, description, promotionType, isActive, stackingRule, orderType, customerType,
     minimumOrder, rules, daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
     scope,
+    usableHourStart, usableHourEnd, showOnBanner, bannerHeadline,
   } = body;
+
+  const clampMin = (v: unknown): number | null => {
+    if (v === null || v === undefined || v === "") return null;
+    const n = Number(v);
+    if (!Number.isFinite(n)) return null;
+    return Math.max(0, Math.min(1440, Math.floor(n)));
+  };
 
   // If trying to flip scope to/from "brand", verify this restaurant is
   // actually a brand parent. We don't want a child-location admin
@@ -63,6 +71,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       ...(usageLimit !== undefined && { usageLimit }),
       ...(autoApply !== undefined && { autoApply }),
       ...(couponCode !== undefined && { couponCode: couponCode || null }),
+      ...(usableHourStart !== undefined && { usableHourStart: clampMin(usableHourStart) }),
+      ...(usableHourEnd !== undefined && { usableHourEnd: clampMin(usableHourEnd) }),
+      ...(showOnBanner !== undefined && { showOnBanner: !!showOnBanner }),
+      ...(bannerHeadline !== undefined && {
+        bannerHeadline: typeof bannerHeadline === "string" && bannerHeadline.trim()
+          ? bannerHeadline.trim().slice(0, 80)
+          : null,
+      }),
       ...scopeUpdate,
     },
   });

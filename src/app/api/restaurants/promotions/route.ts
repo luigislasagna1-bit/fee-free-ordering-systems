@@ -40,7 +40,18 @@ export async function POST(req: NextRequest) {
     name, description, promotionType, isActive, stackingRule, orderType, customerType,
     minimumOrder, rules, daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
     scope,
+    // Fabrizio 2026-05-28: hour-of-day usability window + customer-banner
+    // display. Server-side clamp + null pass-through so the form can
+    // leave them blank without provoking a constraint error.
+    usableHourStart, usableHourEnd, showOnBanner, bannerHeadline,
   } = body;
+
+  const clampMin = (v: unknown): number | null => {
+    if (v === null || v === undefined || v === "") return null;
+    const n = Number(v);
+    if (!Number.isFinite(n)) return null;
+    return Math.max(0, Math.min(1440, Math.floor(n)));
+  };
 
   // Only brand parents can create "brand"-scoped promotions. A standalone
   // restaurant or a child location asking for brand scope is rejected —
@@ -89,6 +100,12 @@ export async function POST(req: NextRequest) {
       autoApply: autoApply ?? true,
       couponCode: couponCode || null,
       scope: resolvedScope,
+      usableHourStart: clampMin(usableHourStart),
+      usableHourEnd: clampMin(usableHourEnd),
+      showOnBanner: showOnBanner === undefined ? true : !!showOnBanner,
+      bannerHeadline: typeof bannerHeadline === "string" && bannerHeadline.trim()
+        ? bannerHeadline.trim().slice(0, 80)
+        : null,
     },
   });
 

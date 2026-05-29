@@ -62,6 +62,13 @@ export type PromoInput = {
   minimumOrder: number;
   rules: string;
   daysOfWeek?: string | null;
+  /** Minutes-since-midnight inclusive lower bound for when the promo
+   *  becomes USABLE today. NULL = no lower bound (00:00). */
+  usableHourStart?: number | null;
+  /** Minutes-since-midnight exclusive upper bound. NULL = no upper bound
+   *  (24:00). When usableHourStart > usableHourEnd, the window WRAPS
+   *  past midnight (e.g. 22:00–02:00 = late-night promo). */
+  usableHourEnd?: number | null;
   startsAt?: Date | null;
   endsAt?: Date | null;
   usageLimit?: number | null;
@@ -96,6 +103,23 @@ function isScheduledNow(promo: PromoInput, now: Date): boolean {
   if (promo.endsAt && now > new Date(promo.endsAt)) return false;
   const days = safeJson<number[] | null>(promo.daysOfWeek ?? null, null);
   if (days && !days.includes(now.getDay())) return false;
+  // Hour-of-day USABILITY window (Fabrizio 2026-05-28). Promo is only
+  // applied if the current minute-of-day falls inside the window. Both
+  // bounds NULL = always usable. Window can wrap past midnight when
+  // start > end (e.g. 22:00–02:00 = late night).
+  const startMin = typeof promo.usableHourStart === "number" ? promo.usableHourStart : null;
+  const endMin = typeof promo.usableHourEnd === "number" ? promo.usableHourEnd : null;
+  if (startMin != null || endMin != null) {
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+    const s = startMin ?? 0;
+    const e = endMin ?? 1440;
+    const inWindow = s <= e
+      ? nowMin >= s && nowMin < e
+      // Wrap: late-night promo (22:00–02:00) is in-window if EITHER
+      // we're past start OR before end.
+      : nowMin >= s || nowMin < e;
+    if (!inWindow) return false;
+  }
   return true;
 }
 

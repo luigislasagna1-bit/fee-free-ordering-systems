@@ -8,6 +8,16 @@ import {
   UserCircle, LogIn,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+
+/** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
+ *  Used by the promo-banner usability-window label so a 12-3 PM lunch
+ *  promo shows up as "12:00–15:00" on the card. */
+function minutesToHHMM(minutes: number): string {
+  const m = Math.max(0, Math.min(1440, Math.floor(minutes)));
+  const hh = String(Math.floor(m / 60)).padStart(2, "0");
+  const mm = String(m % 60).padStart(2, "0");
+  return `${hh}:${mm}`;
+}
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { parseTheme, bannerHeightPx } from "@/lib/theme";
@@ -245,10 +255,30 @@ export function OrderingPageClient({
   isEmbedded = false,
   acceptedMethods = ["cash"],
   fromHostedSite = false,
+  promoBanners = [],
   currentCustomer = null,
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
+  /** Active promotions to display as banners above the menu (per Fabrizio
+   *  2026-05-28). Server-filtered for visibility (active, in date range,
+   *  matches today's day-of-week, showOnBanner=true). The hour-of-day
+   *  USABILITY window is NOT filtered here — that gate runs at order
+   *  calculation. So a 12-3 PM lunch promo still shows at 9 AM so the
+   *  customer can pre-order for tomorrow's lunch. */
+  promoBanners?: Array<{
+    id: string;
+    name: string;
+    description: string | null;
+    promotionType: string;
+    bannerHeadline: string | null;
+    daysOfWeek: string | null;
+    usableHourStart: number | null;
+    usableHourEnd: number | null;
+    minimumOrder: number;
+    orderType: string;
+    couponCode: string | null;
+  }>;
   /** The logged-in per-restaurant customer at this restaurant, if any.
    *  Server-resolved via getCurrentRestaurantCustomer in page.tsx and
    *  passed in so the header can render the right Sign-in vs. Hi-name
@@ -1106,6 +1136,69 @@ export function OrderingPageClient({
         {/* "Our delivery areas" panel was moved to the Restaurant Info page so
            the main ordering grid stays focused on the menu. The "Restaurant Info"
            pill (top right of this header) opens it. */}
+
+        {/* ── Promotion banners (Fabrizio 2026-05-28) ─────────────────────
+            Horizontal scrolling row of active promos at the top of the menu,
+            modeled on GloriaFood. Customers see promos immediately instead
+            of having to wait until checkout. Each card surfaces the promo
+            headline + a "Get Promo" CTA that triggers the coupon code (if
+            one is attached) and / or opens a details modal. Hour-of-day
+            usability is enforced at order calculation, not visibility —
+            a lunch promo still shows at 9 AM so customers can pre-order. */}
+        {promoBanners.length > 0 && (
+          <div className="mb-6 flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
+            {promoBanners.map((promo) => {
+              const headline = promo.bannerHeadline?.trim() || promo.name;
+              const hasUsableWindow =
+                typeof promo.usableHourStart === "number" &&
+                typeof promo.usableHourEnd === "number";
+              const usableWindowLabel = hasUsableWindow
+                ? `${minutesToHHMM(promo.usableHourStart!)}–${minutesToHHMM(promo.usableHourEnd!)}`
+                : null;
+              const minOrderLabel =
+                promo.minimumOrder > 0
+                  ? `${formatCurrency(promo.minimumOrder)} min`
+                  : null;
+              return (
+                <div
+                  key={promo.id}
+                  className="flex-shrink-0 w-72 rounded-xl p-4 text-white shadow-sm relative overflow-hidden"
+                  style={{
+                    background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)`,
+                  }}
+                >
+                  <div className="text-[10px] uppercase tracking-wider font-bold opacity-80 mb-1">
+                    {t("promoLabel")}
+                  </div>
+                  <div className="text-base font-extrabold leading-tight mb-1">{headline}</div>
+                  {promo.description && (
+                    <div className="text-xs opacity-90 leading-snug mb-2">{promo.description}</div>
+                  )}
+                  <div className="flex flex-wrap gap-1.5 text-[10px] font-semibold">
+                    {usableWindowLabel && (
+                      <span className="bg-white/20 rounded-full px-2 py-0.5">
+                        ⏰ {usableWindowLabel}
+                      </span>
+                    )}
+                    {minOrderLabel && (
+                      <span className="bg-white/20 rounded-full px-2 py-0.5">{minOrderLabel}</span>
+                    )}
+                    {promo.orderType !== "both" && (
+                      <span className="bg-white/20 rounded-full px-2 py-0.5">
+                        {promo.orderType === "pickup" ? "🥡 Pickup" : "🚚 Delivery"}
+                      </span>
+                    )}
+                    {promo.couponCode && (
+                      <span className="bg-white text-gray-900 rounded-full px-2 py-0.5 font-mono">
+                        {promo.couponCode}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* ── Category pills ───────────────────────────────────────────── */}
         <div ref={pillRef} className="flex gap-2 overflow-x-auto pb-2 mb-6 scroll-smooth" style={{ scrollbarWidth: "none" }}>

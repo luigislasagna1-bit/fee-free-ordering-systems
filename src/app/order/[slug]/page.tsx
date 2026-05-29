@@ -64,6 +64,74 @@ export default async function OrderingPage({
   // ordering from.
   const menuRestaurantId = await resolveMenuRestaurantId(restaurantBase.id);
 
+  // Active promotions to display as banners at the top of the page.
+  // Per Fabrizio's 2026-05-28 feedback: customers must see active promos
+  // immediately (GloriaFood-style) — not only at checkout. We filter
+  // server-side for visibility:
+  //   - isActive + showOnBanner
+  //   - startsAt..endsAt window covers "now"
+  //   - daysOfWeek includes today (if specified)
+  //
+  // We deliberately do NOT filter by `usableHourStart/End` here — those
+  // control when the promo APPLIES to a cart, not when it's visible.
+  // A lunch promo (usable 12–15) still needs to appear all day so
+  // customers can pre-order for tomorrow's lunch. The hour gate runs
+  // at order calculation time in /api/orders.
+  //
+  // Brand-scoped promos: same logic as brand menus. Children that
+  // inherit the brand menu also surface brand-scope promotions from
+  // the parent so a "20% off all Luigi's locations" banner shows
+  // everywhere.
+  const now = new Date();
+  const todayDow = now.getUTCDay(); // 0=Sun..6=Sat
+  const candidateRestaurantIds: string[] = [restaurantBase.id];
+  // If this is a child inheriting brand menu, also include the parent's
+  // promotions scoped as "brand".
+  if (menuRestaurantId !== restaurantBase.id) candidateRestaurantIds.push(menuRestaurantId);
+
+  const rawPromotions = await prisma.promotion.findMany({
+    where: {
+      isActive: true,
+      showOnBanner: true,
+      OR: [
+        { restaurantId: restaurantBase.id },
+        { restaurantId: menuRestaurantId, scope: "brand" },
+      ],
+      AND: [
+        { OR: [{ startsAt: null }, { startsAt: { lte: now } }] },
+        { OR: [{ endsAt: null }, { endsAt: { gte: now } }] },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      promotionType: true,
+      bannerHeadline: true,
+      daysOfWeek: true,
+      usableHourStart: true,
+      usableHourEnd: true,
+      minimumOrder: true,
+      orderType: true,
+      couponCode: true,
+    },
+    orderBy: { createdAt: "desc" },
+    take: 10, // hard cap — UI is a horizontal scroller anyway
+  });
+
+  // Day-of-week filter happens in app code (DB stores as JSON string
+  // for backwards compat). NULL/empty daysOfWeek = all days.
+  const promoBanners = rawPromotions.filter((p) => {
+    if (!p.daysOfWeek) return true;
+    try {
+      const days = JSON.parse(p.daysOfWeek);
+      if (!Array.isArray(days) || days.length === 0) return true;
+      return days.includes(todayDow);
+    } catch {
+      return true; // malformed → show defensively rather than hide
+    }
+  });
+
   const menuCategories = await prisma.menuCategory.findMany({
     where: { restaurantId: menuRestaurantId, isActive: true },
     orderBy: { sortOrder: "asc" },
@@ -204,6 +272,7 @@ export default async function OrderingPage({
         isEmbedded={isEmbedded}
         acceptedMethods={acceptedMethods}
         fromHostedSite={fromHostedSite}
+        promoBanners={promoBanners}
         currentCustomer={currentCustomer
           ? {
               id: currentCustomer.id,

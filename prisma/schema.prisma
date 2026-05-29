@@ -955,6 +955,24 @@ model Promotion {
   daysOfWeek    String?
   startsAt      DateTime?
   endsAt        DateTime?
+  /// Hour-of-day USABILITY window (separate from daysOfWeek visibility).
+  /// Per Fabrizio's 2026-05-28 feedback: a "lunch promo" should be
+  /// VISIBLE all day (so customers can pre-order tomorrow's lunch) but
+  /// only USABLE at lunch hours (e.g. 12-15). Stored as minutes-since-
+  /// midnight 0–1440, both inclusive on start, exclusive on end. NULL
+  /// on either side = no time constraint (24/7 within the daysOfWeek).
+  usableHourStart Int? // 0..1440 (e.g. 720 = 12:00 PM)
+  usableHourEnd   Int? // 0..1440 (e.g. 900 = 15:00)
+  /// When true, the promo renders as a top-of-page banner on the
+  /// customer ordering page (/order/[slug]) so it's impossible to miss
+  /// — like GloriaFood's promo cards. When false, it's still applied
+  /// at checkout but doesn't get prime real estate. Owners choose per
+  /// promo; defaults to true for new promos.
+  showOnBanner    Boolean @default(true)
+  /// Banner display copy override. When NULL, we render the promo's
+  /// `name` + `description`. When set, the owner gets a tighter
+  /// banner-only headline (e.g. "20% off lunch — today only!").
+  bannerHeadline  String?
   usageLimit    Int?
   usedCount     Int       @default(0)
   autoApply     Boolean   @default(true)

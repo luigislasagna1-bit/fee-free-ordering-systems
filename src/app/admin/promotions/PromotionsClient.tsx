@@ -6,6 +6,22 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 
+// ─── HH:MM ↔ minutes-since-midnight helpers ──────────────────────────────────
+// Promotion.usableHourStart/End are stored as integer minutes (0..1440) so
+// they can be compared cheaply at order time. The admin form uses `time`
+// inputs which round-trip "HH:MM" strings.
+
+function hhmmToMin(hhmm: string): number {
+  const [h, m] = hhmm.split(":").map(Number);
+  if (!Number.isFinite(h) || !Number.isFinite(m)) return 0;
+  return Math.max(0, Math.min(1440, h * 60 + m));
+}
+
+function minToHHMM(min: number): string {
+  const m = Math.max(0, Math.min(1440, Math.floor(min)));
+  return `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+}
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type IG = {
@@ -574,6 +590,14 @@ type FormState = {
   stackingRule: string; autoApply: boolean; couponCode: string;
   usageLimit: string; startsAt: string; endsAt: string;
   daysOfWeek: number[]; isActive: boolean;
+  // Fabrizio 2026-05-28: distinct USABILITY window (24h "HH:MM" strings,
+  // empty = no constraint). Distinct from daysOfWeek which gates
+  // visibility — these only gate when the cart can actually apply it.
+  usableHourStart: string;
+  usableHourEnd: string;
+  // Customer-facing banner config (top of /order/[slug]).
+  showOnBanner: boolean;
+  bannerHeadline: string;
 };
 
 function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
@@ -600,6 +624,10 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
     endsAt: promo?.endsAt ? new Date(promo.endsAt).toISOString().slice(0, 16) : "",
     daysOfWeek: promo?.daysOfWeek ? JSON.parse(promo.daysOfWeek) : [0, 1, 2, 3, 4, 5, 6],
     isActive: promo?.isActive ?? true,
+    usableHourStart: typeof promo?.usableHourStart === "number" ? minToHHMM(promo.usableHourStart) : "",
+    usableHourEnd: typeof promo?.usableHourEnd === "number" ? minToHHMM(promo.usableHourEnd) : "",
+    showOnBanner: promo?.showOnBanner ?? true,
+    bannerHeadline: promo?.bannerHeadline ?? "",
   });
 
   const [rules, setRules] = useState<PromoRules>(() => {
@@ -643,6 +671,13 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
       endsAt: form.endsAt || null,
       couponCode: form.autoApply ? null : (form.couponCode || null),
       rules: JSON.stringify(rules),
+      // New banner + usability fields. Convert HH:MM strings to
+      // minutes-since-midnight (server stores ints). Empty string = null
+      // (no constraint).
+      usableHourStart: form.usableHourStart ? hhmmToMin(form.usableHourStart) : null,
+      usableHourEnd: form.usableHourEnd ? hhmmToMin(form.usableHourEnd) : null,
+      showOnBanner: !!form.showOnBanner,
+      bannerHeadline: form.bannerHeadline.trim() || null,
     };
     try {
       const url = isNew ? "/api/restaurants/promotions" : `/api/restaurants/promotions/${promo.id}`;
@@ -811,6 +846,78 @@ function PromoModal({ promo, categories, menuItems, onClose, onSaved }: {
                           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                           value={form.endsAt} onChange={e => setF("endsAt", e.target.value)} />
                       </div>
+                    </div>
+                    {/* Usability window — distinct from visibility. Per
+                        Fabrizio: a lunch promo can show all day so customers
+                        pre-order for tomorrow, but only APPLIES at lunch
+                        hours. Empty = no time constraint (24/7). */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Usable hours{" "}
+                        <span className="text-xs text-gray-400 font-normal">(when the discount actually applies — leave blank for all day)</span>
+                      </label>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs text-gray-500 mb-1">From</label>
+                          <input type="time"
+                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                            value={form.usableHourStart}
+                            onChange={e => setF("usableHourStart", e.target.value)} />
+                        </div>
+                        <div>
+                          <label className="block text-xs text-gray-500 mb-1">To</label>
+                          <input type="time"
+                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                            value={form.usableHourEnd}
+                            onChange={e => setF("usableHourEnd", e.target.value)} />
+                        </div>
+                      </div>
+                      <p className="text-xs text-gray-400 mt-1.5 leading-relaxed">
+                        Example: a lunch promo with usable hours 12:00–15:00 is visible on the ordering page all day so customers
+                        can pre-order for tomorrow&apos;s lunch, but the discount only applies to orders placed (or scheduled) for
+                        that window.
+                      </p>
+                    </div>
+                    {/* Banner display — surfaces the promo at the top of
+                        /order/[slug] so customers see it before the menu. */}
+                    <div className="rounded-lg border border-emerald-100 bg-emerald-50/40 p-3 space-y-3">
+                      <label className="flex items-start justify-between gap-3 cursor-pointer">
+                        <div>
+                          <div className="text-sm font-semibold text-gray-900">Show on customer banner</div>
+                          <div className="text-xs text-gray-500 leading-relaxed">
+                            Display this promo as a card at the top of the ordering page so customers see it immediately.
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          role="switch"
+                          aria-checked={form.showOnBanner}
+                          onClick={() => setF("showOnBanner", !form.showOnBanner)}
+                          className={`relative inline-flex h-6 w-11 rounded-full transition flex-shrink-0 mt-1 ${
+                            form.showOnBanner ? "bg-emerald-500" : "bg-gray-300"
+                          }`}
+                        >
+                          <span
+                            className={`inline-block w-5 h-5 bg-white rounded-full shadow transform transition mt-0.5 ${
+                              form.showOnBanner ? "translate-x-5" : "translate-x-0.5"
+                            }`}
+                          />
+                        </button>
+                      </label>
+                      {form.showOnBanner && (
+                        <div>
+                          <label className="block text-xs font-medium text-gray-700 mb-1">
+                            Banner headline <span className="text-gray-400 font-normal">(optional — defaults to the promo name)</span>
+                          </label>
+                          <input
+                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                            value={form.bannerHeadline}
+                            onChange={e => setF("bannerHeadline", e.target.value)}
+                            placeholder="e.g. 20% off lunch — today only!"
+                            maxLength={80}
+                          />
+                        </div>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Usage Limit (optional)</label>
