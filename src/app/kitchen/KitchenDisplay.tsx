@@ -156,8 +156,14 @@ function OrderRow({ order, selected, onClick, t, now }: {
   const tk = useTranslations("kitchen");
   // `now === 0` means the client hasn't mounted yet (see useNow). Render
   // stable, time-independent values during SSR/first paint to match hydration.
-  const isNew = !!now && order.status === "pending" && (now - new Date(order.createdAt).getTime()) < 30000;
-  const rowClass = selected ? t.rowSelected : isNew ? `${t.rowNew} cursor-pointer` : t.row;
+  // ALL pending (unaccepted) orders flash — not just <30s old. A pending
+  // order is by definition "needs the kitchen's attention right now," so
+  // the row keeps pulsing on the left edge until staff accepts/rejects it.
+  // We pile the flash class onto whatever theme row style is active so
+  // selected-but-still-pending rows also flash.
+  const isPending = order.status === "pending";
+  const baseRowClass = selected ? t.rowSelected : isPending ? `${t.rowNew} cursor-pointer` : t.row;
+  const rowClass = isPending ? `${baseRowClass} kitchen-flash-new` : baseRowClass;
   const timeAgo = (() => {
     if (!now) return "";
     const diff = now - new Date(order.createdAt).getTime();

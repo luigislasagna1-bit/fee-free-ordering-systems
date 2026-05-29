@@ -1,15 +1,14 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import {
-  CalendarDays, Plus, X, Check, Edit2, Trash2, Settings,
-  Users, Clock, Phone, Mail, FileText, Table2, Loader2,
-  ChevronDown, Save, AlertCircle, RefreshCw, Search,
+  CalendarDays, Plus, X, Edit2, Trash2, Settings,
+  Users, Clock, Phone, Mail, Table2, Loader2, Save,
+  RefreshCw, Search,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-interface ReservationTable { id: string; name: string; number?: number; section?: string; capacity: number; isActive: boolean; sortOrder: number }
 interface Reservation {
   id: string; confirmationCode: string; status: string;
   customerName: string; customerEmail?: string; customerPhone?: string;
@@ -42,90 +41,9 @@ const STATUS_LABELS: Record<string, string> = {
 
 const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-// ─── Table Form Modal ─────────────────────────────────────────────────────────
-
-function TableFormModal({ table, onClose, onSaved }: {
-  table?: ReservationTable; onClose: () => void; onSaved: () => void;
-}) {
-  const isNew = !table;
-  const [form, setForm] = useState({
-    name:     table?.name     ?? "",
-    number:   table?.number   ?? "",
-    section:  table?.section  ?? "",
-    capacity: table?.capacity ?? 4,
-    isActive: table?.isActive ?? true,
-  });
-  const [saving, setSaving] = useState(false);
-
-  const save = async () => {
-    if (!form.name.trim()) { toast.error("Name required"); return; }
-    setSaving(true);
-    try {
-      const url = isNew ? "/api/admin/reservation-tables" : `/api/admin/reservation-tables/${table!.id}`;
-      const method = isNew ? "POST" : "PATCH";
-      const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
-      if (!res.ok) throw new Error("Failed");
-      toast.success(isNew ? "Table added" : "Table updated");
-      onSaved();
-    } catch { toast.error("Failed to save table"); }
-    setSaving(false);
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
-        <div className="flex items-center justify-between p-5 border-b">
-          <h2 className="text-lg font-bold">{isNew ? "Add Table" : "Edit Table"}</h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
-        </div>
-        <div className="p-5 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Table Name *</label>
-              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                placeholder="e.g. Table 1, Booth A" value={form.name}
-                onChange={e => setForm(f => ({ ...f, name: e.target.value }))} autoFocus />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Table Number</label>
-              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                placeholder="e.g. 1" value={form.number}
-                onChange={e => setForm(f => ({ ...f, number: e.target.value as any }))} />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Section</label>
-              <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                placeholder="e.g. Indoor, Patio" value={form.section}
-                onChange={e => setForm(f => ({ ...f, section: e.target.value }))} />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Capacity (guests)</label>
-              <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                value={form.capacity}
-                onChange={e => setForm(f => ({ ...f, capacity: parseInt(e.target.value) || 1 }))} />
-            </div>
-          </div>
-          <button onClick={() => setForm(f => ({ ...f, isActive: !f.isActive }))}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isActive ? "border-green-500 bg-green-50 text-green-700" : "border-gray-200 text-gray-500"}`}>
-            <Check className="w-4 h-4" /> {form.isActive ? "Active" : "Inactive"}
-          </button>
-        </div>
-        <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
-          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">Cancel</button>
-          <button onClick={save} disabled={saving}
-            className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
-            {saving ? "Saving..." : isNew ? "Add Table" : "Save"}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── Reservation Form Modal ───────────────────────────────────────────────────
 
-function ReservationFormModal({ tables, reservation, onClose, onSaved }: {
-  tables: ReservationTable[];
+function ReservationFormModal({ reservation, onClose, onSaved }: {
   reservation?: Reservation;
   onClose: () => void;
   onSaved: () => void;
@@ -141,7 +59,6 @@ function ReservationFormModal({ tables, reservation, onClose, onSaved }: {
     time:          reservation?.time          ?? "19:00",
     durationMinutes: reservation?.durationMinutes ?? 90,
     notes:         reservation?.notes         ?? "",
-    tableId:       reservation?.table?.id     ?? "",
   });
   const [saving, setSaving] = useState(false);
 
@@ -151,7 +68,7 @@ function ReservationFormModal({ tables, reservation, onClose, onSaved }: {
     try {
       const url = isNew ? "/api/admin/reservations" : `/api/admin/reservations/${reservation!.id}`;
       const method = isNew ? "POST" : "PATCH";
-      const body = isNew ? form : { tableId: form.tableId, notes: form.notes, durationMinutes: form.durationMinutes };
+      const body = isNew ? form : { notes: form.notes, durationMinutes: form.durationMinutes };
       const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       if (!res.ok) throw new Error("Failed");
       toast.success(isNew ? "Reservation created" : "Reservation updated");
@@ -159,8 +76,6 @@ function ReservationFormModal({ tables, reservation, onClose, onSaved }: {
     } catch { toast.error("Failed to save"); }
     setSaving(false);
   };
-
-  const activeTables = tables.filter(t => t.isActive);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
@@ -213,17 +128,6 @@ function ReservationFormModal({ tables, reservation, onClose, onSaved }: {
                 value={form.durationMinutes}
                 onChange={e => setForm(f => ({ ...f, durationMinutes: parseInt(e.target.value) || 90 }))} />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Assign Table</label>
-              <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                value={form.tableId}
-                onChange={e => setForm(f => ({ ...f, tableId: e.target.value }))}>
-                <option value="">No table assigned</option>
-                {activeTables.map(t => (
-                  <option key={t.id} value={t.id}>{t.section ? `${t.section} - ` : ""}{t.name} (cap. {t.capacity})</option>
-                ))}
-              </select>
-            </div>
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">Customer Notes</label>
               <textarea rows={2} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none"
@@ -246,7 +150,7 @@ function ReservationFormModal({ tables, reservation, onClose, onSaved }: {
 
 // ─── Reservations List Tab ────────────────────────────────────────────────────
 
-function ReservationsTab({ tables }: { tables: ReservationTable[] }) {
+function ReservationsTab() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterDate, setFilterDate] = useState(new Date().toISOString().slice(0, 10));
@@ -431,121 +335,12 @@ function ReservationsTab({ tables }: { tables: ReservationTable[] }) {
             </div>
           </div>
 
-          {/* Assign table */}
-          <div>
-            <p className="text-xs font-medium text-gray-500 mb-1">Assign Table</p>
-            <select className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              value={detail.table?.id ?? ""}
-              onChange={async e => {
-                await fetch(`/api/admin/reservations/${detail.id}`, {
-                  method: "PATCH",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ tableId: e.target.value }),
-                });
-                load();
-              }}>
-              <option value="">No table</option>
-              {tables.filter(t => t.isActive).map(t => (
-                <option key={t.id} value={t.id}>{t.section ? `${t.section} - ` : ""}{t.name} (cap. {t.capacity})</option>
-              ))}
-            </select>
-          </div>
         </div>
       )}
 
       {modal !== null && (
-        <ReservationFormModal tables={tables} reservation={modal.reservation}
+        <ReservationFormModal reservation={modal.reservation}
           onClose={() => setModal(null)} onSaved={() => { setModal(null); load(); }} />
-      )}
-    </div>
-  );
-}
-
-// ─── Tables Tab ───────────────────────────────────────────────────────────────
-
-function TablesTab() {
-  const [tables, setTables] = useState<ReservationTable[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [modal, setModal] = useState<{ table?: ReservationTable } | null>(null);
-
-  const load = async () => {
-    setLoading(true);
-    const res = await fetch("/api/admin/reservation-tables");
-    if (res.ok) setTables(await res.json());
-    setLoading(false);
-  };
-
-  useEffect(() => { load(); }, []);
-
-  const deleteTable = async (id: string) => {
-    if (!confirm("Delete this table? Active reservations will be unlinked.")) return;
-    await fetch(`/api/admin/reservation-tables/${id}`, { method: "DELETE" });
-    toast.success("Table deleted");
-    load();
-  };
-
-  const toggleActive = async (id: string, isActive: boolean) => {
-    await fetch(`/api/admin/reservation-tables/${id}`, {
-      method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ isActive }),
-    });
-    load();
-  };
-
-  const sections = [...new Set(tables.map(t => t.section || "General"))];
-
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">{tables.length} table{tables.length !== 1 ? "s" : ""} configured</p>
-        <button onClick={() => setModal({})}
-          className="flex items-center gap-1.5 bg-emerald-500 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600">
-          <Plus className="w-4 h-4" /> Add Table
-        </button>
-      </div>
-
-      {loading ? (
-        <div className="flex items-center justify-center h-32"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>
-      ) : tables.length === 0 ? (
-        <div className="text-center py-16 text-gray-400">
-          <Table2 className="w-12 h-12 mx-auto mb-3 opacity-30" />
-          <p className="font-medium">No tables yet</p>
-          <p className="text-sm mt-1">Add your first table to get started</p>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {sections.map(section => (
-            <div key={section}>
-              <h3 className="text-sm font-semibold text-gray-500 mb-2">{section}</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                {tables.filter(t => (t.section || "General") === section).map(t => (
-                  <div key={t.id} className={`bg-white border rounded-xl p-4 ${t.isActive ? "border-gray-100" : "border-gray-100 opacity-50"}`}>
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <div className="font-semibold text-gray-900 text-sm">{t.name}</div>
-                        {t.number && <div className="text-xs text-gray-400">#{t.number}</div>}
-                      </div>
-                      <div className="flex gap-1">
-                        <button onClick={() => setModal({ table: t })} className="p-1 text-gray-400 hover:text-blue-500"><Edit2 className="w-3.5 h-3.5" /></button>
-                        <button onClick={() => deleteTable(t.id)} className="p-1 text-gray-400 hover:text-red-500"><Trash2 className="w-3.5 h-3.5" /></button>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500"><Users className="w-3 h-3 inline mr-1" />{t.capacity} guests</span>
-                      <button onClick={() => toggleActive(t.id, !t.isActive)}
-                        className={`text-xs px-2 py-0.5 rounded-full font-medium transition ${t.isActive ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
-                        {t.isActive ? "Active" : "Inactive"}
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {modal !== null && (
-        <TableFormModal table={modal.table} onClose={() => setModal(null)} onSaved={() => { setModal(null); load(); }} />
       )}
     </div>
   );
@@ -567,9 +362,9 @@ function TablesTab() {
 // Everything else that was on the old panel (auto-confirm logic, slot
 // length, max per slot, deposits, cancellation policy, per-day reservation
 // hours, blackout dates, custom table layout) has been intentionally
-// removed from the SETTINGS surface. Tables are still managed in the
-// Tables tab; the rest is GloriaFood-equivalent (they don't expose those
-// controls either).
+// removed. The Tables tab itself was also dropped 2026-05-28 — GloriaFood
+// doesn't expose per-table management, and the kitchen display + the
+// reservations list are sufficient floor-management surface.
 //
 // Defaults match the screenshot Luigi sent:
 //   minGuests=2, maxGuests=8, minNoticeMinutes=15, maxAdvanceDays=8,
@@ -817,34 +612,28 @@ function NumberRow({
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
-type Tab = "reservations" | "tables" | "settings";
+type Tab = "reservations" | "settings";
 
 export function ReservationsClient() {
   const [activeTab, setActiveTab] = useState<Tab>("reservations");
-  const [tables, setTables] = useState<ReservationTable[]>([]);
-
-  useEffect(() => {
-    fetch("/api/admin/reservation-tables").then(r => r.ok ? r.json() : []).then(setTables);
-  }, []);
 
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between mb-5">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Table Reservations</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Manage bookings, tables, and reservation settings</p>
+          <p className="text-sm text-gray-500 mt-0.5">Manage bookings and reservation settings</p>
         </div>
       </div>
 
       {/* Per-tab accent colors — Luigi's UAT note: mono-color tabs are
           confusing, each surface deserves its own scannable identity.
-          Reservations = sky (future/calendar), Tables = emerald
-          (current floor layout), Settings = slate-900 (config). */}
+          Reservations = sky (future/calendar), Settings = slate-900 (config).
+          (Tables tab removed 2026-05-28 per GloriaFood parity.) */}
       <div className="flex border-b border-gray-200 mb-5">
         {([
-          ["reservations", "Reservations", CalendarDays, "border-sky-500",     "text-sky-700",     "bg-sky-50",     "text-sky-500"    ],
-          ["tables",       "Tables",       Table2,       "border-emerald-500", "text-emerald-700", "bg-emerald-50", "text-emerald-500"],
-          ["settings",     "Settings",     Settings,     "border-slate-900",   "text-slate-900",   "bg-slate-100",  "text-slate-600"  ],
+          ["reservations", "Reservations", CalendarDays, "border-sky-500",   "text-sky-700",   "bg-sky-50",    "text-sky-500"  ],
+          ["settings",     "Settings",     Settings,     "border-slate-900", "text-slate-900", "bg-slate-100", "text-slate-600"],
         ] as [Tab, string, any, string, string, string, string][]).map(([tab, label, Icon, activeBorder, activeText, activeBg, inactiveIcon]) => {
           const isActive = activeTab === tab;
           return (
@@ -861,8 +650,7 @@ export function ReservationsClient() {
       </div>
 
       <div className="flex-1 overflow-y-auto min-h-0">
-        {activeTab === "reservations" && <ReservationsTab tables={tables} />}
-        {activeTab === "tables"       && <TablesTab />}
+        {activeTab === "reservations" && <ReservationsTab />}
         {activeTab === "settings"     && <SettingsTab />}
       </div>
     </div>
