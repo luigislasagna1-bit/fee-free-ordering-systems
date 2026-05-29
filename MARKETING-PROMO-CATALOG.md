@@ -372,13 +372,53 @@ Multiple `schedules` entries means we need an array; `availableBetween` is optio
 
 ---
 
-## Promo Type 7: Get a FREE item 🔒 LOCKED   ⏳ AWAITING SCREENSHOTS
+## Promo Type 7: Get a FREE item 🔒 LOCKED  ✅ CAPTURED
 
-> Free drink on any order $30+
+> Free (or steeply discounted) bonus item that the CUSTOMER chooses from a curated list, triggered by a qualifying cart (e.g. $30+ → pick a free drink)
 
-What I need:
-- All 3 steps
-- Step 2: which items are eligible to be "the free one"? Single pick, category, list?
+### Critical UX difference from Promo 2
+Promo 2 discounts items that are **already** in the cart. Promo 7 **prompts the customer to ADD** a free item once their cart qualifies — a new customer-facing modal.
+
+Tooltip: *"In case you select more than one item your client can choose only one."*
+- Owner can list multiple items as eligible "freebies" (e.g. Coke, Sprite, Bottled Water, Iced Tea)
+- Customer picks ONE when prompted at qualification
+- Customer can't take 2 freebies even if multiple eligible items are listed
+
+### Step 2 — Eligible items + Discount + Min order
+- **Eligible items** picker (same tree-view modal as Type 2) — *Items Group 1* — list of "candidate freebies"
+- **Discount**: Items Group 1: `[100]` `%` (default 100 = totally free; 50 = half off etc.)
+- **No extra charges** dropdown (same 3 options — but only relevant if discount < 100%)
+- **Minimum order amount** (checkbox, CHECKED by default — required logically because there has to be a qualifying threshold)
+  - Default value: 30 CAD
+
+### Customer-facing flow we need to build
+1. Customer adds items to cart
+2. Cart subtotal crosses the minimum order threshold
+3. **Modal appears**: "🎁 You qualify for a free [drink]! Pick one:"
+4. Shows the eligible items as buttons (with their images)
+5. Customer taps one → item added to cart at $0 (or discounted price)
+6. If customer modifies cart and drops below threshold → freebie auto-removed
+
+This is the **first customer-facing modal we have to add** for any promo type. Worth a dedicated component (`<FreebiePromptModal />`).
+
+### Schema additions
+```json
+"ruleConfig": {
+  "kind": "free_item_choice",
+  "eligibleGroup": { "categoryIds": [...], "menuItemIds": [...] },
+  "discountPercent": 100,
+  "extraChargesPolicy": "none"
+}
+// minimumOrder (existing field) gates eligibility
+```
+
+### Open questions for Promo 7
+1. If the customer has ONE eligible item available and crosses threshold — does it auto-add, or still prompt?
+2. If multiple "Get a FREE item" promos are active (e.g. one for $30+ → drink, one for $50+ → dessert) — both prompt, or only the highest-tier one?
+3. Does the prompt re-fire if the customer dismisses it once? (probably no — would be annoying)
+4. What if the customer adds the freebie at full price (because they like it) and THEN crosses threshold? Should the existing line auto-discount, or is a SEPARATE bonus line added?
+
+---
 
 ---
 
