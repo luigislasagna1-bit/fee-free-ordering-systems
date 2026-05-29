@@ -10,6 +10,7 @@
  */
 
 import { Plus, Trash2 } from "lucide-react";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 export type ShowtimeSchedule = {
   dayOfWeek: number;
@@ -535,16 +536,15 @@ export function StepRestrictions({
             </p>
           </div>
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Image URL</label>
-            <input
-              type="url"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+            <label className="block text-xs text-gray-500 mb-1">Promo card image</label>
+            <ImageUpload
               value={form.imageUrl}
-              onChange={(e) => setForm({ imageUrl: e.target.value })}
-              placeholder="https://…"
+              onChange={(url) => setForm({ imageUrl: url })}
+              aspectRatio="wide"
             />
             <p className="text-xs text-gray-400 mt-1">
-              Promo card image. Use any image URL.
+              Upload an image or paste a URL. Shown as the background of the
+              promo card on the ordering page.
             </p>
           </div>
         </div>

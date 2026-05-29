@@ -120,6 +120,9 @@ export default async function OrderingPage({
       // is the legacy string fallback the engine also reads.
       ruleConfig: true,
       rules: true,
+      // Owner-uploaded promo image (Phase 2a). Renders as the banner
+      // card background with a dark gradient overlay for legibility.
+      imageUrl: true,
     },
     orderBy: { createdAt: "desc" },
     take: 10, // hard cap — UI is a horizontal scroller anyway

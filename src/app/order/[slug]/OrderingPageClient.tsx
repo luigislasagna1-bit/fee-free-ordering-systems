@@ -305,6 +305,10 @@ export function OrderingPageClient({
     ruleConfig?: unknown;
     /** Legacy stringified config — fallback when ruleConfig is empty. */
     rules?: string | null;
+    /** Optional promo image URL set in Step 3 → Display details. When
+     *  set, the banner card shows the image instead of the plain black
+     *  background — owners can theme each promo card individually. */
+    imageUrl?: string | null;
   }>;
   /** The logged-in per-restaurant customer at this restaurant, if any.
    *  Server-resolved via getCurrentRestaurantCustomer in page.tsx and
@@ -1424,6 +1428,10 @@ export function OrderingPageClient({
                 promo.minimumOrder > 0
                   ? `${formatCurrency(promo.minimumOrder)} min`
                   : null;
+              // Owner-set imageUrl → render as the card background with a
+              // dark gradient overlay so text stays readable. Falls back to
+              // the theme's primary-color gradient when no image is set.
+              const hasImage = !!promo.imageUrl?.trim();
               return (
                 <div
                   key={promo.id}
@@ -1436,37 +1444,67 @@ export function OrderingPageClient({
                       setActivePromoModal(promo);
                     }
                   }}
-                  className="flex-shrink-0 w-72 rounded-xl p-4 text-white shadow-sm relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
-                  style={{
-                    background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)`,
-                  }}
+                  className="flex-shrink-0 w-72 h-36 rounded-xl text-white shadow-sm relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
                 >
-                  <div className="text-[10px] uppercase tracking-wider font-bold opacity-80 mb-1">
-                    {t("promoLabel")}
-                  </div>
-                  <div className="text-base font-extrabold leading-tight mb-1">{headline}</div>
-                  {promo.description && (
-                    <div className="text-xs opacity-90 leading-snug mb-2">{promo.description}</div>
+                  {/* Background image (when set) — absolutely positioned
+                      behind the dark overlay so it covers the full card. */}
+                  {hasImage && (
+                    <img
+                      src={promo.imageUrl!}
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                    />
                   )}
-                  <div className="flex flex-wrap gap-1.5 text-[10px] font-semibold">
-                    {usableWindowLabel && (
-                      <span className="bg-white/20 rounded-full px-2 py-0.5">
-                        ⏰ {usableWindowLabel}
-                      </span>
+                  {/* Solid colored background when no image, OR a dark
+                      gradient overlay when there IS an image — keeps the
+                      headline / badges legible against any photo. */}
+                  <div
+                    className="absolute inset-0"
+                    style={
+                      hasImage
+                        ? {
+                            background:
+                              "linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.55) 100%)",
+                          }
+                        : {
+                            background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)`,
+                          }
+                    }
+                  />
+                  {/* Foreground content */}
+                  <div className="relative h-full p-4 flex flex-col">
+                    <div className="text-[10px] uppercase tracking-wider font-bold opacity-80 mb-1">
+                      {t("promoLabel")}
+                    </div>
+                    <div className="text-base font-extrabold leading-tight mb-1">{headline}</div>
+                    {promo.description && (
+                      <div className="text-xs opacity-90 leading-snug mb-2 line-clamp-2">
+                        {promo.description}
+                      </div>
                     )}
-                    {minOrderLabel && (
-                      <span className="bg-white/20 rounded-full px-2 py-0.5">{minOrderLabel}</span>
-                    )}
-                    {promo.orderType !== "both" && (
-                      <span className="bg-white/20 rounded-full px-2 py-0.5">
-                        {promo.orderType === "pickup" ? "🥡 Pickup" : "🚚 Delivery"}
-                      </span>
-                    )}
-                    {promo.couponCode && (
-                      <span className="bg-white text-gray-900 rounded-full px-2 py-0.5 font-mono">
-                        {promo.couponCode}
-                      </span>
-                    )}
+                    <div className="mt-auto flex flex-wrap gap-1.5 text-[10px] font-semibold">
+                      {usableWindowLabel && (
+                        <span className="bg-white/20 backdrop-blur rounded-full px-2 py-0.5">
+                          ⏰ {usableWindowLabel}
+                        </span>
+                      )}
+                      {minOrderLabel && (
+                        <span className="bg-white/20 backdrop-blur rounded-full px-2 py-0.5">
+                          {minOrderLabel}
+                        </span>
+                      )}
+                      {promo.orderType !== "both" && (
+                        <span className="bg-white/20 backdrop-blur rounded-full px-2 py-0.5">
+                          {promo.orderType === "pickup" ? "🥡 Pickup" : "🚚 Delivery"}
+                        </span>
+                      )}
+                      {promo.couponCode && (
+                        <span className="bg-white text-gray-900 rounded-full px-2 py-0.5 font-mono">
+                          {promo.couponCode}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
