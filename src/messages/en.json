@@ -1196,7 +1196,7 @@
       "body": "Click the button below to confirm your email address. The link is single-use.",
       "button": "Verify my email",
       "ifYouDidntRequest": "If you didn't request this, you can safely ignore this email."
-    },
+    }
   },
   "marketing": {
     "nav": {

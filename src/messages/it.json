@@ -1196,7 +1196,7 @@
       "body": "Fai clic sul pulsante qui sotto per confermare il tuo indirizzo e-mail. Il link è monouso.",
       "button": "Verifica la mia e-mail",
       "ifYouDidntRequest": "Se non hai richiesto questo, puoi ignorare questa e-mail."
-    },
+    }
   },
   "marketing": {
     "nav": {

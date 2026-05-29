@@ -1196,7 +1196,7 @@
       "body": "Clique no botão abaixo para confirmar seu endereço de e-mail. O link é de uso único.",
       "button": "Verificar meu e-mail",
       "ifYouDidntRequest": "Se você não solicitou isso, pode ignorar este e-mail."
-    },
+    }
   },
   "marketing": {
     "nav": {
