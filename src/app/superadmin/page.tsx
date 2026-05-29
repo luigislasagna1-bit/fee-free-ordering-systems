@@ -18,13 +18,36 @@ export const dynamic = "force-dynamic";
 const STALE_THRESHOLD_DAYS = 30;
 
 export default async function SuperadminDashboard() {
+  // Stat cards use COUNT queries against the full restaurant table.
+  // The `restaurants` list below is only the recent-10 sample shown in
+  // the table at the bottom of the page — DO NOT derive aggregate stats
+  // from it (we did exactly that 2026-05-28 and the dashboard
+  // disagreed with /superadmin/restaurants — "10 restaurants / 0 paid"
+  // because that was just the recent-10 sample, while the restaurants
+  // page correctly counted 13 / 1).
   const [
+    totalRestaurants,
+    activeRestaurants,
+    publishedRestaurants,
+    paidRestaurants,
     restaurants,
     totalOrders,
     totalRevenue,
     addOns,
     activeAddOnRows,
   ] = await Promise.all([
+    prisma.restaurant.count(),
+    prisma.restaurant.count({ where: { isActive: true } }),
+    prisma.restaurant.count({ where: { publishedAt: { not: null } } }),
+    // "Paid" = has at least one active or trialing add-on subscription.
+    // We use a distinct restaurantAddOn count rather than a relational
+    // exists() so the query stays simple — same definition the
+    // /superadmin/restaurants tier filter uses.
+    prisma.restaurant.count({
+      where: {
+        addOns: { some: { status: { in: ["active", "trialing"] } } },
+      },
+    }),
     prisma.restaurant.findMany({
       orderBy: { createdAt: "desc" },
       take: 10,
@@ -69,10 +92,6 @@ export default async function SuperadminDashboard() {
     0,
   );
 
-  const activeRestaurants = restaurants.filter((r) => r.isActive).length;
-  const publishedRestaurants = restaurants.filter((r) => !!r.publishedAt).length;
-  const paidRestaurants = restaurants.filter((r) => r.addOns.length > 0).length;
-
   // Stale-activity: restaurants with no order in the last 30 days.
   // Done with a single grouped query to avoid N+1 across the recent list.
   const staleThreshold = new Date(Date.now() - STALE_THRESHOLD_DAYS * 24 * 60 * 60 * 1000);
@@ -93,7 +112,7 @@ export default async function SuperadminDashboard() {
       {/* Stats — top-line business numbers */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         {[
-          { label: "Total Restaurants", value: restaurants.length, icon: Store, color: "text-blue-500", bg: "bg-blue-50" },
+          { label: "Total Restaurants", value: totalRestaurants, icon: Store, color: "text-blue-500", bg: "bg-blue-50" },
           { label: "Monthly MRR", value: formatCurrency(mrrCents / 100), icon: DollarSign, color: "text-green-500", bg: "bg-green-50", hint: "from active add-ons" },
           { label: "Orders Processed", value: totalOrders, icon: TrendingUp, color: "text-amber-500", bg: "bg-amber-50" },
           { label: "Paid Restaurants", value: paidRestaurants, icon: Zap, color: "text-amber-500", bg: "bg-amber-50", hint: ">= 1 add-on" },
