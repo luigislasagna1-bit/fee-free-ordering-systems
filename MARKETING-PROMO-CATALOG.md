@@ -195,15 +195,64 @@ So **Highlight promo** is about **active attention** — when cart value exceeds
 
 ---
 
-## Promo Type 4: Buy one, get one free   ⏳ AWAITING SCREENSHOTS
+## Promo Type 4: Buy one, get one free  ✅ CAPTURED
 
-What I need:
-- Step 1 + Step 3 (universal)
-- Step 2: **how does the buy-X get-Y picker work?**
-  - Pick "buy" item(s) — single item, category, any?
-  - Pick "get free" item(s)
-  - Are they always the same item?
-  - Does it work on the cheapest of N?
+> Buy a "qualifying" item, get a second item from a (potentially identical) set free or discounted
+
+### Step 2 — TWO item groups + dual discount
+This is the first type with **multiple item groups**, and the pattern carries forward to all combo/bundle types (8, 10, 11, 12, 13).
+
+Tooltip: *"Example: Buy 1 Pizza and get the 2nd Pizza free would require to select all Pizzas for 'Items Group 1' and the same for 'Items Group 2'. By default this template is set to discount the cheaper item by 100%."*
+
+- **Eligible items**:
+  - **Items Group 1:** `[N selected]` (edit pencil) — the "buy" items
+  - **Items Group 2:** `[N selected]` (edit pencil) — the "get free" items
+  - Each opens the same tree-view modal as Type 2
+  - Groups can be IDENTICAL (same 32 pizzas in both) — classic BOGO on same item
+  - Or DIFFERENT (Group 1 = mains, Group 2 = drinks) — "buy a main, get a free drink"
+
+- **Discount:** dropdown — default "Automatically set discounts" (other options TBD — likely "Manually set per-item" or similar)
+
+- **Discount for cheapest item:** `[N]` `%` (default 100 — i.e. the cheaper of the two items is free)
+- **Discount for most expensive item:** `[N]` `%` (default 0 — i.e. the pricier item is paid in full)
+  - Owners can flip this for "buy expensive, get cheap at 50% off" type promos
+
+- **No extra charges** dropdown — same 3 options as Type 2
+
+### Step 3 — Universal, plus NEW Highlight conditions
+The advanced section's "Highlight promo > Custom selection" reveals an alternative trigger:
+
+- **No highlight** (default)
+- **Custom selection** (radio) — pick ONE of:
+  - **Cart value exceeds: `[N]` CAD** (the threshold we saw on Type 1/3)
+  - **Client adds an item to the cart that matches any item from "Item group 1"** (NEW)
+  - **Client adds an item to the cart that matches any item from "Item group 2"** (NEW)
+  - (Multiple highlight triggers can be set — looks like checkboxes, not radios within Custom selection — TBD)
+
+So Highlight isn't only cart-value-based — it can fire when a qualifying ITEM enters the cart, making upsell prompts contextual to what the customer is already buying.
+
+### List-view tooltip (revealed in Screenshot 5)
+Hovering a promo in the Self-made promos list shows a popup with:
+- **What the client gets**: e.g. "100% discount to the cheapest item"
+- **Conditions**: e.g. "Order Type: Pickup, Delivery"
+
+This is a quick-scan affordance for owners managing many promos — they don't have to click in to see what each one does. Worth building.
+
+### Schema additions
+| GloriaFood field | FFOS storage |
+|---|---|
+| Items Group 1 | `ruleConfig.itemGroups[0] = { categoryIds, menuItemIds }` |
+| Items Group 2 | `ruleConfig.itemGroups[1] = { categoryIds, menuItemIds }` |
+| Discount cheapest | `ruleConfig.discountCheapestPercent = 100` |
+| Discount expensive | `ruleConfig.discountExpensivePercent = 0` |
+| Highlight on item-in-cart | `highlightTriggers = [{ kind: "item_in_group", groupIndex: 0 }]` |
+
+### Open questions for Promo 4
+1. The "Discount:" dropdown — what are the alternative options beyond "Automatically set discounts"? Likely "Manually set per-item" for fine-grained control.
+2. Can Items Group 1 and 2 OVERLAP (i.e. same item in both groups for classic same-item BOGO)? Looks like YES based on Luigi's screenshot (Group 1 = 32 selected, Group 2 = 31 selected — heavy overlap).
+3. What if the customer adds 3 items from Group 1 + 1 from Group 2 — does the promo apply to the most expensive pair, the cheapest pair, or all qualifying pairs? Need to find rule.
+
+---
 
 ---
 
