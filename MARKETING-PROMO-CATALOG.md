@@ -156,13 +156,42 @@ Same as Type 1, **plus** Display Time has a SECOND option revealed by Screenshot
 
 ---
 
-## Promo Type 3: Free delivery   ⏳ AWAITING SCREENSHOTS
+## Promo Type 3: Free delivery  ✅ CAPTURED
 
-> Free or discounted delivery for orders over a cart value
+> Free (or discounted) delivery, applied to the DELIVERY FEE not the cart, with optional minimum order
 
-What I need:
-- Step 1 + Step 3 (universal — quick screenshots)
-- Step 2: **what does free delivery config look like?** Toggle "free" vs "discounted X%"? Per-zone configurable? Min cart input?
+### Step 2 — Discount + Minimum order
+- **Discount** `[N]` `%` — % off the delivery fee. **100% = totally free**, anything less = partial discount (e.g. 50% off delivery)
+- **Minimum order amount**:
+  - **Set a minimum order value (recommended)** (checkbox, default ON)
+  - `[N]` `CAD`
+
+### Step 3 — Universal targeting (with one type-specific lock)
+- **Order type** is **locked to Delivery** (no Pick-up option — this promo only makes sense for delivery orders). The "Custom selection" chip shows `Delivery` as the only entry.
+- **Only for selected delivery zones** checkbox (when checked) — expands to show ALL zones from the restaurant's existing delivery-zone configuration (`Zone 1`, `Zone 2`, ..., `Zone N`). Each zone is individually checkboxable.
+  - This means we need to pull zone names dynamically from `DeliveryZone` rows for the picker UI.
+
+### Highlight tooltip (universal across most promos — captured here)
+> *"Some clients may not notice the promo deal section when they start ordering or they see it and decide to look into this later. Therefore sales may be lost due to people forgetting or not noticing how to chase available promo deals. Use this setting to 'step-forward' and upgrade your clients ordering experience with a nice, contextual up-selling prompt."*
+
+So **Highlight promo** is about **active attention** — when cart value exceeds the threshold, the promo banner gets an "almost there!" upselling treatment rather than passive display.
+
+### Schema additions
+| GloriaFood field | FFOS storage |
+|---|---|
+| Delivery fee discount % | `ruleConfig.deliveryFeeDiscountPercent = 100` (or less) |
+| Order type lock | Implicit — promotionType "free_delivery" forces `orderType = "delivery"` server-side |
+| Selected delivery zones | `restrictions[] = { kind: "delivery_area", zoneIds: ["zone_abc", "zone_def"] }` |
+
+### What changes for the customer
+- Cart subtotal: unchanged
+- Delivery fee line: `[fee] × (1 - discountPercent/100)` — shows original + strikethrough or "Free Delivery" badge
+
+### Open questions for Promo 3
+1. When the customer has zones-restricted promo + chose a non-eligible zone → does the promo just not apply (silent), or does it show "available in zones X, Y, Z"?
+2. Free delivery on a $0 delivery zone — does it still show "Free delivery!" or hide because there was nothing to discount?
+
+---
 
 ---
 
