@@ -360,6 +360,11 @@ export function OrderingPageClient({
   const [mods, setMods] = useState<Record<string, string[]>>({});
   const [selectedVariant, setSelectedVariant] = useState<ItemVariant | null>(null);
   const [itemNotes, setItemNotes] = useState("");
+  /** Quantity stepper on the item modal — lets customers pick "I want 3"
+   *  before clicking Add to Cart, instead of having to add then increment
+   *  in the cart drawer. Resets to 1 when a new item opens; preserved
+   *  when editing an existing cart line. */
+  const [itemQuantity, setItemQuantity] = useState(1);
   const [orderType, setOrderType] = useState<"pickup" | "delivery">(restaurant.acceptsPickup ? "pickup" : "delivery");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [reservationOpen, setReservationOpen] = useState(false);
@@ -407,6 +412,10 @@ export function OrderingPageClient({
     email: currentCustomer?.email ?? "",
     phone: currentCustomer?.phone ?? "",
     address: "", city: "", zip: "",
+    // Delivery-only extras — apt/unit, buzzer code, and delivery
+    // instructions. Concatenated into deliveryAddress + notes at
+    // submit time in buildOrderPayload(). Optional.
+    unit: "", buzzer: "", deliveryNotes: "",
     notes: "", paymentMethod: defaultPaymentMethod, scheduledFor: "",
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
@@ -762,6 +771,7 @@ export function OrderingPageClient({
     setMods(defaultMods);
     setSelectedVariant(defaultVariant);
     setItemNotes("");
+    setItemQuantity(1);
     setSelectedItem(item);
   };
 
@@ -811,6 +821,7 @@ export function OrderingPageClient({
       setMods({ ...ci.selectedMods });
       setSelectedVariant(ci.variant ?? null);
       setItemNotes(ci.notes ?? "");
+      setItemQuantity(Math.max(1, ci.quantity ?? 1));
       setSelectedItem(ci.menuItem);
     }
   };
@@ -849,20 +860,22 @@ export function OrderingPageClient({
       }
     }
     const lineTotal = currentItemPrice;
-    const existingQty = editingCartIndex !== null ? cart[editingCartIndex]?.quantity ?? 1 : 1;
+    // Quantity comes from the in-modal stepper. On edit, the stepper
+    // was preseeded with the cart line's existing qty in beginEdit().
+    const qty = Math.max(1, itemQuantity || 1);
     const newEntry: CartItem = {
       menuItem: selectedItem,
       variant: selectedVariant || undefined,
-      quantity: existingQty,
+      quantity: qty,
       selectedMods: { ...mods },
       notes: itemNotes,
-      lineTotal: lineTotal * existingQty,
+      lineTotal: lineTotal * qty,
     };
     const isEdit = editingCartIndex !== null;
     setCart(prev =>
       isEdit
         ? prev.map((it, i) => (i === editingCartIndex ? newEntry : it))
-        : [...prev, { ...newEntry, quantity: 1, lineTotal }]
+        : [...prev, newEntry]
     );
     setSelectedItem(null);
     if (isEdit) {
@@ -908,12 +921,31 @@ export function OrderingPageClient({
   // verifies the entitlement before honoring the claim — see /api/orders POST.
   const fromMarketplace = searchParams.get("from") === "marketplace";
 
-  const buildOrderPayload = () => ({
+  const buildOrderPayload = () => {
+    // Compose the full delivery address: street + unit/apt + buzzer.
+    // Stored as one string on the Order row so the kitchen receipt + the
+    // ShipDay dispatch see everything in one place. Pickup/dine-in orders
+    // skip this entirely.
+    const unitPart = customerInfo.unit?.trim();
+    const buzzerPart = customerInfo.buzzer?.trim();
+    const fullDeliveryAddress = orderType === "delivery"
+      ? [customerInfo.address, unitPart ? `Unit ${unitPart}` : null, buzzerPart ? `Buzz ${buzzerPart}` : null]
+          .filter(Boolean)
+          .join(", ")
+      : customerInfo.address;
+    // Combine delivery instructions with order notes — both flow into
+    // `notes`. Delivery notes go FIRST so drivers see them at the top.
+    const deliveryNotesPart = customerInfo.deliveryNotes?.trim();
+    const combinedNotes = [
+      deliveryNotesPart ? `Delivery: ${deliveryNotesPart}` : null,
+      customerInfo.notes?.trim() || null,
+    ].filter(Boolean).join("\n");
+    return {
     restaurantSlug: restaurant.slug, type: orderType,
     customerName: customerInfo.name, customerEmail: customerInfo.email,
-    customerPhone: customerInfo.phone, deliveryAddress: customerInfo.address,
+    customerPhone: customerInfo.phone, deliveryAddress: fullDeliveryAddress,
     deliveryCity: customerInfo.city, deliveryZip: customerInfo.zip,
-    notes: customerInfo.notes, paymentMethod: customerInfo.paymentMethod,
+    notes: combinedNotes, paymentMethod: customerInfo.paymentMethod,
     scheduledFor: customerInfo.scheduledFor || null,
     from: fromMarketplace ? "marketplace" : undefined,
     // Reports attribution — server-side join from this hash back to
@@ -951,7 +983,8 @@ export function OrderingPageClient({
       bundlePromoName: ci.bundlePromoName ?? undefined,
       bundleItems: ci.bundleItems ?? null,
     })),
-  });
+    };
+  };
 
   const placeOrder = async () => {
     // Mark the cart-session as having reached checkout — the next
@@ -1594,12 +1627,38 @@ export function OrderingPageClient({
               <textarea className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none resize-none"
                 rows={2} placeholder={t("notesPlaceholder")} value={itemNotes} onChange={e => setItemNotes(e.target.value)} />
             </div>
+
+            {/* Quantity stepper + Add to Cart */}
             <div className="p-5">
-              <button onClick={addToCart}
-                className="w-full text-white font-bold py-4 rounded-xl transition"
-                style={{ backgroundColor: theme.primaryColor }}>
-                {t("addToCart")} · {formatCurrency(currentItemPrice)}
-              </button>
+              <div className="flex items-center gap-3">
+                {/* Stepper */}
+                <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden shrink-0">
+                  <button
+                    type="button"
+                    aria-label="Decrease quantity"
+                    onClick={() => setItemQuantity(q => Math.max(1, q - 1))}
+                    disabled={itemQuantity <= 1}
+                    className="w-12 h-14 flex items-center justify-center text-gray-700 hover:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed transition"
+                  >
+                    <Minus className="w-5 h-5" />
+                  </button>
+                  <div className="w-12 text-center font-bold text-gray-900 select-none">{itemQuantity}</div>
+                  <button
+                    type="button"
+                    aria-label="Increase quantity"
+                    onClick={() => setItemQuantity(q => Math.min(99, q + 1))}
+                    className="w-12 h-14 flex items-center justify-center text-gray-700 hover:bg-gray-100 transition"
+                  >
+                    <Plus className="w-5 h-5" />
+                  </button>
+                </div>
+                {/* Add to Cart — price now multiplies by qty */}
+                <button onClick={addToCart}
+                  className="flex-1 text-white font-bold py-4 rounded-xl transition"
+                  style={{ backgroundColor: theme.primaryColor }}>
+                  {t("addToCart")} · {formatCurrency(currentItemPrice * itemQuantity)}
+                </button>
+              </div>
             </div>
           </div>
         </div>

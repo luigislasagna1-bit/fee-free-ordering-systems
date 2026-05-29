@@ -14,6 +14,18 @@ type Theme = ReturnType<typeof parseTheme>;
 type SectionKey = null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes";
 type CustomerInfo = {
   name: string; email: string; phone: string; address: string; city: string; zip: string;
+  /** Apt / suite / unit number — appended to the street address on submit
+   *  so it shows up cleanly on the kitchen receipt + delivery dispatch.
+   *  Customer-supplied, free-text. Empty string when not filled. */
+  unit: string;
+  /** Buzzer / door code — same treatment as `unit`. Drivers need this to
+   *  reach the customer at delivery time. Empty string when not filled. */
+  buzzer: string;
+  /** Delivery-specific instructions ("leave at door", "side entrance",
+   *  "ring twice"). Separate from order `notes` (which is kitchen-facing).
+   *  Prepended to `notes` on submit so the kitchen sees both, but stays
+   *  in its own form field so customers don't conflate the two. */
+  deliveryNotes: string;
   notes: string; paymentMethod: string; scheduledFor: string;
 };
 
@@ -370,6 +382,36 @@ export function CheckoutModal({
                         onChange={e => setCustomerInfo({ ...customerInfo, zip: e.target.value })}
                       />
                     </div>
+                    {/* Apt/Unit + Buzzer (optional) — concatenated into
+                        deliveryAddress on submit so kitchen receipt sees
+                        the full string. */}
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <input
+                        type="text" placeholder="Apt / Unit / Suite (optional)"
+                        className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                        style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                        value={customerInfo.unit || ""}
+                        onChange={e => setCustomerInfo({ ...customerInfo, unit: e.target.value })}
+                      />
+                      <input
+                        type="text" placeholder="Buzzer code (optional)"
+                        className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                        style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                        value={customerInfo.buzzer || ""}
+                        onChange={e => setCustomerInfo({ ...customerInfo, buzzer: e.target.value })}
+                      />
+                    </div>
+                    {/* Delivery instructions — separate from order notes
+                        (which is kitchen-facing). These reach the driver
+                        at dispatch time. */}
+                    <textarea
+                      placeholder="Delivery instructions — leave at door, side entrance, ring twice, etc. (optional)"
+                      rows={3}
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 resize-none"
+                      style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                      value={customerInfo.deliveryNotes || ""}
+                      onChange={e => setCustomerInfo({ ...customerInfo, deliveryNotes: e.target.value })}
+                    />
                     {hasZones && geocoding && (
                       <p className="text-xs text-gray-500 flex items-center gap-1.5">
                         <Loader2 className="w-3 h-3 animate-spin" /> {tc("locatingAddress")}
