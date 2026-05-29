@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import {
   ArrowRight, TrendingUp, Users, Wallet, Zap, CheckCircle2,
   Calculator, DollarSign, Sparkles, Globe, ShieldCheck,
+  Rocket, Package, Hammer,
 } from "lucide-react";
 
 /**
@@ -275,6 +276,92 @@ export default async function PartnersPage() {
         </div>
       </section>
 
+      {/* Growing platform = growing commissions.
+          Luigi 2026-05-28: a major selling point partners need to hear is
+          that the platform isn't static. New paid add-ons ship constantly,
+          and every new add-on is one more attach-revenue lever — meaning
+          the same roster of restaurants generates MORE commission over
+          time without partners having to re-sell anything.
+          Designed to set expectations: "your earning ceiling rises faster
+          than your effort does." */}
+      <section className="py-20 px-4 bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950 text-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-200 rounded-full px-4 py-1.5 text-xs uppercase tracking-wider font-bold mb-4">
+              <Rocket className="w-3.5 h-3.5" /> Built for compounding partners
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Your commission ceiling keeps rising.
+            </h2>
+            <p className="text-emerald-100 max-w-3xl mx-auto text-lg leading-relaxed">
+              We&apos;re shipping new paid features constantly — based on what restaurants actually
+              ask for. Every add-on we launch is one more thing your restaurants can subscribe to,
+              and one more commission line on your monthly statement. <strong className="text-white">Same roster, more revenue
+              — automatically.</strong>
+            </p>
+          </div>
+
+          {/* Three-column timeline: shipped / in-progress / planned.
+              Numbers are deliberate — we want partners to see the
+              trajectory: ~6 today, ~12 by year-end. Doubling the
+              attach surface roughly doubles the per-restaurant ceiling. */}
+          <div className="grid md:grid-cols-3 gap-5 mb-10">
+            <GrowthCard
+              tone="emerald"
+              icon={<CheckCircle2 className="w-5 h-5" />}
+              label="Live today"
+              count="6+ paid add-ons"
+              body="Online Payments, Hosted Website, Custom Domain, Multi-Location, Advanced Promotions, Reservation Deposits, Marketplace, Driver Pool, Unlimited Orders, and more. Every one of them attaches commission to your name."
+            />
+            <GrowthCard
+              tone="amber"
+              icon={<Hammer className="w-5 h-5" />}
+              label="In development"
+              count="3 more shipping soon"
+              body="Loyalty + rewards, advanced kitchen display (Toast/Square-style KDS), SMS marketing automation. Currently being built — your restaurants get them automatically when they launch."
+              highlight
+            />
+            <GrowthCard
+              tone="slate"
+              icon={<Package className="w-5 h-5" />}
+              label="On the roadmap"
+              count="6+ more requested"
+              body="Online catering portal, gift cards, inventory tracking, table-management upgrades, POS integrations, AI menu optimization. Restaurants ask, we build, you earn."
+            />
+          </div>
+
+          {/* Bottom-line stat — gives partners a tangible number to anchor on */}
+          <div className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur p-6 max-w-3xl mx-auto">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                <TrendingUp className="w-6 h-6 text-emerald-300" />
+              </div>
+              <div>
+                <div className="text-xs uppercase tracking-wider font-bold text-emerald-300 mb-1">
+                  The compounding effect
+                </div>
+                <p className="text-sm md:text-base text-emerald-50 leading-relaxed">
+                  Today, a restaurant on all paid add-ons spends ~$150/mo. By the time we&apos;ve
+                  doubled our add-on catalog (planned by end of 2026), that same restaurant&apos;s
+                  add-on ceiling roughly <strong className="text-white">doubles</strong> — and
+                  so does your commission per account.{" "}
+                  <strong className="text-white">
+                    Sell once. Earn more every year as we ship.
+                  </strong>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Reinforces the sales angle */}
+          <p className="text-center text-xs text-emerald-200/70 mt-6 max-w-2xl mx-auto leading-relaxed">
+            Easy to sell, easier to retain: restaurants stay because we&apos;re always
+            shipping the next thing they need. You don&apos;t need to re-sell — you just
+            keep collecting on the same roster as it grows.
+          </p>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="py-20 px-4 bg-gray-50">
         <div className="max-w-3xl mx-auto">
@@ -497,6 +584,63 @@ function Feature({
         <h3 className="font-bold text-gray-900 mb-1">{title}</h3>
         <p className="text-sm text-gray-600">{body}</p>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Card for the "your commission ceiling keeps rising" section.
+ * Dark-themed (sits on slate-900 background) with a small icon, status
+ * label, headline count, and supporting copy. The `highlight` variant
+ * adds a glowing border to draw the eye to "in development" — the
+ * tense partners care most about (what's coming soon).
+ */
+function GrowthCard({
+  tone, icon, label, count, body, highlight,
+}: {
+  tone: "emerald" | "amber" | "slate";
+  icon: React.ReactNode;
+  label: string;
+  count: string;
+  body: string;
+  highlight?: boolean;
+}) {
+  const tones: Record<string, { bg: string; iconBg: string; iconText: string; labelText: string; countText: string }> = {
+    emerald: {
+      bg: "bg-emerald-500/10 border-emerald-400/30",
+      iconBg: "bg-emerald-500/20",
+      iconText: "text-emerald-300",
+      labelText: "text-emerald-300",
+      countText: "text-white",
+    },
+    amber: {
+      bg: "bg-amber-500/10 border-amber-400/40",
+      iconBg: "bg-amber-500/20",
+      iconText: "text-amber-300",
+      labelText: "text-amber-300",
+      countText: "text-white",
+    },
+    slate: {
+      bg: "bg-white/5 border-white/10",
+      iconBg: "bg-white/10",
+      iconText: "text-slate-200",
+      labelText: "text-slate-300",
+      countText: "text-white",
+    },
+  };
+  const t = tones[tone];
+  return (
+    <div
+      className={`rounded-2xl border p-6 backdrop-blur transition ${t.bg} ${
+        highlight ? "ring-2 ring-amber-300/40 shadow-lg shadow-amber-500/10" : ""
+      }`}
+    >
+      <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-4 ${t.iconBg} ${t.iconText}`}>
+        {icon}
+      </div>
+      <div className={`text-xs uppercase tracking-wider font-bold mb-1 ${t.labelText}`}>{label}</div>
+      <div className={`text-2xl font-extrabold mb-3 ${t.countText}`}>{count}</div>
+      <p className="text-sm text-slate-200 leading-relaxed">{body}</p>
     </div>
   );
 }
