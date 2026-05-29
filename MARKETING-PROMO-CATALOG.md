@@ -4,6 +4,53 @@ Working document. Fills in as Luigi sends screenshots. Build starts only AFTER a
 
 ---
 
+## 🎯 UNIVERSAL ENGINE PRINCIPLE (Luigi 2026-05-29, applies to ALL 13 types)
+
+> **Promos must auto-apply whenever the cart matches eligibility — regardless of whether the customer used the walkthrough or added items manually. The walkthrough is a discovery UX, not a requirement.**
+
+### Concrete rules
+
+**For auto-apply promos (no coupon code required):**
+- Customer adds items that satisfy the promo's group/quantity criteria → promo applies AUTOMATICALLY at the next cart re-evaluation
+- Customer doesn't need to click the banner, doesn't need to use any walkthrough
+- Walkthrough/banner is purely a DISCOVERY affordance — "hey, here's a deal you could go after"
+
+**For coupon-code-gated promos:**
+- Customer types the code at checkout → system evaluates if cart items also satisfy the criteria
+- If yes → applied. If no → "this code is for [X], add a pizza to use it"
+- Code can be entered BEFORE adding items OR AFTER — outcome is identical
+- Customer can also click the banner → walkthrough builds matching cart → code auto-applied
+
+**For "Hide from menu" promos:**
+- Coupon code is REQUIRED to unlock visibility AND apply
+- Otherwise behaves identically to coupon-gated above
+
+### Engine architecture implication
+
+The promo engine runs on EVERY cart change (add item, remove item, modify quantity, apply coupon, change order type):
+```
+for each ActivePromo in restaurant.activePromos:
+  if promo.isHiddenFromMenu and not coupon entered: skip
+  if promo.couponCode and not coupon entered or wrong code: skip
+  if not promo.restrictions.allSatisfy(cart, customer, time): skip
+  if not promo.ruleConfig.cartQualifies(cart): skip
+  apply discount/freebie/bundle-conversion to cart
+```
+
+The walkthrough modals (FreebiePromptModal, BundleComposerModal) just help customers BUILD a qualifying cart faster. They don't gate eligibility.
+
+### Why this matters
+- Owner-built promo: "Buy a pizza + pasta, get free sandwich"
+  - Customer A clicks banner → walkthrough → picks 1 pizza, 1 pasta, 1 sandwich → discount applied
+  - Customer B adds 1 pizza + 1 pasta + 1 sandwich naturally (browsing menu) → discount applied
+  - Both paths result in the same final cart, same discount, same total
+- For coupon-gated:
+  - Customer adds qualifying items → enters code → discount applied
+  - Customer enters code first → adds qualifying items → discount applied
+  - Customer enters code but cart isn't qualifying yet → "this code requires [X] in your cart"
+
+---
+
 ## Universal patterns (apply to all 13 promo types)
 
 Every promo flows through a **3-step wizard** with a Next button at top-right:
@@ -560,13 +607,61 @@ Tooltip: *"Buy 2 Pizzas and get the 3rd Pizza free would require you to select a
 
 ---
 
-## Promo Type 10: Free dish as part of a meal 🔒 LOCKED   ⏳ AWAITING SCREENSHOTS
+## Promo Type 10: Free dish as part of a meal 🔒 LOCKED  ✅ CAPTURED
 
-> Free dessert if starter + main purchased
+> Customer must include items from multiple groups; certain groups (typically the LAST) become free or discounted as the "reward" — e.g. buy pizza + pasta, get free sandwich
 
-What I need:
-- All 3 steps
-- Step 2: triggers (starter + main) → reward (free dessert) composition
+### Architectural insight
+Promo 10 is a **generalization of Promo 9** (Buy N get one free) where:
+- Promo 9 typically has identical groups (same items in each)
+- Promo 10 has DIFFERENT groups (pizza vs pasta vs sandwich)
+- Both use "Manually set discounts" mode where the owner explicitly says which groups are rewarded
+
+Tooltip: *"Buy a pizza and a salad to get a free drink would require you to select all pizzas for 'Items Group 1', all salads for 'Items Group 2' and all drinks for 'Items Group 3'. Then you give a discount for 'Items Group 3' which basically discounts the drink."*
+
+### Step 2 — N item groups + manual discount per group
+- **N Item groups** (3+) representing distinct food categories
+- **Discount mode**: "Manually set discounts" (default for this type)
+- **Discount % per group**: owner picks which group(s) get the reward
+  - Typical: [0%, 0%, 100%] — last group is free
+  - Variant: [0%, 0%, 50%] — last group at half price
+  - Variant: [0%, 25%, 50%] — escalating discount across the meal
+
+### Customer-facing flow (when walkthrough used)
+Same as Promo 8 (slot-by-slot guided picker) BUT items land in cart as **3 separate line items** (not a bundle line item). Only the discounted item shows the discount on the cart.
+
+Screenshot 5 cart example:
+- Build Your Own Pizza — full price
+- Ravioli Rose — full price
+- Philly Cheese Steak — strikethrough $15.99 → $0.00 ("You saved $15.99")
+
+### Auto-apply path (per Universal Principle)
+Customer adds 1 pizza + 1 pasta + 1 sandwich to cart manually → engine detects all 3 groups have a matching item → applies 100% discount to the group(s) configured with % > 0. **No walkthrough required.**
+
+### Schema additions
+```json
+"ruleConfig": {
+  "kind": "buy_combo_get_free_or_discounted",
+  "itemGroups": [
+    { "id": 1, "categoryIds": [...], "menuItemIds": [...] },
+    { "id": 2, "categoryIds": [...], "menuItemIds": [...] },
+    { "id": 3, "categoryIds": [...], "menuItemIds": [...] }
+  ],
+  "discountPercentages": [0, 0, 100],
+  "extraChargesPolicy": "none"
+}
+```
+
+### Key difference from Promo 8 (Meal bundle)
+| | Promo 8 (Meal bundle) | Promo 10 (Combo with freebie) |
+|---|---|---|
+| Cart line items | ONE bundle line at flat price | N separate line items, only discounted ones show discount |
+| Pricing model | Flat $ replaces all | Individual prices, % off configured groups |
+| Receipt rendering | Single "Bundle" with sub-items | Normal line items with discount adjustments |
+
+### Open questions for Promo 10
+1. If cart has MULTIPLE matching items per group (e.g. 2 pizzas, 1 pasta, 2 sandwiches) — does the promo fire ONCE or TWICE? Same as Promo 9 question.
+2. Edge case: customer adds qualifying combo, then removes pasta. Engine silently revokes the sandwich discount (per Universal Principle).
 
 ---
 
