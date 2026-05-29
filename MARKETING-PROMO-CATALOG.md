@@ -665,13 +665,51 @@ Customer adds 1 pizza + 1 pasta + 1 sandwich to cart manually → engine detects
 
 ---
 
-## Promo Type 11: Fixed discount on combo deal 🔒 LOCKED   ⏳ AWAITING SCREENSHOTS
+## Promo Type 11: Fixed discount on combo deal 🔒 LOCKED  ✅ CAPTURED
 
-> $5 off main + dessert combo
+> Flat $X off the total when customer's cart contains items matching N groups (e.g. burger + salad + soup → $5 off the trio)
 
-What I need:
-- All 3 steps
-- Step 2: combo composer + flat $ off
+### Step 2 — N groups + single flat $ discount
+- **N item groups** (3+) — same structure as Promo 9/10
+- **Discount:** `[N]` `CAD` (FLAT dollar amount, not %)
+- **No extra charges** dropdown (same 3-option)
+
+Tooltip: *"Buy a burger, side salad and a soup with a $5 discount would require you to select all burgers for 'Items Group 1', all salads for 'Items Group 2' and all soups for 'Items Group 3'."*
+
+### Difference from Promo 9/10
+| | Promo 9 / 10 | Promo 11 |
+|---|---|---|
+| Discount unit | % per group | **Single flat $** across the combo |
+| Per-group config | yes (one % per group) | no — one $ total |
+| Cart display | each qualifying group shows its discount | One "$5 off" line on the promo header |
+
+### Auto-apply confirmed (per Universal Principle)
+Screenshot 4 + 5: Luigi tested by entering the coupon code on an empty cart, then naturally added 3 items from Take & Bake (Pizza Kit + Beef Lasagna + Vegetable Lasagna). The promo auto-detected the match and the cart shows:
+- 3 separate line items at their normal prices
+- Promo banner shows "You saved: 5.00"
+- Subtotal reduced by $5 ($48.97 - $5 = $43.97)
+- HST calculated on the discounted subtotal
+
+Importantly: **no walkthrough needed**. Coupon entered → items added → match detected → discount applied. This is the Universal Principle working as expected.
+
+### Schema additions
+```json
+"ruleConfig": {
+  "kind": "fixed_discount_combo",
+  "itemGroups": [
+    { "id": 1, "categoryIds": [...], "menuItemIds": [...] },
+    { "id": 2, "categoryIds": [...], "menuItemIds": [...] },
+    { "id": 3, "categoryIds": [...], "menuItemIds": [...] }
+  ],
+  "fixedDiscountAmount": 5.00,
+  "extraChargesPolicy": "none"
+}
+```
+
+### Edge case (TBD with Luigi later)
+- Customer has 2 burgers + 1 salad + 1 soup in cart — does the $5 discount apply ONCE (one combo) or TWICE (one for each burger)? Probably once unless owner enables stacking. Same question as Promos 9/10.
+
+---
 
 ---
 
