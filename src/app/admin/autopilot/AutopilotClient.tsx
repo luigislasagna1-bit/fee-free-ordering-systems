@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import {
   Zap, ShoppingBag, ShoppingCart, Users, Mail, Clock, Tag,
@@ -19,11 +19,25 @@ interface Campaign {
   couponId: string | null;
 }
 
+interface MasterState {
+  masterEnabled: boolean;
+  secondOrderEnabled: boolean;
+  reEngageEnabled: boolean;
+  cartAbandonmentEnabled: boolean;
+}
+
 // ─── Campaign config ──────────────────────────────────────────────────────────
+//
+// `stateKey` is the field on AutopilotState that this campaign's individual
+// toggle binds to — used by CampaignCard to switch the per-campaign gate
+// independently of the AutopilotCampaign config's `isEnabled` flag (the
+// AutopilotCampaign row owns subject/body/delay, AutopilotState owns the
+// boolean gate the cron actually reads).
 
 const CAMPAIGN_CONFIGS = [
   {
     type: "second_order",
+    stateKey: "secondOrderEnabled" as const,
     icon: ShoppingBag,
     color: "orange",
     title: "Encourage Second Order",
@@ -31,30 +45,25 @@ const CAMPAIGN_CONFIGS = [
     description: "Automatically emails a customer after their first completed order if they have not ordered again.",
     triggerLabel: "Send this many hours after first order:",
     defaultDelay: 24,
-    defaultSubject: "Thanks for your order! Here's a little something for next time 🍽️",
+    defaultSubject: "Thanks for your order! Here's a little something for next time",
     defaultBody: "Hi {customer_name},\n\nThank you so much for your recent order from {restaurant_name}! We hope you enjoyed it.\n\nAs a thank-you, here's a special offer just for you:\n\n{coupon_section}\n\nWe'd love to see you back soon!\n\n– The {restaurant_name} team",
   },
-  // Cart Abandonment campaign is hidden for soft launch. The backend
-  // returns [] for cart_abandonment types (src/lib/autopilot.ts) because
-  // we don't yet track cart state server-side (carts live only in the
-  // customer's localStorage). Surfacing this campaign in the UI before
-  // wiring up CartSession tracking would let owners enable a campaign
-  // that silently never fires — worse UX than not offering it at all.
-  // Reintroduce after the post-launch cart-tracking buildout.
-  // {
-  //   type: "cart_abandonment",
-  //   icon: ShoppingCart,
-  //   color: "blue",
-  //   title: "Cart Abandonment",
-  //   tagline: "Recover orders that didn't make it through checkout",
-  //   description: "Sends a reminder to customers who added items to their cart but didn't complete their order.",
-  //   triggerLabel: "Send this many hours after cart abandoned:",
-  //   defaultDelay: 2,
-  //   defaultSubject: "You left something behind! 🛒",
-  //   defaultBody: "Hi {customer_name},\n\nYou started an order from {restaurant_name} but didn't finish it. No worries — it happens!\n\nYour cart is still saved. Come back and complete your order:\n\n{restaurant_link}\n\n{coupon_section}\n\n– The {restaurant_name} team",
-  // },
+  {
+    type: "cart_abandonment",
+    stateKey: "cartAbandonmentEnabled" as const,
+    icon: ShoppingCart,
+    color: "blue",
+    title: "Cart Abandonment",
+    tagline: "Recover orders that didn't make it through checkout",
+    description: "Sends a reminder to customers who added items to their cart and entered their email but didn't complete their order. Fires ~90 minutes after they go quiet.",
+    triggerLabel: "Send this many hours after cart goes quiet:",
+    defaultDelay: 2,
+    defaultSubject: "Forgot something at {restaurant_name}?",
+    defaultBody: "Hi {customer_name},\n\nYou started an order at {restaurant_name} but didn't finish checking out. Your cart is still here — come back and pick up where you left off.\n\n{coupon_section}\n\nTap below to complete your order.\n\n– The {restaurant_name} team",
+  },
   {
     type: "reengagement",
+    stateKey: "reEngageEnabled" as const,
     icon: Users,
     color: "purple",
     title: "Re-engage Inactive Customers",
@@ -62,32 +71,39 @@ const CAMPAIGN_CONFIGS = [
     description: "Sends a re-engagement email to customers who haven't placed an order for a set number of days.",
     triggerLabel: "Send after this many days without an order:",
     defaultDelay: 168, // 7 days in hours
-    defaultSubject: "We miss you! Come back for something delicious 🍕",
+    defaultSubject: "We miss you! Come back for something delicious",
     defaultBody: "Hi {customer_name},\n\nIt's been a while since your last order from {restaurant_name} and we miss you!\n\nCome back and treat yourself — we have some amazing dishes waiting for you.\n\n{coupon_section}\n\nWe hope to see you soon!\n\n– The {restaurant_name} team",
   },
 ];
 
 const COLOR_MAP: Record<string, { bg: string; icon: string; border: string; badge: string }> = {
   orange: { bg: "bg-emerald-50", icon: "text-emerald-500", border: "border-emerald-200", badge: "bg-emerald-100 text-emerald-700" },
-  blue:   { bg: "bg-blue-50",   icon: "text-blue-500",   border: "border-blue-200",   badge: "bg-blue-100 text-blue-700"   },
-  purple: { bg: "bg-amber-50", icon: "text-amber-500", border: "border-amber-200", badge: "bg-amber-100 text-amber-700" },
+  blue:   { bg: "bg-blue-50",    icon: "text-blue-500",    border: "border-blue-200",    badge: "bg-blue-100 text-blue-700"   },
+  purple: { bg: "bg-amber-50",   icon: "text-amber-500",   border: "border-amber-200",   badge: "bg-amber-100 text-amber-700" },
 };
 
 // ─── CampaignCard ─────────────────────────────────────────────────────────────
 
 function CampaignCard({
-  config, campaign, emailConfigured, coupons, onChange,
+  config, campaign, stateEnabled, masterEnabled, emailConfigured, coupons, onChange, onToggleStateEnabled,
 }: {
   config: typeof CAMPAIGN_CONFIGS[0];
   campaign: Campaign;
+  /** AutopilotState toggle — the per-campaign master gate the CRON reads. */
+  stateEnabled: boolean;
+  /** AutopilotState.masterEnabled — when off, everything is disabled. */
+  masterEnabled: boolean;
   emailConfigured: boolean;
   coupons: { id: string; code: string; description?: string | null }[];
   onChange: (updated: Partial<Campaign>) => void;
+  onToggleStateEnabled: (next: boolean) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
   const [saving, setSaving] = useState(false);
   const colors = COLOR_MAP[config.color];
   const Icon = config.icon;
+  const disabled = !masterEnabled;
+  const active = stateEnabled && masterEnabled;
   const delayDisplay = config.type === "reengagement"
     ? `${Math.round(campaign.delayHours / 24)} days`
     : campaign.delayHours < 24
@@ -102,7 +118,9 @@ function CampaignCard({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           campaignType: config.type,
-          isEnabled: campaign.isEnabled,
+          // Keep AutopilotCampaign.isEnabled mirrored to the AutopilotState
+          // gate so /admin/autopilot doesn't get into a confusing state.
+          isEnabled: stateEnabled,
           subject: campaign.subject,
           emailBody: campaign.emailBody,
           delayHours: campaign.delayHours,
@@ -119,10 +137,19 @@ function CampaignCard({
     setSaving(false);
   };
 
-  const toggle = () => onChange({ isEnabled: !campaign.isEnabled });
+  const toggle = () => {
+    if (disabled) {
+      toast("Turn on the master toggle to enable individual campaigns.", { icon: "ℹ️" });
+      return;
+    }
+    onToggleStateEnabled(!stateEnabled);
+  };
 
   return (
-    <div className={`bg-white rounded-2xl border shadow-sm overflow-hidden ${campaign.isEnabled ? colors.border : "border-gray-100"}`}>
+    <div
+      className={`bg-white rounded-2xl border shadow-sm overflow-hidden ${active ? colors.border : "border-gray-100"} ${disabled ? "opacity-60" : ""}`}
+      title={disabled ? "Turn on master toggle to enable individual campaigns." : undefined}
+    >
       {/* Header */}
       <div className="p-5 flex items-center gap-4">
         <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${colors.bg}`}>
@@ -131,31 +158,39 @@ function CampaignCard({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-semibold text-gray-900">{config.title}</span>
-            {campaign.isEnabled && (
+            {active && (
               <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${colors.badge}`}>Active</span>
             )}
           </div>
           <p className="text-sm text-gray-500 mt-0.5">{config.tagline}</p>
-          {campaign.isEnabled && (
+          {active && (
             <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
               <Clock className="w-3 h-3" /> Trigger: {delayDisplay} after event
             </p>
           )}
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">
-          <button onClick={toggle} className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition">
-            {campaign.isEnabled
-              ? <ToggleRight className="w-8 h-8 text-emerald-500" />
+          <button
+            onClick={toggle}
+            disabled={disabled}
+            className={`flex items-center gap-2 text-sm font-medium transition ${disabled ? "cursor-not-allowed" : "text-gray-600 hover:text-gray-800"}`}
+          >
+            {stateEnabled
+              ? <ToggleRight className={`w-8 h-8 ${disabled ? "text-gray-300" : "text-emerald-500"}`} />
               : <ToggleLeft className="w-8 h-8 text-gray-300" />}
           </button>
-          <button onClick={() => setExpanded(!expanded)} className="p-2 text-gray-400 hover:text-gray-600 rounded-lg transition">
+          <button
+            onClick={() => setExpanded(!expanded)}
+            disabled={disabled}
+            className={`p-2 rounded-lg transition ${disabled ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-gray-600"}`}
+          >
             {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
         </div>
       </div>
 
       {/* Expanded settings */}
-      {expanded && (
+      {expanded && !disabled && (
         <div className="border-t border-gray-100 p-5 space-y-4 bg-gray-50/50">
           {!emailConfigured && (
             <div className="flex items-start gap-2 p-3 bg-yellow-50 border border-yellow-200 rounded-xl">
@@ -274,11 +309,66 @@ export function AutopilotClient({
     })
   );
 
+  // AutopilotState — the master gate + per-campaign cron toggles. Loaded
+  // on mount from /api/restaurants/autopilot/master.
+  const [master, setMaster] = useState<MasterState>({
+    masterEnabled: false,
+    secondOrderEnabled: false,
+    reEngageEnabled: false,
+    cartAbandonmentEnabled: false,
+  });
+  const [masterLoaded, setMasterLoaded] = useState(false);
+  const [masterSaving, setMasterSaving] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/restaurants/autopilot/master")
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data) {
+          setMaster({
+            masterEnabled: !!data.masterEnabled,
+            secondOrderEnabled: !!data.secondOrderEnabled,
+            reEngageEnabled: !!data.reEngageEnabled,
+            cartAbandonmentEnabled: !!data.cartAbandonmentEnabled,
+          });
+        }
+        setMasterLoaded(true);
+      })
+      .catch(() => setMasterLoaded(true));
+  }, []);
+
+  const patchMaster = async (patch: Partial<MasterState>) => {
+    // Optimistic update so the toggles feel instant.
+    const next = { ...master, ...patch };
+    setMaster(next);
+    setMasterSaving(true);
+    try {
+      const res = await fetch("/api/restaurants/autopilot/master", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(patch),
+      });
+      if (!res.ok) {
+        // Roll back optimistic update on failure.
+        setMaster(master);
+        let msg = "Failed to update";
+        try { const d = await res.json(); msg = d.error || msg; } catch {}
+        toast.error(msg);
+      }
+    } catch (e: any) {
+      setMaster(master);
+      toast.error(e.message || "Network error");
+    }
+    setMasterSaving(false);
+  };
+
   const update = (type: string, partial: Partial<Campaign>) => {
     setCampaigns(prev => prev.map(c => c.campaignType === type ? { ...c, ...partial } : c));
   };
 
-  const activeCampaigns = campaigns.filter(c => c.isEnabled).length;
+  const activeCampaigns = master.masterEnabled
+    ? CAMPAIGN_CONFIGS.filter(c => master[c.stateKey]).length
+    : 0;
 
   return (
     <div>
@@ -293,6 +383,42 @@ export function AutopilotClient({
         <p className="text-sm text-gray-500 ml-13">
           Run your marketing on autopilot with automated email campaigns that bring customers back.
         </p>
+      </div>
+
+      {/* ── Master toggle — GloriaFood-style "Activate Autopilot Selling?" gate */}
+      <div
+        className={`mb-6 rounded-2xl border p-6 shadow-sm transition ${
+          master.masterEnabled
+            ? "bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-300"
+            : "bg-white border-gray-200"
+        }`}
+      >
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <h2 className="text-xl font-bold text-gray-900">
+              Activate Autopilot Selling?
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              {master.masterEnabled
+                ? "Autopilot is ON. Enabled campaigns below will fire automatically."
+                : "When OFF, no campaigns fire — even if individual toggles are enabled."}
+            </p>
+          </div>
+          <button
+            onClick={() => patchMaster({ masterEnabled: !master.masterEnabled })}
+            disabled={!masterLoaded || masterSaving}
+            className={`flex items-center gap-3 px-5 py-3 rounded-xl font-bold text-base transition shadow-sm ${
+              master.masterEnabled
+                ? "bg-emerald-500 text-white hover:bg-emerald-600"
+                : "bg-white border-2 border-gray-300 text-gray-700 hover:border-gray-400"
+            } disabled:opacity-50`}
+            aria-pressed={master.masterEnabled}
+          >
+            {master.masterEnabled
+              ? <><ToggleRight className="w-6 h-6" /> YES</>
+              : <><ToggleLeft className="w-6 h-6" /> NO</>}
+          </button>
+        </div>
       </div>
 
       {/* Overview card */}
@@ -319,13 +445,7 @@ export function AutopilotClient({
         )}
       </div>
 
-      {/* Segment-based targeting — Coming Soon ────────────────────────────
-          Today's Autopilot sends the same email to every customer who
-          matches a campaign trigger (e.g. all first-time buyers, all
-          abandoned-cart visitors). The next iteration will let you target
-          by segment — VIPs, lapsed regulars, big spenders, allergy
-          preferences, etc. The schema field exists (`customer_segmentation`)
-          but the UI + matching engine ships post-launch. */}
+      {/* Segment-based targeting — Coming Soon */}
       <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-5">
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
@@ -353,9 +473,12 @@ export function AutopilotClient({
             key={config.type}
             config={config}
             campaign={campaigns[i]}
+            stateEnabled={master[config.stateKey]}
+            masterEnabled={master.masterEnabled}
             emailConfigured={emailConfigured}
             coupons={coupons}
             onChange={partial => update(config.type, partial)}
+            onToggleStateEnabled={(next) => patchMaster({ [config.stateKey]: next } as Partial<MasterState>)}
           />
         ))}
       </div>

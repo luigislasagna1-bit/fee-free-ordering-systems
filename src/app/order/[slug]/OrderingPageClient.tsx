@@ -465,6 +465,76 @@ export function OrderingPageClient({
     } catch {}
   }, [cart, CART_STORAGE_KEY]);
 
+  // ── Cart-abandonment heartbeat ───────────────────────────────────────
+  //
+  // Pings /api/public/cart-session every time the cart changes (debounced
+  // 3s). The server upserts a CartSession row keyed on sessionToken,
+  // which the hourly autopilot cron sweeps for stale carts to recover
+  // via email.
+  //
+  // Fire-and-forget — failures are silently dropped (the worst case is
+  // a missed recovery email, never a broken cart). The token is stamped
+  // into localStorage so a refresh keeps the same identity.
+  const CART_SESSION_KEY = `ff_cart_session_${restaurant.slug}`;
+  const sessionTokenRef = useRef<string | null>(null);
+  const reachedCheckoutRef = useRef(false);
+  // Read token on mount (preserved across refresh until order success).
+  useEffect(() => {
+    try {
+      const existing = localStorage.getItem(CART_SESSION_KEY);
+      if (existing) sessionTokenRef.current = existing;
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // Ensure a token exists once the cart goes from empty to non-empty.
+  useEffect(() => {
+    if (cart.length === 0) return;
+    if (sessionTokenRef.current) return;
+    // Generate a token. crypto.randomUUID is broadly available in
+    // modern browsers; fall back to Math.random for ancient ones.
+    const token =
+      typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+        ? crypto.randomUUID()
+        : `ff-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+    sessionTokenRef.current = token;
+    try { localStorage.setItem(CART_SESSION_KEY, token); } catch {}
+  }, [cart.length, CART_SESSION_KEY]);
+  // Debounced ping. Re-arms 3 seconds after the LAST cart change.
+  useEffect(() => {
+    if (cart.length === 0) return;
+    if (!sessionTokenRef.current) return;
+    const token = sessionTokenRef.current;
+    const timer = setTimeout(() => {
+      // Snapshot of identity + cart shape — keep payload small so we
+      // don't blow out request size on big carts.
+      const itemCount = cart.reduce((s, i) => s + i.quantity, 0);
+      const cartTotal = cart.reduce((s, i) => s + i.lineTotal, 0);
+      const cartJson = cart.map(ci => ({
+        name: ci.menuItem.name,
+        variant: ci.variant?.name,
+        quantity: ci.quantity,
+        lineTotal: ci.lineTotal,
+      }));
+      // Fire-and-forget; never await, never block UI.
+      void fetch("/api/public/cart-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          restaurantSlug: restaurant.slug,
+          sessionToken: token,
+          customerEmail: customerInfo.email || null,
+          customerPhone: customerInfo.phone || null,
+          itemCount,
+          cartTotal,
+          cartJson,
+          reachedCheckout: reachedCheckoutRef.current,
+        }),
+        keepalive: true,
+      }).catch(() => {});
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [cart, customerInfo.email, customerInfo.phone, restaurant.slug]);
+
   // ── Reports funnel-step tracking ─────────────────────────────────────
   //
   // PURE SIDE EFFECTS — these useEffect blocks observe existing state
@@ -884,6 +954,10 @@ export function OrderingPageClient({
   });
 
   const placeOrder = async () => {
+    // Mark the cart-session as having reached checkout — the next
+    // heartbeat will persist this flag so cart-abandonment reporting
+    // can distinguish "browsed only" vs "entered details but didn't pay."
+    reachedCheckoutRef.current = true;
     if (!customerInfo.name || !customerInfo.phone) { toast.error(tT("nameAndPhone")); return; }
     // Email is required — customers need it for order confirmation, receipts,
     // refund handling, and disputes. We also use it as the unique key in our
@@ -907,8 +981,11 @@ export function OrderingPageClient({
       // Order accepted by the API → clear the persisted cart so a return
       // visit doesn't show the same items they just ordered. The in-memory
       // `cart` state stays as-is (the next route owns the UI) — only the
-      // localStorage copy is wiped.
+      // localStorage copy is wiped. Also drop the cart-session token —
+      // a fresh visit starts a fresh CartSession.
       try { localStorage.removeItem(CART_STORAGE_KEY); } catch {}
+      try { localStorage.removeItem(CART_SESSION_KEY); } catch {}
+      sessionTokenRef.current = null;
 
       if (customerInfo.paymentMethod === "card" && cardPaymentEnabled) {
         // Reports funnel — fire payment_open just before we navigate
