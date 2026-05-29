@@ -390,8 +390,16 @@ function isActiveItem(item: NavItem, pathname: string): boolean {
 function useSafeT() {
   const t = useTranslations("admin.sidebar");
   return (key: string, fallback?: string) => {
-    const v = t(key);
-    return v.startsWith("admin.sidebar.") || v === key ? fallback ?? key : v;
+    // next-intl's t() throws in dev mode when a key is missing — that
+    // takes down the whole sidebar and blocks navigation. Wrap in a
+    // try/catch so a missing translation degrades gracefully to the
+    // hardcoded English fallback (which every NavItem already carries).
+    try {
+      const v = t(key);
+      return v.startsWith("admin.sidebar.") || v === key ? fallback ?? key : v;
+    } catch {
+      return fallback ?? key;
+    }
   };
 }
 

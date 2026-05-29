@@ -479,6 +479,11 @@
   "admin": {
     "welcomeBack": "Welcome back",
     "sidebar": {
+      "categorySetup": "Setup",
+      "categoryMarketing": "Marketing Tools",
+      "categoryReports": "Reports",
+      "categoryOnlineOrdering": "Online Ordering",
+      "categoryOther": "Other",
       "setup": "Setup",
       "setupBasics": "Restaurant Basics",
       "setupServices": "Services & Hours",

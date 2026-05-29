@@ -479,6 +479,11 @@
   "admin": {
     "welcomeBack": "Bem-vindo de volta",
     "sidebar": {
+      "categorySetup": "Configuração",
+      "categoryMarketing": "Ferramentas de Marketing",
+      "categoryReports": "Relatórios",
+      "categoryOnlineOrdering": "Pedidos online",
+      "categoryOther": "Outro",
       "setup": "Configuração",
       "setupBasics": "Dados do restaurante",
       "setupServices": "Serviços e horários",
