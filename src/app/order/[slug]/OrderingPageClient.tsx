@@ -8,6 +8,7 @@ import {
   UserCircle, LogIn,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { PROMO_DEFAULT_FALLBACK_URL } from "@/lib/promo-default-images";
 
 /** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
  *  Used by the promo-banner usability-window label so a 12-3 PM lunch
@@ -1429,9 +1430,13 @@ export function OrderingPageClient({
                   ? `${formatCurrency(promo.minimumOrder)} min`
                   : null;
               // Owner-set imageUrl → render as the card background with a
-              // dark gradient overlay so text stays readable. Falls back to
-              // the theme's primary-color gradient when no image is set.
-              const hasImage = !!promo.imageUrl?.trim();
+              // dark gradient overlay so text stays readable. Falls back
+              // to the first PROMO_DEFAULT_IMAGES entry when no image is
+              // set, so every promo always has a real visual instead of
+              // the plain black box.
+              const resolvedImageUrl =
+                (promo.imageUrl?.trim() || PROMO_DEFAULT_FALLBACK_URL);
+              const hasImage = !!resolvedImageUrl;
               return (
                 <div
                   key={promo.id}
@@ -1446,11 +1451,12 @@ export function OrderingPageClient({
                   }}
                   className="flex-shrink-0 w-72 h-36 rounded-xl text-white shadow-sm relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
                 >
-                  {/* Background image (when set) — absolutely positioned
-                      behind the dark overlay so it covers the full card. */}
+                  {/* Background image (always set — owner-provided or the
+                      stock fallback) absolutely positioned behind the
+                      dark overlay so it covers the full card. */}
                   {hasImage && (
                     <img
-                      src={promo.imageUrl!}
+                      src={resolvedImageUrl}
                       alt=""
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
@@ -1991,6 +1997,12 @@ export function OrderingPageClient({
           cart={cart}
           subtotal={subtotal}
           totalDiscount={totalDiscount}
+          // Drives the "🎉 You unlocked …" celebration banner at the
+          // top of the checkout. Each entry = one applied promo (name,
+          // type, discount amount, optional couponCode).
+          appliedPromos={promoResults}
+          hasFreeDelivery={hasFreeDelivery}
+          baseDeliveryFee={baseDeliveryFee}
           deliveryFee={deliveryFee}
           appliedServiceFees={appliedServiceFees}
           taxAmount={taxAmount}

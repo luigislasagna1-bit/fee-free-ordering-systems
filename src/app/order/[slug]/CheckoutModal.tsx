@@ -73,6 +73,25 @@ interface Props {
   cart: CartLine[];
   subtotal: number;
   totalDiscount: number;
+  /** Promos that fired for the current cart. Used to render the
+   *  "🎉 You unlocked …" celebration banner at the top of the modal
+   *  so customers see exactly what they're saving on. Each entry =
+   *  { promoId, name, type, discount, couponCode? }. */
+  appliedPromos?: Array<{
+    promoId: string;
+    name: string;
+    type: string;
+    discount: number;
+    couponCode?: string;
+  }>;
+  /** True when a Free Delivery promo fired. We surface this in the
+   *  banner separately because calcFreeDelivery returns 0 (the discount
+   *  is realised by zeroing the delivery fee, not by lowering subtotal),
+   *  so the appliedPromos entry has discount=0. */
+  hasFreeDelivery?: boolean;
+  /** What the delivery fee WOULD have been without the promo. Used to
+   *  show the savings on the Free Delivery row. */
+  baseDeliveryFee?: number;
   deliveryFee: number;
   appliedServiceFees: { name: string; amount: number }[];
   taxAmount: number;
@@ -123,7 +142,9 @@ interface Props {
 export function CheckoutModal({
   theme, orderType, onChangeOrderType, acceptsPickup, acceptsDelivery,
   restaurantSlug, isSignedIn, fromMarketplace,
-  cart, subtotal, totalDiscount, deliveryFee, appliedServiceFees, taxAmount,
+  cart, subtotal, totalDiscount,
+  appliedPromos = [], hasFreeDelivery = false, baseDeliveryFee = 0,
+  deliveryFee, appliedServiceFees, taxAmount,
   tipAmount, tipPercent, setTipPercent, total, taxRate,
   customerInfo, setCustomerInfo,
   editingSection, setEditingSection,
@@ -220,6 +241,58 @@ export function CheckoutModal({
             <X className="w-5 h-5" />
           </button>
         </div>
+
+        {/* Celebration banner — applied promos summary. Only renders when
+            at least one promo fired OR free delivery was unlocked. Each
+            row shows the promo name + savings. Stays sticky-at-top of the
+            modal body so customers see what they earned even as they
+            scroll the form below. */}
+        {(appliedPromos.length > 0 || (hasFreeDelivery && baseDeliveryFee > 0)) && (
+          <div className="px-5 pt-4 flex-shrink-0">
+            <div className="rounded-xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-green-50 p-4 shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xl" aria-hidden>🎉</span>
+                <div className="text-sm font-bold text-emerald-800">
+                  You unlocked {appliedPromos.length + (hasFreeDelivery && baseDeliveryFee > 0 ? 1 : 0) === 1 ? "a promo!" : "promos!"}
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                {appliedPromos
+                  // Free Delivery promos have discount=0 — surface them via
+                  // the separate "Free Delivery" line below instead so the
+                  // savings amount is accurate (it's the delivery fee).
+                  .filter((p) => p.type !== "free_delivery" && p.discount > 0)
+                  .map((p) => (
+                    <div key={p.promoId} className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-1.5 text-emerald-700 font-medium truncate">
+                        <span aria-hidden>✓</span>
+                        <span className="truncate">{p.name}</span>
+                        {p.couponCode && (
+                          <span className="font-mono bg-white border border-emerald-200 text-emerald-700 rounded px-1.5 py-0.5 ml-1">
+                            {p.couponCode}
+                          </span>
+                        )}
+                      </div>
+                      <div className="font-semibold text-emerald-800 whitespace-nowrap ml-2">
+                        − {formatCurrency(p.discount)}
+                      </div>
+                    </div>
+                  ))}
+                {hasFreeDelivery && baseDeliveryFee > 0 && (
+                  <div className="flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-1.5 text-emerald-700 font-medium">
+                      <span aria-hidden>🚚</span>
+                      <span>Free delivery</span>
+                    </div>
+                    <div className="font-semibold text-emerald-800 whitespace-nowrap ml-2">
+                      − {formatCurrency(baseDeliveryFee)}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Body */}
         <div className="flex-1 overflow-y-auto">

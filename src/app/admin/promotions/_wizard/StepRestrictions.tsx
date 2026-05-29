@@ -9,8 +9,9 @@
  * scroll.
  */
 
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Check } from "lucide-react";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { PROMO_DEFAULT_IMAGES } from "@/lib/promo-default-images";
 
 export type ShowtimeSchedule = {
   dayOfWeek: number;
@@ -536,15 +537,53 @@ export function StepRestrictions({
             </p>
           </div>
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Promo card image</label>
+            <label className="block text-xs text-gray-500 mb-2">Promo card image</label>
+            {/* Default-image gallery — pick one of our designed backgrounds
+                with a click. Shows a check mark on the active one. */}
+            <div className="grid grid-cols-3 gap-2 mb-3">
+              {PROMO_DEFAULT_IMAGES.map((opt) => {
+                const active = form.imageUrl === opt.url;
+                return (
+                  <button
+                    key={opt.url}
+                    type="button"
+                    onClick={() => setForm({ imageUrl: active ? "" : opt.url })}
+                    title={opt.description}
+                    className={`relative rounded-lg overflow-hidden border-2 transition aspect-[2/1] ${
+                      active
+                        ? "border-emerald-500 ring-2 ring-emerald-200"
+                        : "border-gray-200 hover:border-emerald-300"
+                    }`}
+                  >
+                    <img
+                      src={opt.url}
+                      alt={opt.label}
+                      className="w-full h-full object-cover"
+                    />
+                    {active && (
+                      <div className="absolute top-1 right-1 bg-emerald-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
+                        <Check className="w-3 h-3" />
+                      </div>
+                    )}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-1.5 py-1">
+                      <div className="text-[10px] font-semibold text-white text-left">
+                        {opt.label}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="text-xs text-gray-500 mb-2">— or upload your own —</div>
             <ImageUpload
               value={form.imageUrl}
               onChange={(url) => setForm({ imageUrl: url })}
               aspectRatio="wide"
             />
             <p className="text-xs text-gray-400 mt-1">
-              Upload an image or paste a URL. Shown as the background of the
-              promo card on the ordering page.
+              Click a design above to use it, or upload / paste a URL for
+              your own image. If you skip this entirely, the first design
+              is used as a default.
             </p>
           </div>
         </div>

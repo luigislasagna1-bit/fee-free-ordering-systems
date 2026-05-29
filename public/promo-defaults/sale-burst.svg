@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 288" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="80%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#fef3c7" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#fef3c7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="576" height="288" fill="url(#g)"/>
+  <rect width="576" height="288" fill="url(#glow)"/>
+  <!-- Starburst -->
+  <g transform="translate(450 100)" fill="#fef3c7" opacity="0.85">
+    <polygon points="0,-50 14,-14 50,0 14,14 0,50 -14,14 -50,0 -14,-14"/>
+  </g>
+  <g transform="translate(450 100)" fill="#fff">
+    <circle r="38"/>
+  </g>
+  <text x="450" y="108" font-family="system-ui,-apple-system,sans-serif" font-size="24" font-weight="900" fill="#dc2626" text-anchor="middle">SALE</text>
+  <!-- Big text -->
+  <text x="60" y="170" font-family="system-ui,-apple-system,sans-serif" font-size="64" font-weight="900" fill="#fff" letter-spacing="-2">SPECIAL</text>
+  <text x="60" y="220" font-family="system-ui,-apple-system,sans-serif" font-size="32" font-weight="700" fill="#fef3c7" letter-spacing="1">OFFER</text>
+</svg>
