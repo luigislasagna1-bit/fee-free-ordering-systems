@@ -175,16 +175,43 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // webhook update is idempotent.
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
-      console.error(`[orders PATCH] capturePayment failed for order ${id}:`, msg);
-      return NextResponse.json(
-        {
-          error:
-            "Couldn't charge the customer's card. The card may have been declined or the authorization expired. Reject this order to release the hold.",
-          code: "capture_failed",
-          detail: msg,
-        },
-        { status: 402 },
-      );
+      // Partial-failure retry trap (audit 2026-05-30): a previous accept
+      // attempt may have succeeded at capture but failed at the DB
+      // update that follows (transient Neon hiccup, lambda timeout,
+      // etc.). The staff click again. capturePayment is called again
+      // and Stripe responds with the "already captured" error. Without
+      // this catch we'd block the retry forever — customer's card was
+      // already charged but the kitchen can't progress the order.
+      //
+      // Stripe surfaces this as code `payment_intent_unexpected_state`
+      // with a message that includes "already been captured" or
+      // "already_captured" or status "succeeded" / "canceled". We
+      // accept any of these as "OK, money already moved, proceed".
+      const stripeCode = (e as any)?.code ?? "";
+      const stripeStatus = (e as any)?.raw?.payment_intent?.status ?? "";
+      const isAlreadyCaptured =
+        stripeCode === "payment_intent_unexpected_state" &&
+        (msg.toLowerCase().includes("already") ||
+         stripeStatus === "succeeded" ||
+         stripeStatus === "canceled");
+      if (isAlreadyCaptured) {
+        console.warn(
+          `[orders PATCH] capturePayment for ${id} reports already-captured — treating as success and proceeding with accept.`,
+        );
+        // Fall through to the order.update below. The webhook will
+        // (or already has) set paymentStatus="paid".
+      } else {
+        console.error(`[orders PATCH] capturePayment failed for order ${id}:`, msg);
+        return NextResponse.json(
+          {
+            error:
+              "Couldn't charge the customer's card. The card may have been declined or the authorization expired. Reject this order to release the hold.",
+            code: "capture_failed",
+            detail: msg,
+          },
+          { status: 402 },
+        );
+      }
     }
   }
 
@@ -207,16 +234,37 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       paypalCaptureIdJustSet = cap.captureId;
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
-      console.error(`[orders PATCH] capturePaypalAuthorization failed for order ${id}:`, msg);
-      return NextResponse.json(
-        {
-          error:
-            "Couldn't capture the PayPal payment. The customer's authorization may have expired. Reject this order to release the hold.",
-          code: "paypal_capture_failed",
-          detail: msg,
-        },
-        { status: 402 },
-      );
+      // Same partial-failure retry trap as Stripe above. PayPal
+      // surfaces "already captured" as the issue name
+      // `AUTHORIZATION_ALREADY_CAPTURED`; the auth-already-completed
+      // case is `AUTH_CAPTURE_NOT_ALLOWED` / `AUTH_VOIDED` with a
+      // status string of "CAPTURED" / "COMPLETED". Treat any of these
+      // as success — money already moved.
+      const lower = msg.toLowerCase();
+      const isAlreadyCaptured =
+        lower.includes("already_captured") ||
+        lower.includes("already been captured") ||
+        lower.includes("authorization_already_captured") ||
+        lower.includes("auth_capture_not_allowed");
+      if (isAlreadyCaptured) {
+        console.warn(
+          `[orders PATCH] PayPal capture for ${id} reports already-captured — treating as success.`,
+        );
+        // Fall through; downstream order update proceeds. The PayPal
+        // webhook (PAYMENT.CAPTURE.COMPLETED) will set paymentStatus="paid"
+        // independently.
+      } else {
+        console.error(`[orders PATCH] capturePaypalAuthorization failed for order ${id}:`, msg);
+        return NextResponse.json(
+          {
+            error:
+              "Couldn't capture the PayPal payment. The customer's authorization may have expired. Reject this order to release the hold.",
+            code: "paypal_capture_failed",
+            detail: msg,
+          },
+          { status: 402 },
+        );
+      }
     }
   }
 
