@@ -42,10 +42,27 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   const [reordering, setReordering] = useState(false);
   const [reorderMsg, setReorderMsg] = useState<string | null>(null);
 
+  const [fetchError, setFetchError] = useState<string | null>(null);
   const fetchOrder = async () => {
-    const res = await fetch(`/api/orders/${orderId}`);
-    if (res.ok) setOrder(await res.json());
-    setLoading(false);
+    try {
+      const res = await fetch(`/api/orders/${orderId}`);
+      if (res.ok) {
+        setOrder(await res.json());
+        setFetchError(null);
+      } else {
+        // Surface the HTTP error instead of silently rendering "Order
+        // not found" — that label used to fire for both a real 404 AND
+        // any 500 from the API (e.g. an invalid Prisma select), which
+        // hid debug info. Now we show the status so the operator can
+        // tell the two apart from the page itself.
+        const body = await res.text().catch(() => "");
+        setFetchError(`HTTP ${res.status}${body ? ` · ${body.slice(0, 200)}` : ""}`);
+      }
+    } catch (e) {
+      setFetchError(e instanceof Error ? e.message : String(e));
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -94,7 +111,12 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   );
 
   if (!order) return (
-    <div className="min-h-screen flex items-center justify-center text-gray-500">Order not found</div>
+    <div className="min-h-screen flex flex-col items-center justify-center text-gray-500 px-4 text-center">
+      <div>Order not found</div>
+      {fetchError && (
+        <div className="text-xs text-gray-400 mt-3 max-w-md font-mono">{fetchError}</div>
+      )}
+    </div>
   );
 
   const isRejected = order.status === "rejected" || order.status === "cancelled";
@@ -359,9 +381,9 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 {order.deliveryCity ? `, ${order.deliveryCity}` : ""}
                 {order.deliveryZip ? ` ${order.deliveryZip}` : ""}
               </div>
-              {order.deliveryInstructions && (
-                <div className="text-xs text-gray-500 mt-1 italic">{order.deliveryInstructions}</div>
-              )}
+              {/* No separate deliveryInstructions column — those are
+                  concatenated into `notes` at order-create time and
+                  rendered by the customer-note card further down. */}
             </div>
           )}
 

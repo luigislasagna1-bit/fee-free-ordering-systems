@@ -29,9 +29,10 @@ const PUBLIC_ORDER_SELECT = {
   refundStatus: true,
   // Delivery context — the status page renders the "Delivery to" block
   // when type === "delivery" so the customer can verify the address is
-  // correct (and easily call the restaurant about it).
+  // correct (and easily call the restaurant about it). Customer-typed
+  // delivery instructions are concatenated into `notes` at order-create
+  // time (see CheckoutModal → buildOrderPayload) and surfaced from there.
   deliveryAddress: true, deliveryCity: true, deliveryZip: true,
-  deliveryInstructions: true,
   // Promo snapshot — same JSON-stringified array the confirmation page
   // already renders. Lets the status page show "Promos applied" + the
   // struck-through delivery fee even days later when the customer
