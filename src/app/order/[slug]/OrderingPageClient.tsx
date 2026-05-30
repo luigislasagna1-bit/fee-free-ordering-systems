@@ -508,6 +508,10 @@ export function OrderingPageClient({
   const [hasFreeDelivery, setHasFreeDelivery] = useState(false);
   const [orderLoading, setOrderLoading] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>("");
+  /** Transient banner shown after a "Reorder" handshake from the order
+   *  status page. Tells the customer "we added N items from your last
+   *  order — review and check out." Auto-clears after a few seconds. */
+  const [reorderBanner, setReorderBanner] = useState<string | null>(null);
   // Pizza builder state
   const [pizzaItem, setPizzaItem] = useState<MenuItem | null>(null);
   const [activePizzaConfig, setActivePizzaConfig] = useState<PizzaConfig | null>(null);
@@ -606,6 +610,109 @@ export function OrderingPageClient({
       }
     } catch {}
   }, [cart, CART_STORAGE_KEY]);
+
+  // ── Reorder handshake ───────────────────────────────────────────────
+  // When the customer clicks "Reorder" on /order/[slug]/status/[orderId]
+  // the status page navigates here with ?reorder=<orderId> AND writes
+  // a sessionStorage key (ff_reorder_<slug> = orderId) so we know the
+  // request was user-initiated (vs. a bookmarked URL with the param).
+  //
+  // We fetch the order, look up each line item in the current menu by
+  // menuItemId (the canonical link — names get rewritten over time),
+  // resolve the variant by NAME on the current MenuItem (variant IDs
+  // can churn after menu edits), and push fresh CartItem rows. Modifiers
+  // are intentionally NOT restored: order rows store the modifier name
+  // snapshot, not the modifier_option_id, so we'd have to fuzzy-match
+  // and risk mis-pricing. Better UX: pre-fill items, tell the customer
+  // to re-pick modifiers if they had any.
+  const reorderConsumedRef = useRef(false);
+  useEffect(() => {
+    if (reorderConsumedRef.current) return;
+    if (!cartRestoredRef.current) return; // wait for initial cart restore
+    const reorderId = searchParams.get("reorder");
+    if (!reorderId) return;
+    // Sessionstorage handshake — guards against someone pasting a URL
+    // with ?reorder=X expecting items they didn't actually own. Still
+    // safe even if bypassed (the status page is auth-by-orderId-only),
+    // but the handshake gives a clean cancel path on refresh.
+    let handshakeOk = false;
+    try {
+      const stored = sessionStorage.getItem(`ff_reorder_${restaurant.slug}`);
+      if (stored === reorderId) {
+        handshakeOk = true;
+        sessionStorage.removeItem(`ff_reorder_${restaurant.slug}`);
+      }
+    } catch { /* private mode: skip handshake */ }
+    if (!handshakeOk) {
+      router.replace(`/order/${restaurant.slug}`, { scroll: false });
+      return;
+    }
+    reorderConsumedRef.current = true;
+    (async () => {
+      try {
+        const res = await fetch(`/api/orders/${encodeURIComponent(reorderId)}`);
+        if (!res.ok) throw new Error(`fetch failed: ${res.status}`);
+        const ord = await res.json();
+        const orderItems: any[] = Array.isArray(ord.items) ? ord.items : [];
+        // Build a flat menuItemId → MenuItem index from the CURRENT
+        // visibleCategories so a stale order doesn't smuggle hidden /
+        // sold-out items back into the cart.
+        const itemIndex = new Map<string, MenuItem>();
+        for (const c of visibleCategories) for (const mi of c.menuItems) itemIndex.set(mi.id, mi);
+        const newCart: CartItem[] = [];
+        let dropped = 0;
+        let hadMods = false;
+        for (const oi of orderItems) {
+          // Bundle wrapper rows have menuItemId === null — skip; we
+          // don't try to re-trigger the bundle promo flow on reorder.
+          if (!oi.menuItemId) { dropped++; continue; }
+          const mi = itemIndex.get(oi.menuItemId);
+          if (!mi) { dropped++; continue; }
+          let variant: ItemVariant | undefined;
+          if (oi.variantName) {
+            variant = mi.variants?.find((v: ItemVariant) => v.name === oi.variantName) ?? undefined;
+          }
+          const unitPrice = variant?.price ?? mi.price;
+          const qty = Math.max(1, parseInt(oi.quantity, 10) || 1);
+          if (Array.isArray(oi.modifiers) && oi.modifiers.length > 0) hadMods = true;
+          newCart.push({
+            menuItem: mi,
+            variant,
+            quantity: qty,
+            selectedMods: {},
+            notes: oi.notes ?? "",
+            lineTotal: unitPrice * qty,
+            unitPrice,
+          });
+        }
+        if (newCart.length > 0) {
+          setCart((prev) => [...prev, ...newCart]);
+          setCartOpen(true);
+        }
+        const parts: string[] = [];
+        if (newCart.length > 0) {
+          parts.push(`Added ${newCart.length} item${newCart.length === 1 ? "" : "s"} from your previous order.`);
+        }
+        if (dropped > 0) {
+          parts.push(`${dropped} item${dropped === 1 ? "" : "s"} couldn't be re-added — no longer on the menu.`);
+        }
+        if (hadMods) {
+          parts.push("Please review modifiers before checking out.");
+        }
+        if (parts.length > 0) {
+          setReorderBanner(parts.join(" "));
+          window.setTimeout(() => setReorderBanner(null), 9000);
+        }
+      } catch {
+        setReorderBanner("Sorry — we couldn't restore that order. Try adding items manually.");
+        window.setTimeout(() => setReorderBanner(null), 6000);
+      } finally {
+        // Strip the query param so a refresh doesn't re-trigger.
+        router.replace(`/order/${restaurant.slug}`, { scroll: false });
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   // ── Cart-abandonment heartbeat ───────────────────────────────────────
   //
@@ -1382,6 +1489,25 @@ export function OrderingPageClient({
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: theme.backgroundColor, color: theme.textColor }}>
+      {/* Reorder feedback banner. Fires after the customer hits "Reorder"
+          on the status page; tells them how many items came back, what
+          couldn't, and to review modifiers. Auto-dismisses in ~9s. */}
+      {reorderBanner && (
+        <div
+          role="status"
+          className="fixed left-1/2 -translate-x-1/2 z-50 max-w-sm w-[calc(100%-2rem)] mt-3 sm:mt-4 px-4 py-3 rounded-xl shadow-lg border bg-emerald-50 border-emerald-200 text-emerald-900 text-sm"
+          style={{ top: 0 }}
+        >
+          <div className="flex items-start justify-between gap-2">
+            <span>{reorderBanner}</span>
+            <button
+              onClick={() => setReorderBanner(null)}
+              className="text-emerald-700 hover:text-emerald-900 font-bold leading-none"
+              aria-label="Dismiss"
+            >×</button>
+          </div>
+        </div>
+      )}
       {/* Marketplace ribbon — visible only when the customer arrived from
           /marketplace. Tells them they're paying exactly what's on the menu
           (no aggregator markup) and offers a one-tap back link. Hidden in

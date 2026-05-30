@@ -27,21 +27,45 @@ const PUBLIC_ORDER_SELECT = {
   acceptedAt: true, rejectedAt: true, rejectionReason: true,
   completedAt: true, preparationTime: true, createdAt: true,
   refundStatus: true,
+  // Delivery context — the status page renders the "Delivery to" block
+  // when type === "delivery" so the customer can verify the address is
+  // correct (and easily call the restaurant about it).
+  deliveryAddress: true, deliveryCity: true, deliveryZip: true,
+  deliveryInstructions: true,
+  // Promo snapshot — same JSON-stringified array the confirmation page
+  // already renders. Lets the status page show "Promos applied" + the
+  // struck-through delivery fee even days later when the customer
+  // revisits the order from /account.
+  appliedPromos: true,
+  couponDiscount: true, promoDiscount: true,
   // Marketplace attribution — used by the status page so the "← Back"
   // link sends customers back to the marketplace grid (where they came
   // from) instead of the standalone restaurant menu.
   viaMarketplace: true,
+  // Bundle children — receipts + status page need this to render the
+  // parent-bundle line with its child picks (Promo Type 8 / 13).
+  // Selected as Json since it's stored as Json on OrderItem.
   restaurant: {
     // kitchenWorkflowMode lets the customer status page render the
     // RIGHT step count: "simple" mode just shows Received → Confirmed →
     // Complete (the kitchen never transitions through Preparing / Ready),
     // while "tracking" mode shows the full 5-step flow.
-    select: { name: true, slug: true, phone: true, estimatedPickup: true, estimatedDelivery: true, kitchenWorkflowMode: true },
+    //
+    // phone + email + address: surface on the status page's "Need help?"
+    // panel so customers can call/email the restaurant directly about
+    // their order without leaving the page.
+    select: {
+      name: true, slug: true, phone: true, email: true,
+      address: true, city: true, state: true, zip: true,
+      estimatedPickup: true, estimatedDelivery: true,
+      kitchenWorkflowMode: true,
+    },
   },
   items: {
     select: {
-      id: true, name: true, price: true, quantity: true, subtotal: true,
-      notes: true, variantName: true,
+      id: true, menuItemId: true, variantId: true,
+      name: true, price: true, quantity: true, subtotal: true,
+      notes: true, variantName: true, bundleItems: true,
       modifiers: { select: { name: true, priceAdjustment: true } },
     },
   },
