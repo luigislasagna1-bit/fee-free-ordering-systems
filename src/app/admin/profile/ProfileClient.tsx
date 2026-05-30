@@ -580,8 +580,24 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
             <Field {...fp} label={t("estPickupTime")} field="estimatedPickup" type="number" />
             <Field {...fp} label={t("estDeliveryTime")} field="estimatedDelivery" type="number" />
             <Field {...fp} label={t("minimumOrder")} field="minimumOrder" type="number" />
-            <Field {...fp} label={t("deliveryFee")} field="deliveryFee" type="number" />
-            <Field {...fp} label={t("taxRate")} field="taxRate" type="number" />
+          </div>
+          {/* Delivery-fee and tax-rate fields used to live here. Both
+              moved 2026-05-30 (Luigi audit):
+                • Delivery fee → per-zone in Delivery Zones (the legacy
+                  flat field is now redundant). The schema column stays
+                  as a fallback when no zone resolves, but the owner-
+                  facing input lives only on /admin/delivery.
+                • Tax rate → /admin/service-fees (single home for Sales
+                  Fees & Tax). */}
+          <div className="mt-4 grid sm:grid-cols-2 gap-3 text-xs text-gray-500">
+            <a href="/admin/delivery" className="rounded-lg border border-gray-100 px-3 py-2 hover:border-emerald-300 hover:bg-emerald-50 transition">
+              <div className="font-semibold text-gray-700">Delivery fees</div>
+              <div className="mt-0.5">Set per delivery zone →</div>
+            </a>
+            <a href="/admin/service-fees" className="rounded-lg border border-gray-100 px-3 py-2 hover:border-emerald-300 hover:bg-emerald-50 transition">
+              <div className="font-semibold text-gray-700">Sales tax rate</div>
+              <div className="mt-0.5">Configure in Service Fees &amp; Tax →</div>
+            </a>
           </div>
         </div>
 

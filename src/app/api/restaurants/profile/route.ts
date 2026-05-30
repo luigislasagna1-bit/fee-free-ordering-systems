@@ -3,6 +3,23 @@ import { revalidatePath } from "next/cache";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 
+/**
+ * GET — small endpoint used by surfaces that need a single Restaurant
+ * field without loading the entire profile. Notably the new Sales Tax
+ * card on /admin/service-fees fetches just `taxRate` from here so we
+ * don't have to mirror state through layout props.
+ */
+export async function GET() {
+  const user = await getSessionUser();
+  const restaurantId = user?.restaurantId;
+  if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const restaurant = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { taxRate: true, deliveryFee: true, minimumOrder: true },
+  });
+  return NextResponse.json(restaurant ?? {});
+}
+
 export async function PUT(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;

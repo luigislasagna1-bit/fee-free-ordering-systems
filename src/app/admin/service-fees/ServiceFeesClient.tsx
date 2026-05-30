@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Plus, Wallet, Trash2, Pencil, Loader2, X, ToggleLeft, ToggleRight } from "lucide-react";
+import { Plus, Wallet, Trash2, Pencil, Loader2, X, ToggleLeft, ToggleRight, Receipt } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 
@@ -53,15 +53,51 @@ export function ServiceFeesClient() {
   const [form, setForm] = useState<Omit<ServiceFee, "id" | "sortOrder">>(emptyForm());
   const [showModal, setShowModal] = useState(false);
   const [saving, setSaving] = useState(false);
+  // Sales tax — used to live on /admin/profile alongside delivery-fee /
+  // estimated times. Luigi 2026-05-30 audit: "the tax option from main
+  // admin panel, can we completely move that and make it an option only
+  // in the correct taxes section?" — moved here so tax + service fees
+  // live together on the same page.
+  const [taxRate, setTaxRate] = useState<string>("0");
+  const [savingTax, setSavingTax] = useState(false);
 
   const load = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/service-fees");
-      const d = await res.json();
+      const [feesRes, profileRes] = await Promise.all([
+        fetch("/api/admin/service-fees"),
+        fetch("/api/restaurants/profile"),
+      ]);
+      const d = await feesRes.json();
       setFees(d.fees || []);
+      if (profileRes.ok) {
+        const p = await profileRes.json();
+        if (typeof p.taxRate === "number") setTaxRate(String(p.taxRate));
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const saveTaxRate = async () => {
+    const parsed = parseFloat(taxRate);
+    if (Number.isNaN(parsed) || parsed < 0 || parsed > 100) {
+      toast.error("Tax rate must be between 0 and 100");
+      return;
+    }
+    setSavingTax(true);
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ taxRate: parsed }),
+      });
+      if (!res.ok) throw new Error();
+      toast.success(tToasts("saved"));
+    } catch {
+      toast.error(tToasts("saveFailed"));
+    } finally {
+      setSavingTax(false);
     }
   };
 
@@ -170,6 +206,49 @@ export function ServiceFeesClient() {
         >
           <Plus className="w-4 h-4" /> {t("addFee")}
         </button>
+      </div>
+
+      {/* ── Sales Tax Rate ──────────────────────────────────────────
+          Moved here from /admin/profile Ordering Settings. Single
+          source of truth — Customer cart applies this rate to the
+          taxable base (subtotal − promo discount + delivery + fees). */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <div className="flex items-start gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
+            <Receipt className="w-5 h-5 text-emerald-600" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h2 className="font-semibold text-gray-900">Sales tax rate</h2>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Applied to every order&apos;s taxable subtotal. Set to 0 if you
+              don&apos;t collect sales tax. (e.g. 13 for 13% HST.)
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap items-end gap-3">
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1">Rate (%)</label>
+            <div className="relative">
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                max="100"
+                className="w-32 border border-gray-300 rounded-lg pl-3 pr-8 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                value={taxRate}
+                onChange={(e) => setTaxRate(e.target.value)}
+              />
+              <span className="absolute right-3 top-2.5 text-gray-400 text-sm pointer-events-none">%</span>
+            </div>
+          </div>
+          <button
+            onClick={saveTaxRate}
+            disabled={savingTax}
+            className="bg-emerald-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-emerald-600 transition text-sm shadow-sm disabled:opacity-50"
+          >
+            {savingTax ? "Saving…" : "Save tax rate"}
+          </button>
+        </div>
       </div>
 
       {fees.length === 0 ? (
