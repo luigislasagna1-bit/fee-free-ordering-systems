@@ -389,11 +389,17 @@ export default async function HostedSitePage({
           {/* CSS + inline scroll listener — no React state needed.
               Once the customer scrolls > 60px, swap the transparent
               class for the dark-translucent one so the nav stays
-              readable over the white content below the hero. */}
-          <style jsx global>{`
-            #ff-hosted-nav.ff-nav-transparent { background-color: transparent; }
-            #ff-hosted-nav.ff-nav-scrolled    { background-color: rgba(0,0,0,0.85); border-bottom-color: rgba(255,255,255,0.10); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
-          `}</style>
+              readable over the white content below the hero.
+              Plain <style> (NOT `style jsx`) — this file is a server
+              component, and styled-jsx requires a client component. */}
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
+                #ff-hosted-nav.ff-nav-transparent { background-color: transparent; }
+                #ff-hosted-nav.ff-nav-scrolled    { background-color: rgba(0,0,0,0.85); border-bottom-color: rgba(255,255,255,0.10); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+              `,
+            }}
+          />
           <script
             dangerouslySetInnerHTML={{
               __html: `
