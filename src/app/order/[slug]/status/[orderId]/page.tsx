@@ -5,6 +5,7 @@ import { formatCurrency } from "@/lib/utils";
 import {
   CheckCircle, Clock, ChefHat, Package, XCircle, Loader2,
   Phone, Mail, MapPin, Repeat, Printer, HelpCircle, X,
+  ThumbsUp, ThumbsDown, Share2,
 } from "lucide-react";
 import Link from "next/link";
 import { use } from "react";
@@ -45,6 +46,41 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   const [cancelling, setCancelling] = useState(false);
   const [cancelError, setCancelError] = useState<string | null>(null);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+  // Rating state — loaded lazily once the order reaches `completed`.
+  const [ratingScore, setRatingScore] = useState<1 | -1 | null>(null);
+  const [ratingComment, setRatingComment] = useState("");
+  const [ratingSubmitted, setRatingSubmitted] = useState(false);
+  const [ratingSaving, setRatingSaving] = useState(false);
+  // Fetch existing rating once the order is completed (idempotent —
+  // re-render with the same status doesn't re-fetch).
+  useEffect(() => {
+    if (order?.status !== "completed") return;
+    let cancelled = false;
+    fetch(`/api/public/orders/${orderId}/rating`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => {
+        if (cancelled || !d?.rating) return;
+        setRatingScore(d.rating.score);
+        setRatingComment(d.rating.comment ?? "");
+        setRatingSubmitted(true);
+      })
+      .catch(() => { /* silently ignore — UI just shows the empty rate prompt */ });
+    return () => { cancelled = true; };
+  }, [order?.status, orderId]);
+  const submitRating = async (score: 1 | -1) => {
+    setRatingSaving(true);
+    setRatingScore(score);
+    try {
+      await fetch(`/api/public/orders/${orderId}/rating`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ score, comment: ratingComment.trim() || undefined }),
+      });
+      setRatingSubmitted(true);
+    } finally {
+      setRatingSaving(false);
+    }
+  };
 
   // Live ETA countdown — ticks every second so the customer sees
   // "Ready in 7 min" → "6 min" → … → "Ready now!" without refreshing.
@@ -142,6 +178,25 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   const handlePrint = useCallback(() => {
     if (typeof window !== "undefined") window.print();
   }, []);
+
+  // Share — Web Share API on supported browsers (mobile), copy-to-
+  // clipboard fallback elsewhere. Lets a customer send the live
+  // status URL to whoever's picking up the order.
+  const [shareCopied, setShareCopied] = useState(false);
+  const handleShare = useCallback(async () => {
+    if (typeof window === "undefined") return;
+    const url = window.location.href;
+    const title = order ? `Order #${order.orderNumber} at ${order.restaurant.name}` : "My order";
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, url });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(url);
+        setShareCopied(true);
+        setTimeout(() => setShareCopied(false), 2000);
+      }
+    } catch { /* user cancelled or clipboard denied */ }
+  }, [order]);
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center">
@@ -319,6 +374,66 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 })}
               </div>
 
+              {/* ── Rating prompt (completed orders) ──────────────
+                  Toast / Uber / DoorDash / Skip / Grubhub all ask
+                  "how was it" once the order completes. Thumbs-only
+                  for higher completion vs 1-5 stars. Idempotent —
+                  re-tapping updates the row. */}
+              {order.status === "completed" && (
+                <div className="no-print mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                  <div className="text-sm font-semibold text-emerald-900 text-center">
+                    {ratingSubmitted ? "Thanks for the feedback!" : "How was your order?"}
+                  </div>
+                  <div className="mt-3 flex justify-center gap-3">
+                    <button
+                      onClick={() => submitRating(1)}
+                      disabled={ratingSaving}
+                      aria-label="Thumbs up"
+                      className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition disabled:opacity-50 ${
+                        ratingScore === 1
+                          ? "bg-emerald-500 border-emerald-500 text-white"
+                          : "bg-white border-emerald-300 text-emerald-700 hover:bg-emerald-100"
+                      }`}
+                    >
+                      <ThumbsUp className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => submitRating(-1)}
+                      disabled={ratingSaving}
+                      aria-label="Thumbs down"
+                      className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition disabled:opacity-50 ${
+                        ratingScore === -1
+                          ? "bg-red-500 border-red-500 text-white"
+                          : "bg-white border-red-200 text-red-600 hover:bg-red-50"
+                      }`}
+                    >
+                      <ThumbsDown className="w-5 h-5" />
+                    </button>
+                  </div>
+                  {ratingScore === -1 && (
+                    <div className="mt-3">
+                      <textarea
+                        className="w-full border border-red-200 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-red-400 focus:outline-none resize-none"
+                        rows={2}
+                        placeholder="What went wrong? (optional, helps the restaurant improve)"
+                        value={ratingComment}
+                        onChange={(e) => setRatingComment(e.target.value)}
+                        maxLength={500}
+                      />
+                      <div className="text-right mt-1">
+                        <button
+                          onClick={() => submitRating(-1)}
+                          disabled={ratingSaving}
+                          className="text-xs font-semibold text-red-700 hover:text-red-800 disabled:opacity-50"
+                        >
+                          {ratingSaving ? "Sending…" : "Submit feedback"}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* Live ETA countdown — ticks once per second. Shows
                   "Ready in 12 min" → "Ready in 6 min" → "Ready in <1 min"
                   → "Ready now — pickup time!" once estimatedReady passes.
@@ -494,22 +609,31 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
             </div>
           )}
 
-          {/* ── Action buttons (Reorder / Print) ───────────────────── */}
-          <div className="no-print grid grid-cols-2 gap-3 mb-6">
+          {/* ── Action buttons (Reorder / Print / Share) ──────────── */}
+          <div className="no-print grid grid-cols-3 gap-2 sm:gap-3 mb-6">
             <button
               onClick={handleReorder}
               disabled={reordering}
-              className="flex items-center justify-center gap-2 bg-emerald-500 text-white font-semibold py-3 rounded-xl hover:bg-emerald-600 transition disabled:opacity-50"
+              className="flex items-center justify-center gap-1.5 bg-emerald-500 text-white font-semibold py-3 rounded-xl hover:bg-emerald-600 transition disabled:opacity-50 text-sm"
             >
               {reordering ? <Loader2 className="w-4 h-4 animate-spin" /> : <Repeat className="w-4 h-4" />}
-              Reorder
+              <span className="hidden sm:inline">Reorder</span>
+              <span className="sm:hidden">Again</span>
             </button>
             <button
               onClick={handlePrint}
-              className="flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 font-semibold py-3 rounded-xl hover:bg-gray-50 transition"
+              className="flex items-center justify-center gap-1.5 bg-white border border-gray-300 text-gray-700 font-semibold py-3 rounded-xl hover:bg-gray-50 transition text-sm"
             >
               <Printer className="w-4 h-4" />
-              Print receipt
+              <span className="hidden sm:inline">Print</span>
+              <span className="sm:hidden">Print</span>
+            </button>
+            <button
+              onClick={handleShare}
+              className="flex items-center justify-center gap-1.5 bg-white border border-gray-300 text-gray-700 font-semibold py-3 rounded-xl hover:bg-gray-50 transition text-sm"
+            >
+              <Share2 className="w-4 h-4" />
+              <span>{shareCopied ? "Copied!" : "Share"}</span>
             </button>
           </div>
           {reorderMsg && (

@@ -178,6 +178,7 @@ model Restaurant {
   menuItems              MenuItem[]
   modifierGroups         ModifierGroup[]
   orders                 Order[]
+  orderRatings           OrderRating[]
   customers              Customer[]
   coupons                Coupon[]
   deliveryZones          DeliveryZone[]
@@ -786,6 +787,7 @@ model Order {
   coupon       Coupon?       @relation(fields: [couponId], references: [id])
   deliveryZone DeliveryZone? @relation(fields: [deliveryZoneId], references: [id])
   items        OrderItem[]
+  rating       OrderRating?
 
   @@index([restaurantId, createdAt])
   @@index([restaurantId, status])
@@ -798,6 +800,32 @@ model Order {
   // still has to filter status afterward; this composite makes the
   // dashboard "completed orders last 7 days" query a true index-only.
   @@index([restaurantId, status, createdAt])
+}
+
+/// Customer-submitted rating for a completed order. One row per order
+/// at most (orderId is unique). Surfaced on the status page once the
+/// order reaches `completed`; the customer taps 👍 / 👎 and (on 👎)
+/// optionally types a short comment. Restaurants see aggregate scores
+/// in the admin reports.
+///
+/// Schema designed to extend later: add `dimension` rows (food / speed /
+/// packaging) without changing the read query if needed.
+model OrderRating {
+  id           String   @id @default(cuid())
+  orderId      String   @unique
+  restaurantId String
+  /// 1 = thumbs up, -1 = thumbs down. We deliberately don't use a
+  /// 1-5 star scale at launch — thumbs are higher-completion in
+  /// post-meal contexts and let us avoid 3-star "indifferent" noise.
+  /// Stored as Int so we can extend to stars later without migrating.
+  score        Int
+  comment      String?
+  createdAt    DateTime @default(now())
+
+  order      Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId, createdAt])
 }
 
 model OrderItem {
