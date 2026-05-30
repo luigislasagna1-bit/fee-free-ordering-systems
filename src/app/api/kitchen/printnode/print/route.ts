@@ -413,6 +413,7 @@ export async function POST(req: NextRequest) {
       tip:             order.tip,
       couponDiscount:  order.couponDiscount,
       promoDiscount:   order.promoDiscount,
+      appliedPromos:   (order as any).appliedPromos ?? null,
       total:           order.total,
       paymentMethod:   order.paymentMethod,
       paymentStatus:   order.paymentStatus,

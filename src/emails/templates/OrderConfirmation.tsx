@@ -48,6 +48,16 @@ export type OrderConfirmationProps = {
   restaurantPhone?: string;
   imprint?: string;
   currency?: string;
+  /** Promotions that fired for this order — rendered as a highlighted
+   *  box above the totals so the customer sees the applied promo by
+   *  name + the savings. Each entry: { name, type, discount,
+   *  couponCode? }. Empty / undefined → box hidden. */
+  appliedPromos?: Array<{
+    name: string;
+    type: string;
+    discount: number;
+    couponCode?: string;
+  }>;
 };
 
 const ORDER_TYPE_LABEL: Record<string, string> = {
@@ -64,7 +74,10 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
     estimatedMinutes, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
     discount, total, deliveryAddress, trackingUrl, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, currency,
+    appliedPromos,
   } = props;
+  const cur = currency ?? "$";
+  const promoList = Array.isArray(appliedPromos) ? appliedPromos : [];
   const orderTypeLabel = ORDER_TYPE_LABEL[orderType] ?? orderType;
   const timeLabel = orderType === "delivery" ? "Estimated delivery" : "Estimated ready";
 
@@ -102,6 +115,68 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           Your order details
         </div>
         <OrderItemsTable items={items} currency={currency ?? "$"} />
+
+        {/* Promos applied — boxed highlight above totals (Phase 2 +
+            Luigi feedback 2026-05-29). Skipped when nothing fired. */}
+        {promoList.length > 0 && (
+          <div
+            style={{
+              marginTop: 12,
+              marginBottom: 4,
+              padding: "12px 14px",
+              border: "2px solid #a7f3d0",
+              borderRadius: 10,
+              background: "linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: 13,
+                fontWeight: 700,
+                color: "#065f46",
+                marginBottom: 8,
+              }}
+            >
+              🎉 Promos applied
+            </div>
+            {promoList.map((p, i) => (
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  fontSize: 13,
+                  marginBottom: i === promoList.length - 1 ? 0 : 4,
+                }}
+              >
+                <span style={{ color: "#047857", fontWeight: 500 }}>
+                  ✓ {p.name}
+                  {p.couponCode && (
+                    <span
+                      style={{
+                        fontFamily: "Courier, monospace",
+                        background: "#fff",
+                        border: "1px solid #a7f3d0",
+                        color: "#047857",
+                        padding: "1px 6px",
+                        borderRadius: 4,
+                        marginLeft: 6,
+                        fontSize: 11,
+                      }}
+                    >
+                      {p.couponCode}
+                    </span>
+                  )}
+                </span>
+                <span style={{ color: "#065f46", fontWeight: 700 }}>
+                  {p.discount > 0 ? `− ${cur}${p.discount.toFixed(2)}` : "FREE"}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+
         <OrderTotals
           subtotal={subtotal}
           taxAmount={taxAmount}

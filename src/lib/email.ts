@@ -206,6 +206,15 @@ interface OrderEmailParams {
   restaurantUrl?: string;
   restaurantEmail?: string;
   restaurantPhone?: string;
+  /** Promotions that fired for this order. Rendered as a highlighted
+   *  box in the email above the totals. Each entry:
+   *  { name, type, discount, couponCode? }. Empty/undefined → no box. */
+  appliedPromos?: Array<{
+    name: string;
+    type: string;
+    discount: number;
+    couponCode?: string;
+  }>;
 }
 
 export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
@@ -232,6 +241,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       restaurantEmail: params.restaurantEmail,
       restaurantPhone: params.restaurantPhone,
       imprint: currentImprint(),
+      appliedPromos: params.appliedPromos,
     })
   );
   // Reply-To: the restaurant's own email. Customer hits Reply → response

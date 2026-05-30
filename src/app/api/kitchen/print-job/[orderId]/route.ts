@@ -123,6 +123,7 @@ export async function GET(
     couponDiscount: (order as any).couponDiscount ?? 0,
     promoDiscount: (order as any).promoDiscount ?? 0,
     appliedServiceFees: (order as any).appliedServiceFees ?? null,
+    appliedPromos: (order as any).appliedPromos ?? null,
     total: order.total,
     paymentMethod: (order as any).paymentMethod ?? "",
     paymentStatus: (order as any).paymentStatus ?? "pending",

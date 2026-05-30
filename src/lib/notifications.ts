@@ -335,7 +335,7 @@ export function staffAcceptEventForOrderType(
 // ─── notifyCustomer ────────────────────────────────────────────────────────
 
 export type CustomerEventPayload =
-  | { event: "orderConfirmed"; customerName: string; orderNumber: string; items: { name: string; quantity: number; price: number }[]; total: number; orderType: string; estimatedTime: number; trackingUrl: string }
+  | { event: "orderConfirmed"; customerName: string; orderNumber: string; items: { name: string; quantity: number; price: number }[]; total: number; orderType: string; estimatedTime: number; trackingUrl: string; appliedPromos?: Array<{ name: string; type: string; discount: number; couponCode?: string }> }
   | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string }
   | { event: "reservationConfirmation"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending"; depositPaid?: boolean; depositAmount?: number; preOrderTotal?: number };
 
@@ -410,6 +410,7 @@ export async function notifyCustomer(args: {
           estimatedTime: payload.estimatedTime,
           trackingUrl: payload.trackingUrl,
           locale,
+          appliedPromos: payload.appliedPromos,
         });
       });
       return { sent: true };

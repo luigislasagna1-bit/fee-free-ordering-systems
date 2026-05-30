@@ -493,6 +493,13 @@ export interface ReceiptOrder {
   couponDiscount?: number;
   promoDiscount?: number;
   appliedServiceFees?: string | null;  // JSON: [{ name, amount }]
+  /** Snapshot of every promo that fired for this order, frozen at
+   *  order-create time. JSON: [{ promoId, name, type, discount, couponCode? }].
+   *  When present + non-empty, the customer receipt renders a boxed
+   *  "PROMOS APPLIED" section above the totals listing each promo by
+   *  name + the savings amount. Free-delivery entries carry the saved
+   *  delivery fee as their `discount` value. */
+  appliedPromos?: string | null;
   total: number;
   paymentMethod: string;
   paymentStatus: string;
@@ -770,6 +777,31 @@ async function renderCustomerSection(
       break;
 
     case "totals":
+      // Promo highlight box — renders ABOVE the subtotal so the
+      // applied promotion(s) are the first thing the customer sees in
+      // the totals block. Uses divider lines as the box frame so it
+      // works on every thermal-printer width. Skips entirely when no
+      // promos fired (back-compat: pre-2026-05-29 orders).
+      if (order.appliedPromos) {
+        try {
+          const promos = JSON.parse(order.appliedPromos) as Array<{
+            name: string; type: string; discount: number; couponCode?: string;
+          }>;
+          if (Array.isArray(promos) && promos.length > 0) {
+            r.divider("=");
+            applyStyle(r, s);
+            r.line("* PROMOS APPLIED *");
+            r.divider("-");
+            for (const p of promos) {
+              const label = p.couponCode
+                ? `  ${p.name} [${p.couponCode}]`
+                : `  ${p.name}`;
+              r.columns(label, p.discount > 0 ? `-${fmt(p.discount)}` : "FREE");
+            }
+            r.divider("=");
+          }
+        } catch { /* malformed JSON — fall through to legacy lines */ }
+      }
       r.columns(t("receipt.customer.subtotal"), fmt(order.subtotal));
       if ((order.couponDiscount ?? 0) > 0)
         r.columns(t("receipt.customer.couponDiscount"), `-${fmt(order.couponDiscount!)}`);

@@ -61,6 +61,18 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
 
+  // Parse Order.appliedPromos snapshot so the email + receipt can show
+  // the named promo + savings box. Null/malformed → empty array (template
+  // hides the box). Free-delivery entries already carry the saved
+  // delivery fee as their discount, frozen at order-create time.
+  let appliedPromosForEmail: Array<{ name: string; type: string; discount: number; couponCode?: string }> | undefined;
+  if ((order as any).appliedPromos) {
+    try {
+      const parsed = JSON.parse((order as any).appliedPromos);
+      if (Array.isArray(parsed) && parsed.length > 0) appliedPromosForEmail = parsed;
+    } catch { /* malformed JSON — leave undefined */ }
+  }
+
   // Customer confirmation email — fire-and-forget so a Resend hiccup
   // doesn't fail the webhook (Stripe would retry the whole event).
   notifyCustomer({
@@ -79,6 +91,7 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
         ? order.restaurant.estimatedPickup
         : order.restaurant.estimatedDelivery,
       trackingUrl: `${baseUrl}/order/${order.restaurant.slug}/status/${order.id}`,
+      appliedPromos: appliedPromosForEmail,
     },
   }).catch((e) => console.error("[fireOrderNotifications] notifyCustomer:", e));
 

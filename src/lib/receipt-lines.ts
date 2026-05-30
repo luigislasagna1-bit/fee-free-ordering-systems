@@ -393,6 +393,27 @@ function renderCustomerSection(
       break;
 
     case "totals":
+      // Promo highlight box (Phase 2 + Luigi feedback 2026-05-29) — same
+      // pattern as the ESC/POS path in receipt.ts. Additive; back-compat.
+      if (order.appliedPromos) {
+        try {
+          const promos = JSON.parse(order.appliedPromos) as Array<{
+            name: string; type: string; discount: number; couponCode?: string;
+          }>;
+          if (Array.isArray(promos) && promos.length > 0) {
+            r.divider("=");
+            r.line("* PROMOS APPLIED *");
+            r.divider("-");
+            for (const p of promos) {
+              const label = p.couponCode
+                ? `  ${p.name} [${p.couponCode}]`
+                : `  ${p.name}`;
+              r.columns(label, p.discount > 0 ? `-${fmt(p.discount)}` : "FREE");
+            }
+            r.divider("=");
+          }
+        } catch { /* malformed JSON — fall through to legacy lines */ }
+      }
       r.columns(t("receipt.customer.subtotal"), fmt(order.subtotal));
       if ((order.couponDiscount ?? 0) > 0)
         r.columns(t("receipt.customer.couponDiscount"), `-${fmt(order.couponDiscount!)}`);

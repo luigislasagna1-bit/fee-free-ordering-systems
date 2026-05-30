@@ -696,6 +696,15 @@ model Order {
   deliveryZoneId            String?
   deliveryEstimatedMinutes  Int?
   appliedServiceFees        String? // JSON: [{ name, amount }] frozen at order time
+  /// Snapshot of every promotion that fired for THIS order, frozen at
+  /// order-create time so the receipt + confirmation + email can show
+  /// "10% off — JULY SPECIAL  −$4.54" even months later when the
+  /// underlying promo has been edited or deleted. JSON shape:
+  ///   [{ promoId, name, type, discount, couponCode? }, ...]
+  /// Free-delivery promos appear here with discount=0 (the savings are
+  /// realised by zeroing deliveryFee, not by reducing the subtotal).
+  /// Null on orders created before this field shipped (back-compat).
+  appliedPromos             String? // JSON
 
   /// ShipDay dispatch tracking. Set when an order is dispatched to the
   /// ShipDay third-party driver pool — populated by the dispatch call

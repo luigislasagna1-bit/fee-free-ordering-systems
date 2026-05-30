@@ -668,6 +668,22 @@ export async function POST(req: NextRequest) {
         estimatedReady: estimatedReadyValue,
         preparationTime: preparationTimeValue,
         appliedServiceFees: appliedFees.length > 0 ? JSON.stringify(appliedFees) : null,
+        // Snapshot every promo that fired (incl. free-delivery with
+        // discount=0) so the receipt/email/confirmation can render a
+        // labelled box months after the underlying promo is edited.
+        // Free-delivery entries carry the saved delivery fee so the
+        // receipt can show "−$7.99" against the named promo.
+        appliedPromos: promoResults.length > 0
+          ? JSON.stringify(
+              promoResults.map((r: any) => ({
+                promoId: r.promoId,
+                name: r.name,
+                type: r.type,
+                discount: r.type === "free_delivery" ? zoneDeliveryFee : r.discount,
+                couponCode: r.couponCode ?? undefined,
+              })),
+            )
+          : null,
         type,
         customerName: sanitize(customerName, 100),
         customerEmail: cleanEmail,

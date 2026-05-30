@@ -98,6 +98,48 @@ export default async function ConfirmationPage({
               );
             })}
           </div>
+          {/* Promo highlight box — appears ABOVE totals so customers
+              see EXACTLY which promo(s) they got + the savings. Skipped
+              when nothing fired (back-compat for pre-2026-05-29 orders). */}
+          {(() => {
+            if (!(order as any).appliedPromos) return null;
+            try {
+              const promos = JSON.parse((order as any).appliedPromos) as Array<{
+                name: string; type: string; discount: number; couponCode?: string;
+              }>;
+              if (!Array.isArray(promos) || promos.length === 0) return null;
+              return (
+                <div className="border-t border-gray-100 mt-3 pt-3">
+                  <div className="rounded-xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-green-50 p-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span aria-hidden>🎉</span>
+                      <div className="text-sm font-bold text-emerald-800">
+                        Promos applied
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      {promos.map((p, i) => (
+                        <div key={i} className="flex items-center justify-between text-xs">
+                          <div className="flex items-center gap-1.5 text-emerald-700 font-medium truncate">
+                            <span aria-hidden>✓</span>
+                            <span className="truncate">{p.name}</span>
+                            {p.couponCode && (
+                              <span className="font-mono bg-white border border-emerald-200 text-emerald-700 rounded px-1.5 py-0.5 ml-1">
+                                {p.couponCode}
+                              </span>
+                            )}
+                          </div>
+                          <div className="font-semibold text-emerald-800 whitespace-nowrap ml-2">
+                            {p.discount > 0 ? `− ${formatCurrency(p.discount)}` : "FREE"}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            } catch { return null; }
+          })()}
           <div className="border-t border-gray-100 mt-3 pt-3 space-y-1 text-sm">
             <div className="flex justify-between text-gray-600"><span>Subtotal</span><span>{formatCurrency(order.subtotal)}</span></div>
             {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>Tax</span><span>{formatCurrency(order.taxAmount)}</span></div>}
