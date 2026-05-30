@@ -19,7 +19,14 @@ const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "catering"] as con
 // "card"           = pay online by card via Stripe (gated by cardPaymentEnabled)
 // "card_in_person" = customer pays by card in person (restaurant's own POS).
 //                    No Stripe charge — same kitchen flow as cash.
-const ALLOWED_PAYMENT_METHODS = ["cash", "card", "card_in_person"] as const;
+// "paypal"         = pay online via PayPal Smart Buttons (gated by
+//                    paypalEnabled — restaurant must have a connected
+//                    PayPal app). Bug 2026-05-30: PayPal was added to
+//                    the client picker and PayPal Smart Buttons flow,
+//                    but this allow-list was never extended, so every
+//                    PayPal order was rejected at submit with "Invalid
+//                    payment method". Now properly listed.
+const ALLOWED_PAYMENT_METHODS = ["cash", "card", "card_in_person", "paypal"] as const;
 const MAX_ITEMS = 50;
 const MAX_STRING = 500;
 
