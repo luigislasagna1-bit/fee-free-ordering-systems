@@ -683,6 +683,25 @@ model Order {
   /// clears. Kitchen GET filters on `notifiedAt IS NOT NULL`.
   notifiedAt            DateTime?
 
+  /// Closed-when-placed handling (Luigi 2026-05-30).
+  ///
+  /// When the restaurant is closed at order-create time, the customer is
+  /// forced to "schedule for later" with min slot = next opening time.
+  /// We stamp `placedWhileClosed=true` AND set `alertAt` to the
+  /// restaurant's next opening moment so the kitchen alert+countdown
+  /// fires when the restaurant actually opens (not at order-create time
+  /// in the middle of the night) — with a longer 15-minute countdown
+  /// instead of the standard 3-minute, because staff may arrive a few
+  /// minutes after open.
+  ///
+  /// `alertAt` is null for normal ASAP orders during open hours
+  /// (alert fires immediately — same as before this column existed).
+  /// Kitchen display: orders with alertAt > now appear silently in
+  /// the pending tab but DON'T trigger the ring sound or countdown
+  /// until now reaches alertAt.
+  placedWhileClosed     Boolean   @default(false)
+  alertAt               DateTime?
+
   /// Marketplace channel attribution. True when the customer came from
   /// our /marketplace browse page (detected via ?from=marketplace at
   /// order creation). Drives:

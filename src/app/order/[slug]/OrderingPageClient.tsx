@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
-import { localDowAndHHMM } from "@/lib/restaurant-hours";
+import { localDowAndHHMM, liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
 
 /** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
  *  Used by the promo-banner usability-window label so a 12-3 PM lunch
@@ -1025,6 +1025,71 @@ export function OrderingPageClient({
     return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
   })();
 
+  // ── Closed-now detection (Luigi 2026-05-30) ─────────────────────────
+  // When the restaurant is closed RIGHT NOW, we don't let customers
+  // place ASAP orders — they have to schedule for the next opening
+  // slot or later. (Catering items have a stricter min already; the
+  // two rules combine — we use whichever pushes the picker further
+  // into the future.)
+  const liveStatusForClient = liveOpenStatus(
+    (restaurant.openingHours ?? []) as any,
+    new Date(),
+    hoursFmt,
+    undefined,
+    restaurantTz,
+  );
+  const restaurantIsClosedNow = liveStatusForClient.kind !== "open";
+  const nextOpenDate = restaurantIsClosedNow
+    ? nextOpenAt((restaurant.openingHours ?? []) as any, new Date(), restaurantTz)
+    : null;
+  // Convert nextOpenDate (a UTC Date that represents the local opening
+  // moment) to a "YYYY-MM-DDTHH:MM" string in the restaurant's local
+  // timezone so the datetime-local picker shows the right wall clock.
+  const closedMinScheduledLocal = (() => {
+    if (!nextOpenDate) return "";
+    if (!restaurantTz) {
+      const d = nextOpenDate;
+      const pad = (n: number) => String(n).padStart(2, "0");
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+    try {
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: restaurantTz,
+        year: "numeric", month: "2-digit", day: "2-digit",
+        hour: "2-digit", minute: "2-digit", hour12: false,
+      }).formatToParts(nextOpenDate);
+      const y = parts.find(p => p.type === "year")?.value ?? "1970";
+      const mo = parts.find(p => p.type === "month")?.value ?? "01";
+      const d = parts.find(p => p.type === "day")?.value ?? "01";
+      let h = parts.find(p => p.type === "hour")?.value ?? "00";
+      if (h === "24") h = "00";
+      const mn = parts.find(p => p.type === "minute")?.value ?? "00";
+      return `${y}-${mo}-${d}T${h}:${mn}`;
+    } catch {
+      const pad = (n: number) => String(n).padStart(2, "0");
+      const d = nextOpenDate;
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+  })();
+
+  // Combined "schedule required" reasoning. If EITHER condition pushes
+  // the customer into schedule mode, we honor the stricter of the two
+  // min slots so both rules are satisfied.
+  const scheduleRequired = cartHasCatering || restaurantIsClosedNow;
+  const effectiveMinScheduledLocal = (() => {
+    const candidates: string[] = [];
+    if (cartHasCatering && cateringMinScheduledLocal) candidates.push(cateringMinScheduledLocal);
+    if (restaurantIsClosedNow && closedMinScheduledLocal) candidates.push(closedMinScheduledLocal);
+    if (candidates.length === 0) return "";
+    // Pick the LATEST (string comparison works because both are zero-padded ISO-shaped).
+    return candidates.sort()[candidates.length - 1];
+  })();
+  const scheduleReason: "catering" | "closed" | "both" | null =
+    cartHasCatering && restaurantIsClosedNow ? "both"
+    : cartHasCatering ? "catering"
+    : restaurantIsClosedNow ? "closed"
+    : null;
+
   // ── Catering: auto-fill schedule when activated ─────────────────────
   // Flip from "no catering" → "has catering" defaults the schedule
   // picker to the earliest valid catering slot. Customer can bump
@@ -1032,20 +1097,25 @@ export function OrderingPageClient({
   // catering item in the cart. Removing catering items DOESN'T clear
   // the schedule — their explicit "Friday at 7pm" still applies.
   useEffect(() => {
-    if (cartHasCatering && !prevCateringRef.current) {
+    // Auto-fill triggers whenever EITHER the schedule-required condition
+    // becomes true OR the effective minimum slot moves later than the
+    // current scheduledFor. Closed-now restaurants get the same default-
+    // fill UX as catering — customer never sees an invalid empty-ASAP
+    // state when the rule is in effect.
+    if (scheduleRequired && effectiveMinScheduledLocal) {
       if (!customerInfo.scheduledFor) {
-        setCustomerInfo({ ...customerInfo, scheduledFor: cateringMinScheduledLocal });
+        setCustomerInfo({ ...customerInfo, scheduledFor: effectiveMinScheduledLocal });
       } else {
         try {
-          if (new Date(customerInfo.scheduledFor) < new Date(cateringMinScheduledLocal)) {
-            setCustomerInfo({ ...customerInfo, scheduledFor: cateringMinScheduledLocal });
+          if (new Date(customerInfo.scheduledFor) < new Date(effectiveMinScheduledLocal)) {
+            setCustomerInfo({ ...customerInfo, scheduledFor: effectiveMinScheduledLocal });
           }
         } catch { /* malformed — ignore */ }
       }
     }
     prevCateringRef.current = cartHasCatering;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cartHasCatering, cateringMinScheduledLocal]);
+  }, [scheduleRequired, effectiveMinScheduledLocal]);
   const zoneFee = resolvedZone?.zone.deliveryFee;
   const zoneMin = resolvedZone?.zone.minimumOrder;
   const zoneMinutes = resolvedZone?.zone.estimatedMinutes;
@@ -2493,9 +2563,11 @@ export function OrderingPageClient({
           resolvedZone={resolvedZone}
           mapProvider={restaurant.mapProvider ?? "leaflet"}
           googleMapsApiKey={restaurant.googleMapsApiKey ?? null}
-          cateringMode={cartHasCatering}
-          cateringMinScheduledLocal={cateringMinScheduledLocal}
+          cateringMode={scheduleRequired}
+          cateringMinScheduledLocal={effectiveMinScheduledLocal}
           cateringNoticeHours={cateringNoticeHours}
+          scheduleReason={scheduleReason}
+          closedNextOpenLocal={closedMinScheduledLocal}
           onClose={() => setCheckoutOpen(false)}
         />
       )}

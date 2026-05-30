@@ -150,11 +150,42 @@ function StatusBadge({ status, t }: { status: string; t: T }) {
  * Falls back to createdAt for old orders that pre-date the notifiedAt
  * column being populated, so historic rows still show a sensible value.
  */
-function Countdown({ notifiedAt, createdAt, now }: { notifiedAt: string | null; createdAt: string; now: number }) {
+function Countdown({
+  notifiedAt, createdAt, alertAt, placedWhileClosed, now,
+}: {
+  notifiedAt: string | null;
+  createdAt: string;
+  alertAt?: string | null;
+  placedWhileClosed?: boolean;
+  now: number;
+}) {
   // Stable placeholder until the client mounts (now === 0) to avoid hydration mismatch.
   if (!now) return <span className="text-xs font-mono text-gray-400">--:--</span>;
-  const reference = notifiedAt ?? createdAt;
-  const ms = 3 * 60 * 1000 - (now - new Date(reference).getTime());
+  // If alertAt is set AND still in the future, the order is parked —
+  // the countdown hasn't started yet. Show "waiting for open" badge.
+  if (alertAt) {
+    const alertMs = new Date(alertAt).getTime();
+    if (alertMs > now) {
+      const diff = alertMs - now;
+      const hrs = Math.floor(diff / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      const when = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
+      return (
+        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300"
+          title={`Alert fires in ${when} (at ${new Date(alertAt).toLocaleString(undefined, { hour: "numeric", minute: "2-digit" })})`}
+        >
+          OPENS IN {when.toUpperCase()}
+        </span>
+      );
+    }
+  }
+  // Countdown reference: prefer alertAt (when fired) so closed-placed
+  // orders count from open time, not the middle-of-the-night createdAt.
+  const reference = alertAt ?? notifiedAt ?? createdAt;
+  // Closed-placed orders get a 15-minute initial buffer (staff may be
+  // a few min late arriving after open). Normal orders keep 3 min.
+  const totalMs = placedWhileClosed ? 15 * 60 * 1000 : 3 * 60 * 1000;
+  const ms = totalMs - (now - new Date(reference).getTime());
   if (ms <= 0) return <span className="text-xs font-bold text-red-500 animate-pulse">URGENT</span>;
   const m = Math.floor(ms / 60000);
   const s = Math.floor((ms % 60000) / 1000);
@@ -182,14 +213,20 @@ function OrderRow({ order, selected, onClick, t, now }: {
   //     Matches the URGENT countdown badge so kitchen sees a unified
   //     escalation cue.
   const isPending = order.status === "pending";
-  const countdownReference = order.notifiedAt ?? order.createdAt;
-  const msLeft = now
-    ? 3 * 60 * 1000 - (now - new Date(countdownReference).getTime())
+  // If the order was placed while closed and the alert hasn't fired
+  // yet, treat it as "parked" — visible but NOT flashing/urgent. The
+  // kitchen sees it for prep planning but it doesn't compete for
+  // attention with live pending orders.
+  const alertParked = !!order.alertAt && new Date(order.alertAt).getTime() > (now || 0);
+  const countdownReference = order.alertAt ?? order.notifiedAt ?? order.createdAt;
+  const totalCountdownMs = order.placedWhileClosed ? 15 * 60 * 1000 : 3 * 60 * 1000;
+  const msLeft = now && !alertParked
+    ? totalCountdownMs - (now - new Date(countdownReference).getTime())
     : Number.POSITIVE_INFINITY;
-  const isUrgent = isPending && msLeft <= 30 * 1000;
-  const baseRowClass = selected ? t.rowSelected : isPending ? `${t.rowNew} cursor-pointer` : t.row;
+  const isUrgent = isPending && !alertParked && msLeft <= 30 * 1000;
+  const baseRowClass = selected ? t.rowSelected : isPending && !alertParked ? `${t.rowNew} cursor-pointer` : t.row;
   const flashClass = isUrgent ? "kitchen-flash-urgent" : "kitchen-flash-new";
-  const rowClass = isPending ? `${baseRowClass} ${flashClass}` : baseRowClass;
+  const rowClass = isPending && !alertParked ? `${baseRowClass} ${flashClass}` : baseRowClass;
   const timeAgo = (() => {
     if (!now) return "";
     const diff = now - new Date(order.createdAt).getTime();
@@ -220,7 +257,15 @@ function OrderRow({ order, selected, onClick, t, now }: {
           <div className="flex items-center gap-2 flex-wrap">
             <span className={`font-bold text-sm ${t.text}`}>#{order.orderNumber}</span>
             <StatusBadge status={order.status} t={t} />
-            {order.status === "pending" && <Countdown notifiedAt={order.notifiedAt} createdAt={order.createdAt} now={now} />}
+            {order.status === "pending" && (
+              <Countdown
+                notifiedAt={order.notifiedAt}
+                createdAt={order.createdAt}
+                alertAt={order.alertAt}
+                placedWhileClosed={order.placedWhileClosed}
+                now={now}
+              />
+            )}
             {order.viaMarketplace && (
               // Marketplace channel attribution — purple to differentiate
               // from direct widget/walk-up orders. Staff sees at a glance
@@ -810,7 +855,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // order AND the user hasn't silenced the current alarm. Computed each
   // render so the bell can never get "stuck" — when pending drops to 0
   // or `acknowledged` flips true, the very next render kills the loop.
-  const pendingCount = orders.filter(o => o.status === "pending").length;
+  // Pending orders that should ACTIVELY ring. Excludes "parked" orders
+  // — closed-placed orders sitting silently in the queue until the
+  // restaurant opens. They become alertable the moment the live clock
+  // ticks past their `alertAt`. Recomputed every render so the
+  // transition happens automatically without a fetch round-trip.
+  const nowMs = Date.now();
+  const pendingCount = orders.filter(
+    (o) => o.status === "pending" && !(o.alertAt && new Date(o.alertAt).getTime() > nowMs),
+  ).length;
   const alerting = pendingCount > 0 && !acknowledged;
 
   // Silence the current alarm. Bell stops; the visual "X new" badge

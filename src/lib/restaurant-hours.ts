@@ -225,6 +225,100 @@ export function liveOpenStatus(
 }
 
 /**
+ * Resolve the NEXT moment the restaurant will be open from `now`. Used
+ * by the customer ordering page (to default the schedule picker when
+ * the restaurant is closed) and by the order-create endpoint (to set
+ * `Order.alertAt` for closed-placed orders so the kitchen alert fires
+ * when the restaurant actually opens, not when the order was created).
+ *
+ * Walks forward day-by-day (max 14 days) looking for the first weekly
+ * row with `isOpen` and an `openTime`. Returns a real Date in UTC that
+ * corresponds to that local opening moment in the restaurant's
+ * timezone. Returns null if no opening row exists within 14 days
+ * (restaurant is effectively closed indefinitely).
+ *
+ * Conservative: if the restaurant is currently open RIGHT NOW, returns
+ * now — the caller can disambiguate via `liveOpenStatus`.
+ */
+export function nextOpenAt(
+  hours: OpeningHoursRow[] | undefined | null,
+  now: Date = new Date(),
+  timezone?: string,
+): Date | null {
+  // If currently open, the answer is "now."
+  const status = liveOpenStatus(hours, now, "24h", undefined, timezone);
+  if (status.kind === "open") return now;
+
+  if (!hours || hours.length === 0) return null;
+  const { dow } = localDowAndHHMM(now, timezone);
+  // Today's row first — could open later today. Then walk forward up
+  // to 14 days. (More than 14 days suggests the restaurant has no
+  // viable schedule; bail null so the caller picks a sane fallback.)
+  for (let offset = 0; offset < 14; offset++) {
+    const targetDow = (dow + offset) % 7;
+    const row = hours.find((h) => h.dayOfWeek === targetDow);
+    if (!row || !row.isOpen || !row.openTime) continue;
+
+    // Build the YYYY-MM-DD for `offset` days from `now` in the
+    // restaurant's local timezone.
+    const target = new Date(now.getTime() + offset * 24 * 3600 * 1000);
+    const dateKey = timezone ? dateKeyInTimezone(target, timezone) : target.toISOString().slice(0, 10);
+    const [hh, mm] = row.openTime.split(":").map((s) => parseInt(s, 10));
+    if (!Number.isFinite(hh) || !Number.isFinite(mm)) continue;
+
+    // Construct the moment that corresponds to `dateKey` at `hh:mm`
+    // in the restaurant's local timezone. We do this by hand-rolling
+    // an ISO string and asking JS to parse it; for timezone-correctness
+    // we use a known offset trick: render the string in the tz,
+    // re-interpret, and let Date math close the loop.
+    const candidate = parseLocalDateTimeInTz(dateKey, hh, mm, timezone);
+    if (offset === 0 && candidate <= now) continue; // today's open already passed
+    return candidate;
+  }
+  return null;
+}
+
+/** Parse "YYYY-MM-DD" + hh:mm AS IF IT WERE LOCAL TIME in `timezone`,
+ *  returning the real UTC Date that represents that local moment.
+ *  Without an IANA timezone, the input is interpreted as the server's
+ *  local time (fine for development; on Vercel that's UTC). */
+function parseLocalDateTimeInTz(
+  dateKey: string,
+  hh: number,
+  mm: number,
+  timezone?: string,
+): Date {
+  // No tz → trust the wall clock.
+  if (!timezone) {
+    const [y, mo, d] = dateKey.split("-").map((s) => parseInt(s, 10));
+    return new Date(y, (mo ?? 1) - 1, d ?? 1, hh, mm, 0, 0);
+  }
+  // We need the UTC instant whose representation in `timezone` is
+  // (dateKey, hh:mm). Use a fixed reference UTC date for that
+  // calendar+hh:mm in UTC, then ask Intl what hour:minute it reports
+  // in the target tz. The delta is the timezone offset for that
+  // moment (handles DST transitions). Adjust by the delta to land on
+  // the right UTC instant.
+  const [y, mo, d] = dateKey.split("-").map((s) => parseInt(s, 10));
+  const utcGuess = Date.UTC(y, (mo ?? 1) - 1, d ?? 1, hh, mm, 0, 0);
+  const probe = new Date(utcGuess);
+  const tzLocal = new Intl.DateTimeFormat("en-US", {
+    timeZone: timezone,
+    year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", hour12: false,
+  }).formatToParts(probe);
+  const tzY = parseInt(tzLocal.find(p => p.type === "year")?.value ?? "0", 10);
+  const tzMo = parseInt(tzLocal.find(p => p.type === "month")?.value ?? "0", 10);
+  const tzD = parseInt(tzLocal.find(p => p.type === "day")?.value ?? "0", 10);
+  let tzH = parseInt(tzLocal.find(p => p.type === "hour")?.value ?? "0", 10);
+  if (tzH === 24) tzH = 0;
+  const tzM = parseInt(tzLocal.find(p => p.type === "minute")?.value ?? "0", 10);
+  const observedUtc = Date.UTC(tzY, tzMo - 1, tzD, tzH, tzM, 0, 0);
+  const deltaMs = utcGuess - observedUtc;
+  return new Date(utcGuess + deltaMs);
+}
+
+/**
  * Convert a Date to a "YYYY-MM-DD" string in a specific IANA timezone.
  * Used to match a real-world calendar date to RestaurantHoliday rows
  * (which store dates as @db.Date — no timezone — and we resolve the

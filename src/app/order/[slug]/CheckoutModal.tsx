@@ -150,6 +150,14 @@ interface Props {
   /** Restaurant's configured advance notice (hours) — surfaced in the
    *  banner copy so the customer sees the actual requirement. */
   cateringNoticeHours?: number;
+  /** Why schedule-for-later is being forced. Drives the banner copy
+   *  inside the time-choice section so the customer understands
+   *  whether it's a catering rule, a "we're closed right now" rule,
+   *  or both at once. */
+  scheduleReason?: "catering" | "closed" | "both" | null;
+  /** The restaurant's next opening moment in datetime-local format
+   *  (used by the "we're closed" branch of the banner copy). */
+  closedNextOpenLocal?: string;
 }
 
 export function CheckoutModal({
@@ -167,6 +175,8 @@ export function CheckoutModal({
   cateringMode = false,
   cateringMinScheduledLocal,
   cateringNoticeHours,
+  scheduleReason = null,
+  closedNextOpenLocal,
   paypalEnabled,
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
@@ -542,9 +552,32 @@ export function CheckoutModal({
                 <div className="pt-3 space-y-2">
                   {cateringMode && (
                     <div className="rounded-lg border border-amber-200 bg-amber-50 text-amber-800 px-3 py-2 text-xs">
-                      🎉 Your cart includes catering items — orders must be scheduled at
-                      least <strong>{cateringNoticeHours ?? 24}h</strong> in advance.
-                      ASAP isn&apos;t available with catering items in the cart.
+                      {scheduleReason === "closed" ? (
+                        <>
+                          🌙 We&apos;re closed right now. Pick a time when we&apos;re open —
+                          earliest available is shown below.
+                          {closedNextOpenLocal && (
+                            <span className="block mt-1 text-amber-900 font-semibold">
+                              Next opening: {new Date(closedNextOpenLocal).toLocaleString(undefined, {
+                                weekday: "short", month: "short", day: "numeric",
+                                hour: "numeric", minute: "2-digit",
+                              })}
+                            </span>
+                          )}
+                        </>
+                      ) : scheduleReason === "both" ? (
+                        <>
+                          🌙🎉 We&apos;re closed AND your cart includes catering items.
+                          Earliest available time is the later of next opening and{" "}
+                          <strong>{cateringNoticeHours ?? 24}h</strong> from now.
+                        </>
+                      ) : (
+                        <>
+                          🎉 Your cart includes catering items — orders must be scheduled at
+                          least <strong>{cateringNoticeHours ?? 24}h</strong> in advance.
+                          ASAP isn&apos;t available with catering items in the cart.
+                        </>
+                      )}
                     </div>
                   )}
                   <label className="block text-xs text-gray-500">{tc("scheduleForLaterOptional")}</label>

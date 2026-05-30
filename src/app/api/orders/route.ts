@@ -3,6 +3,7 @@ import { after } from "next/server";
 import prisma from "@/lib/db";
 import { generateOrderNumber } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
+import { liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
@@ -736,6 +737,34 @@ export async function POST(req: NextRequest) {
       : null;
     const preparationTimeValue: number | null = wantsAutoAccept ? fulfillmentMinutes : null;
 
+    // ── Closed-when-placed handling (Luigi 2026-05-30) ──────────────────────
+    // If the restaurant is closed RIGHT NOW, we don't want the kitchen
+    // alert to ring in the middle of the night when nobody's there. Stamp
+    // the order with `placedWhileClosed=true` and defer `alertAt` to the
+    // restaurant's next opening moment. Kitchen display: orders with
+    // alertAt > now appear silently in the pending tab but DON'T trigger
+    // the ring/countdown until alertAt fires.
+    const openingHoursForCheck = (restaurant as any).openingHours
+      ?? (restaurant as any).hours
+      ?? [];
+    const restaurantTz = (restaurant as any).timezone ?? undefined;
+    const liveStatus = liveOpenStatus(
+      openingHoursForCheck,
+      new Date(),
+      restaurant.hoursFormat === "12h" ? "12h" : "24h",
+      undefined,
+      restaurantTz,
+    );
+    const isClosedNow = liveStatus.kind !== "open";
+    let alertAtValue: Date | null = null;
+    if (isClosedNow) {
+      const next = nextOpenAt(openingHoursForCheck, new Date(), restaurantTz);
+      alertAtValue = next ?? null;
+    }
+    // Sanity guard: if we couldn't resolve a next-open (e.g. restaurant
+    // has no opening hours configured), fall back to null — kitchen will
+    // alert immediately. Better to over-alert than to silently never alert.
+
     // ── Create order ────────────────────────────────────────────────────────
     const order = await prisma.order.create({
       data: {
@@ -782,6 +811,9 @@ export async function POST(req: NextRequest) {
         paymentMethod: paymentMethod || "cash",
         paymentStatus: "pending",
         scheduledFor: scheduledFor ? new Date(scheduledFor) : null,
+        // Closed-when-placed routing — see compute block above.
+        placedWhileClosed: isClosedNow,
+        alertAt: alertAtValue,
         deliveryZoneId: resolvedZoneId,
         deliveryEstimatedMinutes: resolvedZoneMinutes,
         viaMarketplace,

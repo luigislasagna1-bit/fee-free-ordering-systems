@@ -15,6 +15,17 @@ export type Order = {
    *  payment via webhook. Drives the kitchen countdown so the timer
    *  doesn't start ticking while the customer is still in Checkout. */
   notifiedAt: string | null;
+  /** When the kitchen alert + countdown should START. For orders
+   *  placed while the restaurant was OPEN, this is null and the
+   *  countdown uses `notifiedAt` (the existing behavior). For orders
+   *  placed while the restaurant was CLOSED, this is the restaurant's
+   *  next opening moment — the order shows up silently in the pending
+   *  tab until alertAt fires, then rings + counts down. */
+  alertAt: string | null;
+  /** True when the restaurant was closed at order-create time. Drives
+   *  the longer (15-min vs standard 3-min) initial countdown buffer
+   *  to give staff slack when they arrive a little late after open. */
+  placedWhileClosed: boolean;
   acceptedAt: string | null;
   completedAt: string | null;
   rejectedAt: string | null;
