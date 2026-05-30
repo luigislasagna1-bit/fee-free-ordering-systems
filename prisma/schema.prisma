@@ -924,6 +924,7 @@ model Customer {
   restaurant      Restaurant       @relation(fields: [restaurantId], references: [id])
   customerAccount CustomerAccount? @relation(fields: [customerAccountId], references: [id])
   orders          Order[]
+  addresses       RestaurantCustomerAddress[]
   assignedCoupons Coupon[]         @relation("CouponAssignedCustomer")
 
   @@index([restaurantId])
@@ -1002,6 +1003,31 @@ model CustomerAddress {
   customerAccount CustomerAccount @relation(fields: [customerAccountId], references: [id], onDelete: Cascade)
 
   @@index([customerAccountId])
+}
+
+/// Per-restaurant Customer address book — the same shape as
+/// CustomerAddress (marketplace) but keyed on Customer (per-restaurant)
+/// since the two account systems are intentionally separate. Lets a
+/// signed-in customer save Home/Work addresses and pick from them at
+/// checkout instead of retyping every time.
+///
+/// Audit 2026-05-30: Toast / Uber / DoorDash / Skip / Grubhub / Square
+/// all support this; it's one of the biggest mobile-conversion wins.
+model RestaurantCustomerAddress {
+  id         String   @id @default(cuid())
+  customerId String
+  label      String?
+  street     String
+  city       String
+  state      String?
+  zip        String?
+  country    String   @default("CA")
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
 }
 
 model Coupon {

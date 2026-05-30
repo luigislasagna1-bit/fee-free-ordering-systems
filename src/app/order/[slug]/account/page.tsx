@@ -14,12 +14,13 @@
 import prisma from "@/lib/db";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ChevronLeft, Tag, ShoppingBag, LogOut, Repeat } from "lucide-react";
+import { ChevronLeft, Tag, ShoppingBag, LogOut, Repeat, MapPin } from "lucide-react";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
 import { formatCurrency } from "@/lib/utils";
 import { LogoutButton } from "./LogoutButton";
 import { ProfileEditor } from "./ProfileEditor";
 import { OrderAgainButton } from "./OrderAgainButton";
+import { AddressBook } from "./AddressBook";
 
 export const dynamic = "force-dynamic";
 
@@ -163,6 +164,15 @@ export default async function RestaurantAccountDashboard({
               })}
             </ul>
           )}
+        </div>
+
+        {/* Saved delivery addresses (Luigi audit 2026-05-30). */}
+        <div className="mt-6">
+          <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-emerald-500" />
+            Saved delivery addresses
+          </h2>
+          <AddressBook />
         </div>
 
         {/* Order again rail — top 3 successful past baskets with a
