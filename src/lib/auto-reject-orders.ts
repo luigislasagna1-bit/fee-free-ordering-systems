@@ -99,11 +99,21 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
   // honoured before they get confused looking at the stale entry.
   const ABANDONED_TIMEOUT_MINUTES = 30;
   const abandonedCutoff = new Date(now.getTime() - ABANDONED_TIMEOUT_MINUTES * 60 * 1000);
+  // Covers three abandonment shapes — all where money never moved and
+  // the order never reached the kitchen:
+  //   • paymentStatus: "pending"           — checkout never authorized.
+  //   • paymentStatus: "requires_action"   — customer started 3D
+  //                                          Secure / SCA challenge
+  //                                          and abandoned it.
+  //   • paymentStatus: "processing"        — bank-debit payment that
+  //                                          never resolved (rare,
+  //                                          but possible if Stripe
+  //                                          loses the webhook).
   const abandoned = await prisma.order.findMany({
     where: {
       status: "pending",
       notifiedAt: null,
-      paymentStatus: "pending",
+      paymentStatus: { in: ["pending", "requires_action", "processing"] },
       createdAt: { lt: abandonedCutoff },
     },
     select: { id: true, orderNumber: true, restaurantId: true, viaMarketplace: true, marketplaceCounterApplied: true, total: true },

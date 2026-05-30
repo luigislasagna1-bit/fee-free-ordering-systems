@@ -31,6 +31,24 @@ import { fireOrderNotifications } from "@/lib/order-notifications";
  *   - payment_intent.succeeded                  → mark Order paid (post-capture)
  *   - payment_intent.payment_failed             → mark Order paymentStatus failed
  *   - payment_intent.canceled                   → mark Order paymentStatus voided
+ *   - payment_intent.requires_action            → mark Order paymentStatus requires_action.
+ *     Fires when the customer's card requires 3D Secure / SCA
+ *     challenge (mandatory in EU/UK, increasingly common in CA/US).
+ *     The customer is still in checkout completing the challenge —
+ *     we don't release the order to the kitchen yet. If they abandon
+ *     the challenge the abandoned-payment sweeper picks it up.
+ *   - payment_intent.processing                 → mark Order paymentStatus processing.
+ *     Alternative payment methods (SEPA, BACS, ACH) take time to
+ *     settle. Card payments are usually instant, but bank-debit
+ *     methods can sit in "processing" for a few business days.
+ *     A final webhook (succeeded / failed) will land later.
+ *
+ * Bug 2026-05-30 audit: previously `requires_action` and `processing`
+ * silently fell through. EU customers paying with a 3D-Secure-required
+ * card would get stuck in paymentStatus=pending forever even after
+ * authenticating, because the only webhook that fired in some flows
+ * was `requires_action` (followed by `amount_capturable_updated` ONLY
+ * if the customer finished the challenge in time).
  */
 export async function handlePaymentIntentEvent(event: Stripe.Event) {
   const intent = event.data.object as Stripe.PaymentIntent;
@@ -98,5 +116,47 @@ export async function handlePaymentIntentEvent(event: Stripe.Event) {
       where: { id: orderId },
       data: { paymentStatus: "voided" },
     });
+  } else if (event.type === "payment_intent.requires_action") {
+    // 3D Secure / SCA challenge in progress. DO NOT release to kitchen
+    // — the customer hasn't actually paid yet, they're still completing
+    // the bank's auth challenge in another window. We track the state
+    // so the admin orders view can show "Awaiting authentication"
+    // instead of a confusing bare "pending".
+    //
+    // If the customer finishes the challenge, the PaymentIntent
+    // transitions to `amount_capturable_updated` (manual capture) or
+    // `succeeded` (auto capture) and we resume the normal flow there.
+    //
+    // If the customer abandons, the PaymentIntent eventually fails or
+    // the abandoned-payment cron (auto-reject-stale-orders) cancels
+    // the order after 30 min. Either way no money moved.
+    //
+    // Idempotency: only step DOWN from "pending" to "requires_action".
+    // If we've already advanced to authorized/paid/voided, ignore the
+    // late event.
+    if (order.paymentStatus === "pending") {
+      await prisma.order.update({
+        where: { id: orderId },
+        data: { paymentStatus: "requires_action", paymentIntentId: intent.id },
+      });
+    }
+  } else if (event.type === "payment_intent.processing") {
+    // Bank-debit-style payment methods (SEPA, BACS, ACH) sit in
+    // "processing" for hours-to-days while the bank confirms the
+    // debit. Cards are usually instant; this only fires for alternate
+    // methods. We DO NOT release to the kitchen here — the funds
+    // aren't confirmed yet. Wait for the eventual `succeeded` or
+    // `payment_failed` webhook.
+    if (order.paymentStatus === "pending" || order.paymentStatus === "requires_action") {
+      await prisma.order.update({
+        where: { id: orderId },
+        data: { paymentStatus: "processing", paymentIntentId: intent.id },
+      });
+    }
+  } else {
+    // Unknown event type for our payment_intent dispatcher. Log so we
+    // catch Stripe-added events in prod. Returning success is fine —
+    // unhandled is not a failure.
+    console.warn(`[stripe] unhandled payment_intent event type: ${event.type} (order=${orderId})`);
   }
 }
