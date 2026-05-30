@@ -63,6 +63,19 @@ type Promo = {
   couponCode: string | null;
   ruleConfig?: RuleConfig | null;
   rules?: string | null;
+  // GloriaFood-style summary panel (Luigi 2026-05-29): drive
+  // "What you get" + "Conditions" lists. All optional — modal degrades
+  // gracefully when the field isn't passed.
+  autoApply?: boolean;
+  customerType?: string;
+  daysOfWeek?: string | null;        // JSON array of 0..6
+  usableHourStart?: number | null;   // minutes since midnight
+  usableHourEnd?: number | null;
+  startsAt?: string | null;
+  endsAt?: string | null;
+  paymentMethodSlugs?: string | null;  // JSON array
+  deliveryZoneIds?: string | null;     // JSON array
+  onceLifetimePerClient?: boolean;
 };
 
 type MenuItemLite = {
@@ -182,6 +195,209 @@ function ItemRow({
   );
 }
 
+// ─── GloriaFood-style summary panel ────────────────────────────────────
+// Builds two bulleted lists from the promo's data:
+//   "What you get" — the benefit (e.g. "20% off cart", "Free delivery")
+//   "Conditions"   — restrictions the customer must meet (cart minimum,
+//                    day-of-week, address zone, payment method, etc.)
+// Renders at the top of every PromoDetailModal so customers always see
+// the same structured info — matches the GloriaFood UX Luigi screenshotted.
+
+const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function safeJsonArray(s: string | null | undefined): string[] {
+  if (!s) return [];
+  try {
+    const v = JSON.parse(s);
+    return Array.isArray(v) ? v.map(String) : [];
+  } catch {
+    return [];
+  }
+}
+
+function minToHHMM(min: number): string {
+  const m = Math.max(0, Math.min(1440, Math.floor(min)));
+  const h = Math.floor(m / 60);
+  const mm = m % 60;
+  const ampm = h >= 12 ? "PM" : "AM";
+  const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return `${h12}:${mm.toString().padStart(2, "0")} ${ampm}`;
+}
+
+function buildWhatYouGet(promo: Promo, rules: RuleConfig): string[] {
+  const out: string[] = [];
+  const pct = rules.discountPercent;
+  const amt = rules.discountAmount;
+  const bundlePrice = rules.bundlePrice;
+  switch (promo.promotionType) {
+    case "percentage_off":
+      out.push(pct ? `${pct}% off the eligible items` : "Percentage off the eligible items");
+      break;
+    case "free_delivery":
+      out.push("100% discount to delivery fee");
+      break;
+    case "bogo":
+      out.push("Buy one item, get another free (or discounted)");
+      break;
+    case "fixed_cart":
+      out.push(amt ? `${formatCurrency(amt)} off your order` : "Fixed dollar discount on your order");
+      break;
+    case "payment_reward":
+      out.push(pct ? `${pct}% off when paying with the selected method` : "Discount for paying with the selected method");
+      break;
+    case "free_item":
+      out.push("A free item from the curated list");
+      break;
+    case "meal_bundle":
+    case "meal_bundle_speciality":
+      out.push(bundlePrice ? `Bundle deal for ${formatCurrency(bundlePrice)}` : "Mix-and-match bundle at a fixed price");
+      break;
+    case "buy_n_get_free":
+      out.push("Add N qualifying items, get one free");
+      break;
+    case "free_dish_meal":
+      out.push("Order the trigger items, get a dish free");
+      break;
+    case "fixed_combo":
+      out.push(amt ? `${formatCurrency(amt)} off when buying the combo` : "Fixed dollar discount on the combo");
+      break;
+    case "percentage_combo":
+      out.push(pct ? `${pct}% off when buying the combo` : "Percentage off the combo");
+      break;
+    default:
+      out.push(promo.description ?? promo.name);
+  }
+  return out;
+}
+
+function buildConditions(promo: Promo, zones: DeliveryZoneLite[]): string[] {
+  const out: string[] = [];
+
+  // Frequency
+  if (promo.onceLifetimePerClient) out.push("Only once per customer (lifetime)");
+  else out.push("Only once in cart");
+
+  // Cart value
+  if (promo.minimumOrder > 0) {
+    out.push(`Sub-total: greater than or equal to ${formatCurrency(promo.minimumOrder)}`);
+  }
+
+  // Order channel
+  if (promo.orderType && promo.orderType !== "both") {
+    const channels = promo.orderType.startsWith("[")
+      ? safeJsonArray(promo.orderType).map(formatChannel).join(", ")
+      : formatChannel(promo.orderType);
+    out.push(`Order Type: ${channels}`);
+  }
+
+  // Client type
+  if (promo.customerType && promo.customerType !== "any") {
+    const label =
+      promo.customerType === "new" ? "New customers only" :
+      promo.customerType === "returning" ? "Returning customers only" :
+      promo.customerType === "member" ? "Signed-in members only" : promo.customerType;
+    out.push(label);
+  }
+
+  // Payment
+  const paymentSlugs = safeJsonArray(promo.paymentMethodSlugs);
+  if (paymentSlugs.length > 0) {
+    out.push(`Payment Method: ${paymentSlugs.map(formatPayment).join(", ")}`);
+  }
+
+  // Delivery area
+  const zoneIds = safeJsonArray(promo.deliveryZoneIds);
+  if (zoneIds.length > 0) {
+    const zoneNames = zoneIds
+      .map((id) => zones.find((z) => z.id === id)?.name ?? null)
+      .filter(Boolean) as string[];
+    if (zoneNames.length > 0) {
+      out.push(`For delivery, the address must be in the following zones: ${zoneNames.join(", ")}`);
+    } else {
+      out.push("Restricted to specific delivery zones");
+    }
+  }
+
+  // Day-of-week
+  const days = safeJsonArray(promo.daysOfWeek).map((d) => parseInt(d, 10)).filter((n) => Number.isFinite(n));
+  if (days.length > 0 && days.length < 7) {
+    out.push(`Available on: ${days.sort((a, b) => a - b).map((d) => DAY_NAMES[d]).join(", ")}`);
+  }
+
+  // Hour-of-day
+  if (typeof promo.usableHourStart === "number" && typeof promo.usableHourEnd === "number") {
+    out.push(`Available between ${minToHHMM(promo.usableHourStart)} – ${minToHHMM(promo.usableHourEnd)}`);
+  }
+
+  // Expiration
+  if (promo.startsAt && new Date(promo.startsAt) > new Date()) {
+    out.push(`Starts ${new Date(promo.startsAt).toLocaleDateString()}`);
+  }
+  if (promo.endsAt) {
+    out.push(`Expires ${new Date(promo.endsAt).toLocaleDateString()}`);
+  }
+
+  return out;
+}
+
+function formatChannel(slug: string): string {
+  return {
+    pickup: "Pickup",
+    delivery: "Delivery",
+    dine_in: "Dine-In",
+    catering: "Catering",
+    takeout: "Take Out",
+  }[slug] ?? slug;
+}
+
+function formatPayment(slug: string): string {
+  return {
+    cash: "Cash",
+    card_in_person: "Card at pickup / door",
+    online_card: "Card online",
+    paypal: "PayPal",
+  }[slug] ?? slug;
+}
+
+function SummaryPanel({ promo, rules, deliveryZones }: {
+  promo: Promo;
+  rules: RuleConfig;
+  deliveryZones: DeliveryZoneLite[];
+}) {
+  const benefits = buildWhatYouGet(promo, rules);
+  const conditions = buildConditions(promo, deliveryZones);
+  const autoApply = promo.autoApply !== false;
+  return (
+    <div className="space-y-4 mb-5 pb-5 border-b border-gray-100">
+      <div>
+        <div className="text-sm font-bold text-gray-900 mb-1.5">What you get:</div>
+        <ul className="list-disc pl-5 space-y-0.5 text-sm text-gray-700">
+          {benefits.map((b, i) => <li key={i}>{b}</li>)}
+        </ul>
+      </div>
+      {conditions.length > 0 && (
+        <div>
+          <div className="text-sm font-bold text-gray-900 mb-1.5">Conditions:</div>
+          <ul className="list-disc pl-5 space-y-0.5 text-sm text-gray-700">
+            {conditions.map((c, i) => <li key={i}>{c}</li>)}
+          </ul>
+        </div>
+      )}
+      {promo.couponCode && !autoApply && (
+        <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-800">
+          Enter the code <span className="font-mono font-bold">{promo.couponCode}</span> in
+          the coupon field at checkout to apply this deal.
+        </div>
+      )}
+      {autoApply && (
+        <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-800 text-center">
+          Deal is applied automatically when all conditions are met.
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Main modal ────────────────────────────────────────────────────────
 
 export function PromoDetailModal({
@@ -277,6 +493,7 @@ export function PromoDetailModal({
 
         {/* Body */}
         <div className="p-5">
+          <SummaryPanel promo={promo} rules={rules} deliveryZones={deliveryZones ?? []} />
           <PromoBody
             promo={promo}
             rules={rules}

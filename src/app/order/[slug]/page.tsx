@@ -123,6 +123,16 @@ export default async function OrderingPage({
       // Owner-uploaded promo image (Phase 2a). Renders as the banner
       // card background with a dark gradient overlay for legibility.
       imageUrl: true,
+      // GloriaFood-style summary panel (Luigi 2026-05-29) — drives the
+      // "What you get / Conditions" lists in the customer modal. All
+      // optional on the modal side; pass through whatever's set.
+      autoApply: true,
+      customerType: true,
+      startsAt: true,
+      endsAt: true,
+      paymentMethodSlugs: true,
+      deliveryZoneIds: true,
+      onceLifetimePerClient: true,
     },
     orderBy: { createdAt: "desc" },
     take: 10, // hard cap — UI is a horizontal scroller anyway

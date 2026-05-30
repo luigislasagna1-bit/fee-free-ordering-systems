@@ -310,6 +310,17 @@ export function OrderingPageClient({
      *  set, the banner card shows the image instead of the plain black
      *  background — owners can theme each promo card individually. */
     imageUrl?: string | null;
+    /** Restriction columns surfaced by the GloriaFood-style summary
+     *  panel inside the customer detail modal — "What you get /
+     *  Conditions". All optional. Server-side `page.tsx` selects
+     *  them via the Promotion select clause. */
+    autoApply?: boolean;
+    customerType?: string;
+    startsAt?: Date | string | null;
+    endsAt?: Date | string | null;
+    paymentMethodSlugs?: string | null;
+    deliveryZoneIds?: string | null;
+    onceLifetimePerClient?: boolean;
   }>;
   /** The logged-in per-restaurant customer at this restaurant, if any.
    *  Server-resolved via getCurrentRestaurantCustomer in page.tsx and
@@ -1487,7 +1498,24 @@ export function OrderingPageClient({
                       src={resolvedImageUrl}
                       alt=""
                       className="absolute inset-0 w-full h-full object-cover"
-                      loading="lazy"
+                      // Eager load — promo banners are above-the-fold
+                      // on every visit. Lazy-loading on mobile Edge/Safari
+                      // sometimes leaves a broken-image placeholder when
+                      // the IntersectionObserver fires too late.
+                      loading="eager"
+                      decoding="async"
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        // Image URL is broken or unreachable (most often
+                        // happens on mobile when the upload path uses a
+                        // CDN the device can't reach). Swap to the local
+                        // stock default so the customer never sees the
+                        // small blue question mark.
+                        const target = e.currentTarget;
+                        if (target.dataset.fellBack === "1") return;
+                        target.dataset.fellBack = "1";
+                        target.src = PROMO_DEFAULT_FALLBACK_URL;
+                      }}
                     />
                   )}
                   {/* Solid colored background when no image, OR a dark
@@ -1546,8 +1574,21 @@ export function OrderingPageClient({
           </div>
         )}
 
-        {/* ── Category pills ───────────────────────────────────────────── */}
-        <div ref={pillRef} className="flex gap-2 overflow-x-auto pb-2 mb-6 scroll-smooth" style={{ scrollbarWidth: "none" }}>
+        {/* ── Category pills (sticky on scroll) ────────────────────────────
+            Pins to the top as the customer scrolls down the menu so they
+            can jump between categories without scrolling back up — the
+            standard pattern from GloriaFood / DoorDash / Uber Eats.
+            Uses a tinted backdrop with blur so menu items show through
+            subtly behind the pills as they scroll past. */}
+        <div
+          ref={pillRef}
+          className="flex gap-2 overflow-x-auto pb-2 mb-6 scroll-smooth sticky top-0 z-20 -mx-3 px-3 py-2 backdrop-blur-md"
+          style={{
+            scrollbarWidth: "none",
+            backgroundColor: `${theme.backgroundColor}f0`, // primary bg + ~94% opacity
+            borderBottom: `1px solid ${theme.cardBackground}`,
+          }}
+        >
           {visibleCategories.map(cat => (
             <button
               key={cat.id}
