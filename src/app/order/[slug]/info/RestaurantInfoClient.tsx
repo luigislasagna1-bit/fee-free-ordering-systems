@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 const DeliveryZonesMap = dynamic(() => import("../DeliveryZonesMap"), { ssr: false });
 
 import { formatTime as fmt, type HoursFormat } from "@/lib/format-time";
+import { localDowAndHHMM } from "@/lib/restaurant-hours";
 
 function formatTime(t: string, hoursFmt: HoursFormat = "24h") {
   return fmt(t, hoursFmt);
@@ -67,6 +68,10 @@ interface Restaurant {
   themeSettings?: string | null;
   serviceSettings?: string | null;
   openingHours: OpeningHour[];
+  /** IANA timezone (e.g. "America/Toronto"). Required to compute the
+   *  correct day-of-week at the restaurant — the customer's browser tz
+   *  can differ. Stable across the Restaurant model lifetime. */
+  timezone?: string;
   deliveryZones?: DeliveryZone[];
 }
 
@@ -103,7 +108,11 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
     .filter(Boolean)
     .join(", ");
 
-  const todayIndex = new Date().getDay();
+  // Project to the restaurant's IANA timezone — `new Date().getDay()`
+  // returns the customer's BROWSER weekday, which can be a different day
+  // when the customer is in a far-off timezone or it's near midnight at
+  // the restaurant. Luigi 2026-05-30: "consistent EVERYWHERE."
+  const { dow: todayIndex } = localDowAndHHMM(new Date(), restaurant.timezone);
   const todayHours = restaurant.openingHours.find((h) => h.dayOfWeek === todayIndex);
 
   const pickupTime = svcSettings.pickup?.estimatedTime ?? restaurant.estimatedPickup;

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
+import { localDowAndHHMM } from "@/lib/restaurant-hours";
 
 /** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
  *  Used by the promo-banner usability-window label so a 12-3 PM lunch
@@ -82,17 +83,20 @@ interface CartItem {
 
 const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
-function isItemAvailableNow(item: MenuItem): boolean {
-  const now = new Date();
+function isItemAvailableNow(item: MenuItem, timezone?: string): boolean {
+  // Day-of-week and HH:MM must be computed in the RESTAURANT's local
+  // timezone so an out-of-town customer (e.g. delivery scheduled from
+  // a different time zone) still sees the right "lunch only" / "Friday
+  // pizza" availability windows. Falls back to browser-local when no
+  // timezone is supplied — matches pre-2026-05-30 behaviour.
+  const { dow, hhmm } = localDowAndHHMM(new Date(), timezone);
   if (item.availableDays) {
     const days: number[] = typeof item.availableDays === "string" ? JSON.parse(item.availableDays) : item.availableDays;
-    if (!days.includes(now.getDay())) return false;
+    if (!days.includes(dow)) return false;
   }
   if (item.availableFrom && item.availableTo) {
-    const [fh, fm] = item.availableFrom.split(":").map(Number);
-    const [th, tm] = item.availableTo.split(":").map(Number);
-    const mins = now.getHours() * 60 + now.getMinutes();
-    if (mins < fh * 60 + fm || mins > th * 60 + tm) return false;
+    // String comparisons work because every value is zero-padded HH:MM.
+    if (hhmm < item.availableFrom || hhmm > item.availableTo) return false;
   }
   return true;
 }
@@ -854,7 +858,13 @@ export function OrderingPageClient({
   const categoryRefs = useRef<Record<string, HTMLElement>>({});
   const pillRef = useRef<HTMLDivElement>(null);
 
-  const today = new Date().getDay();
+  // Day-of-week in the RESTAURANT's local timezone — NOT the customer's
+  // browser TZ. A customer in PST ordering from an EST restaurant at
+  // 9:55 PM PST sees Wednesday-night hours from a Wed→Thu overnight row
+  // when the actual current day at the restaurant is already Thursday.
+  // Luigi 2026-05-30: "restaurant hours should be consistent EVERYWHERE."
+  const restaurantTz = restaurant.timezone ?? undefined;
+  const { dow: today } = localDowAndHHMM(new Date(), restaurantTz);
   const todayHours = restaurant.openingHours?.find((h: any) => h.dayOfWeek === today);
 
   // Visible categories and items, merging category-level modifier groups into each item
@@ -868,7 +878,7 @@ export function OrderingPageClient({
           .filter(i =>
             !i.isHidden &&
             (orderType === "pickup" ? i.forPickup : i.forDelivery) &&
-            isItemAvailableNow(i)
+            isItemAvailableNow(i, restaurantTz)
           )
           .map(item => {
             // Merge: item-level groups first (in their sortOrder), then category-level
