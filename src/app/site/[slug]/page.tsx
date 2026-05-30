@@ -475,9 +475,10 @@ export default async function HostedSitePage({
                 />
               </div>
             )}
-            <div className="mb-4 flex justify-center">
-              <OpenNowBadge status={openStatus} />
-            </div>
+            {/* Open-now badge moved out of the hero (Luigi 2026-05-30) —
+                it used to sit above the title and visually compete with
+                the restaurant name. Now lives in the white service-
+                summary card below for the GloriaFood-parity layout. */}
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight drop-shadow-lg">
               {heroTitle}
             </h1>
@@ -574,6 +575,13 @@ export default async function HostedSitePage({
         // "We offer …" copy and the whole block feels compact.
         <section className="relative -mt-16 md:-mt-24 z-10 max-w-3xl mx-auto px-4 sm:px-6">
           <div className="bg-white rounded-xl shadow-2xl border border-gray-100 px-6 py-6 md:py-8 text-center">
+            {/* Open-now / closed / opens-at badge — moved here from the
+                hero (Luigi 2026-05-30) so it sits just above the
+                "We offer …" headline on the same airy white card,
+                matching GloriaFood's layout. */}
+            <div className="mb-3 flex justify-center">
+              <OpenNowBadge status={openStatus} />
+            </div>
             <p className="text-lg md:text-xl font-semibold text-gray-900">
               {serviceCopy}
             </p>
