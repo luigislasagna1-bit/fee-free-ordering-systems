@@ -60,11 +60,61 @@ export async function PUT(req: NextRequest) {
   }
   if (cuisineType !== undefined) updateData.cuisineType = cuisineType;
   if (timezone !== undefined) updateData.timezone = timezone;
-  if (taxRate !== undefined) updateData.taxRate = taxRate;
-  if (minimumOrder !== undefined) updateData.minimumOrder = minimumOrder;
-  if (deliveryFee !== undefined) updateData.deliveryFee = deliveryFee;
-  if (estimatedPickup !== undefined) updateData.estimatedPickup = estimatedPickup;
-  if (estimatedDelivery !== undefined) updateData.estimatedDelivery = estimatedDelivery;
+  // ── Numeric field validation (audit 2026-05-30) ─────────────────────
+  // Previously these were stamped raw — a negative taxRate or a 0-minute
+  // estimatedPickup would persist and quietly break the customer flow.
+  // Reject loudly with a 400 so the client surfaces the error instead
+  // of letting Prisma write garbage.
+  if (taxRate !== undefined) {
+    const n = typeof taxRate === "number" ? taxRate : parseFloat(taxRate);
+    if (!Number.isFinite(n) || n < 0 || n > 100) {
+      return NextResponse.json(
+        { error: "taxRate must be a number between 0 and 100" },
+        { status: 400 },
+      );
+    }
+    updateData.taxRate = n;
+  }
+  if (minimumOrder !== undefined) {
+    const n = typeof minimumOrder === "number" ? minimumOrder : parseFloat(minimumOrder);
+    if (!Number.isFinite(n) || n < 0 || n > 10000) {
+      return NextResponse.json(
+        { error: "minimumOrder must be a non-negative dollar amount under $10,000" },
+        { status: 400 },
+      );
+    }
+    updateData.minimumOrder = n;
+  }
+  if (deliveryFee !== undefined) {
+    const n = typeof deliveryFee === "number" ? deliveryFee : parseFloat(deliveryFee);
+    if (!Number.isFinite(n) || n < 0 || n > 500) {
+      return NextResponse.json(
+        { error: "deliveryFee must be a non-negative dollar amount under $500" },
+        { status: 400 },
+      );
+    }
+    updateData.deliveryFee = n;
+  }
+  if (estimatedPickup !== undefined) {
+    const n = typeof estimatedPickup === "number" ? estimatedPickup : parseInt(estimatedPickup, 10);
+    if (!Number.isFinite(n) || n < 1 || n > 240) {
+      return NextResponse.json(
+        { error: "estimatedPickup must be between 1 and 240 minutes" },
+        { status: 400 },
+      );
+    }
+    updateData.estimatedPickup = n;
+  }
+  if (estimatedDelivery !== undefined) {
+    const n = typeof estimatedDelivery === "number" ? estimatedDelivery : parseInt(estimatedDelivery, 10);
+    if (!Number.isFinite(n) || n < 1 || n > 240) {
+      return NextResponse.json(
+        { error: "estimatedDelivery must be between 1 and 240 minutes" },
+        { status: 400 },
+      );
+    }
+    updateData.estimatedDelivery = n;
+  }
   if (acceptsPickup !== undefined) updateData.acceptsPickup = acceptsPickup;
   if (acceptsDelivery !== undefined) updateData.acceptsDelivery = acceptsDelivery;
   if (acceptsDineIn !== undefined) updateData.acceptsDineIn = acceptsDineIn;

@@ -44,6 +44,23 @@ export async function PUT(req: NextRequest) {
     }
   }
 
+  // Reject saves where every day is marked closed (audit 2026-05-30).
+  // The owner ALMOST certainly didn't mean to make their restaurant
+  // unreachable for the rest of time; this catches accidental
+  // "Apply to all → closed" clicks. Owner can still close individual
+  // days; the guard only fires when the entire week is off AND the
+  // payload covers all 7 days (so partial updates still work).
+  if (hours.length >= 7 && hours.every((h: any) => !h.isOpen)) {
+    return NextResponse.json(
+      {
+        error:
+          "Refusing to save: every day is marked closed. Toggle at least one day open, or use the temporary-close switch on the dashboard if you want to pause briefly.",
+        code: "all_days_closed",
+      },
+      { status: 400 },
+    );
+  }
+
   for (const h of hours) {
     await prisma.openingHours.upsert({
       where: { restaurantId_dayOfWeek: { restaurantId, dayOfWeek: h.dayOfWeek } },

@@ -74,6 +74,53 @@ export async function PUT(req: NextRequest) {
       if (v >= 1 && v <= 720) cateringNoticeHoursClean = v;
     }
 
+    // Reject saves that would disable EVERY customer-facing ordering
+    // channel (audit 2026-05-30). Reservations are excluded from this
+    // check because they're not a primary ordering channel — a
+    // reservations-only restaurant is a valid model. The owner can
+    // still pause briefly via the dashboard's temporary-close switch.
+    const willHaveAtLeastOneOrderingChannel =
+      !!(enabled?.pickup ?? true) // optimistic default — same as legacy create
+      || !!enabled?.delivery
+      || !!enabled?.dineIn
+      || !!enabled?.catering
+      || !!enabled?.takeOut;
+    // Re-evaluate using the CURRENT DB state for the channels the
+    // caller didn't send. We only block when the EFFECTIVE end state
+    // would have everything off — partial updates that leave existing
+    // enabled channels alone shouldn't trip the guard.
+    if (enabled && Object.keys(enabled).length > 0) {
+      const existing = await prisma.restaurant.findUnique({
+        where: { id: restaurantId },
+        select: {
+          acceptsPickup: true, acceptsDelivery: true, acceptsDineIn: true,
+          acceptsCatering: true, acceptsTakeOut: true,
+        },
+      });
+      const effective = {
+        pickup: enabled.pickup ?? existing?.acceptsPickup ?? false,
+        delivery: enabled.delivery ?? existing?.acceptsDelivery ?? false,
+        dineIn: enabled.dineIn ?? existing?.acceptsDineIn ?? false,
+        catering: enabled.catering ?? existing?.acceptsCatering ?? false,
+        takeOut: enabled.takeOut ?? existing?.acceptsTakeOut ?? false,
+      };
+      const anyOn = effective.pickup || effective.delivery || effective.dineIn
+        || effective.catering || effective.takeOut;
+      if (!anyOn) {
+        return NextResponse.json(
+          {
+            error:
+              "Refusing to save: at least one ordering channel (Pickup, Delivery, Dine-In, Catering, or Take Out) must stay enabled. Use the pause toggle on the dashboard to close briefly.",
+            code: "all_channels_disabled",
+          },
+          { status: 400 },
+        );
+      }
+    }
+    // Suppress unused-var lint warning from the optimistic-default check
+    // above; the actual guard is in the block we just executed.
+    void willHaveAtLeastOneOrderingChannel;
+
     await prisma.restaurant.update({
       where: { id: restaurantId },
       data: {
