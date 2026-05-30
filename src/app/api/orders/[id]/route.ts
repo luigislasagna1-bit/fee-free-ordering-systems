@@ -130,7 +130,12 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // cancel path on reject/cancel.
       type: true,
       shipdayOrderId: true,
-      restaurant: { select: { stripeAccountId: true } },
+      // estimatedPickup/Delivery used as the fallback prep time when the
+      // kitchen Accepts without specifying preparationTime — without
+      // this fallback we'd leave the order's soft estimate (set at
+      // creation as createdAt + prep) untouched, making the customer's
+      // countdown stale by however many minutes the order sat in pending.
+      restaurant: { select: { stripeAccountId: true, estimatedPickup: true, estimatedDelivery: true } },
     },
   });
   if (!existing) return NextResponse.json({ error: "Order not found" }, { status: 404 });
@@ -284,10 +289,24 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       updates.paymentStatus = "paid";
       if (paypalCaptureIdJustSet) updates.paypalCaptureId = paypalCaptureIdJustSet;
     }
-    const prepTime = parseInt(data.preparationTime, 10);
-    if (!isNaN(prepTime) && prepTime > 0 && prepTime <= 240) {
-      updates.preparationTime = prepTime;
-      updates.estimatedReady = new Date(Date.now() + prepTime * 60 * 1000);
+    // Prep-time on acceptance: prefer the explicit value the kitchen
+    // staff entered, fall back to the restaurant's default for this
+    // order type. We ALWAYS recompute estimatedReady here — not just
+    // when prepTime is provided — because the order may have been
+    // sitting in pending with a stale soft estimate (createdAt +
+    // default) from order creation. Once the kitchen Accepts, the
+    // prep clock starts NOW, so estimatedReady = now + prepTime.
+    const explicitPrepTime = parseInt(data.preparationTime, 10);
+    const fallbackPrepTime = existing.type === "delivery"
+      ? existing.restaurant.estimatedDelivery
+      : existing.restaurant.estimatedPickup;
+    const finalPrepTime =
+      !isNaN(explicitPrepTime) && explicitPrepTime > 0 && explicitPrepTime <= 240
+        ? explicitPrepTime
+        : fallbackPrepTime;
+    if (finalPrepTime && finalPrepTime > 0) {
+      updates.preparationTime = finalPrepTime;
+      updates.estimatedReady = new Date(Date.now() + finalPrepTime * 60 * 1000);
     }
   }
   if (newStatus === "rejected") {

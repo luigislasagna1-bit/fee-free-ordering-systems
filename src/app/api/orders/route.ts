@@ -741,9 +741,14 @@ export async function POST(req: NextRequest) {
       : restaurant.estimatedPickup;
     const initialStatus = wantsAutoAccept ? "accepted" : "pending";
     const acceptedAtValue: Date | null = wantsAutoAccept ? new Date() : null;
-    const estimatedReadyValue: Date | null = wantsAutoAccept
-      ? new Date(Date.now() + fulfillmentMinutes * 60_000)
-      : null;
+    // Soft estimate populated even when pending — gives the customer a
+    // "~20 min" countdown on the status page right away instead of a
+    // blank wait. Acceptance overwrites this with the kitchen's actual
+    // promised ready time (now + prepTime at the moment they Accept),
+    // so by the time it matters this value is precise. Matches the
+    // DoorDash/Uber/Toast pattern of showing an estimate immediately
+    // and tightening it on confirmation.
+    const estimatedReadyValue: Date = new Date(Date.now() + fulfillmentMinutes * 60_000);
     const preparationTimeValue: number | null = wantsAutoAccept ? fulfillmentMinutes : null;
 
     // ── Closed-when-placed handling (Luigi 2026-05-30) ──────────────────────

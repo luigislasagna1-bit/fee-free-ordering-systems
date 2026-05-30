@@ -437,14 +437,30 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
               {/* Live ETA countdown — ticks once per second. Shows
                   "Ready in 12 min" → "Ready in 6 min" → "Ready in <1 min"
                   → "Ready now — pickup time!" once estimatedReady passes.
-                  Only fires when the order has been accepted (so the
-                  kitchen actually knows when it'll be ready). */}
-              {order.estimatedReady && order.status === "accepted" && (() => {
+                  Renders for BOTH pending and accepted states:
+                    • pending = muted grey "Estimated ~X min" + "Waiting
+                      for restaurant to confirm" subtitle. The estimate
+                      is a soft prediction (createdAt + prep time) the
+                      server stamps at order creation — matches the
+                      "~20 min" the customer saw on the confirmation
+                      page. UX precedent: DoorDash/Uber/Toast all show
+                      an estimate immediately and tighten it on accept.
+                    • accepted = bold green "Ready in ~X min" — the
+                      kitchen's confirmed promise. Acceptance overwrites
+                      estimatedReady server-side so the countdown stays
+                      precise. */}
+              {order.estimatedReady && (order.status === "pending" || order.status === "accepted") && (() => {
                 const target = new Date(order.estimatedReady).getTime();
                 const msLeft = target - nowTick;
-                const minLeft = Math.round(msLeft / 60000);
+                const minLeft = Math.max(1, Math.round(msLeft / 60000));
+                const isPending = order.status === "pending";
+                const verb = order.type === "delivery" ? "delivery" : "pickup";
                 let line: string;
-                if (msLeft <= -60_000) {
+                if (isPending) {
+                  // Soft language during pending — no "Ready now!" copy
+                  // because the kitchen hasn't actually started prep.
+                  line = `Estimated ${verb} in ~${minLeft} min`;
+                } else if (msLeft <= -60_000) {
                   line = `Ready now — ${order.type === "delivery" ? "on the way" : "pickup time"}!`;
                 } else if (msLeft <= 60_000) {
                   line = "Ready in less than 1 min";
@@ -455,9 +471,21 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 }
                 const targetLabel = new Date(target).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
                 return (
-                  <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
-                    <div className="text-2xl font-bold text-emerald-700 tabular-nums">{line}</div>
-                    <div className="text-xs text-emerald-700/70 mt-0.5">Estimated {order.type === "delivery" ? "arrival" : "ready"} at {targetLabel}</div>
+                  <div className={`mt-6 rounded-xl p-4 text-center border ${
+                    isPending
+                      ? "bg-gray-50 border-gray-200"
+                      : "bg-emerald-50 border-emerald-200"
+                  }`}>
+                    <div className={`text-2xl font-bold tabular-nums ${
+                      isPending ? "text-gray-600" : "text-emerald-700"
+                    }`}>{line}</div>
+                    <div className={`text-xs mt-0.5 ${
+                      isPending ? "text-gray-500" : "text-emerald-700/70"
+                    }`}>
+                      {isPending
+                        ? `Waiting for restaurant to confirm · estimated ${order.type === "delivery" ? "arrival" : "ready"} at ${targetLabel}`
+                        : `Estimated ${order.type === "delivery" ? "arrival" : "ready"} at ${targetLabel}`}
+                    </div>
                   </div>
                 );
               })()}
