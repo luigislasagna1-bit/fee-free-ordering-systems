@@ -550,6 +550,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         await notifyCustomer({
           restaurantId: order.restaurant.id,
           customerEmail: order.customerEmail,
+          customerPhone: order.customerPhone,
           orderType: order.type,
           customerLocale: order.restaurant.defaultLanguage || "en",
           payload: {

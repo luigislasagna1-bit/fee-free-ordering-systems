@@ -33,6 +33,44 @@ import {
   setEmailImprint,
   setEmailLogoUrl,
 } from "@/lib/email";
+import { sendSms } from "@/lib/sms";
+
+/**
+ * Build a short SMS body for a customer order event. Cap-160 friendly
+ * (single-segment) for the common shapes; the SMS sender enforces a
+ * 320-char hard cap as a safety net. We deliberately avoid putting the
+ * tracking URL in pickup-ready / delivery-ready texts because most
+ * customers tap the link, which then defeats the "the page already
+ * told you" assumption — keep the texts informational + actionable.
+ */
+function buildCustomerSms(
+  restaurantName: string,
+  payload: CustomerEventPayload,
+): string | null {
+  switch (payload.event) {
+    case "orderConfirmed":
+      return `${restaurantName}: Order #${payload.orderNumber} received. We'll text you when it's accepted. ${payload.trackingUrl ?? ""}`.trim();
+    case "orderStatusUpdate": {
+      const s = (payload.status ?? "").toLowerCase();
+      if (s === "accepted") {
+        const eta = payload.estimatedReady
+          ? new Date(payload.estimatedReady).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
+          : null;
+        return `${restaurantName}: Order #${payload.orderNumber} accepted${eta ? ` — ready ~${eta}` : ""}.`;
+      }
+      if (s === "ready") return `${restaurantName}: Order #${payload.orderNumber} is ready for pickup!`;
+      if (s === "completed") return `${restaurantName}: Order #${payload.orderNumber} is complete. Thanks!`;
+      if (s === "rejected" || s === "cancelled" || s === "canceled") {
+        return `${restaurantName}: Order #${payload.orderNumber} was ${s}${payload.rejectionReason ? ` — ${payload.rejectionReason}` : ""}.`;
+      }
+      return null;
+    }
+    case "reservationConfirmation":
+      return `${restaurantName}: Reservation for ${payload.partySize} on ${payload.date} at ${payload.time} confirmed. Code ${payload.confirmationCode}.`;
+    default:
+      return null;
+  }
+}
 
 /**
  * Resolve the email footer imprint for a restaurant. If the restaurant is
@@ -358,11 +396,17 @@ export type CustomerEventPayload =
 export async function notifyCustomer(args: {
   restaurantId: string;
   customerEmail: string | null | undefined;
+  /** Optional E.164-ish phone. When provided AND Twilio env vars are
+   *  set on the platform, an SMS goes out alongside the email for
+   *  status events the customer would expect a text on (order
+   *  confirmed, accepted, ready, rejected). Falls back silently when
+   *  Twilio isn't configured — same as the email-only path. */
+  customerPhone?: string | null;
   customerLocale?: string;
   orderType?: string;
   payload: CustomerEventPayload;
-}): Promise<{ sent: boolean; reason?: string }> {
-  const { restaurantId, customerEmail, customerLocale, orderType, payload } = args;
+}): Promise<{ sent: boolean; reason?: string; smsSent?: boolean }> {
+  const { restaurantId, customerEmail, customerPhone, customerLocale, orderType, payload } = args;
   if (!customerEmail) return { sent: false, reason: "no customer email" };
 
   const restaurant = await prisma.restaurant.findUnique({
@@ -395,6 +439,26 @@ export async function notifyCustomer(args: {
 
   const locale = customerLocale || restaurant.defaultLanguage || "en";
 
+  // SMS helper closure — fire-and-forget. Twilio call sites that fail
+  // shouldn't break the email path, so we swallow errors and log them.
+  // Returns the actual sent flag so callers (mostly internal logging)
+  // can tell. No-op when customerPhone is unset.
+  let smsDispatched = false;
+  const fireSms = async () => {
+    if (!customerPhone) return;
+    const body = buildCustomerSms(restaurant.name, payload);
+    if (!body) return;
+    try {
+      const r = await sendSms({ to: customerPhone, body });
+      smsDispatched = r.sent;
+      if (!r.sent && r.reason && !r.reason.startsWith("Twilio not configured")) {
+        console.warn(`[notifyCustomer sms] not sent: ${r.reason}`);
+      }
+    } catch (e) {
+      console.error("[notifyCustomer sms] threw:", e);
+    }
+  };
+
   switch (payload.event) {
     case "orderConfirmed": {
       if (!restaurant.customerEmailOrderConfirm) return { sent: false, reason: "toggle off" };
@@ -413,7 +477,8 @@ export async function notifyCustomer(args: {
           appliedPromos: payload.appliedPromos,
         });
       });
-      return { sent: true };
+      await fireSms();
+      return { sent: true, smsSent: smsDispatched };
     }
     case "orderStatusUpdate": {
       // Match the right toggle based on status + order type.
@@ -457,7 +522,8 @@ export async function notifyCustomer(args: {
           locale,
         });
       });
-      return { sent: true };
+      await fireSms();
+      return { sent: true, smsSent: smsDispatched };
     }
     case "reservationConfirmation": {
       // Reservations always send — customer expects this after booking.
@@ -477,7 +543,8 @@ export async function notifyCustomer(args: {
           locale,
         });
       });
-      return { sent: true };
+      await fireSms();
+      return { sent: true, smsSent: smsDispatched };
     }
   }
 }
