@@ -31,8 +31,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 
-const SCHEDULED_BUFFER_MS = 2 * 60 * 60 * 1000; // 2 hours
-const UNSCHEDULED_BUFFER_MS = 4 * 60 * 60 * 1000; // 4 hours
+// Buffers chosen by Luigi 2026-05-30 — the 2h/4h defaults felt much
+// too long for a real-world simple-mode kitchen (orders that were
+// finished hours ago sit in "In Progress" because the cron hasn't fired
+// yet, distorting the kitchen view). Tighter values keep the In
+// Progress tab honest:
+//   • 30 min past `scheduledFor` if the customer scheduled the order.
+//   • 30 min past `estimatedReady` if the kitchen accepted with a prep
+//     time (the most precise signal — when the food was supposed to be
+//     ready).
+//   • 60 min past `createdAt` as the catch-all for ASAP orders the
+//     kitchen accepted without entering a prep time.
+const SCHEDULED_BUFFER_MS = 30 * 60 * 1000; // 30 min past scheduledFor
+const ESTIMATED_READY_BUFFER_MS = 30 * 60 * 1000; // 30 min past estimatedReady
+const UNSCHEDULED_BUFFER_MS = 60 * 60 * 1000; // 60 min past createdAt
 
 async function autoComplete() {
   const now = new Date();
@@ -60,13 +72,20 @@ async function autoComplete() {
       restaurantId: { in: restaurantIds },
       status: "accepted",
     },
-    select: { id: true, scheduledFor: true, createdAt: true },
+    select: { id: true, scheduledFor: true, estimatedReady: true, createdAt: true },
   });
 
+  // Precedence: scheduledFor (customer's chosen time) → estimatedReady
+  // (kitchen's stated prep time) → createdAt (fallback). The first
+  // available signal wins; we don't double-count.
   const dueIds: string[] = [];
   for (const o of candidates) {
     if (o.scheduledFor) {
       if (now.getTime() - o.scheduledFor.getTime() >= SCHEDULED_BUFFER_MS) {
+        dueIds.push(o.id);
+      }
+    } else if (o.estimatedReady) {
+      if (now.getTime() - o.estimatedReady.getTime() >= ESTIMATED_READY_BUFFER_MS) {
         dueIds.push(o.id);
       }
     } else if (o.createdAt) {

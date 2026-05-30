@@ -30,6 +30,11 @@ export type AutoRejectResult = {
   /** Actual refunds processed (post-capture cancellations). Rare path. */
   refunded: number;
   refundFailed: number;
+  /** Abandoned-payment orders cleaned up — created but the customer
+   *  never finished checkout (paymentStatus stuck "pending" and the
+   *  order never made it to the kitchen). Marked "cancelled" with no
+   *  refund/void needed because no money was ever moved. */
+  abandonedCancelled: number;
   errors: Array<{ orderId: string; reason: string }>;
 };
 
@@ -76,8 +81,62 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
     voided: 0,
     refunded: 0,
     refundFailed: 0,
+    abandonedCancelled: 0,
     errors: [],
   };
+
+  // ── Abandoned-payment sweep ────────────────────────────────────────
+  // Orders created via Stripe Checkout where the customer never finished
+  // payment (paymentStatus stuck "pending" → the webhook that flips to
+  // "authorized" never fired). These have `notifiedAt: null` and so are
+  // NOT picked up by the kitchen-stale sweep above. Without this
+  // sweeper, they'd haunt the customer's account page showing "waiting
+  // for confirmation" forever — even though there's nothing to confirm
+  // because no payment was ever taken.
+  //
+  // Window: 30 min. Long enough for slow Stripe webhooks; short enough
+  // that the customer's "I'll just place the order again" instinct is
+  // honoured before they get confused looking at the stale entry.
+  const ABANDONED_TIMEOUT_MINUTES = 30;
+  const abandonedCutoff = new Date(now.getTime() - ABANDONED_TIMEOUT_MINUTES * 60 * 1000);
+  const abandoned = await prisma.order.findMany({
+    where: {
+      status: "pending",
+      notifiedAt: null,
+      paymentStatus: "pending",
+      createdAt: { lt: abandonedCutoff },
+    },
+    select: { id: true, orderNumber: true, restaurantId: true, viaMarketplace: true, marketplaceCounterApplied: true, total: true },
+  });
+  for (const o of abandoned) {
+    try {
+      await prisma.order.update({
+        where: { id: o.id },
+        data: {
+          status: "cancelled",
+          rejectedAt: now,
+          rejectionReason:
+            "Payment was not completed within the checkout window. The order was cancelled automatically.",
+        },
+      });
+      result.abandonedCancelled += 1;
+      // Marketplace attribution shouldn't include orders that never paid.
+      // (For belt-and-suspenders — usually marketplaceCounterApplied is
+      // false on never-paid orders, but the rollback is idempotent.)
+      if (o.viaMarketplace && o.marketplaceCounterApplied) {
+        unrecordMarketplaceOrder({
+          orderId: o.id,
+          restaurantId: o.restaurantId,
+          orderTotalCents: Math.round(o.total * 100),
+        }).catch((e) => console.error("[auto-reject abandoned unrecord]", e));
+      }
+    } catch (e) {
+      result.errors.push({
+        orderId: o.id,
+        reason: `abandoned cleanup failed: ${e instanceof Error ? e.message : String(e)}`,
+      });
+    }
+  }
 
   if (candidates.length === 0) return result;
 
