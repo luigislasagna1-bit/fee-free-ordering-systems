@@ -213,6 +213,31 @@ function renderCustomer(
       // so the main loop doesn't render it as its own block.
       return null;
 
+    case "promos":
+    case "k_promos": {
+      // Applied promotions preview — sample 2 promos so the owner sees
+      // the layout in the editor. Live receipts only render this when
+      // order.appliedPromos is non-empty.
+      const samplePromos = [
+        { name: "Free Delivery", couponCode: undefined as string | undefined, savings: 7.99, free: true },
+        { name: "July Special",  couponCode: "JULY10", savings: 4.54, free: false },
+      ];
+      return (
+        <span>
+          <span style={{ display: "block", fontWeight: "bold" }}>* PROMOS APPLIED *</span>
+          {samplePromos.map((p, i) => (
+            <span key={i} style={row}>
+              <span>
+                &nbsp;&nbsp;{p.name}
+                {p.couponCode && <> [{p.couponCode}]</>}
+              </span>
+              <span>{p.free ? "FREE" : `-${fmt(p.savings)}`}</span>
+            </span>
+          ))}
+        </span>
+      );
+    }
+
     case "totals":
       return (
         <span>

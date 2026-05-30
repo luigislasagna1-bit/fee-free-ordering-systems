@@ -776,32 +776,31 @@ async function renderCustomerSection(
       // Style-only — never renders as its own block.
       break;
 
+    case "promos":
+    case "k_promos": {
+      // Applied promotions block — restaurants control visibility +
+      // styling via the receipt template editor (font size, bold,
+      // dividers, padding). Renders only when the order has any
+      // promo in its appliedPromos snapshot.
+      if (!order.appliedPromos) break;
+      try {
+        const promos = JSON.parse(order.appliedPromos) as Array<{
+          name: string; type: string; discount: number; couponCode?: string;
+        }>;
+        if (!Array.isArray(promos) || promos.length === 0) break;
+        applyStyle(r, s);
+        r.line("* PROMOS APPLIED *");
+        for (const p of promos) {
+          const label = p.couponCode
+            ? `  ${p.name} [${p.couponCode}]`
+            : `  ${p.name}`;
+          r.columns(label, p.discount > 0 ? `-${fmt(p.discount)}` : "FREE");
+        }
+      } catch { /* malformed JSON — skip */ }
+      break;
+    }
+
     case "totals":
-      // Promo highlight box — renders ABOVE the subtotal so the
-      // applied promotion(s) are the first thing the customer sees in
-      // the totals block. Uses divider lines as the box frame so it
-      // works on every thermal-printer width. Skips entirely when no
-      // promos fired (back-compat: pre-2026-05-29 orders).
-      if (order.appliedPromos) {
-        try {
-          const promos = JSON.parse(order.appliedPromos) as Array<{
-            name: string; type: string; discount: number; couponCode?: string;
-          }>;
-          if (Array.isArray(promos) && promos.length > 0) {
-            r.divider("=");
-            applyStyle(r, s);
-            r.line("* PROMOS APPLIED *");
-            r.divider("-");
-            for (const p of promos) {
-              const label = p.couponCode
-                ? `  ${p.name} [${p.couponCode}]`
-                : `  ${p.name}`;
-              r.columns(label, p.discount > 0 ? `-${fmt(p.discount)}` : "FREE");
-            }
-            r.divider("=");
-          }
-        } catch { /* malformed JSON — fall through to legacy lines */ }
-      }
       r.columns(t("receipt.customer.subtotal"), fmt(order.subtotal));
       if ((order.couponDiscount ?? 0) > 0)
         r.columns(t("receipt.customer.couponDiscount"), `-${fmt(order.couponDiscount!)}`);

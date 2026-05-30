@@ -3,12 +3,20 @@
 export type CustomerSectionType =
   | "store_name" | "store_info"
   | "order_info" | "customer_info" | "items" | "modifiers"
+  /** Applied-promotions box — renders only when the order has any
+   *  promo in its `appliedPromos` snapshot. Shows each promo by name
+   *  + savings, framed by divider lines. Restaurants can disable the
+   *  whole box by toggling enabled=false. */
+  | "promos"
   | "totals" | "payment" | "notes"
   | "thank_you" | "footer";
 
 export type KitchenSectionType =
   | "k_title" | "k_order_type" | "k_order_number"
   | "k_datetime" | "k_customer" | "k_items" | "k_modifiers"
+  /** Kitchen-side applied-promotions box. Restaurants that don't want
+   *  to clutter kitchen tickets with discount info can disable it. */
+  | "k_promos"
   | "k_notes" | "k_prep";
 
 // `modifiers` (customer) and `k_modifiers` (kitchen) are STYLE-ONLY sections.
@@ -84,6 +92,7 @@ export const DEFAULT_CUSTOMER_CONFIG: CustomerConfig = {
     { id: "customer_info", type: "customer_info", label: "Customer Info",       enabled: true,  style: { ...base, paddingTop: 5, paddingBottom: 5 } },
     { id: "items",         type: "items",         label: "Items List",          enabled: true,  style: { ...bl,  fontSize: 13, dividerAbove: true, paddingTop: 7, paddingBottom: 4 } },
     { id: "modifiers",     type: "modifiers",     label: "Modifiers",           enabled: true,  style: { ...base, fontSize: 11, paddingTop: 0, paddingBottom: 0 } },
+    { id: "promos",        type: "promos",        label: "Applied Promotions Box", enabled: true, style: { ...bl, fontSize: 13, dividerAbove: true, dividerBelow: true, paddingTop: 6, paddingBottom: 6 } },
     { id: "totals",        type: "totals",        label: "Totals",              enabled: true,  style: { ...base, dividerAbove: true, paddingTop: 6, paddingBottom: 6 } },
     { id: "payment",       type: "payment",       label: "Payment Method",      enabled: true,  style: { ...base, paddingTop: 2, paddingBottom: 4 } },
     { id: "notes",         type: "notes",         label: "Order Notes",         enabled: true,  style: { ...base, fontSize: 11, paddingTop: 4, paddingBottom: 4 } },
@@ -105,6 +114,7 @@ export const DEFAULT_KITCHEN_CONFIG: KitchenConfig = {
     { id: "k_customer",     type: "k_customer",    label: "Customer Name",       enabled: true, style: { ...base, fontSize: 14, bold: true, paddingTop: 5, paddingBottom: 5 } },
     { id: "k_items",        type: "k_items",       label: "Items (no prices)",   enabled: true, style: { ...bl,  fontSize: 17, dividerAbove: true, paddingTop: 8, paddingBottom: 4 } },
     { id: "k_modifiers",    type: "k_modifiers",   label: "Modifiers",           enabled: true, style: { ...base, fontSize: 14, paddingTop: 0, paddingBottom: 0 } },
+    { id: "k_promos",       type: "k_promos",      label: "Applied Promotions",  enabled: true, style: { ...bl, fontSize: 13, dividerAbove: true, dividerBelow: true, paddingTop: 6, paddingBottom: 6 } },
     { id: "k_notes",        type: "k_notes",       label: "Order Notes",         enabled: true, style: { ...base, fontSize: 14, paddingTop: 6, paddingBottom: 6 } },
     { id: "k_prep",         type: "k_prep",        label: "Prep Time Line",      enabled: true, style: { ...base, fontSize: 13, dividerAbove: true, paddingTop: 6, paddingBottom: 10 } },
   ],
