@@ -30,6 +30,7 @@ export async function GET() {
         estimatedDelivery: true,
         serviceSettings: true,
         autoAcceptOrders: true,
+        cateringNoticeHours: true,
       },
     });
 
@@ -48,6 +49,7 @@ export async function GET() {
       },
       settings: { ...DEFAULT_SETTINGS, ...settings },
       autoAcceptOrders: restaurant?.autoAcceptOrders ?? false,
+      cateringNoticeHours: restaurant?.cateringNoticeHours ?? 24,
     });
   } catch (e: any) {
     return NextResponse.json({ error: e.message }, { status: 500 });
@@ -61,7 +63,16 @@ export async function PUT(req: NextRequest) {
     if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await req.json();
-    const { enabled, settings, autoAcceptOrders } = body;
+    const { enabled, settings, autoAcceptOrders, cateringNoticeHours } = body;
+
+    // Clamp catering notice to [1..720] hours (30 days max — sanity cap,
+    // protects the schedule picker against absurd inputs). Anything else
+    // → undefined so Prisma skips the write.
+    let cateringNoticeHoursClean: number | undefined;
+    if (typeof cateringNoticeHours === "number" && Number.isFinite(cateringNoticeHours)) {
+      const v = Math.floor(cateringNoticeHours);
+      if (v >= 1 && v <= 720) cateringNoticeHoursClean = v;
+    }
 
     await prisma.restaurant.update({
       where: { id: restaurantId },
@@ -76,6 +87,7 @@ export async function PUT(req: NextRequest) {
         estimatedDelivery:   settings?.delivery?.estimatedTime  ?? undefined,
         serviceSettings:     JSON.stringify({ ...DEFAULT_SETTINGS, ...settings }),
         autoAcceptOrders:    typeof autoAcceptOrders === "boolean" ? autoAcceptOrders : undefined,
+        cateringNoticeHours: cateringNoticeHoursClean,
       },
     });
 

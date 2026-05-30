@@ -615,6 +615,12 @@ export function OrderingPageClient({
     } catch {}
   }, [cart, CART_STORAGE_KEY]);
 
+  // Ref used by the catering auto-fill effect — declared up here so the
+  // hook order stays stable across renders. The effect itself lives
+  // further down, after `cartHasCatering` / `cateringMinScheduledLocal`
+  // are computed.
+  const prevCateringRef = useRef(false);
+
   // ── Reorder handshake ───────────────────────────────────────────────
   // When the customer clicks "Reorder" on /order/[slug]/status/[orderId]
   // the status page navigates here with ?reorder=<orderId> AND writes
@@ -985,6 +991,61 @@ export function OrderingPageClient({
   }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
+
+  // ── Catering detection ─────────────────────────────────────────────
+  // An item is treated as catering when EITHER its own isCatering flag
+  // is set OR it lives in a category with isCatering set. We build a
+  // Set of catering menuItem IDs from the current visible menu (cheap
+  // — a few hundred ids at most) and probe the cart against it.
+  const cateringNoticeHours: number =
+    typeof restaurant.cateringNoticeHours === "number" && restaurant.cateringNoticeHours > 0
+      ? restaurant.cateringNoticeHours
+      : 24;
+  const cateringItemIds = new Set<string>();
+  for (const c of (restaurant.menuCategories as any[] ?? [])) {
+    const catIsCatering = !!c.isCatering;
+    for (const it of (c.menuItems ?? [])) {
+      if (catIsCatering || !!it.isCatering) cateringItemIds.add(it.id);
+    }
+  }
+  const cartHasCatering = cart.some((ci) => cateringItemIds.has(ci.menuItem.id));
+  // Earliest schedulable slot — now + cateringNoticeHours, rounded UP
+  // to the next 15-minute boundary so the datetime-local picker doesn't
+  // land on an odd minute value the customer didn't choose. Output is
+  // local "YYYY-MM-DDTHH:MM" (no Z) so the picker accepts it.
+  const cateringMinScheduledLocal = (() => {
+    const ms = Date.now() + cateringNoticeHours * 3600 * 1000;
+    const d = new Date(ms);
+    // Round up to next 15min
+    const m = d.getMinutes();
+    const add = (15 - (m % 15)) % 15;
+    if (add > 0) d.setMinutes(m + add, 0, 0);
+    else d.setSeconds(0, 0);
+    const pad = (n: number) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  })();
+
+  // ── Catering: auto-fill schedule when activated ─────────────────────
+  // Flip from "no catering" → "has catering" defaults the schedule
+  // picker to the earliest valid catering slot. Customer can bump
+  // later if they want — but never sees an empty ASAP state with a
+  // catering item in the cart. Removing catering items DOESN'T clear
+  // the schedule — their explicit "Friday at 7pm" still applies.
+  useEffect(() => {
+    if (cartHasCatering && !prevCateringRef.current) {
+      if (!customerInfo.scheduledFor) {
+        setCustomerInfo({ ...customerInfo, scheduledFor: cateringMinScheduledLocal });
+      } else {
+        try {
+          if (new Date(customerInfo.scheduledFor) < new Date(cateringMinScheduledLocal)) {
+            setCustomerInfo({ ...customerInfo, scheduledFor: cateringMinScheduledLocal });
+          }
+        } catch { /* malformed — ignore */ }
+      }
+    }
+    prevCateringRef.current = cartHasCatering;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartHasCatering, cateringMinScheduledLocal]);
   const zoneFee = resolvedZone?.zone.deliveryFee;
   const zoneMin = resolvedZone?.zone.minimumOrder;
   const zoneMinutes = resolvedZone?.zone.estimatedMinutes;
@@ -2412,6 +2473,9 @@ export function OrderingPageClient({
           resolvedZone={resolvedZone}
           mapProvider={restaurant.mapProvider ?? "leaflet"}
           googleMapsApiKey={restaurant.googleMapsApiKey ?? null}
+          cateringMode={cartHasCatering}
+          cateringMinScheduledLocal={cateringMinScheduledLocal}
+          cateringNoticeHours={cateringNoticeHours}
           onClose={() => setCheckoutOpen(false)}
         />
       )}

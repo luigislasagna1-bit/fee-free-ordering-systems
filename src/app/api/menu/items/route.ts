@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   const { name, description, price, categoryId, imageUrl, isHidden, isSoldOut,
-          forPickup, forDelivery, availableDays, availableFrom, availableTo,
+          forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
           hasVariants, variants, pizzaConfig } = body;
   if (!name || price === undefined || !categoryId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
@@ -30,7 +30,8 @@ export async function POST(req: NextRequest) {
         price: parseFloat(price), imageUrl: imageUrl || null,
         isHidden: isHidden ?? false,
         isSoldOut: isSoldOut ?? false, forPickup: forPickup ?? true,
-        forDelivery: forDelivery ?? true, hasVariants: hasVariants ?? false,
+        forDelivery: forDelivery ?? true, isCatering: !!isCatering,
+        hasVariants: hasVariants ?? false,
         availableDays: availableDays ? JSON.stringify(availableDays) : null,
         availableFrom: availableFrom || null, availableTo: availableTo || null,
         sortOrder: existing,

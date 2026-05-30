@@ -47,12 +47,17 @@ export async function POST(req: NextRequest) {
   if (blocked) return blocked;
 
   const body = await req.json();
-  const { name, description, imageUrl, isHidden } = body;
+  const { name, description, imageUrl, isHidden, isCatering } = body;
   if (!name?.trim()) return NextResponse.json({ error: "Name required" }, { status: 400 });
 
   const existing = await prisma.menuCategory.count({ where: { restaurantId } });
   const cat = await prisma.menuCategory.create({
-    data: { restaurantId, name: name.trim(), description, imageUrl, isHidden: isHidden ?? false, sortOrder: existing },
+    data: {
+      restaurantId, name: name.trim(), description, imageUrl,
+      isHidden: isHidden ?? false,
+      isCatering: !!isCatering,
+      sortOrder: existing,
+    },
   });
   return NextResponse.json(cat);
 }

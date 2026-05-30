@@ -62,6 +62,15 @@ model Restaurant {
   acceptsTakeOut       Boolean @default(false)
   acceptsReservations  Boolean @default(false)
   serviceSettings      String? // JSON: per-service { displayName, description, estimatedTime }
+  /// Minimum advance notice (in HOURS) required for catering orders.
+  /// When the cart contains any item flagged `isCatering` — or any item
+  /// in a category flagged `isCatering` — the customer MUST schedule the
+  /// order at least this many hours into the future. ASAP orders are
+  /// blocked. Enforced both client-side (the schedule picker's earliest
+  /// slot is now+cateringNoticeHours) AND server-side (/api/orders POST
+  /// rejects any catering cart without a sufficiently-future scheduledFor).
+  /// Default 24h matches the most common catering shop convention.
+  cateringNoticeHours  Int     @default(24)
   minimumOrder         Float   @default(0)
   deliveryFee          Float   @default(0)
   estimatedPickup      Int     @default(20)
@@ -515,6 +524,12 @@ model MenuCategory {
   imageUrl     String?
   isActive     Boolean  @default(true)
   isHidden     Boolean  @default(false)
+  /// When true, every item in this category is treated as catering —
+  /// cart with any of them must be scheduled ≥ Restaurant.cateringNoticeHours
+  /// in advance (ASAP is blocked). Per-item MenuItem.isCatering ORs with
+  /// this flag, so an owner can either tag a whole category or sprinkle
+  /// catering items into a regular category.
+  isCatering   Boolean  @default(false)
   sortOrder    Int      @default(0)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -541,6 +556,12 @@ model MenuItem {
   hasVariants   Boolean  @default(false)
   forPickup     Boolean  @default(true)
   forDelivery   Boolean  @default(true)
+  /// Per-item catering flag — opts THIS item into the catering-notice
+  /// rule (see Restaurant.cateringNoticeHours). ORs with the parent
+  /// category's `isCatering` flag, so either path tags the item.
+  /// Cart with any catering item forces schedule-for-later mode with
+  /// earliest slot = now + cateringNoticeHours.
+  isCatering    Boolean  @default(false)
   availableDays String? // JSON: [0,1,2,3,4,5,6] — null = all days
   availableFrom String? // "HH:MM"
   availableTo   String? // "HH:MM"

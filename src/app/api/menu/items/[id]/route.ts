@@ -32,7 +32,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const { id } = await params;
   const body = await req.json();
   const { name, description, price, categoryId, imageUrl, isAvailable, isFeatured, isHidden,
-          isSoldOut, forPickup, forDelivery, availableDays, availableFrom, availableTo,
+          isSoldOut, forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
           hasVariants, sortOrder, variants, pizzaConfig } = body;
 
   const updateData: any = {};
@@ -47,6 +47,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (isSoldOut !== undefined) updateData.isSoldOut = isSoldOut;
   if (forPickup !== undefined) updateData.forPickup = forPickup;
   if (forDelivery !== undefined) updateData.forDelivery = forDelivery;
+  if (isCatering !== undefined) updateData.isCatering = !!isCatering;
   if (availableDays !== undefined) updateData.availableDays = availableDays ? JSON.stringify(availableDays) : null;
   if (availableFrom !== undefined) updateData.availableFrom = availableFrom;
   if (availableTo !== undefined) updateData.availableTo = availableTo;

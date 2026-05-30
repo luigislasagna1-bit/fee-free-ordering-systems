@@ -5,6 +5,7 @@ import {
   Edit2, Trash2, Copy, X, Check, AlertCircle, Tag, Layers,
   Image as ImageIcon, Clock, Truck, ShoppingBag, UtensilsCrossed,
   Settings, ChevronUp, MoreVertical, Upload, FileText, Loader2,
+  PartyPopper,
 } from "lucide-react";
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
@@ -133,6 +134,11 @@ function ItemModal({
     isSoldOut: item?.isSoldOut ?? false,
     forPickup: item?.forPickup ?? true,
     forDelivery: item?.forDelivery ?? true,
+    /** Per-item catering tag. Opts THIS item into the catering advance-
+     *  notice rule (Restaurant.cateringNoticeHours). Cart that contains
+     *  any catering-tagged item — or any item in a catering category —
+     *  forces schedule-for-later mode at checkout. */
+    isCatering: (item as any)?.isCatering ?? false,
     hasVariants: item?.hasVariants ?? false,
     availableFrom: item?.availableFrom ?? "",
     availableTo: item?.availableTo ?? "",
@@ -285,6 +291,7 @@ function ItemModal({
                   ["isSoldOut", "Sold out", AlertCircle],
                   ["forPickup", "Available for pickup", ShoppingBag],
                   ["forDelivery", "Available for delivery", Truck],
+                  ["isCatering", "Catering item (requires advance notice)", PartyPopper],
                 ] as [keyof typeof form, string, any][]).map(([field, label, Icon]) => (
                   <button key={field} onClick={() => toggle(field)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form[field] ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}>
@@ -1016,7 +1023,17 @@ function ModifierLibraryPanel({
 
 function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () => void; onSaved: () => void }) {
   const isNew = !cat;
-  const [form, setForm] = useState({ name: cat?.name ?? "", description: cat?.description ?? "", imageUrl: cat?.imageUrl ?? "", isHidden: cat?.isHidden ?? false });
+  const [form, setForm] = useState({
+    name: cat?.name ?? "",
+    description: cat?.description ?? "",
+    imageUrl: cat?.imageUrl ?? "",
+    isHidden: cat?.isHidden ?? false,
+    // Catering-category flag — every item in this category is treated
+    // as catering for the advance-notice rule, regardless of the per-
+    // item isCatering flag. Owners with a dedicated catering menu just
+    // tag the whole category instead of every item one by one.
+    isCatering: (cat as any)?.isCatering ?? false,
+  });
   const [saving, setSaving] = useState(false);
 
   const save = async () => {
@@ -1058,10 +1075,18 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
               aspectRatio="wide"
             />
           </div>
-          <button onClick={() => setForm(f => ({ ...f, isHidden: !f.isHidden }))}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isHidden ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
-            <EyeOff className="w-4 h-4" /> Hidden from customer menu {form.isHidden && "✓"}
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button onClick={() => setForm(f => ({ ...f, isHidden: !f.isHidden }))}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isHidden ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
+              <EyeOff className="w-4 h-4" /> Hidden from customer menu {form.isHidden && "✓"}
+            </button>
+            <button onClick={() => setForm(f => ({ ...f, isCatering: !f.isCatering }))}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isCatering ? "border-amber-500 bg-amber-50 text-amber-700" : "border-gray-200 text-gray-600"}`}
+              title="Every item in this category becomes a catering item (advance notice required)"
+            >
+              <PartyPopper className="w-4 h-4" /> Catering category {form.isCatering && "✓"}
+            </button>
+          </div>
         </div>
         <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
           <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">Cancel</button>

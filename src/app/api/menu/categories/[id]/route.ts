@@ -17,10 +17,16 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (!await getOwned(id, restaurantId)) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   const body = await req.json();
-  const { name, description, imageUrl, isActive, isHidden, sortOrder } = body;
+  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder } = body;
   const cat = await prisma.menuCategory.update({
     where: { id },
-    data: { name, description, imageUrl, isActive, isHidden, sortOrder },
+    data: {
+      name, description, imageUrl, isActive, isHidden, sortOrder,
+      // Only assign when caller sent the field — undefined preserves
+      // the existing value (matches Prisma's update semantics for the
+      // other optional flags above).
+      ...(isCatering !== undefined ? { isCatering: !!isCatering } : {}),
+    },
   });
   return NextResponse.json(cat);
 }

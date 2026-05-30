@@ -34,6 +34,12 @@ export function ServicesClient() {
     pickup: true, delivery: false, dineIn: false, catering: false, takeOut: false, reservations: false,
   });
   const [autoAcceptOrders, setAutoAcceptOrders] = useState(false);
+  // Catering notice — minimum advance hours customers must schedule a
+  // catering-tagged order. 24h default matches industry convention.
+  // The catering card exposes presets (24 / 48 / 72) + a custom input
+  // for restaurants that want something else (e.g. a 12h shop or a 5d
+  // banquet hall).
+  const [cateringNoticeHours, setCateringNoticeHours] = useState<number>(24);
   const [settings, setSettings] = useState<Record<ServiceKey, ServiceConfig>>({
     pickup:       { displayName: "Pickup",             description: "", estimatedTime: 20 },
     delivery:     { displayName: "Delivery",           description: "", estimatedTime: 45 },
@@ -48,6 +54,9 @@ export function ServicesClient() {
       if (d.enabled) setEnabled(e => ({ ...e, ...d.enabled }));
       if (d.settings) setSettings(s => ({ ...s, ...d.settings }));
       if (typeof d.autoAcceptOrders === "boolean") setAutoAcceptOrders(d.autoAcceptOrders);
+      if (typeof d.cateringNoticeHours === "number" && d.cateringNoticeHours > 0) {
+        setCateringNoticeHours(d.cateringNoticeHours);
+      }
     }).finally(() => setLoading(false));
   }, []);
 
@@ -57,7 +66,7 @@ export function ServicesClient() {
       const res = await fetch("/api/admin/services", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ enabled, settings, autoAcceptOrders }),
+        body: JSON.stringify({ enabled, settings, autoAcceptOrders, cateringNoticeHours }),
       });
       if (!res.ok) throw new Error("Save failed");
       toast.success(tToasts("saved"));
@@ -193,6 +202,59 @@ export function ServicesClient() {
                       <p className="text-xs text-gray-400">
                         Configure reservation times, tables, and availability in{" "}
                         <a href="/admin/reservations" className="text-emerald-500 hover:underline font-medium">Table Reservations settings</a>.
+                      </p>
+                    </div>
+                  )}
+                  {/* Catering-specific: advance-notice window. ASAP orders
+                      with catering items are blocked; the customer's
+                      schedule picker shows now + N as the earliest slot.
+                      Items / categories are tagged "catering" individually
+                      in /admin/menu (catering toggle on the item drawer +
+                      the category modal). */}
+                  {key === "catering" && (
+                    <div className="sm:col-span-3 pt-2 border-t border-gray-100">
+                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                        Required advance notice
+                      </label>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {[24, 48, 72].map((h) => (
+                          <button
+                            key={h}
+                            type="button"
+                            onClick={() => setCateringNoticeHours(h)}
+                            className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition ${
+                              cateringNoticeHours === h
+                                ? "bg-emerald-500 text-white border-emerald-500"
+                                : "bg-white text-gray-700 border-gray-300 hover:border-emerald-300"
+                            }`}
+                          >
+                            {h === 24 ? "24h (1 day)" : h === 48 ? "48h (2 days)" : "72h (3 days)"}
+                          </button>
+                        ))}
+                        <div className="flex items-center gap-1.5">
+                          <input
+                            type="number"
+                            min={1}
+                            max={720}
+                            step={1}
+                            className="w-20 border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                            value={cateringNoticeHours}
+                            onChange={(e) => {
+                              const v = parseInt(e.target.value, 10);
+                              if (!Number.isNaN(v) && v > 0 && v <= 720) setCateringNoticeHours(v);
+                            }}
+                          />
+                          <span className="text-xs text-gray-500">hours</span>
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
+                        Items marked as catering — or items inside a category marked catering —
+                        can&apos;t be ordered for ASAP. The customer must schedule the order
+                        at least {cateringNoticeHours}h in advance.
+                        Manage which items are catering on{" "}
+                        <a href="/admin/menu" className="text-emerald-600 hover:underline font-medium">
+                          the menu page
+                        </a>.
                       </p>
                     </div>
                   )}

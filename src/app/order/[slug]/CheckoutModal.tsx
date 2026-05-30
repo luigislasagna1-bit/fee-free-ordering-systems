@@ -137,6 +137,19 @@ interface Props {
   mapProvider: "leaflet" | "google";
   googleMapsApiKey: string | null;
   onClose: () => void;
+  /** True when the current cart contains any catering-tagged item — at
+   *  the item level or via its parent category. Forces schedule-for-
+   *  later mode (ASAP disabled) with min selectable time =
+   *  cateringMinScheduledIso. The catering banner explains why. */
+  cateringMode?: boolean;
+  /** Earliest selectable datetime in datetime-local format
+   *  ("YYYY-MM-DDTHH:MM"). Derived as now + cateringNoticeHours by the
+   *  parent. Used as the `min` on the schedule picker AND as the
+   *  default value when cateringMode flips on with an empty schedule. */
+  cateringMinScheduledLocal?: string;
+  /** Restaurant's configured advance notice (hours) — surfaced in the
+   *  banner copy so the customer sees the actual requirement. */
+  cateringNoticeHours?: number;
 }
 
 export function CheckoutModal({
@@ -151,6 +164,9 @@ export function CheckoutModal({
   orderLoading, placeOrder,
   cardPaymentEnabled,
   acceptedMethods,
+  cateringMode = false,
+  cateringMinScheduledLocal,
+  cateringNoticeHours,
   paypalEnabled,
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
@@ -202,7 +218,9 @@ export function CheckoutModal({
 
   const timeSummary = customerInfo.scheduledFor
     ? `Scheduled for ${new Date(customerInfo.scheduledFor).toLocaleString()}`
-    : `ASAP · ~${orderType === "delivery" ? estimatedDeliveryMinutes : estimatedPickupMinutes} min`;
+    : cateringMode
+      ? `Catering — choose a time ≥ ${cateringNoticeHours ?? 24}h ahead`
+      : `ASAP · ~${orderType === "delivery" ? estimatedDeliveryMinutes : estimatedPickupMinutes} min`;
 
   // Human-readable summary for the collapsed payment-method card.
   // Stays consistent with the picker labels below; "card" remains the
@@ -522,16 +540,28 @@ export function CheckoutModal({
                 primary={theme.primaryColor}
               >
                 <div className="pt-3 space-y-2">
+                  {cateringMode && (
+                    <div className="rounded-lg border border-amber-200 bg-amber-50 text-amber-800 px-3 py-2 text-xs">
+                      🎉 Your cart includes catering items — orders must be scheduled at
+                      least <strong>{cateringNoticeHours ?? 24}h</strong> in advance.
+                      ASAP isn&apos;t available with catering items in the cart.
+                    </div>
+                  )}
                   <label className="block text-xs text-gray-500">{tc("scheduleForLaterOptional")}</label>
                   <input
                     type="datetime-local"
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    min={new Date().toISOString().slice(0, 16)}
+                    min={cateringMode && cateringMinScheduledLocal
+                      ? cateringMinScheduledLocal
+                      : new Date().toISOString().slice(0, 16)}
                     value={customerInfo.scheduledFor}
                     onChange={e => setCustomerInfo({ ...customerInfo, scheduledFor: e.target.value })}
                   />
-                  {customerInfo.scheduledFor && (
+                  {/* "Switch to ASAP" is hidden in catering mode — ASAP
+                      is exactly what the rule blocks. Customer must
+                      pick a real future time. */}
+                  {customerInfo.scheduledFor && !cateringMode && (
                     <button
                       onClick={() => setCustomerInfo({ ...customerInfo, scheduledFor: "" })}
                       className="text-xs text-gray-500 hover:text-gray-700 underline"

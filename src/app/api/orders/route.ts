@@ -116,6 +116,10 @@ export async function POST(req: NextRequest) {
       include: {
         variants: true,
         modifierGroups: { include: { options: { where: { isAvailable: true } } } },
+        // Pull the parent category's catering flag — an item is treated
+        // as catering if EITHER its own isCatering is true OR its
+        // category.isCatering is true.
+        category: { select: { isCatering: true } },
       },
     });
     const menuItemMap = new Map(menuItems.map((m) => [m.id, m]));
@@ -340,6 +344,45 @@ export async function POST(req: NextRequest) {
             }
           }
         }
+      }
+    }
+
+    // ── Catering advance-notice enforcement ─────────────────────────────────
+    // If ANY cart line is a catering item — flagged either at the menu-item
+    // level (MenuItem.isCatering) OR via its parent category
+    // (MenuCategory.isCatering) — the order must be scheduled at least
+    // Restaurant.cateringNoticeHours in the future. ASAP orders containing
+    // catering items are blocked here. The client-side checkout also
+    // enforces this (forces schedule-for-later mode + min slot), but server
+    // enforcement is the source of truth — a tampered client can't bypass.
+    const hasCateringInCart = validatedItems.some((vi) => {
+      if (!vi.menuItemId) return false; // bundle wrapper — skip
+      const mi = menuItemMap.get(vi.menuItemId) as any;
+      return mi && (mi.isCatering === true || mi.category?.isCatering === true);
+    });
+    if (hasCateringInCart) {
+      const noticeHours = Math.max(1, (restaurant as any).cateringNoticeHours ?? 24);
+      const earliest = new Date(Date.now() + noticeHours * 3600 * 1000);
+      if (!scheduledFor) {
+        return NextResponse.json(
+          {
+            error: `This order includes catering items which need at least ${noticeHours}h advance notice. Pick a scheduled time at least ${noticeHours} hours from now.`,
+            code: "catering_needs_schedule",
+            requiredScheduleFromIso: earliest.toISOString(),
+          },
+          { status: 400 },
+        );
+      }
+      const requested = new Date(scheduledFor);
+      if (!Number.isFinite(requested.getTime()) || requested < earliest) {
+        return NextResponse.json(
+          {
+            error: `Catering orders need at least ${noticeHours}h notice. Earliest available slot is ${earliest.toLocaleString()}.`,
+            code: "catering_schedule_too_soon",
+            requiredScheduleFromIso: earliest.toISOString(),
+          },
+          { status: 400 },
+        );
       }
     }
 
