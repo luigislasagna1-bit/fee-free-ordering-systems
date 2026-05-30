@@ -645,10 +645,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // ── Increment coupon usage ──────────────────────────────────────────────
-    if (resolvedCouponId) {
-      await prisma.coupon.update({ where: { id: resolvedCouponId }, data: { usedCount: { increment: 1 } } });
-    }
+    // ── Coupon usage already claimed atomically pre-create above. ────────
+    // Kept comment here as a breadcrumb; the increment used to live at
+    // this spot before the race-safe rewrite (audit #74, 2026-05-30).
 
     // ── Marketplace attribution + savings snapshot ──────────────────────────
     // Stamp this order as "via marketplace" ONLY if the client hint is set
@@ -765,8 +764,42 @@ export async function POST(req: NextRequest) {
     // has no opening hours configured), fall back to null — kitchen will
     // alert immediately. Better to over-alert than to silently never alert.
 
+    // ── Atomic coupon usage claim ───────────────────────────────────────────
+    // Previously the coupon usedCount was incremented AFTER order.create
+    // outside any transaction (audit 2026-05-30 #74). Two simultaneous
+    // customers using the same coupon could both pass the `usedCount <
+    // maxUses` check, both succeed, and the cap would be breached. The
+    // atomic conditional UPDATE below increments only if the cap still
+    // has headroom — race-loser sees 0 rows affected and we 4xx them.
+    //
+    // Done BEFORE order.create so the order never lands without an
+    // accompanying usage claim. If order.create then fails for a
+    // separate reason, we decrement the coupon back as a best-effort
+    // compensating action so the legitimate next customer can still
+    // redeem it.
+    if (resolvedCouponId) {
+      const claimed = await prisma.$executeRaw`
+        UPDATE "Coupon"
+        SET "usedCount" = "usedCount" + 1
+        WHERE id = ${resolvedCouponId}
+          AND ("maxUses" IS NULL OR "usedCount" < "maxUses")
+      `;
+      if (claimed === 0) {
+        return NextResponse.json(
+          {
+            error:
+              "This coupon has just reached its usage limit. Please try a different one.",
+            code: "coupon_exhausted",
+          },
+          { status: 409 },
+        );
+      }
+    }
+
     // ── Create order ────────────────────────────────────────────────────────
-    const order = await prisma.order.create({
+    let order;
+    try {
+      order = await prisma.order.create({
       data: {
         restaurantId: restaurant.id,
         customerId: customer?.id || null,
@@ -843,6 +876,25 @@ export async function POST(req: NextRequest) {
       },
       include: { items: { include: { modifiers: true } } },
     });
+    } catch (createErr) {
+      // Best-effort rollback of the coupon claim above. If THIS update
+      // also fails, log loudly — the operator can correct by hand. The
+      // coupon being briefly over by 1 is a much smaller harm than an
+      // under-cap by 1 (which would have let a customer cap-bust).
+      if (resolvedCouponId) {
+        prisma.$executeRaw`
+          UPDATE "Coupon"
+          SET "usedCount" = GREATEST(0, "usedCount" - 1)
+          WHERE id = ${resolvedCouponId}
+        `.catch((rollbackErr) => {
+          console.error(
+            `[orders POST] order.create failed AFTER coupon claim; coupon ${resolvedCouponId} usedCount may be over by 1. Rollback also failed:`,
+            rollbackErr,
+          );
+        });
+      }
+      throw createErr;
+    }
 
     // Bump the monthly counter. Fire-and-forget — if this fails we'd
     // rather take the order than lose it. The increment is racy under

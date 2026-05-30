@@ -145,27 +145,59 @@ export async function settleMarketplaceMonth(opts: { now?: Date; monthStart?: Da
   const stripe = (await stripeReady()) ? await getStripe() : null;
 
   for (const c of candidates) {
-    // Skip listings whose counters don't belong to the target month —
-    // they may have already rolled over to a NEW month (the order
-    // POST resets counters on month change), in which case we have
-    // no data for the target month and should skip.
+    // Month-boundary recovery (audit 2026-05-30 #76). The counter
+    // value lives in `currentMonthOrders` and resets when the FIRST
+    // order of a new month lands in /api/orders POST. If a customer
+    // placed a Feb 1 order before the Feb 1 settlement cron ran, the
+    // counter has already rolled to Feb — yet there ARE real Jan
+    // orders to bill that haven't been counted yet. Previously we
+    // bailed with "counter not aligned with target month" and the
+    // orders silently fell through the cracks.
+    //
+    // Now: if the counter has rolled forward, query the canonical
+    // Order rows directly for the target month to recover the actual
+    // count. The counter is treated as a fast-path optimization; the
+    // Order table is the source of truth.
     const counterMonth = monthStartUtc(c.currentMonthStartedAt);
-    const sameMonth = counterMonth.getTime() === targetMonth.getTime();
-    if (!sameMonth) {
-      results.push({
-        restaurantId: c.restaurantId,
-        restaurantName: c.restaurant.name,
-        monthStart: targetMonth,
-        ordersInMonth: 0,
-        accruedCents: 0,
-        invoicedCents: 0,
-        status: "skipped",
-        reason: "counter not aligned with target month",
+    const counterAligned = counterMonth.getTime() === targetMonth.getTime();
+    let orders: number;
+    if (counterAligned) {
+      orders = c.currentMonthOrders;
+    } else {
+      const monthEnd = new Date(targetMonth);
+      monthEnd.setUTCMonth(monthEnd.getUTCMonth() + 1);
+      orders = await prisma.order.count({
+        where: {
+          restaurantId: c.restaurantId,
+          viaMarketplace: true,
+          marketplaceCounterApplied: true,
+          status: { notIn: ["cancelled", "rejected"] },
+          createdAt: { gte: targetMonth, lt: monthEnd },
+        },
       });
-      continue;
+      if (orders === 0) {
+        // No orders found and counter already rolled — nothing to bill
+        // for this listing in the target month. Skip cleanly with the
+        // original reason so the audit trail still reflects what
+        // happened.
+        results.push({
+          restaurantId: c.restaurantId,
+          restaurantName: c.restaurant.name,
+          monthStart: targetMonth,
+          ordersInMonth: 0,
+          accruedCents: 0,
+          invoicedCents: 0,
+          status: "skipped",
+          reason: "counter not aligned with target month + no orders in range",
+        });
+        continue;
+      }
+      // Real orders found! Log so the operator notices the recovery
+      // path fired — useful for spotting any future drift.
+      console.warn(
+        `[marketplace-settle] recovered ${orders} late-${monthLabel(targetMonth)} orders for ${c.restaurant.name} via createdAt query (counter had already rolled).`,
+      );
     }
-
-    const orders = c.currentMonthOrders;
     const accrued = orders * MARKETPLACE_PER_ORDER_CENTS;
     const invoiced = Math.min(accrued, MARKETPLACE_MONTHLY_CAP_CENTS);
 
@@ -257,41 +289,57 @@ export async function settleMarketplaceMonth(opts: { now?: Date; monthStart?: Da
           ? await getOrCreateProvincialTaxRate(stripe, tax)
           : null;
 
+        // Audit 2026-05-30 #77: pass an idempotency_key to BOTH the
+        // invoice-item and invoice creation calls. Previously a
+        // retried cron run (e.g. lambda timeout, Stripe 500 mid-flight)
+        // could create duplicate line items + duplicate invoices for
+        // the same restaurant/month. The key below is deterministic
+        // per restaurant + target month, so Stripe de-dupes server-
+        // side: a retry returns the original response.
+        // Reference: https://stripe.com/docs/api/idempotent_requests
+        const idemPrefix = `marketplace-settle-${c.restaurantId}-${targetMonth.toISOString().slice(0, 7)}`;
+
         // Step 1: create the InvoiceItem (the line item).
         // tax_rates (when present) applies the destination-province tax
         // on top of `amount` at invoice finalization. US/international
         // restaurants get no tax_rate at all (tax-exempt).
-        await stripe.invoiceItems.create({
-          customer: c.restaurant.stripeCustomerId,
-          amount: invoiced, // cents, pre-tax
-          currency: PLATFORM_CURRENCY,
-          description: `Fee Free Marketplace — ${orders} order${orders === 1 ? "" : "s"} (${monthLabel(targetMonth)})`,
-          ...(taxRateId ? { tax_rates: [taxRateId] } : {}),
-          metadata: {
-            type: "marketplace_settlement",
-            restaurantId: c.restaurantId,
-            monthStart: targetMonth.toISOString(),
-            ordersInMonth: String(orders),
-            settlementId: settlement.id,
-            preTaxCents: String(invoiced),
-            taxRatePct: String(tax.ratePct),
-            taxLabel: tax.label,
+        await stripe.invoiceItems.create(
+          {
+            customer: c.restaurant.stripeCustomerId,
+            amount: invoiced, // cents, pre-tax
+            currency: PLATFORM_CURRENCY,
+            description: `Fee Free Marketplace — ${orders} order${orders === 1 ? "" : "s"} (${monthLabel(targetMonth)})`,
+            ...(taxRateId ? { tax_rates: [taxRateId] } : {}),
+            metadata: {
+              type: "marketplace_settlement",
+              restaurantId: c.restaurantId,
+              monthStart: targetMonth.toISOString(),
+              ordersInMonth: String(orders),
+              settlementId: settlement.id,
+              preTaxCents: String(invoiced),
+              taxRatePct: String(tax.ratePct),
+              taxLabel: tax.label,
+            },
           },
-        });
+          { idempotencyKey: `${idemPrefix}-item` },
+        );
         // Step 2: create + finalize the invoice. auto_advance=true tells
         // Stripe to attempt collection immediately (using the customer's
         // default payment method if set).
-        const invoice = await stripe.invoices.create({
-          customer: c.restaurant.stripeCustomerId,
-          auto_advance: true,
-          collection_method: "charge_automatically",
-          metadata: {
-            type: "marketplace_settlement",
-            restaurantId: c.restaurantId,
-            monthStart: targetMonth.toISOString(),
-            settlementId: settlement.id,
+        const invoice = await stripe.invoices.create(
+          {
+            customer: c.restaurant.stripeCustomerId,
+            auto_advance: true,
+            collection_method: "charge_automatically",
+            metadata: {
+              type: "marketplace_settlement",
+              restaurantId: c.restaurantId,
+              monthStart: targetMonth.toISOString(),
+              settlementId: settlement.id,
+            },
           },
-        });
+          { idempotencyKey: `${idemPrefix}-invoice` },
+        );
         invoiceId = invoice.id;
       } catch (e: any) {
         failureReason = e?.message ?? "Stripe invoice creation failed";

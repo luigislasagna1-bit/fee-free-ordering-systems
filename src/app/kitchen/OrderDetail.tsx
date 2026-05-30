@@ -8,6 +8,7 @@ import {
 import { formatCurrency } from "@/lib/utils";
 import toast from "react-hot-toast";
 import type { T, Order } from "./kitchen-types";
+import { paymentStatusLabel } from "./kitchen-types";
 import { useTranslations } from "next-intl";
 import { RejectOrderModal } from "./RejectOrderModal";
 
@@ -309,13 +310,21 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                 {order.paymentMethod === "card" ? tc("payWithCard") : order.paymentMethod === "cash" ? tc("payInCashPickup") : order.paymentMethod}
               </Row>
               <div className="flex items-center gap-2">
-                <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
-                  order.paymentStatus === "paid" ? "bg-green-500/20 text-green-600" :
-                  order.paymentStatus === "refunded" ? "bg-blue-500/20 text-blue-600" :
-                  "bg-yellow-500/20 text-yellow-700"
-                }`}>
-                  {order.paymentStatus?.toUpperCase() ?? "PENDING"}
-                </span>
+                {(() => {
+                  const ps = paymentStatusLabel(order.paymentStatus);
+                  const toneClass = {
+                    green:  "bg-green-500/20 text-green-600",
+                    blue:   "bg-blue-500/20 text-blue-600",
+                    yellow: "bg-yellow-500/20 text-yellow-700",
+                    red:    "bg-red-500/20 text-red-600",
+                    gray:   "bg-gray-300/30 text-gray-700",
+                  }[ps.tone];
+                  return (
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${toneClass}`}>
+                      {ps.label}
+                    </span>
+                  );
+                })()}
                 {order.refundStatus && (
                   <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
                     order.refundStatus === "refunded" ? "bg-blue-500/20 text-blue-600" :

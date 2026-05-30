@@ -1,3 +1,27 @@
+/**
+ * Friendly label + Tailwind tone tuple for a paymentStatus value.
+ * Centralised so admin / kitchen / status surfaces all render the new
+ * 3DS / SCA states the same way (audit 2026-05-30 #78). Unknown values
+ * pass through uppercased with a neutral yellow tone so we don't hide
+ * any future Stripe-added states behind a generic label.
+ */
+export function paymentStatusLabel(status: string | null | undefined): {
+  label: string;
+  tone: "green" | "blue" | "yellow" | "red" | "gray";
+} {
+  switch (status) {
+    case "paid":             return { label: "PAID",                       tone: "green" };
+    case "authorized":       return { label: "AUTHORIZED",                 tone: "green" };
+    case "refunded":         return { label: "REFUNDED",                   tone: "blue" };
+    case "voided":           return { label: "VOIDED",                     tone: "gray" };
+    case "failed":           return { label: "FAILED",                     tone: "red" };
+    case "requires_action":  return { label: "AWAITING AUTHENTICATION",    tone: "yellow" };
+    case "processing":       return { label: "PROCESSING PAYMENT",         tone: "yellow" };
+    case "pending":          return { label: "PENDING",                    tone: "yellow" };
+    default:                 return { label: (status ?? "PENDING").toUpperCase(), tone: "yellow" };
+  }
+}
+
 export type Order = {
   id: string;
   orderNumber: string;

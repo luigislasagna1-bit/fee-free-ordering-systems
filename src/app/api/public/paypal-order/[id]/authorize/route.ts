@@ -19,7 +19,7 @@
 
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { authorizePaypalOrder } from "@/lib/paypal";
+import { authorizePaypalOrder, getPaypalAuthorizationStatus } from "@/lib/paypal";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 
 export async function POST(_req: Request, ctx: { params: Promise<{ id: string }> }) {
@@ -41,11 +41,45 @@ export async function POST(_req: Request, ctx: { params: Promise<{ id: string }>
     return NextResponse.json({ error: "PayPal order not created yet" }, { status: 400 });
   }
 
-  // Already authorized → idempotent success path. Customer hit refresh
-  // or the webhook landed first. Don't re-authorize (PayPal would
-  // 422); just acknowledge.
+  // Already authorized → potentially idempotent success path. Customer
+  // hit refresh or the webhook landed first.
+  //
+  // Audit 2026-05-30 #75: previously this just returned success without
+  // verifying the auth is still valid at PayPal. PayPal auths expire
+  // after 24h, so a stale record would silently claim success here and
+  // then fail at capture time when the kitchen accepts. Now we check
+  // the live status; only CREATED is treated as "still capturable."
+  // Anything else clears the stale ID so the re-auth path below runs.
   if (order.paypalAuthorizationId && order.paymentStatus === "authorized") {
-    return NextResponse.json({ ok: true, idempotent: true });
+    try {
+      const live = await getPaypalAuthorizationStatus({
+        restaurantId: order.restaurantId,
+        authorizationId: order.paypalAuthorizationId,
+      });
+      if (live.status === "CREATED") {
+        return NextResponse.json({ ok: true, idempotent: true });
+      }
+      // Stale — clear our record and fall through to fresh authorize.
+      // Don't change paymentStatus here; if the auth was captured it
+      // already became "paid" via webhook; if voided it'd be "voided".
+      console.warn(
+        `[paypal authorize] order ${order.id} had stored auth ${order.paypalAuthorizationId} with status ${live.status}; re-authorizing.`,
+      );
+      await prisma.order.update({
+        where: { id: order.id },
+        data: { paypalAuthorizationId: null },
+      });
+    } catch (statusErr) {
+      // PayPal lookup failed (network blip, key rotation). Don't
+      // assume worst case — return the idempotent success we'd have
+      // returned without the check. The capture path will catch
+      // genuine expiry with a clearer error.
+      console.warn(
+        `[paypal authorize] could not verify stored auth status for order ${order.id}; treating as idempotent.`,
+        statusErr instanceof Error ? statusErr.message : statusErr,
+      );
+      return NextResponse.json({ ok: true, idempotent: true });
+    }
   }
 
   try {

@@ -296,6 +296,31 @@ export async function capturePaypalAuthorization(params: {
   return { captureId: res.id, status: res.status };
 }
 
+/**
+ * Read the current status of a PayPal authorization. Used by
+ * /api/public/paypal-order/[id]/authorize to verify a previously-
+ * recorded authorizationId is still valid before short-circuiting to
+ * "idempotent success." Without this check, an authorization that
+ * expired (24h window) or was already captured / voided silently makes
+ * the endpoint claim success — then capture fails 25 hours later when
+ * the kitchen finally clicks Accept.
+ *
+ * PayPal authorization statuses: CREATED | CAPTURED | DENIED |
+ * EXPIRED | PARTIALLY_CAPTURED | VOIDED | PENDING.
+ * Only CREATED means "still capturable."
+ */
+export async function getPaypalAuthorizationStatus(params: {
+  restaurantId: string;
+  authorizationId: string;
+}): Promise<{ status: string }> {
+  const res = await paypalFetch<{ status: string }>(
+    params.restaurantId,
+    `/v2/payments/authorizations/${params.authorizationId}`,
+    { method: "GET" },
+  );
+  return { status: res.status };
+}
+
 /** Void an authorization. Released funds — no money moved. Idempotent. */
 export async function voidPaypalAuthorization(params: {
   restaurantId: string;
