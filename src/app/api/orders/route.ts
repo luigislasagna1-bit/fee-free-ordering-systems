@@ -487,9 +487,24 @@ export async function POST(req: NextRequest) {
       // Bundle line items (menuItemId === null) are EXCLUDED from the
       // promo engine — their price is already the discounted bundle
       // total and applying further per-item promos would double-dip.
+      //
+      // categoryId is critical: BOGO / Buy-N-Get-Free / Meal Bundle /
+      // Free Item / Free Dish promos commonly target whole CATEGORIES
+      // (no specific itemIds) via `groups[].categoryIds`. Without
+      // categoryId here, `itemsMatchingGroup()` can't match any cart
+      // item against a category-only group → the promo silently
+      // returns 0 and disappears from `appliedPromos`.
+      // Luigi bug 2026-05-30: BOGO targeting Beverages didn't fire on
+      // a 22-beverage cart because categoryId wasn't being threaded.
       items: validatedItems
         .filter((i) => i.menuItemId !== null)
-        .map((i) => ({ menuItemId: i.menuItemId as string, price: i.price, quantity: i.quantity, subtotal: i.subtotal })),
+        .map((i) => ({
+          menuItemId: i.menuItemId as string,
+          categoryId: menuItemMap.get(i.menuItemId as string)?.categoryId ?? undefined,
+          price: i.price,
+          quantity: i.quantity,
+          subtotal: i.subtotal,
+        })),
       paymentMethod,
       // Phase 2a: the Delivery Area restriction needs this. Undefined
       // for pickup/dine-in (the engine short-circuits zone-restricted
