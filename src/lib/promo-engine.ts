@@ -335,21 +335,49 @@ function calcFreeDelivery(_promo: PromoInput, _ctx: ApplyContext): number {
   return 0; // handled via hasFreeDelivery flag
 }
 
+/** Expand cart items into a flat list of per-unit prices. A cart item
+ *  with quantity 3 becomes 3 entries at the same per-unit price. Used
+ *  by BOGO / Buy-N-Get-Free so we can discount the correct NUMBER of
+ *  units when the customer has multiple qualifying pairs. */
+function expandToUnits(items: CartItem[]): number[] {
+  const units: number[] = [];
+  for (const it of items) {
+    for (let i = 0; i < it.quantity; i++) units.push(it.price);
+  }
+  return units;
+}
+
+/** Pick the N units to discount from a pool, given a strategy. The
+ *  pool is expanded by quantity so a single line item with qty=3
+ *  contributes 3 discountable units. Returns the total discount $. */
+function discountNUnits(
+  pool: CartItem[],
+  count: number,
+  strategy: string,
+  cheapestPct: number,
+  mostExpensivePct: number,
+): number {
+  if (count <= 0 || !pool.length) return 0;
+  const units = expandToUnits(pool);
+  if (!units.length) return 0;
+  const isMostExpensive = strategy === "most_expensive";
+  units.sort((a, b) => (isMostExpensive ? b - a : a - b));
+  const pct = isMostExpensive ? mostExpensivePct : cheapestPct;
+  const take = Math.min(count, units.length);
+  let sum = 0;
+  for (let i = 0; i < take; i++) sum += units[i] * (pct / 100);
+  return parseFloat(sum.toFixed(2));
+}
+
+/** @deprecated single-unit helper. Retained for backwards compatibility
+ *  with callers that haven't been migrated to {@link discountNUnits}. */
 function applyGroupDiscount(
   freePool: CartItem[],
   strategy: string,
   cheapestPct: number,
   mostExpensivePct: number
 ): number {
-  if (!freePool.length) return 0;
-  const sorted = [...freePool].sort((a, b) => a.price - b.price);
-  if (strategy === "most_expensive") {
-    const item = sorted[sorted.length - 1];
-    return parseFloat((item.price * (mostExpensivePct / 100)).toFixed(2));
-  }
-  // default = cheapest
-  const item = sorted[0];
-  return parseFloat((item.price * (cheapestPct / 100)).toFixed(2));
+  return discountNUnits(freePool, 1, strategy, cheapestPct, mostExpensivePct);
 }
 
 function calcBogo(promo: PromoInput, ctx: ApplyContext): number {
@@ -362,6 +390,7 @@ function calcBogo(promo: PromoInput, ctx: ApplyContext): number {
   if (!paidItems.length) return 0;
   const freeItems = itemsMatchingGroup(freeGroup, ctx.items);
   if (!freeItems.length) return 0;
+
   // BOGO requires at least 2 qualifying items in the cart — 1 paid
   // + 1 free. When the paid and free groups overlap (same items in
   // both), a SINGLE cart item satisfies both groups and the engine
@@ -369,18 +398,39 @@ function calcBogo(promo: PromoInput, ctx: ApplyContext): number {
   // quantities and bail out when the total is < 2.
   // Luigi bug 2026-05-29: BOGO Pizza/Pasta with overlapping drink/salad
   // groups fired on a single drink because both groups matched it.
-  const qualifyingIds = new Set<string>();
-  for (const it of itemsMatchingGroup(paidGroup, ctx.items)) qualifyingIds.add(it.menuItemId);
-  for (const it of itemsMatchingGroup(freeGroup, ctx.items)) qualifyingIds.add(it.menuItemId);
-  const totalQualifyingQty = ctx.items
-    .filter((i) => qualifyingIds.has(i.menuItemId))
-    .reduce((s, i) => s + i.quantity, 0);
-  if (totalQualifyingQty < 2) return 0;
-  return applyGroupDiscount(
+  const paidIds = new Set(paidItems.map(i => i.menuItemId));
+  const freeIds = new Set(freeItems.map(i => i.menuItemId));
+  const hasOverlap = [...paidIds].some(id => freeIds.has(id));
+
+  // Compute number of BOGO pairs the cart unlocks.
+  // Luigi bug 2026-05-30: BOGO with 4 qualifying items only discounted
+  // ONE item — should discount TWO (one per pair).
+  //
+  //   • Overlapping groups (e.g. "BOGO on any pizza"): a single item
+  //     is both paid AND free. Pairs = floor(totalQty / 2).
+  //   • Distinct groups (e.g. "Buy pizza, get soda free"): each pair
+  //     needs 1 paid + 1 free, so pairs = min(paidQty, freeQty).
+  let pairs: number;
+  if (hasOverlap) {
+    const qualifyingIds = new Set<string>([...paidIds, ...freeIds]);
+    const totalQualifyingQty = ctx.items
+      .filter((i) => qualifyingIds.has(i.menuItemId))
+      .reduce((s, i) => s + i.quantity, 0);
+    if (totalQualifyingQty < 2) return 0;
+    pairs = Math.floor(totalQualifyingQty / 2);
+  } else {
+    const paidQty = paidItems.reduce((s, i) => s + i.quantity, 0);
+    const freeQty = freeItems.reduce((s, i) => s + i.quantity, 0);
+    pairs = Math.min(paidQty, freeQty);
+    if (pairs < 1) return 0;
+  }
+
+  return discountNUnits(
     freeItems,
+    pairs,
     rules.discountStrategy ?? "cheapest",
     rules.cheapestDiscount ?? 100,
-    rules.mostExpensiveDiscount ?? 100
+    rules.mostExpensiveDiscount ?? 100,
   );
 }
 
@@ -390,17 +440,30 @@ function calcBuyNGetFree(promo: PromoInput, ctx: ApplyContext): number {
   const paidGroups = groups.filter(g => g.role === "paid" || g.role === "required");
   const freeGroup = groups.find(g => g.role === "free");
   if (!freeGroup) return 0;
-  // Check each paid group has at least 1 item
+  // Each paid group has a minCount (defaults to 1). The promo unlocks
+  // floor(actualQty / minCount) "sets" per paid group; the customer
+  // gets ONE free item per FULL set across all paid groups (i.e. the
+  // bottleneck group caps the multiplier).
+  let multiplier = Infinity;
   for (const pg of paidGroups) {
-    if (groupTotalQty(pg, ctx.items) < 1) return 0;
+    const need = pg.minCount ?? 1;
+    if (need < 1) continue;
+    const have = groupTotalQty(pg, ctx.items);
+    if (have < need) return 0;
+    multiplier = Math.min(multiplier, Math.floor(have / need));
+  }
+  if (!Number.isFinite(multiplier) || multiplier < 1) {
+    // No paid-group gating at all — fall back to single application.
+    multiplier = 1;
   }
   const freeItems = itemsMatchingGroup(freeGroup, ctx.items);
   if (!freeItems.length) return 0;
-  return applyGroupDiscount(
+  return discountNUnits(
     freeItems,
+    multiplier,
     rules.discountStrategy ?? "cheapest",
     rules.cheapestDiscount ?? 100,
-    rules.mostExpensiveDiscount ?? 0
+    rules.mostExpensiveDiscount ?? 0,
   );
 }
 
