@@ -1491,51 +1491,33 @@ export function OrderingPageClient({
                     }
                   }}
                   className="flex-shrink-0 w-72 h-36 rounded-xl text-white shadow-sm relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
+                  // CSS background-image stack (Luigi 2026-05-29) — mobile
+                  // browsers can show a small broken-image icon for <img>
+                  // tags during the window between load failure and the
+                  // React onError handler firing. Using background-image
+                  // sidesteps that entirely: if the URL is unreachable, the
+                  // colored gradient just shows through with no artifact.
+                  // Layered order (top → bottom):
+                  //   1. dark gradient overlay for text legibility
+                  //   2. owner-uploaded image (or stock default)
+                  //   3. theme primary-color gradient as the ultimate fallback
+                  style={
+                    hasImage
+                      ? {
+                          backgroundImage: [
+                            "linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.55) 100%)",
+                            `url("${resolvedImageUrl}")`,
+                            `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)`,
+                          ].join(", "),
+                          backgroundSize: "cover, cover, cover",
+                          backgroundPosition: "center, center, center",
+                          backgroundRepeat: "no-repeat, no-repeat, no-repeat",
+                        }
+                      : {
+                          background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)`,
+                        }
+                  }
                 >
-                  {/* Background image (always set — owner-provided or the
-                      stock fallback) absolutely positioned behind the
-                      dark overlay so it covers the full card. */}
-                  {hasImage && (
-                    <img
-                      src={resolvedImageUrl}
-                      alt=""
-                      className="absolute inset-0 w-full h-full object-cover"
-                      // Eager load — promo banners are above-the-fold
-                      // on every visit. Lazy-loading on mobile Edge/Safari
-                      // sometimes leaves a broken-image placeholder when
-                      // the IntersectionObserver fires too late.
-                      loading="eager"
-                      decoding="async"
-                      referrerPolicy="no-referrer"
-                      onError={(e) => {
-                        // Image URL is broken or unreachable (most often
-                        // happens on mobile when the upload path uses a
-                        // CDN the device can't reach). Swap to the local
-                        // stock default so the customer never sees the
-                        // small blue question mark.
-                        const target = e.currentTarget;
-                        if (target.dataset.fellBack === "1") return;
-                        target.dataset.fellBack = "1";
-                        target.src = PROMO_DEFAULT_FALLBACK_URL;
-                      }}
-                    />
-                  )}
-                  {/* Solid colored background when no image, OR a dark
-                      gradient overlay when there IS an image — keeps the
-                      headline / badges legible against any photo. */}
-                  <div
-                    className="absolute inset-0"
-                    style={
-                      hasImage
-                        ? {
-                            background:
-                              "linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.55) 100%)",
-                          }
-                        : {
-                            background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)`,
-                          }
-                    }
-                  />
                   {/* Foreground content */}
                   <div className="relative h-full p-4 flex flex-col">
                     <div className="text-[10px] uppercase tracking-wider font-bold opacity-80 mb-1">
