@@ -993,7 +993,13 @@ export function OrderingPageClient({
     sessionHash: typeof window !== "undefined"
       ? (window.sessionStorage.getItem("ff_session_hash") || undefined)
       : undefined,
-    couponId, couponDiscount, subtotal, taxAmount, deliveryFee, tip: tipAmount, total,
+    couponId, couponDiscount,
+    // Typed coupon code (Phase 2 marketing suite) — server uses this to
+    // match Promotion.couponCode in the engine's couponPromos branch.
+    // Required for autoApply=false promos to fire on the server-side
+    // recompute. Empty → engine ignores.
+    couponCode: couponCode.trim() || undefined,
+    subtotal, taxAmount, deliveryFee, tip: tipAmount, total,
     items: cart.map(ci => ({
       menuItemId: ci.menuItem.id,
       variantId: ci.variant?.id ?? null,

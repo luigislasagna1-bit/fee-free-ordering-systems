@@ -220,13 +220,79 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
             </div>
           </Section>
 
+          {/* Promo highlight box — kitchen needs to see EXACTLY which
+              promos fired on this order so they understand the discount
+              math + can flag any abuse. Rendered as a labelled emerald
+              block above the totals. Parses Order.appliedPromos JSON
+              snapshot (Phase 2 marketing suite). Free-delivery entries
+              carry the saved delivery fee as their `discount`. */}
+          {(() => {
+            const raw = (order as any).appliedPromos as string | null | undefined;
+            if (!raw) return null;
+            try {
+              const promos = JSON.parse(raw) as Array<{
+                name: string; type: string; discount: number; couponCode?: string;
+              }>;
+              if (!Array.isArray(promos) || promos.length === 0) return null;
+              return (
+                <Section title="🎉 Promos applied" t={t}>
+                  <div className="rounded-lg border-2 border-emerald-300 bg-emerald-50 p-2 space-y-1">
+                    {promos.map((p, i) => (
+                      <div key={i} className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-1.5 text-emerald-700 font-medium truncate">
+                          <span aria-hidden>✓</span>
+                          <span className="truncate uppercase">{p.name}</span>
+                          {p.couponCode && (
+                            <span className="font-mono bg-white border border-emerald-300 text-emerald-700 rounded px-1.5 py-0.5 ml-1">
+                              {p.couponCode}
+                            </span>
+                          )}
+                        </div>
+                        <div className="font-bold text-emerald-800 whitespace-nowrap ml-2">
+                          {p.discount > 0 ? `−${formatCurrency(p.discount)}` : "FREE"}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Section>
+              );
+            } catch { return null; }
+          })()}
+
           {/* Totals */}
           <Section title={tCommon("total")} t={t}>
             <div className="space-y-1.5">
               <TotalRow label={tCommon("subtotal")} value={formatCurrency(order.subtotal)} t={t} />
               {(order.couponDiscount ?? 0) > 0 && <TotalRow label={tc("discount")} value={`-${formatCurrency(order.couponDiscount!)}`} t={t} />}
               {(order.promoDiscount ?? 0) > 0 && <TotalRow label={tc("discount")} value={`-${formatCurrency(order.promoDiscount!)}`} t={t} />}
-              {order.deliveryFee > 0 && <TotalRow label={tc("delivery")} value={formatCurrency(order.deliveryFee)} t={t} />}
+              {/* Delivery line: when free-delivery promo fired (parsed
+                  above), the original fee is in the snapshot. Show it
+                  inline as "FREE (was $X)" mirroring the customer
+                  receipt — kitchen needs to know what was waived. */}
+              {(() => {
+                const raw = (order as any).appliedPromos as string | null | undefined;
+                let savedDeliveryFee = 0;
+                if (raw) {
+                  try {
+                    const promos = JSON.parse(raw) as Array<{ type: string; discount: number }>;
+                    const fd = Array.isArray(promos) ? promos.find((p) => p.type === "free_delivery") : null;
+                    if (fd && fd.discount > 0) savedDeliveryFee = fd.discount;
+                  } catch { /* ignore */ }
+                }
+                if (savedDeliveryFee > 0) {
+                  return (
+                    <TotalRow
+                      label={tc("delivery")}
+                      value={`FREE (was ${formatCurrency(savedDeliveryFee)})`}
+                      t={t}
+                    />
+                  );
+                }
+                if (order.deliveryFee > 0) {
+                  return <TotalRow label={tc("delivery")} value={formatCurrency(order.deliveryFee)} t={t} />;
+                }
+                return null;
+              })()}
               <TotalRow label={tc("tax")} value={formatCurrency(order.taxAmount)} t={t} />
               {(order.tip ?? 0) > 0 && <TotalRow label={tc("tip")} value={formatCurrency(order.tip!)} t={t} />}
               <div className={`flex justify-between font-bold text-sm pt-1.5 border-t ${t.border} ${t.text}`}>

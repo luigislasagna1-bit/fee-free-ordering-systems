@@ -33,7 +33,13 @@ export async function POST(req: NextRequest) {
     const {
       restaurantSlug, type, customerName, customerEmail, customerPhone,
       deliveryAddress, deliveryCity, deliveryZip, notes, paymentMethod,
-      scheduledFor, couponId, items, tip: clientTip,
+      scheduledFor, couponId,
+      // Typed coupon code from the cart's Apply field — fed into the
+      // engine's couponPromos branch so autoApply=false promos with a
+      // Promotion.couponCode match can fire on the server recompute.
+      // Empty/undefined → engine ignores. Sanitised below.
+      couponCode: bodyCouponCode,
+      items, tip: clientTip,
       // Marketplace attribution: the customer was redirected here from
       // /marketplace/[slug] (which appends ?from=marketplace). The client
       // forwards this in the body so we can stamp the order as having
@@ -467,6 +473,11 @@ export async function POST(req: NextRequest) {
     // see the deliveryZoneId and can fire correctly. Server-authoritative —
     // the client's hasFreeDelivery flag from /api/public/apply-promos is not
     // trusted; we recompute here with the same engine + same restrictions.
+    // Normalise typed coupon code — uppercase + cap length so the engine
+    // match is stable regardless of how the customer entered it.
+    const normalizedCouponCode = typeof bodyCouponCode === "string"
+      ? bodyCouponCode.trim().toUpperCase().slice(0, 50) || undefined
+      : undefined;
     const promoResults = applyPromotions(activePromos as any, {
       orderType: type,
       isNewCustomer: isNewCustomerForPromo,
@@ -484,6 +495,9 @@ export async function POST(req: NextRequest) {
       // for pickup/dine-in (the engine short-circuits zone-restricted
       // promos via the orderType check).
       deliveryZoneId: resolvedZoneId ?? undefined,
+      // Customer-typed coupon code — engine matches it against
+      // Promotion.couponCode for autoApply=false promos.
+      couponCode: normalizedCouponCode,
     });
     const serverPromoDiscount = Math.round(totalPromoDiscount(promoResults, serverSubtotal) * 100) / 100;
     const hasFreeDelivery = promoResults.some((r: any) => r.type === "free_delivery");
