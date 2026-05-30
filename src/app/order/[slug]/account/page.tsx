@@ -14,10 +14,12 @@
 import prisma from "@/lib/db";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ChevronLeft, Tag, ShoppingBag, LogOut } from "lucide-react";
+import { ChevronLeft, Tag, ShoppingBag, LogOut, Repeat } from "lucide-react";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
 import { formatCurrency } from "@/lib/utils";
 import { LogoutButton } from "./LogoutButton";
+import { ProfileEditor } from "./ProfileEditor";
+import { OrderAgainButton } from "./OrderAgainButton";
 
 export const dynamic = "force-dynamic";
 
@@ -63,6 +65,29 @@ export default async function RestaurantAccountDashboard({
     }),
   ]);
 
+  // "Order again" rail data — the 3 most recent SUCCESSFUL orders
+  // (status NOT IN cancelled/rejected) with their items so we can
+  // preview the basket. One-click reorders use the existing
+  // ?reorder=<id> handshake (see OrderingPageClient).
+  const orderAgainBaskets = await prisma.order.findMany({
+    where: {
+      customerId: me.id,
+      status: { notIn: ["cancelled", "rejected"] },
+    },
+    orderBy: { createdAt: "desc" },
+    take: 3,
+    select: {
+      id: true,
+      orderNumber: true,
+      total: true,
+      createdAt: true,
+      items: {
+        select: { name: true, quantity: true },
+        take: 4, // preview chip count cap
+      },
+    },
+  });
+
   const usableCoupons = coupons.filter((c) => c.maxUses === null || c.usedCount < c.maxUses);
 
   return (
@@ -78,12 +103,19 @@ export default async function RestaurantAccountDashboard({
 
         <div className="mt-4 bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-start justify-between gap-3">
-            <div>
+            <div className="min-w-0 flex-1">
               <h1 className="text-xl font-bold text-gray-900">Hi, {me.name}</h1>
               <p className="text-sm text-gray-500 mt-0.5">
                 {me.email ?? "No email on file"}
                 {me.phone && <> · {me.phone}</>}
               </p>
+              <div className="mt-2">
+                <ProfileEditor
+                  initialName={me.name}
+                  initialEmail={me.email ?? null}
+                  initialPhone={me.phone ?? null}
+                />
+              </div>
             </div>
             <LogoutButton slug={slug} />
           </div>
@@ -132,6 +164,47 @@ export default async function RestaurantAccountDashboard({
             </ul>
           )}
         </div>
+
+        {/* Order again rail — top 3 successful past baskets with a
+            one-click reorder. Toast/Skip/Grubhub/DoorDash all promote
+            this above the order history list because repeat customers
+            account for most volume. */}
+        {orderAgainBaskets.length > 0 && (
+          <div className="mt-6">
+            <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+              <Repeat className="w-4 h-4 text-emerald-500" />
+              Order again
+            </h2>
+            <div className="grid sm:grid-cols-3 gap-3">
+              {orderAgainBaskets.map((o) => {
+                const itemNames = o.items.map((i) => `${i.quantity}× ${i.name}`).join(" · ");
+                return (
+                  <div
+                    key={o.id}
+                    className="bg-white rounded-xl border border-gray-200 p-4 flex flex-col gap-2"
+                  >
+                    <div className="text-xs uppercase tracking-wide text-gray-400 font-semibold">
+                      {new Date(o.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                    </div>
+                    <div className="text-xs text-gray-700 line-clamp-2 min-h-[2.5em]">
+                      {itemNames || "Order"}
+                    </div>
+                    <div className="flex items-center justify-between mt-1">
+                      <div className="text-sm font-semibold text-gray-900">
+                        {formatCurrency(o.total)}
+                      </div>
+                      <OrderAgainButton
+                        slug={slug}
+                        orderId={o.id}
+                        className="text-xs font-semibold text-emerald-600 hover:text-emerald-700"
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Order history */}
         <div className="mt-6">

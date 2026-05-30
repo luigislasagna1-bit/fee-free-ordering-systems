@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { formatCurrency } from "@/lib/utils";
 import {
   CheckCircle, Clock, ChefHat, Package, XCircle, Loader2,
-  Phone, Mail, MapPin, Repeat, Printer, HelpCircle,
+  Phone, Mail, MapPin, Repeat, Printer, HelpCircle, X,
 } from "lucide-react";
 import Link from "next/link";
 import { use } from "react";
@@ -41,6 +41,20 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   const [loading, setLoading] = useState(true);
   const [reordering, setReordering] = useState(false);
   const [reorderMsg, setReorderMsg] = useState<string | null>(null);
+  // Customer cancel state
+  const [cancelling, setCancelling] = useState(false);
+  const [cancelError, setCancelError] = useState<string | null>(null);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+
+  // Live ETA countdown — ticks every second so the customer sees
+  // "Ready in 7 min" → "6 min" → … → "Ready now!" without refreshing.
+  // Toast/Uber/DoorDash all do this; static "Estimated ready at 6:42"
+  // makes the page feel frozen by comparison.
+  const [nowTick, setNowTick] = useState<number>(Date.now());
+  useEffect(() => {
+    const t = setInterval(() => setNowTick(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
 
   const [fetchError, setFetchError] = useState<string | null>(null);
   const fetchOrder = async () => {
@@ -99,6 +113,31 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
     } catch { /* private mode — ignore, query param still works */ }
     router.push(`/order/${slug}?reorder=${encodeURIComponent(orderId)}`);
   }, [router, slug, orderId]);
+
+  // Customer cancel — only enabled when:
+  //   • order is pending (not yet accepted by kitchen)
+  //   • createdAt is within the 10-minute self-cancel window
+  // The server enforces both; the button is also gated on the client
+  // so customers don't see it grayed out unhelpfully past the window.
+  const handleCancel = useCallback(async () => {
+    setCancelling(true);
+    setCancelError(null);
+    try {
+      const res = await fetch(`/api/public/orders/${orderId}/cancel`, { method: "POST" });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || `Cancel failed (${res.status})`);
+      }
+      // Re-fetch so the cancelled state renders immediately.
+      await fetchOrder();
+      setShowCancelConfirm(false);
+    } catch (e) {
+      setCancelError(e instanceof Error ? e.message : String(e));
+    } finally {
+      setCancelling(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderId]);
 
   const handlePrint = useCallback(() => {
     if (typeof window !== "undefined") window.print();
@@ -244,13 +283,34 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 {statusSteps.map((step, idx) => {
                   const done = idx < currentStep;
                   const active = idx === currentStep;
+                  // Timestamp for this step — map each step.key to the
+                  // matching Order.*At column so the customer can see
+                  // exactly when each thing happened. Pending uses
+                  // createdAt. Industry-standard pattern (Toast / Uber /
+                  // DoorDash all show timestamps).
+                  const stepTs: Date | null = (() => {
+                    if (step.key === "pending" && order.createdAt) return new Date(order.createdAt);
+                    if (step.key === "accepted" && order.acceptedAt) return new Date(order.acceptedAt);
+                    if (step.key === "completed" && order.completedAt) return new Date(order.completedAt);
+                    return null;
+                  })();
+                  const tsLabel = stepTs && (done || active)
+                    ? stepTs.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
+                    : null;
                   return (
                     <div key={step.key} className="flex items-start gap-4">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${done ? "bg-green-500" : active ? "bg-emerald-500" : "bg-gray-100"}`}>
                         <step.icon className={`w-5 h-5 ${done || active ? "text-white" : "text-gray-400"}`} />
                       </div>
                       <div className="flex-1 pt-1">
-                        <div className={`font-semibold ${active ? "text-emerald-600" : done ? "text-green-600" : "text-gray-400"}`}>{step.label}</div>
+                        <div className="flex items-center justify-between gap-2">
+                          <div className={`font-semibold ${active ? "text-emerald-600" : done ? "text-green-600" : "text-gray-400"}`}>{step.label}</div>
+                          {tsLabel && (
+                            <div className={`text-xs flex-shrink-0 tabular-nums ${active ? "text-emerald-600" : "text-gray-400"}`}>
+                              {tsLabel}
+                            </div>
+                          )}
+                        </div>
                         {(active || done) && <div className={`text-sm mt-0.5 ${active ? "text-gray-600" : "text-gray-400"}`}>{step.desc}</div>}
                       </div>
                       {done && <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />}
@@ -259,14 +319,33 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 })}
               </div>
 
-              {order.estimatedReady && order.status === "accepted" && (
-                <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
-                  <div className="text-sm text-gray-600">Estimated ready at</div>
-                  <div className="text-xl font-bold text-emerald-600">
-                    {new Date(order.estimatedReady).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
+              {/* Live ETA countdown — ticks once per second. Shows
+                  "Ready in 12 min" → "Ready in 6 min" → "Ready in <1 min"
+                  → "Ready now — pickup time!" once estimatedReady passes.
+                  Only fires when the order has been accepted (so the
+                  kitchen actually knows when it'll be ready). */}
+              {order.estimatedReady && order.status === "accepted" && (() => {
+                const target = new Date(order.estimatedReady).getTime();
+                const msLeft = target - nowTick;
+                const minLeft = Math.round(msLeft / 60000);
+                let line: string;
+                if (msLeft <= -60_000) {
+                  line = `Ready now — ${order.type === "delivery" ? "on the way" : "pickup time"}!`;
+                } else if (msLeft <= 60_000) {
+                  line = "Ready in less than 1 min";
+                } else if (minLeft === 1) {
+                  line = "Ready in ~1 min";
+                } else {
+                  line = `Ready in ~${minLeft} min`;
+                }
+                const targetLabel = new Date(target).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+                return (
+                  <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
+                    <div className="text-2xl font-bold text-emerald-700 tabular-nums">{line}</div>
+                    <div className="text-xs text-emerald-700/70 mt-0.5">Estimated {order.type === "delivery" ? "arrival" : "ready"} at {targetLabel}</div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
             </div>
           )}
 
@@ -437,6 +516,27 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
             <div className="no-print text-xs text-center text-gray-500 -mt-3 mb-6">{reorderMsg}</div>
           )}
 
+          {/* ── Customer cancel — only while pending AND within window.
+              Server enforces the same rules; this just hides the
+              button when there's nothing useful to click. */}
+          {(() => {
+            if (order.status !== "pending") return null;
+            const ageMin = (nowTick - new Date(order.createdAt).getTime()) / 60_000;
+            const CANCEL_WINDOW_MIN = 10;
+            if (ageMin > CANCEL_WINDOW_MIN) return null;
+            const minLeft = Math.max(0, Math.ceil(CANCEL_WINDOW_MIN - ageMin));
+            return (
+              <div className="no-print mb-6">
+                <button
+                  onClick={() => setShowCancelConfirm(true)}
+                  className="w-full flex items-center justify-center gap-2 bg-white border border-red-200 text-red-600 font-semibold py-3 rounded-xl hover:bg-red-50 transition text-sm"
+                >
+                  <X className="w-4 h-4" /> Cancel order ({minLeft} min left)
+                </button>
+              </div>
+            );
+          })()}
+
           {/* ── Need help? (contact restaurant + marketplace) ──────── */}
           <div className="no-print bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">
             <div className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
@@ -500,6 +600,41 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
           </div>
         </div>
       </div>
+
+      {/* ── Cancel confirmation modal ────────────────────────────── */}
+      {showCancelConfirm && (
+        <div className="no-print fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6">
+            <h3 className="text-lg font-bold text-gray-900">Cancel this order?</h3>
+            <p className="text-sm text-gray-600 mt-2">
+              This will release the hold on your card and tell {order.restaurant.name}
+              {" "}not to prepare it. You can always place a new order if you change your mind.
+            </p>
+            {cancelError && (
+              <div className="mt-3 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-xs text-red-700">
+                {cancelError}
+              </div>
+            )}
+            <div className="mt-5 flex gap-3">
+              <button
+                onClick={() => { setShowCancelConfirm(false); setCancelError(null); }}
+                className="flex-1 bg-white border border-gray-300 text-gray-700 font-semibold py-2.5 rounded-lg hover:bg-gray-50 text-sm"
+                disabled={cancelling}
+              >
+                Keep order
+              </button>
+              <button
+                onClick={handleCancel}
+                disabled={cancelling}
+                className="flex-1 flex items-center justify-center gap-2 bg-red-500 text-white font-semibold py-2.5 rounded-lg hover:bg-red-600 disabled:opacity-50 text-sm"
+              >
+                {cancelling && <Loader2 className="w-4 h-4 animate-spin" />}
+                {cancelling ? "Cancelling…" : "Yes, cancel"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
