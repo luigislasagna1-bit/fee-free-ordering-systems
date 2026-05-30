@@ -13,17 +13,36 @@ body {
 /* Kitchen Display — pending order flash.
    Pulses a thick left-edge bar + faint row-wide background tint so a brand
    new order is impossible to miss at a glance, even from across the
-   kitchen. Used by `rowNew` themes in src/app/kitchen/kitchen-types.ts. */
+   kitchen. Used by `rowNew` themes in src/app/kitchen/kitchen-types.ts.
+
+   Two intensities (Luigi feedback):
+     - kitchen-flash-new      → YELLOW pulse for fresh pending orders
+                                (no urgency-red yet, just attention-grabbing)
+     - kitchen-flash-urgent   → RED pulse for orders <30s from the 3-min
+                                accept window deadline */
 @keyframes kitchen-new-order-flash {
   0%, 100% {
     box-shadow: inset 6px 0 0 0 rgb(245 158 11 / 1); /* amber-500 */
     background-color: rgb(245 158 11 / 0.08);
   }
   50% {
-    box-shadow: inset 6px 0 0 0 rgb(239 68 68 / 1); /* red-500 */
-    background-color: rgb(239 68 68 / 0.18);
+    box-shadow: inset 6px 0 0 0 rgb(250 204 21 / 1); /* yellow-400 */
+    background-color: rgb(250 204 21 / 0.20);
   }
 }
 .kitchen-flash-new {
   animation: kitchen-new-order-flash 1s ease-in-out infinite;
+}
+@keyframes kitchen-new-order-flash-urgent {
+  0%, 100% {
+    box-shadow: inset 6px 0 0 0 rgb(220 38 38 / 1); /* red-600 */
+    background-color: rgb(239 68 68 / 0.12);
+  }
+  50% {
+    box-shadow: inset 6px 0 0 0 rgb(127 29 29 / 1); /* red-900 */
+    background-color: rgb(239 68 68 / 0.28);
+  }
+}
+.kitchen-flash-urgent {
+  animation: kitchen-new-order-flash-urgent 0.7s ease-in-out infinite;
 }

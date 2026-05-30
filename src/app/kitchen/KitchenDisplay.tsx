@@ -161,9 +161,21 @@ function OrderRow({ order, selected, onClick, t, now }: {
   // the row keeps pulsing on the left edge until staff accepts/rejects it.
   // We pile the flash class onto whatever theme row style is active so
   // selected-but-still-pending rows also flash.
+  //
+  // TWO intensities (Luigi feedback 2026-05-29):
+  //   - YELLOW pulse during the first 2:30 of the 3-min accept window —
+  //     attention-grabbing but not panic-inducing.
+  //   - RED pulse once the order has <30 seconds left before the deadline.
+  //     Matches the URGENT countdown badge so kitchen sees a unified
+  //     escalation cue.
   const isPending = order.status === "pending";
+  const msLeft = now
+    ? 3 * 60 * 1000 - (now - new Date(order.createdAt).getTime())
+    : Number.POSITIVE_INFINITY;
+  const isUrgent = isPending && msLeft <= 30 * 1000;
   const baseRowClass = selected ? t.rowSelected : isPending ? `${t.rowNew} cursor-pointer` : t.row;
-  const rowClass = isPending ? `${baseRowClass} kitchen-flash-new` : baseRowClass;
+  const flashClass = isUrgent ? "kitchen-flash-urgent" : "kitchen-flash-new";
+  const rowClass = isPending ? `${baseRowClass} ${flashClass}` : baseRowClass;
   const timeAgo = (() => {
     if (!now) return "";
     const diff = now - new Date(order.createdAt).getTime();
