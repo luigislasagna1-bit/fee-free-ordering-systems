@@ -183,7 +183,27 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
       `}</style>
 
       <div className="min-h-screen bg-gray-50 p-4">
-        <div className="max-w-lg mx-auto pt-10">
+        {/* Top breadcrumb — gives the customer a clear way back to
+            "All my orders" without using the browser back button.
+            Hidden in print. The destinations depend on context:
+              • viaMarketplace=true → marketplace account orders list
+              • else (per-restaurant) → per-restaurant account dashboard
+            Both pages redirect to login when no session is present,
+            so it's safe to render unconditionally. */}
+        <div className="no-print max-w-lg mx-auto pt-4">
+          <Link
+            href={
+              cameFromMarketplace
+                ? "/account/orders"
+                : `/order/${slug}/account`
+            }
+            className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 font-medium"
+          >
+            <span aria-hidden="true">←</span>
+            {cameFromMarketplace ? "All my orders" : `Back to my account`}
+          </Link>
+        </div>
+        <div className="max-w-lg mx-auto pt-4">
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-gray-900">{order.restaurant.name}</h1>
             <div className="text-gray-500 mt-1">Order #{order.orderNumber}</div>
