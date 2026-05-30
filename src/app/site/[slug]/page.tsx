@@ -330,8 +330,19 @@ export default async function HostedSitePage({
           opacity so it doesn't feel like a hard band when scrolled over
           the photo hero. */}
       {s.header.stickyNav && (
+        // Transparent-over-hero nav (Luigi 2026-05-30). The grey bar
+        // is gone — `bg-transparent` keeps the food photo behind the
+        // logo / links / CTA visible on first paint. A scroll-aware
+        // class swap (`scrolled:` is the tiny inline-script approach
+        // below) restores a dark backdrop once the customer scrolls
+        // past the hero so the white nav text stays readable on the
+        // white content sections. Tailwind doesn't ship a `scrolled:`
+        // variant; we use a CSS variable + class toggled by the
+        // inline-script at the bottom of this nav (no React state =
+        // works in this server component).
         <nav
-          className="sticky top-0 z-40 bg-black/85 backdrop-blur-sm border-b border-white/10"
+          id="ff-hosted-nav"
+          className="sticky top-0 z-40 transition-colors duration-200 border-b border-transparent ff-nav-transparent"
           aria-label="Site navigation"
         >
           <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
@@ -343,25 +354,28 @@ export default async function HostedSitePage({
                   alt={`${r.name} logo`}
                   width={44}
                   height={44}
-                  className="rounded-md object-contain bg-white/10 p-0.5 flex-shrink-0"
+                  className="rounded-md object-contain bg-white/10 p-0.5 flex-shrink-0 drop-shadow-md"
                 />
               ) : (
-                <span className="text-white font-bold truncate text-base sm:text-lg">{r.name}</span>
+                <span className="text-white font-bold truncate text-base sm:text-lg drop-shadow-md">{r.name}</span>
               )}
             </a>
-            {/* Middle: anchor links (hidden on mobile to save space) */}
+            {/* Middle: anchor links (hidden on mobile to save space).
+                drop-shadow keeps the white text readable over the photo
+                hero where there's no nav backdrop. */}
             <div className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="px-3 py-1.5 text-sm font-semibold uppercase tracking-wider text-white/80 hover:text-white hover:bg-white/10 rounded transition"
+                  className="px-3 py-1.5 text-sm font-semibold uppercase tracking-wider text-white hover:bg-white/15 rounded transition drop-shadow-md"
                 >
                   {link.label}
                 </a>
               ))}
             </div>
-            {/* Right: Order CTA (always visible, theme color) */}
+            {/* Right: Order CTA — keeps its own theme background so
+                it's visible regardless of nav backdrop. */}
             {primaryCta && (
               <Link
                 href={primaryCta.href}
@@ -372,6 +386,35 @@ export default async function HostedSitePage({
               </Link>
             )}
           </div>
+          {/* CSS + inline scroll listener — no React state needed.
+              Once the customer scrolls > 60px, swap the transparent
+              class for the dark-translucent one so the nav stays
+              readable over the white content below the hero. */}
+          <style jsx global>{`
+            #ff-hosted-nav.ff-nav-transparent { background-color: transparent; }
+            #ff-hosted-nav.ff-nav-scrolled    { background-color: rgba(0,0,0,0.85); border-bottom-color: rgba(255,255,255,0.10); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+          `}</style>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(){
+                  var nav = document.getElementById('ff-hosted-nav');
+                  if (!nav) return;
+                  function onScroll() {
+                    if (window.scrollY > 60) {
+                      nav.classList.remove('ff-nav-transparent');
+                      nav.classList.add('ff-nav-scrolled');
+                    } else {
+                      nav.classList.add('ff-nav-transparent');
+                      nav.classList.remove('ff-nav-scrolled');
+                    }
+                  }
+                  window.addEventListener('scroll', onScroll, { passive: true });
+                  onScroll();
+                })();
+              `,
+            }}
+          />
         </nav>
       )}
 
@@ -393,7 +436,19 @@ export default async function HostedSitePage({
        */}
       {s.header.fullScreenHero && s.sections.banner && r.bannerUrl ? (
         <section
-          className="relative text-white min-h-[88vh] flex items-center justify-center text-center"
+          // Hero shortened from 88vh → ~62vh (Luigi 2026-05-30) so the
+          // "See MENU & Order" CTA card directly below sits in the
+          // initial viewport on first paint — matches GloriaFood's
+          // layout where the order button never requires a scroll on
+          // a typical desktop. The food photo still dominates the
+          // visible area; the title sits in the upper-middle band.
+          //
+          // -mt-16 pulls the hero UP under the (now transparent-by-
+          // default) sticky nav so the food photo extends to the very
+          // top of the viewport. pt-16 inside the inner div re-adds
+          // the safe-area below the nav so the title doesn't collide
+          // with it.
+          className="relative text-white min-h-[62vh] md:min-h-[68vh] flex items-center justify-center text-center -mt-16"
           style={{
             // Configurable overlay opacity. Lower = food photo shows
             // through more clearly. Default 0.4 vs GloriaFood's ~0.35.
@@ -402,7 +457,7 @@ export default async function HostedSitePage({
             backgroundPosition: "center",
           }}
         >
-          <div className="max-w-4xl mx-auto px-6 py-20 md:py-28 w-full">
+          <div className="max-w-4xl mx-auto px-6 pt-28 pb-12 md:pt-32 md:pb-16 w-full">
             {s.header.showLogo && r.logoUrl && (
               <div className="mb-6 inline-block">
                 <Image
@@ -507,15 +562,19 @@ export default async function HostedSitePage({
           it, like the GloriaFood pattern. Only renders when there's a
           service to advertise (pickup/delivery enabled). */}
       {s.sections.serviceSummary && serviceCopy && primaryCta && (
-        <section className="relative -mt-12 md:-mt-16 z-10 max-w-3xl mx-auto px-4 sm:px-6">
-          <div className="bg-white rounded-xl shadow-2xl border border-gray-100 px-6 py-8 md:py-10 text-center">
-            <p className="text-xl md:text-2xl font-semibold text-gray-900">
+        // Bigger overlap with the hero so the entire CTA card sits in
+        // the initial viewport (Luigi 2026-05-30 — GloriaFood parity).
+        // Inner padding tightened too so the button sits closer to the
+        // "We offer …" copy and the whole block feels compact.
+        <section className="relative -mt-16 md:-mt-24 z-10 max-w-3xl mx-auto px-4 sm:px-6">
+          <div className="bg-white rounded-xl shadow-2xl border border-gray-100 px-6 py-6 md:py-8 text-center">
+            <p className="text-lg md:text-xl font-semibold text-gray-900">
               {serviceCopy}
             </p>
-            <div className="mt-5 flex flex-wrap justify-center gap-3">
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
               <Link
                 href={primaryCta.href}
-                className="inline-flex items-center justify-center px-8 py-4 rounded-md font-bold text-base md:text-lg shadow-lg hover:shadow-xl transition text-white"
+                className="inline-flex items-center justify-center px-8 py-3.5 rounded-md font-bold text-base md:text-lg shadow-lg hover:shadow-xl transition text-white"
                 style={{ background: themeColor }}
               >
                 {primaryCta.label}
@@ -523,7 +582,7 @@ export default async function HostedSitePage({
               {secondaryCta && (
                 <Link
                   href={secondaryCta.href}
-                  className="inline-flex items-center justify-center px-8 py-4 rounded-md font-bold text-base md:text-lg border-2 text-gray-800 hover:bg-gray-50 transition"
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-md font-bold text-base md:text-lg border-2 text-gray-800 hover:bg-gray-50 transition"
                   style={{ borderColor: themeColor, color: themeColor }}
                 >
                   {secondaryCta.label}
