@@ -34,6 +34,7 @@ import {
   setEmailLogoUrl,
 } from "@/lib/email";
 import { sendSms } from "@/lib/sms";
+import { hasFeature } from "@/lib/entitlements";
 
 /**
  * Build a short SMS body for a customer order event. Cap-160 friendly
@@ -442,10 +443,15 @@ export async function notifyCustomer(args: {
   // SMS helper closure — fire-and-forget. Twilio call sites that fail
   // shouldn't break the email path, so we swallow errors and log them.
   // Returns the actual sent flag so callers (mostly internal logging)
-  // can tell. No-op when customerPhone is unset.
+  // can tell. No-op when customerPhone is unset OR when the
+  // restaurant doesn't have the `customer_sms` add-on (Luigi 2026-05-30
+  // — SMS Notifications is a paid add-on at $19.99/mo, separately
+  // billed; restaurants without the add-on get email-only).
   let smsDispatched = false;
   const fireSms = async () => {
     if (!customerPhone) return;
+    const entitled = await hasFeature(restaurantId, "customer_sms");
+    if (!entitled) return;
     const body = buildCustomerSms(restaurant.name, payload);
     if (!body) return;
     try {

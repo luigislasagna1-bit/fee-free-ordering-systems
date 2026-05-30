@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, ShoppingBag, ChevronRight, Store } from "lucide-react";
+import { ChevronLeft, ShoppingBag, ChevronRight, Store, Repeat } from "lucide-react";
+import { MarketplaceReorderCard } from "./MarketplaceReorderCard";
 import prisma from "@/lib/db";
 import { getCurrentCustomer } from "@/lib/customer-session";
 import { formatCurrency } from "@/lib/utils";
@@ -26,20 +27,40 @@ export default async function CustomerOrdersPage() {
   const account = await getCurrentCustomer();
   if (!account) redirect("/account/login?next=/account/orders");
 
-  const orders = await prisma.order.findMany({
-    where: { customer: { customerAccountId: account.id } },
-    orderBy: { createdAt: "desc" },
-    take: 50,
-    select: {
-      id: true,
-      orderNumber: true,
-      status: true,
-      type: true,
-      total: true,
-      createdAt: true,
-      restaurant: { select: { name: true, slug: true } },
-    },
-  });
+  const [orders, orderAgainBaskets] = await Promise.all([
+    prisma.order.findMany({
+      where: { customer: { customerAccountId: account.id } },
+      orderBy: { createdAt: "desc" },
+      take: 50,
+      select: {
+        id: true,
+        orderNumber: true,
+        status: true,
+        type: true,
+        total: true,
+        createdAt: true,
+        restaurant: { select: { name: true, slug: true } },
+      },
+    }),
+    // "Order again" rail data — marketplace parity with the per-
+    // restaurant /account page (Luigi 2026-05-30). 3 most recent
+    // successful baskets, with item preview chips.
+    prisma.order.findMany({
+      where: {
+        customer: { customerAccountId: account.id },
+        status: { notIn: ["cancelled", "rejected"] },
+      },
+      orderBy: { createdAt: "desc" },
+      take: 3,
+      select: {
+        id: true,
+        total: true,
+        createdAt: true,
+        restaurant: { select: { name: true, slug: true } },
+        items: { select: { name: true, quantity: true }, take: 4 },
+      },
+    }),
+  ]);
 
   return (
     <div className="space-y-6">
@@ -59,6 +80,27 @@ export default async function CustomerOrdersPage() {
           Every order you&apos;ve placed across all the restaurants on the Fee Free Marketplace.
         </p>
       </div>
+
+      {orderAgainBaskets.length > 0 && (
+        <div>
+          <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <Repeat className="w-4 h-4 text-emerald-600" />
+            Order again
+          </h2>
+          <div className="grid sm:grid-cols-3 gap-3">
+            {orderAgainBaskets.map((o) => (
+              <MarketplaceReorderCard
+                key={o.id}
+                restaurantName={o.restaurant.name}
+                restaurantSlug={o.restaurant.slug}
+                orderId={o.id}
+                itemSummary={o.items.map((i) => `${i.quantity}× ${i.name}`).join(" · ")}
+                formattedTotal={formatCurrency(Number(o.total))}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       {orders.length === 0 ? (
         <div className="text-center py-16 bg-white border border-gray-100 rounded-2xl">

@@ -26,15 +26,39 @@ import { NextRequest, NextResponse } from "next/server";
 import { after } from "next/server";
 import prisma from "@/lib/db";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
+import { getCurrentCustomer } from "@/lib/customer-session";
 import { voidPayment, stripeReady } from "@/lib/stripe";
 import { voidPaypalAuthorization } from "@/lib/paypal";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 
-/** Maximum age of an order (from createdAt) for the customer to cancel
- *  themselves. After this window they must call the restaurant. Keeps
- *  the cancel flow safe from accidental clicks on hours-old pending
- *  orders the kitchen has been working on. */
-const CANCEL_WINDOW_MINUTES = 10;
+/**
+ * Verify that the current viewer owns `order` by either:
+ *   1. Per-restaurant Customer session whose customer.id matches order.customerId
+ *   2. Marketplace CustomerAccount session whose id matches order.customer.customerAccountId
+ *
+ * The two account systems are intentionally separate (Luigi 2026-05-30
+ * — "marketplace accounts and per-restaurant accounts are not
+ * connected"), so we have to check both paths. Returns null when no
+ * valid ownership is established.
+ */
+async function checkOrderOwnership(orderCustomerId: string | null, expectedRestaurantId: string) {
+  // (1) Per-restaurant customer.
+  const me = await getCurrentRestaurantCustomer({ expectedRestaurantId });
+  if (me && orderCustomerId === me.id) return { kind: "restaurant" as const };
+
+  // (2) Marketplace customer (CustomerAccount). The order's Customer row
+  // carries an optional customerAccountId that links it to the
+  // marketplace account that placed it.
+  const acct = await getCurrentCustomer();
+  if (acct && orderCustomerId) {
+    const linked = await prisma.customer.findUnique({
+      where: { id: orderCustomerId },
+      select: { customerAccountId: true },
+    });
+    if (linked && linked.customerAccountId === acct.id) return { kind: "marketplace" as const };
+  }
+  return null;
+}
 
 export async function POST(_req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
@@ -58,35 +82,28 @@ export async function POST(_req: NextRequest, ctx: { params: Promise<{ id: strin
   });
   if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
 
-  const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: order.restaurantId });
-  if (!me) {
+  const ownership = await checkOrderOwnership(order.customerId, order.restaurantId);
+  if (!ownership) {
     return NextResponse.json(
-      { error: "Sign in to cancel this order, or call the restaurant.", code: "not_signed_in" },
+      { error: "Sign in to cancel this order, or call the restaurant.", code: "not_signed_in_or_not_owner" },
       { status: 401 },
     );
   }
-  if (order.customerId !== me.id) {
-    return NextResponse.json({ error: "This is not your order." }, { status: 403 });
-  }
 
-  // State preconditions.
+  // State precondition — only PENDING orders can be customer-cancelled.
+  // Once the kitchen accepts, the customer MUST call the restaurant
+  // (Luigi 2026-05-30: "no cancelling after it's accepted"). The
+  // 10-minute time window the original v1 had is gone — abandoned-
+  // pending orders are swept by the auto-reject cron after 30 min,
+  // so leaving the cancel button live the whole pending window is
+  // safe + gives the customer the maximum control.
   if (order.status !== "pending") {
     return NextResponse.json(
       {
         error: order.status === "accepted"
-          ? "Your order has already been accepted. Please call the restaurant to cancel."
+          ? "Your order has already been accepted by the restaurant. Please call them directly to cancel."
           : `Order is ${order.status} — nothing to cancel.`,
         code: "wrong_status",
-      },
-      { status: 409 },
-    );
-  }
-  const ageMin = (Date.now() - new Date(order.createdAt).getTime()) / 60_000;
-  if (ageMin > CANCEL_WINDOW_MINUTES) {
-    return NextResponse.json(
-      {
-        error: `Self-cancel is only available within ${CANCEL_WINDOW_MINUTES} minutes of placing the order. Please call the restaurant.`,
-        code: "window_expired",
       },
       { status: 409 },
     );

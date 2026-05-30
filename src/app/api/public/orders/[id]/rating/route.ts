@@ -10,6 +10,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
+import { getCurrentCustomer } from "@/lib/customer-session";
+
+/** Marketplace-aware ownership check — see cancel route for rationale. */
+async function checkOrderOwnership(orderCustomerId: string | null, expectedRestaurantId: string) {
+  const me = await getCurrentRestaurantCustomer({ expectedRestaurantId });
+  if (me && orderCustomerId === me.id) return true;
+  const acct = await getCurrentCustomer();
+  if (acct && orderCustomerId) {
+    const linked = await prisma.customer.findUnique({
+      where: { id: orderCustomerId },
+      select: { customerAccountId: true },
+    });
+    if (linked && linked.customerAccountId === acct.id) return true;
+  }
+  return false;
+}
 
 export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
@@ -36,15 +52,14 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
     );
   }
 
-  // Verify the customer is the one who placed the order. Without a
-  // session we can't establish identity for rating writes — guests
-  // would need a signed token in the email link (future work, see #84).
-  const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: order.restaurantId });
-  if (!me) {
+  // Verify the customer is the one who placed the order — accepts
+  // either a per-restaurant Customer session OR a marketplace
+  // CustomerAccount session linked to the order's Customer row.
+  // Without a session we can't establish identity for rating writes —
+  // guests would need a signed token in the email link (future work).
+  const owns = await checkOrderOwnership(order.customerId, order.restaurantId);
+  if (!owns) {
     return NextResponse.json({ error: "Sign in to rate this order." }, { status: 401 });
-  }
-  if (order.customerId !== me.id) {
-    return NextResponse.json({ error: "This is not your order." }, { status: 403 });
   }
 
   const rating = await prisma.orderRating.upsert({

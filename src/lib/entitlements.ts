@@ -44,7 +44,14 @@ export type Feature =
    *  Meal bundle with speciality). Granted by the `advanced_promos`
    *  add-on. Types 1-5 are FREE for every restaurant regardless of
    *  this entitlement. */
-  | "advanced_promo_types";
+  | "advanced_promo_types"
+  /** Sends transactional SMS to customers on order status changes
+   *  (confirmed → accepted → ready → completed). Restaurant must
+   *  subscribe to the `customer_sms` add-on at $19.99/month. Until
+   *  active, sendSms() short-circuits to a no-op even when Twilio
+   *  env vars are configured platform-wide. Granted by the
+   *  `customer_sms` add-on. */
+  | "customer_sms";
 
 /** Statuses on RestaurantAddOn that grant entitlements. past_due / cancelled
  *  / incomplete subscriptions do NOT grant access — the feature drops the

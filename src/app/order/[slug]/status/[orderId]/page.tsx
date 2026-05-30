@@ -640,26 +640,22 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
             <div className="no-print text-xs text-center text-gray-500 -mt-3 mb-6">{reorderMsg}</div>
           )}
 
-          {/* ── Customer cancel — only while pending AND within window.
-              Server enforces the same rules; this just hides the
-              button when there's nothing useful to click. */}
-          {(() => {
-            if (order.status !== "pending") return null;
-            const ageMin = (nowTick - new Date(order.createdAt).getTime()) / 60_000;
-            const CANCEL_WINDOW_MIN = 10;
-            if (ageMin > CANCEL_WINDOW_MIN) return null;
-            const minLeft = Math.max(0, Math.ceil(CANCEL_WINDOW_MIN - ageMin));
-            return (
-              <div className="no-print mb-6">
-                <button
-                  onClick={() => setShowCancelConfirm(true)}
-                  className="w-full flex items-center justify-center gap-2 bg-white border border-red-200 text-red-600 font-semibold py-3 rounded-xl hover:bg-red-50 transition text-sm"
-                >
-                  <X className="w-4 h-4" /> Cancel order ({minLeft} min left)
-                </button>
-              </div>
-            );
-          })()}
+          {/* ── Customer cancel — pure "pending" gate. Once the kitchen
+              accepts, the button disappears and the customer must call
+              the restaurant (Luigi 2026-05-30: "no cancelling after
+              acceptance"). The server enforces the same rule.
+              Abandoned-pending orders are swept after 30 min by the
+              auto-reject cron, so we don't need a time window here. */}
+          {order.status === "pending" && (
+            <div className="no-print mb-6">
+              <button
+                onClick={() => setShowCancelConfirm(true)}
+                className="w-full flex items-center justify-center gap-2 bg-white border border-red-200 text-red-600 font-semibold py-3 rounded-xl hover:bg-red-50 transition text-sm"
+              >
+                <X className="w-4 h-4" /> Cancel order
+              </button>
+            </div>
+          )}
 
           {/* ── Need help? (contact restaurant + marketplace) ──────── */}
           <div className="no-print bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">

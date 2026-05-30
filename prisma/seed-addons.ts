@@ -240,6 +240,22 @@ async function main() {
       enabledFeatures: ["marketplace_listing", "driver_pool"],
     },
     {
+      // Customer SMS — transactional SMS to customers on status changes
+      // (order confirmed → accepted → ready → completed/rejected). Same
+      // tone + cadence as the email pipeline; just a different channel.
+      // Restaurant pays $19.99/mo to turn it on for their customers;
+      // until subscribed, sendSms() in src/lib/notifications.ts is a
+      // no-op even when the platform-shared Twilio creds are set in
+      // Vercel env.
+      slug: "customer_sms",
+      name: "Customer SMS Notifications",
+      description:
+        "Text customers as their order moves through the kitchen — confirmed, accepted, ready for pickup, complete. Drives pickup compliance + customer trust. Uses our shared Twilio number; no setup on your side.",
+      monthlyPriceCents: 1999, // $19.99 / month
+      displayOrder: 95,
+      enabledFeatures: ["customer_sms"],
+    },
+    {
       // Driver Pool: standalone access to the ShipDay third-party driver
       // network without subscribing to the full Marketplace. Useful for
       // restaurants that don't want public discovery but DO want
