@@ -107,11 +107,19 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   // Track drag state via refs (not state) so we never re-render mid-drag.
-  // `movedPx` is the absolute distance dragged — used to suppress the
-  // synthetic `click` that would otherwise fire on the card under the
-  // pointer when the user is panning the carousel, not selecting.
+  //   • `armed`     — pointer is down; we MIGHT be about to drag.
+  //   • `dragging`  — pointer moved past the 5px threshold; this IS a drag.
+  //                   Once true, pointer capture is taken and the trailing
+  //                   click is suppressed.
+  //   • `movedPx`   — running max displacement; the click-capture guard
+  //                   reads this to decide whether to swallow the click.
+  // Luigi 2026-05-30: previous version called setPointerCapture on
+  // pointerdown which broke ordinary clicks — the capture stole the
+  // event from the card. Now we only capture once a real drag begins.
   const dragRef = useRef({
-    active: false,
+    armed: false,
+    dragging: false,
+    pointerId: -1,
     startX: 0,
     startScrollLeft: 0,
     movedPx: 0,
@@ -184,47 +192,65 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
         // pointer events — capturing them would disable the native
         // momentum scroll on phones and ruin the mobile experience
         // Luigi explicitly wants left alone.
+        //
+        // Strategy: arm on pointerdown, but do NOT take pointer capture
+        // yet. Promote to a real drag only after the pointer has moved
+        // 5px. This way a normal click never has its event redirected
+        // away from the card.
         onPointerDown={(e) => {
           if (e.pointerType !== "mouse") return;
+          // Ignore right-click / middle-click — only the primary
+          // mouse button should pan.
+          if (e.button !== 0) return;
           const el = scrollRef.current;
           if (!el) return;
-          dragRef.current.active = true;
+          dragRef.current.armed = true;
+          dragRef.current.dragging = false;
+          dragRef.current.pointerId = e.pointerId;
           dragRef.current.startX = e.clientX;
           dragRef.current.startScrollLeft = el.scrollLeft;
           dragRef.current.movedPx = 0;
-          // Capture so we still get move/up events even if the pointer
-          // leaves the strip mid-drag.
-          el.setPointerCapture(e.pointerId);
         }}
         onPointerMove={(e) => {
-          if (!dragRef.current.active) return;
+          if (!dragRef.current.armed) return;
           const el = scrollRef.current;
           if (!el) return;
           const dx = e.clientX - dragRef.current.startX;
-          dragRef.current.movedPx = Math.max(dragRef.current.movedPx, Math.abs(dx));
-          el.scrollLeft = dragRef.current.startScrollLeft - dx;
+          const abs = Math.abs(dx);
+          dragRef.current.movedPx = Math.max(dragRef.current.movedPx, abs);
+          // Promote to real drag only past the threshold. THEN take
+          // pointer capture so the drag survives the cursor leaving
+          // the strip.
+          if (!dragRef.current.dragging && abs > 5) {
+            dragRef.current.dragging = true;
+            try { el.setPointerCapture(e.pointerId); } catch { /* ignore */ }
+          }
+          if (dragRef.current.dragging) {
+            el.scrollLeft = dragRef.current.startScrollLeft - dx;
+          }
         }}
         onPointerUp={(e) => {
-          if (!dragRef.current.active) return;
-          dragRef.current.active = false;
+          if (!dragRef.current.armed) return;
+          const wasDrag = dragRef.current.dragging;
+          dragRef.current.armed = false;
+          dragRef.current.dragging = false;
           const el = scrollRef.current;
           if (el && el.hasPointerCapture(e.pointerId)) {
-            el.releasePointerCapture(e.pointerId);
+            try { el.releasePointerCapture(e.pointerId); } catch { /* ignore */ }
           }
-          // Keep `movedPx` non-zero so the click-capture below knows to
-          // swallow the synthetic click that's about to fire. Reset on
-          // the next frame.
-          const wasDrag = dragRef.current.movedPx > 5;
+          // Reset movedPx after the synthetic click has had a chance
+          // to fire (and be swallowed by onClickCapture below).
           setTimeout(() => { dragRef.current.movedPx = 0; }, 0);
-          if (wasDrag) {
-            // Prevent the click from "opening" whatever card the
-            // pointer happens to be over right now.
-            e.preventDefault();
-          }
+          if (wasDrag) e.preventDefault();
         }}
-        onPointerCancel={() => { dragRef.current.active = false; }}
-        // Capture-phase click handler — fires BEFORE the card's own
-        // onClick, so we can swallow the click if the user was dragging.
+        onPointerCancel={() => {
+          dragRef.current.armed = false;
+          dragRef.current.dragging = false;
+        }}
+        // Capture-phase click guard — fires BEFORE the card's onClick.
+        // Only swallows the click when the user actually dragged
+        // (movedPx > 5). A plain click leaves movedPx at 0 and passes
+        // through cleanly.
         onClickCapture={(e) => {
           if (dragRef.current.movedPx > 5) {
             e.preventDefault();
