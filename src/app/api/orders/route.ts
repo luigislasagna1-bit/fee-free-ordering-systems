@@ -87,8 +87,18 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Load restaurant ─────────────────────────────────────────────────────
+    // Includes openingHours because the closed-when-placed check
+    // (Luigi 2026-05-30) needs them to determine whether to defer
+    // the kitchen alert + use the 15-min closed-placed countdown vs
+    // the standard 3-min. Without this include, the live-open check
+    // sees an empty hours array → always reads "closed" → EVERY
+    // order is stamped placedWhileClosed=true, even normal in-hours
+    // ones (bug surfaced live 2026-05-30).
     const restaurant = await prisma.restaurant.findUnique({
       where: { slug: sanitize(restaurantSlug, 100), isActive: true },
+      include: {
+        openingHours: { orderBy: { dayOfWeek: "asc" } },
+      },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
