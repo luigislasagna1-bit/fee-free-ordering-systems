@@ -49,6 +49,12 @@ type RuleConfig = {
   itemGroups?: RuleConfigGroup[];
   eligibleGroup?: RuleConfigGroup;
   deliveryFeeDiscountPercent?: number;
+  // BOGO / Buy-N strategy fields. "cheapest" | "most_expensive" |
+  // "fixed_percent". Together with the two pct fields they spell out
+  // exactly what gets discounted and how much.
+  discountStrategy?: "cheapest" | "most_expensive" | "fixed_percent";
+  cheapestDiscount?: number;       // % off the cheapest qualifying item
+  mostExpensiveDiscount?: number;  // % off the most expensive
   // ...whatever else the engine emits.
 };
 
@@ -111,6 +117,12 @@ interface Props {
   /** Switch the page-level order type — used by the free_delivery panel's
    *  "Switch to delivery" footer button. */
   onSwitchOrderType?: (next: "pickup" | "delivery") => void;
+  /** Open the item-config sheet for the clicked item (closing this modal
+   *  in the process). Lets the customer pick size / modifiers / quantity
+   *  before adding to cart — necessary because a "Pizza" can't be added
+   *  blindly without picking a size. Falls back to scroll-to-menu-item
+   *  when not provided. */
+  onOpenItem?: (menuItemId: string) => void;
   onClose: () => void;
 }
 
@@ -409,6 +421,7 @@ export function PromoDetailModal({
   onAddFreebie,
   onAddBundle,
   onSwitchOrderType,
+  onOpenItem,
   onClose,
 }: Props) {
   const meta = getPromoTypeMeta(promo.promotionType);
@@ -500,7 +513,13 @@ export function PromoDetailModal({
             allMenuItems={allMenuItems}
             deliveryZones={deliveryZones}
             primaryColor={primaryColor}
-            onScrollToItem={(itemId) => scrollToMenuItem(itemId, onClose)}
+            onScrollToItem={(itemId) => {
+              // Prefer onOpenItem (opens the item-config sheet — better UX
+              // because customer immediately gets size/mods/qty picker)
+              // and fall through to scroll-to-menu-item when not wired.
+              if (onOpenItem) onOpenItem(itemId);
+              else scrollToMenuItem(itemId, onClose);
+            }}
           />
         </div>
 
@@ -637,11 +656,32 @@ function PromoBody({
 
     case "bogo": {
       const [paidGroup, freeGroup] = [groups[0], groups[1]];
+      // Render a clear "cheapest item gets X% off" hint based on the
+      // configured discount strategy. The engine reads `discountStrategy`
+      // ("cheapest" | "most_expensive" | "fixed_percent") and
+      // cheapestDiscount / mostExpensiveDiscount (both as %).
+      const strategy = (rules.discountStrategy ?? "cheapest") as string;
+      const cheapestPct = Number(rules.cheapestDiscount ?? 100);
+      const expPct = Number(rules.mostExpensiveDiscount ?? 100);
+      let strategyHint = "Cheapest item is fully free.";
+      if (strategy === "cheapest") {
+        strategyHint = cheapestPct >= 100
+          ? "The cheapest qualifying item is FREE."
+          : `The cheapest qualifying item gets ${cheapestPct}% off.`;
+      } else if (strategy === "most_expensive") {
+        strategyHint = expPct >= 100
+          ? "The most expensive qualifying item is FREE."
+          : `The most expensive qualifying item gets ${expPct}% off.`;
+      }
+      const freeBadge = strategy === "most_expensive"
+        ? (expPct >= 100 ? "FREE" : `${expPct}% off`)
+        : (cheapestPct >= 100 ? "FREE" : `${cheapestPct}% off`);
       return (
         <>
           <InfoCard>
             Add a paid item from the first group — get one from the second group{" "}
-            <strong>free</strong>.
+            <strong>{freeBadge.toLowerCase() === "free" ? "free" : freeBadge}</strong>.
+            <div className="mt-1.5 text-[11px] text-gray-500">{strategyHint}</div>
           </InfoCard>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
@@ -650,7 +690,7 @@ function PromoBody({
             </div>
             <div>
               <div className="font-semibold text-gray-900 text-sm mb-2">{freeGroup?.label ?? "Get one free"}</div>
-              {freeGroup ? renderGroupItems(freeGroup, "FREE") : <p className="text-xs text-gray-400">No items.</p>}
+              {freeGroup ? renderGroupItems(freeGroup, freeBadge) : <p className="text-xs text-gray-400">No items.</p>}
             </div>
           </div>
         </>

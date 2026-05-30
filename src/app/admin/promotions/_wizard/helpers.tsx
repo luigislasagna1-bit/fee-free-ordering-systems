@@ -165,10 +165,26 @@ export function ItemGroupPicker({
 
   return (
     <div className="absolute left-0 top-full z-50 mt-1 w-80 bg-white rounded-xl border border-gray-200 shadow-xl overflow-hidden">
-      <div className="px-3 py-2 bg-gray-50 border-b text-xs font-semibold text-gray-500 uppercase tracking-wide">
-        Select categories or items
+      <div className="px-3 py-2 bg-gray-50 border-b flex items-center justify-between">
+        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+          Select categories or items
+        </span>
+        {/* Explicit close button — easier to dismiss than relying on the
+            invisible-outside-click behavior, especially on mobile where
+            the user might struggle to find a "safe" tap area. */}
+        <button
+          type="button"
+          onClick={onCancel}
+          className="p-1 -mr-1 text-gray-400 hover:text-gray-600 transition rounded"
+          aria-label="Close"
+        >
+          <X className="w-4 h-4" />
+        </button>
       </div>
-      <div className="max-h-60 overflow-y-auto">
+      <div
+        className="max-h-56 overflow-y-auto"
+        onScroll={(e) => e.stopPropagation()}
+      >
         {cats.length === 0 ? (
           <div className="px-3 py-4 text-sm text-gray-400 text-center">No categories found</div>
         ) : (
@@ -293,11 +309,27 @@ function ItemGroupRow({
 
   useEffect(() => {
     if (!open) return;
-    const h = (e: MouseEvent) => {
+    // Click / tap outside the row closes the picker. mousedown for desktop
+    // + touchstart for mobile, since touchstart fires earlier than the
+    // synthesized mousedown on most mobile browsers (~300ms faster).
+    const handleOutside = (e: MouseEvent | TouchEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
-    document.addEventListener("mousedown", h);
-    return () => document.removeEventListener("mousedown", h);
+    // Also close on window scroll — when the picker is open over a long
+    // form, the user trying to reach controls below can't scroll past
+    // the dropdown. Auto-closing on scroll removes the obstacle and
+    // makes their gesture do what they intended (scroll the page).
+    // We ignore scrolls INSIDE the picker via stopPropagation in the
+    // picker's own scroll container below.
+    const handleScroll = () => setOpen(false);
+    document.addEventListener("mousedown", handleOutside);
+    document.addEventListener("touchstart", handleOutside);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      document.removeEventListener("mousedown", handleOutside);
+      document.removeEventListener("touchstart", handleOutside);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [open]);
 
   const roleLabel: Record<string, string> = {

@@ -2141,6 +2141,19 @@ export function OrderingPageClient({
           onAddFreebie={addFreebieToCart}
           onAddBundle={addBundleToCart}
           onSwitchOrderType={(next) => setOrderType(next)}
+          // Click an eligible item in the promo modal → close the promo
+          // modal + open the item-config sheet so the customer can pick
+          // size/modifiers/quantity before adding to cart. Looks up the
+          // full MenuItem from id (the modal only has the lite shape).
+          onOpenItem={(menuItemId) => {
+            const full = restaurant.menuCategories
+              ?.flatMap((c: any) => c.menuItems)
+              ?.find((m: any) => m?.id === menuItemId);
+            if (full) {
+              setActivePromoModal(null);
+              setTimeout(() => openItem(full), 0);
+            }
+          }}
           onClose={() => setActivePromoModal(null)}
         />
       )}
