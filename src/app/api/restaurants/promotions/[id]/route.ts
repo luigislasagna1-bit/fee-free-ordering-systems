@@ -83,8 +83,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     scopeUpdate = { scope };
   }
 
-  // Check coupon uniqueness if changing code
-  if (couponCode !== undefined) {
+  // Check coupon uniqueness if the new code is a real non-empty string.
+  // Skip the check when the wizard sends "" (which we normalise to null
+  // below) — otherwise the query matches every other promo whose
+  // couponCode is also "" and returns a false-positive 409.
+  if (typeof couponCode === "string" && couponCode.trim() !== "") {
     const existing = await prisma.promotion.findFirst({
       where: { restaurantId, couponCode: { equals: couponCode }, id: { not: id } },
     });
