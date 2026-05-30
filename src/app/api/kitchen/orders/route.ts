@@ -22,6 +22,41 @@ export async function GET() {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
+    // Fetch restaurant config FIRST — the workflow mode drives the
+    // simple-mode auto-complete sweep below.
+    const restaurant = await prisma.restaurant.findUnique({
+      where: { id: restaurantId },
+      select: { kitchenWorkflowMode: true, printNodeEnabled: true },
+    });
+    const resolvedMode = restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple";
+
+    // ── Simple-mode auto-complete sweep ─────────────────────────────────
+    // Simple workflow has no state transitions during prep — orders sit
+    // in "accepted" forever after the kitchen taps Accept. Without this,
+    // the display piles up stale rows the kitchen has to scroll past.
+    //
+    // Sweep: when the kitchen polls (every 4s), flip any of THIS
+    // restaurant's "accepted" simple-mode orders whose estimatedReady
+    // is more than 15 minutes in the past to "completed". Lazy-on-read
+    // pattern — no new cron needed.
+    //
+    // Tracking-mode restaurants are skipped entirely: their staff
+    // manually flip status through Preparing → Ready → Complete,
+    // and silently auto-completing those would suppress the customer
+    // notifications they expect at each stage.
+    if (resolvedMode === "simple") {
+      const cutoff = new Date(Date.now() - 15 * 60 * 1000);
+      const now = new Date();
+      await prisma.order.updateMany({
+        where: {
+          restaurantId,
+          status: "accepted",
+          estimatedReady: { not: null, lt: cutoff },
+        },
+        data: { status: "completed", completedAt: now },
+      });
+    }
+
     const orders = await prisma.order.findMany({
       where: {
         restaurantId,
@@ -42,20 +77,10 @@ export async function GET() {
       },
     });
 
-    // Also include the restaurant's kitchen workflow mode so the
-    // client can render the right UI (simple = Accept/Reject only,
-    // tracking = full state machine). Cheap extra round-trip — the
-    // restaurant row is small and the kitchen polls every 4 seconds
-    // so we want it cached. The client only re-reads the mode when
-    // the response shape changes; otherwise it stays the same.
-    const restaurant = await prisma.restaurant.findUnique({
-      where: { id: restaurantId },
-      select: { kitchenWorkflowMode: true, printNodeEnabled: true },
-    });
-
+    // (restaurant + mode already fetched above for the sweep.)
     return NextResponse.json({
       orders,
-      kitchenWorkflowMode: restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple",
+      kitchenWorkflowMode: resolvedMode,
       // Surface whether PrintNode backup is enabled so the kitchen UI
       // can hide the PrintNode setup option entirely when the admin
       // has not turned it on. Default false — Direct LAN printer is
