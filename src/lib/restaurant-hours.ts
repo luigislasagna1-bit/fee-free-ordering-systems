@@ -62,23 +62,81 @@ export function formatHour(hhmm: string | null | undefined, format: "12h" | "24h
 }
 
 /**
+ * Project a Date into a specific IANA timezone, returning the local
+ * day-of-week (0=Sun) and HH:MM string. Both `liveOpenStatus` and
+ * `statusForToday` need to compare "now" against HH:MM open/close
+ * times that are stored in the restaurant's LOCAL time — using the
+ * server's UTC wall clock breaks any restaurant whose timezone
+ * differs from the server. Vercel runs in UTC; a restaurant in
+ * EST (UTC-5) at 12:55 AM local sees the server compute 04:55 and
+ * mis-flag an overnight window as closed.
+ *
+ * Falls back to the server's wall-clock values when timezone is
+ * undefined or invalid (preserves pre-existing behavior).
+ */
+export function localDowAndHHMM(
+  now: Date,
+  timezone?: string,
+): { dow: number; hhmm: string } {
+  if (!timezone) {
+    return {
+      dow: now.getDay(),
+      hhmm: `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`,
+    };
+  }
+  try {
+    // weekday=short maps to "Sun"|"Mon"|...|"Sat"; we translate to 0..6
+    // so the rest of the file stays integer-keyed like Date.getDay().
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: timezone,
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+      weekday: "short",
+    }).formatToParts(now);
+    const hr = parts.find((p) => p.type === "hour")?.value ?? "00";
+    const mn = parts.find((p) => p.type === "minute")?.value ?? "00";
+    const wk = parts.find((p) => p.type === "weekday")?.value ?? "";
+    const dowMap: Record<string, number> = {
+      Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6,
+    };
+    // Intl can emit "24" for midnight in hour: "2-digit" hour12:false —
+    // normalise to "00" so HH:MM comparisons work.
+    const normHr = hr === "24" ? "00" : hr;
+    return {
+      dow: dowMap[wk] ?? now.getDay(),
+      hhmm: `${normHr}:${mn}`,
+    };
+  } catch {
+    return {
+      dow: now.getDay(),
+      hhmm: `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`,
+    };
+  }
+}
+
+/**
  * Get today's status. Used by the order page header.
  *
  * @param hours          full weekly schedule (7 rows max, may be partial)
  * @param now            optional override for the "current" time
  * @param format         "12h" or "24h" — affects how the openRange string renders
  * @param todayIsHoliday optional flag — if true, force closed with the supplied name
+ * @param timezone       IANA tz of the restaurant (e.g. "America/Toronto").
+ *                       When provided, dow + HH:MM are computed in that
+ *                       zone instead of the server's UTC wall clock.
  */
 export function statusForToday(
   hours: OpeningHoursRow[] | undefined | null,
   now: Date = new Date(),
   format: "12h" | "24h" = "24h",
   todayIsHoliday?: { name?: string },
+  timezone?: string,
 ): HoursStatus {
   if (todayIsHoliday) {
     return { isOpen: false, openRange: "", holidayName: todayIsHoliday.name };
   }
-  const dow = now.getDay();
+  const { dow } = localDowAndHHMM(now, timezone);
   const row = (hours ?? []).find((h) => h.dayOfWeek === dow);
   if (!row || !row.isOpen) return { isOpen: false, openRange: "" };
   return {
@@ -109,11 +167,17 @@ export function liveOpenStatus(
   now: Date = new Date(),
   format: "12h" | "24h" = "24h",
   todayIsHoliday?: { name?: string },
+  timezone?: string,
 ): LiveOpenStatus {
   if (todayIsHoliday) return { kind: "holiday", name: todayIsHoliday.name };
-  const dow = now.getDay();
+  // Day-of-week and HH:MM must be computed in the RESTAURANT's local
+  // timezone. The server runs in UTC on Vercel; without this projection,
+  // a Friday-overnight-into-Saturday-2am window misfires at 12:55 AM
+  // EST because UTC sees 04:55 and concludes the overnight closed at 2.
+  // Luigi bug 2026-05-30: "Opens at 11:00 AM" shown at 12:55 AM EST
+  // while still inside the previous day's open window.
+  const { dow, hhmm: nowHHMM } = localDowAndHHMM(now, timezone);
   const yesterdayDow = (dow + 6) % 7;
-  const nowHHMM = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
   const today = (hours ?? []).find((h) => h.dayOfWeek === dow);
   const yesterday = (hours ?? []).find((h) => h.dayOfWeek === yesterdayDow);
 

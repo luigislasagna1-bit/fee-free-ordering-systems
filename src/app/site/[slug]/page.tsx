@@ -151,7 +151,6 @@ export default async function HostedSitePage({
   // formatting. Pure server-side computation — no client JS needed,
   // the page re-renders on every request anyway.
   const now = new Date();
-  const todayDow = now.getDay();
   const todayKey = dateKeyInTimezone(now, r.timezone);
   const todayHoliday = r.holidays.find((h) => h.date === todayKey);
   const openStatus: LiveOpenStatus = liveOpenStatus(
@@ -159,7 +158,23 @@ export default async function HostedSitePage({
     now,
     r.hoursFormat,
     todayHoliday ? { name: todayHoliday.name ?? undefined } : undefined,
+    // Project to the restaurant's local tz so overnight windows
+    // (e.g. Friday 11 AM → Saturday 2 AM) classify correctly even
+    // when the server runs in UTC and the restaurant doesn't.
+    r.timezone,
   );
+  // Highlight today's row in the hours table — must also use local tz.
+  const todayDow = (() => {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: r.timezone,
+      weekday: "short",
+    }).formatToParts(now);
+    const wk = parts.find((p) => p.type === "weekday")?.value ?? "";
+    const map: Record<string, number> = {
+      Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6,
+    };
+    return map[wk] ?? now.getDay();
+  })();
   // ?from=hosted tells the ordering page to render a "Back to <Restaurant>"
   // breadcrumb at the top so customers who arrived from the marketing site
   // can return to it. Without this they hit a dead-end on /order with no
