@@ -1226,14 +1226,33 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     }
   };
 
-  // Clear history
+  // Clear history. EXCLUDES pending orders (Luigi 2026-05-30 live bug):
+  // adding a pending order to the local cleared set hides it from the
+  // tab but leaves it active in the DB, so `pendingCount` stays > 0 and
+  // the bell keeps ringing from an order the staff can no longer see.
+  // Pending orders must be explicitly Accepted or Rejected before they
+  // can be cleared.
+  //
+  // Also flips `acknowledged` to true as a safety net — if a previous
+  // Clear-on-pending got into this state before the deploy, hitting
+  // Clear now also silences the looping bell.
   const handleClearOrders = () => {
-    const allVisible = orders.filter(o => !clearedOrders.has(o.id)).map(o => o.id);
+    const allVisible = orders
+      .filter((o) => !clearedOrders.has(o.id) && o.status !== "pending")
+      .map((o) => o.id);
+    if (allVisible.length === 0) {
+      toast.error(
+        "Nothing to clear — pending orders must be Accepted or Rejected first.",
+      );
+      setClearConfirm(null);
+      return;
+    }
     const next = new Set([...clearedOrders, ...allVisible]);
     setClearedOrders(next);
     saveSet("kds-cleared-orders", next);
     setSelectedId(null);
     setClearConfirm(null);
+    setAcknowledged(true); // silence any stale bell from prior cleared-pending bug
   };
 
   const handleClearComplete = () => {
@@ -1706,7 +1725,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         <ConfirmModal
           t={t}
           title="Clear Order History"
-          message="Remove all orders from the Orders tab? In-progress orders remain in the In Progress tab. New orders will still appear here. This cannot be undone."
+          message="Remove non-pending orders from the Orders tab? Pending orders MUST be Accepted or Rejected first — they can't be cleared while still waiting for staff action. In-progress orders remain in the In Progress tab. New orders will still appear here. This cannot be undone."
           confirmLabel="Yes, Clear History"
           onConfirm={handleClearOrders}
           onCancel={() => setClearConfirm(null)}
