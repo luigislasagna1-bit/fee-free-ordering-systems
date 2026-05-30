@@ -106,6 +106,16 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
   onOpen: (item: MenuItem) => void;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  // Track drag state via refs (not state) so we never re-render mid-drag.
+  // `movedPx` is the absolute distance dragged — used to suppress the
+  // synthetic `click` that would otherwise fire on the card under the
+  // pointer when the user is panning the carousel, not selecting.
+  const dragRef = useRef({
+    active: false,
+    startX: 0,
+    startScrollLeft: 0,
+    movedPx: 0,
+  });
 
   const scroll = useCallback((dir: -1 | 1) => {
     if (scrollRef.current) {
@@ -131,12 +141,15 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
     );
   }
 
-  // "Carousel" layout — used to be a single-row horizontal scroller with
-  // arrow buttons. Customers found that hard to navigate on desktop
-  // (clicking small chevrons to reach later items). Now wraps into a
-  // multi-row responsive grid on viewports wide enough to fit 2+
-  // columns; falls back to horizontal scroll only on the very narrowest
-  // screens where a grid would feel cramped. Keeps the same card design.
+  // "Carousel" layout — single horizontal scroller on BOTH mobile and
+  // desktop (Luigi 2026-05-30: previous grid-on-desktop variant didn't
+  // look right, restore the original carousel). Desktop interaction:
+  //   • Click-and-drag — grab anywhere on the strip and pan. The
+  //     synthetic click on the card under the cursor is suppressed
+  //     when the pointer moved more than 5px.
+  //   • Arrow buttons — visible on desktop too now (used to be md:hidden).
+  //   • Mouse wheel — vertical wheel pans horizontally.
+  // Mobile interaction is unchanged: native touch swipe (snap-x).
   return (
     <div ref={onRef as any}>
       <div className="flex items-center gap-3 mb-3 sticky top-0 py-2 z-10" style={{ backgroundColor: theme.backgroundColor }}>
@@ -144,8 +157,7 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
           <img src={cat.imageUrl} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
         )}
         <h2 className="text-lg font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
-        {/* Mobile-only arrows for the narrow-screen horizontal scroller. */}
-        <div className="flex md:hidden gap-1">
+        <div className="flex gap-1">
           <button onClick={() => scroll(-1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }} aria-label="Scroll left">
             <ChevronLeft className="w-4 h-4 text-gray-500" />
           </button>
@@ -154,22 +166,9 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
           </button>
         </div>
       </div>
-      {/* Desktop: responsive grid — auto-fills as many ~180px-wide cards
-          as the viewport supports. Customer sees all items at a glance
-          and scrolls vertically (which is what every other ordering site
-          does). The sticky category nav at top still lets them jump. */}
-      <div className="hidden md:grid gap-3 pb-2" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(168px, 1fr))" }}>
-        {cat.menuItems.map((item) => (
-          <CarouselCard key={item.id} item={item} theme={theme} onOpen={onOpen} />
-        ))}
-      </div>
-      {/* Mobile: keep the horizontal scroller — native swipe is the
-          right gesture on a phone. Wheel-to-horizontal-scroll handler
-          lets desktop users with a trackpad swipe naturally too if they
-          shrink their window below md. */}
       <div
         ref={scrollRef}
-        className="flex md:hidden gap-3 overflow-x-auto pb-2 snap-x"
+        className="flex gap-3 overflow-x-auto pb-2 snap-x select-none"
         onWheel={(e) => {
           // Convert vertical wheel deltas into horizontal scroll so a
           // standard mouse wheel can pan the carousel without clicking
@@ -180,7 +179,64 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
             scrollRef.current.scrollBy({ left: e.deltaY, behavior: "auto" });
           }
         }}
-        style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+        // ── Click-and-drag (desktop mouse). Touch is handled by the
+        // browser's native scroll so we explicitly ignore non-mouse
+        // pointer events — capturing them would disable the native
+        // momentum scroll on phones and ruin the mobile experience
+        // Luigi explicitly wants left alone.
+        onPointerDown={(e) => {
+          if (e.pointerType !== "mouse") return;
+          const el = scrollRef.current;
+          if (!el) return;
+          dragRef.current.active = true;
+          dragRef.current.startX = e.clientX;
+          dragRef.current.startScrollLeft = el.scrollLeft;
+          dragRef.current.movedPx = 0;
+          // Capture so we still get move/up events even if the pointer
+          // leaves the strip mid-drag.
+          el.setPointerCapture(e.pointerId);
+        }}
+        onPointerMove={(e) => {
+          if (!dragRef.current.active) return;
+          const el = scrollRef.current;
+          if (!el) return;
+          const dx = e.clientX - dragRef.current.startX;
+          dragRef.current.movedPx = Math.max(dragRef.current.movedPx, Math.abs(dx));
+          el.scrollLeft = dragRef.current.startScrollLeft - dx;
+        }}
+        onPointerUp={(e) => {
+          if (!dragRef.current.active) return;
+          dragRef.current.active = false;
+          const el = scrollRef.current;
+          if (el && el.hasPointerCapture(e.pointerId)) {
+            el.releasePointerCapture(e.pointerId);
+          }
+          // Keep `movedPx` non-zero so the click-capture below knows to
+          // swallow the synthetic click that's about to fire. Reset on
+          // the next frame.
+          const wasDrag = dragRef.current.movedPx > 5;
+          setTimeout(() => { dragRef.current.movedPx = 0; }, 0);
+          if (wasDrag) {
+            // Prevent the click from "opening" whatever card the
+            // pointer happens to be over right now.
+            e.preventDefault();
+          }
+        }}
+        onPointerCancel={() => { dragRef.current.active = false; }}
+        // Capture-phase click handler — fires BEFORE the card's own
+        // onClick, so we can swallow the click if the user was dragging.
+        onClickCapture={(e) => {
+          if (dragRef.current.movedPx > 5) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+        style={{
+          scrollbarWidth: "none",
+          WebkitOverflowScrolling: "touch",
+          cursor: "grab",
+          touchAction: "pan-x",
+        } as React.CSSProperties}
       >
         {cat.menuItems.map((item) => (
           <CarouselCard key={item.id} item={item} theme={theme} onOpen={onOpen} />
