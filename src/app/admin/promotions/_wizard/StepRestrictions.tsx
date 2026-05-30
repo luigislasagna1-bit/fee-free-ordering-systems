@@ -592,22 +592,41 @@ export function StepRestrictions({
       {/* ACTIVATION */}
       <Section title="Activation" subtitle="How customers trigger this promo.">
         <Toggle
-          label="Auto-apply"
-          sub="If on, the promo is applied automatically when the cart qualifies."
+          label="Auto-apply when cart qualifies"
+          sub={
+            form.autoApply
+              ? "The promo fires automatically the moment the cart matches the rules. The coupon code below (if set) is an OPTIONAL alias for power users."
+              : "Customers MUST type the coupon code below — the promo will NOT fire automatically even when the cart qualifies. Use this for flyer codes, email-only deals, or rewards you hand out personally."
+          }
           checked={form.autoApply}
           onChange={(v) => setForm({ autoApply: v })}
         />
         <div className="mt-3">
-          <label className="block text-xs text-gray-500 mb-1">Coupon code</label>
+          <label className="block text-xs text-gray-500 mb-1">
+            Coupon code{" "}
+            {!form.autoApply && (
+              <span className="text-red-500 font-semibold">(required)</span>
+            )}
+            {form.autoApply && (
+              <span className="text-gray-400 font-normal">(optional)</span>
+            )}
+          </label>
           <input
-            className="w-full sm:w-72 border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono uppercase focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+            className={`w-full sm:w-72 border rounded-lg px-3 py-2 text-sm font-mono uppercase focus:ring-2 focus:outline-none ${
+              !form.autoApply && !form.couponCode.trim()
+                ? "border-red-300 focus:ring-red-500"
+                : "border-gray-300 focus:ring-emerald-500"
+            }`}
             value={form.couponCode}
             onChange={(e) => setForm({ couponCode: e.target.value.toUpperCase() })}
             placeholder="e.g. LUNCH20"
           />
-          <p className="text-xs text-gray-400 mt-1">
-            If set, customers can enter this code; promo can also auto-apply.
-          </p>
+          {!form.autoApply && !form.couponCode.trim() && (
+            <p className="text-xs text-red-500 mt-1">
+              A coupon code is required when auto-apply is off — otherwise
+              customers have no way to trigger this promo.
+            </p>
+          )}
         </div>
       </Section>
 

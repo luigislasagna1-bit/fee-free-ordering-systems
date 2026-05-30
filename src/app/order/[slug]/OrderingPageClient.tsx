@@ -722,6 +722,11 @@ export function OrderingPageClient({
         // e.g. pickup orders skip deliveryZoneId.
         deliveryZoneId: orderType === "delivery" && resolvedZone?.inside ? resolvedZone.zone.id : undefined,
         isMember: !!currentCustomer,
+        // Customer-typed coupon code — engine matches it against
+        // Promotion.couponCode in the couponPromos branch. Required
+        // for autoApply=false promos to fire. Empty string is fine
+        // (engine ignores). Auto-apply promos don't need this.
+        couponCode: couponCode.trim() || undefined,
       }),
     })
       .then(r => r.json())
@@ -732,7 +737,7 @@ export function OrderingPageClient({
       })
       .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer]);
+  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
   const zoneFee = resolvedZone?.zone.deliveryFee;
@@ -923,9 +928,26 @@ export function OrderingPageClient({
       const res = await fetch(`/api/public/coupon?code=${couponCode}&restaurantSlug=${restaurant.slug}&subtotal=${subtotal}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || tT("invalidCoupon"));
-      setCouponDiscount(data.discount);
-      setCouponId(data.id);
-      toast.success(tT("couponAppliedAmount", { amount: formatCurrency(data.discount) }));
+      // Two code sources (Phase 2 marketing suite):
+      //   "coupon"      → legacy Coupon row, fixed discount returned now
+      //   "promotion"   → Promotion.couponCode match; engine computes
+      //                   the dynamic discount on next apply-promos call.
+      //                   We keep the typed couponCode in state so the
+      //                   apply-promos useEffect picks it up.
+      if (data.source === "promotion") {
+        setCouponId(null);
+        setCouponDiscount(0);
+        toast.success(`Promo "${data.promoName}" applied!`);
+        // Force a refresh of the auto-apply effect by re-setting cart
+        // (cheap — same reference). The cart-change useEffect calls
+        // /api/public/apply-promos with the live couponCode and the
+        // engine matches it against Promotion.couponCode.
+        setCart((c) => [...c]);
+      } else {
+        setCouponDiscount(data.discount);
+        setCouponId(data.id);
+        toast.success(tT("couponAppliedAmount", { amount: formatCurrency(data.discount) }));
+      }
     } catch (e: any) { toast.error(e.message); }
     setCouponLoading(false);
   };
