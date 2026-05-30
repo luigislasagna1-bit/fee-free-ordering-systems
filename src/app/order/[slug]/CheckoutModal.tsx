@@ -623,20 +623,66 @@ export function CheckoutModal({
                 expanded={editingSection === "tips"}
                 primary={theme.primaryColor}
               >
-                <div className="pt-3 flex flex-wrap gap-2">
-                  {[0, 10, 15, 20].map(p => (
-                    <button
-                      key={p}
-                      onClick={() => setTipPercent(p)}
-                      className="px-3 py-1.5 rounded-lg border-2 text-xs font-semibold transition"
-                      style={tipPercent === p
-                        ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}12`, color: theme.primaryColor }
-                        : { borderColor: "#e5e7eb", color: "#4b5563" }
-                      }
-                    >
-                      {p === 0 ? tc("noTip") : `${p}%`}
-                    </button>
-                  ))}
+                <div className="pt-3 space-y-3">
+                  {/* Preset buttons — quick taps for the common amounts.
+                      "Suggested" badge on 15% (Luigi 2026-05-29) so
+                      customers see the recommended starting point. */}
+                  <div className="flex flex-wrap gap-2">
+                    {[0, 10, 15, 18, 20, 25, 30].map((p) => {
+                      const isSuggested = p === 15;
+                      const active = tipPercent === p;
+                      return (
+                        <button
+                          key={p}
+                          onClick={() => setTipPercent(p)}
+                          className="relative px-3 py-1.5 rounded-lg border-2 text-xs font-semibold transition"
+                          style={
+                            active
+                              ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}12`, color: theme.primaryColor }
+                              : { borderColor: "#e5e7eb", color: "#4b5563" }
+                          }
+                        >
+                          {p === 0 ? tc("noTip") : `${p}%`}
+                          {isSuggested && (
+                            <span
+                              className="absolute -top-2 left-1/2 -translate-x-1/2 text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full whitespace-nowrap"
+                              style={{
+                                backgroundColor: theme.primaryColor,
+                                color: "#fff",
+                              }}
+                            >
+                              Suggested
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {/* Slider — for granular control between / above presets.
+                      Caps at 50% so a stray drag can't tank the customer. */}
+                  <div>
+                    <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+                      <span>Custom amount</span>
+                      <span className="font-mono font-semibold text-gray-700">
+                        {tipPercent}% ({formatCurrency(tipAmount)})
+                      </span>
+                    </div>
+                    <input
+                      type="range"
+                      min={0}
+                      max={50}
+                      step={1}
+                      value={tipPercent}
+                      onChange={(e) => setTipPercent(parseInt(e.target.value, 10) || 0)}
+                      className="w-full accent-emerald-500"
+                      style={{ accentColor: theme.primaryColor }}
+                    />
+                    <div className="flex justify-between text-[10px] text-gray-400 mt-0.5">
+                      <span>0%</span>
+                      <span>25%</span>
+                      <span>50%</span>
+                    </div>
+                  </div>
                 </div>
               </SectionCard>
 

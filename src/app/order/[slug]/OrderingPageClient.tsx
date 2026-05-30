@@ -435,7 +435,9 @@ export function OrderingPageClient({
     notes: "", paymentMethod: defaultPaymentMethod, scheduledFor: "",
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
-  const [tipPercent, setTipPercent] = useState<number>(0); // 0/10/15/20 or custom amount
+  // Default starts at the SUGGESTED amount (15%). Customer can drag the
+  // slider or click "No tip" to override. Luigi 2026-05-29.
+  const [tipPercent, setTipPercent] = useState<number>(15);
 
   // ── Cart persistence ────────────────────────────────────────────────
   // Save the cart to localStorage scoped per-restaurant-slug so a refresh
@@ -1974,10 +1976,43 @@ export function OrderingPageClient({
                   </div>
                 )}
 
-                {/* Minimum order warning */}
+                {/* Minimum order warning + escape hatches.
+                    Two ways out: change the delivery address (might
+                    resolve to a zone with a lower min) or switch the
+                    order to pickup (typically a much lower min). Both
+                    open the Checkout modal at the right section. */}
                 {orderType === "delivery" && minimumOrderForType > 0 && subtotal < minimumOrderForType && (
-                  <div className="mx-4 mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
-                    {t("addMoreToContinue", { min: formatCurrency(minimumOrderForType), more: formatCurrency(minimumOrderForType - subtotal) })}
+                  <div className="mx-4 mt-3 space-y-2">
+                    <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+                      {t("addMoreToContinue", { min: formatCurrency(minimumOrderForType), more: formatCurrency(minimumOrderForType - subtotal) })}
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => {
+                          setCartOpen(false);
+                          setCheckoutOpen(true);
+                          setEditingSection("ordering");
+                        }}
+                        className="flex-1 text-xs font-semibold py-2 px-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition text-gray-700"
+                      >
+                        Change delivery address
+                      </button>
+                      {restaurant.acceptsPickup && (
+                        <button
+                          onClick={() => {
+                            setOrderType("pickup");
+                          }}
+                          className="flex-1 text-xs font-semibold py-2 px-3 rounded-lg border-2 transition"
+                          style={{
+                            borderColor: theme.primaryColor,
+                            color: theme.primaryColor,
+                            backgroundColor: `${theme.primaryColor}10`,
+                          }}
+                        >
+                          Switch to pickup
+                        </button>
+                      )}
+                    </div>
                   </div>
                 )}
 

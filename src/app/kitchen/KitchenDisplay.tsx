@@ -138,10 +138,23 @@ function StatusBadge({ status, t }: { status: string; t: T }) {
 }
 
 // ── Countdown display ─────────────────────────────────────────────────────────
-function Countdown({ createdAt, now }: { createdAt: string; now: number }) {
+/**
+ * Counts down from 3:00 from the moment the order was RELEASED to the
+ * kitchen (notifiedAt). For cash orders that's the moment of POST; for
+ * online_card orders that's when Stripe confirms payment via webhook.
+ *
+ * Bug fix 2026-05-29: previously used createdAt which made the timer
+ * tick down while the customer was still in Stripe Checkout — kitchens
+ * saw orders arrive already 1:30 into the 3:00 window.
+ *
+ * Falls back to createdAt for old orders that pre-date the notifiedAt
+ * column being populated, so historic rows still show a sensible value.
+ */
+function Countdown({ notifiedAt, createdAt, now }: { notifiedAt: string | null; createdAt: string; now: number }) {
   // Stable placeholder until the client mounts (now === 0) to avoid hydration mismatch.
   if (!now) return <span className="text-xs font-mono text-gray-400">--:--</span>;
-  const ms = 3 * 60 * 1000 - (now - new Date(createdAt).getTime());
+  const reference = notifiedAt ?? createdAt;
+  const ms = 3 * 60 * 1000 - (now - new Date(reference).getTime());
   if (ms <= 0) return <span className="text-xs font-bold text-red-500 animate-pulse">URGENT</span>;
   const m = Math.floor(ms / 60000);
   const s = Math.floor((ms % 60000) / 1000);
@@ -169,8 +182,9 @@ function OrderRow({ order, selected, onClick, t, now }: {
   //     Matches the URGENT countdown badge so kitchen sees a unified
   //     escalation cue.
   const isPending = order.status === "pending";
+  const countdownReference = order.notifiedAt ?? order.createdAt;
   const msLeft = now
-    ? 3 * 60 * 1000 - (now - new Date(order.createdAt).getTime())
+    ? 3 * 60 * 1000 - (now - new Date(countdownReference).getTime())
     : Number.POSITIVE_INFINITY;
   const isUrgent = isPending && msLeft <= 30 * 1000;
   const baseRowClass = selected ? t.rowSelected : isPending ? `${t.rowNew} cursor-pointer` : t.row;
@@ -206,7 +220,7 @@ function OrderRow({ order, selected, onClick, t, now }: {
           <div className="flex items-center gap-2 flex-wrap">
             <span className={`font-bold text-sm ${t.text}`}>#{order.orderNumber}</span>
             <StatusBadge status={order.status} t={t} />
-            {order.status === "pending" && <Countdown createdAt={order.createdAt} now={now} />}
+            {order.status === "pending" && <Countdown notifiedAt={order.notifiedAt} createdAt={order.createdAt} now={now} />}
             {order.viaMarketplace && (
               // Marketplace channel attribution — purple to differentiate
               // from direct widget/walk-up orders. Staff sees at a glance

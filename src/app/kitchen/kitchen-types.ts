@@ -10,6 +10,11 @@ export type Order = {
   deliveryCity: string | null;
   notes: string | null;
   createdAt: string;
+  /** Set when the order is "released" to the kitchen — for cash orders
+   *  immediately on POST, for online_card orders once Stripe confirms
+   *  payment via webhook. Drives the kitchen countdown so the timer
+   *  doesn't start ticking while the customer is still in Checkout. */
+  notifiedAt: string | null;
   acceptedAt: string | null;
   completedAt: string | null;
   rejectedAt: string | null;
