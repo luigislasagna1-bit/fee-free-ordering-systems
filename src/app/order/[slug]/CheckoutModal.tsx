@@ -347,6 +347,7 @@ export function CheckoutModal({
                 )}
                 <div className="grid grid-cols-2 gap-2 pt-3">
                   <input
+                    id="checkout-contact-name"
                     required
                     className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
@@ -355,6 +356,7 @@ export function CheckoutModal({
                     onChange={e => setCustomerInfo({ ...customerInfo, name: e.target.value })}
                   />
                   <input
+                    id="checkout-contact-phone"
                     type="tel"
                     required
                     className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
@@ -364,6 +366,7 @@ export function CheckoutModal({
                     onChange={e => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
                   />
                   <input
+                    id="checkout-contact-email"
                     type="email"
                     required
                     className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
@@ -423,6 +426,7 @@ export function CheckoutModal({
                         options={{ fields: ["address_components", "formatted_address", "geometry"], types: ["address"] }}
                       >
                         <input
+                          id="checkout-delivery-address"
                           type="text" placeholder={tc("startTypingAddress")}
                           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                           style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
@@ -432,6 +436,7 @@ export function CheckoutModal({
                       </Autocomplete>
                     ) : (
                       <input
+                        id="checkout-delivery-address"
                         type="text" placeholder={tc("streetAddressPlaceholder")}
                         className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                         style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}

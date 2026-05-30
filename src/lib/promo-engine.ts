@@ -362,6 +362,20 @@ function calcBogo(promo: PromoInput, ctx: ApplyContext): number {
   if (!paidItems.length) return 0;
   const freeItems = itemsMatchingGroup(freeGroup, ctx.items);
   if (!freeItems.length) return 0;
+  // BOGO requires at least 2 qualifying items in the cart — 1 paid
+  // + 1 free. When the paid and free groups overlap (same items in
+  // both), a SINGLE cart item satisfies both groups and the engine
+  // would BOGO-discount itself. Count the unique qualifying line-items'
+  // quantities and bail out when the total is < 2.
+  // Luigi bug 2026-05-29: BOGO Pizza/Pasta with overlapping drink/salad
+  // groups fired on a single drink because both groups matched it.
+  const qualifyingIds = new Set<string>();
+  for (const it of itemsMatchingGroup(paidGroup, ctx.items)) qualifyingIds.add(it.menuItemId);
+  for (const it of itemsMatchingGroup(freeGroup, ctx.items)) qualifyingIds.add(it.menuItemId);
+  const totalQualifyingQty = ctx.items
+    .filter((i) => qualifyingIds.has(i.menuItemId))
+    .reduce((s, i) => s + i.quantity, 0);
+  if (totalQualifyingQty < 2) return 0;
   return applyGroupDiscount(
     freeItems,
     rules.discountStrategy ?? "cheapest",

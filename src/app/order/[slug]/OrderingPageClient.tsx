@@ -1046,15 +1046,42 @@ export function OrderingPageClient({
     // heartbeat will persist this flag so cart-abandonment reporting
     // can distinguish "browsed only" vs "entered details but didn't pay."
     reachedCheckoutRef.current = true;
-    if (!customerInfo.name || !customerInfo.phone) { toast.error(tT("nameAndPhone")); return; }
+    // Guided validation (Luigi 2026-05-29): when the customer hits Place
+    // Order with a missing field, expand the relevant section + focus
+    // the specific input instead of just popping a toast. Saves the
+    // hunt-and-peck for what's wrong.
+    const focusField = (id: string) => {
+      // Scroll target into view + try to put the caret in it. setTimeout
+      // gives React one tick to render the now-expanded section before
+      // we look up the DOM node.
+      setTimeout(() => {
+        const el = document.getElementById(id) as HTMLInputElement | null;
+        if (!el) return;
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        try { el.focus({ preventScroll: true }); } catch { /* iOS quirks */ }
+      }, 50);
+    };
+    if (!customerInfo.name || !customerInfo.phone) {
+      setEditingSection("contact");
+      focusField(!customerInfo.name ? "checkout-contact-name" : "checkout-contact-phone");
+      toast.error(tT("nameAndPhone"));
+      return;
+    }
     // Email is required — customers need it for order confirmation, receipts,
     // refund handling, and disputes. We also use it as the unique key in our
     // customer DB so we can detect returning vs new customers.
     if (!customerInfo.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerInfo.email)) {
+      setEditingSection("contact");
+      focusField("checkout-contact-email");
       toast.error(tT("emailRequired"));
       return;
     }
-    if (orderType === "delivery" && !customerInfo.address) { toast.error(tT("addressRequired")); return; }
+    if (orderType === "delivery" && !customerInfo.address) {
+      setEditingSection("ordering");
+      focusField("checkout-delivery-address");
+      toast.error(tT("addressRequired"));
+      return;
+    }
     if (cart.length === 0) { toast.error(tT("cartEmpty")); return; }
     setOrderLoading(true);
     try {
@@ -1541,8 +1568,17 @@ export function OrderingPageClient({
                         </span>
                       )}
                       {promo.orderType !== "both" && (
-                        <span className="bg-white/20 backdrop-blur rounded-full px-2 py-0.5">
-                          {promo.orderType === "pickup" ? "🥡 Pickup" : "🚚 Delivery"}
+                        <span
+                          className="bg-white/20 backdrop-blur rounded-full px-2 py-0.5"
+                          title={
+                            promo.orderType === "pickup"
+                              ? "This deal only applies to pickup orders"
+                              : "This deal only applies to delivery orders"
+                          }
+                        >
+                          {promo.orderType === "pickup"
+                            ? "🥡 Pickup only"
+                            : "🚚 Delivery only"}
                         </span>
                       )}
                       {promo.couponCode && (
