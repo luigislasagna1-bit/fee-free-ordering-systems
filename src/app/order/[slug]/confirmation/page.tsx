@@ -140,12 +140,54 @@ export default async function ConfirmationPage({
               );
             } catch { return null; }
           })()}
-          <div className="border-t border-gray-100 mt-3 pt-3 space-y-1 text-sm">
-            <div className="flex justify-between text-gray-600"><span>Subtotal</span><span>{formatCurrency(order.subtotal)}</span></div>
-            {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>Tax</span><span>{formatCurrency(order.taxAmount)}</span></div>}
-            {order.deliveryFee > 0 && <div className="flex justify-between text-gray-600"><span>Delivery</span><span>{formatCurrency(order.deliveryFee)}</span></div>}
-            <div className="flex justify-between font-bold text-gray-900"><span>Total</span><span>{formatCurrency(order.total)}</span></div>
-          </div>
+          {(() => {
+            // Derive savings info from the appliedPromos snapshot so the
+            // line items show "Delivery: ~~$7.99~~ FREE" / a struck-through
+            // discount line. Free-delivery entries carry the saved fee
+            // as their `discount` (stored at order-create time).
+            const promosRaw = (order as any).appliedPromos;
+            let promos: Array<{ name: string; type: string; discount: number; couponCode?: string }> = [];
+            if (promosRaw) {
+              try { const p = JSON.parse(promosRaw); if (Array.isArray(p)) promos = p; } catch { /* ignore */ }
+            }
+            const freeDelivery = promos.find((p) => p.type === "free_delivery");
+            const savedDeliveryFee = freeDelivery ? freeDelivery.discount : 0;
+            const cartDiscountTotal = promos
+              .filter((p) => p.type !== "free_delivery")
+              .reduce((s, p) => s + (p.discount || 0), 0)
+              + ((order as any).couponDiscount ?? 0);
+            const isDelivery = (order as any).type === "delivery";
+            return (
+              <div className="border-t border-gray-100 mt-3 pt-3 space-y-1 text-sm">
+                <div className="flex justify-between text-gray-600"><span>Subtotal</span><span>{formatCurrency(order.subtotal)}</span></div>
+                {cartDiscountTotal > 0 && (
+                  <div className="flex justify-between text-emerald-700 font-medium">
+                    <span>Promo discount</span>
+                    <span>− {formatCurrency(cartDiscountTotal)}</span>
+                  </div>
+                )}
+                {isDelivery && (
+                  <div className="flex justify-between text-gray-600">
+                    <span>Delivery</span>
+                    <span>
+                      {savedDeliveryFee > 0 ? (
+                        <>
+                          <span className="line-through text-gray-400 mr-1.5">
+                            {formatCurrency(savedDeliveryFee)}
+                          </span>
+                          <span className="text-emerald-600 font-semibold">FREE</span>
+                        </>
+                      ) : (
+                        formatCurrency(order.deliveryFee)
+                      )}
+                    </span>
+                  </div>
+                )}
+                {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>Tax</span><span>{formatCurrency(order.taxAmount)}</span></div>}
+                <div className="flex justify-between font-bold text-gray-900"><span>Total</span><span>{formatCurrency(order.total)}</span></div>
+              </div>
+            );
+          })()}
         </div>
 
         <div className="flex flex-col gap-3">

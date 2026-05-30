@@ -419,7 +419,25 @@ function renderCustomerSection(
         r.columns(t("receipt.customer.couponDiscount"), `-${fmt(order.couponDiscount!)}`);
       if ((order.promoDiscount ?? 0) > 0)
         r.columns(t("receipt.customer.promoDiscount"), `-${fmt(order.promoDiscount!)}`);
-      if (order.deliveryFee > 0) r.columns(t("receipt.customer.deliveryFee"), fmt(order.deliveryFee));
+      // Delivery line — when a free-delivery promo was applied, show
+      // the ORIGINAL fee inline ("FREE (was $7.99)") since the bitmap
+      // path also can't render strike-through.
+      {
+        const promosRaw = (order as any).appliedPromos as string | null | undefined;
+        let savedDeliveryFee = 0;
+        if (promosRaw) {
+          try {
+            const promos = JSON.parse(promosRaw) as Array<{ type: string; discount: number }>;
+            const fd = Array.isArray(promos) ? promos.find((p) => p.type === "free_delivery") : null;
+            if (fd && fd.discount > 0) savedDeliveryFee = fd.discount;
+          } catch { /* ignore */ }
+        }
+        if (savedDeliveryFee > 0) {
+          r.columns(t("receipt.customer.deliveryFee"), `FREE (was ${fmt(savedDeliveryFee)})`);
+        } else if (order.deliveryFee > 0) {
+          r.columns(t("receipt.customer.deliveryFee"), fmt(order.deliveryFee));
+        }
+      }
       if (order.appliedServiceFees) {
         try {
           const fees = JSON.parse(order.appliedServiceFees) as { name: string; amount: number }[];

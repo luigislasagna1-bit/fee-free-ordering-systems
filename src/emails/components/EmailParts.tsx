@@ -314,6 +314,7 @@ export function OrderTotals({
   subtotal, taxAmount, deliveryFee, tip, discount, total,
   currency = "$",
   taxLabel = "Tax",
+  savedDeliveryFee,
 }: {
   subtotal: number;
   taxAmount?: number;
@@ -323,6 +324,10 @@ export function OrderTotals({
   total: number;
   currency?: string;
   taxLabel?: string;
+  /** When set + > 0, the customer earned free delivery via a promo.
+   *  Render the line as "FREE (was $X)" instead of "$0.00" so the
+   *  savings are visible inline. */
+  savedDeliveryFee?: number;
 }) {
   const row = (label: string, amount: number, bold = false) => (
     <Row>
@@ -337,9 +342,25 @@ export function OrderTotals({
   return (
     <Section style={{ marginTop: 8, paddingTop: 8, borderTop: `1px solid ${COLORS.border}` }}>
       {row("Subtotal", subtotal)}
-      {!!deliveryFee && deliveryFee > 0 && row("Delivery fee", deliveryFee)}
+      {/* Delivery row: when a free-delivery promo fired, show the strike-
+          through ORIGINAL fee + "FREE" so the savings are unmissable. */}
+      {!!savedDeliveryFee && savedDeliveryFee > 0 ? (
+        <Row>
+          <Column style={{ fontSize: 14, color: COLORS.muted, padding: "4px 0", fontWeight: 400 }}>
+            Delivery fee
+          </Column>
+          <Column style={{ fontSize: 14, textAlign: "right", padding: "4px 0" }}>
+            <span style={{ textDecoration: "line-through", color: "#9ca3af", marginRight: 6 }}>
+              {currency}{savedDeliveryFee.toFixed(2)}
+            </span>
+            <span style={{ color: "#059669", fontWeight: 700 }}>FREE</span>
+          </Column>
+        </Row>
+      ) : (
+        !!deliveryFee && deliveryFee > 0 && row("Delivery fee", deliveryFee)
+      )}
       {!!tip && tip > 0 && row("Tip", tip)}
-      {!!discount && discount > 0 && row("Discount", -discount)}
+      {!!discount && discount > 0 && row("Promo discount", -discount)}
       {!!taxAmount && taxAmount > 0 && row(taxLabel, taxAmount)}
       <div style={{ borderTop: `1px solid ${COLORS.border}`, marginTop: 6, paddingTop: 6 }}>
         {row("Total", total, true)}

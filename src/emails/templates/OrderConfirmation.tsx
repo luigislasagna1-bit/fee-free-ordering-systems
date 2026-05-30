@@ -78,6 +78,10 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
   } = props;
   const cur = currency ?? "$";
   const promoList = Array.isArray(appliedPromos) ? appliedPromos : [];
+  // Pull the saved delivery fee off the free-delivery promo entry (if
+  // one fired) so the totals block can render "Delivery fee: ~~$7.99~~ FREE".
+  const freeDelivery = promoList.find((p) => p.type === "free_delivery");
+  const savedDeliveryFee = freeDelivery ? freeDelivery.discount : 0;
   const orderTypeLabel = ORDER_TYPE_LABEL[orderType] ?? orderType;
   const timeLabel = orderType === "delivery" ? "Estimated delivery" : "Estimated ready";
 
@@ -182,6 +186,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           taxAmount={taxAmount}
           taxLabel={taxLabel}
           deliveryFee={deliveryFee}
+          savedDeliveryFee={savedDeliveryFee}
           tip={tip}
           discount={discount}
           total={total}

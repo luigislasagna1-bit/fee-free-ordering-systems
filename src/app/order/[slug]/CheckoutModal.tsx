@@ -734,14 +734,31 @@ export function CheckoutModal({
                 )}
               </div>
 
-              {/* Totals */}
+              {/* Totals — when a promo is reducing a charge, show the
+                  ORIGINAL amount struck through next to the discounted
+                  value so customers see what they would have paid
+                  without the promo (Luigi feedback 2026-05-29). */}
               <div className="mt-4 pt-3 border-t border-gray-200 space-y-1 text-sm">
                 <div className="flex justify-between text-gray-600"><span>Sub-Total</span><span>{formatCurrency(subtotal)}</span></div>
                 {totalDiscount > 0 && (
-                  <div className="flex justify-between text-green-600 font-medium"><span>{tc("discount")}</span><span>-{formatCurrency(totalDiscount)}</span></div>
+                  <div className="flex justify-between text-green-600 font-medium"><span>{tc("discount")}</span><span>− {formatCurrency(totalDiscount)}</span></div>
                 )}
                 {orderType === "delivery" && (
-                  <div className="flex justify-between text-gray-600"><span>{tc("delivery")}</span><span>{formatCurrency(deliveryFee)}</span></div>
+                  <div className="flex justify-between text-gray-600">
+                    <span>{tc("delivery")}</span>
+                    <span>
+                      {hasFreeDelivery && baseDeliveryFee > 0 ? (
+                        <>
+                          <span className="line-through text-gray-400 mr-1.5">
+                            {formatCurrency(baseDeliveryFee)}
+                          </span>
+                          <span className="text-emerald-600 font-semibold">FREE</span>
+                        </>
+                      ) : (
+                        formatCurrency(deliveryFee)
+                      )}
+                    </span>
+                  </div>
                 )}
                 {appliedServiceFees.map(f => (
                   <div key={f.name} className="flex justify-between text-gray-600">
