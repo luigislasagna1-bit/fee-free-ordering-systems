@@ -8,7 +8,6 @@ import {
   UserCircle, LogIn,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
-import { PROMO_DEFAULT_FALLBACK_URL } from "@/lib/promo-default-images";
 
 /** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
  *  Used by the promo-banner usability-window label so a 12-3 PM lunch
@@ -1470,14 +1469,15 @@ export function OrderingPageClient({
                 promo.minimumOrder > 0
                   ? `${formatCurrency(promo.minimumOrder)} min`
                   : null;
-              // Owner-set imageUrl → render as the card background with a
-              // dark gradient overlay so text stays readable. Falls back
-              // to the first PROMO_DEFAULT_IMAGES entry when no image is
-              // set, so every promo always has a real visual instead of
-              // the plain black box.
-              const resolvedImageUrl =
-                (promo.imageUrl?.trim() || PROMO_DEFAULT_FALLBACK_URL);
-              const hasImage = !!resolvedImageUrl;
+              // Render the owner-set imageUrl as a background-image layer
+              // with a dark gradient overlay for legibility. When no image
+              // is set, fall through to a clean theme-color gradient —
+              // no stock "default image" surprise (Luigi 2026-05-29: stock
+              // SVG fallback wasn't loading reliably on mobile, and the
+              // simpler colored card is what owners expect when they
+              // skip the image picker).
+              const ownerImageUrl = promo.imageUrl?.trim() || null;
+              const hasImage = !!ownerImageUrl;
               return (
                 <div
                   key={promo.id}
@@ -1506,7 +1506,7 @@ export function OrderingPageClient({
                       ? {
                           backgroundImage: [
                             "linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.55) 100%)",
-                            `url("${resolvedImageUrl}")`,
+                            `url("${ownerImageUrl}")`,
                             `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)`,
                           ].join(", "),
                           backgroundSize: "cover, cover, cover",
