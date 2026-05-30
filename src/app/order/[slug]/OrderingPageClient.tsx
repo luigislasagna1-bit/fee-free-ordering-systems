@@ -8,6 +8,7 @@ import {
   UserCircle, LogIn,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
 
 /** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
  *  Used by the promo-banner usability-window label so a 12-3 PM lunch
@@ -130,7 +131,12 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
     );
   }
 
-  // Carousel layout
+  // "Carousel" layout — used to be a single-row horizontal scroller with
+  // arrow buttons. Customers found that hard to navigate on desktop
+  // (clicking small chevrons to reach later items). Now wraps into a
+  // multi-row responsive grid on viewports wide enough to fit 2+
+  // columns; falls back to horizontal scroll only on the very narrowest
+  // screens where a grid would feel cramped. Keeps the same card design.
   return (
     <div ref={onRef as any}>
       <div className="flex items-center gap-3 mb-3 sticky top-0 py-2 z-10" style={{ backgroundColor: theme.backgroundColor }}>
@@ -138,21 +144,45 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
           <img src={cat.imageUrl} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
         )}
         <h2 className="text-lg font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
-        <div className="hidden md:flex gap-1">
-          <button onClick={() => scroll(-1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }}>
+        {/* Mobile-only arrows for the narrow-screen horizontal scroller. */}
+        <div className="flex md:hidden gap-1">
+          <button onClick={() => scroll(-1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }} aria-label="Scroll left">
             <ChevronLeft className="w-4 h-4 text-gray-500" />
           </button>
-          <button onClick={() => scroll(1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }}>
+          <button onClick={() => scroll(1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }} aria-label="Scroll right">
             <ChevronRight className="w-4 h-4 text-gray-500" />
           </button>
         </div>
       </div>
+      {/* Desktop: responsive grid — auto-fills as many ~180px-wide cards
+          as the viewport supports. Customer sees all items at a glance
+          and scrolls vertically (which is what every other ordering site
+          does). The sticky category nav at top still lets them jump. */}
+      <div className="hidden md:grid gap-3 pb-2" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(168px, 1fr))" }}>
+        {cat.menuItems.map((item) => (
+          <CarouselCard key={item.id} item={item} theme={theme} onOpen={onOpen} />
+        ))}
+      </div>
+      {/* Mobile: keep the horizontal scroller — native swipe is the
+          right gesture on a phone. Wheel-to-horizontal-scroll handler
+          lets desktop users with a trackpad swipe naturally too if they
+          shrink their window below md. */}
       <div
         ref={scrollRef}
-        className="flex gap-3 overflow-x-auto pb-2"
+        className="flex md:hidden gap-3 overflow-x-auto pb-2 snap-x"
+        onWheel={(e) => {
+          // Convert vertical wheel deltas into horizontal scroll so a
+          // standard mouse wheel can pan the carousel without clicking
+          // the arrow buttons. shift+wheel naturally already scrolls
+          // horizontally — this just handles the no-shift case.
+          if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+          if (scrollRef.current) {
+            scrollRef.current.scrollBy({ left: e.deltaY, behavior: "auto" });
+          }
+        }}
         style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
       >
-        {cat.menuItems.map(item => (
+        {cat.menuItems.map((item) => (
           <CarouselCard key={item.id} item={item} theme={theme} onOpen={onOpen} />
         ))}
       </div>
@@ -354,6 +384,10 @@ export function OrderingPageClient({
   const t = useTranslations("ordering");
   const tT = useTranslations("ordering.toasts");
   const theme = parseTheme(themeSettings);
+  // Owner's chosen clock display format ("12h" → AM/PM, "24h" → 14:30).
+  // Applied wherever times are shown to customers: header hours, info
+  // page, promo usable hours, schedule-for-later picker.
+  const hoursFmt: HoursFormat = restaurant.hoursFormat === "12h" ? "12h" : "24h";
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -1368,7 +1402,9 @@ export function OrderingPageClient({
             <div className="px-4 py-2 text-xs">
               <span className={`flex items-center gap-1.5 ${todayHours.isOpen ? "text-green-600" : "text-red-600"}`}>
                 <Clock className="w-3.5 h-3.5" />
-                {todayHours.isOpen ? `${t("open")} · ${todayHours.openTime} – ${todayHours.closeTime}` : t("closedToday")}
+                {todayHours.isOpen
+                  ? `${t("open")} · ${formatHHMM(todayHours.openTime, hoursFmt)} – ${formatHHMM(todayHours.closeTime, hoursFmt)}`
+                  : t("closedToday")}
               </span>
             </div>
           </div>
@@ -1385,7 +1421,9 @@ export function OrderingPageClient({
             {todayHours && (
               <span className={`flex items-center gap-1.5 ${todayHours.isOpen ? "text-green-600" : "text-red-600"}`}>
                 <Clock className="w-4 h-4" />
-                {todayHours.isOpen ? `${t("open")}: ${todayHours.openTime} – ${todayHours.closeTime}` : t("closedToday")}
+                {todayHours.isOpen
+                  ? `${t("open")}: ${formatHHMM(todayHours.openTime, hoursFmt)} – ${formatHHMM(todayHours.closeTime, hoursFmt)}`
+                  : t("closedToday")}
               </span>
             )}
             <div className="ml-auto flex items-center gap-2">
@@ -1490,7 +1528,7 @@ export function OrderingPageClient({
                 typeof promo.usableHourStart === "number" &&
                 typeof promo.usableHourEnd === "number";
               const usableWindowLabel = hasUsableWindow
-                ? `${minutesToHHMM(promo.usableHourStart!)}–${minutesToHHMM(promo.usableHourEnd!)}`
+                ? `${formatMinutes(promo.usableHourStart!, hoursFmt)}–${formatMinutes(promo.usableHourEnd!, hoursFmt)}`
                 : null;
               const minOrderLabel =
                 promo.minimumOrder > 0

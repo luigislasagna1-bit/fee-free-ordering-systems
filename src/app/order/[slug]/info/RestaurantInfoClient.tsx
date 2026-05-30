@@ -13,12 +13,10 @@ import { useTranslations } from "next-intl";
 
 const DeliveryZonesMap = dynamic(() => import("../DeliveryZonesMap"), { ssr: false });
 
-function formatTime(t: string) {
-  if (!t) return "";
-  const [h, m] = t.split(":").map(Number);
-  const ampm = h >= 12 ? "PM" : "AM";
-  const hour = h % 12 || 12;
-  return `${hour}:${m.toString().padStart(2, "0")} ${ampm}`;
+import { formatTime as fmt, type HoursFormat } from "@/lib/format-time";
+
+function formatTime(t: string, hoursFmt: HoursFormat = "24h") {
+  return fmt(t, hoursFmt);
 }
 
 interface OpeningHour {
@@ -79,6 +77,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
   const [sending, setSending] = useState(false);
 
   const theme = parseTheme(restaurant.themeSettings);
+  const hoursFmt: HoursFormat = (restaurant as any).hoursFormat === "12h" ? "12h" : "24h";
 
   // Parse serviceSettings for display names and descriptions
   let svcSettings: Record<string, { displayName?: string; description?: string; estimatedTime?: number }> = {};
@@ -185,7 +184,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
             <Clock className="w-4 h-4 flex-shrink-0" />
             <span>
               {todayHours.isOpen
-                ? `${tInfo("open")} · ${formatTime(todayHours.openTime)} – ${formatTime(todayHours.closeTime)}`
+                ? `${tInfo("open")} · ${formatTime(todayHours.openTime, hoursFmt)} – ${formatTime(todayHours.closeTime, hoursFmt)}`
                 : tInfo("closedToday")}
             </span>
           </div>
@@ -209,7 +208,7 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
                   <span>{tInfo(`days.${h.dayOfWeek}`)}</span>
                   <span>
                     {h.isOpen
-                      ? `${formatTime(h.openTime)} – ${formatTime(h.closeTime)}`
+                      ? `${formatTime(h.openTime, hoursFmt)} – ${formatTime(h.closeTime, hoursFmt)}`
                       : <span className="text-red-500">{tInfo("closed")}</span>}
                   </span>
                 </div>
