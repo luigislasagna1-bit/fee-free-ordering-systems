@@ -393,6 +393,7 @@ export function OrderingPageClient({
   isEmbedded = false,
   acceptedMethods = ["cash"],
   fromHostedSite = false,
+  hostedSiteBackUrl,
   promoBanners = [],
   currentCustomer = null,
 }: {
@@ -466,6 +467,10 @@ export function OrderingPageClient({
    *  marketing page). Show a "Back to <restaurant>'s site" breadcrumb
    *  at the top so they're not stuck on /order with no way back. */
   fromHostedSite?: boolean;
+  /** Pre-computed URL the back-link should point at. On a branded host
+   *  this is just "/" (proxy rewrites it to the hosted site root); on
+   *  the platform domain it's the explicit `/site/${slug}` path. */
+  hostedSiteBackUrl?: string;
 }) {
   const t = useTranslations("ordering");
   const tT = useTranslations("ordering.toasts");
@@ -1678,7 +1683,7 @@ export function OrderingPageClient({
       {fromHostedSite && !isEmbedded && !fromMarketplace && (
         <div className="bg-white border-b border-gray-200 px-4 py-2 flex items-center gap-2 text-xs sm:text-sm">
           <a
-            href={`/site/${restaurant.slug}`}
+            href={hostedSiteBackUrl ?? `/site/${restaurant.slug}`}
             className="inline-flex items-center gap-1.5 text-gray-700 hover:text-gray-900 hover:underline font-medium"
           >
             <span aria-hidden="true">←</span>

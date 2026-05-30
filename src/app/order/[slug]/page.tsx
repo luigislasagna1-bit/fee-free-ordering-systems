@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { OrderingPageClient } from "./OrderingPageClient";
@@ -34,7 +34,36 @@ export default async function OrderingPage({
   // Sales Optimized Website (subdomain marketing page). Used to render
   // a "Back to <Restaurant>'s site" breadcrumb so the customer isn't
   // stuck on /order with no way back to the page they were just on.
-  const fromHostedSite = sp.from === "hosted";
+  //
+  // We ALSO treat any request landing on a branded host (custom domain
+  // OR subdomain — i.e. anything that's not the canonical platform
+  // domain) as "from hosted site" by default. Without this, a customer
+  // who pastes the order URL on luigispizzapastawings.com or bookmarks
+  // it directly never sees the back-link even though there IS a
+  // marketing site sitting at `/` of the same host (Luigi audit
+  // 2026-05-30). The query-string path stays as an explicit override
+  // for analytics / referrer cases.
+  const hdrs = await headers();
+  const host = (hdrs.get("host") || "").toLowerCase();
+  const platformDomain = (process.env.PLATFORM_DOMAIN || "feefreeordering.com").toLowerCase();
+  const marketplaceDomain = (process.env.MARKETPLACE_DOMAIN || "feefreefood.com").toLowerCase();
+  const appSubdomain = `app.${platformDomain}`;
+  const isBrandedHost =
+    !!host &&
+    host !== platformDomain &&
+    host !== `www.${platformDomain}` &&
+    host !== marketplaceDomain &&
+    host !== `www.${marketplaceDomain}` &&
+    host !== appSubdomain &&
+    !host.startsWith("localhost") &&
+    !host.startsWith("127.0.0.1");
+  const fromHostedSite = sp.from === "hosted" || isBrandedHost;
+  // Compute the back-link URL. On a branded host (luigispizzapastawings.com,
+  // luigis.feefreeordering.com), the proxy rewrites `/` to `/site/${slug}`
+  // so the cleanest link is just `/`. On the platform domain the
+  // customer needs the explicit `/site/${slug}` path because `/` would
+  // take them to the marketing root instead.
+  const hostedSiteBackUrl = isBrandedHost ? "/" : `/site/${slug}`;
 
   // 1) Load the restaurant the customer is ordering FROM (the location).
   // Hours, delivery zones, fees etc. are always per-location — never inherited.
@@ -291,6 +320,7 @@ export default async function OrderingPage({
         isEmbedded={isEmbedded}
         acceptedMethods={acceptedMethods}
         fromHostedSite={fromHostedSite}
+        hostedSiteBackUrl={hostedSiteBackUrl}
         promoBanners={promoBanners}
         currentCustomer={currentCustomer
           ? {
