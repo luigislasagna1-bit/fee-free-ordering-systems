@@ -2300,6 +2300,26 @@ export function OrderingPageClient({
                   {taxAmount > 0 && (
                     <div className="flex justify-between text-gray-600"><span>{t("tax")} ({restaurant.taxRate}%)</span><span>{formatCurrency(taxAmount)}</span></div>
                   )}
+                  {/* Tip — the cart's running total folds in the default
+                      suggested 15% tip until the customer overrides it in
+                      checkout, which used to create a confusing gap
+                      between (subtotal − promo + tax) and Total. Surface
+                      the tip line whenever it's contributing so every
+                      number in the breakdown reconciles. Luigi audit
+                      2026-05-30: "totals don't make sense here." */}
+                  {tipAmount > 0 && (
+                    <div className="flex justify-between text-gray-600">
+                      <span>
+                        {t("tip")}
+                        {tipPercent > 0 && (
+                          <span className="text-xs text-gray-400 ml-1">
+                            ({tipPercent}%)
+                          </span>
+                        )}
+                      </span>
+                      <span>{formatCurrency(tipAmount)}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-100 mt-1"><span>{t("total")}</span><span>{formatCurrency(total)}</span></div>
                 </div>
 
