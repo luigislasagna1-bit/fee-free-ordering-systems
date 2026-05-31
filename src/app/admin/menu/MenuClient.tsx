@@ -78,6 +78,14 @@ type PizzaFormState = {
   variantToppingPrices: Record<string, string>;
   halfToppingMultiplier: string;
   extraQuantityMultiplier: string;
+  /** Display order of customer-side sections (size, half/half toggle,
+   *  modifier groups). Each entry is "section:size",
+   *  "section:halfHalfToggle", "section:toppings", or a library-group
+   *  id. Empty array = legacy hardcoded order. */
+  sectionOrder: string[];
+  /** Pizza roles that expose the customer-side Whole/Split toggle.
+   *  Defaults to all three when undefined (legacy behaviour). */
+  halfHalfRoles: Array<"sauce" | "cheese" | "toppings">;
 };
 
 function parsePizzaForm(json?: string): PizzaFormState {
@@ -97,7 +105,169 @@ function parsePizzaForm(json?: string): PizzaFormState {
       : {},
     halfToppingMultiplier: String(p?.halfToppingMultiplier ?? "0.5"),
     extraQuantityMultiplier: String(p?.extraQuantityMultiplier ?? "0"),
+    sectionOrder: Array.isArray(p?.sectionOrder)
+      ? p.sectionOrder.filter((x: unknown): x is string => typeof x === "string")
+      : [],
+    halfHalfRoles: Array.isArray(p?.halfHalfRoles)
+      ? p.halfHalfRoles.filter((r: unknown): r is "sauce" | "cheese" | "toppings" =>
+          r === "sauce" || r === "cheese" || r === "toppings",
+        )
+      : ["sauce", "cheese", "toppings"],
   };
+}
+
+// ─── Pizza Section Order Editor ───────────────────────────────────────────────
+// Compact controls that let owners reorder Pizza Builder sections and flip
+// per-role half/half. Sits inside the Pizza tab of the item modal. Uses
+// up/down arrows rather than drag-and-drop because the ItemModal is already
+// inside a flexbox column and stacking another DndContext inside it would
+// fight with the parent menu's scroll/drag handling.
+const SECTION_SIZE = "section:size";
+const SECTION_HALF_HALF = "section:halfHalfToggle";
+const SECTION_TOPPINGS = "section:toppings";
+
+function PizzaSectionOrderEditor({
+  item, pizza, setPizza, libraryGroups, hasVariants,
+}: {
+  item?: MenuItem;
+  pizza: PizzaFormState;
+  setPizza: React.Dispatch<React.SetStateAction<PizzaFormState>>;
+  libraryGroups: ModifierGroup[];
+  hasVariants: boolean;
+}) {
+  // The set of section IDs the customer-side will render for this item,
+  // in the legacy default order. Same logic as the customer-side
+  // computation but driven from form state + libraryGroups.
+  const defaultOrder: string[] = (() => {
+    const def: string[] = [];
+    if (hasVariants) def.push(SECTION_SIZE);
+    if (pizza.crustGroupId) def.push(pizza.crustGroupId);
+    // "Other" groups are the item's attached modifier groups that
+    // aren't playing a pizza role. They reflect the current DB state
+    // — the item must be saved at least once for these to appear, so
+    // brand-new items won't show them until after first save.
+    if (item) {
+      const roleIds = new Set<string>([
+        pizza.crustGroupId,
+        pizza.sauceGroupId,
+        pizza.cheeseGroupId,
+        ...pizza.toppingGroupIds,
+      ].filter(Boolean));
+      for (const g of item.modifierGroups) {
+        const libId = g.libraryGroupId ?? g.id;
+        if (!roleIds.has(libId)) def.push(libId);
+      }
+    }
+    if (pizza.allowHalfHalf) def.push(SECTION_HALF_HALF);
+    if (pizza.sauceGroupId) def.push(pizza.sauceGroupId);
+    if (pizza.cheeseGroupId) def.push(pizza.cheeseGroupId);
+    if (pizza.toppingGroupIds.length > 0) def.push(SECTION_TOPPINGS);
+    return def;
+  })();
+
+  const effectiveOrder: string[] = pizza.sectionOrder.length > 0
+    ? (() => {
+        const inUser = new Set(pizza.sectionOrder);
+        const tail = defaultOrder.filter(id => !inUser.has(id));
+        return [...pizza.sectionOrder.filter(id => defaultOrder.includes(id)), ...tail];
+      })()
+    : defaultOrder;
+
+  const labelFor = (id: string): string => {
+    if (id === SECTION_SIZE) return "Size selection";
+    if (id === SECTION_HALF_HALF) return "Half & Half toggle";
+    if (id === SECTION_TOPPINGS) return "Toppings";
+    // Match by id OR libraryGroupId (importer-created instances point
+    // to the library row via libraryGroupId).
+    const lib = libraryGroups.find(g => g.id === id);
+    if (lib) return lib.name;
+    return "(Unknown section)";
+  };
+
+  const roleFor = (id: string): "sauce" | "cheese" | "toppings" | null => {
+    if (id === pizza.sauceGroupId) return "sauce";
+    if (id === pizza.cheeseGroupId) return "cheese";
+    if (id === SECTION_TOPPINGS) return "toppings";
+    return null;
+  };
+
+  const move = (idx: number, dir: -1 | 1) => {
+    const newIdx = idx + dir;
+    if (newIdx < 0 || newIdx >= effectiveOrder.length) return;
+    const next = [...effectiveOrder];
+    [next[idx], next[newIdx]] = [next[newIdx], next[idx]];
+    setPizza(p => ({ ...p, sectionOrder: next }));
+  };
+
+  const resetOrder = () => setPizza(p => ({ ...p, sectionOrder: [] }));
+
+  const toggleRoleHalfHalf = (role: "sauce" | "cheese" | "toppings") => {
+    setPizza(p => ({
+      ...p,
+      halfHalfRoles: p.halfHalfRoles.includes(role)
+        ? p.halfHalfRoles.filter(r => r !== role)
+        : [...p.halfHalfRoles, role],
+    }));
+  };
+
+  return (
+    <div className="border-t pt-4 space-y-3">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Customer Display Order</p>
+          <p className="text-xs text-gray-400 mt-0.5">Reorder how sections appear in the Pizza Builder. Toggle Half/Half for Sauce / Cheese / Toppings.</p>
+        </div>
+        {pizza.sectionOrder.length > 0 && (
+          <button type="button" onClick={resetOrder}
+            className="text-xs text-gray-500 hover:text-gray-700 underline">
+            Reset to default
+          </button>
+        )}
+      </div>
+      <div className="space-y-1.5 border border-gray-200 rounded-lg p-2 bg-gray-50">
+        {effectiveOrder.length === 0 && (
+          <p className="text-xs text-gray-400 text-center py-3">
+            Pick role groups above (Crust / Sauce / Cheese / Toppings) — sections will show up here once selected.
+          </p>
+        )}
+        {effectiveOrder.map((id, i) => {
+          const role = roleFor(id);
+          const halfHalfOn = role ? pizza.halfHalfRoles.includes(role) : false;
+          return (
+            <div key={id} className="flex items-center gap-2 bg-white border border-gray-100 rounded-md px-2 py-1.5">
+              <div className="flex flex-col gap-0.5">
+                <button type="button" onClick={() => move(i, -1)}
+                  disabled={i === 0}
+                  className="text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+                  title="Move up">
+                  <ChevronUp className="w-3.5 h-3.5" />
+                </button>
+                <button type="button" onClick={() => move(i, 1)}
+                  disabled={i === effectiveOrder.length - 1}
+                  className="text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+                  title="Move down">
+                  <ChevronDown className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <span className="text-xs font-mono text-gray-300 w-5">{i + 1}.</span>
+              <span className="text-sm text-gray-800 flex-1 truncate">{labelFor(id)}</span>
+              {role && pizza.allowHalfHalf && (
+                <label className="flex items-center gap-1.5 cursor-pointer text-xs text-gray-600 px-2 py-0.5 rounded hover:bg-gray-50">
+                  <input
+                    type="checkbox"
+                    className="w-3.5 h-3.5 accent-emerald-500"
+                    checked={halfHalfOn}
+                    onChange={() => toggleRoleHalfHalf(role)}
+                  />
+                  Half/Half
+                </label>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 function ConfirmModal({ title, message, confirmLabel = "Delete", onConfirm, onCancel }: {
@@ -206,6 +376,17 @@ function ItemModal({
             : undefined,
           halfToppingMultiplier: parseFloat(pizza.halfToppingMultiplier) || 0.5,
           extraQuantityMultiplier: parseFloat(pizza.extraQuantityMultiplier) || 0,
+          // Persist only when non-empty / non-default so older items
+          // without these fields stay clean.
+          sectionOrder: pizza.sectionOrder.length > 0 ? pizza.sectionOrder : undefined,
+          halfHalfRoles: (() => {
+            const all = ["sauce", "cheese", "toppings"] as const;
+            // Match the legacy default → omit the field so customer-side
+            // falls back to the "every role supports half/half" branch.
+            const isDefault = all.every(r => pizza.halfHalfRoles.includes(r))
+              && pizza.halfHalfRoles.length === all.length;
+            return isDefault ? undefined : pizza.halfHalfRoles;
+          })(),
         })
       : null;
     const payload = {
@@ -489,6 +670,19 @@ function ItemModal({
                       </div>
                     </div>
                   </div>
+
+                  {/* Section Order & Half/Half — customer-side layout
+                      controls. Owner reorders how sections appear in the
+                      Pizza Builder modal and flips half/half capability
+                      per role. Saves to pizzaConfig.sectionOrder and
+                      pizzaConfig.halfHalfRoles. */}
+                  <PizzaSectionOrderEditor
+                    item={item}
+                    pizza={pizza}
+                    setPizza={setPizza}
+                    libraryGroups={libraryGroups}
+                    hasVariants={form.hasVariants}
+                  />
 
                   {/* Pricing engine */}
                   <div className="border-t pt-4 space-y-3">
