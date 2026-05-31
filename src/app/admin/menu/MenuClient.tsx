@@ -127,13 +127,19 @@ const SECTION_HALF_HALF = "section:halfHalfToggle";
 const SECTION_TOPPINGS = "section:toppings";
 
 function PizzaSectionOrderEditor({
-  item, pizza, setPizza, libraryGroups, hasVariants,
+  item, pizza, setPizza, libraryGroups, hasVariants, categoryModGroups,
 }: {
   item?: MenuItem;
   pizza: PizzaFormState;
   setPizza: React.Dispatch<React.SetStateAction<PizzaFormState>>;
   libraryGroups: ModifierGroup[];
   hasVariants: boolean;
+  /** Modifier groups attached to the item's parent category. These are
+   *  "inherited" by every item in the category (Pizza 1 Crust, How Well
+   *  Cooked? etc shared across PIZZAS). The customer-side Pizza Builder
+   *  renders them as their own sections too, so the owner must be able
+   *  to reorder them from here. */
+  categoryModGroups: ModifierGroup[];
 }) {
   // The set of section IDs the customer-side will render for this item,
   // in the legacy default order. Same logic as the customer-side
@@ -142,21 +148,35 @@ function PizzaSectionOrderEditor({
     const def: string[] = [];
     if (hasVariants) def.push(SECTION_SIZE);
     if (pizza.crustGroupId) def.push(pizza.crustGroupId);
-    // "Other" groups are the item's attached modifier groups that
-    // aren't playing a pizza role. They reflect the current DB state
-    // — the item must be saved at least once for these to appear, so
-    // brand-new items won't show them until after first save.
+    // "Other" groups are modifier groups that aren't playing a pizza
+    // role. They come from two sources:
+    //   (a) attached directly to the item — item.modifierGroups
+    //   (b) inherited from the parent category — categoryModGroups
+    // Both render as their own sections in the customer-side Pizza
+    // Builder, so the owner needs to be able to reorder them from
+    // here. We dedupe by canonical library id (or instance id when no
+    // library id) so the same group isn't listed twice when it's both
+    // attached AND inherited (rare but possible after the Pizza
+    // Builder dropdowns auto-attach a category-shared group).
+    const roleIds = new Set<string>([
+      pizza.crustGroupId,
+      pizza.sauceGroupId,
+      pizza.cheeseGroupId,
+      ...pizza.toppingGroupIds,
+    ].filter(Boolean));
+    const seenOther = new Set<string>();
+    const pushOtherGroup = (g: ModifierGroup) => {
+      const libId = g.libraryGroupId ?? g.id;
+      if (roleIds.has(libId) || seenOther.has(libId)) return;
+      seenOther.add(libId);
+      def.push(libId);
+    };
+    // Category-level shared groups first — they're the source-of-truth
+    // for inherited chips and we want them to default-order BEFORE the
+    // item-specific ones (matches how they render today).
+    for (const g of categoryModGroups) pushOtherGroup(g);
     if (item) {
-      const roleIds = new Set<string>([
-        pizza.crustGroupId,
-        pizza.sauceGroupId,
-        pizza.cheeseGroupId,
-        ...pizza.toppingGroupIds,
-      ].filter(Boolean));
-      for (const g of item.modifierGroups) {
-        const libId = g.libraryGroupId ?? g.id;
-        if (!roleIds.has(libId)) def.push(libId);
-      }
+      for (const g of item.modifierGroups) pushOtherGroup(g);
     }
     if (pizza.allowHalfHalf) def.push(SECTION_HALF_HALF);
     if (pizza.sauceGroupId) def.push(pizza.sauceGroupId);
@@ -177,10 +197,17 @@ function PizzaSectionOrderEditor({
     if (id === SECTION_SIZE) return "Size selection";
     if (id === SECTION_HALF_HALF) return "Half & Half toggle";
     if (id === SECTION_TOPPINGS) return "Toppings";
-    // Match by id OR libraryGroupId (importer-created instances point
-    // to the library row via libraryGroupId).
+    // Look up across library, category, and item-level groups since
+    // section ids resolve to whatever canonical id the chip uses:
+    //   - libraryGroupId for groups created via the importer/library
+    //   - the instance id for ad-hoc attachments that have no library
+    // Walking all three covers every shape.
     const lib = libraryGroups.find(g => g.id === id);
     if (lib) return lib.name;
+    const cat = categoryModGroups.find(g => g.id === id || g.libraryGroupId === id);
+    if (cat) return cat.name;
+    const it = item?.modifierGroups.find(g => g.id === id || g.libraryGroupId === id);
+    if (it) return it.name;
     return "(Unknown section)";
   };
 
@@ -757,6 +784,7 @@ function ItemModal({
                     setPizza={setPizza}
                     libraryGroups={libraryGroups}
                     hasVariants={form.hasVariants}
+                    categoryModGroups={categories.find(c => c.id === categoryId)?.modifierGroups ?? []}
                   />
 
                   {/* Pricing engine */}
