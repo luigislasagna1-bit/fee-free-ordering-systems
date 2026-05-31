@@ -1244,6 +1244,25 @@ export function OrderingPageClient({
     }
   };
 
+  /**
+   * Per-option quantity setter, used when group.maxPerOption > 1 (i.e. the
+   * same option can be selected multiple times — "2× So Good Chocolate
+   * Cake" inside a 2-slice combo group, "3× Pepperoni" on a topping that
+   * allows stacking, etc.). Duplicates are stored as repeated entries in
+   * the mods array, which getModPrice and the API payload both handle
+   * natively. Caps at maxPerOption per option AND at maxSelect total
+   * across the whole group (counting duplicates).
+   */
+  const setOptionQty = (group: ModGroup, optId: string, newQty: number) => {
+    const current = mods[group.id] || [];
+    const otherIds = current.filter(id => id !== optId);
+    const perCap = Math.max(1, group.maxPerOption ?? 1);
+    const totalRoom = Math.max(0, group.maxSelect - otherIds.length);
+    const finalQty = Math.max(0, Math.min(newQty, perCap, totalRoom));
+    const next = finalQty === 0 ? otherIds : [...otherIds, ...Array(finalQty).fill(optId)];
+    setMods({ ...mods, [group.id]: next });
+  };
+
   const currentItemPrice = selectedItem
     ? (selectedVariant ? selectedVariant.price : selectedItem.price) + getModPrice(selectedItem, mods)
     : 0;
@@ -2127,30 +2146,93 @@ export function OrderingPageClient({
                   </div>
                   {group.description && <p className="text-xs text-gray-400 mb-2">{group.description}</p>}
                   <div className="space-y-2">
-                    {group.options.filter(o => o.isAvailable).map(opt => {
-                      const selected = (mods[group.id] || []).includes(opt.id);
-                      const disabled = !selected && atMax;
-                      return (
-                        <label
-                          key={opt.id}
-                          className={`flex items-center justify-between p-3 rounded-xl border-2 transition ${disabled ? "opacity-40 cursor-not-allowed border-gray-100" : "cursor-pointer"}`}
-                          style={!disabled && selected
-                            ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}12` }
-                            : !disabled ? { borderColor: "#f3f4f6" } : {}
-                          }
-                        >
-                          <div className="flex items-center gap-3">
-                            <input type={group.maxSelect === 1 ? "radio" : "checkbox"} checked={selected}
-                              disabled={disabled}
-                              onChange={() => !disabled && toggleMod(group, opt.id)} style={{ accentColor: theme.primaryColor }} />
-                            <span className="text-sm text-gray-800">{opt.name}</span>
-                          </div>
-                          {opt.priceAdjustment !== 0 && (
-                            <span className="text-sm text-gray-500">+{formatCurrency(opt.priceAdjustment)}</span>
-                          )}
-                        </label>
-                      );
-                    })}
+                    {(() => {
+                      // Pick rendering mode once for the whole group:
+                      //   - allowsQty (maxPerOption > 1) → stepper per option
+                      //   - else → radio/checkbox per option (original)
+                      const allowsQty = (group.maxPerOption ?? 1) > 1;
+                      const perCap = Math.max(1, group.maxPerOption ?? 1);
+                      return group.options.filter(o => o.isAvailable).map(opt => {
+                        const currentArr = mods[group.id] || [];
+                        const optCount = currentArr.filter(id => id === opt.id).length;
+                        if (allowsQty) {
+                          // Stepper mode — picking "+" adds another copy of
+                          // this option to the mods array. The label row
+                          // becomes interactive only via the +/- buttons so
+                          // we don't toggle on label click.
+                          const canInc = optCount < perCap && !atMax;
+                          const canDec = optCount > 0;
+                          const selected = optCount > 0;
+                          return (
+                            <div
+                              key={opt.id}
+                              className="flex items-center justify-between p-3 rounded-xl border-2 transition"
+                              style={selected
+                                ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}12` }
+                                : { borderColor: "#f3f4f6" }
+                              }
+                            >
+                              <div className="flex items-center gap-3 min-w-0 flex-1">
+                                <span className="text-sm text-gray-800 truncate">{opt.name}</span>
+                                {opt.priceAdjustment !== 0 && (
+                                  <span className="text-xs text-gray-500 flex-shrink-0">+{formatCurrency(opt.priceAdjustment)} each</span>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+                                <button
+                                  type="button"
+                                  aria-label={`Remove one ${opt.name}`}
+                                  onClick={() => setOptionQty(group, opt.id, optCount - 1)}
+                                  disabled={!canDec}
+                                  className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed transition"
+                                >
+                                  <Minus className="w-3.5 h-3.5" />
+                                </button>
+                                <span
+                                  className="w-6 text-center font-semibold tabular-nums text-sm"
+                                  style={{ color: selected ? theme.primaryColor : "#9ca3af" }}
+                                >
+                                  {optCount}
+                                </span>
+                                <button
+                                  type="button"
+                                  aria-label={`Add one ${opt.name}`}
+                                  onClick={() => setOptionQty(group, opt.id, optCount + 1)}
+                                  disabled={!canInc}
+                                  className="w-8 h-8 rounded-full border flex items-center justify-center text-white hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                                  style={{ backgroundColor: canInc ? theme.primaryColor : "#d1d5db", borderColor: canInc ? theme.primaryColor : "#d1d5db" }}
+                                >
+                                  <Plus className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        }
+                        // Single-pick mode (original behaviour)
+                        const selected = optCount > 0;
+                        const disabled = !selected && atMax;
+                        return (
+                          <label
+                            key={opt.id}
+                            className={`flex items-center justify-between p-3 rounded-xl border-2 transition ${disabled ? "opacity-40 cursor-not-allowed border-gray-100" : "cursor-pointer"}`}
+                            style={!disabled && selected
+                              ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}12` }
+                              : !disabled ? { borderColor: "#f3f4f6" } : {}
+                            }
+                          >
+                            <div className="flex items-center gap-3">
+                              <input type={group.maxSelect === 1 ? "radio" : "checkbox"} checked={selected}
+                                disabled={disabled}
+                                onChange={() => !disabled && toggleMod(group, opt.id)} style={{ accentColor: theme.primaryColor }} />
+                              <span className="text-sm text-gray-800">{opt.name}</span>
+                            </div>
+                            {opt.priceAdjustment !== 0 && (
+                              <span className="text-sm text-gray-500">+{formatCurrency(opt.priceAdjustment)}</span>
+                            )}
+                          </label>
+                        );
+                      });
+                    })()}
                   </div>
                 </div>
               );
