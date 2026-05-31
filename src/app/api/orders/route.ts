@@ -134,10 +134,20 @@ export async function POST(req: NextRequest) {
       include: {
         variants: true,
         modifierGroups: { include: { options: { where: { isAvailable: true } } } },
-        // Pull the parent category's catering flag — an item is treated
-        // as catering if EITHER its own isCatering is true OR its
-        // category.isCatering is true.
-        category: { select: { isCatering: true } },
+        // Pull the parent category's catering flag AND its category-level
+        // shared modifier groups. Categories can carry modifier groups
+        // shared across every item in the category (e.g. "Pizza 1 Crust"
+        // shared by every pizza in PIZZAS). Without including these the
+        // validator below rejects valid category-modifier option IDs as
+        // "Invalid modifier option" because they don't appear in
+        // menuItem.modifierGroups. Surfaced by Luigi 2026-05-30 right
+        // after the GloriaFood importer first populated category groups.
+        category: {
+          select: {
+            isCatering: true,
+            modifierGroups: { include: { options: { where: { isAvailable: true } } } },
+          },
+        },
       },
     });
     const menuItemMap = new Map(menuItems.map((m) => [m.id, m]));
@@ -259,10 +269,19 @@ export async function POST(req: NextRequest) {
       const validatedMods: Array<{ modifierOptionId: string; name: string; priceAdjustment: number }> = [];
       const rawMods: any[] = Array.isArray(raw.modifiers) ? raw.modifiers : [];
 
+      // Search both item-level groups (menuItem.modifierGroups — covers
+      // item-scoped AND variant-scoped because both have menuItemId set)
+      // AND category-level shared groups. Category-level groups are how
+      // platforms like GloriaFood model "every pizza shares the same
+      // Crust + Cooked options" without duplicating onto each item.
+      const candidateGroups = [
+        ...menuItem.modifierGroups,
+        ...((menuItem.category as any)?.modifierGroups ?? []),
+      ];
       for (const rawMod of rawMods) {
         let found = false;
-        for (const group of menuItem.modifierGroups) {
-          const opt = group.options.find((o) => o.id === rawMod.modifierOptionId);
+        for (const group of candidateGroups) {
+          const opt = group.options.find((o: any) => o.id === rawMod.modifierOptionId);
           if (opt) {
             modTotal += opt.priceAdjustment;
             // Prefer the client-supplied display name when present — this is how
