@@ -903,15 +903,25 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
   // ── Validation ───────────────────────────────────────────────────────────
   const crustMissing = !!(crustGroup?.required && !customization.crustOptionId);
 
-  // Sauce: when half/half, both halves must be set if the group is required;
-  // when whole, the single sauce must be set.
+  // Sauce / Cheese: the per-section sauceMode / cheeseMode state is the
+  // source of truth for which selection counts. When the customer is in
+  // "split" mode AND the group supports half/half, both halves must be
+  // set; otherwise the single whole-pizza pick satisfies the group. The
+  // old check ignored sauceMode and required left+right whenever the
+  // master Half/Half toggle was on — so a customer who picked "Pizza
+  // Sauce" in Whole mode still saw "Please choose sauce to continue."
+  // Surfaced by Luigi 2026-05-31 on Build Your Own Pizza.
+  const sauceSplit = customization.isHalfHalf && sauceMode === "split"
+    && groupSupportsHalfHalf(sauceGroup, config, "sauce");
+  const cheeseSplit = customization.isHalfHalf && cheeseMode === "split"
+    && groupSupportsHalfHalf(cheeseGroup, config, "cheese");
   const sauceMissing = !!(sauceGroup?.required) && (
-    customization.isHalfHalf
+    sauceSplit
       ? !customization.leftSauceOptionId || !customization.rightSauceOptionId
       : !customization.sauceOptionId
   );
   const cheeseMissing = !!(cheeseGroup?.required) && (
-    customization.isHalfHalf
+    cheeseSplit
       ? !customization.leftCheeseOptionId || !customization.rightCheeseOptionId
       : !customization.cheeseOptionId
   );
