@@ -715,8 +715,22 @@ function ModifierModal({
 
 // ─── Modifier Chip ────────────────────────────────────────────────────────────
 
-function ModifierChip({ group, inherited, onRemove, sortable }: {
-  group: ModifierGroup; inherited?: boolean; onRemove?: () => void;
+function ModifierChip({ group, inherited, categoryLevel, onRemove, sortable }: {
+  group: ModifierGroup;
+  /** Render in "inherited" style: blue chip with a ↑ arrow. Used on
+   *  ITEM rows for chips that come from the parent category's shared
+   *  attachments — the arrow communicates "this isn't attached to
+   *  this item directly; manage it on the category." */
+  inherited?: boolean;
+  /** Render in "category-shared" style: blue chip with NO arrow. Used
+   *  on the CATEGORY row itself when displaying a shared modifier
+   *  group — same colour as the inherited chips so a quick scan
+   *  signals "this group is category-shared" everywhere it appears,
+   *  but without the ↑ since you're already at the source row.
+   *  Picked over the older green-on-source-blue-on-inheritors logic
+   *  per Luigi 2026-05-31 for visual consistency. */
+  categoryLevel?: boolean;
+  onRemove?: () => void;
   /** When true, the chip is wired up as a sortable element in its parent
    *  SortableContext so the owner can drag-and-drop to reorder the
    *  modifier groups attached to an item or category. Inherited chips
@@ -724,6 +738,7 @@ function ModifierChip({ group, inherited, onRemove, sortable }: {
    *  category, not here. */
   sortable?: boolean;
 }) {
+  const isBlue = inherited || categoryLevel;
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: group.id,
     disabled: !sortable,
@@ -750,7 +765,7 @@ function ModifierChip({ group, inherited, onRemove, sortable }: {
       className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border font-medium transition ${
         sortable ? "cursor-grab active:cursor-grabbing select-none" : ""
       } ${
-        inherited
+        isBlue
           ? `bg-blue-50 border-blue-200 text-blue-700 ${isHovered ? "ring-2 ring-blue-400 ring-offset-1" : ""}`
           : `bg-emerald-50 border-emerald-200 text-emerald-700 ${isHovered ? "ring-2 ring-emerald-400 ring-offset-1" : ""}`
       }`}
@@ -977,7 +992,12 @@ function SortableCategoryBlock({
               <DndContext sensors={chipSensors} collisionDetection={closestCenter} onDragEnd={handleCatChipDragEnd}>
                 <SortableContext items={cat.modifierGroups.map(g => g.id)} strategy={rectSortingStrategy}>
                   {cat.modifierGroups.map(g => (
-                    <ModifierChip key={g.id} group={g} sortable onRemove={() => onDetach(g.id)} />
+                    // categoryLevel → blue chip without ↑. These ARE the
+                    // shared category attachments, so we render them blue
+                    // (matching how they appear when inherited on items
+                    // below) but skip the arrow since you're at the
+                    // source row.
+                    <ModifierChip key={g.id} group={g} categoryLevel sortable onRemove={() => onDetach(g.id)} />
                   ))}
                 </SortableContext>
               </DndContext>
