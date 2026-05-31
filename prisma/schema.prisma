@@ -619,6 +619,16 @@ model ModifierGroup {
   isHidden       Boolean  @default(false)
   sortOrder      Int      @default(0)
   libraryGroupId String? // if attached from a library group (points to the source library ModifierGroup id)
+  /// Whether the group can be split half/half on a pizza item. Owners
+  /// flip this for groups whose options can physically be applied
+  /// per-half (toppings, sauces, cheeses, drizzles, etc.) and leave it
+  /// off for groups that don't make sense to split (crust, cook level,
+  /// side drinks, deposits). When true AND the pizza's master Half/Half
+  /// toggle is on, the customer-side Pizza Builder renders the group
+  /// with whole/split UI; otherwise it renders as a normal option grid.
+  /// Default false — owner explicitly enables via the modifier group
+  /// library editor.
+  supportsHalfHalf Boolean @default(false)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 

@@ -25,6 +25,7 @@ type ModifierGroup = {
   minSelect: number; maxSelect: number; maxPerOption: number;
   isHidden: boolean; sortOrder: number; menuItemId?: string;
   categoryId?: string; restaurantId?: string; libraryGroupId?: string;
+  supportsHalfHalf?: boolean;
   options: ModifierOption[];
 };
 type ItemVariant = { id?: string; name: string; price: number; sortOrder: number; isDefault: boolean };
@@ -211,12 +212,23 @@ function PizzaSectionOrderEditor({
     return "(Unknown section)";
   };
 
-  const roleFor = (id: string): "sauce" | "cheese" | "toppings" | null => {
-    if (id === pizza.sauceGroupId) return "sauce";
-    if (id === pizza.cheeseGroupId) return "cheese";
-    if (id === SECTION_TOPPINGS) return "toppings";
-    return null;
+  // Resolve whether a section's underlying group has supportsHalfHalf
+  // set on its library entry — used for the small "✂️" indicator next
+  // to each row so owners can see at a glance which groups will respect
+  // the customer-side Half/Half toggle. Editing the flag happens in
+  // the group library (right panel → edit pencil), not here.
+  const groupForSectionId = (id: string): ModifierGroup | undefined => {
+    if (id === SECTION_SIZE || id === SECTION_HALF_HALF || id === SECTION_TOPPINGS) return undefined;
+    return (
+      libraryGroups.find(g => g.id === id) ??
+      categoryModGroups.find(g => g.id === id || g.libraryGroupId === id) ??
+      item?.modifierGroups.find(g => g.id === id || g.libraryGroupId === id)
+    );
   };
+  const toppingsAreEligible = () =>
+    pizza.toppingGroupIds.some(tid =>
+      libraryGroups.find(g => g.id === tid)?.supportsHalfHalf
+    );
 
   const move = (idx: number, dir: -1 | 1) => {
     const newIdx = idx + dir;
@@ -228,21 +240,15 @@ function PizzaSectionOrderEditor({
 
   const resetOrder = () => setPizza(p => ({ ...p, sectionOrder: [] }));
 
-  const toggleRoleHalfHalf = (role: "sauce" | "cheese" | "toppings") => {
-    setPizza(p => ({
-      ...p,
-      halfHalfRoles: p.halfHalfRoles.includes(role)
-        ? p.halfHalfRoles.filter(r => r !== role)
-        : [...p.halfHalfRoles, role],
-    }));
-  };
-
   return (
     <div className="border-t pt-4 space-y-3">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Customer Display Order</p>
-          <p className="text-xs text-gray-400 mt-0.5">Reorder how sections appear in the Pizza Builder. Toggle Half/Half for Sauce / Cheese / Toppings.</p>
+          <p className="text-xs text-gray-400 mt-0.5">
+            Reorder how sections appear in the Pizza Builder. The ✂️ icon shows which groups
+            are flagged Half/Half-capable in the library (edit in Choices & Add-ons).
+          </p>
         </div>
         {pizza.sectionOrder.length > 0 && (
           <button type="button" onClick={resetOrder}
@@ -258,8 +264,11 @@ function PizzaSectionOrderEditor({
           </p>
         )}
         {effectiveOrder.map((id, i) => {
-          const role = roleFor(id);
-          const halfHalfOn = role ? pizza.halfHalfRoles.includes(role) : false;
+          // Toppings is a synthetic section that aggregates multiple
+          // topping groups — show ✂️ when ANY of them is flagged.
+          const groupEligible = id === SECTION_TOPPINGS
+            ? toppingsAreEligible()
+            : groupForSectionId(id)?.supportsHalfHalf ?? false;
           return (
             <div key={id} className="flex items-center gap-2 bg-white border border-gray-100 rounded-md px-2 py-1.5">
               <div className="flex flex-col gap-0.5">
@@ -278,16 +287,13 @@ function PizzaSectionOrderEditor({
               </div>
               <span className="text-xs font-mono text-gray-300 w-5">{i + 1}.</span>
               <span className="text-sm text-gray-800 flex-1 truncate">{labelFor(id)}</span>
-              {role && pizza.allowHalfHalf && (
-                <label className="flex items-center gap-1.5 cursor-pointer text-xs text-gray-600 px-2 py-0.5 rounded hover:bg-gray-50">
-                  <input
-                    type="checkbox"
-                    className="w-3.5 h-3.5 accent-emerald-500"
-                    checked={halfHalfOn}
-                    onChange={() => toggleRoleHalfHalf(role)}
-                  />
-                  Half/Half
-                </label>
+              {groupEligible && pizza.allowHalfHalf && (
+                <span
+                  className="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium flex-shrink-0"
+                  title="This group is flagged Half/Half-capable in the library. When the customer toggles Half/Half ON, this section will render with Whole/Split UI."
+                >
+                  ✂️ Half/Half
+                </span>
               )}
             </div>
           );
@@ -889,6 +895,7 @@ function ModifierModal({
     maxSelect: group?.maxSelect ?? 1,
     maxPerOption: group?.maxPerOption ?? 1,
     isHidden: group?.isHidden ?? false,
+    supportsHalfHalf: group?.supportsHalfHalf ?? false,
   });
   const [options, setOptions] = useState<ModifierOption[]>(
     group?.options?.length
@@ -948,7 +955,7 @@ function ModifierModal({
                 value={form.maxPerOption} onChange={e => setForm(f => ({ ...f, maxPerOption: parseInt(e.target.value) || 1 }))} />
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             <button onClick={() => setForm(f => ({ ...f, required: !f.required }))}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.required ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
               <Check className="w-4 h-4" /> Required {form.required && "✓"}
@@ -956,6 +963,12 @@ function ModifierModal({
             <button onClick={() => setForm(f => ({ ...f, isHidden: !f.isHidden }))}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isHidden ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
               <EyeOff className="w-4 h-4" /> Hidden {form.isHidden && "✓"}
+            </button>
+            <button
+              onClick={() => setForm(f => ({ ...f, supportsHalfHalf: !f.supportsHalfHalf }))}
+              title="When ON, this group can be split half/half on a pizza item (customer sees Whole/Split UI). Leave OFF for crust, cook level, side drinks, etc."
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.supportsHalfHalf ? "border-blue-500 bg-blue-50 text-blue-700" : "border-gray-200 text-gray-600"}`}>
+              ✂️ Can be Half/Half {form.supportsHalfHalf && "✓"}
             </button>
           </div>
 

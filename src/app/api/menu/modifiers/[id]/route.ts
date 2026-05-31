@@ -29,7 +29,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const { id } = await params;
 
   const body = await req.json();
-  const { name, description, required, minSelect, maxSelect, maxPerOption, isHidden, sortOrder, options } = body;
+  const { name, description, required, minSelect, maxSelect, maxPerOption, isHidden, supportsHalfHalf, sortOrder, options } = body;
 
   const updateData: any = {};
   if (name !== undefined) updateData.name = name;
@@ -39,6 +39,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (maxSelect !== undefined) updateData.maxSelect = maxSelect;
   if (maxPerOption !== undefined) updateData.maxPerOption = maxPerOption;
   if (isHidden !== undefined) updateData.isHidden = isHidden;
+  if (supportsHalfHalf !== undefined) updateData.supportsHalfHalf = supportsHalfHalf;
   if (sortOrder !== undefined) updateData.sortOrder = sortOrder;
 
   await prisma.modifierGroup.update({ where: { id }, data: updateData });
@@ -52,6 +53,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     if (minSelect !== undefined) propagate.minSelect = minSelect;
     if (maxSelect !== undefined) propagate.maxSelect = maxSelect;
     if (maxPerOption !== undefined) propagate.maxPerOption = maxPerOption;
+    if (supportsHalfHalf !== undefined) propagate.supportsHalfHalf = supportsHalfHalf;
     if (name !== undefined) propagate.name = name;
     if (description !== undefined) propagate.description = description;
     if (Object.keys(propagate).length > 0) {
