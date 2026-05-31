@@ -1,0 +1,353 @@
+import { NextRequest, NextResponse } from "next/server";
+import { getSessionUser } from "@/lib/session";
+import prisma from "@/lib/db";
+import { blockIfInheritingMenu } from "@/lib/brand";
+import {
+  fetchGloriaFoodMenu,
+  mapMenu,
+  parseSource,
+  type ImportPreview,
+} from "@/lib/menu-import/gloriafood";
+
+// The fetch + mapping is fast (Luigi's 186-item menu: ~1.2 s network +
+// ~50 ms parse), but allow some headroom for slow links and bigger
+// chains. 60s is generous and keeps us inside Vercel's Pro 300s ceiling
+// with margin to spare.
+export const maxDuration = 60;
+
+/**
+ * POST /api/menu/import-gloriafood — preview a GloriaFood menu.
+ *
+ * Body: { source: string }
+ *   `source` accepts:
+ *     • Full GloriaFood embed snippet (the `<span class="glf-button"
+ *       data-glf-cuid="..." data-glf-ruid="...">…<script src=…></script>`)
+ *     • The restaurant's ordering URL
+ *       (https://<branded-domain>/ordering/restaurant/menu?restaurant_uid=…)
+ *     • Just the restaurant UID (UUID alone)
+ *
+ * Response: ImportPreview (categories, items, modifier groups, stats)
+ *
+ * No DB writes happen here — owner sees the preview, then PUTs to
+ * the same route to commit (matches the import-pdf POST/PUT pattern).
+ */
+export async function POST(req: NextRequest) {
+  const user = await getSessionUser();
+  const restaurantId = user?.restaurantId;
+  if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  // Importing into an inheriting child location would shadow the
+  // parent menu in a confusing way — block early with a clear msg.
+  const blocked = await blockIfInheritingMenu(restaurantId);
+  if (blocked) return blocked;
+
+  const body = (await req.json().catch(() => ({}))) as { source?: string };
+  if (typeof body.source !== "string" || !body.source.trim()) {
+    return NextResponse.json(
+      { error: "Provide the embed snippet, ordering URL, or restaurant UID." },
+      { status: 400 },
+    );
+  }
+
+  let parsed;
+  try {
+    parsed = parseSource(body.source);
+  } catch (e) {
+    return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 400 });
+  }
+
+  let preview: ImportPreview;
+  try {
+    const menu = await fetchGloriaFoodMenu(parsed);
+    preview = mapMenu(menu);
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error("[import-gloriafood] preview failed:", msg);
+    return NextResponse.json({ error: msg }, { status: 502 });
+  }
+
+  // Surface the existing FFOS categories so the UI can offer
+  // "merge into <existing category>" instead of duplicating when
+  // the owner re-imports.
+  const existingCategories = await prisma.menuCategory.findMany({
+    where: { restaurantId, isActive: true },
+    orderBy: { sortOrder: "asc" },
+    select: { id: true, name: true },
+  });
+
+  console.log(
+    `[import-gloriafood] preview: ${preview.stats.categories} cats, ${preview.stats.items} items, ${preview.stats.modifierGroups} groups, ${preview.stats.modifierOptions} opts`,
+  );
+
+  return NextResponse.json({
+    source: parsed,
+    preview,
+    existingCategories,
+  });
+}
+
+/**
+ * PUT /api/menu/import-gloriafood — commit the previewed import.
+ *
+ * Body: ImportPreview shape (categories + categoryGroups) plus
+ * optional per-category `existingCategoryId` to merge into existing
+ * FFOS categories instead of creating new ones.
+ *
+ * Behaviour (one transaction):
+ *   - Categories: create or reuse based on existingCategoryId.
+ *     New categories get sortOrder appended after the current max.
+ *   - Items: de-duped against existing items in the same category
+ *     by case-insensitive name match. Duplicates are skipped (not
+ *     overwritten — owner can delete-then-reimport if they want a
+ *     refresh).
+ *   - Variants: created under each item with their absolute prices.
+ *   - Modifier groups: created at the correct scope (item-level if
+ *     it was attached to an item; variant-level if attached to a
+ *     specific size; category-level if a category-shared group).
+ *   - Modifier options: created under each group.
+ *
+ * Returns: { categoriesCreated, itemsCreated, variantsCreated,
+ *            groupsCreated, optionsCreated, itemsSkippedDuplicate }
+ */
+export async function PUT(req: NextRequest) {
+  const user = await getSessionUser();
+  const restaurantId = user?.restaurantId;
+  if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const blocked = await blockIfInheritingMenu(restaurantId);
+  if (blocked) return blocked;
+
+  const body = (await req.json().catch(() => ({}))) as {
+    preview?: ImportPreview;
+    /** Per-category override: sourceId → existing FFOS category id to merge into. */
+    mergeMap?: Record<string, string>;
+  };
+  const preview = body.preview;
+  if (!preview || !Array.isArray(preview.categories)) {
+    return NextResponse.json({ error: "preview required" }, { status: 400 });
+  }
+  const mergeMap = body.mergeMap ?? {};
+
+  let categoriesCreated = 0;
+  let itemsCreated = 0;
+  let variantsCreated = 0;
+  let groupsCreated = 0;
+  let optionsCreated = 0;
+  let itemsSkippedDuplicate = 0;
+
+  const catMaxSort = await prisma.menuCategory.aggregate({
+    where: { restaurantId },
+    _max: { sortOrder: true },
+  });
+  let nextCatSort = (catMaxSort._max.sortOrder ?? -1) + 1;
+
+  // Bigger commits than the PDF importer — 12k+ options for Luigi's
+  // menu — so bump the transaction timeout from the Prisma default
+  // (5 s) to a comfortable 90 s. Still inside Vercel maxDuration.
+  await prisma.$transaction(
+    async (tx) => {
+      // ── Categories + items ─────────────────────────────────────────
+      // Track source category id → resolved FFOS category id so the
+      // category-level shared groups (categoryGroups[]) can attach
+      // to the right row after we've created them.
+      const catIdMap = new Map<number, string>();
+
+      for (const cat of preview.categories) {
+        if (!cat.items || cat.items.length === 0) continue;
+
+        let categoryId: string;
+        const mergeTarget = mergeMap[String(cat.sourceId)];
+        if (mergeTarget) {
+          const existing = await tx.menuCategory.findFirst({
+            where: { id: mergeTarget, restaurantId },
+            select: { id: true },
+          });
+          if (!existing) continue;
+          categoryId = existing.id;
+        } else {
+          const created = await tx.menuCategory.create({
+            data: {
+              restaurantId,
+              name: cat.name,
+              description: cat.description,
+              sortOrder: nextCatSort++,
+              isActive: cat.isActive,
+              isHidden: cat.isHidden,
+            },
+            select: { id: true },
+          });
+          categoryId = created.id;
+          categoriesCreated++;
+        }
+        catIdMap.set(cat.sourceId, categoryId);
+
+        // De-dup existing items in this category by case-insensitive
+        // trimmed name. Same approach as import-pdf.
+        const existingItems = await tx.menuItem.findMany({
+          where: { restaurantId, categoryId },
+          select: { name: true, sortOrder: true },
+        });
+        const existingNames = new Set(existingItems.map((it) => it.name.trim().toLowerCase()));
+        let nextItemSort = existingItems.reduce((m, it) => Math.max(m, it.sortOrder), -1) + 1;
+
+        for (const item of cat.items) {
+          const normalized = item.name.trim().toLowerCase();
+          if (existingNames.has(normalized)) {
+            itemsSkippedDuplicate++;
+            continue;
+          }
+          existingNames.add(normalized);
+
+          const createdItem = await tx.menuItem.create({
+            data: {
+              restaurantId,
+              categoryId,
+              name: item.name,
+              description: item.description,
+              price: item.basePrice,
+              isAvailable: item.isAvailable,
+              isHidden: item.isHidden,
+              isSoldOut: item.isSoldOut,
+              hasVariants: item.hasVariants,
+              availableDays: item.availableDays,
+              sortOrder: nextItemSort++,
+            },
+            select: { id: true },
+          });
+          itemsCreated++;
+
+          // Variants — preserved in order. Each variant carries its own
+          // set of modifier groups (e.g. "Toppings (Large)" vs "(Small)").
+          const variantIdBySourceId = new Map<number, string>();
+          for (let vi = 0; vi < item.variants.length; vi++) {
+            const v = item.variants[vi];
+            const createdVariant = await tx.itemVariant.create({
+              data: {
+                menuItemId: createdItem.id,
+                name: v.name,
+                price: v.price,
+                isDefault: v.isDefault,
+                sortOrder: vi,
+              },
+              select: { id: true },
+            });
+            variantsCreated++;
+            variantIdBySourceId.set(v.sourceId, createdVariant.id);
+
+            // Variant-level modifier groups
+            for (const g of v.groups) {
+              const createdGroup = await tx.modifierGroup.create({
+                data: {
+                  menuItemId: createdItem.id,
+                  variantId: createdVariant.id,
+                  name: g.name,
+                  required: g.required,
+                  minSelect: g.minSelect,
+                  maxSelect: g.maxSelect,
+                  maxPerOption: g.maxPerOption,
+                  sortOrder: g.sortOrder,
+                },
+                select: { id: true },
+              });
+              groupsCreated++;
+              if (g.options.length > 0) {
+                await tx.modifierOption.createMany({
+                  data: g.options.map((o, oi) => ({
+                    modifierGroupId: createdGroup.id,
+                    name: o.name,
+                    priceAdjustment: o.priceAdjustment,
+                    isDefault: o.isDefault,
+                    isAvailable: o.isAvailable,
+                    sortOrder: o.sortOrder ?? oi,
+                  })),
+                });
+                optionsCreated += g.options.length;
+              }
+            }
+          }
+
+          // Item-level modifier groups (apply to the whole item
+          // regardless of variant — e.g. "Add to Garlic Bread (4pc)").
+          for (const g of item.itemGroups) {
+            const createdGroup = await tx.modifierGroup.create({
+              data: {
+                menuItemId: createdItem.id,
+                name: g.name,
+                required: g.required,
+                minSelect: g.minSelect,
+                maxSelect: g.maxSelect,
+                maxPerOption: g.maxPerOption,
+                sortOrder: g.sortOrder,
+              },
+              select: { id: true },
+            });
+            groupsCreated++;
+            if (g.options.length > 0) {
+              await tx.modifierOption.createMany({
+                data: g.options.map((o, oi) => ({
+                  modifierGroupId: createdGroup.id,
+                  name: o.name,
+                  priceAdjustment: o.priceAdjustment,
+                  isDefault: o.isDefault,
+                  isAvailable: o.isAvailable,
+                  sortOrder: o.sortOrder ?? oi,
+                })),
+              });
+              optionsCreated += g.options.length;
+            }
+          }
+        }
+      }
+
+      // ── Category-level shared modifier groups (e.g. "Pizza 1 Crust"
+      //    shared across every pizza in PIZZAS). ───────────────────────
+      for (const g of preview.categoryGroups) {
+        const targetCatId = catIdMap.get(g.sourceCategoryId);
+        if (!targetCatId) continue; // category was skipped (no items)
+        const createdGroup = await tx.modifierGroup.create({
+          data: {
+            categoryId: targetCatId,
+            name: g.name,
+            required: g.required,
+            minSelect: g.minSelect,
+            maxSelect: g.maxSelect,
+            maxPerOption: g.maxPerOption,
+            sortOrder: g.sortOrder,
+          },
+          select: { id: true },
+        });
+        groupsCreated++;
+        if (g.options.length > 0) {
+          await tx.modifierOption.createMany({
+            data: g.options.map((o, oi) => ({
+              modifierGroupId: createdGroup.id,
+              name: o.name,
+              priceAdjustment: o.priceAdjustment,
+              isDefault: o.isDefault,
+              isAvailable: o.isAvailable,
+              sortOrder: o.sortOrder ?? oi,
+            })),
+          });
+          optionsCreated += g.options.length;
+        }
+      }
+    },
+    {
+      maxWait: 10_000,
+      timeout: 90_000,
+    },
+  );
+
+  console.log(
+    `[import-gloriafood] committed: ${categoriesCreated} cats, ${itemsCreated} items (${itemsSkippedDuplicate} dupes skipped), ${variantsCreated} variants, ${groupsCreated} groups, ${optionsCreated} options`,
+  );
+
+  return NextResponse.json({
+    categoriesCreated,
+    itemsCreated,
+    variantsCreated,
+    groupsCreated,
+    optionsCreated,
+    itemsSkippedDuplicate,
+  });
+}
