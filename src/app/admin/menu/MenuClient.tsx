@@ -1223,6 +1223,7 @@ function SortableCategoryBlock({
   cat, expanded, onToggleExpand, onAddItem, onEditItem, onDeleteItem,
   onToggleItem, onEditCategory, onDeleteCategory, onItemsReordered, categories,
   onAttach, onDetach, onReorderGroups,
+  selectMode, isSelected, onToggleSelect,
 }: {
   cat: Category; expanded: boolean;
   onToggleExpand: () => void; onAddItem: () => void;
@@ -1234,6 +1235,13 @@ function SortableCategoryBlock({
   onAttach: (libraryGroupId: string, menuItemId?: string, categoryId?: string) => void;
   onDetach: (groupId: string) => void;
   onReorderGroups: (scope: { itemId?: string; categoryId?: string }, orderedIds: string[]) => void;
+  /** Bulk-select mode: when true, swap the drag handle for a checkbox
+   *  and short-circuit the row click to toggle selection rather than
+   *  expand the category. Lets owners blast through pre-reimport
+   *  cleanup with Select all → Delete instead of one-at-a-time. */
+  selectMode?: boolean;
+  isSelected?: boolean;
+  onToggleSelect?: () => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: cat.id });
@@ -1265,10 +1273,12 @@ function SortableCategoryBlock({
   };
 
   return (
-    <div ref={setNodeRef} style={style} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div ref={setNodeRef} style={style} className={`bg-white rounded-xl shadow-sm border overflow-hidden transition ${
+      selectMode && isSelected ? "border-emerald-400 ring-2 ring-emerald-200" : "border-gray-100"
+    }`}>
       <div
         className={`flex items-start gap-2 p-4 cursor-pointer hover:bg-gray-50 select-none group transition ${catDragOver ? "bg-emerald-50 outline outline-2 outline-emerald-400 outline-dashed" : ""}`}
-        onClick={onToggleExpand}
+        onClick={selectMode ? onToggleSelect : onToggleExpand}
         onDragOver={e => { e.preventDefault(); if (e.dataTransfer.types.includes("librarygroupid")) { e.dataTransfer.dropEffect = "copy"; setCatDragOver(true); } }}
         onDragLeave={() => setCatDragOver(false)}
         onDrop={e => {
@@ -1277,9 +1287,19 @@ function SortableCategoryBlock({
           if (gid) onAttach(gid, undefined, cat.id);
         }}
       >
-        <button {...attributes} {...listeners} suppressHydrationWarning className="cursor-grab text-gray-300 hover:text-gray-400 touch-none mt-1" onClick={e => e.stopPropagation()}>
-          <GripVertical className="w-4 h-4" />
-        </button>
+        {selectMode ? (
+          <input
+            type="checkbox"
+            checked={!!isSelected}
+            onChange={e => { e.stopPropagation(); onToggleSelect?.(); }}
+            onClick={e => e.stopPropagation()}
+            className="w-4 h-4 accent-emerald-500 flex-shrink-0 mt-1"
+          />
+        ) : (
+          <button {...attributes} {...listeners} suppressHydrationWarning className="cursor-grab text-gray-300 hover:text-gray-400 touch-none mt-1" onClick={e => e.stopPropagation()}>
+            <GripVertical className="w-4 h-4" />
+          </button>
+        )}
         {cat.imageUrl ? (
           <img src={cat.imageUrl} alt={cat.name} className="w-8 h-8 rounded-lg object-cover flex-shrink-0" />
         ) : (
@@ -1356,11 +1376,18 @@ function SortableCategoryBlock({
 
 function ModifierLibraryPanel({
   groups, onAddGroup, onEditGroup, onDeleteGroup,
+  selectMode, selectedIds, onToggleSelect, onSetSelectMode, onSetSelectedIds, onBulkDelete,
 }: {
   groups: ModifierGroup[];
   onAddGroup: () => void;
   onEditGroup: (g: ModifierGroup) => void;
   onDeleteGroup: (id: string) => void;
+  selectMode: boolean;
+  selectedIds: Set<string>;
+  onToggleSelect: (id: string) => void;
+  onSetSelectMode: (v: boolean) => void;
+  onSetSelectedIds: (s: Set<string>) => void;
+  onBulkDelete: (ids: string[]) => void;
 }) {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const toggle = (id: string) => setExpanded(e => ({ ...e, [id]: !e[id] }));
@@ -1395,6 +1422,48 @@ function ModifierLibraryPanel({
         </p>
       </div>
 
+      {/* Bulk-select toolbar — visible whenever there's at least one
+          group. Mirrors the categories toolbar on the left side. */}
+      {groups.length > 0 && (
+        <div className="flex items-center justify-between px-3 py-2 bg-white border-b border-gray-100">
+          {!selectMode ? (
+            <>
+              <span className="text-xs text-gray-500">{groups.length} group{groups.length === 1 ? "" : "s"}</span>
+              <button
+                onClick={() => onSetSelectMode(true)}
+                className="text-xs font-semibold text-gray-600 hover:text-gray-900 px-2 py-0.5 rounded hover:bg-gray-50 transition"
+              >
+                Select
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => onSetSelectedIds(selectedIds.size === groups.length ? new Set() : new Set(groups.map(g => g.id)))}
+                className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 underline"
+              >
+                {selectedIds.size === groups.length ? "Deselect all" : "Select all"}
+              </button>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => onBulkDelete([...selectedIds])}
+                  disabled={selectedIds.size === 0}
+                  className="text-xs font-semibold text-white bg-red-500 hover:bg-red-600 disabled:bg-red-200 disabled:cursor-not-allowed px-2.5 py-1 rounded transition"
+                >
+                  Delete {selectedIds.size > 0 ? `(${selectedIds.size})` : ""}
+                </button>
+                <button
+                  onClick={() => { onSetSelectMode(false); onSetSelectedIds(new Set()); }}
+                  className="text-xs text-gray-500 hover:text-gray-700"
+                >
+                  Cancel
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
       <div className="flex-1 overflow-y-auto p-3 space-y-2">
         {groups.length === 0 && (
           <div className="py-10 text-center text-gray-400 text-sm">
@@ -1404,25 +1473,41 @@ function ModifierLibraryPanel({
         )}
         {groups.map(g => {
           const isHovered = hoveredLibId === g.id;
+          const isChecked = selectedIds.has(g.id);
           return (
           <div
             key={g.id}
             ref={el => { rowRefs.current[g.id] = el; }}
-            draggable
+            draggable={!selectMode}
             onDragStart={e => {
+              if (selectMode) return;
               e.dataTransfer.setData("libraryGroupId", g.id);
               e.dataTransfer.effectAllowed = "copy";
             }}
             onMouseEnter={() => setHovered(g.id)}
             onMouseLeave={() => setHovered(null)}
-            className={`bg-white rounded-xl border overflow-hidden cursor-grab active:cursor-grabbing transition ${
-              isHovered
-                ? "border-emerald-400 ring-2 ring-emerald-300 shadow-md"
-                : "border-gray-100 hover:border-emerald-200 hover:shadow-sm"
+            className={`bg-white rounded-xl border overflow-hidden transition ${
+              selectMode ? "cursor-pointer" : "cursor-grab active:cursor-grabbing"
+            } ${
+              selectMode && isChecked
+                ? "border-emerald-400 ring-2 ring-emerald-300"
+                : isHovered
+                  ? "border-emerald-400 ring-2 ring-emerald-300 shadow-md"
+                  : "border-gray-100 hover:border-emerald-200 hover:shadow-sm"
             }`}
           >
-            <div className="flex items-start gap-2 p-3 hover:bg-gray-50" onClick={() => toggle(g.id)}>
-              <GripVertical className="w-3.5 h-3.5 text-gray-300 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-2 p-3 hover:bg-gray-50" onClick={() => selectMode ? onToggleSelect(g.id) : toggle(g.id)}>
+              {selectMode ? (
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={e => { e.stopPropagation(); onToggleSelect(g.id); }}
+                  onClick={e => e.stopPropagation()}
+                  className="w-3.5 h-3.5 accent-emerald-500 flex-shrink-0 mt-0.5"
+                />
+              ) : (
+                <GripVertical className="w-3.5 h-3.5 text-gray-300 flex-shrink-0 mt-0.5" />
+              )}
               <div className="flex-1 min-w-0">
                 <div className="flex items-start gap-1.5 flex-wrap">
                   {/* Two-line clamp instead of single-line truncate — long
@@ -1921,6 +2006,15 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
   const [modModal, setModModal] = useState<{ group?: ModifierGroup; menuItemId?: string } | null>(null);
   const [catModal, setCatModal] = useState<{ cat?: Category } | null>(null);
   const [pdfImportOpen, setPdfImportOpen] = useState(false);
+  // Bulk-select state for the category list and the modifier-library
+  // panel. selectMode flips on the checkboxes + bulk action bar; the
+  // Set tracks which ids are picked. Wiping the menu before a re-
+  // import goes from 30+ clicks to 3 (Select mode → Select all →
+  // Delete) — surfaced by Luigi 2026-05-31.
+  const [categorySelectMode, setCategorySelectMode] = useState(false);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<Set<string>>(new Set());
+  const [modGroupSelectMode, setModGroupSelectMode] = useState(false);
+  const [selectedModGroupIds, setSelectedModGroupIds] = useState<Set<string>>(new Set());
   const [confirmDialog, setConfirmDialog] = useState<{
     title: string; message: string; confirmLabel?: string; onConfirm: () => void;
   } | null>(null);
@@ -2047,6 +2141,46 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
     });
   };
 
+  /**
+   * Bulk delete N items by issuing parallel DELETE requests (concurrency
+   * 5 so we don't blast Vercel with 30+ in-flight). Returns once every
+   * delete has settled so a single reload() refreshes the UI.
+   */
+  const bulkDelete = async (ids: string[], urlFor: (id: string) => string): Promise<{ ok: number; failed: number }> => {
+    let ok = 0, failed = 0;
+    const CONC = 5;
+    const queue = [...ids];
+    const worker = async () => {
+      while (queue.length) {
+        const id = queue.shift()!;
+        try {
+          const res = await fetch(urlFor(id), { method: "DELETE" });
+          if (res.ok) ok++; else failed++;
+        } catch { failed++; }
+      }
+    };
+    await Promise.all(Array.from({ length: CONC }, worker));
+    return { ok, failed };
+  };
+
+  const bulkDeleteCategories = (ids: string[]) => {
+    if (ids.length === 0) return;
+    setConfirmDialog({
+      title: `Delete ${ids.length} categor${ids.length === 1 ? "y" : "ies"}?`,
+      message: `This will permanently delete ${ids.length === 1 ? "this category and its items" : `these ${ids.length} categories and all their items`}. This cannot be undone.`,
+      confirmLabel: `Delete ${ids.length}`,
+      onConfirm: async () => {
+        setConfirmDialog(null);
+        const { ok, failed } = await bulkDelete(ids, id => `/api/menu/categories/${id}`);
+        if (failed > 0) toast.error(`Deleted ${ok}, ${failed} failed`);
+        else toast.success(`Deleted ${ok} categor${ok === 1 ? "y" : "ies"}`);
+        setSelectedCategoryIds(new Set());
+        setCategorySelectMode(false);
+        await reload();
+      },
+    });
+  };
+
   const deleteModGroup = (id: string) => {
     setConfirmDialog({
       title: "Delete modifier group?",
@@ -2060,6 +2194,24 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
           return;
         }
         toast.success("Modifier group deleted");
+        await reload();
+      },
+    });
+  };
+
+  const bulkDeleteModGroups = (ids: string[]) => {
+    if (ids.length === 0) return;
+    setConfirmDialog({
+      title: `Delete ${ids.length} modifier group${ids.length === 1 ? "" : "s"}?`,
+      message: `This will permanently delete ${ids.length === 1 ? "this modifier group and its options" : `these ${ids.length} modifier groups and all their options`}. Items that referenced them will lose those attachments. This cannot be undone.`,
+      confirmLabel: `Delete ${ids.length}`,
+      onConfirm: async () => {
+        setConfirmDialog(null);
+        const { ok, failed } = await bulkDelete(ids, id => `/api/menu/modifiers/${id}`);
+        if (failed > 0) toast.error(`Deleted ${ok}, ${failed} failed`);
+        else toast.success(`Deleted ${ok} group${ok === 1 ? "" : "s"}`);
+        setSelectedModGroupIds(new Set());
+        setModGroupSelectMode(false);
         await reload();
       },
     });
@@ -2126,6 +2278,54 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
       <div className="flex flex-1 gap-0 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden min-h-0" style={{ height: "calc(100vh - 220px)" }}>
         {/* Left: Categories & Items */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          {categories.length > 0 && (
+            <div className="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-lg px-3 py-2 sticky top-0 z-10">
+              {!categorySelectMode ? (
+                <>
+                  <span className="text-xs text-gray-500">{categories.length} categor{categories.length === 1 ? "y" : "ies"}</span>
+                  <button
+                    onClick={() => setCategorySelectMode(true)}
+                    className="text-xs font-semibold text-gray-600 hover:text-gray-900 px-2 py-1 rounded hover:bg-white transition"
+                  >
+                    Select
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => {
+                        setSelectedCategoryIds(prev =>
+                          prev.size === categories.length ? new Set() : new Set(categories.map(c => c.id))
+                        );
+                      }}
+                      className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 underline"
+                    >
+                      {selectedCategoryIds.size === categories.length ? "Deselect all" : "Select all"}
+                    </button>
+                    <span className="text-xs text-gray-500">
+                      {selectedCategoryIds.size} of {categories.length} selected
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => bulkDeleteCategories([...selectedCategoryIds])}
+                      disabled={selectedCategoryIds.size === 0}
+                      className="text-xs font-semibold text-white bg-red-500 hover:bg-red-600 disabled:bg-red-200 disabled:cursor-not-allowed px-3 py-1.5 rounded transition"
+                    >
+                      Delete {selectedCategoryIds.size > 0 ? `(${selectedCategoryIds.size})` : ""}
+                    </button>
+                    <button
+                      onClick={() => { setCategorySelectMode(false); setSelectedCategoryIds(new Set()); }}
+                      className="text-xs text-gray-500 hover:text-gray-700 px-2"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
           {categories.length === 0 ? (
             <div className="py-20 text-center text-gray-400">
               <UtensilsCrossed className="w-12 h-12 mx-auto mb-3 opacity-30" />
@@ -2150,6 +2350,15 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
                     onAttach={attachModifier}
                     onDetach={detachModifier}
                     onReorderGroups={handleReorderGroups}
+                    selectMode={categorySelectMode}
+                    isSelected={selectedCategoryIds.has(cat.id)}
+                    onToggleSelect={() => {
+                      setSelectedCategoryIds(prev => {
+                        const next = new Set(prev);
+                        if (next.has(cat.id)) next.delete(cat.id); else next.add(cat.id);
+                        return next;
+                      });
+                    }}
                   />
                 ))}
               </SortableContext>
@@ -2163,6 +2372,18 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
           onAddGroup={() => setModModal({})}
           onEditGroup={g => setModModal({ group: g })}
           onDeleteGroup={deleteModGroup}
+          selectMode={modGroupSelectMode}
+          selectedIds={selectedModGroupIds}
+          onToggleSelect={id => {
+            setSelectedModGroupIds(prev => {
+              const next = new Set(prev);
+              if (next.has(id)) next.delete(id); else next.add(id);
+              return next;
+            });
+          }}
+          onSetSelectMode={setModGroupSelectMode}
+          onSetSelectedIds={setSelectedModGroupIds}
+          onBulkDelete={bulkDeleteModGroups}
         />
       </div>
 
