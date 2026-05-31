@@ -15,7 +15,7 @@ export async function GET() {
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { taxRate: true, deliveryFee: true, minimumOrder: true },
+    select: { taxRate: true, deliveryFee: true, minimumOrder: true, tipsEnabled: true, currency: true },
   });
   return NextResponse.json(restaurant ?? {});
 }
@@ -28,7 +28,7 @@ export async function PUT(req: NextRequest) {
   const data = await req.json();
   const {
     name, slogan, description, phone, email, address, city, state, zip, country, cuisineType,
-    timezone, taxRate, minimumOrder, deliveryFee, estimatedPickup, estimatedDelivery,
+    timezone, taxRate, tipsEnabled, currency, minimumOrder, deliveryFee, estimatedPickup, estimatedDelivery,
     acceptsPickup, acceptsDelivery, acceptsDineIn, acceptsCatering, acceptsReservations,
     logoUrl, bannerUrl, reviewLink, infoContent, themeSettings,
     lat, lng,
@@ -74,6 +74,20 @@ export async function PUT(req: NextRequest) {
       );
     }
     updateData.taxRate = n;
+  }
+  if (tipsEnabled !== undefined) updateData.tipsEnabled = !!tipsEnabled;
+  if (currency !== undefined && typeof currency === "string") {
+    // ISO 4217 sanity — 3 letters. Normalize to lowercase (matches
+    // Stripe's expected format and our DB default). Anything else is
+    // rejected so a typo doesn't break Stripe charges silently.
+    const c = currency.trim().toLowerCase();
+    if (!/^[a-z]{3}$/.test(c)) {
+      return NextResponse.json(
+        { error: "currency must be a 3-letter ISO 4217 code (e.g. usd, eur, gbp)" },
+        { status: 400 },
+      );
+    }
+    updateData.currency = c;
   }
   if (minimumOrder !== undefined) {
     const n = typeof minimumOrder === "number" ? minimumOrder : parseFloat(minimumOrder);

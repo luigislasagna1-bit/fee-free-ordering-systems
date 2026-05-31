@@ -618,7 +618,13 @@ export async function POST(req: NextRequest) {
     const totalDiscount = serverCouponDiscount + serverPromoDiscount;
     const taxBase = Math.max(0, serverSubtotal - totalDiscount + serverDeliveryFee + serverServiceFeesTotal);
     const serverTax = Math.round(taxBase * (restaurant.taxRate / 100) * 100) / 100;
-    const serverTip = typeof clientTip === "number" && clientTip >= 0
+    // Hard server-side clamp when the restaurant has tipping disabled.
+    // Owners flip Restaurant.tipsEnabled = false from /admin/service-fees
+    // (typically European markets where tipping isn't a thing). The UI
+    // hides the picker, but a hand-crafted POST or a stale client could
+    // still try to send a tip — refuse to charge it.
+    const tippingAllowed = restaurant.tipsEnabled !== false;
+    const serverTip = tippingAllowed && typeof clientTip === "number" && clientTip >= 0
       ? Math.min(Math.round(clientTip * 100) / 100, serverSubtotal * 2) // cap at 200% of subtotal
       : 0;
     const serverTotal = Math.round((taxBase + serverTax + serverTip) * 100) / 100;

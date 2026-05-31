@@ -17,7 +17,12 @@ import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { createPaypalOrder } from "@/lib/paypal";
 import { hasFeature } from "@/lib/entitlements";
 
-const ALLOWED_CURRENCIES = new Set(["USD", "CAD", "GBP", "EUR", "AUD"]);
+// Mirrors SUPPORTED_CURRENCIES in src/lib/utils.ts. PayPal supports
+// all of these for direct payouts as of 2026.
+const ALLOWED_CURRENCIES = new Set([
+  "USD", "CAD", "EUR", "GBP", "AUD", "NZD",
+  "CHF", "SEK", "NOK", "DKK", "JPY", "MXN",
+]);
 const MAX_AMOUNT = 10_000;
 
 export async function POST(req: NextRequest) {
@@ -45,6 +50,10 @@ export async function POST(req: NextRequest) {
       name: true,
       slug: true,
       paypalAccountStatus: true,
+      // Source of truth for currency — overrides the client value
+      // below so customers can't trigger a USD charge against a
+      // EUR-configured account.
+      currency: true,
     },
   });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
@@ -102,11 +111,14 @@ export async function POST(req: NextRequest) {
   const cancelUrl = `${baseUrl}/order/${restaurant.slug}/paypal/cancel?orderId=${encodeURIComponent(orderId)}`;
 
   try {
+    // Restaurant-configured currency wins. PayPal's `currency_code`
+    // is required uppercase ISO 4217.
+    const chargeCurrency = (restaurant.currency || currency || "USD").toUpperCase();
     const created = await createPaypalOrder({
       restaurantId: restaurant.id,
       orderId,
       amount,
-      currency,
+      currency: chargeCurrency,
       description: `Order from ${restaurant.name}`.slice(0, 127),
       returnUrl,
       cancelUrl,

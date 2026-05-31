@@ -46,6 +46,12 @@ type FormState = {
   address: string; city: string; state: string; zip: string; country: string;
   cuisineType: string; timezone: string;
   taxRate: string; minimumOrder: string; deliveryFee: string;
+  /** Whether the customer ordering page surfaces the tip picker.
+   *  Mirrors Restaurant.tipsEnabled. */
+  tipsEnabled: boolean;
+  /** ISO 4217 currency the restaurant charges in (lowercased to match
+   *  Stripe's expected format). Mirrors Restaurant.currency. */
+  currency: string;
   estimatedPickup: string; estimatedDelivery: string;
   logoUrl: string; bannerUrl: string;
   reviewLink: string; infoContent: string;
@@ -347,6 +353,8 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
     cuisineType: restaurant?.cuisineType || "",
     timezone: restaurant?.timezone || "America/New_York",
     taxRate: String(restaurant?.taxRate ?? 0),
+    tipsEnabled: restaurant?.tipsEnabled ?? true,
+    currency: restaurant?.currency ?? "usd",
     minimumOrder: String(restaurant?.minimumOrder ?? 0),
     deliveryFee: String(restaurant?.deliveryFee ?? 0),
     estimatedPickup: String(restaurant?.estimatedPickup ?? 20),
@@ -419,6 +427,8 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
         body: JSON.stringify({
           ...form,
           taxRate: parseFloat(form.taxRate) || 0,
+          tipsEnabled: !!form.tipsEnabled,
+          currency: (form.currency || "usd").toLowerCase(),
           minimumOrder: parseFloat(form.minimumOrder) || 0,
           deliveryFee: parseFloat(form.deliveryFee) || 0,
           estimatedPickup: parseInt(form.estimatedPickup) || 20,

@@ -8,7 +8,12 @@ import {
 } from "@/lib/stripe";
 import { hasFeature } from "@/lib/entitlements";
 
-const ALLOWED_CURRENCIES = new Set(["usd", "cad", "gbp", "eur", "aud"]);
+// Currencies we support charging in across Stripe + PayPal + our UI.
+// Mirrors SUPPORTED_CURRENCIES in src/lib/utils.ts — keep in sync.
+const ALLOWED_CURRENCIES = new Set([
+  "usd", "cad", "eur", "gbp", "aud", "nzd",
+  "chf", "sek", "nok", "dkk", "jpy", "mxn",
+]);
 const MAX_AMOUNT = 10_000; // $10,000 hard cap
 
 /**
@@ -51,6 +56,13 @@ export async function POST(req: NextRequest) {
       name: true,
       stripeAccountId: true,
       stripeChargesEnabled: true,
+      // The restaurant's chosen settlement currency. We OVERRIDE the
+      // client-supplied currency with this so customers can't trigger
+      // a USD charge against a EUR-configured account (Stripe would
+      // reject it anyway, but failing earlier is cleaner). The client
+      // `currency` is kept as a sanity probe — if it disagrees with
+      // the restaurant's, we trust the restaurant.
+      currency: true,
     },
   });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
@@ -78,9 +90,21 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // Always charge in the restaurant's configured currency — the
+    // client value is advisory only.
+    const chargeCurrency = (restaurant.currency || currency || "usd").toLowerCase();
+    // Zero-decimal currencies (JPY etc) — Stripe expects whole units,
+    // not cents. Most of our SUPPORTED_CURRENCIES are 2-decimal so
+    // the default `amount * 100` is correct; we just special-case JPY
+    // (and a few sister currencies) here. See:
+    // https://docs.stripe.com/currencies#zero-decimal
+    const ZERO_DECIMAL = new Set(["jpy", "krw", "vnd", "clp", "isk"]);
+    const amountMinor = ZERO_DECIMAL.has(chargeCurrency)
+      ? Math.round(amount)
+      : Math.round(amount * 100);
     const intent = await createDirectPaymentIntent({
-      amountCents: Math.round(amount * 100),
-      currency,
+      amountCents: amountMinor,
+      currency: chargeCurrency,
       restaurantStripeAccountId: restaurant.stripeAccountId,
       orderId,
       restaurantId: restaurant.id,

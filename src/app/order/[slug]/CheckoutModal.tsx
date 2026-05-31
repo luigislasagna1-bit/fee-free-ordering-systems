@@ -5,7 +5,7 @@ import {
   AlertCircle, Loader2, ChevronDown,
 } from "lucide-react";
 import { Autocomplete } from "@react-google-maps/api";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import { parseTheme } from "@/lib/theme";
 import { useGoogleMaps } from "@/lib/use-google-maps";
 import { useTranslations } from "next-intl";
@@ -98,6 +98,12 @@ interface Props {
   tipAmount: number;
   tipPercent: number;
   setTipPercent: (n: number) => void;
+  /** When false, the entire Tips section is hidden and the customer
+   *  pays no tip. Source of truth: Restaurant.tipsEnabled. Some
+   *  markets (notably most of Europe) don't tip at restaurants at all
+   *  — surfacing a tip picker there is at best confusing, at worst
+   *  insulting. Owners flip this off in /admin/service-fees. */
+  tipsEnabled?: boolean;
   total: number;
   taxRate: number;
   customerInfo: CustomerInfo;
@@ -166,7 +172,7 @@ export function CheckoutModal({
   cart, subtotal, totalDiscount,
   appliedPromos = [], hasFreeDelivery = false, baseDeliveryFee = 0,
   deliveryFee, appliedServiceFees, taxAmount,
-  tipAmount, tipPercent, setTipPercent, total, taxRate,
+  tipAmount, tipPercent, setTipPercent, tipsEnabled = true, total, taxRate,
   customerInfo, setCustomerInfo,
   editingSection, setEditingSection,
   orderLoading, placeOrder,
@@ -187,6 +193,11 @@ export function CheckoutModal({
   const tc = useTranslations("checkout");
   const tOrd = useTranslations("ordering");
   const tCommon = useTranslations("common");
+  // Wire every $/€/£ label in this checkout through the restaurant's
+  // configured currency via the CurrencyProvider in the parent. We
+  // alias to `formatCurrency` so the existing call sites in this file
+  // didn't all need rewriting.
+  const formatCurrency = useCurrencyFormat();
   const [showCouponField, setShowCouponField] = useState(false);
   const googleEnabled = mapProvider === "google" && !!googleMapsApiKey;
   const { isLoaded: gmapsLoaded } = useGoogleMaps(googleEnabled ? googleMapsApiKey! : "");
@@ -682,7 +693,13 @@ export function CheckoutModal({
                 )}
               </SectionCard>
 
-              {/* TIPS */}
+              {/* TIPS — entire card is hidden when the restaurant has
+                  disabled tipping (Restaurant.tipsEnabled = false).
+                  No-tip markets (most of Europe) should see no tip
+                  picker at all, not a "$0 / No tip" option. The state
+                  is still wired so the totals math doesn't blow up;
+                  the parent forces tipPercent=0 in that case. */}
+              {tipsEnabled && (
               <SectionCard
                 icon={<Heart className="w-4 h-4" />}
                 label={tc("tipsHeading")}
@@ -753,6 +770,7 @@ export function CheckoutModal({
                   </div>
                 </div>
               </SectionCard>
+              )}
 
               {/* NOTES */}
               <SectionCard

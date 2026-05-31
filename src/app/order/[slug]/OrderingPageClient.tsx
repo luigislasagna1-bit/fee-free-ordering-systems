@@ -8,6 +8,7 @@ import {
   UserCircle, LogIn,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
 import { localDowAndHHMM, liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
 
@@ -278,6 +279,7 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
 
 function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<typeof parseTheme>; onOpen: (i: MenuItem) => void }) {
   const t = useTranslations("ordering");
+  const fmt = useCurrencyFormat();
   const isSold = item.isSoldOut;
   const basePrice = item.hasVariants && item.variants?.length
     ? Math.min(...item.variants.map(v => v.price))
@@ -313,7 +315,7 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
         <p className="text-sm font-semibold leading-snug line-clamp-2" style={{ color: theme.textColor }}>{item.name}</p>
         <div className="flex items-center justify-between mt-2">
           <span className="text-sm font-bold" style={{ color: theme.primaryColor }}>
-            {item.hasVariants ? `from ${formatCurrency(basePrice)}` : formatCurrency(basePrice)}
+            {item.hasVariants ? `from ${fmt(basePrice)}` : fmt(basePrice)}
           </span>
           {!isSold && (
             <div className="w-7 h-7 rounded-full flex items-center justify-center shadow-sm transition" style={{ backgroundColor: theme.primaryColor }}>
@@ -328,6 +330,7 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
 
 function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<typeof parseTheme>; onOpen: (i: MenuItem) => void }) {
   const t = useTranslations("ordering");
+  const fmt = useCurrencyFormat();
   const isSold = item.isSoldOut;
   const basePrice = item.hasVariants && item.variants?.length
     ? Math.min(...item.variants.map(v => v.price))
@@ -367,7 +370,7 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
           </div>
           <div className="flex-shrink-0 flex flex-col items-end gap-2">
             <div className="font-bold text-base" style={{ color: theme.textColor }}>
-              {item.hasVariants ? `from ${formatCurrency(basePrice)}` : formatCurrency(basePrice)}
+              {item.hasVariants ? `from ${fmt(basePrice)}` : fmt(basePrice)}
             </div>
             {!isSold && (
               <div className="w-9 h-9 rounded-full flex items-center justify-center shadow-sm transition" style={{ backgroundColor: theme.primaryColor }}>
@@ -565,7 +568,17 @@ export function OrderingPageClient({
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
   // Default starts at the SUGGESTED amount (15%). Customer can drag the
   // slider or click "No tip" to override. Luigi 2026-05-29.
-  const [tipPercent, setTipPercent] = useState<number>(15);
+  // When the restaurant has tipsEnabled=false, force 0 regardless of
+  // client state and skip rendering the selector — see CheckoutDrawer.
+  const tipsEnabled = (restaurant as any)?.tipsEnabled !== false;
+  const [tipPercent, setTipPercent] = useState<number>(tipsEnabled ? 15 : 0);
+  // Per-restaurant currency (ISO 4217). Default to USD so legacy
+  // restaurants without the column set fall back to the old behaviour.
+  // CarouselCard / GridCard / CheckoutModal pick this up from the
+  // CurrencyProvider wrapping the return tree — we use a local helper
+  // here because the provider sits inside this component, not above.
+  const currencyCode: string = ((restaurant as any)?.currency || "usd").toLowerCase();
+  const fmt = (amount: number) => formatCurrency(amount, currencyCode);
 
   // ── Cart persistence ────────────────────────────────────────────────
   // Save the cart to localStorage scoped per-restaurant-slug so a refresh
@@ -868,6 +881,30 @@ export function OrderingPageClient({
   const [geocodeError, setGeocodeError] = useState<string | null>(null);
   const categoryRefs = useRef<Record<string, HTMLElement>>({});
   const pillRef = useRef<HTMLDivElement>(null);
+  // Track whether the category pill row can scroll further left/right so
+  // we can show/hide the desktop nav arrows. Recomputed on scroll +
+  // resize so the arrows accurately reflect overflow state at all
+  // times. Mobile users still use touch/swipe — arrows are a hover
+  // affordance for mouse + trackpad users.
+  const [pillScrollState, setPillScrollState] = useState<{ left: boolean; right: boolean }>({ left: false, right: false });
+  useEffect(() => {
+    const el = pillRef.current;
+    if (!el) return;
+    const update = () => {
+      const max = el.scrollWidth - el.clientWidth;
+      setPillScrollState({ left: el.scrollLeft > 2, right: el.scrollLeft < max - 2 });
+    };
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => { el.removeEventListener("scroll", update); ro.disconnect(); };
+  }, []);
+  const nudgePills = (dir: -1 | 1) => {
+    const el = pillRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.max(200, el.clientWidth * 0.7), behavior: "smooth" });
+  };
 
   // Day-of-week in the RESTAURANT's local timezone — NOT the customer's
   // browser TZ. A customer in PST ordering from an EST restaurant at
@@ -1134,7 +1171,11 @@ export function OrderingPageClient({
     ? (zoneMinutes !== undefined ? zoneMinutes : restaurant.estimatedDelivery)
     : restaurant.estimatedDelivery;
   const deliveryFee = hasFreeDelivery ? 0 : baseDeliveryFee;
-  const tipAmount = Math.round((subtotal * (tipPercent / 100)) * 100) / 100;
+  // When tipping is disabled at the restaurant level, force zero
+  // regardless of any leftover client state. Belt-and-suspenders to
+  // the gated UI — if a customer kept the page open across a settings
+  // change, we still don't surcharge them.
+  const tipAmount = tipsEnabled ? Math.round((subtotal * (tipPercent / 100)) * 100) / 100 : 0;
   const totalDiscount = couponDiscount + promoDiscount;
   const feeOrderType: "pickup" | "delivery" = orderType === "delivery" ? "delivery" : "pickup";
   const appliedServiceFees = evaluateApplicableFees(
@@ -1346,7 +1387,7 @@ export function OrderingPageClient({
       } else {
         setCouponDiscount(data.discount);
         setCouponId(data.id);
-        toast.success(tT("couponAppliedAmount", { amount: formatCurrency(data.discount) }));
+        toast.success(tT("couponAppliedAmount", { amount: fmt(data.discount) }));
       }
     } catch (e: any) { toast.error(e.message); }
     setCouponLoading(false);
@@ -1503,6 +1544,11 @@ export function OrderingPageClient({
           body: JSON.stringify({
             restaurantSlug: restaurant.slug,
             amount: total,
+            // Send the restaurant's configured currency so Stripe charges
+            // in the right denomination (server overrides anyway, but
+            // sending the correct value avoids the "client said USD,
+            // server says EUR" rejection path).
+            currency: currencyCode,
             metadata: { orderId: orderData.id },
           }),
         });
@@ -1531,7 +1577,10 @@ export function OrderingPageClient({
           body: JSON.stringify({
             restaurantSlug: restaurant.slug,
             amount: total,
-            currency: "USD",
+            // Server overrides with the restaurant's stored currency; sending
+            // the right value here keeps the client in sync and avoids a
+            // round-trip rejection on currency mismatch.
+            currency: currencyCode.toUpperCase(),
             orderId: orderData.id,
           }),
         });
@@ -1653,6 +1702,7 @@ export function OrderingPageClient({
   const bannerH = bannerHeightPx(theme.bannerHeight);
 
   return (
+    <CurrencyProvider currency={(restaurant as any)?.currency}>
     <div className="min-h-screen" style={{ backgroundColor: theme.backgroundColor, color: theme.textColor }}>
       {/* Reorder feedback banner. Fires after the customer hits "Reorder"
           on the status page; tells them how many items came back, what
@@ -1876,7 +1926,7 @@ export function OrderingPageClient({
               }
             >
               <Truck className="w-4 h-4" /> {t("delivery")} · {estimatedDeliveryMinutes} {t("minutes")}
-              {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{formatCurrency(baseDeliveryFee)})</span>}
+              {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{fmt(baseDeliveryFee)})</span>}
             </button>
           )}
         </div>
@@ -1905,7 +1955,7 @@ export function OrderingPageClient({
                 : null;
               const minOrderLabel =
                 promo.minimumOrder > 0
-                  ? `${formatCurrency(promo.minimumOrder)} min`
+                  ? `${fmt(promo.minimumOrder)} min`
                   : null;
               // Render the owner-set imageUrl as a background-image layer
               // with a dark gradient overlay for legibility. When no image
@@ -2011,31 +2061,67 @@ export function OrderingPageClient({
             standard pattern from GloriaFood / DoorDash / Uber Eats.
             Uses a tinted backdrop with blur so menu items show through
             subtly behind the pills as they scroll past. */}
-        <div
-          ref={pillRef}
-          className="flex gap-2 overflow-x-auto pb-2 mb-6 scroll-smooth sticky top-0 z-20 -mx-3 px-3 py-2 backdrop-blur-md"
+        <div className="relative sticky top-0 z-20 -mx-3 mb-6"
           style={{
-            scrollbarWidth: "none",
-            backgroundColor: `${theme.backgroundColor}f0`, // primary bg + ~94% opacity
+            backgroundColor: `${theme.backgroundColor}f0`,
             borderBottom: `1px solid ${theme.cardBackground}`,
           }}
         >
-          {visibleCategories.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => scrollToCategory(cat.id)}
-              className="px-4 py-2 rounded-full text-sm font-semibold transition whitespace-nowrap flex-shrink-0 flex items-center gap-1.5"
-              style={activeCategory === cat.id
-                ? { backgroundColor: theme.primaryColor, color: "#fff" }
-                : { backgroundColor: theme.cardBackground, border: "1px solid #e5e7eb", color: theme.textColor }
-              }
-            >
-              {cat.imageUrl && theme.showCategoryImages && (
-                <img src={cat.imageUrl} alt="" className="w-4 h-4 rounded object-cover" />
-              )}
-              {cat.name}
-            </button>
-          ))}
+          <div
+            ref={pillRef}
+            className="flex gap-2 overflow-x-auto pb-2 scroll-smooth px-3 py-2 backdrop-blur-md"
+            style={{ scrollbarWidth: "none" }}
+          >
+            {visibleCategories.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => scrollToCategory(cat.id)}
+                className="px-4 py-2 rounded-full text-sm font-semibold transition whitespace-nowrap flex-shrink-0 flex items-center gap-1.5"
+                style={activeCategory === cat.id
+                  ? { backgroundColor: theme.primaryColor, color: "#fff" }
+                  : { backgroundColor: theme.cardBackground, border: "1px solid #e5e7eb", color: theme.textColor }
+                }
+              >
+                {cat.imageUrl && theme.showCategoryImages && (
+                  <img src={cat.imageUrl} alt="" className="w-4 h-4 rounded object-cover" />
+                )}
+                {cat.name}
+              </button>
+            ))}
+          </div>
+          {/* Desktop scroll arrows + edge fades. Hidden on mobile
+              (touch is the natural scroll affordance there) and when
+              the row doesn't actually overflow. */}
+          {pillScrollState.left && (
+            <>
+              <div className="hidden sm:block pointer-events-none absolute inset-y-0 left-0 w-12"
+                style={{ background: `linear-gradient(to right, ${theme.backgroundColor}f0, transparent)` }}
+              />
+              <button
+                onClick={() => nudgePills(-1)}
+                aria-label="Scroll categories left"
+                className="hidden sm:flex absolute left-1 top-1/2 -translate-y-1/2 w-8 h-8 items-center justify-center rounded-full shadow-md transition hover:scale-110"
+                style={{ backgroundColor: theme.cardBackground, color: theme.textColor }}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+            </>
+          )}
+          {pillScrollState.right && (
+            <>
+              <div className="hidden sm:block pointer-events-none absolute inset-y-0 right-0 w-12"
+                style={{ background: `linear-gradient(to left, ${theme.backgroundColor}f0, transparent)` }}
+              />
+              <button
+                onClick={() => nudgePills(1)}
+                aria-label="Scroll categories right"
+                className="hidden sm:flex absolute right-1 top-1/2 -translate-y-1/2 w-8 h-8 items-center justify-center rounded-full shadow-md transition hover:scale-110"
+                style={{ backgroundColor: theme.cardBackground, color: theme.textColor }}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </>
+          )}
         </div>
 
         {/* ── Menu ─────────────────────────────────────────────────────── */}
@@ -2072,7 +2158,7 @@ export function OrderingPageClient({
               {cartCount}
             </div>
             <span className="flex-1 text-left">{t("viewCart")}</span>
-            <span>{formatCurrency(subtotal)}</span>
+            <span>{fmt(subtotal)}</span>
           </button>
         </div>
       )}
@@ -2091,7 +2177,7 @@ export function OrderingPageClient({
                 <div>
                   <h3 className="text-xl font-bold text-gray-900">{selectedItem.name}</h3>
                   {selectedItem.description && <p className="text-gray-500 text-sm mt-1">{selectedItem.description}</p>}
-                  <div className="text-lg font-bold mt-2" style={{ color: theme.primaryColor }}>{formatCurrency(currentItemPrice)}</div>
+                  <div className="text-lg font-bold mt-2" style={{ color: theme.primaryColor }}>{fmt(currentItemPrice)}</div>
                 </div>
                 <button onClick={() => { setSelectedItem(null); if (editingCartIndex !== null) cancelEdit(); }} className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg flex-shrink-0">
                   <X className="w-5 h-5" />
@@ -2120,7 +2206,7 @@ export function OrderingPageClient({
                         <input type="radio" checked={selectedVariant?.id === v.id} onChange={() => setSelectedVariant(v)} style={{ accentColor: theme.primaryColor }} />
                         <span className="text-sm text-gray-800">{v.name}</span>
                       </div>
-                      <span className="text-sm font-semibold text-gray-700">{formatCurrency(v.price)}</span>
+                      <span className="text-sm font-semibold text-gray-700">{fmt(v.price)}</span>
                     </label>
                   ))}
                 </div>
@@ -2175,7 +2261,7 @@ export function OrderingPageClient({
                               <div className="flex items-center gap-3 min-w-0 flex-1">
                                 <span className="text-sm text-gray-800 truncate">{opt.name}</span>
                                 {opt.priceAdjustment !== 0 && (
-                                  <span className="text-xs text-gray-500 flex-shrink-0">+{formatCurrency(opt.priceAdjustment)} each</span>
+                                  <span className="text-xs text-gray-500 flex-shrink-0">+{fmt(opt.priceAdjustment)} each</span>
                                 )}
                               </div>
                               <div className="flex items-center gap-2 flex-shrink-0 ml-2">
@@ -2227,7 +2313,7 @@ export function OrderingPageClient({
                               <span className="text-sm text-gray-800">{opt.name}</span>
                             </div>
                             {opt.priceAdjustment !== 0 && (
-                              <span className="text-sm text-gray-500">+{formatCurrency(opt.priceAdjustment)}</span>
+                              <span className="text-sm text-gray-500">+{fmt(opt.priceAdjustment)}</span>
                             )}
                           </label>
                         );
@@ -2273,7 +2359,7 @@ export function OrderingPageClient({
                 <button onClick={addToCart}
                   className="flex-1 text-white font-bold py-4 rounded-xl transition"
                   style={{ backgroundColor: theme.primaryColor }}>
-                  {t("addToCart")} · {formatCurrency(currentItemPrice * itemQuantity)}
+                  {t("addToCart")} · {fmt(currentItemPrice * itemQuantity)}
                 </button>
               </div>
             </div>
@@ -2332,7 +2418,7 @@ export function OrderingPageClient({
                                   {child.variantName ? ` (${child.variantName})` : ""}
                                   {child.specialityFee && child.specialityFee > 0 ? (
                                     <span className="ml-1" style={{ color: theme.primaryColor }}>
-                                      (+{formatCurrency(child.specialityFee)})
+                                      (+{fmt(child.specialityFee)})
                                     </span>
                                   ) : null}
                                 </div>
@@ -2355,7 +2441,7 @@ export function OrderingPageClient({
                           }
                           {ci.notes && <div className="text-xs text-gray-400 italic mt-0.5">&ldquo;{ci.notes}&rdquo;</div>}
                         </div>
-                        <div className="text-sm font-bold text-gray-900 flex-shrink-0">{formatCurrency(ci.lineTotal)}</div>
+                        <div className="text-sm font-bold text-gray-900 flex-shrink-0">{fmt(ci.lineTotal)}</div>
                       </div>
                       {/* Bundles are quantity-1 only — multiple bundles
                           should be built separately so the customer can
@@ -2392,7 +2478,7 @@ export function OrderingPageClient({
                     {promoResults.map((r: any) => (
                       <div key={r.promoId} className="flex justify-between text-sm text-green-700 font-medium">
                         <span>🎉 {r.name}</span>
-                        <span>-{formatCurrency(r.discount)}</span>
+                        <span>-{fmt(r.discount)}</span>
                       </div>
                     ))}
                     {/* Hide the "Free delivery applied" badge when the
@@ -2408,7 +2494,7 @@ export function OrderingPageClient({
                   {couponId ? (
                     <div className="flex items-center justify-between text-sm text-green-700 bg-green-50 rounded-lg px-3 py-2">
                       <span>{t("codeApplied", { code: couponCode })}</span>
-                      <span className="font-bold">-{formatCurrency(couponDiscount)}</span>
+                      <span className="font-bold">-{fmt(couponDiscount)}</span>
                     </div>
                   ) : (
                     <div className="flex gap-2">
@@ -2429,9 +2515,9 @@ export function OrderingPageClient({
 
                 {/* Totals */}
                 <div className="px-4 py-3 space-y-1.5 text-sm border-b border-gray-100">
-                  <div className="flex justify-between text-gray-600"><span>{t("subtotal")}</span><span>{formatCurrency(subtotal)}</span></div>
-                  {promoDiscount > 0 && <div className="flex justify-between text-green-600 font-medium"><span>{t("promoDiscount")}</span><span>-{formatCurrency(promoDiscount)}</span></div>}
-                  {couponDiscount > 0 && <div className="flex justify-between text-green-600 font-medium"><span>{t("couponDiscount")}</span><span>-{formatCurrency(couponDiscount)}</span></div>}
+                  <div className="flex justify-between text-gray-600"><span>{t("subtotal")}</span><span>{fmt(subtotal)}</span></div>
+                  {promoDiscount > 0 && <div className="flex justify-between text-green-600 font-medium"><span>{t("promoDiscount")}</span><span>-{fmt(promoDiscount)}</span></div>}
+                  {couponDiscount > 0 && <div className="flex justify-between text-green-600 font-medium"><span>{t("couponDiscount")}</span><span>-{fmt(couponDiscount)}</span></div>}
                   {orderType === "delivery" && (
                     <div className="flex justify-between text-gray-600">
                       <span>
@@ -2442,20 +2528,20 @@ export function OrderingPageClient({
                           </span>
                         )}
                       </span>
-                      <span>{hasFreeDelivery ? <span className="line-through text-gray-400">{formatCurrency(baseDeliveryFee)}</span> : formatCurrency(deliveryFee)}</span>
+                      <span>{hasFreeDelivery ? <span className="line-through text-gray-400">{fmt(baseDeliveryFee)}</span> : fmt(deliveryFee)}</span>
                     </div>
                   )}
                   {appliedServiceFees.map(f => (
                     <div key={f.name} className="flex justify-between text-gray-600">
                       <span>{f.name}</span>
-                      <span>{formatCurrency(f.amount)}</span>
+                      <span>{fmt(f.amount)}</span>
                     </div>
                   ))}
                   {/* Hide when taxRate is 0% — avoids a confusing
                       "Tax (0%) $0.00" sibling underneath any service
                       fee the owner may have named "Tax". */}
                   {taxAmount > 0 && (
-                    <div className="flex justify-between text-gray-600"><span>{t("tax")} ({restaurant.taxRate}%)</span><span>{formatCurrency(taxAmount)}</span></div>
+                    <div className="flex justify-between text-gray-600"><span>{t("tax")} ({restaurant.taxRate}%)</span><span>{fmt(taxAmount)}</span></div>
                   )}
                   {/* Tip — the cart's running total folds in the default
                       suggested 15% tip until the customer overrides it in
@@ -2474,17 +2560,17 @@ export function OrderingPageClient({
                           </span>
                         )}
                       </span>
-                      <span>{formatCurrency(tipAmount)}</span>
+                      <span>{fmt(tipAmount)}</span>
                     </div>
                   )}
-                  <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-100 mt-1"><span>{t("total")}</span><span>{formatCurrency(total)}</span></div>
+                  <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-100 mt-1"><span>{t("total")}</span><span>{fmt(total)}</span></div>
                 </div>
 
                 {/* Out-of-area warning */}
                 {orderType === "delivery" && resolvedZone && !resolvedZone.inside && (
                   <div className="mx-4 mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
                     <strong>{t("headsUp")}</strong> {t("outOfAreaWarning")}{" "}
-                    {t("feeEta", { fee: formatCurrency(resolvedZone.zone.deliveryFee), minutes: resolvedZone.zone.estimatedMinutes })}
+                    {t("feeEta", { fee: fmt(resolvedZone.zone.deliveryFee), minutes: resolvedZone.zone.estimatedMinutes })}
                   </div>
                 )}
 
@@ -2496,7 +2582,7 @@ export function OrderingPageClient({
                 {orderType === "delivery" && minimumOrderForType > 0 && subtotal < minimumOrderForType && (
                   <div className="mx-4 mt-3 space-y-2">
                     <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
-                      {t("addMoreToContinue", { min: formatCurrency(minimumOrderForType), more: formatCurrency(minimumOrderForType - subtotal) })}
+                      {t("addMoreToContinue", { min: fmt(minimumOrderForType), more: fmt(minimumOrderForType - subtotal) })}
                     </div>
                     <div className="flex gap-2">
                       <button
@@ -2534,7 +2620,7 @@ export function OrderingPageClient({
                     disabled={orderType === "delivery" && minimumOrderForType > 0 && subtotal < minimumOrderForType}
                     className="w-full text-white font-bold py-4 rounded-xl transition text-base disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ backgroundColor: theme.primaryColor }}>
-                    {t("proceedToCheckout")} → {formatCurrency(total)}
+                    {t("proceedToCheckout")} → {fmt(total)}
                   </button>
                 </div>
               </div>
@@ -2625,6 +2711,7 @@ export function OrderingPageClient({
           tipAmount={tipAmount}
           tipPercent={tipPercent}
           setTipPercent={setTipPercent}
+          tipsEnabled={tipsEnabled}
           total={total}
           taxRate={restaurant.taxRate}
           customerInfo={customerInfo}
@@ -2707,6 +2794,7 @@ export function OrderingPageClient({
         />
       )}
     </div>
+    </CurrencyProvider>
   );
 }
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Plus, Wallet, Trash2, Pencil, Loader2, X, ToggleLeft, ToggleRight, Receipt } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
+import { SUPPORTED_CURRENCIES } from "@/lib/utils";
 
 interface ServiceFee {
   id: string;
@@ -60,6 +61,12 @@ export function ServiceFeesClient() {
   // live together on the same page.
   const [taxRate, setTaxRate] = useState<string>("0");
   const [savingTax, setSavingTax] = useState(false);
+  // Tips + currency live next to taxRate so the "money behaviour"
+  // controls are in one section (Luigi 2026-05-31).
+  const [tipsEnabled, setTipsEnabled] = useState(true);
+  const [savingTips, setSavingTips] = useState(false);
+  const [currency, setCurrency] = useState<string>("usd");
+  const [savingCurrency, setSavingCurrency] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -73,6 +80,8 @@ export function ServiceFeesClient() {
       if (profileRes.ok) {
         const p = await profileRes.json();
         if (typeof p.taxRate === "number") setTaxRate(String(p.taxRate));
+        if (typeof p.tipsEnabled === "boolean") setTipsEnabled(p.tipsEnabled);
+        if (typeof p.currency === "string" && p.currency) setCurrency(p.currency);
       }
     } finally {
       setLoading(false);
@@ -98,6 +107,45 @@ export function ServiceFeesClient() {
       toast.error(tToasts("saveFailed"));
     } finally {
       setSavingTax(false);
+    }
+  };
+
+  const saveTips = async (next: boolean) => {
+    setTipsEnabled(next);
+    setSavingTips(true);
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tipsEnabled: next }),
+      });
+      if (!res.ok) throw new Error();
+      toast.success(tToasts("saved"));
+    } catch {
+      setTipsEnabled(!next);
+      toast.error(tToasts("saveFailed"));
+    } finally {
+      setSavingTips(false);
+    }
+  };
+
+  const saveCurrency = async (next: string) => {
+    const prev = currency;
+    setCurrency(next);
+    setSavingCurrency(true);
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currency: next.toLowerCase() }),
+      });
+      if (!res.ok) throw new Error();
+      toast.success(tToasts("saved"));
+    } catch {
+      setCurrency(prev);
+      toast.error(tToasts("saveFailed"));
+    } finally {
+      setSavingCurrency(false);
     }
   };
 
@@ -247,6 +295,67 @@ export function ServiceFeesClient() {
             className="bg-emerald-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-emerald-600 transition text-sm shadow-sm disabled:opacity-50"
           >
             {savingTax ? "Saving…" : "Save tax rate"}
+          </button>
+        </div>
+      </div>
+
+      {/* ── Currency ───────────────────────────────────────────────── */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <div className="flex items-start gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
+            <Wallet className="w-5 h-5 text-emerald-600" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h2 className="font-semibold text-gray-900">Currency</h2>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Drives every price the customer sees plus Stripe/PayPal charges, receipts and reports. Changing currency does NOT
+              convert existing prices — update menu prices to match if you switch from USD to EUR (etc.).
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap items-end gap-3">
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1">Currency</label>
+            <select
+              value={currency.toUpperCase()}
+              onChange={(e) => saveCurrency(e.target.value)}
+              disabled={savingCurrency}
+              className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none min-w-[18rem]"
+            >
+              {SUPPORTED_CURRENCIES.map(c => (
+                <option key={c.code} value={c.code}>{c.symbol}  {c.code} — {c.label}</option>
+              ))}
+            </select>
+          </div>
+          <p className="text-xs text-gray-500 pb-2">
+            Sample: <strong>{(new Intl.NumberFormat(undefined, { style: "currency", currency: currency.toUpperCase() })).format(12.34)}</strong>
+          </p>
+        </div>
+      </div>
+
+      {/* ── Tips ───────────────────────────────────────────────────── */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start gap-3 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
+              <Receipt className="w-5 h-5 text-emerald-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="font-semibold text-gray-900">Customer tips</h2>
+              <p className="text-xs text-gray-500 mt-0.5">
+                When OFF, the customer cart hides the tip selector entirely and the server clamps any tampered client value to 0.
+                Some restaurants (e.g. in countries where tipping isn&apos;t customary) prefer no tip prompts.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => saveTips(!tipsEnabled)}
+            disabled={savingTips}
+            className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${tipsEnabled ? "bg-emerald-500" : "bg-gray-300"} disabled:opacity-60`}
+            aria-label={tipsEnabled ? "Disable tips" : "Enable tips"}
+          >
+            <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${tipsEnabled ? "left-[22px]" : "left-0.5"}`} />
           </button>
         </div>
       </div>

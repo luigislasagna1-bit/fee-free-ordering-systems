@@ -76,6 +76,18 @@ model Restaurant {
   estimatedPickup      Int     @default(20)
   estimatedDelivery    Int     @default(45)
   taxRate              Float   @default(0)
+  /// Whether the customer-side cart shows the tip selector. False
+  /// suppresses the entire tip block (no "0% / 10% / 15% / custom"
+  /// row) and the order POST clamps any client-sent tip to 0 so a
+  /// tampered client can't inject one. Default true to preserve the
+  /// historical behaviour for restaurants that haven't touched this.
+  tipsEnabled          Boolean @default(true)
+  /// ISO 4217 lowercase currency code (matches Stripe's expectation:
+  /// "usd", "cad", "eur", "gbp", "aud", etc.). Drives the customer
+  /// price formatting, Stripe PaymentIntent currency, PayPal Order
+  /// currency, kitchen receipt symbol, and email totals. Default
+  /// "usd" so existing restaurants don't change behaviour silently.
+  currency             String  @default("usd")
   // Stripe Connect (Layer C — restaurant collects payments from customers)
   stripeAccountId      String?
   stripeAccountStatus  String? @default("not_connected")

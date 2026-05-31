@@ -61,6 +61,11 @@ const PUBLIC_ORDER_SELECT = {
       address: true, city: true, state: true, zip: true,
       estimatedPickup: true, estimatedDelivery: true,
       kitchenWorkflowMode: true,
+      // Surface the restaurant's chosen currency so the customer
+      // status page formats $/€/£ to match what they paid in. Without
+      // this, a European customer who paid €20 would see "$20.00" on
+      // the receipt — confusing and wrong.
+      currency: true,
     },
   },
   items: {

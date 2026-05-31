@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import {
   CheckCircle, Clock, ChefHat, Package, XCircle, Loader2,
   Phone, Mail, MapPin, Repeat, Printer, HelpCircle, X,
@@ -215,6 +215,11 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
 
   const isRejected = order.status === "rejected" || order.status === "cancelled";
   const isTerminal = isRejected || order.status === "completed";
+  // Format every price label on this status page in the restaurant's
+  // chosen currency. Falls back to USD if the column is unset (legacy
+  // rows pre-currency-column).
+  const orderCurrency: string = (order.restaurant?.currency || "usd").toLowerCase();
+  const formatCurrency = (amount: number) => fmtCurrency(amount, orderCurrency);
   // Pick the step set based on the restaurant's kitchenWorkflowMode.
   // Status values not present in the chosen set (e.g. "preparing" on a
   // simple-mode restaurant — shouldn't happen, but defensive) collapse
