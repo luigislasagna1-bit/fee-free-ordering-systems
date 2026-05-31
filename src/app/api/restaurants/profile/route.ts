@@ -15,7 +15,16 @@ export async function GET() {
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { taxRate: true, deliveryFee: true, minimumOrder: true, tipsEnabled: true, currency: true },
+    select: {
+      taxRate: true,
+      deliveryFee: true,
+      minimumOrder: true,
+      tipsEnabled: true,
+      currency: true,
+      // Surface the owner-uploaded custom alarm sound URL so the KDS
+      // can offer it as a third option in its Sound Settings picker.
+      kitchenAlertSoundUrl: true,
+    },
   });
   return NextResponse.json(restaurant ?? {});
 }

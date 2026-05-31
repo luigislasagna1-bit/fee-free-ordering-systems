@@ -88,6 +88,14 @@ model Restaurant {
   /// currency, kitchen receipt symbol, and email totals. Default
   /// "usd" so existing restaurants don't change behaviour silently.
   currency             String  @default("usd")
+  /// Vercel-Blob URL of a custom new-order ring sound uploaded by the
+  /// owner via /admin/profile. When non-null the KDS Sound Settings
+  /// modal surfaces it as a third selectable option (alongside
+  /// GloriaFood Ding + Classic Bell) — the staff member at the
+  /// terminal still picks which sound plays so a custom track doesn't
+  /// override their personal preference. Null = no custom sound on
+  /// file, the picker only shows the two built-ins.
+  kitchenAlertSoundUrl String?
   // Stripe Connect (Layer C — restaurant collects payments from customers)
   stripeAccountId      String?
   stripeAccountStatus  String? @default("not_connected")

@@ -503,12 +503,17 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const [alertVolume, setAlertVolume] = useState(1.0);
   const [alertMuted, setAlertMuted] = useState(false);
   const [showSoundSettings, setShowSoundSettings] = useState(false);
-  // Which sound to play on new-order alerts. "gloriafood" = the sampled
-  // MP3 ding extracted from Luigi's reference video; "synth" = the
-  // classic 4-partial bell synthesized by Web Audio (the original
-  // sound from before the sample existed). Picker UI lives in the
-  // sound-settings modal. Persisted to localStorage.
-  type AlertSoundChoice = "gloriafood" | "synth";
+  // Which sound to play on new-order alerts.
+  //   "gloriafood" = the sampled MP3 ding (default; bundled with the app)
+  //   "synth"      = the classic 4-partial bell synthesized by Web Audio
+  //                  (the original sound from before the sample existed)
+  //   "custom"     = a sound the restaurant owner uploaded via
+  //                  /admin/profile → Kitchen Alert Sound. Only selectable
+  //                  when restaurant.kitchenAlertSoundUrl is non-null;
+  //                  otherwise we silently fall back to "gloriafood".
+  // Picker UI lives in the sound-settings modal. Persisted to localStorage.
+  type AlertSoundChoice = "gloriafood" | "synth" | "custom";
+  const customSoundUrl: string | null = restaurant?.kitchenAlertSoundUrl ?? null;
   const [alertSound, setAlertSound] = useState<AlertSoundChoice>("gloriafood");
   const audioCtxRef = useRef<AudioContext | null>(null);
   const audioUnlockedRef = useRef(false);
@@ -529,6 +534,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // The ref holds the post-processed buffer; null until it's decoded.
   const sampleBufferRef = useRef<AudioBuffer | null>(null);
   const sampleErroredRef = useRef(false);
+  // Parallel slot for the owner-uploaded custom ring sound. Decoded
+  // the same way the bundled GloriaFood sample is — same trim, same
+  // fade math — so playback feel is consistent across sources. Null
+  // when restaurant.kitchenAlertSoundUrl is empty (or the decode
+  // fails). The picker only surfaces "Custom Sound" as selectable
+  // when this buffer is non-null and didn't error out.
+  const customSampleBufferRef = useRef<AudioBuffer | null>(null);
+  const customSampleErroredRef = useRef(false);
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -649,6 +662,83 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     return () => { cancelled = true; };
   }, []);
 
+  // Custom sound loader. Mirrors the GloriaFood-sample pipeline above
+  // — same trim, fade math, error path — but pulls from the owner's
+  // uploaded URL. Re-runs whenever the URL changes (owner uploads a
+  // new file → admin save → next KDS render picks it up). If decode
+  // fails (corrupt file, unsupported codec) we don't surface the
+  // option in the picker, falling back to GloriaFood Ding silently.
+  useEffect(() => {
+    if (!customSoundUrl) {
+      customSampleBufferRef.current = null;
+      customSampleErroredRef.current = false;
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const Ctx = (window.AudioContext || (window as any).webkitAudioContext);
+        if (!Ctx) {
+          customSampleErroredRef.current = true;
+          return;
+        }
+        const ctx: AudioContext = audioCtxRef.current ?? new Ctx();
+        audioCtxRef.current = ctx;
+        const res = await fetch(customSoundUrl);
+        if (!res.ok) throw new Error(`fetch failed: ${res.status}`);
+        const arr = await res.arrayBuffer();
+        const raw: AudioBuffer = await new Promise((resolve, reject) => {
+          try {
+            const p = ctx.decodeAudioData(arr.slice(0), resolve, reject);
+            if (p && typeof (p as any).then === "function") {
+              (p as Promise<AudioBuffer>).then(resolve, reject);
+            }
+          } catch (e) { reject(e); }
+        });
+        if (cancelled) return;
+
+        // Same cleanup pass as the bundled sample — owner-uploaded
+        // files are even more likely to need it (variable source
+        // quality), and consistent trim/fade keeps the perceived
+        // "feel" matched across sound choices.
+        const FADE_IN_MS = 8;
+        const FADE_OUT_MS = 25;
+        const fadeInSamples = Math.floor((FADE_IN_MS / 1000) * raw.sampleRate);
+        const fadeOutSamples = Math.floor((FADE_OUT_MS / 1000) * raw.sampleRate);
+        const out = ctx.createBuffer(raw.numberOfChannels, raw.length, raw.sampleRate);
+        for (let ch = 0; ch < raw.numberOfChannels; ch++) {
+          const src = raw.getChannelData(ch);
+          const dst = out.getChannelData(ch);
+          for (let i = 0; i < raw.length; i++) dst[i] = src[i];
+          for (let i = 0; i < Math.min(fadeInSamples, raw.length); i++) {
+            dst[i] *= i / fadeInSamples;
+          }
+          const fadeOutStart = Math.max(0, raw.length - fadeOutSamples);
+          for (let i = fadeOutStart; i < raw.length; i++) {
+            const t = (raw.length - i) / fadeOutSamples;
+            dst[i] *= t;
+          }
+        }
+        customSampleBufferRef.current = out;
+        customSampleErroredRef.current = false;
+        console.info(
+          `[KDS] custom alert sound decoded from owner upload: ` +
+          `length ${out.duration.toFixed(2)}s, fade-in ${FADE_IN_MS}ms + fade-out ${FADE_OUT_MS}ms.`
+        );
+      } catch (e) {
+        if (cancelled) return;
+        customSampleErroredRef.current = true;
+        customSampleBufferRef.current = null;
+        console.warn(
+          "[KDS] custom alert sound failed to load/decode — falling back to GloriaFood Ding " +
+          "for this session. The owner may need to re-upload the file from /admin/profile. " +
+          "Error:", e
+        );
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [customSoundUrl]);
+
   // Load saved volume / mute / sound choice on mount.
   useEffect(() => {
     try {
@@ -660,7 +750,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       const m = localStorage.getItem("kds-alert-muted");
       if (m === "1") setAlertMuted(true);
       const s = localStorage.getItem("kds-alert-sound");
-      if (s === "synth" || s === "gloriafood") setAlertSound(s);
+      if (s === "synth" || s === "gloriafood" || s === "custom") setAlertSound(s);
     } catch {}
   }, []);
 
@@ -754,9 +844,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
    * the source recording, leaving the ding cleaner and more cut-through.
    * Returns true if a sample was scheduled, false if no buffer is loaded.
    */
-  const playSampleOnce = useCallback((vol: number): boolean => {
+  // Inner playback core — takes any decoded buffer and applies the
+  // same filter chain. Used by both the bundled GloriaFood sample and
+  // the owner's custom upload.
+  const playBufferOnce = useCallback((buf: AudioBuffer | null, vol: number): boolean => {
     const ctx = audioCtxRef.current;
-    const buf = sampleBufferRef.current;
     if (!ctx || !buf) return false;
     try {
       if (ctx.state === "suspended") ctx.resume().catch(() => {});
@@ -807,6 +899,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     }
   }, []);
 
+  const playSampleOnce = useCallback(
+    (vol: number) => playBufferOnce(sampleBufferRef.current, vol),
+    [playBufferOnce],
+  );
+  const playCustomOnce = useCallback(
+    (vol: number) => playBufferOnce(customSampleBufferRef.current, vol),
+    [playBufferOnce],
+  );
+
   /**
    * Ring one strike using the user's chosen alert sound.
    *
@@ -833,6 +934,29 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       return;
     }
 
+    if (alertSound === "custom") {
+      // Owner-uploaded custom track. Stays strict — if the buffer
+      // failed to decode (corrupt file, etc.) we DON'T silently fall
+      // back to the GloriaFood sample. Better to be silent + log so
+      // the staff hears that something's broken and the owner fixes it.
+      const ok = playCustomOnce(vol);
+      if (ok) {
+        if (!loggedRingPathRef.current) {
+          console.info("[KDS ring] custom (owner-uploaded)");
+          loggedRingPathRef.current = true;
+        }
+      } else if (!loggedRingPathRef.current) {
+        console.warn(
+          "[KDS ring] custom sound not playable (" +
+          (customSampleErroredRef.current ? "load/decode error" : "buffer not ready yet") +
+          "). Silent this ring. Pick GloriaFood Ding or Classic Bell in Sound Settings " +
+          "for guaranteed playback until the file is replaced."
+        );
+        loggedRingPathRef.current = true;
+      }
+      return;
+    }
+
     // alertSound === "gloriafood"
     const ok = playSampleOnce(vol);
     if (ok) {
@@ -849,7 +973,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       );
       loggedRingPathRef.current = true;
     }
-  }, [alertVolume, alertSound, synthBellOnce, playSampleOnce]);
+  }, [alertVolume, alertSound, synthBellOnce, playSampleOnce, playCustomOnce]);
 
   // Derived. `alerting` is true only while there's at least one pending
   // order AND the user hasn't silenced the current alarm. Computed each
@@ -1827,26 +1951,32 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               the order is auto-rejected. Keep it loud so you never miss one.
             </p>
 
-            {/* Sound picker — GloriaFood Ding (sampled MP3, default) vs.
-                Classic Bell (the original 4-partial synth from before the
-                sample existed). Each option is exclusive — picking one
-                means the other never plays, even on load failure. */}
+            {/* Sound picker. The 3rd "Custom Sound" option is only
+                rendered when the owner uploaded a file in /admin/profile
+                — otherwise the picker stays 2-wide (GloriaFood + Classic
+                Bell). Each option is exclusive — picking one means the
+                others never play, even on load failure. */}
             <div className="mb-5">
               <label className={`text-sm font-semibold ${t.text} block mb-2`}>
                 Alert sound
               </label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className={`grid gap-2 ${customSoundUrl ? "grid-cols-3" : "grid-cols-2"}`}>
                 {([
                   {
                     id: "gloriafood",
                     label: "GloriaFood Ding",
-                    sub: "Sampled (recommended)",
+                    sub: "Default",
                   },
                   {
                     id: "synth",
                     label: "Classic Bell",
                     sub: "Synthesized",
                   },
+                  ...(customSoundUrl ? [{
+                    id: "custom" as const,
+                    label: "Custom Sound",
+                    sub: "Owner-uploaded",
+                  }] : []),
                 ] as Array<{ id: AlertSoundChoice; label: string; sub: string }>).map((opt) => (
                   <button
                     key={opt.id}
@@ -1863,7 +1993,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 ))}
               </div>
               <p className={`text-[11px] ${t.muted} mt-2`}>
-                Use the test button below to preview your selection.
+                {customSoundUrl
+                  ? "Upload or replace your custom ring from /admin/profile."
+                  : "Want a custom sound? Upload one from /admin/profile."}
+                {" "}Use the test button below to preview your selection.
               </p>
             </div>
 

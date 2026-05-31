@@ -20,7 +20,7 @@ import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
 import {
   Save, Store, Image as ImageIcon, Link as LinkIcon, MapPin,
-  Loader2, Search, X, CheckCircle2, AlertTriangle,
+  Loader2, Search, X, CheckCircle2, AlertTriangle, Bell, Play, Trash2, Upload,
 } from "lucide-react";
 import NextLink from "next/link";
 import { ImageUpload } from "@/components/admin/ImageUpload";
@@ -121,6 +121,168 @@ interface LocationSectionProps {
   onAddressFill: (fill: AddressFill) => void;
   mapProvider: "leaflet" | "google";
   googleMapsApiKey: string | null;
+}
+
+/**
+ * KitchenSoundSection — owner-facing upload card for a custom new-order
+ * ring sound that surfaces in the Kitchen Display Sound Settings as a
+ * third selectable option.
+ *
+ * Self-managed state: we don't fold the URL into the parent FormState
+ * because the upload completes (and the URL persists) the moment the
+ * file is chosen — there's no "Save Changes" button to wait on. This
+ * also means the parent ProfileClient doesn't need to know how to
+ * upload audio; that's all contained here.
+ *
+ * Defined at module scope (not inside ProfileClient) for the same
+ * focus-loss reason LocationSection is: React reuses the instance
+ * across re-renders only when the component identity stays stable.
+ */
+function KitchenSoundSection({ initialUrl }: { initialUrl: string | null }) {
+  const [url, setUrl] = useState<string | null>(initialUrl);
+  const [busy, setBusy] = useState<"upload" | "delete" | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const onPickFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // allow re-pick of same name later
+    if (!file) return;
+    setError(null);
+
+    // Quick client-side gate. The server re-validates; this just
+    // avoids round-tripping 5 MB files for an obvious rejection.
+    if (file.size > 2 * 1024 * 1024) {
+      setError("File must be under 2 MB.");
+      return;
+    }
+    if (!/^audio\//.test(file.type)) {
+      setError("Please choose an audio file (MP3, WAV, or OGG).");
+      return;
+    }
+
+    setBusy("upload");
+    const form = new FormData();
+    form.append("file", file);
+    fetch("/api/restaurants/kitchen-sound", { method: "POST", body: form })
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || "Upload failed");
+        setUrl(data.url);
+        toast.success("Custom ring sound uploaded");
+      })
+      .catch((err) => {
+        const msg = err instanceof Error ? err.message : "Upload failed";
+        setError(msg);
+        toast.error(msg);
+      })
+      .finally(() => setBusy(null));
+  };
+
+  const onDelete = () => {
+    if (!url) return;
+    setBusy("delete");
+    setError(null);
+    fetch("/api/restaurants/kitchen-sound", { method: "DELETE" })
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || "Delete failed");
+        setUrl(null);
+        toast.success("Custom ring sound removed");
+      })
+      .catch((err) => {
+        const msg = err instanceof Error ? err.message : "Delete failed";
+        setError(msg);
+        toast.error(msg);
+      })
+      .finally(() => setBusy(null));
+  };
+
+  const onPreview = () => {
+    if (!url) return;
+    // Lazy-instantiate the audio element. We don't keep one mounted
+    // because the URL is only set after upload — easier to make a new
+    // <audio> than swap the src + reset playback state.
+    if (!audioRef.current) audioRef.current = new Audio(url);
+    else audioRef.current.src = url;
+    audioRef.current.currentTime = 0;
+    audioRef.current.play().catch((err) => {
+      console.warn("[kitchen-sound preview] play threw:", err);
+      toast.error("Couldn't play preview — your browser may have blocked it.");
+    });
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-2 flex items-center gap-2">
+        <Bell className="w-4 h-4" /> Kitchen Alert Sound
+      </div>
+      <p className="text-sm text-gray-500 mb-4">
+        Upload a custom ring sound for new-order alerts. Once saved,
+        it shows up as a third option (alongside <strong>GloriaFood Ding</strong>
+        {" "}and <strong>Classic Bell</strong>) in the Kitchen Display&apos;s
+        Sound Settings. Best results: a short 1–5 second clip, under 2 MB.
+        MP3, WAV, or OGG.
+      </p>
+
+      {url ? (
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex-1 min-w-0 px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg text-sm text-emerald-900 truncate">
+            ✓ Custom ring on file
+          </div>
+          <button
+            type="button"
+            onClick={onPreview}
+            className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50"
+          >
+            <Play className="w-3.5 h-3.5" /> Preview
+          </button>
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={busy !== null}
+            className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50"
+          >
+            <Upload className="w-3.5 h-3.5" /> Replace
+          </button>
+          <button
+            type="button"
+            onClick={onDelete}
+            disabled={busy !== null}
+            className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg border border-red-200 text-red-600 hover:bg-red-50 disabled:opacity-50"
+          >
+            {busy === "delete" ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
+            Remove
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={busy !== null}
+          className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:opacity-50"
+        >
+          {busy === "upload" ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+          {busy === "upload" ? "Uploading…" : "Upload Custom Ring"}
+        </button>
+      )}
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="audio/mpeg,audio/mp3,audio/wav,audio/x-wav,audio/ogg"
+        onChange={onPickFile}
+        className="hidden"
+      />
+
+      {error && (
+        <div className="mt-3 text-sm text-red-600 flex items-center gap-1.5">
+          <AlertTriangle className="w-3.5 h-3.5" /> {error}
+        </div>
+      )}
+    </div>
+  );
 }
 
 function LocationSection({
@@ -518,6 +680,18 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
             />
           </div>
         </div>
+
+        {/* ── Kitchen Alert Sound ────────────────────────────────────
+            Custom new-order ring upload. The default ring (the
+            GloriaFood Ding bundled with the app) stays as the
+            built-in option. When a file is uploaded here, "Custom
+            Sound" appears as a third option in the Kitchen Display's
+            Sound Settings modal. Encoded as a side-car field on
+            Restaurant.kitchenAlertSoundUrl; upload + delete happen
+            via /api/restaurants/kitchen-sound. */}
+        <KitchenSoundSection
+          initialUrl={restaurant?.kitchenAlertSoundUrl ?? null}
+        />
 
         {/* ── Contact & Location ─────────────────────────────────────── */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
