@@ -15,10 +15,17 @@ import { notifyCustomer, notifyStaff } from "@/lib/notifications";
 import { refundDirectPayment, stripeReady, voidPayment } from "@/lib/stripe";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 
-/** Minutes a pending order can sit before we auto-reject. Conservative
- *  default — kitchen countdown shows URGENT after 3 min, so 10 min is
- *  ample warning. Tunable via AUTO_REJECT_TIMEOUT_MINUTES env if needed. */
-const DEFAULT_TIMEOUT_MINUTES = 10;
+/** Minutes a regular pending order can sit before we auto-reject.
+ *  Matches the kitchen-display visual countdown (3 min) so the bell
+ *  doesn't keep ringing past the URGENT cue. The KitchenDisplay client
+ *  also triggers an instant reject the moment the countdown elapses,
+ *  but this cron is the safety net for when the tablet is offline /
+ *  not loaded. Tunable via AUTO_REJECT_TIMEOUT_MINUTES env. */
+const DEFAULT_TIMEOUT_MINUTES = 3;
+/** Closed-when-placed orders get a longer window — staff may be a few
+ *  minutes late arriving after open, and the kitchen UI gives them
+ *  15 min from alertAt before flashing URGENT. Keep auto-reject aligned. */
+const CLOSED_PLACED_TIMEOUT_MINUTES = 15;
 
 export type AutoRejectResult = {
   scanned: number;
@@ -43,18 +50,31 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
   const envValue = parseInt(process.env.AUTO_REJECT_TIMEOUT_MINUTES ?? "", 10);
   const timeoutMinutes =
     opts.timeoutMinutes ?? (Number.isFinite(envValue) && envValue > 0 ? envValue : DEFAULT_TIMEOUT_MINUTES);
-  const cutoff = new Date(now.getTime() - timeoutMinutes * 60 * 1000);
+  const regularCutoff = new Date(now.getTime() - timeoutMinutes * 60 * 1000);
+  const closedPlacedCutoff = new Date(now.getTime() - CLOSED_PLACED_TIMEOUT_MINUTES * 60 * 1000);
 
   // Pending orders that have been released to the kitchen (notifiedAt
   // set) and have sat for too long. Released card orders are the
   // important ones — the customer already paid, expects either food
   // or a refund. Unreleased card orders (paid not yet → notifiedAt
   // null) are still in payment-confirmation limbo; skip those.
+  //
+  // Two timeout buckets:
+  //   • Regular orders (placedWhileClosed=false): cutoff = createdAt +
+  //     3 min, matching the kitchen UI's countdown.
+  //   • Closed-when-placed orders: cutoff = alertAt + 15 min. These sit
+  //     parked in the queue until the restaurant opens; the 15-min
+  //     window starts when alertAt fires, not when the order was placed.
+  //     If alertAt is null or still in the future, the order isn't
+  //     stale yet — skip.
   const candidates = await prisma.order.findMany({
     where: {
       status: "pending",
       notifiedAt: { not: null },
-      createdAt: { lt: cutoff },
+      OR: [
+        { placedWhileClosed: false, createdAt: { lt: regularCutoff } },
+        { placedWhileClosed: true, alertAt: { not: null, lt: closedPlacedCutoff } },
+      ],
     },
     select: {
       id: true,
@@ -69,6 +89,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       restaurantId: true,
       viaMarketplace: true,
       marketplaceCounterApplied: true,
+      placedWhileClosed: true,
       restaurant: {
         select: { id: true, name: true, defaultLanguage: true, stripeAccountId: true },
       },
@@ -152,9 +173,13 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
 
   const stripeOk = await stripeReady();
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
-  const reasonText = `Auto-rejected: not accepted within ${timeoutMinutes} minutes.`;
 
   for (const order of candidates) {
+    // Per-order reason: closed-placed orders saw a 15-min window from
+    // alertAt, regulars saw the (configurable) 3-min window. Customer
+    // sees this in the rejection email and on the status page.
+    const orderTimeout = order.placedWhileClosed ? CLOSED_PLACED_TIMEOUT_MINUTES : timeoutMinutes;
+    const reasonText = `Auto-rejected: not accepted within ${orderTimeout} minutes.`;
     try {
       await prisma.order.update({
         where: { id: order.id },

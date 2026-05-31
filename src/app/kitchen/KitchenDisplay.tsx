@@ -953,9 +953,76 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
   const seenIdsRef = useRef<Set<string>>(new Set(initialOrders.map(o => o.id)));
   const autoPrintedRef = useRef<Set<string>>(new Set());
+  // Tracks orders we've already kicked an auto-reject request for, so the
+  // 1-second `now` tick doesn't re-fire the PATCH while the previous one
+  // is still in flight (or after it succeeded but before fetchOrders has
+  // refreshed the list). Cleared when the order leaves the pending list.
+  const autoRejectingRef = useRef<Set<string>>(new Set());
   const now = useNow();
 
   useEffect(() => { localStorage.setItem("kds-theme", themeMode); }, [themeMode]);
+
+  // ── Client-side auto-reject when the 3-min countdown elapses ──────────
+  // The cron (auto-reject-stale-orders) is the server-side safety net but
+  // runs every 5 min — so without this client trigger, the bell can ring
+  // for up to ~5 minutes past the visual countdown ending. The trigger
+  // below fires the moment the kitchen tablet sees a pending order's
+  // countdown drop past a small grace window (5 s past 0 — gives staff
+  // the briefest chance to hit Accept on a buzzer-beater). Idempotent
+  // server-side: if staff Accepted in the same beat, the PATCH 4xx's
+  // because the order is no longer pending.
+  //
+  // The reason string here matches what auto-reject-orders.ts uses so a
+  // mixed-source rejection looks consistent to the customer.
+  useEffect(() => {
+    if (!now) return;
+    for (const order of orders) {
+      if (order.status !== "pending") continue;
+      if (autoRejectingRef.current.has(order.id)) continue;
+      // Parked closed-when-placed orders haven't actually started ringing
+      // yet — alertAt is the future moment when their countdown begins.
+      if (order.alertAt && new Date(order.alertAt).getTime() > now) continue;
+      const reference = order.alertAt ?? order.notifiedAt ?? order.createdAt;
+      const totalMs = order.placedWhileClosed ? 15 * 60 * 1000 : 3 * 60 * 1000;
+      const elapsed = now - new Date(reference).getTime();
+      // 5-second grace past the countdown — lets the URGENT pulse render
+      // for a beat before we kill the row.
+      if (elapsed < totalMs + 5_000) continue;
+      autoRejectingRef.current.add(order.id);
+      const reason = `Auto-rejected: not accepted within ${order.placedWhileClosed ? 15 : 3} minutes.`;
+      fetch(`/api/orders/${order.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "rejected", rejectionReason: reason }),
+      })
+        .then(async (r) => {
+          // 409 / 400 typically means the order already moved off pending
+          // (staff Accepted in the same tick, or cron already rejected).
+          // Either way the result we wanted — pending cleared — is true.
+          if (!r.ok && r.status !== 409 && r.status !== 400) {
+            // Surface unexpected failures so it doesn't silently retry-loop
+            // every tick. The ref stays set; if staff want to retry they
+            // can hit Reject manually.
+            const body = await r.text().catch(() => "");
+            console.warn(`[kds auto-reject] order ${order.id} PATCH failed:`, r.status, body.slice(0, 200));
+          }
+        })
+        .catch((e) => console.warn(`[kds auto-reject] order ${order.id} network error:`, e))
+        .finally(() => {
+          // Next fetchOrders tick will pick up the new rejected status and
+          // the row drops out of the pending list naturally.
+          fetchOrders();
+        });
+    }
+    // Garbage-collect the ref: drop IDs that aren't in the current pending
+    // list anymore, so a future "manually-re-pended" order (shouldn't
+    // happen but defensive) would get auto-rejected again next time.
+    const pendingIds = new Set(orders.filter(o => o.status === "pending").map(o => o.id));
+    for (const id of Array.from(autoRejectingRef.current)) {
+      if (!pendingIds.has(id)) autoRejectingRef.current.delete(id);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orders, now]);
 
   // Load cleared-order sets from localStorage after hydration (can't do this
   // during render because the server has no localStorage, causing a mismatch).
