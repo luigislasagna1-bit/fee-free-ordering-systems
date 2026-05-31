@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, createContext, useContext, useEffect, useRef } from "react";
 import {
   Plus, GripVertical, ChevronDown, ChevronRight, Eye, EyeOff,
   Edit2, Trash2, Copy, X, Check, AlertCircle, Tag, Layers,
@@ -46,6 +46,23 @@ type Category = {
 };
 
 const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+// ─── Hover-link context ──────────────────────────────────────────────────────
+// Powers the "hover a chip on an item, see the matching row in the library
+// panel light up + scroll into view" UX, mirrored from GloriaFood. We track
+// the library-group id (not the attached-instance id) so chips that point
+// to the same library row all highlight together regardless of which item
+// the cursor is on. setHovered is debounced via simple state — React
+// batches mouse events fast enough that we don't need explicit throttling
+// for the chip volumes we have (hundreds, not thousands).
+type HoverState = {
+  hoveredLibId: string | null;
+  setHovered: (libId: string | null) => void;
+};
+const MenuHoverContext = createContext<HoverState>({
+  hoveredLibId: null,
+  setHovered: () => {},
+});
 
 // ─── Item Edit Modal ──────────────────────────────────────────────────────────
 
@@ -714,16 +731,28 @@ function ModifierChip({ group, inherited, onRemove, sortable }: {
   const style = sortable
     ? { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.4 : 1 }
     : undefined;
+  // Hover-link: announce the underlying library group id so the right-
+  // side library panel can light up the matching row. Falls back to the
+  // chip's own id when the chip has no libraryGroupId (e.g. an ad-hoc
+  // item-scoped group never imported from the library) — in that case
+  // the library panel just won't have a match, which is fine.
+  const { hoveredLibId, setHovered } = useContext(MenuHoverContext);
+  const linkKey = group.libraryGroupId ?? group.id;
+  const isHovered = hoveredLibId === linkKey;
   return (
     <span
       ref={sortable ? setNodeRef : undefined}
       style={style}
       {...(sortable ? attributes : {})}
       {...(sortable ? listeners : {})}
-      className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border font-medium ${
+      onMouseEnter={() => setHovered(linkKey)}
+      onMouseLeave={() => setHovered(null)}
+      className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border font-medium transition ${
         sortable ? "cursor-grab active:cursor-grabbing select-none" : ""
       } ${
-        inherited ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-emerald-50 border-emerald-200 text-emerald-700"
+        inherited
+          ? `bg-blue-50 border-blue-200 text-blue-700 ${isHovered ? "ring-2 ring-blue-400 ring-offset-1" : ""}`
+          : `bg-emerald-50 border-emerald-200 text-emerald-700 ${isHovered ? "ring-2 ring-emerald-400 ring-offset-1" : ""}`
       }`}
     >
       {inherited && <span className="opacity-60 text-[10px]" title="Inherited from category">↑</span>}
@@ -1008,9 +1037,19 @@ function ModifierLibraryPanel({
 }) {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const toggle = (id: string) => setExpanded(e => ({ ...e, [id]: !e[id] }));
+  const { hoveredLibId, setHovered } = useContext(MenuHoverContext);
+  // Scroll the matching row into view when an external hover (e.g. a
+  // chip on an item) targets a library group that's offscreen. Uses
+  // block: "nearest" so already-visible rows don't jump unnecessarily.
+  const rowRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  useEffect(() => {
+    if (!hoveredLibId) return;
+    const el = rowRefs.current[hoveredLibId];
+    if (el) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }, [hoveredLibId]);
 
   return (
-    <div className="w-72 flex-shrink-0 border-l border-gray-100 bg-gray-50 flex flex-col h-full">
+    <div className="w-80 flex-shrink-0 border-l border-gray-100 bg-gray-50 flex flex-col h-full">
       <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-white">
         <div>
           <h3 className="font-bold text-gray-900 text-sm">Choices & Add-ons</h3>
@@ -1036,23 +1075,41 @@ function ModifierLibraryPanel({
             No modifier groups yet.
           </div>
         )}
-        {groups.map(g => (
+        {groups.map(g => {
+          const isHovered = hoveredLibId === g.id;
+          return (
           <div
             key={g.id}
+            ref={el => { rowRefs.current[g.id] = el; }}
             draggable
             onDragStart={e => {
               e.dataTransfer.setData("libraryGroupId", g.id);
               e.dataTransfer.effectAllowed = "copy";
             }}
-            className="bg-white rounded-xl border border-gray-100 overflow-hidden cursor-grab active:cursor-grabbing hover:border-emerald-200 hover:shadow-sm transition"
+            onMouseEnter={() => setHovered(g.id)}
+            onMouseLeave={() => setHovered(null)}
+            className={`bg-white rounded-xl border overflow-hidden cursor-grab active:cursor-grabbing transition ${
+              isHovered
+                ? "border-emerald-400 ring-2 ring-emerald-300 shadow-md"
+                : "border-gray-100 hover:border-emerald-200 hover:shadow-sm"
+            }`}
           >
-            <div className="flex items-center gap-2 p-3 hover:bg-gray-50" onClick={() => toggle(g.id)}>
-              <GripVertical className="w-3.5 h-3.5 text-gray-300 flex-shrink-0" />
+            <div className="flex items-start gap-2 p-3 hover:bg-gray-50" onClick={() => toggle(g.id)}>
+              <GripVertical className="w-3.5 h-3.5 text-gray-300 flex-shrink-0 mt-0.5" />
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-sm font-semibold text-gray-800 truncate">{g.name}</span>
-                  {g.required && <span className="text-xs bg-emerald-50 text-emerald-600 px-1 rounded">Required</span>}
-                  {g.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1 rounded">Hidden</span>}
+                <div className="flex items-start gap-1.5 flex-wrap">
+                  {/* Two-line clamp instead of single-line truncate — long
+                      names like "WHOLE PIZZA - Extra Toppings (X Large)"
+                      no longer get cut to "WHOLE PIZ..." Title attr is
+                      a hover-tooltip fallback for the very long ones. */}
+                  <span
+                    className="text-sm font-semibold text-gray-800 leading-tight break-words"
+                    title={g.name}
+                  >
+                    {g.name}
+                  </span>
+                  {g.required && <span className="text-xs bg-emerald-50 text-emerald-600 px-1 rounded flex-shrink-0">Required</span>}
+                  {g.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1 rounded flex-shrink-0">Hidden</span>}
                 </div>
                 <div className="text-xs text-gray-400 mt-0.5">
                   {g.options.length} options · min {g.minSelect} / max {g.maxSelect}
@@ -1079,7 +1136,8 @@ function ModifierLibraryPanel({
               </div>
             )}
           </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -1703,7 +1761,13 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
     await reload();
   };
 
+  // Hover-link wiring — shared between every ModifierChip and the
+  // right-side ModifierLibraryPanel. See MenuHoverContext docs.
+  const [hoveredLibId, setHoveredLibId] = useState<string | null>(null);
+  const hoverValue: HoverState = { hoveredLibId, setHovered: setHoveredLibId };
+
   return (
+    <MenuHoverContext.Provider value={hoverValue}>
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
@@ -1805,5 +1869,6 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
         />
       )}
     </div>
+    </MenuHoverContext.Provider>
   );
 }
