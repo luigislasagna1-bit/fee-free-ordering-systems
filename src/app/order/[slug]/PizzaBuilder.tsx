@@ -15,7 +15,7 @@
  * Multi-tenancy: all data (groups, options, prices) comes from the
  * restaurant's own menu items — no cross-restaurant data leaks possible.
  */
-import { useState, useMemo, useCallback, useRef } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import {
   X, Plus, Minus, ChevronLeft, ChevronRight,
   Scissors, Check, Flame, Leaf, AlertCircle,
@@ -744,7 +744,10 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
     const def: string[] = [SECTION_SIZE];
     if (crustGroup) def.push(sectionIdForGroup(crustGroup));
     for (const g of otherGroups) def.push(sectionIdForGroup(g));
-    if (config.allowHalfHalf) def.push(SECTION_HALF_HALF);
+    // SECTION_HALF_HALF entry intentionally omitted — the master Half/Half
+    // toggle was removed 2026-05-31 in favour of per-section Whole/Split
+    // pickers driven by group.supportsHalfHalf. Legacy sectionOrder
+    // arrays that still reference it just no-op since nothing renders.
     if (sauceGroup) def.push(sectionIdForGroup(sauceGroup));
     if (cheeseGroup) def.push(sectionIdForGroup(cheeseGroup));
     if (toppingGroups.length > 0) def.push(SECTION_TOPPINGS);
@@ -841,7 +844,16 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
     [],
   );
 
-  // ── Half/half toggle ─────────────────────────────────────────────────────
+  // ── Half/half derivation ─────────────────────────────────────────────────
+  // Per Luigi 2026-05-31 (and the per-group supportsHalfHalf flag): there's
+  // no master Half/Half toggle anymore. Each half/half-eligible section
+  // owns its own Whole/Split picker (or per-option L/R placement for
+  // toppings) and we derive isHalfHalf from those per-section states for
+  // anything that still needs a "is this a split pizza right now?" answer
+  // (pizza visual + cart line summary + name prefixing). When the cart
+  // round-trips a saved customization back to the editor, the per-section
+  // state seeds itself from those legacy isHalfHalf-based fields so
+  // re-editing existing cart entries still works.
 
   const toggleHalfHalf = () => {
     setCustomization(c => {
@@ -862,6 +874,36 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
     });
     setToppingPlacement("whole");
   };
+
+  /**
+   * Derived "is this pizza currently configured as half/half?"
+   * True if ANY section is in split mode OR ANY topping has L/R placement
+   * OR (legacy) any left/right sauce/cheese is set.
+   * Used by:
+   *   - pizza visual on the right (renders L|R when true)
+   *   - cart line summary / name prefixing
+   *   - addToCart payload (so older order rendering keeps working)
+   */
+  const effectiveHalfHalf =
+    sauceMode === "split" ||
+    cheeseMode === "split" ||
+    customization.toppings.some(t => t.placement !== "whole") ||
+    !!customization.leftSauceOptionId || !!customization.rightSauceOptionId ||
+    !!customization.leftCheeseOptionId || !!customization.rightCheeseOptionId;
+
+  // Keep customization.isHalfHalf in sync with the derived value so the
+  // cart payload and the legacy code paths that still read .isHalfHalf
+  // see the right answer without further changes. We do this in a
+  // dedicated effect so the state stays single-source.
+  useEffect(() => {
+    setCustomization(c => c.isHalfHalf === effectiveHalfHalf ? c : { ...c, isHalfHalf: effectiveHalfHalf });
+  }, [effectiveHalfHalf]);
+
+  // Whether at least one topping group is half/half-eligible — controls
+  // whether the toppings section shows the L/Whole/R placement bar.
+  const toppingsHaveHalfHalf =
+    toppingGroups.some(g => g.supportsHalfHalf) ||
+    roleSupportsHalfHalf(config, "toppings");
 
   // ── Add to cart ──────────────────────────────────────────────────────────
 
@@ -911,9 +953,14 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
   // master Half/Half toggle was on — so a customer who picked "Pizza
   // Sauce" in Whole mode still saw "Please choose sauce to continue."
   // Surfaced by Luigi 2026-05-31 on Build Your Own Pizza.
-  const sauceSplit = customization.isHalfHalf && sauceMode === "split"
+  // Per-section mode is now the master gate (the item-level Half/Half
+  // toggle was removed). The section's UI can only flip to "split" when
+  // the underlying group supports half/half, so checking the mode alone
+  // is sufficient. Keep the explicit groupSupportsHalfHalf guard as a
+  // belt-and-suspenders in case state is restored from an older cart.
+  const sauceSplit = sauceMode === "split"
     && groupSupportsHalfHalf(sauceGroup, config, "sauce");
-  const cheeseSplit = customization.isHalfHalf && cheeseMode === "split"
+  const cheeseSplit = cheeseMode === "split"
     && groupSupportsHalfHalf(cheeseGroup, config, "cheese");
   const sauceMissing = !!(sauceGroup?.required) && (
     sauceSplit
@@ -1133,47 +1180,19 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
               );
             })}
 
-            {/* ── Half & Half toggle ── */}
-            {config.allowHalfHalf && (
-              <section style={orderStyle(SECTION_HALF_HALF)}>
-                <div
-                  className="flex items-center justify-between p-3.5 rounded-xl border-2 cursor-pointer transition"
-                  style={
-                    customization.isHalfHalf
-                      ? { borderColor: primaryColor, backgroundColor: `${primaryColor}10` }
-                      : { borderColor: "#f3f4f6" }
-                  }
-                  onClick={toggleHalfHalf}
-                >
-                  <div className="flex items-center gap-3">
-                    <Scissors
-                      className="w-5 h-5 flex-shrink-0"
-                      style={{ color: customization.isHalfHalf ? primaryColor : "#9ca3af" }}
-                    />
-                    <div>
-                      <p className="text-sm font-semibold text-gray-900">{tp("halfHalf")}</p>
-                      <p className="text-xs text-gray-400">{tp("halfHalfDesc")}</p>
-                    </div>
-                  </div>
-                  <div
-                    className="w-11 h-6 rounded-full relative transition-all flex-shrink-0"
-                    style={{ backgroundColor: customization.isHalfHalf ? primaryColor : "#e5e7eb" }}
-                  >
-                    <div
-                      className="absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all"
-                      style={{ left: customization.isHalfHalf ? "calc(100% - 1.375rem)" : "0.125rem" }}
-                    />
-                  </div>
-                </div>
-              </section>
-            )}
+            {/* Master Half/Half toggle removed 2026-05-31 — each
+                half/half-eligible section owns its own Whole/Split picker
+                via the per-group supportsHalfHalf flag. effectiveHalfHalf
+                derives from per-section state for the pizza visual and
+                cart payload, so nothing else has to change to support
+                the new flow. */}
 
             {/* Sauce */}
             {sauceGroup && (
               <section data-pizza-section="sauce" style={orderStyle(sectionIdForGroup(sauceGroup))} className={ringFor("sauce")}>
                 <div className="flex items-center justify-between mb-2">
                   <SectionHeader label={tp("sauce")} required={sauceGroup.required} />
-                  {customization.isHalfHalf && groupSupportsHalfHalf(sauceGroup, config, "sauce") && (
+                  {groupSupportsHalfHalf(sauceGroup, config, "sauce") && (
                     <div className="flex rounded-lg overflow-hidden border border-gray-200 text-xs">
                       {(["whole", "split"] as const).map(m => (
                         <button
@@ -1192,7 +1211,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                     </div>
                   )}
                 </div>
-                {(!customization.isHalfHalf || !groupSupportsHalfHalf(sauceGroup, config, "sauce") || sauceMode === "whole") && (
+                {(!groupSupportsHalfHalf(sauceGroup, config, "sauce") || sauceMode === "whole") && (
                   <OptionRow
                     options={sauceGroup.options.filter(o => o.isAvailable)}
                     selectedId={customization.sauceOptionId}
@@ -1200,7 +1219,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                     primaryColor={primaryColor}
                   />
                 )}
-                {customization.isHalfHalf && groupSupportsHalfHalf(sauceGroup, config, "sauce") && sauceMode === "split" && (
+                {groupSupportsHalfHalf(sauceGroup, config, "sauce") && sauceMode === "split" && (
                   <div className="space-y-3">
                     <div>
                       <p className="text-xs font-semibold text-gray-500 mb-1.5">{tp("leftHalf")}</p>
@@ -1230,7 +1249,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
               <section data-pizza-section="cheese" style={orderStyle(sectionIdForGroup(cheeseGroup))} className={ringFor("cheese")}>
                 <div className="flex items-center justify-between mb-2">
                   <SectionHeader label={tp("cheese")} required={cheeseGroup.required} />
-                  {customization.isHalfHalf && groupSupportsHalfHalf(cheeseGroup, config, "cheese") && (
+                  {groupSupportsHalfHalf(cheeseGroup, config, "cheese") && (
                     <div className="flex rounded-lg overflow-hidden border border-gray-200 text-xs">
                       {(["whole", "split"] as const).map(m => (
                         <button
@@ -1249,7 +1268,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                     </div>
                   )}
                 </div>
-                {(!customization.isHalfHalf || !groupSupportsHalfHalf(cheeseGroup, config, "cheese") || cheeseMode === "whole") && (
+                {(!groupSupportsHalfHalf(cheeseGroup, config, "cheese") || cheeseMode === "whole") && (
                   <OptionRow
                     options={cheeseGroup.options.filter(o => o.isAvailable)}
                     selectedId={customization.cheeseOptionId}
@@ -1257,7 +1276,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                     primaryColor={primaryColor}
                   />
                 )}
-                {customization.isHalfHalf && groupSupportsHalfHalf(cheeseGroup, config, "cheese") && cheeseMode === "split" && (
+                {groupSupportsHalfHalf(cheeseGroup, config, "cheese") && cheeseMode === "split" && (
                   <div className="space-y-3">
                     <div>
                       <p className="text-xs font-semibold text-gray-500 mb-1.5">{tp("leftHalf")}</p>
@@ -1305,9 +1324,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                 </div>
 
                 {/* Placement selector for half-half mode */}
-                {customization.isHalfHalf && // Toppings is "supported" when ANY of the topping groups has the flag,
-                          // OR the legacy roles list includes it.
-                          (toppingGroups.some(g => g.supportsHalfHalf) || roleSupportsHalfHalf(config, "toppings")) && (
+                {toppingsHaveHalfHalf && (
                   <div className="flex gap-1 p-1 bg-gray-100 rounded-xl mb-4">
                     <PlacementButton
                       label={tp("leftHalfButton")}
@@ -1340,18 +1357,12 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                       )}
                       <div className="space-y-1.5">
                         {g.options.filter(o => o.isAvailable).map(opt => {
-                          // Force whole-pizza placement when the owner
-                          // disabled half/half for toppings — even if the
-                          // global isHalfHalf is on (because the customer
-                          // toggled it for sauce/cheese), each topping is
-                          // applied to the whole pizza.
-                          // Toppings is "supported" when ANY of the topping
-                          // groups carries the flag OR the legacy roles
-                          // list includes "toppings".
-                          const toppingsCanSplit =
-                            toppingGroups.some(g => g.supportsHalfHalf) ||
-                            roleSupportsHalfHalf(config, "toppings");
-                          const placement = (customization.isHalfHalf && toppingsCanSplit) ? toppingPlacement : "whole";
+                          // The L/Whole/R placement picker only renders
+                          // when toppingsHaveHalfHalf is true, so any
+                          // user-selected placement is valid. When
+                          // toppings aren't half/half-eligible we force
+                          // "whole" regardless of toppingPlacement state.
+                          const placement = toppingsHaveHalfHalf ? toppingPlacement : "whole";
                           const t = customization.toppings.find(
                             t => t.optionId === opt.id && t.placement === placement
                           );

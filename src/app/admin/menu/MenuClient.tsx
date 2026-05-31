@@ -179,7 +179,8 @@ function PizzaSectionOrderEditor({
     if (item) {
       for (const g of item.modifierGroups) pushOtherGroup(g);
     }
-    if (pizza.allowHalfHalf) def.push(SECTION_HALF_HALF);
+    // SECTION_HALF_HALF intentionally not pushed — the master toggle
+    // was removed (per-group flag replaces it).
     if (pizza.sauceGroupId) def.push(pizza.sauceGroupId);
     if (pizza.cheeseGroupId) def.push(pizza.cheeseGroupId);
     if (pizza.toppingGroupIds.length > 0) def.push(SECTION_TOPPINGS);
@@ -287,7 +288,7 @@ function PizzaSectionOrderEditor({
               </div>
               <span className="text-xs font-mono text-gray-300 w-5">{i + 1}.</span>
               <span className="text-sm text-gray-800 flex-1 truncate">{labelFor(id)}</span>
-              {groupEligible && pizza.allowHalfHalf && (
+              {groupEligible && (
                 <span
                   className="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium flex-shrink-0"
                   title="This group is flagged Half/Half-capable in the library. When the customer toggles Half/Half ON, this section will render with Whole/Split UI."
@@ -711,14 +712,14 @@ function ItemModal({
 
               {pizza.isPizza && (
                 <>
-                  {/* Half & half */}
-                  <div className="flex items-center justify-between py-1">
-                    <div>
-                      <div className="text-sm font-medium text-gray-700">Allow Half &amp; Half</div>
-                      <div className="text-xs text-gray-400">Customers can split the pizza with different toppings on each side</div>
-                    </div>
-                    <Toggle on={pizza.allowHalfHalf} onToggle={() => setPizza(p => ({ ...p, allowHalfHalf: !p.allowHalfHalf }))} />
-                  </div>
+                  {/* Item-level "Allow Half & Half" toggle removed
+                      2026-05-31 — half/half capability is now a per-
+                      group flag set in Choices & Add-ons. The customer
+                      sees a Whole/Split picker on each section whose
+                      group is flagged supportsHalfHalf. Existing items
+                      with allowHalfHalf saved in pizzaConfig still
+                      preserve the value (parsePizzaForm reads it) so
+                      reverting is a one-line change if needed. */}
 
                   {/* Group assignments */}
                   <div className="border-t pt-4 space-y-3">
