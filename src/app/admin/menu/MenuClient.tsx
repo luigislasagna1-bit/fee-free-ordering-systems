@@ -270,6 +270,81 @@ function PizzaSectionOrderEditor({
   );
 }
 
+// ─── Extra-Quantity Upcharge Field ──────────────────────────────────────────
+// Replaces the bare number input that read "0 = no extra charge for Extra
+// quantity" with a yes/no toggle owners can actually reason about. ON stores
+// "1" (full per-size topping price added when the customer picks "Extra"),
+// OFF stores "0" (free). The customer-side PizzaBuilder pricing engine
+// already multiplied the per-size topping price by this value, so the
+// behaviour map is:
+//   • OFF (0)  → Extra costs nothing
+//   • ON (1)   → Extra costs the per-size topping price (Small +$2.25,
+//                Medium +$2.50, Large +$2.75, X Large +$3.01, etc.)
+// An Advanced expander lets the rare restaurant set a custom fractional
+// multiplier (e.g. 0.5 = half-price upcharge). Existing items whose value
+// is neither 0 nor 1 open with Advanced auto-expanded so nothing silently
+// changes their behaviour.
+function ExtraQtyUpchargeField({
+  value, onChange,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const numeric = parseFloat(value);
+  const isOff = !Number.isFinite(numeric) || numeric === 0;
+  const isOn = numeric === 1;
+  const isAdvanced = !isOff && !isOn;
+  const [advancedOpen, setAdvancedOpen] = useState(isAdvanced);
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        Charge for &quot;Extra&quot; quantity?
+      </label>
+      <div className="flex items-center gap-3">
+        <Toggle
+          on={!isOff}
+          onToggle={() => onChange(isOff ? "1" : "0")}
+        />
+        <span className="text-sm text-gray-600">
+          {isOff
+            ? "Free — Extra doesn't change the price"
+            : isOn
+              ? "Full per-size topping price"
+              : `Custom: ${numeric}× per-size topping price`}
+        </span>
+      </div>
+      <p className="text-xs text-gray-400 mt-1">
+        When ON, picking &quot;Extra&quot; on a topping adds the per-size topping price
+        for the chosen size (Small adds Small&apos;s price, Large adds Large&apos;s, etc.).
+      </p>
+      <button
+        type="button"
+        onClick={() => setAdvancedOpen(o => !o)}
+        className="text-xs text-gray-500 hover:text-gray-700 underline mt-1.5"
+      >
+        {advancedOpen ? "Hide advanced" : "Advanced: custom multiplier"}
+      </button>
+      {advancedOpen && (
+        <div className="mt-2">
+          <input
+            type="number"
+            step="0.05"
+            min="0"
+            placeholder="0"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+            value={value}
+            onChange={e => onChange(e.target.value)}
+          />
+          <p className="text-xs text-gray-400 mt-0.5">
+            0 = free, 1 = full per-size topping price, 0.5 = half charge,
+            2 = double charge.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ConfirmModal({ title, message, confirmLabel = "Delete", onConfirm, onCancel }: {
   title: string; message: string; confirmLabel?: string;
   onConfirm: () => void; onCancel: () => void;
@@ -745,14 +820,10 @@ function ItemModal({
                           onChange={e => setPizza(p => ({ ...p, halfToppingMultiplier: e.target.value }))} />
                         <p className="text-xs text-gray-400 mt-0.5">0.5 = 50% price for a half-pizza topping</p>
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">&quot;Extra&quot; Qty Upcharge</label>
-                        <input type="number" step="0.1" min="0" placeholder="0"
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                          value={pizza.extraQuantityMultiplier}
-                          onChange={e => setPizza(p => ({ ...p, extraQuantityMultiplier: e.target.value }))} />
-                        <p className="text-xs text-gray-400 mt-0.5">0 = no extra charge for &quot;Extra&quot; quantity</p>
-                      </div>
+                      <ExtraQtyUpchargeField
+                        value={pizza.extraQuantityMultiplier}
+                        onChange={(v) => setPizza(p => ({ ...p, extraQuantityMultiplier: v }))}
+                      />
                     </div>
                   </div>
                 </>
