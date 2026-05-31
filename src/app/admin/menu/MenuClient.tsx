@@ -5,7 +5,7 @@ import {
   Edit2, Trash2, Copy, X, Check, AlertCircle, Tag, Layers,
   Image as ImageIcon, Clock, Truck, ShoppingBag, UtensilsCrossed,
   Settings, ChevronUp, MoreVertical, Upload, FileText, Loader2,
-  PartyPopper,
+  PartyPopper, Download,
 } from "lucide-react";
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
@@ -1598,6 +1598,14 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
           <p className="text-sm text-gray-500 mt-0.5">Drag to reorder categories and items</p>
         </div>
         <div className="flex items-center gap-2">
+          {/* GloriaFood/FoodBooking direct importer — restaurants migrating
+              off Sams Restaurant Systems (sunsetting April 2027) or any
+              GloriaFood-powered platform paste their embed snippet and
+              their entire menu (incl. modifiers) lands in seconds. */}
+          <a href="/admin/menu/import-gloriafood"
+            className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition text-sm shadow-sm">
+            <Download className="w-4 h-4" /> Import from GloriaFood
+          </a>
           <button onClick={() => setPdfImportOpen(true)}
             className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition text-sm shadow-sm">
             <Upload className="w-4 h-4" /> Import PDF
