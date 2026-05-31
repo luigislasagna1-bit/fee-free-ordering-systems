@@ -56,6 +56,20 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   // pizzaConfig: null clears the pizza builder; a JSON string enables it
   if (pizzaConfig !== undefined) updateData.pizzaConfig = pizzaConfig;
 
+  // Snapshot the previous pizzaConfig BEFORE the update so the
+  // attachment sync below can diff old-vs-new and detach groups the
+  // owner just removed from a dropdown. Without this, switching the
+  // Crust dropdown from "Pizza 1 Crust" to "Thin Crust" leaves the
+  // old "Pizza 1 Crust" attached forever.
+  let priorPizzaConfig: string | null = null;
+  if (pizzaConfig !== undefined) {
+    const prior = await prisma.menuItem.findFirst({
+      where: { id, restaurantId },
+      select: { pizzaConfig: true },
+    });
+    priorPizzaConfig = prior?.pizzaConfig ?? null;
+  }
+
   try {
     await prisma.menuItem.updateMany({ where: { id, restaurantId }, data: updateData });
 
@@ -70,7 +84,12 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     }
 
     if (pizzaConfig !== undefined) {
-      await syncPizzaConfigAttachments(id, restaurantId, pizzaConfig);
+      const { cleanupDuplicateInheritedAttachments } = await import("@/lib/pizza-config");
+      // Belt-and-suspenders cleanup: any pre-existing item-level attachment
+      // that duplicates a category-level inheritance gets removed before
+      // sync. Idempotent; only acts when dupes exist.
+      await cleanupDuplicateInheritedAttachments(id, restaurantId);
+      await syncPizzaConfigAttachments(id, restaurantId, pizzaConfig, priorPizzaConfig);
     }
 
     return NextResponse.json({ success: true });

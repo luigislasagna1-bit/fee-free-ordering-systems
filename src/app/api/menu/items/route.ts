@@ -48,7 +48,8 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    await syncPizzaConfigAttachments(item.id, restaurantId, pizzaConfig);
+    // New item — no prior pizzaConfig, so pass null as old.
+    await syncPizzaConfigAttachments(item.id, restaurantId, pizzaConfig, null);
 
     return NextResponse.json(item, { status: 201 });
   } catch (e: any) {
