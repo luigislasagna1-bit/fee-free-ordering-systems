@@ -8,7 +8,7 @@ import {
   PartyPopper, Download,
 } from "lucide-react";
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
-import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
+import { SortableContext, useSortable, verticalListSortingStrategy, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { formatCurrency } from "@/lib/utils";
 import { ImageUpload } from "@/components/admin/ImageUpload";
@@ -698,18 +698,44 @@ function ModifierModal({
 
 // ─── Modifier Chip ────────────────────────────────────────────────────────────
 
-function ModifierChip({ group, inherited, onRemove }: {
+function ModifierChip({ group, inherited, onRemove, sortable }: {
   group: ModifierGroup; inherited?: boolean; onRemove?: () => void;
+  /** When true, the chip is wired up as a sortable element in its parent
+   *  SortableContext so the owner can drag-and-drop to reorder the
+   *  modifier groups attached to an item or category. Inherited chips
+   *  intentionally never opt in — they're reordered on the parent
+   *  category, not here. */
+  sortable?: boolean;
 }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: group.id,
+    disabled: !sortable,
+  });
+  const style = sortable
+    ? { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.4 : 1 }
+    : undefined;
   return (
-    <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border font-medium ${
-      inherited ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-emerald-50 border-emerald-200 text-emerald-700"
-    }`}>
+    <span
+      ref={sortable ? setNodeRef : undefined}
+      style={style}
+      {...(sortable ? attributes : {})}
+      {...(sortable ? listeners : {})}
+      className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border font-medium ${
+        sortable ? "cursor-grab active:cursor-grabbing select-none" : ""
+      } ${
+        inherited ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-emerald-50 border-emerald-200 text-emerald-700"
+      }`}
+    >
       {inherited && <span className="opacity-60 text-[10px]" title="Inherited from category">↑</span>}
       {group.name}
       {group.required && <span className="text-[10px] opacity-70">*</span>}
       {onRemove && (
         <button
+          // onPointerDown stops dnd-kit from claiming this as the start
+          // of a drag — without it, clicking the X to detach also
+          // briefly registers as a drag and the visual jitter looks
+          // broken.
+          onPointerDown={e => e.stopPropagation()}
           onClick={e => { e.stopPropagation(); onRemove(); }}
           className="ml-0.5 hover:text-red-600 transition rounded-full"
           title={inherited ? "Manage on category" : "Remove modifier group"}
@@ -724,7 +750,7 @@ function ModifierChip({ group, inherited, onRemove }: {
 // ─── Sortable Item Row ────────────────────────────────────────────────────────
 
 function SortableItemRow({
-  item, categoryModGroups, onEdit, onDelete, onToggle, onAttach, onDetach,
+  item, categoryModGroups, onEdit, onDelete, onToggle, onAttach, onDetach, onReorderGroups,
 }: {
   item: MenuItem;
   categoryModGroups: ModifierGroup[];
@@ -733,11 +759,26 @@ function SortableItemRow({
   onToggle: (field: "isAvailable" | "isSoldOut" | "isHidden", val: boolean) => void;
   onAttach: (libraryGroupId: string, menuItemId: string) => void;
   onDetach: (groupId: string) => void;
+  onReorderGroups: (itemId: string, orderedIds: string[]) => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: item.id });
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
   const [dragOver, setDragOver] = useState(false);
+  // Nested DnD context for the modifier-group chip strip. Uses its own
+  // sensor with a slightly larger activation distance than the parent
+  // item-row sensor (5px) so a quick click on a chip's X button never
+  // accidentally starts a drag.
+  const chipSensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }));
+  const handleChipDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const ids = item.modifierGroups.map(g => g.id);
+    const oldIdx = ids.indexOf(active.id as string);
+    const newIdx = ids.indexOf(over.id as string);
+    if (oldIdx < 0 || newIdx < 0) return;
+    onReorderGroups(item.id, arrayMove(ids, oldIdx, newIdx));
+  };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -786,9 +827,15 @@ function SortableItemRow({
               // Inherited from category — no remove button; manage via the category header
               <ModifierChip key={g.id} group={g} inherited />
             ))}
-            {ownGroups.map(g => (
-              <ModifierChip key={g.id} group={g} onRemove={() => onDetach(g.id)} />
-            ))}
+            {ownGroups.length > 0 && (
+              <DndContext sensors={chipSensors} collisionDetection={closestCenter} onDragEnd={handleChipDragEnd}>
+                <SortableContext items={ownGroups.map(g => g.id)} strategy={rectSortingStrategy}>
+                  {ownGroups.map(g => (
+                    <ModifierChip key={g.id} group={g} sortable onRemove={() => onDetach(g.id)} />
+                  ))}
+                </SortableContext>
+              </DndContext>
+            )}
           </div>
         )}
         {dragOver && <div className="text-xs text-emerald-500 mt-1">Drop to attach modifier group</div>}
@@ -824,7 +871,7 @@ function SortableItemRow({
 function SortableCategoryBlock({
   cat, expanded, onToggleExpand, onAddItem, onEditItem, onDeleteItem,
   onToggleItem, onEditCategory, onDeleteCategory, onItemsReordered, categories,
-  onAttach, onDetach,
+  onAttach, onDetach, onReorderGroups,
 }: {
   cat: Category; expanded: boolean;
   onToggleExpand: () => void; onAddItem: () => void;
@@ -835,11 +882,15 @@ function SortableCategoryBlock({
   categories: Category[];
   onAttach: (libraryGroupId: string, menuItemId?: string, categoryId?: string) => void;
   onDetach: (groupId: string) => void;
+  onReorderGroups: (scope: { itemId?: string; categoryId?: string }, orderedIds: string[]) => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: cat.id });
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
+  // Slightly bigger activation for chip drags so X-button clicks register
+  // as clicks, not drags.
+  const chipSensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }));
   const [catDragOver, setCatDragOver] = useState(false);
 
   const handleItemDragEnd = (event: DragEndEvent) => {
@@ -850,6 +901,16 @@ function SortableCategoryBlock({
     const newIdx = items.findIndex(i => i.id === over.id);
     const reordered = arrayMove(items, oldIdx, newIdx);
     onItemsReordered(cat.id, reordered.map(i => i.id));
+  };
+
+  const handleCatChipDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const ids = cat.modifierGroups.map(g => g.id);
+    const oldIdx = ids.indexOf(active.id as string);
+    const newIdx = ids.indexOf(over.id as string);
+    if (oldIdx < 0 || newIdx < 0) return;
+    onReorderGroups({ categoryId: cat.id }, arrayMove(ids, oldIdx, newIdx));
   };
 
   return (
@@ -884,9 +945,13 @@ function SortableCategoryBlock({
           {cat.description && <div className="text-xs text-gray-400 truncate">{cat.description}</div>}
           {cat.modifierGroups.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-1.5" onClick={e => e.stopPropagation()}>
-              {cat.modifierGroups.map(g => (
-                <ModifierChip key={g.id} group={g} onRemove={() => onDetach(g.id)} />
-              ))}
+              <DndContext sensors={chipSensors} collisionDetection={closestCenter} onDragEnd={handleCatChipDragEnd}>
+                <SortableContext items={cat.modifierGroups.map(g => g.id)} strategy={rectSortingStrategy}>
+                  {cat.modifierGroups.map(g => (
+                    <ModifierChip key={g.id} group={g} sortable onRemove={() => onDetach(g.id)} />
+                  ))}
+                </SortableContext>
+              </DndContext>
             </div>
           )}
           {catDragOver && <div className="text-xs text-emerald-500 mt-1">Drop to apply to all items in this category</div>}
@@ -919,6 +984,7 @@ function SortableCategoryBlock({
                     onToggle={(field, val) => onToggleItem(item.id, field, val)}
                     onAttach={(libId, itemId) => onAttach(libId, itemId)}
                     onDetach={onDetach}
+                    onReorderGroups={(itemId, orderedIds) => onReorderGroups({ itemId }, orderedIds)}
                   />
                 ))}
               </SortableContext>
@@ -1504,6 +1570,54 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
       body: JSON.stringify({ type: "items", ids }) });
   };
 
+  /**
+   * Owner dragged the modifier-group chips on an item or a category to
+   * a new order. Update local state optimistically (the chips visually
+   * land in the new order without waiting for a round-trip) then POST
+   * to /api/menu/reorder. On API failure we don't roll back — the user
+   * will see a toast and a reload() reverts to truth. Same pattern as
+   * handleItemsReordered above.
+   */
+  const handleReorderGroups = async (
+    scope: { itemId?: string; categoryId?: string },
+    orderedIds: string[],
+  ) => {
+    setCategories(cats => cats.map(c => {
+      if (scope.categoryId && c.id === scope.categoryId) {
+        return {
+          ...c,
+          modifierGroups: orderedIds
+            .map(id => c.modifierGroups.find(g => g.id === id)!)
+            .filter(Boolean),
+        };
+      }
+      if (scope.itemId) {
+        return {
+          ...c,
+          menuItems: c.menuItems.map(it => it.id === scope.itemId
+            ? {
+                ...it,
+                modifierGroups: orderedIds
+                  .map(id => it.modifierGroups.find(g => g.id === id)!)
+                  .filter(Boolean),
+              }
+            : it,
+          ),
+        };
+      }
+      return c;
+    }));
+    const res = await fetch("/api/menu/reorder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "modifiers", ids: orderedIds }),
+    });
+    if (!res.ok) {
+      toast.error("Failed to save new order — refreshing.");
+      await reload();
+    }
+  };
+
   const deleteItem = (id: string) => {
     setConfirmDialog({
       title: "Delete item?",
@@ -1644,6 +1758,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
                     categories={categories}
                     onAttach={attachModifier}
                     onDetach={detachModifier}
+                    onReorderGroups={handleReorderGroups}
                   />
                 ))}
               </SortableContext>

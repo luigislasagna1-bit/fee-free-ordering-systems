@@ -21,7 +21,23 @@ export async function POST(req: NextRequest) {
     } else if (type === "items") {
       await prisma.menuItem.updateMany({ where: { id: ids[i], restaurantId }, data: { sortOrder: i } });
     } else if (type === "modifiers") {
-      await prisma.modifierGroup.update({ where: { id: ids[i] }, data: { sortOrder: i } });
+      // Ownership check: a modifier group is owned by this restaurant
+      // when EITHER it's a library group (restaurantId set) OR it's
+      // attached to a menu item / category that belongs here. Without
+      // this OR clause the previous implementation (plain
+      // `update({ where: { id }})`) let any authenticated user reorder
+      // any restaurant's modifier groups by guessing the IDs.
+      await prisma.modifierGroup.updateMany({
+        where: {
+          id: ids[i],
+          OR: [
+            { restaurantId },
+            { menuItem: { restaurantId } },
+            { category: { restaurantId } },
+          ],
+        },
+        data: { sortOrder: i },
+      });
     }
   }
   return NextResponse.json({ ok: true });
