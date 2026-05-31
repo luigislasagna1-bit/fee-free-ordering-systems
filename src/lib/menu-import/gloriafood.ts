@@ -146,6 +146,11 @@ export interface PreviewCategory {
   sortOrder: number;
   isActive: boolean;
   isHidden: boolean;
+  /** Source image URL on the FoodBooking CDN (high-density variant).
+   *  Resolved from the restaurant endpoint's pictures map at preview
+   *  time. The commit step downloads from this URL and re-hosts on
+   *  Vercel Blob so we never link directly to FoodBooking's CDN. */
+  sourceImageUrl: string | null;
   items: PreviewItem[];
 }
 
@@ -165,6 +170,8 @@ export interface PreviewItem {
   sourceId: number;
   name: string;
   description: string | null;
+  /** Source image URL on FoodBooking's CDN — see PreviewCategory.sourceImageUrl. */
+  sourceImageUrl: string | null;
   /** Base price — what the item sells for when there are no size
    *  variants. When variants exist this equals the price of the
    *  default variant (= item.price + default_size.price). */
@@ -289,14 +296,53 @@ export function parseSource(input: string): ParsedSource {
 // ────────────────────────────────────────────────────────────────────
 
 export async function fetchGloriaFoodMenu(src: ParsedSource): Promise<GFMenu> {
-  // Build the endpoint. Pattern verified against Luigi's restaurant:
-  //   https://<branded-domain>/api/restaurant/<ruid>/menu
-  // For direct GloriaFood restaurants the same path serves from
-  // www.gloriafood.com, which is the default brandedDomain.
-  const url = `https://${src.brandedDomain}/api/restaurant/${src.restaurantUid}/menu`;
-  // The API checks Origin/Referer. Setting them to the branded
-  // domain mimics what the customer-facing widget sends — same
-  // behaviour any browser loading the page would produce.
+  return fetchGF<GFMenu>(src, `/api/restaurant/${src.restaurantUid}/menu`, "menu");
+}
+
+/**
+ * Picture lookup table built from the restaurant endpoint. Keys are
+ * `{thumbnail_type}-{entity_id}` (e.g. "menu_item-12345"). Values are
+ * the absolute URL to the high-density (d2) image on FoodBooking's CDN.
+ * Returns an empty map if the endpoint refuses or the response shape
+ * is unexpected — we degrade to "no image import" rather than fail
+ * the whole import.
+ */
+export async function fetchGloriaFoodPictures(src: ParsedSource): Promise<Map<string, string>> {
+  const map = new Map<string, string>();
+  try {
+    const rest = await fetchGF<{ pictures?: Record<string, GFPicture> }>(
+      src,
+      `/api/restaurant/${src.restaurantUid}`,
+      "restaurant",
+    );
+    const pics = rest.pictures ?? {};
+    for (const entry of Object.values(pics)) {
+      if (!entry?.filename || typeof entry.filename !== "string") continue;
+      // Pattern verified 2026-05-31: high-density variants live at
+      //   https://www.fbgcdn.com/pictures/{filename-without-.jpg}_d2.jpg
+      // Plain {filename} also works for standard density 1 — we prefer
+      // d2 because customers on retina displays expect it.
+      const stem = entry.filename.replace(/\.jpg$/i, "");
+      const url = `https://www.fbgcdn.com/pictures/${stem}_d2.jpg`;
+      const key = `${entry.thumbnail_type}-${entry.entity_id}`;
+      map.set(key, url);
+    }
+  } catch (e) {
+    // Don't let a broken pictures endpoint poison the whole import.
+    console.warn("[gloriafood import] picture lookup failed:", e instanceof Error ? e.message : String(e));
+  }
+  return map;
+}
+
+interface GFPicture {
+  filename: string;
+  thumbnail_type: string;
+  entity_id: number;
+  picture_id?: number;
+}
+
+async function fetchGF<T>(src: ParsedSource, path: string, label: string): Promise<T> {
+  const url = `https://${src.brandedDomain}${path}`;
   const res = await fetch(url, {
     headers: {
       Accept: "application/json",
@@ -304,19 +350,18 @@ export async function fetchGloriaFoodMenu(src: ParsedSource): Promise<GFMenu> {
       Referer: `https://${src.brandedDomain}/ordering/restaurant/menu?restaurant_uid=${src.restaurantUid}`,
       "User-Agent": "Mozilla/5.0 (compatible; FFOS-MenuImport/1.0)",
     },
-    // No credentials — we're not sending or receiving cookies.
     cache: "no-store",
   });
   if (!res.ok) {
     const body = await res.text().catch(() => "");
     throw new Error(
-      `GloriaFood menu fetch failed (HTTP ${res.status}). Double-check that the restaurant UID and branded domain are correct. ${body ? `Detail: ${body.slice(0, 200)}` : ""}`.trim(),
+      `GloriaFood ${label} fetch failed (HTTP ${res.status}). ${body ? `Detail: ${body.slice(0, 200)}` : ""}`.trim(),
     );
   }
-  const json = (await res.json()) as GFMenu;
-  if (!json || !Array.isArray(json.categories)) {
+  const json = (await res.json()) as T;
+  if (!json || (label === "menu" && !Array.isArray((json as any).categories))) {
     throw new Error(
-      "The endpoint responded but the payload didn't look like a GloriaFood menu (no categories array). The restaurant may have a different platform.",
+      `The ${label} endpoint responded but the payload didn't look right.`,
     );
   }
   return json;
@@ -392,7 +437,7 @@ function clampMoney(v: number): number {
   return Math.round(v * 100) / 100;
 }
 
-export function mapMenu(menu: GFMenu): ImportPreview {
+export function mapMenu(menu: GFMenu, pictures?: Map<string, string>): ImportPreview {
   const stats: ImportStats = {
     categories: 0,
     items: 0,
@@ -448,10 +493,20 @@ export function mapMenu(menu: GFMenu): ImportPreview {
         stats.modifierOptions += v.groups.reduce((s, g) => s + g.options.length, 0);
       }
 
+      // Picture lookup — pictures map keys are
+      // `{thumbnail_type}-{entity_id}`. Prefer the highest-quality
+      // menu-item thumbnail so the imported image looks crisp on
+      // both the menu grid and the item detail modal.
+      const itemImage =
+        pictures?.get(`menu_item-${item.id}`) ??
+        pictures?.get(`menu_item_small-${item.id}`) ??
+        null;
+
       items.push({
         sourceId: item.id,
         name: (item.name || "Item").slice(0, 120),
         description: item.description ? item.description.slice(0, 500) : null,
+        sourceImageUrl: itemImage,
         basePrice,
         isAvailable: item.active,
         isHidden: isHiddenSeasonally,
@@ -481,10 +536,17 @@ export function mapMenu(menu: GFMenu): ImportPreview {
       stats.modifierOptions += (g.options ?? []).length;
     }
 
+    const categoryImage =
+      pictures?.get(`category-${cat.id}`) ??
+      pictures?.get(`category_small-${cat.id}`) ??
+      pictures?.get(`category_selector-${cat.id}`) ??
+      null;
+
     categories.push({
       sourceId: cat.id,
       name: (cat.name || "Menu").slice(0, 60),
       description: cat.description ? cat.description.slice(0, 500) : null,
+      sourceImageUrl: categoryImage,
       sortOrder: cat.sort ?? 0,
       isActive: cat.active,
       isHidden: false,

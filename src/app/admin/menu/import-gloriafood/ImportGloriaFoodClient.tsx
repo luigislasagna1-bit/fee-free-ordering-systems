@@ -280,6 +280,12 @@ export function ImportGloriaFoodClient() {
             {commitResult.libraryGroupsCreated ?? 0} library groups ·{" "}
             {commitResult.groupsCreated} attached groups ·{" "}
             {commitResult.optionsCreated} options
+            {typeof commitResult.imagesImported === "number" && (
+              <span className="block text-xs text-gray-500 mt-1">
+                {commitResult.imagesImported} image(s) imported
+                {commitResult.imagesFailed > 0 ? ` · ${commitResult.imagesFailed} failed (network)` : ""}
+              </span>
+            )}
             {commitResult.itemsSkippedDuplicate > 0 && (
               <span className="block text-xs text-gray-500 mt-1">
                 Skipped {commitResult.itemsSkippedDuplicate} duplicate item(s) already in your menu.

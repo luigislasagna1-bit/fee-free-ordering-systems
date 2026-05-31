@@ -4,16 +4,18 @@ import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
 import {
   fetchGloriaFoodMenu,
+  fetchGloriaFoodPictures,
   mapMenu,
   parseSource,
   type ImportPreview,
 } from "@/lib/menu-import/gloriafood";
 
-// The fetch + mapping is fast (Luigi's 186-item menu: ~1.2 s network +
-// ~50 ms parse), but allow some headroom for slow links and bigger
-// chains. 60s is generous and keeps us inside Vercel's Pro 300s ceiling
-// with margin to spare.
-export const maxDuration = 60;
+// Preview is fast (menu + pictures fetch ~2 s + parse ~100 ms). Commit
+// is the slow path now that image import is wired in: 157 image
+// downloads + Vercel Blob uploads for Luigi's menu, capped at 8x
+// parallelism. Bumped maxDuration to 300s (Vercel Pro ceiling) so the
+// commit doesn't get truncated on chains with hundreds of images.
+export const maxDuration = 300;
 
 /**
  * POST /api/menu/import-gloriafood — preview a GloriaFood menu.
@@ -58,8 +60,14 @@ export async function POST(req: NextRequest) {
 
   let preview: ImportPreview;
   try {
-    const menu = await fetchGloriaFoodMenu(parsed);
-    preview = mapMenu(menu);
+    // Fetch menu + pictures in parallel — they're independent endpoints
+    // on the same host so there's no benefit to serialising. mapMenu
+    // takes both so item/category sourceImageUrls land on the preview.
+    const [menu, pictures] = await Promise.all([
+      fetchGloriaFoodMenu(parsed),
+      fetchGloriaFoodPictures(parsed),
+    ]);
+    preview = mapMenu(menu, pictures);
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     console.error("[import-gloriafood] preview failed:", msg);
@@ -184,6 +192,64 @@ export async function PUT(req: NextRequest) {
   }
   for (const g of preview.categoryGroups) collectLib(g);
 
+  // ── Image pre-fetch ────────────────────────────────────────────────
+  // Download every category/item image referenced in the preview from
+  // FoodBooking's CDN and re-host on Vercel Blob. We do this BEFORE the
+  // DB transaction so the slow part (network I/O) doesn't lock the
+  // transaction. The resulting urlByPreviewKey map is consulted by the
+  // category/item create calls below. Images that fail to download or
+  // upload are silently skipped — the rest of the import still lands,
+  // owner just doesn't get those specific images.
+  let imagesImported = 0;
+  let imagesFailed = 0;
+  const blobUrlBySource = new Map<string, string>(); // source URL → blob URL
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const sourceUrls = new Set<string>();
+    for (const cat of preview.categories) {
+      if (cat.sourceImageUrl) sourceUrls.add(cat.sourceImageUrl);
+      for (const it of cat.items) {
+        if (it.sourceImageUrl) sourceUrls.add(it.sourceImageUrl);
+      }
+    }
+    if (sourceUrls.size > 0) {
+      const { put } = await import("@vercel/blob");
+      const PARALLEL = 8;
+      const urls = [...sourceUrls];
+      let idx = 0;
+      const worker = async () => {
+        while (idx < urls.length) {
+          const my = idx++;
+          const src = urls[my];
+          try {
+            const imgRes = await fetch(src, { cache: "no-store" });
+            if (!imgRes.ok) {
+              imagesFailed++;
+              console.warn(`[import-gloriafood] image ${src} → HTTP ${imgRes.status}`);
+              continue;
+            }
+            const buf = Buffer.from(await imgRes.arrayBuffer());
+            // Keep the original filename so the blob URL is human-readable
+            // and stable across re-imports of the same image.
+            const filename = src.split("/").pop() || `gf-${my}.jpg`;
+            const blob = await put(`${restaurantId}/menu/${filename}`, buf, {
+              access: "public",
+              addRandomSuffix: false,
+              contentType: imgRes.headers.get("content-type") ?? "image/jpeg",
+            });
+            blobUrlBySource.set(src, blob.url);
+            imagesImported++;
+          } catch (e) {
+            imagesFailed++;
+            console.warn(`[import-gloriafood] image upload failed for ${src}:`, e instanceof Error ? e.message : String(e));
+          }
+        }
+      };
+      await Promise.all(Array.from({ length: PARALLEL }, worker));
+    }
+  } else {
+    console.warn("[import-gloriafood] BLOB_READ_WRITE_TOKEN not set — skipping image import");
+  }
+
   // Bigger commits than the PDF importer — 12k+ options for Luigi's
   // menu — so bump the transaction timeout from the Prisma default
   // (5 s) to a comfortable 90 s. Still inside Vercel maxDuration.
@@ -258,6 +324,7 @@ export async function PUT(req: NextRequest) {
               restaurantId,
               name: cat.name,
               description: cat.description,
+              imageUrl: cat.sourceImageUrl ? (blobUrlBySource.get(cat.sourceImageUrl) ?? null) : null,
               sortOrder: nextCatSort++,
               isActive: cat.isActive,
               isHidden: cat.isHidden,
@@ -292,6 +359,7 @@ export async function PUT(req: NextRequest) {
               categoryId,
               name: item.name,
               description: item.description,
+              imageUrl: item.sourceImageUrl ? (blobUrlBySource.get(item.sourceImageUrl) ?? null) : null,
               price: item.basePrice,
               isAvailable: item.isAvailable,
               isHidden: item.isHidden,
@@ -430,7 +498,7 @@ export async function PUT(req: NextRequest) {
   );
 
   console.log(
-    `[import-gloriafood] committed: ${categoriesCreated} cats, ${itemsCreated} items (${itemsSkippedDuplicate} dupes skipped), ${variantsCreated} variants, ${libraryGroupsCreated} library groups, ${groupsCreated} attached groups, ${optionsCreated} options`,
+    `[import-gloriafood] committed: ${categoriesCreated} cats, ${itemsCreated} items (${itemsSkippedDuplicate} dupes skipped), ${variantsCreated} variants, ${libraryGroupsCreated} library groups, ${groupsCreated} attached groups, ${optionsCreated} options, ${imagesImported} images (${imagesFailed} failed)`,
   );
 
   return NextResponse.json({
@@ -441,5 +509,7 @@ export async function PUT(req: NextRequest) {
     libraryGroupsCreated,
     optionsCreated,
     itemsSkippedDuplicate,
+    imagesImported,
+    imagesFailed,
   });
 }
