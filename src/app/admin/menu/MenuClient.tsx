@@ -424,7 +424,7 @@ function ItemModal({
           {([
             ["basic",        "Basic",                                       "border-emerald-500", "text-emerald-700", "bg-emerald-50", "text-emerald-500"],
             ["availability", "Availability",                                 "border-sky-500",     "text-sky-700",     "bg-sky-50",     "text-sky-500"    ],
-            ["variants",     "Variants",                                     "border-amber-500",   "text-amber-700",   "bg-amber-50",   "text-amber-500"  ],
+            ["variants",     "Sizes",                                        "border-amber-500",   "text-amber-700",   "bg-amber-50",   "text-amber-500"  ],
             ["pizza",        pizza.isPizza ? "🍕 Pizza" : "Pizza Setup",     "border-slate-900",   "text-slate-900",   "bg-slate-100",  "text-slate-600"  ],
           ] as const).map(([t, label, activeBorder, activeText, activeBg]) => (
             <button key={t} onClick={() => setTab(t)}
@@ -455,7 +455,7 @@ function ItemModal({
                 {form.hasVariants ? (
                   <div className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2.5 text-sm text-blue-700 col-span-1">
                     <Layers className="w-4 h-4 flex-shrink-0" />
-                    Pricing is set per size in the <button type="button" className="font-semibold underline" onClick={() => setTab("variants")}>Variants tab</button>
+                    Pricing is set per size in the <button type="button" className="font-semibold underline" onClick={() => setTab("variants")}>Sizes tab</button>
                   </div>
                 ) : (
                   <div>
@@ -1053,7 +1053,7 @@ function SortableItemRow({
           <span className="font-medium text-gray-900 text-sm truncate">{item.name}</span>
           {item.isSoldOut && <span className="text-xs bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-medium">Sold Out</span>}
           {item.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">Hidden</span>}
-          {item.hasVariants && <span className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">Variants</span>}
+          {item.hasVariants && <span className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded" title="This item has multiple sizes (Small / Medium / Large …)">Multiple Sizes</span>}
           {item.pizzaConfig && (() => { try { return JSON.parse(item.pizzaConfig!)?.isPizza; } catch { return false; } })() && (
             <span className="text-xs bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">🍕 Pizza</span>
           )}
