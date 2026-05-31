@@ -133,6 +133,7 @@ export async function PUT(req: NextRequest) {
   let variantsCreated = 0;
   let groupsCreated = 0;
   let optionsCreated = 0;
+  let libraryGroupsCreated = 0;
   let itemsSkippedDuplicate = 0;
 
   const catMaxSort = await prisma.menuCategory.aggregate({
@@ -141,12 +142,99 @@ export async function PUT(req: NextRequest) {
   });
   let nextCatSort = (catMaxSort._max.sortOrder ?? -1) + 1;
 
+  // ── Build library group plan ───────────────────────────────────────
+  // Modifier-groups library (the right-side panel on /admin/menu) only
+  // surfaces groups where restaurantId IS set AND menuItemId IS null.
+  // If we just created item-attached groups, owners would see "No
+  // modifier groups yet" in the sidebar even though every imported
+  // item has its groups correctly attached — confusing and broken UX.
+  //
+  // Fix: for every distinct group name across the entire preview, create
+  // ONE library entry up-front (with the option list as the canonical
+  // template), then set `libraryGroupId` on each item/variant/category-
+  // scoped instance so owners can see the provenance in the editor.
+  // De-dup is by case-insensitive trimmed name, scoped to this
+  // restaurant — if owner re-imports we reuse rather than duplicate.
+  type LibPlan = { name: string; required: boolean; minSelect: number; maxSelect: number; maxPerOption: number; sortOrder: number; options: Array<{ name: string; priceAdjustment: number; isDefault: boolean; isAvailable: boolean; sortOrder: number }> };
+  const libPlanByKey = new Map<string, LibPlan>();
+  const collectLib = (g: { name: string; required: boolean; minSelect: number; maxSelect: number; maxPerOption: number; sortOrder: number; options: Array<any> }) => {
+    const key = g.name.trim().toLowerCase();
+    if (libPlanByKey.has(key)) return;
+    libPlanByKey.set(key, {
+      name: g.name,
+      required: g.required,
+      minSelect: g.minSelect,
+      maxSelect: g.maxSelect,
+      maxPerOption: g.maxPerOption,
+      sortOrder: g.sortOrder,
+      options: g.options.map((o: any, oi: number) => ({
+        name: o.name,
+        priceAdjustment: o.priceAdjustment,
+        isDefault: o.isDefault,
+        isAvailable: o.isAvailable,
+        sortOrder: o.sortOrder ?? oi,
+      })),
+    });
+  };
+  for (const cat of preview.categories) {
+    for (const it of cat.items) {
+      for (const g of it.itemGroups) collectLib(g);
+      for (const v of it.variants) for (const g of v.groups) collectLib(g);
+    }
+  }
+  for (const g of preview.categoryGroups) collectLib(g);
+
   // Bigger commits than the PDF importer — 12k+ options for Luigi's
   // menu — so bump the transaction timeout from the Prisma default
   // (5 s) to a comfortable 90 s. Still inside Vercel maxDuration.
   await prisma.$transaction(
     async (tx) => {
-      // ── Categories + items ─────────────────────────────────────────
+      // ── Phase 1: Library groups ─────────────────────────────────────
+      // Create one library entry per distinct group name. If a library
+      // group with this name already exists in the restaurant (re-import
+      // case) we reuse it instead of duplicating. The instances we
+      // create later link back via libraryGroupId, so owners can see
+      // the source-of-truth row in the sidebar and the per-item
+      // attachments stay in sync.
+      const libIdByKey = new Map<string, string>();
+      if (libPlanByKey.size > 0) {
+        const existingLib = await tx.modifierGroup.findMany({
+          where: { restaurantId, menuItemId: null, categoryId: null, variantId: null },
+          select: { id: true, name: true },
+        });
+        for (const e of existingLib) {
+          libIdByKey.set(e.name.trim().toLowerCase(), e.id);
+        }
+        let libSortStart = await tx.modifierGroup.count({
+          where: { restaurantId, menuItemId: null, categoryId: null, variantId: null },
+        });
+        for (const [key, plan] of libPlanByKey.entries()) {
+          if (libIdByKey.has(key)) continue; // reuse — re-import case
+          const lib = await tx.modifierGroup.create({
+            data: {
+              restaurantId,
+              name: plan.name,
+              required: plan.required,
+              minSelect: plan.minSelect,
+              maxSelect: plan.maxSelect,
+              maxPerOption: plan.maxPerOption,
+              sortOrder: libSortStart++,
+            },
+            select: { id: true },
+          });
+          libIdByKey.set(key, lib.id);
+          libraryGroupsCreated++;
+          if (plan.options.length > 0) {
+            await tx.modifierOption.createMany({
+              data: plan.options.map((o) => ({ modifierGroupId: lib.id, ...o })),
+            });
+            optionsCreated += plan.options.length;
+          }
+        }
+      }
+      const libIdFor = (name: string) => libIdByKey.get(name.trim().toLowerCase()) ?? null;
+
+      // ── Phase 2: Categories + items ─────────────────────────────────
       // Track source category id → resolved FFOS category id so the
       // category-level shared groups (categoryGroups[]) can attach
       // to the right row after we've created them.
@@ -246,6 +334,7 @@ export async function PUT(req: NextRequest) {
                   maxSelect: g.maxSelect,
                   maxPerOption: g.maxPerOption,
                   sortOrder: g.sortOrder,
+                  libraryGroupId: libIdFor(g.name),
                 },
                 select: { id: true },
               });
@@ -278,6 +367,7 @@ export async function PUT(req: NextRequest) {
                 maxSelect: g.maxSelect,
                 maxPerOption: g.maxPerOption,
                 sortOrder: g.sortOrder,
+                libraryGroupId: libIdFor(g.name),
               },
               select: { id: true },
             });
@@ -313,6 +403,7 @@ export async function PUT(req: NextRequest) {
             maxSelect: g.maxSelect,
             maxPerOption: g.maxPerOption,
             sortOrder: g.sortOrder,
+            libraryGroupId: libIdFor(g.name),
           },
           select: { id: true },
         });
@@ -339,7 +430,7 @@ export async function PUT(req: NextRequest) {
   );
 
   console.log(
-    `[import-gloriafood] committed: ${categoriesCreated} cats, ${itemsCreated} items (${itemsSkippedDuplicate} dupes skipped), ${variantsCreated} variants, ${groupsCreated} groups, ${optionsCreated} options`,
+    `[import-gloriafood] committed: ${categoriesCreated} cats, ${itemsCreated} items (${itemsSkippedDuplicate} dupes skipped), ${variantsCreated} variants, ${libraryGroupsCreated} library groups, ${groupsCreated} attached groups, ${optionsCreated} options`,
   );
 
   return NextResponse.json({
@@ -347,6 +438,7 @@ export async function PUT(req: NextRequest) {
     itemsCreated,
     variantsCreated,
     groupsCreated,
+    libraryGroupsCreated,
     optionsCreated,
     itemsSkippedDuplicate,
   });

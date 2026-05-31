@@ -277,7 +277,8 @@ export function ImportGloriaFoodClient() {
             {commitResult.categoriesCreated} categories ·{" "}
             {commitResult.itemsCreated} items ·{" "}
             {commitResult.variantsCreated} sizes ·{" "}
-            {commitResult.groupsCreated} modifier groups ·{" "}
+            {commitResult.libraryGroupsCreated ?? 0} library groups ·{" "}
+            {commitResult.groupsCreated} attached groups ·{" "}
             {commitResult.optionsCreated} options
             {commitResult.itemsSkippedDuplicate > 0 && (
               <span className="block text-xs text-gray-500 mt-1">
