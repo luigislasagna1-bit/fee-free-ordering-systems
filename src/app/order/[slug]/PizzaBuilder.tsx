@@ -49,6 +49,25 @@ export interface PizzaConfig {
   halfToppingMultiplier: number;
   /** Additional price multiplier for "Extra" quantity on top of base topping price (default 0 = no upcharge) */
   extraQuantityMultiplier: number;
+  /**
+   * Customer-facing section display order. Each entry is either a
+   * synthetic id ("section:size", "section:halfHalfToggle") or the
+   * libraryGroupId / id of a modifier group attached to the item.
+   * When undefined or empty the legacy hardcoded order is used, so
+   * existing items render unchanged. Owners drag-reorder the list in
+   * the admin Pizza tab; saved here.
+   */
+  sectionOrder?: string[];
+  /**
+   * Which pizza-roles expose the Whole/Split half-pizza UI. Roles not
+   * in this list render as a simple option grid (whole pizza only).
+   * Defaults to ["sauce", "cheese", "toppings"] when undefined —
+   * matches the legacy behaviour where all three roles supported
+   * half/half. Owners disable a role here when their menu doesn't
+   * actually let customers split that choice across halves (e.g.
+   * cheese is always whole-pizza for their kitchen).
+   */
+  halfHalfRoles?: Array<"sauce" | "cheese" | "toppings">;
 }
 
 export interface SelectedTopping {
@@ -126,8 +145,43 @@ export function parsePizzaConfig(json: string | null | undefined): PizzaConfig |
                                 : undefined,
       halfToppingMultiplier:  Number(c.halfToppingMultiplier) || 0.5,
       extraQuantityMultiplier:Number(c.extraQuantityMultiplier)|| 0,
+      sectionOrder:           Array.isArray(c.sectionOrder)
+                                ? c.sectionOrder.filter((x: unknown): x is string => typeof x === "string")
+                                : undefined,
+      halfHalfRoles:          Array.isArray(c.halfHalfRoles)
+                                ? c.halfHalfRoles.filter((r: unknown): r is "sauce" | "cheese" | "toppings" =>
+                                    r === "sauce" || r === "cheese" || r === "toppings",
+                                  )
+                                : undefined,
     };
   } catch { return null; }
+}
+
+/** Synthetic section IDs used in pizzaConfig.sectionOrder for things
+ *  that aren't a single modifier group (size picker, half/half toggle,
+ *  and the combined toppings section which holds multiple topping
+ *  groups in one block). */
+export const SECTION_SIZE = "section:size";
+export const SECTION_HALF_HALF = "section:halfHalfToggle";
+export const SECTION_TOPPINGS = "section:toppings";
+
+/** Returns the canonical ID a modifier group should be addressed by in
+ *  pizzaConfig.sectionOrder. Prefers libraryGroupId (stable across
+ *  re-imports) and falls back to the instance id. */
+export function sectionIdForGroup(group: { id: string; libraryGroupId?: string | null }): string {
+  return group.libraryGroupId ?? group.id;
+}
+
+/** True if the configured role is currently allowed to render the
+ *  Whole/Split half-pizza UI. */
+export function roleSupportsHalfHalf(
+  config: PizzaConfig,
+  role: "sauce" | "cheese" | "toppings",
+): boolean {
+  // Legacy items (no halfHalfRoles set) — fall through to the old
+  // default where every role supported half/half.
+  if (!config.halfHalfRoles) return true;
+  return config.halfHalfRoles.includes(role);
 }
 
 // ── Pricing engine ────────────────────────────────────────────────────────────
@@ -655,6 +709,35 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
   for (const g of toppingGroups) usedGroupIds.add(g.id);
   const otherGroups = groups.filter(g => !usedGroupIds.has(g.id));
 
+  // ── Section ordering ─────────────────────────────────────────────────────
+  // Each section gets a CSS `order` value computed from either the owner-
+  // configured pizzaConfig.sectionOrder or the legacy default. Using CSS
+  // flexbox `order` rather than reshuffling the JSX keeps the existing
+  // section markup completely unchanged — the only DOM diff is that the
+  // parent container now uses `flex flex-col gap-6` instead of
+  // `space-y-6`. Items without an explicit sectionOrder render in the
+  // historical order, byte-identical to before this refactor.
+  const orderedSectionIds = useMemo<string[]>(() => {
+    const def: string[] = [SECTION_SIZE];
+    if (crustGroup) def.push(sectionIdForGroup(crustGroup));
+    for (const g of otherGroups) def.push(sectionIdForGroup(g));
+    if (config.allowHalfHalf) def.push(SECTION_HALF_HALF);
+    if (sauceGroup) def.push(sectionIdForGroup(sauceGroup));
+    if (cheeseGroup) def.push(sectionIdForGroup(cheeseGroup));
+    if (toppingGroups.length > 0) def.push(SECTION_TOPPINGS);
+    if (!config.sectionOrder || config.sectionOrder.length === 0) return def;
+    const inUser = new Set(config.sectionOrder);
+    const tail = def.filter(id => !inUser.has(id));
+    return [...config.sectionOrder, ...tail];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config.sectionOrder, config.allowHalfHalf, crustGroup?.id, sauceGroup?.id, cheeseGroup?.id, toppingGroups.map(g => g.id).join(","), otherGroups.map(g => g.id).join(",")]);
+  const sectionOrderMap = useMemo<Record<string, number>>(() => {
+    const m: Record<string, number> = {};
+    orderedSectionIds.forEach((id, i) => { m[id] = i; });
+    return m;
+  }, [orderedSectionIds]);
+  const orderStyle = (id: string): React.CSSProperties => ({ order: sectionOrderMap[id] ?? 999 });
+
   // Resolve per-variant topping price — override config.extraToppingPrice for the selected size
   const effectiveConfig = useMemo((): PizzaConfig => {
     if (!config.variantToppingPrices || !variantId) return config;
@@ -919,12 +1002,16 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
         {/* ── Body (two-column on desktop) ── */}
         <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
 
-          {/* ── Left: Options ── */}
-          <div ref={scrollAreaRef} className="flex-1 overflow-y-auto p-5 space-y-6">
+          {/* ── Left: Options ──
+              `flex flex-col gap-6` (was `space-y-6`) so we can use CSS
+              `order` on each child section to reflect the owner's
+              chosen sectionOrder from pizzaConfig. Gap matches the
+              previous space-y-6 vertical rhythm exactly. */}
+          <div ref={scrollAreaRef} className="flex-1 overflow-y-auto p-5 flex flex-col gap-6">
 
             {/* Size */}
             {item.hasVariants && item.variants.length > 0 && (
-              <section data-pizza-section="size" className={ringFor("size")}>
+              <section data-pizza-section="size" style={orderStyle(SECTION_SIZE)} className={ringFor("size")}>
                 <SectionHeader label={tp("chooseSize")} required />
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {item.variants.map(v => (
@@ -950,7 +1037,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
 
             {/* Crust */}
             {crustGroup && (
-              <section data-pizza-section="crust" className={ringFor("crust")}>
+              <section data-pizza-section="crust" style={orderStyle(sectionIdForGroup(crustGroup))} className={ringFor("crust")}>
                 <SectionHeader
                   label={tp("chooseCrust")}
                   required={crustGroup.required}
@@ -983,7 +1070,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
             {otherGroups.map(g => {
               const selected = customization.otherSelections[g.id] ?? [];
               return (
-                <section key={g.id} data-pizza-section={`other-${g.id}`} className={ringFor(`other-${g.id}`)}>
+                <section key={g.id} data-pizza-section={`other-${g.id}`} style={orderStyle(sectionIdForGroup(g))} className={ringFor(`other-${g.id}`)}>
                   <SectionHeader label={g.name} required={g.required || g.minSelect > 0} />
                   <div className="grid grid-cols-2 gap-2">
                     {g.options.filter(o => o.isAvailable).map(opt => {
@@ -1015,7 +1102,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
 
             {/* ── Half & Half toggle ── */}
             {config.allowHalfHalf && (
-              <section>
+              <section style={orderStyle(SECTION_HALF_HALF)}>
                 <div
                   className="flex items-center justify-between p-3.5 rounded-xl border-2 cursor-pointer transition"
                   style={
@@ -1050,10 +1137,10 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
 
             {/* Sauce */}
             {sauceGroup && (
-              <section data-pizza-section="sauce" className={ringFor("sauce")}>
+              <section data-pizza-section="sauce" style={orderStyle(sectionIdForGroup(sauceGroup))} className={ringFor("sauce")}>
                 <div className="flex items-center justify-between mb-2">
                   <SectionHeader label={tp("sauce")} required={sauceGroup.required} />
-                  {customization.isHalfHalf && (
+                  {customization.isHalfHalf && roleSupportsHalfHalf(config, "sauce") && (
                     <div className="flex rounded-lg overflow-hidden border border-gray-200 text-xs">
                       {(["whole", "split"] as const).map(m => (
                         <button
@@ -1072,7 +1159,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                     </div>
                   )}
                 </div>
-                {(!customization.isHalfHalf || sauceMode === "whole") && (
+                {(!customization.isHalfHalf || !roleSupportsHalfHalf(config, "sauce") || sauceMode === "whole") && (
                   <OptionRow
                     options={sauceGroup.options.filter(o => o.isAvailable)}
                     selectedId={customization.sauceOptionId}
@@ -1080,7 +1167,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                     primaryColor={primaryColor}
                   />
                 )}
-                {customization.isHalfHalf && sauceMode === "split" && (
+                {customization.isHalfHalf && roleSupportsHalfHalf(config, "sauce") && sauceMode === "split" && (
                   <div className="space-y-3">
                     <div>
                       <p className="text-xs font-semibold text-gray-500 mb-1.5">{tp("leftHalf")}</p>
@@ -1107,10 +1194,10 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
 
             {/* Cheese */}
             {cheeseGroup && (
-              <section data-pizza-section="cheese" className={ringFor("cheese")}>
+              <section data-pizza-section="cheese" style={orderStyle(sectionIdForGroup(cheeseGroup))} className={ringFor("cheese")}>
                 <div className="flex items-center justify-between mb-2">
                   <SectionHeader label={tp("cheese")} required={cheeseGroup.required} />
-                  {customization.isHalfHalf && (
+                  {customization.isHalfHalf && roleSupportsHalfHalf(config, "cheese") && (
                     <div className="flex rounded-lg overflow-hidden border border-gray-200 text-xs">
                       {(["whole", "split"] as const).map(m => (
                         <button
@@ -1129,7 +1216,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                     </div>
                   )}
                 </div>
-                {(!customization.isHalfHalf || cheeseMode === "whole") && (
+                {(!customization.isHalfHalf || !roleSupportsHalfHalf(config, "cheese") || cheeseMode === "whole") && (
                   <OptionRow
                     options={cheeseGroup.options.filter(o => o.isAvailable)}
                     selectedId={customization.cheeseOptionId}
@@ -1137,7 +1224,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                     primaryColor={primaryColor}
                   />
                 )}
-                {customization.isHalfHalf && cheeseMode === "split" && (
+                {customization.isHalfHalf && roleSupportsHalfHalf(config, "cheese") && cheeseMode === "split" && (
                   <div className="space-y-3">
                     <div>
                       <p className="text-xs font-semibold text-gray-500 mb-1.5">{tp("leftHalf")}</p>
@@ -1164,7 +1251,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
 
             {/* Toppings */}
             {toppingGroups.length > 0 && (
-              <section data-pizza-section="toppings" className={ringFor("toppings")}>
+              <section data-pizza-section="toppings" style={orderStyle(SECTION_TOPPINGS)} className={ringFor("toppings")}>
                 <div className="flex items-center justify-between mb-3">
                   <SectionHeader
                     label={
@@ -1185,7 +1272,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                 </div>
 
                 {/* Placement selector for half-half mode */}
-                {customization.isHalfHalf && (
+                {customization.isHalfHalf && roleSupportsHalfHalf(config, "toppings") && (
                   <div className="flex gap-1 p-1 bg-gray-100 rounded-xl mb-4">
                     <PlacementButton
                       label={tp("leftHalfButton")}
@@ -1218,7 +1305,13 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                       )}
                       <div className="space-y-1.5">
                         {g.options.filter(o => o.isAvailable).map(opt => {
-                          const placement = customization.isHalfHalf ? toppingPlacement : "whole";
+                          // Force whole-pizza placement when the owner
+                          // disabled half/half for toppings — even if the
+                          // global isHalfHalf is on (because the customer
+                          // toggled it for sauce/cheese), each topping is
+                          // applied to the whole pizza.
+                          const toppingsCanSplit = roleSupportsHalfHalf(config, "toppings");
+                          const placement = (customization.isHalfHalf && toppingsCanSplit) ? toppingPlacement : "whole";
                           const t = customization.toppings.find(
                             t => t.optionId === opt.id && t.placement === placement
                           );
