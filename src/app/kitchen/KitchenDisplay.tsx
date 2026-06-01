@@ -1687,7 +1687,26 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
   const confirmAccept = async () => {
     if (!prepModal) return;
-    await updateStatus(prepModal, "accepted", { preparationTime: parseInt(prepTime) || 20 });
+    // For scheduled orders the customer already picked when they
+    // want the order. The kitchen accept doesn't need a separate
+    // prep-time input — we derive preparationTime as the minutes
+    // between now and scheduledFor so downstream consumers (status
+    // page ETA, customer email, auto-complete cron) keep working
+    // exactly as they do for ASAP orders. If the scheduled time has
+    // already passed (rare edge case where staff opens the prompt
+    // late) we fall back to 20 min so the order still moves forward.
+    // Luigi 2026-06-01 GloriaFood-parity.
+    const order = orders.find((o) => o.id === prepModal);
+    const scheduledForRaw = (order as any)?.scheduledFor as string | null | undefined;
+    const scheduledAt = scheduledForRaw ? new Date(scheduledForRaw) : null;
+    let prep: number;
+    if (scheduledAt && Number.isFinite(scheduledAt.getTime())) {
+      const minutes = Math.round((scheduledAt.getTime() - Date.now()) / 60_000);
+      prep = minutes > 0 ? minutes : 20;
+    } else {
+      prep = parseInt(prepTime) || 20;
+    }
+    await updateStatus(prepModal, "accepted", { preparationTime: prep });
     toast.success("Order accepted!");
     setPrepModal(null);
   };
@@ -2176,34 +2195,82 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       </div>
       )}
 
-      {/* ── Accept + prep time modal ── */}
-      {prepModal && (
+      {/* ── Accept modal ──
+          Two shapes depending on whether the order is scheduled:
+            - ASAP order   → prep-time picker (kitchen tells the
+                              customer "we'll have it ready in N min")
+            - Scheduled order → no prep input; show the customer's
+                              chosen pickup/delivery date+time and
+                              just confirm. The scheduled time IS
+                              the ready time, so staff doesn't need
+                              to re-decide. Luigi 2026-06-01: GloriaFood
+                              parity — scheduled orders should accept
+                              for their chosen slot with one tap.
+      */}
+      {prepModal && (() => {
+        const order = orders.find((o) => o.id === prepModal);
+        const scheduledForRaw = (order as any)?.scheduledFor as string | null | undefined;
+        const scheduledFor = scheduledForRaw ? new Date(scheduledForRaw) : null;
+        const isScheduled = scheduledFor !== null && Number.isFinite(scheduledFor.getTime());
+        return (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-4">
           <div className={`${t.modal} rounded-2xl w-full max-w-sm p-6`}>
-            <h3 className={`text-xl font-bold ${t.text} mb-4`}>Accept Order</h3>
-            <label className={`text-sm ${t.muted} block mb-2`}>Preparation time (minutes)</label>
-            <div className="flex flex-wrap gap-2 mb-3">
-              {["10", "15", "20", "25", "30", "45", "60"].map(tm => (
-                <button
-                  key={tm}
-                  onClick={() => setPrepTime(tm)}
-                  className={`px-3 py-2 rounded-xl text-sm font-semibold transition ${
-                    prepTime === tm ? "bg-emerald-500 text-white" : `${t.btn} ${t.muted}`
-                  }`}
-                >
-                  {tm}
-                </button>
-              ))}
-            </div>
-            <input
-              type="number" min="1" max="240"
-              className={`w-full rounded-xl px-3 py-2 border ${t.input} text-sm mb-1 focus:outline-none focus:ring-2 focus:ring-emerald-500`}
-              value={prepTime}
-              onChange={e => setPrepTime(e.target.value)}
-            />
-            <p className={`text-xs ${t.muted} mb-4`}>
-              Customer will see estimated ready time based on this.
-            </p>
+            <h3 className={`text-xl font-bold ${t.text} mb-4`}>
+              {isScheduled ? "Confirm Scheduled Order" : "Accept Order"}
+            </h3>
+
+            {isScheduled ? (
+              <>
+                {/* Scheduled-order accept — no prep-time input. The
+                    customer already picked when they want it. Show
+                    that prominently so staff knows what they're
+                    confirming. */}
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-4">
+                  <div className="text-xs font-semibold text-emerald-700 uppercase tracking-wide mb-1">
+                    Scheduled for
+                  </div>
+                  <div className="text-lg font-bold text-emerald-900 leading-tight">
+                    {scheduledFor!.toLocaleString(undefined, {
+                      weekday: "long",
+                      month: "short",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "2-digit",
+                    })}
+                  </div>
+                </div>
+                <p className={`text-xs ${t.muted} mb-4`}>
+                  The customer chose this time at checkout. Confirming locks it in for the kitchen.
+                </p>
+              </>
+            ) : (
+              <>
+                <label className={`text-sm ${t.muted} block mb-2`}>Preparation time (minutes)</label>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {["10", "15", "20", "25", "30", "45", "60"].map(tm => (
+                    <button
+                      key={tm}
+                      onClick={() => setPrepTime(tm)}
+                      className={`px-3 py-2 rounded-xl text-sm font-semibold transition ${
+                        prepTime === tm ? "bg-emerald-500 text-white" : `${t.btn} ${t.muted}`
+                      }`}
+                    >
+                      {tm}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="number" min="1" max="240"
+                  className={`w-full rounded-xl px-3 py-2 border ${t.input} text-sm mb-1 focus:outline-none focus:ring-2 focus:ring-emerald-500`}
+                  value={prepTime}
+                  onChange={e => setPrepTime(e.target.value)}
+                />
+                <p className={`text-xs ${t.muted} mb-4`}>
+                  Customer will see estimated ready time based on this.
+                </p>
+              </>
+            )}
+
             {printerSettings?.autoPrint && printerReady && (
               <p className="text-xs text-emerald-500 mb-4 flex items-center gap-1">
                 <Printer className="w-3 h-3" /> Receipt will print automatically.
@@ -2214,7 +2281,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 onClick={confirmAccept}
                 className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition"
               >
-                <CheckCircle className="w-4 h-4 inline mr-1.5" />Confirm
+                <CheckCircle className="w-4 h-4 inline mr-1.5" />
+                {isScheduled ? "Confirm" : "Confirm"}
               </button>
               <button
                 onClick={() => setPrepModal(null)}
@@ -2240,7 +2308,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             </button>
           </div>
         </div>
-      )}
+        );
+      })()}
 
       {/* Reject modal triggered from the Accept Order prompt. The version
           rendered inside OrderDetail is separate (different open state). */}
