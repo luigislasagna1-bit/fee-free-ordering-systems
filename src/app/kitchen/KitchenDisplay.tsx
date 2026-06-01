@@ -1180,6 +1180,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // down every time alertVolume / alertSound changes. Single-chime-on-
   // auto-accept reads this ref. Luigi 2026-06-01.
   const ringBellOnceRef = useRef<((volumeOverride?: number) => void) | null>(null);
+  // Same ref-shape for autoPrint — fetchOrders detects newly auto-
+  // accepted orders and fires this so the receipt prints without
+  // staff needing to touch the screen. The function captures the
+  // current printerSettings (PrintNode + direct LAN configs); the
+  // ref keeps fetchOrders' deps=[] stable across printer config
+  // changes. Luigi 2026-06-01: "if auto accept is on and printer
+  // is connected, once accepted it should auto print".
+  const autoPrintRef = useRef<((orderId: string) => Promise<void>) | null>(null);
   const autoPrintedRef = useRef<Set<string>>(new Set());
   // Tracks orders we've already kicked an auto-reject request for, so the
   // 1-second `now` tick doesn't re-fire the PATCH while the previous one
@@ -1318,6 +1326,18 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           `✅ ${newAutoAccepted.length} new order${newAutoAccepted.length > 1 ? "s" : ""} auto-accepted`,
           { icon: "🍕", duration: 5000 },
         );
+        // Fire auto-print for each auto-accepted order, same way the
+        // manual Accept button triggers it elsewhere. The function
+        // prefers Direct LAN printer (when configured) then falls
+        // back to PrintNode. Its own internal autoPrintedRef
+        // dedupes so a re-render or duplicate poll can't double-
+        // print. Luigi 2026-06-01: "if auto accept is on and
+        // printer is connected, once accepted it should auto print".
+        for (const o of newAutoAccepted) {
+          autoPrintRef.current?.(o.id).catch((err) =>
+            console.warn("[kds auto-print on auto-accept] failed:", err),
+          );
+        }
         newAutoAccepted.forEach(o => seenIdsRef.current.add(o.id));
       }
 
@@ -1426,6 +1446,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     if (!printerSettings?.autoPrint || !printerSettings.printNodeConnected || !printerSettings.selectedPrinterId) return;
     await doPrint(orderId, printType);
   }, [printerSettings]);
+
+  // Keep autoPrintRef pointed at the latest autoPrint so fetchOrders
+  // (deps=[]) can fire it without tearing down the 4s poll interval
+  // every time printerSettings changes. Luigi 2026-06-01.
+  useEffect(() => {
+    autoPrintRef.current = autoPrint;
+  }, [autoPrint]);
 
   /** Direct-printer path: fetch ESC/POS bytes from server, send to
    *  printer via native plugin. Used when the kitchen operator
