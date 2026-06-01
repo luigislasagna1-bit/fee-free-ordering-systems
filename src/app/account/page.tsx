@@ -4,13 +4,38 @@ import prisma from "@/lib/db";
 import { getCurrentCustomer } from "@/lib/customer-session";
 import { AccountActions } from "./AccountActions";
 import { ResendVerifyButton } from "./ResendVerifyButton";
-import { ShoppingBag, MapPin, User as UserIcon, MailCheck, MailWarning, CheckCircle2 } from "lucide-react";
+import { MarketplaceProfileEditor } from "./MarketplaceProfileEditor";
+import { MarketplaceReorderCard } from "./orders/MarketplaceReorderCard";
+import { formatCurrency } from "@/lib/utils";
+import {
+  ShoppingBag, MapPin, User as UserIcon, MailCheck, MailWarning, CheckCircle2,
+  Tag, Repeat, Store, ChevronRight, Clock,
+} from "lucide-react";
 
 /**
- * /account — customer dashboard. Auth-gated. Shows the basics and links
- * out to deeper sections (orders, addresses) that Phase 2 fills in.
+ * /account — customer dashboard. Auth-gated. The hub the user lands on
+ * after signing in. Surfaces every major capability of the marketplace
+ * customer account in one place so they don't have to click into
+ * sub-pages to see the essentials:
+ *
+ *   - Hello + verification state
+ *   - Inline editable profile (name / phone, with reset-password link)
+ *   - Tiles → orders / addresses
+ *   - "Order again" rail (3 most recent successful baskets, cross-restaurant)
+ *   - Personal coupons (assigned across every restaurant on the marketplace)
+ *   - Recent order history (last 5)
+ *   - Favourite restaurants (top 3 by order count)
+ *   - Sign-out
+ *
+ * Mirrors the per-restaurant /order/[slug]/account dashboard so the
+ * marketplace surface area matches what restaurants already get
+ * (Luigi feedback 2026-05-31 — "marketplace account should have a lot,
+ * all or more functions similar to what we created for each
+ * individual restaurant account members section").
  */
 export const metadata = { title: "My account — Fee Free Marketplace" };
+
+export const dynamic = "force-dynamic";
 
 export default async function CustomerAccountPage({
   searchParams,
@@ -20,13 +45,99 @@ export default async function CustomerAccountPage({
   const account = await getCurrentCustomer();
   if (!account) redirect("/account/login?next=/account");
 
-  const [orderCount, addressCount] = await Promise.all([
-    // Count orders linked via Customer rows that point at this account.
+  const now = new Date();
+
+  // Fan-out the dashboard reads in parallel. Every query is keyed off
+  // the CustomerAccount id (or Customer rows that point at it), and
+  // every list has an explicit `take` cap — no unbounded reads even
+  // for a power user with thousands of orders.
+  const [
+    orderCount,
+    addressCount,
+    recentOrders,
+    orderAgainBaskets,
+    personalCoupons,
+    favRestaurants,
+  ] = await Promise.all([
     prisma.order.count({
       where: { customer: { customerAccountId: account.id } },
     }),
     prisma.customerAddress.count({ where: { customerAccountId: account.id } }),
+    prisma.order.findMany({
+      where: { customer: { customerAccountId: account.id } },
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: {
+        id: true, orderNumber: true, total: true, status: true,
+        type: true, createdAt: true,
+        restaurant: { select: { name: true, slug: true } },
+      },
+    }),
+    // 3 most recent successful baskets across every restaurant for the
+    // marketplace-wide "Order again" rail. Mirrors the per-restaurant
+    // rail that lives on /order/[slug]/account.
+    prisma.order.findMany({
+      where: {
+        customer: { customerAccountId: account.id },
+        status: { notIn: ["cancelled", "rejected"] },
+      },
+      orderBy: { createdAt: "desc" },
+      take: 3,
+      select: {
+        id: true, total: true, createdAt: true,
+        restaurant: { select: { name: true, slug: true } },
+        items: { select: { name: true, quantity: true }, take: 4 },
+      },
+    }),
+    // Personal coupons that any restaurant has assigned to this
+    // customer (via Customer.customerAccountId linkage). Active +
+    // not-yet-expired + still has uses left. Capped at 8 — anyone
+    // with more can scroll the orders page; this is a teaser.
+    prisma.coupon.findMany({
+      where: {
+        isActive: true,
+        customer: { customerAccountId: account.id },
+        OR: [{ expiresAt: null }, { expiresAt: { gt: now } }],
+      },
+      orderBy: { createdAt: "desc" },
+      take: 8,
+      select: {
+        id: true, code: true, description: true, discountType: true,
+        discountValue: true, minimumOrder: true, maxUses: true,
+        usedCount: true, expiresAt: true,
+        restaurant: { select: { name: true, slug: true } },
+      },
+    }),
+    // Favourite restaurants — top 3 the customer has ordered from
+    // most. groupBy on restaurantId then resolve to name/slug. Sort
+    // by order count desc.
+    prisma.order
+      .groupBy({
+        by: ["restaurantId"],
+        where: { customer: { customerAccountId: account.id } },
+        _count: { restaurantId: true },
+        orderBy: { _count: { restaurantId: "desc" } },
+        take: 3,
+      })
+      .then(async (rows) => {
+        if (rows.length === 0) return [];
+        const restaurants = await prisma.restaurant.findMany({
+          where: { id: { in: rows.map((r) => r.restaurantId) }, isActive: true },
+          select: { id: true, name: true, slug: true, cuisineType: true },
+        });
+        // Preserve the order-by-count ordering when zipping.
+        return rows
+          .map((r) => {
+            const rest = restaurants.find((x) => x.id === r.restaurantId);
+            return rest ? { ...rest, orderCount: r._count.restaurantId } : null;
+          })
+          .filter((x): x is NonNullable<typeof x> => x !== null);
+      }),
   ]);
+
+  const usableCoupons = personalCoupons.filter(
+    (c) => c.maxUses === null || c.usedCount < c.maxUses,
+  );
 
   // Verification toast — set by GET /api/customer/verify-email after consuming
   // the token. "ok" = success, "invalid" = token bad/expired/already-used.
@@ -86,6 +197,34 @@ export default async function CustomerAccountPage({
         </div>
       )}
 
+      {/* Inline-editable profile card. Used to be read-only — Luigi
+          audit 2026-05-31 called this out: marketplace account should
+          match the per-restaurant /order/[slug]/account capabilities. */}
+      <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <h2 className="font-semibold text-gray-900 flex items-center gap-2">
+          <UserIcon className="w-4 h-4 text-gray-400" /> Profile
+        </h2>
+        <dl className="mt-3 grid grid-cols-3 gap-2 text-sm">
+          <dt className="text-gray-500">Name</dt>
+          <dd className="col-span-2 text-gray-900">{account.name || <em className="text-gray-400">Not set</em>}</dd>
+          <dt className="text-gray-500">Email</dt>
+          <dd className="col-span-2 text-gray-900">{account.email}</dd>
+          <dt className="text-gray-500">Phone</dt>
+          <dd className="col-span-2 text-gray-900">{account.phone || <em className="text-gray-400">Not set</em>}</dd>
+          <dt className="text-gray-500">Verified</dt>
+          <dd className="col-span-2 text-gray-900">
+            {account.emailVerifiedAt
+              ? <span className="text-emerald-700 font-semibold">✓ Verified</span>
+              : <span className="text-amber-700">Not yet — check your inbox</span>}
+          </dd>
+        </dl>
+        <MarketplaceProfileEditor
+          initialName={account.name}
+          initialEmail={account.email}
+          initialPhone={account.phone}
+        />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Tile
           icon={<ShoppingBag className="w-5 h-5" />}
@@ -109,25 +248,178 @@ export default async function CustomerAccountPage({
         />
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 p-5">
-        <h2 className="font-semibold text-gray-900 flex items-center gap-2">
-          <UserIcon className="w-4 h-4 text-gray-400" /> Profile
-        </h2>
-        <dl className="mt-3 grid grid-cols-3 gap-2 text-sm">
-          <dt className="text-gray-500">Name</dt>
-          <dd className="col-span-2 text-gray-900">{account.name || <em className="text-gray-400">Not set</em>}</dd>
-          <dt className="text-gray-500">Email</dt>
-          <dd className="col-span-2 text-gray-900">{account.email}</dd>
-          <dt className="text-gray-500">Phone</dt>
-          <dd className="col-span-2 text-gray-900">{account.phone || <em className="text-gray-400">Not set</em>}</dd>
-          <dt className="text-gray-500">Verified</dt>
-          <dd className="col-span-2 text-gray-900">
-            {account.emailVerifiedAt
-              ? <span className="text-emerald-700 font-semibold">✓ Verified</span>
-              : <span className="text-amber-700">Not yet — check your inbox</span>}
-          </dd>
-        </dl>
-      </div>
+      {/* Order again — cross-restaurant rail. Top 3 successful baskets
+          with a one-click reorder. Toast/Skip/Grubhub/DoorDash all
+          promote this above the order history list because repeat
+          customers account for most volume. */}
+      {orderAgainBaskets.length > 0 && (
+        <section>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
+              <Repeat className="w-4 h-4 text-emerald-600" />
+              Order again
+            </h2>
+            <Link
+              href="/account/orders"
+              className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold inline-flex items-center gap-0.5"
+            >
+              See all <ChevronRight className="w-3 h-3" />
+            </Link>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-3">
+            {orderAgainBaskets.map((o) => (
+              <MarketplaceReorderCard
+                key={o.id}
+                restaurantName={o.restaurant.name}
+                restaurantSlug={o.restaurant.slug}
+                orderId={o.id}
+                itemSummary={o.items.map((i) => `${i.quantity}× ${i.name}`).join(" · ")}
+                formattedTotal={formatCurrency(Number(o.total))}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Personal coupons — anything the restaurant assigned directly
+          to this customer (Customer.customerAccountId linkage). Surfaces
+          codes from every restaurant the customer has signed up at
+          on the marketplace. */}
+      {usableCoupons.length > 0 && (
+        <section>
+          <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <Tag className="w-4 h-4 text-emerald-600" />
+            Your coupons ({usableCoupons.length})
+          </h2>
+          <ul className="space-y-2">
+            {usableCoupons.map((c) => {
+              const remaining = c.maxUses === null
+                ? "Unlimited uses"
+                : `${Math.max(0, c.maxUses - c.usedCount)} use${(c.maxUses - c.usedCount) === 1 ? "" : "s"} left`;
+              const discount = c.discountType === "percentage"
+                ? `${c.discountValue}% off`
+                : `${formatCurrency(c.discountValue)} off`;
+              return (
+                <li
+                  key={c.id}
+                  className="bg-white rounded-xl border border-emerald-200 p-4 flex items-center justify-between gap-3 flex-wrap"
+                >
+                  <div className="min-w-0">
+                    <div className="font-bold text-emerald-700">{discount}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">
+                      {c.description ?? "Personal coupon"}
+                      {c.restaurant?.name && (
+                        <>
+                          {" · "}
+                          <Link
+                            href={`/order/${c.restaurant.slug}`}
+                            className="text-emerald-600 hover:underline font-semibold"
+                          >
+                            {c.restaurant.name}
+                          </Link>
+                        </>
+                      )}
+                    </div>
+                    <div className="text-[11px] text-gray-400 mt-1">
+                      {remaining}
+                      {c.minimumOrder > 0 && <> · Min. order {formatCurrency(c.minimumOrder)}</>}
+                      {c.expiresAt && <> · Expires {new Date(c.expiresAt).toLocaleDateString()}</>}
+                    </div>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <code className="bg-emerald-50 text-emerald-800 font-mono font-bold text-sm px-3 py-1.5 rounded border border-emerald-200">
+                      {c.code}
+                    </code>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
+      {/* Favourite restaurants — top 3 by order count. Each is a
+          one-click jump back to that restaurant's menu, matching the
+          "places you order from often" hub on Skip/Grubhub. */}
+      {favRestaurants.length > 0 && (
+        <section>
+          <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <Store className="w-4 h-4 text-emerald-600" />
+            Your favourites
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {favRestaurants.map((r) => (
+              <Link
+                key={r.id}
+                href={`/order/${r.slug}`}
+                className="bg-white rounded-xl border border-gray-200 p-4 hover:border-emerald-300 hover:shadow-sm transition flex items-start gap-3"
+              >
+                <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                  <Store className="w-5 h-5" />
+                </div>
+                <div className="min-w-0">
+                  <div className="font-semibold text-gray-900 truncate">{r.name}</div>
+                  <div className="text-xs text-gray-500 truncate">
+                    {r.cuisineType ? `${r.cuisineType} · ` : ""}{r.orderCount} order{r.orderCount === 1 ? "" : "s"}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Recent orders snapshot — top 5 with deep link to status pages.
+          Doubles the marketplace dashboard as a quick way to track
+          recent business without leaving the hub. */}
+      {recentOrders.length > 0 && (
+        <section>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
+              <Clock className="w-4 h-4 text-emerald-600" />
+              Recent orders
+            </h2>
+            <Link
+              href="/account/orders"
+              className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold inline-flex items-center gap-0.5"
+            >
+              See all <ChevronRight className="w-3 h-3" />
+            </Link>
+          </div>
+          <ul className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-100 overflow-hidden">
+            {recentOrders.map((o) => (
+              <li key={o.id}>
+                <Link
+                  href={`/order/${o.restaurant.slug}/status/${o.id}`}
+                  className="flex items-center justify-between gap-3 p-4 hover:bg-gray-50 transition"
+                >
+                  <div className="min-w-0">
+                    <div className="text-sm font-bold text-gray-900 truncate">
+                      {o.restaurant.name}
+                    </div>
+                    <div className="text-[11px] text-gray-500 mt-0.5">
+                      #{o.orderNumber}
+                      {" · "}{o.type}
+                      {" · "}
+                      {new Date(o.createdAt).toLocaleDateString(undefined, {
+                        month: "short", day: "numeric",
+                      })}
+                    </div>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <div className="text-sm font-bold text-gray-900">
+                      {formatCurrency(Number(o.total))}
+                    </div>
+                    <div className="text-[10px] uppercase tracking-wider font-bold text-gray-500 mt-0.5">
+                      {o.status}
+                    </div>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <AccountActions />
 
