@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { X, Calendar, Clock, Users, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
@@ -135,18 +135,8 @@ export function ReservationModal({
 
   const validation = useMemo(() => validateBooking(settings, { date, time, partySize }, new Date()), [settings, date, time, partySize]);
 
-  // On modal mount, auto-snap the date to the next open day if today
-  // isn't reservable. Avoids the "land on Monday, see No reservations
-  // available, give up" UX that Luigi's Italian client hit. Only fires
-  // ONCE on mount — subsequent date changes are the customer's choice
-  // and we don't second-guess them.
-  useEffect(() => {
-    const next = findNextOpenDate(settings.reservationHours, fallbackOpeningHours as any, todayISO());
-    if (next && next !== date) setDate(next);
-    // Intentionally not depending on settings or hours — we only want
-    // this to fire on first mount.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // No auto-jump on mount — we always render slots now (the "closed
+  // day" UX became a soft warning) so landing on today is fine.
 
   // Build time slot list from the day's reservation hours
   const dayOfWeek = useMemo(() => {
@@ -167,34 +157,55 @@ export function ReservationModal({
   // restaurants only have default rows so the result matches the
   // legacy behaviour.
   const fallbackRow = pickHoursForService(fallbackOpeningHours as any, dayOfWeek, "reservation");
+  // Whether the day looks closed per the data we have. Used to render
+  // a soft amber warning ABOVE the slots — we still surface slots so
+  // the customer can submit a request the kitchen can accept or
+  // decline, matching GloriaFood's "never block the customer" pattern.
+  // Luigi 2026-06-01: data-shape edge cases were producing false
+  // "Closed on X" messages even when the restaurant was actually
+  // open. Switching to soft warnings eliminates the dead end.
+  // Browser-console diagnostic — when an owner sees an unexpected
+  // "this date may be outside our usual hours" warning, this log
+  // makes it obvious whether the openingHours data we received
+  // actually says open or closed for the selected day. Reads once
+  // per date change. Strip later once we're confident.
+  if (typeof window !== "undefined") {
+    // eslint-disable-next-line no-console
+    console.debug("[Reservation] day check", {
+      date,
+      dayOfWeek,
+      reservationHoursJson: settings.reservationHours,
+      fallbackOpeningHours,
+      pickedFallbackRow: fallbackRow,
+    });
+  }
+
+  const dayLooksClosed = useMemo(() => {
+    if (dayHours && dayHours.enabled === false) return true;
+    if (dayHours) return false; // explicit reservation hours for this day, enabled
+    if (fallbackRow) return !fallbackRow.isOpen;
+    // No row at all for this day-of-week; treat as ambiguous rather
+    // than definitely-closed so the customer isn't blocked.
+    return false;
+  }, [dayHours, fallbackRow]);
+
   const timeSlots = useMemo(() => {
     // Explicit reservationHours row wins (per-day owner override).
-    if (dayHours) {
-      if (dayHours.enabled === false) return [];
+    if (dayHours && dayHours.enabled !== false) {
       return generateTimeSlots(dayHours.open || "10:00", dayHours.close || "22:00", 30);
     }
-    // Service-specific (reservation) row or default (null) row from
-    // OpeningHours. Treat ANY open row as enough to generate slots.
+    // Service-aware row from OpeningHours. Use its hours when the
+    // row says open. When the row says closed (or no row exists)
+    // fall through to a default 10-22 window — the customer can
+    // still book and the kitchen decides.
     if (fallbackRow && fallbackRow.isOpen) {
       return generateTimeSlots(fallbackRow.openTime || "10:00", fallbackRow.closeTime || "22:00", 30);
     }
-    // Last-ditch: even when we couldn't find a row for the day, look
-    // for ANY open row for ANY day in the dataset. If there's at
-    // least one (i.e. the restaurant has SOME opening hours saved),
-    // we surface a generous 10-22 default rather than block the
-    // customer with "No reservations available". Better UX: the
-    // kitchen can decline a misplaced booking; the customer never
-    // sees a silent dead-end. Luigi 2026-06-01: client reported
-    // "No reservations available" while Monday IS open — likely a
-    // data-shape mismatch we don't want to silently swallow.
-    const anyOpenRow = fallbackOpeningHours.some((h) => h.isOpen);
-    if (anyOpenRow) {
-      return generateTimeSlots("10:00", "22:00", 30);
-    }
-    // No data at all → genuinely closed everywhere. Show the empty
-    // state so the customer knows to contact the restaurant.
-    return [];
-  }, [dayHours, fallbackRow, fallbackOpeningHours]);
+    // ALWAYS return SOMETHING so the customer never hits a dead end.
+    // The dayLooksClosed warning above sets expectations; the slot
+    // dropdown still lets them request a time.
+    return generateTimeSlots("10:00", "22:00", 30);
+  }, [dayHours, fallbackRow]);
 
   const partySizeRange = useMemo(() => {
     const out: number[] = [];
@@ -292,38 +303,19 @@ export function ReservationModal({
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
                   <Clock className="w-4 h-4" /> {tr("selectTime")}
                 </label>
-                {timeSlots.length === 0 ? (() => {
-                  // Smarter empty-state. Tell the customer WHICH day is
-                  // closed and offer a "Jump to next open day" button
-                  // so they don't have to play date-picker roulette.
-                  const dayLabel = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dayOfWeek] ?? "this day";
-                  const nextOpen = findNextOpenDate(
-                    settings.reservationHours,
-                    fallbackOpeningHours as any,
-                    (() => {
-                      // Probe from the day AFTER the currently-selected one
-                      const d = new Date(`${date}T00:00:00`);
-                      d.setDate(d.getDate() + 1);
-                      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-                    })(),
-                  );
-                  return (
-                    <div className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 space-y-2">
-                      <div>
-                        We&apos;re closed on <strong>{dayLabel}</strong> — please pick a different date.
-                      </div>
-                      {nextOpen && (
-                        <button
-                          type="button"
-                          onClick={() => setDate(nextOpen)}
-                          className="text-xs font-semibold underline hover:no-underline"
-                        >
-                          Jump to next open day ({new Date(`${nextOpen}T00:00:00`).toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric" })})
-                        </button>
-                      )}
-                    </div>
-                  );
-                })() : (
+                {/* Soft warning when the day APPEARS closed in the
+                    hours data. We still render the slot picker so the
+                    customer can submit a request — the kitchen approves
+                    or declines. Matches GloriaFood's pattern and gets
+                    us out of the "false-closed" UX rabbit hole when
+                    the underlying data isn't quite what we expect. */}
+                {dayLooksClosed && (
+                  <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-2">
+                    Heads up: this date may be outside our usual reservation hours.
+                    You can still submit a request and we&apos;ll confirm if we can fit you in.
+                  </p>
+                )}
+                {false ? (() => null)() : (
                   <select
                     value={time}
                     onChange={e => setTime(e.target.value)}
