@@ -155,7 +155,7 @@ export function HoursClient({
   hoursFormat: initialFormat,
   holidays: initialHolidays,
 }: {
-  hours: HoursRow[];
+  hours: (HoursRow & { service?: string | null })[];
   hoursFormat: Format;
   holidays: Holiday[];
 }) {
@@ -166,20 +166,55 @@ export function HoursClient({
   const tToasts = useTranslations("admin.toasts");
 
   const [format, setFormat] = useState<Format>(initialFormat);
-  const [hours, setHours] = useState<HoursRow[]>(
-    [0, 1, 2, 3, 4, 5, 6].map((i) => {
-      const found = initial.find((h) => h.dayOfWeek === i);
-      return found
-        ? {
-            dayOfWeek: i,
-            isOpen: found.isOpen,
-            openTime: found.openTime,
-            closeTime: found.closeTime,
-            closesNextDay: !!found.closesNextDay,
-          }
-        : { dayOfWeek: i, isOpen: false, openTime: "09:00", closeTime: "21:00", closesNextDay: false };
-    }),
-  );
+  // Service-tabbed hours state. "default" = the legacy null-service
+  // row set (regular opening hours, used as a fallback for any
+  // service without a specific override). pickup/delivery/reservation
+  // are optional overrides — they're only persisted when the owner
+  // explicitly enables them via the tab UI. GloriaFood-parity.
+  type ServiceKey = "default" | "pickup" | "delivery" | "reservation";
+  const SERVICE_DB_VALUE: Record<ServiceKey, string | null> = {
+    default: null, pickup: "pickup", delivery: "delivery", reservation: "reservation",
+  };
+  const initialByService: Record<ServiceKey, HoursRow[]> = (() => {
+    const out: Record<ServiceKey, HoursRow[]> = {
+      default: [], pickup: [], delivery: [], reservation: [],
+    };
+    for (const key of ["default", "pickup", "delivery", "reservation"] as ServiceKey[]) {
+      const dbVal = SERVICE_DB_VALUE[key];
+      out[key] = [0, 1, 2, 3, 4, 5, 6].map((i) => {
+        const found = (initial as any[]).find(
+          (h) => h.dayOfWeek === i && (h.service ?? null) === dbVal,
+        );
+        return found
+          ? {
+              dayOfWeek: i,
+              isOpen: found.isOpen,
+              openTime: found.openTime,
+              closeTime: found.closeTime,
+              closesNextDay: !!found.closesNextDay,
+            }
+          : { dayOfWeek: i, isOpen: false, openTime: "09:00", closeTime: "21:00", closesNextDay: false };
+      });
+    }
+    return out;
+  })();
+  const [hoursByService, setHoursByService] = useState<Record<ServiceKey, HoursRow[]>>(initialByService);
+  // Active editing tab.
+  const [activeTab, setActiveTab] = useState<ServiceKey>("default");
+  // Which per-service overrides are "enabled" (have at least one row in
+  // the DB on initial load). When disabled, the tab UI is hidden and
+  // we don't persist those rows on save.
+  const initialEnabledTabs = new Set<ServiceKey>(["default"]);
+  for (const key of ["pickup", "delivery", "reservation"] as ServiceKey[]) {
+    const dbVal = SERVICE_DB_VALUE[key];
+    if ((initial as any[]).some((h) => (h.service ?? null) === dbVal)) initialEnabledTabs.add(key);
+  }
+  const [enabledTabs, setEnabledTabs] = useState<Set<ServiceKey>>(initialEnabledTabs);
+  // Shim: legacy code references `hours` (= the active tab's array).
+  const hours = hoursByService[activeTab];
+  const setHours = (updater: (prev: HoursRow[]) => HoursRow[]) => {
+    setHoursByService((prev) => ({ ...prev, [activeTab]: updater(prev[activeTab]) }));
+  };
   const [holidays, setHolidays] = useState<Holiday[]>(initialHolidays);
   const [newHolidayDate, setNewHolidayDate] = useState("");
   const [newHolidayName, setNewHolidayName] = useState("");
@@ -187,7 +222,12 @@ export function HoursClient({
   const [bulkMenuOpen, setBulkMenuOpen] = useState<number | null>(null);
 
   function update<K extends keyof HoursRow>(day: number, field: K, value: HoursRow[K]) {
-    setHours((prev) => prev.map((h) => (h.dayOfWeek === day ? { ...h, [field]: value } : h)));
+    // Writes go into the currently-active tab's rows. Per-service tab
+    // changes don't leak into the default tab.
+    setHoursByService((prev) => ({
+      ...prev,
+      [activeTab]: prev[activeTab].map((h) => (h.dayOfWeek === day ? { ...h, [field]: value } : h)),
+    }));
   }
 
   /**
@@ -196,10 +236,11 @@ export function HoursClient({
    * Mon-Fri the same and weekend custom" pattern.
    */
   function copyFromDay(sourceDay: number, scope: "all" | "closed_only") {
-    const src = hours.find((h) => h.dayOfWeek === sourceDay);
+    const src = hoursByService[activeTab].find((h) => h.dayOfWeek === sourceDay);
     if (!src) return;
-    setHours((prev) =>
-      prev.map((h) => {
+    setHoursByService((prev) => ({
+      ...prev,
+      [activeTab]: prev[activeTab].map((h) => {
         if (h.dayOfWeek === sourceDay) return h;
         if (scope === "closed_only" && h.isOpen) return h;
         return {
@@ -210,7 +251,7 @@ export function HoursClient({
           closesNextDay: !!src.closesNextDay,
         };
       }),
-    );
+    }));
     setBulkMenuOpen(null);
     toast.success(
       scope === "all"
@@ -230,10 +271,24 @@ export function HoursClient({
   async function save() {
     setLoading(true);
     try {
+      // Build the payload: include the active "default" tab rows always,
+      // plus any enabled per-service tabs. The API tags each row with
+      // its service column so the DB ends up with a per-(service,day)
+      // row. Tabs that aren't enabled are NOT sent, so flipping a tab
+      // off later would leave stale rows in the DB — out of scope for
+      // this initial UI; an explicit "Remove service overrides"
+      // button can come later if owners need it.
+      const payloadHours: any[] = [];
+      for (const key of ["default", "pickup", "delivery", "reservation"] as ServiceKey[]) {
+        if (!enabledTabs.has(key)) continue;
+        for (const h of hoursByService[key]) {
+          payloadHours.push({ ...h, service: SERVICE_DB_VALUE[key] });
+        }
+      }
       const res = await fetch("/api/restaurants/hours", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ hours, hoursFormat: format }),
+        body: JSON.stringify({ hours: payloadHours, hoursFormat: format }),
       });
       if (!res.ok) throw new Error("Failed");
       toast.success(tToasts("saved"));
@@ -335,11 +390,72 @@ export function HoursClient({
         </div>
       </div>
 
+      {/* Service tabs (Luigi 2026-05-31, GloriaFood parity).
+          Default tab is the existing "open hours" set used by any
+          service without an override. Pickup/Delivery/Reservation
+          are opt-in overrides — owners enable a service by clicking
+          its tab, get a fresh-copy editor, and save. The customer
+          page falls back to the default row when no override exists. */}
+      <div className="flex flex-wrap gap-2 bg-white rounded-xl border border-gray-100 p-2">
+        {(["default", "pickup", "delivery", "reservation"] as ServiceKey[]).map((key) => {
+          const enabled = enabledTabs.has(key);
+          const isActive = activeTab === key;
+          const labels: Record<ServiceKey, string> = {
+            default: "Default (all services)",
+            pickup: "Pickup",
+            delivery: "Delivery",
+            reservation: "Reservation",
+          };
+          return (
+            <div key={key} className="flex items-center">
+              <button
+                type="button"
+                onClick={() => {
+                  if (!enabled) setEnabledTabs((prev) => new Set(prev).add(key));
+                  setActiveTab(key);
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                  isActive
+                    ? "bg-emerald-500 text-white"
+                    : enabled
+                    ? "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-white text-gray-400 border border-dashed border-gray-300 hover:bg-gray-50"
+                }`}
+              >
+                {labels[key]}
+                {!enabled && <span className="ml-1.5 opacity-70">+ Add</span>}
+              </button>
+              {/* Allow removing an override tab (but not default). */}
+              {enabled && key !== "default" && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEnabledTabs((prev) => {
+                      const next = new Set(prev);
+                      next.delete(key);
+                      return next;
+                    });
+                    if (activeTab === key) setActiveTab("default");
+                  }}
+                  aria-label={`Remove ${labels[key]} override`}
+                  className="ml-1 text-gray-400 hover:text-gray-700 text-xs"
+                  title="Remove override (stale rows stay in the DB until you Save with the tab re-enabled)"
+                >
+                  ×
+                </button>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
       {/* Weekly schedule */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-4 border-b border-gray-100 bg-gray-50 flex items-center gap-2 text-sm text-gray-600">
           <Clock className="w-4 h-4" />
-          {tInfo("openingHours")}
+          {activeTab === "default"
+            ? tInfo("openingHours")
+            : `Hours for ${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} only`}
         </div>
         {hours.map((h) => (
           <div
