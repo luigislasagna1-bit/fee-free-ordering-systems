@@ -283,11 +283,12 @@ const SCRIPT = `(function(){
     overlay.appendChild(frameWrap);
 
     function open() {
-      // Reservation-mode launchers open the iframe with ?reservation=1
-      // appended so the OrderingPageClient auto-opens the table modal.
-      // The widget endpoint forwards arbitrary query strings to the
-      // canonical /order/[slug] URL.
-      var qs = (mode === "reservation") ? "?reservation=1" : "";
+      // Reservation-mode launchers open the STANDALONE reservation
+      // page (no menu chrome) — GloriaFood parity. Order-mode opens
+      // the regular embed iframe. The widget endpoint forwards
+      // ?mode=reservation onto the order page which redirects to
+      // /order/<slug>/reservation server-side.
+      var qs = (mode === "reservation") ? "?mode=reservation" : "";
       iframe.src = base + "/embed/widget/" + encodeURIComponent(publicId) + qs;
       overlay.style.setProperty("display", "flex", "important");
       document.documentElement.style.overflow = "hidden";

@@ -925,15 +925,14 @@ function ReservationSnippet({
   const [copied, setCopied] = useState(false);
   const snippet = useMemo(() => {
     if (snippetType === "iframe") {
-      // iframe mode + reservations: same iframe URL with ?reservation=1.
-      // We don't bother with a custom height — reservation modal is
-      // typically shorter than the full menu, but the parent page
-      // sizes the iframe so leave their existing iframeHeight alone
-      // and just bolt the query string on.
+      // iframe mode → standalone reservation page (GloriaFood UX).
+      // No menu chrome inside the iframe; the customer lands directly
+      // on the form. Iframe height stays at 700px which fits the form
+      // comfortably without scrolling.
       return [
         `<!-- Fee Free Ordering — Book a Table (iframe) -->`,
         `<iframe`,
-        `  src="${baseUrl}/embed/widget/${publicId}?reservation=1"`,
+        `  src="${baseUrl}/embed/widget/${publicId}?mode=reservation"`,
         `  style="width:100%;border:0;display:block"`,
         `  height="700"`,
         `  allow="payment; geolocation"`,
@@ -941,12 +940,12 @@ function ReservationSnippet({
       ].join("\n");
     }
     if (snippetType === "button_link") {
-      // Plain HTML button that opens /order/<slug>?reservation=1 in a
-      // new tab. Same visual treatment as the main menu button, just
-      // a different label + URL.
+      // Plain HTML button that opens the STANDALONE reservation page
+      // in a new tab — no menu visible. Customer lands straight on
+      // the form. Same visual treatment as the main menu button.
       return [
         `<!-- Fee Free Ordering — Book a Table (HTML button) -->`,
-        `<a href="${baseUrl}/order/${orderSlug}?reservation=1"`,
+        `<a href="${baseUrl}/order/${orderSlug}/reservation"`,
         `   target="_blank"`,
         `   rel="noopener noreferrer"`,
         `   style="display:inline-block;background:${color};color:#fff;padding:18px 36px;font-family:system-ui,-apple-system,sans-serif;font-size:18px;font-weight:700;text-decoration:none;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.2);letter-spacing:0.02em;white-space:nowrap;">Book a Table</a>`,

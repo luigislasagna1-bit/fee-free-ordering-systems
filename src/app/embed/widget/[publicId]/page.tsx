@@ -24,12 +24,14 @@ export default async function WidgetEmbedPage({
   if (!restaurant || !restaurant.publishedAt || !restaurant.isActive) {
     notFound();
   }
-  // Forward known query params so the customer-facing page can react
-  // to them. Currently:
-  //   ?reservation=1 → auto-opens the table-reservation modal (used by
-  //     data-mode="reservation" widget buttons)
-  // Anything else is silently dropped — embed URLs are a security
-  // surface, so we whitelist rather than passthrough.
+  // ?mode=reservation → standalone reservation page (no menu chrome).
+  // GloriaFood-style UX: click "Book a Table" lands DIRECTLY on the
+  // form. Anything else routes to the regular order page.
+  // Legacy ?reservation=1 (from older widget snippets) auto-opens
+  // the modal on the regular order page — kept for backwards compat.
+  if (sp.mode === "reservation") {
+    redirect(`/order/${restaurant.slug}/reservation?embedded=1`);
+  }
   const extra: string[] = [];
   if (sp.reservation === "1") extra.push("reservation=1");
   const qs = extra.length > 0 ? `&${extra.join("&")}` : "";

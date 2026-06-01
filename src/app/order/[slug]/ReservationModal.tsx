@@ -168,19 +168,33 @@ export function ReservationModal({
   // legacy behaviour.
   const fallbackRow = pickHoursForService(fallbackOpeningHours as any, dayOfWeek, "reservation");
   const timeSlots = useMemo(() => {
+    // Explicit reservationHours row wins (per-day owner override).
     if (dayHours) {
       if (dayHours.enabled === false) return [];
       return generateTimeSlots(dayHours.open || "10:00", dayHours.close || "22:00", 30);
     }
+    // Service-specific (reservation) row or default (null) row from
+    // OpeningHours. Treat ANY open row as enough to generate slots.
     if (fallbackRow && fallbackRow.isOpen) {
       return generateTimeSlots(fallbackRow.openTime || "10:00", fallbackRow.closeTime || "22:00", 30);
     }
-    // No reservation hours AND no opening hours → genuinely closed.
-    // We could still surface the 10-22 default to be permissive, but
-    // honouring "the restaurant is closed today" is the right call.
-    if (fallbackOpeningHours.length > 0) return [];
-    return generateTimeSlots("10:00", "22:00", 30);
-  }, [dayHours, fallbackRow, fallbackOpeningHours.length]);
+    // Last-ditch: even when we couldn't find a row for the day, look
+    // for ANY open row for ANY day in the dataset. If there's at
+    // least one (i.e. the restaurant has SOME opening hours saved),
+    // we surface a generous 10-22 default rather than block the
+    // customer with "No reservations available". Better UX: the
+    // kitchen can decline a misplaced booking; the customer never
+    // sees a silent dead-end. Luigi 2026-06-01: client reported
+    // "No reservations available" while Monday IS open — likely a
+    // data-shape mismatch we don't want to silently swallow.
+    const anyOpenRow = fallbackOpeningHours.some((h) => h.isOpen);
+    if (anyOpenRow) {
+      return generateTimeSlots("10:00", "22:00", 30);
+    }
+    // No data at all → genuinely closed everywhere. Show the empty
+    // state so the customer knows to contact the restaurant.
+    return [];
+  }, [dayHours, fallbackRow, fallbackOpeningHours]);
 
   const partySizeRange = useMemo(() => {
     const out: number[] = [];
