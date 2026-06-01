@@ -34,6 +34,12 @@ export async function POST(req: NextRequest) {
     couponCode,
     paymentMethod,
     deliveryZoneId: typeof deliveryZoneId === "string" && deliveryZoneId ? deliveryZoneId : undefined,
+    // Restaurant's IANA timezone — drives Happy Hour / day-of-week
+    // evaluation in the owner's local time, not the Vercel UTC clock.
+    // Without this the Italian "15:00–18:00" window was being matched
+    // against UTC and silently failing for any customer whose local
+    // hour differed from UTC (Luigi 2026-05-31, Italian beta tester).
+    restaurantTimezone: restaurant.timezone,
   };
 
   const results = applyPromotions(activePromos as any, ctx);

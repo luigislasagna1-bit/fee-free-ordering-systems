@@ -593,6 +593,12 @@ export async function POST(req: NextRequest) {
       // Customer-typed coupon code — engine matches it against
       // Promotion.couponCode for autoApply=false promos.
       couponCode: normalizedCouponCode,
+      // Restaurant timezone for Happy Hour / day-of-week evaluation.
+      // Same fix as /api/public/apply-promos — without this the
+      // server-side recompute on order placement would disagree with
+      // the client-side promo banner that just told the customer
+      // "your promo applied" (the public route uses tz too).
+      restaurantTimezone: restaurant.timezone,
     });
     const serverPromoDiscount = Math.round(totalPromoDiscount(promoResults, serverSubtotal) * 100) / 100;
     const hasFreeDelivery = promoResults.some((r: any) => r.type === "free_delivery");

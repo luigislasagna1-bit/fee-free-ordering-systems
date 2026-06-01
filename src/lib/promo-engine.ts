@@ -158,7 +158,65 @@ export type ApplyContext = {
    *  filtered to this customer + this promotion. */
   hasUsedLifetime?: Record<string, boolean>;
   now?: Date;
+  /** Restaurant's IANA timezone (e.g. "Europe/Rome", "America/Toronto").
+   *  Used to evaluate the day-of-week + hour-of-day usability windows
+   *  in the OWNER's local time rather than the server's UTC clock.
+   *  Without this, an Italian restaurant's "3 PM – 6 PM" Happy Hour
+   *  is compared against UTC — so an actual 4 PM Italy customer hits
+   *  the engine as 14:00 UTC and falls outside the window, producing
+   *  a silent no-apply (Luigi flagged 2026-05-31, Italian beta tester).
+   *  Falls back to the server clock when undefined for legacy callers. */
+  restaurantTimezone?: string;
 };
+
+/**
+ * Convert a Date into the {hour, minute, weekday} fields as seen in the
+ * given IANA timezone. Uses Intl.DateTimeFormat which is stable across
+ * Node runtimes and doesn't require pulling in date-fns-tz.
+ *
+ * weekday: 0 = Sunday … 6 = Saturday (matches Date.prototype.getDay()
+ * so existing daysOfWeek arrays stored as `[0,1,2…]` keep working).
+ *
+ * If `tz` is empty/unset or rejected by Intl (invalid IANA name), we
+ * fall back to the input Date's UTC fields — same behaviour as before
+ * the fix, so a bad timezone string degrades gracefully instead of
+ * crashing the whole order placement path.
+ */
+function localDateParts(now: Date, tz?: string): { weekday: number; minuteOfDay: number } {
+  if (!tz) {
+    return {
+      weekday: now.getDay(),
+      minuteOfDay: now.getHours() * 60 + now.getMinutes(),
+    };
+  }
+  try {
+    const fmt = new Intl.DateTimeFormat("en-US", {
+      timeZone: tz,
+      hour12: false,
+      weekday: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    const parts = fmt.formatToParts(now);
+    const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+    // Intl's hour: "2-digit" sometimes returns "24" for midnight — normalise.
+    let hour = parseInt(get("hour"), 10);
+    if (!Number.isFinite(hour)) hour = 0;
+    if (hour === 24) hour = 0;
+    const minute = parseInt(get("minute"), 10) || 0;
+    const wd = get("weekday"); // "Sun" / "Mon" / …
+    const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(wd);
+    return {
+      weekday: weekday >= 0 ? weekday : now.getDay(),
+      minuteOfDay: hour * 60 + minute,
+    };
+  } catch {
+    return {
+      weekday: now.getDay(),
+      minuteOfDay: now.getHours() * 60 + now.getMinutes(),
+    };
+  }
+}
 
 function safeJson<T>(s: string | null | undefined, fallback: T): T {
   if (!s) return fallback;
@@ -212,11 +270,18 @@ function parseOrderTypes(raw: string): Set<string> | null {
 
 // ── Schedule / eligibility checks ─────────────────────────────────────────────
 
-function isScheduledNow(promo: PromoInput, now: Date): boolean {
+function isScheduledNow(promo: PromoInput, now: Date, tz?: string): boolean {
   if (promo.startsAt && now < new Date(promo.startsAt)) return false;
   if (promo.endsAt && now > new Date(promo.endsAt)) return false;
+  // Day-of-week + hour-of-day both evaluated in the restaurant's
+  // timezone, NOT the server's UTC clock. Without this an Italian
+  // restaurant's 15:00–18:00 Happy Hour window is checked against
+  // Vercel's UTC time and silently fails for any customer whose
+  // local hour disagrees with UTC. Fall back to server-local fields
+  // when no tz is supplied so legacy callers behave as before.
+  const { weekday, minuteOfDay } = localDateParts(now, tz);
   const days = safeJson<number[] | null>(promo.daysOfWeek ?? null, null);
-  if (days && !days.includes(now.getDay())) return false;
+  if (days && !days.includes(weekday)) return false;
   // Hour-of-day USABILITY window (Fabrizio 2026-05-28). Promo is only
   // applied if the current minute-of-day falls inside the window. Both
   // bounds NULL = always usable. Window can wrap past midnight when
@@ -224,14 +289,13 @@ function isScheduledNow(promo: PromoInput, now: Date): boolean {
   const startMin = typeof promo.usableHourStart === "number" ? promo.usableHourStart : null;
   const endMin = typeof promo.usableHourEnd === "number" ? promo.usableHourEnd : null;
   if (startMin != null || endMin != null) {
-    const nowMin = now.getHours() * 60 + now.getMinutes();
     const s = startMin ?? 0;
     const e = endMin ?? 1440;
     const inWindow = s <= e
-      ? nowMin >= s && nowMin < e
+      ? minuteOfDay >= s && minuteOfDay < e
       // Wrap: late-night promo (22:00–02:00) is in-window if EITHER
       // we're past start OR before end.
-      : nowMin >= s || nowMin < e;
+      : minuteOfDay >= s || minuteOfDay < e;
     if (!inWindow) return false;
   }
   return true;
@@ -294,7 +358,7 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
   }
 
   // ── Happy Hour + Expiration ────────────────────────────────────────
-  if (!isScheduledNow(promo, ctx.now ?? new Date())) return false;
+  if (!isScheduledNow(promo, ctx.now ?? new Date(), ctx.restaurantTimezone)) return false;
 
   return true;
 }
