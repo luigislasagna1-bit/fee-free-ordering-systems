@@ -493,8 +493,31 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       } catch {}
     };
     fetchRes();
-    const id = setInterval(fetchRes, 30000);
-    return () => { cancelled = true; clearInterval(id); };
+    // Match the order-poll cadence (4s) so a new reservation surfaces
+    // within seconds, not the 30s the original setInterval allowed.
+    // Luigi 2026-06-01: "takes 30–60 sec after order placed before it
+    // shows up". Reservations are low-volume — the 4s interval costs
+    // negligible compared to orders, and the kitchen needs to hear
+    // the ring as soon as a booking lands so they can plan capacity.
+    //
+    // Plus visibility / focus / online wake hooks — same pattern as
+    // fetchOrders. Without them, a backgrounded kitchen tab gets
+    // throttled by Chromium to ~1 poll/min for hidden tabs, so the
+    // first poll on tab re-focus could otherwise be 30+ sec late.
+    const id = setInterval(fetchRes, 4000);
+    const wake = () => {
+      if (document.visibilityState === "visible") fetchRes();
+    };
+    document.addEventListener("visibilitychange", wake);
+    window.addEventListener("focus", wake);
+    window.addEventListener("online", wake);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+      document.removeEventListener("visibilitychange", wake);
+      window.removeEventListener("focus", wake);
+      window.removeEventListener("online", wake);
+    };
   }, [activeTab]);
 
   const printReservation = async (id: string) => {
