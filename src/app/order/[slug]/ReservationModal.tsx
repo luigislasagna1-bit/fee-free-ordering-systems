@@ -148,14 +148,43 @@ function ClosedDayBlock({
   );
 }
 
+/**
+ * Build a list of HH:MM strings from openHHMM (inclusive) to closeHHMM
+ * (inclusive) at stepMin-minute intervals.
+ *
+ * Closes-next-day handling (Luigi 2026-06-01): when the close time
+ * is at or before the open time we treat the window as wrapping past
+ * midnight — e.g. 11 AM → 12 AM means "open 11 AM to midnight" and
+ * should emit 11 AM, 11:30 AM, 12 PM, … 11:30 PM. The owner-side
+ * hours editor stamps closesNextDay on save, and the read path
+ * auto-applies it (src/lib/service-hours.ts), but we make the slot
+ * generator defensive regardless — if anyone EVER hands us an
+ * impossible window, returning [] silently is the exact "no slots"
+ * footgun we just spent a day diagnosing.
+ *
+ * stepMin is the configurable slot interval — comes from
+ * ReservationSettings.slotLengthMinutes (default 30, owner can pick
+ * 10/15/20/30/45/60 in the admin reservation settings).
+ *
+ * sanitisation: clamp stepMin to [5, 120] so a bad value (0, negative,
+ * 9999) can't lock the slot loop or generate thousands of options.
+ */
 function generateTimeSlots(openHHMM: string, closeHHMM: string, stepMin: number): string[] {
+  const step = Math.max(5, Math.min(120, Math.floor(stepMin) || 30));
   const [oh, om] = openHHMM.split(":").map(Number);
   const [ch, cm] = closeHHMM.split(":").map(Number);
-  const start = oh * 60 + om;
-  const end = ch * 60 + cm;
+  const start = (oh ?? 0) * 60 + (om ?? 0);
+  let end = (ch ?? 0) * 60 + (cm ?? 0);
+  // Wrap-past-midnight: 11 AM → 12 AM, 9 PM → 2 AM, etc. We don't
+  // bother passing closesNextDay explicitly because it's implied
+  // whenever close <= open. (The owner can't legitimately set a
+  // 0-minute window.)
+  if (end <= start) end += 24 * 60;
   const out: string[] = [];
-  for (let m = start; m <= end; m += stepMin) {
-    out.push(`${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`);
+  for (let m = start; m <= end; m += step) {
+    const hh = Math.floor(m / 60) % 24;
+    const mm = m % 60;
+    out.push(`${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`);
   }
   return out;
 }
@@ -268,22 +297,49 @@ export function ReservationModal({
   }, [dayHours, fallbackRow]);
   const dayLooksClosed = dayStatus === "closedHard";
 
+  // Slot interval — owner-controlled via ReservationSettings.
+  // slotLengthMinutes (admin reservation settings, default 30). Cap
+  // at sane values inside generateTimeSlots so a stale or corrupt
+  // value can't break the loop.
+  const slotStep = settings.slotLengthMinutes ?? 30;
   const timeSlots = useMemo(() => {
     // Explicit reservationHours row wins (per-day owner override).
     if (dayHours && dayHours.enabled !== false) {
-      return generateTimeSlots(dayHours.open || "10:00", dayHours.close || "22:00", 30);
+      return generateTimeSlots(dayHours.open || "10:00", dayHours.close || "22:00", slotStep);
     }
     // Service-aware row from OpeningHours when it says open.
     if (fallbackRow && fallbackRow.isOpen) {
-      return generateTimeSlots(fallbackRow.openTime || "10:00", fallbackRow.closeTime || "22:00", 30);
+      return generateTimeSlots(fallbackRow.openTime || "10:00", fallbackRow.closeTime || "22:00", slotStep);
     }
     // Hard-closed days: empty list. The JSX below switches to the
     // "We're closed on Monday — pick another date" + Jump-to-next CTA.
     if (dayStatus === "closedHard") return [];
     // Ambiguous (no row): permissive default so an incomplete setup
     // doesn't block the customer.
-    return generateTimeSlots("10:00", "22:00", 30);
-  }, [dayHours, fallbackRow, dayStatus]);
+    return generateTimeSlots("10:00", "22:00", slotStep);
+  }, [dayHours, fallbackRow, dayStatus, slotStep]);
+
+  // When the slot list changes (date pick, hours change, interval
+  // change) and the currently-selected time is no longer in the list,
+  // snap to the first valid slot. Prevents the dropdown rendering
+  // visually-empty in browsers that hide unselected options when the
+  // bound value doesn't match — the exact "Select time is blank"
+  // symptom Luigi reported 2026-06-01.
+  useEffect(() => {
+    if (timeSlots.length === 0) return;
+    if (!timeSlots.includes(time)) {
+      // Prefer a "prime-time" default near 7 PM when available, else
+      // the middle of the list, else the first slot. Mirrors the
+      // GloriaFood UX where the dropdown opens close to dinner.
+      const prime =
+        timeSlots.find((t) => t === "19:00") ??
+        timeSlots.find((t) => t === "18:30") ??
+        timeSlots.find((t) => t === "19:30") ??
+        timeSlots[Math.floor(timeSlots.length / 2)] ??
+        timeSlots[0];
+      setTime(prime);
+    }
+  }, [timeSlots, time]);
 
   const partySizeRange = useMemo(() => {
     const out: number[] = [];

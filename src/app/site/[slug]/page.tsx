@@ -196,10 +196,16 @@ export default async function HostedSitePage({
       }
     : null;
   const secondaryCtaEnabled = s.cta.secondary.enabled && r.acceptsReservations;
+  // Direct-land the customer on the standalone reservation page —
+  // GloriaFood UX (Luigi 2026-06-01 "should not need another click").
+  // Used to route through /order/<slug>?service=reservation which
+  // opened the ordering page first and required the customer to tap
+  // again to enter the reservation flow.
+  const reservationDirectUrl = `/order/${r.slug}/reservation?from=hosted`;
   const secondaryCta = secondaryCtaEnabled
     ? {
         label: (s.cta.secondary.label || "Book a Table").trim(),
-        href: (s.cta.secondary.href || `${orderUrl}?service=reservation`).trim() || `${orderUrl}?service=reservation`,
+        href: (s.cta.secondary.href || reservationDirectUrl).trim() || reservationDirectUrl,
       }
     : null;
 

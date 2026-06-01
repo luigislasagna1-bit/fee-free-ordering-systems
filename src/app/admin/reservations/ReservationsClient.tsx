@@ -377,8 +377,19 @@ interface SimpleSettingsForm {
   minNoticeMinutes: number;
   maxAdvanceDays: number;
   holdMinutes: number;
+  /** Customer-facing time-slot interval. 30 = "7:00 PM, 7:30 PM, 8:00
+   *  PM, …", 15 = "7:00, 7:15, 7:30 …", 60 = on the hour only.
+   *  Persisted as ReservationSettings.slotLengthMinutes — drives the
+   *  generateTimeSlots step in ReservationModal. Default 30 matches
+   *  the schema default + GloriaFood's out-of-the-box behaviour. */
+  slotLengthMinutes: number;
   allowPreOrder: boolean;
 }
+
+/** Allowed slot intervals. 5/10/15/20/30/45/60 covers the common
+ *  restaurant patterns — fine-grained for high-turnover counter
+ *  service (10/15) and coarse for white-tablecloth slots (45/60). */
+const SLOT_INTERVAL_OPTIONS = [5, 10, 15, 20, 30, 45, 60] as const;
 
 function SettingsTab() {
   const [loading, setLoading] = useState(true);
@@ -390,6 +401,7 @@ function SettingsTab() {
     minNoticeMinutes: 15,
     maxAdvanceDays: 8,
     holdMinutes: 15,
+    slotLengthMinutes: 30,
     allowPreOrder: false,
   });
 
@@ -410,6 +422,7 @@ function SettingsTab() {
         minNoticeMinutes: s?.minNoticeMinutes ?? (s?.minNoticeHours != null ? s.minNoticeHours * 60 : f.minNoticeMinutes),
         maxAdvanceDays: s?.maxAdvanceDays ?? f.maxAdvanceDays,
         holdMinutes: s?.holdMinutes ?? f.holdMinutes,
+        slotLengthMinutes: s?.slotLengthMinutes ?? f.slotLengthMinutes,
         allowPreOrder: s?.allowPreOrder ?? f.allowPreOrder,
       }));
     }).finally(() => setLoading(false));
@@ -438,6 +451,7 @@ function SettingsTab() {
             minNoticeHours,
             maxAdvanceDays: form.maxAdvanceDays,
             holdMinutes: form.holdMinutes,
+            slotLengthMinutes: form.slotLengthMinutes,
             allowPreOrder: form.allowPreOrder,
           }),
         }),
@@ -556,6 +570,35 @@ function SettingsTab() {
             min={0}
             onChange={(v) => setForm(f => ({ ...f, holdMinutes: v }))}
           />
+          {/* Slot-interval picker. Drives the customer-facing time
+              dropdown in ReservationModal — 30 = "7:00, 7:30, 8:00",
+              15 = "7:00, 7:15, 7:30 …", 60 = on the hour only.
+              Smaller intervals = more booking surface area, larger
+              intervals = simpler kitchen flow. Owner picks the trade-
+              off. */}
+          <div className="flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <label className="text-sm text-gray-800 block">
+                Time slot interval
+              </label>
+              <p className="text-[11px] text-gray-500 mt-0.5">
+                How far apart the time options are on the customer&apos;s reservation form.
+              </p>
+            </div>
+            <select
+              value={form.slotLengthMinutes}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, slotLengthMinutes: parseInt(e.target.value, 10) }))
+              }
+              className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
+            >
+              {SLOT_INTERVAL_OPTIONS.map((m) => (
+                <option key={m} value={m}>
+                  Every {m} minutes
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="pt-2 border-t border-gray-100">
             <label className="flex items-center justify-between gap-4 cursor-pointer">
               <span className="text-sm text-gray-800">
