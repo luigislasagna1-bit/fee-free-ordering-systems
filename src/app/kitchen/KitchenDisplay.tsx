@@ -553,7 +553,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         }
         const ctx: AudioContext = audioCtxRef.current ?? new Ctx();
         audioCtxRef.current = ctx;
-        const res = await fetch("/sounds/gloriafood-new-order.mp3");
+        // Cache-buster: browsers (and Vercel's CDN) aggressively cache
+        // /sounds/*.mp3, so when we swap the file in public/sounds/
+        // every existing kitchen tablet keeps playing the OLD version
+        // for hours until its cache TTL expires. Bumping this query
+        // string forces a fresh fetch the next time the KDS loads.
+        // Bump whenever the bundled MP3 is replaced:
+        //   v=2 (2026-05-31) — Luigi's IMG_6508 11–15s extract
+        const res = await fetch("/sounds/gloriafood-new-order.mp3?v=2");
         if (!res.ok) throw new Error(`fetch failed: ${res.status}`);
         const arr = await res.arrayBuffer();
         // decodeAudioData is the old callback API in Safari — wrap.
