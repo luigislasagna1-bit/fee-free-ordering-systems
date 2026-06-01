@@ -27,6 +27,7 @@ import {
   sendNewReservationNotification,
   sendOrderConfirmationEmail,
   sendOrderStatusUpdateEmail,
+  sendOrderDelayedEmail,
   sendOrderRejectedEmail,
   sendOrderCanceledEmail,
   sendReservationConfirmation,
@@ -65,6 +66,12 @@ function buildCustomerSms(
         return `${restaurantName}: Order #${payload.orderNumber} was ${s}${payload.rejectionReason ? ` — ${payload.rejectionReason}` : ""}.`;
       }
       return null;
+    }
+    case "orderDelayed": {
+      const eta = payload.newEstimatedReady
+        ? new Date(payload.newEstimatedReady).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
+        : null;
+      return `${restaurantName}: Heads up — order #${payload.orderNumber} is delayed about ${payload.delayMinutes} minutes${eta ? `, new ETA ~${eta}` : ""}.${payload.reason ? ` ${payload.reason}` : ""}`;
     }
     case "reservationConfirmation":
       return `${restaurantName}: Reservation for ${payload.partySize} on ${payload.date} at ${payload.time} confirmed. Code ${payload.confirmationCode}.`;
@@ -375,7 +382,12 @@ export function staffAcceptEventForOrderType(
 
 export type CustomerEventPayload =
   | { event: "orderConfirmed"; customerName: string; orderNumber: string; items: { name: string; quantity: number; price: number }[]; total: number; orderType: string; estimatedTime: number; trackingUrl: string; appliedPromos?: Array<{ name: string; type: string; discount: number; couponCode?: string }> }
-  | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string }
+  | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string; trackingUrl?: string; paidOnline?: boolean; paymentMethod?: string }
+  /** Kitchen pushed back the ready time. Fired from POST /api/orders/[id]/delay
+   *  whenever staff hits "+5 / +10 / Custom" on the order detail. Customer
+   *  always gets this (no toggle gate) because a delay is the kind of news
+   *  a paying customer should hear about regardless of restaurant settings. */
+  | { event: "orderDelayed"; customerName: string; orderNumber: string; newEstimatedReady: Date; delayMinutes: number; reason: string | null }
   | { event: "reservationConfirmation"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending"; depositPaid?: boolean; depositAmount?: number; preOrderTotal?: number };
 
 /**
@@ -414,6 +426,12 @@ export async function notifyCustomer(args: {
     where: { id: restaurantId },
     select: {
       name: true,
+      slug: true,
+      // Phone + email surfaced as contact info in the status / delay
+      // email footers so customers can call/email the restaurant
+      // directly from any update message (GloriaFood parity).
+      phone: true,
+      email: true,
       defaultLanguage: true,
       // Per-toggle email switches — let owners mute individual status
       // notifications without affecting the others.
@@ -516,6 +534,7 @@ export async function notifyCustomer(args: {
         toggle = restaurant.customerEmailOrderRejected;
       }
       if (!toggle) return { sent: false, reason: "toggle off" };
+      const baseUrlForStatus = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
       await withImprint(restaurantId, async () => {
         await sendOrderStatusUpdateEmail({
           to: customerEmail,
@@ -525,6 +544,39 @@ export async function notifyCustomer(args: {
           restaurantName: restaurant.name,
           estimatedReady: payload.estimatedReady,
           rejectionReason: payload.rejectionReason,
+          // Real status-page URL — fixes broken "View order status"
+          // button on the accepted/ready/etc. emails (Luigi 2026-05-31).
+          // Fallback derived from restaurant slug when caller omitted.
+          trackingUrl: payload.trackingUrl,
+          paidOnline: payload.paidOnline,
+          paymentMethod: payload.paymentMethod,
+          restaurantPhone: restaurant.phone,
+          restaurantEmail: restaurant.email,
+          restaurantUrl: `${baseUrlForStatus}/order/${restaurant.slug}`,
+          locale,
+        });
+      });
+      await fireSms();
+      return { sent: true, smsSent: smsDispatched };
+    }
+    case "orderDelayed": {
+      // No toggle gate — when the kitchen pushes the ready time, the
+      // customer always hears about it. They paid; they deserve the
+      // update. Imprint set so reseller-branded restaurants stay on
+      // their own letterhead.
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+      await withImprint(restaurantId, async () => {
+        await sendOrderDelayedEmail({
+          to: customerEmail,
+          customerName: payload.customerName,
+          orderNumber: payload.orderNumber,
+          restaurantName: restaurant.name,
+          newEstimatedReady: payload.newEstimatedReady,
+          delayMinutes: payload.delayMinutes,
+          reason: payload.reason,
+          restaurantPhone: restaurant.phone,
+          restaurantEmail: restaurant.email,
+          restaurantUrl: `${baseUrl}/order/${restaurant.slug}`,
           locale,
         });
       });

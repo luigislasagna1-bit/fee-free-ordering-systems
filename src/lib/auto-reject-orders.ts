@@ -91,7 +91,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       marketplaceCounterApplied: true,
       placedWhileClosed: true,
       restaurant: {
-        select: { id: true, name: true, defaultLanguage: true, stripeAccountId: true },
+        select: { id: true, name: true, slug: true, defaultLanguage: true, stripeAccountId: true },
       },
     },
   });
@@ -293,6 +293,18 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
           orderNumber: order.orderNumber,
           status: "rejected",
           rejectionReason: reasonText,
+          // Payment context drives the refund disclosure on the rejection
+          // email (GloriaFood-parity language: "card → 5-10 business days"
+          // etc.). Auto-rejected orders are typically pre-acceptance so
+          // paidOnline reflects whether the customer's auth was ever
+          // captured / charged; cash orders get the "nothing to refund"
+          // line.
+          paymentMethod: order.paymentMethod || undefined,
+          paidOnline:
+            order.paymentMethod === "card" || order.paymentMethod === "paypal"
+              ? ["authorized", "paid", "refunded"].includes(order.paymentStatus ?? "")
+              : false,
+          trackingUrl: `${baseUrl}/order/${order.restaurant.slug}/status/${order.id}`,
         },
       }).catch((e: unknown) => console.error("[auto-reject notifyCustomer]", e));
 

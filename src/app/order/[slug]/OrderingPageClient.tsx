@@ -2028,20 +2028,65 @@ export function OrderingPageClient({
                           {minOrderLabel}
                         </span>
                       )}
-                      {promo.orderType !== "both" && (
-                        <span
-                          className="bg-white/20 backdrop-blur rounded-full px-2 py-0.5"
-                          title={
-                            promo.orderType === "pickup"
-                              ? "This deal only applies to pickup orders"
-                              : "This deal only applies to delivery orders"
-                          }
-                        >
-                          {promo.orderType === "pickup"
-                            ? "🥡 Pickup only"
-                            : "🚚 Delivery only"}
-                        </span>
-                      )}
+                      {/* Order-type chip on the promo banner.
+                          Multi-select promos store orderType as a JSON
+                          array (e.g. '["pickup","delivery"]'). The
+                          legacy single-value form ("pickup"/"delivery"/
+                          "both") still flows through too.
+
+                          Three bugs the new logic fixes (Luigi 2026-05-31):
+                          - A JSON array `["pickup","delivery"]` was
+                            falling into the else branch and rendering
+                            "Delivery only" even though both channels
+                            were allowed.
+                          - Restaurants that only accept Pickup were
+                            seeing a "Delivery only" chip on every
+                            non-"both" promo — confusing since
+                            delivery isn't even an option for them.
+                          - A "delivery"-only promo shown on a
+                            pickup-only restaurant is unactionable;
+                            we still surface it but the chip label
+                            now matches what the restaurant offers. */}
+                      {(() => {
+                        const raw = promo.orderType ?? "both";
+                        // Parse JSON array OR a plain comma-separated /
+                        // single-value string into a Set of channels.
+                        const channels = new Set<string>();
+                        if (typeof raw === "string" && raw.startsWith("[")) {
+                          try {
+                            const arr = JSON.parse(raw);
+                            if (Array.isArray(arr)) arr.forEach((v) => channels.add(String(v)));
+                          } catch { /* fall through */ }
+                        } else if (raw && raw !== "both") {
+                          channels.add(raw);
+                        }
+                        // "both" / empty / parse failure → no badge.
+                        if (channels.size === 0) return null;
+                        // ALL relevant channels present → no badge.
+                        // (Multi-select with everything = unrestricted.)
+                        if (channels.has("pickup") && channels.has("delivery")) return null;
+                        const onlyPickup = channels.has("pickup");
+                        const onlyDelivery = channels.has("delivery");
+                        if (!onlyPickup && !onlyDelivery) return null;
+                        // If the restaurant doesn't offer the matching
+                        // channel, don't pretend they do — hide the chip
+                        // so we never claim "delivery only" on a pickup-
+                        // only shop.
+                        if (onlyDelivery && !restaurant.acceptsDelivery) return null;
+                        if (onlyPickup && !restaurant.acceptsPickup) return null;
+                        return (
+                          <span
+                            className="bg-white/20 backdrop-blur rounded-full px-2 py-0.5"
+                            title={
+                              onlyPickup
+                                ? "This deal only applies to pickup orders"
+                                : "This deal only applies to delivery orders"
+                            }
+                          >
+                            {onlyPickup ? "🥡 Pickup only" : "🚚 Delivery only"}
+                          </span>
+                        );
+                      })()}
                       {promo.couponCode && (
                         <span className="bg-white text-gray-900 rounded-full px-2 py-0.5 font-mono">
                           {promo.couponCode}

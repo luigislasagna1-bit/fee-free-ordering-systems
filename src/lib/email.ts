@@ -19,6 +19,7 @@ import { renderEmail } from "@/emails/render";
 import OrderConfirmation         from "@/emails/templates/OrderConfirmation";
 import KitchenNotification       from "@/emails/templates/KitchenNotification";
 import OrderStatusUpdate         from "@/emails/templates/OrderStatusUpdate";
+import OrderDelayed              from "@/emails/templates/OrderDelayed";
 import OrderRejected             from "@/emails/templates/OrderRejected";
 import OrderCanceled             from "@/emails/templates/OrderCanceled";
 import ReservationConfirmation   from "@/emails/templates/ReservationConfirmation";
@@ -90,8 +91,41 @@ export async function isEmailEnabled(): Promise<boolean> {
 
 export const EMAIL_ENABLED = true;
 
+/**
+ * Override the display name on the From header while keeping the email
+ * address on our verified sending domain.
+ *
+ * Example: platform default `from` is `Fee Free Ordering <orders@feefreeordering.com>`.
+ * Calling `applyFromName(from, "Luigi's Lasagna")` returns
+ *   `Luigi's Lasagna <orders@feefreeordering.com>`
+ * so the customer's inbox shows the restaurant's name as the sender,
+ * but Resend still ships from our DKIM-signed domain (no per-restaurant
+ * domain verification needed).
+ *
+ * Why this matters: Luigi 2026-05-31 — order receipts were going out
+ * as "Fee Free Ordering" instead of the actual restaurant name.
+ * Customers couldn't tell at a glance which of their ordering apps
+ * the email belonged to.
+ *
+ * Quirk: RFC 5322 allows special characters in display names only when
+ * the entire name is quoted. Apostrophes and commas (common in
+ * restaurant names) blow up some clients unless quoted. We always
+ * quote the name to be safe + escape any inner double-quotes.
+ */
+function applyFromName(from: string, displayName: string | null | undefined): string {
+  if (!displayName) return from;
+  const trimmed = displayName.trim();
+  if (!trimmed) return from;
+  // Parse the email address out of the platform default. Resend
+  // accepts either `email` or `Name <email>` for `from`.
+  const angle = from.match(/<([^>]+)>/);
+  const addr = angle ? angle[1] : from;
+  const safeName = trimmed.replace(/"/g, '\\"').slice(0, 90);
+  return `"${safeName}" <${addr}>`;
+}
+
 async function send({
-  to, subject, html, text, replyTo, listUnsubscribeUrl,
+  to, subject, html, text, replyTo, listUnsubscribeUrl, fromName,
 }: {
   to: string;
   subject: string;
@@ -108,9 +142,15 @@ async function send({
    *  any email that's transactional-bulk (digest, marketing). Order
    *  receipts are exempt — they're 1:1 transactional. */
   listUnsubscribeUrl?: string | null;
+  /** Override the display-name portion of the From header. The email
+   *  address stays on our verified sending domain. Used for per-
+   *  restaurant order emails so the customer's inbox shows the
+   *  restaurant's name rather than the platform default. */
+  fromName?: string | null;
 }): Promise<{ success: boolean; error?: string }> {
   if (!to) return { success: false, error: "no recipient" };
-  const { client, from } = await getTransport();
+  const { client, from: defaultFrom } = await getTransport();
+  const from = applyFromName(defaultFrom, fromName);
   if (!client) {
     console.log("[Email placeholder]", to, "·", subject);
     return { success: true };
@@ -248,7 +288,14 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
   // goes to the restaurant directly, not to our platform inbox. Deliverability
   // bonus too — Reply-To matching the visible "from this restaurant" content
   // is a positive signal for Gmail/Outlook trust scoring.
-  return send({ to: params.to, subject, html, replyTo: params.restaurantEmail });
+  // From display name = the restaurant's name (verified sending domain stays
+  // ours). Customer's inbox shows "Luigi's Lasagna" instead of "Fee Free
+  // Ordering" — addresses Luigi 2026-05-31 feedback.
+  return send({
+    to: params.to, subject, html,
+    replyTo: params.restaurantEmail,
+    fromName: params.restaurantName,
+  });
 }
 
 export async function sendNewOrderNotificationEmail(params: {
@@ -311,6 +358,20 @@ export async function sendOrderStatusUpdateEmail(params: {
   estimatedReady?: Date;
   rejectionReason?: string;
   trackingUrl?: string;
+  /** Order's payment method — drives which refund copy renders on
+   *  rejected/cancelled emails ("card → 5-10 business days", "PayPal
+   *  → instant void", "cash → nothing to refund"). When undefined,
+   *  the rejected/cancelled template renders the generic refund
+   *  paragraph for backwards compat with callers that haven't been
+   *  updated yet. */
+  paidOnline?: boolean;
+  paymentMethod?: string;
+  /** Restaurant contact info — surfaced in the email footer. Missing
+   *  these used to mean the customer got an accepted/rejected email
+   *  with no way to call the restaurant. Luigi 2026-05-31. */
+  restaurantPhone?: string | null;
+  restaurantEmail?: string | null;
+  restaurantUrl?: string | null;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
@@ -328,11 +389,62 @@ export async function sendOrderStatusUpdateEmail(params: {
       // it. Previously dropped on the floor — customer never saw WHY their
       // order was declined.
       rejectionReason: params.rejectionReason,
+      // Real status-page link. Previously was always "#" because the
+      // dispatcher never threaded a trackingUrl through — the customer's
+      // "View order status" button was a no-op. Luigi bug 2026-05-31.
       trackingUrl: params.trackingUrl ?? "#",
+      paidOnline: params.paidOnline,
+      paymentMethod: params.paymentMethod,
+      restaurantPhone: params.restaurantPhone ?? undefined,
+      restaurantEmail: params.restaurantEmail ?? undefined,
+      restaurantUrl: params.restaurantUrl ?? undefined,
       imprint: currentImprint(),
     })
   );
-  return send({ to: params.to, subject, html });
+  return send({
+    to: params.to, subject, html,
+    replyTo: params.restaurantEmail,
+    fromName: params.restaurantName,
+  });
+}
+
+export async function sendOrderDelayedEmail(params: {
+  to: string;
+  customerName: string;
+  orderNumber: string;
+  restaurantName: string;
+  newEstimatedReady: Date;
+  delayMinutes: number;
+  reason?: string | null;
+  trackingUrl?: string;
+  restaurantPhone?: string | null;
+  restaurantEmail?: string | null;
+  restaurantUrl?: string | null;
+  locale?: string;
+}) {
+  // Subject line lives inline rather than in the dict because this is
+  // a brand-new event and translations would land later anyway.
+  const subject = `Order #${params.orderNumber} — running about ${params.delayMinutes} min behind`;
+  const html = await renderEmail(
+    OrderDelayed({
+      customerName: params.customerName,
+      orderNumber: params.orderNumber,
+      restaurantName: params.restaurantName,
+      newEstimatedReady: params.newEstimatedReady,
+      delayMinutes: params.delayMinutes,
+      reason: params.reason,
+      trackingUrl: params.trackingUrl ?? "#",
+      restaurantPhone: params.restaurantPhone ?? undefined,
+      restaurantEmail: params.restaurantEmail ?? undefined,
+      restaurantUrl: params.restaurantUrl ?? undefined,
+      imprint: currentImprint(),
+    })
+  );
+  return send({
+    to: params.to, subject, html,
+    replyTo: params.restaurantEmail,
+    fromName: params.restaurantName,
+  });
 }
 
 export async function sendOrderRejectedEmail(params: {
@@ -360,6 +472,7 @@ export async function sendOrderRejectedEmail(params: {
     to: params.to,
     subject: t("email.orderRejected.subject", { orderNumber: params.orderNumber }),
     html,
+    fromName: params.restaurantName,
   });
 }
 
@@ -388,6 +501,7 @@ export async function sendOrderCanceledEmail(params: {
     to: params.to,
     subject: t("email.orderCanceled.subject", { orderNumber: params.orderNumber }),
     html,
+    fromName: params.restaurantName,
   });
 }
 

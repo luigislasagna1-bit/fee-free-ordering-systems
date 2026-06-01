@@ -329,7 +329,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const order = await prisma.order.update({
     where: { id },
     data: updates,
-    include: { restaurant: { select: { id: true, name: true, defaultLanguage: true } } },
+    include: { restaurant: { select: { id: true, name: true, slug: true, defaultLanguage: true } } },
   });
 
   // ── Kill flow: void vs refund ────────────────────────────────────────────
@@ -584,6 +584,21 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
             status: order.status,
             estimatedReady: order.estimatedReady ? new Date(order.estimatedReady) : undefined,
             rejectionReason: order.rejectionReason || undefined,
+            // Status-page link the customer clicks to track the order.
+            // Without this the email template defaults the button to
+            // href="#" and the "View order status" button does nothing
+            // (Luigi bug 2026-05-31).
+            trackingUrl: `${baseUrl}/order/${order.restaurant.slug}/status/${order.id}`,
+            // Payment context — drives the rejected/cancelled refund
+            // disclosure ("nothing to refund" / "5-10 business days" /
+            // "back to your PayPal balance"). paidOnline derived from
+            // paymentStatus history; a non-cash order that ever reached
+            // authorized/paid had online money attached.
+            paymentMethod: order.paymentMethod || undefined,
+            paidOnline:
+              order.paymentMethod === "card" || order.paymentMethod === "paypal"
+                ? ["authorized", "paid", "refunded"].includes(order.paymentStatus ?? "")
+                : false,
           },
         });
       } catch (e) {

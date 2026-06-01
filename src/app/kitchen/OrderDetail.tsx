@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   X, Phone, Mail, MapPin, Clock, CheckCircle, XCircle, ChefHat,
   Package, CreditCard, Printer, UtensilsCrossed, RefreshCw, Loader2,
-  ReceiptText, User,
+  ReceiptText, User, Plus, Timer,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import toast from "react-hot-toast";
@@ -53,6 +53,67 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
   const [cancelReason, setCancelReason] = useState("");
   const [busy, setBusy] = useState(false);
   const [printing, setPrinting] = useState<string | null>(null);
+  // ── Delay / Extend Prep Time modal state ──────────────────────────
+  // Hits POST /api/orders/[id]/delay which:
+  //   1. Bumps estimatedReady by N minutes
+  //   2. Appends an audit line to Order.notes
+  //   3. Emails the customer the new ETA
+  // We don't optimistically mutate the local Order here — instead we
+  // let the parent's poll (every 4s) refresh state. Avoids the
+  // "two-sources-of-truth" trap when the customer is also watching
+  // the same status page.
+  const [showDelay, setShowDelay] = useState(false);
+  const [delayMinutes, setDelayMinutes] = useState<number>(10);
+  const [delayReason, setDelayReason] = useState("");
+  const [delaying, setDelaying] = useState(false);
+
+  // ── Live countdown to estimatedReady ──────────────────────────────
+  // Re-render once per second while the order is `accepted` so the
+  // staff can see how long they have left. We DO NOT auto-complete on
+  // the client — the cron handles that server-side. The countdown is
+  // purely informational; "Ready" still appears as soon as the server
+  // poll picks up the status flip.
+  const [nowTick, setNowTick] = useState(() => Date.now());
+  useEffect(() => {
+    if (order.status !== "accepted") return;
+    const id = setInterval(() => setNowTick(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, [order.status]);
+  const countdownMs = order.estimatedReady
+    ? new Date(order.estimatedReady).getTime() - nowTick
+    : null;
+  const countdownLabel = (() => {
+    if (countdownMs == null) return null;
+    const totalSec = Math.round(Math.abs(countdownMs) / 1000);
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    const sign = countdownMs < 0 ? "-" : "";
+    return `${sign}${m}:${String(s).padStart(2, "0")}`;
+  })();
+  const isOverdue = countdownMs != null && countdownMs < 0;
+
+  const submitDelay = async () => {
+    const minutes = Math.max(1, Math.min(240, Math.round(delayMinutes || 0)));
+    if (!minutes) return;
+    setDelaying(true);
+    try {
+      const res = await fetch(`/api/orders/${order.id}/delay`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ minutes, reason: delayReason.trim() || undefined }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Delay failed");
+      toast.success(`Delayed by ${minutes} min — customer notified`);
+      setShowDelay(false);
+      setDelayMinutes(10);
+      setDelayReason("");
+    } catch (err: any) {
+      toast.error(err?.message ?? "Couldn't apply delay");
+    } finally {
+      setDelaying(false);
+    }
+  };
 
   const act = async (fn: () => Promise<void>) => {
     setBusy(true);
@@ -153,6 +214,47 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                 {order.preparationTime && <Row icon={<Clock className="w-4 h-4" />} t={t}>{tk("preparationTime")}: {order.preparationTime} {tk("minAway", { minutes: "" })}</Row>}
                 {order.completedAt && <Row icon={<Package className="w-4 h-4 text-gray-500" />} t={t}>{tk("completed")}: {fmtTime(order.completedAt)}</Row>}
               </div>
+
+              {/* Live countdown — ticks once per second once the order is
+                  accepted, until either we hit estimatedReady or the
+                  server flips status to completed. Goes red-and-blinking
+                  past 0:00 so the kitchen can see at a glance "this one
+                  is late." Hidden for terminal states. */}
+              {order.status === "accepted" && countdownLabel && (
+                <div
+                  className={`mt-3 rounded-lg px-3 py-2.5 border flex items-center justify-between gap-2 ${
+                    isOverdue
+                      ? "bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-300 animate-pulse"
+                      : "bg-blue-500/10 border-blue-500/30 text-blue-700 dark:text-blue-300"
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <Timer className="w-4 h-4" />
+                    <span className="text-sm font-semibold">
+                      {isOverdue ? "Overdue by" : "Ready in"}
+                    </span>
+                  </div>
+                  <span className="text-2xl font-mono font-bold tabular-nums">
+                    {countdownLabel}
+                  </span>
+                </div>
+              )}
+
+              {/* Add Prep Time / Delay button — only relevant while the
+                  order is still in-progress. Once it's completed or
+                  rejected, delaying makes no sense. Per-restaurant
+                  setting could gate this later; for now it's on for all. */}
+              {order.status === "accepted" && (
+                <div className="mt-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowDelay(true)}
+                    className={`w-full inline-flex items-center justify-center gap-2 py-2 rounded-lg border border-dashed text-sm font-semibold transition ${t.btn}`}
+                  >
+                    <Plus className="w-4 h-4" /> Add prep time / delay
+                  </button>
+                </div>
+              )}
             </Section>
           )}
 
@@ -447,6 +549,67 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               {busy ? tCommon("loading") : tCommon("cancel")}
             </button>
             <button onClick={() => setShowCancel(false)} className={`flex-1 ${t.btn} py-2.5 rounded-xl text-sm transition`}>
+              {tCommon("back")}
+            </button>
+          </div>
+        </Modal>
+      )}
+
+      {/* Delay / Extend Prep Time modal. Quick-pick chips for the common
+          deltas (+5/+10/+15/+20/+30) plus a free-numeric field. Submit
+          hits the dedicated /delay endpoint which bumps estimatedReady
+          and fires a customer email with the new ETA. */}
+      {showDelay && (
+        <Modal title="Add prep time" t={t} onClose={() => setShowDelay(false)}>
+          <p className={`text-sm ${t.muted} mb-3`}>
+            Bump this order&apos;s estimated ready time. The customer gets an
+            email with the new ETA.
+          </p>
+          <div className="grid grid-cols-5 gap-2 mb-3">
+            {[5, 10, 15, 20, 30].map((m) => (
+              <button
+                key={m}
+                type="button"
+                onClick={() => setDelayMinutes(m)}
+                className={`py-2 rounded-lg text-sm font-bold transition ${
+                  delayMinutes === m
+                    ? "bg-blue-500 text-white"
+                    : t.btn
+                }`}
+              >
+                +{m}m
+              </button>
+            ))}
+          </div>
+          <label className={`text-xs ${t.muted} block mb-1`}>Custom (1–240 min)</label>
+          <input
+            type="number"
+            min={1}
+            max={240}
+            step={1}
+            value={delayMinutes}
+            onChange={(e) => setDelayMinutes(parseInt(e.target.value, 10) || 0)}
+            className={`w-full rounded-xl px-3 py-2 text-sm border ${t.input} focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3`}
+          />
+          <label className={`text-xs ${t.muted} block mb-1`}>Reason (optional — shown to customer)</label>
+          <textarea
+            rows={2}
+            value={delayReason}
+            onChange={(e) => setDelayReason(e.target.value)}
+            placeholder="Kitchen running busy, out of an ingredient, etc."
+            className={`w-full rounded-xl px-3 py-2 text-sm border ${t.input} focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4`}
+            maxLength={200}
+          />
+          <div className="flex gap-3">
+            <button
+              onClick={submitDelay}
+              disabled={delaying || !delayMinutes}
+              className="flex-1 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2"
+            >
+              {delaying ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+              {delaying ? "Saving…" : `Delay by ${delayMinutes || 0} min`}
+            </button>
+            <button onClick={() => setShowDelay(false)} className={`flex-1 ${t.btn} py-2.5 rounded-xl text-sm transition`}>
               {tCommon("back")}
             </button>
           </div>

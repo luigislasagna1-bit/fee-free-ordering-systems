@@ -25,6 +25,14 @@ export type OrderStatusUpdateProps = {
   statusMessage?: string;
   /** Restaurant-supplied reason — shown in a callout when status is rejected/cancelled. */
   rejectionReason?: string;
+  /** Drives the refund disclosure on rejected/cancelled status emails.
+   *  Cash orders get a "no charge was made" line; card → "5-10 business
+   *  days back to your card"; PayPal → "released to your PayPal balance
+   *  within 3-5 days." Matches GloriaFood's customer expectation that
+   *  rejection emails answer the "am I being charged?" question loud
+   *  and clear. Luigi 2026-05-31. */
+  paidOnline?: boolean;
+  paymentMethod?: string;
   trackingUrl: string;
   restaurantUrl?: string;
   restaurantEmail?: string;
@@ -76,6 +84,7 @@ const STATUS_COPY: Record<string, StatusCopy> = {
 export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
   const {
     customerName, orderNumber, restaurantName, status, statusMessage, rejectionReason,
+    paidOnline, paymentMethod,
     trackingUrl, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
   } = props;
   const normalized = status.toLowerCase();
@@ -86,6 +95,27 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
     badge: status, badgeColor: "sky", isNegative: false,
   };
   const reason = rejectionReason?.trim();
+
+  // Refund disclosure shown ONLY on rejected/cancelled emails. Customer's
+  // first question on a rejection is always "what about my money?" — we
+  // answer it explicitly per payment method, mirroring GloriaFood's
+  // explicit refund language. When we can't tell what they paid with
+  // (legacy callers, missing payment fields) we fall back to the generic
+  // "if you paid online…" line.
+  const isCardPay = paymentMethod === "card" || paymentMethod === "online_card";
+  const isPaypal = paymentMethod === "paypal";
+  const isCashIsh = paymentMethod === "cash" || paymentMethod === "card_in_person";
+  const refundCopy = copy.isNegative
+    ? isCashIsh || paidOnline === false
+      ? "You haven't been charged for this order — no payment was taken, so there's nothing to refund."
+      : isCardPay
+        ? "Your card was authorized but not charged. The authorization is being released automatically — depending on your bank it may show as a pending charge for a few hours, then disappear. If you were already charged, a full refund will reach your card within 5–10 business days."
+        : isPaypal
+          ? "Your PayPal authorization is being released automatically. If a charge was already captured, the full amount will be returned to your PayPal balance (or original funding source) within 3–5 business days."
+          : paidOnline === true
+            ? "If you paid online, the full amount is being refunded automatically. Card refunds typically take 5–10 business days; PayPal refunds 3–5 business days."
+            : null
+    : null;
 
   return (
     <EmailLayout preview={`Order #${orderNumber} — ${copy.title}`}>
@@ -99,6 +129,11 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
         {copy.isNegative && reason && (
           <InfoCard label="Reason from the restaurant" accent="rose">
             {reason}
+          </InfoCard>
+        )}
+        {refundCopy && (
+          <InfoCard label="About your payment" accent="amber">
+            {refundCopy}
           </InfoCard>
         )}
         {!copy.isNegative && (
