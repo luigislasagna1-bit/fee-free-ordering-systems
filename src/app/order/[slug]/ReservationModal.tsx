@@ -218,7 +218,28 @@ export function ReservationModal({
   const [partySize, setPartySize] = useState(Math.max(2, settings.minGuests));
   const [date, setDate] = useState(todayISO());
   const [time, setTime] = useState("19:00");
-  const [name, setName] = useState("");
+  // First / last name split for the form (Luigi 2026-06-01) — the
+  // wire payload still posts a single `customerName` field so the
+  // API + DB schema are unchanged. We concatenate "First Last" on
+  // submit; an empty last name produces just "First". GloriaFood
+  // parity. The legacy `name` variable name is preserved for the
+  // existing validation/submit logic; `name` is derived from
+  // firstName + lastName via a memo below.
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const name = useMemo(
+    () => [firstName.trim(), lastName.trim()].filter(Boolean).join(" "),
+    [firstName, lastName],
+  );
+  const setName = (v: string) => {
+    // Back-compat shim: any code paths that still call setName()
+    // (e.g. autofill from a saved profile) split the value on the
+    // first space. Most use-cases hand us "First Last".
+    const parts = v.split(" ");
+    setFirstName(parts[0] ?? "");
+    setLastName(parts.slice(1).join(" "));
+  };
+  void setName; // suppress unused-warn — kept available for future autofill
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
@@ -532,27 +553,47 @@ export function ReservationModal({
                 )}
               </div>
 
-              {/* Contact */}
+              {/* Contact — first/last name split (Luigi 2026-06-01
+                  GloriaFood parity). Asterisk rendered ONCE based on
+                  required state; no more "Name **" double-marker.
+                  Email placeholder no longer says "optional" when the
+                  field is in fact required (requireCustomerEmail). */}
               <div className="grid grid-cols-2 gap-3">
                 <input
-                  type="text" placeholder={tr("fullName")}
-                  value={name} onChange={e => setName(e.target.value)}
+                  type="text"
+                  required
+                  placeholder={`${tr("firstName")} *`}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
+                  style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                />
+                <input
+                  type="text"
+                  required
+                  placeholder={`${tr("lastName")} *`}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 />
                 <input
                   type="tel"
                   required={requireCustomerPhone}
-                  placeholder={`${tr("phoneRequired")}${requireCustomerPhone ? "" : " (optional)"}`}
+                  placeholder={`${tr("phoneRequired")}${requireCustomerPhone ? " *" : " (optional)"}`}
                   value={phone} onChange={e => setPhone(e.target.value)}
-                  className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
+                  className="col-span-2 border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 />
               </div>
               <input
                 type="email"
                 required={requireCustomerEmail}
-                placeholder={`${tr("emailForConfirmation")}${requireCustomerEmail ? "" : " (optional)"}`}
+                placeholder={
+                  requireCustomerEmail
+                    ? `${tr("emailForConfirmation")} *`
+                    : tr("emailForConfirmationOptional")
+                }
                 value={email} onChange={e => setEmail(e.target.value)}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
                 style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}

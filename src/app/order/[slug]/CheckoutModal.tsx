@@ -408,21 +408,52 @@ export function CheckoutModal({
                     </div>
                   )
                 )}
+                {/* GloriaFood-parity (Luigi 2026-06-01): first + last
+                    name as SEPARATE inputs. DB schema unchanged —
+                    customerInfo.name still holds the concatenated
+                    "First Last" string downstream code already expects,
+                    so the server, kitchen receipts, status emails, and
+                    every existing consumer keep working without an
+                    API contract change. */}
                 <div className="grid grid-cols-2 gap-2 pt-3">
                   <input
-                    id="checkout-contact-name"
+                    id="checkout-contact-first-name"
                     required
                     className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    placeholder={`${tc("fullNamePlaceholder")} *`}
-                    value={customerInfo.name}
-                    onChange={e => setCustomerInfo({ ...customerInfo, name: e.target.value })}
+                    placeholder={`${tc("firstNamePlaceholder")} *`}
+                    value={(customerInfo.name || "").split(" ")[0] ?? ""}
+                    onChange={(e) => {
+                      const first = e.target.value;
+                      const parts = (customerInfo.name || "").split(" ");
+                      const last = parts.slice(1).join(" ");
+                      setCustomerInfo({
+                        ...customerInfo,
+                        name: [first, last].filter(Boolean).join(" "),
+                      });
+                    }}
+                  />
+                  <input
+                    id="checkout-contact-last-name"
+                    required
+                    className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                    style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                    placeholder={`${tc("lastNamePlaceholder")} *`}
+                    value={(customerInfo.name || "").split(" ").slice(1).join(" ")}
+                    onChange={(e) => {
+                      const last = e.target.value;
+                      const first = (customerInfo.name || "").split(" ")[0] ?? "";
+                      setCustomerInfo({
+                        ...customerInfo,
+                        name: [first, last].filter(Boolean).join(" "),
+                      });
+                    }}
                   />
                   <input
                     id="checkout-contact-phone"
                     type="tel"
                     required={requireCustomerPhone}
-                    className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                    className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                     placeholder={`${tc("phonePlaceholder")}${requireCustomerPhone ? " *" : ""}`}
                     value={customerInfo.phone}
@@ -434,7 +465,7 @@ export function CheckoutModal({
                     required={requireCustomerEmail}
                     className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    placeholder={`${tc("emailPlaceholder")}${requireCustomerEmail ? " *" : ""}`}
+                    placeholder={`${tc("emailPlaceholder")}${requireCustomerEmail ? " *" : " (optional)"}`}
                     value={customerInfo.email}
                     onChange={e => setCustomerInfo({ ...customerInfo, email: e.target.value })}
                   />
