@@ -2024,46 +2024,74 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       <div className="flex-1 flex overflow-hidden">
         {/* Order list */}
         <div className={`${selectedOrder ? "hidden md:flex" : "flex"} flex-col w-full md:w-2/5 lg:w-1/3 border-r ${t.border} overflow-y-auto`}>
-          {/* Reservations strip — only on the Orders tab */}
-          {activeTab === "orders" && reservations.length > 0 && (
-            <div className={`px-3 py-3 border-b ${t.border} space-y-2 bg-opacity-50`}>
-              <div className={`text-[11px] font-bold uppercase tracking-wider ${t.muted} px-1`}>
-                {tk("reservations")} · {reservations.length}
-              </div>
-              {reservations.slice(0, 6).map(r => (
-                <ReservationCard key={r.id} r={r} t={t} onStatusChange={updateReservationStatus} onPrint={printReservation} compact />
-              ))}
-              {reservations.length > 6 && (
-                <button
-                  onClick={() => setActiveTab("reservations")}
-                  className={`w-full text-xs font-semibold py-1.5 rounded-lg ${t.muted} hover:${t.text} transition`}
-                >
-                  + {reservations.length - 6} more — see all
-                </button>
-              )}
-            </div>
-          )}
+          {/* Unified order + reservation list (Luigi 2026-06-01).
+              The All tab used to pin a "Reservations" strip above
+              the order list. Now reservations interleave with orders
+              chronologically — newest first — same way GloriaFood
+              presents them. In Progress and Complete tabs keep
+              orders-only for now (Phase 2 will mirror this merge
+              there with TODAY/LATER grouping). */}
+          {(() => {
+            type MixedItem =
+              | { kind: "order"; ts: number; order: Order }
+              | { kind: "reservation"; ts: number; r: KitchenReservation };
+            const items: MixedItem[] = [];
+            for (const o of tabOrders) {
+              const ts = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
+              items.push({ kind: "order", ts, order: o });
+            }
+            // Merge reservations into the All tab only — the user
+            // explicitly asked for them to live alongside orders
+            // there, not be pinned. Phase 2 will extend this to the
+            // In Progress tab with day groupings.
+            if (activeTab === "orders") {
+              for (const r of reservations) {
+                // Sort by the booking moment (date + time) so upcoming
+                // reservations land near same-day orders naturally —
+                // the kitchen sees "what's happening soon" without
+                // having to scan two separate sections. The KitchenReservation
+                // type doesn't carry createdAt, so this is also the
+                // only timestamp we have.
+                const ts = new Date(`${r.date}T${r.time}:00`).getTime();
+                items.push({ kind: "reservation", ts: isNaN(ts) ? Date.now() : ts, r });
+              }
+            }
+            // Newest first — same default the orders list used.
+            items.sort((a, b) => b.ts - a.ts);
 
-          {tabOrders.length === 0 ? (
-            <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
-              <Package className="w-10 h-10 mb-3 opacity-30" />
-              <p className="text-sm">{tk("noOrders")}</p>
-            </div>
-          ) : (
-            tabOrders.map(order => (
-              <OrderRow
-                key={order.id}
-                order={order}
-                selected={selectedId === order.id}
-                onClick={() => {
-                  setSelectedId(order.id);
-                  if (order.status === "pending") setPrepModal(order.id);
-                }}
-                t={t}
-                now={now}
-              />
-            ))
-          )}
+            if (items.length === 0) {
+              return (
+                <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
+                  <Package className="w-10 h-10 mb-3 opacity-30" />
+                  <p className="text-sm">{tk("noOrders")}</p>
+                </div>
+              );
+            }
+            return items.map((it) =>
+              it.kind === "order" ? (
+                <OrderRow
+                  key={`o-${it.order.id}`}
+                  order={it.order}
+                  selected={selectedId === it.order.id}
+                  onClick={() => {
+                    setSelectedId(it.order.id);
+                    if (it.order.status === "pending") setPrepModal(it.order.id);
+                  }}
+                  t={t}
+                  now={now}
+                />
+              ) : (
+                <ReservationCard
+                  key={`r-${it.r.id}`}
+                  r={it.r}
+                  t={t}
+                  onStatusChange={updateReservationStatus}
+                  onPrint={printReservation}
+                  compact
+                />
+              ),
+            );
+          })()}
         </div>
 
         {/* Order detail */}
