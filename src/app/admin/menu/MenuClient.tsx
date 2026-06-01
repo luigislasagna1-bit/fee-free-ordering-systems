@@ -2223,6 +2223,35 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
     });
   };
 
+  /**
+   * One-shot repair for the legacy state where attaching a library
+   * group at the category level used to leave behind duplicate
+   * item-level attachments. New attaches dedupe inline (see
+   * /api/menu/modifiers/attach), but existing menus need a sweep.
+   * Luigi 2026-06-01: "added Cheese Options to category, some items
+   * came blue and some green."
+   */
+  const [dedupeRunning, setDedupeRunning] = useState(false);
+  const dedupeAttachments = async () => {
+    setDedupeRunning(true);
+    try {
+      const res = await fetch("/api/admin/menu/dedupe-modifier-attachments", { method: "POST" });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Failed");
+      const n = typeof data.cleaned === "number" ? data.cleaned : 0;
+      if (n === 0) {
+        toast.success("No duplicates found — your menu is clean.");
+      } else {
+        toast.success(`Cleaned up ${n} duplicate attachment${n === 1 ? "" : "s"}.`);
+        await reload();
+      }
+    } catch (err: any) {
+      toast.error(err?.message ?? "Cleanup failed");
+    } finally {
+      setDedupeRunning(false);
+    }
+  };
+
   const attachModifier = async (libraryGroupId: string, menuItemId?: string, categoryId?: string) => {
     const res = await fetch("/api/menu/modifiers/attach", {
       method: "POST",
@@ -2272,6 +2301,16 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
           <button onClick={() => setPdfImportOpen(true)}
             className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition text-sm shadow-sm">
             <Upload className="w-4 h-4" /> Import PDF
+          </button>
+          {/* Repair tool — deletes item-level modifier attachments
+              that duplicate a category-level attachment. Idempotent;
+              clicking on a clean menu is a no-op. Surfaced as a small
+              button so it doesn't compete with the primary actions. */}
+          <button onClick={dedupeAttachments} disabled={dedupeRunning}
+            title="Remove duplicate modifier attachments (when a group is attached both at category AND item level)"
+            className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 font-semibold px-3 py-2.5 rounded-xl hover:bg-gray-50 disabled:opacity-60 transition text-sm shadow-sm">
+            {dedupeRunning ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+            Fix duplicates
           </button>
           <button onClick={() => setCatModal({})}
             className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-emerald-600 transition text-sm shadow-sm">

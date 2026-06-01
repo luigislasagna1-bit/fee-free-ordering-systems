@@ -65,6 +65,43 @@ export async function POST(req: NextRequest) {
       include: { options: { orderBy: { sortOrder: "asc" } } },
     });
 
+    // ── Cascade cleanup ────────────────────────────────────────────
+    // When we just attached at the CATEGORY level, every item in that
+    // category that ALREADY had a direct attachment of the same
+    // library group now has it twice — once at item level (blue chip)
+    // and once inherited from the category (green chip). The customer
+    // sees both, which is a UX bug Luigi flagged 2026-06-01: "added
+    // Cheese Options to the category but some items came out blue
+    // and some green."
+    //
+    // Fix: delete the duplicate item-level attachments. The category
+    // attachment becomes the single source of truth; every item in
+    // the category will render the same inherited (green) chip.
+    if (categoryId) {
+      const itemIdsInCategory = await prisma.menuItem.findMany({
+        where: { categoryId },
+        select: { id: true },
+      });
+      const itemIds = itemIdsInCategory.map((i) => i.id);
+      if (itemIds.length > 0) {
+        const duplicates = await prisma.modifierGroup.findMany({
+          where: {
+            menuItemId: { in: itemIds },
+            libraryGroupId,
+            id: { not: copy.id }, // never the row we just created
+          },
+          select: { id: true },
+        });
+        if (duplicates.length > 0) {
+          await prisma.modifierGroup.deleteMany({
+            where: { id: { in: duplicates.map((d) => d.id) } },
+          });
+          console.log("[modifiers/attach] cleaned up", duplicates.length,
+            "duplicate item-level attachments after category attach");
+        }
+      }
+    }
+
     return NextResponse.json(copy, { status: 201 });
   } catch (e: any) {
     console.error("[modifiers/attach POST]", e);
