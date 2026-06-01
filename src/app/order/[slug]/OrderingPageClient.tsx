@@ -2044,35 +2044,57 @@ export function OrderingPageClient({
                     }
                   }}
                   className="flex-shrink-0 w-72 h-36 rounded-xl text-white shadow-sm relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
-                  // CSS background-image stack (Luigi 2026-05-29) — mobile
-                  // browsers can show a small broken-image icon for <img>
-                  // tags during the window between load failure and the
-                  // React onError handler firing. Using background-image
-                  // sidesteps that entirely: if the URL is unreachable, the
-                  // colored gradient just shows through with no artifact.
-                  // Layered order (top → bottom):
-                  //   1. dark gradient overlay for text legibility
-                  //   2. owner-uploaded image (or stock default)
-                  //   3. theme primary-color gradient as the ultimate fallback
+                  // Split layout when an owner image is present (Luigi
+                  // 2026-06-01): image on the LEFT shows cleanly without
+                  // a dark overlay competing with it; theme-color text
+                  // panel on the RIGHT keeps the copy readable on a
+                  // solid background instead of floating over imagery.
+                  // No image → full theme gradient (unchanged fallback).
                   style={
                     hasImage
-                      ? {
-                          backgroundImage: [
-                            "linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.55) 100%)",
-                            `url("${ownerImageUrl}")`,
-                            `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)`,
-                          ].join(", "),
-                          backgroundSize: "cover, cover, cover",
-                          backgroundPosition: "center, center, center",
-                          backgroundRepeat: "no-repeat, no-repeat, no-repeat",
-                        }
+                      ? undefined
                       : {
                           background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)`,
                         }
                   }
                 >
-                  {/* Foreground content */}
-                  <div className="relative h-full p-4 flex flex-col">
+                  {hasImage && (
+                    <>
+                      {/* Left half: owner image, full clarity. Using
+                          background-image (not <img>) avoids the mobile
+                          broken-image flash if the URL is unreachable —
+                          the right-side panel + the page background
+                          show through cleanly. */}
+                      <div
+                        className="absolute inset-y-0 left-0 w-2/5"
+                        style={{
+                          backgroundImage: `url("${ownerImageUrl}")`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          backgroundRepeat: "no-repeat",
+                          backgroundColor: theme.primaryColor,
+                        }}
+                      />
+                      {/* Right ~60% panel — solid theme colour at the
+                          far right, fading to transparent at the seam
+                          for a soft blend with the image. */}
+                      <div
+                        className="absolute inset-y-0 right-0 w-3/4 pointer-events-none"
+                        style={{
+                          background: `linear-gradient(90deg, transparent 0%, ${theme.primaryColor} 35%, ${theme.primaryColor} 100%)`,
+                        }}
+                      />
+                    </>
+                  )}
+                  {/* Foreground content — sits on top of the panel
+                      stack. With an image we right-align the text into
+                      the colored panel; without an image we left-align
+                      to fill the full card. */}
+                  <div
+                    className={`relative h-full p-4 flex flex-col ${
+                      hasImage ? "items-end text-right pl-[40%]" : ""
+                    }`}
+                  >
                     <div className="text-[10px] uppercase tracking-wider font-bold opacity-80 mb-1">
                       {t("promoLabel")}
                     </div>
@@ -2082,7 +2104,7 @@ export function OrderingPageClient({
                         {promo.description}
                       </div>
                     )}
-                    <div className="mt-auto flex flex-wrap gap-1.5 text-[10px] font-semibold">
+                    <div className={`mt-auto flex flex-wrap gap-1.5 text-[10px] font-semibold ${hasImage ? "justify-end" : ""}`}>
                       {usableWindowLabel && (
                         <span className="bg-white/20 backdrop-blur rounded-full px-2 py-0.5">
                           ⏰ {usableWindowLabel}
