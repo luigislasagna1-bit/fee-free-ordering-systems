@@ -312,21 +312,47 @@ export function ReservationModal({
   // value can't break the loop.
   const slotStep = settings.slotLengthMinutes ?? 30;
   const timeSlots = useMemo(() => {
-    // Explicit reservationHours row wins (per-day owner override).
+    // 1. Generate the raw list from the day's hours.
+    let raw: string[];
     if (dayHours && dayHours.enabled !== false) {
-      return generateTimeSlots(dayHours.open || "10:00", dayHours.close || "22:00", slotStep);
+      raw = generateTimeSlots(dayHours.open || "10:00", dayHours.close || "22:00", slotStep);
+    } else if (fallbackRow && fallbackRow.isOpen) {
+      raw = generateTimeSlots(fallbackRow.openTime || "10:00", fallbackRow.closeTime || "22:00", slotStep);
+    } else if (dayStatus === "closedHard") {
+      // Hard-closed days: empty list. The JSX below switches to the
+      // "We're closed on Monday — pick another date" + Jump-to-next CTA.
+      return [];
+    } else {
+      // Ambiguous (no row): permissive default so an incomplete setup
+      // doesn't block the customer.
+      raw = generateTimeSlots("10:00", "22:00", slotStep);
     }
-    // Service-aware row from OpeningHours when it says open.
-    if (fallbackRow && fallbackRow.isOpen) {
-      return generateTimeSlots(fallbackRow.openTime || "10:00", fallbackRow.closeTime || "22:00", slotStep);
+
+    // 2. If the selected date is TODAY, drop slots that are in the
+    //    past OR within the minNoticeMinutes window. No reason to
+    //    let a customer pick 11:00 AM at 2:58 PM and then see the
+    //    validator reject it with "book at least 2 hours in advance"
+    //    — better to hide the impossible options up front. Luigi
+    //    2026-06-01 (GloriaFood parity: the picker only ever shows
+    //    bookable slots for the chosen day).
+    if (date === todayISO()) {
+      // Prefer minNoticeMinutes when set; fall back to legacy
+      // minNoticeHours * 60 for older settings rows.
+      const minNotice =
+        typeof settings.minNoticeMinutes === "number"
+          ? settings.minNoticeMinutes
+          : (settings.minNoticeHours ?? 0) * 60;
+      const now = new Date();
+      const cutoffMin =
+        now.getHours() * 60 + now.getMinutes() + Math.max(0, minNotice);
+      raw = raw.filter((hhmm) => {
+        const [hh, mm] = hhmm.split(":").map(Number);
+        const slotMin = (hh ?? 0) * 60 + (mm ?? 0);
+        return slotMin >= cutoffMin;
+      });
     }
-    // Hard-closed days: empty list. The JSX below switches to the
-    // "We're closed on Monday — pick another date" + Jump-to-next CTA.
-    if (dayStatus === "closedHard") return [];
-    // Ambiguous (no row): permissive default so an incomplete setup
-    // doesn't block the customer.
-    return generateTimeSlots("10:00", "22:00", slotStep);
-  }, [dayHours, fallbackRow, dayStatus, slotStep]);
+    return raw;
+  }, [dayHours, fallbackRow, dayStatus, slotStep, date, settings.minNoticeMinutes, settings.minNoticeHours]);
 
   // When the slot list changes (date pick, hours change, interval
   // change) and the currently-selected time is no longer in the list,

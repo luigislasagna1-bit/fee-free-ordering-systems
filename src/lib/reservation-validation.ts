@@ -3,6 +3,13 @@
 
 export interface ReservationSettingsLike {
   minNoticeHours: number;
+  /** Newer, finer-grained notice rule (preferred). Stored on the
+   *  ReservationSettings row alongside minNoticeHours. Schema-level
+   *  field; the validator and the customer-side picker now prefer
+   *  this when present. Falls back to minNoticeHours * 60 for legacy
+   *  rows. Luigi audit 2026-06-01 — picker needs minutes-granular
+   *  cutoff to hide past slots without lopping off an extra hour. */
+  minNoticeMinutes?: number;
   maxAdvanceDays: number;
   slotLengthMinutes: number;
   maxPerSlot: number;
