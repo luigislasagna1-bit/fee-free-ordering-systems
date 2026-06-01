@@ -1,7 +1,7 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowDown, ArrowUp, ArrowUpDown, Search } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { ImpersonateButton } from "./ImpersonateButton";
 
@@ -60,10 +60,18 @@ const DEFAULT_FILTER: Filter = {
  * That's intentional: superadmin is a low-traffic surface and most
  * operators interact in a single session.
  */
+/** Per-page choices in the dropdown. `"all"` is a sentinel for the
+ *  "show every row" mode used when the dataset is small enough that
+ *  pagination just gets in the way. */
+type PageSize = 10 | 25 | 50 | 100 | "all";
+const PAGE_SIZE_OPTIONS: PageSize[] = [10, 25, 50, 100, "all"];
+
 export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
   const [filter, setFilter] = useState<Filter>(DEFAULT_FILTER);
   const [sortKey, setSortKey] = useState<SortKey>("joined");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+  const [pageSize, setPageSize] = useState<PageSize>(25);
+  const [page, setPage] = useState(1);
 
   const visible = useMemo(() => {
     const q = filter.search.trim().toLowerCase();
@@ -111,6 +119,30 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
     out = [...out].sort((a, b) => (sortDir === "asc" ? cmp(a, b) : -cmp(a, b)));
     return out;
   }, [rows, filter, sortKey, sortDir]);
+
+  // ── Pagination ─────────────────────────────────────────────────────
+  // `visible` is the full filtered+sorted list; `paged` is the slice
+  // we actually render. "all" shows every row (no slicing). Whenever
+  // the filter/sort/page-size changes, snap back to page 1 so the
+  // user never lands on a stale empty page (e.g. you were on page 5
+  // of "all restaurants", then filtered to just 3 → without this
+  // reset, the table would render empty until you clicked back).
+  const totalPages = pageSize === "all" ? 1 : Math.max(1, Math.ceil(visible.length / pageSize));
+  useEffect(() => {
+    setPage(1);
+  }, [filter, sortKey, sortDir, pageSize]);
+  // Also clamp the page number if the underlying list shrunk for any
+  // other reason (e.g. props change with fewer rows).
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+  const paged = useMemo(() => {
+    if (pageSize === "all") return visible;
+    const start = (page - 1) * pageSize;
+    return visible.slice(start, start + pageSize);
+  }, [visible, page, pageSize]);
+  const startRow = visible.length === 0 ? 0 : pageSize === "all" ? 1 : (page - 1) * pageSize + 1;
+  const endRow = pageSize === "all" ? visible.length : Math.min(page * pageSize, visible.length);
 
   function toggleSort(k: SortKey) {
     if (k === sortKey) {
@@ -201,8 +233,35 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
         )}
       </div>
 
-      <div className="text-xs text-gray-500">
-        Showing <strong className="text-gray-900">{visible.length}</strong> of {rows.length} restaurants
+      <div className="flex items-center justify-between gap-3 flex-wrap text-xs text-gray-500">
+        <div>
+          Showing{" "}
+          <strong className="text-gray-900">
+            {visible.length === 0 ? 0 : `${startRow}–${endRow}`}
+          </strong>{" "}
+          of <strong className="text-gray-900">{visible.length}</strong>
+          {visible.length !== rows.length && (
+            <span className="text-gray-400"> (filtered from {rows.length})</span>
+          )}{" "}
+          restaurants
+        </div>
+        <label className="flex items-center gap-2">
+          <span>Per page</span>
+          <select
+            value={String(pageSize)}
+            onChange={(e) => {
+              const v = e.target.value;
+              setPageSize(v === "all" ? "all" : (parseInt(v, 10) as PageSize));
+            }}
+            className="border border-gray-200 rounded-md px-2 py-1 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          >
+            {PAGE_SIZE_OPTIONS.map((opt) => (
+              <option key={String(opt)} value={String(opt)}>
+                {opt === "all" ? "All" : opt}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -248,7 +307,7 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
                   </td>
                 </tr>
               ) : (
-                visible.map((r) => {
+                paged.map((r) => {
                   const isPaid = r.paidAddOnCount > 0;
                   return (
                     <tr key={r.id} className="hover:bg-gray-50">
@@ -312,6 +371,35 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
           </table>
         </div>
       </div>
+
+      {/* Pagination footer — hidden when the entire dataset already
+          fits in a single page (avoids cluttering the small-restaurant
+          superadmin view we have today). */}
+      {pageSize !== "all" && totalPages > 1 && (
+        <div className="flex items-center justify-end gap-2 text-xs text-gray-600">
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page <= 1}
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            aria-label="Previous page"
+          >
+            <ChevronLeft className="w-3.5 h-3.5" /> Prev
+          </button>
+          <span className="px-2 font-medium text-gray-700">
+            Page {page} of {totalPages}
+          </span>
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page >= totalPages}
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            aria-label="Next page"
+          >
+            Next <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
