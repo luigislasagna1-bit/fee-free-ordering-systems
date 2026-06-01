@@ -57,7 +57,7 @@ function pickDayRow(
   // 1. Prefer the explicit default-scope row — it's the owner's
   //    answer for "is the kitchen open?"
   const defaultRow = dayRows.find((h) => h.service == null || h.service === "");
-  if (defaultRow) return defaultRow;
+  if (defaultRow) return normalizeRow(defaultRow);
   // 2. No default exists (uncommon — usually means the owner only
   //    configured per-service hours and skipped the global default).
   //    In that case, the kitchen should be considered open if ANY
@@ -65,9 +65,35 @@ function pickDayRow(
   //    so a single reservation-closed Monday doesn't make the global
   //    status read "closed" while pickup is open. Luigi 2026-06-01.
   const openServiceRow = dayRows.find((h) => h.isOpen);
-  if (openServiceRow) return openServiceRow;
+  if (openServiceRow) return normalizeRow(openServiceRow);
   // 3. Every service row says closed → return whichever; they agree.
-  return dayRows[0];
+  return normalizeRow(dayRows[0]);
+}
+
+/**
+ * Defensive midnight-wrap auto-fix at READ time. If a row says
+ * close <= open AND closesNextDay is false, the window is
+ * mathematically impossible (close would happen 11+ hours BEFORE
+ * open the same day). Owners typing "11 AM – 12 AM" in the picker
+ * almost always mean "11 AM until midnight at the END of the day"
+ * but the picker stored 12 AM as 00:00 (midnight at the START of
+ * the day). We treat the row as if closesNextDay=true so the
+ * window reads correctly — without forcing the owner to find the
+ * checkbox and re-save.
+ *
+ * Same logic as src/lib/service-hours.ts pickHoursForService and
+ * the /api/restaurants/hours auto-fix on write. This applies the
+ * same correction to the global "are we open now" status path
+ * which previously read the bad shape literally and concluded
+ * "closed all day". Luigi 2026-06-01.
+ */
+function normalizeRow(row: OpeningHoursRow): OpeningHoursRow {
+  if (!row.isOpen || !row.openTime || !row.closeTime) return row;
+  if (row.closesNextDay) return row;
+  if (row.closeTime <= row.openTime) {
+    return { ...row, closesNextDay: true };
+  }
+  return row;
 }
 
 export interface HoursStatus {
