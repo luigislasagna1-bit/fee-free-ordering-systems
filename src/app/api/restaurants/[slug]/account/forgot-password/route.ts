@@ -62,10 +62,21 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
     // doubles as a "set your password for the first time" flow — same
     // UX as Toast/Skip/Uber where guest customers get promoted to
     // password-holders via the reset link.
-    const customer = await prisma.customer.findFirst({
+    //
+    // Duplicate-row safety: same problem as the login endpoint —
+    // multiple Customer rows can exist for the same (restaurantId,
+    // email). Prefer the row that already has a passwordHash so
+    // subsequent reset emails consistently land on the SAME row the
+    // login picks. Otherwise the reset and the login can disagree
+    // about "which Luigi" — symptom: reset works, immediate sign-in
+    // works (auto-cookie sets), but next manual sign-in fails because
+    // the login picks a different row that hasn't been updated.
+    const candidates = await prisma.customer.findMany({
       where: { restaurantId: restaurant.id, email: cleanEmail },
-      select: { id: true, email: true, name: true },
+      select: { id: true, email: true, name: true, passwordHash: true },
     });
+    const customer =
+      candidates.find((c) => !!c.passwordHash) ?? candidates[0] ?? null;
 
     // Always-true posture for anti-enumeration. Log internally so we can
     // diagnose "I never got the email" cases — almost always a different

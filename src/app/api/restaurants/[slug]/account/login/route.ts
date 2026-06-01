@@ -56,13 +56,26 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
   // 2026-06-01: customers who ordered as guests were hitting a
   // dead-end at login because the UI couldn't tell them what state
   // they were in.
-  const customer = await prisma.customer.findFirst({
+  //
+  // Duplicate-row safety: a customer can accumulate multiple Customer
+  // rows for the same (restaurantId, email) if early guest-order paths
+  // ever produced one + later signup produced another. findFirst would
+  // pick whichever was inserted first, which could be the guest row
+  // even when an account row exists alongside it — sending the user
+  // into an infinite set-password loop. Defensive: fetch ALL matches,
+  // prefer the one with passwordHash. Luigi 2026-06-01 — "I reset my
+  // password, signed in, signed out, and now can't sign in again."
+  const candidates = await prisma.customer.findMany({
     where: { restaurantId: restaurant.id, email },
     select: {
       id: true, restaurantId: true, name: true, email: true, phone: true,
       passwordHash: true, emailVerifiedAt: true,
     },
   });
+  // Prefer a row that actually has a password set; fall back to the
+  // first row (guest record) if none do.
+  const customer =
+    candidates.find((c) => !!c.passwordHash) ?? candidates[0] ?? null;
   // Constant-ish-time comparison: even when the customer doesn't exist
   // we still run a dummy bcrypt.compare against a static hash. Stops
   // login-form timing attacks from leaking which emails have accounts.
