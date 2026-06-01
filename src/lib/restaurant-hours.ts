@@ -54,9 +54,20 @@ function pickDayRow(
 ): OpeningHoursRow | undefined {
   const dayRows = (rows ?? []).filter((h) => h.dayOfWeek === dow);
   if (dayRows.length === 0) return undefined;
-  return (
-    dayRows.find((h) => h.service == null || h.service === "") ?? dayRows[0]
-  );
+  // 1. Prefer the explicit default-scope row — it's the owner's
+  //    answer for "is the kitchen open?"
+  const defaultRow = dayRows.find((h) => h.service == null || h.service === "");
+  if (defaultRow) return defaultRow;
+  // 2. No default exists (uncommon — usually means the owner only
+  //    configured per-service hours and skipped the global default).
+  //    In that case, the kitchen should be considered open if ANY
+  //    service is open. Prefer an open service row over a closed one
+  //    so a single reservation-closed Monday doesn't make the global
+  //    status read "closed" while pickup is open. Luigi 2026-06-01.
+  const openServiceRow = dayRows.find((h) => h.isOpen);
+  if (openServiceRow) return openServiceRow;
+  // 3. Every service row says closed → return whichever; they agree.
+  return dayRows[0];
 }
 
 export interface HoursStatus {
