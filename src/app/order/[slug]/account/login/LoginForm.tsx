@@ -59,6 +59,14 @@ export function LoginForm({ slug }: { slug: string }) {
       {error && (
         <p className="text-xs text-red-600">{error}</p>
       )}
+      <div className="flex justify-end -mt-1">
+        <a
+          href={`/order/${slug}/account/forgot-password`}
+          className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold"
+        >
+          Forgot password?
+        </a>
+      </div>
       <button
         type="submit"
         disabled={busy}
