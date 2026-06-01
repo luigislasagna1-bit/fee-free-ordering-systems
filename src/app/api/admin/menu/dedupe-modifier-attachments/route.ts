@@ -95,6 +95,87 @@ export async function POST(_req: NextRequest) {
       totalCleaned += duplicateIds.length;
       restaurantsTouched += 1;
     }
+
+    // ── Stale pizzaConfig cleanup ─────────────────────────────────
+    // After deleting duplicates AND in general, any MenuItem.pizzaConfig
+    // role assignments (crustGroupId / sauceGroupId / cheeseGroupId /
+    // toppingGroupIds) that point at modifier groups no longer
+    // attached to the item (or its parent category) leak into the
+    // Pizza Builder's display order as "(Unknown section)" rows or,
+    // worse, as resolvable-but-detached library names (the
+    // "Choose Sauce" ghost Luigi flagged 2026-06-01).
+    //
+    // Pass: for every pizza item in this restaurant, recompute the
+    // set of "live" library ids (attached at item or category level)
+    // and strip any role assignment that doesn't match. Also strip
+    // sectionOrder entries pointing at non-live ids.
+    const pizzaItems = await prisma.menuItem.findMany({
+      where: { restaurantId: r.id, pizzaConfig: { not: null } },
+      include: {
+        modifierGroups: { select: { libraryGroupId: true, id: true } },
+        category: {
+          select: {
+            modifierGroups: { select: { libraryGroupId: true, id: true } },
+          },
+        },
+      },
+    });
+    for (const it of pizzaItems) {
+      // pizzaConfig is stored as a JSON-encoded string on this schema
+      // (see prisma/schema.prisma — `pizzaConfig String?`). Parse it
+      // back so we can mutate fields and re-stringify on write.
+      let cfg: any = null;
+      try { cfg = it.pizzaConfig ? JSON.parse(it.pizzaConfig) : null; } catch { cfg = null; }
+      if (!cfg || typeof cfg !== "object") continue;
+      const live = new Set<string>();
+      for (const g of it.modifierGroups) {
+        live.add(g.libraryGroupId ?? g.id);
+        if (g.libraryGroupId) live.add(g.id);
+      }
+      for (const g of it.category?.modifierGroups ?? []) {
+        live.add(g.libraryGroupId ?? g.id);
+        if (g.libraryGroupId) live.add(g.id);
+      }
+      let dirty = false;
+      const next = { ...cfg };
+      const strip = (key: string) => {
+        if (next[key] && !live.has(next[key])) {
+          next[key] = null;
+          dirty = true;
+        }
+      };
+      strip("crustGroupId");
+      strip("sauceGroupId");
+      strip("cheeseGroupId");
+      if (Array.isArray(next.toppingGroupIds)) {
+        const filtered = next.toppingGroupIds.filter((id: string) => live.has(id));
+        if (filtered.length !== next.toppingGroupIds.length) {
+          next.toppingGroupIds = filtered;
+          dirty = true;
+        }
+      }
+      if (Array.isArray(next.sectionOrder)) {
+        // Sentinel section ids — these aren't modifier-group ids,
+        // they're hardcoded marker strings the Pizza Builder renders
+        // for the variant size picker / half-half toggle / topping
+        // section. Must match the constants in MenuClient.tsx.
+        const SENTINEL = new Set(["section:size", "section:halfHalfToggle", "section:toppings"]);
+        const filtered = next.sectionOrder.filter(
+          (id: string) => SENTINEL.has(id) || live.has(id),
+        );
+        if (filtered.length !== next.sectionOrder.length) {
+          next.sectionOrder = filtered;
+          dirty = true;
+        }
+      }
+      if (dirty) {
+        await prisma.menuItem.update({
+          where: { id: it.id },
+          data: { pizzaConfig: JSON.stringify(next) },
+        });
+        totalCleaned += 1;
+      }
+    }
   }
 
   return NextResponse.json({ cleaned: totalCleaned, restaurantsTouched });

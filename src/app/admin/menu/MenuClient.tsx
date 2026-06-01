@@ -142,13 +142,42 @@ function PizzaSectionOrderEditor({
    *  to reorder them from here. */
   categoryModGroups: ModifierGroup[];
 }) {
+  // Set of canonical IDs that ARE currently attached (item-level OR
+  // category-level inherited). Used to filter out stale role IDs
+  // pointing at groups that were detached or deleted — without this,
+  // "Choose Sauce" can linger in the display order after its
+  // attachment was removed because pizza.sauceGroupId still holds
+  // the library id. Luigi 2026-06-01 reported exactly this.
+  const attachedIds = new Set<string>();
+  for (const g of categoryModGroups) {
+    attachedIds.add(g.libraryGroupId ?? g.id);
+    if (g.libraryGroupId) attachedIds.add(g.id);
+  }
+  if (item) {
+    for (const g of item.modifierGroups) {
+      attachedIds.add(g.libraryGroupId ?? g.id);
+      if (g.libraryGroupId) attachedIds.add(g.id);
+    }
+  }
+  // Helper — given a role ID (may be a library id or instance id),
+  // does it still match an attached group? Returns the canonical key
+  // to push into the order, or null when stale.
+  const resolveRoleId = (rawId: string | null | undefined): string | null => {
+    if (!rawId) return null;
+    if (attachedIds.has(rawId)) return rawId;
+    return null;
+  };
+
   // The set of section IDs the customer-side will render for this item,
   // in the legacy default order. Same logic as the customer-side
-  // computation but driven from form state + libraryGroups.
+  // computation but driven from form state + libraryGroups. Stale role
+  // ids (no longer attached) are filtered so they don't pollute the
+  // display.
   const defaultOrder: string[] = (() => {
     const def: string[] = [];
     if (hasVariants) def.push(SECTION_SIZE);
-    if (pizza.crustGroupId) def.push(pizza.crustGroupId);
+    const liveCrustId = resolveRoleId(pizza.crustGroupId);
+    if (liveCrustId) def.push(liveCrustId);
     // "Other" groups are modifier groups that aren't playing a pizza
     // role. They come from two sources:
     //   (a) attached directly to the item — item.modifierGroups
@@ -159,12 +188,15 @@ function PizzaSectionOrderEditor({
     // library id) so the same group isn't listed twice when it's both
     // attached AND inherited (rare but possible after the Pizza
     // Builder dropdowns auto-attach a category-shared group).
+    const liveSauceId = resolveRoleId(pizza.sauceGroupId);
+    const liveCheeseId = resolveRoleId(pizza.cheeseGroupId);
+    const liveToppingIds = pizza.toppingGroupIds
+      .map((id) => resolveRoleId(id))
+      .filter((x): x is string => !!x);
     const roleIds = new Set<string>([
-      pizza.crustGroupId,
-      pizza.sauceGroupId,
-      pizza.cheeseGroupId,
-      ...pizza.toppingGroupIds,
-    ].filter(Boolean));
+      liveCrustId, liveSauceId, liveCheeseId,
+      ...liveToppingIds,
+    ].filter(Boolean) as string[]);
     const seenOther = new Set<string>();
     const pushOtherGroup = (g: ModifierGroup) => {
       const libId = g.libraryGroupId ?? g.id;
@@ -181,9 +213,9 @@ function PizzaSectionOrderEditor({
     }
     // SECTION_HALF_HALF intentionally not pushed — the master toggle
     // was removed (per-group flag replaces it).
-    if (pizza.sauceGroupId) def.push(pizza.sauceGroupId);
-    if (pizza.cheeseGroupId) def.push(pizza.cheeseGroupId);
-    if (pizza.toppingGroupIds.length > 0) def.push(SECTION_TOPPINGS);
+    if (liveSauceId) def.push(liveSauceId);
+    if (liveCheeseId) def.push(liveCheeseId);
+    if (liveToppingIds.length > 0) def.push(SECTION_TOPPINGS);
     return def;
   })();
 
