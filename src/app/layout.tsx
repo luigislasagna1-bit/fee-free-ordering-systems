@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { NextIntlClientProvider } from "next-intl";
 import { resolveLocale, loadMessages } from "@/lib/i18n-server";
+import { SupportChat } from "@/components/SupportChat";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +34,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className={`${inter.className} h-full antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>{children}</Providers>
+          {/* Tawk.to support chat — globally mounted, self-hides on
+              customer-facing /order/* + kitchen + superadmin + embed
+              routes. No-ops until NEXT_PUBLIC_TAWK_PROPERTY_ID is set
+              in the Vercel env. See src/components/SupportChat.tsx. */}
+          <SupportChat />
         </NextIntlClientProvider>
       </body>
     </html>
