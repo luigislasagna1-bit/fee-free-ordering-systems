@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { X, Calendar, Clock, Users, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
@@ -52,6 +52,54 @@ function maxISO(daysAhead: number): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
+/**
+ * Find the next calendar date (looking at up to 14 days ahead) that
+ * has a reservable hours window. Checks both the per-day reservation
+ * hours JSON and the fallback openingHours rows. Used to:
+ *   - auto-default the date picker to a day the customer can actually
+ *     book on, instead of landing on a closed day and seeing "No
+ *     reservations available"
+ *   - surface a "next open: <day>" suggestion in the closed-day banner
+ *
+ * Returns the YYYY-MM-DD string of the next open day, or null when we
+ * can't find one in the lookahead window (typical when the restaurant
+ * is genuinely closed every day, which suggests a setup problem).
+ */
+function findNextOpenDate(
+  reservationHoursJson: string | null | undefined,
+  fallbackOpeningHours: Array<{ dayOfWeek: number; isOpen: boolean; service?: string | null }>,
+  startISO: string,
+): string | null {
+  let hoursMap: Record<string, { enabled: boolean }> = {};
+  try { hoursMap = JSON.parse(reservationHoursJson || "{}"); } catch {}
+  const start = new Date(`${startISO}T00:00:00`);
+  for (let offset = 0; offset < 14; offset++) {
+    const probe = new Date(start);
+    probe.setDate(start.getDate() + offset);
+    const dow = probe.getDay();
+    const explicit = hoursMap[String(dow)];
+    if (explicit) {
+      if (explicit.enabled !== false) {
+        return `${probe.getFullYear()}-${String(probe.getMonth() + 1).padStart(2, "0")}-${String(probe.getDate()).padStart(2, "0")}`;
+      }
+      continue;
+    }
+    // Fall back to openingHours — prefer a reservation-scoped row,
+    // then the default. Closed (isOpen=false) days don't count.
+    const reservationRow = fallbackOpeningHours.find(
+      (h) => h.dayOfWeek === dow && h.service === "reservation",
+    );
+    const defaultRow = fallbackOpeningHours.find(
+      (h) => h.dayOfWeek === dow && (h.service == null || h.service === ""),
+    );
+    const row = reservationRow ?? defaultRow;
+    if (row && row.isOpen) {
+      return `${probe.getFullYear()}-${String(probe.getMonth() + 1).padStart(2, "0")}-${String(probe.getDate()).padStart(2, "0")}`;
+    }
+  }
+  return null;
+}
+
 function generateTimeSlots(openHHMM: string, closeHHMM: string, stepMin: number): string[] {
   const [oh, om] = openHHMM.split(":").map(Number);
   const [ch, cm] = closeHHMM.split(":").map(Number);
@@ -86,6 +134,19 @@ export function ReservationModal({
   const [finalStatus, setFinalStatus] = useState<"confirmed" | "pending" | null>(null);
 
   const validation = useMemo(() => validateBooking(settings, { date, time, partySize }, new Date()), [settings, date, time, partySize]);
+
+  // On modal mount, auto-snap the date to the next open day if today
+  // isn't reservable. Avoids the "land on Monday, see No reservations
+  // available, give up" UX that Luigi's Italian client hit. Only fires
+  // ONCE on mount — subsequent date changes are the customer's choice
+  // and we don't second-guess them.
+  useEffect(() => {
+    const next = findNextOpenDate(settings.reservationHours, fallbackOpeningHours as any, todayISO());
+    if (next && next !== date) setDate(next);
+    // Intentionally not depending on settings or hours — we only want
+    // this to fire on first mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Build time slot list from the day's reservation hours
   const dayOfWeek = useMemo(() => {
@@ -217,11 +278,38 @@ export function ReservationModal({
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
                   <Clock className="w-4 h-4" /> {tr("selectTime")}
                 </label>
-                {timeSlots.length === 0 ? (
-                  <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                    {tr("noReservationsToday")}
-                  </p>
-                ) : (
+                {timeSlots.length === 0 ? (() => {
+                  // Smarter empty-state. Tell the customer WHICH day is
+                  // closed and offer a "Jump to next open day" button
+                  // so they don't have to play date-picker roulette.
+                  const dayLabel = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dayOfWeek] ?? "this day";
+                  const nextOpen = findNextOpenDate(
+                    settings.reservationHours,
+                    fallbackOpeningHours as any,
+                    (() => {
+                      // Probe from the day AFTER the currently-selected one
+                      const d = new Date(`${date}T00:00:00`);
+                      d.setDate(d.getDate() + 1);
+                      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+                    })(),
+                  );
+                  return (
+                    <div className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 space-y-2">
+                      <div>
+                        We&apos;re closed on <strong>{dayLabel}</strong> — please pick a different date.
+                      </div>
+                      {nextOpen && (
+                        <button
+                          type="button"
+                          onClick={() => setDate(nextOpen)}
+                          className="text-xs font-semibold underline hover:no-underline"
+                        >
+                          Jump to next open day ({new Date(`${nextOpen}T00:00:00`).toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric" })})
+                        </button>
+                      )}
+                    </div>
+                  );
+                })() : (
                   <select
                     value={time}
                     onChange={e => setTime(e.target.value)}
