@@ -5,7 +5,7 @@ import {
   ShoppingCart, MapPin, Phone, Clock, Plus, Minus, X,
   AlertCircle, Tag, Loader2, ChevronDown, Star, Info, Calendar,
   Truck, ShoppingBag, Image as ImageIcon, ChevronLeft, ChevronRight,
-  UserCircle, LogIn,
+  UserCircle, LogIn, Search,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
@@ -325,6 +325,51 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
         </div>
       </div>
     </button>
+  );
+}
+
+/**
+ * Magnifying-glass search bar above the category pills. Pure
+ * controlled input — the filter logic happens in the parent where
+ * visibleCategories is computed. Inspired by CloudWaitress's
+ * always-visible search pattern (Luigi 2026-05-31).
+ */
+function MenuSearchBar({
+  value,
+  onChange,
+  theme,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  theme: ReturnType<typeof parseTheme>;
+}) {
+  return (
+    <div className="relative mb-3">
+      <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+      <input
+        type="search"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Search the menu…"
+        className="w-full pl-9 pr-9 py-2.5 rounded-full text-sm focus:outline-none focus:ring-2 transition"
+        style={{
+          backgroundColor: theme.cardBackground,
+          border: `1px solid #e5e7eb`,
+          color: theme.textColor,
+          "--tw-ring-color": theme.primaryColor,
+        } as React.CSSProperties}
+      />
+      {value && (
+        <button
+          type="button"
+          onClick={() => onChange("")}
+          aria-label="Clear search"
+          className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center hover:bg-gray-100 text-gray-500"
+        >
+          <X className="w-3.5 h-3.5" />
+        </button>
+      )}
+    </div>
   );
 }
 
@@ -881,6 +926,10 @@ export function OrderingPageClient({
   const [geocodeError, setGeocodeError] = useState<string | null>(null);
   const categoryRefs = useRef<Record<string, HTMLElement>>({});
   const pillRef = useRef<HTMLDivElement>(null);
+  // Menu search query (Luigi 2026-05-31). Drives client-side filtering
+  // of categories + items by name + description. CloudWaitress-style
+  // always-visible search bar above the category pills.
+  const [menuSearchQuery, setMenuSearchQuery] = useState("");
   // Track whether the category pill row can scroll further left/right so
   // we can show/hide the desktop nav arrows. Recomputed on scroll +
   // resize so the arrows accurately reflect overflow state at all
@@ -943,6 +992,22 @@ export function OrderingPageClient({
               modifierGroups: [...item.modifierGroups, ...uniqueCatGroups],
             };
           }),
+      };
+    })
+    // Apply menu search filter. Case-insensitive substring match
+    // against item name + description + category name. If the query
+    // matches the category name itself, all items in the category
+    // are kept (so searching "pizza" shows the whole Pizza section).
+    .map(c => {
+      const q = menuSearchQuery.trim().toLowerCase();
+      if (!q) return c;
+      if (c.name.toLowerCase().includes(q)) return c;
+      return {
+        ...c,
+        menuItems: c.menuItems.filter((i) => {
+          const hay = `${i.name} ${i.description ?? ""}`.toLowerCase();
+          return hay.includes(q);
+        }),
       };
     })
     .filter(c => c.menuItems.length > 0);
@@ -2100,6 +2165,19 @@ export function OrderingPageClient({
           </div>
         )}
 
+        {/* ── Menu search (Luigi 2026-05-31, CloudWaitress parity) ────
+            Single text field that filters the visible menu items by
+            name / description / category. Hides categories that have
+            no matching items so the customer doesn't have to scroll
+            past empty headers. Auto-clears when they hit ×. State
+            lives below alongside the cart and is consumed where
+            visibleCategories is computed. */}
+        <MenuSearchBar
+          value={menuSearchQuery}
+          onChange={setMenuSearchQuery}
+          theme={theme}
+        />
+
         {/* ── Category pills (sticky on scroll) ────────────────────────────
             Pins to the top as the customer scrolls down the menu so they
             can jump between categories without scrolling back up — the
@@ -2787,6 +2865,11 @@ export function OrderingPageClient({
           cateringNoticeHours={cateringNoticeHours}
           scheduleReason={scheduleReason}
           closedNextOpenLocal={closedMinScheduledLocal}
+          schedulingInterval={(restaurant as any).scheduledOrderInterval ?? 15}
+          openingHours={(restaurant as any).openingHours ?? []}
+          restaurantTimezone={(restaurant as any).timezone}
+          requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}
+          requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}
           onClose={() => setCheckoutOpen(false)}
         />
       )}
@@ -2830,6 +2913,13 @@ export function OrderingPageClient({
           restaurantSlug={restaurant.slug}
           restaurantName={restaurant.name}
           settings={restaurant.reservationSettings}
+          // Pass the restaurant's regular opening hours so the modal
+          // can fall back to them when reservationHours isn't
+          // explicitly configured. Without this fallback, every
+          // customer hit "No reservations available on this day"
+          // because the default reservationHours JSON is "{}". Luigi
+          // 2026-05-31, multiple restaurants reported.
+          fallbackOpeningHours={restaurant.openingHours ?? []}
           theme={theme}
           onClose={() => {
             setReservationOpen(false);

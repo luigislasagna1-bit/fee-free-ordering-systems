@@ -164,6 +164,22 @@ interface Props {
   /** The restaurant's next opening moment in datetime-local format
    *  (used by the "we're closed" branch of the banner copy). */
   closedNextOpenLocal?: string;
+  /** Minutes between selectable scheduling slots (15 / 30 / 60 etc.).
+   *  Default 15 to match GloriaFood. Without this the schedule picker
+   *  is a free-form datetime-local input and customers can schedule
+   *  irrational times like 3:02 PM. */
+  schedulingInterval?: number;
+  /** Restaurant opening hours by day-of-week, used to constrain the
+   *  selectable slots to actual open periods. Each row: dayOfWeek
+   *  0=Sunday … 6=Saturday with HH:MM open/close strings. */
+  openingHours?: Array<{ dayOfWeek: number; openTime: string; closeTime: string; isOpen: boolean }>;
+  /** Restaurant IANA timezone — used to format the slot labels in
+   *  the owner's local time when the customer is in a different zone. */
+  restaurantTimezone?: string;
+  /** Whether email is mandatory on the checkout contact form. */
+  requireCustomerEmail?: boolean;
+  /** Whether phone is mandatory on the checkout contact form. */
+  requireCustomerPhone?: boolean;
 }
 
 export function CheckoutModal({
@@ -180,6 +196,10 @@ export function CheckoutModal({
   acceptedMethods,
   cateringMode = false,
   cateringMinScheduledLocal,
+  schedulingInterval = 15,
+  openingHours = [],
+  requireCustomerEmail = true,
+  requireCustomerPhone = true,
   cateringNoticeHours,
   scheduleReason = null,
   closedNextOpenLocal,
@@ -397,20 +417,20 @@ export function CheckoutModal({
                   <input
                     id="checkout-contact-phone"
                     type="tel"
-                    required
+                    required={requireCustomerPhone}
                     className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    placeholder={`${tc("phonePlaceholder")} *`}
+                    placeholder={`${tc("phonePlaceholder")}${requireCustomerPhone ? " *" : ""}`}
                     value={customerInfo.phone}
                     onChange={e => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
                   />
                   <input
                     id="checkout-contact-email"
                     type="email"
-                    required
+                    required={requireCustomerEmail}
                     className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    placeholder={`${tc("emailPlaceholder")} *`}
+                    placeholder={`${tc("emailPlaceholder")}${requireCustomerEmail ? " *" : ""}`}
                     value={customerInfo.email}
                     onChange={e => setCustomerInfo({ ...customerInfo, email: e.target.value })}
                   />
@@ -592,16 +612,96 @@ export function CheckoutModal({
                     </div>
                   )}
                   <label className="block text-xs text-gray-500">{tc("scheduleForLaterOptional")}</label>
-                  <input
-                    type="datetime-local"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
-                    style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    min={cateringMode && cateringMinScheduledLocal
-                      ? cateringMinScheduledLocal
-                      : new Date().toISOString().slice(0, 16)}
-                    value={customerInfo.scheduledFor}
-                    onChange={e => setCustomerInfo({ ...customerInfo, scheduledFor: e.target.value })}
-                  />
+                  {/* Date + time-slot picker. Replaces the free-form
+                      datetime-local input so customers can no longer
+                      schedule 3:02 PM — they pick from the restaurant's
+                      configured interval (10/15/30/60 min) within open
+                      hours. The combined value is still written back to
+                      customerInfo.scheduledFor in datetime-local format
+                      so downstream code (validation, server) doesn't
+                      need to change. */}
+                  {(() => {
+                    const parts = (customerInfo.scheduledFor || "").split("T");
+                    const datePart = parts[0] || "";
+                    const timePart = (parts[1] || "").slice(0, 5);
+                    const minDate = cateringMode && cateringMinScheduledLocal
+                      ? cateringMinScheduledLocal.split("T")[0]
+                      : new Date().toISOString().slice(0, 10);
+                    const minTimeForDate = (() => {
+                      // If the chosen date is today, slots in the past are off-limits.
+                      const todayISO = new Date().toISOString().slice(0, 10);
+                      if (datePart === todayISO) {
+                        const now = new Date();
+                        return `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+                      }
+                      if (cateringMode && cateringMinScheduledLocal && datePart === cateringMinScheduledLocal.split("T")[0]) {
+                        return cateringMinScheduledLocal.split("T")[1] || "00:00";
+                      }
+                      return "00:00";
+                    })();
+                    // Build slots for this date from openingHours + interval.
+                    let slots: string[] = [];
+                    if (datePart) {
+                      const dow = new Date(`${datePart}T12:00:00`).getDay();
+                      const row = openingHours.find((h) => h.dayOfWeek === dow && h.isOpen);
+                      const open = row?.openTime || "10:00";
+                      const close = row?.closeTime || "22:00";
+                      const [oh, om] = open.split(":").map(Number);
+                      const [ch, cm] = close.split(":").map(Number);
+                      const start = (oh ?? 10) * 60 + (om ?? 0);
+                      const end = (ch ?? 22) * 60 + (cm ?? 0);
+                      const step = Math.max(5, Math.min(120, schedulingInterval || 15));
+                      const minMin = (() => {
+                        const [mh, mm] = minTimeForDate.split(":").map(Number);
+                        return (mh ?? 0) * 60 + (mm ?? 0);
+                      })();
+                      for (let m = start; m <= end - step; m += step) {
+                        if (m < minMin) continue;
+                        slots.push(`${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`);
+                      }
+                    }
+                    const setDate = (d: string) => {
+                      // When date changes, snap time to first valid slot if current time
+                      // is outside the new slot set.
+                      let newTime = timePart;
+                      if (slots.length > 0 && !slots.includes(timePart)) newTime = slots[0];
+                      setCustomerInfo({ ...customerInfo, scheduledFor: d ? `${d}T${newTime || "12:00"}` : "" });
+                    };
+                    const setTime = (tt: string) => {
+                      const d = datePart || new Date().toISOString().slice(0, 10);
+                      setCustomerInfo({ ...customerInfo, scheduledFor: `${d}T${tt}` });
+                    };
+                    return (
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="date"
+                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                          style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                          min={minDate}
+                          value={datePart}
+                          onChange={(e) => setDate(e.target.value)}
+                        />
+                        <select
+                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                          style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                          value={timePart}
+                          onChange={(e) => setTime(e.target.value)}
+                          disabled={!datePart || slots.length === 0}
+                        >
+                          {slots.length === 0 ? (
+                            <option value="">{datePart ? "Closed this day" : "Pick a date first"}</option>
+                          ) : (
+                            <>
+                              <option value="">Pick a time…</option>
+                              {slots.map((s) => (
+                                <option key={s} value={s}>{s}</option>
+                              ))}
+                            </>
+                          )}
+                        </select>
+                      </div>
+                    );
+                  })()}
                   {/* "Switch to ASAP" is hidden in catering mode — ASAP
                       is exactly what the rule blocks. Customer must
                       pick a real future time. */}

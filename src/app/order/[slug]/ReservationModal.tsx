@@ -12,6 +12,21 @@ interface Props {
   restaurantSlug: string;
   restaurantName: string;
   settings: ReservationSettingsLike;
+  /** Restaurant's standard opening hours — used as a fallback when
+   *  reservationSettings.reservationHours is empty / unset. Each row
+   *  is one day of the week (dayOfWeek: 0=Sunday … 6=Saturday) with
+   *  open/close strings and an isOpen flag. The reservation modal
+   *  treats these as the "default" reservation window if the owner
+   *  hasn't explicitly configured per-day reservation hours.
+   *  Previously the modal returned no slots when reservationHours
+   *  was "{}" (the schema default) which made the booking form
+   *  unusable for every new restaurant. */
+  fallbackOpeningHours?: Array<{
+    dayOfWeek: number;
+    openTime: string;
+    closeTime: string;
+    isOpen: boolean;
+  }>;
   theme: Theme;
   onClose: () => void;
 }
@@ -39,7 +54,7 @@ function generateTimeSlots(openHHMM: string, closeHHMM: string, stepMin: number)
   return out;
 }
 
-export function ReservationModal({ restaurantSlug, restaurantName, settings, theme, onClose }: Props) {
+export function ReservationModal({ restaurantSlug, restaurantName, settings, fallbackOpeningHours = [], theme, onClose }: Props) {
   const tr = useTranslations("reservation");
   const tOrd = useTranslations("ordering");
   const [step, setStep] = useState<"details" | "preorder" | "deposit" | "done">("details");
@@ -64,10 +79,27 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, the
   let hoursMap: Record<string, { open: string; close: string; enabled: boolean }> = {};
   try { hoursMap = JSON.parse(settings.reservationHours || "{}"); } catch {}
   const dayHours = hoursMap[String(dayOfWeek)];
+  // Fallback chain (Luigi bug 2026-05-31, "No reservations available"):
+  //   1. Explicit reservationHours for this day, if owner configured one
+  //   2. Restaurant's regular openingHours for this day-of-week
+  //   3. Final hard fallback to 10:00–22:00 so the form is never empty
+  //      when the data is genuinely missing — at worst the kitchen
+  //      will see a booking outside hours and decline it.
+  const fallbackRow = fallbackOpeningHours.find((h) => h.dayOfWeek === dayOfWeek);
   const timeSlots = useMemo(() => {
-    if (!dayHours || dayHours.enabled === false) return [];
-    return generateTimeSlots(dayHours.open || "10:00", dayHours.close || "22:00", 30);
-  }, [dayHours]);
+    if (dayHours) {
+      if (dayHours.enabled === false) return [];
+      return generateTimeSlots(dayHours.open || "10:00", dayHours.close || "22:00", 30);
+    }
+    if (fallbackRow && fallbackRow.isOpen) {
+      return generateTimeSlots(fallbackRow.openTime || "10:00", fallbackRow.closeTime || "22:00", 30);
+    }
+    // No reservation hours AND no opening hours → genuinely closed.
+    // We could still surface the 10-22 default to be permissive, but
+    // honouring "the restaurant is closed today" is the right call.
+    if (fallbackOpeningHours.length > 0) return [];
+    return generateTimeSlots("10:00", "22:00", 30);
+  }, [dayHours, fallbackRow, fallbackOpeningHours.length]);
 
   const partySizeRange = useMemo(() => {
     const out: number[] = [];

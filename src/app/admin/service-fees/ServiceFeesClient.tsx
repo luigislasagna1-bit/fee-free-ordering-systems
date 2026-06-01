@@ -67,6 +67,15 @@ export function ServiceFeesClient() {
   const [savingTips, setSavingTips] = useState(false);
   const [currency, setCurrency] = useState<string>("usd");
   const [savingCurrency, setSavingCurrency] = useState(false);
+  // Scheduled-order interval + checkout-required toggles (Luigi 2026-05-31).
+  // Live here next to the other "money / checkout behaviour" controls
+  // so an owner finds them in one place instead of hunting the Profile.
+  const [scheduledOrderInterval, setScheduledOrderInterval] = useState<number>(15);
+  const [savingInterval, setSavingInterval] = useState(false);
+  const [requireCustomerEmail, setRequireCustomerEmail] = useState(true);
+  const [requireCustomerPhone, setRequireCustomerPhone] = useState(true);
+  const [savingReqEmail, setSavingReqEmail] = useState(false);
+  const [savingReqPhone, setSavingReqPhone] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -82,6 +91,9 @@ export function ServiceFeesClient() {
         if (typeof p.taxRate === "number") setTaxRate(String(p.taxRate));
         if (typeof p.tipsEnabled === "boolean") setTipsEnabled(p.tipsEnabled);
         if (typeof p.currency === "string" && p.currency) setCurrency(p.currency);
+        if (typeof p.scheduledOrderInterval === "number") setScheduledOrderInterval(p.scheduledOrderInterval);
+        if (typeof p.requireCustomerEmail === "boolean") setRequireCustomerEmail(p.requireCustomerEmail);
+        if (typeof p.requireCustomerPhone === "boolean") setRequireCustomerPhone(p.requireCustomerPhone);
       }
     } finally {
       setLoading(false);
@@ -146,6 +158,33 @@ export function ServiceFeesClient() {
       toast.error(tToasts("saveFailed"));
     } finally {
       setSavingCurrency(false);
+    }
+  };
+
+  /** Generic single-field saver — used by the three new toggles + the
+   *  interval dropdown so we don't repeat the boilerplate four times. */
+  const saveField = async (
+    key: "scheduledOrderInterval" | "requireCustomerEmail" | "requireCustomerPhone",
+    value: unknown,
+    setter: (v: any) => void,
+    busySetter: (v: boolean) => void,
+    prev: unknown,
+  ) => {
+    setter(value);
+    busySetter(true);
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ [key]: value }),
+      });
+      if (!res.ok) throw new Error();
+      toast.success(tToasts("saved"));
+    } catch {
+      setter(prev);
+      toast.error(tToasts("saveFailed"));
+    } finally {
+      busySetter(false);
     }
   };
 
@@ -356,6 +395,107 @@ export function ServiceFeesClient() {
             aria-label={tipsEnabled ? "Disable tips" : "Enable tips"}
           >
             <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${tipsEnabled ? "left-[22px]" : "left-0.5"}`} />
+          </button>
+        </div>
+      </div>
+
+      {/* ── Order behaviour: scheduling interval + required fields ────
+          New 2026-05-31 (Luigi). Three knobs that shape what the
+          customer sees on the checkout form. Each saves immediately.
+      */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-5">
+        <div className="flex items-start gap-3">
+          <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center flex-shrink-0">
+            <Receipt className="w-5 h-5 text-amber-600" />
+          </div>
+          <div className="flex-1">
+            <h2 className="font-semibold text-gray-900">Scheduling &amp; checkout form</h2>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Control which time slots customers can schedule for, and which contact fields are mandatory at checkout.
+            </p>
+          </div>
+        </div>
+
+        {/* Scheduling interval */}
+        <div className="flex items-center justify-between gap-3 pt-2 border-t border-gray-100">
+          <div className="flex-1 min-w-0">
+            <div className="font-medium text-sm text-gray-800">Slot interval (minutes)</div>
+            <div className="text-xs text-gray-500 mt-0.5">
+              Customers can only schedule orders at this cadence (matches GloriaFood). Default is 15 — change to 30 for slower kitchens.
+            </div>
+          </div>
+          <select
+            value={String(scheduledOrderInterval)}
+            onChange={(e) => {
+              const v = parseInt(e.target.value, 10);
+              saveField(
+                "scheduledOrderInterval",
+                v,
+                setScheduledOrderInterval,
+                setSavingInterval,
+                scheduledOrderInterval,
+              );
+            }}
+            disabled={savingInterval}
+            className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 disabled:opacity-60"
+          >
+            {[10, 15, 20, 30, 60].map((n) => (
+              <option key={n} value={n}>{n} min</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Require email */}
+        <div className="flex items-center justify-between gap-3 pt-2 border-t border-gray-100">
+          <div className="flex-1 min-w-0">
+            <div className="font-medium text-sm text-gray-800">Require customer email</div>
+            <div className="text-xs text-gray-500 mt-0.5">
+              When ON, the checkout form rejects orders without an email address. OFF lets phone-only ordering through.
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() =>
+              saveField(
+                "requireCustomerEmail",
+                !requireCustomerEmail,
+                setRequireCustomerEmail,
+                setSavingReqEmail,
+                requireCustomerEmail,
+              )
+            }
+            disabled={savingReqEmail}
+            className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${requireCustomerEmail ? "bg-emerald-500" : "bg-gray-300"} disabled:opacity-60`}
+            aria-label={requireCustomerEmail ? "Make email optional" : "Make email required"}
+          >
+            <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${requireCustomerEmail ? "left-[22px]" : "left-0.5"}`} />
+          </button>
+        </div>
+
+        {/* Require phone */}
+        <div className="flex items-center justify-between gap-3 pt-2 border-t border-gray-100">
+          <div className="flex-1 min-w-0">
+            <div className="font-medium text-sm text-gray-800">Require customer phone</div>
+            <div className="text-xs text-gray-500 mt-0.5">
+              When ON, the checkout form rejects orders without a phone number. Recommended for delivery so the kitchen can call about hand-off.
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() =>
+              saveField(
+                "requireCustomerPhone",
+                !requireCustomerPhone,
+                setRequireCustomerPhone,
+                setSavingReqPhone,
+                requireCustomerPhone,
+              )
+            }
+            disabled={savingReqPhone}
+            className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${requireCustomerPhone ? "bg-emerald-500" : "bg-gray-300"} disabled:opacity-60`}
+            aria-label={requireCustomerPhone ? "Make phone optional" : "Make phone required"}
+          >
+            <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${requireCustomerPhone ? "left-[22px]" : "left-0.5"}`} />
           </button>
         </div>
       </div>

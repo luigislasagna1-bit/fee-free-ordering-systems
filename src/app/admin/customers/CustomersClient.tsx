@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import { Users, Mail, Phone, KeyRound, ChevronRight, Search } from "lucide-react";
+import { Users, Mail, Phone, KeyRound, ChevronRight, Search, Download } from "lucide-react";
 
 /**
  * Client-side filter + search for the /admin/customers list.
@@ -59,15 +59,71 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
     });
   }, [customers, filter, query]);
 
+  /**
+   * Build a CSV from the CURRENTLY visible rows and trigger a browser
+   * download. Includes name / email / phone / orders / spend / signup
+   * date / has-account flag — matches the GloriaFood export layout.
+   * Empty strings for missing fields. CSV-escapes any double-quotes
+   * or commas in the source data via standard RFC 4180.
+   */
+  const exportCsv = () => {
+    const esc = (v: string | number | null | undefined) => {
+      if (v == null) return "";
+      const s = String(v);
+      // RFC 4180: wrap in quotes if contains comma, quote, or newline; double up any internal quotes.
+      return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    const header = ["Name", "Email", "Phone", "Total orders", "Total spent", "Signup date", "Has account"];
+    const lines = [header.join(",")];
+    for (const c of visible) {
+      lines.push([
+        esc(c.name),
+        esc(c.email),
+        esc(c.phone),
+        esc(c.totalOrders),
+        esc(c.totalSpent.toFixed(2)),
+        esc(c.createdAt.slice(0, 10)),
+        esc(c.hasAccount ? "yes" : "no"),
+      ].join(","));
+    }
+    // Prefix with UTF-8 BOM so Excel reads accented characters correctly
+    // — Italian/French/Spanish restaurants always have non-ASCII names.
+    const csv = "﻿" + lines.join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const stamp = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `customers-${stamp}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
         <h1 className="text-2xl font-bold text-gray-900">Customers</h1>
-        <span className="text-sm text-gray-500 flex-shrink-0">
-          {visible.length === customers.length
-            ? `${customers.length} customers`
-            : `${visible.length} of ${customers.length}`}
-        </span>
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <span className="text-sm text-gray-500">
+            {visible.length === customers.length
+              ? `${customers.length} customers`
+              : `${visible.length} of ${customers.length}`}
+          </span>
+          {/* GloriaFood parity: one-click CSV export of the visible
+              (filtered + searched) customer set. The owner can switch
+              the filter chip first (e.g. "Signed up only") and export
+              just that segment. */}
+          <button
+            type="button"
+            onClick={exportCsv}
+            disabled={visible.length === 0}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white text-xs font-semibold transition"
+          >
+            <Download className="w-3.5 h-3.5" /> Export CSV
+          </button>
+        </div>
       </div>
 
       {/* Filter chips + search bar */}

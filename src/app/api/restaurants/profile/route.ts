@@ -21,6 +21,9 @@ export async function GET() {
       minimumOrder: true,
       tipsEnabled: true,
       currency: true,
+      scheduledOrderInterval: true,
+      requireCustomerEmail: true,
+      requireCustomerPhone: true,
       // Surface the owner-uploaded custom alarm sound URL so the KDS
       // can offer it as a third option in its Sound Settings picker.
       kitchenAlertSoundUrl: true,
@@ -45,6 +48,9 @@ export async function PUT(req: NextRequest) {
     defaultLanguage,
     kitchenWorkflowMode,
     printNodeEnabled,
+    scheduledOrderInterval,
+    requireCustomerEmail,
+    requireCustomerPhone,
   } = data;
 
   const ALLOWED_LOCALES = ["en", "fr", "es", "it", "pt"];
@@ -164,6 +170,23 @@ export async function PUT(req: NextRequest) {
     updateData.kitchenWorkflowMode = kitchenWorkflowMode;
   }
   if (printNodeEnabled !== undefined) updateData.printNodeEnabled = !!printNodeEnabled;
+  // Scheduled-order slot interval (Luigi 2026-05-31). Whitelist values
+  // so we don't accidentally accept 1-minute (kitchen chaos) or 1440
+  // (no slots in a day). 10/15/20/30/60 covers every real workflow.
+  if (scheduledOrderInterval !== undefined) {
+    const n = typeof scheduledOrderInterval === "number"
+      ? scheduledOrderInterval
+      : parseInt(scheduledOrderInterval, 10);
+    if (![10, 15, 20, 30, 60].includes(n)) {
+      return NextResponse.json(
+        { error: "scheduledOrderInterval must be 10, 15, 20, 30, or 60" },
+        { status: 400 },
+      );
+    }
+    updateData.scheduledOrderInterval = n;
+  }
+  if (requireCustomerEmail !== undefined) updateData.requireCustomerEmail = !!requireCustomerEmail;
+  if (requireCustomerPhone !== undefined) updateData.requireCustomerPhone = !!requireCustomerPhone;
 
   await prisma.restaurant.update({ where: { id: restaurantId }, data: updateData });
 

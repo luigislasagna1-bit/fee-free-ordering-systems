@@ -96,6 +96,22 @@ model Restaurant {
   /// override their personal preference. Null = no custom sound on
   /// file, the picker only shows the two built-ins.
   kitchenAlertSoundUrl String?
+  /// Minutes between selectable scheduling slots for customer orders.
+  /// GloriaFood ships 15-minute intervals; we let owners pick from
+  /// 10/15/20/30/60. Without this the schedule picker is a free-form
+  /// HTML datetime-local input and a customer can schedule "3:02 PM"
+  /// which doesn't fit any kitchen workflow. Italian beta tester
+  /// reported 2026-05-31. Default 15 to match GloriaFood's default.
+  scheduledOrderInterval Int @default(15)
+  /// Whether the customer's email is mandatory on the checkout form.
+  /// Default true so receipts can be sent; an owner who only wants
+  /// SMS notification can flip this off and require phone instead.
+  /// Validation gate lives in the checkout form + order POST.
+  requireCustomerEmail Boolean @default(true)
+  /// Whether the customer's phone number is mandatory on checkout.
+  /// Default true because the kitchen needs to call customers about
+  /// delivery / pickup hand-offs.
+  requireCustomerPhone Boolean @default(true)
   // Stripe Connect (Layer C — restaurant collects payments from customers)
   stripeAccountId      String?
   stripeAccountStatus  String? @default("not_connected")
