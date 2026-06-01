@@ -352,7 +352,7 @@ export function nextOpenAt(
  *  returning the real UTC Date that represents that local moment.
  *  Without an IANA timezone, the input is interpreted as the server's
  *  local time (fine for development; on Vercel that's UTC). */
-function parseLocalDateTimeInTz(
+export function parseLocalDateTimeInTz(
   dateKey: string,
   hh: number,
   mm: number,

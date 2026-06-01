@@ -45,6 +45,12 @@ interface Props {
    *  matches the legacy behaviour for restaurants who haven't
    *  explicitly opted into 12-hour rendering. */
   hoursFormat?: HoursFormat;
+  /** Restaurant's IANA timezone. Threaded into validateBooking so
+   *  client- and server-side validation use the same wall-clock
+   *  reference. Without it the server (UTC) and client (browser
+   *  local) can disagree on whether "today 6 PM" is enough notice.
+   *  Luigi 2026-06-01. */
+  timezone?: string;
   theme: Theme;
   onClose: () => void;
 }
@@ -203,6 +209,7 @@ export function ReservationModal({
   requireCustomerEmail = true,
   requireCustomerPhone = true,
   hoursFormat = "24h",
+  timezone,
   theme, onClose,
 }: Props) {
   const tr = useTranslations("reservation");
@@ -219,7 +226,10 @@ export function ReservationModal({
   const [confirmationCode, setConfirmationCode] = useState<string | null>(null);
   const [finalStatus, setFinalStatus] = useState<"confirmed" | "pending" | null>(null);
 
-  const validation = useMemo(() => validateBooking(settings, { date, time, partySize }, new Date()), [settings, date, time, partySize]);
+  const validation = useMemo(
+    () => validateBooking(settings, { date, time, partySize }, new Date(), timezone),
+    [settings, date, time, partySize, timezone],
+  );
 
   // On modal mount, auto-snap the date to the next open day IF today
   // is explicitly closed (per admin hours). When today is open or the

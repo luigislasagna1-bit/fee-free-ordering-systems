@@ -1,6 +1,8 @@
 // Shared reservation validator — runs identically on client (instant feedback)
 // and server (authoritative enforcement). Pure function, no DB access.
 
+import { parseLocalDateTimeInTz } from "./restaurant-hours";
+
 export interface ReservationSettingsLike {
   minNoticeHours: number;
   /** Newer, finer-grained notice rule (preferred). Stored on the
@@ -44,6 +46,16 @@ export function validateBooking(
   s: ReservationSettingsLike,
   proposal: BookingProposal,
   now: Date,
+  /** Restaurant's IANA timezone. When provided, the proposal's
+   *  date+time string is interpreted as wall-clock time IN THE
+   *  RESTAURANT'S TIMEZONE, not the server's. Without this, the
+   *  server (running in UTC on Vercel) interprets the input as
+   *  UTC — so a customer booking at 6 PM Toronto time (= 22 UTC)
+   *  has their proposal parsed as 18 UTC = 14 EST, which then
+   *  fails the "minimum N hours notice" rule incorrectly.
+   *  Luigi bug 2026-06-01: "trying to book and its more than 2
+   *  hours in advance but still not working". */
+  timezone?: string,
 ): ValidationResult {
   const { date, time, partySize } = proposal;
 
@@ -66,15 +78,32 @@ export function validateBooking(
     return { ok: false, reason: "Please pick a valid time." };
   }
 
-  const reservationAt = new Date(`${date}T${time}:00`);
+  // Build the real-world UTC instant that corresponds to (date, time)
+  // in the restaurant's local timezone. parseLocalDateTimeInTz does the
+  // DST-aware projection. Without a timezone we fall back to the legacy
+  // "trust the server's wall clock" path — fine for local dev where
+  // server tz == restaurant tz, broken on Vercel UTC.
+  const [hh, mm] = time.split(":").map(Number);
+  const reservationAt = parseLocalDateTimeInTz(date, hh ?? 0, mm ?? 0, timezone);
   if (Number.isNaN(reservationAt.getTime())) {
     return { ok: false, reason: "Please pick a valid date and time." };
   }
 
-  // 3. Minimum notice
+  // 3. Minimum notice. Prefer minNoticeMinutes when present; fall back
+  //    to minNoticeHours * 60 for legacy rows. Same precedence the
+  //    customer-side picker uses to filter past slots.
+  const minNoticeMinutes =
+    typeof s.minNoticeMinutes === "number"
+      ? s.minNoticeMinutes
+      : (s.minNoticeHours ?? 0) * 60;
   const minutesAhead = (reservationAt.getTime() - now.getTime()) / 60000;
-  if (minutesAhead < s.minNoticeHours * 60) {
-    return { ok: false, reason: `Please book at least ${s.minNoticeHours} hour${s.minNoticeHours === 1 ? "" : "s"} in advance.` };
+  if (minutesAhead < minNoticeMinutes) {
+    const friendlyHours = Math.ceil(minNoticeMinutes / 60);
+    const noticeLabel =
+      minNoticeMinutes < 60
+        ? `${minNoticeMinutes} minute${minNoticeMinutes === 1 ? "" : "s"}`
+        : `${friendlyHours} hour${friendlyHours === 1 ? "" : "s"}`;
+    return { ok: false, reason: `Please book at least ${noticeLabel} in advance.` };
   }
 
   // 4. Maximum advance

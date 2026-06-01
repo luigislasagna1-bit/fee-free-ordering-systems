@@ -58,6 +58,7 @@ export default async function ReservationPage({
     requireCustomerEmail: restaurant.requireCustomerEmail,
     requireCustomerPhone: restaurant.requireCustomerPhone,
     hoursFormat: restaurant.hoursFormat,
+    timezone: restaurant.timezone,
     openingHours: restaurant.openingHours.map((h) => ({
       dayOfWeek: h.dayOfWeek,
       openTime: h.openTime,

@@ -2923,6 +2923,7 @@ export function OrderingPageClient({
           requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}
           requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}
           hoursFormat={(restaurant as any).hoursFormat === "12h" ? "12h" : "24h"}
+          timezone={(restaurant as any).timezone ?? undefined}
           theme={theme}
           onClose={() => {
             setReservationOpen(false);

@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
       where: { slug: restaurantSlug, isActive: true },
       select: {
         id: true, name: true, email: true, slug: true, acceptsReservations: true,
-        reservationSettings: true, defaultLanguage: true,
+        reservationSettings: true, defaultLanguage: true, timezone: true,
         // openingHours powers the closed-day server-side guard. Mirror
         // the client check: if the owner explicitly marked the day off
         // (in reservationHours JSON OR Restaurant.openingHours), refuse
@@ -98,8 +98,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Reservation settings not configured. Please contact the restaurant." }, { status: 400 });
     }
 
-    // Validate against rules
-    const v = validateBooking(settings as ReservationSettingsLike, { date, time, partySize: parseInt(String(partySize)) }, new Date());
+    // Validate against rules. Pass restaurant.timezone so the
+    // proposal's "YYYY-MM-DD HH:MM" string is interpreted as the
+    // restaurant's local wall-clock — server runs in UTC on Vercel,
+    // so without this a 6 PM Toronto booking parsed as 6 PM UTC
+    // (= 2 PM EST) would fail "at least N hours notice" even though
+    // it's hours in the future for the customer. Luigi 2026-06-01.
+    const v = validateBooking(
+      settings as ReservationSettingsLike,
+      { date, time, partySize: parseInt(String(partySize)) },
+      new Date(),
+      restaurant.timezone,
+    );
     if (!v.ok) return NextResponse.json({ error: v.reason }, { status: 400 });
 
     // Closed-day server guard. If the owner marked the day off in
