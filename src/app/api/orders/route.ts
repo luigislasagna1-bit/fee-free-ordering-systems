@@ -3,7 +3,7 @@ import { after } from "next/server";
 import prisma from "@/lib/db";
 import { generateOrderNumber } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
-import { liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
+import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
@@ -410,11 +410,36 @@ export async function POST(req: NextRequest) {
           { status: 400 },
         );
       }
-      const requested = new Date(scheduledFor);
+      // Interpret scheduledFor in the RESTAURANT's timezone, not the
+      // server's. Without this, a 3:45 PM Toronto pickup parses as
+      // 3:45 PM UTC = 11:45 AM EST on Vercel, which fails the 24h
+      // check even when the customer's chosen time is well past the
+      // notice window. Luigi bug 2026-06-01: "earliest slot should
+      // be 24h from now but 24h from now is selected and it doesn't
+      // work." Same TZ fix the reservation validator got earlier
+      // today (commit c13c8b9).
+      const restaurantTz = (restaurant as any).timezone ?? undefined;
+      const requested = (() => {
+        const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
+        if (m) {
+          return parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), restaurantTz);
+        }
+        // Fallback for ISO with offset / Z — already absolute.
+        return new Date(scheduledFor);
+      })();
       if (!Number.isFinite(requested.getTime()) || requested < earliest) {
+        // Format the earliest cutoff in the restaurant's timezone so
+        // the customer sees their own wall-clock instead of UTC.
+        const earliestLabel = restaurantTz
+          ? earliest.toLocaleString("en-US", {
+              timeZone: restaurantTz,
+              year: "numeric", month: "numeric", day: "numeric",
+              hour: "numeric", minute: "2-digit",
+            })
+          : earliest.toLocaleString();
         return NextResponse.json(
           {
-            error: `Catering orders need at least ${noticeHours}h notice. Earliest available slot is ${earliest.toLocaleString()}.`,
+            error: `Catering orders need at least ${noticeHours}h notice. Earliest available slot is ${earliestLabel}.`,
             code: "catering_schedule_too_soon",
             requiredScheduleFromIso: earliest.toISOString(),
           },
@@ -889,7 +914,22 @@ export async function POST(req: NextRequest) {
         total: serverTotal,
         paymentMethod: paymentMethod || "cash",
         paymentStatus: "pending",
-        scheduledFor: scheduledFor ? new Date(scheduledFor) : null,
+        // Parse scheduledFor in the restaurant's local timezone (same
+        // pattern as the catering-notice check above). Without this,
+        // a "2026-06-02T15:45" string from the client is interpreted
+        // as UTC on Vercel — 11:45 EST instead of 15:45 EST — and
+        // every downstream surface (status page ETA, kitchen
+        // "scheduled for" label, reminder cron) lands 4 hours off.
+        scheduledFor: scheduledFor
+          ? (() => {
+              const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
+              if (m) {
+                const tz = (restaurant as any).timezone ?? undefined;
+                return parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), tz);
+              }
+              return new Date(scheduledFor);
+            })()
+          : null,
         // Closed-when-placed routing — see compute block above.
         placedWhileClosed: isClosedNow,
         alertAt: alertAtValue,
