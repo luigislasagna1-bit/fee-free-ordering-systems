@@ -5,7 +5,8 @@
  *   {
  *     hours: [
  *       { dayOfWeek: 0, isOpen: true, openTime: "09:00",
- *         closeTime: "21:00", closesNextDay: false },
+ *         closeTime: "21:00", closesNextDay: false,
+ *         service?: null | "pickup" | "delivery" | "reservation" },
  *       ...
  *     ],
  *     hoursFormat?: "12h" | "24h"
@@ -15,6 +16,11 @@
  * row so the customer-facing surfaces render the new convention. We
  * accept it on the same endpoint so the UI can save format + hours in
  * one button click; less moving parts for the admin.
+ *
+ * `service` is optional — null/missing = the "default/all services" row,
+ * a specific value = per-service override. The new unique key on
+ * OpeningHours is `(restaurantId, dayOfWeek, service)` so default and
+ * per-service rows for the same day coexist. GloriaFood-parity 2026-05-31.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
@@ -61,24 +67,49 @@ export async function PUT(req: NextRequest) {
     );
   }
 
+  const ALLOWED_SERVICES = new Set([null, "pickup", "delivery", "reservation"]);
   for (const h of hours) {
-    await prisma.openingHours.upsert({
-      where: { restaurantId_dayOfWeek: { restaurantId, dayOfWeek: h.dayOfWeek } },
-      update: {
-        isOpen: !!h.isOpen,
-        openTime: h.openTime,
-        closeTime: h.closeTime,
-        closesNextDay: !!h.closesNextDay,
-      },
-      create: {
-        restaurantId,
-        dayOfWeek: h.dayOfWeek,
-        isOpen: !!h.isOpen,
-        openTime: h.openTime,
-        closeTime: h.closeTime,
-        closesNextDay: !!h.closesNextDay,
-      },
+    // Normalize the service field. "" → null so the default-row lookup
+    // hits the SQL NULL correctly. Reject unknown service values so an
+    // attacker can't stuff arbitrary strings into the column.
+    const service: string | null = h.service === "pickup" || h.service === "delivery" || h.service === "reservation"
+      ? h.service
+      : null;
+    if (!ALLOWED_SERVICES.has(service)) {
+      return NextResponse.json({ error: "Invalid service" }, { status: 400 });
+    }
+    // Prisma can't model a compound unique against a NULLABLE column
+    // in the generated where input — `service: null` is rejected at
+    // type-check time. Workaround: find-then-update. Race-safe enough
+    // for an admin-only endpoint (no two staff members simultaneously
+    // editing the same restaurant's hours).
+    const existing = await prisma.openingHours.findFirst({
+      where: { restaurantId, dayOfWeek: h.dayOfWeek, service },
+      select: { id: true },
     });
+    if (existing) {
+      await prisma.openingHours.update({
+        where: { id: existing.id },
+        data: {
+          isOpen: !!h.isOpen,
+          openTime: h.openTime,
+          closeTime: h.closeTime,
+          closesNextDay: !!h.closesNextDay,
+        },
+      });
+    } else {
+      await prisma.openingHours.create({
+        data: {
+          restaurantId,
+          dayOfWeek: h.dayOfWeek,
+          isOpen: !!h.isOpen,
+          openTime: h.openTime,
+          closeTime: h.closeTime,
+          closesNextDay: !!h.closesNextDay,
+          service,
+        },
+      });
+    }
   }
 
   if (format) {

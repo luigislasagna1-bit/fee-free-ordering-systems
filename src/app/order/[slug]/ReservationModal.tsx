@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { parseTheme } from "@/lib/theme";
 import { useTranslations } from "next-intl";
+import { pickHoursForService } from "@/lib/service-hours";
 
 type Theme = ReturnType<typeof parseTheme>;
 
@@ -26,6 +27,7 @@ interface Props {
     openTime: string;
     closeTime: string;
     isOpen: boolean;
+    service?: string | null;
   }>;
   /** Whether email is mandatory on the reservation form. Mirrors the
    *  same flag used by the ordering checkout (Restaurant.
@@ -99,7 +101,11 @@ export function ReservationModal({
   //   3. Final hard fallback to 10:00–22:00 so the form is never empty
   //      when the data is genuinely missing — at worst the kitchen
   //      will see a booking outside hours and decline it.
-  const fallbackRow = fallbackOpeningHours.find((h) => h.dayOfWeek === dayOfWeek);
+  // Service-aware lookup: prefer a "reservation"-scoped row when the
+  // owner has configured one, else the default row. Pre-feature
+  // restaurants only have default rows so the result matches the
+  // legacy behaviour.
+  const fallbackRow = pickHoursForService(fallbackOpeningHours as any, dayOfWeek, "reservation");
   const timeSlots = useMemo(() => {
     if (dayHours) {
       if (dayHours.enabled === false) return [];

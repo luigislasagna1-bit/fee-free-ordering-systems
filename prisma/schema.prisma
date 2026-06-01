@@ -1435,10 +1435,18 @@ model OpeningHours {
   // 2026-05-24 after UAT — Luigi noted bars/late-night spots couldn't
   // express their real hours without this.
   closesNextDay Boolean @default(false)
+  /// Service this row applies to. null = the legacy "all services"
+  /// row (regular opening hours, used for ANY service that doesn't
+  /// have a more specific row). Specific values: "pickup" / "delivery"
+  /// / "reservation". GloriaFood-parity: lets a restaurant be open for
+  /// reservations 11–14 + 19–22 but only accept delivery 19–22. Lookup
+  /// pattern: prefer the row matching the active service, fall back to
+  /// the null/default row when no override exists. Added 2026-05-31.
+  service       String?
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
 
-  @@unique([restaurantId, dayOfWeek])
+  @@unique([restaurantId, dayOfWeek, service])
 }
 
 // One-off holiday closures (Christmas Day, July 4th, owner vacation,

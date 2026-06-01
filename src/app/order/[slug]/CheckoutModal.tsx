@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { Autocomplete } from "@react-google-maps/api";
 import { useCurrencyFormat } from "@/lib/currency-context";
+import { pickHoursForService } from "@/lib/service-hours";
 import { parseTheme } from "@/lib/theme";
 import { useGoogleMaps } from "@/lib/use-google-maps";
 import { useTranslations } from "next-intl";
@@ -171,8 +172,11 @@ interface Props {
   schedulingInterval?: number;
   /** Restaurant opening hours by day-of-week, used to constrain the
    *  selectable slots to actual open periods. Each row: dayOfWeek
-   *  0=Sunday … 6=Saturday with HH:MM open/close strings. */
-  openingHours?: Array<{ dayOfWeek: number; openTime: string; closeTime: string; isOpen: boolean }>;
+   *  0=Sunday … 6=Saturday with HH:MM open/close strings. May include
+   *  service-scoped rows (with non-null `service`) when the owner has
+   *  set different hours for pickup vs delivery vs reservation — the
+   *  CheckoutModal picks the matching row via pickHoursForService. */
+  openingHours?: Array<{ dayOfWeek: number; openTime: string; closeTime: string; isOpen: boolean; service?: string | null }>;
   /** Restaurant IANA timezone — used to format the slot labels in
    *  the owner's local time when the customer is in a different zone. */
   restaurantTimezone?: string;
@@ -640,12 +644,17 @@ export function CheckoutModal({
                       return "00:00";
                     })();
                     // Build slots for this date from openingHours + interval.
+                    // Service-aware lookup: a restaurant with separate
+                    // pickup vs delivery hours will surface only the
+                    // window relevant to the active orderType.
                     let slots: string[] = [];
                     if (datePart) {
                       const dow = new Date(`${datePart}T12:00:00`).getDay();
-                      const row = openingHours.find((h) => h.dayOfWeek === dow && h.isOpen);
-                      const open = row?.openTime || "10:00";
-                      const close = row?.closeTime || "22:00";
+                      const serviceKind = orderType === "delivery" ? "delivery" : "pickup";
+                      const row = pickHoursForService(openingHours as any, dow, serviceKind);
+                      const effective = row && row.isOpen ? row : null;
+                      const open = effective?.openTime || "10:00";
+                      const close = effective?.closeTime || "22:00";
                       const [oh, om] = open.split(":").map(Number);
                       const [ch, cm] = close.split(":").map(Number);
                       const start = (oh ?? 10) * 60 + (om ?? 0);

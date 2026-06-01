@@ -169,19 +169,26 @@ async function main() {
   });
   console.log("✅ Created restaurant users");
 
-  // Opening hours (Mon-Sun)
+  // Opening hours (Mon-Sun). Compound unique now includes `service`
+  // (null = default row for all services). Use findFirst + create
+  // pattern since Prisma can't model service=null in compound unique
+  // where input.
   for (let i = 0; i < 7; i++) {
-    await prisma.openingHours.upsert({
-      where: { restaurantId_dayOfWeek: { restaurantId: demoRestaurant.id, dayOfWeek: i } },
-      update: {},
-      create: {
-        restaurantId: demoRestaurant.id,
-        dayOfWeek: i,
-        isOpen: i !== 1,
-        openTime: "11:00",
-        closeTime: "22:00",
-      },
+    const existing = await prisma.openingHours.findFirst({
+      where: { restaurantId: demoRestaurant.id, dayOfWeek: i, service: null },
+      select: { id: true },
     });
+    if (!existing) {
+      await prisma.openingHours.create({
+        data: {
+          restaurantId: demoRestaurant.id,
+          dayOfWeek: i,
+          isOpen: i !== 1,
+          openTime: "11:00",
+          closeTime: "22:00",
+        },
+      });
+    }
   }
   console.log("✅ Created opening hours");
 

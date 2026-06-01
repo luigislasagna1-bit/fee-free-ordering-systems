@@ -65,7 +65,13 @@ try {
     console.log(`Pushing schema to: ${masked}`);
     console.log(`========================================`);
     rewriteEnvLocal(url);
-    const r = spawnSync("npx", ["prisma", "db", "push"], {
+    // Forward any CLI flags after the script name onto prisma db push.
+    // Most commonly `--accept-data-loss` — needed when restructuring a
+    // unique index (Prisma is conservative; the data isn't actually
+    // at risk for an additive change like adding a nullable column to
+    // a compound unique). Use sparingly + only on additive schema work.
+    const extraFlags = process.argv.slice(2);
+    const r = spawnSync("npx", ["prisma", "db", "push", ...extraFlags], {
       stdio: "inherit",
       shell: true,
     });
