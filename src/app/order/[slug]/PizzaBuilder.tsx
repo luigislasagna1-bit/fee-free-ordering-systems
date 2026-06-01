@@ -761,6 +761,16 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
   const toppingGroups = groups.filter(g =>
     config.toppingGroupIds.some(tid => g.id === tid || g.libraryGroupId === tid)
   );
+
+  // Whether at least one topping group is half/half-eligible — controls
+  // whether the toppings section shows the L/Whole/R placement bar AND
+  // whether toggleTopping should honour the current tab (vs. always
+  // storing as "whole"). Hoisted up here from below so toggleTopping
+  // can close over it without hitting a TDZ error.
+  const toppingsHaveHalfHalf =
+    toppingGroups.some(g => g.supportsHalfHalf) ||
+    roleSupportsHalfHalf(config, "toppings");
+
   // Any modifier group attached to the item that isn't playing a pizza role
   // (e.g. Cook Level). These render as their own sections under Crust.
   const usedGroupIds = new Set<string>();
@@ -845,7 +855,20 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
 
   const toggleTopping = useCallback((opt: ModOption, groupId: string) => {
     setCustomization(c => {
-      const placement = c.isHalfHalf ? toppingPlacement : "whole";
+      // Honor the explicit tab choice (Left Half / Whole / Right Half).
+      // We DO NOT gate this on c.isHalfHalf because that flag is derived
+      // from "do any toppings have a non-whole placement?" — which means
+      // it's false until the FIRST half topping exists, creating a
+      // chicken-and-egg: the first half-topping click would be silently
+      // recorded as "whole" and the checkbox in the half tab wouldn't
+      // tick because the topping is stored under the wrong placement
+      // (Luigi 2026-06-01). The renderer already uses toppingsHaveHalfHalf
+      // (capability flag — "are the L/W/R tabs even visible?"), so we
+      // mirror that here: when the tabs are visible, trust the tab; when
+      // not, force whole. toppingPlacement is initialised to "whole" and
+      // only changes when the user clicks a half tab, so referencing it
+      // directly gives the right answer in both modes.
+      const placement = toppingsHaveHalfHalf ? toppingPlacement : "whole";
       const existing = c.toppings.findIndex(
         t => t.optionId === opt.id && t.placement === placement
       );
@@ -886,7 +909,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
         }],
       };
     });
-  }, [toppingPlacement, effectiveConfig.extraToppingPrice]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [toppingPlacement, effectiveConfig.extraToppingPrice, toppingsHaveHalfHalf]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const setToppingQuantity = useCallback(
     (optionId: string, placement: ToppingPlacement, qty: ToppingQuantity) => {
@@ -958,11 +981,8 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
     setCustomization(c => c.isHalfHalf === effectiveHalfHalf ? c : { ...c, isHalfHalf: effectiveHalfHalf });
   }, [effectiveHalfHalf]);
 
-  // Whether at least one topping group is half/half-eligible — controls
-  // whether the toppings section shows the L/Whole/R placement bar.
-  const toppingsHaveHalfHalf =
-    toppingGroups.some(g => g.supportsHalfHalf) ||
-    roleSupportsHalfHalf(config, "toppings");
+  // (toppingsHaveHalfHalf hoisted up near toppingGroups so the
+  // toggleTopping useCallback can close over it without a TDZ error.)
 
   // ── Add to cart ──────────────────────────────────────────────────────────
 
