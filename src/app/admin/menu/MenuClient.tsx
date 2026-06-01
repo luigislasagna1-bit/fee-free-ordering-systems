@@ -5,7 +5,7 @@ import {
   Edit2, Trash2, Copy, X, Check, AlertCircle, Tag, Layers,
   Image as ImageIcon, Clock, Truck, ShoppingBag, UtensilsCrossed,
   Settings, ChevronUp, MoreVertical, Upload, FileText, Loader2,
-  PartyPopper, Download,
+  PartyPopper, Download, Search,
 } from "lucide-react";
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable";
@@ -1999,6 +1999,12 @@ interface Props { categories: Category[]; libraryGroups: ModifierGroup[]; restau
 export function MenuClient({ categories: initial, libraryGroups: initialGroups }: Props) {
   const [categories, setCategories] = useState(initial);
   const [libraryGroups, setLibraryGroups] = useState(initialGroups);
+  // Menu search query for the admin menu builder. Filters the visible
+  // categories list (left rail) to those that contain at least one
+  // matching item or whose name itself matches. Item-level filtering
+  // is rendered inside each SortableCategoryBlock via the same query.
+  // Luigi 2026-05-31 (GloriaFood parity).
+  const [menuSearchQuery, setMenuSearchQuery] = useState("");
   const [expandedCats, setExpandedCats] = useState<Record<string, boolean>>(
     Object.fromEntries(initial.map(c => [c.id, true]))
   );
@@ -2278,6 +2284,33 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
       <div className="flex flex-1 gap-0 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden min-h-0" style={{ height: "calc(100vh - 220px)" }}>
         {/* Left: Categories & Items */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          {/* Menu search bar (Luigi 2026-05-31, GloriaFood parity). Filters
+              categories + items by name and description. Items that don't
+              match disappear; categories that have NO matching items
+              collapse to a single "no items match" row. Owners can find
+              the dish they need to price-edit without scrolling. */}
+          {categories.length > 0 && (
+            <div className="relative">
+              <Search className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="search"
+                value={menuSearchQuery}
+                onChange={(e) => setMenuSearchQuery(e.target.value)}
+                placeholder="Search categories and items…"
+                className="w-full pl-8 pr-8 py-2 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              />
+              {menuSearchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setMenuSearchQuery("")}
+                  aria-label="Clear search"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center hover:bg-gray-100 text-gray-400"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              )}
+            </div>
+          )}
           {categories.length > 0 && (
             <div className="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-lg px-3 py-2 sticky top-0 z-10">
               {!categorySelectMode ? (
@@ -2332,10 +2365,35 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
               <p className="font-medium">No categories yet</p>
               <p className="text-sm mt-1">Click "Add Category" to get started</p>
             </div>
-          ) : (
+          ) : (() => {
+            // Filter visible categories by search query. We compute
+            // here (not via useMemo above the JSX) so the search field
+            // stays accurate even mid-drag without re-arranging hooks.
+            const q = menuSearchQuery.trim().toLowerCase();
+            const filteredCategories = !q ? categories : categories.filter((c: any) => {
+              if (c.name.toLowerCase().includes(q)) return true;
+              return (c.menuItems ?? []).some((i: any) => {
+                const hay = `${i.name ?? ""} ${i.description ?? ""}`.toLowerCase();
+                return hay.includes(q);
+              });
+            });
+            if (filteredCategories.length === 0) {
+              return (
+                <div className="py-12 text-center text-gray-400">
+                  <Search className="w-10 h-10 mx-auto mb-2 opacity-40" />
+                  <p className="font-medium">No matches for &ldquo;{menuSearchQuery}&rdquo;</p>
+                  <button
+                    type="button"
+                    onClick={() => setMenuSearchQuery("")}
+                    className="mt-2 text-sm text-emerald-600 hover:underline"
+                  >Clear search</button>
+                </div>
+              );
+            }
+            return (
             <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleCatDragEnd}>
-              <SortableContext items={categories.map(c => c.id)} strategy={verticalListSortingStrategy}>
-                {categories.map(cat => (
+              <SortableContext items={filteredCategories.map((c: any) => c.id)} strategy={verticalListSortingStrategy}>
+                {filteredCategories.map((cat: any) => (
                   <SortableCategoryBlock key={cat.id} cat={cat}
                     expanded={expandedCats[cat.id] ?? true}
                     onToggleExpand={() => setExpandedCats(e => ({ ...e, [cat.id]: !e[cat.id] }))}
@@ -2363,7 +2421,8 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
                 ))}
               </SortableContext>
             </DndContext>
-          )}
+            );
+          })()}
         </div>
 
         {/* Right: Modifier Library */}

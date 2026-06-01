@@ -27,6 +27,14 @@ interface Props {
     closeTime: string;
     isOpen: boolean;
   }>;
+  /** Whether email is mandatory on the reservation form. Mirrors the
+   *  same flag used by the ordering checkout (Restaurant.
+   *  requireCustomerEmail). Default true. */
+  requireCustomerEmail?: boolean;
+  /** Whether phone is mandatory on the reservation form. Mirrors the
+   *  ordering side. Default true — strongly recommended because the
+   *  restaurant needs to call about table assignments. */
+  requireCustomerPhone?: boolean;
   theme: Theme;
   onClose: () => void;
 }
@@ -54,7 +62,13 @@ function generateTimeSlots(openHHMM: string, closeHHMM: string, stepMin: number)
   return out;
 }
 
-export function ReservationModal({ restaurantSlug, restaurantName, settings, fallbackOpeningHours = [], theme, onClose }: Props) {
+export function ReservationModal({
+  restaurantSlug, restaurantName, settings,
+  fallbackOpeningHours = [],
+  requireCustomerEmail = true,
+  requireCustomerPhone = true,
+  theme, onClose,
+}: Props) {
   const tr = useTranslations("reservation");
   const tOrd = useTranslations("ordering");
   const [step, setStep] = useState<"details" | "preorder" | "deposit" | "done">("details");
@@ -109,7 +123,9 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, fal
 
   const submit = async () => {
     if (!validation.ok) { toast.error(validation.reason); return; }
-    if (!name.trim() || !phone.trim()) { toast.error(tr("nameAndPhone")); return; }
+    if (!name.trim()) { toast.error(tr("nameAndPhone")); return; }
+    if (requireCustomerPhone && !phone.trim()) { toast.error(tr("nameAndPhone")); return; }
+    if (requireCustomerEmail && !email.trim()) { toast.error("Email is required"); return; }
 
     setSubmitting(true);
     try {
@@ -222,14 +238,18 @@ export function ReservationModal({ restaurantSlug, restaurantName, settings, fal
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 />
                 <input
-                  type="tel" placeholder={tr("phoneRequired")}
+                  type="tel"
+                  required={requireCustomerPhone}
+                  placeholder={`${tr("phoneRequired")}${requireCustomerPhone ? "" : " (optional)"}`}
                   value={phone} onChange={e => setPhone(e.target.value)}
                   className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 />
               </div>
               <input
-                type="email" placeholder={tr("emailForConfirmation")}
+                type="email"
+                required={requireCustomerEmail}
+                placeholder={`${tr("emailForConfirmation")}${requireCustomerEmail ? "" : " (optional)"}`}
                 value={email} onChange={e => setEmail(e.target.value)}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
                 style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}

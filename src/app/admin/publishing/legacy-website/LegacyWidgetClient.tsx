@@ -54,6 +54,7 @@ export function LegacyWidgetClient({
   orderSlug,
   baseUrl,
   isPublished,
+  acceptsReservations = false,
 }: {
   publicId: string;
   /** Public restaurant slug used in /order/<slug> URLs — passed alongside
@@ -63,6 +64,12 @@ export function LegacyWidgetClient({
   orderSlug: string;
   baseUrl: string;
   isPublished: boolean;
+  /** When true, emit a SECOND "Book a Table" widget snippet below the
+   *  main ordering snippet. Mirrors GloriaFood's pattern where the same
+   *  embed page surfaces both buttons. Skipped entirely when the
+   *  restaurant has reservations disabled — no point in a button that
+   *  opens an empty modal. */
+  acceptsReservations?: boolean;
 }) {
   const [snippetType, setSnippetType] = useState<SnippetType>("popup_js");
   const [label, setLabel] = useState(DEFAULT_LABEL);
@@ -529,6 +536,22 @@ export function LegacyWidgetClient({
         <pre className="p-4 text-xs text-gray-100 overflow-x-auto whitespace-pre">{snippet}</pre>
       </div>
 
+      {/* ── Book a Table widget (when reservations enabled) ───────────
+          Mirrors GloriaFood: a SECOND button snippet that opens the
+          reservation modal directly. Only rendered when the restaurant
+          has acceptsReservations=true so we don't dangle a useless
+          button. Paste both snippets together to get the GloriaFood-
+          style "See Menu / Book a Table" pair. */}
+      {acceptsReservations && (
+        <ReservationSnippet
+          publicId={publicId}
+          orderSlug={orderSlug}
+          baseUrl={baseUrl}
+          snippetType={snippetType}
+          color={color}
+        />
+      )}
+
       {/* ── Platform install guide ───────────────────────────────────── */}
       <div className="rounded-xl border border-blue-200 bg-blue-50 p-5 space-y-4">
         <div className="flex items-center gap-2">
@@ -871,4 +894,95 @@ function WarnBox({ children }: { children: React.ReactNode }) {
 
 function escapeHtml(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/**
+ * Second widget snippet specifically for the Book-a-Table button.
+ * Renders in the same install-code style as the main snippet so
+ * owners can copy both into the same page. GloriaFood ships their
+ * widget as TWO `<span class="glf-button">` elements + one shared
+ * <script> tag; we ship two independent snippets (each self-contained)
+ * because our widget script is restaurant-scoped via data-restaurant
+ * — pasting twice is fine, the heartbeat dedupes itself.
+ *
+ * Reservation mode is signalled to the loader via data-mode="reservation".
+ * The loader appends ?reservation=1 to the iframe URL which the
+ * OrderingPageClient picks up to auto-open the table modal.
+ */
+function ReservationSnippet({
+  publicId,
+  orderSlug,
+  baseUrl,
+  snippetType,
+  color,
+}: {
+  publicId: string;
+  orderSlug: string;
+  baseUrl: string;
+  snippetType: "popup_js" | "button_link" | "iframe";
+  color: string;
+}) {
+  const [copied, setCopied] = useState(false);
+  const snippet = useMemo(() => {
+    if (snippetType === "iframe") {
+      // iframe mode + reservations: same iframe URL with ?reservation=1.
+      // We don't bother with a custom height — reservation modal is
+      // typically shorter than the full menu, but the parent page
+      // sizes the iframe so leave their existing iframeHeight alone
+      // and just bolt the query string on.
+      return [
+        `<!-- Fee Free Ordering — Book a Table (iframe) -->`,
+        `<iframe`,
+        `  src="${baseUrl}/embed/widget/${publicId}?reservation=1"`,
+        `  style="width:100%;border:0;display:block"`,
+        `  height="700"`,
+        `  allow="payment; geolocation"`,
+        `  title="Book a Table"></iframe>`,
+      ].join("\n");
+    }
+    if (snippetType === "button_link") {
+      // Plain HTML button that opens /order/<slug>?reservation=1 in a
+      // new tab. Same visual treatment as the main menu button, just
+      // a different label + URL.
+      return [
+        `<!-- Fee Free Ordering — Book a Table (HTML button) -->`,
+        `<a href="${baseUrl}/order/${orderSlug}?reservation=1"`,
+        `   target="_blank"`,
+        `   rel="noopener noreferrer"`,
+        `   style="display:inline-block;background:${color};color:#fff;padding:18px 36px;font-family:system-ui,-apple-system,sans-serif;font-size:18px;font-weight:700;text-decoration:none;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.2);letter-spacing:0.02em;white-space:nowrap;">Book a Table</a>`,
+      ].join("\n");
+    }
+    // popup_js — same script, data-mode flag flips it to reservation.
+    return [
+      `<!-- Fee Free Ordering — Book a Table button -->`,
+      `<script src="${baseUrl}/embed/widget.js"`,
+      `        data-restaurant="${publicId}"`,
+      `        data-mode="reservation"`,
+      `        data-label="Book a Table"`,
+      `        async defer></script>`,
+    ].join("\n");
+  }, [publicId, orderSlug, baseUrl, snippetType, color]);
+
+  return (
+    <div className="rounded-xl border border-gray-200 bg-gray-900 overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-gray-800 border-b border-gray-700">
+        <span className="text-xs font-semibold text-gray-300">Book a Table — install code</span>
+        <button
+          type="button"
+          onClick={async () => {
+            try {
+              await navigator.clipboard.writeText(snippet);
+              setCopied(true);
+              setTimeout(() => setCopied(false), 2000);
+            } catch { /* noop */ }
+          }}
+          className="flex items-center gap-1.5 text-xs font-medium text-gray-300 hover:text-white transition"
+        >
+          {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+          {copied ? "Copied" : "Copy code"}
+        </button>
+      </div>
+      <pre className="p-4 text-xs text-gray-100 overflow-x-auto whitespace-pre">{snippet}</pre>
+    </div>
+  );
 }

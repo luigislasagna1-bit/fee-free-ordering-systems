@@ -56,6 +56,16 @@ const SCRIPT = `(function(){
     })();
     var btnLabel = (s && s.getAttribute("data-label")) || "See MENU & Order";
     var btnColor = (s && s.getAttribute("data-color")) || "#ef4444";
+    // data-mode="reservation" makes the widget open straight to the
+    // table-reservation modal (forwards ?reservation=1 to the iframe).
+    // GloriaFood-parity: their data-glf-reservation="true" maps to the
+    // same idea. Without this attribute, the widget opens the menu /
+    // ordering surface. Default label flips to "Book a Table" when
+    // mode=reservation and the page didn't supply its own data-label.
+    var mode = (s && s.getAttribute("data-mode")) || "order";
+    if (mode === "reservation" && (!s || !s.getAttribute("data-label"))) {
+      btnLabel = "Book a Table";
+    }
     // data-target="#some-id" lets the restaurant pin the button inline
     // wherever they want on their page (e.g. inside their nav). Without
     // it, we fall back to the floating launcher.
@@ -273,7 +283,12 @@ const SCRIPT = `(function(){
     overlay.appendChild(frameWrap);
 
     function open() {
-      iframe.src = base + "/embed/widget/" + encodeURIComponent(publicId);
+      // Reservation-mode launchers open the iframe with ?reservation=1
+      // appended so the OrderingPageClient auto-opens the table modal.
+      // The widget endpoint forwards arbitrary query strings to the
+      // canonical /order/[slug] URL.
+      var qs = (mode === "reservation") ? "?reservation=1" : "";
+      iframe.src = base + "/embed/widget/" + encodeURIComponent(publicId) + qs;
       overlay.style.setProperty("display", "flex", "important");
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";

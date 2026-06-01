@@ -2920,6 +2920,8 @@ export function OrderingPageClient({
           // because the default reservationHours JSON is "{}". Luigi
           // 2026-05-31, multiple restaurants reported.
           fallbackOpeningHours={restaurant.openingHours ?? []}
+          requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}
+          requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}
           theme={theme}
           onClose={() => {
             setReservationOpen(false);

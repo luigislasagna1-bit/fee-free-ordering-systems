@@ -21,7 +21,7 @@ export default async function LegacyWebsitePage() {
     // not /embed/widget/<widgetPublicId> — we want a real shareable URL).
     prisma.restaurant.findUnique({
       where: { id: user.restaurantId },
-      select: { slug: true },
+      select: { slug: true, acceptsReservations: true },
     }),
   ]);
 
@@ -49,6 +49,7 @@ export default async function LegacyWebsitePage() {
         orderSlug={restaurant?.slug ?? ""}
         baseUrl={baseUrl}
         isPublished={!!state.publishedAt}
+        acceptsReservations={!!restaurant?.acceptsReservations}
       />
 
       <div className="rounded-lg border border-gray-200 bg-white p-5">
