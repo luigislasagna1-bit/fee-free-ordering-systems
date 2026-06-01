@@ -485,6 +485,26 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 `📅 ${newConfirmed.length} new reservation${newConfirmed.length > 1 ? "s" : ""} confirmed`,
                 { icon: "✅", duration: 5000 },
               );
+              // Auto-print each confirmed reservation through the
+              // PrintNode pipe (the only reservation print path
+              // wired today — direct-LAN reservation printing is
+              // tracked separately). Skips silently when no
+              // PrintNode printer is configured — same posture as
+              // the order auto-print path. Luigi 2026-06-01.
+              if (
+                printerSettingsRef.current?.printNodeConnected &&
+                printerSettingsRef.current.selectedPrinterId
+              ) {
+                for (const r of newConfirmed) {
+                  fetch("/api/kitchen/printnode/print", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ reservationId: r.id }),
+                  }).catch((err) =>
+                    console.warn("[kds reservation auto-print] failed:", err),
+                  );
+                }
+              }
             }
             fresh.forEach((r) => seen.add(r.id));
           }
@@ -1188,6 +1208,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // changes. Luigi 2026-06-01: "if auto accept is on and printer
   // is connected, once accepted it should auto print".
   const autoPrintRef = useRef<((orderId: string, opts?: { force?: boolean }) => Promise<void>) | null>(null);
+  // Mirror of printerSettings into a ref so the reservation poll
+  // (deps=[activeTab]) can decide whether to auto-print a newly-
+  // confirmed reservation without retearing-down the 4s interval
+  // every time settings load. Luigi 2026-06-01.
+  const printerSettingsRef = useRef<PrinterSettings | null>(null);
   const autoPrintedRef = useRef<Set<string>>(new Set());
   // Tracks orders we've already kicked an auto-reject request for, so the
   // 1-second `now` tick doesn't re-fire the PATCH while the previous one
@@ -1461,6 +1486,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   useEffect(() => {
     autoPrintRef.current = autoPrint;
   }, [autoPrint]);
+
+  // Keep printerSettingsRef in sync — read by the reservation auto-
+  // print branch which sits inside a useEffect with deps=[activeTab].
+  useEffect(() => {
+    printerSettingsRef.current = printerSettings;
+  }, [printerSettings]);
 
   /** Direct-printer path: fetch ESC/POS bytes from server, send to
    *  printer via native plugin. Used when the kitchen operator
