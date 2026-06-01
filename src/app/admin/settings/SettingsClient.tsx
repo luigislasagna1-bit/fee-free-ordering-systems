@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import {
-  CreditCard, Zap, Bell, Globe, Code2, CheckCircle2,
+  CreditCard, Zap, Bell, Globe, CheckCircle2,
   ChevronRight, Shield, Building2, ArrowUpRight, ExternalLink, Sparkles,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -231,7 +231,15 @@ export function SettingsClient({
           </div>
         </Section>
 
-        {/* Advanced */}
+        {/* Advanced — real add-on tiles.
+            2026-05-31: removed the legacy "Growth+ / Pro+ / Enterprise"
+            plan-tier badges. Those plan tiers don't exist anymore — we
+            ship a FREE base + à-la-carte add-ons. The badge would tell
+            a Luigi-style owner to "upgrade to Pro+" with no Pro+ to
+            upgrade to. Each tile now links straight to the matching
+            add-on on /admin/billing/add-ons where the price + Subscribe
+            CTA live. REST API was dropped from this list — there's no
+            corresponding add-on, so surfacing it here is misleading. */}
         <Section title={t("dangerZone")}>
           <div className="space-y-3">
             {[
@@ -241,17 +249,7 @@ export function SettingsClient({
                 iconColor: "text-amber-500",
                 title: "Custom Domain",
                 desc: "Serve your ordering page at yourdomain.com instead of the default URL.",
-                badge: "Growth+ Plan",
-                badgeColor: "bg-amber-100 text-amber-700",
-              },
-              {
-                icon: Code2,
-                iconBg: "bg-green-50",
-                iconColor: "text-green-500",
-                title: "REST API Access",
-                desc: "Integrate with your POS, loyalty program, or custom apps via our REST API.",
-                badge: "Pro+ Plan",
-                badgeColor: "bg-green-100 text-green-700",
+                href: "/admin/billing/add-ons#custom_domain",
               },
               {
                 icon: Building2,
@@ -259,11 +257,14 @@ export function SettingsClient({
                 iconColor: "text-gray-500",
                 title: "Multi-Location",
                 desc: "Manage multiple restaurant locations from one account.",
-                badge: "Enterprise",
-                badgeColor: "bg-gray-100 text-gray-600",
+                href: "/admin/billing/add-ons#multi_location",
               },
             ].map((item) => (
-              <div key={item.title} className="flex items-center gap-4 p-4 border border-gray-100 rounded-xl hover:border-gray-200 transition">
+              <a
+                key={item.title}
+                href={item.href}
+                className="flex items-center gap-4 p-4 border border-gray-100 rounded-xl hover:border-emerald-200 hover:bg-emerald-50/30 transition group"
+              >
                 <div className={`w-10 h-10 ${item.iconBg} rounded-lg flex items-center justify-center flex-shrink-0`}>
                   <item.icon className={`w-5 h-5 ${item.iconColor}`} />
                 </div>
@@ -272,10 +273,10 @@ export function SettingsClient({
                   <div className="text-xs text-gray-500">{item.desc}</div>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${item.badgeColor}`}>{item.badge}</span>
-                  <ChevronRight className="w-4 h-4 text-gray-300" />
+                  <span className="text-xs font-medium text-emerald-600 group-hover:underline">Add-on</span>
+                  <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-emerald-500" />
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </Section>

@@ -346,11 +346,41 @@ function SwitchFromMonthlyView({
                 marketplace order, capped at $249.99/month. Your listing stays
                 live throughout; no gap in service.
               </p>
-              <p className="text-xs text-emerald-700 mt-2 italic">
-                Driver Pool benefit ends with the Monthly plan. If you need
-                overflow drivers under PAYG, subscribe to Driver Pool ($19.99/mo)
-                separately before the switch date.
-              </p>
+            </div>
+          </div>
+
+          {/* Loud Driver Pool warning. The bundled Driver Pool inclusion
+              ends with the Monthly plan — without an active Driver Pool
+              subscription the owner loses ShipDay dispatch AND can't
+              fulfil Marketplace orders post-switch (Marketplace orders
+              need drivers). Existing italic caption was too easy to
+              miss; promoted to its own panel with a direct subscribe
+              link. Luigi 2026-05-31. */}
+          <div className="mt-4 rounded-xl border-2 border-amber-300 bg-amber-50 p-4 sm:p-5">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center flex-shrink-0">
+                <AlertCircle className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h2 className="font-bold text-amber-900">
+                  Driver Pool ends with the Monthly plan
+                </h2>
+                <p className="text-sm text-amber-900 mt-1 leading-relaxed">
+                  Pay-As-You-Go does <strong>not</strong> include the ShipDay
+                  Driver Pool. Without an active Driver Pool subscription on
+                  the switch date, you&apos;ll lose third-party driver
+                  dispatch — and Marketplace orders, which require drivers,
+                  can&apos;t be fulfilled. Subscribe to the standalone
+                  Driver Pool add-on ($9.99/mo) before the switch date to
+                  keep things running.
+                </p>
+                <Link
+                  href="/admin/billing/add-ons#driver_pool"
+                  className="inline-flex items-center gap-1.5 mt-3 px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold transition"
+                >
+                  Subscribe to Driver Pool →
+                </Link>
+              </div>
             </div>
           </div>
           <SwitchToPaygButton mode="undo" />

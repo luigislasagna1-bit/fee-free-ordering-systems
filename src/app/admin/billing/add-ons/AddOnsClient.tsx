@@ -170,6 +170,21 @@ export function AddOnsClient({
             x.isSubscribed &&
             ["active", "trialing"].includes(x.subscription?.status || "")
           );
+          // Is Marketplace mid-switch from Monthly to PAYG? When yes
+          // the bundled Driver Pool inclusion has an expiration date —
+          // we surface that on BOTH the Marketplace tile (extending
+          // the existing "Switching to PAYG" notice) AND the Driver
+          // Pool tile (so owners know to subscribe to driver_pool
+          // separately before the monthly period ends, or they'll
+          // lose access to drivers AND to fulfilling marketplace
+          // orders entirely). Luigi 2026-05-31.
+          const marketplaceRow = addOns.find((x) => x.slug === "marketplace");
+          const marketplaceSwitchingToPayg =
+            !!marketplaceRow?.subscription?.cancelAtPeriodEnd &&
+            !!marketplaceListing?.switchToPaygOnCancel;
+          const marketplaceSwitchEnd = marketplaceSwitchingToPayg && marketplaceRow?.subscription?.currentPeriodEnd
+            ? new Date(marketplaceRow.subscription.currentPeriodEnd)
+            : null;
           return addOns.map((a) => {
           const dollars = (a.monthlyPriceCents / 100).toFixed(2);
           const active =
@@ -186,13 +201,24 @@ export function AddOnsClient({
             a.slug === "unlimited_orders" && !active && hasOtherPaidAddOn;
           // Driver Pool is redundant when Marketplace Monthly is active
           // (Marketplace bundles driver_pool via enabledFeatures).
+          // EXCEPTION: when the owner has scheduled the Monthly → PAYG
+          // switch, the bundled inclusion ends at the period boundary.
+          // We then surface the Subscribe button (NOT "already
+          // included") so they can lock in driver_pool before the
+          // switch lands. Without this, they'd hit the PAYG date with
+          // no drivers and a still-open Marketplace listing → bad UX.
           const driverPoolRedundant =
-            a.slug === "driver_pool" && !active && hasMarketplaceMonthly;
+            a.slug === "driver_pool" && !active && hasMarketplaceMonthly && !marketplaceSwitchingToPayg;
           const includedNote = unlimitedRedundant
             ? "Your other paid add-on already includes unlimited orders — you don't need this one."
             : driverPoolRedundant
               ? "Marketplace Monthly already includes the ShipDay Driver Pool — you don't need this one."
               : null;
+          // Special pre-cancellation banner on the Driver Pool tile —
+          // rendered as a warning ABOVE the Subscribe button when the
+          // user is mid-switch from Marketplace Monthly to PAYG.
+          const driverPoolEndingWithMarketplace =
+            a.slug === "driver_pool" && !active && hasMarketplaceMonthly && marketplaceSwitchingToPayg;
           // Marketplace-specific: is the user mid-switch from Monthly to
           // PAYG? When both Stripe's cancel_at_period_end AND our local
           // switchToPaygOnCancel flag are set, the "scheduled cancellation"
@@ -306,6 +332,17 @@ export function AddOnsClient({
                               </strong>
                               . PAYG ($3/order, capped $249.99/mo) kicks in automatically.
                               Your listing stays live throughout.
+                              {/* Driver Pool was bundled with Monthly; PAYG does NOT
+                                  include it. Without an explicit subscribe-now nudge
+                                  the owner loses ShipDay dispatch on the switch date
+                                  and can't deliver marketplace orders either. */}
+                              <span className="block mt-2 text-amber-900 font-medium">
+                                ⚠ The bundled <strong>Driver Pool</strong> ends on the
+                                same date. To keep dispatching to ShipDay drivers (and
+                                to keep fulfilling Marketplace orders, which need
+                                drivers), subscribe to the Driver Pool add-on
+                                separately before then.
+                              </span>
                             </>
                           ) : (
                             <>
@@ -434,6 +471,37 @@ export function AddOnsClient({
                   </div>
                 ) : (
                   <div className="space-y-2">
+                    {/* Pre-cancellation nudge on the Driver Pool tile when
+                        Marketplace Monthly is scheduled to switch to PAYG.
+                        Without this banner the owner sees a normal blue
+                        Subscribe button and could easily miss that their
+                        bundled access is about to end. */}
+                    {driverPoolEndingWithMarketplace && (
+                      <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2.5 text-xs text-amber-900">
+                        <div className="font-semibold flex items-center gap-1.5 mb-0.5">
+                          <Clock className="w-3.5 h-3.5" />
+                          Bundled access ending
+                        </div>
+                        <span>
+                          Marketplace is switching to Pay-As-You-Go
+                          {marketplaceSwitchEnd && (
+                            <>
+                              {" "}on{" "}
+                              <strong>
+                                {marketplaceSwitchEnd.toLocaleDateString(undefined, {
+                                  month: "long",
+                                  day: "numeric",
+                                  year: "numeric",
+                                })}
+                              </strong>
+                            </>
+                          )}
+                          . PAYG does <strong>not</strong> include the Driver Pool — subscribe
+                          here before the switch date to keep ShipDay dispatch (and to keep
+                          fulfilling Marketplace orders, which require drivers).
+                        </span>
+                      </div>
+                    )}
                     <button
                       type="button"
                       onClick={() => subscribe(a.slug)}
