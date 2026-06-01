@@ -658,7 +658,17 @@ export function CheckoutModal({
                       const [oh, om] = open.split(":").map(Number);
                       const [ch, cm] = close.split(":").map(Number);
                       const start = (oh ?? 10) * 60 + (om ?? 0);
-                      const end = (ch ?? 22) * 60 + (cm ?? 0);
+                      let end = (ch ?? 22) * 60 + (cm ?? 0);
+                      // Midnight-wrap fix (Luigi 2026-06-01): when the
+                      // close time is at or before the open time, the
+                      // window crosses midnight (e.g. 11 AM → 12 AM =
+                      // 11:00 → 00:00, meaning "open until midnight at
+                      // end of day"). Without rolling `end` past
+                      // midnight the loop emits zero slots and the
+                      // dropdown reads "Closed this day". pickHoursForService
+                      // already stamps closesNextDay=true defensively
+                      // for the same shape; we trust either signal here.
+                      if (end <= start) end += 24 * 60;
                       const step = Math.max(5, Math.min(120, schedulingInterval || 15));
                       const minMin = (() => {
                         const [mh, mm] = minTimeForDate.split(":").map(Number);
@@ -666,7 +676,9 @@ export function CheckoutModal({
                       })();
                       for (let m = start; m <= end - step; m += step) {
                         if (m < minMin) continue;
-                        slots.push(`${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`);
+                        const hh = Math.floor(m / 60) % 24;
+                        const mm = m % 60;
+                        slots.push(`${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`);
                       }
                     }
                     const setDate = (d: string) => {
