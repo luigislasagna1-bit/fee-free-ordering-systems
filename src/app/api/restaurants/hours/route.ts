@@ -39,6 +39,15 @@ export async function PUT(req: NextRequest) {
 
   // Validate each row before any DB write — cheaper than rolling back
   // partial writes on bad input.
+  //
+  // Auto-fix step (Luigi 2026-06-01): when openTime > closeTime and
+  // closesNextDay is false, the window is impossible (close happens
+  // 11+ hours BEFORE open). Almost always means the owner wanted
+  // 12:00 AM to mean "midnight at end of day" but the picker stored
+  // it as 00:00 (midnight at start). Auto-flip closesNextDay = true
+  // so the row reads correctly without making the owner re-save.
+  // The previous quiet "closed all day" interpretation was the root
+  // cause of the reservation false-closed report.
   for (const h of hours) {
     if (typeof h?.dayOfWeek !== "number" || h.dayOfWeek < 0 || h.dayOfWeek > 6) {
       return NextResponse.json({ error: "Invalid dayOfWeek" }, { status: 400 });
@@ -46,6 +55,16 @@ export async function PUT(req: NextRequest) {
     if (h.isOpen) {
       if (!VALID_HHMM.test(h.openTime) || !VALID_HHMM.test(h.closeTime)) {
         return NextResponse.json({ error: "Times must be HH:MM 24-hour" }, { status: 400 });
+      }
+      const [oh, om] = h.openTime.split(":").map(Number);
+      const [ch, cm] = h.closeTime.split(":").map(Number);
+      const openMin = oh * 60 + om;
+      const closeMin = ch * 60 + cm;
+      if (closeMin <= openMin && !h.closesNextDay) {
+        // Auto-toggle closesNextDay rather than rejecting. Mirrors
+        // the smart default GloriaFood uses when an owner types
+        // "11 AM – 12 AM" in their hours editor.
+        h.closesNextDay = true;
       }
     }
   }

@@ -257,20 +257,21 @@ function computePrice(
     // a half-pizza topping costs 1 half-unit. So 1 included topping
     // covers either 1 whole OR 2 halves on different sides.
     //
-    // Luigi 2026-06-01: customer picked Pepperoni (L) + Ground Beef (R)
-    // on a "1 topping included" Monday Special and was charged for
-    // both halves. With the fix, 1 included = 2 half-credits → both
-    // halves consume 1 credit each → total $0 surcharge.
+    // The credit covers the WHOLE charge of the topping line item,
+    // including the "extra" quantity bump. Luigi 2026-06-01: "the
+    // extra bump should only be charged if it goes over the allotted
+    // free included toppings." So 1 included topping covers either:
+    //   - 1 Pepperoni (whole, normal)
+    //   - 1 Pepperoni (whole, extra)
+    //   - 2 Pepperoni halves on different sides
+    //   - 1 Pepperoni (half, extra) — partial credit used
+    // 7 toppings on a "6 included" pizza → 6 free, 1 charged
+    // (with the extra bump on whichever one didn't get covered).
     let toppingTotal = 0;
     let halfCreditsLeft = (config.includedToppings || 0) * 2;
 
     for (const t of toppings) {
       const isHalf = t.placement !== "whole";
-      // baseUnit = the cost of the topping itself (already halved
-      // when isHalf). extraQtyUnit = the surcharge for "extra"
-      // quantity. We discount the baseUnit when inclusion credits
-      // apply, but the customer always pays the extra-qty surcharge —
-      // "extra cheese on a free topping" still costs the extra bump.
       const baseUnit = isHalf
         ? config.extraToppingPrice * config.halfToppingMultiplier
         : config.extraToppingPrice;
@@ -282,10 +283,11 @@ function computePrice(
       if (t.quantity !== "light" && halfCreditsLeft > 0) {
         const creditCost = isHalf ? 1 : 2;
         const used = Math.min(creditCost, halfCreditsLeft);
-        // Prorate the discount when we only have partial credit
-        // (e.g. 1 half-credit left and customer picks a whole topping
-        // → cover half the base, charge the other half).
-        const discount = baseUnit * (used / creditCost);
+        // Discount the ENTIRE charge proportionally to the credit
+        // consumed — base AND extra bump both get covered. Partial
+        // credit (e.g. 1 half-credit left + whole topping) covers
+        // half the whole charge.
+        const discount = charge * (used / creditCost);
         charge = Math.max(0, charge - discount);
         halfCreditsLeft -= used;
       }

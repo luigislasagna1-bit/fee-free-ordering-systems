@@ -37,20 +37,39 @@ export type ServiceKind = "pickup" | "delivery" | "reservation";
  * Pick the effective hours row for a given day-of-week + service.
  * Returns the most specific row available (service-scoped first, then
  * the default), or null when neither exists.
+ *
+ * The row is normalised on the way out — if `closeTime <= openTime`
+ * and `closesNextDay` is false, we infer that the owner meant
+ * "closes at the end of the day" (a 12:00 AM mistake from the time
+ * picker) and stamp closesNextDay=true on the returned row. This
+ * means existing data with the bad shape still resolves correctly
+ * without forcing a re-save. The same auto-correction now also
+ * applies at write time in /api/restaurants/hours.
  */
 export function pickHoursForService(
   rows: HoursRow[],
   dayOfWeek: number,
   service: ServiceKind | null,
 ): HoursRow | null {
-  // Service-specific row wins when provided.
+  let picked: HoursRow | null = null;
   if (service) {
     const specific = rows.find((r) => r.dayOfWeek === dayOfWeek && r.service === service);
-    if (specific) return specific;
+    if (specific) picked = specific;
   }
-  // Fall back to the default row (service = null).
-  const fallback = rows.find((r) => r.dayOfWeek === dayOfWeek && (r.service == null || r.service === ""));
-  return fallback ?? null;
+  if (!picked) {
+    picked = rows.find((r) => r.dayOfWeek === dayOfWeek && (r.service == null || r.service === "")) ?? null;
+  }
+  if (!picked || !picked.isOpen) return picked;
+  // Auto-fix impossible-window rows: 11 AM → 12 AM with closesNextDay
+  // false would otherwise read as "closed all day" downstream.
+  const [oh, om] = (picked.openTime || "00:00").split(":").map(Number);
+  const [ch, cm] = (picked.closeTime || "00:00").split(":").map(Number);
+  const openMin = (oh ?? 0) * 60 + (om ?? 0);
+  const closeMin = (ch ?? 0) * 60 + (cm ?? 0);
+  if (closeMin <= openMin && !picked.closesNextDay) {
+    return { ...picked, closesNextDay: true };
+  }
+  return picked;
 }
 
 /**

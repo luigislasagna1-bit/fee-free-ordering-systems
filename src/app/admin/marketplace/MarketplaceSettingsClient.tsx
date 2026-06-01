@@ -154,13 +154,19 @@ export function MarketplaceSettingsClient({
             Configure how <span className="font-semibold">{restaurant.name}</span> appears on the public marketplace.
           </p>
         </div>
-        <Link
+        {/* Plain <a> rather than next/link <Link> — the marketplace
+            listing page does a server-side redirect that next/link's
+            client-side prefetch + soft-navigation interaction has
+            been flaky on (Luigi 2026-06-01: "view your listing link
+            here doesnt work"). Adding rel + noopener for safety. */}
+        <a
           href={`/marketplace/${restaurant.slug}`}
           target="_blank"
+          rel="noopener noreferrer"
           className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1.5"
         >
           View your live listing <ExternalLink className="w-3.5 h-3.5" />
-        </Link>
+        </a>
       </div>
 
       {/* Listed/paused state banner */}
