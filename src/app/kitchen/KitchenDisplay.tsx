@@ -1187,7 +1187,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // ref keeps fetchOrders' deps=[] stable across printer config
   // changes. Luigi 2026-06-01: "if auto accept is on and printer
   // is connected, once accepted it should auto print".
-  const autoPrintRef = useRef<((orderId: string) => Promise<void>) | null>(null);
+  const autoPrintRef = useRef<((orderId: string, opts?: { force?: boolean }) => Promise<void>) | null>(null);
   const autoPrintedRef = useRef<Set<string>>(new Set());
   // Tracks orders we've already kicked an auto-reject request for, so the
   // 1-second `now` tick doesn't re-fire the PATCH while the previous one
@@ -1334,7 +1334,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         // print. Luigi 2026-06-01: "if auto accept is on and
         // printer is connected, once accepted it should auto print".
         for (const o of newAutoAccepted) {
-          autoPrintRef.current?.(o.id).catch((err) =>
+          // force=true bypasses the per-printer "autoprint" toggle.
+          // The owner has already opted into full automation via
+          // autoAcceptOrders; gating on a second toggle would be
+          // redundant and is what was preventing the receipt from
+          // printing in Luigi's 2026-06-01 repro.
+          autoPrintRef.current?.(o.id, { force: true }).catch((err) =>
             console.warn("[kds auto-print on auto-accept] failed:", err),
           );
         }
@@ -1412,7 +1417,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // pendingCount/alerting/silenceAlert are declared above next to the
   // bell-loop effect (they have to be in scope before that effect runs).
 
-  const autoPrint = useCallback(async (orderId: string) => {
+  const autoPrint = useCallback(async (orderId: string, opts?: { force?: boolean }) => {
     if (autoPrintedRef.current.has(orderId)) return;
     autoPrintedRef.current.add(orderId);
     // Preference order:
@@ -1421,20 +1426,22 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     //   2. PrintNode — fallback for browser / desktop / non-native
     //      installs. Still works for restaurants who haven't installed
     //      the native app yet.
-    // We deliberately try the direct printer FIRST regardless of any
-    // "autoPrint" toggle from PrintNode settings — if the operator
-    // configured the direct printer, that's an explicit opt-in.
-    // Pick which receipt(s) to print based on the kitchen's PrintNode
-    // settings (those settings double as the source of truth for direct
-    // printer too — if "Print Kitchen" + "Print Customer" are both on,
-    // print both; if only kitchen, print kitchen; etc.).
+    //
+    // `force` (Luigi 2026-06-01): when true, bypass the per-printer
+    // "autoprint" toggles. Used by the auto-accept code path — the
+    // owner has explicitly opted into full automation (server-side
+    // autoAcceptOrders=true), so requiring them to also flip the
+    // direct.autoprint or printerSettings.autoPrint toggle would
+    // double-gate the same intent. Manual-accept path leaves `force`
+    // undefined so the toggles still control "do I want a receipt
+    // when I tap Accept?".
     const printType: "kitchen" | "customer" | "both" =
       printerSettings?.printKitchen && printerSettings?.printCustomer ? "both"
       : printerSettings?.printCustomer ? "customer"
       : "kitchen"; // default — chef always wants the ticket
 
     const direct = getDirectPrinterConfig();
-    if (direct && direct.autoprint) {
+    if (direct && (opts?.force || direct.autoprint)) {
       try {
         await doPrintDirect(orderId, printType);
         return;
@@ -1443,7 +1450,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       }
     }
     // PrintNode path (legacy / backup)
-    if (!printerSettings?.autoPrint || !printerSettings.printNodeConnected || !printerSettings.selectedPrinterId) return;
+    if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) return;
+    if (!opts?.force && !printerSettings.autoPrint) return;
     await doPrint(orderId, printType);
   }, [printerSettings]);
 
