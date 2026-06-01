@@ -53,8 +53,17 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
   }
 
   try {
+    // Match by restaurant + email only. We DO NOT require an existing
+    // passwordHash — Luigi 2026-06-01: customers who placed an order
+    // (and so have a Customer row) but never set a password were being
+    // silently dropped here, so the form showed "Check your inbox" but
+    // no email fired. Reset-password endpoint already handles the
+    // null-hash case (it just sets the new hash), so the reset email
+    // doubles as a "set your password for the first time" flow — same
+    // UX as Toast/Skip/Uber where guest customers get promoted to
+    // password-holders via the reset link.
     const customer = await prisma.customer.findFirst({
-      where: { restaurantId: restaurant.id, email: cleanEmail, passwordHash: { not: null } },
+      where: { restaurantId: restaurant.id, email: cleanEmail },
       select: { id: true, email: true, name: true },
     });
 
