@@ -473,9 +473,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               );
             }
             if (newConfirmed.length > 0) {
-              // Auto-accept arrival → single chime (toast only).
-              // Doesn't re-arm the alarm — staff get the heads-up
-              // without the prep-rush cadence.
+              // Auto-accept arrival → single chime + toast. Uses
+              // the SAME owner-chosen ring sound + volume the
+              // alarm loop uses, fired exactly once. No re-arm —
+              // staff get the heads-up without the prep-rush
+              // cadence. Mirrors the order-side auto-accept
+              // chime so both surfaces sound identical for the
+              // "new thing arrived, already accepted" event.
+              try { ringBellOnceRef.current?.(); } catch { /* noop */ }
               toast(
                 `📅 ${newConfirmed.length} new reservation${newConfirmed.length > 1 ? "s" : ""} confirmed`,
                 { icon: "✅", duration: 5000 },
@@ -1030,6 +1035,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     }
   }, [alertVolume, alertSound, synthBellOnce, playSampleOnce, playCustomOnce]);
 
+  // Mirror the latest ringBellOnce into a ref so non-reactive call
+  // sites (the fetchOrders useCallback, which keeps deps=[] to stop
+  // the 4s poll interval from tearing down each tick) can still
+  // fire the current sound. Re-points whenever alertVolume /
+  // alertSound / underlying playback fns change.
+  useEffect(() => {
+    ringBellOnceRef.current = ringBellOnce;
+  }, [ringBellOnce]);
+
   // Derived. `alerting` is true only while there's at least one pending
   // order AND the user hasn't silenced the current alarm. Computed each
   // render so the bell can never get "stuck" — when pending drops to 0
@@ -1138,6 +1152,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const [clearConfirm, setClearConfirm] = useState<"orders" | "complete" | null>(null);
 
   const seenIdsRef = useRef<Set<string>>(new Set(initialOrders.map(o => o.id)));
+  // Stable ref to ringBellOnce so fetchOrders (deps=[]) can call the
+  // current sound config without forcing the 4s poll interval to tear
+  // down every time alertVolume / alertSound changes. Single-chime-on-
+  // auto-accept reads this ref. Luigi 2026-06-01.
+  const ringBellOnceRef = useRef<((volumeOverride?: number) => void) | null>(null);
   const autoPrintedRef = useRef<Set<string>>(new Set());
   // Tracks orders we've already kicked an auto-reject request for, so the
   // 1-second `now` tick doesn't re-fire the PATCH while the previous one
@@ -1252,6 +1271,31 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         setAcknowledged(false);
         toast(`🔔 ${newPending.length} new order${newPending.length > 1 ? "s" : ""}!`, { icon: "🍕", duration: 6000 });
         newPending.forEach(o => seenIdsRef.current.add(o.id));
+      }
+
+      // Auto-accept-mode arrivals — order skipped the pending state
+      // because Restaurant.autoAcceptOrders is true server-side, so it
+      // wouldn't hit the alarm loop above. Luigi 2026-06-01: "ring
+      // once instead of ongoing" so staff still get the heads-up.
+      // Uses the SAME ringBellOnce primitive that drives the
+      // continuous alarm — owner-chosen sound (synth / GloriaFood /
+      // custom-uploaded), owner-chosen volume — but fired exactly
+      // once per arriving order. No re-arm of the alarm loop.
+      const newAutoAccepted = fresh.filter(
+        o => o.status === "accepted" && !seenIdsRef.current.has(o.id),
+      );
+      if (newAutoAccepted.length > 0) {
+        // Single chime via the shared sound primitive. Reads through
+        // the ref so this fetchOrders callback (deps=[]) stays
+        // stable across polls — without the ref, adding ringBellOnce
+        // to fetchOrders' deps would tear the 4s interval down on
+        // every volume/sound-choice change.
+        try { ringBellOnceRef.current?.(); } catch { /* noop */ }
+        toast(
+          `✅ ${newAutoAccepted.length} new order${newAutoAccepted.length > 1 ? "s" : ""} auto-accepted`,
+          { icon: "🍕", duration: 5000 },
+        );
+        newAutoAccepted.forEach(o => seenIdsRef.current.add(o.id));
       }
 
       setOrders(fresh);
