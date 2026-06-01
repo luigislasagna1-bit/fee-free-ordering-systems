@@ -78,6 +78,14 @@ export async function POST(req: NextRequest) {
       select: {
         id: true, name: true, email: true, slug: true, acceptsReservations: true,
         reservationSettings: true, defaultLanguage: true,
+        // openingHours powers the closed-day server-side guard. Mirror
+        // the client check: if the owner explicitly marked the day off
+        // (in reservationHours JSON OR Restaurant.openingHours), refuse
+        // the booking. Belt-and-suspenders to the disabled client
+        // button — hand-crafted POSTs can't sneak through. Luigi
+        // 2026-06-01: "if the restaurant is closed in settings, it
+        // shouldn't allow anyone to put in a reservation."
+        openingHours: { select: { dayOfWeek: true, isOpen: true, service: true } },
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
@@ -93,6 +101,37 @@ export async function POST(req: NextRequest) {
     // Validate against rules
     const v = validateBooking(settings as ReservationSettingsLike, { date, time, partySize: parseInt(String(partySize)) }, new Date());
     if (!v.ok) return NextResponse.json({ error: v.reason }, { status: 400 });
+
+    // Closed-day server guard. If the owner marked the day off in
+    // either the reservationHours JSON or Restaurant.openingHours
+    // (preferring a "reservation"-scoped row when present), refuse
+    // the booking. Belt-and-suspenders to the disabled client button.
+    const probeDate = new Date(`${date}T00:00:00`);
+    const probeDow = probeDate.getDay();
+    let resHoursMap: Record<string, { enabled?: boolean }> = {};
+    try { resHoursMap = JSON.parse(settings.reservationHours || "{}"); } catch { /* noop */ }
+    const explicitResDay = resHoursMap[String(probeDow)];
+    let dayBlocked = false;
+    if (explicitResDay && explicitResDay.enabled === false) {
+      dayBlocked = true;
+    } else if (!explicitResDay) {
+      // No reservationHours row for the day → check openingHours.
+      const resRow = restaurant.openingHours.find(
+        (h) => h.dayOfWeek === probeDow && h.service === "reservation",
+      );
+      const defaultRow = restaurant.openingHours.find(
+        (h) => h.dayOfWeek === probeDow && (h.service == null || h.service === ""),
+      );
+      const row = resRow ?? defaultRow;
+      if (row && row.isOpen === false) dayBlocked = true;
+    }
+    if (dayBlocked) {
+      const dayLabel = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][probeDow];
+      return NextResponse.json(
+        { error: `We're closed on ${dayLabel} — please pick a different date.` },
+        { status: 400 },
+      );
+    }
 
     // Capacity
     const cap = await checkCapacity(restaurant.id, settings as ReservationSettingsLike, date, time, parseInt(String(partySize)));

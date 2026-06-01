@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { X, Calendar, Clock, Users, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
@@ -100,6 +100,54 @@ function findNextOpenDate(
   return null;
 }
 
+/**
+ * Closed-day banner — renders when the owner explicitly marked the
+ * selected date off in admin hours. Shows the day name + a button
+ * that hops the date picker to the next open day. Booking is blocked
+ * until the customer picks a different date (the submit button is
+ * disabled by the parent).
+ */
+function ClosedDayBlock({
+  dayOfWeek,
+  date,
+  settings,
+  fallbackOpeningHours,
+  onJump,
+}: {
+  dayOfWeek: number;
+  date: string;
+  settings: { reservationHours?: string | null };
+  fallbackOpeningHours: Array<{ dayOfWeek: number; isOpen: boolean; service?: string | null }>;
+  onJump: (next: string) => void;
+}) {
+  const dayLabel = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dayOfWeek] ?? "this day";
+  const nextOpen = findNextOpenDate(
+    settings.reservationHours,
+    fallbackOpeningHours,
+    (() => {
+      const d = new Date(`${date}T00:00:00`);
+      d.setDate(d.getDate() + 1);
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    })(),
+  );
+  return (
+    <div className="text-sm text-rose-800 bg-rose-50 border border-rose-200 rounded-lg px-3 py-3 space-y-2">
+      <div>
+        We&apos;re closed on <strong>{dayLabel}</strong> — please pick a different date.
+      </div>
+      {nextOpen && (
+        <button
+          type="button"
+          onClick={() => onJump(nextOpen)}
+          className="text-xs font-semibold underline hover:no-underline"
+        >
+          Jump to next open day ({new Date(`${nextOpen}T00:00:00`).toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric" })})
+        </button>
+      )}
+    </div>
+  );
+}
+
 function generateTimeSlots(openHHMM: string, closeHHMM: string, stepMin: number): string[] {
   const [oh, om] = openHHMM.split(":").map(Number);
   const [ch, cm] = closeHHMM.split(":").map(Number);
@@ -135,8 +183,27 @@ export function ReservationModal({
 
   const validation = useMemo(() => validateBooking(settings, { date, time, partySize }, new Date()), [settings, date, time, partySize]);
 
-  // No auto-jump on mount — we always render slots now (the "closed
-  // day" UX became a soft warning) so landing on today is fine.
+  // On modal mount, auto-snap the date to the next open day IF today
+  // is explicitly closed (per admin hours). When today is open or the
+  // day is ambiguous (no row for the day-of-week) we stay on today —
+  // we only fast-forward when the owner clearly marked the day off.
+  useEffect(() => {
+    const next = findNextOpenDate(settings.reservationHours, fallbackOpeningHours as any, todayISO());
+    // Only auto-jump when "today" is explicitly closed AND we found
+    // a different, open day to land on.
+    const todayClosedExplicit = (() => {
+      const today = todayISO();
+      const dow = new Date(`${today}T00:00:00`).getDay();
+      let hoursMap: Record<string, { enabled?: boolean }> = {};
+      try { hoursMap = JSON.parse(settings.reservationHours || "{}"); } catch {}
+      const explicit = hoursMap[String(dow)];
+      if (explicit) return explicit.enabled === false;
+      const row = (fallbackOpeningHours as any[]).find((h) => h.dayOfWeek === dow);
+      return !!row && row.isOpen === false;
+    })();
+    if (todayClosedExplicit && next && next !== date) setDate(next);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Build time slot list from the day's reservation hours
   const dayOfWeek = useMemo(() => {
@@ -180,32 +247,43 @@ export function ReservationModal({
     });
   }
 
-  const dayLooksClosed = useMemo(() => {
-    if (dayHours && dayHours.enabled === false) return true;
-    if (dayHours) return false; // explicit reservation hours for this day, enabled
-    if (fallbackRow) return !fallbackRow.isOpen;
-    // No row at all for this day-of-week; treat as ambiguous rather
-    // than definitely-closed so the customer isn't blocked.
-    return false;
+  // Three-state day status (Luigi 2026-06-01, GloriaFood-strict):
+  //   "open"        — owner explicitly marked this day open OR provided
+  //                   a reservationHours row with enabled !== false
+  //   "closedHard"  — owner explicitly marked the day off in admin
+  //                   (isOpen:false row OR reservationHours enabled:false).
+  //                   BLOCK booking — match GloriaFood: no requests
+  //                   get through for explicitly-closed days.
+  //   "ambiguous"   — no row at all for the day-of-week. Show a soft
+  //                   warning + still allow the request so an
+  //                   incomplete setup doesn't kill the flow.
+  const dayStatus: "open" | "closedHard" | "ambiguous" = useMemo(() => {
+    if (dayHours) {
+      return dayHours.enabled === false ? "closedHard" : "open";
+    }
+    if (fallbackRow) {
+      return fallbackRow.isOpen === false ? "closedHard" : "open";
+    }
+    return "ambiguous";
   }, [dayHours, fallbackRow]);
+  const dayLooksClosed = dayStatus === "closedHard";
 
   const timeSlots = useMemo(() => {
     // Explicit reservationHours row wins (per-day owner override).
     if (dayHours && dayHours.enabled !== false) {
       return generateTimeSlots(dayHours.open || "10:00", dayHours.close || "22:00", 30);
     }
-    // Service-aware row from OpeningHours. Use its hours when the
-    // row says open. When the row says closed (or no row exists)
-    // fall through to a default 10-22 window — the customer can
-    // still book and the kitchen decides.
+    // Service-aware row from OpeningHours when it says open.
     if (fallbackRow && fallbackRow.isOpen) {
       return generateTimeSlots(fallbackRow.openTime || "10:00", fallbackRow.closeTime || "22:00", 30);
     }
-    // ALWAYS return SOMETHING so the customer never hits a dead end.
-    // The dayLooksClosed warning above sets expectations; the slot
-    // dropdown still lets them request a time.
+    // Hard-closed days: empty list. The JSX below switches to the
+    // "We're closed on Monday — pick another date" + Jump-to-next CTA.
+    if (dayStatus === "closedHard") return [];
+    // Ambiguous (no row): permissive default so an incomplete setup
+    // doesn't block the customer.
     return generateTimeSlots("10:00", "22:00", 30);
-  }, [dayHours, fallbackRow]);
+  }, [dayHours, fallbackRow, dayStatus]);
 
   const partySizeRange = useMemo(() => {
     const out: number[] = [];
@@ -214,6 +292,13 @@ export function ReservationModal({
   }, [settings.minGuests, settings.maxGuests]);
 
   const submit = async () => {
+    if (dayLooksClosed) {
+      // Belt-and-suspenders to the disabled submit button — refuse
+      // to fire the request when the day is explicitly closed in
+      // admin hours. GloriaFood-strict: no requests get through.
+      toast.error("We're closed on the selected date — please pick another day.");
+      return;
+    }
     if (!validation.ok) { toast.error(validation.reason); return; }
     if (!name.trim()) { toast.error(tr("nameAndPhone")); return; }
     if (requireCustomerPhone && !phone.trim()) { toast.error(tr("nameAndPhone")); return; }
@@ -303,29 +388,41 @@ export function ReservationModal({
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
                   <Clock className="w-4 h-4" /> {tr("selectTime")}
                 </label>
-                {/* Soft warning when the day APPEARS closed in the
-                    hours data. We still render the slot picker so the
-                    customer can submit a request — the kitchen approves
-                    or declines. Matches GloriaFood's pattern and gets
-                    us out of the "false-closed" UX rabbit hole when
-                    the underlying data isn't quite what we expect. */}
-                {dayLooksClosed && (
-                  <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-2">
-                    Heads up: this date may be outside our usual reservation hours.
-                    You can still submit a request and we&apos;ll confirm if we can fit you in.
-                  </p>
-                )}
-                {false ? (() => null)() : (
-                  <select
-                    value={time}
-                    onChange={e => setTime(e.target.value)}
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
-                    style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                  >
-                    {timeSlots.map(t => (
-                      <option key={t} value={t}>{t}</option>
-                    ))}
-                  </select>
+                {/* GloriaFood-strict closed-day handling:
+                    - "closedHard" (owner explicitly marked off in
+                      admin) → block booking with a red banner + Jump
+                      CTA. No time picker.
+                    - "ambiguous" (no row at all for the day) → amber
+                      soft warning above the time picker; submission
+                      allowed so an incomplete setup doesn't kill the
+                      flow entirely.
+                    - "open" → just the time picker. */}
+                {dayStatus === "closedHard" ? (
+                  <ClosedDayBlock
+                    dayOfWeek={dayOfWeek}
+                    date={date}
+                    settings={settings}
+                    fallbackOpeningHours={fallbackOpeningHours}
+                    onJump={(d) => setDate(d)}
+                  />
+                ) : (
+                  <>
+                    {dayStatus === "ambiguous" && (
+                      <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-2">
+                        Heads up: we haven&apos;t set hours for this day. Submit a request anyway and we&apos;ll confirm if we can fit you in.
+                      </p>
+                    )}
+                    <select
+                      value={time}
+                      onChange={e => setTime(e.target.value)}
+                      className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
+                      style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                    >
+                      {timeSlots.map(t => (
+                        <option key={t} value={t}>{t}</option>
+                      ))}
+                    </select>
+                  </>
                 )}
               </div>
 
