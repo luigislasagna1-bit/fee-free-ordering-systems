@@ -249,24 +249,45 @@ function computePrice(
   const { toppings } = customization;
 
   if (config.extraToppingPrice > 0) {
-    // Included-toppings model: first N whole toppings free, then charge per topping
+    // Included-toppings model. The "included" count is denominated in
+    // WHOLE toppings, but customers can split a whole-credit across
+    // two halves on opposite sides (left + right). Internally we
+    // track credit in HALF UNITS where 1 whole topping = 2 half
+    // units. A whole-pizza topping costs 2 half-units (= 1 whole),
+    // a half-pizza topping costs 1 half-unit. So 1 included topping
+    // covers either 1 whole OR 2 halves on different sides.
+    //
+    // Luigi 2026-06-01: customer picked Pepperoni (L) + Ground Beef (R)
+    // on a "1 topping included" Monday Special and was charged for
+    // both halves. With the fix, 1 included = 2 half-credits → both
+    // halves consume 1 credit each → total $0 surcharge.
     let toppingTotal = 0;
-    let includedLeft = config.includedToppings;
+    let halfCreditsLeft = (config.includedToppings || 0) * 2;
 
     for (const t of toppings) {
       const isHalf = t.placement !== "whole";
-      const baseCharge = isHalf
+      // baseUnit = the cost of the topping itself (already halved
+      // when isHalf). extraQtyUnit = the surcharge for "extra"
+      // quantity. We discount the baseUnit when inclusion credits
+      // apply, but the customer always pays the extra-qty surcharge —
+      // "extra cheese on a free topping" still costs the extra bump.
+      const baseUnit = isHalf
         ? config.extraToppingPrice * config.halfToppingMultiplier
         : config.extraToppingPrice;
+      const extraQtyUnit = t.quantity === "extra"
+        ? baseUnit * config.extraQuantityMultiplier
+        : 0;
+      let charge = t.quantity === "light" ? 0 : baseUnit + extraQtyUnit;
 
-      let charge = baseCharge;
-      if (t.quantity === "extra") charge += baseCharge * config.extraQuantityMultiplier;
-      else if (t.quantity === "light") charge = 0;
-
-      // Deduct from included toppings (only whole toppings consume inclusions)
-      if (!isHalf && t.quantity !== "light" && includedLeft > 0) {
-        charge = Math.max(0, charge - config.extraToppingPrice);
-        includedLeft--;
+      if (t.quantity !== "light" && halfCreditsLeft > 0) {
+        const creditCost = isHalf ? 1 : 2;
+        const used = Math.min(creditCost, halfCreditsLeft);
+        // Prorate the discount when we only have partial credit
+        // (e.g. 1 half-credit left and customer picks a whole topping
+        // → cover half the base, charge the other half).
+        const discount = baseUnit * (used / creditCost);
+        charge = Math.max(0, charge - discount);
+        halfCreditsLeft -= used;
       }
 
       toppingTotal += charge;
