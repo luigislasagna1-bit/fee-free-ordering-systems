@@ -27,6 +27,36 @@ export interface OpeningHoursRow {
   openTime: string | null;
   closeTime: string | null;
   closesNextDay?: boolean;
+  /** Per-service override scope (null = default kitchen hours).
+   *  Added 2026-05-31 when per-service hours shipped. The day-status
+   *  helpers below pick the default row over any service-scoped row
+   *  for "is the kitchen open" answers — service-scoped rows are for
+   *  the slot pickers in the corresponding flows (pickup / delivery /
+   *  reservation), not for the global "open now" badge. */
+  service?: string | null;
+}
+
+/**
+ * Pick the row that authoritatively represents "is the kitchen open
+ * for this day?" Prefers the default (service=null) row when one
+ * exists, falls back to the first service-scoped row otherwise. Used
+ * by both day-level and live status helpers so they don't accidentally
+ * read a reservation- or delivery-scoped row as the global state.
+ *
+ * Luigi 2026-06-01: checkout was saying "We're closed" at 1:53 PM on
+ * a day the kitchen was open because openingHours contained multiple
+ * rows for the same day (default + reservation) and Array.find picked
+ * a service row marked closed. This helper makes the choice explicit.
+ */
+function pickDayRow(
+  rows: OpeningHoursRow[] | undefined | null,
+  dow: number,
+): OpeningHoursRow | undefined {
+  const dayRows = (rows ?? []).filter((h) => h.dayOfWeek === dow);
+  if (dayRows.length === 0) return undefined;
+  return (
+    dayRows.find((h) => h.service == null || h.service === "") ?? dayRows[0]
+  );
 }
 
 export interface HoursStatus {
@@ -137,7 +167,7 @@ export function statusForToday(
     return { isOpen: false, openRange: "", holidayName: todayIsHoliday.name };
   }
   const { dow } = localDowAndHHMM(now, timezone);
-  const row = (hours ?? []).find((h) => h.dayOfWeek === dow);
+  const row = pickDayRow(hours, dow);
   if (!row || !row.isOpen) return { isOpen: false, openRange: "" };
   return {
     isOpen: true,
@@ -178,8 +208,8 @@ export function liveOpenStatus(
   // while still inside the previous day's open window.
   const { dow, hhmm: nowHHMM } = localDowAndHHMM(now, timezone);
   const yesterdayDow = (dow + 6) % 7;
-  const today = (hours ?? []).find((h) => h.dayOfWeek === dow);
-  const yesterday = (hours ?? []).find((h) => h.dayOfWeek === yesterdayDow);
+  const today = pickDayRow(hours, dow);
+  const yesterday = pickDayRow(hours, yesterdayDow);
 
   // (1) Are we still inside yesterday's overnight window? E.g. it's now
   //     1:30am Saturday and Friday's row was open 5pm → 2am.
@@ -256,7 +286,10 @@ export function nextOpenAt(
   // viable schedule; bail null so the caller picks a sane fallback.)
   for (let offset = 0; offset < 14; offset++) {
     const targetDow = (dow + offset) % 7;
-    const row = hours.find((h) => h.dayOfWeek === targetDow);
+    // Prefer the default (service=null) row — service-scoped rows
+    // (pickup / delivery / reservation) are for slot pickers, not for
+    // "is the kitchen open at all". Same fix as liveOpenStatus above.
+    const row = pickDayRow(hours, targetDow);
     if (!row || !row.isOpen || !row.openTime) continue;
 
     // Build the YYYY-MM-DD for `offset` days from `now` in the
