@@ -2,18 +2,26 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { Loader2, MailCheck } from "lucide-react";
 
 export function LoginForm({ slug }: { slug: string }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // When the login API tells us "this is a guest-order customer who
+  // hasn't set a password yet" we render an emerald info banner with
+  // the friendly message it returned (instead of the red error) +
+  // a "Resend" button that re-fires the login to send another email.
+  // Luigi 2026-06-01 — closes the dead-end where guests who'd ordered
+  // before saw "wrong password" with no recovery path.
+  const [needsSetup, setNeedsSetup] = useState<string | null>(null);
   const [form, setForm] = useState({ email: "", password: "" });
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
     setError(null);
+    setNeedsSetup(null);
     try {
       const res = await fetch(`/api/restaurants/${encodeURIComponent(slug)}/account/login`, {
         method: "POST",
@@ -21,6 +29,10 @@ export function LoginForm({ slug }: { slug: string }) {
         body: JSON.stringify(form),
       });
       const data = await res.json().catch(() => ({}));
+      if (res.status === 409 && data?.code === "needs_password_setup") {
+        setNeedsSetup(data.message ?? "We've emailed you a link to set your password.");
+        return;
+      }
       if (!res.ok) {
         setError(data.error ?? "Sign-in failed. Try again.");
         return;
@@ -58,6 +70,15 @@ export function LoginForm({ slug }: { slug: string }) {
       </div>
       {error && (
         <p className="text-xs text-red-600">{error}</p>
+      )}
+      {needsSetup && (
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 flex items-start gap-2">
+          <MailCheck className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+          <div className="text-xs text-emerald-900 leading-relaxed">
+            <p className="font-semibold mb-1">Welcome back!</p>
+            <p>{needsSetup}</p>
+          </div>
+        </div>
       )}
       <div className="flex justify-end -mt-1">
         <a
