@@ -2073,64 +2073,63 @@ export function OrderingPageClient({
                       setActivePromoModal(promo);
                     }
                   }}
-                  className="flex-shrink-0 w-72 h-36 rounded-xl text-white shadow-sm relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
-                  // Split layout when an owner image is present (Luigi
-                  // 2026-06-01): image on the LEFT shows cleanly without
-                  // a dark overlay competing with it; theme-color text
-                  // panel on the RIGHT keeps the copy readable on a
-                  // solid background instead of floating over imagery.
-                  // No image → full theme gradient (unchanged fallback).
+                  className="flex-shrink-0 w-72 h-36 rounded-xl text-white shadow-md relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
+                  // Full-cover image with a gradient curtain on the
+                  // RIGHT half for text legibility (Luigi 2026-06-01
+                  // v3): image fills the whole tile (covers it edge
+                  // to edge), then a transparent-→-theme-color
+                  // gradient fades in from the centre to the right
+                  // edge so the text panel reads cleanly against a
+                  // solid color while the left half stays purely
+                  // image. No-image fallback unchanged: full theme
+                  // gradient.
                   style={
                     hasImage
-                      ? undefined
+                      ? {
+                          backgroundImage: `url("${imageUrl}")`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          backgroundRepeat: "no-repeat",
+                          backgroundColor: theme.primaryColor,
+                        }
                       : {
                           background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)`,
                         }
                   }
                 >
                   {hasImage && (
-                    <>
-                      {/* Left half: owner image, full clarity. Using
-                          background-image (not <img>) avoids the mobile
-                          broken-image flash if the URL is unreachable —
-                          the right-side panel + the page background
-                          show through cleanly. */}
-                      <div
-                        className="absolute inset-y-0 left-0 w-2/5"
-                        style={{
-                          backgroundImage: `url("${imageUrl}")`,
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                          backgroundRepeat: "no-repeat",
-                          backgroundColor: theme.primaryColor,
-                        }}
-                      />
-                      {/* Right ~60% panel — solid theme colour at the
-                          far right, fading to transparent at the seam
-                          for a soft blend with the image. */}
-                      <div
-                        className="absolute inset-y-0 right-0 w-3/4 pointer-events-none"
-                        style={{
-                          background: `linear-gradient(90deg, transparent 0%, ${theme.primaryColor} 35%, ${theme.primaryColor} 100%)`,
-                        }}
-                      />
-                    </>
+                    /* Right-side gradient curtain — transparent at
+                       the centre fading to solid theme colour at the
+                       right edge. Keeps the text panel legible
+                       without dimming the rest of the image. */
+                    <div
+                      className="absolute inset-y-0 right-0 w-3/5 pointer-events-none"
+                      style={{
+                        background: `linear-gradient(90deg, transparent 0%, ${theme.primaryColor}d9 35%, ${theme.primaryColor} 70%)`,
+                      }}
+                    />
                   )}
-                  {/* Foreground content — sits on top of the panel
-                      stack. With an image we right-align the text into
-                      the colored panel; without an image we left-align
-                      to fill the full card. */}
+                  {/* Foreground content — sits on top of the image
+                      + curtain. Right-aligned + bolder type when an
+                      image is present so it pops against the photo.
+                      Subtle text-shadow gives the copy extra grip on
+                      the gradient seam. */}
                   <div
                     className={`relative h-full p-4 flex flex-col ${
-                      hasImage ? "items-end text-right pl-[40%]" : ""
+                      hasImage ? "items-end text-right pl-[42%]" : ""
                     }`}
+                    style={
+                      hasImage
+                        ? { textShadow: "0 1px 2px rgba(0,0,0,0.35)" }
+                        : undefined
+                    }
                   >
-                    <div className="text-[10px] uppercase tracking-wider font-bold opacity-80 mb-1">
+                    <div className={`text-[10px] uppercase tracking-wider font-extrabold mb-1 ${hasImage ? "opacity-95" : "opacity-80"}`}>
                       {t("promoLabel")}
                     </div>
-                    <div className="text-base font-extrabold leading-tight mb-1">{headline}</div>
+                    <div className={`leading-tight mb-1 ${hasImage ? "text-lg font-black" : "text-base font-extrabold"}`}>{headline}</div>
                     {promo.description && (
-                      <div className="text-xs opacity-90 leading-snug mb-2 line-clamp-2">
+                      <div className={`leading-snug mb-2 line-clamp-2 ${hasImage ? "text-xs font-semibold opacity-95" : "text-xs opacity-90"}`}>
                         {promo.description}
                       </div>
                     )}
