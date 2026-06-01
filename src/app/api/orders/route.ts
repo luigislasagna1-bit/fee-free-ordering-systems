@@ -102,6 +102,32 @@ export async function POST(req: NextRequest) {
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
+    // ── Paused-service guard (Luigi 2026-06-01) ─────────────────────────────
+    // Server-side mirror of the customer-page banner + disabled button.
+    // A tampered client could POST an order for a paused service; this
+    // check refuses it. orderType is one of pickup / delivery / dine_in /
+    // catering / take_out. The per-service pausedUntil columns auto-resume
+    // when their timestamp passes — same logic on both sides.
+    const pauseField = (() => {
+      switch (type) {
+        case "pickup":   return (restaurant as any).pickupPausedUntil;
+        case "delivery": return (restaurant as any).deliveryPausedUntil;
+        case "dine_in":  return (restaurant as any).dineInPausedUntil;
+        case "catering": return (restaurant as any).cateringPausedUntil;
+        default:         return null; // take_out reuses pickup-style; covered above for the known set
+      }
+    })();
+    if (pauseField && new Date(pauseField).getTime() > Date.now()) {
+      const resumesAt = new Date(pauseField).toLocaleString();
+      return NextResponse.json(
+        {
+          error: `${type} is temporarily paused by the restaurant. Estimated to resume around ${resumesAt}.`,
+          code: "service_paused",
+        },
+        { status: 423 },
+      );
+    }
+
     // ── Server-side price calculation ───────────────────────────────────────
     // Menu items may live on the parent restaurant if this location inherits
     // the brand menu (useBrandMenu=true). Resolve the effective menu owner

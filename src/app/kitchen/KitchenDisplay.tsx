@@ -10,6 +10,7 @@ import {
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
 import { PrinterSetupModal } from "./PrinterSetupModal";
+import { RestaurantStatusModal } from "./RestaurantStatusModal";
 import { DispatchModeToggle } from "./DispatchModeToggle";
 import { OrderDetail } from "./OrderDetail";
 import { RejectOrderModal } from "./RejectOrderModal";
@@ -617,6 +618,43 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // user can switch between them from within either modal.
   const [showPrinterSetup, setShowPrinterSetup] = useState(false);
   const [showDirectPrinterSetup, setShowDirectPrinterSetup] = useState(false);
+  // Restaurant Status modal — pause services + mark items out of
+  // stock. Luigi 2026-06-01. Pulls fresh restaurant pause-state +
+  // refetches orders/menu when changes are saved so the kitchen
+  // tablet reflects the new status without a manual reload.
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [restaurantPauses, setRestaurantPauses] = useState<{
+    pickup: string | null; delivery: string | null; dineIn: string | null;
+    catering: string | null; takeOut: string | null; reservations: string | null;
+  }>({
+    pickup: (restaurant as any)?.pickupPausedUntil ?? null,
+    delivery: (restaurant as any)?.deliveryPausedUntil ?? null,
+    dineIn: (restaurant as any)?.dineInPausedUntil ?? null,
+    catering: (restaurant as any)?.cateringPausedUntil ?? null,
+    takeOut: (restaurant as any)?.takeOutPausedUntil ?? null,
+    reservations: (restaurant as any)?.reservationsPausedUntil ?? null,
+  });
+  const refreshRestaurantPauses = useCallback(async () => {
+    try {
+      const r = await fetch("/api/kitchen/restaurant-status");
+      if (!r.ok) return;
+      const d = await r.json();
+      setRestaurantPauses({
+        pickup: d.pickupPausedUntil ?? null,
+        delivery: d.deliveryPausedUntil ?? null,
+        dineIn: d.dineInPausedUntil ?? null,
+        catering: d.cateringPausedUntil ?? null,
+        takeOut: d.takeOutPausedUntil ?? null,
+        reservations: d.reservationsPausedUntil ?? null,
+      });
+    } catch { /* noop */ }
+  }, []);
+  const anyServicePaused = (() => {
+    const now = Date.now();
+    return Object.values(restaurantPauses).some(
+      (v) => v && new Date(v).getTime() > now,
+    );
+  })();
   const [printerSettings, setPrinterSettings] = useState<PrinterSettings | null>(null);
   // Acknowledged = user pressed "Silence" while the bell was ringing. Bell
   // stays quiet until a *new* pending order arrives (detected in
@@ -1877,6 +1915,23 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             </span>
           </button>
 
+          {/* Restaurant Status — pause services + mark out of stock.
+              When any service is paused, the button shows amber so
+              the kitchen sees the active state at a glance. Luigi
+              2026-06-01 GloriaFood-parity. */}
+          <button
+            type="button"
+            onClick={() => setShowStatusModal(true)}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
+              anyServicePaused
+                ? "border-amber-500/60 text-amber-600 bg-amber-500/10"
+                : "border-gray-500/30 text-gray-600"
+            } ${t.btn}`}
+            title="Pause services or mark items out of stock"
+          >
+            {anyServicePaused ? "⏸ Paused" : "Status"}
+          </button>
+
           {/* Delivery dispatch toggle — only renders for restaurants on
               "both" mode (own + ShipDay), where staff can swap which
               source new orders dispatch to. Hidden for own-only or
@@ -2433,6 +2488,20 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           themeMode={themeMode}
         />
       )}
+
+      <RestaurantStatusModal
+        open={showStatusModal}
+        onClose={() => setShowStatusModal(false)}
+        acceptsPickup={!!(restaurant as any)?.acceptsPickup}
+        acceptsDelivery={!!(restaurant as any)?.acceptsDelivery}
+        acceptsDineIn={!!(restaurant as any)?.acceptsDineIn}
+        acceptsCatering={!!(restaurant as any)?.acceptsCatering}
+        acceptsTakeOut={!!(restaurant as any)?.acceptsTakeOut}
+        acceptsReservations={!!(restaurant as any)?.acceptsReservations}
+        pausedUntilByService={restaurantPauses}
+        onChange={refreshRestaurantPauses}
+      />
+
 
       {/* First-run guided tour. Renders nothing if the operator has
           previously skipped or completed it on this device for this

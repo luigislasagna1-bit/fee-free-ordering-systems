@@ -1967,33 +1967,93 @@ export function OrderingPageClient({
       )}
 
       <div className="max-w-5xl mx-auto px-4 py-5">
+        {/* ── Paused-service banner ──────────────────────────────────────
+            Reads the per-service pausedUntil columns we added on
+            Restaurant. When non-null AND in the future, that service
+            is paused. Auto-clears the moment the timestamp passes
+            (next render). Luigi 2026-06-01 GloriaFood-parity. */}
+        {(() => {
+          const r = restaurant as any;
+          const nowMs = Date.now();
+          const pausedNames: string[] = [];
+          const earliestResume: { ms: number; label: string } | null = (() => {
+            const entries = [
+              ["Pickup", r.pickupPausedUntil],
+              ["Delivery", r.deliveryPausedUntil],
+              ["Dine-in", r.dineInPausedUntil],
+              ["Catering", r.cateringPausedUntil],
+              ["Take & Bake", r.takeOutPausedUntil],
+              ["Reservations", r.reservationsPausedUntil],
+            ] as const;
+            let best: { ms: number; label: string } | null = null;
+            for (const [name, val] of entries) {
+              if (!val) continue;
+              const ms = new Date(val).getTime();
+              if (ms > nowMs) {
+                pausedNames.push(name);
+                if (!best || ms < best.ms) best = { ms, label: name };
+              }
+            }
+            return best;
+          })();
+          if (pausedNames.length === 0) return null;
+          return (
+            <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm">
+              <div className="font-semibold text-amber-900 mb-0.5">
+                ⏸ {pausedNames.join(", ")} {pausedNames.length === 1 ? "is" : "are"} temporarily paused
+              </div>
+              <div className="text-xs text-amber-800">
+                The kitchen is briefly stopped from taking new {pausedNames.join(" / ").toLowerCase()} orders.
+                {earliestResume && (
+                  <> Estimated to resume around{" "}
+                    {new Date(earliestResume.ms).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })}
+                    .
+                  </>
+                )}
+              </div>
+            </div>
+          );
+        })()}
+
         {/* ── Order type ───────────────────────────────────────────────── */}
         <div className="flex gap-3 mb-5">
-          {restaurant.acceptsPickup && (
-            <button
-              onClick={() => setOrderType("pickup")}
-              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold border-2 transition text-sm"
-              style={orderType === "pickup"
-                ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
-                : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
-              }
-            >
-              <ShoppingBag className="w-4 h-4" /> {t("pickup")} · {restaurant.estimatedPickup} {t("minutes")}
-            </button>
-          )}
-          {restaurant.acceptsDelivery && (
-            <button
-              onClick={() => setOrderType("delivery")}
-              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold border-2 transition text-sm"
-              style={orderType === "delivery"
-                ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
-                : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
-              }
-            >
-              <Truck className="w-4 h-4" /> {t("delivery")} · {estimatedDeliveryMinutes} {t("minutes")}
-              {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{fmt(baseDeliveryFee)})</span>}
-            </button>
-          )}
+          {restaurant.acceptsPickup && (() => {
+            const until = (restaurant as any).pickupPausedUntil;
+            const paused = !!until && new Date(until).getTime() > Date.now();
+            return (
+              <button
+                onClick={() => !paused && setOrderType("pickup")}
+                disabled={paused}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                style={orderType === "pickup"
+                  ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
+                  : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
+                }
+              >
+                <ShoppingBag className="w-4 h-4" /> {t("pickup")} · {restaurant.estimatedPickup} {t("minutes")}
+                {paused && <span className="text-xs">(paused)</span>}
+              </button>
+            );
+          })()}
+          {restaurant.acceptsDelivery && (() => {
+            const until = (restaurant as any).deliveryPausedUntil;
+            const paused = !!until && new Date(until).getTime() > Date.now();
+            return (
+              <button
+                onClick={() => !paused && setOrderType("delivery")}
+                disabled={paused}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                style={orderType === "delivery"
+                  ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
+                  : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
+                }
+              >
+                <Truck className="w-4 h-4" /> {t("delivery")} · {estimatedDeliveryMinutes} {t("minutes")}
+                {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{fmt(baseDeliveryFee)})</span>}
+                {paused && <span className="text-xs">(paused)</span>}
+              </button>
+            );
+          })()}
         </div>
 
         {/* "Our delivery areas" panel was moved to the Restaurant Info page so

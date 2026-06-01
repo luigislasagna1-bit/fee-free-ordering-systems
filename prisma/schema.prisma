@@ -61,6 +61,20 @@ model Restaurant {
   acceptsCatering      Boolean @default(false)
   acceptsTakeOut       Boolean @default(false)
   acceptsReservations  Boolean @default(false)
+  /// Per-service pause timestamps. When non-null AND in the future,
+  /// the corresponding service is paused — customers see a banner +
+  /// the order button for that service is blocked. When the timestamp
+  /// passes (or is null) the service auto-resumes on the next page
+  /// load — no cron required. Luigi 2026-06-01 GloriaFood-parity:
+  /// kitchen needs a "pause for the rest of the day" / "pause for 1
+  /// hour" button when they're slammed, so they can stop new orders
+  /// without disabling the service globally.
+  pickupPausedUntil       DateTime?
+  deliveryPausedUntil     DateTime?
+  dineInPausedUntil       DateTime?
+  cateringPausedUntil     DateTime?
+  takeOutPausedUntil      DateTime?
+  reservationsPausedUntil DateTime?
   serviceSettings      String? // JSON: per-service { displayName, description, estimatedTime }
   /// Minimum advance notice (in HOURS) required for catering orders.
   /// When the cart contains any item flagged `isCatering` — or any item
