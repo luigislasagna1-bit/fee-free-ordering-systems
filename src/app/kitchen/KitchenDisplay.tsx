@@ -426,8 +426,20 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     !!restaurant?.printNodeEnabled,
   );
 
+  // Track which reservation IDs the kitchen has already seen — same
+  // pattern as seenIdsRef for orders. Lets the fetch loop tell
+  // "brand-new arrival" (worth ringing/toasting) from "still in the
+  // upcoming list since last poll" (already acknowledged). Seeded
+  // empty so the very first poll doesn't ring for every existing
+  // booking — we seed inside the first fetchRes() below.
+  const seenReservationIdsRef = useRef<Set<string> | null>(null);
+
   // Poll upcoming reservations whenever the Reservations OR Orders tab is open
-  // (Orders tab shows reservations alongside the order list).
+  // (Orders tab shows reservations alongside the order list). Also drives
+  // the kitchen ring/toast for NEW reservation arrivals — manual-accept
+  // (status "pending") re-arms the alarm loop the same way a new order
+  // does; auto-accept (status "confirmed") shows a single toast so staff
+  // know a booking just landed without the alarm cadence.
   useEffect(() => {
     if (activeTab !== "reservations" && activeTab !== "orders") return;
     let cancelled = false;
@@ -435,8 +447,44 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       try {
         const res = await fetch("/api/admin/reservations/upcoming");
         if (!res.ok) return;
-        const data = await res.json();
-        if (!cancelled) setReservations(data);
+        const data: KitchenReservation[] = await res.json();
+        if (cancelled) return;
+        // Seed the seen-set on the FIRST poll so existing bookings
+        // don't trigger an alarm on tab-open. Subsequent polls compare
+        // against this baseline to find new arrivals.
+        if (seenReservationIdsRef.current === null) {
+          seenReservationIdsRef.current = new Set(data.map((r) => r.id));
+        } else {
+          const seen = seenReservationIdsRef.current;
+          const fresh = data.filter((r) => !seen.has(r.id));
+          if (fresh.length > 0) {
+            const newPending = fresh.filter((r) => r.status === "pending");
+            const newConfirmed = fresh.filter((r) => r.status === "confirmed");
+            if (newPending.length > 0) {
+              // Manual-accept arrival → re-arm the kitchen alarm.
+              // Mirrors the order-side "newPending" branch in
+              // fetchOrders. Same alarm loop will keep ringing until
+              // staff acknowledge (silence button) or accept/reject
+              // each booking via the reservation list.
+              setAcknowledged(false);
+              toast(
+                `🔔 ${newPending.length} new reservation${newPending.length > 1 ? "s" : ""} — tap to accept`,
+                { icon: "📅", duration: 8000 },
+              );
+            }
+            if (newConfirmed.length > 0) {
+              // Auto-accept arrival → single chime (toast only).
+              // Doesn't re-arm the alarm — staff get the heads-up
+              // without the prep-rush cadence.
+              toast(
+                `📅 ${newConfirmed.length} new reservation${newConfirmed.length > 1 ? "s" : ""} confirmed`,
+                { icon: "✅", duration: 5000 },
+              );
+            }
+            fresh.forEach((r) => seen.add(r.id));
+          }
+        }
+        setReservations(data);
       } catch {}
     };
     fetchRes();
@@ -995,7 +1043,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const pendingCount = orders.filter(
     (o) => o.status === "pending" && !(o.alertAt && new Date(o.alertAt).getTime() > nowMs),
   ).length;
-  const alerting = pendingCount > 0 && !acknowledged;
+  // Pending reservations (manual-accept mode arrivals not yet
+  // accepted/declined by staff) re-arm the alarm right alongside
+  // pending orders. The existing alarm-loop reads pendingCount, so
+  // adding reservations here is the single hook that ties the
+  // reservation-side ring to the order-side cadence — no duplicate
+  // loop required. Luigi 2026-06-01: "the ring should be the same".
+  const pendingReservationCount = reservations.filter((r) => r.status === "pending").length;
+  const alerting = (pendingCount + pendingReservationCount) > 0 && !acknowledged;
 
   // Silence the current alarm. Bell stops; the visual "X new" badge
   // stays so the kitchen still sees there's work waiting. Auto-cleared

@@ -384,6 +384,13 @@ interface SimpleSettingsForm {
    *  the schema default + GloriaFood's out-of-the-box behaviour. */
   slotLengthMinutes: number;
   allowPreOrder: boolean;
+  /** Manual vs automatic acceptance. true = reservation arrives with
+   *  status="confirmed" (auto-accepted, kitchen shows toast only).
+   *  false = arrives with status="pending" (kitchen ring fires
+   *  continuously until staff accept/reject). Mirrors the
+   *  Restaurant.autoAcceptOrders pattern for ordering. GloriaFood
+   *  parity 2026-06-01. */
+  autoConfirm: boolean;
 }
 
 /** Allowed slot intervals. 5/10/15/20/30/45/60 covers the common
@@ -403,6 +410,7 @@ function SettingsTab() {
     holdMinutes: 15,
     slotLengthMinutes: 30,
     allowPreOrder: false,
+    autoConfirm: true,
   });
 
   useEffect(() => {
@@ -424,6 +432,7 @@ function SettingsTab() {
         holdMinutes: s?.holdMinutes ?? f.holdMinutes,
         slotLengthMinutes: s?.slotLengthMinutes ?? f.slotLengthMinutes,
         allowPreOrder: s?.allowPreOrder ?? f.allowPreOrder,
+        autoConfirm: typeof s?.autoConfirm === "boolean" ? s.autoConfirm : f.autoConfirm,
       }));
     }).finally(() => setLoading(false));
   }, []);
@@ -453,6 +462,7 @@ function SettingsTab() {
             holdMinutes: form.holdMinutes,
             slotLengthMinutes: form.slotLengthMinutes,
             allowPreOrder: form.allowPreOrder,
+            autoConfirm: form.autoConfirm,
           }),
         }),
         fetch("/api/restaurants/profile", {
@@ -489,6 +499,48 @@ function SettingsTab() {
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           Save Settings
         </button>
+      </div>
+
+      {/* Acceptance mode — manual vs auto. Mirrors the
+          Restaurant.autoAcceptOrders pattern on the ordering side.
+          Manual: kitchen ring fires continuously on each new
+          reservation until staff hit Accept or Decline. Auto: the
+          reservation arrives already confirmed; the kitchen sees a
+          one-time toast/chime instead of the alarm loop.
+          GloriaFood-parity (Luigi 2026-06-01). Only meaningful when
+          acceptsReservations=true, but harmless to leave editable
+          either way. */}
+      <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-5 transition-opacity ${form.acceptsReservations ? "" : "opacity-60"}`}>
+        <div className="flex items-center justify-between gap-4">
+          <div className="min-w-0">
+            <h3 className="font-semibold text-gray-900">Reservation acceptance</h3>
+            <p className="text-xs text-gray-500 mt-0.5">
+              {form.autoConfirm
+                ? "Automatic — reservations are confirmed instantly. Kitchen gets a one-time chime."
+                : "Manual — kitchen rings until you accept or decline each booking."}
+            </p>
+          </div>
+          <div className="flex items-center gap-1 rounded-lg border border-gray-200 overflow-hidden flex-shrink-0">
+            <button
+              type="button"
+              onClick={() => setForm(f => ({ ...f, autoConfirm: true }))}
+              className={`px-4 py-1.5 text-sm font-semibold transition ${
+                form.autoConfirm ? "bg-emerald-500 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              Automatic
+            </button>
+            <button
+              type="button"
+              onClick={() => setForm(f => ({ ...f, autoConfirm: false }))}
+              className={`px-4 py-1.5 text-sm font-semibold transition ${
+                !form.autoConfirm ? "bg-amber-500 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              Manual
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Master enable toggle */}
