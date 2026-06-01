@@ -5,6 +5,15 @@ import {
   ChevronDown, ChevronRight, Code2, MousePointerClick, ExternalLink,
 } from "lucide-react";
 
+/** Inline Facebook brand mark. Lucide doesn't ship a Facebook icon
+ *  (third-party brand marks aren't in their open set), so we use the
+ *  official brand glyph directly. Kept colourable via `currentColor`. */
+const FacebookGlyph = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+    <path d="M22 12C22 6.477 17.523 2 12 2S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12Z"/>
+  </svg>
+);
+
 /**
  * Widget customizer + per-platform install guide.
  *
@@ -552,6 +561,16 @@ export function LegacyWidgetClient({
         />
       )}
 
+      {/* ── Facebook Page install ────────────────────────────────────
+          GloriaFood-parity: their "facebook-ordering" page tells the
+          restaurant to paste a smart link into the Facebook "Start
+          Order" action button. Our equivalent is the public order URL
+          — Facebook accepts any https URL on that action button, so
+          there's no code to embed; just copy and paste. This block
+          surfaces the link with one-click copy + the same 3-step
+          instructions GloriaFood ships. */}
+      <FacebookInstall orderUrl={`${baseUrl}/order/${orderSlug}`} />
+
       {/* ── Platform install guide ───────────────────────────────────── */}
       <div className="rounded-xl border border-blue-200 bg-blue-50 p-5 space-y-4">
         <div className="flex items-center gap-2">
@@ -982,6 +1001,116 @@ function ReservationSnippet({
         </button>
       </div>
       <pre className="p-4 text-xs text-gray-100 overflow-x-auto whitespace-pre">{snippet}</pre>
+    </div>
+  );
+}
+
+/**
+ * Facebook Page install block. GloriaFood-equivalent of their
+ * /facebook-ordering walkthrough: paste the restaurant's order URL
+ * into Facebook's "Start Order" page action button — Facebook
+ * accepts any https link there, so there's nothing JS-related to
+ * embed. Just the link + the 3 manual clicks the restaurant has to
+ * make on Facebook's side.
+ *
+ * Implementation note: no API or persisted state — the link is
+ * derived from the restaurant's slug at render time. If the slug
+ * changes, the link auto-updates on the next page render.
+ */
+function FacebookInstall({ orderUrl }: { orderUrl: string }) {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(orderUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* noop — clipboard blocked (e.g. insecure context). Owner can
+         still triple-click the field below and Ctrl-C manually. */
+    }
+  };
+  return (
+    <div className="rounded-xl border border-[#1877F2]/30 bg-[#1877F2]/5 p-5 space-y-4">
+      <div className="flex items-center gap-2">
+        <FacebookGlyph className="w-5 h-5 text-[#1877F2]" />
+        <h3 className="font-semibold text-gray-900">Add a “Start Order” button to your Facebook Page</h3>
+      </div>
+
+      <p className="text-sm text-gray-700 leading-relaxed">
+        Turn your Facebook Page into an ordering surface — same pattern
+        Oracle GloriaFood uses. Facebook lets every Page owner pin one
+        action button at the top of the page; pick <strong>Start Order</strong>{" "}
+        and paste your smart link below. Customers tap it and land
+        straight on your menu, no app required.
+      </p>
+
+      <div>
+        <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">
+          Your smart link
+        </label>
+        <div className="flex items-stretch gap-2">
+          <input
+            readOnly
+            value={orderUrl}
+            onFocus={(e) => e.currentTarget.select()}
+            className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-gray-300 bg-white text-sm font-mono text-gray-800 focus:ring-2 focus:ring-[#1877F2] focus:outline-none"
+          />
+          <button
+            type="button"
+            onClick={copy}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#1877F2] hover:bg-[#1466d1] text-white text-sm font-semibold transition flex-shrink-0"
+          >
+            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? "Copied" : "Copy link"}
+          </button>
+        </div>
+        <p className="text-[11px] text-gray-500 mt-1">
+          This is your public ordering URL. Safe to share anywhere — on
+          Facebook, in Instagram bios, on business cards, in emails.
+        </p>
+      </div>
+
+      <ol className="space-y-3 text-sm text-gray-800">
+        <li className="flex gap-3">
+          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1877F2] text-white text-xs font-bold flex items-center justify-center">1</span>
+          <span>
+            On your Facebook Page, click the <strong>•••</strong> (three dots) menu →{" "}
+            <strong>Add Action Button</strong> → pick <strong>Start Order</strong>.
+          </span>
+        </li>
+        <li className="flex gap-3">
+          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1877F2] text-white text-xs font-bold flex items-center justify-center">2</span>
+          <span>
+            Paste the smart link above into the <strong>Website link</strong> field.
+          </span>
+        </li>
+        <li className="flex gap-3">
+          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1877F2] text-white text-xs font-bold flex items-center justify-center">3</span>
+          <span>
+            Click <strong>Save</strong>. The button now appears at the top of your Facebook
+            Page — every visitor can order in one tap.
+          </span>
+        </li>
+      </ol>
+
+      <div className="rounded-lg bg-white border border-gray-200 p-3 flex items-start gap-2">
+        <Info className="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5" />
+        <p className="text-xs text-gray-600 leading-relaxed">
+          The smart link also works inside Instagram bios, WhatsApp
+          Business profiles, Google Business Profile, TikTok bios, and
+          QR codes. Same link, every channel.
+        </p>
+      </div>
+
+      <a
+        href="https://www.facebook.com/pages/?category=your_pages"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#1877F2] hover:text-[#1466d1] transition"
+      >
+        Open my Facebook Pages
+        <ExternalLink className="w-3.5 h-3.5" />
+      </a>
     </div>
   );
 }
