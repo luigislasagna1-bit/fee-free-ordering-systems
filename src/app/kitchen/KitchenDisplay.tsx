@@ -485,17 +485,34 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 `📅 ${newConfirmed.length} new reservation${newConfirmed.length > 1 ? "s" : ""} confirmed`,
                 { icon: "✅", duration: 5000 },
               );
-              // Auto-print each confirmed reservation through the
-              // PrintNode pipe (the only reservation print path
-              // wired today — direct-LAN reservation printing is
-              // tracked separately). Skips silently when no
-              // PrintNode printer is configured — same posture as
-              // the order auto-print path. Luigi 2026-06-01.
-              if (
-                printerSettingsRef.current?.printNodeConnected &&
-                printerSettingsRef.current.selectedPrinterId
-              ) {
-                for (const r of newConfirmed) {
+              // Auto-print each confirmed reservation. Mirrors the
+              // order auto-print preference: direct LAN first when
+              // configured (fastest, no PrintNode dependency), then
+              // PrintNode as fallback. Skips silently when neither
+              // is configured — same posture as the order auto-print
+              // path. Luigi 2026-06-01 — full parity with orders.
+              const directCfg = getDirectPrinterConfig();
+              for (const r of newConfirmed) {
+                if (directCfg) {
+                  doPrintDirectReservation(r.id).catch((err) => {
+                    console.warn("[kds reservation auto-print direct] failed, trying PrintNode", err);
+                    if (
+                      printerSettingsRef.current?.printNodeConnected &&
+                      printerSettingsRef.current.selectedPrinterId
+                    ) {
+                      fetch("/api/kitchen/printnode/print", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ reservationId: r.id }),
+                      }).catch((e) =>
+                        console.warn("[kds reservation auto-print printnode]", e),
+                      );
+                    }
+                  });
+                } else if (
+                  printerSettingsRef.current?.printNodeConnected &&
+                  printerSettingsRef.current.selectedPrinterId
+                ) {
                   fetch("/api/kitchen/printnode/print", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -540,7 +557,32 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     };
   }, [activeTab]);
 
+  /** Print a reservation receipt. Mirrors the order print logic:
+   *    1. Try direct LAN printer first when configured — fastest, no
+   *       third-party dependency.
+   *    2. Fall back to PrintNode when the direct path isn't set up
+   *       (or fails) AND PrintNode is connected.
+   *    3. Nothing configured → toast + open printer setup modal.
+   *  Luigi 2026-06-01: reservations now have the same dual-path
+   *  setup as orders. */
   const printReservation = async (id: string) => {
+    const direct = getDirectPrinterConfig();
+    if (direct) {
+      try {
+        await doPrintDirectReservation(id);
+        toast.success("Reservation printed ✓");
+        return;
+      } catch (err) {
+        // Fall through to PrintNode if available, else surface a
+        // user-friendly error and stop. Mirrors doPrint().
+        console.warn("[reservation print] direct printer failed, trying PrintNode", err);
+        if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
+          const reason = (err as any)?.code || (err as any)?.message || "";
+          toast.error(nativePrinterErrorCopy(reason));
+          return;
+        }
+      }
+    }
     if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
       toast.error("No printer configured. Open Printer Setup to connect.");
       setShowPrinterSetup(true);
@@ -1508,6 +1550,31 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     const cfg = getDirectPrinterConfig();
     if (!cfg) throw new Error("Direct printer not configured");
     const res = await fetch(`/api/kitchen/print-job/${orderId}?width=${cfg.paperWidth}&type=${type}`);
+    if (!res.ok) throw new Error("Failed to fetch print job");
+    const { bytes, lines } = await res.json();
+    if (!bytes && !lines) throw new Error("Empty print payload");
+    const paperWidthDots = cfg.paperWidth === 58 ? 384 : 576;
+    await nativePrint({
+      ip: cfg.ip,
+      port: cfg.port,
+      bytes,
+      lines,
+      paperWidthDots,
+      timeoutMs: 15000,
+    });
+  };
+
+  /** Direct LAN print for a RESERVATION receipt. Mirrors doPrintDirectOne
+   *  but hits the parallel `/api/kitchen/print-job/reservation/[id]` route
+   *  and uses the buildReservationReceipt[Lines] builders. Lets a kitchen
+   *  on a direct-LAN-only printer setup get reservation receipts without
+   *  configuring PrintNode. Luigi 2026-06-01 — full parity with order
+   *  printing setup methods. */
+  const doPrintDirectReservation = async (reservationId: string) => {
+    if (!isNativePrinterAvailable()) throw new Error("Native plugin missing");
+    const cfg = getDirectPrinterConfig();
+    if (!cfg) throw new Error("Direct printer not configured");
+    const res = await fetch(`/api/kitchen/print-job/reservation/${reservationId}?width=${cfg.paperWidth}`);
     if (!res.ok) throw new Error("Failed to fetch print job");
     const { bytes, lines } = await res.json();
     if (!bytes && !lines) throw new Error("Empty print payload");

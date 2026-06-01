@@ -23,7 +23,7 @@
 // `StarXpandBridge.kt`.
 
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "./receipt-schema";
-import type { ReceiptOrder, ReceiptRestaurant } from "./receipt";
+import type { ReceiptOrder, ReceiptRestaurant, ReservationReceiptData } from "./receipt";
 import { getDict, type Translator } from "./i18n-dict";
 
 // ─── Public types ────────────────────────────────────────────────────────────
@@ -541,6 +541,74 @@ export async function buildCustomerReceiptLines(
   const r = new LinesBuilder(paperWidth);
   const t = await getDict(locale);
   renderSections(r, config, order, restaurant, t);
+  r.nl(4);
+  r.cut();
+  return r.lines;
+}
+
+/**
+ * Structured-lines renderer for reservation receipts — parallel to
+ * `buildReservationReceipt` in receipt.ts (which produces ESC/POS
+ * bytes for raw-TCP / PrintNode). The two functions emit identical
+ * layouts; this one outputs ReceiptLine[] for the StarXpand bitmap
+ * renderer used by the native Android print pipe. Mirror any
+ * formatting change here when receipt.ts's reservation builder
+ * changes. Luigi 2026-06-01 — closes the direct-LAN reservation
+ * print gap so reservations match orders' two-format output.
+ */
+export async function buildReservationReceiptLines(
+  data: ReservationReceiptData,
+  paperWidth = "80mm",
+  locale: string = "en",
+): Promise<ReceiptLine[]> {
+  const r = new LinesBuilder(paperWidth);
+  const t = await getDict(locale);
+
+  r.center().sizeMode(24).bold(true).line(t("receipt.reservation.title")).bold(false).sizeMode(12);
+  r.line("");
+  r.line(data.restaurantName);
+  r.divider("-");
+
+  r.left().bold(true).line(`#${data.confirmationCode}`).bold(false);
+  r.line(`${t("receipt.reservation.status")}: ${data.status.toUpperCase()}`);
+  r.line(`${t("receipt.reservation.printed")}: ${data.createdAt.toLocaleString()}`);
+  r.divider("-");
+
+  r.bold(true).line(t("receipt.reservation.guest")).bold(false);
+  r.line(data.customerName);
+  if (data.customerPhone) r.line(data.customerPhone);
+  if (data.customerEmail) r.line(data.customerEmail);
+  r.divider("-");
+
+  r.bold(true).line(t("receipt.reservation.booking")).bold(false);
+  r.sizeMode(24).line(data.date).sizeMode(12);
+  r.sizeMode(24).line(data.time).sizeMode(12);
+  r.line(t("receipt.reservation.partyOf", { n: data.partySize }));
+  if (data.tableName) r.line(`${t("receipt.reservation.table")}: ${data.tableName}`);
+  r.divider("-");
+
+  if (data.notes) {
+    r.bold(true).line(t("receipt.reservation.notes")).bold(false);
+    r.line(data.notes);
+    r.divider("-");
+  }
+
+  if ((data.depositAmount ?? 0) > 0) {
+    r.bold(true).line(t("receipt.reservation.deposit")).bold(false);
+    r.columns(t("receipt.reservation.amount"), `$${(data.depositAmount ?? 0).toFixed(2)}`);
+    r.columns(t("receipt.reservation.status"), data.depositPaid ? "PAID" : "PENDING");
+    r.divider("-");
+  }
+
+  if ((data.preOrderTotal ?? 0) > 0) {
+    r.bold(true).line(t("receipt.reservation.preOrder")).bold(false);
+    r.columns(t("receipt.customer.subtotal"), `$${(data.preOrderTotal ?? 0).toFixed(2)}`);
+    r.line(t("receipt.reservation.preOrderHint"));
+    r.divider("-");
+  }
+
+  r.line("");
+  r.center().line(t("receipt.customer.thankYou"));
   r.nl(4);
   r.cut();
   return r.lines;
