@@ -270,7 +270,22 @@ function computePrice(
     let toppingTotal = 0;
     let halfCreditsLeft = (config.includedToppings || 0) * 2;
 
-    for (const t of toppings) {
+    // Defensive dedupe — collapse any legacy state where the same
+    // option exists as Whole AND a half (L or R). Whole wins because
+    // it semantically supersedes the halves. The new toggleTopping
+    // handler prevents this from ever being produced at runtime, but
+    // round-tripping older cart entries through the editor could
+    // surface the old shape. Pricing a duplicated topping would
+    // burn the included-topping credit on the halves and leave the
+    // Whole at full charge — Luigi's 2026-06-01 bug.
+    const hasWhole = new Set(
+      toppings.filter(t => t.placement === "whole").map(t => t.optionId)
+    );
+    const pricingToppings = toppings.filter(
+      t => t.placement === "whole" || !hasWhole.has(t.optionId)
+    );
+
+    for (const t of pricingToppings) {
       const isHalf = t.placement !== "whole";
       const baseUnit = isHalf
         ? config.extraToppingPrice * config.halfToppingMultiplier
@@ -838,13 +853,34 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
         // Remove
         return { ...c, toppings: c.toppings.filter((_, i) => i !== existing) };
       }
-      // Add
+      // Add — but FIRST drop any placement-conflicting entries for the
+      // same option so the topping list never holds logical duplicates.
+      // Luigi 2026-06-01: clicking through Left → Right → Whole was
+      // leaving three pepperoni records for the same item, so the
+      // included-topping credit was getting fully spent on L+R and the
+      // Whole stayed at full charge. The cleanup rules:
+      //   • Adding "whole"          → remove any "left" or "right" of
+      //                                the same option (Whole supersedes
+      //                                both halves)
+      //   • Adding "left" / "right" → remove any "whole" of the same
+      //                                option (since a half is replacing
+      //                                what was a whole)
+      //   • L vs R for the same option stay both — that's a legitimate
+      //     "pepperoni on both sides" state pricing-equivalent to Whole.
+      let nextToppings = c.toppings;
+      if (placement === "whole") {
+        nextToppings = c.toppings.filter(t => t.optionId !== opt.id);
+      } else {
+        nextToppings = c.toppings.filter(
+          t => !(t.optionId === opt.id && t.placement === "whole")
+        );
+      }
       const unitPrice = effectiveConfig.extraToppingPrice > 0
         ? effectiveConfig.extraToppingPrice
         : opt.priceAdjustment;
       return {
         ...c,
-        toppings: [...c.toppings, {
+        toppings: [...nextToppings, {
           optionId: opt.id, name: opt.name, groupId,
           placement, quantity: "normal", unitPrice,
         }],
