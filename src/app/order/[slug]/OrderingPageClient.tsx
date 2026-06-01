@@ -1914,52 +1914,59 @@ export function OrderingPageClient({
                   : t("closedToday")}
               </span>
             )}
-            <div className="ml-auto flex items-center gap-2">
+            {/* Action group — mobile-friendly (Luigi 2026-06-01):
+                on phones the pill buttons collapsed text labels behind
+                an overflowing flex row that got clipped at the right
+                edge. Now labels hide below sm: so the buttons become
+                compact icon-pills, padding shrinks, and ml-auto only
+                kicks in once there's room (≥sm). The group also wraps
+                if anything still doesn't fit, so even with translated
+                labels (Italian "Prenotazione tavolo" is much longer
+                than "Reservation") nothing gets cut off. */}
+            <div className="w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-1.5 sm:gap-2">
               <LanguageSwitcher currentLocale={locale} />
-              {/* Per-restaurant customer account link. Logged-in: "Hi, <first
-                  name>" → dashboard. Logged-out: "Sign in" → login page,
-                  signup is a link from there. We render this whenever the
-                  page isn't in marketplace mode (marketplace orders use the
-                  cross-restaurant CustomerAccount flow at /account, not
-                  the per-restaurant one). */}
               {!fromMarketplace && (
                 currentCustomer ? (
                   <a
                     href={`/order/${restaurant.slug}/account`}
-                    className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full border-2 transition hover:bg-gray-50"
+                    className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full border-2 transition hover:bg-gray-50"
                     style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
                     title="View your account, coupons, and order history"
                   >
-                    <UserCircle className="w-4 h-4" />
-                    Hi, {currentCustomer.name.split(/\s+/)[0]}
+                    <UserCircle className="w-4 h-4 flex-shrink-0" />
+                    <span className="hidden sm:inline">Hi, {currentCustomer.name.split(/\s+/)[0]}</span>
                   </a>
                 ) : (
                   <a
                     href={`/order/${restaurant.slug}/account/login`}
-                    className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full border-2 transition hover:bg-gray-50"
+                    className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full border-2 transition hover:bg-gray-50"
                     style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
                     title="Sign in or create an account to track coupons and order history"
                   >
-                    <LogIn className="w-4 h-4" />
-                    Sign in
+                    <LogIn className="w-4 h-4 flex-shrink-0" />
+                    <span className="hidden sm:inline">Sign in</span>
                   </a>
                 )
               )}
               {restaurant.acceptsReservations && (
                 <button
                   onClick={() => setReservationOpen(true)}
-                  className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full text-white transition hover:opacity-90"
+                  className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-white transition hover:opacity-90"
                   style={{ backgroundColor: theme.primaryColor }}
+                  title={t("tableReservation")}
                 >
-                  <Calendar className="w-4 h-4" /> {t("tableReservation")}
+                  <Calendar className="w-4 h-4 flex-shrink-0" />
+                  <span className="hidden sm:inline">{t("tableReservation")}</span>
                 </button>
               )}
               <a
                 href={infoLink}
-                className="flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-full border-2 transition hover:bg-gray-50"
+                className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full border-2 transition hover:bg-gray-50"
                 style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
+                title={t("restaurantInfo")}
               >
-                <Info className="w-4 h-4" /> {t("restaurantInfo")}
+                <Info className="w-4 h-4 flex-shrink-0" />
+                <span className="hidden sm:inline">{t("restaurantInfo")}</span>
               </a>
             </div>
           </div>

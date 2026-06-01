@@ -164,8 +164,21 @@ export function ItemGroupPicker({
     });
 
   return (
-    <div className="absolute left-0 top-full z-50 mt-1 w-80 bg-white rounded-xl border border-gray-200 shadow-xl overflow-hidden">
-      <div className="px-3 py-2 bg-gray-50 border-b flex items-center justify-between">
+    // Centered modal overlay (Luigi 2026-06-01). The picker used to be
+    // absolutely positioned below its trigger button — when the trigger
+    // sat near the bottom of the wizard form, the picker spilled past
+    // the visible area and Apply/Cancel buttons got cut off. Promoting
+    // to a fixed modal sidesteps every parent-clipping concern and is
+    // mobile-friendly out of the box.
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      onClick={onCancel}
+    >
+      <div
+        className="w-full max-w-md max-h-[85vh] bg-white rounded-xl border border-gray-200 shadow-xl overflow-hidden flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+      <div className="px-3 py-2 bg-gray-50 border-b flex items-center justify-between flex-shrink-0">
         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
           Select categories or items
         </span>
@@ -182,7 +195,7 @@ export function ItemGroupPicker({
         </button>
       </div>
       <div
-        className="max-h-56 overflow-y-auto"
+        className="flex-1 overflow-y-auto"
         onScroll={(e) => e.stopPropagation()}
       >
         {cats.length === 0 ? (
@@ -259,10 +272,10 @@ export function ItemGroupPicker({
           })
         )}
       </div>
-      <div className="flex gap-2 px-3 py-2 border-t bg-gray-50">
+      <div className="flex gap-2 px-3 py-2 border-t bg-gray-50 flex-shrink-0">
         <button
           onClick={() => onApply(draft)}
-          className="flex-1 bg-emerald-500 text-white text-sm font-semibold py-1.5 rounded-lg hover:bg-emerald-600 transition"
+          className="flex-1 bg-emerald-500 text-white text-sm font-semibold py-2 rounded-lg hover:bg-emerald-600 transition"
         >
           Apply
         </button>
@@ -272,6 +285,7 @@ export function ItemGroupPicker({
         >
           Cancel
         </button>
+      </div>
       </div>
     </div>
   );
