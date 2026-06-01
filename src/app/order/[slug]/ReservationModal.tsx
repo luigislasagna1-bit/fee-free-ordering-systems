@@ -6,6 +6,7 @@ import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation
 import { parseTheme } from "@/lib/theme";
 import { useTranslations } from "next-intl";
 import { pickHoursForService } from "@/lib/service-hours";
+import { formatTime, type HoursFormat } from "@/lib/format-time";
 
 type Theme = ReturnType<typeof parseTheme>;
 
@@ -37,6 +38,13 @@ interface Props {
    *  ordering side. Default true — strongly recommended because the
    *  restaurant needs to call about table assignments. */
   requireCustomerPhone?: boolean;
+  /** Customer-facing time-of-day display format — comes from
+   *  Restaurant.hoursFormat. Drives only the LABEL in the time slot
+   *  dropdown; the form value stays HH:MM 24-hour for API
+   *  compatibility. "12h" → "7:00 PM", "24h" → "19:00". Default 24h
+   *  matches the legacy behaviour for restaurants who haven't
+   *  explicitly opted into 12-hour rendering. */
+  hoursFormat?: HoursFormat;
   theme: Theme;
   onClose: () => void;
 }
@@ -194,6 +202,7 @@ export function ReservationModal({
   fallbackOpeningHours = [],
   requireCustomerEmail = true,
   requireCustomerPhone = true,
+  hoursFormat = "24h",
   theme, onClose,
 }: Props) {
   const tr = useTranslations("reservation");
@@ -475,7 +484,12 @@ export function ReservationModal({
                       style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                     >
                       {timeSlots.map(t => (
-                        <option key={t} value={t}>{t}</option>
+                        // value stays HH:MM 24h (the form posts this
+                        // verbatim — the API and DB expect 24h). The
+                        // label renders in the restaurant's chosen
+                        // hoursFormat so a 12-hour-clock restaurant
+                        // sees "7:00 PM" instead of "19:00".
+                        <option key={t} value={t}>{formatTime(t, hoursFormat)}</option>
                       ))}
                     </select>
                   </>

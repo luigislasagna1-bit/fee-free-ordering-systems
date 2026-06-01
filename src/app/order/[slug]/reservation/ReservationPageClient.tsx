@@ -44,6 +44,7 @@ export function ReservationPageClient({ restaurant }: { restaurant: any }) {
           fallbackOpeningHours={restaurant.openingHours ?? []}
           requireCustomerEmail={restaurant.requireCustomerEmail !== false}
           requireCustomerPhone={restaurant.requireCustomerPhone !== false}
+          hoursFormat={restaurant.hoursFormat === "12h" ? "12h" : "24h"}
           theme={theme}
           onClose={() => {
             // Land on the regular order page on close. Most customers

@@ -2922,6 +2922,7 @@ export function OrderingPageClient({
           fallbackOpeningHours={restaurant.openingHours ?? []}
           requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}
           requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}
+          hoursFormat={(restaurant as any).hoursFormat === "12h" ? "12h" : "24h"}
           theme={theme}
           onClose={() => {
             setReservationOpen(false);
