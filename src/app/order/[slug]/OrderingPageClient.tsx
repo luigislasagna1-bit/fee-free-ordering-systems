@@ -2030,7 +2030,37 @@ export function OrderingPageClient({
               // simpler colored card is what owners expect when they
               // skip the image picker).
               const ownerImageUrl = promo.imageUrl?.trim() || null;
-              const hasImage = !!ownerImageUrl;
+              // Stock-image fallback (Luigi 2026-06-01): when the
+              // owner hasn't uploaded a custom image, pick a
+              // food-promo background deterministically by promo.id
+              // hash so each promo gets a consistent look and the
+              // set looks varied across multiple promos on the same
+              // page. Owner uploads always win — the admin promo
+              // editor at /admin/promotions/[id]/edit lets owners
+              // override. Hosted by Unsplash's image CDN (free for
+              // any use, no API key) so we don't have to bundle
+              // image assets.
+              const STOCK_PROMO_IMAGES = [
+                // Pizza (top-down, vibrant)
+                "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop",
+                // Pasta plate (italian, warm)
+                "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&auto=format&fit=crop",
+                // Burger and fries (american comfort)
+                "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop",
+                // Wood-table food spread (catering vibe)
+                "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&auto=format&fit=crop",
+                // Italian sauce / red (sale / promo feel)
+                "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&auto=format&fit=crop",
+                // Hand handing off bag (delivery)
+                "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&auto=format&fit=crop",
+              ];
+              const stockFallback = (() => {
+                let h = 0;
+                for (let i = 0; i < promo.id.length; i++) h = (h * 31 + promo.id.charCodeAt(i)) | 0;
+                return STOCK_PROMO_IMAGES[Math.abs(h) % STOCK_PROMO_IMAGES.length];
+              })();
+              const imageUrl = ownerImageUrl ?? stockFallback;
+              const hasImage = !!imageUrl;
               return (
                 <div
                   key={promo.id}
@@ -2068,7 +2098,7 @@ export function OrderingPageClient({
                       <div
                         className="absolute inset-y-0 left-0 w-2/5"
                         style={{
-                          backgroundImage: `url("${ownerImageUrl}")`,
+                          backgroundImage: `url("${imageUrl}")`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
                           backgroundRepeat: "no-repeat",
