@@ -27,7 +27,7 @@
     },
     {
       "path": "/api/cron/auto-complete-orders",
-      "schedule": "15 * * * *"
+      "schedule": "*/2 * * * *"
     },
     {
       "path": "/api/cron/reports-snapshot",

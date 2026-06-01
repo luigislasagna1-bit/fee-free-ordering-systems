@@ -31,20 +31,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 
-// Buffers chosen by Luigi 2026-05-30 — the 2h/4h defaults felt much
-// too long for a real-world simple-mode kitchen (orders that were
-// finished hours ago sit in "In Progress" because the cron hasn't fired
-// yet, distorting the kitchen view). Tighter values keep the In
-// Progress tab honest:
-//   • 30 min past `scheduledFor` if the customer scheduled the order.
-//   • 30 min past `estimatedReady` if the kitchen accepted with a prep
-//     time (the most precise signal — when the food was supposed to be
-//     ready).
-//   • 60 min past `createdAt` as the catch-all for ASAP orders the
-//     kitchen accepted without entering a prep time.
-const SCHEDULED_BUFFER_MS = 30 * 60 * 1000; // 30 min past scheduledFor
-const ESTIMATED_READY_BUFFER_MS = 30 * 60 * 1000; // 30 min past estimatedReady
-const UNSCHEDULED_BUFFER_MS = 60 * 60 * 1000; // 60 min past createdAt
+// Buffers tightened 2026-05-31 (Luigi + Italian beta tester). The
+// previous 30/30/60 minute values combined with the hourly cron made
+// orders sit in In Progress for up to an HOUR after they were ready.
+// The customer expectation is "moves to Complete the moment the prep
+// time elapses." A 60-second grace window on the precise signals
+// (scheduledFor, estimatedReady) absorbs clock skew between Vercel
+// edges; the unscheduled fallback stays larger because an "ASAP order
+// with no prep time" genuinely has no precise ready signal.
+//
+// Paired with the cron going from hourly → every 2 minutes (see
+// vercel.json), the worst-case lag is now ~3 minutes instead of ~90.
+const SCHEDULED_BUFFER_MS = 60 * 1000; // 60 sec past scheduledFor
+const ESTIMATED_READY_BUFFER_MS = 60 * 1000; // 60 sec past estimatedReady
+const UNSCHEDULED_BUFFER_MS = 60 * 60 * 1000; // 60 min past createdAt (fallback only)
 
 async function autoComplete() {
   const now = new Date();
