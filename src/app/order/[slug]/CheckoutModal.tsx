@@ -663,11 +663,26 @@ export function CheckoutModal({
                       ? cateringMinScheduledLocal.split("T")[0]
                       : new Date().toISOString().slice(0, 10);
                     const minTimeForDate = (() => {
-                      // If the chosen date is today, slots in the past are off-limits.
+                      // If the chosen date is today, slots in the past
+                      // are off-limits AND the earliest selectable slot
+                      // must be at least the restaurant's standard
+                      // prep time away from now — pickup uses
+                      // estimatedPickupMinutes, delivery uses
+                      // estimatedDeliveryMinutes. Otherwise the
+                      // dropdown could offer "5 minutes from now" for
+                      // a 20-min-prep restaurant, which is impossible.
+                      // Luigi 2026-06-01: "first pickup time should
+                      // be at least standard pickup time away".
                       const todayISO = new Date().toISOString().slice(0, 10);
                       if (datePart === todayISO) {
-                        const now = new Date();
-                        return `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+                        const prepMinutes = Math.max(
+                          0,
+                          orderType === "delivery"
+                            ? estimatedDeliveryMinutes
+                            : estimatedPickupMinutes,
+                        );
+                        const cutoff = new Date(Date.now() + prepMinutes * 60_000);
+                        return `${String(cutoff.getHours()).padStart(2, "0")}:${String(cutoff.getMinutes()).padStart(2, "0")}`;
                       }
                       if (cateringMode && cateringMinScheduledLocal && datePart === cateringMinScheduledLocal.split("T")[0]) {
                         return cateringMinScheduledLocal.split("T")[1] || "00:00";
