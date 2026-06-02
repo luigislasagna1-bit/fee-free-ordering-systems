@@ -109,7 +109,13 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       ...(minimumOrder !== undefined && { minimumOrder }),
       ...(rules !== undefined && { rules: typeof rules === "string" ? rules : JSON.stringify(rules) }),
       ...(ruleConfig !== undefined && { ruleConfig: normalizeRuleConfig(ruleConfig) as object }),
-      ...(daysOfWeek !== undefined && { daysOfWeek: daysOfWeek ? JSON.stringify(daysOfWeek) : null }),
+      // Empty array (no days selected) or full 7 = "no restriction" → null.
+      // Storing "[]" used to silently kill the promo every day (Luigi 2026-06-02).
+      ...(daysOfWeek !== undefined && {
+        daysOfWeek: Array.isArray(daysOfWeek) && daysOfWeek.length > 0 && daysOfWeek.length < 7
+          ? JSON.stringify(daysOfWeek)
+          : null,
+      }),
       ...(startsAt !== undefined && { startsAt: startsAt ? new Date(startsAt) : null }),
       ...(endsAt !== undefined && { endsAt: endsAt ? new Date(endsAt) : null }),
       ...(usageLimit !== undefined && { usageLimit }),

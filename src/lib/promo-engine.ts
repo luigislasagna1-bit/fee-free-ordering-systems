@@ -281,7 +281,13 @@ function isScheduledNow(promo: PromoInput, now: Date, tz?: string): boolean {
   // when no tz is supplied so legacy callers behave as before.
   const { weekday, minuteOfDay } = localDateParts(now, tz);
   const days = safeJson<number[] | null>(promo.daysOfWeek ?? null, null);
-  if (days && !days.includes(weekday)) return false;
+  // An EMPTY array means "no day-of-week restriction" — NOT "no day ever
+  // matches". Without the length guard, a promo stored with daysOfWeek
+  // "[]" (which happens when the wizard's day chips are all deselected
+  // and the save path stringifies the empty array) silently fails to
+  // apply on every single day. This was the root cause of time-windowed
+  // promos "never applying" — Luigi report 2026-06-02. Treat [] like null.
+  if (days && days.length > 0 && !days.includes(weekday)) return false;
   // Hour-of-day USABILITY window (Fabrizio 2026-05-28). Promo is only
   // applied if the current minute-of-day falls inside the window. Both
   // bounds NULL = always usable. Window can wrap past midnight when

@@ -125,7 +125,13 @@ export async function POST(req: NextRequest) {
       // `ruleConfig` (Json) instead.
       rules: typeof rules === "string" ? rules : JSON.stringify(rules ?? {}),
       ruleConfig: normalizeRuleConfig(ruleConfig) as object,
-      daysOfWeek: daysOfWeek ? JSON.stringify(daysOfWeek) : null,
+      // Store a day-of-week restriction ONLY when it's a real subset
+      // (1–6 days). Empty array = no days selected, and a full 7 = every
+      // day; both mean "no restriction" → null. Storing "[]" here used to
+      // kill the promo on every day (Luigi 2026-06-02).
+      daysOfWeek: Array.isArray(daysOfWeek) && daysOfWeek.length > 0 && daysOfWeek.length < 7
+        ? JSON.stringify(daysOfWeek)
+        : null,
       startsAt: startsAt ? new Date(startsAt) : null,
       endsAt: endsAt ? new Date(endsAt) : null,
       usageLimit: usageLimit ?? null,
