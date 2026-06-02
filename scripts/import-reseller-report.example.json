@@ -1,0 +1,12 @@
+{
+  "title": "Kitchen display freezes when a new order arrives",
+  "body": "When a new order comes in while the kitchen display is open, the screen freezes for ~5 seconds and the new ticket doesn't show until you refresh.\n\nSteps to reproduce:\n1. Open /kitchen on the iPad\n2. Place a test order from /order/demo-pizza-palace\n3. Watch the kitchen display — it hangs, then the ticket appears only after a manual refresh\n\nExpected: the new ticket appears automatically within the 4s poll.",
+  "type": "BUG",
+  "priority": "HIGH",
+  "status": "NEW",
+  "authorEmail": "admin@feefreeordering.com",
+  "authorName": "Luigi",
+  "reportedByEmail": "",
+  "reportedByName": "",
+  "screenshots": []
+}

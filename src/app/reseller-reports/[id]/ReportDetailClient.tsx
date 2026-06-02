@@ -94,6 +94,15 @@ export function ReportDetailClient({
   const [savingStatus, setSavingStatus] = useState(false);
   const [busyUpvote, setBusyUpvote] = useState(false);
   const [busyVerify, setBusyVerify] = useState(false);
+  // Reporter reassignment (SA only). Prefilled with the current
+  // on-behalf reporter when there is one; blank otherwise.
+  const [reporterNameInput, setReporterNameInput] = useState(
+    report.filedOnBehalf ? report.reporterName : "",
+  );
+  const [reporterEmailInput, setReporterEmailInput] = useState(
+    report.filedOnBehalf ? report.reporterEmail : "",
+  );
+  const [savingReporter, setSavingReporter] = useState(false);
 
   /** Upload one or more image files to /api/reseller-reports/upload.
    *  Returns the URL list — caller decides whether to merge into the
@@ -166,6 +175,42 @@ export function ReportDetailClient({
       toast.error(e instanceof Error ? e.message : "Failed");
     } finally {
       setSavingStatus(false);
+    }
+  };
+
+  // ─── Reporter reassignment (SA only) ───────────────────────────────
+  // `clear` reverts attribution to the report's author. Otherwise the
+  // typed name/email become the "reported by" credit.
+  const saveReporter = async (clear = false) => {
+    const email = clear ? "" : reporterEmailInput.trim();
+    const name = clear ? "" : reporterNameInput.trim();
+    if (!clear && !email) {
+      toast.error("Enter the reporter's email (or use Clear)");
+      return;
+    }
+    setSavingReporter(true);
+    try {
+      const r = await fetch(`/api/reseller-reports/${report.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reportedByEmail: email, reportedByName: name }),
+      });
+      if (!r.ok) {
+        const d = await r.json().catch(() => ({}));
+        throw new Error(d.error || "Failed");
+      }
+      if (clear) {
+        setReporterNameInput("");
+        setReporterEmailInput("");
+        toast.success("Reporter reset to author");
+      } else {
+        toast.success("Reporter updated");
+      }
+      router.refresh();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed");
+    } finally {
+      setSavingReporter(false);
     }
   };
 
@@ -306,6 +351,52 @@ export function ReportDetailClient({
                 ))}
               </select>
               {savingStatus && <Loader2 className="w-3.5 h-3.5 animate-spin text-gray-400" />}
+            </div>
+          )}
+
+          {access.canChangeStatus && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Reassign reporter
+              </label>
+              <p className="text-[11px] text-gray-400 mt-0.5 mb-2">
+                Credit the person who actually reported this. Leave blank and Clear to attribute it to {report.authorName}.
+              </p>
+              <div className="flex items-center gap-2 flex-wrap">
+                <input
+                  type="text"
+                  value={reporterNameInput}
+                  onChange={(e) => setReporterNameInput(e.target.value)}
+                  disabled={savingReporter}
+                  placeholder="Reporter name"
+                  className="px-3 py-1.5 rounded-lg border border-gray-200 text-sm bg-white w-40"
+                />
+                <input
+                  type="email"
+                  value={reporterEmailInput}
+                  onChange={(e) => setReporterEmailInput(e.target.value)}
+                  disabled={savingReporter}
+                  placeholder="reporter@email.com"
+                  className="px-3 py-1.5 rounded-lg border border-gray-200 text-sm bg-white w-52"
+                />
+                <button
+                  onClick={() => saveReporter(false)}
+                  disabled={savingReporter}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white"
+                >
+                  {savingReporter && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                  Save
+                </button>
+                {report.filedOnBehalf && (
+                  <button
+                    onClick={() => saveReporter(true)}
+                    disabled={savingReporter}
+                    className="inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-semibold border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-50 text-gray-700"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
             </div>
           )}
 
