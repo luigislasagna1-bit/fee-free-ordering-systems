@@ -112,6 +112,7 @@ export function ReportDetailClient({
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(initial.aiAnalysis);
   const [analyzing, setAnalyzing] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
+  const [deletingReport, setDeletingReport] = useState(false);
 
   /** Upload one or more image files to /api/reseller-reports/upload.
    *  Returns the URL list — caller decides whether to merge into the
@@ -234,6 +235,24 @@ export function ReportDetailClient({
       toast.success("Comment deleted");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Failed");
+    }
+  };
+
+  // ─── Delete the whole report (SA only) ──────────────────────────────
+  const deleteReport = async () => {
+    if (!window.confirm("Delete this entire report and all its comments? This can't be undone.")) return;
+    setDeletingReport(true);
+    try {
+      const r = await fetch(`/api/reseller-reports/${report.id}`, { method: "DELETE" });
+      if (!r.ok) {
+        const d = await r.json().catch(() => ({}));
+        throw new Error(d.error || "Failed");
+      }
+      toast.success("Report deleted");
+      router.push("/reseller-reports");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed");
+      setDeletingReport(false);
     }
   };
 
@@ -517,6 +536,20 @@ export function ReportDetailClient({
               <ScreenshotStrip urls={report.imageUrls} onOpen={(u) => setLightboxUrl(u)} />
             )}
           </div>
+
+          {access.canChangeStatus && (
+            <div className="mt-4 pt-4 border-t border-gray-100 flex justify-end">
+              <button
+                onClick={deleteReport}
+                disabled={deletingReport}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-rose-600 hover:bg-rose-50 disabled:opacity-50"
+                title="Permanently delete this report and all its comments"
+              >
+                {deletingReport ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
+                Delete report
+              </button>
+            </div>
+          )}
         </div>
 
         {/* ── AI triage analysis (SUPERADMIN ONLY, internal) ────────── */}

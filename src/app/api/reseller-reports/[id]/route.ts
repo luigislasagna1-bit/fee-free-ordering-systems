@@ -179,3 +179,27 @@ export async function PATCH(
 
   return NextResponse.json({ ok: true, ...data });
 }
+
+/**
+ * DELETE /api/reseller-reports/[id] — SUPERADMIN ONLY.
+ *
+ * Permanently removes a report and everything attached to it (comments,
+ * verifications, upvotes, activity all cascade-delete via the schema's
+ * onDelete: Cascade). Use for clearing out test reports / junk. This is
+ * irreversible — the UI confirms first.
+ */
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const access = await getReportAccess();
+  if (!access.canChangeStatus) {
+    return NextResponse.json({ error: "Only superadmin can delete a report" }, { status: 403 });
+  }
+  const { id } = await params;
+  const existing = await prisma.resellerReport.findUnique({ where: { id }, select: { id: true } });
+  if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
+
+  await prisma.resellerReport.delete({ where: { id } });
+  return NextResponse.json({ ok: true });
+}
