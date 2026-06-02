@@ -255,13 +255,18 @@ export async function getSessionUser(opts?: { preferKitchen?: boolean }): Promis
  * told to log out (HTTP 401 → kitchen client triggers signOut).
  *
  * Returns:
- *   "ok"       — JWT token matches DB, caller is the active session
- *   "stale"    — JWT carries a kitchenSessionToken but the DB has moved
- *                on (another device signed in). Caller should 401.
- *   "no-token" — JWT was minted before this feature shipped, OR caller
- *                isn't a kitchen session at all. Treated as ok for
- *                back-compat so we don't kick out existing sessions on
- *                the rollout day.
+ *   "ok"       — JWT token matches DB. Caller is the active session.
+ *                Also returned for the truly-pre-feature state where
+ *                BOTH the JWT and the DB lack a token (back-compat:
+ *                nobody's logged in since the feature deployed yet).
+ *   "stale"    — Caller's JWT no longer matches the active DB token.
+ *                Could be (a) JWT has a token but it's outdated, or
+ *                (b) JWT has no token but the DB has been populated by
+ *                a fresh login — meaning this is a pre-feature session
+ *                that another device has since displaced. Either way:
+ *                caller should be 401'd and bounced to login.
+ *   "no-token" — Not a kitchen session at all (no restaurantId) — the
+ *                caller falls through to other auth handling.
  *
  * Cheap (one indexed Restaurant lookup), so calling per poll is fine.
  */
@@ -270,13 +275,24 @@ export async function checkKitchenSessionFresh(): Promise<
 > {
   const session = await getServerSession(kitchenAuthOptions);
   const u = session?.user as { restaurantId?: string; kitchenSessionToken?: string } | undefined;
-  if (!u?.restaurantId || !u.kitchenSessionToken) return "no-token";
+  if (!u?.restaurantId) return "no-token";
   const row = await prisma.restaurant.findUnique({
     where: { id: u.restaurantId },
     select: { kitchenSessionToken: true },
   });
-  if (!row?.kitchenSessionToken) return "no-token";
-  return row.kitchenSessionToken === u.kitchenSessionToken ? "ok" : "stale";
+  const dbToken = row?.kitchenSessionToken ?? null;
+  const jwtToken = u.kitchenSessionToken ?? null;
+  // Truly-pre-feature state: nobody has logged in since the feature
+  // shipped, so neither the JWT nor the DB has a token. Treat as ok.
+  if (dbToken === null && jwtToken === null) return "ok";
+  // The DB has been populated by a fresh login somewhere — any session
+  // whose JWT lacks the matching token is stale, including the
+  // back-compat pre-feature sessions. This is what actually enforces
+  // single-active-kitchen-session: the first fresh login claims the
+  // active slot, and every other tab/device gets bounced.
+  if (jwtToken === null) return "stale";
+  if (dbToken === null) return "stale";
+  return dbToken === jwtToken ? "ok" : "stale";
 }
 
 /**
