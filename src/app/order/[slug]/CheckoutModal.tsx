@@ -488,7 +488,12 @@ export function CheckoutModal({
                     <input
                       type="checkbox"
                       className="mt-0.5"
-                      checked={customerInfo.marketingConsent ?? false}
+                      // Defaults to TRUE if the field is somehow undefined
+                      // — the explicit `false` value from a user uncheck
+                      // is preserved (false ?? true is false in JS). This
+                      // belt-and-suspenders means a stale bundle or any
+                      // missing-field path still pre-ticks the box.
+                      checked={customerInfo.marketingConsent ?? true}
                       onChange={e => setCustomerInfo({ ...customerInfo, marketingConsent: e.target.checked })}
                       style={{ accentColor: theme.primaryColor }}
                     />
