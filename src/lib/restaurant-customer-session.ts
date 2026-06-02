@@ -91,6 +91,7 @@ export async function getCurrentRestaurantCustomer(opts: {
   phone: string | null;
   emailVerifiedAt: Date | null;
   chainCustomerId: string | null;
+  marketingConsent?: boolean;
 } | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
@@ -128,7 +129,7 @@ export async function getCurrentRestaurantCustomer(opts: {
     where: { id: payload.customerId },
     select: {
       id: true, restaurantId: true, name: true, email: true, phone: true,
-      emailVerifiedAt: true, chainCustomerId: true,
+      emailVerifiedAt: true, chainCustomerId: true, marketingConsent: true,
     },
   });
   return customer;

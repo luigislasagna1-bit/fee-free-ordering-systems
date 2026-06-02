@@ -115,7 +115,7 @@ export default async function RestaurantAccountDashboard({
                   initialName={me.name}
                   initialEmail={me.email ?? null}
                   initialPhone={me.phone ?? null}
-                  initialMarketingConsent={(me as { marketingConsent?: boolean }).marketingConsent ?? false}
+                  initialMarketingConsent={me.marketingConsent ?? false}
                 />
               </div>
             </div>
