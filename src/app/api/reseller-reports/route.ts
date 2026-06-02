@@ -58,6 +58,7 @@ export async function POST(req: NextRequest) {
     priority?: string;
     reportedByEmail?: string;
     reportedByName?: string;
+    imageUrls?: string[];
   };
   try {
     body = await req.json();
@@ -97,6 +98,15 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Screenshot URLs. Capped at 10 (sanity bound to prevent a runaway
+  // form). Each URL must look plausible — we don't fetch them, we just
+  // ensure they're strings the caller could have gotten from our own
+  // upload endpoint. Filter empties so a UI that pushes "" doesn't
+  // leave broken <img> tags in the rendered report.
+  const imageUrls = Array.isArray(body.imageUrls)
+    ? body.imageUrls.filter((u) => typeof u === "string" && u.trim().length > 0).slice(0, 10)
+    : [];
+
   const report = await prisma.resellerReport.create({
     data: {
       title,
@@ -109,6 +119,7 @@ export async function POST(req: NextRequest) {
       authorName: access.name,
       reportedByEmail,
       reportedByName,
+      imageUrls: imageUrls.length > 0 ? JSON.stringify(imageUrls) : null,
     },
     select: { id: true },
   });

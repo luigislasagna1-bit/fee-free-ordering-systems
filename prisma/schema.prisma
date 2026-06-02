@@ -2490,6 +2490,12 @@ model ResellerReport {
   /// person who reported the issue.
   reportedByEmail String?
   reportedByName  String?
+  /// JSON-encoded string array of image URLs (Vercel Blob URLs in prod,
+  /// /uploads/... in local dev). Screenshots attached at report creation
+  /// time. Null/missing = no attachments; "[]" also means none. We use a
+  /// string column for cross-DB portability (matches how availableDays
+  /// is stored elsewhere in this schema).
+  imageUrls   String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -2569,6 +2575,10 @@ model ResellerReportComment {
   authorEmail String
   authorName  String
   body        String
+  /// JSON-encoded string array of image URLs. Same shape as
+  /// ResellerReport.imageUrls — comments can attach screenshots too
+  /// (e.g. "here's what I see after the fix").
+  imageUrls   String?
   createdAt   DateTime @default(now())
 
   report      ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)

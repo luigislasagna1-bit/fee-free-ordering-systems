@@ -13,6 +13,18 @@ import { ReportsListClient } from "./ReportsListClient";
 
 export const dynamic = "force-dynamic";
 
+/** Count attached screenshots without parsing the whole array. Used
+ *  by the list row to drive the paperclip indicator. */
+function countImageUrls(raw: string | null): number {
+  if (!raw) return 0;
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.length : 0;
+  } catch {
+    return 0;
+  }
+}
+
 export default async function ReportsListPage() {
   const access = await getReportAccess();
   // Send everyone without access to /login. Returning notFound() would
@@ -33,6 +45,7 @@ export default async function ReportsListPage() {
         authorName: true,
         reportedByEmail: true,
         reportedByName: true,
+        imageUrls: true,
         createdAt: true,
         updatedAt: true,
         _count: {
@@ -74,6 +87,7 @@ export default async function ReportsListPage() {
         commentsCount: r._count.comments,
         upvotesCount: r._count.upvotes,
         verificationsCount: r._count.verifications,
+        attachmentsCount: countImageUrls(r.imageUrls),
       }))}
       invites={invites.map((i) => ({
         id: i.id,

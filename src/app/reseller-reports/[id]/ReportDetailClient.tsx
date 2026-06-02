@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ChevronLeft, MessageSquare, Loader2, ThumbsUp, CheckCircle2, XCircle,
-  Activity, Star,
+  Activity, Star, ImagePlus, X as XIcon,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import {
@@ -22,6 +22,7 @@ interface Comment {
   authorEmail: string;
   authorName: string;
   body: string;
+  imageUrls: string[];
   createdAt: string;
 }
 
@@ -62,6 +63,7 @@ interface Report {
   reporterEmail: string;
   reporterName: string;
   filedOnBehalf: boolean;
+  imageUrls: string[];
   createdAt: string;
   updatedAt: string;
   comments: Comment[];
@@ -83,10 +85,47 @@ export function ReportDetailClient({
   const router = useRouter();
   const [report, setReport] = useState(initial);
   const [newComment, setNewComment] = useState("");
+  /** URLs of any screenshots the user has attached to the in-progress
+   *  comment. Each entry is the URL returned by /api/reseller-reports/upload. */
+  const [newCommentImages, setNewCommentImages] = useState<string[]>([]);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
   const [posting, setPosting] = useState(false);
   const [savingStatus, setSavingStatus] = useState(false);
   const [busyUpvote, setBusyUpvote] = useState(false);
   const [busyVerify, setBusyVerify] = useState(false);
+
+  /** Upload one or more image files to /api/reseller-reports/upload.
+   *  Returns the URL list — caller decides whether to merge into the
+   *  in-progress comment, a new report, etc. Shows a single toast on
+   *  any failure (we don't surface per-file errors — most failures are
+   *  "wrong type" or "too large" and the user can re-attach). */
+  const uploadImages = async (files: FileList | File[]): Promise<string[]> => {
+    const arr = Array.from(files);
+    if (arr.length === 0) return [];
+    setUploadingImage(true);
+    const uploaded: string[] = [];
+    try {
+      for (const file of arr) {
+        const form = new FormData();
+        form.append("file", file);
+        const r = await fetch("/api/reseller-reports/upload", {
+          method: "POST",
+          body: form,
+        });
+        if (!r.ok) {
+          const d = await r.json().catch(() => ({}));
+          toast.error(d.error || "Upload failed");
+          continue;
+        }
+        const { url } = await r.json();
+        if (typeof url === "string") uploaded.push(url);
+      }
+    } finally {
+      setUploadingImage(false);
+    }
+    return uploaded;
+  };
 
   // Verification tally — counts WORKING vs NOT_WORKING, and surfaces
   // the reporter's vote (if any) so the UI can emphasise "the person
@@ -132,13 +171,14 @@ export function ReportDetailClient({
 
   // ─── Comments ───────────────────────────────────────────────────────
   const post = async () => {
-    if (!newComment.trim()) return;
+    // Allow image-only comments — sometimes a screenshot says it all.
+    if (!newComment.trim() && newCommentImages.length === 0) return;
     setPosting(true);
     try {
       const r = await fetch(`/api/reseller-reports/${report.id}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ body: newComment }),
+        body: JSON.stringify({ body: newComment, imageUrls: newCommentImages }),
       });
       if (!r.ok) {
         const d = await r.json().catch(() => ({}));
@@ -152,10 +192,12 @@ export function ReportDetailClient({
           authorEmail: comment.authorEmail,
           authorName: comment.authorName,
           body: comment.body,
+          imageUrls: newCommentImages,
           createdAt: comment.createdAt,
         }],
       }));
       setNewComment("");
+      setNewCommentImages([]);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Failed");
     } finally {
@@ -269,6 +311,9 @@ export function ReportDetailClient({
 
           <div className="mt-4 pt-4 border-t border-gray-100">
             <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">{report.body}</p>
+            {report.imageUrls.length > 0 && (
+              <ScreenshotStrip urls={report.imageUrls} onOpen={(u) => setLightboxUrl(u)} />
+            )}
           </div>
         </div>
 
@@ -386,7 +431,12 @@ export function ReportDetailClient({
                     {" · "}
                     {new Date(c.createdAt).toLocaleString()}
                   </div>
-                  <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">{c.body}</p>
+                  {c.body && (
+                    <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">{c.body}</p>
+                  )}
+                  {c.imageUrls.length > 0 && (
+                    <ScreenshotStrip urls={c.imageUrls} onOpen={(u) => setLightboxUrl(u)} />
+                  )}
                 </li>
               ))}
             </ul>
@@ -403,10 +453,37 @@ export function ReportDetailClient({
                 placeholder="Update, follow-up question, repro steps…"
                 className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300 leading-relaxed"
               />
-              <div className="flex items-center justify-end mt-2 gap-2">
+              {newCommentImages.length > 0 && (
+                <PendingAttachments
+                  urls={newCommentImages}
+                  onRemove={(u) => setNewCommentImages((p) => p.filter((x) => x !== u))}
+                />
+              )}
+              <div className="flex items-center justify-between mt-2 gap-2">
+                <label className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border border-gray-200 bg-white hover:bg-gray-50 cursor-pointer ${uploadingImage ? "opacity-60 cursor-wait" : ""}`}>
+                  {uploadingImage
+                    ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    : <ImagePlus className="w-3.5 h-3.5" />}
+                  Attach screenshot
+                  <input
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp,image/gif"
+                    multiple
+                    disabled={uploadingImage}
+                    className="sr-only"
+                    onChange={async (e) => {
+                      const files = e.target.files;
+                      if (!files || files.length === 0) return;
+                      const urls = await uploadImages(files);
+                      if (urls.length > 0) setNewCommentImages((p) => [...p, ...urls].slice(0, 10));
+                      // Reset the input so picking the same file twice re-fires onChange.
+                      e.target.value = "";
+                    }}
+                  />
+                </label>
                 <button
                   onClick={post}
-                  disabled={posting || !newComment.trim()}
+                  disabled={posting || (!newComment.trim() && newCommentImages.length === 0)}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white"
                 >
                   {posting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
@@ -416,6 +493,32 @@ export function ReportDetailClient({
             </div>
           )}
         </div>
+
+        {/* ── Lightbox for screenshots ────────────────────────────── */}
+        {lightboxUrl && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 cursor-zoom-out"
+            onClick={() => setLightboxUrl(null)}
+            role="dialog"
+            aria-modal="true"
+          >
+            <button
+              type="button"
+              aria-label="Close"
+              onClick={() => setLightboxUrl(null)}
+              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white"
+            >
+              <XIcon className="w-5 h-5" />
+            </button>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={lightboxUrl}
+              alt="Screenshot"
+              className="max-w-full max-h-full object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        )}
 
         {/* ── Activity timeline ───────────────────────────────────── */}
         {report.activity.length > 0 && (
@@ -439,6 +542,62 @@ export function ReportDetailClient({
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+/** Renders a row of screenshot thumbnails. Clicking one opens the
+ *  lightbox via the parent's `onOpen` callback. Sized to be readable
+ *  on the page (each thumb ~96px tall) while still letting the user
+ *  zoom for detail when they need to. */
+function ScreenshotStrip({ urls, onOpen }: { urls: string[]; onOpen: (url: string) => void }) {
+  return (
+    <div className="mt-3 flex flex-wrap gap-2">
+      {urls.map((u, i) => (
+        <button
+          key={u}
+          type="button"
+          onClick={() => onOpen(u)}
+          className="block rounded-lg overflow-hidden border border-gray-200 hover:border-emerald-400 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-emerald-300"
+          aria-label={`Open screenshot ${i + 1}`}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={u}
+            alt={`Screenshot ${i + 1}`}
+            className="h-24 w-auto object-cover"
+            loading="lazy"
+          />
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** Pending-attachments preview shown above the comment composer. Each
+ *  thumbnail has an X overlay to remove it before posting. */
+function PendingAttachments({
+  urls, onRemove,
+}: {
+  urls: string[];
+  onRemove: (url: string) => void;
+}) {
+  return (
+    <div className="mt-2 flex flex-wrap gap-2">
+      {urls.map((u, i) => (
+        <div key={u} className="relative rounded-lg overflow-hidden border border-gray-200 group">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={u} alt={`Attachment ${i + 1}`} className="h-20 w-auto object-cover" />
+          <button
+            type="button"
+            onClick={() => onRemove(u)}
+            className="absolute top-1 right-1 p-1 rounded-full bg-black/60 hover:bg-black/80 text-white transition opacity-0 group-hover:opacity-100 focus:opacity-100"
+            aria-label="Remove attachment"
+          >
+            <XIcon className="w-3 h-3" />
+          </button>
+        </div>
+      ))}
     </div>
   );
 }

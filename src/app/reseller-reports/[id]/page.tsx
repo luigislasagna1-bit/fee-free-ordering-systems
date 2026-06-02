@@ -11,6 +11,18 @@ import { ReportDetailClient } from "./ReportDetailClient";
 
 export const dynamic = "force-dynamic";
 
+/** Parse the JSON-string imageUrls column safely. Returns [] on null
+ *  or malformed input — never throws on the render path. */
+function parseImageUrls(raw: string | null): string[] {
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.filter((u) => typeof u === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
 export default async function ReportDetailPage({
   params,
 }: {
@@ -61,6 +73,9 @@ export default async function ReportDetailPage({
         // True only when superadmin filed on behalf of someone else.
         // Drives a small "Filed by Luigi" subtitle on the detail page.
         filedOnBehalf: !!report.reportedByEmail,
+        // Parse the JSON-encoded URL array. Malformed JSON falls back
+        // to empty — never throws on the page render path.
+        imageUrls: parseImageUrls(report.imageUrls),
         createdAt: report.createdAt.toISOString(),
         updatedAt: report.updatedAt.toISOString(),
         comments: report.comments.map((c) => ({
@@ -68,6 +83,7 @@ export default async function ReportDetailPage({
           authorEmail: c.authorEmail,
           authorName: c.authorName,
           body: c.body,
+          imageUrls: parseImageUrls(c.imageUrls),
           createdAt: c.createdAt.toISOString(),
         })),
         verifications: report.verifications.map((v) => ({
