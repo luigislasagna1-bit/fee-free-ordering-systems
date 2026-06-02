@@ -206,6 +206,15 @@ model Restaurant {
   mapProvider          String    @default("leaflet") // "leaflet" | "google"
   googleMapsApiKey     String? // only used when mapProvider = "google"
   autoAcceptOrders     Boolean   @default(false)
+  /// Currently-active kitchen-display session token. Rotated on every
+  /// /kitchen login so only the newest device's JWT matches what's
+  /// in the DB — older devices' JWTs become stale and the kitchen
+  /// API/heartbeat rejects them with 401 → they redirect to login.
+  /// GloriaFood-parity single-active-session enforcement
+  /// (Luigi 2026-06-02). Null = no kitchen device has ever logged in,
+  /// in which case the JWT verification is bypassed for back-compat
+  /// with sessions minted before this column existed.
+  kitchenSessionToken  String?
   defaultLanguage      String    @default("en")
   socialLinks          String? // JSON: { instagram, facebook, tiktok, x, youtube, linkedin, pinterest, snapchat, threads, whatsapp, yelp, googleBusiness, tripadvisor, website }
   marketingTier        String    @default("free") // "free" | "social_basic" | "social_pro" | "social_managed" — gates AI-post / scheduling features

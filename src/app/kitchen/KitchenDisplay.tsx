@@ -1533,12 +1533,38 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       }
     } catch {}
     if (!deviceHash) return;
-    const beat = () => {
-      fetch("/api/kitchen/heartbeat", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ deviceHash }),
-      }).catch(() => {});
+    let supersededHandled = false;
+    const beat = async () => {
+      try {
+        const res = await fetch("/api/kitchen/heartbeat", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ deviceHash }),
+        });
+        // Single-active-session enforcement: the server returns 401 +
+        // code "session_superseded" when another device has logged in
+        // as this restaurant's kitchen. We show a one-time toast and
+        // sign out so the customer sees "you've been signed out
+        // because the kitchen was opened somewhere else", matching the
+        // GloriaFood behaviour Luigi asked for (2026-06-02).
+        if (res.status === 401 && !supersededHandled) {
+          const body = await res.json().catch(() => null);
+          if (body?.code === "session_superseded") {
+            supersededHandled = true;
+            try {
+              window.alert(
+                "This kitchen has been opened on another device — you've been signed out here. Sign back in if you need to use this device instead.",
+              );
+            } catch { /* SSR guard */ }
+            try {
+              const { signOut } = await import("next-auth/react");
+              await signOut({ redirect: true, callbackUrl: "/kitchen/login" });
+            } catch {
+              window.location.href = "/kitchen/login";
+            }
+          }
+        }
+      } catch { /* network blip — try again next interval */ }
     };
     beat();
     const id = setInterval(beat, 60_000);

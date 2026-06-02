@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionUser } from "@/lib/session";
+import { getSessionUser, checkKitchenSessionFresh } from "@/lib/session";
 import { recordHeartbeat } from "@/lib/kitchen-devices";
 
 export async function POST(req: NextRequest) {
@@ -15,6 +15,20 @@ export async function POST(req: NextRequest) {
     const restaurantId = user.restaurantId;
     if (!restaurantId) {
       return NextResponse.json({ error: "no_restaurant" }, { status: 400 });
+    }
+
+    // Single-active-session enforcement (Luigi 2026-06-02 GloriaFood
+    // parity). If another kitchen tablet has signed in for this
+    // restaurant since our JWT was minted, fail the heartbeat with a
+    // distinct code so the client can show a "you've been signed out
+    // because another device opened the kitchen" toast before
+    // redirecting to /kitchen/login.
+    const freshness = await checkKitchenSessionFresh();
+    if (freshness === "stale") {
+      return NextResponse.json(
+        { error: "session_superseded", code: "session_superseded" },
+        { status: 401 },
+      );
     }
 
     const body = await req.json().catch(() => ({} as any));

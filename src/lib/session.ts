@@ -243,6 +243,43 @@ export async function getSessionUser(opts?: { preferKitchen?: boolean }): Promis
 }
 
 /**
+ * GloriaFood-parity single-active-kitchen-session check
+ * (Luigi 2026-06-02).
+ *
+ * On every successful kitchen login auth-kitchen.ts mints a fresh UUID
+ * and stores it both on the JWT and on Restaurant.kitchenSessionToken.
+ * Kitchen-facing endpoints (heartbeat, order poll) call this helper to
+ * confirm the caller's JWT token still matches the DB row. A mismatch
+ * means another device has signed in to the same restaurant and stolen
+ * the active-session slot — the current caller is stale and should be
+ * told to log out (HTTP 401 → kitchen client triggers signOut).
+ *
+ * Returns:
+ *   "ok"       — JWT token matches DB, caller is the active session
+ *   "stale"    — JWT carries a kitchenSessionToken but the DB has moved
+ *                on (another device signed in). Caller should 401.
+ *   "no-token" — JWT was minted before this feature shipped, OR caller
+ *                isn't a kitchen session at all. Treated as ok for
+ *                back-compat so we don't kick out existing sessions on
+ *                the rollout day.
+ *
+ * Cheap (one indexed Restaurant lookup), so calling per poll is fine.
+ */
+export async function checkKitchenSessionFresh(): Promise<
+  "ok" | "stale" | "no-token"
+> {
+  const session = await getServerSession(kitchenAuthOptions);
+  const u = session?.user as { restaurantId?: string; kitchenSessionToken?: string } | undefined;
+  if (!u?.restaurantId || !u.kitchenSessionToken) return "no-token";
+  const row = await prisma.restaurant.findUnique({
+    where: { id: u.restaurantId },
+    select: { kitchenSessionToken: true },
+  });
+  if (!row?.kitchenSessionToken) return "no-token";
+  return row.kitchenSessionToken === u.kitchenSessionToken ? "ok" : "stale";
+}
+
+/**
  * The user's User.restaurantId points at the brand's parent Restaurant. A
  * valid switch target is either that same parent OR one of its children
  * (Restaurant.parentRestaurantId === parent.id).

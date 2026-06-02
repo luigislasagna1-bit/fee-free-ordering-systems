@@ -6,6 +6,7 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { randomUUID } from "crypto";
 import prisma from "./db";
 
 // Match the same tunnel-aware logic as the admin auth (lib/auth.ts). Real
@@ -65,6 +66,27 @@ export const kitchenAuthOptions: NextAuthOptions = {
         const valid = await bcrypt.compare(credentials.password, user.passwordHash);
         if (!valid) return null;
 
+        // Single-active-kitchen-session enforcement (Luigi 2026-06-02,
+        // GloriaFood parity). On every successful kitchen login we
+        // mint a fresh UUID and persist it to Restaurant.kitchenSessionToken.
+        // The JWT carries this UUID; getSessionUser({ preferKitchen: true })
+        // compares the JWT UUID against the DB row and treats a
+        // mismatch as logged-out. So when a new device signs in, the
+        // previously-active tablet's next request returns 401 and the
+        // kitchen client redirects it to /kitchen/login — exactly how
+        // GloriaFood enforces "only one kitchen open at a time".
+        //
+        // Superadmin / no restaurantId → no token to rotate (those
+        // sessions never touch /kitchen anyway).
+        let kitchenSessionToken: string | undefined;
+        if (user.restaurantId) {
+          kitchenSessionToken = randomUUID();
+          await prisma.restaurant.update({
+            where: { id: user.restaurantId },
+            data: { kitchenSessionToken },
+          });
+        }
+
         return {
           id: user.id,
           email: user.email,
@@ -72,6 +94,7 @@ export const kitchenAuthOptions: NextAuthOptions = {
           role: user.role,
           restaurantId: user.restaurantId ?? undefined,
           restaurantSlug: user.restaurant?.slug ?? undefined,
+          kitchenSessionToken,
         };
       },
     }),
@@ -82,6 +105,7 @@ export const kitchenAuthOptions: NextAuthOptions = {
         token.role = (user as any).role;
         token.restaurantId = (user as any).restaurantId;
         token.restaurantSlug = (user as any).restaurantSlug;
+        token.kitchenSessionToken = (user as any).kitchenSessionToken;
       }
       return token;
     },
@@ -91,6 +115,7 @@ export const kitchenAuthOptions: NextAuthOptions = {
         (session.user as any).role = token.role;
         (session.user as any).restaurantId = token.restaurantId;
         (session.user as any).restaurantSlug = token.restaurantSlug;
+        (session.user as any).kitchenSessionToken = token.kitchenSessionToken;
       }
       return session;
     },
