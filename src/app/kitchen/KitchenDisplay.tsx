@@ -56,13 +56,18 @@ function ReservationStatusBadge({ status, t }: { status: string; t: T }) {
 }
 
 function ReservationCard({
-  r, t, onStatusChange, onPrint, compact,
+  r, t, onStatusChange, onPrint, compact, dayChip,
 }: {
   r: KitchenReservation;
   t: T;
   onStatusChange: (id: string, status: string) => void;
   onPrint: (id: string) => void;
   compact?: boolean;
+  /** When present (LATER group in the In Progress tab), a small
+   *  day-of-week pill (TUE/FRI/…) is rendered next to the customer
+   *  name so the kitchen can scan upcoming-day items at a glance,
+   *  matching the GloriaFood KDS pattern. */
+  dayChip?: string;
 }) {
   const tk = useTranslations("kitchen");
   return (
@@ -70,6 +75,11 @@ function ReservationCard({
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
+            {dayChip && (
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-700 tracking-wider">
+                {dayChip}
+              </span>
+            )}
             <span className={`font-bold ${t.text} ${compact ? "text-sm" : ""}`}>{r.customerName}</span>
             <ReservationStatusBadge status={r.status} t={t} />
             {r.depositPaid && (
@@ -195,8 +205,12 @@ function Countdown({
 }
 
 // ── Order row ─────────────────────────────────────────────────────────────────
-function OrderRow({ order, selected, onClick, t, now }: {
+function OrderRow({ order, selected, onClick, t, now, dayChip }: {
   order: Order; selected: boolean; onClick: () => void; t: T; now: number;
+  /** Optional day-of-week pill (MON/TUE/…) rendered alongside the
+   *  order number. Used by the In Progress LATER section so the
+   *  kitchen can spot which day each scheduled order is for. */
+  dayChip?: string;
 }) {
   const tk = useTranslations("kitchen");
   // `now === 0` means the client hasn't mounted yet (see useNow). Render
@@ -256,6 +270,11 @@ function OrderRow({ order, selected, onClick, t, now }: {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
+            {dayChip && (
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-700 tracking-wider">
+                {dayChip}
+              </span>
+            )}
             <span className={`font-bold text-sm ${t.text}`}>#{order.orderNumber}</span>
             <StatusBadge status={order.status} t={t} />
             {order.status === "pending" && (
@@ -385,6 +404,13 @@ type KitchenReservation = {
   depositPaid: boolean;
   depositAmount: number;
   table: { name: string; number: number | null } | null;
+  /** When the reservation row was inserted in our DB. Used so the
+   *  All / In Progress tabs can interleave reservations with orders
+   *  in the same "newest first" order as the orders list — sorted
+   *  by when the kitchen heard about them, NOT by when the booking
+   *  is FOR (Luigi 2026-06-01: previously a reservation for next
+   *  week was sorting to the very top because we used date+time). */
+  createdAt: string;
 };
 
 function loadSet(key: string): Set<string> {
@@ -1778,30 +1804,37 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
   // Tab data — Orders = permanent history (all statuses), In Progress = operational, Complete = done
   const ordersTabItems = orders.filter(o => !clearedOrders.has(o.id));
-  // In-progress tab. In Simple mode (GloriaFood-style) we also apply a
-  // date filter so the tab doesn't accumulate orders forever — since
-  // simple-mode orders never transition out of "accepted" except via
-  // the daily auto-complete cron, without this filter the In Progress
-  // tab would grow indefinitely between cron runs. The filter shows:
-  //   - orders created today (regardless of scheduledFor)
-  //   - orders scheduled for today or tomorrow
-  // Tracking mode keeps the full unfiltered list because the kitchen
-  // explicitly moves orders out via the state buttons.
+  // In-progress tab (Luigi 2026-06-01 v2, GloriaFood parity):
+  //   - ASAP orders accepted today and not yet past their estimatedReady
+  //   - Scheduled orders for today OR any future day (so LATER section
+  //     can show TUE/FRI/SAT chips like GloriaFood)
+  //   - Accepted orders without a scheduled time stay visible until they
+  //     move out via Mark Complete (or the 15-min-past-ready cron).
+  // Tracking mode keeps the unfiltered set.
   const inProgressItems = (() => {
     const base = orders.filter(o => IN_PROGRESS_STATUSES.includes(o.status));
     if (workflowMode !== "simple") return base;
-    const now = new Date();
-    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const dayAfterTomorrow = new Date(todayStart);
-    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+    const today = new Date();
+    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     return base.filter(o => {
       const created = o.createdAt ? new Date(o.createdAt) : null;
       const scheduled = (o as any).scheduledFor ? new Date((o as any).scheduledFor) : null;
+      // A future-scheduled order (any day) is always relevant in the
+      // In Progress tab — it sits in LATER until its day arrives.
+      if (scheduled && scheduled >= todayStart) return true;
+      // An ASAP-accepted order is relevant if it came in today.
       if (created && created >= todayStart) return true;
-      if (scheduled && scheduled >= todayStart && scheduled < dayAfterTomorrow) return true;
       return false;
     });
   })();
+  // Reservations the kitchen has already accepted (status confirmed or
+  // seated). The In Progress tab shows these alongside accepted orders
+  // grouped by TODAY / LATER. Pending reservations (not yet accepted)
+  // stay in the All tab + Reservations tab so they aren't "in progress"
+  // until the kitchen acts on them.
+  const inProgressReservations = reservations.filter(
+    r => r.status === "confirmed" || r.status === "seated",
+  );
   const completeItems = orders.filter(o => COMPLETE_STATUSES.includes(o.status) && !clearedComplete.has(o.id));
 
   const tabOrders: Order[] =
@@ -2098,41 +2131,143 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       <div className="flex-1 flex overflow-hidden">
         {/* Order list */}
         <div className={`${selectedOrder ? "hidden md:flex" : "flex"} flex-col w-full md:w-2/5 lg:w-1/3 border-r ${t.border} overflow-y-auto`}>
-          {/* Unified order + reservation list (Luigi 2026-06-01).
-              The All tab used to pin a "Reservations" strip above
-              the order list. Now reservations interleave with orders
-              chronologically — newest first — same way GloriaFood
-              presents them. In Progress and Complete tabs keep
-              orders-only for now (Phase 2 will mirror this merge
-              there with TODAY/LATER grouping). */}
-          {(() => {
-            type MixedItem =
-              | { kind: "order"; ts: number; order: Order }
-              | { kind: "reservation"; ts: number; r: KitchenReservation };
-            const items: MixedItem[] = [];
-            for (const o of tabOrders) {
-              const ts = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
-              items.push({ kind: "order", ts, order: o });
-            }
-            // Merge reservations into the All tab only — the user
-            // explicitly asked for them to live alongside orders
-            // there, not be pinned. Phase 2 will extend this to the
-            // In Progress tab with day groupings.
-            if (activeTab === "orders") {
-              for (const r of reservations) {
-                // Sort by the booking moment (date + time) so upcoming
-                // reservations land near same-day orders naturally —
-                // the kitchen sees "what's happening soon" without
-                // having to scan two separate sections. The KitchenReservation
-                // type doesn't carry createdAt, so this is also the
-                // only timestamp we have.
-                const ts = new Date(`${r.date}T${r.time}:00`).getTime();
-                items.push({ kind: "reservation", ts: isNaN(ts) ? Date.now() : ts, r });
-              }
-            }
-            // Newest first — same default the orders list used.
-            items.sort((a, b) => b.ts - a.ts);
+          {/* Unified order + reservation list (Luigi 2026-06-01 v3,
+              GloriaFood parity).
 
+              ALL tab        — orders + ALL reservations, interleaved
+                                strictly by arrival time (createdAt
+                                desc, newest first). Reservations no
+                                longer pin to the top; they appear in
+                                the order the kitchen received them,
+                                same as orders.
+
+              IN PROGRESS tab — accepted orders + accepted
+                                (confirmed/seated) reservations +
+                                future-scheduled orders. Split into
+                                TODAY and LATER groups (matching
+                                GloriaFood's KDS layout). Inside each
+                                group, sort by due time ascending —
+                                soonest first — so the next thing
+                                that needs attention is on top. LATER
+                                items get a tiny day-of-week chip
+                                (MON/TUE/…) below the item icon.
+
+              COMPLETE tab    — orders only, newest first. No
+                                reservation merge (reservations don't
+                                hit a "complete" state worth showing
+                                here yet).
+          */}
+          {(() => {
+            // ── Helpers ────────────────────────────────────────────
+            const dueTimeOfOrder = (o: Order): number => {
+              const scheduled = (o as any).scheduledFor ? new Date((o as any).scheduledFor).getTime() : NaN;
+              if (!Number.isNaN(scheduled)) return scheduled;
+              const ready = (o as any).estimatedReady ? new Date((o as any).estimatedReady).getTime() : NaN;
+              if (!Number.isNaN(ready)) return ready;
+              const created = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
+              return created;
+            };
+            const dueTimeOfReservation = (r: KitchenReservation): number => {
+              const ts = new Date(`${r.date}T${r.time}:00`).getTime();
+              return Number.isNaN(ts) ? Date.now() : ts;
+            };
+            const startOfDay = (ms: number) => {
+              const d = new Date(ms);
+              return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+            };
+            const nowMs = now > 0 ? now : Date.now();
+            const todayStartMs = startOfDay(nowMs);
+            const tomorrowStartMs = todayStartMs + 24 * 60 * 60 * 1000;
+            const DAY_ABBR = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+            type Mixed =
+              | { kind: "order"; sortTs: number; order: Order }
+              | { kind: "reservation"; sortTs: number; r: KitchenReservation };
+
+            // ── ALL tab: chronological by arrival ─────────────────
+            if (activeTab === "orders") {
+              const items: Mixed[] = [];
+              for (const o of tabOrders) {
+                const arrived = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
+                items.push({ kind: "order", sortTs: arrived, order: o });
+              }
+              for (const r of reservations) {
+                // Sort by createdAt — when the reservation arrived
+                // into the kitchen — NOT by the booking date+time.
+                // Otherwise a reservation booked for next week would
+                // sort to the top of "newest first".
+                const arrived = r.createdAt ? new Date(r.createdAt).getTime() : Date.now();
+                items.push({ kind: "reservation", sortTs: arrived, r });
+              }
+              items.sort((a, b) => b.sortTs - a.sortTs);
+
+              if (items.length === 0) {
+                return (
+                  <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
+                    <Package className="w-10 h-10 mb-3 opacity-30" />
+                    <p className="text-sm">{tk("noOrders")}</p>
+                  </div>
+                );
+              }
+              return items.map((it) => renderRow(it));
+            }
+
+            // ── IN PROGRESS tab: TODAY / LATER groups ─────────────
+            if (activeTab === "inprogress") {
+              const items: Mixed[] = [];
+              for (const o of tabOrders) {
+                items.push({ kind: "order", sortTs: dueTimeOfOrder(o), order: o });
+              }
+              for (const r of inProgressReservations) {
+                items.push({ kind: "reservation", sortTs: dueTimeOfReservation(r), r });
+              }
+              const today: Mixed[] = [];
+              const later: Mixed[] = [];
+              for (const it of items) {
+                if (it.sortTs < tomorrowStartMs) today.push(it);
+                else later.push(it);
+              }
+              // Soonest first inside each group — matches GloriaFood.
+              today.sort((a, b) => a.sortTs - b.sortTs);
+              later.sort((a, b) => a.sortTs - b.sortTs);
+
+              if (today.length === 0 && later.length === 0) {
+                return (
+                  <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
+                    <Package className="w-10 h-10 mb-3 opacity-30" />
+                    <p className="text-sm">{tk("noOrders")}</p>
+                  </div>
+                );
+              }
+              const sectionHeader = (label: string) => (
+                <div
+                  key={`hdr-${label}`}
+                  className={`px-4 py-1.5 text-[10px] font-bold tracking-widest ${t.muted} ${
+                    themeMode === "dark" ? "bg-gray-900/40" : "bg-gray-50"
+                  } border-b ${t.border}`}
+                >
+                  {label}
+                </div>
+              );
+              const dayChipFor = (sortTs: number): string | undefined =>
+                sortTs >= tomorrowStartMs ? DAY_ABBR[new Date(sortTs).getDay()] : undefined;
+              return (
+                <>
+                  {today.length > 0 && sectionHeader(tk("today") || "TODAY")}
+                  {today.map((it) => renderRow(it))}
+                  {later.length > 0 && sectionHeader(tk("later") || "LATER")}
+                  {later.map((it) => renderRow(it, dayChipFor(it.sortTs)))}
+                </>
+              );
+            }
+
+            // ── COMPLETE tab: orders only, newest first ───────────
+            const items: Mixed[] = [];
+            for (const o of tabOrders) {
+              const arrived = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
+              items.push({ kind: "order", sortTs: arrived, order: o });
+            }
+            items.sort((a, b) => b.sortTs - a.sortTs);
             if (items.length === 0) {
               return (
                 <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
@@ -2141,20 +2276,27 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 </div>
               );
             }
-            return items.map((it) =>
-              it.kind === "order" ? (
-                <OrderRow
-                  key={`o-${it.order.id}`}
-                  order={it.order}
-                  selected={selectedId === it.order.id}
-                  onClick={() => {
-                    setSelectedId(it.order.id);
-                    if (it.order.status === "pending") setPrepModal(it.order.id);
-                  }}
-                  t={t}
-                  now={now}
-                />
-              ) : (
+            return items.map((it) => renderRow(it));
+
+            // ── Row renderer (shared) ─────────────────────────────
+            function renderRow(it: Mixed, dayChip?: string) {
+              if (it.kind === "order") {
+                return (
+                  <OrderRow
+                    key={`o-${it.order.id}`}
+                    order={it.order}
+                    selected={selectedId === it.order.id}
+                    onClick={() => {
+                      setSelectedId(it.order.id);
+                      if (it.order.status === "pending") setPrepModal(it.order.id);
+                    }}
+                    t={t}
+                    now={now}
+                    dayChip={dayChip}
+                  />
+                );
+              }
+              return (
                 <ReservationCard
                   key={`r-${it.r.id}`}
                   r={it.r}
@@ -2162,9 +2304,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                   onStatusChange={updateReservationStatus}
                   onPrint={printReservation}
                   compact
+                  dayChip={dayChip}
                 />
-              ),
-            );
+              );
+            }
           })()}
         </div>
 

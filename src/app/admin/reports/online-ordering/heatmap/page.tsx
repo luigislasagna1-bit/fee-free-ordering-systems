@@ -140,7 +140,8 @@ export default async function HeatmapReportPage({
       {restaurant.deliveryZones.length > 0 && points.length > 0 && (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
           <h2 className="font-semibold text-gray-900 mb-3">Orders by zone</h2>
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full text-sm min-w-[520px]">
             <thead>
               <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100">
                 <th className="py-2 px-3 font-semibold">Zone</th>
@@ -176,6 +177,7 @@ export default async function HeatmapReportPage({
               )}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

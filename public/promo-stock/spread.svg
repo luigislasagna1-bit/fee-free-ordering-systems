@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 288" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#365314"/>
+      <stop offset="100%" stop-color="#65a30d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="35%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#fef9c3" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#365314" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="576" height="288" fill="url(#bg)"/>
+  <rect width="576" height="288" fill="url(#glow)"/>
+  <g transform="translate(100 80)">
+    <circle cx="0" cy="0" r="55" fill="#fef3c7"/>
+    <circle cx="0" cy="-4" r="48" fill="#fff8e7"/>
+    <g fill="#16a34a"><circle cx="-10" cy="-12" r="6"/><circle cx="14" cy="6" r="5"/><circle cx="-6" cy="14" r="4"/></g>
+    <g fill="#dc2626"><circle cx="6" cy="-14" r="5"/><circle cx="-18" cy="2" r="4"/></g>
+  </g>
+  <g transform="translate(220 200)">
+    <ellipse rx="65" ry="50" fill="#fef3c7"/>
+    <ellipse rx="58" ry="44" fill="#fff8e7"/>
+    <g stroke="#fbbf24" stroke-width="5" fill="none" stroke-linecap="round">
+      <path d="M -40 -10 Q 0 -25 40 -10"/>
+      <path d="M -40 8 Q 0 -5 40 12"/>
+      <path d="M -38 22 Q 5 12 38 26"/>
+    </g>
+  </g>
+  <g transform="translate(350 100)">
+    <circle r="60" fill="#fef3c7"/>
+    <circle r="52" fill="#fff8e7"/>
+    <circle r="42" fill="#fbbf24"/>
+    <circle r="36" fill="#f87171"/>
+    <g fill="#dc2626" opacity="0.85">
+      <circle cx="-14" cy="-10" r="5"/>
+      <circle cx="12" cy="-8" r="4"/>
+      <circle cx="-6" cy="14" r="4"/>
+      <circle cx="16" cy="10" r="5"/>
+    </g>
+  </g>
+  <g transform="translate(450 220)">
+    <ellipse rx="50" ry="40" fill="#fef3c7"/>
+    <ellipse rx="44" ry="34" fill="#fff8e7"/>
+    <g fill="#7c2d12"><rect x="-25" y="-12" width="50" height="8" rx="2"/><rect x="-25" y="-2" width="50" height="8" rx="2"/><rect x="-25" y="8" width="50" height="8" rx="2"/></g>
+  </g>
+</svg>

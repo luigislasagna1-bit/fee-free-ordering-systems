@@ -508,7 +508,8 @@ export function ServiceFeesClient() {
         </div>
       ) : (
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full text-sm min-w-[640px]">
             <thead className="bg-gray-50 text-gray-600 text-xs uppercase tracking-wide">
               <tr>
                 <th className="text-left px-4 py-3">{t("feeName")}</th>
@@ -549,6 +550,7 @@ export function ServiceFeesClient() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 

@@ -78,7 +78,8 @@ export default async function SalesSummaryPage({
       </div>
 
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden relative">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
               <th className="py-2.5 px-4 font-semibold">{labelByDim(by)}</th>
@@ -115,6 +116,7 @@ export default async function SalesSummaryPage({
             })}
           </tbody>
         </table>
+        </div>
 
         <div className="absolute bottom-3 right-3">
           <ExportMenu

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 288" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7f1d1d"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="30%" cy="55%" r="55%">
+      <stop offset="0%" stop-color="#fecaca" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#7f1d1d" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="576" height="288" fill="url(#bg)"/>
+  <rect width="576" height="288" fill="url(#glow)"/>
+  <g transform="translate(155 144)">
+    <circle r="115" fill="#b91c1c"/>
+    <circle r="105" fill="#dc2626"/>
+    <g fill="#fbbf24" opacity="0.85">
+      <ellipse cx="-30" cy="-25" rx="22" ry="14" transform="rotate(-25 -30 -25)"/>
+      <ellipse cx="25" cy="-30" rx="20" ry="12" transform="rotate(15 25 -30)"/>
+      <ellipse cx="-10" cy="20" rx="24" ry="14" transform="rotate(35 -10 20)"/>
+      <ellipse cx="40" cy="20" rx="18" ry="12" transform="rotate(-20 40 20)"/>
+    </g>
+    <g fill="#16a34a" opacity="0.85">
+      <path d="M -50 -45 Q -45 -55 -38 -50 Q -32 -45 -40 -38 Z"/>
+      <path d="M 45 -10 Q 50 -20 56 -15 Q 60 -8 52 -2 Z"/>
+      <path d="M -20 50 Q -18 38 -10 40 Q -5 48 -12 55 Z"/>
+    </g>
+    <g fill="#fef3c7" opacity="0.4">
+      <circle cx="-50" cy="0" r="3"/>
+      <circle cx="55" cy="35" r="3"/>
+      <circle cx="-25" cy="55" r="2.5"/>
+    </g>
+  </g>
+  <g fill="#fef3c7" opacity="0.18">
+    <circle cx="450" cy="60" r="5"/>
+    <circle cx="490" cy="120" r="4"/>
+    <circle cx="430" cy="220" r="5"/>
+    <circle cx="520" cy="240" r="5"/>
+  </g>
+</svg>

@@ -1949,13 +1949,22 @@ export function OrderingPageClient({
                 )
               )}
               {restaurant.acceptsReservations && (
+                // Luigi 2026-06-01 v3: bump the Reserve chip to be the
+                // visually dominant button in the action group on
+                // mobile — bigger icon, bolder weight, deeper shadow,
+                // longer "Book a Table" label so the customer can't
+                // miss what it is. Other action pills stay compact
+                // icon-only (Sign in, Restaurant Info) per Luigi's
+                // explicit ask. Desktop keeps the longer
+                // "Table Reservation" label it already used.
                 <button
                   onClick={() => setReservationOpen(true)}
-                  className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-white transition hover:opacity-90"
+                  className="flex items-center gap-1.5 sm:gap-2 text-sm sm:text-sm font-bold px-4 sm:px-4 py-2.5 sm:py-2.5 rounded-full text-white transition hover:opacity-90 shadow-md ring-1 ring-white/10"
                   style={{ backgroundColor: theme.primaryColor }}
                   title={t("tableReservation")}
                 >
-                  <Calendar className="w-4 h-4 flex-shrink-0" />
+                  <Calendar className="w-[18px] h-[18px] sm:w-4 sm:h-4 flex-shrink-0" />
+                  <span className="sm:hidden">{t("bookATable")}</span>
                   <span className="hidden sm:inline">{t("tableReservation")}</span>
                 </button>
               )}
@@ -2097,29 +2106,30 @@ export function OrderingPageClient({
               // simpler colored card is what owners expect when they
               // skip the image picker).
               const ownerImageUrl = promo.imageUrl?.trim() || null;
-              // Stock-image fallback (Luigi 2026-06-01): when the
+              // Stock-image fallback (Luigi 2026-06-01 v2): when the
               // owner hasn't uploaded a custom image, pick a
               // food-promo background deterministically by promo.id
               // hash so each promo gets a consistent look and the
               // set looks varied across multiple promos on the same
               // page. Owner uploads always win — the admin promo
               // editor at /admin/promotions/[id]/edit lets owners
-              // override. Hosted by Unsplash's image CDN (free for
-              // any use, no API key) so we don't have to bundle
-              // image assets.
+              // override.
+              //
+              // Shipped LOCALLY as SVGs under /public/promo-stock/
+              // so they always render, even when the visitor is
+              // behind a corporate firewall / ad-blocker / strict
+              // CSP that would otherwise block external image CDNs
+              // (the original Unsplash URLs were silently failing
+              // for some visitors, leaving the tile pure-color from
+              // the backgroundColor fallback — see Luigi's
+              // 2026-06-01 black-tile screenshot).
               const STOCK_PROMO_IMAGES = [
-                // Pizza (top-down, vibrant)
-                "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop",
-                // Pasta plate (italian, warm)
-                "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&auto=format&fit=crop",
-                // Burger and fries (american comfort)
-                "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop",
-                // Wood-table food spread (catering vibe)
-                "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&auto=format&fit=crop",
-                // Italian sauce / red (sale / promo feel)
-                "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&auto=format&fit=crop",
-                // Hand handing off bag (delivery)
-                "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&auto=format&fit=crop",
+                "/promo-stock/pizza.svg",
+                "/promo-stock/pasta.svg",
+                "/promo-stock/burger.svg",
+                "/promo-stock/spread.svg",
+                "/promo-stock/sauce.svg",
+                "/promo-stock/delivery.svg",
               ];
               const stockFallback = (() => {
                 let h = 0;

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 288" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9a3412"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="30%" cy="55%" r="55%">
+      <stop offset="0%" stop-color="#fde68a" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#9a3412" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="576" height="288" fill="url(#bg)"/>
+  <rect width="576" height="288" fill="url(#glow)"/>
+  <g transform="translate(160 150)">
+    <ellipse rx="135" ry="105" fill="#fef3c7"/>
+    <ellipse rx="120" ry="92" fill="#fff8e7"/>
+    <g stroke="#fbbf24" stroke-width="6" fill="none" stroke-linecap="round">
+      <path d="M -90 -30 Q -40 -50 10 -20 Q 60 10 100 -30"/>
+      <path d="M -90 0 Q -30 -10 30 10 Q 80 30 100 0"/>
+      <path d="M -85 30 Q -30 50 30 35 Q 80 20 95 50"/>
+      <path d="M -75 55 Q -20 35 40 60 Q 80 80 90 55"/>
+    </g>
+    <g fill="#dc2626" opacity="0.85">
+      <ellipse cx="-30" cy="10" rx="14" ry="10"/>
+      <ellipse cx="40" cy="-15" rx="12" ry="9"/>
+      <ellipse cx="20" cy="40" rx="13" ry="9"/>
+      <ellipse cx="-50" cy="-20" rx="11" ry="8"/>
+    </g>
+    <g fill="#15803d" opacity="0.8">
+      <circle cx="-10" cy="-30" r="5"/>
+      <circle cx="55" cy="20" r="4"/>
+      <circle cx="-65" cy="35" r="4"/>
+    </g>
+  </g>
+</svg>
