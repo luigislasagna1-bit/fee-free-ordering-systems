@@ -2150,16 +2150,14 @@ export function OrderingPageClient({
                       setActivePromoModal(promo);
                     }
                   }}
-                  className="flex-shrink-0 w-72 h-36 rounded-xl text-white shadow-md relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
-                  // Full-cover image with a gradient curtain on the
-                  // RIGHT half for text legibility (Luigi 2026-06-01
-                  // v3): image fills the whole tile (covers it edge
-                  // to edge), then a transparent-→-theme-color
-                  // gradient fades in from the centre to the right
-                  // edge so the text panel reads cleanly against a
-                  // solid color while the left half stays purely
-                  // image. No-image fallback unchanged: full theme
-                  // gradient.
+                  // GloriaFood-style tile (Luigi 2026-06-01 v4):
+                  // taller (h-48), full-bleed image, dark gradient
+                  // overlay across the bottom half so the title +
+                  // description + CTA pill all sit on a legible
+                  // surface without dimming the food photo. Owner
+                  // can still override the image at
+                  // /admin/promotions/[id]/edit (Promotion settings).
+                  className="flex-shrink-0 w-80 h-48 rounded-xl text-white shadow-md relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
                   style={
                     hasImage
                       ? {
@@ -2174,53 +2172,83 @@ export function OrderingPageClient({
                         }
                   }
                 >
+                  {/* Bottom-up dark gradient curtain — transparent
+                      at the top, fading to ~85% black at the bottom.
+                      Matches GloriaFood's promo tile look so the
+                      photo dominates the top half and the text panel
+                      gets a solid surface below. We keep the
+                      no-image branch on a pure theme gradient (no
+                      additional dim) so the color stays vivid. */}
                   {hasImage && (
-                    /* Right-side gradient curtain — transparent at
-                       the centre fading to solid theme colour at the
-                       right edge. Keeps the text panel legible
-                       without dimming the rest of the image. */
                     <div
-                      className="absolute inset-y-0 right-0 w-3/5 pointer-events-none"
+                      className="absolute inset-x-0 bottom-0 h-2/3 pointer-events-none"
                       style={{
-                        background: `linear-gradient(90deg, transparent 0%, ${theme.primaryColor}d9 35%, ${theme.primaryColor} 70%)`,
+                        background:
+                          "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.88) 100%)",
                       }}
                     />
                   )}
-                  {/* Foreground content — sits on top of the image
-                      + curtain. Right-aligned + bolder type when an
-                      image is present so it pops against the photo.
-                      Subtle text-shadow gives the copy extra grip on
-                      the gradient seam. */}
+                  {/* Tiny "PROMO" tag in the top-left, matching
+                      GloriaFood's "Learn more" anchor placement.
+                      Lower-cased + smaller so it doesn't compete
+                      with the headline. */}
                   <div
-                    className={`relative h-full p-4 flex flex-col ${
-                      hasImage ? "items-end text-right pl-[42%]" : ""
-                    }`}
-                    style={
-                      hasImage
-                        ? { textShadow: "0 1px 2px rgba(0,0,0,0.35)" }
-                        : undefined
-                    }
+                    className="absolute top-2.5 left-3 text-[10px] uppercase tracking-widest font-bold opacity-90"
+                    style={{ textShadow: "0 1px 2px rgba(0,0,0,0.55)" }}
                   >
-                    <div className={`text-[10px] uppercase tracking-wider font-extrabold mb-1 ${hasImage ? "opacity-95" : "opacity-80"}`}>
-                      {t("promoLabel")}
-                    </div>
-                    <div className={`leading-tight mb-1 ${hasImage ? "text-lg font-black" : "text-base font-extrabold"}`}>{headline}</div>
-                    {promo.description && (
-                      <div className={`leading-snug mb-2 line-clamp-2 ${hasImage ? "text-xs font-semibold opacity-95" : "text-xs opacity-90"}`}>
-                        {promo.description}
+                    {t("promoLabel")}
+                  </div>
+
+                  {/* Bottom content block — title + description on
+                      the LEFT, "Get it now" CTA pill on the RIGHT.
+                      Sits inside the dark gradient band. */}
+                  <div className="absolute inset-x-0 bottom-0 p-3 flex items-end gap-3">
+                    <div
+                      className="flex-1 min-w-0"
+                      style={{ textShadow: "0 1px 3px rgba(0,0,0,0.55)" }}
+                    >
+                      <div className="text-lg font-black leading-tight line-clamp-2">
+                        {headline}
                       </div>
+                      {promo.description && (
+                        <div className="text-xs font-medium opacity-95 line-clamp-2 mt-0.5">
+                          {promo.description}
+                        </div>
+                      )}
+                    </div>
+                    {/* CTA — uses the restaurant's primary color so
+                        it brand-matches. Same fixed label as GloriaFood
+                        ("Get it now") regardless of promo type — the
+                        modal handles the type-specific UX. */}
+                    <span
+                      className="flex-shrink-0 text-xs font-bold px-3 py-2 rounded-md shadow-md whitespace-nowrap"
+                      style={{
+                        backgroundColor: theme.primaryColor,
+                        // Black-themed shops get a contrasting white
+                        // pill outline so the CTA reads as a button,
+                        // not just a black blob on the dark curtain.
+                        boxShadow: "0 2px 6px rgba(0,0,0,0.35)",
+                      }}
+                    >
+                      {t("promoGetItNow")}
+                    </span>
+                  </div>
+
+                  {/* Constraint chips (window / min order / type /
+                      coupon). Anchored to the TOP-RIGHT so they
+                      don't crowd the bottom title band. Tiny
+                      translucent pills, same content as before. */}
+                  <div className="absolute top-2.5 right-3 flex flex-wrap justify-end gap-1 text-[10px] font-semibold max-w-[60%]">
+                    {usableWindowLabel && (
+                      <span className="bg-black/55 backdrop-blur rounded-full px-2 py-0.5">
+                        ⏰ {usableWindowLabel}
+                      </span>
                     )}
-                    <div className={`mt-auto flex flex-wrap gap-1.5 text-[10px] font-semibold ${hasImage ? "justify-end" : ""}`}>
-                      {usableWindowLabel && (
-                        <span className="bg-white/20 backdrop-blur rounded-full px-2 py-0.5">
-                          ⏰ {usableWindowLabel}
-                        </span>
-                      )}
-                      {minOrderLabel && (
-                        <span className="bg-white/20 backdrop-blur rounded-full px-2 py-0.5">
-                          {minOrderLabel}
-                        </span>
-                      )}
+                    {minOrderLabel && (
+                      <span className="bg-black/55 backdrop-blur rounded-full px-2 py-0.5">
+                        {minOrderLabel}
+                      </span>
+                    )}
                       {/* Order-type chip on the promo banner.
                           Multi-select promos store orderType as a JSON
                           array (e.g. '["pickup","delivery"]'). The
@@ -2269,7 +2297,7 @@ export function OrderingPageClient({
                         if (onlyPickup && !restaurant.acceptsPickup) return null;
                         return (
                           <span
-                            className="bg-white/20 backdrop-blur rounded-full px-2 py-0.5"
+                            className="bg-black/55 backdrop-blur rounded-full px-2 py-0.5"
                             title={
                               onlyPickup
                                 ? "This deal only applies to pickup orders"
@@ -2281,11 +2309,10 @@ export function OrderingPageClient({
                         );
                       })()}
                       {promo.couponCode && (
-                        <span className="bg-white text-gray-900 rounded-full px-2 py-0.5 font-mono">
+                        <span className="bg-white/95 text-gray-900 rounded-full px-2 py-0.5 font-mono">
                           {promo.couponCode}
                         </span>
                       )}
-                    </div>
                   </div>
                 </div>
               );
