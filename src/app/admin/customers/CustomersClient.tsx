@@ -32,6 +32,10 @@ type CustomerRow = {
   totalSpent: number;
   createdAt: string;
   hasAccount: boolean;
+  /** Customer.marketingConsent — drives the "Marketing" column badge
+   *  and the matching CSV column. True = opted in (default-checked at
+   *  checkout was left ticked, OR toggled on from /account). */
+  marketingConsent: boolean;
 };
 
 type FilterKey = "all" | "signed_up" | "guests";
@@ -73,7 +77,7 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
       // RFC 4180: wrap in quotes if contains comma, quote, or newline; double up any internal quotes.
       return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
     };
-    const header = ["Name", "Email", "Phone", "Total orders", "Total spent", "Signup date", "Has account"];
+    const header = ["Name", "Email", "Phone", "Total orders", "Total spent", "Signup date", "Has account", "Marketing consent"];
     const lines = [header.join(",")];
     for (const c of visible) {
       lines.push([
@@ -84,6 +88,7 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
         esc(c.totalSpent.toFixed(2)),
         esc(c.createdAt.slice(0, 10)),
         esc(c.hasAccount ? "yes" : "no"),
+        esc(c.marketingConsent ? "yes" : "no"),
       ].join(","));
     }
     // Prefix with UTF-8 BOM so Excel reads accented characters correctly
@@ -185,6 +190,11 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
                               <KeyRound className="w-2.5 h-2.5" />Account
                             </span>
                           )}
+                          {c.marketingConsent && (
+                            <span className="inline-flex items-center text-[9px] font-bold uppercase tracking-wider bg-sky-100 text-sky-700 px-1.5 py-0.5 rounded">
+                              ✓ Marketing
+                            </span>
+                          )}
                         </div>
                         <div className="text-xs text-gray-500 mt-0.5">
                           {c.totalOrders} order{c.totalOrders === 1 ? "" : "s"} · since {formatDate(c.createdAt)}
@@ -221,7 +231,7 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
               <table className="w-full text-sm">
                 <thead className="bg-gray-50 border-b border-gray-100">
                   <tr>
-                    {["Name", "Email", "Phone", "Orders", "Total Spent", "First Order", ""].map((h) => (
+                    {["Name", "Email", "Phone", "Orders", "Total Spent", "Marketing", "First Order", ""].map((h) => (
                       <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">{h}</th>
                     ))}
                   </tr>
@@ -243,6 +253,15 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
                       <td className="px-4 py-3 text-gray-600">{c.phone || "—"}</td>
                       <td className="px-4 py-3 text-gray-600">{c.totalOrders}</td>
                       <td className="px-4 py-3 font-semibold text-gray-900">{formatCurrency(c.totalSpent)}</td>
+                      <td className="px-4 py-3">
+                        {c.marketingConsent ? (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">
+                            ✓ Opted in
+                          </span>
+                        ) : (
+                          <span className="text-xs text-gray-400">—</span>
+                        )}
+                      </td>
                       <td className="px-4 py-3 text-gray-500">{formatDate(c.createdAt)}</td>
                       <td className="px-4 py-3 text-right">
                         <Link href={`/admin/customers/${c.id}`} className="text-emerald-600 hover:text-emerald-700">

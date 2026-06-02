@@ -33,6 +33,11 @@ export default async function CustomersPage() {
       id: true, name: true, email: true, phone: true,
       totalOrders: true, totalSpent: true, createdAt: true,
       passwordHash: true,
+      // Marketing-consent flag — drives the "Marketing" column on the
+      // customers list and the new CSV column. Stamped at checkout when
+      // the (default-checked) opt-in box is left ticked, or toggled by
+      // the customer themselves from /order/<slug>/account.
+      marketingConsent: true,
     },
   });
   const customers = rows.map((c) => ({
@@ -44,6 +49,7 @@ export default async function CustomersPage() {
     totalSpent: c.totalSpent,
     createdAt: c.createdAt.toISOString(),
     hasAccount: !!c.passwordHash,
+    marketingConsent: !!c.marketingConsent,
   }));
 
   return <CustomersClient customers={customers} />;
