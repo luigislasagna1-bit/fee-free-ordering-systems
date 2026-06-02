@@ -611,10 +611,21 @@ export function OrderingPageClient({
     unit: "", buzzer: "", deliveryNotes: "",
     notes: "", paymentMethod: defaultPaymentMethod, scheduledFor: "",
     // Marketing-consent opt-in checkbox on the contact section
-    // (GloriaFood-parity, Luigi/Fabrizio 2026-06-02). False by default —
-    // CASL / GDPR require explicit opt-in. Server-side persists onto
-    // Customer.marketingConsent + marketingConsentAt.
-    marketingConsent: false,
+    // (GloriaFood-parity, Luigi 2026-06-02). Default = TRUE per
+    // Luigi's spec — matches the GloriaFood/Toast/Square pattern of
+    // pre-ticking the box so the average customer opts in unless they
+    // actively uncheck. The customer can still opt OUT at checkout
+    // (uncheck) and at any later point from their /account profile or
+    // an email-unsubscribe link.
+    //
+    // Legal note for future reviewers: CASL (Canada) and GDPR (EU)
+    // technically require *unticked* defaults. CASL §10 + GDPR
+    // Recital 32 both single out "pre-checked boxes" as not valid
+    // consent. We're following the US/GloriaFood convention; if a
+    // CASL/GDPR complaint ever lands, flip this back to false and
+    // the rest of the pipeline (sticky upgrade, server-side
+    // marketingConsentAt stamp) keeps working unchanged.
+    marketingConsent: true,
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
   // Default starts at the SUGGESTED amount (15%). Customer can drag the
@@ -1496,7 +1507,11 @@ export function OrderingPageClient({
     deliveryCity: customerInfo.city, deliveryZip: customerInfo.zip,
     notes: combinedNotes, paymentMethod: customerInfo.paymentMethod,
     scheduledFor: customerInfo.scheduledFor || null,
-    marketingConsent: customerInfo.marketingConsent === true,
+    // Only honour the consent flag if we actually have an email to send
+    // to AND the user kept the box checked. With the box pre-ticked by
+    // default (Luigi 2026-06-02), an email-less guest would otherwise
+    // get stamped as "opted in" with nothing to send.
+    marketingConsent: customerInfo.marketingConsent === true && customerInfo.email.trim().length > 0,
     from: fromMarketplace ? "marketplace" : undefined,
     // Reports attribution — server-side join from this hash back to
     // the WebsiteVisit row written when the session started. Server
