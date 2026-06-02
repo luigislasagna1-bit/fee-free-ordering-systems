@@ -257,24 +257,38 @@ function OrderRow({ order, selected, onClick, t, now, dayChip }: {
 
   return (
     <div onClick={onClick} className={`px-4 py-3.5 transition-colors ${rowClass}`}>
-      <div className="flex items-center gap-3">
-        <div className={`flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center ${
-          isTest ? "bg-amber-500/20" :
-          order.type === "delivery" ? "bg-blue-500/20" : "bg-emerald-500/20"
-        }`}>
-          {isTest
-            ? <FlaskConical className="w-4 h-4 text-amber-500" />
-            : order.type === "delivery"
-              ? <Truck className="w-4 h-4 text-blue-500" />
-              : <ShoppingBag className="w-4 h-4 text-emerald-500" />}
+      <div className="flex items-start gap-3">
+        {/* Icon column + chip underneath (Luigi 2026-06-02 GloriaFood
+            parity). The chip is either a live countdown to the order's
+            due time (today's items) or a day-of-week abbreviation
+            (LATER section items waiting for their day). Position kept
+            tight under the icon so a kitchen at a glance can read
+            "bag, 00:00 = pickup that's due now" without scanning. */}
+        <div className="flex-shrink-0 flex flex-col items-center w-9">
+          <div className={`w-9 h-9 rounded-full flex items-center justify-center ${
+            isTest ? "bg-amber-500/20" :
+            order.type === "delivery" ? "bg-blue-500/20" : "bg-emerald-500/20"
+          }`}>
+            {isTest
+              ? <FlaskConical className="w-4 h-4 text-amber-500" />
+              : order.type === "delivery"
+                ? <Truck className="w-4 h-4 text-blue-500" />
+                : <ShoppingBag className="w-4 h-4 text-emerald-500" />}
+          </div>
+          {dayChip && (
+            <span
+              className={`text-[10px] mt-1 font-bold tracking-wider tabular-nums ${
+                /^\d/.test(dayChip)
+                  ? t.muted // countdown digits — neutral grey, same vibe as GloriaFood
+                  : "text-sky-700" // future-day chip — sky like before
+              }`}
+            >
+              {dayChip}
+            </span>
+          )}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            {dayChip && (
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-700 tracking-wider">
-                {dayChip}
-              </span>
-            )}
             <span className={`font-bold text-sm ${t.text}`}>#{order.orderNumber}</span>
             <StatusBadge status={order.status} t={t} />
             {order.status === "pending" && (
@@ -1878,26 +1892,45 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // server-side in /api/kitchen/orders, so the client doesn't need its
   // own localStorage cleared-set. Tabs just split by status.
   const ordersTabItems = orders;
-  // In-progress tab (Luigi 2026-06-01 v2, GloriaFood parity):
-  //   - ASAP orders accepted today and not yet past their estimatedReady
-  //   - Scheduled orders for today OR any future day (so LATER section
-  //     can show TUE/FRI/SAT chips like GloriaFood)
-  //   - Accepted orders without a scheduled time stay visible until they
-  //     move out via Mark Complete (or the 15-min-past-ready cron).
-  // Tracking mode keeps the unfiltered set.
+  // In-progress tab (Luigi 2026-06-02 v3, full GloriaFood parity):
+  //
+  //   Every order that was accepted TODAY stays in In Progress all day,
+  //   even after its prep-time countdown hits 00:00. They only roll out
+  //   when the next calendar day begins — at which point the natural
+  //   "createdAt was today" filter excludes them and they move to the
+  //   Complete tab. Rejected / cancelled orders never appear here.
+  //
+  //   This matches GloriaFood: a busy kitchen wants to keep glancing
+  //   at "what came in today" without items vanishing mid-service.
+  //
+  //   Future-day scheduled orders also appear, grouped into the LATER
+  //   section with a day-of-week chip (TUE / WED / THU…). When their
+  //   day arrives the chip becomes a live HH:MM countdown.
+  //
+  //   Tracking mode keeps the unfiltered set (the kitchen is using the
+  //   full state machine and decides themselves when to clear).
+  const SHOWS_IN_PROGRESS_SIMPLE = ["accepted", "preparing", "ready", "completed"];
   const inProgressItems = (() => {
-    const base = orders.filter(o => IN_PROGRESS_STATUSES.includes(o.status));
+    const base = orders.filter(o =>
+      workflowMode === "simple"
+        ? SHOWS_IN_PROGRESS_SIMPLE.includes(o.status)
+        : IN_PROGRESS_STATUSES.includes(o.status),
+    );
     if (workflowMode !== "simple") return base;
-    const today = new Date();
-    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const todayStart = (() => {
+      const d = new Date();
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+    })();
     return base.filter(o => {
-      const created = o.createdAt ? new Date(o.createdAt) : null;
-      const scheduled = (o as any).scheduledFor ? new Date((o as any).scheduledFor) : null;
+      const created = o.createdAt ? new Date(o.createdAt).getTime() : NaN;
+      const scheduled = (o as any).scheduledFor ? new Date((o as any).scheduledFor).getTime() : NaN;
       // A future-scheduled order (any day) is always relevant in the
       // In Progress tab — it sits in LATER until its day arrives.
-      if (scheduled && scheduled >= todayStart) return true;
-      // An ASAP-accepted order is relevant if it came in today.
-      if (created && created >= todayStart) return true;
+      if (!Number.isNaN(scheduled) && scheduled >= todayStart) return true;
+      // An order that was accepted today stays visible all day,
+      // including AFTER the auto-complete cron flips it to "completed"
+      // — the kitchen wants to keep seeing today's work until tomorrow.
+      if (!Number.isNaN(created) && created >= todayStart) return true;
       return false;
     });
   })();
@@ -2323,14 +2356,46 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                   {label}
                 </div>
               );
-              const dayChipFor = (sortTs: number): string | undefined =>
-                sortTs >= tomorrowStartMs ? DAY_ABBR[new Date(sortTs).getDay()] : undefined;
+              // Chip / countdown rendered UNDER the icon (Luigi 2026-06-02
+              // GloriaFood parity). Three shapes:
+              //
+              //   - Future day (LATER) → day-of-week abbreviation
+              //     (MON / TUE / WED…). When the day arrives the item
+              //     falls into the today bucket and the chip flips to
+              //     a live HH:MM countdown.
+              //
+              //   - Same-day, > 1 hour out → "HH:MM" (e.g. 03:24).
+              //   - Same-day, ≤ 1 hour out → "MM:SS" (e.g. 14:31).
+              //   - Past the due time → "00:00" (stays visible, doesn't
+              //     vanish; the order remains in In Progress all day).
+              //
+              // The chip text is what gets passed via OrderRow's dayChip
+              // prop (the prop name is kept for back-compat — the
+              // component decides styling based on whether the first
+              // character is a digit, so a countdown reads in neutral
+              // grey and a day chip reads in sky-blue).
+              const chipFor = (sortTs: number): string | undefined => {
+                if (!Number.isFinite(sortTs)) return undefined;
+                if (sortTs >= tomorrowStartMs) {
+                  return DAY_ABBR[new Date(sortTs).getDay()];
+                }
+                const diffMs = sortTs - nowMs;
+                if (diffMs <= 0) return "00:00";
+                const totalSec = Math.floor(diffMs / 1000);
+                const hh = Math.floor(totalSec / 3600);
+                const mm = Math.floor((totalSec % 3600) / 60);
+                const ss = totalSec % 60;
+                if (hh > 0) {
+                  return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
+                }
+                return `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`;
+              };
               return (
                 <>
                   {today.length > 0 && sectionHeader(tk("today") || "TODAY")}
-                  {today.map((it) => renderRow(it))}
+                  {today.map((it) => renderRow(it, chipFor(it.sortTs)))}
                   {later.length > 0 && sectionHeader(tk("later") || "LATER")}
-                  {later.map((it) => renderRow(it, dayChipFor(it.sortTs)))}
+                  {later.map((it) => renderRow(it, chipFor(it.sortTs)))}
                 </>
               );
             }
