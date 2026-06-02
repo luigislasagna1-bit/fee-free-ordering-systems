@@ -851,6 +851,15 @@ model Order {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  /// When set, this order has been dismissed from the kitchen display
+  /// (via the "Clear orders" or "Clear complete" buttons). Tracked
+  /// server-side so it's identical across every device that opens the
+  /// kitchen — log in on a phone after dismissing on the tablet and
+  /// you see the same list (Luigi 2026-06-02 GloriaFood-parity follow-
+  /// up). The order itself isn't deleted — admin reports + customer
+  /// status pages still see it. Just hidden from the kitchen list.
+  clearedFromKitchenAt DateTime?
+
   restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
   customer     Customer?     @relation(fields: [customerId], references: [id])
   coupon       Coupon?       @relation(fields: [couponId], references: [id])

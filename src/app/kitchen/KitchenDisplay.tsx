@@ -1296,8 +1296,16 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // Clear history sets (localStorage-persisted).
   // Start empty on both server and client so hydration matches, then load
   // from localStorage in an effect after the first render.
-  const [clearedOrders, setClearedOrders] = useState<Set<string>>(() => new Set());
-  const [clearedComplete, setClearedComplete] = useState<Set<string>>(() => new Set());
+  // Cleared-orders / cleared-complete state lived in localStorage here
+  // before Luigi 2026-06-02. It's now server-side
+  // (Order.clearedFromKitchenAt) so every device that signs in to the
+  // same kitchen sees the same list — no more "I cleared on the iPad
+  // but the laptop still shows them" mismatches.
+  //
+  // We keep an empty noop ref of the old setters so the legacy migration
+  // useEffect below can wipe the historical localStorage entries
+  // without breaking. Drop the migration block in a follow-up once
+  // every kitchen device has loaded the new build at least once.
   const [clearConfirm, setClearConfirm] = useState<"orders" | "complete" | null>(null);
 
   const seenIdsRef = useRef<Set<string>>(new Set(initialOrders.map(o => o.id)));
@@ -1391,11 +1399,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orders, now]);
 
-  // Load cleared-order sets from localStorage after hydration (can't do this
-  // during render because the server has no localStorage, causing a mismatch).
+  // Migration: scrub the historical localStorage cleared-sets the very
+  // first time this build mounts. They're authoritative server-side
+  // now (Order.clearedFromKitchenAt), so leaving the keys around would
+  // just confuse anyone inspecting the device's storage later.
   useEffect(() => {
-    setClearedOrders(loadSet("kds-cleared-orders"));
-    setClearedComplete(loadSet("kds-cleared-complete"));
+    try {
+      localStorage.removeItem("kds-cleared-orders");
+      localStorage.removeItem("kds-cleared-complete");
+    } catch { /* SSR / private mode — fine to ignore */ }
   }, []);
 
   useEffect(() => {
@@ -1482,6 +1494,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       setPrintNodeEnabled(pnEnabled);
     } catch {}
   }, []);
+
+  // Mirror fetchOrders into a ref so non-reactive call sites
+  // (server-side clear handlers, etc.) can trigger an immediate refresh
+  // without re-binding their closures on every render.
+  const fetchOrdersRef = useRef<typeof fetchOrders | null>(null);
+  useEffect(() => { fetchOrdersRef.current = fetchOrders; }, [fetchOrders]);
 
   // Kitchen orders polling. We poll every 4 seconds while the tab is
   // visible — that's the "feels instant" target. We also force a fresh
@@ -1798,38 +1816,68 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // Also flips `acknowledged` to true as a safety net — if a previous
   // Clear-on-pending got into this state before the deploy, hitting
   // Clear now also silences the looping bell.
+  // Both clear handlers now hit the server (Luigi 2026-06-02). The DB
+  // owns the cleared flag (Order.clearedFromKitchenAt) so every device
+  // that polls /api/kitchen/orders sees the same hidden set. Optimistic
+  // local update + refresh keeps the UI snappy; the next poll
+  // reconciles in case the server count differs.
+  const callClear = async (scope: "orders" | "complete") => {
+    try {
+      const res = await fetch("/api/kitchen/orders/clear", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ scope }),
+      });
+      if (res.status === 401) {
+        const body = await res.json().catch(() => null);
+        if (body?.code === "session_superseded") {
+          // Single-session enforcement caught this device — let the
+          // heartbeat's signOut handler do the redirect work.
+          return;
+        }
+        toast.error("Not signed in — please log in again.");
+        return;
+      }
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        toast.error(body?.error ?? "Failed to clear orders.");
+        return;
+      }
+      // Force a fresh fetch so the cleared rows disappear immediately
+      // instead of waiting for the next 4s poll.
+      fetchOrdersRef.current?.();
+    } catch (e: any) {
+      toast.error(e?.message ?? "Network error clearing orders.");
+    }
+  };
+
   const handleClearOrders = () => {
-    const allVisible = orders
-      .filter((o) => !clearedOrders.has(o.id) && o.status !== "pending")
-      .map((o) => o.id);
-    if (allVisible.length === 0) {
+    const eligible = orders.filter(
+      (o) => o.status !== "pending" && !(o as any).clearedFromKitchenAt,
+    );
+    if (eligible.length === 0) {
       toast.error(
         "Nothing to clear — pending orders must be Accepted or Rejected first.",
       );
       setClearConfirm(null);
       return;
     }
-    const next = new Set([...clearedOrders, ...allVisible]);
-    setClearedOrders(next);
-    saveSet("kds-cleared-orders", next);
     setSelectedId(null);
     setClearConfirm(null);
     setAcknowledged(true); // silence any stale bell from prior cleared-pending bug
+    callClear("orders");
   };
 
   const handleClearComplete = () => {
-    const allVisible = orders
-      .filter(o => COMPLETE_STATUSES.includes(o.status) && !clearedComplete.has(o.id))
-      .map(o => o.id);
-    const next = new Set([...clearedComplete, ...allVisible]);
-    setClearedComplete(next);
-    saveSet("kds-cleared-complete", next);
     setSelectedId(null);
     setClearConfirm(null);
+    callClear("complete");
   };
 
-  // Tab data — Orders = permanent history (all statuses), In Progress = operational, Complete = done
-  const ordersTabItems = orders.filter(o => !clearedOrders.has(o.id));
+  // Tab data (Luigi 2026-06-02): clearedFromKitchenAt is now filtered
+  // server-side in /api/kitchen/orders, so the client doesn't need its
+  // own localStorage cleared-set. Tabs just split by status.
+  const ordersTabItems = orders;
   // In-progress tab (Luigi 2026-06-01 v2, GloriaFood parity):
   //   - ASAP orders accepted today and not yet past their estimatedReady
   //   - Scheduled orders for today OR any future day (so LATER section
@@ -1861,7 +1909,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const inProgressReservations = reservations.filter(
     r => r.status === "confirmed" || r.status === "seated",
   );
-  const completeItems = orders.filter(o => COMPLETE_STATUSES.includes(o.status) && !clearedComplete.has(o.id));
+  const completeItems = orders.filter(o => COMPLETE_STATUSES.includes(o.status));
 
   const tabOrders: Order[] =
     activeTab === "orders" ? ordersTabItems :
