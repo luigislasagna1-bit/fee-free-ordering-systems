@@ -25,6 +25,11 @@ export async function GET() {
       id: true,
       name: true,
       isSoldOut: true,
+      // Surface base price so the kitchen's Settings > Item availability
+      // & pricing panel can show + edit it inline without forcing the
+      // owner to open /admin/menu. PATCH below accepts price updates
+      // scoped to this restaurant only.
+      price: true,
       category: { select: { name: true, sortOrder: true } },
     },
     orderBy: [{ category: { sortOrder: "asc" } }, { sortOrder: "asc" }],

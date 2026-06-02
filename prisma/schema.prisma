@@ -96,6 +96,13 @@ model Restaurant {
   /// tampered client can't inject one. Default true to preserve the
   /// historical behaviour for restaurants that haven't touched this.
   tipsEnabled          Boolean @default(true)
+  /// Whether the customer ordering page shows the magnifying-glass
+  /// menu search bar above the category pills. Default true to
+  /// preserve the historical "always-on" behaviour (Luigi 2026-05-31).
+  /// When false the entire search row is omitted — clients use the
+  /// category pills to navigate, GloriaFood style. Toggled by the
+  /// owner from /admin/service-fees > Customer ordering page.
+  showCustomerMenuSearch Boolean @default(true)
   /// ISO 4217 lowercase currency code (matches Stripe's expectation:
   /// "usd", "cad", "eur", "gbp", "aud", etc.). Drives the customer
   /// price formatting, Stripe PaymentIntent currency, PayPal Order

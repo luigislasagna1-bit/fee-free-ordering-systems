@@ -24,6 +24,7 @@ export async function GET() {
       scheduledOrderInterval: true,
       requireCustomerEmail: true,
       requireCustomerPhone: true,
+      showCustomerMenuSearch: true,
       // Surface the owner-uploaded custom alarm sound URL so the KDS
       // can offer it as a third option in its Sound Settings picker.
       kitchenAlertSoundUrl: true,
@@ -51,6 +52,7 @@ export async function PUT(req: NextRequest) {
     scheduledOrderInterval,
     requireCustomerEmail,
     requireCustomerPhone,
+    showCustomerMenuSearch,
   } = data;
 
   const ALLOWED_LOCALES = ["en", "fr", "es", "it", "pt"];
@@ -91,6 +93,7 @@ export async function PUT(req: NextRequest) {
     updateData.taxRate = n;
   }
   if (tipsEnabled !== undefined) updateData.tipsEnabled = !!tipsEnabled;
+  if (showCustomerMenuSearch !== undefined) updateData.showCustomerMenuSearch = !!showCustomerMenuSearch;
   if (currency !== undefined && typeof currency === "string") {
     // ISO 4217 sanity — 3 letters. Normalize to lowercase (matches
     // Stripe's expected format and our DB default). Anything else is

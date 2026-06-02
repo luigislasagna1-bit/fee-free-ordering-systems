@@ -1,13 +1,13 @@
 /**
  * PATCH /api/kitchen/menu-stock/[id]
  *
- * Kitchen-side toggle for MenuItem.isSoldOut. Lets staff mark an item
- * out of stock without leaving the kitchen display. The customer
- * ordering page already respects isSoldOut (greys the item out, blocks
- * add-to-cart), so the change propagates on their next page load /
- * refetch.
+ * Kitchen-side fast-edit for MenuItem.isSoldOut and price. Lets staff
+ * mark an item out of stock OR adjust its base price without leaving
+ * the kitchen display. The customer ordering page and admin menu page
+ * both read the same row, so changes propagate immediately on the next
+ * page load / refetch.
  *
- * Body: { isSoldOut: boolean }
+ * Body: { isSoldOut?: boolean, price?: number } — either or both.
  *
  * Scoped to the kitchen's restaurant — caller can't toggle items at
  * other restaurants by guessing IDs.
@@ -28,26 +28,39 @@ export async function PATCH(
   }
 
   const { id } = await params;
-  let body: { isSoldOut?: boolean };
+  let body: { isSoldOut?: boolean; price?: number };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
-  if (typeof body.isSoldOut !== "boolean") {
-    return NextResponse.json({ error: "isSoldOut boolean required" }, { status: 400 });
+
+  const data: { isSoldOut?: boolean; price?: number } = {};
+  if (typeof body.isSoldOut === "boolean") data.isSoldOut = body.isSoldOut;
+  if (body.price !== undefined) {
+    // Accept a plain JS number; reject NaN, negative, and absurdly large
+    // values. Round to 2 decimals so the DB doesn't carry float fuzz
+    // (e.g. 19.989999) that confuses the receipt printer.
+    const n = typeof body.price === "number" ? body.price : Number(body.price);
+    if (!Number.isFinite(n) || n < 0 || n > 9999) {
+      return NextResponse.json({ error: "Invalid price" }, { status: 400 });
+    }
+    data.price = Math.round(n * 100) / 100;
+  }
+  if (Object.keys(data).length === 0) {
+    return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
   }
 
   // Restaurant scope check on the WHERE clause so a kitchen user can't
-  // toggle items on other restaurants.
+  // edit items on other restaurants.
   const result = await prisma.menuItem.updateMany({
     where: { id, restaurantId },
-    data: { isSoldOut: body.isSoldOut },
+    data,
   });
 
   if (result.count === 0) {
     return NextResponse.json({ error: "Item not found" }, { status: 404 });
   }
-  return NextResponse.json({ ok: true, id, isSoldOut: body.isSoldOut });
+  return NextResponse.json({ ok: true, id, ...data });
 }
 

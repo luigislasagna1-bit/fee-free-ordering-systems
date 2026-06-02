@@ -6,7 +6,7 @@ import {
 import toast from "react-hot-toast";
 
 /**
- * Kitchen-side restaurant status panel.
+ * Kitchen-side restaurant Settings panel (header button label = "Settings").
  *
  * Two responsibilities, both kitchen staff need from the floor:
  *
@@ -17,12 +17,14 @@ import toast from "react-hot-toast";
  *      so a backed-up kitchen can still take pickups while pausing
  *      delivery, or vice versa.
  *
- *   2. Mark items out of stock — quick toggle per menu item without
- *      navigating to /admin/menu. Customer page already respects
- *      MenuItem.isSoldOut (greys + blocks add-to-cart).
+ *   2. Item availability & pricing — quick per-item Mark out / Restock
+ *      toggle PLUS an inline price input so the owner can bump a price
+ *      without leaving the kitchen tablet. Both fields write to
+ *      MenuItem, which is the same row read by /admin/menu and
+ *      /order/[slug], so changes are reflected everywhere immediately.
  *
  * Posts to /api/kitchen/pause-services and /api/kitchen/menu-stock.
- * Luigi 2026-06-01 GloriaFood-parity.
+ * Luigi 2026-06-01 GloriaFood-parity; pricing 2026-06-02.
  */
 
 type ServiceKey =
@@ -141,7 +143,7 @@ export function RestaurantStatusModal({
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 flex-shrink-0">
           <h2 className="text-lg font-bold flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-amber-500" />
-            Restaurant status
+            Restaurant settings
           </h2>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100">
             <X className="w-5 h-5" />
@@ -165,7 +167,7 @@ export function RestaurantStatusModal({
               tab === "stock" ? "border-emerald-500 text-emerald-700" : "border-transparent text-gray-500 hover:text-gray-800"
             }`}
           >
-            <Package className="w-4 h-4 inline mr-1.5" /> Out of stock
+            <Package className="w-4 h-4 inline mr-1.5" /> Item availability / pricing
           </button>
         </div>
 
@@ -270,7 +272,8 @@ interface StockItem {
   id: string;
   name: string;
   isSoldOut: boolean;
-  category: { name: string; displayOrder: number } | null;
+  price: number;
+  category: { name: string; sortOrder: number } | null;
 }
 
 function StockPanel({ onChange }: { onChange?: () => void }) {
@@ -278,6 +281,13 @@ function StockPanel({ onChange }: { onChange?: () => void }) {
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [busyIds, setBusyIds] = useState<Set<string>>(new Set());
+  // Per-item draft for the inline price input — keyed by item id, holds
+  // the raw text the user is typing. Committed (saved) on blur or
+  // Enter; reverted on Escape. We don't write keystroke-by-keystroke
+  // so the kitchen doesn't fire 14 PATCHes while the owner types
+  // "12.50". Items not in this map render the canonical it.price.
+  const [priceDrafts, setPriceDrafts] = useState<Record<string, string>>({});
+  const [priceBusyIds, setPriceBusyIds] = useState<Set<string>>(new Set());
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -313,6 +323,66 @@ function StockPanel({ onChange }: { onChange?: () => void }) {
     }
   };
 
+  // Commit a draft price for the given item. Validates locally so a
+  // typo (empty string, NaN, negative, > 9999) shows an immediate
+  // toast instead of a backend round-trip. On success we update the
+  // local item row so the input reverts to formatted server state on
+  // the next blur.
+  const commitPrice = async (it: StockItem) => {
+    const raw = priceDrafts[it.id];
+    if (raw === undefined) return; // no draft = nothing to commit
+    const trimmed = raw.trim();
+    // No change → quietly clear the draft.
+    const next = Number(trimmed);
+    if (trimmed === "" || !Number.isFinite(next) || next < 0 || next > 9999) {
+      toast.error("Enter a valid price (0 – 9999).");
+      // Revert by clearing the draft so the canonical price renders.
+      setPriceDrafts((d) => {
+        const cp = { ...d };
+        delete cp[it.id];
+        return cp;
+      });
+      return;
+    }
+    const rounded = Math.round(next * 100) / 100;
+    if (rounded === it.price) {
+      setPriceDrafts((d) => {
+        const cp = { ...d };
+        delete cp[it.id];
+        return cp;
+      });
+      return;
+    }
+    setPriceBusyIds((s) => new Set(s).add(it.id));
+    try {
+      const r = await fetch(`/api/kitchen/menu-stock/${it.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ price: rounded }),
+      });
+      if (!r.ok) {
+        const d = await r.json().catch(() => ({}));
+        throw new Error(d.error || "Failed");
+      }
+      setItems((cur) => cur.map((i) => i.id === it.id ? { ...i, price: rounded } : i));
+      setPriceDrafts((d) => {
+        const cp = { ...d };
+        delete cp[it.id];
+        return cp;
+      });
+      toast.success(`Price updated to $${rounded.toFixed(2)}`);
+      onChange?.();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed to save price");
+    } finally {
+      setPriceBusyIds((s) => {
+        const cp = new Set(s);
+        cp.delete(it.id);
+        return cp;
+      });
+    }
+  };
+
   const filtered = query.trim()
     ? items.filter((it) =>
         it.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -342,38 +412,79 @@ function StockPanel({ onChange }: { onChange?: () => void }) {
         </div>
       ) : (
         <ul className="divide-y divide-gray-100 border border-gray-100 rounded-xl overflow-hidden">
-          {filtered.map((it) => (
-            <li key={it.id} className="flex items-center justify-between px-3 py-2.5 gap-3">
-              <div className="min-w-0">
-                <div className={`text-sm font-semibold truncate ${it.isSoldOut ? "text-gray-400 line-through" : "text-gray-900"}`}>
-                  {it.name}
+          {filtered.map((it) => {
+            const draft = priceDrafts[it.id];
+            const inputValue = draft !== undefined ? draft : it.price.toFixed(2);
+            const priceBusy = priceBusyIds.has(it.id);
+            return (
+              <li key={it.id} className="flex items-center justify-between px-3 py-2.5 gap-3">
+                <div className="min-w-0 flex-1">
+                  <div className={`text-sm font-semibold truncate ${it.isSoldOut ? "text-gray-400 line-through" : "text-gray-900"}`}>
+                    {it.name}
+                  </div>
+                  {it.category && (
+                    <div className="text-[11px] text-gray-500 truncate">{it.category.name}</div>
+                  )}
                 </div>
-                {it.category && (
-                  <div className="text-[11px] text-gray-500 truncate">{it.category.name}</div>
-                )}
-              </div>
-              <button
-                type="button"
-                onClick={() => toggle(it)}
-                disabled={busyIds.has(it.id)}
-                className={`flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg transition ${
-                  it.isSoldOut
-                    ? "bg-emerald-500 hover:bg-emerald-600 text-white"
-                    : "bg-amber-500 hover:bg-amber-600 text-white"
-                } ${busyIds.has(it.id) ? "opacity-50 cursor-wait" : ""}`}
-              >
-                {busyIds.has(it.id)
-                  ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  : it.isSoldOut ? "Restock" : "Mark out"}
-              </button>
-            </li>
-          ))}
+                {/* Inline price editor — sits LEFT of the Mark out /
+                    Restock button. Owner taps in, edits, blurs (or hits
+                    Enter) to save. Escape reverts. Writes propagate to
+                    the same MenuItem.price row read by /admin/menu and
+                    /order/[slug] so changes are immediately reflected
+                    everywhere. */}
+                <div className="flex-shrink-0 flex items-center gap-1 text-xs">
+                  <span className="text-gray-400">$</span>
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    min={0}
+                    step="0.01"
+                    value={inputValue}
+                    disabled={priceBusy}
+                    onChange={(e) => setPriceDrafts((d) => ({ ...d, [it.id]: e.target.value }))}
+                    onBlur={() => commitPrice(it)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        (e.target as HTMLInputElement).blur();
+                      } else if (e.key === "Escape") {
+                        setPriceDrafts((d) => {
+                          const cp = { ...d };
+                          delete cp[it.id];
+                          return cp;
+                        });
+                        (e.target as HTMLInputElement).blur();
+                      }
+                    }}
+                    className="w-20 px-2 py-1.5 rounded-lg border border-gray-200 text-sm font-semibold text-right tabular-nums focus:outline-none focus:ring-2 focus:ring-emerald-300 disabled:opacity-60"
+                    aria-label={`Price for ${it.name}`}
+                  />
+                  {priceBusy && <Loader2 className="w-3 h-3 animate-spin text-gray-400" />}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => toggle(it)}
+                  disabled={busyIds.has(it.id)}
+                  className={`flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg transition ${
+                    it.isSoldOut
+                      ? "bg-emerald-500 hover:bg-emerald-600 text-white"
+                      : "bg-amber-500 hover:bg-amber-600 text-white"
+                  } ${busyIds.has(it.id) ? "opacity-50 cursor-wait" : ""}`}
+                >
+                  {busyIds.has(it.id)
+                    ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    : it.isSoldOut ? "Restock" : "Mark out"}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       )}
 
       <p className="text-[11px] text-gray-500 leading-relaxed">
-        Marking an item out of stock greys it out on the customer ordering page immediately
-        and blocks new orders for it. Tap <strong>Restock</strong> to bring it back.
+        Edit the price field then tap outside (or press Enter) to save. Marking an item
+        out of stock greys it out on the customer ordering page and blocks new orders.
+        All changes appear on the customer site and admin menu immediately.
       </p>
     </div>
   );

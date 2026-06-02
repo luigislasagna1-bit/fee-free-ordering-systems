@@ -2129,9 +2129,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 ? "border-amber-500/60 text-amber-600 bg-amber-500/10"
                 : "border-gray-500/30 text-gray-600"
             } ${t.btn}`}
-            title="Pause services or mark items out of stock"
+            title="Pause services or adjust item availability and pricing"
           >
-            {anyServicePaused ? "⏸ Paused" : "Status"}
+            {anyServicePaused ? "⏸ Paused" : "Settings"}
           </button>
 
           {/* End-of-day report — opens a modal with today's totals and

@@ -1424,6 +1424,19 @@ function ModifierLibraryPanel({
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const toggle = (id: string) => setExpanded(e => ({ ...e, [id]: !e[id] }));
   const { hoveredLibId, setHovered } = useContext(MenuHoverContext);
+  // Local search for the modifier-group library (Luigi 2026-06-02).
+  // Filters by group name AND by option name — so an owner searching
+  // "pepperoni" finds groups that have a Pepperoni option even when
+  // the group itself is just called "Toppings". Case-insensitive.
+  const [modSearchQuery, setModSearchQuery] = useState("");
+  const filteredGroups = (() => {
+    const q = modSearchQuery.trim().toLowerCase();
+    if (!q) return groups;
+    return groups.filter(g => {
+      if (g.name.toLowerCase().includes(q)) return true;
+      return (g.options ?? []).some(o => o.name.toLowerCase().includes(q));
+    });
+  })();
   // Scroll the matching row into view when an external hover (e.g. a
   // chip on an item) targets a library group that's offscreen. Uses
   // block: "nearest" so already-visible rows don't jump unnecessarily.
@@ -1496,6 +1509,37 @@ function ModifierLibraryPanel({
         </div>
       )}
 
+      {/* Modifier-group search (Luigi 2026-06-02). Filters the library
+          rows below by group name OR by any of the group's option
+          names — so searching "pepperoni" surfaces a "Toppings" group
+          that contains a Pepperoni option, not just groups literally
+          named "pepperoni". Always rendered so the input is one tab
+          away even when the panel is empty. */}
+      {groups.length > 0 && (
+        <div className="px-3 pt-3 pb-1">
+          <div className="relative">
+            <Search className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="search"
+              value={modSearchQuery}
+              onChange={(e) => setModSearchQuery(e.target.value)}
+              placeholder="Search modifier groups…"
+              className="w-full pl-8 pr-7 py-1.5 text-xs rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:border-emerald-300"
+            />
+            {modSearchQuery && (
+              <button
+                type="button"
+                onClick={() => setModSearchQuery("")}
+                aria-label="Clear modifier search"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 text-gray-400 hover:text-gray-700"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="flex-1 overflow-y-auto p-3 space-y-2">
         {groups.length === 0 && (
           <div className="py-10 text-center text-gray-400 text-sm">
@@ -1503,7 +1547,13 @@ function ModifierLibraryPanel({
             No modifier groups yet.
           </div>
         )}
-        {groups.map(g => {
+        {groups.length > 0 && filteredGroups.length === 0 && (
+          <div className="py-8 text-center text-gray-400 text-xs">
+            <Search className="w-6 h-6 mx-auto mb-1.5 opacity-40" />
+            No matches for &ldquo;{modSearchQuery}&rdquo;
+          </div>
+        )}
+        {filteredGroups.map(g => {
           const isHovered = hoveredLibId === g.id;
           const isChecked = selectedIds.has(g.id);
           return (

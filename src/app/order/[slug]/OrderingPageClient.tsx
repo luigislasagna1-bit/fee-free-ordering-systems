@@ -2339,12 +2339,21 @@ export function OrderingPageClient({
             no matching items so the customer doesn't have to scroll
             past empty headers. Auto-clears when they hit ×. State
             lives below alongside the cart and is consumed where
-            visibleCategories is computed. */}
-        <MenuSearchBar
-          value={menuSearchQuery}
-          onChange={setMenuSearchQuery}
-          theme={theme}
-        />
+            visibleCategories is computed.
+
+            Gated 2026-06-02 on restaurant.showCustomerMenuSearch
+            (admin toggle in /admin/service-fees). When the owner
+            disables it the entire row is omitted; customers navigate
+            via the category pills below. Default-true coalesce so
+            restaurants that haven't touched the toggle keep the
+            historical "always-on" behaviour. */}
+        {(restaurant.showCustomerMenuSearch ?? true) && (
+          <MenuSearchBar
+            value={menuSearchQuery}
+            onChange={setMenuSearchQuery}
+            theme={theme}
+          />
+        )}
 
         {/* ── Category pills (sticky on scroll) ────────────────────────────
             Pins to the top as the customer scrolls down the menu so they

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Plus, Wallet, Trash2, Pencil, Loader2, X, ToggleLeft, ToggleRight, Receipt } from "lucide-react";
+import { Plus, Wallet, Trash2, Pencil, Loader2, X, ToggleLeft, ToggleRight, Receipt, Search } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { SUPPORTED_CURRENCIES } from "@/lib/utils";
@@ -65,6 +65,14 @@ export function ServiceFeesClient() {
   // controls are in one section (Luigi 2026-05-31).
   const [tipsEnabled, setTipsEnabled] = useState(true);
   const [savingTips, setSavingTips] = useState(false);
+  // Customer-side menu search toggle (Luigi 2026-06-02). When ON the
+  // /order/[slug] page renders a magnifying-glass search bar above the
+  // category pills so the customer can type to filter the menu. When
+  // OFF the whole row is hidden — customers navigate via the category
+  // pills only, GloriaFood style. Default ON to preserve existing
+  // behaviour for restaurants that had the bar pre-toggle.
+  const [showCustomerMenuSearch, setShowCustomerMenuSearch] = useState(true);
+  const [savingMenuSearch, setSavingMenuSearch] = useState(false);
   const [currency, setCurrency] = useState<string>("usd");
   const [savingCurrency, setSavingCurrency] = useState(false);
   // Scheduled-order interval + checkout-required toggles (Luigi 2026-05-31).
@@ -94,6 +102,7 @@ export function ServiceFeesClient() {
         if (typeof p.scheduledOrderInterval === "number") setScheduledOrderInterval(p.scheduledOrderInterval);
         if (typeof p.requireCustomerEmail === "boolean") setRequireCustomerEmail(p.requireCustomerEmail);
         if (typeof p.requireCustomerPhone === "boolean") setRequireCustomerPhone(p.requireCustomerPhone);
+        if (typeof p.showCustomerMenuSearch === "boolean") setShowCustomerMenuSearch(p.showCustomerMenuSearch);
       }
     } finally {
       setLoading(false);
@@ -138,6 +147,28 @@ export function ServiceFeesClient() {
       toast.error(tToasts("saveFailed"));
     } finally {
       setSavingTips(false);
+    }
+  };
+
+  // Save the customer-side menu-search toggle. Mirrors saveTips —
+  // optimistic update, revert on error so the toggle UI never lies
+  // about persisted state (Luigi 2026-06-02).
+  const saveMenuSearch = async (next: boolean) => {
+    setShowCustomerMenuSearch(next);
+    setSavingMenuSearch(true);
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ showCustomerMenuSearch: next }),
+      });
+      if (!res.ok) throw new Error();
+      toast.success(tToasts("saved"));
+    } catch {
+      setShowCustomerMenuSearch(!next);
+      toast.error(tToasts("saveFailed"));
+    } finally {
+      setSavingMenuSearch(false);
     }
   };
 
@@ -395,6 +426,38 @@ export function ServiceFeesClient() {
             aria-label={tipsEnabled ? "Disable tips" : "Enable tips"}
           >
             <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${tipsEnabled ? "left-[22px]" : "left-0.5"}`} />
+          </button>
+        </div>
+      </div>
+
+      {/* ── Customer menu search bar (Luigi 2026-06-02) ─────────────
+          GloriaFood-style magnifying glass on /order/[slug]. ON =
+          show the search field above the category pills so customers
+          can type to filter the menu. OFF = hide the row entirely;
+          customers navigate via category pills only. */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start gap-3 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center flex-shrink-0">
+              <Search className="w-5 h-5 text-sky-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="font-semibold text-gray-900">Customer menu search</h2>
+              <p className="text-xs text-gray-500 mt-0.5">
+                When ON, the customer ordering page shows a magnifying-glass search
+                bar so visitors can type to find items quickly. Turn OFF if you prefer
+                they browse only via the category pills.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => saveMenuSearch(!showCustomerMenuSearch)}
+            disabled={savingMenuSearch}
+            className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${showCustomerMenuSearch ? "bg-emerald-500" : "bg-gray-300"} disabled:opacity-60`}
+            aria-label={showCustomerMenuSearch ? "Hide menu search on customer page" : "Show menu search on customer page"}
+          >
+            <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${showCustomerMenuSearch ? "left-[22px]" : "left-0.5"}`} />
           </button>
         </div>
       </div>
