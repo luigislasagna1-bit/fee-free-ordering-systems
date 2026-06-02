@@ -2150,14 +2150,17 @@ export function OrderingPageClient({
                       setActivePromoModal(promo);
                     }
                   }}
-                  // GloriaFood-style tile (Luigi 2026-06-01 v4):
-                  // taller (h-48), full-bleed image, dark gradient
-                  // overlay across the bottom half so the title +
-                  // description + CTA pill all sit on a legible
-                  // surface without dimming the food photo. Owner
-                  // can still override the image at
-                  // /admin/promotions/[id]/edit (Promotion settings).
-                  className="flex-shrink-0 w-80 h-48 rounded-xl text-white shadow-md relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
+                  // GloriaFood-style tile (Luigi 2026-06-01 v5):
+                  // full-bleed image, dark gradient overlay across
+                  // the bottom half so the title + description +
+                  // CTA pill all sit on a legible surface without
+                  // dimming the food photo. Size tuned back down
+                  // from v4 (w-80 h-48 → w-72 h-40) per Luigi: keep
+                  // the new layout but trim the footprint to roughly
+                  // match the previous tile. Owner can still
+                  // override the image at /admin/promotions/[id]/edit
+                  // (Promotion settings).
+                  className="flex-shrink-0 w-72 h-40 rounded-xl text-white shadow-md relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
                   style={
                     hasImage
                       ? {
