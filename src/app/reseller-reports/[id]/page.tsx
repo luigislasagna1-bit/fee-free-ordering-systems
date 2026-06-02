@@ -76,6 +76,11 @@ export default async function ReportDetailPage({
         // Parse the JSON-encoded URL array. Malformed JSON falls back
         // to empty — never throws on the page render path.
         imageUrls: parseImageUrls(report.imageUrls),
+        // SUPERADMIN-ONLY: the AI triage note is only ever sent to the
+        // browser when the viewer can change status (i.e. is the
+        // superadmin). Resellers receive null — it never leaves the server
+        // for them. Drives the internal "AI Analysis" card on the detail page.
+        aiAnalysis: access.canChangeStatus ? (report.aiAnalysis ?? null) : null,
         createdAt: report.createdAt.toISOString(),
         updatedAt: report.updatedAt.toISOString(),
         comments: report.comments.map((c) => ({

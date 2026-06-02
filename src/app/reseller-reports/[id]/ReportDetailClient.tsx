@@ -1,11 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ChevronLeft, MessageSquare, Loader2, ThumbsUp, CheckCircle2, XCircle,
-  Activity, Star, ImagePlus, X as XIcon,
+  Activity, Star, ImagePlus, X as XIcon, Sparkles, Trash2,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import {
@@ -64,6 +64,9 @@ interface Report {
   reporterName: string;
   filedOnBehalf: boolean;
   imageUrls: string[];
+  /** SUPERADMIN-ONLY AI triage note (markdown). null for resellers (never
+   *  sent to their browser) or when not yet generated. */
+  aiAnalysis: string | null;
   createdAt: string;
   updatedAt: string;
   comments: Comment[];
@@ -104,6 +107,11 @@ export function ReportDetailClient({
   );
   const [savingReporter, setSavingReporter] = useState(false);
   const [shippingFix, setShippingFix] = useState(false);
+  // AI triage note (superadmin-only). Starts with whatever the server sent
+  // (null for resellers, or null if not generated yet).
+  const [aiAnalysis, setAiAnalysis] = useState<string | null>(initial.aiAnalysis);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
 
   /** Upload one or more image files to /api/reseller-reports/upload.
    *  Returns the URL list — caller decides whether to merge into the
@@ -176,6 +184,56 @@ export function ReportDetailClient({
       toast.error(e instanceof Error ? e.message : "Failed");
     } finally {
       setSavingStatus(false);
+    }
+  };
+
+  // ─── AI triage analysis (SA only) ──────────────────────────────────
+  // Generates the analysis on first superadmin view (and backfills old
+  // reports the same way). Idempotent server-side, so a double-fire just
+  // returns the cached note.
+  const runAnalysis = async (regenerate = false) => {
+    setAnalyzing(true);
+    setAiError(null);
+    try {
+      const r = await fetch(`/api/reseller-reports/${report.id}/analyze`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ regenerate }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.error || "Analysis failed");
+      setAiAnalysis(d.analysis);
+    } catch (e) {
+      setAiError(e instanceof Error ? e.message : "Analysis failed");
+    } finally {
+      setAnalyzing(false);
+    }
+  };
+
+  useEffect(() => {
+    if (access.canChangeStatus && !aiAnalysis && !analyzing && !aiError) {
+      void runAnalysis(false);
+    }
+    // Run once on mount for an un-analyzed report. Deliberately not
+    // re-firing on every state change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ─── Delete a comment (SA only) ─────────────────────────────────────
+  const deleteComment = async (commentId: string) => {
+    if (!window.confirm("Delete this comment? This can't be undone.")) return;
+    try {
+      const r = await fetch(`/api/reseller-reports/${report.id}/comments/${commentId}`, {
+        method: "DELETE",
+      });
+      if (!r.ok) {
+        const d = await r.json().catch(() => ({}));
+        throw new Error(d.error || "Failed");
+      }
+      setReport((p) => ({ ...p, comments: p.comments.filter((c) => c.id !== commentId) }));
+      toast.success("Comment deleted");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed");
     }
   };
 
@@ -461,6 +519,46 @@ export function ReportDetailClient({
           </div>
         </div>
 
+        {/* ── AI triage analysis (SUPERADMIN ONLY, internal) ────────── */}
+        {access.canChangeStatus && (
+          <div className="mt-4 bg-indigo-50/60 rounded-2xl border border-indigo-200 shadow-sm p-5">
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-indigo-600" />
+                <span className="text-sm font-bold text-indigo-900">AI Analysis</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 border border-indigo-200">
+                  Internal · superadmin only
+                </span>
+              </div>
+              {aiAnalysis && !analyzing && (
+                <button
+                  onClick={() => runAnalysis(true)}
+                  className="text-xs font-semibold text-indigo-700 hover:text-indigo-900"
+                  title="Re-run the analysis from scratch"
+                >
+                  Re-analyze
+                </button>
+              )}
+            </div>
+            {analyzing ? (
+              <div className="flex items-center gap-2 text-sm text-indigo-700 py-2">
+                <Loader2 className="w-4 h-4 animate-spin" /> Analyzing this report…
+              </div>
+            ) : aiError ? (
+              <div className="text-sm text-rose-700">
+                {aiError}{" "}
+                <button onClick={() => runAnalysis(false)} className="underline font-semibold">
+                  Retry
+                </button>
+              </div>
+            ) : aiAnalysis ? (
+              <div className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">{aiAnalysis}</div>
+            ) : (
+              <div className="text-sm text-gray-500">Not analyzed yet.</div>
+            )}
+          </div>
+        )}
+
         {/* ── Engagement panel: upvote + verification ──────────────── */}
         <div className="mt-4 grid sm:grid-cols-2 gap-3">
           {/* "Me too" upvote */}
@@ -570,10 +668,22 @@ export function ReportDetailClient({
             <ul className="space-y-2">
               {report.comments.map((c) => (
                 <li key={c.id} className="bg-white rounded-xl border border-gray-200 p-4">
-                  <div className="text-xs text-gray-500 mb-1">
-                    <strong className="text-gray-700">{c.authorName}</strong>
-                    {" · "}
-                    {new Date(c.createdAt).toLocaleString()}
+                  <div className="flex items-start justify-between gap-2 mb-1">
+                    <div className="text-xs text-gray-500">
+                      <strong className="text-gray-700">{c.authorName}</strong>
+                      {" · "}
+                      {new Date(c.createdAt).toLocaleString()}
+                    </div>
+                    {access.canChangeStatus && (
+                      <button
+                        onClick={() => deleteComment(c.id)}
+                        title="Delete this comment"
+                        className="flex-shrink-0 p-1 rounded-md text-gray-400 hover:text-rose-600 hover:bg-rose-50"
+                        aria-label="Delete comment"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                   </div>
                   {c.body && (
                     <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">{c.body}</p>
