@@ -2123,13 +2123,21 @@ export function OrderingPageClient({
               // for some visitors, leaving the tile pure-color from
               // the backgroundColor fallback — see Luigi's
               // 2026-06-01 black-tile screenshot).
+              // Cache-busting suffix (Luigi 2026-06-01): the earlier
+              // proxy bug made these paths 404 on custom domains
+              // (luigispizzapastawings.com etc.). Browsers cache 404
+              // image loads aggressively, so even after the proxy
+              // fix landed visitors who had already loaded the page
+              // kept seeing black tiles. Bumping the query suffix
+              // forces the browser to treat each URL as new — no
+              // negative cache entry to hit.
               const STOCK_PROMO_IMAGES = [
-                "/promo-stock/pizza.svg",
-                "/promo-stock/pasta.svg",
-                "/promo-stock/burger.svg",
-                "/promo-stock/spread.svg",
-                "/promo-stock/sauce.svg",
-                "/promo-stock/delivery.svg",
+                "/promo-stock/pizza.svg?v=2",
+                "/promo-stock/pasta.svg?v=2",
+                "/promo-stock/burger.svg?v=2",
+                "/promo-stock/spread.svg?v=2",
+                "/promo-stock/sauce.svg?v=2",
+                "/promo-stock/delivery.svg?v=2",
               ];
               const stockFallback = (() => {
                 let h = 0;
