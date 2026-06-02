@@ -2446,3 +2446,78 @@ model ConnectivityEvent {
   @@index([restaurantId, occurredAt])
   @@index([restaurantId, deviceHash, occurredAt])
 }
+
+/// ─────────────────────────────────────────────────────────────────────
+/// Reseller Reports & Requests (Luigi 2026-06-02)
+/// ─────────────────────────────────────────────────────────────────────
+/// Hidden, auth-gated bug tracker / feature request hub. Replaces the
+/// FeeFree-Bug-Tracker-v3.xlsx workflow that was getting unwieldy.
+///
+/// Access model:
+///   - Superadmin: full read/write, can change status, can invite/revoke.
+///   - Invited resellers (email in ResellerReportInvite): can read all
+///     reports, create new ones, comment on any. Cannot change status.
+///   - Anyone else: 404.
+///
+/// Status flow is enforced server-side — only superadmin PATCHes the
+/// status field. Resellers see the current status as a read-only badge.
+
+model ResellerReport {
+  id          String   @id @default(cuid())
+  title       String
+  /// Markdown allowed. Rendered as plain text on the list view, with
+  /// basic newline preservation on the detail view. We deliberately
+  /// don't ship a rich text editor — the tracker is meant to be
+  /// fast, not polished.
+  body        String
+  /// One of: BUG | FEATURE_REQUEST | FEATURE_ADJUSTMENT | FEATURE_UPDATE | FEATURE_FIX
+  /// Drives the type badge color on the list + detail view.
+  type        String
+  /// One of: NEW | IN_PROGRESS | IN_TESTING | FIXED | WONT_FIX
+  /// Defaults to NEW on creation. Only superadmin can change it.
+  status      String   @default("NEW")
+  /// One of: LOW | MEDIUM | HIGH | CRITICAL
+  /// Defaults to MEDIUM. Optional — used for sorting the table.
+  priority    String   @default("MEDIUM")
+  /// Identity of the person who filed the report. Stored verbatim (not
+  /// as a foreign key) so the report survives reseller account deletion
+  /// and so superadmin can file on behalf of a reseller too.
+  authorEmail String
+  authorName  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  comments    ResellerReportComment[]
+
+  @@index([status, createdAt])
+  @@index([type])
+  @@index([authorEmail])
+}
+
+model ResellerReportComment {
+  id          String   @id @default(cuid())
+  reportId    String
+  authorEmail String
+  authorName  String
+  body        String
+  createdAt   DateTime @default(now())
+
+  report      ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@index([reportId, createdAt])
+}
+
+model ResellerReportInvite {
+  id          String   @id @default(cuid())
+  /// Email of the reseller who can access /reseller-reports. Lowercased
+  /// at write time so case-insensitive matching just works.
+  email       String   @unique
+  /// Optional human-readable name shown in the invites table.
+  displayName String?
+  invitedAt   DateTime @default(now())
+  /// User.id of the superadmin who created the invite. We don't FK this
+  /// because the User table may move under us and the invite shouldn't
+  /// vanish if an admin account is removed.
+  invitedById String
+}
+
