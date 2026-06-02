@@ -2150,17 +2150,16 @@ export function OrderingPageClient({
                       setActivePromoModal(promo);
                     }
                   }}
-                  // GloriaFood-style tile (Luigi 2026-06-01 v5):
+                  // GloriaFood-style tile (Luigi 2026-06-01 v6):
                   // full-bleed image, dark gradient overlay across
                   // the bottom half so the title + description +
                   // CTA pill all sit on a legible surface without
-                  // dimming the food photo. Size tuned back down
-                  // from v4 (w-80 h-48 → w-72 h-40) per Luigi: keep
-                  // the new layout but trim the footprint to roughly
-                  // match the previous tile. Owner can still
-                  // override the image at /admin/promotions/[id]/edit
-                  // (Promotion settings).
-                  className="flex-shrink-0 w-72 h-40 rounded-xl text-white shadow-md relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
+                  // dimming the food photo. Size: w-[230px] h-32
+                  // — ~20% smaller than v5 (was w-72 h-40) per
+                  // Luigi's ask. Owner can still override the image
+                  // at /admin/promotions/[id]/edit (Promotion
+                  // settings).
+                  className="flex-shrink-0 w-[230px] h-32 rounded-xl text-white shadow-md relative overflow-hidden cursor-pointer hover:scale-[1.02] transition focus:outline-none focus:ring-2 focus:ring-white/60"
                   style={
                     hasImage
                       ? {
@@ -2204,17 +2203,18 @@ export function OrderingPageClient({
 
                   {/* Bottom content block — title + description on
                       the LEFT, "Get it now" CTA pill on the RIGHT.
-                      Sits inside the dark gradient band. */}
-                  <div className="absolute inset-x-0 bottom-0 p-3 flex items-end gap-3">
+                      Sits inside the dark gradient band. Inner type
+                      scaled down with v6 (smaller tile). */}
+                  <div className="absolute inset-x-0 bottom-0 p-2.5 flex items-end gap-2">
                     <div
                       className="flex-1 min-w-0"
                       style={{ textShadow: "0 1px 3px rgba(0,0,0,0.55)" }}
                     >
-                      <div className="text-lg font-black leading-tight line-clamp-2">
+                      <div className="text-base font-black leading-tight line-clamp-2">
                         {headline}
                       </div>
                       {promo.description && (
-                        <div className="text-xs font-medium opacity-95 line-clamp-2 mt-0.5">
+                        <div className="text-[10px] font-medium opacity-95 line-clamp-1 mt-0.5">
                           {promo.description}
                         </div>
                       )}
@@ -2224,12 +2224,9 @@ export function OrderingPageClient({
                         ("Get it now") regardless of promo type — the
                         modal handles the type-specific UX. */}
                     <span
-                      className="flex-shrink-0 text-xs font-bold px-3 py-2 rounded-md shadow-md whitespace-nowrap"
+                      className="flex-shrink-0 text-[11px] font-bold px-2.5 py-1.5 rounded-md shadow-md whitespace-nowrap"
                       style={{
                         backgroundColor: theme.primaryColor,
-                        // Black-themed shops get a contrasting white
-                        // pill outline so the CTA reads as a button,
-                        // not just a black blob on the dark curtain.
                         boxShadow: "0 2px 6px rgba(0,0,0,0.35)",
                       }}
                     >
