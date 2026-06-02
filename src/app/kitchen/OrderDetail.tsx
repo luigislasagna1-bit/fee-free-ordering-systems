@@ -82,15 +82,19 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
   const countdownMs = order.estimatedReady
     ? new Date(order.estimatedReady).getTime() - nowTick
     : null;
+  // Countdown to estimatedReady (Luigi 2026-06-02 polish): clamps at
+  // 0:00. We never display a negative ("overdue by") timer anymore —
+  // when the deadline passes the widget just locks at 0:00, normal
+  // colour, no red, no "overdue" label. The kitchen can still see the
+  // order is at its promised time without the row screaming red.
   const countdownLabel = (() => {
     if (countdownMs == null) return null;
-    const totalSec = Math.round(Math.abs(countdownMs) / 1000);
+    const safeMs = Math.max(0, countdownMs);
+    const totalSec = Math.round(safeMs / 1000);
     const m = Math.floor(totalSec / 60);
     const s = totalSec % 60;
-    const sign = countdownMs < 0 ? "-" : "";
-    return `${sign}${m}:${String(s).padStart(2, "0")}`;
+    return `${m}:${String(s).padStart(2, "0")}`;
   })();
-  const isOverdue = countdownMs != null && countdownMs < 0;
 
   const submitDelay = async () => {
     const minutes = Math.max(1, Math.min(240, Math.round(delayMinutes || 0)));
@@ -217,22 +221,15 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
 
               {/* Live countdown — ticks once per second once the order is
                   accepted, until either we hit estimatedReady or the
-                  server flips status to completed. Goes red-and-blinking
-                  past 0:00 so the kitchen can see at a glance "this one
-                  is late." Hidden for terminal states. */}
+                  server flips status to completed. Clamps at 0:00 with
+                  normal styling (Luigi 2026-06-02): no red, no
+                  pulsation, no "overdue by" label. Hidden for terminal
+                  states. */}
               {order.status === "accepted" && countdownLabel && (
-                <div
-                  className={`mt-3 rounded-lg px-3 py-2.5 border flex items-center justify-between gap-2 ${
-                    isOverdue
-                      ? "bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-300 animate-pulse"
-                      : "bg-blue-500/10 border-blue-500/30 text-blue-700 dark:text-blue-300"
-                  }`}
-                >
+                <div className="mt-3 rounded-lg px-3 py-2.5 border flex items-center justify-between gap-2 bg-blue-500/10 border-blue-500/30 text-blue-700 dark:text-blue-300">
                   <div className="flex items-center gap-2">
                     <Timer className="w-4 h-4" />
-                    <span className="text-sm font-semibold">
-                      {isOverdue ? "Overdue by" : "Ready in"}
-                    </span>
+                    <span className="text-sm font-semibold">Ready in</span>
                   </div>
                   <span className="text-2xl font-mono font-bold tabular-nums">
                     {countdownLabel}

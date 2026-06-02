@@ -216,8 +216,9 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
    *  it reaches 00:00 instead of locking at zero. The All tab uses
    *  this so the list reads like GloriaFood's — past-due orders show
    *  no timer at all, current orders show a live countdown. The
-   *  In Progress tab keeps the locked-at-zero behaviour because the
-   *  kitchen wants to see "overdue" loudly there. */
+   *  In Progress tab keeps the locked-at-zero display so the kitchen
+   *  can still see the row hit its promised time — but the styling
+   *  is quiet (no red, no "overdue" label) per Luigi 2026-06-02. */
   hideZeroCountdown?: boolean;
 }) {
   const tk = useTranslations("kitchen");
@@ -2520,7 +2521,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             // right-side countdown once it reaches 00:00 (GloriaFood
             // parity — past-due rows show no timer). In Progress
             // explicitly opts in to keeping the locked-at-zero display
-            // because the kitchen wants to see "overdue" loudly there.
+            // so the kitchen can glance at the row and see it's at
+            // its promised time — styled quietly (no red highlight,
+            // no "overdue" label) per Luigi's polish.
             function renderRow(it: Mixed, dayChip?: string, hideZeroCountdown = true) {
               if (it.kind === "order") {
                 return (
