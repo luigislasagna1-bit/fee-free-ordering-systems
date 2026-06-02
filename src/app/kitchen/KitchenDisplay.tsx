@@ -351,22 +351,26 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
           <div className={`font-bold text-sm ${t.text}`}>{formatCurrency(order.total)}</div>
           {/* Live countdown to the promised ready time (Luigi 2026-06-02
               kitchen-card revamp). Larger + lower than the static "20 m"
-              prep number it replaced; ticks every second; never
-              vanishes — locks at 00:00 when the time passes so the
-              kitchen can still see the row is overdue at a glance. */}
+              prep number it replaced; ticks every second; locks at 00:00
+              when the time passes.
+              Luigi 2026-06-02 polish: countdown stays in NORMAL text
+              colour at 00:00 (no red "overdue" highlight) and the
+              "overdue" label is dropped — when the digits hit 00:00
+              the "ready in" caption also disappears so the row is
+              quiet, not loud. */}
           {readyCountdown && order.status !== "pending" && !(hideZeroCountdown && countdownIsPast) && (
             <div className="mt-2 text-right">
               <div
-                className={`text-xl font-bold tabular-nums leading-none ${
-                  countdownIsPast ? "text-rose-500" : t.text
-                }`}
-                title={countdownIsPast ? "Past the promised ready time" : "Time remaining to promised ready"}
+                className={`text-xl font-bold tabular-nums leading-none ${t.text}`}
+                title="Promised ready time"
               >
                 {readyCountdown}
               </div>
-              <div className={`text-[10px] uppercase tracking-wider mt-0.5 ${t.muted}`}>
-                {countdownIsPast ? "overdue" : "ready in"}
-              </div>
+              {!countdownIsPast && (
+                <div className={`text-[10px] uppercase tracking-wider mt-0.5 ${t.muted}`}>
+                  ready in
+                </div>
+              )}
             </div>
           )}
         </div>
