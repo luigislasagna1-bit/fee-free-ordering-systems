@@ -24,6 +24,7 @@
 
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "./receipt-schema";
 import type { ReceiptOrder, ReceiptRestaurant, ReservationReceiptData } from "./receipt";
+import type { DigestStats } from "./email";
 import { getDict, type Translator } from "./i18n-dict";
 
 // ─── Public types ────────────────────────────────────────────────────────────
@@ -612,4 +613,95 @@ export async function buildReservationReceiptLines(
   r.nl(4);
   r.cut();
   return r.lines;
+}
+
+/**
+ * End-of-day report formatted as a thermal-printer receipt
+ * (Luigi 2026-06-02). Mirrors the on-screen /admin/reports/end-of-day
+ * page but laid out for the 80mm Star TSP143 paper roll: stat
+ * highlights at the top, by-channel breakdown, payment split, money
+ * breakdown, and a printed timestamp footer.
+ *
+ * Sized for a busy service: owner prints at close, staples it next
+ * to the till, knows the day's numbers without opening a laptop.
+ * Same DigestStats shape the email digest uses so the printed
+ * report and tomorrow morning's email will agree to the cent.
+ */
+export async function buildEndOfDayReceiptLines(
+  stats: DigestStats,
+  paperWidth = "80mm",
+  locale: string = "en",
+): Promise<ReceiptLine[]> {
+  const r = new LinesBuilder(paperWidth);
+  // Title block — restaurant name + report header
+  r.center().sizeMode(24).bold(true).line("END OF DAY").bold(false).sizeMode(12);
+  r.line("");
+  r.line(stats.restaurantName);
+  r.divider("=");
+
+  // Period
+  r.center().line(stats.periodLabel);
+  r.center().line(stats.comparisonLabel);
+  r.left().divider("-");
+
+  // Sales + orders — the headline numbers, big
+  r.bold(true).line("SALES").bold(false);
+  r.sizeMode(24).line(formatMoney(stats.sales)).sizeMode(12);
+  r.line(deltaLabel(stats.salesDelta));
+  r.line("");
+
+  r.bold(true).line("ORDERS").bold(false);
+  r.sizeMode(24).line(String(stats.orders)).sizeMode(12);
+  r.line(deltaLabel(stats.ordersDelta));
+  r.line("");
+
+  r.bold(true).line("AVG TICKET").bold(false);
+  r.line(formatMoney(stats.avgOrderValue));
+  r.line(deltaLabel(stats.avgOrderValueDelta));
+  r.line("");
+
+  r.bold(true).line("RESERVATIONS").bold(false);
+  r.line(String(stats.tableReservations));
+  r.line(deltaLabel(stats.reservationsDelta));
+  r.divider("-");
+
+  // By channel
+  r.bold(true).line("BY CHANNEL").bold(false);
+  r.columns("Pickup",   `${stats.pickupOrders}  ${formatMoney(stats.pickupSales)}`);
+  r.columns("Delivery", `${stats.deliveryOrders}  ${formatMoney(stats.deliverySales)}`);
+  r.columns("Dine-in",  `${stats.dineInOrders}  ${formatMoney(stats.dineInSales)}`);
+  r.divider("-");
+
+  // Payment split
+  r.bold(true).line("PAYMENT SPLIT").bold(false);
+  r.columns("Online (card)", `${stats.onlinePayments}  ${formatMoney(stats.onlinePaymentsAmount)}`);
+  r.columns("Offline",       `${stats.offlinePayments}  ${formatMoney(stats.offlinePaymentsAmount)}`);
+  r.divider("-");
+
+  // Money breakdown
+  r.bold(true).line("MONEY BREAKDOWN").bold(false);
+  r.columns("Subtotal",      formatMoney(stats.subTotals));
+  r.columns("Tax",           formatMoney(stats.taxAmount));
+  r.columns("Delivery fees", formatMoney(stats.deliveryFees));
+  r.columns("Tips",          formatMoney(stats.tips));
+  if (stats.otherFees > 0) r.columns("Other fees", formatMoney(stats.otherFees));
+  r.divider("=");
+  r.bold(true).columns("TOTAL TAKEN IN", formatMoney(stats.total)).bold(false);
+  r.line("");
+
+  // Printed-at footer
+  r.center().line(`Printed ${new Date().toLocaleString(locale)}`);
+  r.nl(4);
+  r.cut();
+  return r.lines;
+}
+
+function formatMoney(n: number): string {
+  return `$${(n ?? 0).toFixed(2)}`;
+}
+
+function deltaLabel(pct: number): string {
+  if (!Number.isFinite(pct) || Math.abs(pct) < 0.5) return "(no change vs prior)";
+  const sign = pct > 0 ? "+" : "-";
+  return `(${sign}${Math.abs(Math.round(pct))}% vs prior)`;
 }

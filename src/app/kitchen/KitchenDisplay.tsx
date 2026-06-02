@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
 import { PrinterSetupModal } from "./PrinterSetupModal";
 import { RestaurantStatusModal } from "./RestaurantStatusModal";
+import { EndOfDayModal } from "./EndOfDayModal";
 import { DispatchModeToggle } from "./DispatchModeToggle";
 import { OrderDetail } from "./OrderDetail";
 import { RejectOrderModal } from "./RejectOrderModal";
@@ -697,6 +698,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // refetches orders/menu when changes are saved so the kitchen
   // tablet reflects the new status without a manual reload.
   const [showStatusModal, setShowStatusModal] = useState(false);
+  const [showEndOfDayModal, setShowEndOfDayModal] = useState(false);
   const [restaurantPauses, setRestaurantPauses] = useState<{
     pickup: string | null; delivery: string | null; dineIn: string | null;
     catering: string | null; takeOut: string | null; reservations: string | null;
@@ -2125,6 +2127,19 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             {anyServicePaused ? "⏸ Paused" : "Status"}
           </button>
 
+          {/* End-of-day report — opens a modal with today's totals and
+              a "Print to printer" button so the owner can pull the
+              numbers off the till at close without opening a laptop
+              (Luigi 2026-06-02). */}
+          <button
+            type="button"
+            onClick={() => setShowEndOfDayModal(true)}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border border-gray-500/30 text-gray-600 transition ${t.btn}`}
+            title="Today's totals + print to thermal printer"
+          >
+            📊 Day report
+          </button>
+
           {/* Delivery dispatch toggle — only renders for restaurants on
               "both" mode (own + ShipDay), where staff can swap which
               source new orders dispatch to. Hidden for own-only or
@@ -2885,6 +2900,37 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         acceptsReservations={!!(restaurant as any)?.acceptsReservations}
         pausedUntilByService={restaurantPauses}
         onChange={refreshRestaurantPauses}
+      />
+
+      <EndOfDayModal
+        open={showEndOfDayModal}
+        onClose={() => setShowEndOfDayModal(false)}
+        themeMode={themeMode}
+        onPrint={async ({ lines, width }) => {
+          // Prefer the direct LAN Star printer path (matches reservation /
+          // order printing). PrintNode fallback isn't wired for the EoD
+          // layout yet — owners with PrintNode-only setups can still
+          // glance at the on-screen numbers and print from
+          // /admin/reports/end-of-day in the browser.
+          const direct = getDirectPrinterConfig();
+          if (!direct) {
+            throw new Error(
+              "Direct LAN printer not configured. Open Printer Setup on the kitchen tablet to connect.",
+            );
+          }
+          const paperWidthDots = width === 58 ? 384 : 576;
+          await nativePrint({
+            ip: direct.ip,
+            port: direct.port,
+            // Empty bytes string — Star printers use the structured
+            // `lines` path; the native bridge requires the field to
+            // be present even when it's not used.
+            bytes: "",
+            lines: lines as any,
+            paperWidthDots,
+            timeoutMs: 15000,
+          });
+        }}
       />
 
 
