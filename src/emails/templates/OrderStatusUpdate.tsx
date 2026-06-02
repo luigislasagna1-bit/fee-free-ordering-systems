@@ -136,6 +136,20 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
             {refundCopy}
           </InfoCard>
         )}
+        {copy.isNegative && restaurantPhone && (
+          // Lifted from the footer onto a prominent body line on
+          // negative-status emails (rejected / cancelled). A customer
+          // whose order was just turned down or cancelled is most
+          // likely to want to call the restaurant — making them scroll
+          // past the refund disclosure to find the number was a fair
+          // gripe from Fabrizio (2026-06-01).
+          <P>
+            Questions or need help? Call <strong>{restaurantName}</strong>:{" "}
+            <a href={`tel:${restaurantPhone.replace(/[^0-9+]/g, "")}`} style={{ color: "#047857", fontWeight: 600, textDecoration: "none" }}>
+              {restaurantPhone}
+            </a>
+          </P>
+        )}
         {!copy.isNegative && (
           <EmailButton href={trackingUrl}>View order status</EmailButton>
         )}

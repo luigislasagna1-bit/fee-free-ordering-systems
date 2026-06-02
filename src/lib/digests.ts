@@ -179,6 +179,63 @@ export async function buildDailyDigest(restaurantId: string, now = new Date()): 
   };
 }
 
+/** Build the DigestStats for TODAY (live snapshot), for an
+ *  in-app end-of-day report viewable from /admin/reports/end-of-day.
+ *  Same numbers the email digest would compute tomorrow, but using
+ *  today's window so the owner can glance at where they stand
+ *  mid-service (Fabrizio 2026-06-01). Compares to yesterday rather
+ *  than the same weekday last week. */
+export async function buildTodaySnapshot(restaurantId: string, now = new Date()): Promise<DigestStats | null> {
+  const restaurant = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { name: true },
+  });
+  if (!restaurant) return null;
+
+  // Today's window (UTC): [startOfToday, startOfTomorrow).
+  const startOfToday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const startOfTomorrow = new Date(startOfToday.getTime() + 24 * 60 * 60 * 1000);
+  // Comparison: same hours yesterday so the delta is apples-to-apples
+  // mid-service (e.g. 2 PM vs 2 PM yesterday).
+  const yesterdaySoFarStart = new Date(startOfToday.getTime() - 24 * 60 * 60 * 1000);
+  const yesterdaySoFarEnd = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+  const [current, prior] = await Promise.all([
+    aggregate(restaurantId, startOfToday, startOfTomorrow),
+    aggregate(restaurantId, yesterdaySoFarStart, yesterdaySoFarEnd),
+  ]);
+
+  return {
+    restaurantName: restaurant.name,
+    periodLabel: weekdayLabel(startOfToday),
+    comparisonLabel: "vs same time yesterday",
+    sales: current.sales,
+    salesDelta: pct(current.sales, prior.sales),
+    orders: current.orders,
+    ordersDelta: pct(current.orders, prior.orders),
+    avgOrderValue: current.avgOrderValue,
+    avgOrderValueDelta: pct(current.avgOrderValue, prior.avgOrderValue),
+    tableReservations: current.tableReservations,
+    reservationsDelta: pct(current.tableReservations, prior.tableReservations),
+    pickupOrders: current.pickupOrders,
+    pickupSales: current.pickupSales,
+    deliveryOrders: current.deliveryOrders,
+    deliverySales: current.deliverySales,
+    dineInOrders: current.dineInOrders,
+    dineInSales: current.dineInSales,
+    offlinePayments: current.offlinePayments,
+    offlinePaymentsAmount: current.offlinePaymentsAmount,
+    onlinePayments: current.onlinePayments,
+    onlinePaymentsAmount: current.onlinePaymentsAmount,
+    subTotals: current.subTotals,
+    taxAmount: current.taxAmount,
+    deliveryFees: current.deliveryFees,
+    tips: current.tips,
+    otherFees: current.otherFees,
+    total: current.total,
+  };
+}
+
 /** Build the DigestStats for the previous calendar month. */
 export async function buildMonthlyDigest(restaurantId: string, now = new Date()): Promise<DigestStats | null> {
   const restaurant = await prisma.restaurant.findUnique({

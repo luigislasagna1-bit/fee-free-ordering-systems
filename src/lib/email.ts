@@ -455,6 +455,14 @@ export async function sendOrderRejectedEmail(params: {
   reason?: string;
   dashboardUrl: string;
   paidOnline?: boolean;
+  /** True when the online payment was already captured at rejection time.
+   *  When false, the customer sees "your card was not charged" instead
+   *  of "we'll refund you" — matches GloriaFood's clearer wording
+   *  (Fabrizio 2026-06-01). */
+  paymentCaptured?: boolean;
+  restaurantEmail?: string;
+  restaurantPhone?: string;
+  restaurantUrl?: string;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
@@ -465,6 +473,10 @@ export async function sendOrderRejectedEmail(params: {
       restaurantName: params.restaurantName,
       reason: params.reason ?? null,
       paidOnline: params.paidOnline ?? false,
+      paymentCaptured: params.paymentCaptured ?? false,
+      restaurantEmail: params.restaurantEmail,
+      restaurantPhone: params.restaurantPhone,
+      restaurantUrl: params.restaurantUrl,
       imprint: currentImprint(),
     })
   );
@@ -472,6 +484,7 @@ export async function sendOrderRejectedEmail(params: {
     to: params.to,
     subject: t("email.orderRejected.subject", { orderNumber: params.orderNumber }),
     html,
+    replyTo: params.restaurantEmail,
     fromName: params.restaurantName,
   });
 }

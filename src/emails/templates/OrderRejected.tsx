@@ -17,6 +17,11 @@ export type OrderRejectedProps = {
   reason?: string | null;
   /** True if the original payment was online — triggers the refund message. */
   paidOnline: boolean;
+  /** True when the card was already captured (Stripe: paymentStatus="paid").
+   *  Used to distinguish "your card was not charged" (auth-only, no capture)
+   *  from "we'll refund you" (captured, money moved). Mirrors what
+   *  GloriaFood writes in the same case (Fabrizio 2026-06-01 feedback). */
+  paymentCaptured?: boolean;
   restaurantUrl?: string;
   restaurantEmail?: string;
   restaurantPhone?: string;
@@ -24,7 +29,7 @@ export type OrderRejectedProps = {
 };
 
 export default function OrderRejected(props: OrderRejectedProps) {
-  const { customerName, orderNumber, restaurantName, reason, paidOnline,
+  const { customerName, orderNumber, restaurantName, reason, paidOnline, paymentCaptured,
     restaurantUrl, restaurantEmail, restaurantPhone, imprint } = props;
   return (
     <EmailLayout preview={`Order #${orderNumber} could not be accepted`}>
@@ -47,9 +52,23 @@ export default function OrderRejected(props: OrderRejectedProps) {
           </InfoCard>
         )}
         {paidOnline && (
-          <InfoCard label="Refund" accent="emerald">
-            Your payment will be automatically refunded to the card you used. It typically takes <strong>5–10 business days</strong> to appear on your statement.
-          </InfoCard>
+          paymentCaptured ? (
+            <InfoCard label="Refund" accent="emerald">
+              Your payment will be automatically refunded to the card you used. It typically takes <strong>5–10 business days</strong> to appear on your statement.
+            </InfoCard>
+          ) : (
+            <InfoCard label="Payment" accent="emerald">
+              <strong>Your card was not charged.</strong> The authorization hold on your card will drop off automatically within a few business days.
+            </InfoCard>
+          )
+        )}
+        {restaurantPhone && (
+          <P>
+            Questions? Call the restaurant directly:{" "}
+            <a href={`tel:${restaurantPhone.replace(/[^0-9+]/g, "")}`} style={{ color: "#047857", fontWeight: 600 }}>
+              {restaurantPhone}
+            </a>
+          </P>
         )}
         <P>We&apos;re sorry for the inconvenience. Try ordering again later, or reach out to the restaurant if you have questions.</P>
       </EmailBody>
