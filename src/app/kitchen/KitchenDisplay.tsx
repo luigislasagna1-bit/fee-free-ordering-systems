@@ -242,16 +242,37 @@ function OrderRow({ order, selected, onClick, t, now, dayChip }: {
   const baseRowClass = selected ? t.rowSelected : isPending && !alertParked ? `${t.rowNew} cursor-pointer` : t.row;
   const flashClass = isUrgent ? "kitchen-flash-urgent" : "kitchen-flash-new";
   const rowClass = isPending && !alertParked ? `${baseRowClass} ${flashClass}` : baseRowClass;
-  const timeAgo = (() => {
-    if (!now) return "";
-    const diff = now - new Date(order.createdAt).getTime();
-    const m = Math.floor(diff / 60000);
-    if (m < 1) return tk("addedAt");
-    if (m < 60) return `${m} ${tk("minAway", { minutes: m })}`;
-    const h = Math.floor(m / 60);
-    if (h < 24) return `${h}h`;
-    return `${Math.floor(h / 24)}d`;
+  // Live countdown to the order's promised ready time. We prefer
+  // scheduledFor (customer-chosen slot) over estimatedReady (kitchen's
+  // accept-time promise). Once the moment passes the chip locks at
+  // "00:00" instead of disappearing — matches how the under-icon chip
+  // in the In Progress tab behaves, and means the list never goes
+  // mute on the orders the kitchen most needs to see.
+  //
+  // Format:
+  //   ≥ 1 hour → "HH:MM"   e.g. 03:24
+  //   < 1 hour → "MM:SS"   e.g. 14:31  (small enough to be useful at a glance)
+  //   past due  → "00:00"
+  const dueTs = (() => {
+    const scheduled = (order as any).scheduledFor ? new Date((order as any).scheduledFor).getTime() : NaN;
+    if (Number.isFinite(scheduled)) return scheduled;
+    const er = (order as any).estimatedReady ? new Date((order as any).estimatedReady).getTime() : NaN;
+    if (Number.isFinite(er)) return er;
+    return NaN;
   })();
+  const readyCountdown = (() => {
+    if (!now || !Number.isFinite(dueTs)) return null;
+    const diffMs = dueTs - now;
+    if (diffMs <= 0) return "00:00";
+    const totalSec = Math.floor(diffMs / 1000);
+    const hh = Math.floor(totalSec / 3600);
+    const mm = Math.floor((totalSec % 3600) / 60);
+    const ss = totalSec % 60;
+    return hh > 0
+      ? `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`
+      : `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`;
+  })();
+  const countdownIsPast = readyCountdown === "00:00";
 
   const isTest = order.customerName.startsWith("[TEST]");
 
@@ -314,17 +335,30 @@ function OrderRow({ order, selected, onClick, t, now, dayChip }: {
             {order.customerName.replace("[TEST] ", "")}
             {order.deliveryAddress && ` · ${order.deliveryAddress}`}
           </div>
-          <div className={`text-xs ${t.subtle} flex items-center gap-2 mt-0.5`}>
-            <span>{order.items.length} {tk("items")}</span>
-            <span>·</span>
-            <span>{timeAgo}</span>
+          <div className={`text-xs ${t.subtle} mt-0.5`}>
+            {order.items.length} {tk("items")}
           </div>
         </div>
-        <div className="text-right flex-shrink-0">
+        <div className="flex flex-col items-end flex-shrink-0">
           <div className={`font-bold text-sm ${t.text}`}>{formatCurrency(order.total)}</div>
-          {order.preparationTime && (
-            <div className={`text-xs ${t.muted} flex items-center gap-0.5 justify-end`}>
-              <Clock className="w-3 h-3" />{order.preparationTime}m
+          {/* Live countdown to the promised ready time (Luigi 2026-06-02
+              kitchen-card revamp). Larger + lower than the static "20 m"
+              prep number it replaced; ticks every second; never
+              vanishes — locks at 00:00 when the time passes so the
+              kitchen can still see the row is overdue at a glance. */}
+          {readyCountdown && order.status !== "pending" && (
+            <div className="mt-2 text-right">
+              <div
+                className={`text-xl font-bold tabular-nums leading-none ${
+                  countdownIsPast ? "text-rose-500" : t.text
+                }`}
+                title={countdownIsPast ? "Past the promised ready time" : "Time remaining to promised ready"}
+              >
+                {readyCountdown}
+              </div>
+              <div className={`text-[10px] uppercase tracking-wider mt-0.5 ${t.muted}`}>
+                {countdownIsPast ? "overdue" : "ready in"}
+              </div>
             </div>
           )}
         </div>
