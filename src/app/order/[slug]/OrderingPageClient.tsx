@@ -925,6 +925,20 @@ export function OrderingPageClient({
     if (checkoutOpen) fireStep("checkout_open");
   }, [checkoutOpen, fireStep]);
 
+  // Reset marketing-consent to the pre-ticked default every time the
+  // checkout modal opens (Luigi 2026-06-02). customerInfo lives in
+  // OrderingPageClient state so it survives close/reopen of the modal —
+  // which meant if the customer opened checkout, unchecked the box,
+  // then closed and re-opened later in the same page session, the box
+  // stayed unchecked. Per-modal-open default = checked is the consent
+  // UX Luigi wants (matches how the customer perceives it: every fresh
+  // checkout asks fresh consent unless they actively opt out THIS time).
+  useEffect(() => {
+    if (checkoutOpen) {
+      setCustomerInfo((ci) => ({ ...ci, marketingConsent: true }));
+    }
+  }, [checkoutOpen]);
+
   // checkout_info — once name + phone are minimally valid. Lightweight
   // validation matches the server's required fields without redoing
   // the regex (saves needing to import a validator).
