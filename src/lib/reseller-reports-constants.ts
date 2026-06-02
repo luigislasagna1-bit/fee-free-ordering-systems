@@ -78,6 +78,13 @@ export const PRIORITY_BADGE: Record<ReportPriority, string> = {
 export const VERIFICATION_VOTES = ["WORKING", "NOT_WORKING"] as const;
 export type VerificationVote = (typeof VERIFICATION_VOTES)[number];
 
+/** Distinct resellers who must vote WORKING (with zero "still broken"
+ *  votes) before a report auto-closes to FIXED. Luigi's rule: a report
+ *  must never be closed by a single vote or by Claude — only by multiple
+ *  resellers or a manual superadmin close. Keep this >= 2. The workflow
+ *  engine and the detail-page UI both read this one value. */
+export const VERIFY_QUORUM = 2;
+
 /** Activity-log entry kinds. The API auto-writes one of these every
  *  time a report's state changes — surfaces as the timeline on the
  *  detail page. */

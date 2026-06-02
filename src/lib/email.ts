@@ -40,6 +40,7 @@ import MarketplaceSettlement     from "@/emails/templates/MarketplaceSettlement"
 import AutopilotEmail            from "@/emails/templates/AutopilotEmail";
 import ResellerPayoutNotification from "@/emails/templates/ResellerPayoutNotification";
 import ResellerApplicationStatus from "@/emails/templates/ResellerApplicationStatus";
+import ReportNotification        from "@/emails/templates/ReportNotification";
 import type { EmailOrderItem } from "@/emails/components/EmailParts";
 
 // Cached transport so we don't query PlatformSettings on every call.
@@ -1009,6 +1010,36 @@ export async function sendResellerPayoutNotificationEmail(params: {
     : params.variant === "paid"   ? `Your payout has been sent — ${params.amount}`
     :                                "Your payout request couldn't be processed";
   return send({ to: params.to, subject, html });
+}
+
+// ─── Reseller-report lifecycle notifications ─────────────────────────
+// Sent by src/lib/reseller-reports-workflow.ts when a report's fix ships
+// (→ please verify), when it's auto-closed after reseller verification,
+// or when a fix is disputed. Thin generic wrapper around the
+// ReportNotification template.
+
+export async function sendReportNotificationEmail(params: {
+  to: string;
+  recipientName?: string | null;
+  subject: string;
+  title: string;
+  subtitle?: string;
+  body: string;
+  ctaLabel?: string;
+  ctaUrl?: string;
+}) {
+  const html = await renderEmail(
+    ReportNotification({
+      recipientName: params.recipientName ?? undefined,
+      title: params.title,
+      subtitle: params.subtitle,
+      body: params.body,
+      buttonLabel: params.ctaLabel,
+      buttonUrl: params.ctaUrl,
+      imprint: currentImprint(),
+    })
+  );
+  return send({ to: params.to, subject: params.subject, html });
 }
 
 export async function sendScheduledOrderReminderEmail(params: {

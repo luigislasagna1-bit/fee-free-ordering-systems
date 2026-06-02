@@ -17,6 +17,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getReportAccess, VERIFICATION_VOTES, type VerificationVote } from "@/lib/reseller-reports-access";
+import { onVerificationVote } from "@/lib/reseller-reports-workflow";
 
 export async function POST(
   req: NextRequest,
@@ -71,7 +72,18 @@ export async function POST(
       kind: vote === "WORKING" ? "VERIFIED_WORKING" : "VERIFIED_BROKEN",
     },
   });
-  return NextResponse.json({ verification });
+
+  // Lifecycle reaction: may auto-close to FIXED (only when the reseller
+  // quorum is met with no dissent — see reseller-reports-workflow.ts) or
+  // alert ops that a shipped fix was disputed. Wrapped so a notification
+  // hiccup never fails the vote itself.
+  let autoClosed = false;
+  try {
+    ({ autoClosed } = await onVerificationVote(id, vote));
+  } catch (err) {
+    console.error("[reseller-reports/verify] lifecycle hook failed", { id, err });
+  }
+  return NextResponse.json({ verification, autoClosed });
 }
 
 export async function DELETE(

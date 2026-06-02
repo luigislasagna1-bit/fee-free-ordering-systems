@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import {
-  REPORT_STATUSES,
+  REPORT_STATUSES, VERIFY_QUORUM,
   TYPE_LABEL, STATUS_LABEL, PRIORITY_LABEL,
   TYPE_BADGE, STATUS_BADGE, PRIORITY_BADGE,
   ACTIVITY_LABEL,
@@ -103,6 +103,7 @@ export function ReportDetailClient({
     report.filedOnBehalf ? report.reporterEmail : "",
   );
   const [savingReporter, setSavingReporter] = useState(false);
+  const [shippingFix, setShippingFix] = useState(false);
 
   /** Upload one or more image files to /api/reseller-reports/upload.
    *  Returns the URL list — caller decides whether to merge into the
@@ -175,6 +176,34 @@ export function ReportDetailClient({
       toast.error(e instanceof Error ? e.message : "Failed");
     } finally {
       setSavingStatus(false);
+    }
+  };
+
+  // ─── Mark fix shipped (SA only) ─────────────────────────────────────
+  // Moves the report to In Testing and emails the reporter + upvoters to
+  // verify. Does NOT close it — that still needs human verification.
+  const shipFix = async () => {
+    const note = window.prompt(
+      "Optional note to the reporter (e.g. a version tag or 'try a hard refresh'). Leave blank to skip:",
+      "",
+    );
+    // prompt returns null if the user cancels — abort the whole action.
+    if (note === null) return;
+    setShippingFix(true);
+    try {
+      const r = await fetch(`/api/reseller-reports/${report.id}/ship-fix`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ note }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.error || "Failed");
+      toast.success(`Marked In Testing · notified ${d.notified ?? 0} ${d.notified === 1 ? "person" : "people"}`);
+      router.refresh();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed");
+    } finally {
+      setShippingFix(false);
     }
   };
 
@@ -351,6 +380,30 @@ export function ReportDetailClient({
                 ))}
               </select>
               {savingStatus && <Loader2 className="w-3.5 h-3.5 animate-spin text-gray-400" />}
+              {(report.status === "NEW" || report.status === "IN_PROGRESS") && (
+                <button
+                  onClick={shipFix}
+                  disabled={shippingFix}
+                  title="Move to In Testing and email the reporter + upvoters to verify"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white"
+                >
+                  {shippingFix ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                  Mark fix shipped
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Awaiting-verification banner — visible to everyone while the
+              report is In Testing. Surfaces the human-gated close rule. */}
+          {report.status === "IN_TESTING" && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <div className="rounded-lg bg-purple-50 border border-purple-200 px-3 py-2 text-xs text-purple-900">
+                🧪 <strong>Awaiting verification.</strong>{" "}
+                {tally.working} of {VERIFY_QUORUM} confirmations needed to auto-close.
+                {tally.notWorking > 0 && " A “still not working” vote is currently blocking auto-close."}
+                {access.canChangeStatus && " You can also set it to Fixed manually above."}
+              </div>
             </div>
           )}
 
