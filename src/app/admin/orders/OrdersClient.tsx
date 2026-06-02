@@ -122,19 +122,54 @@ export function OrdersClient({ orders }: { orders: any[] }) {
           </div>
         ) : (
           <div className="divide-y divide-gray-100">
-            {filtered.map((order) => (
+            {filtered.map((order) => {
+              const scheduledForRaw = (order as any).scheduledFor as string | null | undefined;
+              const scheduledAt = scheduledForRaw ? new Date(scheduledForRaw) : null;
+              const hasFutureSchedule =
+                scheduledAt && Number.isFinite(scheduledAt.getTime()) && scheduledAt.getTime() > Date.now() - 60_000;
+              const itemCount = order.items?.reduce((s: number, it: any) => s + (it.quantity ?? 0), 0) ?? 0;
+              return (
               <div key={order.id} className={order.status === "pending" ? "border-l-4 border-l-yellow-400" : ""}>
                 <div
                   className="p-3 sm:p-4 flex items-center justify-between gap-3 cursor-pointer hover:bg-gray-50"
                   onClick={() => setExpanded(expanded === order.id ? null : order.id)}
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="font-semibold text-gray-900 truncate">{order.customerName}</div>
-                    <div className="text-xs sm:text-sm text-gray-500 truncate">
-                      <span className="font-mono">{order.orderNumber}</span> · {order.type} ·{" "}
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-semibold text-gray-900 truncate">{order.customerName}</span>
+                      {hasFutureSchedule && (
+                        // The MOST important fact for a scheduled order
+                        // — make it impossible to miss in the row. Same
+                        // emerald accent we use on the kitchen scheduled
+                        // confirm modal so the language is consistent.
+                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 whitespace-nowrap">
+                          📅 {scheduledAt!.toLocaleString([], {
+                            month: "short",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "2-digit",
+                          })}
+                        </span>
+                      )}
+                      {order.notes && (
+                        <span
+                          className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 whitespace-nowrap"
+                          title={order.notes}
+                        >
+                          📝 {t("hasNotes") ?? "Has notes"}
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-xs sm:text-sm text-gray-500 truncate mt-0.5">
+                      <span className="font-mono">{order.orderNumber}</span> · {order.type} · {itemCount} {itemCount === 1 ? "item" : "items"} ·{" "}
                       <span className="hidden sm:inline">{formatDate(order.createdAt)}</span>
                       <span className="sm:hidden">{new Date(order.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}</span>
                     </div>
+                    {order.type === "delivery" && order.deliveryAddress && (
+                      <div className="text-xs text-gray-500 truncate mt-0.5">
+                        🚚 {order.deliveryAddress}{order.deliveryCity ? `, ${order.deliveryCity}` : ""}
+                      </div>
+                    )}
                   </div>
                   <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-3 flex-shrink-0">
                     <span className="font-bold text-gray-900 text-sm sm:text-base whitespace-nowrap">{formatCurrency(order.total)}</span>
@@ -146,6 +181,26 @@ export function OrdersClient({ orders }: { orders: any[] }) {
 
                 {expanded === order.id && (
                   <div className="px-4 pb-4 bg-gray-50 border-t border-gray-100">
+                    {hasFutureSchedule && (
+                      // Scheduled-for callout pinned at the top of the
+                      // expanded details so kitchen staff scanning a
+                      // catering/pre-order can't miss when it's due.
+                      <div className="mt-4 mb-1 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 flex items-center gap-2">
+                        <span aria-hidden>📅</span>
+                        <span>
+                          <span className="font-semibold">
+                            {order.type === "delivery" ? "Deliver " : "Ready for pickup "}
+                          </span>
+                          {scheduledAt!.toLocaleString([], {
+                            weekday: "short",
+                            month: "short",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "2-digit",
+                          })}
+                        </span>
+                      </div>
+                    )}
                     <div className="grid md:grid-cols-2 gap-4 pt-4">
                       <div>
                         <div className="text-xs font-semibold text-gray-500 uppercase mb-2">{t("customer")}</div>
@@ -190,7 +245,8 @@ export function OrdersClient({ orders }: { orders: any[] }) {
                   </div>
                 )}
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

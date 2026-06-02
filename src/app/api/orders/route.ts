@@ -823,15 +823,48 @@ export async function POST(req: NextRequest) {
       : restaurant.estimatedPickup;
     const initialStatus = wantsAutoAccept ? "accepted" : "pending";
     const acceptedAtValue: Date | null = wantsAutoAccept ? new Date() : null;
-    // Soft estimate populated even when pending — gives the customer a
-    // "~20 min" countdown on the status page right away instead of a
-    // blank wait. Acceptance overwrites this with the kitchen's actual
-    // promised ready time (now + prepTime at the moment they Accept),
-    // so by the time it matters this value is precise. Matches the
-    // DoorDash/Uber/Toast pattern of showing an estimate immediately
-    // and tightening it on confirmation.
-    const estimatedReadyValue: Date = new Date(Date.now() + fulfillmentMinutes * 60_000);
-    const preparationTimeValue: number | null = wantsAutoAccept ? fulfillmentMinutes : null;
+
+    // Parse scheduledFor up-front so the kitchen-promise math below can
+    // honour it (Luigi 2026-06-02 bug: auto-accepted scheduled orders
+    // were getting estimatedReady = now + 20min, ignoring the scheduled
+    // time entirely; kitchen tablet then showed "Ready in 14:31" for a
+    // tomorrow-10:30-PM order).
+    const scheduledForDate: Date | null = scheduledFor
+      ? (() => {
+          const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
+          if (m) {
+            const tz = (restaurant as any).timezone ?? undefined;
+            return parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), tz);
+          }
+          return new Date(scheduledFor);
+        })()
+      : null;
+    const hasFutureSchedule =
+      scheduledForDate !== null &&
+      Number.isFinite(scheduledForDate.getTime()) &&
+      scheduledForDate.getTime() > Date.now();
+
+    // For SCHEDULED orders, estimatedReady IS the customer's chosen
+    // slot — they asked for "ready at 10:30 PM tomorrow", so that's
+    // when it'll be ready. preparationTime is the gap from now until
+    // that slot, so the kitchen-display countdown lines up.
+    //
+    // For ASAP orders, estimatedReady is a soft now + prep estimate
+    // that gives the customer a countdown on the status page right
+    // away. Kitchen Accept later overwrites this with the actual
+    // promised ready time, matching the DoorDash/Uber/Toast pattern
+    // of "estimate now, tighten on confirmation".
+    const estimatedReadyValue: Date = hasFutureSchedule
+      ? scheduledForDate!
+      : new Date(Date.now() + fulfillmentMinutes * 60_000);
+    const preparationTimeValue: number | null = wantsAutoAccept
+      ? hasFutureSchedule
+        ? Math.max(
+            fulfillmentMinutes,
+            Math.round((scheduledForDate!.getTime() - Date.now()) / 60_000),
+          )
+        : fulfillmentMinutes
+      : null;
 
     // ── Closed-when-placed handling (Luigi 2026-05-30) ──────────────────────
     // If the restaurant is closed RIGHT NOW, we don't want the kitchen
@@ -940,22 +973,11 @@ export async function POST(req: NextRequest) {
         total: serverTotal,
         paymentMethod: paymentMethod || "cash",
         paymentStatus: "pending",
-        // Parse scheduledFor in the restaurant's local timezone (same
-        // pattern as the catering-notice check above). Without this,
-        // a "2026-06-02T15:45" string from the client is interpreted
-        // as UTC on Vercel — 11:45 EST instead of 15:45 EST — and
-        // every downstream surface (status page ETA, kitchen
-        // "scheduled for" label, reminder cron) lands 4 hours off.
-        scheduledFor: scheduledFor
-          ? (() => {
-              const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
-              if (m) {
-                const tz = (restaurant as any).timezone ?? undefined;
-                return parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), tz);
-              }
-              return new Date(scheduledFor);
-            })()
-          : null,
+        // scheduledForDate is parsed up-front in the restaurant's
+        // local timezone — see the comment block where it's computed,
+        // above the auto-accept handling. Same Date object reused for
+        // the kitchen estimatedReady math so the two can never drift.
+        scheduledFor: scheduledForDate,
         // Closed-when-placed routing — see compute block above.
         placedWhileClosed: isClosedNow,
         alertAt: alertAtValue,
