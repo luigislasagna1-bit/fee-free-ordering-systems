@@ -27,6 +27,11 @@ type CustomerInfo = {
    *  Prepended to `notes` on submit so the kitchen sees both, but stays
    *  in its own form field so customers don't conflate the two. */
   deliveryNotes: string;
+  /** "Yes, I'd like to receive marketing communications from this
+   *  restaurant" checkbox. Lands on Customer.marketingConsent
+   *  server-side. False by default — opt-in, not opt-out, for
+   *  CASL / GDPR compliance. */
+  marketingConsent: boolean;
   notes: string; paymentMethod: string; scheduledFor: string;
 };
 
@@ -470,6 +475,29 @@ export function CheckoutModal({
                     onChange={e => setCustomerInfo({ ...customerInfo, email: e.target.value })}
                   />
                 </div>
+                {/* Marketing-consent opt-in (Luigi/Fabrizio 2026-06-02
+                    GloriaFood parity). Shown only when the customer
+                    has typed an email — there's nothing to opt in to
+                    if we have no inbox to send to. Stored on
+                    Customer.marketingConsent + .marketingConsentAt
+                    server-side so it survives across orders and can
+                    be flipped back from the customer's account profile
+                    or the email unsubscribe link. */}
+                {customerInfo.email.trim().length > 0 && (
+                  <label className="mt-3 flex items-start gap-2 text-xs text-gray-600 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="mt-0.5"
+                      checked={customerInfo.marketingConsent ?? false}
+                      onChange={e => setCustomerInfo({ ...customerInfo, marketingConsent: e.target.checked })}
+                      style={{ accentColor: theme.primaryColor }}
+                    />
+                    <span>
+                      Yes, I&apos;d like to receive marketing communications from this
+                      restaurant. You can unsubscribe at any time.
+                    </span>
+                  </label>
+                )}
               </SectionCard>
 
               {/* ORDERING METHOD — pickup ↔ delivery toggle PLUS the

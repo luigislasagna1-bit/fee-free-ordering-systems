@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     const {
       restaurantSlug, type, customerName, customerEmail, customerPhone,
       deliveryAddress, deliveryCity, deliveryZip, notes, paymentMethod,
-      scheduledFor, couponId,
+      scheduledFor, couponId, marketingConsent,
       // Typed coupon code from the cart's Apply field — fed into the
       // engine's couponPromos branch so autoApply=false promos with a
       // Promotion.couponCode match can fire on the server recompute.
@@ -704,6 +704,13 @@ export async function POST(req: NextRequest) {
     if (cleanEmail || cleanPhone) {
       const where = cleanEmail ? { restaurantId: restaurant.id, email: cleanEmail } : undefined;
       if (where) customer = await prisma.customer.findFirst({ where });
+      // Normalise the marketing-consent flag once so both the create
+      // and update branches can apply it consistently. Stored only
+      // when the customer affirmatively ticked the box (we don't want
+      // to silently overwrite a previously-true consent with false
+      // just because the customer left the box unchecked on a later
+      // order — they explicitly opted in once, that survives).
+      const hasOptedInMarketing = marketingConsent === true;
       if (!customer) {
         customer = await prisma.customer.create({
           data: {
@@ -715,6 +722,8 @@ export async function POST(req: NextRequest) {
             // Reports — populated at create so first-time customers are
             // captured in the lapsed-customer / cohort queries.
             lastOrderAt: new Date(),
+            marketingConsent: hasOptedInMarketing,
+            marketingConsentAt: hasOptedInMarketing ? new Date() : null,
           },
         });
       } else {
@@ -731,6 +740,14 @@ export async function POST(req: NextRequest) {
             // so we don't overwrite a previous link.
             ...(currentAccount && !customer.customerAccountId
               ? { customerAccountId: currentAccount.id }
+              : {}),
+            // Upgrade-only consent: if they tick the box on this order
+            // and weren't previously opted in, record it. If they
+            // leave it unchecked, we DON'T flip them back to false —
+            // a checkout form is not the place to revoke consent
+            // (the profile page + email unsubscribe link are).
+            ...(hasOptedInMarketing && !customer.marketingConsent
+              ? { marketingConsent: true, marketingConsentAt: new Date() }
               : {}),
           },
         });

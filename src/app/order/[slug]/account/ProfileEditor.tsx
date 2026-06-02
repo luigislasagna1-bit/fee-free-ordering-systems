@@ -19,14 +19,17 @@ export function ProfileEditor({
   initialName,
   initialEmail,
   initialPhone,
+  initialMarketingConsent,
 }: {
   initialName: string;
   initialEmail: string | null;
   initialPhone: string | null;
+  initialMarketingConsent?: boolean;
 }) {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(initialName);
   const [phone, setPhone] = useState(initialPhone ?? "");
+  const [marketingConsent, setMarketingConsent] = useState(initialMarketingConsent ?? false);
   const [saving, setSaving] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
@@ -37,7 +40,7 @@ export function ProfileEditor({
       const res = await fetch("/api/public/restaurant-customer/me", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone }),
+        body: JSON.stringify({ name, phone, marketingConsent }),
       });
       if (!res.ok) {
         const b = await res.json().catch(() => ({}));
@@ -93,6 +96,23 @@ export function ProfileEditor({
           disabled
         />
         <p className="text-[10px] text-gray-400 mt-0.5">Contact the restaurant to change your sign-in email.</p>
+      </div>
+      {/* Marketing-consent toggle (Luigi/Fabrizio 2026-06-02 GloriaFood
+          parity). Mirrors the checkout-time checkbox; the customer can
+          flip it back here at any time. Server-side persists to
+          Customer.marketingConsent. */}
+      <div>
+        <label className="flex items-start gap-2 text-xs text-gray-700 cursor-pointer">
+          <input
+            type="checkbox"
+            className="mt-0.5"
+            checked={marketingConsent}
+            onChange={(e) => setMarketingConsent(e.target.checked)}
+          />
+          <span>
+            Receive marketing emails from this restaurant. You can change this any time.
+          </span>
+        </label>
       </div>
       {err && (
         <div className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1">{err}</div>

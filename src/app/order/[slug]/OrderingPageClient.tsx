@@ -610,6 +610,11 @@ export function OrderingPageClient({
     // submit time in buildOrderPayload(). Optional.
     unit: "", buzzer: "", deliveryNotes: "",
     notes: "", paymentMethod: defaultPaymentMethod, scheduledFor: "",
+    // Marketing-consent opt-in checkbox on the contact section
+    // (GloriaFood-parity, Luigi/Fabrizio 2026-06-02). False by default —
+    // CASL / GDPR require explicit opt-in. Server-side persists onto
+    // Customer.marketingConsent + marketingConsentAt.
+    marketingConsent: false,
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
   // Default starts at the SUGGESTED amount (15%). Customer can drag the
@@ -1491,6 +1496,7 @@ export function OrderingPageClient({
     deliveryCity: customerInfo.city, deliveryZip: customerInfo.zip,
     notes: combinedNotes, paymentMethod: customerInfo.paymentMethod,
     scheduledFor: customerInfo.scheduledFor || null,
+    marketingConsent: customerInfo.marketingConsent === true,
     from: fromMarketplace ? "marketplace" : undefined,
     // Reports attribution — server-side join from this hash back to
     // the WebsiteVisit row written when the session started. Server

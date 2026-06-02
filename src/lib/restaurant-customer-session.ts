@@ -118,7 +118,7 @@ export async function getCurrentRestaurantCustomer(opts: {
       },
       select: {
         id: true, restaurantId: true, name: true, email: true, phone: true,
-        emailVerifiedAt: true, chainCustomerId: true,
+        emailVerifiedAt: true, chainCustomerId: true, marketingConsent: true,
       },
     });
     return chainCustomer;

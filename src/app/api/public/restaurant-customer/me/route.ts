@@ -16,11 +16,16 @@ export async function PATCH(req: NextRequest) {
   const me = await getCurrentRestaurantCustomer();
   if (!me) return NextResponse.json({ error: "Not signed in" }, { status: 401 });
 
-  let body: { name?: string; phone?: string };
+  let body: { name?: string; phone?: string; marketingConsent?: boolean };
   try { body = await req.json(); }
   catch { return NextResponse.json({ error: "Invalid JSON" }, { status: 400 }); }
 
-  const data: { name?: string; phone?: string | null } = {};
+  const data: {
+    name?: string;
+    phone?: string | null;
+    marketingConsent?: boolean;
+    marketingConsentAt?: Date | null;
+  } = {};
   if (typeof body.name === "string") {
     const n = body.name.trim().slice(0, 100);
     if (n.length === 0) {
@@ -32,6 +37,14 @@ export async function PATCH(req: NextRequest) {
     const p = body.phone.trim().slice(0, 30);
     data.phone = p === "" ? null : p;
   }
+  // Marketing-consent toggle — customer can opt in or out from their
+  // own profile. When they flip the box on, we stamp the consent date
+  // so we can prove WHEN they consented if asked. When they flip it
+  // off, we clear the date too (they're no longer consented).
+  if (typeof body.marketingConsent === "boolean") {
+    data.marketingConsent = body.marketingConsent;
+    data.marketingConsentAt = body.marketingConsent ? new Date() : null;
+  }
   if (Object.keys(data).length === 0) {
     return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
   }
@@ -39,7 +52,7 @@ export async function PATCH(req: NextRequest) {
   const updated = await prisma.customer.update({
     where: { id: me.id },
     data,
-    select: { id: true, name: true, email: true, phone: true },
+    select: { id: true, name: true, email: true, phone: true, marketingConsent: true },
   });
   return NextResponse.json({ customer: updated });
 }

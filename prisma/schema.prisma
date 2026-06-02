@@ -980,6 +980,19 @@ model Customer {
   // customer's one set of credentials then authenticates at any
   // location in the chain. Null for accounts at standalone restaurants.
   chainCustomerId        String?
+  /// Customer's marketing-email consent ON THIS RESTAURANT
+  /// (GDPR/CASL-style opt-in). Set true when the customer ticked
+  /// "Yes, I'd like marketing communications from this restaurant"
+  /// at checkout. Can be flipped back to false from their account
+  /// profile or via the email unsubscribe link. Reseller scope:
+  /// per-restaurant — a customer opted-in at Restaurant A is NOT
+  /// auto-opted-in at Restaurant B in the same marketplace.
+  /// (Luigi/Fabrizio 2026-06-02 GloriaFood-parity.)
+  marketingConsent       Boolean   @default(false)
+  /// When the marketingConsent field was last updated. Used for
+  /// audit trails / "show me when this customer opted in" + lets
+  /// us prove consent if a customer complains.
+  marketingConsentAt     DateTime?
   totalOrders            Int       @default(0)
   totalSpent             Float     @default(0)
   /// Timestamp of this customer's most recent order at this restaurant.

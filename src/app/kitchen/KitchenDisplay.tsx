@@ -206,12 +206,19 @@ function Countdown({
 }
 
 // ── Order row ─────────────────────────────────────────────────────────────────
-function OrderRow({ order, selected, onClick, t, now, dayChip }: {
+function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown }: {
   order: Order; selected: boolean; onClick: () => void; t: T; now: number;
   /** Optional day-of-week pill (MON/TUE/…) rendered alongside the
    *  order number. Used by the In Progress LATER section so the
    *  kitchen can spot which day each scheduled order is for. */
   dayChip?: string;
+  /** When true, the right-column "ready in" countdown disappears once
+   *  it reaches 00:00 instead of locking at zero. The All tab uses
+   *  this so the list reads like GloriaFood's — past-due orders show
+   *  no timer at all, current orders show a live countdown. The
+   *  In Progress tab keeps the locked-at-zero behaviour because the
+   *  kitchen wants to see "overdue" loudly there. */
+  hideZeroCountdown?: boolean;
 }) {
   const tk = useTranslations("kitchen");
   // `now === 0` means the client hasn't mounted yet (see useNow). Render
@@ -347,7 +354,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip }: {
               prep number it replaced; ticks every second; never
               vanishes — locks at 00:00 when the time passes so the
               kitchen can still see the row is overdue at a glance. */}
-          {readyCountdown && order.status !== "pending" && (
+          {readyCountdown && order.status !== "pending" && !(hideZeroCountdown && countdownIsPast) && (
             <div className="mt-2 text-right">
               <div
                 className={`text-xl font-bold tabular-nums leading-none ${
@@ -2442,9 +2449,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               return (
                 <>
                   {today.length > 0 && sectionHeader(tk("today") || "TODAY")}
-                  {today.map((it) => renderRow(it, chipFor(it.sortTs)))}
+                  {today.map((it) => renderRow(it, chipFor(it.sortTs), false))}
                   {later.length > 0 && sectionHeader(tk("later") || "LATER")}
-                  {later.map((it) => renderRow(it, chipFor(it.sortTs)))}
+                  {later.map((it) => renderRow(it, chipFor(it.sortTs), false))}
                 </>
               );
             }
@@ -2467,7 +2474,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             return items.map((it) => renderRow(it));
 
             // ── Row renderer (shared) ─────────────────────────────
-            function renderRow(it: Mixed, dayChip?: string) {
+            //
+            // hideZeroCountdown defaults to the tab semantics Luigi
+            // 2026-06-02 asked for: All + Complete tabs hide the
+            // right-side countdown once it reaches 00:00 (GloriaFood
+            // parity — past-due rows show no timer). In Progress
+            // explicitly opts in to keeping the locked-at-zero display
+            // because the kitchen wants to see "overdue" loudly there.
+            function renderRow(it: Mixed, dayChip?: string, hideZeroCountdown = true) {
               if (it.kind === "order") {
                 return (
                   <OrderRow
@@ -2481,6 +2495,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                     t={t}
                     now={now}
                     dayChip={dayChip}
+                    hideZeroCountdown={hideZeroCountdown}
                   />
                 );
               }
