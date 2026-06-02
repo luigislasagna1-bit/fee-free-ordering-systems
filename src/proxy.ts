@@ -82,7 +82,16 @@ export const config = {
   // DO go through the proxy so we can redirect them off the marketplace
   // domain back to PLATFORM_DOMAIN.
   matcher: [
-    "/((?!api|_next/|_static|icons|manifest-order.webmanifest|manifest-kitchen.webmanifest|sw\\.js|offline\\.html|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
+    // Anything under /promo-stock/ is a stock food SVG we ship as a
+    // static asset under public/. The proxy must NOT touch those —
+    // otherwise on a custom domain like luigispizzapastawings.com the
+    // default tenant-rewrite turns /promo-stock/pizza.svg into
+    // /order/<slug>/promo-stock/pizza.svg and the asset 404s, leaving
+    // promo tiles rendering as pure background-color (Luigi 2026-06-01).
+    // Same applies to /uploads/ for owner-uploaded images served from
+    // public/ in dev (prod uses Vercel Blob which is on a different
+    // host so unaffected).
+    "/((?!api|_next/|_static|icons|promo-stock|uploads|manifest-order.webmanifest|manifest-kitchen.webmanifest|sw\\.js|offline\\.html|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
   ],
 };
 
