@@ -1985,7 +1985,43 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const inProgressReservations = reservations.filter(
     r => r.status === "confirmed" || r.status === "seated",
   );
-  const completeItems = orders.filter(o => COMPLETE_STATUSES.includes(o.status));
+  // Complete tab visibility rule (Luigi 2026-06-02 spec):
+  //   "Orders only show in Complete once they DISAPPEAR from In Progress
+  //    — i.e. at end-of-day. When the clock goes 11:59 → 12:00, today's
+  //    accepted/completed orders roll from In Progress into Complete and
+  //    stay there until cleared. The only orders that stay in In Progress
+  //    are the new day's orders and future scheduled orders."
+  //
+  // The auto-complete sweep still flips status accepted → completed at
+  // +15min past estimatedReady so the customer-facing status page +
+  // email reflect "ready/complete" in real time. But the kitchen tablet
+  // visually keeps today's completed orders pinned in In Progress until
+  // midnight, then they appear in Complete instead.
+  //
+  // Implementation: today's "completed" orders are excluded from the
+  // Complete tab (they're already visible in In Progress per the same
+  // todayStart gate above). Rejected + cancelled are terminal negative
+  // states that have always belonged in Complete from the moment they
+  // happen — Luigi's spec doesn't call those "active" — so they're
+  // shown immediately regardless of date.
+  const completeTodayStart = (() => {
+    const d = new Date();
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  })();
+  const completeItems = orders.filter(o => {
+    if (!COMPLETE_STATUSES.includes(o.status)) return false;
+    // Simple mode only — tracking-mode kitchens explicitly click
+    // "Complete" and expect the order in the Complete tab immediately.
+    // Their In Progress tab also doesn't pin "completed" orders, so
+    // applying the today-defer here would make the order vanish from
+    // both tabs.
+    if (workflowMode === "simple" && o.status === "completed") {
+      const ts = (o as any).completedAt ? new Date((o as any).completedAt).getTime()
+        : o.createdAt ? new Date(o.createdAt).getTime() : NaN;
+      if (!Number.isNaN(ts) && ts >= completeTodayStart) return false;
+    }
+    return true;
+  });
 
   const tabOrders: Order[] =
     activeTab === "orders" ? ordersTabItems :
