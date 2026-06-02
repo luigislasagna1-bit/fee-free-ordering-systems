@@ -273,6 +273,8 @@ interface StockItem {
   name: string;
   isSoldOut: boolean;
   price: number;
+  hasVariants: boolean;
+  variants: { id: string; name: string; price: number; sortOrder: number }[];
   category: { name: string; sortOrder: number } | null;
 }
 
@@ -319,6 +321,66 @@ function StockPanel({ onChange }: { onChange?: () => void }) {
         const next = new Set(s);
         next.delete(it.id);
         return next;
+      });
+    }
+  };
+
+  // Commit a draft price for a VARIANT (size). Same UX as the base
+  // commitPrice below — local validate, PATCH the new
+  // /api/kitchen/menu-stock/variant/[id] route, mutate the in-memory
+  // it.variants[] entry on success so the input reverts cleanly.
+  const commitVariantPrice = async (it: StockItem, v: StockItem["variants"][number]) => {
+    const raw = priceDrafts[v.id];
+    if (raw === undefined) return;
+    const trimmed = raw.trim();
+    const next = Number(trimmed);
+    if (trimmed === "" || !Number.isFinite(next) || next < 0 || next > 9999) {
+      toast.error("Enter a valid price (0 – 9999).");
+      setPriceDrafts((d) => {
+        const cp = { ...d };
+        delete cp[v.id];
+        return cp;
+      });
+      return;
+    }
+    const rounded = Math.round(next * 100) / 100;
+    if (rounded === v.price) {
+      setPriceDrafts((d) => {
+        const cp = { ...d };
+        delete cp[v.id];
+        return cp;
+      });
+      return;
+    }
+    setPriceBusyIds((s) => new Set(s).add(v.id));
+    try {
+      const r = await fetch(`/api/kitchen/menu-stock/variant/${v.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ price: rounded }),
+      });
+      if (!r.ok) {
+        const d = await r.json().catch(() => ({}));
+        throw new Error(d.error || "Failed");
+      }
+      setItems((cur) => cur.map((i) => i.id === it.id
+        ? { ...i, variants: i.variants.map((vv) => vv.id === v.id ? { ...vv, price: rounded } : vv) }
+        : i,
+      ));
+      setPriceDrafts((d) => {
+        const cp = { ...d };
+        delete cp[v.id];
+        return cp;
+      });
+      toast.success(`${it.name} · ${v.name}: $${rounded.toFixed(2)}`);
+      onChange?.();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed to save price");
+    } finally {
+      setPriceBusyIds((s) => {
+        const cp = new Set(s);
+        cp.delete(v.id);
+        return cp;
       });
     }
   };
@@ -413,6 +475,90 @@ function StockPanel({ onChange }: { onChange?: () => void }) {
       ) : (
         <ul className="divide-y divide-gray-100 border border-gray-100 rounded-xl overflow-hidden">
           {filtered.map((it) => {
+            const hasVariants = it.hasVariants && it.variants.length > 0;
+            // Two rendering modes:
+            //   - hasVariants → header row with Mark out/Restock (no base
+            //     price input — MenuItem.price isn't what the customer
+            //     pays for variant items, so editing it would be a silent
+            //     no-op and that's exactly the bug we're fixing). Below
+            //     the header, one nested row per variant with its own
+            //     live-editable price.
+            //   - no variants → original single row: base price input +
+            //     Mark out / Restock button.
+            if (hasVariants) {
+              return (
+                <li key={it.id} className="px-3 py-2.5">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <div className={`text-sm font-semibold truncate ${it.isSoldOut ? "text-gray-400 line-through" : "text-gray-900"}`}>
+                        {it.name}
+                      </div>
+                      <div className="text-[11px] text-gray-500 truncate">
+                        {it.category?.name ?? ""}
+                        {it.category && " · "}
+                        <span className="italic">Priced by size below</span>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => toggle(it)}
+                      disabled={busyIds.has(it.id)}
+                      className={`flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg transition ${
+                        it.isSoldOut
+                          ? "bg-emerald-500 hover:bg-emerald-600 text-white"
+                          : "bg-amber-500 hover:bg-amber-600 text-white"
+                      } ${busyIds.has(it.id) ? "opacity-50 cursor-wait" : ""}`}
+                    >
+                      {busyIds.has(it.id)
+                        ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        : it.isSoldOut ? "Restock" : "Mark out"}
+                    </button>
+                  </div>
+                  <ul className="mt-2 ml-4 border-l border-gray-200 pl-3 space-y-1.5">
+                    {it.variants.map((v) => {
+                      const vDraft = priceDrafts[v.id];
+                      const vInputValue = vDraft !== undefined ? vDraft : v.price.toFixed(2);
+                      const vBusy = priceBusyIds.has(v.id);
+                      return (
+                        <li key={v.id} className="flex items-center justify-between gap-2">
+                          <div className="text-xs text-gray-700 min-w-0 flex-1 truncate">{v.name}</div>
+                          <div className="flex-shrink-0 flex items-center gap-1 text-xs">
+                            <span className="text-gray-400">$</span>
+                            <input
+                              type="number"
+                              inputMode="decimal"
+                              min={0}
+                              step="0.01"
+                              value={vInputValue}
+                              disabled={vBusy}
+                              onChange={(e) => setPriceDrafts((d) => ({ ...d, [v.id]: e.target.value }))}
+                              onBlur={() => commitVariantPrice(it, v)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.preventDefault();
+                                  (e.target as HTMLInputElement).blur();
+                                } else if (e.key === "Escape") {
+                                  setPriceDrafts((d) => {
+                                    const cp = { ...d };
+                                    delete cp[v.id];
+                                    return cp;
+                                  });
+                                  (e.target as HTMLInputElement).blur();
+                                }
+                              }}
+                              className="w-20 px-2 py-1 rounded-lg border border-gray-200 text-xs font-semibold text-right tabular-nums focus:outline-none focus:ring-2 focus:ring-emerald-300 disabled:opacity-60"
+                              aria-label={`Price for ${it.name} — ${v.name}`}
+                            />
+                            {vBusy && <Loader2 className="w-3 h-3 animate-spin text-gray-400" />}
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              );
+            }
+
             const draft = priceDrafts[it.id];
             const inputValue = draft !== undefined ? draft : it.price.toFixed(2);
             const priceBusy = priceBusyIds.has(it.id);
@@ -482,9 +628,11 @@ function StockPanel({ onChange }: { onChange?: () => void }) {
       )}
 
       <p className="text-[11px] text-gray-500 leading-relaxed">
-        Edit the price field then tap outside (or press Enter) to save. Marking an item
-        out of stock greys it out on the customer ordering page and blocks new orders.
-        All changes appear on the customer site and admin menu immediately.
+        Edit any price (item or size) then tap outside (or press Enter) to save. Items
+        with sizes are priced per-size below — the base item has no editable price.
+        Marking an item out of stock greys it out on the customer ordering page and
+        blocks new orders. All changes appear on the customer site and admin menu
+        immediately. Modifier (add-on) pricing still lives in /admin/menu.
       </p>
     </div>
   );

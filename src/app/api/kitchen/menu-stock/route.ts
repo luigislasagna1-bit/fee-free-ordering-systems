@@ -30,6 +30,18 @@ export async function GET() {
       // owner to open /admin/menu. PATCH below accepts price updates
       // scoped to this restaurant only.
       price: true,
+      // hasVariants distinguishes two pricing models on the wire:
+      //   false → MenuItem.price is the live customer price (edit it).
+      //   true  → ItemVariant.price drives what the customer pays;
+      //           MenuItem.price is just a "starting from" hint. The
+      //           kitchen panel hides the base-price input in this
+      //           case and shows one editable row per variant below
+      //           so a size-pricing change actually lands.
+      hasVariants: true,
+      variants: {
+        select: { id: true, name: true, price: true, sortOrder: true },
+        orderBy: { sortOrder: "asc" },
+      },
       category: { select: { name: true, sortOrder: true } },
     },
     orderBy: [{ category: { sortOrder: "asc" } }, { sortOrder: "asc" }],
