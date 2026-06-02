@@ -30,12 +30,23 @@ export default async function KitchenPage() {
         where: {
           restaurantId,
           createdAt: { gte: thirtyDaysAgo },
-          // Same filter as /api/kitchen/orders polling: never show
-          // pre-payment card orders to the kitchen on initial SSR.
+          // Same filter set as /api/kitchen/orders polling. The polling
+          // shape MUST match SSR exactly or the kitchen flashes stale
+          // rows for ~4 seconds between hydration and the first poll —
+          // which is what happened when these two diverged before Luigi
+          // 2026-06-02 caught it.
+          //   - notifiedAt: filters pre-payment card orders the kitchen
+          //     mustn't start cooking until Stripe webhook confirms.
+          //   - clearedFromKitchenAt: filters orders the owner already
+          //     cleared from the kitchen tablet (Clear / Clear complete).
           notifiedAt: { not: null },
+          clearedFromKitchenAt: null,
         },
         orderBy: { createdAt: "desc" },
-        take: 300,
+        // Match the polling cap (500) so a busy kitchen doesn't see
+        // "extra" rows briefly appear on first poll. Cap stays as a
+        // safety net; well below the size where it'd hurt SSR latency.
+        take: 500,
         include: {
           items: {
             include: { modifiers: { select: { name: true, priceAdjustment: true } } },
