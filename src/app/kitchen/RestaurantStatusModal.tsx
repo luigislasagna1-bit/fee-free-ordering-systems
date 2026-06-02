@@ -2,6 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import {
   X, Pause, Play, AlertTriangle, Loader2, Package, Search, CheckCircle2,
+  Sliders, Sun, Moon, Volume2, VolumeX, Printer, RefreshCw, BarChart3, ChevronRight,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -46,6 +47,24 @@ interface StatusModalProps {
   pausedUntilByService: Partial<Record<ServiceKey, string | null>>;
   /** Notify parent so it can refetch fresh restaurant + menu state. */
   onChange?: () => void;
+  /** Preferences-tab props (Luigi 2026-06-02 header declutter). The
+   *  kitchen header used to host dedicated buttons for Refresh, Sound,
+   *  Day/Night, Printer setup, and Day report — those buttons are
+   *  gone now and this modal's Preferences tab hosts the entry points
+   *  instead. The actual sub-modals (sound settings, printer setup,
+   *  day report) stay where they were — we just open them from here. */
+  themeMode: "light" | "dark";
+  onToggleTheme: () => void;
+  onRefresh: () => void;
+  onOpenSound: () => void;
+  onOpenPrinter: () => void;
+  onOpenDayReport: () => void;
+  /** Status hints so the Preferences rows can show meaningful subtitles
+   *  (e.g. "Printer: Direct: 192.168.1.50" or "Sound: muted"). */
+  alertMuted: boolean;
+  alertVolume: number;
+  printerReady: boolean;
+  printerLabel: string | null;
 }
 
 const SERVICE_LABELS: Record<ServiceKey, string> = {
@@ -69,8 +88,11 @@ export function RestaurantStatusModal({
   acceptsCatering, acceptsTakeOut, acceptsReservations,
   pausedUntilByService,
   onChange,
+  themeMode, onToggleTheme,
+  onRefresh, onOpenSound, onOpenPrinter, onOpenDayReport,
+  alertMuted, alertVolume, printerReady, printerLabel,
 }: StatusModalProps) {
-  const [tab, setTab] = useState<"pause" | "stock">("pause");
+  const [tab, setTab] = useState<"pause" | "stock" | "prefs">("pause");
   const [selectedServices, setSelectedServices] = useState<Set<ServiceKey>>(new Set());
   const [pauseBusy, setPauseBusy] = useState(false);
 
@@ -169,6 +191,15 @@ export function RestaurantStatusModal({
           >
             <Package className="w-4 h-4 inline mr-1.5" /> Item availability / pricing
           </button>
+          <button
+            type="button"
+            onClick={() => setTab("prefs")}
+            className={`px-3 py-2 text-sm font-semibold border-b-2 transition ${
+              tab === "prefs" ? "border-emerald-500 text-emerald-700" : "border-transparent text-gray-500 hover:text-gray-800"
+            }`}
+          >
+            <Sliders className="w-4 h-4 inline mr-1.5" /> Preferences
+          </button>
         </div>
 
         {tab === "pause" && (
@@ -263,8 +294,160 @@ export function RestaurantStatusModal({
         {tab === "stock" && (
           <StockPanel onChange={onChange} />
         )}
+
+        {tab === "prefs" && (
+          <PreferencesPanel
+            themeMode={themeMode}
+            onToggleTheme={onToggleTheme}
+            onRefresh={() => { onRefresh(); onClose(); }}
+            onOpenSound={() => { onOpenSound(); onClose(); }}
+            onOpenPrinter={() => { onOpenPrinter(); onClose(); }}
+            onOpenDayReport={() => { onOpenDayReport(); onClose(); }}
+            alertMuted={alertMuted}
+            alertVolume={alertVolume}
+            printerReady={printerReady}
+            printerLabel={printerLabel}
+          />
+        )}
       </div>
     </div>
+  );
+}
+
+/** Preferences tab — the new home for the buttons that used to live
+ *  on the kitchen header (Refresh, Sound, Day/Night, Printer, Day
+ *  report). Each row opens the corresponding sub-modal that already
+ *  exists in KitchenDisplay — we don't re-implement those, we just
+ *  surface them from a cleaner control-panel hub. */
+function PreferencesPanel({
+  themeMode, onToggleTheme,
+  onRefresh, onOpenSound, onOpenPrinter, onOpenDayReport,
+  alertMuted, alertVolume, printerReady, printerLabel,
+}: {
+  themeMode: "light" | "dark";
+  onToggleTheme: () => void;
+  onRefresh: () => void;
+  onOpenSound: () => void;
+  onOpenPrinter: () => void;
+  onOpenDayReport: () => void;
+  alertMuted: boolean;
+  alertVolume: number;
+  printerReady: boolean;
+  printerLabel: string | null;
+}) {
+  const soundSubtitle = alertMuted || alertVolume === 0
+    ? "Muted — kitchen won't hear new orders"
+    : alertVolume < 0.5
+      ? `Volume ${Math.round(alertVolume * 100)}% — turn it up`
+      : `Volume ${Math.round(alertVolume * 100)}%`;
+  const soundTone = alertMuted || alertVolume === 0
+    ? "text-red-600"
+    : alertVolume < 0.5
+      ? "text-amber-600"
+      : "text-emerald-600";
+
+  return (
+    <div className="flex-1 overflow-y-auto p-5 space-y-2">
+      <p className="text-xs text-gray-600 leading-relaxed mb-3">
+        Everything that used to live on the kitchen header lives here
+        now — sound, day/night, printer setup, refresh, end-of-day
+        report. Tap a row to open it.
+      </p>
+
+      {/* Sound */}
+      <PrefRow
+        icon={alertMuted || alertVolume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+        iconBg="bg-emerald-50"
+        iconColor={soundTone}
+        title="Alert sound"
+        subtitle={soundSubtitle}
+        onClick={onOpenSound}
+      />
+
+      {/* Day / Night — inline toggle, no sub-modal */}
+      <button
+        type="button"
+        onClick={onToggleTheme}
+        className="w-full flex items-center gap-3 px-3 py-3 rounded-xl border border-gray-200 bg-white hover:border-emerald-300 hover:bg-gray-50 transition text-left"
+      >
+        <div className="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center flex-shrink-0">
+          {themeMode === "light"
+            ? <Sun className="w-5 h-5 text-amber-500" />
+            : <Moon className="w-5 h-5 text-indigo-500" />}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-semibold text-gray-900">Day / Night mode</div>
+          <div className="text-xs text-gray-500 truncate">
+            Currently <strong>{themeMode === "light" ? "Day" : "Night"}</strong> — tap to switch
+          </div>
+        </div>
+        <div className={`text-xs font-bold px-2 py-1 rounded-full ${
+          themeMode === "light"
+            ? "bg-amber-100 text-amber-700"
+            : "bg-indigo-100 text-indigo-700"
+        }`}>
+          {themeMode === "light" ? "DAY" : "NIGHT"}
+        </div>
+      </button>
+
+      {/* Printer */}
+      <PrefRow
+        icon={<Printer className="w-5 h-5" />}
+        iconBg="bg-emerald-50"
+        iconColor={printerReady ? "text-emerald-600" : "text-gray-400"}
+        title="Printer setup"
+        subtitle={printerLabel ?? "No printer connected — tap to set up"}
+        onClick={onOpenPrinter}
+      />
+
+      {/* End-of-day report */}
+      <PrefRow
+        icon={<BarChart3 className="w-5 h-5" />}
+        iconBg="bg-amber-50"
+        iconColor="text-amber-600"
+        title="End-of-day report"
+        subtitle="Today's totals — view + print"
+        onClick={onOpenDayReport}
+      />
+
+      {/* Refresh */}
+      <PrefRow
+        icon={<RefreshCw className="w-5 h-5" />}
+        iconBg="bg-sky-50"
+        iconColor="text-sky-600"
+        title="Refresh orders"
+        subtitle="Re-poll the server now (auto-polls every 4 s)"
+        onClick={onRefresh}
+      />
+    </div>
+  );
+}
+
+function PrefRow({
+  icon, iconBg, iconColor, title, subtitle, onClick,
+}: {
+  icon: React.ReactNode;
+  iconBg: string;
+  iconColor: string;
+  title: string;
+  subtitle: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="w-full flex items-center gap-3 px-3 py-3 rounded-xl border border-gray-200 bg-white hover:border-emerald-300 hover:bg-gray-50 transition text-left"
+    >
+      <div className={`w-9 h-9 rounded-lg ${iconBg} flex items-center justify-center flex-shrink-0 ${iconColor}`}>
+        {icon}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="text-sm font-semibold text-gray-900">{title}</div>
+        <div className="text-xs text-gray-500 truncate">{subtitle}</div>
+      </div>
+      <ChevronRight className="w-4 h-4 text-gray-400 flex-shrink-0" />
+    </button>
   );
 }
 

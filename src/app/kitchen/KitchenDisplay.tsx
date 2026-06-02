@@ -2092,76 +2092,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             </button>
           )}
 
-          <button onClick={fetchOrders} className={`p-2 rounded-lg ${t.btn} ${t.muted}`} title={tk("inProgress")}>
-            <RefreshCw className="w-4 h-4" />
-          </button>
-
-          {/* Sound settings — opens volume/mute panel. Icon reflects state:
-              muted → red bell-off, low → amber, healthy → green. */}
-          <button
-            onClick={() => setShowSoundSettings(true)}
-            className={`relative p-2 rounded-lg ${t.btn} transition ${
-              alertMuted || alertVolume === 0
-                ? "text-red-500"
-                : alertVolume < 0.5
-                  ? "text-amber-500"
-                  : "text-green-600"
-            }`}
-            title="Alert sound settings"
-            aria-label="Alert sound settings"
-          >
-            {alertMuted || alertVolume === 0 ? (
-              <VolumeX className="w-4 h-4" />
-            ) : (
-              <Volume2 className="w-4 h-4" />
-            )}
-            {/* Pulse dot when bell is actively ringing. */}
-            {alerting && !alertMuted && alertVolume > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full animate-ping" aria-hidden="true" />
-            )}
-          </button>
-
-          <button
-            onClick={() => setThemeMode(m => m === "light" ? "dark" : "light")}
-            className={`p-2 rounded-lg ${t.btn} ${t.muted}`}
-            title={themeMode === "light" ? tk("darkMode") : tk("lightMode")}
-          >
-            {themeMode === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
-          </button>
-
-          <button
-            onClick={() => {
-              // Routing logic for the printer setup button:
-              //   1. Running in native app → Direct WiFi/LAN setup
-              //      (main path, mDNS auto-discovery)
-              //   2. Running in browser AND admin has enabled PrintNode
-              //      backup → PrintNode setup (legacy/backup path)
-              //   3. Running in browser AND PrintNode NOT enabled →
-              //      Direct setup modal too, which surfaces the "install
-              //      the native app" hint
-              if (isNativePrinterAvailable()) {
-                setShowDirectPrinterSetup(true);
-              } else if (printNodeEnabled) {
-                setShowPrinterSetup(true);
-              } else {
-                setShowDirectPrinterSetup(true);
-              }
-            }}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
-              printerReady ? "border-green-500/40 text-green-600" : "border-emerald-500/40 text-emerald-600"
-            } ${t.btn}`}
-            title={tk("printerSetup")}
-          >
-            <Printer className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">
-              {printerLabel ?? tk("printerSetup")}
-            </span>
-          </button>
-
-          {/* Restaurant Status — pause services + mark out of stock.
-              When any service is paused, the button shows amber so
-              the kitchen sees the active state at a glance. Luigi
-              2026-06-01 GloriaFood-parity. */}
+          {/* Settings — the new hub. Hosts pause services, item availability +
+              pricing, AND Preferences (sound, day/night, printer, refresh,
+              day report). Luigi 2026-06-02 header declutter: these five
+              buttons used to each get their own slot on the header — they
+              all live inside this modal now. The button itself doubles as
+              the "paused services" indicator: amber when any service is
+              currently paused. */}
           <button
             type="button"
             onClick={() => setShowStatusModal(true)}
@@ -2170,22 +2107,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 ? "border-amber-500/60 text-amber-600 bg-amber-500/10"
                 : "border-gray-500/30 text-gray-600"
             } ${t.btn}`}
-            title="Pause services or adjust item availability and pricing"
+            title="Pause services, item availability, sound, day/night, printer, end-of-day"
           >
             {anyServicePaused ? "⏸ Paused" : "Settings"}
-          </button>
-
-          {/* End-of-day report — opens a modal with today's totals and
-              a "Print to printer" button so the owner can pull the
-              numbers off the till at close without opening a laptop
-              (Luigi 2026-06-02). */}
-          <button
-            type="button"
-            onClick={() => setShowEndOfDayModal(true)}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border border-gray-500/30 text-gray-600 transition ${t.btn}`}
-            title="Today's totals + print to thermal printer"
-          >
-            📊 Day report
           </button>
 
           {/* Delivery dispatch toggle — only renders for restaurants on
@@ -2958,6 +2882,24 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         acceptsReservations={!!(restaurant as any)?.acceptsReservations}
         pausedUntilByService={restaurantPauses}
         onChange={refreshRestaurantPauses}
+        // Preferences-tab plumbing (Luigi 2026-06-02 header declutter).
+        // Each callback closes this modal then opens the corresponding
+        // dedicated sub-modal — the originals still exist, we just
+        // route to them from one centralised hub.
+        themeMode={themeMode}
+        onToggleTheme={() => setThemeMode((m) => (m === "light" ? "dark" : "light"))}
+        onRefresh={fetchOrders}
+        onOpenSound={() => setShowSoundSettings(true)}
+        onOpenPrinter={() => {
+          if (isNativePrinterAvailable()) setShowDirectPrinterSetup(true);
+          else if (printNodeEnabled) setShowPrinterSetup(true);
+          else setShowDirectPrinterSetup(true);
+        }}
+        onOpenDayReport={() => setShowEndOfDayModal(true)}
+        alertMuted={alertMuted}
+        alertVolume={alertVolume}
+        printerReady={printerReady}
+        printerLabel={printerLabel}
       />
 
       <EndOfDayModal
