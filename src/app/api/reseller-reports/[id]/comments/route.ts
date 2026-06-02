@@ -43,12 +43,20 @@ export async function POST(
       body: text,
     },
   });
-  // Touch the report's updatedAt so the list view sorts by activity, not
-  // just creation time. Doing it inline (not in a transaction) is fine —
-  // a failed touch is recoverable, the comment itself is the source of truth.
+  // Touch updatedAt + audit-log the comment. Both writes are best-effort
+  // — if the activity-row insert ever fails, we don't undo the comment
+  // (comment is the source of truth, activity log is informational).
   await prisma.resellerReport.update({
     where: { id },
     data: { updatedAt: new Date() },
+  });
+  await prisma.resellerReportActivity.create({
+    data: {
+      reportId: id,
+      actorEmail: access.email,
+      actorName: access.name,
+      kind: "COMMENTED",
+    },
   });
   return NextResponse.json({ comment });
 }

@@ -2480,18 +2480,87 @@ model ResellerReport {
   /// Defaults to MEDIUM. Optional — used for sorting the table.
   priority    String   @default("MEDIUM")
   /// Identity of the person who filed the report. Stored verbatim (not
-  /// as a foreign key) so the report survives reseller account deletion
-  /// and so superadmin can file on behalf of a reseller too.
+  /// as a foreign key) so the report survives reseller account deletion.
   authorEmail String
   authorName  String
+  /// "Reported by" — distinct from `author*` so the superadmin can file
+  /// a report on behalf of a reseller (Luigi 2026-06-02 spec). When
+  /// null, callers should fall back to authorEmail/authorName. Set
+  /// only when the form was filed by someone other than the actual
+  /// person who reported the issue.
+  reportedByEmail String?
+  reportedByName  String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  comments    ResellerReportComment[]
+  comments      ResellerReportComment[]
+  verifications ResellerReportVerification[]
+  upvotes       ResellerReportUpvote[]
+  activity      ResellerReportActivity[]
 
   @@index([status, createdAt])
   @@index([type])
   @@index([authorEmail])
+}
+
+/// Verification poll. Once a report is marked IN_TESTING / FIXED any
+/// person with access can cast a single vote — "still working" or
+/// "still broken". The reporter's vote is visually prominent on the
+/// detail page so a "fixed by Luigi → confirmed working by the
+/// reseller who reported it" loop is visible at a glance.
+model ResellerReportVerification {
+  id         String   @id @default(cuid())
+  reportId   String
+  /// Lowercased email of the voter. Acts as the per-report identity —
+  /// one vote per person; flipping vote updates the row in place.
+  voterEmail String
+  voterName  String
+  /// "WORKING" | "NOT_WORKING".
+  vote       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  report     ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@unique([reportId, voterEmail])
+  @@index([reportId])
+}
+
+/// "Me too" upvotes. Lets resellers signal "I hit this too" without
+/// filing a duplicate report. Severity at a glance: a report with 8
+/// upvotes is more urgent than one with 0.
+model ResellerReportUpvote {
+  id         String   @id @default(cuid())
+  reportId   String
+  voterEmail String   // lowercased
+  voterName  String
+  createdAt  DateTime @default(now())
+
+  report     ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@unique([reportId, voterEmail])
+  @@index([reportId])
+}
+
+/// Append-only audit log per report. Auto-written by the API layer on:
+///   CREATED | STATUS_CHANGE | PRIORITY_CHANGE | VERIFIED_WORKING |
+///   VERIFIED_BROKEN | VERIFICATION_REMOVED | UPVOTED | UNUPVOTED |
+///   COMMENTED
+/// Renders as a timeline on the detail page so the conversation +
+/// state history is visible in one place (nolt.io-style activity log).
+model ResellerReportActivity {
+  id         String   @id @default(cuid())
+  reportId   String
+  actorEmail String
+  actorName  String
+  kind       String
+  /// Free-form detail — e.g. "NEW → IN_PROGRESS" or empty for "UPVOTED".
+  detail     String?
+  createdAt  DateTime @default(now())
+
+  report     ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@index([reportId, createdAt])
 }
 
 model ResellerReportComment {

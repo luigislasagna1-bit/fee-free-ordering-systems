@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   Plus, Search, Bug, Lightbulb, Sliders, ArrowUpRight, MessageSquare,
-  UserPlus, Trash2, X, Loader2, Inbox,
+  UserPlus, Trash2, X, Loader2, Inbox, ThumbsUp, CheckCircle2,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import {
@@ -23,9 +23,15 @@ interface ReportRow {
   priority: string;
   authorEmail: string;
   authorName: string;
+  /** The person who actually reported the issue. Equals author when
+   *  reportedByEmail was null on the row. Drives the "by X" display. */
+  reporterEmail: string;
+  reporterName: string;
   createdAt: string;
   updatedAt: string;
   commentsCount: number;
+  upvotesCount: number;
+  verificationsCount: number;
 }
 
 interface InviteRow {
@@ -66,7 +72,9 @@ export function ReportsListClient({
       if (typeFilter !== "ALL" && r.type !== typeFilter) return false;
       if (query.trim()) {
         const q = query.trim().toLowerCase();
-        const hay = `${r.title} ${r.authorName} ${r.authorEmail}`.toLowerCase();
+        // Search across title + author + reporter so "luigi" matches
+        // both his own reports AND ones he filed on behalf of someone.
+        const hay = `${r.title} ${r.authorName} ${r.authorEmail} ${r.reporterName} ${r.reporterEmail}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
@@ -170,6 +178,7 @@ export function ReportsListClient({
 
       {showCreate && (
         <CreateReportModal
+          canSetReporter={access.canChangeStatus /* same gate as superadmin */}
           onClose={() => setShowCreate(false)}
           onCreated={(id) => {
             setShowCreate(false);
@@ -224,8 +233,23 @@ function StatusSection({ status, rows }: { status: ReportStatus; rows: ReportRow
                     )}
                   </div>
                   <div className="text-xs text-gray-500 mt-1 flex items-center gap-3 flex-wrap">
-                    <span>by {r.authorName}</span>
+                    {/* "Reported by" prominent — bold name so the actual
+                        reporter (not whoever clicked Submit on their
+                        behalf) is what jumps off the row. */}
+                    <span>
+                      Reported by <strong className="text-gray-700">{r.reporterName}</strong>
+                    </span>
                     <span>· {new Date(r.createdAt).toLocaleDateString()}</span>
+                    {r.upvotesCount > 0 && (
+                      <span className="inline-flex items-center gap-1 text-emerald-700" title={`${r.upvotesCount} "me too" upvotes`}>
+                        <ThumbsUp className="w-3 h-3" /> {r.upvotesCount}
+                      </span>
+                    )}
+                    {r.verificationsCount > 0 && (
+                      <span className="inline-flex items-center gap-1 text-purple-700" title="Verification poll votes">
+                        <CheckCircle2 className="w-3 h-3" /> {r.verificationsCount}
+                      </span>
+                    )}
                     {r.commentsCount > 0 && (
                       <span className="inline-flex items-center gap-1">
                         <MessageSquare className="w-3 h-3" /> {r.commentsCount}
@@ -252,8 +276,9 @@ function iconForType(type: string) {
 // ─── New report modal ────────────────────────────────────────────────
 
 function CreateReportModal({
-  onClose, onCreated,
+  canSetReporter, onClose, onCreated,
 }: {
+  canSetReporter: boolean;
   onClose: () => void;
   onCreated: (id: string) => void;
 }) {
@@ -261,6 +286,12 @@ function CreateReportModal({
   const [bodyText, setBodyText] = useState("");
   const [type, setType] = useState<ReportType>("BUG");
   const [priority, setPriority] = useState<ReportPriority>("MEDIUM");
+  // Reported-by — only shown when canSetReporter (superadmin). Empty
+  // string means "I am the reporter" and the server attributes it to
+  // the caller. Set this to a different email to file on behalf of
+  // someone else (e.g. Luigi filing a bug a reseller called him about).
+  const [reportedByEmail, setReportedByEmail] = useState("");
+  const [reportedByName, setReportedByName] = useState("");
   const [busy, setBusy] = useState(false);
 
   const submit = async () => {
@@ -273,7 +304,11 @@ function CreateReportModal({
       const r = await fetch("/api/reseller-reports", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, bodyText, type, priority }),
+        body: JSON.stringify({
+          title, bodyText, type, priority,
+          reportedByEmail: canSetReporter ? reportedByEmail : undefined,
+          reportedByName: canSetReporter ? reportedByName : undefined,
+        }),
       });
       if (!r.ok) {
         const d = await r.json().catch(() => ({}));
@@ -341,6 +376,34 @@ function CreateReportModal({
               className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300 leading-relaxed"
             />
           </div>
+          {/* Reported-by — superadmin-only. Lets Luigi file a report
+              on behalf of a reseller who phoned in the issue, with
+              proper attribution so the list shows "Reported by X"
+              correctly. Leave blank to file as yourself. */}
+          {canSetReporter && (
+            <div className="border-t border-gray-100 pt-3">
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                Reported by <span className="text-gray-400 font-normal">(optional — leave blank to file as yourself)</span>
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  value={reportedByEmail}
+                  onChange={(e) => setReportedByEmail(e.target.value)}
+                  placeholder="reporter@example.com"
+                  className="px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                />
+                <input
+                  value={reportedByName}
+                  onChange={(e) => setReportedByName(e.target.value)}
+                  placeholder="Display name"
+                  className="px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                />
+              </div>
+              <p className="text-[10px] text-gray-400 mt-1">
+                Use this when a reseller calls in a bug and you&apos;re entering it for them.
+              </p>
+            </div>
+          )}
         </div>
         <div className="flex items-center justify-end gap-2 px-5 py-3 border-t border-gray-100">
           <button onClick={onClose} className="px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-100">Cancel</button>

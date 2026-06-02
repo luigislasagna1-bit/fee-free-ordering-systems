@@ -31,9 +31,17 @@ export default async function ReportsListPage() {
         priority: true,
         authorEmail: true,
         authorName: true,
+        reportedByEmail: true,
+        reportedByName: true,
         createdAt: true,
         updatedAt: true,
-        _count: { select: { comments: true } },
+        _count: {
+          select: {
+            comments: true,
+            upvotes: true,
+            verifications: true,
+          },
+        },
       },
     }),
     access.canInvite
@@ -49,10 +57,23 @@ export default async function ReportsListPage() {
         canInvite: access.canInvite,
       }}
       reports={reports.map((r) => ({
-        ...r,
+        id: r.id,
+        title: r.title,
+        type: r.type,
+        status: r.status,
+        priority: r.priority,
+        authorEmail: r.authorEmail,
+        authorName: r.authorName,
+        // Fall back to author when reportedBy isn't explicitly set.
+        // The whole point of reportedBy is "Luigi filed on behalf of X" —
+        // when it's null the report was self-filed and author IS reporter.
+        reporterEmail: r.reportedByEmail ?? r.authorEmail,
+        reporterName: r.reportedByName ?? r.authorName,
         createdAt: r.createdAt.toISOString(),
         updatedAt: r.updatedAt.toISOString(),
         commentsCount: r._count.comments,
+        upvotesCount: r._count.upvotes,
+        verificationsCount: r._count.verifications,
       }))}
       invites={invites.map((i) => ({
         id: i.id,

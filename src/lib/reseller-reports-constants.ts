@@ -72,3 +72,36 @@ export const PRIORITY_BADGE: Record<ReportPriority, string> = {
   HIGH: "bg-amber-100 text-amber-800",
   CRITICAL: "bg-red-100 text-red-800",
 };
+
+/** Verification-poll vote values. One row per (report, voter) — flipping
+ *  vote upserts the row, withdrawing deletes it. */
+export const VERIFICATION_VOTES = ["WORKING", "NOT_WORKING"] as const;
+export type VerificationVote = (typeof VERIFICATION_VOTES)[number];
+
+/** Activity-log entry kinds. The API auto-writes one of these every
+ *  time a report's state changes — surfaces as the timeline on the
+ *  detail page. */
+export const ACTIVITY_KINDS = [
+  "CREATED",
+  "STATUS_CHANGE",
+  "PRIORITY_CHANGE",
+  "VERIFIED_WORKING",
+  "VERIFIED_BROKEN",
+  "VERIFICATION_REMOVED",
+  "UPVOTED",
+  "UNUPVOTED",
+  "COMMENTED",
+] as const;
+export type ActivityKind = (typeof ACTIVITY_KINDS)[number];
+
+export const ACTIVITY_LABEL: Record<ActivityKind, string> = {
+  CREATED: "filed this report",
+  STATUS_CHANGE: "changed status",
+  PRIORITY_CHANGE: "changed priority",
+  VERIFIED_WORKING: "marked confirmed working ✓",
+  VERIFIED_BROKEN: "marked still not working ✗",
+  VERIFICATION_REMOVED: "withdrew verification",
+  UPVOTED: "added a me-too",
+  UNUPVOTED: "removed their me-too",
+  COMMENTED: "commented",
+};

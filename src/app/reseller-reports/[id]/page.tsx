@@ -22,9 +22,22 @@ export default async function ReportDetailPage({
   const { id } = await params;
   const report = await prisma.resellerReport.findUnique({
     where: { id },
-    include: { comments: { orderBy: { createdAt: "asc" } } },
+    include: {
+      comments: { orderBy: { createdAt: "asc" } },
+      verifications: { orderBy: { updatedAt: "desc" } },
+      upvotes: { orderBy: { createdAt: "desc" } },
+      activity: { orderBy: { createdAt: "asc" } },
+    },
   });
   if (!report) notFound();
+
+  // Resolve the canonical reporter identity. Falls back to author when
+  // reportedByEmail is null (self-filed).
+  const reporterEmail = report.reportedByEmail ?? report.authorEmail;
+  const reporterName = report.reportedByName ?? report.authorName;
+  const myLowerEmail = access.email.trim().toLowerCase();
+  const myUpvote = report.upvotes.find((u) => u.voterEmail === myLowerEmail) ?? null;
+  const myVerification = report.verifications.find((v) => v.voterEmail === myLowerEmail) ?? null;
 
   return (
     <ReportDetailClient
@@ -32,6 +45,8 @@ export default async function ReportDetailPage({
         canComment: access.canComment,
         canChangeStatus: access.canChangeStatus,
       }}
+      myEmail={access.email}
+      myName={access.name}
       report={{
         id: report.id,
         title: report.title,
@@ -41,6 +56,11 @@ export default async function ReportDetailPage({
         priority: report.priority,
         authorEmail: report.authorEmail,
         authorName: report.authorName,
+        reporterEmail,
+        reporterName,
+        // True only when superadmin filed on behalf of someone else.
+        // Drives a small "Filed by Luigi" subtitle on the detail page.
+        filedOnBehalf: !!report.reportedByEmail,
         createdAt: report.createdAt.toISOString(),
         updatedAt: report.updatedAt.toISOString(),
         comments: report.comments.map((c) => ({
@@ -50,6 +70,30 @@ export default async function ReportDetailPage({
           body: c.body,
           createdAt: c.createdAt.toISOString(),
         })),
+        verifications: report.verifications.map((v) => ({
+          id: v.id,
+          voterEmail: v.voterEmail,
+          voterName: v.voterName,
+          vote: v.vote,
+          isReporter: v.voterEmail === reporterEmail.toLowerCase(),
+          updatedAt: v.updatedAt.toISOString(),
+        })),
+        upvotes: report.upvotes.map((u) => ({
+          id: u.id,
+          voterEmail: u.voterEmail,
+          voterName: u.voterName,
+          createdAt: u.createdAt.toISOString(),
+        })),
+        activity: report.activity.map((a) => ({
+          id: a.id,
+          actorEmail: a.actorEmail,
+          actorName: a.actorName,
+          kind: a.kind,
+          detail: a.detail,
+          createdAt: a.createdAt.toISOString(),
+        })),
+        myUpvoteId: myUpvote?.id ?? null,
+        myVerificationVote: myVerification?.vote ?? null,
       }}
     />
   );

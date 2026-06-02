@@ -1,15 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, MessageSquare, Loader2 } from "lucide-react";
+import {
+  ChevronLeft, MessageSquare, Loader2, ThumbsUp, CheckCircle2, XCircle,
+  Activity, Star,
+} from "lucide-react";
 import toast from "react-hot-toast";
 import {
   REPORT_STATUSES,
   TYPE_LABEL, STATUS_LABEL, PRIORITY_LABEL,
   TYPE_BADGE, STATUS_BADGE, PRIORITY_BADGE,
+  ACTIVITY_LABEL,
   type ReportType, type ReportStatus, type ReportPriority,
+  type VerificationVote, type ActivityKind,
 } from "@/lib/reseller-reports-constants";
 
 interface Comment {
@@ -17,6 +22,31 @@ interface Comment {
   authorEmail: string;
   authorName: string;
   body: string;
+  createdAt: string;
+}
+
+interface Verification {
+  id: string;
+  voterEmail: string;
+  voterName: string;
+  vote: string;
+  isReporter: boolean;
+  updatedAt: string;
+}
+
+interface Upvote {
+  id: string;
+  voterEmail: string;
+  voterName: string;
+  createdAt: string;
+}
+
+interface ActivityEntry {
+  id: string;
+  actorEmail: string;
+  actorName: string;
+  kind: string;
+  detail: string | null;
   createdAt: string;
 }
 
@@ -29,23 +59,78 @@ interface Report {
   priority: string;
   authorEmail: string;
   authorName: string;
+  reporterEmail: string;
+  reporterName: string;
+  filedOnBehalf: boolean;
   createdAt: string;
   updatedAt: string;
   comments: Comment[];
+  verifications: Verification[];
+  upvotes: Upvote[];
+  activity: ActivityEntry[];
+  myUpvoteId: string | null;
+  myVerificationVote: string | null;
 }
 
 export function ReportDetailClient({
-  access, report: initial,
+  access, report: initial, myEmail, myName,
 }: {
   access: { canComment: boolean; canChangeStatus: boolean };
   report: Report;
+  myEmail: string;
+  myName: string;
 }) {
   const router = useRouter();
   const [report, setReport] = useState(initial);
   const [newComment, setNewComment] = useState("");
   const [posting, setPosting] = useState(false);
   const [savingStatus, setSavingStatus] = useState(false);
+  const [busyUpvote, setBusyUpvote] = useState(false);
+  const [busyVerify, setBusyVerify] = useState(false);
 
+  // Verification tally — counts WORKING vs NOT_WORKING, and surfaces
+  // the reporter's vote (if any) so the UI can emphasise "the person
+  // who filed it agrees the fix is good".
+  const tally = useMemo(() => {
+    let working = 0;
+    let notWorking = 0;
+    let reporterVote: string | null = null;
+    let reporterVoterName: string | null = null;
+    for (const v of report.verifications) {
+      if (v.vote === "WORKING") working++;
+      if (v.vote === "NOT_WORKING") notWorking++;
+      if (v.isReporter) {
+        reporterVote = v.vote;
+        reporterVoterName = v.voterName;
+      }
+    }
+    return { working, notWorking, reporterVote, reporterVoterName };
+  }, [report.verifications]);
+
+  // ─── Status change (SA only) ───────────────────────────────────────
+  const changeStatus = async (next: ReportStatus) => {
+    if (next === report.status) return;
+    setSavingStatus(true);
+    const prev = report.status;
+    setReport((p) => ({ ...p, status: next }));
+    try {
+      const r = await fetch(`/api/reseller-reports/${report.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: next }),
+      });
+      if (!r.ok) throw new Error("Failed");
+      toast.success(`Status → ${STATUS_LABEL[next]}`);
+      router.refresh();
+    } catch (e) {
+      setReport((p) => ({ ...p, status: prev }));
+      toast.error(e instanceof Error ? e.message : "Failed");
+    } finally {
+      setSavingStatus(false);
+    }
+  };
+
+  // ─── Comments ───────────────────────────────────────────────────────
   const post = async () => {
     if (!newComment.trim()) return;
     setPosting(true);
@@ -78,26 +163,51 @@ export function ReportDetailClient({
     }
   };
 
-  const changeStatus = async (next: ReportStatus) => {
-    setSavingStatus(true);
-    const prev = report.status;
-    setReport((p) => ({ ...p, status: next }));
+  // ─── Upvote / "me too" ──────────────────────────────────────────────
+  const toggleUpvote = async () => {
+    setBusyUpvote(true);
+    const wasUpvoted = !!report.myUpvoteId;
     try {
-      const r = await fetch(`/api/reseller-reports/${report.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: next }),
+      const r = await fetch(`/api/reseller-reports/${report.id}/upvote`, {
+        method: wasUpvoted ? "DELETE" : "POST",
       });
       if (!r.ok) throw new Error("Failed");
-      toast.success(`Status → ${STATUS_LABEL[next]}`);
+      // Refetch the page to pull fresh tallies + activity. Simpler than
+      // mutating local state for every micro-interaction.
       router.refresh();
     } catch (e) {
-      setReport((p) => ({ ...p, status: prev }));
       toast.error(e instanceof Error ? e.message : "Failed");
     } finally {
-      setSavingStatus(false);
+      setBusyUpvote(false);
     }
   };
+
+  // ─── Verification poll ─────────────────────────────────────────────
+  const castVerify = async (vote: VerificationVote | null) => {
+    setBusyVerify(true);
+    try {
+      if (vote === null) {
+        const r = await fetch(`/api/reseller-reports/${report.id}/verify`, { method: "DELETE" });
+        if (!r.ok) throw new Error("Failed");
+        toast.success("Verification withdrawn");
+      } else {
+        const r = await fetch(`/api/reseller-reports/${report.id}/verify`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ vote }),
+        });
+        if (!r.ok) throw new Error("Failed");
+        toast.success(vote === "WORKING" ? "Marked Confirmed Working" : "Marked Still Not Working");
+      }
+      router.refresh();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed");
+    } finally {
+      setBusyVerify(false);
+    }
+  };
+
+  const iAmReporter = report.reporterEmail.toLowerCase() === myEmail.trim().toLowerCase();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -109,28 +219,36 @@ export function ReportDetailClient({
           <ChevronLeft className="w-4 h-4" /> Back to reports
         </Link>
 
+        {/* ── Report header ─────────────────────────────────────────── */}
         <div className="mt-4 bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-          <div className="flex items-start justify-between gap-3 flex-wrap">
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2 flex-wrap mb-2">
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${TYPE_BADGE[report.type as ReportType] ?? "bg-gray-100 text-gray-700 border-gray-200"}`}>
-                  {TYPE_LABEL[report.type as ReportType] ?? report.type}
-                </span>
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${STATUS_BADGE[report.status as ReportStatus] ?? "bg-gray-100 text-gray-700 border-gray-200"}`}>
-                  {STATUS_LABEL[report.status as ReportStatus] ?? report.status}
-                </span>
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${PRIORITY_BADGE[report.priority as ReportPriority] ?? "bg-gray-100 text-gray-700"}`}>
-                  {PRIORITY_LABEL[report.priority as ReportPriority] ?? report.priority}
-                </span>
-              </div>
-              <h1 className="text-xl font-bold text-gray-900">{report.title}</h1>
-              <div className="text-xs text-gray-500 mt-1">
-                by <strong>{report.authorName}</strong>
-                {" · "}
-                {new Date(report.createdAt).toLocaleString()}
-              </div>
-            </div>
+          <div className="flex items-center gap-2 flex-wrap mb-2">
+            <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${TYPE_BADGE[report.type as ReportType] ?? "bg-gray-100 text-gray-700 border-gray-200"}`}>
+              {TYPE_LABEL[report.type as ReportType] ?? report.type}
+            </span>
+            <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${STATUS_BADGE[report.status as ReportStatus] ?? "bg-gray-100 text-gray-700 border-gray-200"}`}>
+              {STATUS_LABEL[report.status as ReportStatus] ?? report.status}
+            </span>
+            <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${PRIORITY_BADGE[report.priority as ReportPriority] ?? "bg-gray-100 text-gray-700"}`}>
+              {PRIORITY_LABEL[report.priority as ReportPriority] ?? report.priority}
+            </span>
           </div>
+          <h1 className="text-xl font-bold text-gray-900">{report.title}</h1>
+
+          {/* Reporter line — prominent. When filed-on-behalf, also note
+              who actually filed it (the form-submitter) in a subtitle. */}
+          <div className="mt-2 flex items-baseline gap-2 flex-wrap">
+            <span className="text-sm text-gray-700">
+              Reported by <strong className="text-gray-900">{report.reporterName}</strong>
+            </span>
+            <span className="text-xs text-gray-400">
+              · {new Date(report.createdAt).toLocaleString()}
+            </span>
+          </div>
+          {report.filedOnBehalf && (
+            <div className="text-[11px] text-gray-500 mt-1 italic">
+              Filed on their behalf by {report.authorName}
+            </div>
+          )}
 
           {access.canChangeStatus && (
             <div className="mt-4 flex items-center gap-2 flex-wrap pt-4 border-t border-gray-100">
@@ -154,7 +272,102 @@ export function ReportDetailClient({
           </div>
         </div>
 
-        {/* Comments */}
+        {/* ── Engagement panel: upvote + verification ──────────────── */}
+        <div className="mt-4 grid sm:grid-cols-2 gap-3">
+          {/* "Me too" upvote */}
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="text-xs font-bold text-gray-700 uppercase tracking-wider">Me too</div>
+                <div className="text-xl font-bold text-emerald-600 mt-0.5">
+                  {report.upvotes.length}
+                  <span className="text-xs font-normal text-gray-500 ml-1">
+                    {report.upvotes.length === 1 ? "person hit this" : "people hit this"}
+                  </span>
+                </div>
+              </div>
+              {access.canComment && (
+                <button
+                  onClick={toggleUpvote}
+                  disabled={busyUpvote}
+                  className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold transition ${
+                    report.myUpvoteId
+                      ? "bg-emerald-500 text-white hover:bg-emerald-600"
+                      : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200"
+                  } disabled:opacity-50`}
+                >
+                  {busyUpvote && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                  <ThumbsUp className="w-4 h-4" />
+                  {report.myUpvoteId ? "Voted" : "Me too"}
+                </button>
+              )}
+            </div>
+            {report.upvotes.length > 0 && (
+              <div className="mt-2 text-[11px] text-gray-500 truncate" title={report.upvotes.map(u => u.voterName).join(", ")}>
+                {report.upvotes.slice(0, 3).map(u => u.voterName).join(", ")}
+                {report.upvotes.length > 3 && ` +${report.upvotes.length - 3} more`}
+              </div>
+            )}
+          </div>
+
+          {/* Verification poll — "Did the fix actually work?" */}
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
+            <div className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+              Did the fix work?
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700">
+                <CheckCircle2 className="w-3.5 h-3.5" /> {tally.working}
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-rose-50 text-rose-700">
+                <XCircle className="w-3.5 h-3.5" /> {tally.notWorking}
+              </span>
+            </div>
+            {tally.reporterVote && (
+              <div className={`mt-2 text-[11px] font-semibold inline-flex items-center gap-1 ${
+                tally.reporterVote === "WORKING" ? "text-emerald-700" : "text-rose-700"
+              }`}>
+                <Star className="w-3 h-3 fill-current" />
+                Reporter ({tally.reporterVoterName}) says: {tally.reporterVote === "WORKING" ? "Working ✓" : "Still broken ✗"}
+              </div>
+            )}
+            {access.canComment && (
+              <div className="mt-3 flex items-center gap-2 flex-wrap">
+                <button
+                  onClick={() => castVerify(report.myVerificationVote === "WORKING" ? null : "WORKING")}
+                  disabled={busyVerify}
+                  className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${
+                    report.myVerificationVote === "WORKING"
+                      ? "bg-emerald-500 text-white border-emerald-500 hover:bg-emerald-600"
+                      : "bg-white text-emerald-700 border-emerald-200 hover:bg-emerald-50"
+                  } disabled:opacity-50`}
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  Confirmed Working
+                </button>
+                <button
+                  onClick={() => castVerify(report.myVerificationVote === "NOT_WORKING" ? null : "NOT_WORKING")}
+                  disabled={busyVerify}
+                  className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${
+                    report.myVerificationVote === "NOT_WORKING"
+                      ? "bg-rose-500 text-white border-rose-500 hover:bg-rose-600"
+                      : "bg-white text-rose-700 border-rose-200 hover:bg-rose-50"
+                  } disabled:opacity-50`}
+                >
+                  <XCircle className="w-3.5 h-3.5" />
+                  Still Not Working
+                </button>
+              </div>
+            )}
+            {iAmReporter && (
+              <div className="mt-2 text-[10px] text-amber-600 font-semibold uppercase tracking-wider">
+                You are the reporter — your vote carries extra weight ★
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ── Comments ─────────────────────────────────────────────── */}
         <div className="mt-6">
           <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
             <MessageSquare className="w-4 h-4 text-gray-500" />
@@ -203,6 +416,28 @@ export function ReportDetailClient({
             </div>
           )}
         </div>
+
+        {/* ── Activity timeline ───────────────────────────────────── */}
+        {report.activity.length > 0 && (
+          <div className="mt-6">
+            <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+              <Activity className="w-4 h-4 text-gray-500" />
+              Activity
+            </h2>
+            <ul className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100 overflow-hidden">
+              {report.activity.map((a) => (
+                <li key={a.id} className="px-4 py-2 text-xs text-gray-600">
+                  <span className="font-semibold text-gray-800">{a.actorName}</span>{" "}
+                  <span>{ACTIVITY_LABEL[a.kind as ActivityKind] ?? a.kind}</span>
+                  {a.detail && (
+                    <span className="text-gray-500"> — <span className="font-mono">{a.detail}</span></span>
+                  )}
+                  <span className="text-gray-400"> · {new Date(a.createdAt).toLocaleString()}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

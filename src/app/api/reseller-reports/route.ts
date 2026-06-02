@@ -21,7 +21,7 @@ export async function GET() {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const reports = await prisma.resellerReport.findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: { updatedAt: "desc" },
     select: {
       id: true,
       title: true,
@@ -30,9 +30,17 @@ export async function GET() {
       priority: true,
       authorEmail: true,
       authorName: true,
+      reportedByEmail: true,
+      reportedByName: true,
       createdAt: true,
       updatedAt: true,
-      _count: { select: { comments: true } },
+      _count: {
+        select: {
+          comments: true,
+          upvotes: true,
+          verifications: true,
+        },
+      },
     },
   });
   return NextResponse.json({ reports });
@@ -43,7 +51,14 @@ export async function POST(req: NextRequest) {
   if (!access.canCreate) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
-  let body: { title?: string; bodyText?: string; type?: string; priority?: string };
+  let body: {
+    title?: string;
+    bodyText?: string;
+    type?: string;
+    priority?: string;
+    reportedByEmail?: string;
+    reportedByName?: string;
+  };
   try {
     body = await req.json();
   } catch {
@@ -61,6 +76,27 @@ export async function POST(req: NextRequest) {
   if (!REPORT_PRIORITIES.includes(priority)) {
     return NextResponse.json({ error: "Invalid priority" }, { status: 400 });
   }
+
+  // "Reported by" attribution. Only superadmin can set it — a reseller
+  // is always the reporter of their own report. When superadmin omits
+  // the fields, the report is attributed to them. When superadmin
+  // supplies them, they're trusted verbatim (the form's email field
+  // can be free-form so superadmin can file on behalf of someone not
+  // yet on the platform).
+  let reportedByEmail: string | null = null;
+  let reportedByName: string | null = null;
+  if (access.canChangeStatus) {
+    const rEmail = (body.reportedByEmail ?? "").trim().toLowerCase();
+    const rName = (body.reportedByName ?? "").trim().slice(0, 100);
+    if (rEmail) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rEmail)) {
+        return NextResponse.json({ error: "Invalid reported-by email" }, { status: 400 });
+      }
+      reportedByEmail = rEmail;
+      reportedByName = rName || rEmail;
+    }
+  }
+
   const report = await prisma.resellerReport.create({
     data: {
       title,
@@ -71,8 +107,24 @@ export async function POST(req: NextRequest) {
       // can change it later via PATCH /api/reseller-reports/[id].
       authorEmail: access.email,
       authorName: access.name,
+      reportedByEmail,
+      reportedByName,
     },
     select: { id: true },
   });
+
+  // Audit-log the creation. Used by the detail page's activity timeline.
+  await prisma.resellerReportActivity.create({
+    data: {
+      reportId: report.id,
+      actorEmail: access.email,
+      actorName: access.name,
+      kind: "CREATED",
+      detail: reportedByEmail
+        ? `Filed on behalf of ${reportedByName ?? reportedByEmail}`
+        : null,
+    },
+  });
+
   return NextResponse.json({ id: report.id });
 }
