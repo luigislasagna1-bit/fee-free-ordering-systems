@@ -18,6 +18,12 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
+import { COUNTRIES, CURRENCIES, defaultsForCountry, regionForCountry, allTimezones } from "@/lib/regions";
+
+// Languages currently shipping a full dictionary. The country→language
+// cascade only auto-applies a language in this set (others gracefully
+// fall back to English until their dictionary lands). Phase 3 widens this.
+const SUPPORTED_PROFILE_LANGS = new Set(["en", "fr", "es", "it", "pt"]);
 import {
   Save, Store, Image as ImageIcon, Link as LinkIcon, MapPin,
   Loader2, Search, X, CheckCircle2, AlertTriangle, Bell, Play, Trash2, Upload,
@@ -528,6 +534,29 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
     defaultLanguage: restaurant?.defaultLanguage || "en",
   });
 
+  // The "one setting" cascade: picking a Country prefills timezone,
+  // currency, and (when shipped) default language to that country's
+  // defaults — each still individually overridable below.
+  const onCountryChange = (code: string) => {
+    const d = defaultsForCountry(code);
+    setForm((f) => ({
+      ...f,
+      country: code,
+      timezone: d.timezone,
+      currency: d.currency,
+      defaultLanguage: SUPPORTED_PROFILE_LANGS.has(d.language) ? d.language : f.defaultLanguage,
+    }));
+  };
+
+  // Timezone options: the selected country's zones (most countries are
+  // single-zone). For "Other" we offer the full IANA list. Always keep
+  // the currently-saved value selectable so legacy values aren't lost.
+  const region = regionForCountry(form.country);
+  let timezoneOptions = region && form.country !== "OTHER" ? [...region.timezones] : allTimezones();
+  if (form.timezone && !timezoneOptions.includes(form.timezone)) {
+    timezoneOptions = [form.timezone, ...timezoneOptions];
+  }
+
   // lat/lng are managed separately — they're not part of the main text form
   const [lat, setLat] = useState<number | null>(restaurant?.lat ?? null);
   const [lng, setLng] = useState<number | null>(restaurant?.lng ?? null);
@@ -705,22 +734,35 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
             <Field {...fp} label={t("city")} field="city" />
             <Field {...fp} label={t("state")} field="state" />
             <Field {...fp} label={t("zip")} field="zip" />
-            <div className="md:col-span-2">
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">{t("country")}</label>
               <select
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
                 value={form.country}
-                onChange={(e) => setForm((f) => ({ ...f, country: e.target.value }))}
+                onChange={(e) => onCountryChange(e.target.value)}
               >
-                <option value="CA">Canada</option>
-                <option value="US">United States</option>
-                <option value="GB">United Kingdom</option>
-                <option value="AU">Australia</option>
-                <option value="NZ">New Zealand</option>
-                <option value="IE">Ireland</option>
-                <option value="MX">Mexico</option>
-                <option value="OTHER">Other</option>
+                {COUNTRIES.map((c) => (
+                  <option key={c.code} value={c.code}>{c.name}</option>
+                ))}
               </select>
+              <p className="text-xs text-gray-400 mt-1">
+                Sets your timezone, currency &amp; language defaults — adjust any below.
+              </p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Timezone</label>
+              <select
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                value={form.timezone}
+                onChange={(e) => setForm((f) => ({ ...f, timezone: e.target.value }))}
+              >
+                {timezoneOptions.map((tz) => (
+                  <option key={tz} value={tz}>{tz.replace(/_/g, " ")}</option>
+                ))}
+              </select>
+              <p className="text-xs text-gray-400 mt-1">
+                Used for opening hours, scheduling &amp; time-limited promos.
+              </p>
             </div>
           </div>
         </div>
@@ -764,6 +806,21 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
             <Field {...fp} label={t("estPickupTime")} field="estimatedPickup" type="number" />
             <Field {...fp} label={t("estDeliveryTime")} field="estimatedDelivery" type="number" />
             <Field {...fp} label={t("minimumOrder")} field="minimumOrder" type="number" />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Currency</label>
+              <select
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                value={form.currency}
+                onChange={(e) => setForm((f) => ({ ...f, currency: e.target.value }))}
+              >
+                {CURRENCIES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.label} ({c.symbol}) · {c.code.toUpperCase()}
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs text-gray-400 mt-1">All prices across your menu, checkout &amp; receipts use this.</p>
+            </div>
           </div>
           {/* Delivery-fee and tax-rate fields used to live here. Both
               moved 2026-05-30 (Luigi audit):

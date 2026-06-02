@@ -6,6 +6,7 @@ import { ChefHat, Loader2, Building2, AlertCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
+import { COUNTRIES } from "@/lib/regions";
 
 export interface InviteContext {
   token: string;
@@ -300,20 +301,9 @@ export function SignupForm({
                     value={form.country}
                     onChange={(e) => setForm({ ...form, country: e.target.value })}
                   >
-                    <option value="CA">Canada</option>
-                    <option value="US">United States</option>
-                    <option value="GB">United Kingdom</option>
-                    <option value="AU">Australia</option>
-                    <option value="IE">Ireland</option>
-                    <option value="NZ">New Zealand</option>
-                    <option value="FR">France</option>
-                    <option value="DE">Germany</option>
-                    <option value="ES">Spain</option>
-                    <option value="IT">Italy</option>
-                    <option value="PT">Portugal</option>
-                    <option value="NL">Netherlands</option>
-                    <option value="BE">Belgium</option>
-                    <option value="MX">Mexico</option>
+                    {COUNTRIES.map((c) => (
+                      <option key={c.code} value={c.code}>{c.name}</option>
+                    ))}
                   </select>
                 </div>
               </div>

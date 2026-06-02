@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import prisma from "@/lib/db";
 import { slugify } from "@/lib/utils";
+import { defaultsForCountry } from "@/lib/regions";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { validatePassword } from "@/lib/password";
 import { sendSignupConfirmationEmail } from "@/lib/email";
@@ -126,6 +127,15 @@ export async function POST(req: NextRequest) {
     const countryClean      = trim(country, 2) ?? "CA"; // ISO-2; default Canada
     const cuisineTypeClean  = trim(cuisineType, 60);
 
+    // Derive locale defaults from the chosen country so a new restaurant
+    // starts with the RIGHT timezone/currency/language instead of the old
+    // hardcoded US/Eastern + USD schema defaults (worldwide launch). Each
+    // is still editable in the admin profile. Language is clamped to the
+    // currently-shipped dictionaries; others fall back to English for now.
+    const regionDefaults = defaultsForCountry(countryClean);
+    const SHIPPED_LOCALES = new Set(["en", "fr", "es", "it", "pt"]);
+    const derivedLanguage = SHIPPED_LOCALES.has(regionDefaults.language) ? regionDefaults.language : "en";
+
     const restaurant = await prisma.restaurant.create({
       data: {
         name: restaurantNameClean,
@@ -142,6 +152,10 @@ export async function POST(req: NextRequest) {
         state: stateClean,
         zip: zipClean,
         country: countryClean,
+        // Region cascade: correct timezone/currency/language from country.
+        timezone: regionDefaults.timezone,
+        currency: regionDefaults.currency,
+        defaultLanguage: derivedLanguage,
         cuisineType: cuisineTypeClean,
         // EXPLICITLY override the schema defaults for service flags. Schema
         // has acceptsPickup: true by default — but that lets new restaurants

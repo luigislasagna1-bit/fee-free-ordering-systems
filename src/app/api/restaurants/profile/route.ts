@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { isValidTimezone } from "@/lib/regions";
 
 /**
  * GET — small endpoint used by surfaces that need a single Restaurant
@@ -76,7 +77,17 @@ export async function PUT(req: NextRequest) {
     updateData.country = country.trim().slice(0, 10);
   }
   if (cuisineType !== undefined) updateData.cuisineType = cuisineType;
-  if (timezone !== undefined) updateData.timezone = timezone;
+  if (timezone !== undefined) {
+    // Reject bogus IANA zones so promo windows / scheduling / hours never
+    // silently evaluate against an invalid clock (worldwide launch).
+    if (typeof timezone !== "string" || !isValidTimezone(timezone)) {
+      return NextResponse.json(
+        { error: "timezone must be a valid IANA zone (e.g. Europe/Rome, America/Toronto)" },
+        { status: 400 },
+      );
+    }
+    updateData.timezone = timezone;
+  }
   // ── Numeric field validation (audit 2026-05-30) ─────────────────────
   // Previously these were stamped raw — a negative taxRate or a 0-minute
   // estimatedPickup would persist and quietly break the customer flow.
