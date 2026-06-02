@@ -1,12 +1,23 @@
 /**
- * Seed N random test orders for a given customer email so reports /
- * customer-detail / "Order again" rails have realistic data to scroll
- * through. Distributes orders across the past 12 months with weighted
- * randomness toward more-recent months (matches real-life ramp).
+ * Seed N random test orders for a given customer email + a SPECIFIC
+ * restaurant so reports / customer-detail / "Order again" rails have
+ * realistic data to scroll through. Distributes orders across the past
+ * 12 months with weighted randomness toward more-recent months
+ * (matches real-life ramp).
+ *
+ * IMPORTANT — the --restaurant flag is REQUIRED.
+ *
+ * The Customer table is per-restaurant: the same email can have a
+ * Customer row under multiple restaurants (a customer who ordered
+ * from > 1 shop). Earlier versions of this script matched on email
+ * alone, which silently fanned orders out across every restaurant
+ * that email had ever touched. We hit that bug on prod (2026-06-01:
+ * 503 [TEST] orders landed on Luigi's instead of staying on
+ * Ristorante Test). The required slug eliminates the footgun.
  *
  * Each fake order:
  *   - picks 1–4 random menu items (with variant + 0–2 modifier options)
- *     from the customer's restaurant
+ *     from the target restaurant's menu
  *   - chooses type (pickup / delivery / dine_in / take_out) weighted to
  *     match a typical mix
  *   - chooses status (completed mostly, some cancelled / rejected /
@@ -20,24 +31,40 @@
  * as TEST and our reports filter / delete script can find them later.
  *
  * Usage:
- *   npx tsx scripts/seed-test-orders.ts <email> [count] [db-url]
+ *   npx tsx scripts/seed-test-orders.ts \
+ *     --email <email> --restaurant <slug> [--count N] [--db-url <url>]
  *
  * Examples:
- *   npx tsx scripts/seed-test-orders.ts fabrx900@gmail.com 1000
- *   npx tsx scripts/seed-test-orders.ts fabrx900@gmail.com 1000 \
- *     "postgresql://...purple-brook..."
+ *   npx tsx scripts/seed-test-orders.ts \
+ *     --email fabrx900@gmail.com --restaurant ristorante-test --count 1000
+ *
+ *   npx tsx scripts/seed-test-orders.ts \
+ *     --email fabrx900@gmail.com --restaurant ristorante-test --count 1000 \
+ *     --db-url "postgresql://...dawn-tree..."
  */
 import { config as dotenvConfig } from "dotenv";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
-const email = process.argv[2];
-const count = parseInt(process.argv[3] ?? "1000", 10);
-const explicitUrl = process.argv[4];
+// ── Flag parser (no third-party dep) ──────────────────────────────────
+function getFlag(name: string): string | undefined {
+  const i = process.argv.indexOf(`--${name}`);
+  return i >= 0 ? process.argv[i + 1] : undefined;
+}
 
-if (!email) {
+const email = getFlag("email");
+const restaurantSlug = getFlag("restaurant");
+const count = parseInt(getFlag("count") ?? "1000", 10);
+const explicitUrl = getFlag("db-url");
+
+if (!email || !restaurantSlug) {
   console.error(
-    "Usage: npx tsx scripts/seed-test-orders.ts <email> [count] [db-url]",
+    "Usage: npx tsx scripts/seed-test-orders.ts \\\n" +
+      "  --email <email> --restaurant <slug> [--count N] [--db-url <url>]\n\n" +
+      "Both --email and --restaurant are required. The script will only\n" +
+      "seed orders for the Customer row attached to THAT restaurant — it\n" +
+      "will never fan out across multiple restaurants the email might\n" +
+      "have ordered from.",
   );
   process.exit(1);
 }
@@ -128,104 +155,122 @@ async function main() {
     process.exit(1);
   }
   const masked = url.replace(/:[^:@]+@/, ":****@");
-  console.log(`Database: ${masked}`);
-  console.log(`Email:    ${email}`);
-  console.log(`Count:    ${count}`);
+  console.log(`Database:   ${masked}`);
+  console.log(`Email:      ${email}`);
+  console.log(`Restaurant: ${restaurantSlug}`);
+  console.log(`Count:      ${count}`);
   console.log("");
 
   const adapter = new PrismaPg({ connectionString: url });
   const prisma = new PrismaClient({ adapter } as any);
 
-  // ── 1. Find the customer row(s) for this email ──────────────────────
-  const customers = await prisma.customer.findMany({
-    where: { email: { equals: email, mode: "insensitive" } },
+  // ── 1. Resolve the restaurant FIRST ─────────────────────────────────
+  // We look up by slug because the slug is the human-readable handle
+  // the script is invoked with. If the slug doesn't exist we hard-fail
+  // — never fall back to "any matching restaurant" — that's how the
+  // earlier version sprayed orders across both Luigi's and Ristorante
+  // Test (Luigi 2026-06-01).
+  const restaurant = await prisma.restaurant.findUnique({
+    where: { slug: restaurantSlug },
+    select: { id: true, name: true, slug: true },
+  });
+  if (!restaurant) {
+    console.error(
+      `❌ No restaurant found with slug="${restaurantSlug}".\n` +
+        `   Check the spelling, or list restaurants:\n` +
+        `   npx tsx scripts/check-restaurants.ts`,
+    );
+    await prisma.$disconnect();
+    process.exit(1);
+  }
+  console.log(
+    `Target restaurant: ${restaurant.name} (id=${restaurant.id})`,
+  );
+  console.log("");
+
+  // ── 2. Find the customer row scoped to THIS restaurant ─────────────
+  // findMany not findUnique because the (restaurantId, email) tuple
+  // can have duplicates in legacy data. We take exactly the first
+  // row on this restaurant and ignore Customer rows on any other
+  // restaurant the email might also belong to.
+  const customerCandidates = await prisma.customer.findMany({
+    where: {
+      restaurantId: restaurant.id,
+      email: { equals: email, mode: "insensitive" },
+    },
     select: {
       id: true,
       name: true,
       phone: true,
       address: true,
       restaurantId: true,
-      restaurant: { select: { name: true, slug: true } },
     },
+    take: 1,
   });
+  const customer = customerCandidates[0];
 
-  if (customers.length === 0) {
-    console.error(`❌ No Customer row found with email=${email}.`);
+  if (!customer) {
     console.error(
-      "   The customer must have ordered (or been added) to at least one restaurant first.",
+      `❌ No Customer row found on restaurant "${restaurant.slug}" for email=${email}.\n` +
+        `   The email must have placed an order on (or been added as a customer to) this\n` +
+        `   specific restaurant first — the Customer table is per-restaurant.`,
     );
     await prisma.$disconnect();
     process.exit(1);
   }
-
-  // Pick the first customer row (usually only one). If they're attached
-  // to multiple restaurants, we spread orders across all of them.
-  console.log(`Found ${customers.length} Customer row(s):`);
-  for (const c of customers) {
-    console.log(`  - ${c.restaurant.name} (${c.restaurant.slug}) → id=${c.id}`);
-  }
+  console.log(
+    `Scoped customer: ${customer.name} (id=${customer.id})`,
+  );
   console.log("");
 
-  // ── 2. Pre-load menu items per restaurant so we can pick fast ──────
-  type MenuLoad = {
-    items: {
-      id: string;
-      name: string;
-      price: number;
-      variants: { id: string; name: string; price: number }[];
+  // ── 3. Pre-load this restaurant's menu so we can pick fast ─────────
+  const menuItems = await prisma.menuItem.findMany({
+    where: { restaurantId: restaurant.id, isHidden: false },
+    select: {
+      id: true,
+      name: true,
+      price: true,
+      variants: { select: { id: true, name: true, price: true } },
       modifierGroups: {
-        id: string;
-        name: string;
-        options: { id: string; name: string; priceAdjustment: number }[];
-      }[];
-    }[];
-    deliveryZoneId: string | null;
-  };
-  const menusByRestaurant = new Map<string, MenuLoad>();
-  for (const c of customers) {
-    const items = await prisma.menuItem.findMany({
-      where: { restaurantId: c.restaurantId, isHidden: false },
-      select: {
-        id: true,
-        name: true,
-        price: true,
-        variants: { select: { id: true, name: true, price: true } },
-        modifierGroups: {
-          select: {
-            id: true,
-            name: true,
-            options: {
-              select: { id: true, name: true, priceAdjustment: true },
-            },
+        select: {
+          id: true,
+          name: true,
+          options: {
+            select: { id: true, name: true, priceAdjustment: true },
           },
         },
       },
-    });
-    const zone = await prisma.deliveryZone.findFirst({
-      where: { restaurantId: c.restaurantId, isActive: true },
-      select: { id: true },
-    });
-    menusByRestaurant.set(c.restaurantId, {
-      items,
-      deliveryZoneId: zone?.id ?? null,
-    });
-    console.log(
-      `  Loaded ${items.length} menu items for restaurant ${c.restaurant.name}`,
-    );
-  }
+    },
+  });
+  const zone = await prisma.deliveryZone.findFirst({
+    where: { restaurantId: restaurant.id, isActive: true },
+    select: { id: true },
+  });
+  console.log(
+    `Loaded ${menuItems.length} menu items, deliveryZoneId=${zone?.id ?? "(none)"}`,
+  );
   console.log("");
 
-  // Filter out restaurants with no usable menu items.
-  const seedTargets = customers.filter(
-    (c) => (menusByRestaurant.get(c.restaurantId)?.items.length ?? 0) > 0,
-  );
-  if (seedTargets.length === 0) {
+  if (menuItems.length === 0) {
     console.error(
-      "❌ None of the restaurants for this customer have any menu items.",
+      `❌ Restaurant "${restaurant.slug}" has no menu items to seed orders against.`,
     );
     await prisma.$disconnect();
     process.exit(1);
   }
+
+  // Single-target shape that the inner loop already understands.
+  // (Holdover from the previous multi-target shape so the loop didn't
+  // need to be rewritten end-to-end.)
+  const menusByRestaurant = new Map<string, {
+    items: typeof menuItems;
+    deliveryZoneId: string | null;
+  }>([
+    [restaurant.id, { items: menuItems, deliveryZoneId: zone?.id ?? null }],
+  ]);
+  const seedTargets = [
+    { ...customer, restaurant: { name: restaurant.name, slug: restaurant.slug } },
+  ];
 
   // ── 3. Build the orders ─────────────────────────────────────────────
   let inserted = 0;
