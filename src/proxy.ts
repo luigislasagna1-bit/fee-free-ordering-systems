@@ -82,16 +82,20 @@ export const config = {
   // DO go through the proxy so we can redirect them off the marketplace
   // domain back to PLATFORM_DOMAIN.
   matcher: [
-    // Anything under /promo-stock/ is a stock food SVG we ship as a
-    // static asset under public/. The proxy must NOT touch those —
-    // otherwise on a custom domain like luigispizzapastawings.com the
-    // default tenant-rewrite turns /promo-stock/pizza.svg into
-    // /order/<slug>/promo-stock/pizza.svg and the asset 404s, leaving
-    // promo tiles rendering as pure background-color (Luigi 2026-06-01).
-    // Same applies to /uploads/ for owner-uploaded images served from
-    // public/ in dev (prod uses Vercel Blob which is on a different
-    // host so unaffected).
-    "/((?!api|_next/|_static|icons|promo-stock|uploads|manifest-order.webmanifest|manifest-kitchen.webmanifest|sw\\.js|offline\\.html|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
+    // Any path that contains a file extension we recognise as a static
+    // asset is excluded outright — same defence the previous explicit
+    // lists were trying to apply, but exhaustive instead of folder-by-
+    // folder. We hit this exact bug twice in one day (Luigi 2026-06-01:
+    // /promo-stock/*.svg, then /promo-defaults/*.svg) because the proxy
+    // was rewriting tenant-bound paths over real static files in
+    // public/. The negative-lookahead below skips static-file-shaped
+    // URLs even if they live in folders we haven't named yet (e.g.
+    // future /icons/, /promo-foo/, /assets/ additions).
+    //
+    // Plus the original named exclusions for paths that don't carry a
+    // file extension but should still skip the proxy (api, _next,
+    // service worker, PWA manifests).
+    "/((?!api|_next/|_static|.*\\.(?:svg|png|jpe?g|gif|webp|avif|ico|css|js|mjs|woff2?|ttf|eot|map|json|txt|xml|mp3|wav|ogg|mp4|webm|pdf)$|manifest-order.webmanifest|manifest-kitchen.webmanifest|sw\\.js|offline\\.html|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
   ],
 };
 
