@@ -31,6 +31,7 @@ import {
 import { geocodeAddress, findZoneForPoint, type ZoneLike } from "@/lib/geocode";
 import { CheckoutModal } from "./CheckoutModal";
 import { ReservationModal } from "./ReservationModal";
+import { PROMO_STOCK_IMAGES } from "./promo-stock-data";
 import { PromoDetailModal } from "./PromoDetailModal";
 import type { BundleCartItem } from "./BundleComposerModal";
 import { evaluateApplicableFees, type ServiceFeeRow } from "@/lib/service-fees";
@@ -2123,22 +2124,20 @@ export function OrderingPageClient({
               // for some visitors, leaving the tile pure-color from
               // the backgroundColor fallback — see Luigi's
               // 2026-06-01 black-tile screenshot).
-              // Cache-busting suffix (Luigi 2026-06-01): the earlier
-              // proxy bug made these paths 404 on custom domains
-              // (luigispizzapastawings.com etc.). Browsers cache 404
-              // image loads aggressively, so even after the proxy
-              // fix landed visitors who had already loaded the page
-              // kept seeing black tiles. Bumping the query suffix
-              // forces the browser to treat each URL as new — no
-              // negative cache entry to hit.
-              const STOCK_PROMO_IMAGES = [
-                "/promo-stock/pizza.svg?v=2",
-                "/promo-stock/pasta.svg?v=2",
-                "/promo-stock/burger.svg?v=2",
-                "/promo-stock/spread.svg?v=2",
-                "/promo-stock/sauce.svg?v=2",
-                "/promo-stock/delivery.svg?v=2",
-              ];
+              // Inline base64 data URIs (Luigi 2026-06-01 v3): we
+              // bounced through three iterations of this — Unsplash
+              // CDN, then local /promo-stock/*.svg URLs, then
+              // proxy-fix + cache-bust query string — and the
+              // tiles still showed black for visitors on custom
+              // domains who had cached the previous 404. Inlining
+              // the images as data: URIs eliminates the failure
+              // mode entirely: there is no network request to be
+              // proxied, cached, or 404'd. The bytes for each
+              // image live in promo-stock-data.ts as part of the
+              // JS bundle, ~9 KB gzipped total. The /public/
+              // copies stay around as a mirror for SEO / crawler
+              // use but are no longer in the customer hot path.
+              const STOCK_PROMO_IMAGES = PROMO_STOCK_IMAGES;
               const stockFallback = (() => {
                 let h = 0;
                 for (let i = 0; i < promo.id.length; i++) h = (h * 31 + promo.id.charCodeAt(i)) | 0;
