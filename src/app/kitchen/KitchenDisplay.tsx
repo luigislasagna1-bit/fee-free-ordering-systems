@@ -2906,6 +2906,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         open={showEndOfDayModal}
         onClose={() => setShowEndOfDayModal(false)}
         themeMode={themeMode}
+        currency={(restaurant as any)?.currency ?? "usd"}
         onPrint={async ({ lines, width }) => {
           // Prefer the direct LAN Star printer path (matches reservation /
           // order printing). PrintNode fallback isn't wired for the EoD

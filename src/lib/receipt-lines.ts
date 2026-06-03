@@ -24,6 +24,7 @@
 
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "./receipt-schema";
 import type { ReceiptOrder, ReceiptRestaurant, ReservationReceiptData } from "./receipt";
+import { formatCurrency } from "./utils";
 import type { DigestStats } from "./email";
 import { getDict, type Translator } from "./i18n-dict";
 
@@ -167,7 +168,10 @@ function blankLines(r: LinesBuilder, px: number) {
   if (n > 0) r.nl(n);
 }
 
-function fmt(n: number) { return `$${n.toFixed(2)}`; }
+// Module-scoped active currency, set at the top of each builder from the
+// restaurant's currency. Single-threaded per request; defaults to USD.
+let activeCurrency = "usd";
+function fmt(n: number) { return formatCurrency(n, activeCurrency); }
 
 function fmtDateTime(d: Date | string): string {
   const dt = typeof d === "string" ? new Date(d) : d;
@@ -254,7 +258,7 @@ function renderKitchenSection(
             const variantPart = child.variantName ? ` (${child.variantName})` : "";
             const specPart =
               child.specialityFee && child.specialityFee > 0
-                ? ` (+$${child.specialityFee.toFixed(2)})`
+                ? ` (+${fmt(child.specialityFee)})`
                 : "";
             r.wrapped(`  - 1x ${child.name}${variantPart}${specPart}`, 4);
             if (modsEnabled && Array.isArray(child.modifiers)) {
@@ -363,7 +367,7 @@ function renderCustomerSection(
             const variantPart = child.variantName ? ` (${child.variantName})` : "";
             const specPart =
               child.specialityFee && child.specialityFee > 0
-                ? ` (+$${child.specialityFee.toFixed(2)})`
+                ? ` (+${fmt(child.specialityFee)})`
                 : "";
             r.wrapped(`  - ${child.name}${variantPart}${specPart}`, 2);
             if (modsEnabled && Array.isArray(child.modifiers)) {
@@ -524,6 +528,7 @@ export async function buildKitchenReceiptLines(
   paperWidth = "80mm",
   locale: string = "en",
 ): Promise<ReceiptLine[]> {
+  activeCurrency = restaurant.currency ?? "usd";
   const r = new LinesBuilder(paperWidth);
   const t = await getDict(locale);
   renderSections(r, config, order, restaurant, t);
@@ -539,6 +544,7 @@ export async function buildCustomerReceiptLines(
   paperWidth = "80mm",
   locale: string = "en",
 ): Promise<ReceiptLine[]> {
+  activeCurrency = restaurant.currency ?? "usd";
   const r = new LinesBuilder(paperWidth);
   const t = await getDict(locale);
   renderSections(r, config, order, restaurant, t);
@@ -562,6 +568,7 @@ export async function buildReservationReceiptLines(
   paperWidth = "80mm",
   locale: string = "en",
 ): Promise<ReceiptLine[]> {
+  activeCurrency = data.currency ?? "usd";
   const r = new LinesBuilder(paperWidth);
   const t = await getDict(locale);
 
@@ -596,14 +603,14 @@ export async function buildReservationReceiptLines(
 
   if ((data.depositAmount ?? 0) > 0) {
     r.bold(true).line(t("receipt.reservation.deposit")).bold(false);
-    r.columns(t("receipt.reservation.amount"), `$${(data.depositAmount ?? 0).toFixed(2)}`);
+    r.columns(t("receipt.reservation.amount"), fmt(data.depositAmount ?? 0));
     r.columns(t("receipt.reservation.status"), data.depositPaid ? "PAID" : "PENDING");
     r.divider("-");
   }
 
   if ((data.preOrderTotal ?? 0) > 0) {
     r.bold(true).line(t("receipt.reservation.preOrder")).bold(false);
-    r.columns(t("receipt.customer.subtotal"), `$${(data.preOrderTotal ?? 0).toFixed(2)}`);
+    r.columns(t("receipt.customer.subtotal"), fmt(data.preOrderTotal ?? 0));
     r.line(t("receipt.reservation.preOrderHint"));
     r.divider("-");
   }
@@ -631,7 +638,9 @@ export async function buildEndOfDayReceiptLines(
   stats: DigestStats,
   paperWidth = "80mm",
   locale: string = "en",
+  currency: string = "usd",
 ): Promise<ReceiptLine[]> {
+  activeCurrency = currency;
   const r = new LinesBuilder(paperWidth);
   // Title block — restaurant name + report header
   r.center().sizeMode(24).bold(true).line("END OF DAY").bold(false).sizeMode(12);
@@ -697,7 +706,7 @@ export async function buildEndOfDayReceiptLines(
 }
 
 function formatMoney(n: number): string {
-  return `$${(n ?? 0).toFixed(2)}`;
+  return formatCurrency(n ?? 0, activeCurrency);
 }
 
 function deltaLabel(pct: number): string {

@@ -9,6 +9,11 @@
  */
 import { Section, Row, Column, Hr } from "@react-email/components";
 import { COLORS } from "./EmailLayout";
+import { formatCurrency } from "@/lib/utils";
+
+// `currency` props below are ISO 4217 codes (e.g. "usd", "eur", "gbp").
+// Money renders through formatCurrency() so the symbol, placement, and
+// separators match each market — "$1,234.56", "1.234,56 €", "£1,234.56".
 
 /**
  * Body section — wraps content with consistent padding.
@@ -207,7 +212,7 @@ export type EmailOrderItem = {
 };
 
 export function OrderItemsTable({
-  items, currency = "$",
+  items, currency = "usd",
 }: {
   items: EmailOrderItem[];
   currency?: string;
@@ -286,7 +291,7 @@ export function OrderItemsTable({
                   {item.modifiers.map((m, i) => (
                     <div key={i}>
                       {m.label}: <strong style={{ color: COLORS.text }}>{m.value}</strong>
-                      {m.priceAdjustment ? ` (+${currency}${m.priceAdjustment.toFixed(2)})` : ""}
+                      {m.priceAdjustment ? ` (+${formatCurrency(m.priceAdjustment, currency)})` : ""}
                     </div>
                   ))}
                 </div>
@@ -298,7 +303,7 @@ export function OrderItemsTable({
               )}
             </td>
             <td style={{ padding: "10px 0", color: COLORS.text, textAlign: "right", fontWeight: 600 }}>
-              {currency}{item.price.toFixed(2)}
+              {formatCurrency(item.price, currency)}
             </td>
           </tr>
         ))}
@@ -312,7 +317,7 @@ export function OrderItemsTable({
  */
 export function OrderTotals({
   subtotal, taxAmount, deliveryFee, tip, discount, total,
-  currency = "$",
+  currency = "usd",
   taxLabel = "Tax",
   savedDeliveryFee,
 }: {
@@ -335,7 +340,7 @@ export function OrderTotals({
         {label}
       </Column>
       <Column style={{ fontSize: 14, textAlign: "right", color: bold ? COLORS.text : COLORS.muted, padding: "4px 0", fontWeight: bold ? 700 : 600 }}>
-        {currency}{amount.toFixed(2)}
+        {formatCurrency(amount, currency)}
       </Column>
     </Row>
   );
@@ -351,7 +356,7 @@ export function OrderTotals({
           </Column>
           <Column style={{ fontSize: 14, textAlign: "right", padding: "4px 0" }}>
             <span style={{ textDecoration: "line-through", color: "#9ca3af", marginRight: 6 }}>
-              {currency}{savedDeliveryFee.toFixed(2)}
+              {formatCurrency(savedDeliveryFee, currency)}
             </span>
             <span style={{ color: "#059669", fontWeight: 700 }}>FREE</span>
           </Column>

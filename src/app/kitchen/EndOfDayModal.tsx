@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { X, Printer, RefreshCw } from "lucide-react";
 import type { ThemeMode } from "./kitchen-types";
+import { formatCurrency } from "@/lib/utils";
 
 type Stats = {
   restaurantName: string;
@@ -52,8 +53,11 @@ type Stats = {
   total: number;
 };
 
+// Module-scoped active currency, set from the prop at render. Single
+// component instance on screen at a time, so no cross-bleed.
+let activeCurrency = "usd";
 function fmt(n: number): string {
-  return `$${(n ?? 0).toFixed(2)}`;
+  return formatCurrency(n ?? 0, activeCurrency);
 }
 
 function DeltaPill({ pct }: { pct: number }) {
@@ -78,9 +82,12 @@ export function EndOfDayModal({
   onClose,
   onPrint,
   themeMode,
+  currency = "usd",
 }: {
   open: boolean;
   onClose: () => void;
+  /** ISO 4217 currency code for money formatting. */
+  currency?: string;
   /** Caller is responsible for actually sending the lines to the
    *  printer — we hand it the raw payload from the API. Returning
    *  a resolved promise on success / rejected on failure drives the
@@ -88,6 +95,7 @@ export function EndOfDayModal({
   onPrint: (payload: { lines: unknown[]; bytes?: string | null; width: number }) => Promise<void>;
   themeMode: ThemeMode;
 }) {
+  activeCurrency = currency;
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
   const [printing, setPrinting] = useState(false);

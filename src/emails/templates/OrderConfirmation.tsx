@@ -18,6 +18,7 @@
  * receipt, totals breakdown, delivery address (if delivery), tracking CTA.
  */
 import { EmailLayout, EmailHeader } from "../components/EmailLayout";
+import { formatCurrency } from "@/lib/utils";
 import {
   EmailBody, P, EmailButton, InfoCard, Badge,
   OrderItemsTable, OrderTotals, EmailOrderItem,
@@ -76,7 +77,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
     restaurantEmail, restaurantPhone, imprint, currency,
     appliedPromos,
   } = props;
-  const cur = currency ?? "$";
+  const cur = currency ?? "usd";
   const promoList = Array.isArray(appliedPromos) ? appliedPromos : [];
   // Pull the saved delivery fee off the free-delivery promo entry (if
   // one fired) so the totals block can render "Delivery fee: ~~$7.99~~ FREE".
@@ -118,7 +119,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
         <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", color: "#6b7280", marginTop: 20, marginBottom: 4 }}>
           Your order details
         </div>
-        <OrderItemsTable items={items} currency={currency ?? "$"} />
+        <OrderItemsTable items={items} currency={currency ?? "usd"} />
 
         {/* Promos applied — boxed highlight above totals (Phase 2 +
             Luigi feedback 2026-05-29). Skipped when nothing fired. */}
@@ -174,7 +175,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
                   )}
                 </span>
                 <span style={{ color: "#065f46", fontWeight: 700 }}>
-                  {p.discount > 0 ? `− ${cur}${p.discount.toFixed(2)}` : "FREE"}
+                  {p.discount > 0 ? `− ${formatCurrency(p.discount, cur)}` : "FREE"}
                 </span>
               </div>
             ))}
@@ -190,7 +191,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           tip={tip}
           discount={discount}
           total={total}
-          currency={currency ?? "$"}
+          currency={currency ?? "usd"}
         />
 
         <EmailButton href={trackingUrl}>Track your order</EmailButton>

@@ -233,6 +233,9 @@ interface OrderEmailParams {
   trackingUrl: string;
   /** Restaurant defaultLanguage. Defaults to "en". */
   locale?: string;
+  /** ISO 4217 currency code (e.g. "usd", "eur"). Drives money formatting
+   *  in the email body. Defaults to USD when omitted. */
+  currency?: string;
   /** Optional rich-data passthrough. When the caller already has these
    *  fields handy, we render the GloriaFood-style detailed confirmation
    *  with delivery address + payment status + tax breakdown. Otherwise
@@ -283,6 +286,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       restaurantPhone: params.restaurantPhone,
       imprint: currentImprint(),
       appliedPromos: params.appliedPromos,
+      currency: params.currency,
     })
   );
   // Reply-To: the restaurant's own email. Customer hits Reply → response
@@ -307,6 +311,8 @@ export async function sendNewOrderNotificationEmail(params: {
   total: number;
   dashboardUrl: string;
   locale?: string;
+  /** ISO 4217 currency code — drives money formatting. Defaults to USD. */
+  currency?: string;
   // Optional rich extras — when the caller has them, we render the
   // GloriaFood-style itemized kitchen notification instead of the minimal
   // version.
@@ -345,6 +351,7 @@ export async function sendNewOrderNotificationEmail(params: {
       customerNotes: params.customerNotes,
       dashboardUrl: params.dashboardUrl,
       imprint: currentImprint(),
+      currency: params.currency,
     })
   );
   return send({ to: params.to, subject, html });

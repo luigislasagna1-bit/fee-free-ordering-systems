@@ -10,6 +10,7 @@
 //   "plaintext"  — No control codes (debug / unsupported hardware)
 
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "./receipt-schema";
+import { formatCurrency } from "./utils";
 import { getDict, type Translator } from "./i18n-dict";
 
 export type PrinterLanguage = "escpos" | "starprnt" | "star_line" | "plaintext";
@@ -538,11 +539,17 @@ export interface ReceiptRestaurant {
   zip?: string | null;
   phone?: string | null;
   email?: string | null;
+  /** ISO 4217 currency code. Drives money formatting on the receipt. */
+  currency?: string | null;
 }
 
 // ── Format helpers ────────────────────────────────────────────────────────────
 
-function fmt(n: number) { return "$" + n.toFixed(2); }
+// Module-scoped active currency for the receipt being built. Set at the top
+// of each public builder from the restaurant's currency. Single-threaded per
+// request, so no cross-bleed; defaults to USD for legacy callers.
+let activeReceiptCurrency = "usd";
+function fmt(n: number) { return formatCurrency(n, activeReceiptCurrency); }
 
 function fmtTime(d: string | Date | null | undefined) {
   if (!d) return "";
@@ -930,6 +937,7 @@ export async function buildKitchenReceiptFromConfig(
   locale: string = "en",
 ): Promise<Buffer> {
   console.log(`[receipt] Kitchen print — lang=${lang} paper=${paperWidth} locale=${locale} sections=${config.sections.filter(s => s.enabled).length}`);
+  activeReceiptCurrency = restaurant.currency ?? "usd";
   const r = new EscPos(paperWidth, lang);
   const t = await getDict(locale);
   r.init();
@@ -947,6 +955,7 @@ export async function buildCustomerReceiptFromConfig(
   locale: string = "en",
 ): Promise<Buffer> {
   console.log(`[receipt] Customer print — lang=${lang} paper=${paperWidth} locale=${locale} sections=${config.sections.filter(s => s.enabled).length}`);
+  activeReceiptCurrency = restaurant.currency ?? "usd";
   const r = new EscPos(paperWidth, lang);
   const t = await getDict(locale);
   r.init();
@@ -973,6 +982,8 @@ export interface ReservationReceiptData {
   preOrderTotal?: number;
   status: string;
   createdAt: Date;
+  /** ISO 4217 currency code for money on the reservation receipt. */
+  currency?: string | null;
 }
 
 export async function buildReservationReceipt(
@@ -981,6 +992,7 @@ export async function buildReservationReceipt(
   lang: PrinterLanguage = "escpos",
   locale: string = "en",
 ): Promise<Buffer> {
+  activeReceiptCurrency = data.currency ?? "usd";
   const r = new EscPos(paperWidth, lang);
   const t = await getDict(locale);
   r.init();
@@ -1016,14 +1028,14 @@ export async function buildReservationReceipt(
 
   if ((data.depositAmount ?? 0) > 0) {
     r.bold(true).line(t("receipt.reservation.deposit")).bold(false);
-    r.columns(t("receipt.reservation.amount"), `$${(data.depositAmount ?? 0).toFixed(2)}`);
+    r.columns(t("receipt.reservation.amount"), fmt(data.depositAmount ?? 0));
     r.columns(t("receipt.reservation.status"), data.depositPaid ? "PAID" : "PENDING");
     r.divider("-");
   }
 
   if ((data.preOrderTotal ?? 0) > 0) {
     r.bold(true).line(t("receipt.reservation.preOrder")).bold(false);
-    r.columns(t("receipt.customer.subtotal"), `$${(data.preOrderTotal ?? 0).toFixed(2)}`);
+    r.columns(t("receipt.customer.subtotal"), fmt(data.preOrderTotal ?? 0));
     r.line(t("receipt.reservation.preOrderHint"));
     r.divider("-");
   }

@@ -14,6 +14,7 @@
  * have a new order" ping to the kitchen.
  */
 import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
+import { formatCurrency } from "@/lib/utils";
 import {
   EmailBody, P, EmailButton, Badge,
   OrderItemsTable, OrderTotals, EmailOrderItem, InfoCard,
@@ -65,7 +66,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
   const hasItems = items && items.length > 0;
 
   return (
-    <EmailLayout preview={`${restaurantName} — Order #${orderNumber} — ${currency ?? "$"}${total.toFixed(2)}`}>
+    <EmailLayout preview={`${restaurantName} — Order #${orderNumber} — ${formatCurrency(total, currency ?? "usd")}`}>
       <EmailHeader
         variant="transactional"
         title={`${restaurantName} — Order #${orderNumber}`}
@@ -118,7 +119,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
             <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", color: "#6b7280", marginTop: 20, marginBottom: 4 }}>
               Order details
             </div>
-            <OrderItemsTable items={items!} currency={currency ?? "$"} />
+            <OrderItemsTable items={items!} currency={currency ?? "usd"} />
             <OrderTotals
               subtotal={subtotal ?? total}
               taxAmount={taxAmount}
@@ -127,14 +128,14 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
               tip={tip}
               discount={discount}
               total={total}
-              currency={currency ?? "$"}
+              currency={currency ?? "usd"}
             />
           </>
         ) : (
           // Fallback: caller didn't pass items (legacy senders). Show just
           // the total and direct them to the admin for the breakdown.
           <InfoCard label="Order total" accent="slate">
-            <strong style={{ fontSize: 18 }}>{currency ?? "$"}{total.toFixed(2)}</strong>
+            <strong style={{ fontSize: 18 }}>{formatCurrency(total, currency ?? "usd")}</strong>
             <div style={{ fontSize: 12, color: "#6b7280", marginTop: 4 }}>
               See itemized breakdown in the admin dashboard.
             </div>

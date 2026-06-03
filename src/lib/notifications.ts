@@ -245,6 +245,7 @@ export async function notifyStaff(args: {
     select: {
       id: true,
       name: true,
+      currency: true,
       notificationRecipients: {
         where: { isActive: true },
       },
@@ -267,7 +268,7 @@ export async function notifyStaff(args: {
     await Promise.all(
       eligible.map(async (r) => {
         try {
-          await dispatchStaffEvent(r.email, r.emailLanguage, restaurant.name, payload);
+          await dispatchStaffEvent(r.email, r.emailLanguage, restaurant.name, payload, restaurant.currency);
           sent++;
         } catch (err) {
           console.error(`[notifyStaff] send to ${r.email} failed:`, err instanceof Error ? err.message : err);
@@ -285,7 +286,8 @@ async function dispatchStaffEvent(
   to: string,
   locale: string,
   restaurantName: string,
-  payload: StaffEventPayload
+  payload: StaffEventPayload,
+  currency?: string,
 ): Promise<void> {
   switch (payload.event) {
     case "orderPlaced":
@@ -301,6 +303,7 @@ async function dispatchStaffEvent(
         total: payload.total,
         dashboardUrl: payload.dashboardUrl,
         locale,
+        currency,
       });
       return;
     case "orderRejected":
@@ -433,6 +436,7 @@ export async function notifyCustomer(args: {
       phone: true,
       email: true,
       defaultLanguage: true,
+      currency: true,
       // Per-toggle email switches — let owners mute individual status
       // notifications without affecting the others.
       customerEmailOrderConfirm: true,
@@ -499,6 +503,7 @@ export async function notifyCustomer(args: {
           trackingUrl: payload.trackingUrl,
           locale,
           appliedPromos: payload.appliedPromos,
+          currency: restaurant.currency,
         });
       });
       await fireSms();

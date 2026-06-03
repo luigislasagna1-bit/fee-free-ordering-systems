@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { after } from "next/server";
 import prisma from "@/lib/db";
-import { generateOrderNumber } from "@/lib/utils";
+import { generateOrderNumber, formatCurrency } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
 import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
@@ -352,7 +352,7 @@ export async function POST(req: NextRequest) {
 
     // ── Minimum order check (delivery uses zone-specific minimum below) ─────
     if (type !== "delivery" && restaurant.minimumOrder > 0 && serverSubtotal < restaurant.minimumOrder) {
-      return NextResponse.json({ error: `Minimum order is $${restaurant.minimumOrder.toFixed(2)}` }, { status: 400 });
+      return NextResponse.json({ error: `Minimum order is ${formatCurrency(restaurant.minimumOrder, (restaurant as any).currency ?? "usd")}` }, { status: 400 });
     }
 
     // ── Coupon validation (server-side) ─────────────────────────────────────
@@ -529,7 +529,7 @@ export async function POST(req: NextRequest) {
       // Server-side minimum-order enforcement (uses resolved zone if any).
       if (zoneMinimumOrder > 0 && serverSubtotal < zoneMinimumOrder) {
         return NextResponse.json(
-          { error: `Minimum order for this delivery area is $${zoneMinimumOrder.toFixed(2)}.` },
+          { error: `Minimum order for this delivery area is ${formatCurrency(zoneMinimumOrder, (restaurant as any).currency ?? "usd")}.` },
           { status: 400 },
         );
       }

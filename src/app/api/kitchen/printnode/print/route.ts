@@ -250,7 +250,7 @@ export async function POST(req: NextRequest) {
 
     const restaurant = await prisma.restaurant.findUnique({
       where: { id: user.restaurantId },
-      select: { name: true, address: true, city: true, state: true, zip: true, phone: true, email: true, defaultLanguage: true },
+      select: { name: true, address: true, city: true, state: true, zip: true, phone: true, email: true, defaultLanguage: true, currency: true },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
@@ -362,6 +362,7 @@ export async function POST(req: NextRequest) {
         preOrderTotal: reservation.preOrderTotal,
         status: reservation.status,
         createdAt: new Date(),
+        currency: receiptRestaurant.currency,
       }, paperWidth, lang, locale);
 
       const jobId = await submitJob(

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { formatCurrency } from "@/lib/utils";
 
 export async function GET(req: NextRequest) {
   // Rate limit: 10 coupon attempts per IP per minute to prevent brute-force
@@ -31,7 +32,7 @@ export async function GET(req: NextRequest) {
     if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date()) return NextResponse.json({ error: "Coupon has expired" }, { status: 400 });
     if (coupon.maxUses && coupon.usedCount >= coupon.maxUses) return NextResponse.json({ error: "Coupon has reached its usage limit" }, { status: 400 });
     if (coupon.minimumOrder > 0 && subtotal < coupon.minimumOrder) {
-      return NextResponse.json({ error: `Minimum order of $${coupon.minimumOrder.toFixed(2)} required` }, { status: 400 });
+      return NextResponse.json({ error: `Minimum order of ${formatCurrency(coupon.minimumOrder, restaurant.currency)} required` }, { status: 400 });
     }
 
     const discount = coupon.discountType === "percentage"
@@ -76,7 +77,7 @@ export async function GET(req: NextRequest) {
     }
     if (promo.minimumOrder > 0 && subtotal < promo.minimumOrder) {
       return NextResponse.json(
-        { error: `Minimum order of $${promo.minimumOrder.toFixed(2)} required for this promo` },
+        { error: `Minimum order of ${formatCurrency(promo.minimumOrder, restaurant.currency)} required for this promo` },
         { status: 400 },
       );
     }
