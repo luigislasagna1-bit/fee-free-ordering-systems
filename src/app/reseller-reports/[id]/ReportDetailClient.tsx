@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import {
-  REPORT_STATUSES, VERIFY_QUORUM,
+  REPORT_STATUSES, REPORT_PRIORITIES, VERIFY_QUORUM,
   TYPE_LABEL, STATUS_LABEL, PRIORITY_LABEL,
   TYPE_BADGE, STATUS_BADGE, PRIORITY_BADGE,
   ACTIVITY_LABEL,
@@ -95,6 +95,7 @@ export function ReportDetailClient({
   const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
   const [posting, setPosting] = useState(false);
   const [savingStatus, setSavingStatus] = useState(false);
+  const [savingPriority, setSavingPriority] = useState(false);
   const [busyUpvote, setBusyUpvote] = useState(false);
   const [busyVerify, setBusyVerify] = useState(false);
   // Reporter reassignment (SA only). Prefilled with the current
@@ -185,6 +186,31 @@ export function ReportDetailClient({
       toast.error(e instanceof Error ? e.message : "Failed");
     } finally {
       setSavingStatus(false);
+    }
+  };
+
+  // ─── Priority change ───────────────────────────────────────────────
+  // Allowed for anyone with access (resellers can bump their own report's
+  // urgency); the PATCH route gates status separately but not priority.
+  const changePriority = async (next: ReportPriority) => {
+    if (next === report.priority) return;
+    setSavingPriority(true);
+    const prev = report.priority;
+    setReport((p) => ({ ...p, priority: next }));
+    try {
+      const r = await fetch(`/api/reseller-reports/${report.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priority: next }),
+      });
+      if (!r.ok) throw new Error("Failed");
+      toast.success(`Priority → ${PRIORITY_LABEL[next]}`);
+      router.refresh();
+    } catch (e) {
+      setReport((p) => ({ ...p, priority: prev }));
+      toast.error(e instanceof Error ? e.message : "Failed");
+    } finally {
+      setSavingPriority(false);
     }
   };
 
@@ -468,6 +494,23 @@ export function ReportDetailClient({
                   Mark fix shipped
                 </button>
               )}
+            </div>
+          )}
+
+          {access.canComment && (
+            <div className="mt-4 flex items-center gap-2 flex-wrap pt-4 border-t border-gray-100">
+              <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">Change priority</label>
+              <select
+                value={report.priority}
+                disabled={savingPriority}
+                onChange={(e) => changePriority(e.target.value as ReportPriority)}
+                className="px-3 py-1.5 rounded-lg border border-gray-200 text-sm bg-white"
+              >
+                {REPORT_PRIORITIES.map((p) => (
+                  <option key={p} value={p}>{PRIORITY_LABEL[p]}</option>
+                ))}
+              </select>
+              {savingPriority && <Loader2 className="w-3.5 h-3.5 animate-spin text-gray-400" />}
             </div>
           )}
 
