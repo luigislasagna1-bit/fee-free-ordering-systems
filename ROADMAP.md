@@ -4,6 +4,24 @@
 > can be reordered, scope can change, and some things will get cut. Use it
 > to know what's queued and roughly what each phase is for.
 
+## 🌍 Worldwide Launch — Internationalization (in progress, 2026-06-02)
+
+Goal: one main setting (restaurant **Country**) cascades timezone + currency +
+language across the ENTIRE platform; GloriaFood-scale language coverage; all
+currencies; timezones triple-checked. Full plan: `~/.claude/plans/zazzy-beaming-marble.md`.
+
+- **Phase 0 — Region backbone + cascade ✅ shipped 2026-06-02.** `src/lib/regions.ts`
+  (countries→tz/currency/language), admin profile country/timezone/currency
+  pickers with cascade, signup derives defaults from country, profile-route
+  timezone validation, `scripts/backfill-region-defaults.ts` (Ristorante Test
+  fixed → Europe/Rome on prod — root cause of its promo bug).
+- **Phase 1 — Currency everywhere ✅ shipped 2026-06-02.** All money (emails, both receipt builders + 3 print routes, API errors, kitchen End-of-Day) renders in the restaurant's currency via `formatCurrency`. Platform billing stays USD.
+- **Phase 2 — Timezone correctness sweep ✅ shipped 2026-06-02.** Reservation day-of-week, kitchen "rest of day" pause, and the daily/monthly digest windowing (incl. per-restaurant "1st of month") all evaluate in the restaurant's timezone now (were UTC). Remaining date-DISPLAY items (reports-page ranges, receipt timestamps, `formatDate`) folded into Phase 4's locale-aware date pass.
+- **Phase 3 — Full i18n coverage** ⏳ partial.
+  - **3a ✅ shipped 2026-06-02:** added 32 new locales (37 total — GloriaFood-scale), each a full AI-generated dictionary (validated: 0 missing/extra keys, placeholders intact) via a 32-agent workflow. Single-source `src/lib/locales.ts`; switchers + admin language picker list all; signup/profile accept all; basic RTL (`dir`) for Arabic/Hebrew. Customer-facing app + already-translated screens now in 37 languages.
+  - **3b pending:** extract the ~62 English-only ADMIN screens into translation keys (then regenerate the new keys into all 37 dicts) — the remaining staff-UI localization.
+- **Phase 4 — Locale-aware dates/addresses + final verification matrix.**
+
 ## 🔬 Shipped 2026-05-21 → 2026-05-22 (this sprint)
 
 ### Live + verified end-to-end ✅

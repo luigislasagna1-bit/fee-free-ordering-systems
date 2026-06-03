@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { isValidTimezone } from "@/lib/regions";
+import { SUPPORTED_LOCALES } from "@/lib/locales";
 
 /**
  * GET — small endpoint used by surfaces that need a single Restaurant
@@ -56,7 +57,7 @@ export async function PUT(req: NextRequest) {
     showCustomerMenuSearch,
   } = data;
 
-  const ALLOWED_LOCALES = ["en", "fr", "es", "it", "pt"];
+  const ALLOWED_LOCALES: readonly string[] = SUPPORTED_LOCALES;
 
   if (mapProvider !== undefined && mapProvider !== "leaflet" && mapProvider !== "google") {
     return NextResponse.json({ error: "Invalid mapProvider" }, { status: 400 });

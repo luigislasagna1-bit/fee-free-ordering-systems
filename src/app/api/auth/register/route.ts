@@ -4,6 +4,7 @@ import crypto from "crypto";
 import prisma from "@/lib/db";
 import { slugify } from "@/lib/utils";
 import { defaultsForCountry } from "@/lib/regions";
+import { isSupportedLocale } from "@/lib/locales";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { validatePassword } from "@/lib/password";
 import { sendSignupConfirmationEmail } from "@/lib/email";
@@ -133,8 +134,7 @@ export async function POST(req: NextRequest) {
     // is still editable in the admin profile. Language is clamped to the
     // currently-shipped dictionaries; others fall back to English for now.
     const regionDefaults = defaultsForCountry(countryClean);
-    const SHIPPED_LOCALES = new Set(["en", "fr", "es", "it", "pt"]);
-    const derivedLanguage = SHIPPED_LOCALES.has(regionDefaults.language) ? regionDefaults.language : "en";
+    const derivedLanguage = isSupportedLocale(regionDefaults.language) ? regionDefaults.language : "en";
 
     const restaurant = await prisma.restaurant.create({
       data: {

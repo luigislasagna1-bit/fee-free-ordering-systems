@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { NextIntlClientProvider } from "next-intl";
 import { resolveLocale, loadMessages } from "@/lib/i18n-server";
+import { isRtlLocale } from "@/lib/locales";
 import { SupportChat } from "@/components/SupportChat";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await resolveLocale();
   const messages = await loadMessages(locale);
   return (
-    <html lang={locale} className="h-full notranslate" translate="no">
+    <html lang={locale} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="h-full notranslate" translate="no">
       <head>
         <meta name="google" content="notranslate" />
       </head>

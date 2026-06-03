@@ -1,21 +1,13 @@
 import { getRequestConfig } from "next-intl/server";
 import { cookies } from "next/headers";
+import { DEFAULT_LOCALE, isSupportedLocale, type Locale } from "@/lib/locales";
 
-export const SUPPORTED_LOCALES = ["en", "fr", "es", "it", "pt"] as const;
-export type Locale = (typeof SUPPORTED_LOCALES)[number];
-export const DEFAULT_LOCALE: Locale = "en";
-
-export const LOCALE_LABELS: Record<Locale, string> = {
-  en: "English",
-  fr: "Français",
-  es: "Español",
-  it: "Italiano",
-  pt: "Português",
-};
-
-export function isSupportedLocale(value: unknown): value is Locale {
-  return typeof value === "string" && (SUPPORTED_LOCALES as readonly string[]).includes(value);
-}
+// Single source of truth lives in src/lib/locales.ts. Re-export so existing
+// importers of "@/i18n/request" keep resolving.
+export {
+  SUPPORTED_LOCALES, LOCALE_LABELS, DEFAULT_LOCALE, RTL_LOCALES,
+  isSupportedLocale, isRtlLocale, LOCALE_OPTIONS, type Locale,
+} from "@/lib/locales";
 
 export default getRequestConfig(async () => {
   const cookieStore = await cookies();

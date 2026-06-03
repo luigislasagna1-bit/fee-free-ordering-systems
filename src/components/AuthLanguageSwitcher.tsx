@@ -1,13 +1,6 @@
 "use client";
 import { Globe } from "lucide-react";
-
-const OPTIONS: { code: string; label: string }[] = [
-  { code: "en", label: "English" },
-  { code: "fr", label: "Français" },
-  { code: "es", label: "Español" },
-  { code: "it", label: "Italiano" },
-  { code: "pt", label: "Português" },
-];
+import { LOCALE_OPTIONS } from "@/lib/locales";
 
 interface Props {
   currentLocale: string;
@@ -29,7 +22,7 @@ export function AuthLanguageSwitcher({ currentLocale }: Props) {
         onChange={(e) => onChange(e.target.value)}
         className="bg-transparent text-sm text-gray-700 focus:outline-none cursor-pointer pr-1"
       >
-        {OPTIONS.map((o) => (
+        {LOCALE_OPTIONS.map((o) => (
           <option key={o.code} value={o.code}>{o.label}</option>
         ))}
       </select>

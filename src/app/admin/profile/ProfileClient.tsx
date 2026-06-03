@@ -19,11 +19,11 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
 import { COUNTRIES, CURRENCIES, defaultsForCountry, regionForCountry, allTimezones } from "@/lib/regions";
+import { LOCALE_OPTIONS, SUPPORTED_LOCALES } from "@/lib/locales";
 
-// Languages currently shipping a full dictionary. The country→language
-// cascade only auto-applies a language in this set (others gracefully
-// fall back to English until their dictionary lands). Phase 3 widens this.
-const SUPPORTED_PROFILE_LANGS = new Set(["en", "fr", "es", "it", "pt"]);
+// Every supported language ships a dictionary now, so the country→language
+// cascade can auto-apply any of them.
+const SUPPORTED_PROFILE_LANGS = new Set<string>(SUPPORTED_LOCALES);
 import {
   Save, Store, Image as ImageIcon, Link as LinkIcon, MapPin,
   Loader2, Search, X, CheckCircle2, AlertTriangle, Bell, Play, Trash2, Upload,
@@ -856,11 +856,9 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
               value={form.defaultLanguage}
               onChange={(e) => setForm((f) => ({ ...f, defaultLanguage: e.target.value }))}
             >
-              <option value="en">English</option>
-              <option value="fr">Français</option>
-              <option value="es">Español</option>
-              <option value="it">Italiano</option>
-              <option value="pt">Português</option>
+              {LOCALE_OPTIONS.map((o) => (
+                <option key={o.code} value={o.code}>{o.label}</option>
+              ))}
             </select>
             <p className="text-xs text-gray-400">{t("languageHelp")}</p>
           </div>

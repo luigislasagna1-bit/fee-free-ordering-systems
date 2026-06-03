@@ -1,13 +1,10 @@
 import { cookies, headers } from "next/headers";
 import prisma from "@/lib/db";
+import { DEFAULT_LOCALE, isSupportedLocale, type Locale } from "@/lib/locales";
 
-export const SUPPORTED_LOCALES = ["en", "fr", "es", "it", "pt"] as const;
-export type Locale = (typeof SUPPORTED_LOCALES)[number];
-export const DEFAULT_LOCALE: Locale = "en";
-
-export function isSupportedLocale(value: unknown): value is Locale {
-  return typeof value === "string" && (SUPPORTED_LOCALES as readonly string[]).includes(value);
-}
+// Single source of truth lives in src/lib/locales.ts. Re-export so callers
+// of "@/lib/i18n-server" keep resolving the same names.
+export { SUPPORTED_LOCALES, DEFAULT_LOCALE, isSupportedLocale, type Locale } from "@/lib/locales";
 
 /**
  * Resolve the effective locale for the current request.
