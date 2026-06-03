@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Loader2, Plus, MapPin, X, ExternalLink, ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type Location = {
   id: string;
@@ -23,6 +24,7 @@ export function LocationsClient({
   children: Location[];
   activeId: string;
 }) {
+  const t = useTranslations("admin.locations");
   const [showAdd, setShowAdd] = useState(false);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -49,12 +51,12 @@ export function LocationsClient({
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || "Could not create location");
+        setError(data.error || t("errorCouldNotCreate"));
         return;
       }
       window.location.reload();
     } catch {
-      setError("Could not create location");
+      setError(t("errorCouldNotCreate"));
     } finally {
       setBusy(null);
     }
@@ -72,7 +74,7 @@ export function LocationsClient({
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setError(data.error || "Could not switch");
+        setError(data.error || t("errorCouldNotSwitch"));
         return;
       }
       window.location.reload();
@@ -87,16 +89,16 @@ export function LocationsClient({
     <div className="max-w-4xl">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Locations</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500">
-            Add and switch between the locations of your restaurant brand.
+            {t("pageSubtitle")}
           </p>
         </div>
         <button
           onClick={() => setShowAdd(true)}
           className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
         >
-          <Plus className="w-4 h-4" /> Add another location
+          <Plus className="w-4 h-4" /> {t("addAnotherLocation")}
         </button>
       </div>
 
@@ -107,14 +109,9 @@ export function LocationsClient({
       )}
 
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 text-sm text-blue-800">
-        <strong>Heads up:</strong> each location is billed independently. Every new location starts on its own
-        FREE plan (100 orders/month, no card required) and chooses which add-ons and features it wants to
-        subscribe to — Unlimited Orders, Marketplace, Driver Pool, Sales-Optimized Website, and more. Each
-        location has its own hours, payment provider, and Stripe Connect account.
+        <strong>{t("infoHeadsUp")}</strong> {t("infoBillingBody")}
         {" "}
-        <strong>Menus can optionally be shared:</strong> new locations inherit the brand parent&apos;s menu by
-        default — open <em>Menu Setup</em> on a child location and click <em>&ldquo;Customize this
-        location&apos;s menu&rdquo;</em> to opt out and run an independent menu.
+        <strong>{t("infoMenusShared")}</strong> {t("infoMenusSharedBody")}
       </div>
 
       <div className="space-y-3">
@@ -136,18 +133,18 @@ export function LocationsClient({
                     <div className="font-semibold text-gray-900 truncate">{loc.name}</div>
                     {loc.isParent && (
                       <span className="text-[10px] uppercase tracking-wider text-emerald-700 font-bold bg-emerald-100 px-1.5 py-0.5 rounded">
-                        Brand parent
+                        {t("badgeBrandParent")}
                       </span>
                     )}
                     {isActive && (
                       <span className="text-[10px] uppercase tracking-wider text-green-700 font-bold bg-green-100 px-1.5 py-0.5 rounded">
-                        Currently viewing
+                        {t("badgeCurrentlyViewing")}
                       </span>
                     )}
                   </div>
                   <div className="text-xs text-gray-500 mt-0.5">
-                    {[loc.city, loc.state].filter(Boolean).join(", ") || "No address yet"}
-                    {" · "}status: {loc.subscriptionStatus}
+                    {[loc.city, loc.state].filter(Boolean).join(", ") || t("noAddressYet")}
+                    {" · "}{t("statusLabel")} {loc.subscriptionStatus}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -162,7 +159,7 @@ export function LocationsClient({
                       ) : (
                         <ArrowRight className="w-3 h-3" />
                       )}
-                      Switch to
+                      {t("switchTo")}
                     </button>
                   )}
                   <a
@@ -170,7 +167,7 @@ export function LocationsClient({
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs text-gray-600 hover:text-gray-900 px-2 py-1.5"
-                    title="Open public ordering page"
+                    title={t("openPublicOrderingPage")}
                   >
                     <ExternalLink className="w-3 h-3" />
                   </a>
@@ -185,26 +182,25 @@ export function LocationsClient({
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-gray-900">Add a new location</h2>
+              <h2 className="text-lg font-bold text-gray-900">{t("modalTitle")}</h2>
               <button onClick={() => setShowAdd(false)} className="text-gray-400 hover:text-gray-600">
                 <X className="w-5 h-5" />
               </button>
             </div>
             <p className="text-sm text-gray-500 mb-4">
-              The new location starts on the FREE plan (100 orders/month, no card required) and gets its own
-              admin panel. You can switch into it from the header dropdown after creating.
+              {t("modalDescription")}
             </p>
             <div className="space-y-3">
-              <Field label="Location name">
+              <Field label={t("fieldLocationName")}>
                 <input
                   type="text"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  placeholder="e.g. Luigi's — Mississauga"
+                  placeholder={t("fieldLocationNamePlaceholder")}
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
-              <Field label="Phone (optional)">
+              <Field label={t("fieldPhone")}>
                 <input
                   type="text"
                   value={form.phone}
@@ -212,7 +208,7 @@ export function LocationsClient({
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
-              <Field label="Address (optional)">
+              <Field label={t("fieldAddress")}>
                 <input
                   type="text"
                   value={form.address}
@@ -221,7 +217,7 @@ export function LocationsClient({
                 />
               </Field>
               <div className="grid grid-cols-3 gap-2">
-                <Field label="City">
+                <Field label={t("fieldCity")}>
                   <input
                     type="text"
                     value={form.city}
@@ -229,7 +225,7 @@ export function LocationsClient({
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   />
                 </Field>
-                <Field label="State / Province">
+                <Field label={t("fieldStateProvince")}>
                   <input
                     type="text"
                     value={form.state}
@@ -237,7 +233,7 @@ export function LocationsClient({
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   />
                 </Field>
-                <Field label="ZIP / Postal">
+                <Field label={t("fieldZipPostal")}>
                   <input
                     type="text"
                     value={form.zip}
@@ -249,20 +245,20 @@ export function LocationsClient({
               {/* Country picker — required for accurate Stripe Connect
                   onboarding, ShipDay region routing, and tax-rate defaults
                   per location. Mirrors the list on /admin/profile. */}
-              <Field label="Country">
+              <Field label={t("fieldCountry")}>
                 <select
                   value={form.country}
                   onChange={(e) => setForm({ ...form, country: e.target.value })}
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"
                 >
-                  <option value="CA">Canada</option>
-                  <option value="US">United States</option>
-                  <option value="GB">United Kingdom</option>
-                  <option value="AU">Australia</option>
-                  <option value="NZ">New Zealand</option>
-                  <option value="IE">Ireland</option>
-                  <option value="MX">Mexico</option>
-                  <option value="OTHER">Other</option>
+                  <option value="CA">{t("countryCA")}</option>
+                  <option value="US">{t("countryUS")}</option>
+                  <option value="GB">{t("countryGB")}</option>
+                  <option value="AU">{t("countryAU")}</option>
+                  <option value="NZ">{t("countryNZ")}</option>
+                  <option value="IE">{t("countryIE")}</option>
+                  <option value="MX">{t("countryMX")}</option>
+                  <option value="OTHER">{t("countryOther")}</option>
                 </select>
               </Field>
             </div>
@@ -273,13 +269,13 @@ export function LocationsClient({
                 className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition disabled:opacity-50"
               >
                 {busy === "add" && <Loader2 className="w-4 h-4 animate-spin" />}
-                Create location
+                {t("createLocation")}
               </button>
               <button
                 onClick={() => setShowAdd(false)}
                 className="px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 rounded-lg"
               >
-                Cancel
+                {t("cancel")}
               </button>
             </div>
           </div>

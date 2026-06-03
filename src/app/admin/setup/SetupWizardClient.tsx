@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   CheckCircle2, Circle, ArrowRight, ExternalLink, Loader2,
   Rocket, AlertCircle, PartyPopper, ChevronDown,
@@ -39,6 +40,7 @@ export function SetupWizardClient({
   progress: SetupProgress;
 }) {
   const router = useRouter();
+  const t = useTranslations("admin.setupWizard");
   const [publishing, setPublishing] = useState(false);
   /**
    * Race-condition guard: the Publish button only renders when
@@ -89,13 +91,13 @@ export function SetupWizardClient({
           router.refresh();
           return;
         }
-        toast.error(data.error || "Failed to publish");
+        toast.error(data.error || t("publishFailedGeneric"));
         return;
       }
-      toast.success("🎉 You're live! Customers can now order from you.");
+      toast.success(t("publishSuccessToast"));
       router.refresh();
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : "Failed to publish";
+      const msg = e instanceof Error ? e.message : t("publishFailedGeneric");
       toast.error(msg);
     } finally {
       setPublishing(false);
@@ -113,25 +115,24 @@ export function SetupWizardClient({
         <div className="flex items-center gap-2 mb-2">
           {isPublished ? <PartyPopper className="w-5 h-5" /> : <Rocket className="w-5 h-5" />}
           <span className="text-sm font-bold uppercase tracking-wider opacity-90">
-            {isPublished ? "Live" : "Setup wizard"}
+            {isPublished ? t("heroBadgeLive") : t("heroBadgeSetup")}
           </span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-          {isPublished ? `${restaurantName} is published` : `Get ${restaurantName} ready to take orders`}
+          {isPublished ? t("heroTitlePublished", { restaurantName }) : t("heroTitleSetup", { restaurantName })}
         </h1>
         <p className="mt-2 text-white/90 text-sm sm:text-base leading-relaxed">
           {isPublished ? (
             <>
-              Customers can order from you at{" "}
+              {t("heroSubtitlePublishedBefore")}{" "}
               <code className="bg-white/15 px-1.5 py-0.5 rounded text-xs">
                 /order/{restaurantSlug}
               </code>
-              . You can still customize anything below — changes go live instantly.
+              {t("heroSubtitlePublishedAfter")}
             </>
           ) : (
             <>
-              Knock off the steps below in any order. When every <strong>required</strong> step
-              is done, you can publish your restaurant and start taking real customer orders.
+              {t.rich("heroSubtitleSetup", { strong: (chunks) => <strong>{chunks}</strong> })}
             </>
           )}
         </p>
@@ -139,7 +140,7 @@ export function SetupWizardClient({
         {/* Progress bar */}
         <div className="mt-5">
           <div className="flex items-center justify-between text-xs mb-1.5 opacity-90">
-            <span className="font-semibold">{progress.completedSteps} of {progress.totalSteps} steps complete</span>
+            <span className="font-semibold">{t("progressLabel", { completed: progress.completedSteps, total: progress.totalSteps })}</span>
             <span className="font-bold">{progress.percent}%</span>
           </div>
           <div className="h-2.5 bg-white/20 rounded-full overflow-hidden">
@@ -160,7 +161,7 @@ export function SetupWizardClient({
             href="/admin/setup/next"
             className="mt-5 inline-flex items-center gap-2 bg-white text-emerald-600 hover:bg-emerald-50 font-bold px-5 py-2.5 rounded-xl text-sm shadow-md transition"
           >
-            {progress.completedSteps === 0 ? "Start guided setup" : "Continue where you left off"}
+            {progress.completedSteps === 0 ? t("ctaStartSetup") : t("ctaContinueSetup")}
             <ArrowRight className="w-4 h-4" />
           </Link>
         )}
@@ -193,17 +194,16 @@ export function SetupWizardClient({
             </div>
             <div className="flex-1 min-w-0">
               <h2 className={`font-bold ${progress.publishReady ? "text-emerald-900" : "text-amber-900"}`}>
-                {progress.publishReady ? "Ready to publish" : `${progress.requiredStepsRemaining.length} required step${progress.requiredStepsRemaining.length === 1 ? "" : "s"} left`}
+                {progress.publishReady ? t("publishReadyTitle") : t("publishBlockedTitle", { count: progress.requiredStepsRemaining.length })}
               </h2>
               {progress.publishReady ? (
                 <p className="text-sm text-emerald-800 mt-1 leading-relaxed">
-                  Every required step is done. Click below and your restaurant goes live —
-                  customers can immediately start placing orders.
+                  {t("publishReadyDescription")}
                 </p>
               ) : (
                 <>
                   <p className="text-sm text-amber-800 mt-1 leading-snug">
-                    Finish these before you can publish:
+                    {t("publishBlockedDescription")}
                   </p>
                   <ul className="mt-2 space-y-1">
                     {progress.requiredStepsRemaining.map((step) => (
@@ -227,7 +227,7 @@ export function SetupWizardClient({
                     href="/admin/setup/next"
                     className="mt-4 inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-lg text-sm shadow transition"
                   >
-                    Take me to the next step
+                    {t("takeNextStepButton")}
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </>
@@ -242,13 +242,11 @@ export function SetupWizardClient({
                   <div className="flex items-start gap-2 mb-2">
                     <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
                     <div className="text-sm font-semibold text-red-900">
-                      Can&apos;t publish yet — a required step came undone
+                      {t("publishBlockErrorTitle")}
                     </div>
                   </div>
                   <p className="text-xs text-red-800 mb-2 leading-snug">
-                    Looks like someone (maybe you in another tab?) just
-                    un-completed a setup step. Knock these off and try
-                    publishing again:
+                    {t("publishBlockErrorDescription")}
                   </p>
                   <ul className="space-y-1">
                     {publishBlock.map((step) => (
@@ -272,9 +270,9 @@ export function SetupWizardClient({
                 className="mt-5 w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white font-bold px-6 py-3 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2"
               >
                 {publishing ? (
-                  <><Loader2 className="w-4 h-4 animate-spin" /> Publishing…</>
+                  <><Loader2 className="w-4 h-4 animate-spin" /> {t("publishingButton")}</>
                 ) : (
-                  <><Rocket className="w-4 h-4" /> Publish my restaurant</>
+                  <><Rocket className="w-4 h-4" /> {t("publishButton")}</>
                 )}
               </button>
             </>
@@ -287,12 +285,12 @@ export function SetupWizardClient({
         <div className="rounded-2xl p-5 bg-white border border-gray-200">
           <h3 className="font-bold text-gray-900 text-sm mb-2 flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-            You&apos;re live
+            {t("youAreLiveTitle")}
           </h3>
           <p className="text-sm text-gray-600 leading-relaxed">
-            Published {publishedAt ? new Date(publishedAt).toLocaleDateString() : "recently"}.
-            Need to take your restaurant offline temporarily? Toggle <Link href="/admin/profile" className="text-emerald-600 hover:underline">Profile → Active</Link> off
-            — that hides you from customers without losing your setup data.
+            {t("youAreLivePublishedOn", { date: publishedAt ? new Date(publishedAt).toLocaleDateString() : t("youAreLivePublishedRecently") })}.
+            {t("youAreLiveOfflinePrompt")}{" "}<Link href="/admin/profile" className="text-emerald-600 hover:underline">{t("youAreLiveProfileLink")}</Link>{" "}
+            {t("youAreLiveOfflineSuffix")}
           </p>
         </div>
       )}
@@ -309,6 +307,7 @@ function SectionCard({
   isOpen: boolean;
   onToggle: () => void;
 }) {
+  const t = useTranslations("admin.setupWizard");
   const allDone = section.complete;
   const sectionPercent = section.totalCount > 0
     ? Math.round((section.completedCount / section.totalCount) * 100)
@@ -330,7 +329,7 @@ function SectionCard({
         <div className="flex-1 min-w-0">
           <div className="font-bold text-gray-900 text-sm sm:text-base">{section.label}</div>
           <div className="text-xs text-gray-500 mt-0.5">
-            {section.completedCount} of {section.totalCount} {section.totalCount === 1 ? "step" : "steps"}
+            {t("sectionStepCount", { completed: section.completedCount, total: section.totalCount, count: section.totalCount })}
             {allDone ? " ✓" : ""}
           </div>
         </div>
@@ -363,6 +362,7 @@ function SectionCard({
 }
 
 function StepRow({ step }: { step: SetupStep }) {
+  const t = useTranslations("admin.setupWizard");
   return (
     <Link
       href={step.href}
@@ -386,7 +386,7 @@ function StepRow({ step }: { step: SetupStep }) {
         )}
         {step.required && !step.complete && (
           <div className="text-[10px] text-amber-600 font-semibold uppercase tracking-wider mt-0.5">
-            Required to publish
+            {t("requiredToPublish")}
           </div>
         )}
       </div>

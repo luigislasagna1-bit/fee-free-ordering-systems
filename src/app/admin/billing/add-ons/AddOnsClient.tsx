@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw, Sparkles, ArrowRight, Settings, Rocket } from "lucide-react";
 
 /**
@@ -64,6 +65,7 @@ export function AddOnsClient({
   marketplaceListing?: MarketplaceListingHint;
 }) {
   const router = useRouter();
+  const t = useTranslations("admin.addOns");
   const [pendingSlug, setPendingSlug] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   // Slug currently in the cancel-confirmation modal. Replaces the old
@@ -81,13 +83,13 @@ export function AddOnsClient({
       });
       const data = await r.json();
       if (!r.ok || !data?.url) {
-        setError(data?.error || "Failed to start checkout");
+        setError(data?.error || t("errorCheckout"));
         setPendingSlug(null);
         return;
       }
       window.location.href = data.url;
     } catch (e: any) {
-      setError(e?.message || "Failed to start checkout");
+      setError(e?.message || t("errorCheckout"));
       setPendingSlug(null);
     }
   }
@@ -104,12 +106,12 @@ export function AddOnsClient({
       });
       const data = await r.json();
       if (!r.ok) {
-        setError(data?.error || "Failed to cancel");
+        setError(data?.error || t("errorCancel"));
       } else {
         router.refresh();
       }
     } catch (e: any) {
-      setError(e?.message || "Failed to cancel");
+      setError(e?.message || t("errorCancel"));
     } finally {
       setPendingSlug(null);
     }
@@ -126,12 +128,12 @@ export function AddOnsClient({
       });
       const data = await r.json();
       if (!r.ok) {
-        setError(data?.error || "Failed to resume");
+        setError(data?.error || t("errorResume"));
       } else {
         router.refresh();
       }
     } catch (e: any) {
-      setError(e?.message || "Failed to resume");
+      setError(e?.message || t("errorResume"));
     } finally {
       setPendingSlug(null);
     }
@@ -210,9 +212,9 @@ export function AddOnsClient({
           const driverPoolRedundant =
             a.slug === "driver_pool" && !active && hasMarketplaceMonthly && !marketplaceSwitchingToPayg;
           const includedNote = unlimitedRedundant
-            ? "Your other paid add-on already includes unlimited orders — you don't need this one."
+            ? t("includedNoteUnlimited")
             : driverPoolRedundant
-              ? "Marketplace Monthly already includes the ShipDay Driver Pool — you don't need this one."
+              ? t("includedNoteDriverPool")
               : null;
           // Special pre-cancellation banner on the Driver Pool tile —
           // rendered as a warning ABOVE the Subscribe button when the
@@ -250,7 +252,7 @@ export function AddOnsClient({
                     {a.comingSoon && !active && (
                       <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
                         <Rocket className="w-2.5 h-2.5" />
-                        Coming Soon
+                        {t("comingSoonBadge")}
                       </span>
                     )}
                   </div>
@@ -270,21 +272,21 @@ export function AddOnsClient({
                   // ROADMAP teaser format — restaurants see the value
                   // prop without us mis-selling vapor.
                   <div className="text-sm text-amber-700 font-semibold">
-                    In development · pricing TBD
+                    {t("inDevelopmentPricing")}
                   </div>
                 ) : (
                   <>
                     <span className="text-2xl font-bold text-gray-900">
                       ${dollars}
                     </span>
-                    <span className="text-sm text-gray-500"> / month</span>
+                    <span className="text-sm text-gray-500"> {t("perMonth")}</span>
                     {(a.trialDays ?? 0) > 0 && (
                       <span className="ml-2 text-xs font-medium px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
-                        {a.trialDays}-day trial
+                        {t("trialDaysBadge", { days: a.trialDays ?? 0 })}
                       </span>
                     )}
                     <div className="text-[10px] text-gray-400 mt-0.5 uppercase tracking-wider">
-                      USD · CA tax by province · US/intl exempt
+                      {t("taxNote")}
                     </div>
                   </>
                 )}
@@ -315,13 +317,13 @@ export function AddOnsClient({
                     <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2.5 text-sm">
                       <div className="font-semibold text-amber-900 flex items-center gap-1.5">
                         <Clock className="w-4 h-4" />
-                        {isMarketplaceSwitch ? "Switching to Pay-As-You-Go" : "Cancellation scheduled"}
+                        {isMarketplaceSwitch ? t("switchingToPayg") : t("cancellationScheduled")}
                       </div>
                       <div className="text-amber-800 mt-0.5">
                         {periodEnd ? (
                           isMarketplaceSwitch ? (
                             <>
-                              Monthly ends{" "}
+                              {t("marketplaceSwitchMonthlyEnds")}{" "}
                               <strong>
                                 {periodEnd.toLocaleDateString(undefined, {
                                   weekday: "long",
@@ -330,23 +332,18 @@ export function AddOnsClient({
                                   year: "numeric",
                                 })}
                               </strong>
-                              . PAYG ($3/order, capped $249.99/mo) kicks in automatically.
-                              Your listing stays live throughout.
+                              . {t("marketplaceSwitchPaygKicksIn")}
                               {/* Driver Pool was bundled with Monthly; PAYG does NOT
                                   include it. Without an explicit subscribe-now nudge
                                   the owner loses ShipDay dispatch on the switch date
                                   and can't deliver marketplace orders either. */}
                               <span className="block mt-2 text-amber-900 font-medium">
-                                ⚠ The bundled <strong>Driver Pool</strong> ends on the
-                                same date. To keep dispatching to ShipDay drivers (and
-                                to keep fulfilling Marketplace orders, which need
-                                drivers), subscribe to the Driver Pool add-on
-                                separately before then.
+                                {t("marketplaceSwitchDriverPoolWarning")}
                               </span>
                             </>
                           ) : (
                             <>
-                              Access ends{" "}
+                              {t("accessEnds")}{" "}
                               <strong>
                                 {periodEnd.toLocaleDateString(undefined, {
                                   weekday: "long",
@@ -355,13 +352,13 @@ export function AddOnsClient({
                                   year: "numeric",
                                 })}
                               </strong>
-                              . Until then, the feature stays unlocked.
+                              . {t("accessEndsUntilThen")}
                             </>
                           )
                         ) : (
                           isMarketplaceSwitch
-                            ? "PAYG kicks in at the end of your current billing period."
-                            : "Access ends at the end of your current billing period."
+                            ? t("paygKicksInAtPeriodEnd")
+                            : t("accessEndsAtPeriodEnd")
                         )}
                       </div>
                     </div>
@@ -370,7 +367,7 @@ export function AddOnsClient({
                         href="/admin/marketplace/payg-opt-in"
                         className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-white text-gray-800 border border-gray-200 hover:bg-gray-50 transition"
                       >
-                        <RefreshCw className="w-4 h-4" /> Review switch · undo
+                        <RefreshCw className="w-4 h-4" /> {t("reviewSwitchUndo")}
                       </Link>
                     ) : (
                       <button
@@ -380,9 +377,9 @@ export function AddOnsClient({
                         className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                       >
                         {busy ? (
-                          <><Loader2 className="w-4 h-4 animate-spin" /> Restoring…</>
+                          <><Loader2 className="w-4 h-4 animate-spin" /> {t("restoring")}</>
                         ) : (
-                          <><RefreshCw className="w-4 h-4" /> Keep this service</>
+                          <><RefreshCw className="w-4 h-4" /> {t("keepThisService")}</>
                         )}
                       </button>
                     )}
@@ -410,21 +407,21 @@ export function AddOnsClient({
                     {a.slug === "marketplace" && (
                       <div className="rounded-lg bg-emerald-50 border border-emerald-100 px-3 py-2 flex items-center justify-between gap-2 flex-wrap">
                         <div className="text-xs text-emerald-900">
-                          <strong>Currently on: Monthly plan</strong> · $199.99/mo · unlimited orders
+                          <strong>{t("currentlyOnMonthlyPlan")}</strong> · $199.99/mo · {t("unlimitedOrders")}
                         </div>
                         <Link
                           href="/admin/marketplace/payg-opt-in"
                           className="text-xs font-semibold text-emerald-700 hover:underline whitespace-nowrap"
                         >
-                          Switch to Pay-As-You-Go →
+                          {t("switchToPayg")}
                         </Link>
                       </div>
                     )}
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-600">
                         {periodEnd
-                          ? `Renews ${periodEnd.toLocaleDateString()}`
-                          : "Renews automatically"}
+                          ? t("renewsOn", { date: periodEnd.toLocaleDateString() })
+                          : t("renewsAutomatically")}
                       </span>
                       <button
                         type="button"
@@ -432,7 +429,7 @@ export function AddOnsClient({
                         disabled={busy}
                         className="text-xs font-medium text-red-600 hover:underline disabled:opacity-50"
                       >
-                        {busy ? "Working…" : "Cancel"}
+                        {busy ? t("working") : t("cancel")}
                       </button>
                     </div>
                   </div>
@@ -448,11 +445,10 @@ export function AddOnsClient({
                       className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-amber-100 text-amber-600 cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       <Rocket className="w-3.5 h-3.5" />
-                      In development
+                      {t("inDevelopment")}
                     </button>
                     <p className="text-[11px] text-gray-500 leading-snug text-center">
-                      We&apos;re building this. You&apos;ll see it here as
-                      soon as it&apos;s ready to subscribe to.
+                      {t("inDevelopmentDesc")}
                     </p>
                   </div>
                 ) : includedNote ? (
@@ -463,7 +459,7 @@ export function AddOnsClient({
                   <div className="space-y-2">
                     <div className="w-full px-4 py-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center justify-center gap-2">
                       <CheckCircle2 className="w-4 h-4" />
-                      Already included
+                      {t("alreadyIncluded")}
                     </div>
                     <p className="text-[11px] text-emerald-700 leading-snug text-center">
                       {includedNote}
@@ -480,13 +476,13 @@ export function AddOnsClient({
                       <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2.5 text-xs text-amber-900">
                         <div className="font-semibold flex items-center gap-1.5 mb-0.5">
                           <Clock className="w-3.5 h-3.5" />
-                          Bundled access ending
+                          {t("bundledAccessEnding")}
                         </div>
                         <span>
-                          Marketplace is switching to Pay-As-You-Go
+                          {t("marketplaceSwitchingToPayg")}
                           {marketplaceSwitchEnd && (
                             <>
-                              {" "}on{" "}
+                              {" "}{t("on")}{" "}
                               <strong>
                                 {marketplaceSwitchEnd.toLocaleDateString(undefined, {
                                   month: "long",
@@ -496,9 +492,7 @@ export function AddOnsClient({
                               </strong>
                             </>
                           )}
-                          . PAYG does <strong>not</strong> include the Driver Pool — subscribe
-                          here before the switch date to keep ShipDay dispatch (and to keep
-                          fulfilling Marketplace orders, which require drivers).
+                          . {t("paygNoDriverPool")}
                         </span>
                       </div>
                     )}
@@ -509,20 +503,20 @@ export function AddOnsClient({
                       className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                       title={
                         notSynced
-                          ? "This add-on isn't synced to Stripe yet. Ask the platform admin."
+                          ? t("titleNotSynced")
                           : a.monthlyPriceCents <= 0
-                          ? "No price set yet"
+                          ? t("titleNoPrice")
                           : ""
                       }
                     >
                       {busy && <Loader2 className="w-4 h-4 animate-spin" />}
                       {notSynced || a.monthlyPriceCents <= 0
-                        ? "Coming soon"
+                        ? t("comingSoon")
                         : busy
-                          ? "Loading…"
+                          ? t("loading")
                           : a.slug === "marketplace"
-                            ? "Subscribe to Monthly ($199.99/mo)"
-                            : "Subscribe"}
+                            ? t("subscribeToMonthly")
+                            : t("subscribe")}
                     </button>
                     {/* The Marketplace add-on has a SECOND signup path —
                         Pay-As-You-Go ($3/order, capped at $249.99/month,
@@ -536,13 +530,11 @@ export function AddOnsClient({
                           className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-white text-emerald-600 border border-emerald-300 hover:bg-emerald-50 flex items-center justify-center gap-1.5 transition"
                         >
                           <Sparkles className="w-3.5 h-3.5" />
-                          Or start Pay-As-You-Go
+                          {t("orStartPayg")}
                           <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
                         <p className="text-[11px] text-gray-600 leading-snug bg-blue-50 border border-blue-100 rounded px-2 py-1.5">
-                          💡 <strong>Tip:</strong> Start with Pay-As-You-Go until
-                          you&apos;re consistently getting 60–70 marketplace
-                          orders/month. Above that volume Monthly saves money.
+                          {t("paygTip")}
                         </p>
                       </>
                     )}
@@ -578,6 +570,7 @@ function CancelModal({
   onClose: () => void;
   onConfirm: () => void;
 }) {
+  const t = useTranslations("admin.addOns");
   const periodEnd = addOn.subscription?.currentPeriodEnd
     ? new Date(addOn.subscription.currentPeriodEnd)
     : null;
@@ -596,13 +589,13 @@ function CancelModal({
               <AlertCircle className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-gray-900">Cancel {addOn.name}?</h3>
+              <h3 className="font-bold text-gray-900">{t("modalCancelTitle", { name: addOn.name })}</h3>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t("close")}
             className="w-8 h-8 rounded-lg hover:bg-gray-100 text-gray-500 flex items-center justify-center"
           >
             <X className="w-4 h-4" />
@@ -611,7 +604,7 @@ function CancelModal({
 
         <div className="mt-4 text-sm text-gray-700 leading-relaxed">
           <p>
-            You&apos;ll keep access to the features below until
+            {t("modalKeepAccessUntil")}
             {periodEnd ? (
               <>
                 {" "}
@@ -625,16 +618,16 @@ function CancelModal({
                 </strong>
               </>
             ) : (
-              " the end of the current billing period"
+              " " + t("modalEndOfBillingPeriod")
             )}
-            . After that, the add-on turns off — you can re-subscribe any time.
+            . {t("modalAfterThatOff")}
           </p>
           {addOn.enabledFeatures.length > 0 && (
             <ul className="mt-3 space-y-1">
               {addOn.enabledFeatures.map((f) => (
                 <li key={f} className="text-xs text-gray-600 flex items-center gap-1.5">
                   <X className="w-3 h-3 text-red-400" />
-                  <code className="font-mono">{f}</code> will be locked
+                  <code className="font-mono">{f}</code> {t("willBeLocked")}
                 </li>
               ))}
             </ul>
@@ -647,14 +640,14 @@ function CancelModal({
             onClick={onClose}
             className="px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition"
           >
-            Don&apos;t cancel — keep this service
+            {t("dontCancel")}
           </button>
           <button
             type="button"
             onClick={onConfirm}
             className="px-4 py-2 text-sm font-semibold rounded-lg border border-red-200 text-red-700 bg-white hover:bg-red-50 transition"
           >
-            Yes, cancel
+            {t("yesCancel")}
           </button>
         </div>
       </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   CreditCard, AlertTriangle, CheckCircle2, Clock, ExternalLink, Loader2,
   ShoppingBag, Plus, XCircle,
@@ -82,6 +83,7 @@ export function BillingClient({
     level: "ok" | "warning" | "cap_reached";
   };
 }) {
+  const t = useTranslations("admin.billing");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -133,12 +135,12 @@ export function BillingClient({
       const res = await fetch("/api/admin/billing/portal", { method: "POST" });
       const data = await res.json();
       if (!res.ok || !data.url) {
-        setError(data.error || "Could not open billing portal");
+        setError(data.error || t("portalError"));
         return;
       }
       window.location.href = data.url;
     } catch {
-      setError("Could not open billing portal");
+      setError(t("portalError"));
     } finally {
       setBusy(null);
     }
@@ -146,11 +148,11 @@ export function BillingClient({
 
   return (
     <div className="max-w-4xl">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Billing</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">{t("billingTitle")}</h1>
 
       {!billingConfigured && (
         <div className="mb-6 rounded-xl bg-yellow-50 border border-yellow-200 p-4 text-sm text-yellow-800">
-          Billing is not configured on the platform yet. Contact support.
+          {t("billingNotConfigured")}
         </div>
       )}
 
@@ -176,7 +178,7 @@ export function BillingClient({
             className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition disabled:opacity-50"
           >
             {busy === "portal" ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
-            Update payment method
+            {t("updatePaymentMethod")}
           </button>
         )}
         {restaurant.stripeCustomerId && (status === "active" || status === "past_due") && (
@@ -186,7 +188,7 @@ export function BillingClient({
             className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-5 py-2.5 rounded-lg font-semibold text-sm transition disabled:opacity-50"
           >
             {busy === "portal" ? <Loader2 className="w-4 h-4 animate-spin" /> : <ExternalLink className="w-4 h-4" />}
-            Manage subscription &amp; invoices in Stripe
+            {t("manageSubscriptionInStripe")}
           </button>
         )}
       </div>
@@ -199,10 +201,9 @@ export function BillingClient({
       <div className="mt-10">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-lg font-bold text-gray-900">Add-ons</h2>
+            <h2 className="text-lg font-bold text-gray-900">{t("addOnsTitle")}</h2>
             <p className="text-xs text-gray-500 mt-0.5">
-              Every paid feature you can add to your FREE plan.
-              Browse the full catalog to subscribe.
+              {t("addOnsSubtitle")}
             </p>
           </div>
           <Link
@@ -210,7 +211,7 @@ export function BillingClient({
             className="inline-flex items-center gap-1.5 bg-gray-900 hover:bg-gray-800 text-white px-3.5 py-2 rounded-lg font-semibold text-xs transition"
           >
             <Plus className="w-3.5 h-3.5" />
-            Browse add-ons
+            {t("browseAddOns")}
           </Link>
         </div>
 
@@ -236,7 +237,7 @@ export function BillingClient({
             )}
             {mergedAddOns.length === 0 && (
               <li className="px-4 py-6 text-center text-sm text-gray-500">
-                No add-ons configured on the platform yet.
+                {t("noAddOns")}
               </li>
             )}
           </ul>
@@ -245,7 +246,7 @@ export function BillingClient({
 
       {invoices.length > 0 && (
         <div className="mt-10">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Recent invoices</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-4">{t("recentInvoices")}</h2>
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
             {/* Mobile: card layout */}
             <ul className="divide-y divide-gray-100 sm:hidden">
@@ -281,7 +282,7 @@ export function BillingClient({
                           rel="noopener noreferrer"
                           className="text-blue-600 hover:text-blue-700 text-xs font-semibold inline-flex items-center gap-1 mt-1"
                         >
-                          View <ExternalLink className="w-3 h-3" />
+                          {t("invoiceView")} <ExternalLink className="w-3 h-3" />
                         </a>
                       )}
                     </div>
@@ -294,9 +295,9 @@ export function BillingClient({
             <table className="w-full text-sm hidden sm:table">
               <thead className="bg-gray-50 text-xs uppercase text-gray-500">
                 <tr>
-                  <th className="px-4 py-3 text-left">Date</th>
-                  <th className="px-4 py-3 text-left">Amount</th>
-                  <th className="px-4 py-3 text-left">Status</th>
+                  <th className="px-4 py-3 text-left">{t("invoiceDate")}</th>
+                  <th className="px-4 py-3 text-left">{t("invoiceAmount")}</th>
+                  <th className="px-4 py-3 text-left">{t("invoiceStatus")}</th>
                   <th className="px-4 py-3"></th>
                 </tr>
               </thead>
@@ -330,7 +331,7 @@ export function BillingClient({
                           rel="noopener noreferrer"
                           className="text-blue-600 hover:text-blue-700 text-xs font-medium inline-flex items-center gap-1"
                         >
-                          View <ExternalLink className="w-3 h-3" />
+                          {t("invoiceView")} <ExternalLink className="w-3 h-3" />
                         </a>
                       )}
                     </td>
@@ -356,6 +357,7 @@ function OrderCapUsageCard({
     level: "ok" | "warning" | "cap_reached";
   };
 }) {
+  const t = useTranslations("admin.billing");
   const resetDate = usage.resetAt
     ? new Date(usage.resetAt).toLocaleDateString(undefined, { month: "long", day: "numeric" })
     : null;
@@ -366,10 +368,9 @@ function OrderCapUsageCard({
         <div className="flex items-start gap-3">
           <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
           <div>
-            <h3 className="font-bold text-emerald-900 text-sm mb-1">Unlimited orders</h3>
+            <h3 className="font-bold text-emerald-900 text-sm mb-1">{t("unlimitedOrdersTitle")}</h3>
             <p className="text-xs text-emerald-800">
-              You have an active paid add-on, so the 100-orders/month FREE-plan cap doesn&apos;t
-              apply. This month so far: <strong>{usage.count} orders</strong>.
+              {t("unlimitedOrdersDesc", { count: usage.count })}
             </p>
           </div>
         </div>
@@ -391,10 +392,10 @@ function OrderCapUsageCard({
   return (
     <div className={`mt-4 rounded-xl border p-4 ${cardClass}`}>
       <div className="flex items-baseline justify-between mb-2">
-        <h3 className="font-bold text-gray-900 text-sm">This month&apos;s orders</h3>
+        <h3 className="font-bold text-gray-900 text-sm">{t("thisMonthsOrders")}</h3>
         <div className="text-xs text-gray-600">
           <span className="font-bold text-gray-900">{usage.count}</span>
-          <span className="text-gray-500"> / {usage.cap} included</span>
+          <span className="text-gray-500"> / {usage.cap} {t("included")}</span>
         </div>
       </div>
       <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -406,17 +407,17 @@ function OrderCapUsageCard({
       <div className="mt-2 flex items-center justify-between gap-2">
         <p className="text-[11px] text-gray-600">
           {usage.level === "cap_reached"
-            ? `Cap reached — new orders paused until ${resetDate ?? "next month"}.`
+            ? t("capReached", { resetDate: resetDate ?? t("nextMonth") })
             : usage.level === "warning"
-              ? `Heads up — you'll hit the cap soon. Resets ${resetDate ?? "next month"}.`
-              : `Resets ${resetDate ?? "next month"}. Subscribe to any paid add-on for unlimited orders.`}
+              ? t("capWarning", { resetDate: resetDate ?? t("nextMonth") })
+              : t("capOk", { resetDate: resetDate ?? t("nextMonth") })}
         </p>
         {usage.level !== "ok" && (
           <Link
             href="/admin/billing/add-ons?addon=unlimited_orders"
             className="text-[11px] font-semibold text-blue-600 hover:text-blue-700 whitespace-nowrap"
           >
-            Upgrade →
+            {t("upgrade")}
           </Link>
         )}
       </div>
@@ -433,17 +434,16 @@ function StatusCard({
   periodEnd: Date | null;
   cancelAtPeriodEnd: boolean;
 }) {
+  const t = useTranslations("admin.billing");
   if (status === "free") {
     return (
       <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-5">
         <div className="flex items-start gap-3">
           <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
           <div>
-            <h2 className="font-bold text-emerald-900 mb-1">FREE plan</h2>
+            <h2 className="font-bold text-emerald-900 mb-1">{t("freePlanTitle")}</h2>
             <p className="text-sm text-emerald-800">
-              You&apos;re on the <strong>FREE plan</strong> — accept up to 100 orders/month at no cost,
-              forever. Need more? Subscribe to any paid add-on, or upgrade to FREE Unlimited Orders
-              for $14.99/month to take the cap off.
+              {t("freePlanDesc")}
             </p>
           </div>
         </div>
@@ -456,10 +456,9 @@ function StatusCard({
         <div className="flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
           <div>
-            <h2 className="font-bold text-red-900 mb-1">Your last payment failed</h2>
+            <h2 className="font-bold text-red-900 mb-1">{t("pastDueTitle")}</h2>
             <p className="text-sm text-red-800">
-              Update your card via the billing portal to restore service. The FREE plan
-              keeps working in the meantime, but any paid add-ons are paused until payment clears.
+              {t("pastDueDesc")}
             </p>
           </div>
         </div>
@@ -472,10 +471,9 @@ function StatusCard({
         <div className="flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
           <div>
-            <h2 className="font-bold text-gray-900 mb-1">Subscription cancelled</h2>
+            <h2 className="font-bold text-gray-900 mb-1">{t("cancelledTitle")}</h2>
             <p className="text-sm text-gray-700">
-              All paid add-ons are off. You&apos;re back on the FREE plan — 100 orders/month
-              included. Re-subscribe to any add-on any time.
+              {t("cancelledDesc")}
             </p>
           </div>
         </div>
@@ -489,14 +487,14 @@ function StatusCard({
           <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
           <div>
             <h2 className="font-bold text-green-900 mb-1">
-              Active — paid add-ons on file
+              {t("activeTitle")}
             </h2>
             <p className="text-sm text-green-800">
               {cancelAtPeriodEnd
-                ? `Subscription cancels at end of period${periodEnd ? ` (${periodEnd.toLocaleDateString()})` : ""}.`
+                ? t("activeCancelsAtPeriodEnd", { date: periodEnd ? ` (${periodEnd.toLocaleDateString()})` : "" })
                 : periodEnd
-                  ? `Next billing date: ${periodEnd.toLocaleDateString()}.`
-                  : "Subscription active. Manage add-ons below."}
+                  ? t("activeNextBillingDate", { date: periodEnd.toLocaleDateString() })
+                  : t("activeManageAddOns")}
             </p>
           </div>
         </div>
@@ -505,7 +503,7 @@ function StatusCard({
   }
   return (
     <div className="rounded-xl bg-gray-50 border border-gray-200 p-5">
-      <h2 className="font-bold text-gray-900 mb-1">Subscription status: {status}</h2>
+      <h2 className="font-bold text-gray-900 mb-1">{t("subscriptionStatus", { status })}</h2>
     </div>
   );
 }
@@ -534,6 +532,7 @@ function AddOnRowItem({
    *  included via Marketplace" state for the driver_pool row. */
   hasMarketplaceMonthly: boolean;
 }) {
+  const t = useTranslations("admin.billing");
   // Normalize legacy "trialing" status to "active" — trial concept is dead.
   const status = mine && mine.status === "trialing" ? "active" : mine?.status ?? null;
   const isActive = status === "active";
@@ -547,9 +546,9 @@ function AddOnRowItem({
   const driverPoolRedundant =
     catalog.slug === "driver_pool" && !isActive && hasMarketplaceMonthly;
   const includedNote = unlimitedRedundant
-    ? "Your other paid add-on already includes unlimited orders. Subscribing here would buy nothing extra."
+    ? t("unlimitedRedundantNote")
     : driverPoolRedundant
-      ? "Marketplace Monthly already includes the ShipDay Driver Pool. Subscribing here would be a duplicate purchase."
+      ? t("driverPoolRedundantNote")
       : null;
 
   return (
@@ -586,25 +585,25 @@ function AddOnRowItem({
           <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-gray-500">
             {activatedDate && (
               <span>
-                <strong className="text-gray-700 font-semibold">Activated:</strong>{" "}
+                <strong className="text-gray-700 font-semibold">{t("activated")}:</strong>{" "}
                 {activatedDate.toLocaleDateString()}
               </span>
             )}
             {renewDate && isActive && !cancelsAtPeriodEnd && (
               <span>
-                <strong className="text-gray-700 font-semibold">Renews:</strong>{" "}
+                <strong className="text-gray-700 font-semibold">{t("renews")}:</strong>{" "}
                 {renewDate.toLocaleDateString()}
               </span>
             )}
             {renewDate && cancelsAtPeriodEnd && (
               <span className="text-amber-700">
-                <strong className="font-semibold">Ends:</strong>{" "}
+                <strong className="font-semibold">{t("ends")}:</strong>{" "}
                 {renewDate.toLocaleDateString()}
               </span>
             )}
             {renewDate && isPastDue && (
               <span className="text-rose-700">
-                <strong className="font-semibold">Was due:</strong>{" "}
+                <strong className="font-semibold">{t("wasDue")}:</strong>{" "}
                 {renewDate.toLocaleDateString()}
               </span>
             )}
@@ -616,9 +615,9 @@ function AddOnRowItem({
       <div className="flex-shrink-0 text-right">
         <div className="text-sm font-bold text-gray-900">
           {catalog.comingSoon ? (
-            <span className="text-amber-700">Pricing TBD</span>
+            <span className="text-amber-700">{t("pricingTbd")}</span>
           ) : catalog.monthlyPriceCents === 0 ? (
-            <span className="text-gray-500">Free</span>
+            <span className="text-gray-500">{t("free")}</span>
           ) : (
             <>{formatCurrency(catalog.monthlyPriceCents / 100)}<span className="text-xs font-normal text-gray-500">/mo</span></>
           )}
@@ -629,14 +628,14 @@ function AddOnRowItem({
             title={includedNote}
           >
             <CheckCircle2 className="w-3 h-3" />
-            Already included
+            {t("alreadyIncluded")}
           </span>
         ) : (
           <Link
             href={`/admin/billing/add-ons${mine ? `?addon=${catalog.slug}` : ""}`}
             className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 mt-1"
           >
-            {isActive || isPastDue ? "Manage" : isCancelled ? "Re-subscribe" : catalog.comingSoon ? "Learn more" : "Subscribe"}
+            {isActive || isPastDue ? t("manage") : isCancelled ? t("reSubscribe") : catalog.comingSoon ? t("learnMore") : t("subscribe")}
             <ExternalLink className="w-3 h-3" />
           </Link>
         )}
@@ -671,6 +670,7 @@ function MarketplaceAddOnRow({
   mine: RestaurantAddOnRow | null;
   listing: MarketplaceListing | null;
 }) {
+  const t = useTranslations("admin.billing");
   const monthlyActive = !!mine && (mine.status === "active" || mine.status === "trialing");
   const paygActive = !monthlyActive && listing?.billingMode === "payg" && !!listing;
   const subscribedAnyMode = monthlyActive || paygActive;
@@ -694,12 +694,12 @@ function MarketplaceAddOnRow({
   // Status pill at the header level. Surfaces which plan is active,
   // whether a switch is pending, or "Not subscribed — 2 plans available".
   const headerPillLabel = switchPending
-    ? "Switching to PAYG"
+    ? t("switchingToPayg")
     : monthlyActive
-      ? "Active — Monthly"
+      ? t("activeMonthly")
       : paygActive
-        ? "Active — Pay-As-You-Go"
-        : "Not subscribed";
+        ? t("activePayg")
+        : t("notSubscribed");
   const headerPillClass = switchPending
     ? "bg-amber-100 text-amber-800"
     : subscribedAnyMode
@@ -724,8 +724,7 @@ function MarketplaceAddOnRow({
             </span>
           </div>
           <p className="text-xs text-gray-600 mt-1 leading-snug">
-            List your restaurant on the public Fee Free Marketplace.
-            Choose the plan that fits your volume — switch any time.
+            {t("marketplaceDesc")}
           </p>
         </div>
       </div>
@@ -737,10 +736,10 @@ function MarketplaceAddOnRow({
           monthlyActive ? "border-emerald-300 bg-emerald-50/50" : "border-gray-200 bg-white"
         }`}>
           <div className="flex items-center gap-2 mb-1">
-            <div className="text-sm font-bold text-gray-900">Monthly Unlimited</div>
+            <div className="text-sm font-bold text-gray-900">{t("monthlyUnlimited")}</div>
             {monthlyActive && (
               <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-500 text-white px-1.5 py-0.5 rounded">
-                Current
+                {t("current")}
               </span>
             )}
           </div>
@@ -748,25 +747,25 @@ function MarketplaceAddOnRow({
             $199.99<span className="text-xs font-normal text-gray-500">/mo</span>
           </div>
           <p className="text-[11px] text-gray-600 mt-1 leading-snug">
-            Unlimited marketplace orders. ShipDay Driver Pool included. Predictable bill, no surprises.
+            {t("monthlyUnlimitedDesc")}
           </p>
           {monthlyActive ? (
             <div className="mt-2 space-y-1 text-[11px] text-gray-600">
               {activatedDate && (
                 <div>
-                  <strong className="text-gray-700 font-semibold">Activated:</strong>{" "}
+                  <strong className="text-gray-700 font-semibold">{t("activated")}:</strong>{" "}
                   {activatedDate.toLocaleDateString()}
                 </div>
               )}
               {renewDate && !mine?.cancelAtPeriodEnd && (
                 <div>
-                  <strong className="text-gray-700 font-semibold">Renews:</strong>{" "}
+                  <strong className="text-gray-700 font-semibold">{t("renews")}:</strong>{" "}
                   {renewDate.toLocaleDateString()}
                 </div>
               )}
               {renewDate && mine?.cancelAtPeriodEnd && (
                 <div className="text-amber-700">
-                  <strong className="font-semibold">Ends:</strong>{" "}
+                  <strong className="font-semibold">{t("ends")}:</strong>{" "}
                   {renewDate.toLocaleDateString()}
                 </div>
               )}
@@ -776,7 +775,7 @@ function MarketplaceAddOnRow({
               href="/admin/billing/add-ons?addon=marketplace"
               className="inline-block mt-2 text-xs font-semibold text-blue-600 hover:text-blue-700"
             >
-              {paygActive ? "Switch to Monthly →" : "Subscribe →"}
+              {paygActive ? t("switchToMonthly") : t("subscribe")}
             </Link>
           )}
         </div>
@@ -786,10 +785,10 @@ function MarketplaceAddOnRow({
           paygActive ? "border-emerald-300 bg-emerald-50/50" : "border-gray-200 bg-white"
         }`}>
           <div className="flex items-center gap-2 mb-1">
-            <div className="text-sm font-bold text-gray-900">Pay-As-You-Go</div>
+            <div className="text-sm font-bold text-gray-900">{t("payAsYouGo")}</div>
             {paygActive && (
               <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-500 text-white px-1.5 py-0.5 rounded">
-                Current
+                {t("current")}
               </span>
             )}
           </div>
@@ -797,21 +796,21 @@ function MarketplaceAddOnRow({
             $3<span className="text-xs font-normal text-gray-500">/order</span>
           </div>
           <p className="text-[11px] text-gray-600 mt-1 leading-snug">
-            Pay only when you get a marketplace order. Capped at $249.99/month — past that, the rest is free. Driver Pool sold separately.
+            {t("paygDesc")}
           </p>
           {paygActive ? (
             <div className="mt-2 space-y-1 text-[11px] text-gray-600">
               <div>
-                <strong className="text-gray-700 font-semibold">This period:</strong>{" "}
+                <strong className="text-gray-700 font-semibold">{t("thisPeriod")}:</strong>{" "}
                 {paygOrdersThisPeriod} order{paygOrdersThisPeriod === 1 ? "" : "s"}{" "}
                 · <strong>{formatCurrency(paygChargeCents / 100)}</strong>
                 {paygChargeCents >= PAYG_MONTHLY_CAP_CENTS && (
-                  <span className="text-emerald-700 font-semibold"> (cap reached — free from here)</span>
+                  <span className="text-emerald-700 font-semibold"> {t("paygCapReached")}</span>
                 )}
               </div>
               {monthStartDate && (
                 <div>
-                  <strong className="text-gray-700 font-semibold">Period started:</strong>{" "}
+                  <strong className="text-gray-700 font-semibold">{t("periodStarted")}:</strong>{" "}
                   {monthStartDate.toLocaleDateString()}
                 </div>
               )}
@@ -821,7 +820,7 @@ function MarketplaceAddOnRow({
               href="/admin/marketplace/payg-opt-in"
               className="inline-block mt-2 text-xs font-semibold text-blue-600 hover:text-blue-700"
             >
-              {monthlyActive ? "Switch to Pay-As-You-Go →" : "Start Pay-As-You-Go →"}
+              {monthlyActive ? t("switchToPayg") : t("startPayg")}
             </Link>
           )}
         </div>
@@ -834,7 +833,7 @@ function MarketplaceAddOnRow({
             href="/admin/marketplace"
             className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700"
           >
-            Manage marketplace listing
+            {t("manageMarketplaceListing")}
             <ExternalLink className="w-3 h-3" />
           </Link>
         </div>
@@ -852,52 +851,53 @@ function StatusPill({
   comingSoon: boolean;
   cancelsAtPeriodEnd: boolean;
 }) {
+  const t = useTranslations("admin.billing");
   if (comingSoon) {
     return (
       <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">
-        <Clock className="w-2.5 h-2.5" /> Coming Soon
+        <Clock className="w-2.5 h-2.5" /> {t("comingSoon")}
       </span>
     );
   }
   if (status === "active" && cancelsAtPeriodEnd) {
     return (
       <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">
-        <Clock className="w-2.5 h-2.5" /> Cancels soon
+        <Clock className="w-2.5 h-2.5" /> {t("cancelsSoon")}
       </span>
     );
   }
   if (status === "active") {
     return (
       <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
-        <CheckCircle2 className="w-2.5 h-2.5" /> Active
+        <CheckCircle2 className="w-2.5 h-2.5" /> {t("active")}
       </span>
     );
   }
   if (status === "past_due") {
     return (
       <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full">
-        <AlertTriangle className="w-2.5 h-2.5" /> Payment failed
+        <AlertTriangle className="w-2.5 h-2.5" /> {t("paymentFailed")}
       </span>
     );
   }
   if (status === "cancelled") {
     return (
       <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-        <XCircle className="w-2.5 h-2.5" /> Cancelled
+        <XCircle className="w-2.5 h-2.5" /> {t("cancelled")}
       </span>
     );
   }
   if (status === "incomplete") {
     return (
       <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-        <Clock className="w-2.5 h-2.5" /> Setup incomplete
+        <Clock className="w-2.5 h-2.5" /> {t("setupIncomplete")}
       </span>
     );
   }
   // No subscription row at all
   return (
     <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">
-      Not subscribed
+      {t("notSubscribed")}
     </span>
   );
 }
