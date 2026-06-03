@@ -7,6 +7,7 @@ import {
   ExternalLink, Shield, Zap, Lock, HelpCircle, ChevronDown, ChevronUp,
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type RestaurantState = {
   stripeAccountId: string | null;
@@ -42,6 +43,7 @@ export function ProvidersClient({
   onlineCardEnabled,
   paypalEnabled,
 }: Props) {
+  const t = useTranslations("admin.paymentProviders");
   const params = useSearchParams();
   const justConnected = params.get("status") === "connected";
 
@@ -69,7 +71,7 @@ export function ProvidersClient({
 
   async function connectPaypal() {
     if (!ppForm.clientId.trim() || !ppForm.secret.trim()) {
-      setPpError("Both Client ID and Secret are required.");
+      setPpError(t("ppErrorBothRequired"));
       return;
     }
     setBusy("paypal-connect");
@@ -83,29 +85,33 @@ export function ProvidersClient({
       });
       const data = await res.json();
       if (!res.ok) {
-        setPpError(data.error || "Could not connect PayPal");
+        setPpError(data.error || t("ppErrorCouldNotConnect"));
         return;
       }
-      setPpSuccess(`Connected${data.merchantEmail ? ` (${data.merchantEmail})` : ""}.`);
+      setPpSuccess(
+        data.merchantEmail
+          ? t("ppSuccessConnectedWithEmail", { email: data.merchantEmail })
+          : t("ppSuccessConnected")
+      );
       // Clear creds out of the in-memory form so they don't sit in
       // React state. The server has them encrypted now.
       setPpForm({ clientId: "", secret: "", environment: ppForm.environment, merchantEmail: "" });
       setTimeout(() => window.location.reload(), 700);
     } catch {
-      setPpError("Network error connecting PayPal.");
+      setPpError(t("ppErrorNetwork"));
     } finally {
       setBusy(null);
     }
   }
 
   async function disconnectPaypal() {
-    if (!confirm("Disconnect your PayPal account? Customers won't be able to pay with PayPal until you reconnect.")) return;
+    if (!confirm(t("ppDisconnectConfirm"))) return;
     setBusy("paypal-disconnect");
     try {
       const res = await fetch("/api/paypal/connect", { method: "DELETE" });
       if (!res.ok) {
         const d = await res.json().catch(() => ({}));
-        setPpError(d.error || "Could not disconnect");
+        setPpError(d.error || t("errorCouldNotDisconnect"));
         return;
       }
       window.location.reload();
@@ -121,12 +127,12 @@ export function ProvidersClient({
       const res = await fetch("/api/stripe/connect", { method: "POST" });
       const data = await res.json();
       if (!res.ok || !data.url) {
-        setError(data.error || "Could not start onboarding");
+        setError(data.error || t("errorCouldNotStartOnboarding"));
         return;
       }
       window.location.href = data.url;
     } catch {
-      setError("Could not start onboarding");
+      setError(t("errorCouldNotStartOnboarding"));
     } finally {
       setBusy(null);
     }
@@ -138,7 +144,7 @@ export function ProvidersClient({
     try {
       const res = await fetch("/api/stripe/connect/status");
       if (!res.ok) {
-        setError("Could not refresh status");
+        setError(t("errorCouldNotRefreshStatus"));
         return;
       }
       window.location.reload();
@@ -148,14 +154,14 @@ export function ProvidersClient({
   }
 
   async function disconnect() {
-    if (!confirm("Disconnect your Stripe account? You won't be able to accept payments until you reconnect.")) return;
+    if (!confirm(t("stripeDisconnectConfirm"))) return;
     setBusy("disconnect");
     setError(null);
     try {
       const res = await fetch("/api/stripe/connect", { method: "DELETE" });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setError(data.error || "Could not disconnect");
+        setError(data.error || t("errorCouldNotDisconnect"));
         return;
       }
       window.location.reload();
@@ -167,11 +173,9 @@ export function ProvidersClient({
   return (
     <div className="p-6 max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Accept payments</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
         <p className="text-sm text-gray-500 mt-1">
-          Connect your Stripe account to accept card payments from your customers.
-          Money lands directly in your Stripe balance — Fee Free Ordering takes
-          0% per order. You only pay Stripe&apos;s standard processing fee.
+          {t("pageSubtitle")}
         </p>
       </div>
 
@@ -179,10 +183,9 @@ export function ProvidersClient({
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3">
           <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-semibold text-amber-800">Payments not yet enabled</p>
+            <p className="text-sm font-semibold text-amber-800">{t("stripeNotEnabledTitle")}</p>
             <p className="text-sm text-amber-700 mt-1">
-              The platform hasn't finished setting up Stripe. Contact support to enable
-              online payments for your restaurant.
+              {t("stripeNotEnabledBody")}
             </p>
           </div>
         </div>
@@ -199,20 +202,18 @@ export function ProvidersClient({
           </div>
           <div className="flex-1">
             <p className="font-semibold text-emerald-900">
-              Subscribe to Online Payments first
+              {t("noAddOnTitle")}
             </p>
             <p className="text-sm text-emerald-800 mt-1">
-              Card payments are unlocked by the <strong>Online Payments</strong> add-on.
-              Without it, even a connected Stripe account can&apos;t accept card charges
-              from your customers — they&apos;ll get redirected to cash / pay-at-store only.
-              You can still set up Stripe Connect now and the add-on later, but you won&apos;t
-              accept cards until both are done.
+              {t.rich("noAddOnBody", {
+                strong: (c) => <strong>{c}</strong>,
+              })}
             </p>
             <Link
               href="/admin/billing/add-ons"
               className="inline-flex items-center gap-2 mt-3 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
             >
-              View add-ons
+              {t("viewAddOns")}
               <ExternalLink className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -228,11 +229,10 @@ export function ProvidersClient({
           <Zap className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-semibold text-blue-900">
-              You&apos;re subscribed to Online Payments — one step left
+              {t("subscribedOneStepLeftTitle")}
             </p>
             <p className="text-sm text-blue-800 mt-1">
-              Connect your Stripe account below to start accepting card payments.
-              Onboarding takes about 5 minutes.
+              {t("subscribedOneStepLeftBody")}
             </p>
           </div>
         </div>
@@ -247,18 +247,16 @@ export function ProvidersClient({
           <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
             <p className="text-sm font-semibold text-amber-900">
-              Online card payment is currently OFF
+              {t("cardOffTitle")}
             </p>
             <p className="text-sm text-amber-800 mt-1">
-              You&apos;re subscribed to the Online Payments add-on, but customers
-              can&apos;t pay by card yet — you haven&apos;t enabled it in Accepted
-              Methods. Connecting Stripe alone won&apos;t change that.
+              {t("cardOffBody")}
             </p>
             <Link
               href="/admin/payments"
               className="inline-flex items-center gap-2 mt-3 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
             >
-              Enable in Accepted Methods
+              {t("enableInAcceptedMethods")}
               <ExternalLink className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -269,9 +267,9 @@ export function ProvidersClient({
         <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex gap-3">
           <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-semibold text-green-800">Returned from Stripe</p>
+            <p className="text-sm font-semibold text-green-800">{t("returnedFromStripeTitle")}</p>
             <p className="text-sm text-green-700 mt-1">
-              We're syncing your account status. Refresh in a moment if it doesn't update.
+              {t("returnedFromStripeBody")}
             </p>
           </div>
         </div>
@@ -292,7 +290,7 @@ export function ProvidersClient({
             </div>
             <div>
               <div className="font-semibold text-gray-900">Stripe</div>
-              <div className="text-xs text-gray-500">Connect account · Express onboarding</div>
+              <div className="text-xs text-gray-500">{t("stripeSubheading")}</div>
             </div>
           </div>
           {connected && (
@@ -304,7 +302,7 @@ export function ProvidersClient({
               }`}
             >
               {charges ? <CheckCircle className="w-3.5 h-3.5" /> : <AlertCircle className="w-3.5 h-3.5" />}
-              {charges ? "Connected" : "Setup incomplete"}
+              {charges ? t("badgeConnected") : t("badgeSetupIncomplete")}
             </div>
           )}
         </div>
@@ -315,18 +313,18 @@ export function ProvidersClient({
               <div className="space-y-3">
                 <Feature
                   icon={<Zap className="w-4 h-4" />}
-                  title="One-click onboarding"
-                  body="Sign in or create your Stripe account in a few minutes."
+                  title={t("featureOnboardingTitle")}
+                  body={t("featureOnboardingBody")}
                 />
                 <Feature
                   icon={<Shield className="w-4 h-4" />}
-                  title="No card data on our servers"
-                  body="Card details go straight to Stripe — we never see them."
+                  title={t("featureNoCardDataTitle")}
+                  body={t("featureNoCardDataBody")}
                 />
                 <Feature
                   icon={<CreditCard className="w-4 h-4" />}
-                  title="Money lands in your bank"
-                  body="Stripe pays you directly. Fee Free Ordering takes 0% per order — you only pay Stripe's processing fee."
+                  title={t("featureMoneyLandsTitle")}
+                  body={t("featureMoneyLandsBody")}
                 />
               </div>
               <button
@@ -339,7 +337,7 @@ export function ProvidersClient({
                 ) : (
                   <CreditCard className="w-4 h-4" />
                 )}
-                Connect with Stripe
+                {t("btnConnectWithStripe")}
               </button>
             </>
           )}
@@ -348,23 +346,22 @@ export function ProvidersClient({
             <>
               <div className="grid grid-cols-2 gap-3">
                 <StatusTile
-                  label="Accept charges"
+                  label={t("tileAcceptCharges")}
                   ok={charges}
-                  hint={charges ? "Live" : "Pending verification"}
+                  hint={charges ? t("tileLive") : t("tilePendingVerification")}
                 />
                 <StatusTile
-                  label="Bank payouts"
+                  label={t("tileBankPayouts")}
                   ok={payouts}
-                  hint={payouts ? "Enabled" : "Pending"}
+                  hint={payouts ? t("tileEnabled") : t("tilePending")}
                 />
               </div>
               <p className="text-xs text-gray-500">
-                Account status: <span className="font-mono">{status}</span>
+                {t("accountStatusLabel")} <span className="font-mono">{status}</span>
               </p>
               {!charges && (
                 <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 text-sm text-yellow-800">
-                  Stripe still needs more info to enable charges. Click below to finish
-                  onboarding.
+                  {t("stripeNeedsMoreInfo")}
                 </div>
               )}
               <div className="flex flex-wrap gap-2">
@@ -375,7 +372,7 @@ export function ProvidersClient({
                     className="flex items-center gap-2 bg-[#635BFF] hover:bg-[#5048df] text-white font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
                   >
                     {busy === "onboard" ? <Loader2 className="w-4 h-4 animate-spin" /> : <ExternalLink className="w-4 h-4" />}
-                    Finish onboarding
+                    {t("btnFinishOnboarding")}
                   </button>
                 )}
                 <button
@@ -383,14 +380,14 @@ export function ProvidersClient({
                   disabled={busy !== null}
                   className="flex items-center gap-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
                 >
-                  {busy === "refresh" ? <Loader2 className="w-4 h-4 animate-spin" /> : "Refresh status"}
+                  {busy === "refresh" ? <Loader2 className="w-4 h-4 animate-spin" /> : t("btnRefreshStatus")}
                 </button>
                 <button
                   onClick={disconnect}
                   disabled={busy !== null}
                   className="flex items-center gap-2 bg-white border border-red-200 hover:bg-red-50 text-red-600 font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
                 >
-                  {busy === "disconnect" ? <Loader2 className="w-4 h-4 animate-spin" /> : "Disconnect"}
+                  {busy === "disconnect" ? <Loader2 className="w-4 h-4 animate-spin" /> : t("btnDisconnect")}
                 </button>
               </div>
             </>
@@ -407,19 +404,19 @@ export function ProvidersClient({
             </div>
             <div>
               <div className="font-semibold text-gray-900">PayPal</div>
-              <div className="text-xs text-gray-500">REST app · Direct charge</div>
+              <div className="text-xs text-gray-500">{t("paypalSubheading")}</div>
             </div>
           </div>
           {paypalConnected && (
             <div className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-green-100 text-green-700">
               <CheckCircle className="w-3.5 h-3.5" />
-              Connected
+              {t("badgeConnected")}
             </div>
           )}
           {paypalStatus === "error" && (
             <div className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-rose-100 text-rose-700">
               <AlertCircle className="w-3.5 h-3.5" />
-              Error
+              {t("badgeError")}
             </div>
           )}
         </div>
@@ -442,9 +439,9 @@ export function ProvidersClient({
             <>
               <div className="text-sm text-gray-600 space-y-2">
                 <p>
-                  <strong>One-time setup</strong> — paste credentials from your PayPal Business
-                  account&apos;s REST app. We encrypt them at rest; PayPal money flows directly
-                  to your account, Fee Free Ordering takes 0% per order.
+                  {t.rich("ppSetupIntro", {
+                    strong: (c) => <strong>{c}</strong>,
+                  })}
                 </p>
                 <button
                   type="button"
@@ -453,8 +450,8 @@ export function ProvidersClient({
                 >
                   <HelpCircle className="w-3.5 h-3.5" />
                   {showPpInstructions
-                    ? "Hide step-by-step instructions"
-                    : "Don't know where to find these? Show step-by-step instructions"}
+                    ? t("ppHideInstructions")
+                    : t("ppShowInstructions")}
                   {showPpInstructions ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                 </button>
               </div>
@@ -463,25 +460,26 @@ export function ProvidersClient({
                 <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 space-y-3">
                   <h3 className="text-sm font-bold text-blue-900 flex items-center gap-2">
                     <Shield className="w-4 h-4" />
-                    How to get your PayPal credentials (about 5 minutes)
+                    {t("ppInstructionsTitle")}
                   </h3>
 
                   {/* Step 1 — Business account */}
                   <div className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">1</div>
                     <div className="flex-1 text-xs text-blue-900 leading-relaxed">
-                      <strong>Make sure you have a PayPal Business account</strong> (not a
-                      personal one). Personal accounts can&apos;t take payments via the API.{" "}
-                      <a
-                        href="https://www.paypal.com/us/business"
-                        target="_blank" rel="noopener noreferrer"
-                        className="underline font-semibold inline-flex items-center gap-0.5"
-                      >
-                        Upgrade or create one
-                        <ExternalLink className="w-2.5 h-2.5" />
-                      </a>
-                      . It&apos;s free to open and there&apos;s nothing to pay monthly — PayPal
-                      only charges per transaction, same as their normal rates.
+                      {t.rich("ppStep1", {
+                        strong: (c) => <strong>{c}</strong>,
+                        a: (c) => (
+                          <a
+                            href="https://www.paypal.com/us/business"
+                            target="_blank" rel="noopener noreferrer"
+                            className="underline font-semibold inline-flex items-center gap-0.5"
+                          >
+                            {c}
+                            <ExternalLink className="w-2.5 h-2.5" />
+                          </a>
+                        ),
+                      })}
                     </div>
                   </div>
 
@@ -489,18 +487,18 @@ export function ProvidersClient({
                   <div className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">2</div>
                     <div className="flex-1 text-xs text-blue-900 leading-relaxed">
-                      Sign in to the PayPal Developer Dashboard with the SAME credentials
-                      as your Business account:{" "}
-                      <a
-                        href="https://developer.paypal.com/dashboard/applications/live"
-                        target="_blank" rel="noopener noreferrer"
-                        className="underline font-semibold inline-flex items-center gap-0.5"
-                      >
-                        developer.paypal.com → Apps &amp; Credentials
-                        <ExternalLink className="w-2.5 h-2.5" />
-                      </a>
-                      . You&apos;ll land on the Live tab by default — that&apos;s the one
-                      you want for real customer payments.
+                      {t.rich("ppStep2", {
+                        a: (c) => (
+                          <a
+                            href="https://developer.paypal.com/dashboard/applications/live"
+                            target="_blank" rel="noopener noreferrer"
+                            className="underline font-semibold inline-flex items-center gap-0.5"
+                          >
+                            {c}
+                            <ExternalLink className="w-2.5 h-2.5" />
+                          </a>
+                        ),
+                      })}
                     </div>
                   </div>
 
@@ -508,10 +506,10 @@ export function ProvidersClient({
                   <div className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">3</div>
                     <div className="flex-1 text-xs text-blue-900 leading-relaxed">
-                      Click <strong>&quot;Create App&quot;</strong>. Give it a name like
-                      <em> &quot;Fee Free Ordering&quot;</em> so you remember what it&apos;s
-                      for. Choose <strong>&quot;Merchant&quot;</strong> when asked what
-                      type. Submit. PayPal will land you on the app&apos;s detail page.
+                      {t.rich("ppStep3", {
+                        strong: (c) => <strong>{c}</strong>,
+                        em: (c) => <em>{c}</em>,
+                      })}
                     </div>
                   </div>
 
@@ -519,15 +517,13 @@ export function ProvidersClient({
                   <div className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">4</div>
                     <div className="flex-1 text-xs text-blue-900 leading-relaxed">
-                      Near the top of the app page you&apos;ll see <strong>&quot;Client ID&quot;</strong>{" "}
-                      and <strong>&quot;Secret&quot;</strong>. Click <em>Show</em> next to the
-                      Secret to reveal it, then copy both. Paste them into the fields
-                      below.{" "}
-                      <span className="text-blue-700/80">
-                        Tip: the Client ID is the long alphanumeric string starting with{" "}
-                        <code className="font-mono bg-white px-1 rounded">A...</code>. The
-                        Secret usually starts with <code className="font-mono bg-white px-1 rounded">E...</code>.
-                      </span>
+                      {t.rich("ppStep4", {
+                        strong: (c) => <strong>{c}</strong>,
+                        em: (c) => <em>{c}</em>,
+                        span: (c) => <span className="text-blue-700/80">{c}</span>,
+                        codeA: () => <code className="font-mono bg-white px-1 rounded">A...</code>,
+                        codeE: () => <code className="font-mono bg-white px-1 rounded">E...</code>,
+                      })}
                     </div>
                   </div>
 
@@ -535,12 +531,9 @@ export function ProvidersClient({
                   <div className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">5</div>
                     <div className="flex-1 text-xs text-blue-900 leading-relaxed">
-                      Pick the matching <strong>Environment</strong> below — pick
-                      <strong> Live</strong> for real customer payments, or
-                      <strong> Sandbox</strong> if you want to test with PayPal&apos;s fake-money
-                      accounts first. (If you grabbed the credentials from the
-                      developer dashboard&apos;s &quot;Sandbox&quot; tab, you MUST pick
-                      Sandbox — Live credentials won&apos;t work as Sandbox and vice versa.)
+                      {t.rich("ppStep5", {
+                        strong: (c) => <strong>{c}</strong>,
+                      })}
                     </div>
                   </div>
 
@@ -548,33 +541,33 @@ export function ProvidersClient({
                   <div className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center">6</div>
                     <div className="flex-1 text-xs text-blue-900 leading-relaxed">
-                      Click <strong>&quot;Verify &amp; Connect PayPal&quot;</strong>. We&apos;ll
-                      test the credentials by asking PayPal for an OAuth token. If it
-                      works, the panel switches to &quot;Connected&quot; and customers
-                      can immediately pay with PayPal at checkout.
+                      {t.rich("ppStep6", {
+                        strong: (c) => <strong>{c}</strong>,
+                      })}
                     </div>
                   </div>
 
                   <div className="border-t border-blue-200 pt-3 mt-3 text-[11px] text-blue-800 leading-relaxed">
-                    <strong>Security note:</strong> We encrypt your Client ID and Secret
-                    with AES-256-GCM before storing. They&apos;re never visible in your
-                    browser or any log file again after the initial save. If you ever
-                    rotate them in PayPal&apos;s dashboard, just come back here and
-                    paste the new ones.
+                    {t.rich("ppSecurityNote", {
+                      strong: (c) => <strong>{c}</strong>,
+                    })}
                   </div>
                   <div className="text-[11px] text-blue-800 leading-relaxed">
-                    <strong>Stuck?</strong> Email{" "}
-                    <a href="mailto:support@feefreeordering.com" className="underline font-semibold">
-                      support@feefreeordering.com
-                    </a>{" "}
-                    with a screenshot of where you&apos;re stuck — we&apos;ll walk you through.
+                    {t.rich("ppStuckNote", {
+                      strong: (c) => <strong>{c}</strong>,
+                      a: (c) => (
+                        <a href="mailto:support@feefreeordering.com" className="underline font-semibold">
+                          {c}
+                        </a>
+                      ),
+                    })}
                   </div>
                 </div>
               )}
 
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Environment</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelEnvironment")}</label>
                   <div className="grid grid-cols-2 gap-2">
                     {(["live", "sandbox"] as const).map((env) => (
                       <button
@@ -587,17 +580,17 @@ export function ProvidersClient({
                             : "border-gray-200 text-gray-600 hover:border-gray-300"
                         }`}
                       >
-                        {env === "live" ? "Live (Production)" : "Sandbox (Testing)"}
+                        {env === "live" ? t("envLive") : t("envSandbox")}
                       </button>
                     ))}
                   </div>
                   <p className="text-[11px] text-gray-500 mt-1">
-                    Use Sandbox to test with PayPal&apos;s fake-money accounts. Switch to Live when ready to take real payments.
+                    {t("envHint")}
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Client ID</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelClientId")}</label>
                   <input
                     type="text"
                     autoComplete="off"
@@ -610,7 +603,7 @@ export function ProvidersClient({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Secret</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelSecret")}</label>
                   <div className="relative">
                     <input
                       type={showSecret ? "text" : "password"}
@@ -626,16 +619,16 @@ export function ProvidersClient({
                       onClick={() => setShowSecret(!showSecret)}
                       className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-500 hover:text-gray-700 font-semibold"
                     >
-                      {showSecret ? "Hide" : "Show"}
+                      {showSecret ? t("btnHide") : t("btnShow")}
                     </button>
                   </div>
                   <p className="text-[11px] text-gray-500 mt-1">
-                    We encrypt this with AES-256-GCM before storing. It&apos;s never sent back to your browser after this.
+                    {t("secretHint")}
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">PayPal account email (optional)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelMerchantEmail")}</label>
                   <input
                     type="email"
                     autoComplete="off"
@@ -645,7 +638,7 @@ export function ProvidersClient({
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <p className="text-[11px] text-gray-500 mt-1">
-                    Shown back to you here so you can tell at a glance which PayPal account is wired up.
+                    {t("merchantEmailHint")}
                   </p>
                 </div>
               </div>
@@ -660,7 +653,7 @@ export function ProvidersClient({
                 ) : (
                   <Shield className="w-4 h-4" />
                 )}
-                Verify &amp; Connect PayPal
+                {t("btnVerifyConnectPaypal")}
               </button>
             </>
           )}
@@ -668,26 +661,28 @@ export function ProvidersClient({
           {paypalConnected && (
             <>
               <div className="grid grid-cols-2 gap-3">
-                <StatusTile label="Status" ok hint="Connected" />
+                <StatusTile label={t("tileStatus")} ok hint={t("tileConnected")} />
                 <StatusTile
-                  label="Environment"
+                  label={t("tileEnvironment")}
                   ok={restaurant?.paypalEnvironment === "live"}
-                  hint={restaurant?.paypalEnvironment === "live" ? "Live" : "Sandbox (test)"}
+                  hint={restaurant?.paypalEnvironment === "live" ? t("tileLive") : t("tileSandboxTest")}
                 />
               </div>
               {restaurant?.paypalMerchantEmail && (
                 <p className="text-xs text-gray-500">
-                  PayPal account: <span className="font-mono">{restaurant.paypalMerchantEmail}</span>
+                  {t("paypalAccountLabel")} <span className="font-mono">{restaurant.paypalMerchantEmail}</span>
                 </p>
               )}
               {!paypalEnabled && (
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-800">
-                  PayPal is connected but not yet listed in <strong>Accepted Methods</strong> —
-                  customers won&apos;t see it as a payment option.{" "}
-                  <Link href="/admin/payments" className="underline font-semibold">
-                    Enable it here
-                  </Link>
-                  .
+                  {t.rich("paypalNotInAcceptedMethods", {
+                    strong: (c) => <strong>{c}</strong>,
+                    a: (c) => (
+                      <Link href="/admin/payments" className="underline font-semibold">
+                        {c}
+                      </Link>
+                    ),
+                  })}
                 </div>
               )}
               <div className="flex flex-wrap gap-2">
@@ -696,7 +691,7 @@ export function ProvidersClient({
                   disabled={busy !== null}
                   className="flex items-center gap-2 bg-white border border-red-200 hover:bg-red-50 text-red-600 font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
                 >
-                  {busy === "paypal-disconnect" ? <Loader2 className="w-4 h-4 animate-spin" /> : "Disconnect"}
+                  {busy === "paypal-disconnect" ? <Loader2 className="w-4 h-4 animate-spin" /> : t("btnDisconnect")}
                 </button>
               </div>
             </>

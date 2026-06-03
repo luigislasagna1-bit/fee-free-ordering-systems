@@ -13,6 +13,7 @@ import {
   ChevronDown,
   GraduationCap,
   Palette,
+  Bug,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
@@ -118,17 +119,23 @@ function pathMatchesGroup(path: string, group: Group): boolean {
   return false;
 }
 
-export function ResellerNav() {
+export function ResellerNav({ canViewReports = false }: { canViewReports?: boolean }) {
   const path = usePathname();
+  // Invited resellers (added via the report center's "Manage access") also
+  // get a "Reports & Requests" entry that opens the shared bug/feature
+  // tracker at /reseller-reports. Non-invited resellers don't see it.
+  const navGroups: Group[] = canViewReports
+    ? [...groups, { id: "reports", label: "Reports & Requests", icon: Bug, href: "/reseller-reports" }]
+    : groups;
   // Track which group is currently expanded. Default to whichever group
   // contains the active route so the user lands inside the right section.
   const initiallyOpen =
-    groups.find((g) => pathMatchesGroup(path, g))?.id ?? null;
+    navGroups.find((g) => pathMatchesGroup(path, g))?.id ?? null;
   const [openId, setOpenId] = useState<string | null>(initiallyOpen);
 
   return (
     <nav className="flex-1 py-3">
-      {groups.map((group) => {
+      {navGroups.map((group) => {
         const Icon = group.icon;
         const activeAnywhere = pathMatchesGroup(path, group);
         const isOpen = openId === group.id;

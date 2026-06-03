@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, Save } from "lucide-react";
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 import { PROMO_TYPES, isLockedType } from "@/lib/promo-types";
 import { CatEntry, hhmmToMin, initRulesForType, minToHHMM, PromoRules } from "./helpers";
@@ -168,6 +169,7 @@ export function PromoWizard(props: WizardProps) {
   const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo } =
     props;
   const router = useRouter();
+  const t = useTranslations("admin.promoWizard");
 
   const [step, setStep] = useState<1 | 2 | 3>(mode === "edit" ? 2 : 1);
   const [saving, setSaving] = useState(false);
@@ -214,7 +216,7 @@ export function PromoWizard(props: WizardProps) {
   const goNext = () => {
     if (step === 1) {
       if (!canAdvanceFromType) {
-        toast.error("Pick a promotion type to continue.");
+        toast.error(t("errorPickType"));
         return;
       }
       setStep(2);
@@ -222,7 +224,7 @@ export function PromoWizard(props: WizardProps) {
     }
     if (step === 2) {
       if (!name.trim()) {
-        toast.error("Promotion name is required.");
+        toast.error(t("errorNameRequired"));
         return;
       }
       setStep(3);
@@ -237,11 +239,11 @@ export function PromoWizard(props: WizardProps) {
 
   const save = async () => {
     if (!name.trim()) {
-      toast.error("Promotion name is required.");
+      toast.error(t("errorNameRequired"));
       return;
     }
     if (!promotionType) {
-      toast.error("Promotion type is required.");
+      toast.error(t("errorTypeRequired"));
       return;
     }
     setSaving(true);
@@ -292,27 +294,27 @@ export function PromoWizard(props: WizardProps) {
         body: JSON.stringify(payload),
       });
       if (!res.ok) {
-        let msg = `Save failed (${res.status})`;
+        let msg = t("errorSaveFailed", { status: res.status });
         try {
           const d = await res.json();
           msg = d.error || msg;
         } catch {}
         throw new Error(msg);
       }
-      toast.success(isEdit ? "Promotion updated" : "Promotion created");
+      toast.success(isEdit ? t("successUpdated") : t("successCreated"));
       router.push("/admin/promotions");
       router.refresh();
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : "Failed to save promotion";
+      const msg = e instanceof Error ? e.message : t("errorSaveFailedGeneric");
       toast.error(msg);
       setSaving(false);
     }
   };
 
   // Title pieces for the header.
-  const meta = PROMO_TYPES.find((t) => t.slug === promotionType);
+  const meta = PROMO_TYPES.find((pt) => pt.slug === promotionType);
   const headerTitle =
-    mode === "edit" ? "Edit promotion" : "New promotion";
+    mode === "edit" ? t("headerEdit") : t("headerNew");
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -321,7 +323,7 @@ export function PromoWizard(props: WizardProps) {
           href="/admin/promotions"
           className="text-sm text-gray-500 hover:text-gray-700"
         >
-          &larr; Back to promotions
+          &larr; {t("backToPromotions")}
         </Link>
       </div>
 
@@ -375,7 +377,7 @@ export function PromoWizard(props: WizardProps) {
             disabled={(step === 1) || (step === 2 && mode === "edit")}
             className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-800 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            <ArrowLeft className="w-4 h-4" /> Back
+            <ArrowLeft className="w-4 h-4" /> {t("back")}
           </button>
           {step < 3 ? (
             <button
@@ -383,7 +385,7 @@ export function PromoWizard(props: WizardProps) {
               disabled={step === 1 && !canAdvanceFromType}
               className="flex items-center gap-1.5 px-5 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-xl hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition"
             >
-              Next <ArrowRight className="w-4 h-4" />
+              {t("next")} <ArrowRight className="w-4 h-4" />
             </button>
           ) : (
             <button
@@ -392,10 +394,10 @@ export function PromoWizard(props: WizardProps) {
               className="flex items-center gap-1.5 px-5 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-xl hover:bg-emerald-600 disabled:opacity-50 transition"
             >
               {saving ? (
-                "Saving..."
+                t("saving")
               ) : (
                 <>
-                  <Save className="w-4 h-4" /> Save promo
+                  <Save className="w-4 h-4" /> {t("savePromo")}
                 </>
               )}
             </button>
@@ -407,7 +409,8 @@ export function PromoWizard(props: WizardProps) {
 }
 
 function StepIndicator({ step }: { step: 1 | 2 | 3 }) {
-  const labels = ["Type", "Configure", "Restrictions & Display"];
+  const t = useTranslations("admin.promoWizard");
+  const labels = [t("stepType"), t("stepConfigure"), t("stepRestrictionsDisplay")];
   return (
     <div className="mt-4 flex items-center gap-2">
       {labels.map((label, i) => {

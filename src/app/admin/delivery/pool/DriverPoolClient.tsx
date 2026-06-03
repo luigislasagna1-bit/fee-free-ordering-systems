@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 import { Loader2, Truck, User, Users, Key, DollarSign, Check, X, Plus, Trash2, Lock, ArrowRight } from "lucide-react";
 
 /**
@@ -31,6 +32,7 @@ type Initial = {
 };
 
 export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Initial; driverPoolEntitled: boolean }) {
+  const t = useTranslations("admin.driverPool");
   const router = useRouter();
   const [enabled, setEnabled] = useState(initial.enabled);
   const [deliverySource, setDeliverySource] = useState<Initial["deliverySource"]>(initial.deliverySource);
@@ -49,7 +51,7 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
   // to the add-ons page instead of changing state.
   function handleSourceClick(next: Initial["deliverySource"]) {
     if (next !== "own" && !driverPoolEntitled) {
-      toast.error("Subscribe to the Driver Pool add-on (or Marketplace Monthly) to unlock ShipDay dispatch.");
+      toast.error(t("toastSubscribeToUnlock"));
       return;
     }
     setDeliverySource(next);
@@ -57,11 +59,11 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
 
   async function save() {
     if (needsShipDay && !driverPoolEntitled) {
-      toast.error("Subscribe to Driver Pool first, or choose 'Own drivers'.");
+      toast.error(t("toastSubscribeFirst"));
       return;
     }
     if (missingCredentials) {
-      toast.error("Add your ShipDay API key first, or switch source to 'Own drivers'.");
+      toast.error(t("toastAddApiKeyFirst"));
       return;
     }
     setSaving(true);
@@ -85,15 +87,15 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
       });
       const data = await res.json();
       if (!res.ok) {
-        toast.error(data.error || "Failed to save");
+        toast.error(data.error || t("toastFailedToSave"));
         return;
       }
-      toast.success("Driver pool settings saved");
+      toast.success(t("toastSaved"));
       setApiKey("");
       setReplacingKey(false);
       router.refresh();
     } catch (e: any) {
-      toast.error(e?.message || "Failed to save");
+      toast.error(e?.message || t("toastFailedToSave"));
     } finally {
       setSaving(false);
     }
@@ -104,42 +106,41 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
       <div>
         <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
           <Truck className="w-6 h-6 text-blue-500" />
-          Driver pool
+          {t("heading")}
         </h1>
         <p className="text-sm text-gray-600 mt-1">
-          Configure how your deliveries get dispatched. Mix your own drivers with
-          ShipDay&apos;s third-party pool — or use one exclusively.
+          {t("headingDescription")}
         </p>
       </div>
 
       {/* Section 1: Delivery source */}
       <Section
-        title="Delivery source"
-        description="Who handles your delivery orders by default? You must pick one before joining the marketplace."
+        title={t("deliverySourceTitle")}
+        description={t("deliverySourceDescription")}
       >
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <SourceCard
             id="own"
-            label="Own drivers"
+            label={t("sourceOwnLabel")}
             icon={<User className="w-5 h-5" />}
-            description="Your in-house drivers handle every delivery. ShipDay is never invoked. Free."
+            description={t("sourceOwnDescription")}
             selected={deliverySource === "own"}
             onClick={() => handleSourceClick("own")}
           />
           <SourceCard
             id="shipday"
-            label="ShipDay only"
+            label={t("sourceShipdayLabel")}
             icon={<Truck className="w-5 h-5" />}
-            description="Every delivery routes to ShipDay's third-party pool automatically."
+            description={t("sourceShipdayDescription")}
             selected={deliverySource === "shipday"}
             onClick={() => handleSourceClick("shipday")}
             locked={!driverPoolEntitled}
           />
           <SourceCard
             id="both"
-            label="Both — switch per order"
+            label={t("sourceBothLabel")}
             icon={<Users className="w-5 h-5" />}
-            description="Kitchen sees a picker on each delivery order: in-house or pool."
+            description={t("sourceBothDescription")}
             selected={deliverySource === "both"}
             onClick={() => handleSourceClick("both")}
             locked={!driverPoolEntitled}
@@ -149,17 +150,15 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
           <div className="mt-4 rounded-xl bg-amber-50 border border-amber-200 p-3 flex items-start gap-3">
             <Lock className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
             <div className="flex-1 text-xs text-amber-900 leading-relaxed">
-              <strong>ShipDay options are locked.</strong> To dispatch deliveries
-              to ShipDay&apos;s pool, subscribe to the standalone <strong>Driver Pool</strong>{" "}
-              add-on ($19.99/mo) or to <strong>Marketplace Monthly</strong>{" "}
-              ($199.99/mo, includes Driver Pool free). &quot;Own drivers&quot;
-              stays free and selectable for everyone.
+              {t.rich("lockedNotice", {
+                strong: (c) => <strong>{c}</strong>,
+              })}
             </div>
             <Link
               href="/admin/billing/add-ons"
               className="flex-shrink-0 inline-flex items-center gap-1 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition"
             >
-              Get Driver Pool <ArrowRight className="w-3 h-3" />
+              {t("getDriverPool")} <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
         )}
@@ -168,15 +167,15 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
       {/* Section 2: ShipDay credentials — only shown when source isn't "own" */}
       {needsShipDay && (
         <Section
-          title="ShipDay credentials"
-          description="Paste your ShipDay API key. We encrypt it at rest with the platform's encryption key."
+          title={t("credentialsTitle")}
+          description={t("credentialsDescription")}
         >
           <div className="space-y-3">
             {initial.hasApiKey && !replacingKey ? (
               <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-3">
                 <div className="flex items-center gap-2 text-sm text-emerald-900">
                   <Check className="w-4 h-4 text-emerald-600" />
-                  <span className="font-semibold">API key saved</span>
+                  <span className="font-semibold">{t("apiKeySaved")}</span>
                   <span className="text-emerald-700">· ••••</span>
                 </div>
                 <button
@@ -184,13 +183,13 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                   onClick={() => setReplacingKey(true)}
                   className="text-xs font-medium text-emerald-700 hover:underline"
                 >
-                  Replace
+                  {t("replaceKey")}
                 </button>
               </div>
             ) : (
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-                  ShipDay API key
+                  {t("apiKeyLabel")}
                 </label>
                 <div className="relative">
                   <Key className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -198,7 +197,7 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                     type="password"
                     value={apiKey}
                     onChange={(e) => setApiKey(e.target.value)}
-                    placeholder="Paste your ShipDay API key"
+                    placeholder={t("apiKeyPlaceholder")}
                     className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm font-mono"
                     autoComplete="off"
                   />
@@ -209,12 +208,11 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                     onClick={() => { setReplacingKey(false); setApiKey(""); }}
                     className="mt-2 text-xs text-gray-500 hover:underline"
                   >
-                    Cancel — keep the existing key
+                    {t("cancelReplaceKey")}
                   </button>
                 )}
                 <p className="text-[11px] text-gray-500 mt-2 leading-snug">
-                  Find your key in ShipDay → Settings → API. The key is sent
-                  encrypted and never logged.
+                  {t("apiKeyHint")}
                 </p>
               </div>
             )}
@@ -228,14 +226,12 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                   className="w-4 h-4 text-blue-500 rounded focus:ring-2 focus:ring-blue-400"
                 />
                 <span className="text-sm font-medium text-gray-700">
-                  Master enable — actually dispatch to ShipDay
+                  {t("masterEnableLabel")}
                 </span>
               </label>
             </div>
             <p className="text-[11px] text-gray-500 leading-snug">
-              When off, ShipDay calls are skipped even if &quot;Delivery source&quot; is
-              set to ShipDay or Both. Use this to pause dispatch without changing
-              your settings (e.g. during a billing dispute).
+              {t("masterEnableHint")}
             </p>
           </div>
         </Section>
@@ -244,21 +240,21 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
       {/* Section 3: Customer-facing fee */}
       {needsShipDay && (
         <Section
-          title="What does the customer pay for delivery?"
-          description="ShipDay charges you per delivery. You decide how much of that fee the customer sees."
+          title={t("feeSectionTitle")}
+          description={t("feeSectionDescription")}
         >
           <div className="space-y-3">
             <FeeModeOption
               id="pass_through"
-              label="Pass-through"
-              description="Customer pays the entire ShipDay fee. You absorb nothing."
+              label={t("feePassThroughLabel")}
+              description={t("feePassThroughDescription")}
               selected={deliveryFeeMode === "pass_through"}
               onClick={() => setDeliveryFeeMode("pass_through")}
             />
             <FeeModeOption
               id="flat"
-              label="Flat fee"
-              description="Customer pays a fixed fee no matter what ShipDay charges. You absorb the gap."
+              label={t("feeFlatLabel")}
+              description={t("feeFlatDescription")}
               selected={deliveryFeeMode === "flat"}
               onClick={() => setDeliveryFeeMode("flat")}
             >
@@ -273,14 +269,14 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                     onChange={(e) => setFlatDeliveryFee(parseFloat(e.target.value) || 0)}
                     className="w-32 px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                   />
-                  <span className="text-xs text-gray-500">flat delivery fee shown to customer</span>
+                  <span className="text-xs text-gray-500">{t("flatFeeInputHint")}</span>
                 </div>
               )}
             </FeeModeOption>
             <FeeModeOption
               id="tiered"
-              label="Tiered by order total"
-              description="Charge less (or zero) when the order is bigger. e.g. free over $50."
+              label={t("feeTieredLabel")}
+              description={t("feeTieredDescription")}
               selected={deliveryFeeMode === "tiered"}
               onClick={() => setDeliveryFeeMode("tiered")}
             >
@@ -288,7 +284,7 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                 <div className="mt-3 space-y-2">
                   {tieredRules.map((rule, i) => (
                     <div key={i} className="flex items-center gap-2">
-                      <span className="text-xs text-gray-600 w-12">Over</span>
+                      <span className="text-xs text-gray-600 w-12">{t("tierOver")}</span>
                       <DollarSign className="w-3.5 h-3.5 text-gray-400" />
                       <input
                         type="number"
@@ -302,7 +298,7 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                         }}
                         className="w-24 px-2 py-1 border border-gray-300 rounded text-sm"
                       />
-                      <span className="text-xs text-gray-600">→ customer pays</span>
+                      <span className="text-xs text-gray-600">{t("tierCustomerPays")}</span>
                       <DollarSign className="w-3.5 h-3.5 text-gray-400" />
                       <input
                         type="number"
@@ -320,7 +316,7 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                         type="button"
                         onClick={() => setTieredRules(tieredRules.filter((_, j) => j !== i))}
                         className="p-1 text-gray-400 hover:text-red-500"
-                        aria-label="Remove tier"
+                        aria-label={t("removeTierAriaLabel")}
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -331,7 +327,7 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                     onClick={() => setTieredRules([...tieredRules, { minOrderTotal: 0, customerFee: 0 }])}
                     className="text-xs font-medium text-blue-600 hover:underline inline-flex items-center gap-1"
                   >
-                    <Plus className="w-3 h-3" /> Add tier
+                    <Plus className="w-3 h-3" /> {t("addTier")}
                   </button>
                 </div>
               )}
@@ -348,9 +344,9 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
           className="bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow transition flex items-center gap-2"
         >
           {saving ? (
-            <><Loader2 className="w-4 h-4 animate-spin" /> Saving…</>
+            <><Loader2 className="w-4 h-4 animate-spin" /> {t("saving")}</>
           ) : (
-            <>Save changes</>
+            <>{t("saveChanges")}</>
           )}
         </button>
       </div>
@@ -383,6 +379,7 @@ function SourceCard({
    *  a Lock badge; click still calls onClick (which toasts the upsell). */
   locked?: boolean;
 }) {
+  const t = useTranslations("admin.driverPool");
   return (
     <button
       type="button"
@@ -404,12 +401,12 @@ function SourceCard({
         <div className={`font-bold text-sm ${locked ? "text-gray-500" : "text-gray-900"}`}>{label}</div>
         {locked && (
           <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-gray-200 text-gray-600 uppercase tracking-wider inline-flex items-center gap-1">
-            <Lock className="w-2.5 h-2.5" /> Add-on required
+            <Lock className="w-2.5 h-2.5" /> {t("addonRequired")}
           </span>
         )}
         {!locked && selected && (
           <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-500 text-white uppercase tracking-wider">
-            Selected
+            {t("selected")}
           </span>
         )}
       </div>

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { formatCurrency } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 /**
  * /admin/marketplace editor. Two-column layout:
@@ -74,6 +75,7 @@ export function MarketplaceSettingsClient({
   billingMode: "payg" | "monthly";
   isSuperadmin: boolean;
 }) {
+  const t = useTranslations("admin.marketplaceSettings");
   const router = useRouter();
   const [listing, setListing] = useState<Listing>(initialListing);
   const [saving, setSaving] = useState(false);
@@ -106,14 +108,14 @@ export function MarketplaceSettingsClient({
       });
       const data = await res.json();
       if (!res.ok) {
-        toast.error(data.error || "Failed to save");
+        toast.error(data.error || t("saveError"));
         return;
       }
-      toast.success("Marketplace listing updated");
+      toast.success(t("saveSuccess"));
       setDirty(false);
       router.refresh();
     } catch (e: any) {
-      toast.error(e?.message || "Failed to save");
+      toast.error(e?.message || t("saveError"));
     } finally {
       setSaving(false);
     }
@@ -135,8 +137,8 @@ export function MarketplaceSettingsClient({
     update("marketplaceTags", [...listing.marketplaceTags, v]);
     setTagDraft("");
   };
-  const removeTag = (t: string) => {
-    update("marketplaceTags", listing.marketplaceTags.filter((x) => x !== t));
+  const removeTag = (tag: string) => {
+    update("marketplaceTags", listing.marketplaceTags.filter((x) => x !== tag));
   };
 
   const previewBanner = listing.marketplaceBanner || restaurant.bannerUrl;
@@ -148,10 +150,13 @@ export function MarketplaceSettingsClient({
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
             <Sparkles className="w-6 h-6 text-emerald-500" />
-            Marketplace Listing
+            {t("pageTitle")}
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Configure how <span className="font-semibold">{restaurant.name}</span> appears on the public marketplace.
+            {t.rich("pageSubtitle", {
+              name: restaurant.name,
+              semibold: (c) => <span className="font-semibold">{c}</span>,
+            })}
           </p>
         </div>
         {/* Plain <a> rather than next/link <Link> — the marketplace
@@ -165,7 +170,7 @@ export function MarketplaceSettingsClient({
           rel="noopener noreferrer"
           className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1.5"
         >
-          View your live listing <ExternalLink className="w-3.5 h-3.5" />
+          {t("viewLiveListing")} <ExternalLink className="w-3.5 h-3.5" />
         </a>
       </div>
 
@@ -182,12 +187,12 @@ export function MarketplaceSettingsClient({
         </div>
         <div className="flex-1">
           <p className="font-semibold text-sm">
-            {listing.isListed ? "You are live on the marketplace" : "Your listing is paused"}
+            {listing.isListed ? t("statusLiveHeading") : t("statusPausedHeading")}
           </p>
           <p className="text-xs mt-0.5 opacity-90">
             {listing.isListed
-              ? "Customers browsing /marketplace can find and order from you right now."
-              : "You're not showing in the public grid. Your subscription is still active — you can re-list anytime."}
+              ? t("statusLiveDetail")
+              : t("statusPausedDetail")}
           </p>
         </div>
         <button
@@ -198,7 +203,7 @@ export function MarketplaceSettingsClient({
               : "bg-green-500 text-white hover:bg-green-600"
           }`}
         >
-          {listing.isListed ? "Pause" : "Go live"}
+          {listing.isListed ? t("buttonPause") : t("buttonGoLive")}
         </button>
       </div>
 
@@ -206,13 +211,13 @@ export function MarketplaceSettingsClient({
         {/* ── LEFT: Form ───────────────────────────────────── */}
         <div className="space-y-5">
           {/* Tagline */}
-          <Field label="Tagline" hint="One short hook shown under your name. Falls back to your restaurant slogan.">
+          <Field label={t("fieldTaglineLabel")} hint={t("fieldTaglineHint")}>
             <input
               type="text"
               value={listing.marketplaceTagline}
               onChange={(e) => update("marketplaceTagline", e.target.value)}
               maxLength={200}
-              placeholder={`e.g. "Authentic Italian since 1985"`}
+              placeholder={t("fieldTaglinePlaceholder")}
               className="w-full rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400"
             />
             <CharCount value={listing.marketplaceTagline} max={200} />
@@ -220,15 +225,15 @@ export function MarketplaceSettingsClient({
 
           {/* Short description */}
           <Field
-            label="Short description"
-            hint="1–2 sentences for the detail page. Falls back to your restaurant description."
+            label={t("fieldShortDescLabel")}
+            hint={t("fieldShortDescHint")}
           >
             <textarea
               value={listing.marketplaceShortDesc}
               onChange={(e) => update("marketplaceShortDesc", e.target.value)}
               maxLength={500}
               rows={3}
-              placeholder="Family-owned pizzeria specializing in wood-fired Neapolitan-style pizzas and house-made pasta. Open late."
+              placeholder={t("fieldShortDescPlaceholder")}
               className="w-full rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400 resize-none"
             />
             <CharCount value={listing.marketplaceShortDesc} max={500} />
@@ -236,8 +241,8 @@ export function MarketplaceSettingsClient({
 
           {/* Banner URL override */}
           <Field
-            label="Marketplace banner URL"
-            hint="Optional — override your restaurant banner specifically for the marketplace tile. Leave blank to use your default banner."
+            label={t("fieldBannerLabel")}
+            hint={t("fieldBannerHint")}
           >
             <div className="flex gap-2">
               <input
@@ -251,9 +256,9 @@ export function MarketplaceSettingsClient({
                 <button
                   onClick={() => update("marketplaceBanner", "")}
                   className="px-3 py-2 rounded-xl border border-gray-300 text-sm text-gray-600 hover:bg-gray-50"
-                  title="Clear override"
+                  title={t("buttonClearOverrideTitle")}
                 >
-                  Clear
+                  {t("buttonClear")}
                 </button>
               )}
             </div>
@@ -261,8 +266,8 @@ export function MarketplaceSettingsClient({
 
           {/* Categories */}
           <Field
-            label="Categories"
-            hint="Cuisine + service types. Customers filter the browse grid by these. Up to 8."
+            label={t("fieldCategoriesLabel")}
+            hint={t("fieldCategoriesHint")}
           >
             <div className="flex flex-wrap gap-1.5 mb-2">
               {listing.marketplaceCategories.map((c) => (
@@ -280,7 +285,7 @@ export function MarketplaceSettingsClient({
                     addCategory();
                   }
                 }}
-                placeholder="pizza, italian, delivery…"
+                placeholder={t("fieldCategoriesPlaceholder")}
                 maxLength={40}
                 className="flex-1 rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400"
                 disabled={listing.marketplaceCategories.length >= 8}
@@ -290,19 +295,19 @@ export function MarketplaceSettingsClient({
                 disabled={!catDraft.trim() || listing.marketplaceCategories.length >= 8}
                 className="px-4 py-2 rounded-xl bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Add
+                {t("buttonAdd")}
               </button>
             </div>
           </Field>
 
           {/* Tags */}
           <Field
-            label="Tags"
-            hint="Short visual tags shown on the tile (family-friendly, vegan-options, late-night). Up to 8."
+            label={t("fieldTagsLabel")}
+            hint={t("fieldTagsHint")}
           >
             <div className="flex flex-wrap gap-1.5 mb-2">
-              {listing.marketplaceTags.map((t) => (
-                <Chip key={t} label={t} onRemove={() => removeTag(t)} variant="tag" />
+              {listing.marketplaceTags.map((tag) => (
+                <Chip key={tag} label={tag} onRemove={() => removeTag(tag)} variant="tag" />
               ))}
             </div>
             <div className="flex gap-2">
@@ -316,7 +321,7 @@ export function MarketplaceSettingsClient({
                     addTag();
                   }
                 }}
-                placeholder="late-night, vegetarian-options…"
+                placeholder={t("fieldTagsPlaceholder")}
                 maxLength={40}
                 className="flex-1 rounded-xl px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400"
                 disabled={listing.marketplaceTags.length >= 8}
@@ -326,7 +331,7 @@ export function MarketplaceSettingsClient({
                 disabled={!tagDraft.trim() || listing.marketplaceTags.length >= 8}
                 className="px-4 py-2 rounded-xl bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Add
+                {t("buttonAdd")}
               </button>
             </div>
           </Field>
@@ -334,8 +339,8 @@ export function MarketplaceSettingsClient({
           {/* Superadmin-only: featured */}
           {isSuperadmin && (
             <Field
-              label="Featured (superadmin only)"
-              hint="Pin this restaurant to the top of the marketplace grid with a 'Featured' badge."
+              label={t("fieldFeaturedLabel")}
+              hint={t("fieldFeaturedHint")}
             >
               <label className="flex items-center gap-2 text-sm">
                 <input
@@ -346,7 +351,7 @@ export function MarketplaceSettingsClient({
                 />
                 <span className="flex items-center gap-1.5">
                   <Star className={`w-4 h-4 ${listing.marketplaceFeatured ? "text-emerald-500 fill-emerald-500" : "text-gray-300"}`} />
-                  Show as Featured
+                  {t("fieldFeaturedCheckboxLabel")}
                 </span>
               </label>
             </Field>
@@ -355,7 +360,7 @@ export function MarketplaceSettingsClient({
           {/* Save bar */}
           <div className="sticky bottom-4 z-10 bg-white border border-gray-200 rounded-2xl shadow-lg p-3 flex items-center justify-between gap-3">
             <span className="text-xs text-gray-500">
-              {dirty ? "Unsaved changes" : "All changes saved"}
+              {dirty ? t("unsavedChanges") : t("allChangesSaved")}
             </span>
             <button
               onClick={save}
@@ -363,7 +368,7 @@ export function MarketplaceSettingsClient({
               className="px-5 py-2 rounded-xl bg-emerald-500 text-white font-semibold text-sm hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-              {saving ? "Saving…" : "Save changes"}
+              {saving ? t("buttonSaving") : t("buttonSaveChanges")}
             </button>
           </div>
         </div>
@@ -372,7 +377,7 @@ export function MarketplaceSettingsClient({
         <div>
           <div className="sticky top-4">
             <p className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-3 flex items-center gap-2">
-              <ImageIcon className="w-3.5 h-3.5" /> Live preview — your tile on /marketplace
+              <ImageIcon className="w-3.5 h-3.5" /> {t("livePreviewLabel")}
             </p>
             <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200">
               <div className={`bg-white rounded-2xl overflow-hidden shadow-sm border ${
@@ -385,7 +390,7 @@ export function MarketplaceSettingsClient({
                   )}
                   {listing.marketplaceFeatured && (
                     <span className="absolute top-2 right-2 bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
-                      <Star className="w-3 h-3 fill-white" /> Featured
+                      <Star className="w-3 h-3 fill-white" /> {t("badgeFeatured")}
                     </span>
                   )}
                   {restaurant.logoUrl && (
@@ -421,8 +426,9 @@ export function MarketplaceSettingsClient({
                 <div className="mt-3 flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900">
                   <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                   <span>
-                    Preview only — your tile is paused, so customers can't actually see this on /marketplace right now.
-                    Click <strong>Go live</strong> above to show it.
+                    {t.rich("previewPausedNotice", {
+                      strong: (c) => <strong>{c}</strong>,
+                    })}
                   </span>
                 </div>
               )}
@@ -433,15 +439,14 @@ export function MarketplaceSettingsClient({
               <div className="flex items-center gap-2 mb-1">
                 <Trophy className="w-4 h-4" />
                 <span className="text-xs font-bold uppercase tracking-wider opacity-90">
-                  Lifetime savings vs UberEats
+                  {t("lifetimeSavingsHeading")}
                 </span>
               </div>
               <div className="text-3xl font-bold tracking-tight">
                 {formatCurrency(stats.lifetimeSavingsVsUberEatsCents / 100)}
               </div>
               <p className="text-xs mt-1.5 opacity-90 leading-relaxed">
-                That's the 30% commission you DIDN'T pay because customers ordered here instead of
-                on UberEats / DoorDash. Pure margin you got to keep.
+                {t("lifetimeSavingsDetail")}
               </p>
             </div>
 
@@ -449,23 +454,23 @@ export function MarketplaceSettingsClient({
             <div className="mt-4 bg-white border border-gray-200 rounded-2xl p-4">
               <div className="flex items-center justify-between mb-3">
                 <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
-                  This billing month
+                  {t("thisBillingMonth")}
                 </p>
                 <span className="text-[10px] text-gray-400">
-                  since {new Date(stats.currentMonthStartedAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                  {t("since", { date: new Date(stats.currentMonthStartedAt).toLocaleDateString("en-US", { month: "short", day: "numeric" }) })}
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <StatCell
                   icon={<ShoppingBag className="w-3.5 h-3.5" />}
-                  label="Orders"
+                  label={t("statOrders")}
                   value={String(stats.currentMonthOrders)}
                   color="text-blue-600"
                   bg="bg-blue-50"
                 />
                 <StatCell
                   icon={<DollarSign className="w-3.5 h-3.5" />}
-                  label="Revenue"
+                  label={t("statRevenue")}
                   value={formatCurrency(stats.currentMonthRevenue)}
                   color="text-emerald-600"
                   bg="bg-emerald-50"
@@ -482,26 +487,27 @@ export function MarketplaceSettingsClient({
                   <div className="flex items-center gap-1.5 mb-1">
                     <TrendingUp className="w-3.5 h-3.5 text-emerald-700" />
                     <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
-                      Marketplace bill this month
+                      {t("billingHeading")}
                     </span>
                   </div>
                   <div className="text-xl font-bold text-emerald-900">
                     $199.99
-                    <span className="text-xs font-semibold opacity-70 ml-1">/ month · flat</span>
+                    <span className="text-xs font-semibold opacity-70 ml-1">{t("monthlyPriceLabel")}</span>
                   </div>
                   <div className="text-[10px] uppercase tracking-wider opacity-60 mt-0.5">
-                    USD · tax by province (CA) · US/intl exempt
+                    {t("monthlyTaxNote")}
                   </div>
                   <p className="text-[11px] mt-1 leading-snug text-emerald-800">
-                    You&apos;re on the <strong>Monthly plan</strong>. Unlimited marketplace
-                    orders included — no per-order charges. {stats.currentMonthOrders} order
-                    {stats.currentMonthOrders === 1 ? "" : "s"} this month, all free.
+                    {t.rich("monthlyPlanDetail", {
+                      n: stats.currentMonthOrders,
+                      strong: (c) => <strong>{c}</strong>,
+                    })}
                   </p>
                   <Link
                     href="/admin/marketplace/payg-opt-in"
                     className="mt-2 inline-block text-[11px] font-semibold text-emerald-700 hover:underline"
                   >
-                    Switch to Pay-As-You-Go ($3/order, capped at $249.99/mo) →
+                    {t("switchToPayg")}
                   </Link>
                 </div>
               ) : (
@@ -517,7 +523,7 @@ export function MarketplaceSettingsClient({
                     <span className={`text-xs font-bold uppercase tracking-wider ${
                       stats.billing.capHit ? "text-emerald-800" : "text-emerald-800"
                     }`}>
-                      Marketplace bill this month
+                      {t("billingHeading")}
                     </span>
                   </div>
                   <div className={`text-xl font-bold ${
@@ -525,43 +531,41 @@ export function MarketplaceSettingsClient({
                   }`}>
                     {formatCurrency(stats.billing.effectiveCents / 100)}
                     <span className="text-xs font-semibold opacity-70 ml-1">
-                      / {formatCurrency(stats.billing.capCents / 100)} cap
+                      {t("paygCapLabel", { cap: formatCurrency(stats.billing.capCents / 100) })}
                     </span>
                   </div>
                   <div className="text-[10px] uppercase tracking-wider opacity-60 mt-0.5">
-                    USD · tax by province (CA) at settlement
+                    {t("paygTaxNote")}
                   </div>
                   <p className={`text-[11px] mt-1 leading-snug ${
                     stats.billing.capHit ? "text-emerald-800" : "text-emerald-800"
                   }`}>
                     {stats.billing.capHit ? (
-                      <>
-                        You hit the <strong>PAYG monthly cap</strong> of {formatCurrency(stats.billing.capCents / 100)}.
-                        Every additional marketplace order this month is <strong>completely free</strong>.
-                        Counter resets the 1st of next month.
-                      </>
+                      t.rich("paygCapHitDetail", {
+                        capAmount: formatCurrency(stats.billing.capCents / 100),
+                        strong: (c) => <strong>{c}</strong>,
+                      })
                     ) : (
-                      <>
-                        You&apos;re on <strong>Pay-As-You-Go</strong>. $3 per marketplace order
-                        accrues toward a {formatCurrency(stats.billing.capCents / 100)}/month
-                        cap. After the cap, every additional order is free.
-                      </>
+                      t.rich("paygRunningDetail", {
+                        capAmount: formatCurrency(stats.billing.capCents / 100),
+                        strong: (c) => <strong>{c}</strong>,
+                      })
                     )}
                   </p>
                   <Link
                     href="/admin/billing/add-ons"
                     className="mt-2 inline-block text-[11px] font-semibold text-emerald-700 hover:underline"
                   >
-                    Switch to Monthly ($199.99/mo, unlimited) →
+                    {t("switchToMonthly")}
                   </Link>
                 </div>
               )}
 
               {stats.currentMonthOrders === 0 && (
                 <p className="mt-3 text-[11px] text-gray-500 italic leading-relaxed">
-                  No marketplace orders yet this month. Once a customer orders through{" "}
-                  <Link href="/marketplace" className="text-emerald-600 hover:underline">/marketplace</Link>{" "}
-                  → your listing, real numbers appear here.
+                  {t.rich("noOrdersYet", {
+                    link: (c) => <Link href="/marketplace" className="text-emerald-600 hover:underline">{c}</Link>,
+                  })}
                 </p>
               )}
             </div>
@@ -624,6 +628,7 @@ function Chip({
   onRemove: () => void;
   variant: "cat" | "tag";
 }) {
+  const t = useTranslations("admin.marketplaceSettings");
   const colors = variant === "cat"
     ? "bg-amber-100 text-amber-700"
     : "bg-emerald-100 text-emerald-700";
@@ -634,7 +639,7 @@ function Chip({
       <button
         onClick={onRemove}
         className="hover:bg-black/10 rounded-full p-0.5"
-        title="Remove"
+        title={t("buttonRemoveTitle")}
         type="button"
       >
         <X className="w-3 h-3" />

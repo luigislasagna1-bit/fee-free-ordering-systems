@@ -7,6 +7,7 @@ import {
   Layers, ShoppingBag, Sparkles, Tags,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 /**
  * GloriaFood import wizard — 3 steps.
@@ -26,6 +27,7 @@ import toast from "react-hot-toast";
  */
 export function ImportGloriaFoodClient() {
   const router = useRouter();
+  const t = useTranslations("admin.importGloriaFood");
 
   // Wizard state
   const [step, setStep] = useState<"input" | "preview" | "committing" | "done">("input");
@@ -49,14 +51,14 @@ export function ImportGloriaFoodClient() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error ?? `Preview failed (HTTP ${res.status})`);
+        setError(data.error ?? t("previewFailed", { status: res.status }));
         return;
       }
       setPreview(data.preview);
       setExistingCategories(data.existingCategories ?? []);
       setStep("preview");
     } catch (e: any) {
-      setError(e?.message ?? "Network error");
+      setError(e?.message ?? t("networkError"));
     } finally {
       setPreviewing(false);
     }
@@ -74,15 +76,15 @@ export function ImportGloriaFoodClient() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error ?? `Import failed (HTTP ${res.status})`);
+        setError(data.error ?? t("importFailed", { status: res.status }));
         setStep("preview");
         return;
       }
       setCommitResult(data);
       setStep("done");
-      toast.success(`Imported ${data.itemsCreated} items!`);
+      toast.success(t("toastImported", { count: data.itemsCreated ?? 0 }));
     } catch (e: any) {
-      setError(e?.message ?? "Network error");
+      setError(e?.message ?? t("networkError"));
       setStep("preview");
     }
   };
@@ -95,7 +97,7 @@ export function ImportGloriaFoodClient() {
         href="/admin/menu"
         className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 mb-4"
       >
-        <ChevronLeft className="w-4 h-4" /> Back to Menu
+        <ChevronLeft className="w-4 h-4" /> {t("backToMenu")}
       </Link>
 
       <div className="flex items-center gap-3 mb-2">
@@ -103,12 +105,11 @@ export function ImportGloriaFoodClient() {
           <Download className="w-5 h-5" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Import from GloriaFood</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-600">
-            Pull your existing menu — categories, items, sizes, modifier groups, options — in
-            seconds.{" "}
+            {t("pageSubtitle")}{" "}
             <span className="text-gray-500">
-              Works with GloriaFood, Sams Restaurant Systems, and any FoodBooking white-label.
+              {t("pageSubtitleNote")}
             </span>
           </p>
         </div>
@@ -116,13 +117,13 @@ export function ImportGloriaFoodClient() {
 
       {/* Progress chips */}
       <div className="flex items-center gap-2 my-6 text-xs">
-        <StepChip active={step === "input"} done={step !== "input"}>1. Paste code</StepChip>
+        <StepChip active={step === "input"} done={step !== "input"}>{t("step1Label")}</StepChip>
         <ChevronRight className="w-3 h-3 text-gray-300" />
         <StepChip active={step === "preview" || step === "committing"} done={step === "done"}>
-          2. Preview
+          {t("step2Label")}
         </StepChip>
         <ChevronRight className="w-3 h-3 text-gray-300" />
-        <StepChip active={step === "done"} done={false}>3. Confirm</StepChip>
+        <StepChip active={step === "done"} done={false}>{t("step3Label")}</StepChip>
       </div>
 
       {error && (
@@ -136,11 +137,12 @@ export function ImportGloriaFoodClient() {
       {step === "input" && (
         <div className="rounded-2xl border border-gray-200 bg-white p-6">
           <label className="block text-sm font-semibold text-gray-900 mb-2">
-            GloriaFood ordering code, URL, or UID
+            {t("inputLabel")}
           </label>
           <p className="text-xs text-gray-500 mb-3">
-            In your GloriaFood admin go to <strong>Publish → Ordering Button</strong> and copy
-            the HTML snippet. Or paste your ordering page URL. Or just the restaurant UID.
+            {t.rich("inputHint", {
+              strong: (c) => <strong>{c}</strong>,
+            })}
           </p>
           <textarea
             value={source}
@@ -154,7 +156,7 @@ export function ImportGloriaFoodClient() {
               href="/admin/menu"
               className="text-sm text-gray-500 hover:text-gray-700"
             >
-              Cancel
+              {t("cancel")}
             </Link>
             <button
               onClick={handlePreview}
@@ -162,7 +164,7 @@ export function ImportGloriaFoodClient() {
               className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-lg text-sm disabled:opacity-50"
             >
               {previewing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-              {previewing ? "Fetching menu…" : "Preview menu"}
+              {previewing ? t("fetchingMenu") : t("previewMenu")}
             </button>
           </div>
         </div>
@@ -173,16 +175,20 @@ export function ImportGloriaFoodClient() {
         <div className="space-y-4">
           {/* Stat tiles */}
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-            <StatTile icon={Layers} label="Categories" value={preview.stats.categories} />
-            <StatTile icon={ShoppingBag} label="Items" value={preview.stats.items} />
-            <StatTile icon={Tags} label="Sizes" value={preview.stats.variants} />
-            <StatTile icon={Sparkles} label="Modifier groups" value={preview.stats.modifierGroups} />
-            <StatTile icon={Sparkles} label="Options" value={preview.stats.modifierOptions} />
+            <StatTile icon={Layers} label={t("statCategories")} value={preview.stats.categories} />
+            <StatTile icon={ShoppingBag} label={t("statItems")} value={preview.stats.items} />
+            <StatTile icon={Tags} label={t("statSizes")} value={preview.stats.variants} />
+            <StatTile icon={Sparkles} label={t("statModifierGroups")} value={preview.stats.modifierGroups} />
+            <StatTile icon={Sparkles} label={t("statOptions")} value={preview.stats.modifierOptions} />
           </div>
           {(preview.stats.skippedInactive > 0 || preview.stats.skippedHidden > 0) && (
             <div className="text-xs text-gray-500">
-              Skipped {preview.stats.skippedInactive} inactive
-              {preview.stats.skippedHidden > 0 ? ` and ${preview.stats.skippedHidden} hidden` : ""} items.
+              {preview.stats.skippedHidden > 0
+                ? t("skippedBoth", {
+                    inactive: preview.stats.skippedInactive ?? 0,
+                    hidden: preview.stats.skippedHidden ?? 0,
+                  })
+                : t("skippedInactive", { inactive: preview.stats.skippedInactive ?? 0 })}
             </div>
           )}
 
@@ -197,7 +203,7 @@ export function ImportGloriaFoodClient() {
                       <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{cat.description}</div>
                     )}
                     <div className="text-xs text-gray-500 mt-1">
-                      {cat.items.length} items
+                      {t("catItemCount", { count: cat.items.length ?? 0 })}
                     </div>
                   </div>
                   {existingCategories.length > 0 && (
@@ -208,10 +214,10 @@ export function ImportGloriaFoodClient() {
                       }
                       className="text-xs border border-gray-300 rounded-lg px-2 py-1.5 max-w-[200px]"
                     >
-                      <option value="">Create new category</option>
+                      <option value="">{t("createNewCategory")}</option>
                       {existingCategories.map((ec) => (
                         <option key={ec.id} value={ec.id}>
-                          Merge into: {ec.name}
+                          {t("mergeInto", { name: ec.name })}
                         </option>
                       ))}
                     </select>
@@ -220,7 +226,7 @@ export function ImportGloriaFoodClient() {
                 {cat.items.length > 0 && (
                   <details className="mt-3">
                     <summary className="text-xs text-emerald-700 cursor-pointer hover:underline">
-                      Show {cat.items.length} items
+                      {t("showItems", { count: cat.items.length ?? 0 })}
                     </summary>
                     <ul className="mt-2 space-y-1 text-sm">
                       {cat.items.slice(0, 50).map((it: any) => (
@@ -229,7 +235,7 @@ export function ImportGloriaFoodClient() {
                             {it.name}
                             {it.hasVariants && (
                               <span className="text-xs text-gray-400 ml-2">
-                                ({it.variants.length} sizes)
+                                ({t("variantSizes", { count: it.variants.length ?? 0 })})
                               </span>
                             )}
                           </span>
@@ -239,7 +245,7 @@ export function ImportGloriaFoodClient() {
                         </li>
                       ))}
                       {cat.items.length > 50 && (
-                        <li className="pl-3 text-xs text-gray-400">… and {cat.items.length - 50} more</li>
+                        <li className="pl-3 text-xs text-gray-400">{t("andMore", { count: cat.items.length - 50 })}</li>
                       )}
                     </ul>
                   </details>
@@ -254,7 +260,7 @@ export function ImportGloriaFoodClient() {
               className="text-sm text-gray-500 hover:text-gray-700"
               disabled={step === "committing"}
             >
-              ← Start over
+              {t("startOver")}
             </button>
             <button
               onClick={handleCommit}
@@ -262,7 +268,7 @@ export function ImportGloriaFoodClient() {
               className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-lg text-sm disabled:opacity-50"
             >
               {step === "committing" ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
-              {step === "committing" ? "Importing…" : "Import this menu"}
+              {step === "committing" ? t("importing") : t("importThisMenu")}
             </button>
           </div>
         </div>
@@ -272,23 +278,29 @@ export function ImportGloriaFoodClient() {
       {step === "done" && commitResult && (
         <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center">
           <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto mb-3" />
-          <h2 className="text-xl font-bold text-gray-900 mb-1">Menu imported!</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-1">{t("doneHeading")}</h2>
           <p className="text-sm text-gray-700 mb-5">
-            {commitResult.categoriesCreated} categories ·{" "}
-            {commitResult.itemsCreated} items ·{" "}
-            {commitResult.variantsCreated} sizes ·{" "}
-            {commitResult.libraryGroupsCreated ?? 0} library groups ·{" "}
-            {commitResult.groupsCreated} attached groups ·{" "}
-            {commitResult.optionsCreated} options
+            {t("doneSummary", {
+              categories: commitResult.categoriesCreated ?? 0,
+              items: commitResult.itemsCreated ?? 0,
+              sizes: commitResult.variantsCreated ?? 0,
+              libraryGroups: commitResult.libraryGroupsCreated ?? 0,
+              groups: commitResult.groupsCreated ?? 0,
+              options: commitResult.optionsCreated ?? 0,
+            })}
             {typeof commitResult.imagesImported === "number" && (
               <span className="block text-xs text-gray-500 mt-1">
-                {commitResult.imagesImported} image(s) imported
-                {commitResult.imagesFailed > 0 ? ` · ${commitResult.imagesFailed} failed (network)` : ""}
+                {commitResult.imagesFailed > 0
+                  ? t("imagesImportedWithFailures", {
+                      imported: commitResult.imagesImported ?? 0,
+                      failed: commitResult.imagesFailed ?? 0,
+                    })
+                  : t("imagesImported", { imported: commitResult.imagesImported ?? 0 })}
               </span>
             )}
             {commitResult.itemsSkippedDuplicate > 0 && (
               <span className="block text-xs text-gray-500 mt-1">
-                Skipped {commitResult.itemsSkippedDuplicate} duplicate item(s) already in your menu.
+                {t("skippedDuplicates", { count: commitResult.itemsSkippedDuplicate ?? 0 })}
               </span>
             )}
           </p>
@@ -296,7 +308,7 @@ export function ImportGloriaFoodClient() {
             onClick={() => router.push("/admin/menu")}
             className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-lg text-sm"
           >
-            Open Menu editor <ChevronRight className="w-4 h-4" />
+            {t("openMenuEditor")} <ChevronRight className="w-4 h-4" />
           </button>
         </div>
       )}

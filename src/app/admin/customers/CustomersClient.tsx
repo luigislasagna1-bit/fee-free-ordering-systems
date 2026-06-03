@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { Users, Mail, Phone, KeyRound, ChevronRight, Search, Download } from "lucide-react";
 
@@ -41,6 +42,7 @@ type CustomerRow = {
 type FilterKey = "all" | "signed_up" | "guests";
 
 export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
+  const t = useTranslations("admin.customersList");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [query, setQuery] = useState("");
 
@@ -109,12 +111,12 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
-        <h1 className="text-2xl font-bold text-gray-900">Customers</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{t("heading")}</h1>
         <div className="flex items-center gap-3 flex-shrink-0">
           <span className="text-sm text-gray-500">
             {visible.length === customers.length
-              ? `${customers.length} customers`
-              : `${visible.length} of ${customers.length}`}
+              ? t("totalCount", { n: customers.length })
+              : t("filteredCount", { visible: visible.length, total: customers.length })}
           </span>
           {/* GloriaFood parity: one-click CSV export of the visible
               (filtered + searched) customer set. The owner can switch
@@ -126,7 +128,7 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
             disabled={visible.length === 0}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white text-xs font-semibold transition"
           >
-            <Download className="w-3.5 h-3.5" /> Export CSV
+            <Download className="w-3.5 h-3.5" /> {t("exportCsv")}
           </button>
         </div>
       </div>
@@ -135,9 +137,9 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-3 mb-4 flex flex-wrap items-center gap-2">
         <div className="flex gap-1">
           {([
-            { key: "all" as const, label: "All", count: counts.all },
-            { key: "signed_up" as const, label: "Signed up", count: counts.signed_up },
-            { key: "guests" as const, label: "Guests", count: counts.guests },
+            { key: "all" as const, label: t("filterAll"), count: counts.all },
+            { key: "signed_up" as const, label: t("filterSignedUp"), count: counts.signed_up },
+            { key: "guests" as const, label: t("filterGuests"), count: counts.guests },
           ]).map((chip) => (
             <button
               key={chip.key}
@@ -158,7 +160,7 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search name, email, phone…"
+            placeholder={t("searchPlaceholder")}
             className="w-full bg-gray-50 border border-gray-200 rounded-full pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
@@ -169,9 +171,9 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
           <div className="p-12 text-center text-gray-400">
             <Users className="w-10 h-10 mx-auto mb-3 opacity-40" />
             {customers.length === 0 ? (
-              <p>No customers yet. They&apos;ll appear here after their first order.</p>
+              <p>{t("emptyNoCustomers")}</p>
             ) : (
-              <p>No customers match this filter.</p>
+              <p>{t("emptyNoMatch")}</p>
             )}
           </div>
         ) : (
@@ -187,22 +189,22 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
                           <span className="font-semibold text-gray-900 truncate">{c.name}</span>
                           {c.hasAccount && (
                             <span className="inline-flex items-center gap-0.5 text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">
-                              <KeyRound className="w-2.5 h-2.5" />Account
+                              <KeyRound className="w-2.5 h-2.5" />{t("badgeAccount")}
                             </span>
                           )}
                           {c.marketingConsent && (
                             <span className="inline-flex items-center text-[9px] font-bold uppercase tracking-wider bg-sky-100 text-sky-700 px-1.5 py-0.5 rounded">
-                              ✓ Marketing
+                              {t("badgeMarketing")}
                             </span>
                           )}
                         </div>
                         <div className="text-xs text-gray-500 mt-0.5">
-                          {c.totalOrders} order{c.totalOrders === 1 ? "" : "s"} · since {formatDate(c.createdAt)}
+                          {t("ordersSince", { n: c.totalOrders, date: formatDate(c.createdAt) })}
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
                         <div className="font-bold text-gray-900">{formatCurrency(c.totalSpent)}</div>
-                        <div className="text-[10px] text-gray-400 uppercase tracking-wider">total spent</div>
+                        <div className="text-[10px] text-gray-400 uppercase tracking-wider">{t("totalSpentLabel")}</div>
                       </div>
                     </div>
                     {(c.email || c.phone) && (
@@ -231,8 +233,17 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
               <table className="w-full text-sm">
                 <thead className="bg-gray-50 border-b border-gray-100">
                   <tr>
-                    {["Name", "Email", "Phone", "Orders", "Total Spent", "Marketing", "First Order", ""].map((h) => (
-                      <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">{h}</th>
+                    {[
+                      { key: "colName", label: t("colName") },
+                      { key: "colEmail", label: t("colEmail") },
+                      { key: "colPhone", label: t("colPhone") },
+                      { key: "colOrders", label: t("colOrders") },
+                      { key: "colTotalSpent", label: t("colTotalSpent") },
+                      { key: "colMarketing", label: t("colMarketing") },
+                      { key: "colFirstOrder", label: t("colFirstOrder") },
+                      { key: "colActions", label: "" },
+                    ].map((h) => (
+                      <th key={h.key} className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">{h.label}</th>
                     ))}
                   </tr>
                 </thead>
@@ -244,7 +255,7 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
                           {c.name}
                           {c.hasAccount && (
                             <span className="inline-flex items-center gap-0.5 text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">
-                              <KeyRound className="w-2.5 h-2.5" />Account
+                              <KeyRound className="w-2.5 h-2.5" />{t("badgeAccount")}
                             </span>
                           )}
                         </Link>
@@ -256,7 +267,7 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
                       <td className="px-4 py-3">
                         {c.marketingConsent ? (
                           <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">
-                            ✓ Opted in
+                            {t("badgeOptedIn")}
                           </span>
                         ) : (
                           <span className="text-xs text-gray-400">—</span>
@@ -279,11 +290,13 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
 
       {/* Helpful pointer for owners who came here looking for analytics */}
       <p className="mt-4 text-xs text-gray-500">
-        Looking for spend / lifetime metrics over a date range?{" "}
-        <Link href="/admin/reports/list/clients" className="text-emerald-600 font-semibold hover:underline">
-          Reports → Clients (List view)
-        </Link>{" "}
-        — same customers, with date-range filtering and CSV export.
+        {t.rich("analyticsHint", {
+          link: (chunks) => (
+            <Link href="/admin/reports/list/clients" className="text-emerald-600 font-semibold hover:underline">
+              {chunks}
+            </Link>
+          ),
+        })}
       </p>
     </div>
   );

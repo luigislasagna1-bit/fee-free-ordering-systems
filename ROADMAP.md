@@ -17,9 +17,9 @@ currencies; timezones triple-checked. Full plan: `~/.claude/plans/zazzy-beaming-
   fixed → Europe/Rome on prod — root cause of its promo bug).
 - **Phase 1 — Currency everywhere ✅ shipped 2026-06-02.** All money (emails, both receipt builders + 3 print routes, API errors, kitchen End-of-Day) renders in the restaurant's currency via `formatCurrency`. Platform billing stays USD.
 - **Phase 2 — Timezone correctness sweep ✅ shipped 2026-06-02.** Reservation day-of-week, kitchen "rest of day" pause, and the daily/monthly digest windowing (incl. per-restaurant "1st of month") all evaluate in the restaurant's timezone now (were UTC). Remaining date-DISPLAY items (reports-page ranges, receipt timestamps, `formatDate`) folded into Phase 4's locale-aware date pass.
-- **Phase 3 — Full i18n coverage** ⏳ partial.
-  - **3a ✅ shipped 2026-06-02:** added 32 new locales (37 total — GloriaFood-scale), each a full AI-generated dictionary (validated: 0 missing/extra keys, placeholders intact) via a 32-agent workflow. Single-source `src/lib/locales.ts`; switchers + admin language picker list all; signup/profile accept all; basic RTL (`dir`) for Arabic/Hebrew. Customer-facing app + already-translated screens now in 37 languages.
-  - **3b pending:** extract the ~62 English-only ADMIN screens into translation keys (then regenerate the new keys into all 37 dicts) — the remaining staff-UI localization.
+- **Phase 3 — Full i18n coverage** ⏳ in progress.
+  - **3a ✅ shipped:** 37 locales (GloriaFood-scale), single-source `src/lib/locales.ts`, switchers/pickers, basic RTL. Customer-facing app fully localized + verified.
+  - **3b admin-screen extraction (batched, AI-translated):** batch 1 ✅ (4 screens). batch 2+3 ✅ (24 screens: menu editor, full promo wizard, customers, coupons, reservations, autopilot, marketplace, payments, brand dashboard, website editor/theme/domain, payment providers, driver pool, kickstarter, GloriaFood import, publishing) — all 36 locales at full parity (2678 keys). Pipeline: agent-extract → deterministic merge → preflight → AI-translate (recover complex-script stragglers; merge locale files in-code to avoid clobber). ~19 text-bearing admin screens remain (mostly report pages — server components).
 - **Phase 4 — Locale-aware dates/addresses + final verification matrix.**
 
 ## 🔬 Shipped 2026-05-21 → 2026-05-22 (this sprint)

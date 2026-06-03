@@ -18,6 +18,7 @@ import {
   X,
 } from "lucide-react";
 import type { BrandSummary } from "@/lib/brand";
+import { useTranslations } from "next-intl";
 
 /**
  * Brand-level admin dashboard. Renders when the owner is focused on the
@@ -31,6 +32,7 @@ import type { BrandSummary } from "@/lib/brand";
  *     link (and optionally sends an email to a co-owner / manager)
  */
 export function BrandDashboardClient({ summary }: { summary: BrandSummary }) {
+  const t = useTranslations("admin.brandDashboard");
   const router = useRouter();
   const [inviteOpen, setInviteOpen] = useState(false);
 
@@ -58,57 +60,60 @@ export function BrandDashboardClient({ summary }: { summary: BrandSummary }) {
       <div className="flex items-start justify-between flex-wrap gap-4">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold uppercase tracking-wide mb-2">
-            <Building2 className="w-3.5 h-3.5" /> Brand dashboard
+            <Building2 className="w-3.5 h-3.5" /> {t("brandDashboardBadge")}
           </div>
           <h1 className="text-2xl font-bold text-gray-900">{summary.name}</h1>
           <p className="text-sm text-gray-500 mt-1">
-            {summary.locations.length} location{summary.locations.length === 1 ? "" : "s"} ·{" "}
-            {publishedCount} published
+            {t("locationCount", { count: summary.locations.length })} ·{" "}
+            {t("publishedCount", { count: publishedCount })}
           </p>
         </div>
         <button
           onClick={() => setInviteOpen(true)}
           className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2.5 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-2"
         >
-          <Plus className="w-4 h-4" /> Invite new location
+          <Plus className="w-4 h-4" /> {t("inviteNewLocation")}
         </button>
       </div>
 
       {/* ─── Top-line stats ─────────────────────────────────────── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
-          label="Pending orders"
+          label={t("statPendingOrders")}
           value={totalPending.toString()}
           icon={Clock}
           color="amber"
-          subtext={totalPending > 0 ? "Needs attention" : "All clear"}
+          subtext={totalPending > 0 ? t("subtextNeedsAttention") : t("subtextAllClear")}
         />
         <StatCard
-          label="Orders today"
+          label={t("statOrdersToday")}
           value={totalOrdersToday.toString()}
           icon={ShoppingBag}
           color="blue"
-          subtext="Across all locations"
+          subtext={t("subtextAcrossAllLocations")}
         />
         <StatCard
-          label="Revenue today"
+          label={t("statRevenueToday")}
           value={`$${totalRevenueToday.toFixed(2)}`}
           icon={DollarSign}
           color="green"
-          subtext="Across all locations"
+          subtext={t("subtextAcrossAllLocations")}
         />
         <StatCard
-          label="Locations"
+          label={t("statLocations")}
           value={`${publishedCount}/${summary.locations.length}`}
           icon={Store}
           color="purple"
-          subtext={`${publishedCount} live · ${summary.locations.length - publishedCount} setup`}
+          subtext={t("subtextLocationsLiveSetup", {
+            live: publishedCount,
+            setup: summary.locations.length - publishedCount,
+          })}
         />
       </div>
 
       {/* ─── Locations grid ─────────────────────────────────────── */}
       <div>
-        <h2 className="text-lg font-bold text-gray-900 mb-3">Your locations</h2>
+        <h2 className="text-lg font-bold text-gray-900 mb-3">{t("yourLocations")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {summary.locations.map((loc) => (
             <button
@@ -122,7 +127,7 @@ export function BrandDashboardClient({ summary }: { summary: BrandSummary }) {
                     <h3 className="font-bold text-gray-900 truncate">{loc.name}</h3>
                     {loc.isParent && (
                       <span className="text-[10px] uppercase tracking-wider text-emerald-600 font-bold bg-emerald-100 px-2 py-0.5 rounded">
-                        Brand HQ
+                        {t("brandHqBadge")}
                       </span>
                     )}
                   </div>
@@ -132,28 +137,28 @@ export function BrandDashboardClient({ summary }: { summary: BrandSummary }) {
                 </div>
                 {loc.isPublished ? (
                   <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-green-700 bg-green-100 px-2 py-0.5 rounded whitespace-nowrap">
-                    <CheckCircle2 className="w-3 h-3" /> Live
+                    <CheckCircle2 className="w-3 h-3" /> {t("statusLive")}
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-700 bg-amber-100 px-2 py-0.5 rounded whitespace-nowrap">
-                    <AlertCircle className="w-3 h-3" /> Setup
+                    <AlertCircle className="w-3 h-3" /> {t("statusSetup")}
                   </span>
                 )}
               </div>
 
               <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-gray-100">
                 <div>
-                  <div className="text-[10px] uppercase tracking-wider text-gray-500">Pending</div>
+                  <div className="text-[10px] uppercase tracking-wider text-gray-500">{t("colPending")}</div>
                   <div className={`text-lg font-bold ${loc.stats.pendingOrders > 0 ? "text-amber-600" : "text-gray-400"}`}>
                     {loc.stats.pendingOrders}
                   </div>
                 </div>
                 <div>
-                  <div className="text-[10px] uppercase tracking-wider text-gray-500">Today</div>
+                  <div className="text-[10px] uppercase tracking-wider text-gray-500">{t("colToday")}</div>
                   <div className="text-lg font-bold text-gray-900">{loc.stats.totalOrdersToday}</div>
                 </div>
                 <div>
-                  <div className="text-[10px] uppercase tracking-wider text-gray-500">Revenue</div>
+                  <div className="text-[10px] uppercase tracking-wider text-gray-500">{t("colRevenue")}</div>
                   <div className="text-lg font-bold text-gray-900">
                     ${loc.stats.revenueToday.toFixed(0)}
                   </div>
@@ -161,7 +166,7 @@ export function BrandDashboardClient({ summary }: { summary: BrandSummary }) {
               </div>
 
               <div className="mt-4 text-xs font-medium text-emerald-600 group-hover:underline flex items-center gap-1">
-                Manage location <ExternalLink className="w-3 h-3" />
+                {t("manageLocation")} <ExternalLink className="w-3 h-3" />
               </div>
             </button>
           ))}
@@ -170,11 +175,11 @@ export function BrandDashboardClient({ summary }: { summary: BrandSummary }) {
 
       {/* ─── What's NEXT row (placeholder for Phase 2) ─────────── */}
       <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5">
-        <h3 className="font-bold text-gray-900 mb-2">Coming next</h3>
+        <h3 className="font-bold text-gray-900 mb-2">{t("comingNextHeading")}</h3>
         <ul className="text-sm text-gray-700 space-y-1">
-          <li>📋 Master menu — edit once, push to selected locations (Phase 2)</li>
-          <li>📊 Cross-location reports — which location is your top performer?</li>
-          <li>📣 Chain-wide promos — run one campaign across every location</li>
+          <li>{t("comingNextMasterMenu")}</li>
+          <li>{t("comingNextReports")}</li>
+          <li>{t("comingNextPromos")}</li>
         </ul>
       </div>
 
@@ -240,6 +245,7 @@ function InviteLocationModal({
   onClose: () => void;
   onSent: () => void;
 }) {
+  const t = useTranslations("admin.brandDashboard");
   const [email, setEmail] = useState("");
   const [suggestedName, setSuggestedName] = useState("");
   const [sending, setSending] = useState(false);
@@ -258,12 +264,12 @@ function InviteLocationModal({
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data?.error || "Failed to create invite");
+        setError(data?.error || t("errorFailedToCreateInvite"));
         return;
       }
       setGeneratedUrl(data.url);
     } catch (e: any) {
-      setError(e?.message || "Failed to create invite");
+      setError(e?.message || t("errorFailedToCreateInvite"));
     } finally {
       setSending(false);
     }
@@ -282,38 +288,39 @@ function InviteLocationModal({
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
         <div className="flex items-center justify-between p-5 border-b border-gray-100">
-          <h2 className="text-lg font-bold text-gray-900">Invite a new location</h2>
+          <h2 className="text-lg font-bold text-gray-900">{t("modalTitle")}</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600"><X className="w-5 h-5" /></button>
         </div>
         <div className="p-5 space-y-4">
           {!generatedUrl ? (
             <>
               <p className="text-sm text-gray-600">
-                Generate a signup link for a new location under <strong>{brandName}</strong>.
-                The recipient completes the standard signup flow with their own email + password;
-                a new Restaurant gets created and linked to your brand automatically.
+                {t.rich("modalDescription", {
+                  brandName,
+                  strong: (c) => <strong>{c}</strong>,
+                })}
               </p>
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1">
-                  Recipient email <span className="text-gray-400 font-normal">(optional — emails them the link)</span>
+                  {t("labelRecipientEmail")} <span className="text-gray-400 font-normal">{t("labelRecipientEmailOptional")}</span>
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="manager@brooklyn.example.com"
+                  placeholder={t("placeholderEmail")}
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
                 />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1">
-                  Suggested location name <span className="text-gray-400 font-normal">(optional)</span>
+                  {t("labelSuggestedName")} <span className="text-gray-400 font-normal">{t("labelOptional")}</span>
                 </label>
                 <input
                   type="text"
                   value={suggestedName}
                   onChange={(e) => setSuggestedName(e.target.value)}
-                  placeholder="Brooklyn Branch"
+                  placeholder={t("placeholderLocationName")}
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
                 />
               </div>
@@ -328,14 +335,13 @@ function InviteLocationModal({
               <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-sm text-green-800 flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <span>
-                  Invite created.
                   {email
-                    ? ` We emailed it to ${email}.`
-                    : " Copy the link below and share it with the new location's owner."}
+                    ? t("inviteCreatedWithEmail", { email })
+                    : t("inviteCreatedNoEmail")}
                 </span>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">Signup link</label>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelSignupLink")}</label>
                 <div className="flex items-center gap-2">
                   <input
                     readOnly
@@ -347,11 +353,11 @@ function InviteLocationModal({
                     className="px-3 py-2 text-xs font-semibold bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center gap-1"
                   >
                     {copied ? <Check className="w-3.5 h-3.5 text-green-600" /> : <Copy className="w-3.5 h-3.5" />}
-                    {copied ? "Copied" : "Copy"}
+                    {copied ? t("buttonCopied") : t("buttonCopy")}
                   </button>
                 </div>
                 <p className="text-[10px] text-gray-500 mt-1">
-                  Link expires in 30 days. Single-use — once they complete signup it can't be reused.
+                  {t("linkExpiryNotice")}
                 </p>
               </div>
             </>
@@ -360,14 +366,14 @@ function InviteLocationModal({
         <div className="flex justify-end gap-3 p-5 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
           {!generatedUrl ? (
             <>
-              <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
+              <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">{t("buttonCancel")}</button>
               <button
                 onClick={generate}
                 disabled={sending}
                 className="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg disabled:opacity-50 flex items-center gap-2"
               >
                 {sending && <Loader2 className="w-4 h-4 animate-spin" />}
-                {sending ? "Creating…" : "Create invite"}
+                {sending ? t("buttonCreating") : t("buttonCreateInvite")}
               </button>
             </>
           ) : (
@@ -375,7 +381,7 @@ function InviteLocationModal({
               onClick={onSent}
               className="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg"
             >
-              Done
+              {t("buttonDone")}
             </button>
           )}
         </div>

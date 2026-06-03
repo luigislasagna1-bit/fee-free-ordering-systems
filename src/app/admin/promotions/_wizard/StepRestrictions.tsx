@@ -10,6 +10,7 @@
  */
 
 import { Plus, Trash2, Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { PROMO_DEFAULT_IMAGES } from "@/lib/promo-default-images";
 
@@ -56,22 +57,6 @@ export type Step3Form = {
   isActive: boolean;
 };
 
-const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-const ORDER_CHANNELS: { value: string; label: string }[] = [
-  { value: "pickup", label: "Pickup" },
-  { value: "delivery", label: "Delivery" },
-  { value: "dine_in", label: "Dine-in" },
-  { value: "catering", label: "Catering" },
-  { value: "takeout", label: "Takeout" },
-];
-
-const STACKING_RULES = [
-  { value: "standard", label: "Standard", desc: "Stacks with other standard promos." },
-  { value: "exclusive", label: "Exclusive", desc: "Blocks all others except Masters." },
-  { value: "master", label: "Master", desc: "Applies alongside any other promo." },
-];
-
 function hhmmToMin(hhmm: string): number {
   if (!hhmm) return 0;
   const [h, m] = hhmm.split(":").map(Number);
@@ -94,6 +79,32 @@ export function StepRestrictions({
   paymentMethods: string[]; // restaurant's enabled payment slugs
   deliveryZones: { id: string; name: string }[];
 }) {
+  const t = useTranslations("admin.promoStepRestrictions");
+
+  const DAY_NAMES = [
+    t("daySun"),
+    t("dayMon"),
+    t("dayTue"),
+    t("dayWed"),
+    t("dayThu"),
+    t("dayFri"),
+    t("daySat"),
+  ];
+
+  const ORDER_CHANNELS: { value: string; label: string }[] = [
+    { value: "pickup", label: t("channelPickup") },
+    { value: "delivery", label: t("channelDelivery") },
+    { value: "dine_in", label: t("channelDineIn") },
+    { value: "catering", label: t("channelCatering") },
+    { value: "takeout", label: t("channelTakeout") },
+  ];
+
+  const STACKING_RULES = [
+    { value: "standard", label: t("stackingStandardLabel"), desc: t("stackingStandardDesc") },
+    { value: "exclusive", label: t("stackingExclusiveLabel"), desc: t("stackingExclusiveDesc") },
+    { value: "master", label: t("stackingMasterLabel"), desc: t("stackingMasterDesc") },
+  ];
+
   const toggleDay = (d: number) => {
     const days = form.daysOfWeek.includes(d)
       ? form.daysOfWeek.filter((x) => x !== d)
@@ -151,18 +162,17 @@ export function StepRestrictions({
   return (
     <div className="space-y-7">
       <div className="mb-2">
-        <h2 className="text-lg font-semibold text-gray-900">Restrictions & display</h2>
+        <h2 className="text-lg font-semibold text-gray-900">{t("pageTitle")}</h2>
         <p className="text-sm text-gray-500 mt-1">
-          Set when, where, and for whom this promo runs. Anything left blank is
-          unrestricted.
+          {t("pageSubtitle")}
         </p>
       </div>
 
       {/* HAPPY HOUR (days + usable-hour window) */}
-      <Section title="Happy Hour" subtitle="Limit which days and hours the discount applies.">
+      <Section title={t("happyHourTitle")} subtitle={t("happyHourSubtitle")}>
         <div>
           <label className="block text-xs font-medium text-gray-600 mb-1.5">
-            Days of week
+            {t("daysOfWeekLabel")}
           </label>
           <div className="flex gap-1.5 flex-wrap">
             {DAY_NAMES.map((d, i) => (
@@ -182,7 +192,7 @@ export function StepRestrictions({
         </div>
         <div className="grid grid-cols-2 gap-3 mt-3">
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Usable from</label>
+            <label className="block text-xs text-gray-500 mb-1">{t("usableFromLabel")}</label>
             <input
               type="time"
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
@@ -191,7 +201,7 @@ export function StepRestrictions({
             />
           </div>
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Usable to</label>
+            <label className="block text-xs text-gray-500 mb-1">{t("usableToLabel")}</label>
             <input
               type="time"
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
@@ -201,13 +211,12 @@ export function StepRestrictions({
           </div>
         </div>
         <p className="text-xs text-gray-400 mt-1.5">
-          Leave blank for no time constraint. Promo is visible all day but the
-          discount only applies during these hours.
+          {t("happyHourHint")}
         </p>
       </Section>
 
       {/* CART VALUE */}
-      <Section title="Cart Value" subtitle="Minimum spend required for the promo to apply.">
+      <Section title={t("cartValueTitle")} subtitle={t("cartValueSubtitle")}>
         <div className="relative w-48">
           <span className="absolute left-3 top-2 text-gray-400 text-sm">$</span>
           <input
@@ -222,10 +231,10 @@ export function StepRestrictions({
       </Section>
 
       {/* EXPIRATION */}
-      <Section title="Expiration" subtitle="Optional start and end window.">
+      <Section title={t("expirationTitle")} subtitle={t("expirationSubtitle")}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Starts at</label>
+            <label className="block text-xs text-gray-500 mb-1">{t("startsAtLabel")}</label>
             <input
               type="datetime-local"
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
@@ -234,7 +243,7 @@ export function StepRestrictions({
             />
           </div>
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Ends at</label>
+            <label className="block text-xs text-gray-500 mb-1">{t("endsAtLabel")}</label>
             <input
               type="datetime-local"
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
@@ -246,7 +255,7 @@ export function StepRestrictions({
       </Section>
 
       {/* ORDER CHANNEL */}
-      <Section title="Order Channel" subtitle="Which ordering modes this promo applies to.">
+      <Section title={t("orderChannelTitle")} subtitle={t("orderChannelSubtitle")}>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
           {ORDER_CHANNELS.map((c) => (
             <label
@@ -266,13 +275,13 @@ export function StepRestrictions({
       </Section>
 
       {/* CLIENT TYPE */}
-      <Section title="Client Type" subtitle="Who can use this promo.">
+      <Section title={t("clientTypeTitle")} subtitle={t("clientTypeSubtitle")}>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {[
-            { value: "any", label: "Any customer" },
-            { value: "new", label: "New only" },
-            { value: "returning", label: "Returning" },
-            { value: "member", label: "Members only" },
+            { value: "any", label: t("clientTypeAny") },
+            { value: "new", label: t("clientTypeNew") },
+            { value: "returning", label: t("clientTypeReturning") },
+            { value: "member", label: t("clientTypeMember") },
           ].map((opt) => (
             <button
               key={opt.value}
@@ -291,12 +300,12 @@ export function StepRestrictions({
 
       {/* PAYMENT */}
       <Section
-        title="Payment"
-        subtitle="Limit to specific payment methods. Leave all unchecked for no restriction."
+        title={t("paymentTitle")}
+        subtitle={t("paymentSubtitle")}
       >
         {paymentMethods.length === 0 ? (
           <p className="text-xs text-gray-400">
-            No payment methods configured for this restaurant.
+            {t("paymentNoMethods")}
           </p>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -323,12 +332,12 @@ export function StepRestrictions({
       {/* DELIVERY AREA (only when delivery is a chosen channel) */}
       {form.orderType.includes("delivery") && (
         <Section
-          title="Delivery Area"
-          subtitle="Limit to specific delivery zones. Leave all unchecked for no restriction."
+          title={t("deliveryAreaTitle")}
+          subtitle={t("deliveryAreaSubtitle")}
         >
           {deliveryZones.length === 0 ? (
             <p className="text-xs text-gray-400">
-              No delivery zones configured for this restaurant.
+              {t("deliveryAreaNoZones")}
             </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -352,11 +361,11 @@ export function StepRestrictions({
       )}
 
       {/* FREQUENCY */}
-      <Section title="Frequency" subtitle="Cap on how often this promo can be used.">
+      <Section title={t("frequencyTitle")} subtitle={t("frequencySubtitle")}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs text-gray-500 mb-1">
-              Total usage limit
+              {t("usageLimitLabel")}
             </label>
             <input
               type="number"
@@ -364,12 +373,12 @@ export function StepRestrictions({
               className="w-40 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               value={form.usageLimit}
               onChange={(e) => setForm({ usageLimit: e.target.value })}
-              placeholder="Unlimited"
+              placeholder={t("usageLimitPlaceholder")}
             />
           </div>
           <Toggle
-            label="Once per customer for life"
-            sub="If on, each customer can redeem this promo at most once, ever."
+            label={t("oncePerCustomerLabel")}
+            sub={t("oncePerCustomerSub")}
             checked={form.onceLifetimePerClient}
             onChange={(v) => setForm({ onceLifetimePerClient: v })}
           />
@@ -377,7 +386,7 @@ export function StepRestrictions({
       </Section>
 
       {/* EXCLUSIVITY */}
-      <Section title="Exclusivity" subtitle="How this promo stacks with others.">
+      <Section title={t("exclusivityTitle")} subtitle={t("exclusivitySubtitle")}>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           {STACKING_RULES.map((r) => {
             const active = form.stackingRule === r.value;
@@ -407,13 +416,13 @@ export function StepRestrictions({
 
       {/* LIMITED SHOWTIME (visibility windows) */}
       <Section
-        title="Limited Showtime"
-        subtitle="Promo is HIDDEN from the menu outside these windows but can still be applied via coupon."
+        title={t("limitedShowtimeTitle")}
+        subtitle={t("limitedShowtimeSubtitle")}
       >
         <div className="space-y-2">
           {form.limitedShowtimeSchedules.length === 0 && (
             <p className="text-xs text-gray-400">
-              No windows set. Promo is visible during its general display rules.
+              {t("limitedShowtimeEmpty")}
             </p>
           )}
           {form.limitedShowtimeSchedules.map((s, i) => (
@@ -442,7 +451,7 @@ export function StepRestrictions({
                 }
                 className="border border-gray-200 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               />
-              <span className="text-xs text-gray-400">to</span>
+              <span className="text-xs text-gray-400">{t("showtimeTo")}</span>
               <input
                 type="time"
                 value={minToHHMM(s.hourEnd)}
@@ -463,29 +472,29 @@ export function StepRestrictions({
             onClick={addShowtime}
             className="flex items-center gap-1.5 text-sm text-emerald-600 hover:text-emerald-700 font-medium"
           >
-            <Plus className="w-3.5 h-3.5" /> Add showtime
+            <Plus className="w-3.5 h-3.5" /> {t("addShowtime")}
           </button>
         </div>
       </Section>
 
       {/* DISPLAY MODE */}
-      <Section title="Display Mode" subtitle="How customers discover this promo.">
+      <Section title={t("displayModeTitle")} subtitle={t("displayModeSubtitle")}>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           {[
             {
               value: "menu_visible",
-              label: "Menu visible",
-              desc: "Card shows alongside menu items.",
+              label: t("displayModeMenuVisibleLabel"),
+              desc: t("displayModeMenuVisibleDesc"),
             },
             {
               value: "hidden_coupon_only",
-              label: "Coupon only",
-              desc: "Hidden from menu; activates with coupon code.",
+              label: t("displayModeCouponOnlyLabel"),
+              desc: t("displayModeCouponOnlyDesc"),
             },
             {
               value: "popup",
-              label: "Popup",
-              desc: "Modal pops up on ordering page.",
+              label: t("displayModePopupLabel"),
+              desc: t("displayModePopupDesc"),
             },
           ].map((opt) => {
             const active = form.displayMode === opt.value;
@@ -514,11 +523,11 @@ export function StepRestrictions({
       </Section>
 
       {/* HIGHLIGHT THRESHOLD + IMAGE */}
-      <Section title="Display details">
+      <Section title={t("displayDetailsTitle")}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs text-gray-500 mb-1">
-              Highlight threshold ($)
+              {t("highlightThresholdLabel")}
             </label>
             <div className="relative w-40">
               <span className="absolute left-3 top-2 text-gray-400 text-sm">$</span>
@@ -532,12 +541,11 @@ export function StepRestrictions({
               />
             </div>
             <p className="text-xs text-gray-400 mt-1">
-              If set, shows &quot;Add $X more to unlock!&quot; when cart is within
-              $X of the minimum.
+              {t("highlightThresholdHint")}
             </p>
           </div>
           <div>
-            <label className="block text-xs text-gray-500 mb-2">Promo card image</label>
+            <label className="block text-xs text-gray-500 mb-2">{t("promoCardImageLabel")}</label>
             {/* Default-image gallery — pick one of our designed backgrounds
                 with a click. Shows a check mark on the active one. */}
             <div className="grid grid-cols-3 gap-2 mb-3">
@@ -574,41 +582,39 @@ export function StepRestrictions({
                 );
               })}
             </div>
-            <div className="text-xs text-gray-500 mb-2">— or upload your own —</div>
+            <div className="text-xs text-gray-500 mb-2">{t("orUploadOwn")}</div>
             <ImageUpload
               value={form.imageUrl}
               onChange={(url) => setForm({ imageUrl: url })}
               aspectRatio="wide"
             />
             <p className="text-xs text-gray-400 mt-1">
-              Click a design above to use it, or upload / paste a URL for
-              your own image. If you skip this entirely, the first design
-              is used as a default.
+              {t("imageUploadHint")}
             </p>
           </div>
         </div>
       </Section>
 
       {/* ACTIVATION */}
-      <Section title="Activation" subtitle="How customers trigger this promo.">
+      <Section title={t("activationTitle")} subtitle={t("activationSubtitle")}>
         <Toggle
-          label="Auto-apply when cart qualifies"
+          label={t("autoApplyLabel")}
           sub={
             form.autoApply
-              ? "The promo fires automatically the moment the cart matches the rules. The coupon code below (if set) is an OPTIONAL alias for power users."
-              : "Customers MUST type the coupon code below — the promo will NOT fire automatically even when the cart qualifies. Use this for flyer codes, email-only deals, or rewards you hand out personally."
+              ? t("autoApplyOnSub")
+              : t("autoApplyOffSub")
           }
           checked={form.autoApply}
           onChange={(v) => setForm({ autoApply: v })}
         />
         <div className="mt-3">
           <label className="block text-xs text-gray-500 mb-1">
-            Coupon code{" "}
+            {t("couponCodeLabel")}{" "}
             {!form.autoApply && (
-              <span className="text-red-500 font-semibold">(required)</span>
+              <span className="text-red-500 font-semibold">{t("couponCodeRequired")}</span>
             )}
             {form.autoApply && (
-              <span className="text-gray-400 font-normal">(optional)</span>
+              <span className="text-gray-400 font-normal">{t("couponCodeOptional")}</span>
             )}
           </label>
           <input
@@ -619,36 +625,35 @@ export function StepRestrictions({
             }`}
             value={form.couponCode}
             onChange={(e) => setForm({ couponCode: e.target.value.toUpperCase() })}
-            placeholder="e.g. LUNCH20"
+            placeholder={t("couponCodePlaceholder")}
           />
           {!form.autoApply && !form.couponCode.trim() && (
             <p className="text-xs text-red-500 mt-1">
-              A coupon code is required when auto-apply is off — otherwise
-              customers have no way to trigger this promo.
+              {t("couponCodeMissingError")}
             </p>
           )}
         </div>
       </Section>
 
       {/* BANNER */}
-      <Section title="Banner" subtitle="Top-of-page promo card on /order.">
+      <Section title={t("bannerTitle")} subtitle={t("bannerSubtitle")}>
         <Toggle
-          label="Show on customer banner"
-          sub="Pin this promo to the top of the ordering page."
+          label={t("showOnBannerLabel")}
+          sub={t("showOnBannerSub")}
           checked={form.showOnBanner}
           onChange={(v) => setForm({ showOnBanner: v })}
         />
         {form.showOnBanner && (
           <div className="mt-3">
             <label className="block text-xs text-gray-500 mb-1">
-              Banner headline{" "}
-              <span className="text-gray-400">(optional — defaults to name)</span>
+              {t("bannerHeadlineLabel")}{" "}
+              <span className="text-gray-400">{t("bannerHeadlineOptional")}</span>
             </label>
             <input
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               value={form.bannerHeadline}
               onChange={(e) => setForm({ bannerHeadline: e.target.value })}
-              placeholder="e.g. 20% off lunch — today only!"
+              placeholder={t("bannerHeadlinePlaceholder")}
               maxLength={80}
             />
           </div>
@@ -658,8 +663,8 @@ export function StepRestrictions({
       {/* ACTIVE */}
       <div className="border-t pt-5">
         <Toggle
-          label="Promo is active"
-          sub="If off, the promo won't apply even if its conditions are met."
+          label={t("promoIsActiveLabel")}
+          sub={t("promoIsActiveSub")}
           checked={form.isActive}
           onChange={(v) => setForm({ isActive: v })}
         />

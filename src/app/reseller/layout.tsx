@@ -3,6 +3,7 @@ import { ChefHat } from "lucide-react";
 import prisma from "@/lib/db";
 import { ROLES } from "@/lib/roles";
 import { getSessionUser } from "@/lib/session";
+import { getReportAccess } from "@/lib/reseller-reports-access";
 import { ResellerNav } from "./ResellerNav";
 import { SuperadminImpersonationBanner } from "./SuperadminImpersonationBanner";
 
@@ -40,6 +41,9 @@ export default async function ResellerLayout({ children }: { children: React.Rea
 
   const isApproved = profile?.status === "approved";
   const isSuperadminViewing = user.impersonationMode === "superadmin_as_reseller";
+  // Show the "Reports & Requests" nav entry only to resellers who've been
+  // invited to the report center (or superadmins). Same gate the page uses.
+  const canViewReports = (await getReportAccess()).canView;
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden flex-col">
@@ -58,7 +62,7 @@ export default async function ResellerLayout({ children }: { children: React.Rea
               <div className="text-[10px] uppercase tracking-wider text-gray-500">Reseller</div>
             </div>
           </div>
-          {isApproved && <ResellerNav />}
+          {isApproved && <ResellerNav canViewReports={canViewReports} />}
           <div className="mt-auto p-4 border-t border-gray-700 text-xs text-gray-500">
             {profile?.companyName ?? user.email}
             <div className="mt-1 text-[10px] uppercase">{profile?.status ?? "no profile"}</div>

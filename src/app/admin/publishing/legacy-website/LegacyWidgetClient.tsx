@@ -4,6 +4,7 @@ import {
   Copy, Check, AlertCircle, Info, Sparkles, Printer,
   ChevronDown, ChevronRight, Code2, MousePointerClick, ExternalLink,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /** Inline Facebook brand mark. Lucide doesn't ship a Facebook icon
  *  (third-party brand marks aren't in their open set), so we use the
@@ -80,6 +81,7 @@ export function LegacyWidgetClient({
    *  opens an empty modal. */
   acceptsReservations?: boolean;
 }) {
+  const t = useTranslations("admin.legacyWidget");
   const [snippetType, setSnippetType] = useState<SnippetType>("popup_js");
   const [label, setLabel] = useState(DEFAULT_LABEL);
   const [color, setColor] = useState(DEFAULT_COLOR);
@@ -165,10 +167,9 @@ export function LegacyWidgetClient({
         <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 flex items-start gap-3">
           <AlertCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
           <div className="text-sm text-emerald-900">
-            <p className="font-medium">Not yet published</p>
+            <p className="font-medium">{t("notYetPublishedTitle")}</p>
             <p className="mt-0.5 text-emerald-800">
-              You can copy this code now, but the widget won&apos;t accept orders until you finish setup
-              and click Publish on the previous page.
+              {t("notYetPublishedBody")}
             </p>
           </div>
         </div>
@@ -187,18 +188,18 @@ export function LegacyWidgetClient({
           active={snippetType === "popup_js"}
           onClick={() => setSnippetType("popup_js")}
           icon={<MousePointerClick className="w-5 h-5" />}
-          title="Popup button"
-          description="Floating button on every page that opens a full-screen ordering modal. Most polished UX. Must be pasted into your site's site-wide custom code area."
-          tag="BEST UX"
+          title={t("popupButtonTitle")}
+          description={t("popupButtonDescription")}
+          tag={t("popupButtonTag")}
           tagColor="emerald"
         />
         <SnippetTypeCard
           active={snippetType === "button_link"}
           onClick={() => setSnippetType("button_link")}
           icon={<ExternalLink className="w-5 h-5" />}
-          title="HTML Button (paste anywhere)"
-          description="A styled HTML button you paste into any HTML widget on your page. Click opens the full ordering page in a new tab. Works in any builder. Same approach GloriaFood uses."
-          tag="WORKS EVERYWHERE"
+          title={t("htmlButtonTitle")}
+          description={t("htmlButtonDescription")}
+          tag={t("htmlButtonTag")}
           tagColor="amber"
         />
       </div>
@@ -212,10 +213,10 @@ export function LegacyWidgetClient({
       <details className="rounded-lg border border-gray-200 bg-white">
         <summary className="cursor-pointer px-4 py-2.5 text-xs font-medium text-gray-600 hover:text-gray-900 flex items-center gap-2">
           <Code2 className="w-3.5 h-3.5" />
-          Advanced: embed the entire menu inline (instead of a button)
+          {t("advancedEmbedSummary")}
           {snippetType === "iframe" && (
             <span className="ml-auto text-[10px] font-bold text-blue-700 bg-blue-100 rounded-full px-2 py-0.5">
-              ACTIVE
+              {t("activeBadge")}
             </span>
           )}
         </summary>
@@ -234,9 +235,9 @@ export function LegacyWidgetClient({
                 <Code2 className="w-5 h-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <h4 className="font-bold text-gray-900 text-sm">HTML Embed (inline menu, no button)</h4>
+                <h4 className="font-bold text-gray-900 text-sm">{t("htmlEmbedCardTitle")}</h4>
                 <p className="text-xs text-gray-600 mt-1 leading-relaxed">
-                  Plain iframe that renders the entire menu directly inline. No button, no popup — customers browse and order without clicking anything first. Best for a dedicated &quot;Order Online&quot; page.
+                  {t("htmlEmbedCardDescription")}
                 </p>
               </div>
             </div>
@@ -250,14 +251,14 @@ export function LegacyWidgetClient({
         <div className="rounded-xl border border-gray-200 bg-white p-5 space-y-5">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-emerald-500" />
-            <h3 className="font-semibold text-gray-900">Customize</h3>
+            <h3 className="font-semibold text-gray-900">{t("customizeHeading")}</h3>
           </div>
 
           {snippetType === "iframe" && (
             <>
               <div>
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-                  Embed height (pixels)
+                  {t("embedHeightLabel")}
                 </label>
                 <input
                   type="number"
@@ -269,17 +270,17 @@ export function LegacyWidgetClient({
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
                 />
                 <p className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                  Height of the embedded menu in your page. <strong>700px</strong> is a good default — fits most menus without scrolling inside the iframe. Increase if you have many categories.
+                  {t.rich("embedHeightHint", { strong: (c) => <strong>{c}</strong> })}
                 </p>
               </div>
               <div className="rounded-lg border border-blue-200 bg-blue-50 p-3 text-xs text-blue-900 leading-relaxed">
-                <p className="font-bold mb-1">📝 Where to paste this</p>
+                <p className="font-bold mb-1">{t("iframeWhereToPasteTitle")}</p>
                 <ol className="list-decimal pl-4 space-y-1">
-                  <li>In Wix: drag in an <strong>&quot;Embed HTML&quot;</strong> element wherever you want the menu</li>
-                  <li>Paste the code below into it</li>
-                  <li>Resize the Wix element to roughly match the height above</li>
+                  <li>{t.rich("iframeWhereToPasteStep1", { strong: (c) => <strong>{c}</strong> })}</li>
+                  <li>{t("iframeWhereToPasteStep2")}</li>
+                  <li>{t("iframeWhereToPasteStep3")}</li>
                 </ol>
-                <p className="mt-2">Works the same on Squarespace (Code Block), WordPress (Custom HTML block), Webflow (Embed widget), etc.</p>
+                <p className="mt-2">{t("iframeWhereToPasteNote")}</p>
               </div>
             </>
           )}
@@ -287,13 +288,13 @@ export function LegacyWidgetClient({
           {snippetType === "button_link" && (
             <>
               <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900 leading-relaxed">
-                <p className="font-bold mb-1">📝 Where to paste this</p>
+                <p className="font-bold mb-1">{t("buttonLinkWhereToPasteTitle")}</p>
                 <ol className="list-decimal pl-4 space-y-1">
-                  <li>In Wix: drag in an <strong>&quot;Embed HTML&quot;</strong> element wherever you want the button to appear (a section header, your &quot;Order Online&quot; page, anywhere)</li>
-                  <li>Paste the code below into it</li>
-                  <li>Wix shows a small white box — that&apos;s the button, click <strong>Preview</strong> or <strong>Publish</strong> to see it styled</li>
+                  <li>{t.rich("buttonLinkWhereToPasteStep1", { strong: (c) => <strong>{c}</strong> })}</li>
+                  <li>{t("buttonLinkWhereToPasteStep2")}</li>
+                  <li>{t.rich("buttonLinkWhereToPasteStep3", { strong: (c) => <strong>{c}</strong> })}</li>
                 </ol>
-                <p className="mt-2">Click opens the full ordering experience in a new tab. Customer can browse, add to cart, and checkout there.</p>
+                <p className="mt-2">{t("buttonLinkWhereToPasteNote")}</p>
               </div>
             </>
           )}
@@ -303,7 +304,7 @@ export function LegacyWidgetClient({
             <>
               <div>
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-                  Button text
+                  {t("buttonTextLabel")}
                 </label>
                 <input
                   type="text"
@@ -314,13 +315,12 @@ export function LegacyWidgetClient({
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-400 transition"
                 />
                 <p className="text-[11px] text-gray-500 mt-1">
-                  What the button says. Default: &quot;See MENU &amp; Order&quot; (the
-                  proven highest-clicked version).
+                  {t("buttonTextHint")}
                 </p>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-                  Button color
+                  {t("buttonColorLabel")}
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -340,14 +340,14 @@ export function LegacyWidgetClient({
                 </div>
                 <div className="flex gap-1.5 mt-2">
                   {[
-                    { name: "Red",     value: "#ef4444" },
-                    { name: "Orange",  value: "#f97316" },
-                    { name: "Yellow",  value: "#eab308" },
-                    { name: "Green",   value: "#10b981" },
-                    { name: "Blue",    value: "#3b82f6" },
-                    { name: "Purple",  value: "#8b5cf6" },
-                    { name: "Pink",    value: "#ec4899" },
-                    { name: "Black",   value: "#111827" },
+                    { name: t("colorRed"),    value: "#ef4444" },
+                    { name: t("colorOrange"), value: "#f97316" },
+                    { name: t("colorYellow"), value: "#eab308" },
+                    { name: t("colorGreen"),  value: "#10b981" },
+                    { name: t("colorBlue"),   value: "#3b82f6" },
+                    { name: t("colorPurple"), value: "#8b5cf6" },
+                    { name: t("colorPink"),   value: "#ec4899" },
+                    { name: t("colorBlack"),  value: "#111827" },
                   ].map((c) => (
                     <button
                       key={c.value}
@@ -368,65 +368,59 @@ export function LegacyWidgetClient({
           {/* Position */}
           <div>
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-              Button position
+              {t("buttonPositionLabel")}
             </label>
             <div className="space-y-1.5">
               <PosRadio
                 value="br"
                 current={position}
                 onSelect={setPosition}
-                label="Floating, bottom-right"
-                hint="Default. Always visible. ⚠️ May overlap with chat widgets (Tidio, Intercom, Wix Chat) which also default here — try bottom-left if you have a chat bubble."
+                label={t("posBottomRight")}
+                hint={t("posBottomRightHint")}
               />
               <PosRadio
                 value="bl"
                 current={position}
                 onSelect={setPosition}
-                label="Floating, bottom-left"
-                hint="Avoids the bottom-right corner where most chat widgets live."
+                label={t("posBottomLeft")}
+                hint={t("posBottomLeftHint")}
               />
               <PosRadio
                 value="tr"
                 current={position}
                 onSelect={setPosition}
-                label="Floating, top-right"
-                hint="High visibility on first scroll. Good when your hero section already has a CTA at the bottom."
+                label={t("posTopRight")}
+                hint={t("posTopRightHint")}
               />
               <PosRadio
                 value="tl"
                 current={position}
                 onSelect={setPosition}
-                label="Floating, top-left"
-                hint="Least common — usually conflicts with the site logo. Use only if other corners are taken."
+                label={t("posTopLeft")}
+                hint={t("posTopLeftHint")}
               />
               <PosRadio
                 value="inline"
                 current={position}
                 onSelect={setPosition}
-                label="Inline (custom location)"
-                hint="Place the button anywhere on your page using a CSS selector."
+                label={t("posInline")}
+                hint={t("posInlineHint")}
               />
             </div>
             {position === "inline" && (
               <div className="mt-3 space-y-3">
                 <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900 leading-relaxed">
-                  <p className="font-bold mb-1">⚠️ Inline mode requires a placeholder element</p>
+                  <p className="font-bold mb-1">{t("inlineModeWarningTitle")}</p>
                   <p>
-                    For inline mode to work, your website needs an empty HTML element with a matching ID
-                    (e.g. <code className="bg-white/70 px-1 rounded">&lt;div id=&quot;order-button&quot;&gt;&lt;/div&gt;</code>)
-                    placed exactly where you want the button to appear.
+                    {t.rich("inlineModeWarningBody", { code: (c) => <code className="bg-white/70 px-1 rounded">{c}</code> })}
                   </p>
                   <p className="mt-2">
-                    <strong>If you&apos;re on Wix, Squarespace, or another no-code builder, this is usually
-                    hard or impossible.</strong> Those editors don&apos;t expose custom IDs. <strong>Use one of the
-                    Floating positions instead</strong> — they always work and you can pick any corner. If
-                    your inline target isn&apos;t found, the widget auto-falls-back to floating bottom-right
-                    so customers can still order.
+                    {t.rich("inlineModeWarningFooter", { strong: (c) => <strong>{c}</strong> })}
                   </p>
                 </div>
                 <div>
                   <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                    Target element (CSS selector)
+                    {t("targetSelectorLabel")}
                   </label>
                   <input
                     type="text"
@@ -446,26 +440,26 @@ export function LegacyWidgetClient({
         {/* Live preview */}
         <div className="rounded-xl border border-gray-200 bg-white p-5 space-y-3">
           <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-gray-900">Live preview</h3>
+            <h3 className="font-semibold text-gray-900">{t("livePreviewHeading")}</h3>
             <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider bg-gray-100 px-1.5 py-0.5 rounded">
-              How it&apos;ll look
+              {t("livePreviewBadge")}
             </span>
           </div>
           <BrowserMock>
             {snippetType === "iframe" ? (
               <div className="absolute inset-2 bg-white border border-emerald-200 rounded shadow-inner flex flex-col items-center justify-center p-2 gap-1.5">
                 <div className="text-[9px] font-bold uppercase tracking-wider text-emerald-700">
-                  Embedded menu
+                  {t("previewEmbeddedMenuLabel")}
                 </div>
                 <div className="text-[10px] text-gray-500 text-center leading-tight">
-                  The whole ordering UI renders right here, inline on your page.
+                  {t("previewEmbeddedMenuDescription")}
                 </div>
                 <div className="mt-1 px-2 py-1 bg-emerald-500 text-white text-[10px] rounded">
-                  Pickup · 20 min
+                  {t("previewPickupBadge")}
                 </div>
                 <div className="flex gap-1 mt-1">
-                  <span className="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 text-[8px] rounded">Pizzas</span>
-                  <span className="px-1.5 py-0.5 bg-gray-100 text-gray-500 text-[8px] rounded">Drinks</span>
+                  <span className="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 text-[8px] rounded">{t("previewCategoryPizzas")}</span>
+                  <span className="px-1.5 py-0.5 bg-gray-100 text-gray-500 text-[8px] rounded">{t("previewCategoryDrinks")}</span>
                 </div>
               </div>
             ) : snippetType === "button_link" ? (
@@ -521,10 +515,10 @@ export function LegacyWidgetClient({
           </BrowserMock>
           <p className="text-[11px] text-gray-500 leading-relaxed">
             {snippetType === "iframe"
-              ? "The embed renders the menu inline — no popup, no overlay. Customers stay on your page while they order."
+              ? t("previewDescriptionIframe")
               : snippetType === "button_link"
-              ? "Clicking the button opens the full ordering page in a new browser tab. Customer browses, orders, checks out there — your original page stays open in their other tab."
-              : "Clicking the real button on your site opens a full-screen modal with your complete ordering UI — pickup/delivery toggle, menu categories, cart, checkout. Not previewed here."}
+              ? t("previewDescriptionButtonLink")
+              : t("previewDescriptionPopup")}
           </p>
         </div>
       </div>
@@ -532,14 +526,14 @@ export function LegacyWidgetClient({
       {/* ── Generated snippet ────────────────────────────────────────── */}
       <div className="rounded-xl border border-gray-200 bg-gray-900 overflow-hidden">
         <div className="flex items-center justify-between px-4 py-2.5 bg-gray-800 border-b border-gray-700">
-          <span className="text-xs font-semibold text-gray-300">Install code</span>
+          <span className="text-xs font-semibold text-gray-300">{t("installCodeLabel")}</span>
           <button
             type="button"
             onClick={copy}
             className="flex items-center gap-1.5 text-xs font-medium text-gray-300 hover:text-white transition"
           >
             {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
-            {copied ? "Copied" : "Copy code"}
+            {copied ? t("copied") : t("copyCode")}
           </button>
         </div>
         <pre className="p-4 text-xs text-gray-100 overflow-x-auto whitespace-pre">{snippet}</pre>
@@ -575,20 +569,16 @@ export function LegacyWidgetClient({
       <div className="rounded-xl border border-blue-200 bg-blue-50 p-5 space-y-4">
         <div className="flex items-center gap-2">
           <Info className="w-4 h-4 text-blue-600" />
-          <h3 className="font-semibold text-blue-900">Where to paste this code</h3>
+          <h3 className="font-semibold text-blue-900">{t("whereToPasteHeading")}</h3>
         </div>
 
         <p className="text-sm text-blue-900 leading-relaxed">
-          The code goes into your website&apos;s <strong>site-wide custom code area</strong> — where
-          Google Analytics or Facebook Pixel scripts go. NOT into an inline
-          &quot;Embed HTML&quot; element on a page. Most website builders sandbox
-          inline embeds in tiny iframes which prevents the ordering modal
-          from opening full-size.
+          {t.rich("whereToPasteBody", { strong: (c) => <strong>{c}</strong> })}
         </p>
 
         <div>
           <label className="block text-xs font-semibold text-blue-900 uppercase tracking-wide mb-2">
-            What platform is your website on?
+            {t("platformPickerLabel")}
           </label>
           <div className="flex flex-wrap gap-2">
             {PLATFORMS.map((p) => (
@@ -619,7 +609,7 @@ export function LegacyWidgetClient({
             className="text-xs text-blue-800 hover:text-blue-600 inline-flex items-center gap-1.5 transition"
           >
             <Printer className="w-3.5 h-3.5" />
-            Print these instructions
+            {t("printInstructions")}
           </button>
         </div>
       </div>
@@ -785,97 +775,97 @@ const PLATFORMS = [
 ];
 
 function PlatformGuide({ platform }: { platform: string }) {
+  const t = useTranslations("admin.legacyWidget");
   switch (platform) {
     case "wix":
       return (
-        <Steps title="Wix — Custom Code (the right way)">
+        <Steps title={t("wixGuideTitle")}>
           <Step n={1}>
-            Go to <a href="https://manage.wix.com/account/sites" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">manage.wix.com</a> and click your site.
+            {t.rich("wixStep1", {
+              a: (c) => <a href="https://manage.wix.com/account/sites" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{c}</a>,
+            })}
           </Step>
-          <Step n={2}>In the left sidebar, click <strong>Settings</strong>.</Step>
-          <Step n={3}>Click <strong>Custom Code</strong> (sometimes under <strong>Advanced</strong>).</Step>
-          <Step n={4}>Click <strong>+ Add Custom Code</strong>.</Step>
-          <Step n={5}>Paste the install code from above.</Step>
+          <Step n={2}>{t.rich("wixStep2", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={3}>{t.rich("wixStep3", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={4}>{t.rich("wixStep4", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={5}>{t("wixStep5")}</Step>
           <Step n={6}>
-            Name: <em>Fee Free Ordering Widget</em>. Add to: <strong>All pages, load code once</strong>. Place in: <strong>Body — end</strong>.
+            {t.rich("wixStep6", { em: (c) => <em>{c}</em>, strong: (c) => <strong>{c}</strong> })}
           </Step>
-          <Step n={7}>Click <strong>Apply</strong>, then publish your Wix site.</Step>
+          <Step n={7}>{t.rich("wixStep7", { strong: (c) => <strong>{c}</strong> })}</Step>
           <WarnBox>
-            ⚠️ Do <strong>NOT</strong> paste this code into an &quot;Embed HTML&quot; element on a page. Wix sandboxes those in iframes and the ordering modal won&apos;t open full-size.
+            {t.rich("wixWarn1", { strong: (c) => <strong>{c}</strong> })}
           </WarnBox>
           <WarnBox>
-            <strong>Don&apos;t see the button on your live site?</strong> If you have Wix Chat enabled it sits in the bottom-right corner and can cover our button. Switch the <em>Button position</em> above to &quot;Floating, bottom-left&quot; (or top-right) and re-copy the code. You don&apos;t need to re-paste into Wix — just edit the existing snippet to add <code className="bg-gray-100 px-1 rounded text-[10px]">data-position=&quot;bl&quot;</code>.
+            {t.rich("wixWarn2", { strong: (c) => <strong>{c}</strong>, em: (c) => <em>{c}</em>, code: (c) => <code className="bg-gray-100 px-1 rounded text-[10px]">{c}</code> })}
           </WarnBox>
         </Steps>
       );
     case "squarespace":
       return (
-        <Steps title="Squarespace — Code Injection">
-          <Step n={1}>In your Squarespace dashboard, go to <strong>Settings → Developer Tools → Code Injection</strong>.</Step>
-          <Step n={2}>Paste the install code into the <strong>Footer</strong> box.</Step>
-          <Step n={3}>Click <strong>Save</strong>. The widget loads on every page automatically.</Step>
+        <Steps title={t("squarespaceGuideTitle")}>
+          <Step n={1}>{t.rich("squarespaceStep1", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={2}>{t.rich("squarespaceStep2", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={3}>{t.rich("squarespaceStep3", { strong: (c) => <strong>{c}</strong> })}</Step>
         </Steps>
       );
     case "wordpress":
       return (
-        <Steps title="WordPress — Footer Snippet">
+        <Steps title={t("wordpressGuideTitle")}>
           <Step n={1}>
-            <strong>Easiest:</strong> install the free plugin <em>Insert Headers and Footers</em> (or <em>WPCode</em>) from Plugins → Add New.
+            {t.rich("wordpressStep1", { strong: (c) => <strong>{c}</strong>, em: (c) => <em>{c}</em> })}
           </Step>
-          <Step n={2}>Open the plugin&apos;s settings. Paste the install code into the <strong>Footer</strong> / &quot;Before &lt;/body&gt;&quot; box.</Step>
-          <Step n={3}>Save changes.</Step>
+          <Step n={2}>{t.rich("wordpressStep2", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={3}>{t("wordpressStep3")}</Step>
           <Step n={4}>
-            <strong>Alternative (developers):</strong> edit your theme&apos;s <code className="bg-gray-100 px-1 rounded">footer.php</code> and
-            paste the snippet just before <code className="bg-gray-100 px-1 rounded">&lt;/body&gt;</code>.
+            {t.rich("wordpressStep4", { strong: (c) => <strong>{c}</strong>, code: (c) => <code className="bg-gray-100 px-1 rounded">{c}</code> })}
           </Step>
         </Steps>
       );
     case "shopify":
       return (
-        <Steps title="Shopify — Theme Edit">
-          <Step n={1}>In your Shopify admin, go to <strong>Online Store → Themes</strong>.</Step>
-          <Step n={2}>Click <strong>Actions → Edit code</strong> on your live theme.</Step>
-          <Step n={3}>In the file list, click <code className="bg-gray-100 px-1 rounded">theme.liquid</code>.</Step>
+        <Steps title={t("shopifyGuideTitle")}>
+          <Step n={1}>{t.rich("shopifyStep1", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={2}>{t.rich("shopifyStep2", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={3}>{t.rich("shopifyStep3", { code: (c) => <code className="bg-gray-100 px-1 rounded">{c}</code> })}</Step>
           <Step n={4}>
-            Find the closing <code className="bg-gray-100 px-1 rounded">&lt;/body&gt;</code> tag near the bottom. Paste the install code on the line just above it.
+            {t.rich("shopifyStep4", { code: (c) => <code className="bg-gray-100 px-1 rounded">{c}</code> })}
           </Step>
-          <Step n={5}>Click <strong>Save</strong>.</Step>
+          <Step n={5}>{t.rich("shopifyStep5", { strong: (c) => <strong>{c}</strong> })}</Step>
         </Steps>
       );
     case "webflow":
       return (
-        <Steps title="Webflow — Custom Code">
-          <Step n={1}>In your Webflow project, click the <strong>Project Settings</strong> gear icon.</Step>
-          <Step n={2}>Go to <strong>Custom Code</strong>.</Step>
-          <Step n={3}>Paste the install code into the <strong>Footer Code</strong> box.</Step>
-          <Step n={4}>Click <strong>Save Changes</strong>, then <strong>Publish</strong> your site.</Step>
+        <Steps title={t("webflowGuideTitle")}>
+          <Step n={1}>{t.rich("webflowStep1", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={2}>{t.rich("webflowStep2", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={3}>{t.rich("webflowStep3", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={4}>{t.rich("webflowStep4", { strong: (c) => <strong>{c}</strong> })}</Step>
         </Steps>
       );
     case "godaddy":
       return (
-        <Steps title="GoDaddy Website Builder">
-          <Step n={1}>In your GoDaddy site editor, click <strong>Add Section</strong> → search for <strong>HTML</strong>.</Step>
-          <Step n={2}>
-            ⚠️ GoDaddy sandboxes the HTML section in an iframe, similar to Wix. The button works but you&apos;ll need to size the section tall enough (~600px+) for customers to see the menu when they click it.
-          </Step>
-          <Step n={3}>Paste the install code into the HTML section.</Step>
-          <Step n={4}>Resize the section to take a meaningful chunk of the page.</Step>
-          <Step n={5}>Save and publish.</Step>
+        <Steps title={t("godaddyGuideTitle")}>
+          <Step n={1}>{t.rich("godaddyStep1", { strong: (c) => <strong>{c}</strong> })}</Step>
+          <Step n={2}>{t("godaddyStep2")}</Step>
+          <Step n={3}>{t("godaddyStep3")}</Step>
+          <Step n={4}>{t("godaddyStep4")}</Step>
+          <Step n={5}>{t("godaddyStep5")}</Step>
           <WarnBox>
-            If you have access to GoDaddy&apos;s site-wide settings or a paid plan with custom code support, paste this into the site footer instead — that&apos;s the cleaner install.
+            {t("godaddyWarn")}
           </WarnBox>
         </Steps>
       );
     case "html":
       return (
-        <Steps title="Plain HTML site">
-          <Step n={1}>Open the HTML file for any page where you want the widget.</Step>
+        <Steps title={t("htmlGuideTitle")}>
+          <Step n={1}>{t("htmlStep1")}</Step>
           <Step n={2}>
-            Find the closing <code className="bg-gray-100 px-1 rounded">&lt;/body&gt;</code> tag at the bottom of the file.
+            {t.rich("htmlStep2", { code: (c) => <code className="bg-gray-100 px-1 rounded">{c}</code> })}
           </Step>
-          <Step n={3}>Paste the install code on a new line just before <code className="bg-gray-100 px-1 rounded">&lt;/body&gt;</code>.</Step>
-          <Step n={4}>Save the file and upload it to your hosting.</Step>
-          <Step n={5}>For multi-page sites, repeat on each page (or include via a shared footer template).</Step>
+          <Step n={3}>{t.rich("htmlStep3", { code: (c) => <code className="bg-gray-100 px-1 rounded">{c}</code> })}</Step>
+          <Step n={4}>{t("htmlStep4")}</Step>
+          <Step n={5}>{t("htmlStep5")}</Step>
         </Steps>
       );
     default:
@@ -941,6 +931,7 @@ function ReservationSnippet({
   snippetType: "popup_js" | "button_link" | "iframe";
   color: string;
 }) {
+  const t = useTranslations("admin.legacyWidget");
   const [copied, setCopied] = useState(false);
   const snippet = useMemo(() => {
     if (snippetType === "iframe") {
@@ -984,7 +975,7 @@ function ReservationSnippet({
   return (
     <div className="rounded-xl border border-gray-200 bg-gray-900 overflow-hidden">
       <div className="flex items-center justify-between px-4 py-2.5 bg-gray-800 border-b border-gray-700">
-        <span className="text-xs font-semibold text-gray-300">Book a Table — install code</span>
+        <span className="text-xs font-semibold text-gray-300">{t("reservationInstallCodeLabel")}</span>
         <button
           type="button"
           onClick={async () => {
@@ -997,7 +988,7 @@ function ReservationSnippet({
           className="flex items-center gap-1.5 text-xs font-medium text-gray-300 hover:text-white transition"
         >
           {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
-          {copied ? "Copied" : "Copy code"}
+          {copied ? t("copied") : t("copyCode")}
         </button>
       </div>
       <pre className="p-4 text-xs text-gray-100 overflow-x-auto whitespace-pre">{snippet}</pre>
@@ -1018,6 +1009,7 @@ function ReservationSnippet({
  * changes, the link auto-updates on the next page render.
  */
 function FacebookInstall({ orderUrl }: { orderUrl: string }) {
+  const t = useTranslations("admin.legacyWidget");
   const [copied, setCopied] = useState(false);
   const copy = async () => {
     try {
@@ -1033,20 +1025,16 @@ function FacebookInstall({ orderUrl }: { orderUrl: string }) {
     <div className="rounded-xl border border-[#1877F2]/30 bg-[#1877F2]/5 p-5 space-y-4">
       <div className="flex items-center gap-2">
         <FacebookGlyph className="w-5 h-5 text-[#1877F2]" />
-        <h3 className="font-semibold text-gray-900">Add a “Start Order” button to your Facebook Page</h3>
+        <h3 className="font-semibold text-gray-900">{t("facebookHeading")}</h3>
       </div>
 
       <p className="text-sm text-gray-700 leading-relaxed">
-        Turn your Facebook Page into an ordering surface — same pattern
-        Oracle GloriaFood uses. Facebook lets every Page owner pin one
-        action button at the top of the page; pick <strong>Start Order</strong>{" "}
-        and paste your smart link below. Customers tap it and land
-        straight on your menu, no app required.
+        {t.rich("facebookIntro", { strong: (c) => <strong>{c}</strong> })}
       </p>
 
       <div>
         <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">
-          Your smart link
+          {t("facebookSmartLinkLabel")}
         </label>
         <div className="flex items-stretch gap-2">
           <input
@@ -1061,12 +1049,11 @@ function FacebookInstall({ orderUrl }: { orderUrl: string }) {
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#1877F2] hover:bg-[#1466d1] text-white text-sm font-semibold transition flex-shrink-0"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-            {copied ? "Copied" : "Copy link"}
+            {copied ? t("copied") : t("copyLink")}
           </button>
         </div>
         <p className="text-[11px] text-gray-500 mt-1">
-          This is your public ordering URL. Safe to share anywhere — on
-          Facebook, in Instagram bios, on business cards, in emails.
+          {t("facebookSmartLinkHint")}
         </p>
       </div>
 
@@ -1074,21 +1061,19 @@ function FacebookInstall({ orderUrl }: { orderUrl: string }) {
         <li className="flex gap-3">
           <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1877F2] text-white text-xs font-bold flex items-center justify-center">1</span>
           <span>
-            On your Facebook Page, click the <strong>•••</strong> (three dots) menu →{" "}
-            <strong>Add Action Button</strong> → pick <strong>Start Order</strong>.
+            {t.rich("facebookStep1", { strong: (c) => <strong>{c}</strong> })}
           </span>
         </li>
         <li className="flex gap-3">
           <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1877F2] text-white text-xs font-bold flex items-center justify-center">2</span>
           <span>
-            Paste the smart link above into the <strong>Website link</strong> field.
+            {t.rich("facebookStep2", { strong: (c) => <strong>{c}</strong> })}
           </span>
         </li>
         <li className="flex gap-3">
           <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1877F2] text-white text-xs font-bold flex items-center justify-center">3</span>
           <span>
-            Click <strong>Save</strong>. The button now appears at the top of your Facebook
-            Page — every visitor can order in one tap.
+            {t.rich("facebookStep3", { strong: (c) => <strong>{c}</strong> })}
           </span>
         </li>
       </ol>
@@ -1096,9 +1081,7 @@ function FacebookInstall({ orderUrl }: { orderUrl: string }) {
       <div className="rounded-lg bg-white border border-gray-200 p-3 flex items-start gap-2">
         <Info className="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5" />
         <p className="text-xs text-gray-600 leading-relaxed">
-          The smart link also works inside Instagram bios, WhatsApp
-          Business profiles, Google Business Profile, TikTok bios, and
-          QR codes. Same link, every channel.
+          {t("facebookSmartLinkChannels")}
         </p>
       </div>
 
@@ -1108,7 +1091,7 @@ function FacebookInstall({ orderUrl }: { orderUrl: string }) {
         rel="noopener noreferrer"
         className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#1877F2] hover:text-[#1466d1] transition"
       >
-        Open my Facebook Pages
+        {t("facebookOpenMyPages")}
         <ExternalLink className="w-3.5 h-3.5" />
       </a>
     </div>

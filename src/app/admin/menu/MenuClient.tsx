@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { useState, useCallback, createContext, useContext, useEffect, useRef } from "react";
 import {
   Plus, GripVertical, ChevronDown, ChevronRight, Eye, EyeOff,
@@ -227,10 +228,11 @@ function PizzaSectionOrderEditor({
       })()
     : defaultOrder;
 
+  const t = useTranslations("admin.menuEditor");
   const labelFor = (id: string): string => {
-    if (id === SECTION_SIZE) return "Size selection";
-    if (id === SECTION_HALF_HALF) return "Half & Half toggle";
-    if (id === SECTION_TOPPINGS) return "Toppings";
+    if (id === SECTION_SIZE) return t("sectionSizeLabel");
+    if (id === SECTION_HALF_HALF) return t("sectionHalfHalfLabel");
+    if (id === SECTION_TOPPINGS) return t("sectionToppingsLabel");
     // Look up across library, category, and item-level groups since
     // section ids resolve to whatever canonical id the chip uses:
     //   - libraryGroupId for groups created via the importer/library
@@ -242,7 +244,7 @@ function PizzaSectionOrderEditor({
     if (cat) return cat.name;
     const it = item?.modifierGroups.find(g => g.id === id || g.libraryGroupId === id);
     if (it) return it.name;
-    return "(Unknown section)";
+    return t("sectionUnknown");
   };
 
   // Resolve whether a section's underlying group has supportsHalfHalf
@@ -277,23 +279,22 @@ function PizzaSectionOrderEditor({
     <div className="border-t pt-4 space-y-3">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Customer Display Order</p>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t("customerDisplayOrder")}</p>
           <p className="text-xs text-gray-400 mt-0.5">
-            Reorder how sections appear in the Pizza Builder. The ✂️ icon shows which groups
-            are flagged Half/Half-capable in the library (edit in Choices & Add-ons).
+            {t("customerDisplayOrderHint")}
           </p>
         </div>
         {pizza.sectionOrder.length > 0 && (
           <button type="button" onClick={resetOrder}
             className="text-xs text-gray-500 hover:text-gray-700 underline">
-            Reset to default
+            {t("resetToDefault")}
           </button>
         )}
       </div>
       <div className="space-y-1.5 border border-gray-200 rounded-lg p-2 bg-gray-50">
         {effectiveOrder.length === 0 && (
           <p className="text-xs text-gray-400 text-center py-3">
-            Pick role groups above (Crust / Sauce / Cheese / Toppings) — sections will show up here once selected.
+            {t("sectionOrderEmpty")}
           </p>
         )}
         {effectiveOrder.map((id, i) => {
@@ -308,13 +309,13 @@ function PizzaSectionOrderEditor({
                 <button type="button" onClick={() => move(i, -1)}
                   disabled={i === 0}
                   className="text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
-                  title="Move up">
+                  title={t("moveUp")}>
                   <ChevronUp className="w-3.5 h-3.5" />
                 </button>
                 <button type="button" onClick={() => move(i, 1)}
                   disabled={i === effectiveOrder.length - 1}
                   className="text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
-                  title="Move down">
+                  title={t("moveDown")}>
                   <ChevronDown className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -323,9 +324,9 @@ function PizzaSectionOrderEditor({
               {groupEligible && (
                 <span
                   className="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium flex-shrink-0"
-                  title="This group is flagged Half/Half-capable in the library. When the customer toggles Half/Half ON, this section will render with Whole/Split UI."
+                  title={t("halfHalfCapableTitle")}
                 >
-                  ✂️ Half/Half
+                  {t("halfHalfBadge")}
                 </span>
               )}
             </div>
@@ -360,11 +361,12 @@ function ExtraQtyUpchargeField({
   const isOff = !Number.isFinite(numeric) || numeric === 0;
   const isOn = numeric === 1;
   const isAdvanced = !isOff && !isOn;
+  const t = useTranslations("admin.menuEditor");
   const [advancedOpen, setAdvancedOpen] = useState(isAdvanced);
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-1">
-        Charge for &quot;Extra&quot; quantity?
+        {t("chargeForExtra")}
       </label>
       <div className="flex items-center gap-3">
         <Toggle
@@ -373,22 +375,21 @@ function ExtraQtyUpchargeField({
         />
         <span className="text-sm text-gray-600">
           {isOff
-            ? "Free — Extra doesn't change the price"
+            ? t("extraChargeFree")
             : isOn
-              ? "Full per-size topping price"
-              : `Custom: ${numeric}× per-size topping price`}
+              ? t("extraChargeFullPrice")
+              : t("extraChargeCustom", { numeric })}
         </span>
       </div>
       <p className="text-xs text-gray-400 mt-1">
-        When ON, picking &quot;Extra&quot; on a topping adds the per-size topping price
-        for the chosen size (Small adds Small&apos;s price, Large adds Large&apos;s, etc.).
+        {t("extraChargeHint")}
       </p>
       <button
         type="button"
         onClick={() => setAdvancedOpen(o => !o)}
         className="text-xs text-gray-500 hover:text-gray-700 underline mt-1.5"
       >
-        {advancedOpen ? "Hide advanced" : "Advanced: custom multiplier"}
+        {advancedOpen ? t("hideAdvanced") : t("advancedCustomMultiplier")}
       </button>
       {advancedOpen && (
         <div className="mt-2">
@@ -402,8 +403,7 @@ function ExtraQtyUpchargeField({
             onChange={e => onChange(e.target.value)}
           />
           <p className="text-xs text-gray-400 mt-0.5">
-            0 = free, 1 = full per-size topping price, 0.5 = half charge,
-            2 = double charge.
+            {t("extraChargeMultiplierHint")}
           </p>
         </div>
       )}
@@ -411,10 +411,11 @@ function ExtraQtyUpchargeField({
   );
 }
 
-function ConfirmModal({ title, message, confirmLabel = "Delete", onConfirm, onCancel }: {
+function ConfirmModal({ title, message, confirmLabel, onConfirm, onCancel }: {
   title: string; message: string; confirmLabel?: string;
   onConfirm: () => void; onCancel: () => void;
 }) {
+  const t = useTranslations("admin.menuEditor");
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
@@ -423,11 +424,11 @@ function ConfirmModal({ title, message, confirmLabel = "Delete", onConfirm, onCa
         <div className="flex gap-3 mt-5 justify-end">
           <button onClick={onCancel}
             className="px-4 py-2 text-sm text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition">
-            Cancel
+            {t("cancel")}
           </button>
           <button onClick={onConfirm}
             className="px-4 py-2 text-sm font-semibold text-white bg-red-500 hover:bg-red-600 rounded-lg transition">
-            {confirmLabel}
+            {confirmLabel ?? t("delete")}
           </button>
         </div>
       </div>
@@ -451,6 +452,7 @@ function ItemModal({
   libraryGroups: ModifierGroup[];
   onClose: () => void; onSaved: () => void;
 }) {
+  const t = useTranslations("admin.menuEditor");
   const isNew = !item;
   const [form, setForm] = useState({
     name: item?.name ?? "",
@@ -489,13 +491,13 @@ function ItemModal({
 
   const save = async () => {
     if (!form.name.trim()) {
-      toast.error("Item name is required"); return;
+      toast.error(t("itemNameRequired")); return;
     }
     if (!form.hasVariants && !form.price) {
-      toast.error("Set a base price, or enable sizes/variants in the Variants tab"); return;
+      toast.error(t("itemPriceRequired")); return;
     }
     if (form.hasVariants && variants.filter(v => v.name.trim()).length === 0) {
-      toast.error("Add at least one size in the Variants tab, or disable sizes/variants"); return;
+      toast.error(t("itemVariantRequired")); return;
     }
     setSaving(true);
     const pizzaConfig = pizza.isPizza
@@ -544,9 +546,9 @@ function ItemModal({
         const errBody = await res.json().catch(() => ({}));
         throw new Error(errBody.error || `Server error ${res.status}`);
       }
-      toast.success(isNew ? "Item added" : "Item updated");
+      toast.success(isNew ? t("itemAdded") : t("itemUpdated"));
       onSaved();
-    } catch (e: any) { toast.error(e.message || "Failed to save item"); }
+    } catch (e: any) { toast.error(e.message || t("itemSaveFailed")); }
     setSaving(false);
   };
 
@@ -554,7 +556,7 @@ function ItemModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between p-5 border-b">
-          <h2 className="text-lg font-bold text-gray-900">{isNew ? "Add Menu Item" : "Edit Item"}</h2>
+          <h2 className="text-lg font-bold text-gray-900">{isNew ? t("addMenuItem") : t("editItem")}</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
         </div>
 
@@ -563,14 +565,14 @@ function ItemModal({
             same-color tabs look confusing). */}
         <div className="flex border-b px-5 overflow-x-auto">
           {([
-            ["basic",        "Basic",                                       "border-emerald-500", "text-emerald-700", "bg-emerald-50", "text-emerald-500"],
-            ["availability", "Availability",                                 "border-sky-500",     "text-sky-700",     "bg-sky-50",     "text-sky-500"    ],
-            ["variants",     "Sizes",                                        "border-amber-500",   "text-amber-700",   "bg-amber-50",   "text-amber-500"  ],
-            ["pizza",        pizza.isPizza ? "🍕 Pizza" : "Pizza Setup",     "border-slate-900",   "text-slate-900",   "bg-slate-100",  "text-slate-600"  ],
-          ] as const).map(([t, label, activeBorder, activeText, activeBg]) => (
-            <button key={t} onClick={() => setTab(t)}
+            ["basic",        t("tabBasic"),                                             "border-emerald-500", "text-emerald-700", "bg-emerald-50", "text-emerald-500"],
+            ["availability", t("tabAvailability"),                                      "border-sky-500",     "text-sky-700",     "bg-sky-50",     "text-sky-500"    ],
+            ["variants",     t("tabSizes"),                                             "border-amber-500",   "text-amber-700",   "bg-amber-50",   "text-amber-500"  ],
+            ["pizza",        pizza.isPizza ? t("tabPizzaActive") : t("tabPizzaSetup"),  "border-slate-900",   "text-slate-900",   "bg-slate-100",  "text-slate-600"  ],
+          ] as [string, string, string, string, string, string][]).map(([tabKey, label, activeBorder, activeText, activeBg]) => (
+            <button key={tabKey} onClick={() => setTab(tabKey as "basic" | "availability" | "variants" | "pizza")}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition whitespace-nowrap flex-shrink-0 ${
-                tab === t
+                tab === tabKey
                   ? `${activeBorder} ${activeText} ${activeBg}`
                   : "border-transparent text-gray-500 hover:text-gray-700"
               }`}>
@@ -584,23 +586,23 @@ function ItemModal({
             <>
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Item Name *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("itemNameLabel")}</label>
                   <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                    value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g. Margherita Pizza" />
+                    value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder={t("itemNamePlaceholder")} />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("descriptionLabel")}</label>
                   <textarea className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none" rows={2}
-                    value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Describe this item..." />
+                    value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder={t("itemDescriptionPlaceholder")} />
                 </div>
                 {form.hasVariants ? (
                   <div className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2.5 text-sm text-blue-700 col-span-1">
                     <Layers className="w-4 h-4 flex-shrink-0" />
-                    Pricing is set per size in the <button type="button" className="font-semibold underline" onClick={() => setTab("variants")}>Sizes tab</button>
+                    {t("pricingPerSize")} <button type="button" className="font-semibold underline" onClick={() => setTab("variants")}>{t("sizesTabLink")}</button>
                   </div>
                 ) : (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Base Price *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("basePriceLabel")}</label>
                     <div className="relative">
                       <span className="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
                       <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
@@ -609,7 +611,7 @@ function ItemModal({
                   </div>
                 )}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("categoryLabel")}</label>
                   <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.categoryId} onChange={e => setForm(f => ({ ...f, categoryId: e.target.value }))}>
                     {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -626,11 +628,11 @@ function ItemModal({
               </div>
               <div className="flex flex-wrap gap-3 pt-2">
                 {([
-                  ["isHidden", "Hidden from menu", EyeOff],
-                  ["isSoldOut", "Sold out", AlertCircle],
-                  ["forPickup", "Available for pickup", ShoppingBag],
-                  ["forDelivery", "Available for delivery", Truck],
-                  ["isCatering", "Catering item (requires advance notice)", PartyPopper],
+                  ["isHidden", t("hiddenFromMenu"), EyeOff],
+                  ["isSoldOut", t("soldOut"), AlertCircle],
+                  ["forPickup", t("availableForPickup"), ShoppingBag],
+                  ["forDelivery", t("availableForDelivery"), Truck],
+                  ["isCatering", t("cateringItem"), PartyPopper],
                 ] as [keyof typeof form, string, any][]).map(([field, label, Icon]) => (
                   <button key={field} onClick={() => toggle(field)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form[field] ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}>
@@ -646,7 +648,7 @@ function ItemModal({
           {tab === "availability" && (
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Available Days</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("availableDays")}</label>
                 <div className="flex gap-2 flex-wrap">
                   {DAY_NAMES.map((d, i) => (
                     <button key={i} onClick={() => toggleDay(i)}
@@ -655,22 +657,22 @@ function ItemModal({
                     </button>
                   ))}
                   <button onClick={() => setForm(f => ({ ...f, availableDays: [0,1,2,3,4,5,6] }))}
-                    className="px-3 h-10 rounded-lg border border-gray-200 text-xs text-gray-500 hover:border-gray-400">All</button>
+                    className="px-3 h-10 rounded-lg border border-gray-200 text-xs text-gray-500 hover:border-gray-400">{t("allDays")}</button>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Available From</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("availableFrom")}</label>
                   <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.availableFrom} onChange={e => setForm(f => ({ ...f, availableFrom: e.target.value }))} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Available Until</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("availableUntil")}</label>
                   <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                     value={form.availableTo} onChange={e => setForm(f => ({ ...f, availableTo: e.target.value }))} />
                 </div>
               </div>
-              <p className="text-xs text-gray-400">Leave time fields empty to be available all day.</p>
+              <p className="text-xs text-gray-400">{t("availabilityAllDayHint")}</p>
             </div>
           )}
 
@@ -680,11 +682,11 @@ function ItemModal({
               <div className="flex items-center justify-between p-3 rounded-xl border-2 transition"
                 style={form.hasVariants ? { borderColor: "#10b981", backgroundColor: "#ecfdf5" } : { borderColor: "#e5e7eb", backgroundColor: "#f9fafb" }}>
                 <div>
-                  <div className="text-sm font-semibold text-gray-800">Use sizes / variants for pricing</div>
+                  <div className="text-sm font-semibold text-gray-800">{t("useSizesVariants")}</div>
                   <div className="text-xs text-gray-500 mt-0.5">
                     {form.hasVariants
-                      ? "Each size below has its own price. The single base price is ignored."
-                      : "Off — a single base price is used. Enable to charge different prices per size."}
+                      ? t("variantsOnHint")
+                      : t("variantsOffHint")}
                   </div>
                 </div>
                 <Toggle on={form.hasVariants} onToggle={() => setForm(f => ({ ...f, hasVariants: !f.hasVariants }))} />
@@ -693,17 +695,17 @@ function ItemModal({
               {!form.hasVariants && variants.filter(v => v.name).length > 0 && (
                 <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-sm text-amber-700">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                  You have sizes configured but the toggle above is off — enable it so prices are taken from sizes, not the single base price.
+                  {t("variantsConfiguredButOff")}
                 </div>
               )}
 
-              <p className="text-sm text-gray-500">Each size or variation can have its own name and price (e.g. Small 10" / Large 14").</p>
+              <p className="text-sm text-gray-500">{t("variantsHint")}</p>
 
               {variants.map((v, i) => (
                 <div key={i} className="flex items-center gap-3 bg-gray-50 rounded-lg p-3">
                   <div className="flex-1">
                     <input className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                      placeholder={`Size name (e.g. Small 10")`}
+                      placeholder={t("variantSizeNamePlaceholder")}
                       value={v.name} onChange={e => setVariants(vs => vs.map((x, j) => j === i ? { ...x, name: e.target.value } : x))} />
                   </div>
                   <div className="w-28 relative">
@@ -724,7 +726,7 @@ function ItemModal({
                   if (!form.hasVariants) setForm(f => ({ ...f, hasVariants: true }));
                 }}
                 className="flex items-center gap-2 text-sm text-emerald-600 hover:text-emerald-700 font-medium">
-                <Plus className="w-4 h-4" /> Add Variant
+                <Plus className="w-4 h-4" /> {t("addVariant")}
               </button>
             </div>
           )}
@@ -735,9 +737,9 @@ function ItemModal({
               <div className="flex items-center justify-between p-4 bg-emerald-50 rounded-xl border border-emerald-100">
                 <div>
                   <div className="font-semibold text-gray-900 flex items-center gap-2">
-                    <span>🍕</span> Pizza Builder
+                    <span>🍕</span> {t("pizzaBuilder")}
                   </div>
-                  <div className="text-sm text-gray-500 mt-0.5">Enable the advanced pizza customisation interface for this item</div>
+                  <div className="text-sm text-gray-500 mt-0.5">{t("pizzaBuilderHint")}</div>
                 </div>
                 <Toggle on={pizza.isPizza} onToggle={() => setPizza(p => ({ ...p, isPizza: !p.isPizza }))} />
               </div>
@@ -755,27 +757,27 @@ function ItemModal({
 
                   {/* Group assignments */}
                   <div className="border-t pt-4 space-y-3">
-                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Modifier Group Assignments</p>
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t("modifierGroupAssignments")}</p>
                     {libraryGroups.length === 0 && (
                       <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-700">
-                        No modifier groups in the library yet. Create some in the Choices &amp; Add-ons panel first.
+                        {t("noModifierGroupsYet")}
                       </div>
                     )}
                     {(
                       [
-                        ["crustGroupId", "Crust Group", "Customer selects one crust type"],
-                        ["sauceGroupId", "Sauce Group", "Customer selects sauce (one per half when half & half)"],
-                        ["cheeseGroupId", "Cheese Group", "Customer selects cheese type"],
-                      ] as const
+                        ["crustGroupId", t("crustGroupLabel"), t("crustGroupDesc")],
+                        ["sauceGroupId", t("sauceGroupLabel"), t("sauceGroupDesc")],
+                        ["cheeseGroupId", t("cheeseGroupLabel"), t("cheeseGroupDesc")],
+                      ] as [keyof PizzaFormState, string, string][]
                     ).map(([key, label, desc]) => (
-                      <div key={key}>
+                      <div key={key as string}>
                         <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
                         <select
                           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                          value={pizza[key]}
+                          value={pizza[key] as string}
                           onChange={e => setPizza(p => ({ ...p, [key]: e.target.value }))}
                         >
-                          <option value="">— None —</option>
+                          <option value="">{t("noneOption")}</option>
                           {libraryGroups.map(g => (
                             <option key={g.id} value={g.id}>{g.name} ({g.options.length} options)</option>
                           ))}
@@ -786,11 +788,11 @@ function ItemModal({
 
                     {/* Topping groups multi-select */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Topping Groups</label>
-                      <p className="text-xs text-gray-400 mb-2">Select the modifier group(s) that contain available pizza toppings</p>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t("toppingGroupsLabel")}</label>
+                      <p className="text-xs text-gray-400 mb-2">{t("toppingGroupsHint")}</p>
                       <div className="space-y-1.5 border border-gray-200 rounded-lg p-3 max-h-44 overflow-y-auto bg-gray-50">
                         {libraryGroups.length === 0 ? (
-                          <p className="text-xs text-gray-400">No groups available.</p>
+                          <p className="text-xs text-gray-400">{t("noGroupsAvailable")}</p>
                         ) : libraryGroups.map(g => (
                           <label key={g.id} className="flex items-center gap-2.5 cursor-pointer hover:bg-white rounded p-1 transition">
                             <input
@@ -828,22 +830,22 @@ function ItemModal({
 
                   {/* Pricing engine */}
                   <div className="border-t pt-4 space-y-3">
-                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Pricing Engine</p>
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t("pricingEngine")}</p>
                     <div className="grid grid-cols-2 gap-3">
                       <div className={form.hasVariants ? "col-span-2" : ""}>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Included Toppings</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t("includedToppings")}</label>
                         <input type="number" min="0" placeholder="0"
                           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                           value={pizza.includedToppings}
                           onChange={e => setPizza(p => ({ ...p, includedToppings: parseInt(e.target.value) || 0 }))} />
-                        <p className="text-xs text-gray-400 mt-0.5">Free toppings in base price (0 = use each option&apos;s price)</p>
+                        <p className="text-xs text-gray-400 mt-0.5">{t("includedToppingsHint")}</p>
                       </div>
                       {form.hasVariants ? (
                         <div className="col-span-2">
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Price per Extra Topping — by Size</label>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">{t("pricePerExtraToppingBySize")}</label>
                           {variants.filter(v => v.name.trim()).length === 0 ? (
                             <p className="text-xs text-amber-600 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2">
-                              Add sizes in the Variants tab first, then set a topping price for each.
+                              {t("addSizesFirstHint")}
                             </p>
                           ) : (
                             <div className="space-y-2">
@@ -862,13 +864,13 @@ function ItemModal({
                                   </div>
                                 </div>
                               ))}
-                              <p className="text-xs text-gray-400">Topping price charged per each additional topping for that size</p>
+                              <p className="text-xs text-gray-400">{t("toppingPricePerSizeHint")}</p>
                             </div>
                           )}
                         </div>
                       ) : (
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Price per Extra Topping</label>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">{t("pricePerExtraTopping")}</label>
                           <div className="relative">
                             <span className="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
                             <input type="number" step="0.01" min="0" placeholder="0.00"
@@ -876,16 +878,16 @@ function ItemModal({
                               value={pizza.extraToppingPrice}
                               onChange={e => setPizza(p => ({ ...p, extraToppingPrice: e.target.value }))} />
                           </div>
-                          <p className="text-xs text-gray-400 mt-0.5">Charged per topping beyond the included count</p>
+                          <p className="text-xs text-gray-400 mt-0.5">{t("extraToppingPriceHint")}</p>
                         </div>
                       )}
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Half-Topping Multiplier</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t("halfToppingMultiplier")}</label>
                         <input type="number" step="0.1" min="0" max="1" placeholder="0.5"
                           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                           value={pizza.halfToppingMultiplier}
                           onChange={e => setPizza(p => ({ ...p, halfToppingMultiplier: e.target.value }))} />
-                        <p className="text-xs text-gray-400 mt-0.5">0.5 = 50% price for a half-pizza topping</p>
+                        <p className="text-xs text-gray-400 mt-0.5">{t("halfToppingMultiplierHint")}</p>
                       </div>
                       <ExtraQtyUpchargeField
                         value={pizza.extraQuantityMultiplier}
@@ -900,10 +902,10 @@ function ItemModal({
         </div>
 
         <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
-          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800">Cancel</button>
+          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800">{t("cancel")}</button>
           <button onClick={save} disabled={saving}
             className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 transition disabled:opacity-50">
-            {saving ? "Saving..." : isNew ? "Add Item" : "Save Changes"}
+            {saving ? t("saving") : isNew ? t("addItem") : t("saveChanges")}
           </button>
         </div>
       </div>
@@ -919,6 +921,7 @@ function ModifierModal({
   group?: ModifierGroup; menuItemId?: string;
   onClose: () => void; onSaved: () => void;
 }) {
+  const t = useTranslations("admin.menuEditor");
   const isNew = !group;
   const [form, setForm] = useState({
     name: group?.name ?? "",
@@ -938,7 +941,7 @@ function ModifierModal({
   const [saving, setSaving] = useState(false);
 
   const save = async () => {
-    if (!form.name.trim()) { toast.error("Group name required"); return; }
+    if (!form.name.trim()) { toast.error(t("groupNameRequired")); return; }
     setSaving(true);
     const payload = { ...form, menuItemId: menuItemId || undefined, options: options.filter(o => o.name.trim()) };
     try {
@@ -946,9 +949,9 @@ function ModifierModal({
       const method = isNew ? "POST" : "PATCH";
       const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (!res.ok) throw new Error("Failed");
-      toast.success(isNew ? "Modifier group added" : "Modifier group updated");
+      toast.success(isNew ? t("modifierGroupAdded") : t("modifierGroupUpdated"));
       onSaved();
-    } catch { toast.error("Failed to save modifier group"); }
+    } catch { toast.error(t("modifierGroupSaveFailed")); }
     setSaving(false);
   };
 
@@ -956,34 +959,34 @@ function ModifierModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between p-5 border-b">
-          <h2 className="text-lg font-bold">{isNew ? "Add Modifier Group" : "Edit Modifier Group"}</h2>
+          <h2 className="text-lg font-bold">{isNew ? t("addModifierGroup") : t("editModifierGroup")}</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Group Name *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t("groupNameLabel")}</label>
             <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g. Size, Crust, Extra Toppings" />
+              value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder={t("groupNamePlaceholder")} />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Description (optional)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t("groupDescriptionLabel")}</label>
             <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Instructions shown to customer" />
+              value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder={t("groupDescriptionPlaceholder")} />
           </div>
           <div className="grid grid-cols-3 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Min Select</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("minSelect")}</label>
               <input type="number" min="0" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.minSelect} onChange={e => setForm(f => ({ ...f, minSelect: parseInt(e.target.value) || 0 }))} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Max Select</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("maxSelect")}</label>
               <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.maxSelect} onChange={e => setForm(f => ({ ...f, maxSelect: parseInt(e.target.value) || 1 }))} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Max per Option</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("maxPerOption")}</label>
               <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.maxPerOption} onChange={e => setForm(f => ({ ...f, maxPerOption: parseInt(e.target.value) || 1 }))} />
             </div>
@@ -991,33 +994,33 @@ function ModifierModal({
           <div className="flex gap-3 flex-wrap">
             <button onClick={() => setForm(f => ({ ...f, required: !f.required }))}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.required ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
-              <Check className="w-4 h-4" /> Required {form.required && "✓"}
+              <Check className="w-4 h-4" /> {t("required")} {form.required && "✓"}
             </button>
             <button onClick={() => setForm(f => ({ ...f, isHidden: !f.isHidden }))}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isHidden ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
-              <EyeOff className="w-4 h-4" /> Hidden {form.isHidden && "✓"}
+              <EyeOff className="w-4 h-4" /> {t("hidden")} {form.isHidden && "✓"}
             </button>
             <button
               onClick={() => setForm(f => ({ ...f, supportsHalfHalf: !f.supportsHalfHalf }))}
-              title="When ON, this group can be split half/half on a pizza item (customer sees Whole/Split UI). Leave OFF for crust, cook level, side drinks, etc."
+              title={t("canBeHalfHalfTitle")}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.supportsHalfHalf ? "border-blue-500 bg-blue-50 text-blue-700" : "border-gray-200 text-gray-600"}`}>
-              ✂️ Can be Half/Half {form.supportsHalfHalf && "✓"}
+              {t("canBeHalfHalf")} {form.supportsHalfHalf && "✓"}
             </button>
           </div>
 
           <div className="border-t pt-4">
             <div className="flex items-center justify-between mb-3">
-              <label className="text-sm font-semibold text-gray-700">Options / Choices</label>
+              <label className="text-sm font-semibold text-gray-700">{t("optionsChoices")}</label>
               <button onClick={() => setOptions(o => [...o, { name: "", priceAdjustment: 0, isDefault: false, isAvailable: true }])}
                 className="text-sm text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-1">
-                <Plus className="w-3.5 h-3.5" /> Add option
+                <Plus className="w-3.5 h-3.5" /> {t("addOption")}
               </button>
             </div>
             <div className="space-y-2">
               {options.map((opt, i) => (
                 <div key={i} className="flex items-center gap-2 bg-gray-50 rounded-lg p-2">
                   <input className="flex-1 border border-gray-200 rounded px-2 py-1.5 text-sm focus:ring-1 focus:ring-emerald-400 focus:outline-none bg-white"
-                    placeholder="Option name" value={opt.name}
+                    placeholder={t("optionNamePlaceholder")} value={opt.name}
                     onChange={e => setOptions(os => os.map((o, j) => j === i ? { ...o, name: e.target.value } : o))} />
                   <div className="relative w-24">
                     <span className="absolute left-2 top-1.5 text-gray-400 text-xs">+$</span>
@@ -1027,7 +1030,7 @@ function ModifierModal({
                   </div>
                   <button
                     onClick={() => setOptions(os => os.map((o, j) => j === i ? { ...o, isDefault: !o.isDefault } : o))}
-                    title="Set as default"
+                    title={t("setAsDefault")}
                     className={`p-1.5 rounded text-xs transition ${opt.isDefault ? "bg-emerald-100 text-emerald-600" : "text-gray-400 hover:text-gray-600"}`}>
                     ★
                   </button>
@@ -1041,10 +1044,10 @@ function ModifierModal({
         </div>
 
         <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
-          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">Cancel</button>
+          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">{t("cancel")}</button>
           <button onClick={save} disabled={saving}
             className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
-            {saving ? "Saving..." : isNew ? "Add Group" : "Save"}
+            {saving ? t("saving") : isNew ? t("addGroup") : t("save")}
           </button>
         </div>
       </div>
@@ -1077,6 +1080,7 @@ function ModifierChip({ group, inherited, categoryLevel, onRemove, sortable }: {
    *  category, not here. */
   sortable?: boolean;
 }) {
+  const t = useTranslations("admin.menuEditor");
   const isBlue = inherited || categoryLevel;
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: group.id,
@@ -1109,7 +1113,7 @@ function ModifierChip({ group, inherited, categoryLevel, onRemove, sortable }: {
           : `bg-emerald-50 border-emerald-200 text-emerald-700 ${isHovered ? "ring-2 ring-emerald-400 ring-offset-1" : ""}`
       }`}
     >
-      {inherited && <span className="opacity-60 text-[10px]" title="Inherited from category">↑</span>}
+      {inherited && <span className="opacity-60 text-[10px]" title={t("inheritedFromCategory")}>↑</span>}
       {group.name}
       {group.required && <span className="text-[10px] opacity-70">*</span>}
       {onRemove && (
@@ -1121,7 +1125,7 @@ function ModifierChip({ group, inherited, categoryLevel, onRemove, sortable }: {
           onPointerDown={e => e.stopPropagation()}
           onClick={e => { e.stopPropagation(); onRemove(); }}
           className="ml-0.5 hover:text-red-600 transition rounded-full"
-          title={inherited ? "Manage on category" : "Remove modifier group"}
+          title={inherited ? t("manageOnCategory") : t("removeModifierGroup")}
         >
           <X className="w-2.5 h-2.5" />
         </button>
@@ -1144,6 +1148,7 @@ function SortableItemRow({
   onDetach: (groupId: string) => void;
   onReorderGroups: (itemId: string, orderedIds: string[]) => void;
 }) {
+  const t = useTranslations("admin.menuEditor");
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: item.id });
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
@@ -1196,9 +1201,9 @@ function SortableItemRow({
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="font-medium text-gray-900 text-sm truncate">{item.name}</span>
-          {item.isSoldOut && <span className="text-xs bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-medium">Sold Out</span>}
-          {item.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">Hidden</span>}
-          {item.hasVariants && <span className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded" title="This item has multiple sizes (Small / Medium / Large …)">Multiple Sizes</span>}
+          {item.isSoldOut && <span className="text-xs bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-medium">{t("soldOutBadge")}</span>}
+          {item.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">{t("hiddenBadge")}</span>}
+          {item.hasVariants && <span className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded" title={t("multipleSizesTitle")}>{t("multipleSizesBadge")}</span>}
           {item.pizzaConfig && (() => { try { return JSON.parse(item.pizzaConfig!)?.isPizza; } catch { return false; } })() && (
             <span className="text-xs bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">🍕 Pizza</span>
           )}
@@ -1221,19 +1226,19 @@ function SortableItemRow({
             )}
           </div>
         )}
-        {dragOver && <div className="text-xs text-emerald-500 mt-1">Drop to attach modifier group</div>}
+        {dragOver && <div className="text-xs text-emerald-500 mt-1">{t("dropToAttachModifier")}</div>}
       </div>
       <div className="flex items-center gap-2 flex-shrink-0">
         {item.hasVariants
-          ? <span className="text-xs text-gray-400">from {formatCurrency(Math.min(...item.variants.map(v => v.price)))}</span>
+          ? <span className="text-xs text-gray-400">{t("priceFrom", { price: formatCurrency(Math.min(...item.variants.map(v => v.price))) })}</span>
           : <span className="font-semibold text-gray-700 text-sm">{formatCurrency(item.price)}</span>
         }
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
-          <button onClick={() => onToggle("isSoldOut", !item.isSoldOut)} title={item.isSoldOut ? "Mark available" : "Mark sold out"}
+          <button onClick={() => onToggle("isSoldOut", !item.isSoldOut)} title={item.isSoldOut ? t("markAvailable") : t("markSoldOut")}
             className={`p-1.5 rounded transition text-sm ${item.isSoldOut ? "text-red-400 hover:text-red-600" : "text-gray-400 hover:text-gray-600"}`}>
             <AlertCircle className="w-4 h-4" />
           </button>
-          <button onClick={() => onToggle("isHidden", !item.isHidden)} title={item.isHidden ? "Show" : "Hide"}
+          <button onClick={() => onToggle("isHidden", !item.isHidden)} title={item.isHidden ? t("show") : t("hide")}
             className="p-1.5 text-gray-400 hover:text-gray-600 rounded transition">
             {item.isHidden ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
           </button>
@@ -1275,6 +1280,7 @@ function SortableCategoryBlock({
   isSelected?: boolean;
   onToggleSelect?: () => void;
 }) {
+  const t = useTranslations("admin.menuEditor");
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: cat.id });
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
@@ -1342,7 +1348,7 @@ function SortableCategoryBlock({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <h2 className="font-bold text-gray-900">{cat.name}</h2>
-            {cat.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">Hidden</span>}
+            {cat.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">{t("hiddenBadge")}</span>}
             <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{cat.menuItems.length}</span>
           </div>
           {cat.description && <div className="text-xs text-gray-400 truncate">{cat.description}</div>}
@@ -1362,11 +1368,11 @@ function SortableCategoryBlock({
               </DndContext>
             </div>
           )}
-          {catDragOver && <div className="text-xs text-emerald-500 mt-1">Drop to apply to all items in this category</div>}
+          {catDragOver && <div className="text-xs text-emerald-500 mt-1">{t("dropToApplyToCategory")}</div>}
         </div>
         <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition flex-shrink-0" onClick={e => e.stopPropagation()}>
           <button onClick={onAddItem} className="flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 font-medium px-2 py-1 rounded hover:bg-emerald-50">
-            <Plus className="w-3.5 h-3.5" /> Add Item
+            <Plus className="w-3.5 h-3.5" /> {t("addItem")}
           </button>
           <button onClick={onEditCategory} className="p-1.5 text-gray-400 hover:text-blue-500 rounded"><Edit2 className="w-3.5 h-3.5" /></button>
           <button onClick={onDeleteCategory} className="p-1.5 text-gray-400 hover:text-red-500 rounded"><Trash2 className="w-3.5 h-3.5" /></button>
@@ -1379,7 +1385,7 @@ function SortableCategoryBlock({
           {cat.menuItems.length === 0 ? (
             <div className="py-8 text-center text-gray-400 text-sm">
               <UtensilsCrossed className="w-8 h-8 mx-auto mb-2 opacity-30" />
-              No items yet. Click "Add Item" to get started.
+              {t("noItemsYet")}
             </div>
           ) : (
             <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleItemDragEnd}>
@@ -1421,6 +1427,7 @@ function ModifierLibraryPanel({
   onSetSelectedIds: (s: Set<string>) => void;
   onBulkDelete: (ids: string[]) => void;
 }) {
+  const t = useTranslations("admin.menuEditor");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const toggle = (id: string) => setExpanded(e => ({ ...e, [id]: !e[id] }));
   const { hoveredLibId, setHovered } = useContext(MenuHoverContext);
@@ -1451,19 +1458,19 @@ function ModifierLibraryPanel({
     <div className="w-80 flex-shrink-0 border-l border-gray-100 bg-gray-50 flex flex-col h-full">
       <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-white">
         <div>
-          <h3 className="font-bold text-gray-900 text-sm">Choices & Add-ons</h3>
-          <p className="text-xs text-gray-400 mt-0.5">Modifier groups library</p>
+          <h3 className="font-bold text-gray-900 text-sm">{t("choicesAndAddons")}</h3>
+          <p className="text-xs text-gray-400 mt-0.5">{t("modifierGroupsLibrary")}</p>
         </div>
         <button onClick={onAddGroup}
           className="flex items-center gap-1 bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-emerald-600">
-          <Plus className="w-3.5 h-3.5" /> Add Group
+          <Plus className="w-3.5 h-3.5" /> {t("addGroup")}
         </button>
       </div>
 
       <div className="px-3 py-2 bg-emerald-50 border-b border-emerald-100">
         <p className="text-xs text-emerald-700">
           <GripVertical className="w-3 h-3 inline mr-1 opacity-60" />
-          Drag modifier groups onto items or categories to attach them.
+          {t("dragModifierGroupsHint")}
         </p>
       </div>
 
@@ -1473,12 +1480,12 @@ function ModifierLibraryPanel({
         <div className="flex items-center justify-between px-3 py-2 bg-white border-b border-gray-100">
           {!selectMode ? (
             <>
-              <span className="text-xs text-gray-500">{groups.length} group{groups.length === 1 ? "" : "s"}</span>
+              <span className="text-xs text-gray-500">{t("groupCount", { n: groups.length })}</span>
               <button
                 onClick={() => onSetSelectMode(true)}
                 className="text-xs font-semibold text-gray-600 hover:text-gray-900 px-2 py-0.5 rounded hover:bg-gray-50 transition"
               >
-                Select
+                {t("select")}
               </button>
             </>
           ) : (
@@ -1487,7 +1494,7 @@ function ModifierLibraryPanel({
                 onClick={() => onSetSelectedIds(selectedIds.size === groups.length ? new Set() : new Set(groups.map(g => g.id)))}
                 className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 underline"
               >
-                {selectedIds.size === groups.length ? "Deselect all" : "Select all"}
+                {selectedIds.size === groups.length ? t("deselectAll") : t("selectAll")}
               </button>
               <div className="flex items-center gap-1.5">
                 <button
@@ -1495,13 +1502,13 @@ function ModifierLibraryPanel({
                   disabled={selectedIds.size === 0}
                   className="text-xs font-semibold text-white bg-red-500 hover:bg-red-600 disabled:bg-red-200 disabled:cursor-not-allowed px-2.5 py-1 rounded transition"
                 >
-                  Delete {selectedIds.size > 0 ? `(${selectedIds.size})` : ""}
+                  {selectedIds.size > 0 ? t("deleteCount", { n: selectedIds.size }) : t("delete")}
                 </button>
                 <button
                   onClick={() => { onSetSelectMode(false); onSetSelectedIds(new Set()); }}
                   className="text-xs text-gray-500 hover:text-gray-700"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
               </div>
             </>
@@ -1523,14 +1530,14 @@ function ModifierLibraryPanel({
               type="search"
               value={modSearchQuery}
               onChange={(e) => setModSearchQuery(e.target.value)}
-              placeholder="Search modifier groups…"
+              placeholder={t("searchModifierGroups")}
               className="w-full pl-8 pr-7 py-1.5 text-xs rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:border-emerald-300"
             />
             {modSearchQuery && (
               <button
                 type="button"
                 onClick={() => setModSearchQuery("")}
-                aria-label="Clear modifier search"
+                aria-label={t("clearModifierSearch")}
                 className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 text-gray-400 hover:text-gray-700"
               >
                 <X className="w-3 h-3" />
@@ -1544,13 +1551,13 @@ function ModifierLibraryPanel({
         {groups.length === 0 && (
           <div className="py-10 text-center text-gray-400 text-sm">
             <Settings className="w-8 h-8 mx-auto mb-2 opacity-30" />
-            No modifier groups yet.
+            {t("noModifierGroupsYet")}
           </div>
         )}
         {groups.length > 0 && filteredGroups.length === 0 && (
           <div className="py-8 text-center text-gray-400 text-xs">
             <Search className="w-6 h-6 mx-auto mb-1.5 opacity-40" />
-            No matches for &ldquo;{modSearchQuery}&rdquo;
+            {t("noMatchesFor", { query: modSearchQuery })}
           </div>
         )}
         {filteredGroups.map(g => {
@@ -1602,11 +1609,11 @@ function ModifierLibraryPanel({
                   >
                     {g.name}
                   </span>
-                  {g.required && <span className="text-xs bg-emerald-50 text-emerald-600 px-1 rounded flex-shrink-0">Required</span>}
-                  {g.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1 rounded flex-shrink-0">Hidden</span>}
+                  {g.required && <span className="text-xs bg-emerald-50 text-emerald-600 px-1 rounded flex-shrink-0">{t("required")}</span>}
+                  {g.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1 rounded flex-shrink-0">{t("hidden")}</span>}
                 </div>
                 <div className="text-xs text-gray-400 mt-0.5">
-                  {g.options.length} options · min {g.minSelect} / max {g.maxSelect}
+                  {t("optionsSummary", { count: g.options.length, min: g.minSelect, max: g.maxSelect })}
                 </div>
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
@@ -1624,7 +1631,7 @@ function ModifierLibraryPanel({
                 {g.options.map(opt => (
                   <div key={opt.id ?? opt.name} className="flex items-center justify-between px-2 py-1 rounded text-xs">
                     <span className="text-gray-700">{opt.isDefault ? "★ " : ""}{opt.name}</span>
-                    <span className="text-gray-500">{opt.priceAdjustment ? `+${formatCurrency(opt.priceAdjustment)}` : "free"}</span>
+                    <span className="text-gray-500">{opt.priceAdjustment ? `+${formatCurrency(opt.priceAdjustment)}` : t("free")}</span>
                   </div>
                 ))}
               </div>
@@ -1640,6 +1647,7 @@ function ModifierLibraryPanel({
 // ─── Category Edit Modal ──────────────────────────────────────────────────────
 
 function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () => void; onSaved: () => void }) {
+  const t = useTranslations("admin.menuEditor");
   const isNew = !cat;
   const [form, setForm] = useState({
     name: cat?.name ?? "",
@@ -1655,15 +1663,15 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
   const [saving, setSaving] = useState(false);
 
   const save = async () => {
-    if (!form.name.trim()) { toast.error("Name required"); return; }
+    if (!form.name.trim()) { toast.error(t("categoryNameRequired")); return; }
     setSaving(true);
     try {
       const url = isNew ? "/api/menu/categories" : `/api/menu/categories/${cat!.id}`;
       const method = isNew ? "POST" : "PATCH";
       await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
-      toast.success(isNew ? "Category added" : "Category updated");
+      toast.success(isNew ? t("categoryAdded") : t("categoryUpdated"));
       onSaved();
-    } catch { toast.error("Failed"); }
+    } catch { toast.error(t("saveFailed")); }
     setSaving(false);
   };
 
@@ -1671,19 +1679,19 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
         <div className="flex items-center justify-between p-5 border-b">
-          <h2 className="text-lg font-bold">{isNew ? "Add Category" : "Edit Category"}</h2>
+          <h2 className="text-lg font-bold">{isNew ? t("addCategory") : t("editCategory")}</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
         </div>
         <div className="p-5 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Category Name *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t("categoryNameLabel")}</label>
             <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g. Pizzas" autoFocus />
+              value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder={t("categoryNamePlaceholder")} autoFocus />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t("descriptionLabel")}</label>
             <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Optional description" />
+              value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder={t("categoryDescriptionPlaceholder")} />
           </div>
           <div>
             <ImageUpload
@@ -1696,20 +1704,20 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
           <div className="flex flex-wrap gap-2">
             <button onClick={() => setForm(f => ({ ...f, isHidden: !f.isHidden }))}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isHidden ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
-              <EyeOff className="w-4 h-4" /> Hidden from customer menu {form.isHidden && "✓"}
+              <EyeOff className="w-4 h-4" /> {t("hiddenFromCustomerMenu")} {form.isHidden && "✓"}
             </button>
             <button onClick={() => setForm(f => ({ ...f, isCatering: !f.isCatering }))}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isCatering ? "border-amber-500 bg-amber-50 text-amber-700" : "border-gray-200 text-gray-600"}`}
-              title="Every item in this category becomes a catering item (advance notice required)"
+              title={t("cateringCategoryTitle")}
             >
-              <PartyPopper className="w-4 h-4" /> Catering category {form.isCatering && "✓"}
+              <PartyPopper className="w-4 h-4" /> {t("cateringCategory")} {form.isCatering && "✓"}
             </button>
           </div>
         </div>
         <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
-          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">Cancel</button>
+          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">{t("cancel")}</button>
           <button onClick={save} disabled={saving} className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
-            {saving ? "Saving..." : isNew ? "Add Category" : "Save"}
+            {saving ? t("saving") : isNew ? t("addCategory") : t("save")}
           </button>
         </div>
       </div>
@@ -1739,6 +1747,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
   onClose: () => void;
   onImported: () => void;
 }) {
+  const t = useTranslations("admin.menuEditor");
   const [step, setStep] = useState<"upload" | "review">("upload");
   const [uploading, setUploading] = useState(false);
   const [importing, setImporting] = useState(false);
@@ -1847,7 +1856,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
 
   const confirmImport = async () => {
     if (totalSelected === 0) {
-      toast.error("Select at least one item");
+      toast.error(t("selectAtLeastOneItem"));
       return;
     }
     setImporting(true);
@@ -1868,17 +1877,17 @@ function PdfImportModal({ categories, onClose, onImported }: {
         body: JSON.stringify(payload),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Import failed");
+      if (!res.ok) throw new Error(data.error || t("importFailed"));
       const catMsg = data.categoriesCreated > 0
-        ? `${data.categoriesCreated} new categor${data.categoriesCreated === 1 ? "y" : "ies"} + `
+        ? t("importCategoriesCreated", { n: data.categoriesCreated }) + " + "
         : "";
       const dupMsg = data.itemsSkippedDuplicate > 0
-        ? ` (${data.itemsSkippedDuplicate} duplicate${data.itemsSkippedDuplicate === 1 ? "" : "s"} skipped)`
+        ? " (" + t("importDuplicatesSkipped", { n: data.itemsSkippedDuplicate }) + ")"
         : "";
-      toast.success(`${catMsg}${data.itemsCreated} item${data.itemsCreated !== 1 ? "s" : ""} imported!${dupMsg}`);
+      toast.success(catMsg + t("importItemsImported", { n: data.itemsCreated }) + dupMsg);
       onImported();
     } catch (e: any) {
-      toast.error(e.message || "Import failed");
+      toast.error(e.message || t("importFailed"));
     }
     setImporting(false);
   };
@@ -1925,7 +1934,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
         <div className="flex items-center justify-between p-5 border-b">
           <div className="flex items-center gap-2">
             <FileText className="w-5 h-5 text-emerald-500" />
-            <h2 className="text-lg font-bold text-gray-900">Import Menu from PDF</h2>
+            <h2 className="text-lg font-bold text-gray-900">{t("importMenuFromPdf")}</h2>
           </div>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600"><X className="w-5 h-5" /></button>
         </div>
@@ -1940,8 +1949,8 @@ function PdfImportModal({ categories, onClose, onImported }: {
             >
               <Upload className="w-10 h-10 text-emerald-400" />
               <div className="text-center">
-                <div className="font-semibold text-gray-800">Drop your menu PDF here</div>
-                <div className="text-sm text-gray-500 mt-1">or click to browse — max 25 MB</div>
+                <div className="font-semibold text-gray-800">{t("dropPdfHere")}</div>
+                <div className="text-sm text-gray-500 mt-1">{t("dropPdfOrBrowse")}</div>
               </div>
               {uploading && <Loader2 className="w-6 h-6 animate-spin text-emerald-500" />}
             </div>
@@ -1953,7 +1962,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
               </div>
             )}
             <p className="text-xs text-gray-400 text-center max-w-sm">
-              We read your PDF automatically — including categories, prices, and descriptions. Works on print-designed menus with multi-column layouts and decorative typography.
+              {t("pdfReadDescription")}
             </p>
           </div>
         )}
@@ -1962,20 +1971,20 @@ function PdfImportModal({ categories, onClose, onImported }: {
           <>
             <div className="p-4 border-b bg-gray-50 flex items-center gap-3 flex-wrap">
               <span className="text-sm font-medium text-gray-600">
-                {importCats.length} categor{importCats.length === 1 ? "y" : "ies"} · {totalItems} items detected
+                {t("pdfCategoriesDetected", { cats: importCats.length, items: totalItems })}
               </span>
               {extractionMethod === "regex_fallback" && (
                 <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-800" title={extractionNote}>
-                  Basic mode
+                  {t("pdfBasicMode")}
                 </span>
               )}
               {extractionMethod === "claude" && (
                 <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">
-                  Auto-detected
+                  {t("pdfAutoDetected")}
                 </span>
               )}
               <span className="ml-auto text-xs text-gray-500">
-                {totalSelected} of {totalItems} selected
+                {t("pdfSelectedOf", { selected: totalSelected, total: totalItems })}
               </span>
             </div>
             <div className="flex-1 overflow-y-auto">
@@ -1990,7 +1999,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
                         onClick={() => toggleAllInCat(ci)}
                         className="text-xs text-emerald-600 hover:underline whitespace-nowrap"
                       >
-                        {allOn ? "Deselect all" : someOn ? "Select all" : "Select all"}
+                        {allOn ? t("deselectAll") : t("selectAll")}
                       </button>
                       <input
                         className="flex-1 min-w-[180px] text-sm font-semibold text-gray-900 border-b border-transparent hover:border-gray-300 focus:border-emerald-400 focus:outline-none px-0 py-0.5 bg-transparent"
@@ -1999,15 +2008,15 @@ function PdfImportModal({ categories, onClose, onImported }: {
                         disabled={!!cat.existingCategoryId}
                       />
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-500">into:</span>
+                        <span className="text-xs text-gray-500">{t("pdfInto")}</span>
                         <select
                           className="text-xs border border-gray-300 rounded px-2 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
                           value={cat.existingCategoryId ?? ""}
                           onChange={(e) => updateCatMerge(ci, e.target.value || null)}
                         >
-                          <option value="">+ New: &quot;{cat.name}&quot;</option>
+                          <option value="">{t("pdfNewCategory", { name: cat.name })}</option>
                           {categories.map((c) => (
-                            <option key={c.id} value={c.id}>Merge into: {c.name}</option>
+                            <option key={c.id} value={c.id}>{t("pdfMergeInto", { name: c.name })}</option>
                           ))}
                         </select>
                       </div>
@@ -2038,7 +2047,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
                               onChange={(e) => updateItem(ci, ii, "price", parseFloat(e.target.value) || 0)}
                             />
                             <input
-                              placeholder="Description (optional)"
+                              placeholder={t("itemDescriptionPlaceholder")}
                               className="col-span-2 text-xs text-gray-500 border-b border-transparent hover:border-gray-300 focus:border-emerald-400 focus:outline-none px-0 py-0.5"
                               value={item.description}
                               onChange={(e) => updateItem(ci, ii, "description", e.target.value)}
@@ -2053,17 +2062,17 @@ function PdfImportModal({ categories, onClose, onImported }: {
             </div>
             <div className="flex justify-between items-center p-5 border-t bg-gray-50 rounded-b-2xl gap-3">
               <button onClick={() => { setStep("upload"); setError(""); setImportCats([]); }} className="text-sm text-gray-500 hover:text-gray-800">
-                ← Upload another
+                {t("uploadAnother")}
               </button>
               <div className="flex gap-3">
-                <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
+                <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">{t("cancel")}</button>
                 <button
                   onClick={confirmImport}
                   disabled={importing || totalSelected === 0}
                   className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50 flex items-center gap-2"
                 >
                   {importing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-                  Import {totalSelected} Item{totalSelected === 1 ? "" : "s"}
+                  {t("importItems", { n: totalSelected })}
                 </button>
               </div>
             </div>
@@ -2079,6 +2088,7 @@ function PdfImportModal({ categories, onClose, onImported }: {
 interface Props { categories: Category[]; libraryGroups: ModifierGroup[]; restaurantId: string }
 
 export function MenuClient({ categories: initial, libraryGroups: initialGroups }: Props) {
+  const t = useTranslations("admin.menuEditor");
   const [categories, setCategories] = useState(initial);
   const [libraryGroups, setLibraryGroups] = useState(initialGroups);
   // Menu search query for the admin menu builder. Filters the visible
@@ -2180,25 +2190,25 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
       body: JSON.stringify({ type: "modifiers", ids: orderedIds }),
     });
     if (!res.ok) {
-      toast.error("Failed to save new order — refreshing.");
+      toast.error(t("failedToSaveOrder"));
       await reload();
     }
   };
 
   const deleteItem = (id: string) => {
     setConfirmDialog({
-      title: "Delete item?",
-      message: "This cannot be undone. Items with order history will be hidden from the menu rather than permanently deleted.",
-      confirmLabel: "Delete",
+      title: t("deleteItemTitle"),
+      message: t("deleteItemMessage"),
+      confirmLabel: t("delete"),
       onConfirm: async () => {
         setConfirmDialog(null);
         const res = await fetch(`/api/menu/items/${id}`, { method: "DELETE" });
         if (!res.ok) {
           const body = await res.json().catch(() => ({}));
-          toast.error(body.error || "Failed to delete item");
+          toast.error(body.error || t("failedToDeleteItem"));
           return;
         }
-        toast.success("Item deleted");
+        toast.success(t("itemDeleted"));
         await reload();
       },
     });
@@ -2212,18 +2222,18 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
 
   const deleteCategory = (id: string) => {
     setConfirmDialog({
-      title: "Delete category?",
-      message: "This will permanently delete the category and all its items. This cannot be undone.",
-      confirmLabel: "Delete Category",
+      title: t("deleteCategoryTitle"),
+      message: t("deleteCategoryMessage"),
+      confirmLabel: t("deleteCategoryConfirm"),
       onConfirm: async () => {
         setConfirmDialog(null);
         const res = await fetch(`/api/menu/categories/${id}`, { method: "DELETE" });
         const body = await res.json().catch(() => ({}));
         if (!res.ok) {
-          toast.error(body.error || "Failed to delete category");
+          toast.error(body.error || t("failedToDeleteCategory"));
           return;
         }
-        toast.success("Category deleted");
+        toast.success(t("categoryDeleted"));
         await reload();
       },
     });
@@ -2254,14 +2264,14 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
   const bulkDeleteCategories = (ids: string[]) => {
     if (ids.length === 0) return;
     setConfirmDialog({
-      title: `Delete ${ids.length} categor${ids.length === 1 ? "y" : "ies"}?`,
-      message: `This will permanently delete ${ids.length === 1 ? "this category and its items" : `these ${ids.length} categories and all their items`}. This cannot be undone.`,
-      confirmLabel: `Delete ${ids.length}`,
+      title: t("bulkDeleteCategoriesTitle", { n: ids.length }),
+      message: t("bulkDeleteCategoriesMessage", { n: ids.length }),
+      confirmLabel: t("deleteCount", { n: ids.length }),
       onConfirm: async () => {
         setConfirmDialog(null);
         const { ok, failed } = await bulkDelete(ids, id => `/api/menu/categories/${id}`);
-        if (failed > 0) toast.error(`Deleted ${ok}, ${failed} failed`);
-        else toast.success(`Deleted ${ok} categor${ok === 1 ? "y" : "ies"}`);
+        if (failed > 0) toast.error(t("bulkDeletePartial", { ok, failed }));
+        else toast.success(t("bulkDeleteCategoriesSuccess", { n: ok }));
         setSelectedCategoryIds(new Set());
         setCategorySelectMode(false);
         await reload();
@@ -2271,17 +2281,17 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
 
   const deleteModGroup = (id: string) => {
     setConfirmDialog({
-      title: "Delete modifier group?",
-      message: "This will permanently delete this modifier group and all its options.",
-      confirmLabel: "Delete",
+      title: t("deleteModifierGroupTitle"),
+      message: t("deleteModifierGroupMessage"),
+      confirmLabel: t("delete"),
       onConfirm: async () => {
         setConfirmDialog(null);
         const res = await fetch(`/api/menu/modifiers/${id}`, { method: "DELETE" });
         if (!res.ok) {
-          toast.error("Failed to delete modifier group");
+          toast.error(t("failedToDeleteModifierGroup"));
           return;
         }
-        toast.success("Modifier group deleted");
+        toast.success(t("modifierGroupDeleted"));
         await reload();
       },
     });
@@ -2290,14 +2300,14 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
   const bulkDeleteModGroups = (ids: string[]) => {
     if (ids.length === 0) return;
     setConfirmDialog({
-      title: `Delete ${ids.length} modifier group${ids.length === 1 ? "" : "s"}?`,
-      message: `This will permanently delete ${ids.length === 1 ? "this modifier group and its options" : `these ${ids.length} modifier groups and all their options`}. Items that referenced them will lose those attachments. This cannot be undone.`,
-      confirmLabel: `Delete ${ids.length}`,
+      title: t("bulkDeleteModGroupsTitle", { n: ids.length }),
+      message: t("bulkDeleteModGroupsMessage", { n: ids.length }),
+      confirmLabel: t("deleteCount", { n: ids.length }),
       onConfirm: async () => {
         setConfirmDialog(null);
         const { ok, failed } = await bulkDelete(ids, id => `/api/menu/modifiers/${id}`);
-        if (failed > 0) toast.error(`Deleted ${ok}, ${failed} failed`);
-        else toast.success(`Deleted ${ok} group${ok === 1 ? "" : "s"}`);
+        if (failed > 0) toast.error(t("bulkDeletePartial", { ok, failed }));
+        else toast.success(t("bulkDeleteModGroupsSuccess", { n: ok }));
         setSelectedModGroupIds(new Set());
         setModGroupSelectMode(false);
         await reload();
@@ -2322,13 +2332,13 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
       if (!res.ok) throw new Error(data.error || "Failed");
       const n = typeof data.cleaned === "number" ? data.cleaned : 0;
       if (n === 0) {
-        toast.success("No duplicates found — your menu is clean.");
+        toast.success(t("dedupeNoDuplicates"));
       } else {
-        toast.success(`Cleaned up ${n} duplicate attachment${n === 1 ? "" : "s"}.`);
+        toast.success(t("dedupeSuccess", { n }));
         await reload();
       }
     } catch (err: any) {
-      toast.error(err?.message ?? "Cleanup failed");
+      toast.error(err?.message ?? t("cleanupFailed"));
     } finally {
       setDedupeRunning(false);
     }
@@ -2340,9 +2350,9 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ libraryGroupId, menuItemId, categoryId }),
     });
-    if (res.status === 409) { toast.error("Already attached"); return; }
-    if (!res.ok) { toast.error("Failed to attach"); return; }
-    toast.success(categoryId ? "Attached to category" : "Attached to item");
+    if (res.status === 409) { toast.error(t("alreadyAttached")); return; }
+    if (!res.ok) { toast.error(t("failedToAttach")); return; }
+    toast.success(categoryId ? t("attachedToCategory") : t("attachedToItem"));
     await reload();
   };
 
@@ -2352,8 +2362,8 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ groupId }),
     });
-    if (!res.ok) { toast.error("Failed to detach"); return; }
-    toast.success("Removed");
+    if (!res.ok) { toast.error(t("failedToDetach")); return; }
+    toast.success(t("removed"));
     await reload();
   };
 
@@ -2368,8 +2378,8 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Menu Management</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Drag to reorder categories and items</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t("menuManagement")}</h1>
+          <p className="text-sm text-gray-500 mt-0.5">{t("menuManagementHint")}</p>
         </div>
         <div className="flex items-center gap-2">
           {/* GloriaFood/FoodBooking direct importer — restaurants migrating
@@ -2378,25 +2388,25 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
               their entire menu (incl. modifiers) lands in seconds. */}
           <a href="/admin/menu/import-gloriafood"
             className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition text-sm shadow-sm">
-            <Download className="w-4 h-4" /> Import from GloriaFood
+            <Download className="w-4 h-4" /> {t("importFromGloriaFood")}
           </a>
           <button onClick={() => setPdfImportOpen(true)}
             className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition text-sm shadow-sm">
-            <Upload className="w-4 h-4" /> Import PDF
+            <Upload className="w-4 h-4" /> {t("importPdf")}
           </button>
           {/* Repair tool — deletes item-level modifier attachments
               that duplicate a category-level attachment. Idempotent;
               clicking on a clean menu is a no-op. Surfaced as a small
               button so it doesn't compete with the primary actions. */}
           <button onClick={dedupeAttachments} disabled={dedupeRunning}
-            title="Remove duplicate modifier attachments (when a group is attached both at category AND item level)"
+            title={t("fixDuplicatesTitle")}
             className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 font-semibold px-3 py-2.5 rounded-xl hover:bg-gray-50 disabled:opacity-60 transition text-sm shadow-sm">
             {dedupeRunning ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-            Fix duplicates
+            {t("fixDuplicates")}
           </button>
           <button onClick={() => setCatModal({})}
             className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-emerald-600 transition text-sm shadow-sm">
-            <Plus className="w-4 h-4" /> Add Category
+            <Plus className="w-4 h-4" /> {t("addCategory")}
           </button>
         </div>
       </div>
@@ -2417,14 +2427,14 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
                 type="search"
                 value={menuSearchQuery}
                 onChange={(e) => setMenuSearchQuery(e.target.value)}
-                placeholder="Search categories and items…"
+                placeholder={t("searchCategoriesItems")}
                 className="w-full pl-8 pr-8 py-2 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
               />
               {menuSearchQuery && (
                 <button
                   type="button"
                   onClick={() => setMenuSearchQuery("")}
-                  aria-label="Clear search"
+                  aria-label={t("clearSearch")}
                   className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center hover:bg-gray-100 text-gray-400"
                 >
                   <X className="w-3 h-3" />
@@ -2436,12 +2446,12 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
             <div className="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-lg px-3 py-2 sticky top-0 z-10">
               {!categorySelectMode ? (
                 <>
-                  <span className="text-xs text-gray-500">{categories.length} categor{categories.length === 1 ? "y" : "ies"}</span>
+                  <span className="text-xs text-gray-500">{t("categoryCount", { n: categories.length })}</span>
                   <button
                     onClick={() => setCategorySelectMode(true)}
                     className="text-xs font-semibold text-gray-600 hover:text-gray-900 px-2 py-1 rounded hover:bg-white transition"
                   >
-                    Select
+                    {t("select")}
                   </button>
                 </>
               ) : (
@@ -2455,10 +2465,10 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
                       }}
                       className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 underline"
                     >
-                      {selectedCategoryIds.size === categories.length ? "Deselect all" : "Select all"}
+                      {selectedCategoryIds.size === categories.length ? t("deselectAll") : t("selectAll")}
                     </button>
                     <span className="text-xs text-gray-500">
-                      {selectedCategoryIds.size} of {categories.length} selected
+                      {t("pdfSelectedOf", { selected: selectedCategoryIds.size, total: categories.length })}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -2467,13 +2477,13 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
                       disabled={selectedCategoryIds.size === 0}
                       className="text-xs font-semibold text-white bg-red-500 hover:bg-red-600 disabled:bg-red-200 disabled:cursor-not-allowed px-3 py-1.5 rounded transition"
                     >
-                      Delete {selectedCategoryIds.size > 0 ? `(${selectedCategoryIds.size})` : ""}
+                      {selectedCategoryIds.size > 0 ? t("deleteCount", { n: selectedCategoryIds.size }) : t("delete")}
                     </button>
                     <button
                       onClick={() => { setCategorySelectMode(false); setSelectedCategoryIds(new Set()); }}
                       className="text-xs text-gray-500 hover:text-gray-700 px-2"
                     >
-                      Cancel
+                      {t("cancel")}
                     </button>
                   </div>
                 </>
@@ -2483,8 +2493,8 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
           {categories.length === 0 ? (
             <div className="py-20 text-center text-gray-400">
               <UtensilsCrossed className="w-12 h-12 mx-auto mb-3 opacity-30" />
-              <p className="font-medium">No categories yet</p>
-              <p className="text-sm mt-1">Click "Add Category" to get started</p>
+              <p className="font-medium">{t("noCategoriesYet")}</p>
+              <p className="text-sm mt-1">{t("noCategoriesHint")}</p>
             </div>
           ) : (() => {
             // Filter visible categories by search query. We compute
@@ -2502,12 +2512,12 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
               return (
                 <div className="py-12 text-center text-gray-400">
                   <Search className="w-10 h-10 mx-auto mb-2 opacity-40" />
-                  <p className="font-medium">No matches for &ldquo;{menuSearchQuery}&rdquo;</p>
+                  <p className="font-medium">{t("noMatchesFor", { query: menuSearchQuery })}</p>
                   <button
                     type="button"
                     onClick={() => setMenuSearchQuery("")}
                     className="mt-2 text-sm text-emerald-600 hover:underline"
-                  >Clear search</button>
+                  >{t("clearSearch")}</button>
                 </div>
               );
             }

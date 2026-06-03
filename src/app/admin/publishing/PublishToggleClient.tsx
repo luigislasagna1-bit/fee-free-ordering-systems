@@ -1,6 +1,7 @@
 "use client";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export function PublishToggleClient({
   isPublished,
@@ -9,6 +10,7 @@ export function PublishToggleClient({
   isPublished: boolean;
   publishReady: boolean;
 }) {
+  const t = useTranslations("admin.publishToggle");
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -25,12 +27,12 @@ export function PublishToggleClient({
       });
       const data = await r.json();
       if (!r.ok) {
-        setError(data?.error || "Action failed");
+        setError(data?.error || t("actionFailed"));
       } else {
         startTransition(() => router.refresh());
       }
     } catch (e: any) {
-      setError(e?.message || "Action failed");
+      setError(e?.message || t("actionFailed"));
     } finally {
       setBusy(false);
     }
@@ -45,7 +47,7 @@ export function PublishToggleClient({
           disabled={busy || pending}
           className="px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-50"
         >
-          {busy ? "Working…" : "Unpublish"}
+          {busy ? t("working") : t("unpublish")}
         </button>
         {error && <span className="text-xs text-red-600">{error}</span>}
       </div>
@@ -60,7 +62,7 @@ export function PublishToggleClient({
         onClick={() => doAction("publish")}
         className="px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
       >
-        {busy ? "Publishing…" : "Publish"}
+        {busy ? t("publishing") : t("publish")}
       </button>
       {error && <span className="text-xs text-red-600">{error}</span>}
     </div>

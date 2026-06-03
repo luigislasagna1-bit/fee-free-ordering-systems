@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { Banknote, CreditCard, Globe, Check, Loader2, ArrowRight, AlertCircle, Lock } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * Accepted-payment-methods picker.
@@ -21,32 +22,22 @@ type Method = "cash" | "card_in_person" | "online_card" | "paypal";
 
 const METHOD_CARDS: Array<{
   id: Method;
-  label: string;
-  description: string;
   icon: typeof Banknote;
 }> = [
   {
     id: "cash",
-    label: "Cash",
-    description: "Customers pay with cash at pickup or when their delivery arrives. Zero setup required.",
     icon: Banknote,
   },
   {
     id: "card_in_person",
-    label: "Card in person",
-    description: "You take card payments via your own in-store POS, Square reader, Clover, or mobile terminal at pickup or delivery. We don't process these.",
     icon: CreditCard,
   },
   {
     id: "online_card",
-    label: "Online card payment",
-    description: "Customers pay by card on the ordering page. Money lands in your Stripe account, minus a small processor fee. Requires Stripe Connect setup.",
     icon: Globe,
   },
   {
     id: "paypal",
-    label: "PayPal",
-    description: "Customers pay with PayPal. Money lands directly in your PayPal Business account. Requires your PayPal REST app credentials (paste them on the Providers page).",
     icon: Globe,
   },
 ];
@@ -64,6 +55,7 @@ export function PaymentMethodsClient({
    *  add-on. When false, the online_card tile is locked. */
   onlinePaymentsUnlocked: boolean;
 }) {
+  const t = useTranslations("admin.paymentMethods");
   const router = useRouter();
   const [methods, setMethods] = useState<Set<Method>>(
     new Set(initialMethods.filter((m): m is Method =>
@@ -74,7 +66,7 @@ export function PaymentMethodsClient({
 
   function toggle(m: Method) {
     if ((m === "online_card" || m === "paypal") && !onlinePaymentsUnlocked) {
-      toast.error("Subscribe to the Online Payments add-on first.");
+      toast.error(t("toastSubscribeFirst"));
       return;
     }
     setMethods((s) => {
@@ -87,7 +79,7 @@ export function PaymentMethodsClient({
 
   async function save() {
     if (methods.size === 0) {
-      toast.error("Pick at least one payment method.");
+      toast.error(t("toastPickAtLeastOne"));
       return;
     }
     setSaving(true);
@@ -99,15 +91,15 @@ export function PaymentMethodsClient({
       });
       if (!res.ok) {
         const d = await res.json().catch(() => ({}));
-        throw new Error(d.error || "Failed to save");
+        throw new Error(d.error || t("toastSaveFailed"));
       }
-      toast.success("Payment methods updated");
+      toast.success(t("toastSaveSuccess"));
       // Re-render the layout so the setup checklist + GuidedSetupPill pick
       // up the new selection (and Stripe Connect becomes required-or-not
       // based on whether online_card is now in the list).
       router.refresh();
     } catch (e: any) {
-      toast.error(e?.message || "Failed to save");
+      toast.error(e?.message || t("toastSaveFailed"));
     } finally {
       setSaving(false);
     }
@@ -119,10 +111,9 @@ export function PaymentMethodsClient({
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Accepted payment methods</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{t("heading")}</h1>
         <p className="text-sm text-gray-600 mt-1">
-          Pick how customers can pay. You can change these any time — it just
-          affects what shows up on the customer&apos;s checkout page.
+          {t("subheading")}
         </p>
       </div>
 
@@ -151,26 +142,26 @@ export function PaymentMethodsClient({
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <div className={`font-bold ${locked ? "text-gray-500" : "text-gray-900"}`}>{m.label}</div>
+                  <div className={`font-bold ${locked ? "text-gray-500" : "text-gray-900"}`}>{t(`methodLabel_${m.id}` as any)}</div>
                   {locked && (
                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-gray-200 text-gray-600 uppercase tracking-wider inline-flex items-center gap-1">
-                      <Lock className="w-2.5 h-2.5" /> Add-on required
+                      <Lock className="w-2.5 h-2.5" /> {t("badgeAddonRequired")}
                     </span>
                   )}
                   {!locked && selected && (
                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500 text-white uppercase tracking-wider">
-                      Selected
+                      {t("badgeSelected")}
                     </span>
                   )}
                 </div>
-                <div className={`text-sm mt-1 leading-snug ${locked ? "text-gray-500" : "text-gray-600"}`}>{m.description}</div>
+                <div className={`text-sm mt-1 leading-snug ${locked ? "text-gray-500" : "text-gray-600"}`}>{t(`methodDesc_${m.id}` as any)}</div>
                 {locked && (
                   <Link
                     href="/admin/billing/add-ons"
                     onClick={(e) => e.stopPropagation()}
                     className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline"
                   >
-                    Subscribe to Online Payments add-on
+                    {t("subscribeAddonLink")}
                     <ArrowRight className="w-3 h-3" />
                   </Link>
                 )}
@@ -201,26 +192,27 @@ export function PaymentMethodsClient({
             <div className="flex-1 min-w-0">
               {stripeReady ? (
                 <>
-                  <div className="font-bold text-emerald-900">Stripe Connect is live</div>
+                  <div className="font-bold text-emerald-900">{t("stripeReadyTitle")}</div>
                   <p className="text-sm text-emerald-800 mt-0.5 leading-snug">
-                    Card payments will flow into your Stripe account. You&apos;re ready to publish.
+                    {t("stripeReadyBody")}
                   </p>
                 </>
               ) : (
                 <>
                   <div className="font-bold text-amber-900">
-                    Finish Stripe setup to accept online card payments
+                    {t("stripeNotReadyTitle")}
                   </div>
                   <p className="text-sm text-amber-800 mt-0.5 leading-snug">
-                    You picked online card payment, but Stripe Connect is{" "}
-                    <code className="bg-amber-100 px-1 py-0.5 rounded">{stripeStatus}</code>.
-                    You can&apos;t publish until charges are enabled on your account.
+                    {t.rich("stripeNotReadyBody", {
+                      status: stripeStatus ?? "",
+                      code: (chunks) => <code className="bg-amber-100 px-1 py-0.5 rounded">{chunks}</code>,
+                    })}
                   </p>
                   <Link
                     href="/admin/payments/providers"
                     className="mt-3 inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-lg text-sm shadow transition"
                   >
-                    Finish Stripe setup
+                    {t("finishStripeSetupButton")}
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </>
@@ -233,8 +225,8 @@ export function PaymentMethodsClient({
       <div className="flex items-center justify-between gap-3 pt-2">
         <p className="text-xs text-gray-500">
           {methods.size === 0
-            ? "Pick at least one method to publish."
-            : `${methods.size} method${methods.size === 1 ? "" : "s"} selected`}
+            ? t("footerNoneSelected")
+            : t("footerMethodsSelected", { n: methods.size })}
         </p>
         <button
           type="button"
@@ -243,9 +235,9 @@ export function PaymentMethodsClient({
           className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow transition flex items-center gap-2"
         >
           {saving ? (
-            <><Loader2 className="w-4 h-4 animate-spin" /> Saving…</>
+            <><Loader2 className="w-4 h-4 animate-spin" /> {t("buttonSaving")}</>
           ) : (
-            <>Save changes</>
+            <>{t("buttonSaveChanges")}</>
           )}
         </button>
       </div>
@@ -253,7 +245,7 @@ export function PaymentMethodsClient({
       {/* Note about the warning */}
       {onlineCardWarning && (
         <p className="text-xs text-amber-700 text-right">
-          ⚠ Save will succeed, but Stripe must be connected before you can publish.
+          {t("stripeWarningFooter")}
         </p>
       )}
     </div>

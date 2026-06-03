@@ -3,6 +3,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Save, ExternalLink, Palette, Image, Layout, Eye } from "lucide-react";
 import { type ThemeSettings, DEFAULT_THEME, parseTheme } from "@/lib/theme";
+import { useTranslations } from "next-intl";
 
 const DEFAULTS = DEFAULT_THEME;
 
@@ -31,11 +32,12 @@ function ColorField({ label, value, onChange }: { label: string; value: string; 
 }
 
 export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
+  const t = useTranslations("admin.websiteThemeClient");
   const [theme, setTheme] = useState<ThemeSettings>(parseTheme(restaurant?.themeSettings));
   const [saving, setSaving] = useState(false);
 
   const set = <K extends keyof ThemeSettings>(key: K, value: ThemeSettings[K]) =>
-    setTheme(t => ({ ...t, [key]: value }));
+    setTheme(prev => ({ ...prev, [key]: value }));
 
   const save = async () => {
     setSaving(true);
@@ -46,9 +48,9 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
         body: JSON.stringify({ themeSettings: JSON.stringify(theme) }),
       });
       if (!res.ok) throw new Error("Failed");
-      toast.success("Theme saved! Changes are live on your ordering page.");
+      toast.success(t("toastSaved"));
     } catch {
-      toast.error("Failed to save theme");
+      toast.error(t("toastFailed"));
     }
     setSaving(false);
   };
@@ -64,8 +66,8 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Website Theme</h1>
-          <p className="text-sm text-gray-500 mt-1">Customize how your ordering page looks to customers</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+          <p className="text-sm text-gray-500 mt-1">{t("pageSubtitle")}</p>
         </div>
         <div className="flex items-center gap-3">
           {restaurant?.slug && (
@@ -74,7 +76,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
               target="_blank"
               className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-emerald-500 transition"
             >
-              <ExternalLink className="w-4 h-4" /> Preview
+              <ExternalLink className="w-4 h-4" /> {t("previewLink")}
             </a>
           )}
           <button
@@ -82,7 +84,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
             disabled={saving}
             className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition text-sm disabled:opacity-60"
           >
-            <Save className="w-4 h-4" /> {saving ? "Saving..." : "Save Theme"}
+            <Save className="w-4 h-4" /> {saving ? t("saving") : t("saveTheme")}
           </button>
         </div>
       </div>
@@ -94,21 +96,21 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
           {/* Colors */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div className="flex items-center gap-2 text-sm font-bold text-gray-700 uppercase tracking-wide mb-5">
-              <Palette className="w-4 h-4" /> Colors
+              <Palette className="w-4 h-4" /> {t("sectionColors")}
             </div>
             <div className="grid sm:grid-cols-2 gap-5">
-              <ColorField label="Primary Color" value={theme.primaryColor} onChange={v => set("primaryColor", v)} />
-              <ColorField label="Accent / Hover Color" value={theme.accentColor} onChange={v => set("accentColor", v)} />
-              <ColorField label="Page Background" value={theme.backgroundColor} onChange={v => set("backgroundColor", v)} />
-              <ColorField label="Card Background" value={theme.cardBackground} onChange={v => set("cardBackground", v)} />
-              <ColorField label="Text Color" value={theme.textColor} onChange={v => set("textColor", v)} />
+              <ColorField label={t("colorPrimary")} value={theme.primaryColor} onChange={v => set("primaryColor", v)} />
+              <ColorField label={t("colorAccent")} value={theme.accentColor} onChange={v => set("accentColor", v)} />
+              <ColorField label={t("colorBackground")} value={theme.backgroundColor} onChange={v => set("backgroundColor", v)} />
+              <ColorField label={t("colorCard")} value={theme.cardBackground} onChange={v => set("cardBackground", v)} />
+              <ColorField label={t("colorText")} value={theme.textColor} onChange={v => set("textColor", v)} />
             </div>
             <div className="mt-4 pt-4 border-t border-gray-100">
               <button
                 onClick={() => setTheme(DEFAULTS)}
                 className="text-xs text-gray-400 hover:text-gray-600 transition"
               >
-                Reset to defaults
+                {t("resetDefaults")}
               </button>
             </div>
           </div>
@@ -116,11 +118,11 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
           {/* Banner */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div className="flex items-center gap-2 text-sm font-bold text-gray-700 uppercase tracking-wide mb-5">
-              <Image className="w-4 h-4" /> Banner Image
+              <Image className="w-4 h-4" /> {t("sectionBanner")}
             </div>
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Banner Height</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("bannerHeight")}</label>
                 <div className="flex gap-2">
                   {(["sm", "md", "lg"] as const).map(h => (
                     <button
@@ -128,7 +130,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                       onClick={() => set("bannerHeight", h)}
                       className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition ${theme.bannerHeight === h ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
                     >
-                      {h === "sm" ? "Small" : h === "md" ? "Medium" : "Large"}
+                      {h === "sm" ? t("heightSmall") : h === "md" ? t("heightMedium") : t("heightLarge")}
                     </button>
                   ))}
                 </div>
@@ -136,7 +138,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Overlay Opacity: {theme.bannerOpacity}%
+                  {t("overlayOpacity", { value: theme.bannerOpacity })}
                 </label>
                 <input
                   type="range" min={0} max={90} step={5}
@@ -145,13 +147,13 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                   className="w-full accent-emerald-500"
                 />
                 <div className="flex justify-between text-xs text-gray-400 mt-1">
-                  <span>Transparent (0%)</span>
-                  <span>Dark (90%)</span>
+                  <span>{t("opacityTransparent")}</span>
+                  <span>{t("opacityDark")}</span>
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Image Position</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("imagePosition")}</label>
                 <div className="flex gap-2">
                   {(["top", "center", "bottom"] as const).map(p => (
                     <button
@@ -159,7 +161,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                       onClick={() => set("bannerPosition", p)}
                       className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition capitalize ${theme.bannerPosition === p ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
                     >
-                      {p}
+                      {p === "top" ? t("positionTop") : p === "center" ? t("positionCenter") : t("positionBottom")}
                     </button>
                   ))}
                 </div>
@@ -170,11 +172,11 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
           {/* Layout */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div className="flex items-center gap-2 text-sm font-bold text-gray-700 uppercase tracking-wide mb-5">
-              <Layout className="w-4 h-4" /> Layout
+              <Layout className="w-4 h-4" /> {t("sectionLayout")}
             </div>
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Header Layout</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("headerLayout")}</label>
                 <div className="flex gap-2">
                   {(["left", "center"] as const).map(l => (
                     <button
@@ -182,14 +184,14 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                       onClick={() => set("headerLayout", l)}
                       className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition capitalize ${theme.headerLayout === l ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
                     >
-                      {l === "left" ? "Left-aligned" : "Centered"}
+                      {l === "left" ? t("headerLeft") : t("headerCentered")}
                     </button>
                   ))}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Menu Layout</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("menuLayout")}</label>
                 <div className="flex gap-2">
                   {(["carousel", "grid"] as const).map(m => (
                     <button
@@ -197,19 +199,19 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                       onClick={() => set("menuLayout", m)}
                       className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition ${theme.menuLayout === m ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
                     >
-                      {m === "carousel" ? "Carousel (compact)" : "Grid (classic)"}
+                      {m === "carousel" ? t("menuCarousel") : t("menuGrid")}
                     </button>
                   ))}
                 </div>
                 <p className="text-xs text-gray-400 mt-2">
-                  Carousel: compact horizontal scrolling cards per category. Grid: traditional 2-column layout.
+                  {t("menuLayoutHint")}
                 </p>
               </div>
 
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
-                  <div className="text-sm font-medium text-gray-700">Show Category Images</div>
-                  <div className="text-xs text-gray-500">Display category thumbnails in the nav pills</div>
+                  <div className="text-sm font-medium text-gray-700">{t("showCategoryImages")}</div>
+                  <div className="text-xs text-gray-500">{t("showCategoryImagesHint")}</div>
                 </div>
                 <button
                   onClick={() => set("showCategoryImages", !theme.showCategoryImages)}
@@ -226,7 +228,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
         <div className="lg:col-span-1">
           <div className="sticky top-6">
             <div className="flex items-center gap-2 text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">
-              <Eye className="w-4 h-4" /> Preview
+              <Eye className="w-4 h-4" /> {t("sectionPreview")}
             </div>
             <div style={previewPrimary}>
               {/* Mini banner preview */}
@@ -252,15 +254,15 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                     <img src={restaurant.logoUrl} alt="" className="w-10 h-10 rounded-xl border-2 border-white object-cover flex-shrink-0" />
                   )}
                   <div className="text-white text-left">
-                    <div className="text-sm font-bold drop-shadow">{restaurant?.name || "Your Restaurant"}</div>
-                    <div className="text-xs opacity-80">Slogan here</div>
+                    <div className="text-sm font-bold drop-shadow">{restaurant?.name || t("previewRestaurantName")}</div>
+                    <div className="text-xs opacity-80">{t("previewSlogan")}</div>
                   </div>
                 </div>
               </div>
 
               {/* Mini category pills */}
               <div className="flex gap-1.5 px-3 py-2 overflow-hidden" style={{ backgroundColor: theme.cardBackground }}>
-                {["Starters", "Mains", "Desserts"].map((c, i) => (
+                {[t("previewCat1"), t("previewCat2"), t("previewCat3")].map((c, i) => (
                   <span
                     key={c}
                     className="text-xs font-semibold px-2 py-1 rounded-full whitespace-nowrap flex-shrink-0"
@@ -274,7 +276,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
               {/* Mini menu items */}
               {theme.menuLayout === "carousel" ? (
                 <div className="flex gap-2 px-3 pb-3 overflow-hidden" style={{ backgroundColor: theme.backgroundColor }}>
-                  {["Margherita", "BBQ Chicken", "Veggie"].map(name => (
+                  {[t("previewItem1"), t("previewItem2"), t("previewItem3")].map(name => (
                     <div
                       key={name}
                       className="flex-shrink-0 rounded-xl overflow-hidden shadow-sm"
@@ -290,7 +292,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-2 px-3 pb-3" style={{ backgroundColor: theme.backgroundColor }}>
-                  {["Margherita", "BBQ Chicken"].map(name => (
+                  {[t("previewItem1"), t("previewItem2")].map(name => (
                     <div
                       key={name}
                       className="rounded-xl overflow-hidden shadow-sm"
@@ -308,7 +310,7 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
             </div>
 
             <p className="text-xs text-gray-400 mt-3 text-center">
-              This is a simplified preview. <a href={restaurant?.slug ? `/order/${restaurant.slug}` : "#"} target="_blank" className="text-emerald-500 underline">View live page →</a>
+              {t("previewNote")} <a href={restaurant?.slug ? `/order/${restaurant.slug}` : "#"} target="_blank" className="text-emerald-500 underline">{t("previewLivePage")}</a>
             </p>
           </div>
         </div>

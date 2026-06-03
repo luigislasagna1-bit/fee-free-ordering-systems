@@ -2,6 +2,7 @@
 import { useCallback, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { Plus, Trash2, Loader2, RotateCcw, Save, Eye, EyeOff, Check, ImageIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type {
   HostedSiteSettings,
   BuiltInSection,
@@ -14,28 +15,6 @@ import {
   MAX_CTA_LABEL_LEN,
 } from "@/lib/hosted-site-settings";
 import { ImageUpload } from "@/components/admin/ImageUpload";
-
-const SECTION_LABELS: Record<BuiltInSection, string> = {
-  banner: "Banner image",
-  serviceSummary: "Service summary card (We offer X · Order button)",
-  specialOffers: "Special Offers (auto-pulled from active promotions)",
-  about: "About",
-  featuredMenu: "Featured menu",
-  visit: "Visit (address, phone, hours)",
-  map: "Embedded map",
-  social: "Social links",
-};
-
-const POSITION_OPTIONS: Array<{ value: BuiltInSection; label: string }> = [
-  { value: "banner", label: "After the banner / hero" },
-  { value: "serviceSummary", label: "After the service summary card" },
-  { value: "specialOffers", label: "After Special Offers" },
-  { value: "about", label: "After About" },
-  { value: "featuredMenu", label: "After Featured menu" },
-  { value: "visit", label: "After Visit + Hours" },
-  { value: "map", label: "After the map" },
-  { value: "social", label: "After social links" },
-];
 
 /**
  * Client-side editor that mirrors the HostedSiteSettings shape with
@@ -62,6 +41,7 @@ export function WebsiteEditorClient({
   };
   previewUrl: string;
 }) {
+  const t = useTranslations("admin.websiteEditor");
   const [settings, setSettings] = useState<HostedSiteSettings>(initial);
   const [saving, setSaving] = useState(false);
   const [resetting, setResetting] = useState(false);
@@ -72,6 +52,28 @@ export function WebsiteEditorClient({
   // photo + so we can mutate it without a full page reload.
   const [bannerUrl, setBannerUrl] = useState(restaurantDefaults.bannerUrl ?? "");
   const [logoUrl, setLogoUrl] = useState(restaurantDefaults.logoUrl ?? "");
+
+  const SECTION_LABELS: Record<BuiltInSection, string> = {
+    banner: t("sectionBanner"),
+    serviceSummary: t("sectionServiceSummary"),
+    specialOffers: t("sectionSpecialOffers"),
+    about: t("sectionAbout"),
+    featuredMenu: t("sectionFeaturedMenu"),
+    visit: t("sectionVisit"),
+    map: t("sectionMap"),
+    social: t("sectionSocial"),
+  };
+
+  const POSITION_OPTIONS: Array<{ value: BuiltInSection; label: string }> = [
+    { value: "banner", label: t("positionAfterBanner") },
+    { value: "serviceSummary", label: t("positionAfterServiceSummary") },
+    { value: "specialOffers", label: t("positionAfterSpecialOffers") },
+    { value: "about", label: t("positionAfterAbout") },
+    { value: "featuredMenu", label: t("positionAfterFeaturedMenu") },
+    { value: "visit", label: t("positionAfterVisit") },
+    { value: "map", label: t("positionAfterMap") },
+    { value: "social", label: t("positionAfterSocial") },
+  ];
 
   /** Persist a single Restaurant field via /api/restaurants/profile.
    *  Used by the banner + logo uploads inside the website editor so
@@ -87,18 +89,18 @@ export function WebsiteEditorClient({
         });
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
-          toast.error(data?.error || "Failed to save photo");
+          toast.error(data?.error || t("errorFailedToSavePhoto"));
           return false;
         }
         setPreviewKey((k) => k + 1); // refresh the iframe preview
-        toast.success(field === "bannerUrl" ? "Hero photo updated" : "Logo updated");
+        toast.success(field === "bannerUrl" ? t("successHeroPhotoUpdated") : t("successLogoUpdated"));
         return true;
       } catch (e: any) {
-        toast.error(e?.message || "Failed to save photo");
+        toast.error(e?.message || t("errorFailedToSavePhoto"));
         return false;
       }
     },
-    [],
+    [t],
   );
 
   // Track if the in-memory settings differ from the last-saved baseline so
@@ -118,36 +120,36 @@ export function WebsiteEditorClient({
       });
       const data = await res.json();
       if (!res.ok) {
-        toast.error(data?.error || "Failed to save");
+        toast.error(data?.error || t("errorFailedToSave"));
         return;
       }
       setSettings(data.settings);
       setPreviewKey((k) => k + 1);
-      toast.success("Saved");
+      toast.success(t("successSaved"));
     } catch (e: any) {
-      toast.error(e?.message || "Failed to save");
+      toast.error(e?.message || t("errorFailedToSave"));
     } finally {
       setSaving(false);
     }
-  }, [saving, settings]);
+  }, [saving, settings, t]);
 
   const resetAll = useCallback(async () => {
-    if (!confirm("Reset every customization back to defaults? This can't be undone.")) return;
+    if (!confirm(t("confirmResetAll"))) return;
     setResetting(true);
     try {
       const res = await fetch("/api/admin/website/settings", { method: "DELETE" });
       const data = await res.json();
       if (!res.ok) {
-        toast.error(data?.error || "Failed to reset");
+        toast.error(data?.error || t("errorFailedToReset"));
         return;
       }
       setSettings(data.settings);
       setPreviewKey((k) => k + 1);
-      toast.success("Reset to defaults");
+      toast.success(t("successResetToDefaults"));
     } finally {
       setResetting(false);
     }
-  }, []);
+  }, [t]);
 
   function toggleSection(key: BuiltInSection) {
     setSettings((s) => ({
@@ -158,12 +160,12 @@ export function WebsiteEditorClient({
 
   function addCustomSection() {
     if (settings.customSections.length >= MAX_CUSTOM_SECTIONS) {
-      toast.error(`Maximum ${MAX_CUSTOM_SECTIONS} custom sections.`);
+      toast.error(t("errorMaxCustomSections", { max: MAX_CUSTOM_SECTIONS }));
       return;
     }
     const newSection: CustomSection = {
       id: `cs-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-      title: "New section",
+      title: t("newSectionDefaultTitle"),
       body: "",
       position: "about",
     };
@@ -191,7 +193,7 @@ export function WebsiteEditorClient({
       {/* ─── Left column: forms ───────────────────────────────────────── */}
       <div className="space-y-5">
         {/* Header / hero */}
-        <Card title="Header & hero" subtitle="Logo, title, and the buttons at the top of your page.">
+        <Card title={t("cardHeaderHeroTitle")} subtitle={t("cardHeaderHeroSubtitle")}>
           {/* Hero photo — uploads save immediately via /api/restaurants/profile.
               Lives at the top of the section so it's the first thing the
               owner sees — matches the visual prominence of the photo on
@@ -199,8 +201,8 @@ export function WebsiteEditorClient({
           <div className="border-b border-gray-100 pb-4 mb-4">
             <div className="flex items-center gap-2 mb-2">
               <ImageIcon className="w-4 h-4 text-gray-500" />
-              <label className="text-sm font-semibold text-gray-800">Hero photo</label>
-              <span className="text-xs text-gray-500">(the big banner image filling the top of your page)</span>
+              <label className="text-sm font-semibold text-gray-800">{t("heroPhotoLabel")}</label>
+              <span className="text-xs text-gray-500">{t("heroPhotoHint")}</span>
             </div>
             <ImageUpload
               value={bannerUrl}
@@ -211,9 +213,7 @@ export function WebsiteEditorClient({
               }}
             />
             <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
-              Recommended: 1600×900 (or larger), JPG/WebP, &lt; 1MB. Food photography
-              with good lighting beats a stock photo every time. The image is
-              auto-cropped to fit the hero so center the most important content.
+              {t("heroPhotoTip")}
             </p>
           </div>
 
@@ -221,8 +221,8 @@ export function WebsiteEditorClient({
           <div className="border-b border-gray-100 pb-4 mb-4">
             <div className="flex items-center gap-2 mb-2">
               <ImageIcon className="w-4 h-4 text-gray-500" />
-              <label className="text-sm font-semibold text-gray-800">Logo</label>
-              <span className="text-xs text-gray-500">(shown in the top-left nav + over the hero)</span>
+              <label className="text-sm font-semibold text-gray-800">{t("logoLabel")}</label>
+              <span className="text-xs text-gray-500">{t("logoHint")}</span>
             </div>
             <ImageUpload
               value={logoUrl}
@@ -233,37 +233,41 @@ export function WebsiteEditorClient({
               }}
             />
             <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
-              Square format works best (e.g. 400×400). PNG with transparency renders cleanly over the photo hero.
+              {t("logoTip")}
             </p>
           </div>
 
           <ToggleRow
-            label="Full-screen hero"
-            help="Banner image fills the entire hero with a dark overlay, GloriaFood-style. Best for photographic banners (food shots, restaurant interior). Leave off if your banner is a logo or text graphic."
+            label={t("toggleFullScreenHero")}
+            help={t("toggleFullScreenHeroHelp")}
             value={settings.header.fullScreenHero}
             onChange={(v) =>
               setSettings((s) => ({ ...s, header: { ...s.header, fullScreenHero: v } }))
             }
           />
           <ToggleRow
-            label="Show logo"
-            help="Your uploaded logo overlapping the banner/hero."
+            label={t("toggleShowLogo")}
+            help={t("toggleShowLogoHelp")}
             value={settings.header.showLogo}
             onChange={(v) =>
               setSettings((s) => ({ ...s, header: { ...s.header, showLogo: v } }))
             }
           />
           <ToggleRow
-            label="Show cuisine type label"
-            help={restaurantDefaults.cuisineType ? `Currently: "${restaurantDefaults.cuisineType}"` : "No cuisine set in profile yet."}
+            label={t("toggleShowCuisineLabel")}
+            help={
+              restaurantDefaults.cuisineType
+                ? t("toggleShowCuisineLabelHelpSet", { cuisineType: restaurantDefaults.cuisineType })
+                : t("toggleShowCuisineLabelHelpUnset")
+            }
             value={settings.header.showCuisineLabel}
             onChange={(v) =>
               setSettings((s) => ({ ...s, header: { ...s.header, showCuisineLabel: v } }))
             }
           />
           <TextField
-            label="Custom title"
-            help={`Override the page title. Leave empty to use "${restaurantDefaults.name}".`}
+            label={t("fieldCustomTitleLabel")}
+            help={t("fieldCustomTitleHelp", { name: restaurantDefaults.name })}
             placeholder={restaurantDefaults.name}
             value={settings.header.customTitle ?? ""}
             onChange={(v) =>
@@ -275,9 +279,9 @@ export function WebsiteEditorClient({
             maxLength={80}
           />
           <TextField
-            label="Custom slogan"
-            help={`Override the tagline under the title. Default: "${restaurantDefaults.slogan ?? "(none set)"}".`}
-            placeholder={restaurantDefaults.slogan ?? "Delicious food made fresh daily"}
+            label={t("fieldCustomSloganLabel")}
+            help={t("fieldCustomSloganHelp", { slogan: restaurantDefaults.slogan ?? t("sloganNoneSet") })}
+            placeholder={restaurantDefaults.slogan ?? t("sloganPlaceholder")}
             value={settings.header.customSlogan ?? ""}
             onChange={(v) =>
               setSettings((s) => ({
@@ -291,8 +295,8 @@ export function WebsiteEditorClient({
 
         {/* Sections — visibility toggles */}
         <Card
-          title="Sections"
-          subtitle="Show or hide each section. Content for visible sections is pulled automatically from your menu, hours, and profile."
+          title={t("cardSectionsTitle")}
+          subtitle={t("cardSectionsSubtitle")}
         >
           {(Object.entries(SECTION_LABELS) as Array<[BuiltInSection, string]>).map(
             ([key, label]) => (
@@ -307,10 +311,10 @@ export function WebsiteEditorClient({
         </Card>
 
         {/* CTAs */}
-        <Card title="Call-to-action buttons" subtitle="The hero buttons. The primary defaults to your order page; the secondary defaults to your reservation flow.">
+        <Card title={t("cardCtaTitle")} subtitle={t("cardCtaSubtitle")}>
           <div className="border-b border-gray-100 pb-4 mb-4">
             <ToggleRow
-              label="Show Primary button"
+              label={t("toggleShowPrimaryButton")}
               value={settings.cta.primary.enabled}
               onChange={(v) =>
                 setSettings((s) => ({
@@ -320,8 +324,8 @@ export function WebsiteEditorClient({
               }
             />
             <TextField
-              label="Primary label"
-              placeholder="Order Online"
+              label={t("fieldPrimaryLabelLabel")}
+              placeholder={t("fieldPrimaryLabelPlaceholder")}
               value={settings.cta.primary.label}
               onChange={(v) =>
                 setSettings((s) => ({
@@ -332,9 +336,9 @@ export function WebsiteEditorClient({
               maxLength={MAX_CTA_LABEL_LEN}
             />
             <TextField
-              label="Primary link"
-              help="Defaults to your /order page. Override only if you want this button to go somewhere else."
-              placeholder="/order/your-slug (default)"
+              label={t("fieldPrimaryLinkLabel")}
+              help={t("fieldPrimaryLinkHelp")}
+              placeholder={t("fieldPrimaryLinkPlaceholder")}
               value={settings.cta.primary.href ?? ""}
               onChange={(v) =>
                 setSettings((s) => ({
@@ -347,8 +351,8 @@ export function WebsiteEditorClient({
           </div>
           <div>
             <ToggleRow
-              label="Show Secondary button"
-              help="Only shows when you accept reservations."
+              label={t("toggleShowSecondaryButton")}
+              help={t("toggleShowSecondaryButtonHelp")}
               value={settings.cta.secondary.enabled}
               onChange={(v) =>
                 setSettings((s) => ({
@@ -358,8 +362,8 @@ export function WebsiteEditorClient({
               }
             />
             <TextField
-              label="Secondary label"
-              placeholder="Book a Table"
+              label={t("fieldSecondaryLabelLabel")}
+              placeholder={t("fieldSecondaryLabelPlaceholder")}
               value={settings.cta.secondary.label}
               onChange={(v) =>
                 setSettings((s) => ({
@@ -370,9 +374,9 @@ export function WebsiteEditorClient({
               maxLength={MAX_CTA_LABEL_LEN}
             />
             <TextField
-              label="Secondary link"
-              help="Defaults to /order?service=reservation."
-              placeholder="(default)"
+              label={t("fieldSecondaryLinkLabel")}
+              help={t("fieldSecondaryLinkHelp")}
+              placeholder={t("fieldSecondaryLinkPlaceholder")}
               value={settings.cta.secondary.href ?? ""}
               onChange={(v) =>
                 setSettings((s) => ({
@@ -387,44 +391,44 @@ export function WebsiteEditorClient({
 
         {/* Custom sections */}
         <Card
-          title="Your own sections"
-          subtitle={`Add up to ${MAX_CUSTOM_SECTIONS} sections of your own — perfect for daily specials, the chef's story, or COVID hours notes.`}
+          title={t("cardCustomSectionsTitle")}
+          subtitle={t("cardCustomSectionsSubtitle", { max: MAX_CUSTOM_SECTIONS })}
         >
           {settings.customSections.length === 0 && (
             <p className="text-sm text-gray-500 mb-4 italic">
-              No custom sections yet. Click + Add section to create one.
+              {t("customSectionsEmpty")}
             </p>
           )}
           {settings.customSections.map((sec) => (
             <div key={sec.id} className="border border-gray-200 rounded-xl p-4 mb-3 space-y-3">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                  Custom section
+                  {t("customSectionBadge")}
                 </span>
                 <button
                   type="button"
                   onClick={() => removeCustomSection(sec.id)}
                   className="inline-flex items-center gap-1 text-xs text-red-600 hover:text-red-700 font-semibold"
                 >
-                  <Trash2 className="w-3.5 h-3.5" /> Remove
+                  <Trash2 className="w-3.5 h-3.5" /> {t("buttonRemove")}
                 </button>
               </div>
               <TextField
-                label="Section title"
+                label={t("fieldSectionTitleLabel")}
                 value={sec.title}
                 onChange={(v) => updateCustomSection(sec.id, { title: v })}
                 maxLength={MAX_CUSTOM_SECTION_TITLE_LEN}
               />
               <TextAreaField
-                label="Section content"
-                help="Plain text. Line breaks are preserved."
+                label={t("fieldSectionContentLabel")}
+                help={t("fieldSectionContentHelp")}
                 value={sec.body}
                 onChange={(v) => updateCustomSection(sec.id, { body: v })}
                 maxLength={MAX_CUSTOM_SECTION_BODY_LEN}
                 rows={5}
               />
               <SelectField
-                label="Place this section…"
+                label={t("fieldSectionPositionLabel")}
                 value={sec.position}
                 onChange={(v) =>
                   updateCustomSection(sec.id, { position: v as BuiltInSection })
@@ -439,7 +443,7 @@ export function WebsiteEditorClient({
               onClick={addCustomSection}
               className="w-full mt-2 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border-2 border-dashed border-gray-300 text-sm font-semibold text-gray-600 hover:border-emerald-300 hover:text-emerald-600 transition"
             >
-              <Plus className="w-4 h-4" /> Add section ({settings.customSections.length}/{MAX_CUSTOM_SECTIONS})
+              <Plus className="w-4 h-4" /> {t("buttonAddSection", { current: settings.customSections.length, max: MAX_CUSTOM_SECTIONS })}
             </button>
           )}
         </Card>
@@ -453,11 +457,11 @@ export function WebsiteEditorClient({
             className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-600 hover:text-gray-900 disabled:opacity-50"
           >
             {resetting ? <Loader2 className="w-4 h-4 animate-spin" /> : <RotateCcw className="w-4 h-4" />}
-            Reset all
+            {t("buttonResetAll")}
           </button>
           <div className="flex items-center gap-2">
             {dirty && (
-              <span className="text-xs text-amber-600 font-semibold">Unsaved changes</span>
+              <span className="text-xs text-amber-600 font-semibold">{t("unsavedChanges")}</span>
             )}
             <button
               type="button"
@@ -467,11 +471,11 @@ export function WebsiteEditorClient({
             >
               {saving ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" /> Saving…
+                  <Loader2 className="w-4 h-4 animate-spin" /> {t("buttonSaving")}
                 </>
               ) : (
                 <>
-                  <Save className="w-4 h-4" /> {dirty ? "Save changes" : "All saved"}
+                  <Save className="w-4 h-4" /> {dirty ? t("buttonSaveChanges") : t("buttonAllSaved")}
                 </>
               )}
             </button>
@@ -483,19 +487,18 @@ export function WebsiteEditorClient({
       <div className="hidden lg:block">
         <div className="sticky top-4 space-y-2">
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
-            <Eye className="w-3.5 h-3.5" /> Live preview
+            <Eye className="w-3.5 h-3.5" /> {t("livePreviewLabel")}
           </div>
           <div className="rounded-xl border border-gray-200 overflow-hidden bg-white shadow-sm">
             <iframe
               key={previewKey}
               src={previewUrl}
               className="w-full h-[640px] border-0"
-              title="Hosted site preview"
+              title={t("iframeTitle")}
             />
           </div>
           <p className="text-[11px] text-gray-400 leading-snug">
-            Preview updates on save. To see live changes during edits, click
-            Save then this panel will refresh automatically.
+            {t("previewNote")}
           </p>
         </div>
       </div>

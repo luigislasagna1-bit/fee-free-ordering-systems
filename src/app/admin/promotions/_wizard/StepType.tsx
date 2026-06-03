@@ -11,6 +11,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import * as Icons from "lucide-react";
+import { useTranslations } from "next-intl";
 import { PROMO_TYPES, isLockedType } from "@/lib/promo-types";
 
 type IconKey = keyof typeof Icons;
@@ -33,6 +34,7 @@ export function StepType({
   onSelect: (slug: string) => void;
   hasAdvanced: boolean;
 }) {
+  const t = useTranslations("admin.promoStepType");
   const [upgradePromptOpen, setUpgradePromptOpen] = useState(false);
 
   const handleCardClick = (slug: string) => {
@@ -46,24 +48,23 @@ export function StepType({
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-lg font-semibold text-gray-900">Choose a promotion type</h2>
+        <h2 className="text-lg font-semibold text-gray-900">{t("heading")}</h2>
         <p className="text-sm text-gray-500 mt-1">
-          Pick the kind of deal you want to run. Types 6-13 require the Advanced
-          Promo Marketing add-on.
+          {t("subheading")}
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {PROMO_TYPES.map((t) => {
-          const Icon = resolveIcon(t.icon);
-          const locked = t.tier === "locked";
+        {PROMO_TYPES.map((promo) => {
+          const Icon = resolveIcon(promo.icon);
+          const locked = promo.tier === "locked";
           const gated = locked && !hasAdvanced;
-          const selected = selectedType === t.slug;
+          const selected = selectedType === promo.slug;
 
           return (
             <button
-              key={t.slug}
-              onClick={() => handleCardClick(t.slug)}
+              key={promo.slug}
+              onClick={() => handleCardClick(promo.slug)}
               className={`relative text-left p-4 rounded-xl border-2 transition group ${
                 selected
                   ? "border-emerald-500 bg-emerald-50"
@@ -89,12 +90,12 @@ export function StepType({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5 mb-0.5">
                     <span className="text-xs font-bold text-gray-400">
-                      #{t.catalogNumber}
+                      #{promo.catalogNumber}
                     </span>
                     {locked && (
                       <span className="inline-flex items-center gap-0.5 text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">
                         <Icons.Lock className="w-2.5 h-2.5" />
-                        {gated ? "Locked" : "Pro"}
+                        {gated ? t("badgeLocked") : t("badgePro")}
                       </span>
                     )}
                   </div>
@@ -103,18 +104,18 @@ export function StepType({
                       gated ? "text-gray-500" : "text-gray-900"
                     }`}
                   >
-                    {t.name}
+                    {promo.name}
                   </div>
                   <div
                     className={`text-xs mt-0.5 ${
                       gated ? "text-gray-400" : "text-gray-500"
                     }`}
                   >
-                    {t.description}
+                    {promo.description}
                   </div>
                   {gated && (
                     <div className="text-[11px] text-amber-700 mt-1.5 font-medium">
-                      Unlock with Advanced Promo Marketing $19.99/mo
+                      {t("unlockNudge")}
                     </div>
                   )}
                 </div>
@@ -139,32 +140,30 @@ export function StepType({
               </div>
               <div>
                 <h3 className="text-lg font-bold text-gray-900">
-                  Advanced Promo Marketing
+                  {t("modalTitle")}
                 </h3>
-                <p className="text-sm text-gray-500">$19.99 / month</p>
+                <p className="text-sm text-gray-500">{t("modalPrice")}</p>
               </div>
             </div>
             <p className="text-sm text-gray-700 mb-4">
-              This promo type is part of the Advanced Promo Marketing add-on,
-              which unlocks 8 additional promo types including meal bundles,
-              buy-N-get-free, payment-method rewards, and combo deals.
+              {t("modalBody")}
             </p>
             <ul className="text-xs text-gray-600 space-y-1.5 mb-5">
               <li className="flex gap-2">
                 <Icons.Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                Payment method reward (cash discount, etc.)
+                {t("featurePaymentMethod")}
               </li>
               <li className="flex gap-2">
                 <Icons.Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                Meal bundles & combos
+                {t("featureBundles")}
               </li>
               <li className="flex gap-2">
                 <Icons.Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                Buy-N-get-free progressive discounts
+                {t("featureBuyNGetFree")}
               </li>
               <li className="flex gap-2">
                 <Icons.Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                Free dish as part of a meal
+                {t("featureFreeDish")}
               </li>
             </ul>
             <div className="flex gap-2">
@@ -172,13 +171,13 @@ export function StepType({
                 onClick={() => setUpgradePromptOpen(false)}
                 className="flex-1 px-4 py-2.5 text-sm text-gray-600 border border-gray-200 rounded-xl hover:bg-gray-50"
               >
-                Maybe later
+                {t("maybeLater")}
               </button>
               <Link
                 href="/admin/billing/add-ons"
                 className="flex-1 px-4 py-2.5 bg-amber-500 text-white text-sm font-semibold rounded-xl hover:bg-amber-600 text-center"
               >
-                Subscribe
+                {t("subscribe")}
               </Link>
             </div>
           </div>

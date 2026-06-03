@@ -14,6 +14,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   Tag, Edit2, Trash2, X, Copy, Eye, EyeOff,
@@ -39,22 +40,23 @@ const PROMO_TYPE_DISPLAY: { value: string; label: string; icon: React.ComponentT
   { value: "free_dish_meal",         label: "Free Dish as Part of a Meal",  icon: Gift    },
 ];
 
-function stackingBadge(rule: string) {
+function StackingBadge({ rule }: { rule: string }) {
+  const t = useTranslations("admin.promotionsList");
   if (rule === "master")
     return (
       <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 flex items-center gap-1">
         <Star className="w-3 h-3" />
-        Master
+        {t("stackingMaster")}
       </span>
     );
   if (rule === "exclusive")
     return (
       <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 flex items-center gap-1">
         <Crown className="w-3 h-3" />
-        Exclusive
+        {t("stackingExclusive")}
       </span>
     );
-  return <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">Standard</span>;
+  return <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">{t("stackingStandard")}</span>;
 }
 
 // ─── Coupon modal (kept — coupons are still edit-in-place) ──────────────────
@@ -91,16 +93,17 @@ function CouponModal({
         }
       : emptyCouponForm,
   );
+  const t = useTranslations("admin.promotionsList");
   const [saving, setSaving] = useState(false);
   const isNew = !coupon;
 
   const save = async () => {
     if (!form.code.trim()) {
-      toast.error("Coupon code is required");
+      toast.error(t("errorCouponCodeRequired"));
       return;
     }
     if (!form.discountValue) {
-      toast.error("Discount value is required");
+      toast.error(t("errorDiscountValueRequired"));
       return;
     }
     setSaving(true);
@@ -124,14 +127,14 @@ function CouponModal({
         body: JSON.stringify(body),
       });
       if (!res.ok) {
-        let msg = `Save failed (${res.status})`;
+        let msg = t("errorSaveFailed", { status: res.status });
         try {
           const d = await res.json();
           msg = d.error || msg;
         } catch {}
         throw new Error(msg);
       }
-      toast.success(isNew ? "Coupon created!" : "Coupon updated!");
+      toast.success(isNew ? t("couponCreated") : t("couponUpdated"));
       onSaved();
     } catch (e: any) {
       toast.error(e.message);
@@ -150,7 +153,7 @@ function CouponModal({
       >
         <div className="flex items-center justify-between p-5 border-b">
           <h2 className="text-lg font-bold text-gray-900">
-            {isNew ? "New Coupon Code" : "Edit Coupon"}
+            {isNew ? t("modalTitleNew") : t("modalTitleEdit")}
           </h2>
           <button
             onClick={onClose}
@@ -163,12 +166,12 @@ function CouponModal({
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Coupon Code *
+                {t("labelCouponCode")}
               </label>
               <input
                 type="text"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none uppercase font-mono"
-                placeholder="SAVE10"
+                placeholder={t("placeholderCouponCode")}
                 value={form.code}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, code: e.target.value.toUpperCase() }))
@@ -177,7 +180,7 @@ function CouponModal({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Discount Type
+                {t("labelDiscountType")}
               </label>
               <select
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
@@ -189,13 +192,13 @@ function CouponModal({
                   }))
                 }
               >
-                <option value="percentage">Percentage (%)</option>
-                <option value="fixed">Fixed Amount ($)</option>
+                <option value="percentage">{t("discountTypePercentage")}</option>
+                <option value="fixed">{t("discountTypeFixed")}</option>
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Value *
+                {t("labelValue")}
               </label>
               <input
                 type="number"
@@ -211,7 +214,7 @@ function CouponModal({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Min. Order ($)
+                {t("labelMinOrder")}
               </label>
               <input
                 type="number"
@@ -227,13 +230,13 @@ function CouponModal({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Max Uses
+                {t("labelMaxUses")}
               </label>
               <input
                 type="number"
                 min="1"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                placeholder="Unlimited"
+                placeholder={t("placeholderUnlimited")}
                 value={form.maxUses}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, maxUses: e.target.value }))
@@ -242,7 +245,7 @@ function CouponModal({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Expires At
+                {t("labelExpiresAt")}
               </label>
               <input
                 type="date"
@@ -256,12 +259,12 @@ function CouponModal({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Description
+              {t("labelDescription")}
             </label>
             <input
               type="text"
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              placeholder="10% off your first order"
+              placeholder={t("placeholderDescription")}
               value={form.description}
               onChange={(e) =>
                 setForm((f) => ({ ...f, description: e.target.value }))
@@ -274,14 +277,14 @@ function CouponModal({
             onClick={onClose}
             className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800"
           >
-            Cancel
+            {t("buttonCancel")}
           </button>
           <button
             onClick={save}
             disabled={saving}
             className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-xl hover:bg-emerald-600 disabled:opacity-50 transition"
           >
-            {saving ? "Saving..." : isNew ? "Create Coupon" : "Save Changes"}
+            {saving ? t("buttonSaving") : isNew ? t("buttonCreateCoupon") : t("buttonSaveChanges")}
           </button>
         </div>
       </div>
@@ -304,6 +307,7 @@ function CouponCard({
   onToggle: () => void;
   onDuplicate: () => void;
 }) {
+  const t = useTranslations("admin.promotionsList");
   const isExpired = coupon.expiresAt && new Date(coupon.expiresAt) < new Date();
   const discountLabel =
     coupon.discountType === "percentage"
@@ -333,19 +337,19 @@ function CouponCard({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
             <span className="text-xs bg-blue-50 text-blue-700 font-semibold px-2 py-0.5 rounded">
-              COUPON
+              {t("badgeCoupon")}
             </span>
             <span className="font-mono font-bold text-gray-900 bg-gray-100 px-2 py-0.5 rounded text-sm">
               {coupon.code}
             </span>
             {!coupon.isActive && (
               <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">
-                Inactive
+                {t("badgeInactive")}
               </span>
             )}
             {isExpired && (
               <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
-                Expired
+                {t("badgeExpired")}
               </span>
             )}
           </div>
@@ -365,17 +369,17 @@ function CouponCard({
           )}
           <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-gray-400">
             <span>
-              {coupon.usedCount}/{coupon.maxUses ?? "∞"} used
+              {t("usedCount", { used: coupon.usedCount, max: coupon.maxUses ?? "∞" })}
             </span>
             {coupon.expiresAt && (
-              <span>Expires {new Date(coupon.expiresAt).toLocaleDateString()}</span>
+              <span>{t("expiresOn", { date: new Date(coupon.expiresAt).toLocaleDateString() })}</span>
             )}
           </div>
         </div>
         <div className="flex items-center gap-1 flex-shrink-0">
           <button
             onClick={onToggle}
-            title={coupon.isActive ? "Deactivate" : "Activate"}
+            title={coupon.isActive ? t("titleDeactivate") : t("titleActivate")}
             className={`p-1.5 rounded transition ${
               coupon.isActive
                 ? "text-green-500 hover:text-green-700"
@@ -387,7 +391,7 @@ function CouponCard({
           <button
             onClick={onDuplicate}
             className="p-1.5 text-gray-400 hover:text-blue-500 rounded"
-            title="Duplicate"
+            title={t("titleDuplicate")}
           >
             <Copy className="w-4 h-4" />
           </button>
@@ -420,8 +424,9 @@ function PromoCard({
   onToggle: () => void;
   onDuplicate: () => void;
 }) {
+  const t = useTranslations("admin.promotionsList");
   const typeInfo =
-    PROMO_TYPE_DISPLAY.find((t) => t.value === promo.promotionType) ??
+    PROMO_TYPE_DISPLAY.find((pt) => pt.value === promo.promotionType) ??
     PROMO_TYPE_DISPLAY[0];
   const Icon = typeInfo.icon;
 
@@ -448,10 +453,10 @@ function PromoCard({
             <span className="font-semibold text-gray-900">{promo.name}</span>
             {!promo.isActive && (
               <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">
-                Inactive
+                {t("badgeInactive")}
               </span>
             )}
-            {stackingBadge(promo.stackingRule)}
+            <StackingBadge rule={promo.stackingRule} />
             {promo.couponCode && (
               <span className="text-xs bg-blue-50 text-blue-700 font-mono px-2 py-0.5 rounded border border-blue-100">
                 {promo.couponCode}
@@ -459,7 +464,7 @@ function PromoCard({
             )}
             {promo.autoApply && !promo.couponCode && (
               <span className="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded">
-                Auto
+                {t("badgeAuto")}
               </span>
             )}
           </div>
@@ -470,24 +475,24 @@ function PromoCard({
             </div>
           )}
           <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-gray-400">
-            {promo.minimumOrder > 0 && <span>Min ${promo.minimumOrder}</span>}
+            {promo.minimumOrder > 0 && <span>{t("minOrder", { amount: promo.minimumOrder })}</span>}
             {promo.endsAt && (
-              <span>Ends {new Date(promo.endsAt).toLocaleDateString()}</span>
+              <span>{t("endsOn", { date: new Date(promo.endsAt).toLocaleDateString() })}</span>
             )}
             {promo.usageLimit && (
               <span>
-                {promo.usedCount}/{promo.usageLimit} used
+                {t("usedCount", { used: promo.usedCount, max: promo.usageLimit })}
               </span>
             )}
             {promo.orderType !== "both" && (
-              <span className="capitalize">{promo.orderType} only</span>
+              <span className="capitalize">{t("orderTypeOnly", { type: promo.orderType ?? "" })}</span>
             )}
           </div>
         </div>
         <div className="flex items-center gap-1 flex-shrink-0">
           <button
             onClick={onToggle}
-            title={promo.isActive ? "Deactivate" : "Activate"}
+            title={promo.isActive ? t("titleDeactivate") : t("titleActivate")}
             className={`p-1.5 rounded transition ${
               promo.isActive
                 ? "text-green-500 hover:text-green-700"
@@ -499,14 +504,14 @@ function PromoCard({
           <button
             onClick={onDuplicate}
             className="p-1.5 text-gray-400 hover:text-blue-500 rounded"
-            title="Duplicate"
+            title={t("titleDuplicate")}
           >
             <Copy className="w-4 h-4" />
           </button>
           <Link
             href={`/admin/promotions/${promo.id}/edit`}
             className="p-1.5 text-gray-400 hover:text-blue-500 rounded"
-            title="Edit"
+            title={t("titleEdit")}
           >
             <Edit2 className="w-4 h-4" />
           </Link>
@@ -536,6 +541,7 @@ export function PromotionsClient({
   categories?: any[];
   menuItems?: any[];
 }) {
+  const t = useTranslations("admin.promotionsList");
   const [promotions, setPromotions] = useState(initial);
   const [coupons, setCoupons] = useState(initialCoupons);
   const [couponModal, setCouponModal] = useState<{ kind: "coupon"; coupon?: any } | null>(null);
@@ -553,9 +559,9 @@ export function PromotionsClient({
   };
 
   const deletePromo = async (id: string) => {
-    if (!confirm("Delete this promotion? This cannot be undone.")) return;
+    if (!confirm(t("confirmDeletePromotion"))) return;
     await fetch(`/api/restaurants/promotions/${id}`, { method: "DELETE" });
-    toast.success("Promotion deleted");
+    toast.success(t("promotionDeleted"));
     await reloadPromos();
     router.refresh();
   };
@@ -576,11 +582,11 @@ export function PromotionsClient({
       method: "POST",
     });
     if (res.ok) {
-      toast.success("Promotion duplicated");
+      toast.success(t("promotionDuplicated"));
       await reloadPromos();
       router.refresh();
     } else {
-      let msg = "Failed to duplicate";
+      let msg = t("errorFailedToDuplicate");
       try {
         const d = await res.json();
         msg = d.error || msg;
@@ -590,9 +596,9 @@ export function PromotionsClient({
   };
 
   const deleteCoupon = async (id: string) => {
-    if (!confirm("Delete this coupon? This cannot be undone.")) return;
+    if (!confirm(t("confirmDeleteCoupon"))) return;
     await fetch(`/api/restaurants/coupons/${id}`, { method: "DELETE" });
-    toast.success("Coupon deleted");
+    toast.success(t("couponDeleted"));
     await reloadCoupons();
   };
 
@@ -614,10 +620,10 @@ export function PromotionsClient({
       body: JSON.stringify({ ...rest, code: `${rest.code}_COPY` }),
     });
     if (res.ok) {
-      toast.success("Coupon duplicated");
+      toast.success(t("couponDuplicated"));
       await reloadCoupons();
     } else {
-      let msg = "Failed";
+      let msg = t("errorFailed");
       try {
         const d = await res.json();
         msg = d.error || msg;
@@ -655,12 +661,12 @@ export function PromotionsClient({
     coupons.filter((c) => c.expiresAt && new Date(c.expiresAt) < now).length;
 
   const TABS: { id: TabFilter; label: string; count: number }[] = [
-    { id: "all",        label: "All",          count: totalAll },
-    { id: "promotions", label: "Promotions",   count: promotions.length },
-    { id: "coupons",    label: "Coupon Codes", count: coupons.length },
-    { id: "active",     label: "Active",       count: totalActive },
-    { id: "inactive",   label: "Inactive",     count: totalInactive },
-    { id: "expired",    label: "Expired",      count: totalExpired },
+    { id: "all",        label: t("tabAll"),         count: totalAll },
+    { id: "promotions", label: t("tabPromotions"),  count: promotions.length },
+    { id: "coupons",    label: t("tabCouponCodes"), count: coupons.length },
+    { id: "active",     label: t("tabActive"),      count: totalActive },
+    { id: "inactive",   label: t("tabInactive"),    count: totalInactive },
+    { id: "expired",    label: t("tabExpired"),      count: totalExpired },
   ];
 
   const isEmpty = filteredPromos.length === 0 && filteredCoupons.length === 0;
@@ -670,32 +676,33 @@ export function PromotionsClient({
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-5 flex items-start gap-3">
         <Shield className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
         <p className="text-sm text-blue-800">
-          <span className="font-semibold">Stacking: </span>
-          <span className="font-bold text-yellow-700">Master</span> deals apply alongside everything.{" "}
-          <span className="font-bold text-amber-700">Exclusive</span> deals block all others except Masters.{" "}
-          <span className="font-bold text-gray-700">Standard</span> deals stack with each other. Coupon codes
-          are customer-entered and never auto-applied.
+          {t.rich("stackingInfo", {
+            label: (c) => <span className="font-semibold">{c}</span>,
+            master: (c) => <span className="font-bold text-yellow-700">{c}</span>,
+            exclusive: (c) => <span className="font-bold text-amber-700">{c}</span>,
+            standard: (c) => <span className="font-bold text-gray-700">{c}</span>,
+          })}
         </p>
       </div>
 
       <div className="flex gap-2 mb-5 flex-wrap items-center">
-        {TABS.map((t) => (
+        {TABS.map((tab_item) => (
           <button
-            key={t.id}
-            onClick={() => setTab(t.id)}
+            key={tab_item.id}
+            onClick={() => setTab(tab_item.id)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${
-              tab === t.id
+              tab === tab_item.id
                 ? "bg-emerald-500 text-white"
                 : "bg-white border border-gray-200 text-gray-600 hover:border-emerald-300"
             }`}
           >
-            {t.label}{" "}
+            {tab_item.label}{" "}
             <span
               className={`ml-1 text-xs ${
-                tab === t.id ? "opacity-80" : "text-gray-400"
+                tab === tab_item.id ? "opacity-80" : "text-gray-400"
               }`}
             >
-              ({t.count})
+              ({tab_item.count})
             </span>
           </button>
         ))}
@@ -704,7 +711,7 @@ export function PromotionsClient({
             onClick={() => setCouponModal({ kind: "coupon" })}
             className="text-sm text-blue-600 hover:text-blue-700 font-medium px-3 py-1.5 rounded-lg border border-blue-200 hover:bg-blue-50"
           >
-            + New coupon code
+            {t("buttonNewCouponCode")}
           </button>
         </div>
       </div>
@@ -712,10 +719,12 @@ export function PromotionsClient({
       {isEmpty ? (
         <div className="bg-white rounded-2xl p-16 text-center border border-gray-100 shadow-sm">
           <Tag className="w-12 h-12 mx-auto mb-3 text-gray-200" />
-          <p className="text-gray-500 font-medium">No deals yet</p>
+          <p className="text-gray-500 font-medium">{t("emptyStateTitle")}</p>
           <p className="text-sm text-gray-400 mt-1">
-            Click <span className="font-semibold text-emerald-600">&ldquo;+ New Promo&rdquo;</span> at the top to create a promotion,
-            or <span className="font-semibold text-blue-600">&ldquo;+ New coupon code&rdquo;</span> above to create a coupon.
+            {t.rich("emptyStateBody", {
+              newPromo: (c) => <span className="font-semibold text-emerald-600">{c}</span>,
+              newCoupon: (c) => <span className="font-semibold text-blue-600">{c}</span>,
+            })}
           </p>
         </div>
       ) : (

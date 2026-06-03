@@ -6,6 +6,7 @@ import {
   RefreshCw, Search,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -48,6 +49,7 @@ function ReservationFormModal({ reservation, onClose, onSaved }: {
   onClose: () => void;
   onSaved: () => void;
 }) {
+  const t = useTranslations("admin.reservationsList");
   const isNew = !reservation;
   const today = new Date().toISOString().slice(0, 10);
   const [form, setForm] = useState({
@@ -63,7 +65,7 @@ function ReservationFormModal({ reservation, onClose, onSaved }: {
   const [saving, setSaving] = useState(false);
 
   const save = async () => {
-    if (!form.customerName.trim()) { toast.error("Customer name required"); return; }
+    if (!form.customerName.trim()) { toast.error(t("errorCustomerNameRequired")); return; }
     setSaving(true);
     try {
       const url = isNew ? "/api/admin/reservations" : `/api/admin/reservations/${reservation!.id}`;
@@ -71,9 +73,9 @@ function ReservationFormModal({ reservation, onClose, onSaved }: {
       const body = isNew ? form : { notes: form.notes, durationMinutes: form.durationMinutes };
       const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       if (!res.ok) throw new Error("Failed");
-      toast.success(isNew ? "Reservation created" : "Reservation updated");
+      toast.success(isNew ? t("toastReservationCreated") : t("toastReservationUpdated"));
       onSaved();
-    } catch { toast.error("Failed to save"); }
+    } catch { toast.error(t("errorFailedToSave")); }
     setSaving(false);
   };
 
@@ -81,66 +83,66 @@ function ReservationFormModal({ reservation, onClose, onSaved }: {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between p-5 border-b">
-          <h2 className="text-lg font-bold">{isNew ? "New Reservation" : "Edit Reservation"}</h2>
+          <h2 className="text-lg font-bold">{isNew ? t("modalTitleNew") : t("modalTitleEdit")}</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
         </div>
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("labelCustomerName")}</label>
               <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                placeholder="Full name" value={form.customerName} disabled={!isNew}
+                placeholder={t("placeholderFullName")} value={form.customerName} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, customerName: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("labelPhone")}</label>
               <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                placeholder="+1 (555) 000-0000" value={form.customerPhone} disabled={!isNew}
+                placeholder={t("placeholderPhone")} value={form.customerPhone} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, customerPhone: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("labelEmail")}</label>
               <input className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                placeholder="email@example.com" value={form.customerEmail} disabled={!isNew}
+                placeholder={t("placeholderEmail")} value={form.customerEmail} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, customerEmail: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Date *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("labelDate")}</label>
               <input type="date" min={today} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.date} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, date: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Time *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("labelTime")}</label>
               <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.time} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, time: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Party Size *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("labelPartySize")}</label>
               <input type="number" min="1" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.partySize} disabled={!isNew}
                 onChange={e => setForm(f => ({ ...f, partySize: parseInt(e.target.value) || 1 }))} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Duration (min)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("labelDuration")}</label>
               <input type="number" min="30" step="15" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.durationMinutes}
                 onChange={e => setForm(f => ({ ...f, durationMinutes: parseInt(e.target.value) || 90 }))} />
             </div>
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Customer Notes</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("labelCustomerNotes")}</label>
               <textarea rows={2} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none"
-                placeholder="Any special requests..." value={form.notes}
+                placeholder={t("placeholderSpecialRequests")} value={form.notes}
                 onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
             </div>
           </div>
         </div>
         <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
-          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">Cancel</button>
+          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">{t("buttonCancel")}</button>
           <button onClick={save} disabled={saving}
             className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
-            {saving ? "Saving..." : isNew ? "Create Reservation" : "Save"}
+            {saving ? t("buttonSaving") : isNew ? t("buttonCreateReservation") : t("buttonSave")}
           </button>
         </div>
       </div>
@@ -151,6 +153,7 @@ function ReservationFormModal({ reservation, onClose, onSaved }: {
 // ─── Reservations List Tab ────────────────────────────────────────────────────
 
 function ReservationsTab() {
+  const t = useTranslations("admin.reservationsList");
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterDate, setFilterDate] = useState(new Date().toISOString().slice(0, 10));
@@ -178,7 +181,7 @@ function ReservationsTab() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
     });
-    toast.success(`Status updated to ${STATUS_LABELS[status] ?? status}`);
+    toast.success(t("toastStatusUpdated", { status: STATUS_LABELS[status] ?? status }));
     load();
   };
 
@@ -194,9 +197,9 @@ function ReservationsTab() {
   };
 
   const deleteReservation = async (id: string) => {
-    if (!confirm("Delete this reservation?")) return;
+    if (!confirm(t("confirmDelete"))) return;
     await fetch(`/api/admin/reservations/${id}`, { method: "DELETE" });
-    toast.success("Reservation deleted");
+    toast.success(t("toastReservationDeleted"));
     load();
   };
 
@@ -216,21 +219,21 @@ function ReservationsTab() {
         <div className="flex flex-wrap gap-2 items-center">
           <input type="date" className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             value={filterDate} onChange={e => setFilterDate(e.target.value)} />
-          <button onClick={() => setFilterDate("")} className="text-xs text-gray-500 hover:text-gray-700 px-2">All dates</button>
+          <button onClick={() => setFilterDate("")} className="text-xs text-gray-500 hover:text-gray-700 px-2">{t("filterAllDates")}</button>
           <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
-            <option value="all">All statuses</option>
+            <option value="all">{t("filterAllStatuses")}</option>
             {Object.entries(STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
           </select>
           <div className="relative">
             <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
             <input className="border border-gray-300 rounded-lg pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              placeholder="Search name or code…" value={search} onChange={e => setSearch(e.target.value)} />
+              placeholder={t("placeholderSearch")} value={search} onChange={e => setSearch(e.target.value)} />
           </div>
           <button onClick={load} className="p-2 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100"><RefreshCw className="w-4 h-4" /></button>
           <button onClick={() => setModal({})}
             className="ml-auto flex items-center gap-1.5 bg-emerald-500 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600">
-            <Plus className="w-4 h-4" /> New Reservation
+            <Plus className="w-4 h-4" /> {t("buttonNewReservation")}
           </button>
         </div>
 
@@ -239,7 +242,7 @@ function ReservationsTab() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-16 text-gray-400">
             <CalendarDays className="w-12 h-12 mx-auto mb-3 opacity-30" />
-            <p className="font-medium">No reservations found</p>
+            <p className="font-medium">{t("emptyNoReservations")}</p>
           </div>
         ) : (
           <div className="space-y-2 overflow-y-auto">
@@ -258,7 +261,7 @@ function ReservationsTab() {
                     </div>
                     <div className="flex items-center gap-3 mt-1 text-sm text-gray-600">
                       <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{r.date} {r.time}</span>
-                      <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5" />{r.partySize} guests</span>
+                      <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5" />{t("guests", { n: r.partySize })}</span>
                       {r.table && <span className="flex items-center gap-1"><Table2 className="w-3.5 h-3.5" />{r.table.name}</span>}
                     </div>
                   </div>
@@ -290,40 +293,40 @@ function ReservationsTab() {
             {detail.customerPhone && <div className="flex items-center gap-2 text-gray-700"><Phone className="w-3.5 h-3.5 text-gray-400" />{detail.customerPhone}</div>}
             {detail.customerEmail && <div className="flex items-center gap-2 text-gray-700"><Mail className="w-3.5 h-3.5 text-gray-400" />{detail.customerEmail}</div>}
             <div className="flex items-center gap-2 text-gray-700"><Clock className="w-3.5 h-3.5 text-gray-400" />{detail.date} at {detail.time} ({detail.durationMinutes} min)</div>
-            <div className="flex items-center gap-2 text-gray-700"><Users className="w-3.5 h-3.5 text-gray-400" />{detail.partySize} guests</div>
+            <div className="flex items-center gap-2 text-gray-700"><Users className="w-3.5 h-3.5 text-gray-400" />{t("guests", { n: detail.partySize })}</div>
             {detail.table && <div className="flex items-center gap-2 text-gray-700"><Table2 className="w-3.5 h-3.5 text-gray-400" />{detail.table.name}{detail.table.section ? ` (${detail.table.section})` : ""}</div>}
           </div>
 
           {detail.notes && (
             <div>
-              <p className="text-xs font-medium text-gray-500 mb-1">Customer Notes</p>
+              <p className="text-xs font-medium text-gray-500 mb-1">{t("labelCustomerNotes")}</p>
               <p className="text-sm text-gray-700 bg-gray-50 rounded-lg p-2">{detail.notes}</p>
             </div>
           )}
 
           <div>
-            <p className="text-xs font-medium text-gray-500 mb-1">Staff Notes</p>
+            <p className="text-xs font-medium text-gray-500 mb-1">{t("labelStaffNotes")}</p>
             {staffNoteEditing?.id === detail.id ? (
               <div className="space-y-1.5">
                 <textarea rows={2} className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none"
                   value={staffNoteEditing.note}
                   onChange={e => setStaffNoteEditing({ ...staffNoteEditing, note: e.target.value })} />
                 <div className="flex gap-2">
-                  <button onClick={saveStaffNote} className="px-3 py-1 bg-emerald-500 text-white text-xs rounded-lg hover:bg-emerald-600">Save</button>
-                  <button onClick={() => setStaffNoteEditing(null)} className="px-3 py-1 text-gray-500 text-xs hover:text-gray-700">Cancel</button>
+                  <button onClick={saveStaffNote} className="px-3 py-1 bg-emerald-500 text-white text-xs rounded-lg hover:bg-emerald-600">{t("buttonSave")}</button>
+                  <button onClick={() => setStaffNoteEditing(null)} className="px-3 py-1 text-gray-500 text-xs hover:text-gray-700">{t("buttonCancel")}</button>
                 </div>
               </div>
             ) : (
               <button onClick={() => setStaffNoteEditing({ id: detail.id, note: detail.staffNotes ?? "" })}
                 className="w-full text-left text-sm text-gray-500 bg-gray-50 rounded-lg p-2 hover:bg-gray-100 transition min-h-[40px]">
-                {detail.staffNotes || <span className="text-gray-400 italic">Click to add staff notes…</span>}
+                {detail.staffNotes || <span className="text-gray-400 italic">{t("placeholderStaffNotes")}</span>}
               </button>
             )}
           </div>
 
           {/* Status actions */}
           <div>
-            <p className="text-xs font-medium text-gray-500 mb-2">Change Status</p>
+            <p className="text-xs font-medium text-gray-500 mb-2">{t("labelChangeStatus")}</p>
             <div className="grid grid-cols-2 gap-1.5">
               {["confirmed","seated","completed","cancelled","no_show"].map(s => (
                 <button key={s} onClick={() => updateStatus(detail.id, s)}
@@ -399,6 +402,7 @@ interface SimpleSettingsForm {
 const SLOT_INTERVAL_OPTIONS = [5, 10, 15, 20, 30, 45, 60] as const;
 
 function SettingsTab() {
+  const t = useTranslations("admin.reservationsList");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<SimpleSettingsForm>({
@@ -472,9 +476,9 @@ function SettingsTab() {
         }),
       ]);
       if (!resA.ok || !resB.ok) throw new Error("Failed");
-      toast.success("Reservation settings saved");
+      toast.success(t("toastSettingsSaved"));
     } catch {
-      toast.error("Failed to save");
+      toast.error(t("errorFailedToSave"));
     } finally {
       setSaving(false);
     }
@@ -497,7 +501,7 @@ function SettingsTab() {
           className="flex items-center gap-2 bg-emerald-500 text-white text-sm font-semibold px-5 py-2 rounded-xl hover:bg-emerald-600 disabled:opacity-50"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          Save Settings
+          {t("buttonSaveSettings")}
         </button>
       </div>
 
@@ -513,11 +517,11 @@ function SettingsTab() {
       <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-5 transition-opacity ${form.acceptsReservations ? "" : "opacity-60"}`}>
         <div className="flex items-center justify-between gap-4">
           <div className="min-w-0">
-            <h3 className="font-semibold text-gray-900">Reservation acceptance</h3>
+            <h3 className="font-semibold text-gray-900">{t("headingReservationAcceptance")}</h3>
             <p className="text-xs text-gray-500 mt-0.5">
               {form.autoConfirm
-                ? "Automatic — reservations are confirmed instantly. Kitchen gets a one-time chime."
-                : "Manual — kitchen rings until you accept or decline each booking."}
+                ? t("descAutoConfirmOn")
+                : t("descAutoConfirmOff")}
             </p>
           </div>
           <div className="flex items-center gap-1 rounded-lg border border-gray-200 overflow-hidden flex-shrink-0">
@@ -528,7 +532,7 @@ function SettingsTab() {
                 form.autoConfirm ? "bg-emerald-500 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
               }`}
             >
-              Automatic
+              {t("buttonAutomatic")}
             </button>
             <button
               type="button"
@@ -537,7 +541,7 @@ function SettingsTab() {
                 !form.autoConfirm ? "bg-amber-500 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
               }`}
             >
-              Manual
+              {t("buttonManual")}
             </button>
           </div>
         </div>
@@ -547,9 +551,9 @@ function SettingsTab() {
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h3 className="font-semibold text-gray-900">Do you offer table reservation?</h3>
+            <h3 className="font-semibold text-gray-900">{t("headingOfferTableReservation")}</h3>
             <p className="text-xs text-gray-500 mt-0.5">
-              Show the Table Reservation button on your customer ordering page.
+              {t("descOfferTableReservation")}
             </p>
           </div>
           <div className="flex items-center gap-1 rounded-lg border border-gray-200 overflow-hidden flex-shrink-0">
@@ -562,7 +566,7 @@ function SettingsTab() {
                   : "bg-white text-gray-600 hover:bg-gray-50"
               }`}
             >
-              Yes
+              {t("buttonYes")}
             </button>
             <button
               type="button"
@@ -573,7 +577,7 @@ function SettingsTab() {
                   : "bg-white text-gray-600 hover:bg-gray-50"
               }`}
             >
-              No
+              {t("buttonNo")}
             </button>
           </div>
         </div>
@@ -585,39 +589,39 @@ function SettingsTab() {
       <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-5 transition-opacity ${
         form.acceptsReservations ? "" : "opacity-60"
       }`}>
-        <h3 className="font-semibold text-gray-900 mb-4">Settings</h3>
+        <h3 className="font-semibold text-gray-900 mb-4">{t("headingSettings")}</h3>
         <div className="space-y-4">
           <NumberRow
-            label="Minimum guests"
-            unit="guests"
+            label={t("labelMinGuests")}
+            unit={t("unitGuests")}
             value={form.minGuests}
             min={1}
             onChange={(v) => setForm(f => ({ ...f, minGuests: v }))}
           />
           <NumberRow
-            label="Maximum guests"
-            unit="guests"
+            label={t("labelMaxGuests")}
+            unit={t("unitGuests")}
             value={form.maxGuests}
             min={1}
             onChange={(v) => setForm(f => ({ ...f, maxGuests: v }))}
           />
           <NumberRow
-            label="Minimum time in advance"
-            unit="min"
+            label={t("labelMinNotice")}
+            unit={t("unitMin")}
             value={form.minNoticeMinutes}
             min={0}
             onChange={(v) => setForm(f => ({ ...f, minNoticeMinutes: v }))}
           />
           <NumberRow
-            label="Maximum time in advance"
-            unit="days"
+            label={t("labelMaxAdvance")}
+            unit={t("unitDays")}
             value={form.maxAdvanceDays}
             min={1}
             onChange={(v) => setForm(f => ({ ...f, maxAdvanceDays: v }))}
           />
           <NumberRow
-            label="When guests are late, hold table for"
-            unit="min"
+            label={t("labelHoldTable")}
+            unit={t("unitMin")}
             value={form.holdMinutes}
             min={0}
             onChange={(v) => setForm(f => ({ ...f, holdMinutes: v }))}
@@ -631,10 +635,10 @@ function SettingsTab() {
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0">
               <label className="text-sm text-gray-800 block">
-                Time slot interval
+                {t("labelSlotInterval")}
               </label>
               <p className="text-[11px] text-gray-500 mt-0.5">
-                How far apart the time options are on the customer&apos;s reservation form.
+                {t("descSlotInterval")}
               </p>
             </div>
             <select
@@ -646,7 +650,7 @@ function SettingsTab() {
             >
               {SLOT_INTERVAL_OPTIONS.map((m) => (
                 <option key={m} value={m}>
-                  Every {m} minutes
+                  {t("optionEveryMinutes", { m })}
                 </option>
               ))}
             </select>
@@ -654,7 +658,7 @@ function SettingsTab() {
           <div className="pt-2 border-t border-gray-100">
             <label className="flex items-center justify-between gap-4 cursor-pointer">
               <span className="text-sm text-gray-800">
-                Allow guests to pre-order their food when booking a table
+                {t("labelAllowPreOrder")}
               </span>
               <button
                 type="button"
@@ -710,14 +714,15 @@ function NumberRow({
 type Tab = "reservations" | "settings";
 
 export function ReservationsClient() {
+  const t = useTranslations("admin.reservationsList");
   const [activeTab, setActiveTab] = useState<Tab>("reservations");
 
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Table Reservations</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Manage bookings and reservation settings</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+          <p className="text-sm text-gray-500 mt-0.5">{t("pageSubtitle")}</p>
         </div>
       </div>
 
@@ -727,8 +732,8 @@ export function ReservationsClient() {
           (Tables tab removed 2026-05-28 per GloriaFood parity.) */}
       <div className="flex border-b border-gray-200 mb-5">
         {([
-          ["reservations", "Reservations", CalendarDays, "border-sky-500",   "text-sky-700",   "bg-sky-50",    "text-sky-500"  ],
-          ["settings",     "Settings",     Settings,     "border-slate-900", "text-slate-900", "bg-slate-100", "text-slate-600"],
+          ["reservations", t("tabReservations"), CalendarDays, "border-sky-500",   "text-sky-700",   "bg-sky-50",    "text-sky-500"  ],
+          ["settings",     t("tabSettings"),     Settings,     "border-slate-900", "text-slate-900", "bg-slate-100", "text-slate-600"],
         ] as [Tab, string, any, string, string, string, string][]).map(([tab, label, Icon, activeBorder, activeText, activeBg, inactiveIcon]) => {
           const isActive = activeTab === tab;
           return (

@@ -7,6 +7,7 @@
  * Name + description (always shown) live at the top.
  */
 
+import { useTranslations } from "next-intl";
 import {
   AmtInput,
   CatEntry,
@@ -44,39 +45,40 @@ export function StepConfig({
    *  to the full list. */
   paymentMethods?: string[];
 }) {
+  const t = useTranslations("admin.promoStepConfig");
   const gUp = (groups: IG[]) => onRules({ groups });
 
   return (
     <div className="space-y-6">
       <div className="mb-2">
-        <h2 className="text-lg font-semibold text-gray-900">Configure your promotion</h2>
+        <h2 className="text-lg font-semibold text-gray-900">{t("configureHeading")}</h2>
         <p className="text-sm text-gray-500 mt-1">
-          Set the discount details and items this deal applies to.
+          {t("configureSubheading")}
         </p>
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Promotion name <span className="text-red-500">*</span>
+          {t("promotionNameLabel")} <span className="text-red-500">*</span>
         </label>
         <input
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           value={name}
           onChange={(e) => onName(e.target.value)}
-          placeholder="e.g. Weekend Lunch Deal"
+          placeholder={t("promotionNamePlaceholder")}
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Description{" "}
-          <span className="text-xs text-gray-400 font-normal">(shown to customers)</span>
+          {t("descriptionLabel")}{" "}
+          <span className="text-xs text-gray-400 font-normal">{t("descriptionHint")}</span>
         </label>
         <input
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           value={description}
           onChange={(e) => onDescription(e.target.value)}
-          placeholder="e.g. 20% off your lunch order before 3pm"
+          placeholder={t("descriptionPlaceholder")}
         />
       </div>
 
@@ -109,18 +111,19 @@ function TypeSpecific({
   cats: CatEntry[];
   paymentMethods?: string[];
 }) {
+  const t = useTranslations("admin.promoStepConfig");
   switch (type) {
     case "percentage_off": {
       const wholeCart = (rules.groups?.length ?? 0) === 0;
       return (
         <div className="space-y-4">
           <PctInput
-            label="Discount %"
+            label={t("discountPctLabel")}
             value={rules.discountPercent ?? 0}
             onChange={(v) => onRules({ discountPercent: v })}
           />
           <div>
-            <SL label="What does this apply to?" />
+            <SL label={t("appliesToLabel")} />
             <div className="space-y-2">
               <label className="flex items-start gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-50">
                 <input
@@ -131,9 +134,9 @@ function TypeSpecific({
                   className="mt-1"
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-800">Whole cart</div>
+                  <div className="text-sm font-medium text-gray-800">{t("wholeCartLabel")}</div>
                   <div className="text-xs text-gray-500">
-                    The discount applies to every item the customer adds.
+                    {t("wholeCartSub")}
                   </div>
                 </div>
               </label>
@@ -150,9 +153,9 @@ function TypeSpecific({
                   className="mt-1"
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-800">Specific items / categories only</div>
+                  <div className="text-sm font-medium text-gray-800">{t("specificItemsLabel")}</div>
                   <div className="text-xs text-gray-500">
-                    Limit the discount to the items or categories you pick below.
+                    {t("specificItemsSub")}
                   </div>
                 </div>
               </label>
@@ -163,7 +166,7 @@ function TypeSpecific({
                   groups={rules.groups ?? []}
                   onChange={gUp}
                   cats={cats}
-                  addLabel="Add item group"
+                  addLabel={t("addItemGroupLabel")}
                 />
               </div>
             )}
@@ -175,9 +178,7 @@ function TypeSpecific({
     case "free_delivery":
       return (
         <div className="rounded-lg bg-blue-50 border border-blue-100 p-3 text-sm text-blue-800">
-          Free delivery applies automatically when the cart meets the minimum
-          order set on Step 3. This promo is delivery-only by default — you
-          don&apos;t need to configure anything else here.
+          {t("freeDeliveryInfo")}
         </div>
       );
 
@@ -200,7 +201,7 @@ function TypeSpecific({
         };
       return (
         <div className="space-y-3">
-          <SL label="Paid group" sub="Items the customer buys" />
+          <SL label={t("bogoPaidGroupLabel")} sub={t("bogoPaidGroupSub")} />
           <ItemGroupRow
             group={{ ...pG, role: "paid" }}
             index={0}
@@ -214,7 +215,7 @@ function TypeSpecific({
             onRemove={() => {}}
             canRemove={false}
           />
-          <SL label="Free group" sub="The item the customer gets free" />
+          <SL label={t("bogoFreeGroupLabel")} sub={t("bogoFreeGroupSub")} />
           <ItemGroupRow
             group={{ ...fG, role: "free" }}
             index={1}
@@ -252,8 +253,8 @@ function TypeSpecific({
       return (
         <div className="space-y-3">
           <SL
-            label="Paid groups"
-            sub="Customer must order from each group to qualify"
+            label={t("bnfPaidGroupsLabel")}
+            sub={t("bnfPaidGroupsSub")}
           />
           <GroupsEditor
             groups={
@@ -272,10 +273,10 @@ function TypeSpecific({
             onChange={setPaid}
             cats={cats}
             defaultRole="paid"
-            addLabel="Add paid group"
+            addLabel={t("addPaidGroupLabel")}
             minGroups={1}
           />
-          <SL label="Free group" sub="The item the customer gets free" />
+          <SL label={t("bogoFreeGroupLabel")} sub={t("bogoFreeGroupSub")} />
           <ItemGroupRow
             group={{ ...fG, role: "free" }}
             index={0}
@@ -297,7 +298,7 @@ function TypeSpecific({
     case "fixed_cart":
       return (
         <AmtInput
-          label="Discount Amount"
+          label={t("discountAmountLabel")}
           value={rules.discountAmount ?? 0}
           onChange={(v) => onRules({ discountAmount: v })}
         />
@@ -309,10 +310,10 @@ function TypeSpecific({
       // when PayPal isn't even turned on. Falls back to the full list
       // when the restaurant hasn't configured any (defensive).
       const PAYMENT_LABELS: Record<string, string> = {
-        cash: "Cash on delivery / pickup",
-        card_in_person: "Card in person (tap / chip / swipe)",
-        online_card: "Card online (Stripe)",
-        paypal: "PayPal",
+        cash: t("paymentLabelCash"),
+        card_in_person: t("paymentLabelCardInPerson"),
+        online_card: t("paymentLabelOnlineCard"),
+        paypal: t("paymentLabelPaypal"),
       };
       const enabled = paymentMethods && paymentMethods.length > 0
         ? paymentMethods
@@ -321,14 +322,14 @@ function TypeSpecific({
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Payment Method
+              {t("paymentMethodLabel")}
             </label>
             <select
               value={rules.paymentMethod ?? "any"}
               onChange={(e) => onRules({ paymentMethod: e.target.value })}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             >
-              <option value="any">Any payment method</option>
+              <option value="any">{t("paymentMethodAny")}</option>
               {enabled.map((slug) => (
                 <option key={slug} value={slug}>
                   {PAYMENT_LABELS[slug] ?? slug}
@@ -336,11 +337,11 @@ function TypeSpecific({
               ))}
             </select>
             <p className="text-xs text-gray-400 mt-1">
-              Only payment methods you&apos;ve enabled in Settings appear here.
+              {t("paymentMethodHint")}
             </p>
           </div>
           <PctInput
-            label="Discount %"
+            label={t("discountPctLabel")}
             value={rules.discountPercent ?? 0}
             onChange={(v) => onRules({ discountPercent: v })}
           />
@@ -360,14 +361,14 @@ function TypeSpecific({
       return (
         <div className="space-y-4">
           <AmtInput
-            label="Minimum spend to trigger"
+            label={t("minSpendLabel")}
             value={rules.triggerAmount ?? 0}
             onChange={(v) => onRules({ triggerAmount: v })}
           />
           <div>
             <SL
-              label="Free item pool"
-              sub="The cheapest matching item is given free."
+              label={t("freeItemPoolLabel")}
+              sub={t("freeItemPoolSub")}
             />
             <ItemGroupRow
               group={{ ...fG, role: "free" }}
@@ -386,22 +387,20 @@ function TypeSpecific({
       return (
         <div className="space-y-4">
           <AmtInput
-            label="Bundle Price"
+            label={t("bundlePriceLabel")}
             value={rules.bundlePrice ?? 0}
             onChange={(v) => onRules({ bundlePrice: v })}
           />
           <div>
             <SL
-              label="Bundle item groups"
-              sub="Customer picks items from each group. Use the per-slot
-                   counts below to set how many of each they pick
-                   (e.g. 1 pizza + 2 sides + 1 drink)."
+              label={t("bundleGroupsLabel")}
+              sub={t("bundleGroupsSub")}
             />
             <GroupsEditor
               groups={rules.groups ?? []}
               onChange={gUp}
               cats={cats}
-              addLabel="Add group"
+              addLabel={t("addGroupLabel")}
               showSlotConfig
             />
           </div>
@@ -412,21 +411,20 @@ function TypeSpecific({
       return (
         <div className="space-y-4">
           <AmtInput
-            label="Bundle base price"
+            label={t("bundleBasePriceLabel")}
             value={rules.bundlePrice ?? 0}
             onChange={(v) => onRules({ bundlePrice: v })}
           />
           <div>
             <SL
-              label="Bundle item groups"
-              sub="Premium groups can carry a speciality fee that's added
-                   per item on top of the bundle base (e.g. lobster +$5)."
+              label={t("bundleGroupsLabel")}
+              sub={t("bundleSpecialityGroupsSub")}
             />
             <GroupsEditor
               groups={rules.groups ?? []}
               onChange={gUp}
               cats={cats}
-              addLabel="Add group"
+              addLabel={t("addGroupLabel")}
               showSlotConfig
               showSpecialityFee
             />
@@ -438,20 +436,20 @@ function TypeSpecific({
       return (
         <div className="space-y-4">
           <AmtInput
-            label="Discount Amount"
+            label={t("discountAmountLabel")}
             value={rules.discountAmount ?? 0}
             onChange={(v) => onRules({ discountAmount: v })}
           />
           <div>
             <SL
-              label="Combo groups"
-              sub="Customer must have at least one item from each group."
+              label={t("comboGroupsLabel")}
+              sub={t("comboGroupsSub")}
             />
             <GroupsEditor
               groups={rules.groups ?? []}
               onChange={gUp}
               cats={cats}
-              addLabel="Add combo group"
+              addLabel={t("addComboGroupLabel")}
               minGroups={2}
             />
           </div>
@@ -462,20 +460,20 @@ function TypeSpecific({
       return (
         <div className="space-y-4">
           <PctInput
-            label="Discount %"
+            label={t("discountPctLabel")}
             value={rules.discountPercent ?? 0}
             onChange={(v) => onRules({ discountPercent: v })}
           />
           <div>
             <SL
-              label="Combo groups"
-              sub="Customer must have at least one item from each group."
+              label={t("comboGroupsLabel")}
+              sub={t("comboGroupsSub")}
             />
             <GroupsEditor
               groups={rules.groups ?? []}
               onChange={gUp}
               cats={cats}
-              addLabel="Add combo group"
+              addLabel={t("addComboGroupLabel")}
               minGroups={2}
             />
           </div>
@@ -501,8 +499,8 @@ function TypeSpecific({
       return (
         <div className="space-y-3">
           <SL
-            label="Trigger groups"
-            sub="Items the customer must order to qualify"
+            label={t("triggerGroupsLabel")}
+            sub={t("triggerGroupsSub")}
           />
           <GroupsEditor
             groups={
@@ -521,17 +519,17 @@ function TypeSpecific({
             onChange={setTriggers}
             cats={cats}
             defaultRole="trigger"
-            addLabel="Add trigger group"
+            addLabel={t("addTriggerGroupLabel")}
             minGroups={1}
           />
-          <SL label="Free dish pool" />
+          <SL label={t("freeDishPoolLabel")} />
           <ItemGroupRow
             group={{ ...fG, role: "free" }}
             index={0}
             cats={cats}
             onChange={(g) =>
               gUp([
-                ...triggerGs.map((t) => ({ ...t, role: "trigger" as const })),
+                ...triggerGs.map((tg) => ({ ...tg, role: "trigger" as const })),
                 { ...g, role: "free" as const },
               ])
             }
@@ -539,7 +537,7 @@ function TypeSpecific({
             canRemove={false}
           />
           <PctInput
-            label="Discount on free dish (100 = fully free)"
+            label={t("freeDishDiscountLabel")}
             value={rules.discountPercent ?? 100}
             onChange={(v) => onRules({ discountPercent: v })}
           />
@@ -550,7 +548,7 @@ function TypeSpecific({
     default:
       return (
         <div className="text-sm text-gray-500">
-          Pick a promotion type on Step 1 to configure the details here.
+          {t("pickTypePrompt")}
         </div>
       );
   }
