@@ -14,6 +14,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { buildDailyDigest, buildMonthlyDigest } from "@/lib/digests";
 import { sendDailyDigestEmail, sendMonthlyDigestEmail, setEmailImprint, type DigestStats } from "@/lib/email";
+import { dateKeyInTimezone } from "@/lib/restaurant-hours";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -30,9 +31,10 @@ export async function GET(req: NextRequest) {
 
   // On the 1st of each month, also dispatch the monthly digest (Vercel Hobby
   // plan caps us at 2 cron jobs total, so we piggy-back monthly here instead
-  // of having a separate /api/cron/monthly-digest schedule).
+  // of having a separate /api/cron/monthly-digest schedule). "The 1st" is
+  // evaluated PER RESTAURANT in its own timezone below — a Sydney restaurant's
+  // 1st arrives ~hours before UTC's. (Phase 2b timezone sweep.)
   const now = new Date();
-  const isFirstOfMonth = now.getUTCDate() === 1;
 
   // Pull every active restaurant with both recipient sets (daily and monthly)
   // plus reseller imprint in one shot. The recipient lists are filtered by
@@ -42,6 +44,7 @@ export async function GET(req: NextRequest) {
     select: {
       id: true,
       name: true,
+      timezone: true,
       notificationRecipients: {
         where: { isActive: true },
         select: { email: true, emailLanguage: true, endOfDayReport: true, endOfMonthReport: true },
@@ -58,6 +61,8 @@ export async function GET(req: NextRequest) {
 
   for (const r of restaurants) {
     const dailyRecipients = r.notificationRecipients.filter((rec) => rec.endOfDayReport);
+    // Is it the 1st of the month in THIS restaurant's local timezone?
+    const isFirstOfMonth = dateKeyInTimezone(now, r.timezone ?? "UTC").slice(8, 10) === "01";
     const monthlyRecipients = isFirstOfMonth
       ? r.notificationRecipients.filter((rec) => rec.endOfMonthReport)
       : [];
@@ -156,7 +161,6 @@ export async function GET(req: NextRequest) {
     monthlySent,
     skipped,
     errors,
-    isFirstOfMonth,
     ranAt: now.toISOString(),
   });
 }

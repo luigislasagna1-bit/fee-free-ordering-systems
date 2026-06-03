@@ -13,37 +13,62 @@
 
 import prisma from "@/lib/db";
 import type { DigestStats } from "@/lib/email";
+import { parseLocalDateTimeInTz, dateKeyInTimezone } from "@/lib/restaurant-hours";
 
-/** Returns [startOfWindow, endOfWindow] for the previous calendar day in UTC.
- *  We use UTC throughout — Vercel Cron runs on UTC schedules so this is the
- *  least surprising boundary. Restaurants in non-UTC timezones will see
- *  reports for "yesterday in UTC" which is close enough for v1. */
-function dailyWindow(now: Date): [Date, Date] {
-  const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-  const start = new Date(end.getTime() - 24 * 60 * 60 * 1000);
-  return [start, end];
+// ── Local-date key math (DST-safe) ──────────────────────────────────────────
+// Windows are computed in the RESTAURANT's local timezone, then projected to
+// UTC instants (via parseLocalDateTimeInTz) for comparison against order
+// timestamps. This fixes "yesterday in UTC" reports for restaurants far from
+// UTC — a Sydney restaurant's "yesterday" is now their local yesterday, not
+// the UTC one. (Phase 2b timezone sweep.)
+
+/** Shift a "YYYY-MM-DD" key by N days. Noon-UTC anchor dodges DST edges. */
+function addDaysToKey(key: string, delta: number): string {
+  const d = new Date(`${key}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + delta);
+  return d.toISOString().slice(0, 10);
 }
 
-/** Same window one week earlier — used for daily-comparison deltas. */
-function priorDailyWindow(now: Date): [Date, Date] {
-  const [start, end] = dailyWindow(now);
+/** First-of-month key, shifted by N months, for the month containing `key`. */
+function monthFirstKey(key: string, monthDelta = 0): string {
+  const [y, m] = key.split("-").map(Number);
+  const d = new Date(Date.UTC(y, m - 1 + monthDelta, 1, 12));
+  return d.toISOString().slice(0, 10);
+}
+
+/** [start, end) for the previous local day in the restaurant's timezone. */
+function dailyWindow(now: Date, tz: string): [Date, Date] {
+  const todayKey = dateKeyInTimezone(now, tz);
   return [
-    new Date(start.getTime() - 7 * 24 * 60 * 60 * 1000),
-    new Date(end.getTime() - 7 * 24 * 60 * 60 * 1000),
+    parseLocalDateTimeInTz(addDaysToKey(todayKey, -1), 0, 0, tz),
+    parseLocalDateTimeInTz(todayKey, 0, 0, tz),
   ];
 }
 
-/** Returns [startOfLastMonth, endOfLastMonth] in UTC. */
-function monthlyWindow(now: Date): [Date, Date] {
-  const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
-  const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
-  return [start, end];
+/** Same one-day window a week earlier — daily-comparison baseline. */
+function priorDailyWindow(now: Date, tz: string): [Date, Date] {
+  const todayKey = dateKeyInTimezone(now, tz);
+  return [
+    parseLocalDateTimeInTz(addDaysToKey(todayKey, -8), 0, 0, tz),
+    parseLocalDateTimeInTz(addDaysToKey(todayKey, -7), 0, 0, tz),
+  ];
 }
 
-function priorMonthlyWindow(now: Date): [Date, Date] {
-  const start = new Date(Date.UTC(now.getUTCFullYear() - 1, now.getUTCMonth() - 1, 1));
-  const end = new Date(Date.UTC(now.getUTCFullYear() - 1, now.getUTCMonth(), 1));
-  return [start, end];
+/** [startOfLastMonth, startOfThisMonth) in the restaurant's timezone. */
+function monthlyWindow(now: Date, tz: string): [Date, Date] {
+  const todayKey = dateKeyInTimezone(now, tz);
+  return [
+    parseLocalDateTimeInTz(monthFirstKey(todayKey, -1), 0, 0, tz),
+    parseLocalDateTimeInTz(monthFirstKey(todayKey, 0), 0, 0, tz),
+  ];
+}
+
+function priorMonthlyWindow(now: Date, tz: string): [Date, Date] {
+  const todayKey = dateKeyInTimezone(now, tz);
+  return [
+    parseLocalDateTimeInTz(monthFirstKey(todayKey, -13), 0, 0, tz),
+    parseLocalDateTimeInTz(monthFirstKey(todayKey, -12), 0, 0, tz),
+  ];
 }
 
 function pct(current: number, prior: number): number {
@@ -125,24 +150,25 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
   };
 }
 
-function weekdayLabel(d: Date): string {
-  return d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
+function weekdayLabel(d: Date, tz: string): string {
+  return d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: tz });
 }
 
-function monthLabel(d: Date): string {
-  return d.toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" });
+function monthLabel(d: Date, tz: string): string {
+  return d.toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: tz });
 }
 
 /** Build the DigestStats for "yesterday" for a single restaurant. */
 export async function buildDailyDigest(restaurantId: string, now = new Date()): Promise<DigestStats | null> {
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { name: true },
+    select: { name: true, timezone: true },
   });
   if (!restaurant) return null;
+  const tz = restaurant.timezone ?? "UTC";
 
-  const [start, end] = dailyWindow(now);
-  const [priorStart, priorEnd] = priorDailyWindow(now);
+  const [start, end] = dailyWindow(now, tz);
+  const [priorStart, priorEnd] = priorDailyWindow(now, tz);
   const [current, prior] = await Promise.all([
     aggregate(restaurantId, start, end),
     aggregate(restaurantId, priorStart, priorEnd),
@@ -150,8 +176,8 @@ export async function buildDailyDigest(restaurantId: string, now = new Date()): 
 
   return {
     restaurantName: restaurant.name,
-    periodLabel: weekdayLabel(start),
-    comparisonLabel: `vs previous ${start.toLocaleDateString("en-US", { weekday: "long", timeZone: "UTC" })}`,
+    periodLabel: weekdayLabel(start, tz),
+    comparisonLabel: `vs previous ${start.toLocaleDateString("en-US", { weekday: "long", timeZone: tz })}`,
     sales: current.sales,
     salesDelta: pct(current.sales, prior.sales),
     orders: current.orders,
@@ -188,16 +214,18 @@ export async function buildDailyDigest(restaurantId: string, now = new Date()): 
 export async function buildTodaySnapshot(restaurantId: string, now = new Date()): Promise<DigestStats | null> {
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { name: true },
+    select: { name: true, timezone: true },
   });
   if (!restaurant) return null;
+  const tz = restaurant.timezone ?? "UTC";
 
-  // Today's window (UTC): [startOfToday, startOfTomorrow).
-  const startOfToday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-  const startOfTomorrow = new Date(startOfToday.getTime() + 24 * 60 * 60 * 1000);
+  // Today's window in the restaurant's local timezone: [startOfToday, startOfTomorrow).
+  const todayKey = dateKeyInTimezone(now, tz);
+  const startOfToday = parseLocalDateTimeInTz(todayKey, 0, 0, tz);
+  const startOfTomorrow = parseLocalDateTimeInTz(addDaysToKey(todayKey, 1), 0, 0, tz);
   // Comparison: same hours yesterday so the delta is apples-to-apples
   // mid-service (e.g. 2 PM vs 2 PM yesterday).
-  const yesterdaySoFarStart = new Date(startOfToday.getTime() - 24 * 60 * 60 * 1000);
+  const yesterdaySoFarStart = parseLocalDateTimeInTz(addDaysToKey(todayKey, -1), 0, 0, tz);
   const yesterdaySoFarEnd = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
   const [current, prior] = await Promise.all([
@@ -207,7 +235,7 @@ export async function buildTodaySnapshot(restaurantId: string, now = new Date())
 
   return {
     restaurantName: restaurant.name,
-    periodLabel: weekdayLabel(startOfToday),
+    periodLabel: weekdayLabel(startOfToday, tz),
     comparisonLabel: "vs same time yesterday",
     sales: current.sales,
     salesDelta: pct(current.sales, prior.sales),
@@ -240,12 +268,13 @@ export async function buildTodaySnapshot(restaurantId: string, now = new Date())
 export async function buildMonthlyDigest(restaurantId: string, now = new Date()): Promise<DigestStats | null> {
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { name: true },
+    select: { name: true, timezone: true },
   });
   if (!restaurant) return null;
+  const tz = restaurant.timezone ?? "UTC";
 
-  const [start, end] = monthlyWindow(now);
-  const [priorStart, priorEnd] = priorMonthlyWindow(now);
+  const [start, end] = monthlyWindow(now, tz);
+  const [priorStart, priorEnd] = priorMonthlyWindow(now, tz);
   const [current, prior] = await Promise.all([
     aggregate(restaurantId, start, end),
     aggregate(restaurantId, priorStart, priorEnd),
@@ -253,7 +282,7 @@ export async function buildMonthlyDigest(restaurantId: string, now = new Date())
 
   return {
     restaurantName: restaurant.name,
-    periodLabel: monthLabel(start),
+    periodLabel: monthLabel(start, tz),
     comparisonLabel: "vs same month last year",
     sales: current.sales,
     salesDelta: pct(current.sales, prior.sales),
