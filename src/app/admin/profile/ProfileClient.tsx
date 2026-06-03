@@ -732,8 +732,10 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
             <Field {...fp} label={t("email")} field="email" type="email" />
             <Field {...fp} label={t("address")} field="address" />
             <Field {...fp} label={t("city")} field="city" />
-            <Field {...fp} label={t("state")} field="state" />
-            <Field {...fp} label={t("zip")} field="zip" />
+            {/* Address-field labels adapt to the country: State / Province /
+                Region, and ZIP code / Postcode / PIN code, from regions.ts. */}
+            <Field {...fp} label={region?.stateLabel ?? t("state")} field="state" />
+            <Field {...fp} label={region?.postalLabel ?? t("zip")} field="zip" />
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">{t("country")}</label>
               <select
