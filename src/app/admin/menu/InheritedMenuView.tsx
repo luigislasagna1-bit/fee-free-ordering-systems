@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Layers, Eye, AlertCircle, Loader2 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import toast from "react-hot-toast";
@@ -39,6 +40,7 @@ export function InheritedMenuView({
   categories: InheritedCategory[];
 }) {
   const router = useRouter();
+  const t = useTranslations("admin.inheritedMenu");
   const [customizing, setCustomizing] = useState(false);
 
   const totalItems = categories.reduce((s, c) => s + c.itemCount, 0);
@@ -50,16 +52,16 @@ export function InheritedMenuView({
       const res = await fetch("/api/menu/customize-location", { method: "POST" });
       const data = await res.json();
       if (!res.ok) {
-        toast.error(data.error || "Failed to customize menu");
+        toast.error(data.error || t("toastCustomizeError"));
         return;
       }
       toast.success(
-        `Menu copied! ${data.categoriesCopied} categories, ${data.itemsCopied} items. You can now edit them freely.`,
+        t("toastCopied", { categoriesCopied: data.categoriesCopied ?? 0, itemsCopied: data.itemsCopied ?? 0 }),
         { duration: 6000 },
       );
       router.refresh();
     } catch (err: any) {
-      toast.error(err?.message || "Failed to customize menu");
+      toast.error(err?.message || t("toastCustomizeError"));
     } finally {
       setCustomizing(false);
     }
@@ -73,11 +75,10 @@ export function InheritedMenuView({
           <Layers className="w-6 h-6 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
             <h1 className="text-lg sm:text-xl font-bold leading-tight">
-              This location uses the master menu from {brandName}
+              {t("headerTitle", { brandName })}
             </h1>
             <p className="text-sm text-white/85 mt-1 leading-snug">
-              {totalItems} item{totalItems === 1 ? "" : "s"} across {categories.length} categor{categories.length === 1 ? "y" : "ies"}.
-              Changes made at the brand level appear here automatically.
+              {t("headerSubtitle", { totalItems, categoryCount: categories.length })}
             </p>
           </div>
         </div>
@@ -87,10 +88,9 @@ export function InheritedMenuView({
           <div className="flex items-start gap-2 mb-3">
             <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
             <div className="text-sm">
-              <p className="font-semibold mb-0.5">Want to edit this location's menu independently?</p>
+              <p className="font-semibold mb-0.5">{t("customizeHeading")}</p>
               <p className="text-white/80">
-                Customizing copies the master menu into this location so you can change prices, items, and availability
-                without affecting other locations. You can always go back to inheriting from the brand later.
+                {t("customizeDescription")}
               </p>
             </div>
           </div>
@@ -100,9 +100,9 @@ export function InheritedMenuView({
             className="w-full sm:w-auto bg-white text-amber-700 hover:bg-amber-50 disabled:opacity-60 disabled:cursor-wait font-bold px-5 py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2"
           >
             {customizing ? (
-              <><Loader2 className="w-4 h-4 animate-spin" /> Copying menu…</>
+              <><Loader2 className="w-4 h-4 animate-spin" /> {t("buttonCopying")}</>
             ) : (
-              <><Eye className="w-4 h-4" /> Customize this location's menu</>
+              <><Eye className="w-4 h-4" /> {t("buttonCustomize")}</>
             )}
           </button>
         </div>
@@ -113,7 +113,7 @@ export function InheritedMenuView({
         {categories.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
             <Layers className="w-10 h-10 mx-auto mb-3 opacity-40" />
-            <p className="text-sm">The brand hasn't built a menu yet.</p>
+            <p className="text-sm">{t("emptyState")}</p>
           </div>
         ) : (
           categories.map((cat) => (
@@ -122,7 +122,7 @@ export function InheritedMenuView({
                 <div className="flex items-center justify-between gap-3">
                   <h2 className="font-bold text-gray-900 truncate">{cat.name}</h2>
                   <span className="text-xs font-medium text-gray-500 flex-shrink-0">
-                    {cat.itemCount} item{cat.itemCount === 1 ? "" : "s"}
+                    {t("categoryItemCount", { count: cat.itemCount })}
                   </span>
                 </div>
               </div>
@@ -137,7 +137,7 @@ export function InheritedMenuView({
                 ))}
                 {cat.itemCount > 12 && (
                   <div className="px-4 py-2 text-xs text-gray-500 italic">
-                    + {cat.itemCount - 12} more
+                    {t("moreItems", { count: cat.itemCount - 12 })}
                   </div>
                 )}
               </div>

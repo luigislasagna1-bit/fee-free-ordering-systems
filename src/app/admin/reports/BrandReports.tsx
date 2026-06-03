@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import type { BrandReportPayload } from "@/lib/brand-reports";
+import { useTranslations } from "next-intl";
 
 /**
  * Brand-level reports dashboard. Surfaces:
@@ -19,6 +20,7 @@ import type { BrandReportPayload } from "@/lib/brand-reports";
  * later as a query-string param.
  */
 export function BrandReports({ payload }: { payload: BrandReportPayload }) {
+  const t = useTranslations("admin.brandReports");
   const maxRevenue = Math.max(...payload.daily.map((d) => d.revenue), 1);
   const maxLocationRev = Math.max(...payload.perLocation.map((l) => l.revenue), 1);
 
@@ -28,10 +30,10 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
             <Building2 className="w-6 h-6 text-amber-500" />
-            {payload.brandName} — Chain Reports
+            {t("chainReportsHeading", { brandName: payload.brandName ?? "" })}
           </h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            Last 30 days · {payload.totals.locations} location{payload.totals.locations === 1 ? "" : "s"}
+            {t("last30DaysLocations", { count: payload.totals.locations })}
           </p>
         </div>
       </div>
@@ -49,13 +51,13 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-0.5">
-            <h3 className="text-sm font-bold text-amber-900">Deeper chain-wide reports</h3>
+            <h3 className="text-sm font-bold text-amber-900">{t("deeperReportsTitle")}</h3>
             <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full">
-              Coming Soon
+              {t("comingSoon")}
             </span>
           </div>
           <p className="text-xs sm:text-sm text-amber-900/90 leading-relaxed">
-            What you see today: revenue, orders, top items and per-location breakdown for the last 30 days. Coming next: chain-wide Funnel, Website Visits, Delivery Heatmap, Connectivity Health and custom date ranges. For those reports today, click into any single location below.
+            {t("deeperReportsDescription")}
           </p>
         </div>
       </div>
@@ -63,10 +65,10 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
       {/* Top-line cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         {[
-          { label: "Total Revenue", value: formatCurrency(payload.totals.revenue), icon: DollarSign, color: "text-green-500", bg: "bg-green-50" },
-          { label: "Completed Orders", value: payload.totals.completedCount, icon: ShoppingBag, color: "text-blue-500", bg: "bg-blue-50" },
-          { label: "Average Order", value: formatCurrency(payload.totals.averageOrder), icon: TrendingUp, color: "text-amber-500", bg: "bg-amber-50" },
-          { label: "Total Orders", value: payload.totals.orderCount, icon: BarChart3, color: "text-emerald-500", bg: "bg-emerald-50" },
+          { label: t("totalRevenue"), value: formatCurrency(payload.totals.revenue), icon: DollarSign, color: "text-green-500", bg: "bg-green-50" },
+          { label: t("completedOrders"), value: payload.totals.completedCount, icon: ShoppingBag, color: "text-blue-500", bg: "bg-blue-50" },
+          { label: t("averageOrder"), value: formatCurrency(payload.totals.averageOrder), icon: TrendingUp, color: "text-amber-500", bg: "bg-amber-50" },
+          { label: t("totalOrders"), value: payload.totals.orderCount, icon: BarChart3, color: "text-emerald-500", bg: "bg-emerald-50" },
         ].map((s) => (
           <div key={s.label} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-3">
@@ -83,14 +85,14 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
       <div className="grid lg:grid-cols-2 gap-6 mb-6">
         {/* 7-day trend */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-          <h2 className="font-semibold text-gray-900 mb-4">Revenue — Last 7 Days (Chain-Wide)</h2>
+          <h2 className="font-semibold text-gray-900 mb-4">{t("revenueLast7DaysHeading")}</h2>
           <div className="space-y-3">
             {payload.daily.map((d) => (
               <div key={d.date}>
                 <div className="flex justify-between text-xs text-gray-500 mb-1">
                   <span>{d.date}</span>
                   <span>
-                    {d.orderCount} order{d.orderCount === 1 ? "" : "s"} · {formatCurrency(d.revenue)}
+                    {t("ordersCount", { count: d.orderCount })} · {formatCurrency(d.revenue)}
                   </span>
                 </div>
                 <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
@@ -106,9 +108,9 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
 
         {/* Top items */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-          <h2 className="font-semibold text-gray-900 mb-4">Top 10 Items — Chain-Wide</h2>
+          <h2 className="font-semibold text-gray-900 mb-4">{t("top10ItemsHeading")}</h2>
           {payload.topItems.length === 0 ? (
-            <p className="text-sm text-gray-400">No items sold in this range yet.</p>
+            <p className="text-sm text-gray-400">{t("noItemsSold")}</p>
           ) : (
             <div className="space-y-2">
               {payload.topItems.map((item, i) => (
@@ -130,16 +132,16 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
 
       {/* Per-location breakdown */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-        <h2 className="font-semibold text-gray-900 mb-4">Revenue by Location</h2>
+        <h2 className="font-semibold text-gray-900 mb-4">{t("revenueByLocationHeading")}</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100">
-                <th className="py-2 pr-4 font-medium">Location</th>
-                <th className="py-2 pr-4 font-medium text-right">Orders</th>
-                <th className="py-2 pr-4 font-medium text-right">Revenue</th>
-                <th className="py-2 pr-4 font-medium text-right">Avg Order</th>
-                <th className="py-2 font-medium hidden md:table-cell">Share</th>
+                <th className="py-2 pr-4 font-medium">{t("colLocation")}</th>
+                <th className="py-2 pr-4 font-medium text-right">{t("colOrders")}</th>
+                <th className="py-2 pr-4 font-medium text-right">{t("colRevenue")}</th>
+                <th className="py-2 pr-4 font-medium text-right">{t("colAvgOrder")}</th>
+                <th className="py-2 font-medium hidden md:table-cell">{t("colShare")}</th>
               </tr>
             </thead>
             <tbody>
@@ -155,7 +157,7 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
                     </td>
                     <td className="py-3 pr-4 text-right">
                       <div>{loc.completedCount}</div>
-                      <div className="text-xs text-gray-400">of {loc.orderCount}</div>
+                      <div className="text-xs text-gray-400">{t("ofTotal", { total: loc.orderCount })}</div>
                     </td>
                     <td className="py-3 pr-4 text-right font-semibold">{formatCurrency(loc.revenue)}</td>
                     <td className="py-3 pr-4 text-right text-gray-600">{formatCurrency(loc.averageOrder)}</td>
@@ -177,7 +179,7 @@ export function BrandReports({ payload }: { payload: BrandReportPayload }) {
           </table>
         </div>
         <p className="text-xs text-gray-400 mt-3">
-          Click a location in the brand dashboard to drill into its own per-location reports.
+          {t("drillDownHint")}
         </p>
       </div>
     </div>

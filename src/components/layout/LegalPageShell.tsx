@@ -3,6 +3,7 @@ import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
 import Link from "next/link";
 import { ChevronLeft, FileText } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * Shared chrome for the three legal pages — Privacy Policy, Terms of
@@ -30,6 +31,7 @@ export function LegalPageShell({
   /** Page body — semantic HTML structured with h2/p/ul/etc. */
   children: React.ReactNode;
 }) {
+  const t = useTranslations("admin.legalPageShell");
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <PublicNav currentLocale={locale} />
@@ -42,7 +44,7 @@ export function LegalPageShell({
               className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 transition mb-4"
             >
               <ChevronLeft className="w-4 h-4" />
-              Back to Fee Free Ordering
+              {t("backToHome")}
             </Link>
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
@@ -53,7 +55,7 @@ export function LegalPageShell({
                   {title}
                 </h1>
                 <p className="text-xs text-gray-500 mt-1">
-                  Last updated: {lastUpdated}
+                  {t("lastUpdated", { date: lastUpdated ?? "" })}
                 </p>
               </div>
             </div>
@@ -64,9 +66,9 @@ export function LegalPageShell({
             without forcing the user back to the footer. */}
         <nav className="border-b border-gray-100 bg-gray-50">
           <div className="max-w-3xl mx-auto px-4 py-3 flex flex-wrap gap-2 text-sm">
-            <LegalNavLink href="/privacy" active={title === "Privacy Policy"}>Privacy</LegalNavLink>
-            <LegalNavLink href="/terms" active={title === "Terms of Service"}>Terms</LegalNavLink>
-            <LegalNavLink href="/refund" active={title === "Refund Policy"}>Refunds</LegalNavLink>
+            <LegalNavLink href="/privacy" active={title === "Privacy Policy"}>{t("navPrivacy")}</LegalNavLink>
+            <LegalNavLink href="/terms" active={title === "Terms of Service"}>{t("navTerms")}</LegalNavLink>
+            <LegalNavLink href="/refund" active={title === "Refund Policy"}>{t("navRefunds")}</LegalNavLink>
           </div>
         </nav>
 

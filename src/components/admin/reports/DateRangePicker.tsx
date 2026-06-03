@@ -4,6 +4,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { Calendar, ChevronDown } from "lucide-react";
 import { toISODate, formatRangeLabel, parseDateRange, type Preset } from "@/lib/reports/date-range";
+import { useTranslations } from "next-intl";
 
 /**
  * Top-right date-range selector that every report page shares.
@@ -22,6 +23,7 @@ import { toISODate, formatRangeLabel, parseDateRange, type Preset } from "@/lib/
  * components use — no client/server drift.
  */
 export function DateRangePicker() {
+  const t = useTranslations("admin.dateRangePicker");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -87,9 +89,9 @@ export function DateRangePicker() {
       {open && !showCustom && (
         <div className="absolute right-0 top-full mt-1 z-30 bg-white border border-gray-200 rounded-lg shadow-lg w-56 overflow-hidden">
           {[
-            { key: "last_7",  label: "Last 7 days" },
-            { key: "last_14", label: "Last 14 days" },
-            { key: "last_28", label: "Last 28 days" },
+            { key: "last_7",  label: t("last7Days") },
+            { key: "last_14", label: t("last14Days") },
+            { key: "last_28", label: t("last28Days") },
           ].map((p) => (
             <button
               key={p.key}
@@ -110,7 +112,7 @@ export function DateRangePicker() {
               current.preset === "custom" ? "text-emerald-600 font-semibold" : "text-gray-700"
             }`}
           >
-            Custom range…
+            {t("customRange")}
           </button>
         </div>
       )}
@@ -150,6 +152,7 @@ function CustomRangePanel({
   onCancel: () => void;
   onApply: (from: Date, to: Date) => void;
 }) {
+  const t = useTranslations("admin.dateRangePicker");
   const [anchor, setAnchor] = useState(() => startOfMonth(initialFrom));
   const [from, setFrom] = useState<Date | null>(initialFrom);
   const [to, setTo] = useState<Date | null>(initialTo);
@@ -185,7 +188,7 @@ function CustomRangePanel({
             setAnchor(prev);
           }}
           className="text-gray-400 hover:text-gray-700 px-2 py-1 rounded text-sm"
-          aria-label="Previous month"
+          aria-label={t("previousMonth")}
         >
           ‹
         </button>
@@ -201,7 +204,7 @@ function CustomRangePanel({
             setAnchor(n);
           }}
           className="text-gray-400 hover:text-gray-700 px-2 py-1 rounded text-sm"
-          aria-label="Next month"
+          aria-label={t("nextMonth")}
         >
           ›
         </button>
@@ -218,7 +221,7 @@ function CustomRangePanel({
           onClick={onCancel}
           className="px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 transition"
         >
-          Cancel
+          {t("cancel")}
         </button>
         <button
           type="button"
@@ -226,7 +229,7 @@ function CustomRangePanel({
           onClick={() => from && to && onApply(from, to)}
           className="px-3 py-1.5 text-sm bg-emerald-500 text-white font-semibold rounded hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition"
         >
-          Apply
+          {t("apply")}
         </button>
       </div>
     </div>
@@ -241,6 +244,7 @@ function MonthGrid({
   to: Date | null;
   onClick: (d: Date) => void;
 }) {
+  const t = useTranslations("admin.dateRangePicker");
   const year = month.getFullYear();
   const m = month.getMonth();
   const firstOfMonth = new Date(year, m, 1);
@@ -253,7 +257,10 @@ function MonthGrid({
   for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(year, m, d));
   while (cells.length % 7 !== 0) cells.push(null);
 
-  const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const dayLabels = [
+    t("dayMon"), t("dayTue"), t("dayWed"), t("dayThu"),
+    t("dayFri"), t("daySat"), t("daySun"),
+  ];
 
   return (
     <div>

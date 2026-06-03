@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * Sticky banner shown above the admin chrome when the logged-in owner
@@ -17,6 +18,7 @@ export function EmailVerificationBanner({
   email: string | null;
   verified: boolean;
 }) {
+  const t = useTranslations("admin.emailVerificationBanner");
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,17 +49,17 @@ export function EmailVerificationBanner({
         <div className="flex items-center gap-2 min-w-0">
           <AlertCircle className="w-4 h-4 text-amber-700 flex-shrink-0" />
           <p className="text-sm text-amber-900 truncate">
-            <span className="font-semibold">Verify your email</span>
+            <span className="font-semibold">{t("verifyYourEmail")}</span>
             {email && (
-              <span className="text-amber-800"> &middot; we sent a link to <strong>{email}</strong></span>
+              <span className="text-amber-800"> &middot; {t.rich("weSentALinkTo", { email, strong: (chunks) => <strong>{chunks}</strong> })}</span>
             )}
-            <span className="text-amber-800"> &middot; required before you can publish</span>
+            <span className="text-amber-800"> &middot; {t("requiredBeforePublish")}</span>
           </p>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
           {sent ? (
             <span className="text-xs font-medium text-green-700 flex items-center gap-1">
-              <CheckCircle2 className="w-4 h-4" /> Email sent — check your inbox
+              <CheckCircle2 className="w-4 h-4" /> {t("emailSentCheckInbox")}
             </span>
           ) : (
             <>
@@ -69,7 +71,7 @@ export function EmailVerificationBanner({
                 className="text-xs font-semibold px-3 py-1 rounded-md bg-amber-600 hover:bg-amber-700 text-white disabled:opacity-50 flex items-center gap-1"
               >
                 {busy && <Loader2 className="w-3 h-3 animate-spin" />}
-                {busy ? "Sending…" : "Resend verification email"}
+                {busy ? t("sending") : t("resendVerificationEmail")}
               </button>
             </>
           )}

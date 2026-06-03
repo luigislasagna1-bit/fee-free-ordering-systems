@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { AlertTriangle, ArrowLeftCircle, Loader2, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * Shown on /admin/menu for CHILD locations that have switched off
@@ -13,6 +14,7 @@ import { AlertTriangle, ArrowLeftCircle, Loader2, X } from "lucide-react";
  */
 export function RevertToBrandMenuBanner({ brandName }: { brandName: string }) {
   const router = useRouter();
+  const t = useTranslations("admin.revertBrandMenu");
   const [confirming, setConfirming] = useState(false);
   const [reverting, setReverting] = useState(false);
 
@@ -22,15 +24,15 @@ export function RevertToBrandMenuBanner({ brandName }: { brandName: string }) {
       const res = await fetch("/api/menu/revert-to-brand-menu", { method: "POST" });
       const data = await res.json();
       if (!res.ok) {
-        toast.error(data?.error || "Failed to revert");
+        toast.error(data?.error || t("failedToRevert"));
         setReverting(false);
         return;
       }
-      toast.success(`Reverted to ${brandName}'s menu. Local changes deleted.`);
+      toast.success(t("revertSuccess", { brandName: brandName ?? "" }));
       setConfirming(false);
       router.refresh();
     } catch (e: any) {
-      toast.error(e?.message || "Failed to revert");
+      toast.error(e?.message || t("failedToRevert"));
       setReverting(false);
     }
   }
@@ -44,12 +46,13 @@ export function RevertToBrandMenuBanner({ brandName }: { brandName: string }) {
           </div>
           <div className="min-w-0">
             <div className="font-semibold text-amber-900 text-sm">
-              You&apos;re on a <strong>custom menu</strong> for this location
+              {t.rich("bannerHeading", { strong: (chunks) => <strong>{chunks}</strong> })}
             </div>
             <div className="text-xs text-amber-800 mt-0.5 leading-snug">
-              Inheriting from <strong>{brandName}</strong> is off — you can
-              independently edit prices, items, and availability here. Want to
-              go back to using {brandName}&apos;s master menu?
+              {t.rich("bannerDescription", {
+                brandName: brandName ?? "",
+                strong: (chunks) => <strong>{chunks}</strong>,
+              })}
             </div>
           </div>
         </div>
@@ -58,7 +61,7 @@ export function RevertToBrandMenuBanner({ brandName }: { brandName: string }) {
           onClick={() => setConfirming(true)}
           className="flex-shrink-0 text-xs font-semibold text-amber-700 hover:text-amber-900 hover:underline px-3 py-1.5"
         >
-          Revert to brand menu
+          {t("revertToBrandMenuButton")}
         </button>
       </div>
 
@@ -77,13 +80,13 @@ export function RevertToBrandMenuBanner({ brandName }: { brandName: string }) {
                   <AlertTriangle className="w-5 h-5" />
                 </div>
                 <h3 className="font-bold text-gray-900">
-                  Revert to {brandName}&apos;s menu?
+                  {t("modalHeading", { brandName: brandName ?? "" })}
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setConfirming(false)}
-                aria-label="Close"
+                aria-label={t("closeAriaLabel")}
                 disabled={reverting}
                 className="w-8 h-8 rounded-lg hover:bg-gray-100 text-gray-500 flex items-center justify-center disabled:opacity-40"
               >
@@ -93,15 +96,13 @@ export function RevertToBrandMenuBanner({ brandName }: { brandName: string }) {
 
             <div className="mt-4 text-sm text-gray-700 leading-relaxed space-y-3">
               <p>
-                This will <strong>permanently delete</strong> every menu item,
-                category, variant, and modifier on this location. After
-                reverting, you&apos;ll show whatever <strong>{brandName}</strong>
-                {" "}has as their master menu, exactly like a brand-new child
-                location.
+                {t.rich("modalBody1", {
+                  brandName: brandName ?? "",
+                  strong: (chunks) => <strong>{chunks}</strong>,
+                })}
               </p>
               <p className="text-red-700">
-                <strong>This cannot be undone.</strong> If you want to keep any
-                of your customizations, copy them down somewhere first.
+                {t.rich("modalBody2", { strong: (chunks) => <strong>{chunks}</strong> })}
               </p>
             </div>
 
@@ -112,7 +113,7 @@ export function RevertToBrandMenuBanner({ brandName }: { brandName: string }) {
                 disabled={reverting}
                 className="px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:opacity-40 transition"
               >
-                Keep my custom menu
+                {t("keepCustomMenuButton")}
               </button>
               <button
                 type="button"
@@ -121,9 +122,9 @@ export function RevertToBrandMenuBanner({ brandName }: { brandName: string }) {
                 className="px-4 py-2 text-sm font-semibold rounded-lg border border-red-200 text-red-700 bg-white hover:bg-red-50 disabled:opacity-40 transition inline-flex items-center justify-center gap-2"
               >
                 {reverting ? (
-                  <><Loader2 className="w-4 h-4 animate-spin" /> Reverting…</>
+                  <><Loader2 className="w-4 h-4 animate-spin" /> {t("revertingLabel")}</>
                 ) : (
-                  <>Yes, delete custom menu</>
+                  <>{t("confirmDeleteButton")}</>
                 )}
               </button>
             </div>

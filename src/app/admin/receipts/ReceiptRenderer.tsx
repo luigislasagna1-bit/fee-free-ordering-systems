@@ -1,5 +1,6 @@
 "use client";
 import { forwardRef } from "react";
+import { useTranslations } from "next-intl";
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "@/lib/receipt-schema";
 
 // Paper widths in px at 96 dpi:
@@ -113,7 +114,8 @@ function renderCustomer(
   section: Section,
   order: SampleOrder,
   restaurant: any,
-  config: CustomerConfig
+  config: CustomerConfig,
+  t: ReturnType<typeof useTranslations<"admin.receiptRenderer">>
 ): React.ReactNode {
   const s = section.style;
   const dim = s.highlight ? "#cccccc" : "#555555";
@@ -122,7 +124,7 @@ function renderCustomer(
 
   switch (section.type) {
     case "store_name":
-      return <span>{restaurant?.name || "Your Restaurant"}</span>;
+      return <span>{restaurant?.name || t("yourRestaurant")}</span>;
 
     case "store_info":
       return (
@@ -136,10 +138,10 @@ function renderCustomer(
     case "order_info":
       return (
         <span>
-          <span style={row}><b>Order #</b><span>{order.orderNumber}</span></span>
-          <span style={row}><b>Date</b><span>{fmtDate(order.createdAt)}</span></span>
-          <span style={row}><b>Time</b><span>{fmtTime(order.createdAt)}</span></span>
-          <span style={row}><b>Type</b><span style={{ textTransform: "capitalize" }}>{order.type}</span></span>
+          <span style={row}><b>{t("orderNumber")}</b><span>{order.orderNumber}</span></span>
+          <span style={row}><b>{t("date")}</b><span>{fmtDate(order.createdAt)}</span></span>
+          <span style={row}><b>{t("time")}</b><span>{fmtTime(order.createdAt)}</span></span>
+          <span style={row}><b>{t("type")}</b><span style={{ textTransform: "capitalize" }}>{order.type}</span></span>
         </span>
       );
 
@@ -198,7 +200,7 @@ function renderCustomer(
                 ))}
                 {item.notes && (
                   <span style={{ display: "block", paddingLeft: "14px", fontSize: `${Math.max(9, s.fontSize - 2)}px`, color: s.highlight ? "#ffd" : "#b45309", fontStyle: "italic" }}>
-                    Note: {item.notes}
+                    {t("itemNote", { note: item.notes })}
                   </span>
                 )}
               </span>
@@ -224,14 +226,14 @@ function renderCustomer(
       ];
       return (
         <span>
-          <span style={{ display: "block", fontWeight: "bold" }}>* PROMOS APPLIED *</span>
+          <span style={{ display: "block", fontWeight: "bold" }}>{t("promosApplied")}</span>
           {samplePromos.map((p, i) => (
             <span key={i} style={row}>
               <span>
                 &nbsp;&nbsp;{p.name}
                 {p.couponCode && <> [{p.couponCode}]</>}
               </span>
-              <span>{p.free ? "FREE" : `-${fmt(p.savings)}`}</span>
+              <span>{p.free ? t("free") : `-${fmt(p.savings)}`}</span>
             </span>
           ))}
         </span>
@@ -241,23 +243,23 @@ function renderCustomer(
     case "totals":
       return (
         <span>
-          <span style={row}><span>Subtotal</span><span>{fmt(order.subtotal)}</span></span>
-          {order.couponDiscount > 0 && <span style={{ ...row, color: s.highlight ? "#9f9" : "#16a34a" }}><span>Discount</span><span>-{fmt(order.couponDiscount)}</span></span>}
-          {order.taxAmount > 0    && <span style={row}><span>Tax</span><span>{fmt(order.taxAmount)}</span></span>}
-          {order.deliveryFee > 0  && <span style={row}><span>Delivery</span><span>{fmt(order.deliveryFee)}</span></span>}
+          <span style={row}><span>{t("subtotal")}</span><span>{fmt(order.subtotal)}</span></span>
+          {order.couponDiscount > 0 && <span style={{ ...row, color: s.highlight ? "#9f9" : "#16a34a" }}><span>{t("discount")}</span><span>-{fmt(order.couponDiscount)}</span></span>}
+          {order.taxAmount > 0    && <span style={row}><span>{t("tax")}</span><span>{fmt(order.taxAmount)}</span></span>}
+          {order.deliveryFee > 0  && <span style={row}><span>{t("deliveryFee")}</span><span>{fmt(order.deliveryFee)}</span></span>}
           <span style={{ ...SOLID, display: "block" }} />
-          <span style={{ ...row, fontWeight: "bold", fontSize: `${s.fontSize + 2}px` }}><span>TOTAL</span><span>{fmt(order.total)}</span></span>
+          <span style={{ ...row, fontWeight: "bold", fontSize: `${s.fontSize + 2}px` }}><span>{t("total")}</span><span>{fmt(order.total)}</span></span>
         </span>
       );
 
     case "payment":
-      return <span>Payment: <b style={{ textTransform: "capitalize" }}>{order.paymentMethod}</b></span>;
+      return <span>{t("payment")}: <b style={{ textTransform: "capitalize" }}>{order.paymentMethod}</b></span>;
 
     case "notes":
       if (!order.notes) return null;
       return (
         <span style={{ display: "block", border: "1px dashed #888", padding: "4px 6px", borderRadius: 2 }}>
-          <b>Note: </b>{order.notes}
+          <b>{t("noteLabel")}: </b>{order.notes}
         </span>
       );
 
@@ -274,14 +276,14 @@ function renderCustomer(
 
 // ─── Kitchen section renderers ────────────────────────────────────────────────
 
-function renderKitchen(section: Section, order: SampleOrder, config: KitchenConfig): React.ReactNode {
+function renderKitchen(section: Section, order: SampleOrder, config: KitchenConfig, t: ReturnType<typeof useTranslations<"admin.receiptRenderer">>): React.ReactNode {
   const s = section.style;
   const dim = s.highlight ? "#cccccc" : "#555555";
   const small: React.CSSProperties = { fontSize: `${Math.max(9, s.fontSize - 3)}px`, color: dim, fontWeight: "normal" };
 
   switch (section.type) {
     case "k_title":
-      return <span>— KITCHEN ORDER —</span>;
+      return <span>{t("kitchenOrderTitle")}</span>;
 
     case "k_order_type":
       return <span>{order.type.toUpperCase()}</span>;
@@ -360,16 +362,16 @@ function renderKitchen(section: Section, order: SampleOrder, config: KitchenConf
       return null;
 
     case "k_notes":
-      if (!order.notes) return <span style={{ color: dim, fontStyle: "italic", fontWeight: "normal", fontSize: `${s.fontSize - 2}px` }}>(no special notes)</span>;
+      if (!order.notes) return <span style={{ color: dim, fontStyle: "italic", fontWeight: "normal", fontSize: `${s.fontSize - 2}px` }}>{t("noSpecialNotes")}</span>;
       return (
         <span style={{ display: "block", border: `2px solid ${s.highlight ? "#fff" : "#000"}`, padding: "6px 8px" }}>
-          <span style={{ display: "block", fontWeight: "bold", marginBottom: "2px" }}>⚠ NOTE:</span>
+          <span style={{ display: "block", fontWeight: "bold", marginBottom: "2px" }}>⚠ {t("kitchenNoteHeading")}:</span>
           {order.notes}
         </span>
       );
 
     case "k_prep":
-      return <span>Prep Time: ________________ min</span>;
+      return <span>{t("prepTime")}</span>;
 
     default:
       return null;
@@ -384,6 +386,7 @@ type Props = CustomerProps | KitchenProps;
 
 export const ReceiptRenderer = forwardRef<HTMLDivElement, Props>(
   function ReceiptRenderer({ type, config, order = SAMPLE_ORDER, restaurant, widthPx }, ref) {
+    const t = useTranslations("admin.receiptRenderer");
     const w = widthPx ?? PAPER_WIDTH_PX;
     return (
       <div
@@ -404,8 +407,8 @@ export const ReceiptRenderer = forwardRef<HTMLDivElement, Props>(
 
           const content =
             type === "customer"
-              ? renderCustomer(section, order, restaurant, config as CustomerConfig)
-              : renderKitchen(section, order, config as KitchenConfig);
+              ? renderCustomer(section, order, restaurant, config as CustomerConfig, t)
+              : renderKitchen(section, order, config as KitchenConfig, t);
 
           if (content === null) return null;
 

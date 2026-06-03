@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Download, FileSpreadsheet, FileText } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * Bottom-right Export trigger on every report. Matches the GloriaFood
@@ -37,6 +38,7 @@ export function ExportMenu({
   currentQuery: string;
   compact?: boolean;
 }) {
+  const t = useTranslations("admin.exportMenu");
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -66,11 +68,11 @@ export function ExportMenu({
             ? "w-8 h-8 inline-flex items-center justify-center rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition"
             : "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-white border border-gray-200 text-gray-700 hover:border-gray-300 transition"
         }
-        aria-label="Export"
-        title="Export"
+        aria-label={t("exportAriaLabel")}
+        title={t("exportTitle")}
       >
         <Download className="w-4 h-4" />
-        {!compact && "Export"}
+        {!compact && t("exportLabel")}
       </button>
 
       {open && (
@@ -85,7 +87,7 @@ export function ExportMenu({
             onClick={() => setOpen(false)}
           >
             <FileSpreadsheet className="w-4 h-4 text-emerald-500" />
-            Export XLS
+            {t("exportXls")}
           </a>
           <a
             href={buildHref("csv")}
@@ -94,7 +96,7 @@ export function ExportMenu({
             onClick={() => setOpen(false)}
           >
             <FileText className="w-4 h-4 text-blue-500" />
-            Export CSV
+            {t("exportCsv")}
           </a>
         </div>
       )}

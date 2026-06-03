@@ -2,6 +2,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Zap, Activity, ChevronDown, ChevronUp, Info, Printer, ServerCrash } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * Kitchen workflow mode toggle for the Orders page.
@@ -32,6 +33,7 @@ export function KitchenWorkflowToggle({
   initialMode: "simple" | "tracking";
   initialPrintNodeEnabled?: boolean;
 }) {
+  const t = useTranslations("admin.kitchenWorkflowToggle");
   const [mode, setMode] = useState<"simple" | "tracking">(initialMode);
   const [printNodeEnabled, setPrintNodeEnabled] = useState<boolean>(initialPrintNodeEnabled);
   const [savingPrintNode, setSavingPrintNode] = useState(false);
@@ -54,12 +56,12 @@ export function KitchenWorkflowToggle({
       if (!res.ok) throw new Error("Failed to save");
       toast.success(
         enabled
-          ? "PrintNode backup enabled — kitchen now shows PrintNode setup option"
-          : "PrintNode backup disabled — only direct WiFi/LAN printing shown",
+          ? t("printNodeEnabledToast")
+          : t("printNodeDisabledToast"),
       );
     } catch {
       setPrintNodeEnabled(!enabled);
-      toast.error("Failed to save — please try again");
+      toast.error(t("saveErrorToast"));
     } finally {
       setSavingPrintNode(false);
     }
@@ -78,13 +80,13 @@ export function KitchenWorkflowToggle({
       if (!res.ok) throw new Error("Failed to save");
       toast.success(
         newMode === "simple"
-          ? "Switched to Simple mode — kitchen just accepts orders"
-          : "Switched to Tracking mode — kitchen updates each order through every stage",
+          ? t("switchedToSimpleToast")
+          : t("switchedToTrackingToast"),
       );
     } catch {
       // Roll back optimistic state on failure
       setMode(mode);
-      toast.error("Failed to save — please try again");
+      toast.error(t("saveErrorToast"));
     } finally {
       setSaving(false);
     }
@@ -106,12 +108,12 @@ export function KitchenWorkflowToggle({
           </div>
           <div className="text-left min-w-0">
             <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-              Kitchen workflow
+              {t("kitchenWorkflowLabel")}
             </div>
             <div className="text-sm font-bold text-gray-900 truncate">
               {mode === "simple"
-                ? "Simple — just Accept or Reject (recommended for busy restaurants)"
-                : "Tracking — kitchen updates each order through every stage"}
+                ? t("modeSimpleSummary")
+                : t("modeTrackingSummary")}
             </div>
           </div>
         </div>
@@ -130,14 +132,14 @@ export function KitchenWorkflowToggle({
               disabled={saving}
               onClick={() => change("simple")}
               icon={<Zap className="w-5 h-5" />}
-              tagText="DEFAULT — RECOMMENDED"
+              tagText={t("simpleTagText")}
               tagColor="emerald"
-              title="Simple (GloriaFood-style)"
-              description="Kitchen sees only Accept and Reject. Orders move into 'In Progress' on accept and stay there until end-of-day. No status updates needed per order. Best for busy restaurants — same model GloriaFood uses."
+              title={t("simpleTitle")}
+              description={t("simpleDescription")}
               points={[
-                "Kitchen: 1 tap per order (Accept)",
-                "Customer notified once when accepted",
-                "'In Progress' shows today + scheduled today/tomorrow",
+                t("simplePoint1"),
+                t("simplePoint2"),
+                t("simplePoint3"),
               ]}
             />
             <ModeCard
@@ -145,21 +147,21 @@ export function KitchenWorkflowToggle({
               disabled={saving}
               onClick={() => change("tracking")}
               icon={<Activity className="w-5 h-5" />}
-              tagText="DETAILED"
+              tagText={t("trackingTagText")}
               tagColor="blue"
-              title="Tracking (full state)"
-              description="Kitchen explicitly moves each order through Preparing → Ready → Complete. Customer gets a notification at each step. Slower workflow but the most precise status updates."
+              title={t("trackingTitle")}
+              description={t("trackingDescription")}
               points={[
-                "Kitchen: 3-4 taps per order",
-                "Customer notified at each stage",
-                "Better for slower-paced or upscale restaurants",
+                t("trackingPoint1"),
+                t("trackingPoint2"),
+                t("trackingPoint3"),
               ]}
             />
           </div>
           <div className="flex items-start gap-2 text-xs text-gray-500 leading-relaxed">
             <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
             <p>
-              You can switch modes anytime. Orders already in progress keep their current status when you switch — only NEW orders follow the new mode.
+              {t("switchModeNote")}
             </p>
           </div>
         </div>
@@ -183,23 +185,23 @@ export function KitchenWorkflowToggle({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                PrintNode backup printer
+                {t("printNodeLabel")}
               </div>
               <span className="text-[9px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 rounded px-1.5 py-0.5">
-                OPTIONAL · BACKUP
+                {t("printNodeBadge")}
               </span>
             </div>
             <div className="text-sm text-gray-900 mt-0.5 leading-snug">
               {printNodeEnabled
-                ? "ON — kitchen also shows PrintNode setup as a backup option"
-                : "OFF — direct WiFi/LAN printing only (recommended)"}
+                ? t("printNodeStatusOn")
+                : t("printNodeStatusOff")}
             </div>
           </div>
           <button
             type="button"
             onClick={() => togglePrintNode(!printNodeEnabled)}
             disabled={savingPrintNode}
-            aria-label="Toggle PrintNode backup"
+            aria-label={t("printNodeToggleAriaLabel")}
             className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
               printNodeEnabled ? "bg-amber-500" : "bg-gray-300"
             } ${savingPrintNode ? "opacity-50" : ""}`}
@@ -215,7 +217,9 @@ export function KitchenWorkflowToggle({
           <p className="text-[11px] text-gray-600 leading-relaxed flex items-start gap-2">
             <Printer className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-gray-400" />
             <span>
-              <strong>Direct WiFi/LAN printing</strong> (via the Fee Free Kitchen native app on Android/iOS tablet) is the main printer connection — it auto-discovers your printer on the network, no PrintNode account or monthly fee needed. Enable PrintNode only as a backup if you can&apos;t install the native app or are running the kitchen on a Windows browser.
+              {t.rich("printNodeFooterNote", {
+                strong: (chunks) => <strong>{chunks}</strong>,
+              })}
             </span>
           </p>
         </div>

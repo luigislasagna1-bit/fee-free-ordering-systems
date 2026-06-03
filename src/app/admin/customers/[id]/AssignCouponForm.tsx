@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Tag, CheckCircle2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function AssignCouponForm({
   customerId,
@@ -11,6 +12,7 @@ export function AssignCouponForm({
   customerId: string;
   customerName: string;
 }) {
+  const t = useTranslations("admin.assignCoupon");
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,13 +46,13 @@ export function AssignCouponForm({
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data.error ?? "Failed to create coupon");
+        setError(data.error ?? t("errorFailed"));
         return;
       }
       const c = data.coupon;
       const discountLabel = form.discountType === "percentage"
-        ? `${form.discountValue}% off`
-        : `$${form.discountValue} off`;
+        ? t("discountLabelPercent", { value: form.discountValue })
+        : t("discountLabelFixed", { value: form.discountValue });
       setSuccess({ code: c.code, discount: discountLabel });
       // Reset form
       setForm({ ...form, description: "", discountValue: "10" });
@@ -58,7 +60,7 @@ export function AssignCouponForm({
       // list below the form.
       router.refresh();
     } catch {
-      setError("Network error. Try again.");
+      setError(t("errorNetwork"));
     } finally {
       setBusy(false);
     }
@@ -68,19 +70,19 @@ export function AssignCouponForm({
     <form onSubmit={submit} className="mt-4 space-y-3">
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-semibold text-gray-700 mb-1">Discount type</label>
+          <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelDiscountType")}</label>
           <select
             value={form.discountType}
             onChange={(e) => setForm({ ...form, discountType: e.target.value as "percentage" | "fixed" })}
             className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
-            <option value="percentage">Percentage off</option>
-            <option value="fixed">Fixed amount off</option>
+            <option value="percentage">{t("optionPercentage")}</option>
+            <option value="fixed">{t("optionFixed")}</option>
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold text-gray-700 mb-1">
-            {form.discountType === "percentage" ? "Percent (1–100)" : "Amount ($)"}
+            {form.discountType === "percentage" ? t("labelPercent") : t("labelAmount")}
           </label>
           <input
             type="number"
@@ -97,24 +99,24 @@ export function AssignCouponForm({
 
       <div>
         <label className="block text-xs font-semibold text-gray-700 mb-1">
-          Description (optional)
+          {t("labelDescription")}
         </label>
         <input
           type="text"
           value={form.description}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
-          placeholder={`Gift coupon for ${customerName}`}
+          placeholder={t("placeholderDescription", { customerName: customerName ?? "" })}
           maxLength={200}
           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
         />
         <p className="text-[11px] text-gray-500 mt-1">
-          Shown to the customer in their account dashboard.
+          {t("hintDescription")}
         </p>
       </div>
 
       <div className="grid grid-cols-3 gap-3">
         <div>
-          <label className="block text-xs font-semibold text-gray-700 mb-1">Min. order ($)</label>
+          <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelMinOrder")}</label>
           <input
             type="number"
             min={0}
@@ -125,7 +127,7 @@ export function AssignCouponForm({
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-gray-700 mb-1">Max uses</label>
+          <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelMaxUses")}</label>
           <input
             type="number"
             min={1}
@@ -136,7 +138,7 @@ export function AssignCouponForm({
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-gray-700 mb-1">Expires (optional)</label>
+          <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelExpires")}</label>
           <input
             type="date"
             value={form.expiresAt}
@@ -154,7 +156,12 @@ export function AssignCouponForm({
       {success && (
         <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-800">
           <CheckCircle2 className="w-3.5 h-3.5 inline mr-1" />
-          Coupon <code className="font-mono font-bold">{success.code}</code> ({success.discount}) assigned to {customerName}.
+          {t.rich("successMessage", {
+            code: success.code ?? "",
+            discount: success.discount ?? "",
+            customerName: customerName ?? "",
+            couponCode: (chunks) => <code className="font-mono font-bold">{chunks}</code>,
+          })}
         </div>
       )}
 
@@ -164,7 +171,7 @@ export function AssignCouponForm({
         className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-bold px-5 py-2.5 rounded-lg text-sm transition"
       >
         {busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Tag className="w-4 h-4" />}
-        Create &amp; assign coupon
+        {t("buttonCreate")}
       </button>
     </form>
   );

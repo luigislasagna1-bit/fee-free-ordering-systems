@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { SetupProgress } from "@/lib/setup-checklist";
 import { useSetupProgress } from "@/components/admin/SetupProgressProvider";
 
@@ -47,6 +48,7 @@ import { useSetupProgress } from "@/components/admin/SetupProgressProvider";
 const DISMISS_KEY = "ffo:guided-setup-pill-dismissed-at";
 
 export function GuidedSetupPill({ progress: progressProp }: { progress: SetupProgress }) {
+  const t = useTranslations("admin.guidedSetupPill");
   // Prefer the live SetupProgressProvider value (polls + refetches on
   // route change) so the pill auto-advances to the next incomplete step
   // the moment the owner saves the current one. Falls back to the prop
@@ -121,24 +123,24 @@ export function GuidedSetupPill({ progress: progressProp }: { progress: SetupPro
             </div>
             <div className="flex-1 min-w-0 pr-6">
               <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">
-                Setup walkthrough · {progress.percent}%
+                {t("header", { percent: progress.percent })}
               </div>
               {onCurrentStep ? (
                 <>
                   <div className="text-sm text-gray-900 font-bold mt-0.5">
-                    Working on: {nextStep.label}
+                    {t("workingOn", { label: nextStep.label })}
                   </div>
                   <div className="text-xs text-gray-600 mt-0.5">
-                    Save this page, then click here to continue →
+                    {t("saveAndContinue")}
                   </div>
                 </>
               ) : (
                 <>
                   <div className="text-sm text-gray-900 font-bold mt-0.5">
-                    Next: {nextStep.label}
+                    {t("next", { label: nextStep.label })}
                   </div>
                   <div className="text-xs text-gray-600 mt-0.5">
-                    {requiredLeft} required step{requiredLeft === 1 ? "" : "s"} left · click to go
+                    {t("stepsLeft", { n: requiredLeft })}
                   </div>
                 </>
               )}
@@ -149,7 +151,7 @@ export function GuidedSetupPill({ progress: progressProp }: { progress: SetupPro
         <button
           type="button"
           onClick={dismiss}
-          aria-label="Hide setup walkthrough"
+          aria-label={t("dismissAriaLabel")}
           className="absolute top-1.5 right-1.5 w-6 h-6 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100 flex items-center justify-center transition pointer-events-auto"
         >
           <X className="w-3.5 h-3.5" />

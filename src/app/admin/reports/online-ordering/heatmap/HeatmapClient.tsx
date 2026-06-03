@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.heat";
@@ -50,6 +51,7 @@ export function HeatmapClient({
   points: HeatPoint[];
   zones: DeliveryZoneOverlay[];
 }) {
+  const t = useTranslations("admin.heatmapClient");
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
 
@@ -74,7 +76,7 @@ export function HeatmapClient({
     // Restaurant marker
     L.marker([restaurantLat, restaurantLng])
       .addTo(map)
-      .bindPopup(`<strong>${escapeHtml(restaurantName)}</strong><br/>Your restaurant`);
+      .bindPopup(`<strong>${escapeHtml(restaurantName)}</strong><br/>${t("yourRestaurant")}`);
 
     // Delivery zone rings — same color palette as the admin Delivery
     // page. Drawn beneath the heat layer so hot spots remain visible
@@ -133,10 +135,9 @@ export function HeatmapClient({
       {points.length === 0 && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="bg-white/95 px-4 py-3 rounded-lg shadow border border-gray-200 max-w-xs text-center pointer-events-auto">
-            <div className="text-sm font-semibold text-gray-800 mb-1">No delivery data yet</div>
+            <div className="text-sm font-semibold text-gray-800 mb-1">{t("noDataTitle")}</div>
             <p className="text-xs text-gray-500">
-              The heatmap populates as delivery orders accrue. Each new order
-              with a resolvable address adds one point.
+              {t("noDataBody")}
             </p>
           </div>
         </div>
