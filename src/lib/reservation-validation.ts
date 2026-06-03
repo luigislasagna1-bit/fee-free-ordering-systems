@@ -122,7 +122,13 @@ export function validateBooking(
   // 6. Reservation hours for this day of week
   let hoursMap: Record<string, { open: string; close: string; enabled: boolean }> = {};
   try { hoursMap = JSON.parse(s.reservationHours || "{}"); } catch { hoursMap = {}; }
-  const dayOfWeek = reservationAt.getDay(); // 0 = Sun
+  // Day-of-week of the restaurant-local calendar date. Derive it from the
+  // `date` string (a plain calendar date) via noon-UTC so it's timezone-
+  // independent. Previously this used reservationAt.getDay(), which reads
+  // the SERVER's (UTC) day-of-week — a Friday 11 PM Toronto booking is
+  // Saturday 04:00 UTC, so it was validated against Saturday's hours.
+  // (Phase 2 timezone sweep.)
+  const dayOfWeek = new Date(`${date}T12:00:00Z`).getUTCDay(); // 0 = Sun
   const day = hoursMap[String(dayOfWeek)];
   if (day && day.enabled === false) {
     return { ok: false, reason: "We don't take reservations on this day." };

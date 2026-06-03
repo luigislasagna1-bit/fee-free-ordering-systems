@@ -25,6 +25,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { kitchenAuthOptions } from "@/lib/auth-kitchen";
 import prisma from "@/lib/db";
+import { parseLocalDateTimeInTz, dateKeyInTimezone } from "@/lib/restaurant-hours";
 
 type ServiceKey =
   | "pickup" | "delivery" | "dineIn" | "catering" | "takeOut" | "reservations";
@@ -85,15 +86,19 @@ export async function POST(req: NextRequest) {
   } else if (typeof body.durationMinutes === "number" && body.durationMinutes > 0) {
     until = new Date(Date.now() + body.durationMinutes * 60_000);
   } else if (body.restOfDay) {
-    // End of today in the restaurant's local timezone. We use UTC
-    // midnight tomorrow minus a minute as a safe "rest of day" — the
-    // customer-side check uses Date.now() vs the stored UTC moment,
-    // so timezone of the restaurant doesn't matter for correctness,
-    // only for display.
-    const now = new Date();
-    const tomorrow = new Date(now);
-    tomorrow.setHours(23, 59, 0, 0);
-    until = tomorrow;
+    // 23:59 TODAY in the RESTAURANT's local timezone, projected to the
+    // correct UTC instant. The old code used new Date().setHours(23,59),
+    // which is 23:59 on the SERVER's clock (UTC on Vercel) — so a Toronto
+    // restaurant pausing "rest of day" resumed hours early/late. We now
+    // resolve the restaurant's local calendar date and build the local
+    // end-of-day with the same DST-aware helper used by scheduling.
+    const r = await prisma.restaurant.findUnique({
+      where: { id: restaurantId },
+      select: { timezone: true },
+    });
+    const tz = r?.timezone ?? "UTC";
+    const localDate = dateKeyInTimezone(new Date(), tz); // "YYYY-MM-DD" in tz
+    until = parseLocalDateTimeInTz(localDate, 23, 59, tz);
   } else {
     return NextResponse.json(
       { error: "Must provide untilIso, durationMinutes, restOfDay, or resume: true" },
