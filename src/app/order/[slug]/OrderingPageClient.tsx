@@ -933,28 +933,34 @@ export function OrderingPageClient({
     if (checkoutOpen) fireStep("checkout_open");
   }, [checkoutOpen, fireStep]);
 
-  // Reset marketing-consent to the customer's BASELINE choice every time
-  // the checkout modal opens (Luigi 2026-06-02, refined 2026-06-03).
-  // customerInfo lives in OrderingPageClient state so it survives
-  // close/reopen of the modal. Baseline = the signed-in customer's stored
-  // consent if known (so an opted-out customer stays unchecked across
-  // reopens), otherwise the pre-ticked default for fresh guests. A
-  // returning guest's box is further corrected by the consent-lookup
-  // effect once they type a recognised email.
+  // Known stored consent for the current email, kept in a REF (not state)
+  // so updating it never triggers a re-render that could clobber the box.
+  // Seeded from the signed-in customer; refreshed by the lookup effect below.
+  const knownConsentRef = useRef<boolean | null>(currentCustomer?.marketingConsent ?? null);
+
+  // Reset marketing-consent to the customer's BASELINE choice every time the
+  // checkout modal opens (Luigi 2026-06-02, refined 2026-06-03). customerInfo
+  // lives in OrderingPageClient state so it survives close/reopen. Baseline =
+  // the last-known stored consent (so an opted-out customer stays unchecked
+  // across reopens), else the pre-ticked default for fresh guests. Keyed on
+  // checkoutOpen ONLY — reading the ref means a late async lookup can't
+  // re-fire this effect and overwrite an in-progress manual toggle.
   useEffect(() => {
     if (checkoutOpen) {
-      const baseline = currentCustomer?.marketingConsent ?? true;
+      const baseline = knownConsentRef.current ?? true;
       setCustomerInfo((ci) => ({ ...ci, marketingConsent: baseline }));
     }
-  }, [checkoutOpen, currentCustomer?.marketingConsent]);
+  }, [checkoutOpen]);
 
-  // Returning-guest consent pre-fill: when the email field holds a
-  // recognised customer for this restaurant, mirror their STORED marketing
-  // choice into the box so an opted-out email stays unchecked instead of
-  // being silently re-opted-in. Debounced + keyed on the email only, so it
-  // never clobbers an active manual toggle (the customer can still re-check
-  // to opt back in — that's "sticky default, re-checkable"). Unknown emails
-  // leave the current box state untouched. Luigi 2026-06-03.
+  // Returning-customer consent pre-fill: when the email field holds a
+  // recognised customer for this restaurant, reflect their STORED choice.
+  // Debounced + keyed on the email. CRITICAL: this only ever opts the box
+  // DOWN to unchecked for a KNOWN opted-out email — it NEVER re-checks it.
+  // That guarantees a customer's in-progress uncheck (opt-in → opt-out) can
+  // never be clobbered by this async lookup landing a beat later, while still
+  // making an opted-out email default to unchecked. Re-opt-in stays possible:
+  // they tick the box, the lookup won't re-fire (email unchanged), it sticks.
+  // Luigi 2026-06-03.
   useEffect(() => {
     const email = customerInfo.email.trim();
     if (!email || !email.includes("@")) return;
@@ -968,9 +974,12 @@ export function OrderingPageClient({
         .then((r) => (r.ok ? r.json() : null))
         .then((d) => {
           if (cancelled || !d || typeof d.marketingConsent !== "boolean") return;
-          setCustomerInfo((ci) =>
-            ci.email.trim() === email ? { ...ci, marketingConsent: d.marketingConsent } : ci,
-          );
+          knownConsentRef.current = d.marketingConsent;
+          if (d.marketingConsent === false) {
+            setCustomerInfo((ci) =>
+              ci.email.trim() === email ? { ...ci, marketingConsent: false } : ci,
+            );
+          }
         })
         .catch(() => {});
     }, 600);
