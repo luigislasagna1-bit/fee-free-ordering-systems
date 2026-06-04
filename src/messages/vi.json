@@ -592,7 +592,9 @@
       "customCta": "CTA tùy chỉnh / Thông tin thêm (JSON)",
       "yourLinks": "Liên kết của bạn",
       "orderingPage": "Trang đặt hàng",
-      "infoPageLink": "Trang thông tin"
+      "infoPageLink": "Trang thông tin",
+      "favicon": "Favicon",
+      "faviconHelp": "Biểu tượng hình vuông hiển thị trên tab trình duyệt. Hình ảnh không vuông sẽ được cắt từ giữa — PNG 350×350 là lý tưởng nhất."
     },
     "menu": {
       "title": "Thực đơn",

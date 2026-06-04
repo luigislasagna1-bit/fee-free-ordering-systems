@@ -592,7 +592,9 @@
       "customCta": "カスタム CTA / 追加情報（JSON）",
       "yourLinks": "リンク",
       "orderingPage": "注文ページ",
-      "infoPageLink": "情報ページ"
+      "infoPageLink": "情報ページ",
+      "favicon": "Favicon",
+      "faviconHelp": "ブラウザのタブに表示される正方形のアイコンです。正方形でない画像は中央でトリミングされます — 350×350のPNGが最適です。"
     },
     "menu": {
       "title": "メニュー",

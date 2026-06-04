@@ -592,7 +592,9 @@
       "customCta": "Egyéni CTA / Extra info (JSON)",
       "yourLinks": "Az Ön linkjei",
       "orderingPage": "Rendelési oldal",
-      "infoPageLink": "Info oldal"
+      "infoPageLink": "Info oldal",
+      "favicon": "Favicon",
+      "faviconHelp": "Négyzet alakú ikon, amely a böngésző lapján jelenik meg. A nem négyzet alakú képeket középre vágja a rendszer — ideális egy 350×350-es PNG."
     },
     "menu": {
       "title": "Étlap",

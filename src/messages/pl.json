@@ -592,7 +592,9 @@
       "customCta": "Własne CTA / Dodatkowe info (JSON)",
       "yourLinks": "Twoje linki",
       "orderingPage": "Strona zamówień",
-      "infoPageLink": "Strona informacyjna"
+      "infoPageLink": "Strona informacyjna",
+      "favicon": "Favicon",
+      "faviconHelp": "Kwadratowa ikona wyświetlana w karcie przeglądarki. Obrazy nieproporcjonalne są przycinane do środka — idealny jest plik PNG 350×350."
     },
     "menu": {
       "title": "Menu",

@@ -615,7 +615,9 @@
       "customCta": "Custom CTA / Extra Info (JSON)",
       "yourLinks": "Your Links",
       "orderingPage": "Ordering Page",
-      "infoPageLink": "Info Page"
+      "infoPageLink": "Info Page",
+      "favicon": "Favicon",
+      "faviconHelp": "Square icon shown in the browser tab. Non-square images are cropped to the center — a 350×350 PNG is ideal."
     },
     "menu": {
       "title": "Menu",

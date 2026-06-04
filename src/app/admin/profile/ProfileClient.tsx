@@ -59,7 +59,7 @@ type FormState = {
    *  Stripe's expected format). Mirrors Restaurant.currency. */
   currency: string;
   estimatedPickup: string; estimatedDelivery: string;
-  logoUrl: string; bannerUrl: string;
+  logoUrl: string; bannerUrl: string; faviconUrl: string;
   reviewLink: string; infoContent: string;
   defaultLanguage: string;
 };
@@ -529,6 +529,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
     estimatedDelivery: String(restaurant?.estimatedDelivery ?? 45),
     logoUrl: restaurant?.logoUrl || "",
     bannerUrl: restaurant?.bannerUrl || "",
+    faviconUrl: restaurant?.faviconUrl || "",
     reviewLink: restaurant?.reviewLink || "",
     infoContent: restaurant?.infoContent || "",
     defaultLanguage: restaurant?.defaultLanguage || "en",
@@ -707,6 +708,15 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
               onChange={(url) => setForm((f) => ({ ...f, bannerUrl: url }))}
               aspectRatio="wide"
             />
+            <div>
+              <ImageUpload
+                label={t("favicon")}
+                value={form.faviconUrl}
+                onChange={(url) => setForm((f) => ({ ...f, faviconUrl: url }))}
+                aspectRatio="square"
+              />
+              <p className="text-xs text-gray-500 mt-1.5">{t("faviconHelp")}</p>
+            </div>
           </div>
         </div>
 

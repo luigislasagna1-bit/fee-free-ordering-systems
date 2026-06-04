@@ -54,6 +54,11 @@ model Restaurant {
   cuisineType          String?
   logoUrl              String?
   bannerUrl            String?
+  /// Optional per-restaurant favicon (square icon, recommended 350x350) shown
+  /// in the browser tab on the customer ordering page. Falls back to the
+  /// platform default when null. Nullable + on the small Restaurant table, so
+  /// no hot-path/scale concern.
+  faviconUrl           String?
   isActive             Boolean @default(true)
   acceptsPickup        Boolean @default(true)
   acceptsDelivery      Boolean @default(false)

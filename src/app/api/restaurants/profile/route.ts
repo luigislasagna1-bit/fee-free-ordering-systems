@@ -45,7 +45,7 @@ export async function PUT(req: NextRequest) {
     name, slogan, description, phone, email, address, city, state, zip, country, cuisineType,
     timezone, taxRate, tipsEnabled, currency, minimumOrder, deliveryFee, estimatedPickup, estimatedDelivery,
     acceptsPickup, acceptsDelivery, acceptsDineIn, acceptsCatering, acceptsReservations,
-    logoUrl, bannerUrl, reviewLink, infoContent, themeSettings,
+    logoUrl, bannerUrl, faviconUrl, reviewLink, infoContent, themeSettings,
     lat, lng,
     mapProvider, googleMapsApiKey,
     defaultLanguage,
@@ -165,6 +165,7 @@ export async function PUT(req: NextRequest) {
   if (acceptsCatering !== undefined) updateData.acceptsCatering = acceptsCatering;
   if (acceptsReservations !== undefined) updateData.acceptsReservations = acceptsReservations;
   if (logoUrl !== undefined) updateData.logoUrl = logoUrl;
+  if (faviconUrl !== undefined) updateData.faviconUrl = faviconUrl;
   if (bannerUrl !== undefined) updateData.bannerUrl = bannerUrl;
   if (reviewLink !== undefined) updateData.reviewLink = reviewLink;
   if (infoContent !== undefined) updateData.infoContent = infoContent;

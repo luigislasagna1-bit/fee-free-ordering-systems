@@ -1,8 +1,30 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cookies, headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { OrderingPageClient } from "./OrderingPageClient";
+
+/**
+ * Per-restaurant browser-tab branding: the <title> is the restaurant's name
+ * and the favicon is their uploaded icon (when set), instead of the generic
+ * platform default. Lightweight standalone query — metadata runs separately
+ * from the page render. Luigi 2026-06-04.
+ */
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> },
+): Promise<Metadata> {
+  const { slug } = await params;
+  const r = await prisma.restaurant.findUnique({
+    where: { slug, isActive: true },
+    select: { name: true, faviconUrl: true },
+  });
+  if (!r) return {};
+  return {
+    title: r.name,
+    ...(r.faviconUrl ? { icons: { icon: r.faviconUrl } } : {}),
+  };
+}
 import { VisitTracker } from "@/components/order/VisitTracker";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { stripeReady, getPublishableKey } from "@/lib/stripe";

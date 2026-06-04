@@ -592,7 +592,9 @@
       "customCta": "CTA personalizzato / Info extra (JSON)",
       "yourLinks": "I tuoi link",
       "orderingPage": "Pagina di ordinazione",
-      "infoPageLink": "Pagina info"
+      "infoPageLink": "Pagina info",
+      "favicon": "Favicon",
+      "faviconHelp": "Icona quadrata mostrata nella scheda del browser. Le immagini non quadrate vengono ritagliate al centro — un PNG 350×350 è l'ideale."
     },
     "menu": {
       "title": "Menù",

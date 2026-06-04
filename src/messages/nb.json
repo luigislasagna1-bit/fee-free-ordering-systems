@@ -592,7 +592,9 @@
       "customCta": "Tilpasset CTA / ekstra info (JSON)",
       "yourLinks": "Dine lenker",
       "orderingPage": "Bestillingsside",
-      "infoPageLink": "Infoside"
+      "infoPageLink": "Infoside",
+      "favicon": "Favicon",
+      "faviconHelp": "Kvadratisk ikon vist i nettleserfanen. Ikke-kvadratiske bilder beskjæres til midten — en 350×350 PNG er ideell."
     },
     "menu": {
       "title": "Meny",

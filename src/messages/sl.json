@@ -592,7 +592,9 @@
       "customCta": "Lastni CTA / Dodatne informacije (JSON)",
       "yourLinks": "Vaše povezave",
       "orderingPage": "Stran za naročanje",
-      "infoPageLink": "Informacijska stran"
+      "infoPageLink": "Informacijska stran",
+      "favicon": "Favicon",
+      "faviconHelp": "Kvadratna ikona, prikazana v zavihku brskalnika. Nekvadrarne slike so obrezane na sredino — idealna je slika PNG 350×350."
     },
     "menu": {
       "title": "Meni",

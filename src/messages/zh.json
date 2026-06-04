@@ -592,7 +592,9 @@
       "customCta": "自定义 CTA / 附加信息（JSON）",
       "yourLinks": "您的链接",
       "orderingPage": "点餐页面",
-      "infoPageLink": "信息页"
+      "infoPageLink": "信息页",
+      "favicon": "Favicon",
+      "faviconHelp": "显示在浏览器标签页中的方形图标。非方形图片将从中心裁剪——建议使用 350×350 的 PNG 图片。"
     },
     "menu": {
       "title": "菜单",

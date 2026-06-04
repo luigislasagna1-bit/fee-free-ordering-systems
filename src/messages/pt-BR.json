@@ -592,7 +592,9 @@
       "customCta": "CTA Personalizado / Informações Extras (JSON)",
       "yourLinks": "Seus Links",
       "orderingPage": "Página de Pedidos",
-      "infoPageLink": "Página de Informações"
+      "infoPageLink": "Página de Informações",
+      "favicon": "Favicon",
+      "faviconHelp": "Ícone quadrado exibido na aba do navegador. Imagens não quadradas são cortadas ao centro — um PNG de 350×350 é o ideal."
     },
     "menu": {
       "title": "Cardápio",

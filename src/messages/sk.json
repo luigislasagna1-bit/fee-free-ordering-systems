@@ -592,7 +592,9 @@
       "customCta": "Vlastná CTA / Ďalšie info (JSON)",
       "yourLinks": "Vaše odkazy",
       "orderingPage": "Stránka objednávania",
-      "infoPageLink": "Informačná stránka"
+      "infoPageLink": "Informačná stránka",
+      "favicon": "Favicon",
+      "faviconHelp": "Štvorcová ikona zobrazená na karte prehliadača. Neštvoricové obrázky sú orezané na stred — ideálny je PNG 350×350."
     },
     "menu": {
       "title": "Menu",

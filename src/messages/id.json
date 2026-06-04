@@ -592,7 +592,9 @@
       "customCta": "CTA Kustom / Info Tambahan (JSON)",
       "yourLinks": "Tautan Anda",
       "orderingPage": "Halaman Pemesanan",
-      "infoPageLink": "Halaman Info"
+      "infoPageLink": "Halaman Info",
+      "favicon": "Favicon",
+      "faviconHelp": "Ikon persegi yang ditampilkan di tab browser. Gambar yang tidak persegi akan dipotong ke bagian tengah — PNG 350×350 adalah ukuran yang ideal."
     },
     "menu": {
       "title": "Menu",

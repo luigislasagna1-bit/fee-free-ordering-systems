@@ -592,7 +592,9 @@
       "customCta": "CTA personalizat / Informații suplimentare (JSON)",
       "yourLinks": "Link-urile tale",
       "orderingPage": "Pagina de comandă",
-      "infoPageLink": "Pagina de informații"
+      "infoPageLink": "Pagina de informații",
+      "favicon": "Favicon",
+      "faviconHelp": "Pictogramă pătrată afișată în fila browserului. Imaginile non-pătrate sunt decupate din centru — un PNG de 350×350 este ideal."
     },
     "menu": {
       "title": "Meniu",

@@ -592,7 +592,9 @@
       "customCta": "Kohandatud CTA / Lisainfo (JSON)",
       "yourLinks": "Sinu lingid",
       "orderingPage": "Tellimisleht",
-      "infoPageLink": "Info leht"
+      "infoPageLink": "Info leht",
+      "favicon": "Favicon",
+      "faviconHelp": "Ruudukujuline ikoon, mis kuvatakse brauseri vahekaardil. Mitteruudukujulised pildid kärbitakse keskelt — ideaalne on 350×350 PNG."
     },
     "menu": {
       "title": "Menüü",

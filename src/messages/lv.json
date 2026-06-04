@@ -592,7 +592,9 @@
       "customCta": "Pielāgota CTA / Papildinformācija (JSON)",
       "yourLinks": "Jūsu saites",
       "orderingPage": "Pasūtīšanas lapa",
-      "infoPageLink": "Informācijas lapa"
+      "infoPageLink": "Informācijas lapa",
+      "favicon": "Favicon",
+      "faviconHelp": "Kvadrātveida ikona, kas redzama pārlūkprogrammas cilnē. Nekvadrātveida attēli tiek apgriezti no centra — ideāls variants ir 350×350 PNG."
     },
     "menu": {
       "title": "Ēdienkarte",

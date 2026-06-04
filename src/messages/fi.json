@@ -592,7 +592,9 @@
       "customCta": "Mukautettu CTA / lisätiedot (JSON)",
       "yourLinks": "Linkkisi",
       "orderingPage": "Tilaussivu",
-      "infoPageLink": "Tietosivu"
+      "infoPageLink": "Tietosivu",
+      "favicon": "Favicon",
+      "faviconHelp": "Neliömäinen kuvake, joka näkyy selaimen välilehdellä. Ei-neliömäiset kuvat rajataan keskikohtaan — ihanteellinen koko on 350×350 PNG."
     },
     "menu": {
       "title": "Menu",

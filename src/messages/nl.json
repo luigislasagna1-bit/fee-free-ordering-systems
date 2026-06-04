@@ -592,7 +592,9 @@
       "customCta": "Aangepaste CTA / extra info (JSON)",
       "yourLinks": "Uw links",
       "orderingPage": "Bestelpagina",
-      "infoPageLink": "Infopagina"
+      "infoPageLink": "Infopagina",
+      "favicon": "Favicon",
+      "faviconHelp": "Vierkant icoon dat wordt weergegeven in het browsertabblad. Niet-vierkante afbeeldingen worden in het midden bijgesneden — een PNG van 350×350 is ideaal."
     },
     "menu": {
       "title": "Menu",

@@ -592,7 +592,9 @@
       "customCta": "Prilagođeni CTA / Dodatne informacije (JSON)",
       "yourLinks": "Vaše poveznice",
       "orderingPage": "Stranica za narudžbe",
-      "infoPageLink": "Informacijska stranica"
+      "infoPageLink": "Informacijska stranica",
+      "favicon": "Favicon",
+      "faviconHelp": "Kvadratna ikona prikazana u kartici preglednika. Slike koje nisu kvadratne izrezuju se prema sredini — idealan je PNG formata 350×350."
     },
     "menu": {
       "title": "Jelovnik",

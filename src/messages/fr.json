@@ -592,7 +592,9 @@
       "customCta": "CTA personnalisé / Infos supplémentaires (JSON)",
       "yourLinks": "Vos liens",
       "orderingPage": "Page de commande",
-      "infoPageLink": "Page d'informations"
+      "infoPageLink": "Page d'informations",
+      "favicon": "Favicon",
+      "faviconHelp": "Icône carrée affichée dans l'onglet du navigateur. Les images non carrées sont recadrées au centre — un PNG de 350×350 est idéal."
     },
     "menu": {
       "title": "Menu",

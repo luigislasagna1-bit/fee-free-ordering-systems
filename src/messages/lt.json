@@ -592,7 +592,9 @@
       "customCta": "Pasirinktinis CTA / papildoma informacija (JSON)",
       "yourLinks": "Jūsų nuorodos",
       "orderingPage": "Užsakymų puslapis",
-      "infoPageLink": "Informacijos puslapis"
+      "infoPageLink": "Informacijos puslapis",
+      "favicon": "Favicon",
+      "faviconHelp": "Kvadratinė piktograma, rodoma naršyklės skirtuke. Nekvadratiniai vaizdai apkarpomi iš centro — idealiai tinka 350×350 PNG failas."
     },
     "menu": {
       "title": "Meniu",

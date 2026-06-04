@@ -592,7 +592,9 @@
       "customCta": "Benutzerdefinierter CTA / Zusatzinfos (JSON)",
       "yourLinks": "Ihre Links",
       "orderingPage": "Bestellseite",
-      "infoPageLink": "Infoseite"
+      "infoPageLink": "Infoseite",
+      "favicon": "Favicon",
+      "faviconHelp": "Quadratisches Symbol, das im Browser-Tab angezeigt wird. Nicht-quadratische Bilder werden mittig zugeschnitten — ideal ist ein 350×350 PNG."
     },
     "menu": {
       "title": "Speisekarte",

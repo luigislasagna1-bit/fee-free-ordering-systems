@@ -592,7 +592,9 @@
       "customCta": "כפתור פעולה מותאם / מידע נוסף (JSON)",
       "yourLinks": "הקישורים שלך",
       "orderingPage": "דף הזמנות",
-      "infoPageLink": "דף מידע"
+      "infoPageLink": "דף מידע",
+      "favicon": "Favicon",
+      "faviconHelp": "אייקון מרובע המוצג בלשונית הדפדפן. תמונות שאינן מרובעות נחתכות למרכז — PNG בגודל 350×350 הוא האידיאלי."
     },
     "menu": {
       "title": "תפריט",

@@ -592,7 +592,9 @@
       "customCta": "사용자 정의 CTA / 추가 정보 (JSON)",
       "yourLinks": "링크",
       "orderingPage": "주문 페이지",
-      "infoPageLink": "정보 페이지"
+      "infoPageLink": "정보 페이지",
+      "favicon": "Favicon",
+      "faviconHelp": "브라우저 탭에 표시되는 정사각형 아이콘입니다. 정사각형이 아닌 이미지는 중앙을 기준으로 잘립니다 — 350×350 PNG가 이상적입니다."
     },
     "menu": {
       "title": "메뉴",

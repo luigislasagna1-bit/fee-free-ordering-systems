@@ -592,7 +592,9 @@
       "customCta": "Özel CTA / Ek Bilgi (JSON)",
       "yourLinks": "Bağlantılarınız",
       "orderingPage": "Sipariş Sayfası",
-      "infoPageLink": "Bilgi Sayfası"
+      "infoPageLink": "Bilgi Sayfası",
+      "favicon": "Favicon",
+      "faviconHelp": "Tarayıcı sekmesinde görünen kare simge. Kare olmayan görüntüler ortadan kırpılır — ideal olan 350×350 piksel PNG dosyasıdır."
     },
     "menu": {
       "title": "Menü",

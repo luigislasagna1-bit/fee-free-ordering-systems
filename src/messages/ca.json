@@ -592,7 +592,9 @@
       "customCta": "CTA personalitzada / Informació addicional (JSON)",
       "yourLinks": "Els vostres enllaços",
       "orderingPage": "Pàgina de comandes",
-      "infoPageLink": "Pàgina d'informació"
+      "infoPageLink": "Pàgina d'informació",
+      "favicon": "Favicon",
+      "faviconHelp": "Icona quadrada que es mostra a la pestanya del navegador. Les imatges no quadrades es retallen pel centre — un PNG de 350×350 és ideal."
     },
     "menu": {
       "title": "Carta",
