@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import {
   Plus, Search, Bug, Lightbulb, Sliders, ArrowUpRight, MessageSquare,
   UserPlus, Trash2, X, Loader2, Inbox, ThumbsUp, CheckCircle2,
-  ImagePlus, Paperclip,
+  ImagePlus, Paperclip, ArrowLeft,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import {
@@ -96,6 +96,15 @@ export function ReportsListClient({
         {/* Header */}
         <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
           <div className="min-w-0">
+            {/* Back to the caller's dashboard. canInvite is superadmin-only,
+                so it doubles as the "is this a superadmin?" signal. */}
+            <Link
+              href={access.canInvite ? "/superadmin" : "/reseller"}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-800 transition mb-2"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              {access.canInvite ? "Back to Superadmin" : "Back to Dashboard"}
+            </Link>
             <h1 className="text-2xl font-bold text-gray-900">Reseller Reports &amp; Requests</h1>
             <p className="text-sm text-gray-500 mt-0.5">
               Hidden internal tracker. {access.canChangeStatus
