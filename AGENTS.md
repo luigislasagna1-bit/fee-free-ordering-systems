@@ -4,6 +4,16 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+<!-- BEGIN:standing-rule-sync-safety -->
+# STANDING RULE — keep everything in sync, break nothing (Luigi, 2026-06-04)
+
+This is a permanent acceptance criterion for **every** change, not a one-off — Luigi asked that it be honored without him ever restating it.
+
+- **No regressions.** Before shipping, trace what else touches the same code/data/flow and confirm the change can't break it (hot paths: customer ordering page, kitchen display poll, checkout, payments, the GOLDEN printer pipeline). Run `npm run preflight` before every push, read it bottom-up.
+- **i18n is part of "done" — never ship an English-only user-facing string.** Any new/changed visible text must land in `src/messages/en.json` AND be translated into **all** non-English locales **in the same change**, so parity never breaks. Locale set = **38 languages** (en + 36 + Hindi), single source `src/lib/locales.ts`. Use `t()` / `getTranslations`, preserve `{placeholders}`, ICU plurals, rich tags, brand names. After translating, run the parity audit (0 missing / extra / placeholder-arg / rich-tag mismatch across all 38) before deploy.
+- **Update everything that moves together, together** — e.g. a new locale needs both `LOCALE_LABELS` and a full `messages/<code>.json`; a schema change goes to BOTH Neon branches; new customer money goes through `formatCurrency(amount, restaurant.currency)`; a new marketing email path must respect `marketingConsent`.
+<!-- END:standing-rule-sync-safety -->
+
 <!-- BEGIN:owner-context -->
 # Who you're working with — and what's at stake
 
