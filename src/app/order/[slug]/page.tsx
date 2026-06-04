@@ -328,6 +328,10 @@ export default async function OrderingPage({
               name: currentCustomer.name,
               email: currentCustomer.email,
               phone: currentCustomer.phone,
+              // Surfaced so the checkout marketing checkbox pre-fills to the
+              // customer's stored choice — an opted-out customer sees it
+              // unchecked instead of being silently re-opted-in. Luigi 2026-06-03.
+              marketingConsent: currentCustomer.marketingConsent,
             }
           : null}
       />

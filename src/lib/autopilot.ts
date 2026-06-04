@@ -315,6 +315,10 @@ async function pickCandidates(
         totalOrders: 1,
         createdAt: { lte: cutoff },
         email: { not: null },
+        // Respect marketing consent — opted-out customers must never
+        // receive these automated marketing nudges (they still get
+        // transactional order emails). Luigi 2026-06-03.
+        marketingConsent: true,
       },
       select: { id: true, name: true, email: true },
       take: 200,
@@ -340,6 +344,9 @@ async function pickCandidates(
         email: { not: null },
         lastOrderAt: { gte: sixMonthsAgo, not: null },
         totalOrders: { gte: 1 },
+        // Respect marketing consent — opted-out customers are excluded
+        // from re-engagement sends. Luigi 2026-06-03.
+        marketingConsent: true,
       },
       select: { id: true, name: true, email: true, lastOrderAt: true },
       orderBy: { lastOrderAt: "asc" },
@@ -452,6 +459,24 @@ export async function runCartAbandonmentForRestaurant(
 
   for (const session of candidates) {
     if (!session.customerEmail) continue;
+
+    // Respect marketing consent: if this email belongs to a KNOWN customer
+    // who has opted out, skip the cart-recovery nudge (it's a marketing
+    // email, not a transactional one). A brand-new guest with no Customer
+    // record yet hasn't opted out, so they still get the nudge — that's the
+    // whole point of cart abandonment. Luigi 2026-06-03.
+    const knownCustomer = await prisma.customer.findFirst({
+      where: { restaurantId, email: session.customerEmail },
+      select: { marketingConsent: true },
+    });
+    if (knownCustomer && knownCustomer.marketingConsent === false) {
+      // Mark the session resolved so we don't re-evaluate it every cron run.
+      await prisma.cartSession.update({
+        where: { id: session.id },
+        data: { abandonedAt: new Date() },
+      });
+      continue;
+    }
 
     // Suppression: did this email place an order at this restaurant
     // recently? If yes, mark recovered + skip the email.

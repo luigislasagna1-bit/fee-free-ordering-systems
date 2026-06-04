@@ -704,13 +704,24 @@ export async function POST(req: NextRequest) {
     if (cleanEmail || cleanPhone) {
       const where = cleanEmail ? { restaurantId: restaurant.id, email: cleanEmail } : undefined;
       if (where) customer = await prisma.customer.findFirst({ where });
-      // Normalise the marketing-consent flag once so both the create
-      // and update branches can apply it consistently. Stored only
-      // when the customer affirmatively ticked the box (we don't want
-      // to silently overwrite a previously-true consent with false
-      // just because the customer left the box unchecked on a later
-      // order — they explicitly opted in once, that survives).
-      const hasOptedInMarketing = marketingConsent === true;
+      // BIDIRECTIONAL marketing consent (GloriaFood-parity, Luigi 2026-06-03).
+      // The checkbox state IS the customer's explicit choice on this order:
+      //   ticked   → opt IN
+      //   unticked → opt OUT
+      // The choice is authoritative every time and persists (sticky) in the
+      // DB until they change it again — so an opted-out customer stays out of
+      // every marketing send (autopilot reads marketingConsent) and only
+      // receives transactional emails (order confirmations never check it).
+      //
+      // GUARD: the marketing box is meaningless without an email, so we ONLY
+      // act on consent when the customer supplied an email on THIS order.
+      // (The client already sends marketingConsent=false whenever the email
+      // field is empty — without this guard a phone-only reorder would wrongly
+      // opt-out a customer who has an email on file.) Since `customer` is only
+      // ever looked up via the email where-clause above, the update branch
+      // always has an email; the guard mainly protects the create branch.
+      const emailPresent = !!cleanEmail;
+      const consentChoice = emailPresent && marketingConsent === true;
       if (!customer) {
         customer = await prisma.customer.create({
           data: {
@@ -722,8 +733,10 @@ export async function POST(req: NextRequest) {
             // Reports — populated at create so first-time customers are
             // captured in the lapsed-customer / cohort queries.
             lastOrderAt: new Date(),
-            marketingConsent: hasOptedInMarketing,
-            marketingConsentAt: hasOptedInMarketing ? new Date() : null,
+            marketingConsent: consentChoice,
+            // Stamp the moment we recorded their choice (opt-in OR opt-out)
+            // so we keep an audit trail; null only when there's no email.
+            marketingConsentAt: emailPresent ? new Date() : null,
           },
         });
       } else {
@@ -741,13 +754,12 @@ export async function POST(req: NextRequest) {
             ...(currentAccount && !customer.customerAccountId
               ? { customerAccountId: currentAccount.id }
               : {}),
-            // Upgrade-only consent: if they tick the box on this order
-            // and weren't previously opted in, record it. If they
-            // leave it unchecked, we DON'T flip them back to false —
-            // a checkout form is not the place to revoke consent
-            // (the profile page + email unsubscribe link are).
-            ...(hasOptedInMarketing && !customer.marketingConsent
-              ? { marketingConsent: true, marketingConsentAt: new Date() }
+            // Flip consent in EITHER direction when the customer's choice
+            // differs from what we have stored — and only re-stamp the
+            // timestamp when it actually changes, to keep the audit trail
+            // meaningful and avoid needless writes on every reorder.
+            ...(emailPresent && customer.marketingConsent !== consentChoice
+              ? { marketingConsent: consentChoice, marketingConsentAt: new Date() }
               : {}),
           },
         });

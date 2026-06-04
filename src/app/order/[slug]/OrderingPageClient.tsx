@@ -492,7 +492,7 @@ export function OrderingPageClient({
    *  Server-resolved via getCurrentRestaurantCustomer in page.tsx and
    *  passed in so the header can render the right Sign-in vs. Hi-name
    *  state without a client-side fetch flash. Null = guest visitor. */
-  currentCustomer?: { id: string; name: string; email: string | null; phone: string | null } | null;
+  currentCustomer?: { id: string; name: string; email: string | null; phone: string | null; marketingConsent?: boolean | null } | null;
   /** True when the restaurant has connected PayPal AND has the
    *  card_payments entitlement. Drives whether PayPal works at
    *  checkout vs. shows a "not yet ready" notice. */
@@ -624,9 +624,16 @@ export function OrderingPageClient({
     // Recital 32 both single out "pre-checked boxes" as not valid
     // consent. We're following the US/GloriaFood convention; if a
     // CASL/GDPR complaint ever lands, flip this back to false and
-    // the rest of the pipeline (sticky upgrade, server-side
-    // marketingConsentAt stamp) keeps working unchanged.
-    marketingConsent: true,
+    // the rest of the pipeline (server-side marketingConsentAt stamp)
+    // keeps working unchanged.
+    //
+    // Pre-fill from the signed-in customer's STORED choice so a known
+    // opted-out customer sees the box unchecked instead of being
+    // silently re-opted-in. Guests (and unknown logged-in state) keep
+    // the pre-ticked default; a returning guest's box is corrected once
+    // they type a recognised email (see the consent-lookup effect below).
+    // Luigi 2026-06-03.
+    marketingConsent: currentCustomer?.marketingConsent ?? true,
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
   // Default starts at the SUGGESTED amount (15%). Customer can drag the
@@ -926,19 +933,52 @@ export function OrderingPageClient({
     if (checkoutOpen) fireStep("checkout_open");
   }, [checkoutOpen, fireStep]);
 
-  // Reset marketing-consent to the pre-ticked default every time the
-  // checkout modal opens (Luigi 2026-06-02). customerInfo lives in
-  // OrderingPageClient state so it survives close/reopen of the modal —
-  // which meant if the customer opened checkout, unchecked the box,
-  // then closed and re-opened later in the same page session, the box
-  // stayed unchecked. Per-modal-open default = checked is the consent
-  // UX Luigi wants (matches how the customer perceives it: every fresh
-  // checkout asks fresh consent unless they actively opt out THIS time).
+  // Reset marketing-consent to the customer's BASELINE choice every time
+  // the checkout modal opens (Luigi 2026-06-02, refined 2026-06-03).
+  // customerInfo lives in OrderingPageClient state so it survives
+  // close/reopen of the modal. Baseline = the signed-in customer's stored
+  // consent if known (so an opted-out customer stays unchecked across
+  // reopens), otherwise the pre-ticked default for fresh guests. A
+  // returning guest's box is further corrected by the consent-lookup
+  // effect once they type a recognised email.
   useEffect(() => {
     if (checkoutOpen) {
-      setCustomerInfo((ci) => ({ ...ci, marketingConsent: true }));
+      const baseline = currentCustomer?.marketingConsent ?? true;
+      setCustomerInfo((ci) => ({ ...ci, marketingConsent: baseline }));
     }
-  }, [checkoutOpen]);
+  }, [checkoutOpen, currentCustomer?.marketingConsent]);
+
+  // Returning-guest consent pre-fill: when the email field holds a
+  // recognised customer for this restaurant, mirror their STORED marketing
+  // choice into the box so an opted-out email stays unchecked instead of
+  // being silently re-opted-in. Debounced + keyed on the email only, so it
+  // never clobbers an active manual toggle (the customer can still re-check
+  // to opt back in — that's "sticky default, re-checkable"). Unknown emails
+  // leave the current box state untouched. Luigi 2026-06-03.
+  useEffect(() => {
+    const email = customerInfo.email.trim();
+    if (!email || !email.includes("@")) return;
+    let cancelled = false;
+    const timer = window.setTimeout(() => {
+      fetch(
+        `/api/public/restaurant-customer/consent?slug=${encodeURIComponent(
+          restaurant.slug,
+        )}&email=${encodeURIComponent(email)}`,
+      )
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => {
+          if (cancelled || !d || typeof d.marketingConsent !== "boolean") return;
+          setCustomerInfo((ci) =>
+            ci.email.trim() === email ? { ...ci, marketingConsent: d.marketingConsent } : ci,
+          );
+        })
+        .catch(() => {});
+    }, 600);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [customerInfo.email, restaurant.slug]);
 
   // checkout_info — once name + phone are minimally valid. Lightweight
   // validation matches the server's required fields without redoing
