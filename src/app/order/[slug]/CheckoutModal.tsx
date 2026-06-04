@@ -908,7 +908,17 @@ export function CheckoutModal({
                       label: "PayPal",
                     },
                   ];
-                  const visible = all.filter((p) => acceptedMethods.includes(p.slug));
+                  // Only offer a method that's actually usable. online_card /
+                  // paypal can be in the restaurant's accepted list (e.g. legacy
+                  // Connect data) while the capability is OFF — offering them
+                  // would create a ghost order that never gets paid or reaches
+                  // the kitchen. Hide them unless truly available. (Luigi 2026-06-04)
+                  const visible = all.filter(
+                    (p) =>
+                      acceptedMethods.includes(p.slug) &&
+                      !(p.slug === "online_card" && !cardPaymentEnabled) &&
+                      !(p.slug === "paypal" && !paypalEnabled),
+                  );
                   const cols = visible.length >= 4 ? "grid-cols-2 sm:grid-cols-4" : visible.length === 3 ? "grid-cols-3" : "grid-cols-2";
                   return (
                     <div className={`pt-3 grid ${cols} gap-2`}>

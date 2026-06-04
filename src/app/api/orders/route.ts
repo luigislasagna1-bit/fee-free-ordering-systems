@@ -8,6 +8,7 @@ import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
+import { hasFeature } from "@/lib/entitlements";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
 import {
   computeUberEatsEquivalentCents,
@@ -133,9 +134,51 @@ export async function POST(req: NextRequest) {
         // One-off holiday closures — force "closed today" so holiday orders
         // are routed through the closed/schedule-for-later flow. Luigi 2026-06-04.
         holidays: true,
+        // Key-only Stripe provider — used to verify card availability before
+        // we ever create a card order (see the guard below).
+        paymentProvider: { select: { isActive: true, publishableKey: true } },
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+
+    // ── Card / PayPal availability guard (defense-in-depth, Luigi 2026-06-04) ──
+    // After the Connect→key-only migration a restaurant can still list
+    // "online_card" in its accepted methods (legacy) while having NO active
+    // key-only provider. Without this guard, selecting card creates a "ghost"
+    // order: payment never happens, notifiedAt stays null, so it never reaches
+    // the kitchen — yet the customer sees "Order Placed". Refuse it up-front so
+    // they pick a working method (or the restaurant finishes Stripe setup).
+    if (paymentMethod === "card") {
+      const provider = (restaurant as any).paymentProvider;
+      const cardOk =
+        !!(provider?.isActive && provider.publishableKey) &&
+        (await hasFeature(restaurant.id, "card_payments"));
+      if (!cardOk) {
+        return NextResponse.json(
+          {
+            error:
+              "Online card payments aren't available for this restaurant right now. Please choose another payment method.",
+            code: "card_unavailable",
+          },
+          { status: 400 },
+        );
+      }
+    }
+    if (paymentMethod === "paypal") {
+      const paypalOk =
+        (restaurant as any).paypalAccountStatus === "connected" &&
+        (await hasFeature(restaurant.id, "card_payments"));
+      if (!paypalOk) {
+        return NextResponse.json(
+          {
+            error:
+              "PayPal isn't available for this restaurant right now. Please choose another payment method.",
+            code: "paypal_unavailable",
+          },
+          { status: 400 },
+        );
+      }
+    }
 
     // ── Paused-service guard (Luigi 2026-06-01) ─────────────────────────────
     // Server-side mirror of the customer-page banner + disabled button.
