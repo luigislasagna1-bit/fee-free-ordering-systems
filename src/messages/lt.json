@@ -3662,6 +3662,19 @@
       "enjoy": "Skanaus, {firstName}!",
       "firstTimeNotice": "Jei esate pirmą kartą besinaudojantis klientas, galite gauti skambutį jūsų duomenims patikrinti.",
       "subject": "Priminimas — jūsų užsakymas #{orderNumber} jau keliauja pas jus"
+    },
+    "orderRefund": {
+      "preview": "Užsakymo {orderNumber} pinigų grąžinimas",
+      "subject": "Užsakymo {orderNumber} pinigų grąžinimas",
+      "title": "Pinigai grąžinti",
+      "subtitle": "Užsakymas {orderNumber}",
+      "greeting": "Sveiki, {customerName},",
+      "badgeFull": "Visa suma grąžinta",
+      "badgePartial": "Dalinis grąžinimas",
+      "body": "{restaurantName} grąžino pinigus už jūsų užsakymą. Toliau nurodyta suma buvo grąžinta į pradinį jūsų apmokėjimo būdą.",
+      "amountLabel": "Grąžinama suma",
+      "timing": "Suma jūsų sąskaitos išraše gali atsirasti per 5–10 darbo dienų.",
+      "contactLine": "Jei turite klausimų, tiesiog atsakykite į šį el. laišką."
     }
   },
   "marketing": {

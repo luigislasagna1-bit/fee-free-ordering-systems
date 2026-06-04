@@ -3662,6 +3662,19 @@
       "enjoy": "Selamat menikmati, {firstName}!",
       "firstTimeNotice": "Jika Anda adalah pelanggan baru, Anda mungkin akan menerima panggilan telepon untuk memverifikasi detail Anda.",
       "subject": "Pengingat ramah — pesanan #{orderNumber} Anda sedang dalam perjalanan"
+    },
+    "orderRefund": {
+      "preview": "Pengembalian dana untuk pesanan {orderNumber}",
+      "subject": "Pengembalian dana untuk pesanan {orderNumber}",
+      "title": "Pengembalian dana diproses",
+      "subtitle": "Pesanan {orderNumber}",
+      "greeting": "Halo {customerName},",
+      "badgeFull": "Pengembalian dana penuh",
+      "badgePartial": "Pengembalian dana sebagian",
+      "body": "{restaurantName} telah memproses pengembalian dana untuk pesanan Anda. Jumlah di bawah ini telah dikembalikan ke metode pembayaran awal Anda.",
+      "amountLabel": "Jumlah pengembalian dana",
+      "timing": "Dana mungkin membutuhkan waktu 5–10 hari kerja untuk muncul di laporan rekening Anda.",
+      "contactLine": "Jika Anda memiliki pertanyaan, cukup balas email ini."
     }
   },
   "marketing": {

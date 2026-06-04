@@ -3662,6 +3662,19 @@
       "enjoy": "Labu apetīti, {firstName}!",
       "firstTimeNotice": "Ja esat pirmreizējs klients, iespējams, saņemsiet tālruņa zvanu, lai verificētu jūsu datus.",
       "subject": "Atgādinājums — jūsu pasūtījums #{orderNumber} jau ir ceļā"
+    },
+    "orderRefund": {
+      "preview": "Atmaksa par pasūtījumu {orderNumber}",
+      "subject": "Atmaksa par pasūtījumu {orderNumber}",
+      "title": "Atmaksa veikta",
+      "subtitle": "Pasūtījums {orderNumber}",
+      "greeting": "Sveiki, {customerName}!",
+      "badgeFull": "Pilna atmaksa",
+      "badgePartial": "Daļēja atmaksa",
+      "body": "{restaurantName} ir veicis atmaksu par jūsu pasūtījumu. Zemāk norādītā summa ir atgriezta jūsu sākotnējā maksājuma metodē.",
+      "amountLabel": "Atmaksas summa",
+      "timing": "Lai summa parādītos jūsu konta pārskatā, var paiet 5–10 darba dienas.",
+      "contactLine": "Ja jums ir kādi jautājumi, vienkārši atbildiet uz šo e-pastu."
     }
   },
   "marketing": {

@@ -22,6 +22,7 @@ import OrderStatusUpdate         from "@/emails/templates/OrderStatusUpdate";
 import OrderDelayed              from "@/emails/templates/OrderDelayed";
 import OrderRejected             from "@/emails/templates/OrderRejected";
 import OrderCanceled             from "@/emails/templates/OrderCanceled";
+import OrderRefund               from "@/emails/templates/OrderRefund";
 import ReservationConfirmation   from "@/emails/templates/ReservationConfirmation";
 import NewReservationNotification from "@/emails/templates/NewReservationNotification";
 import PasswordReset             from "@/emails/templates/PasswordReset";
@@ -525,6 +526,36 @@ export async function sendOrderCanceledEmail(params: {
   return send({
     to: params.to,
     subject: t("email.orderCanceled.subject", { orderNumber: params.orderNumber }),
+    html,
+    fromName: params.restaurantName,
+  });
+}
+
+export async function sendOrderRefundEmail(params: {
+  to: string;
+  restaurantName: string;
+  orderNumber: string;
+  customerName: string;
+  /** Pre-formatted in the restaurant's currency, e.g. "$30.00". */
+  refundAmountLabel: string;
+  isFull: boolean;
+  locale?: string;
+}) {
+  const t = await getDict(params.locale);
+  const html = await renderEmail(
+    OrderRefund({
+      t,
+      customerName: params.customerName,
+      orderNumber: params.orderNumber,
+      restaurantName: params.restaurantName,
+      refundAmountLabel: params.refundAmountLabel,
+      isFull: params.isFull,
+      imprint: currentImprint(),
+    })
+  );
+  return send({
+    to: params.to,
+    subject: t("email.orderRefund.subject", { orderNumber: params.orderNumber }),
     html,
     fromName: params.restaurantName,
   });

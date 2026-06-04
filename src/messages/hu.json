@@ -3662,6 +3662,19 @@
       "enjoy": "Jó étvágyat, {firstName}!",
       "firstTimeNotice": "Ha Ön első alkalommal rendel nálunk, előfordulhat, hogy telefonon hívjuk az adatai ellenőrzése érdekében.",
       "subject": "Emlékeztető — a #{orderNumber}. rendelése úton van"
+    },
+    "orderRefund": {
+      "preview": "Visszatérítés a(z) {orderNumber} rendeléshez",
+      "subject": "Visszatérítés a(z) {orderNumber} rendeléshez",
+      "title": "Visszatérítés kiállítva",
+      "subtitle": "{orderNumber} rendelés",
+      "greeting": "Üdv {customerName}!",
+      "badgeFull": "Teljes visszatérítés",
+      "badgePartial": "Részleges visszatérítés",
+      "body": "A(z) {restaurantName} visszatérítést indított a rendelésedhez. Az alább látható összeget visszautaltuk az eredeti fizetési módodra.",
+      "amountLabel": "Visszatérített összeg",
+      "timing": "5–10 munkanapba telhet, mire megjelenik a számlakivonatodon.",
+      "contactLine": "Ha bármilyen kérdésed van, csak válaszolj erre az e-mailre."
     }
   },
   "marketing": {

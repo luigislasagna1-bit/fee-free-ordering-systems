@@ -3662,6 +3662,19 @@
       "enjoy": "בתיאבון, {firstName}!",
       "firstTimeNotice": "אם זו ההזמנה הראשונה שלך, ייתכן שתקבל/י שיחת טלפון לאימות פרטיך.",
       "subject": "תזכורת ידידותית — הזמנתך #{orderNumber} בדרך"
+    },
+    "orderRefund": {
+      "preview": "החזר כספי עבור הזמנה {orderNumber}",
+      "subject": "החזר כספי עבור הזמנה {orderNumber}",
+      "title": "בוצע החזר כספי",
+      "subtitle": "הזמנה {orderNumber}",
+      "greeting": "שלום {customerName},",
+      "badgeFull": "החזר מלא",
+      "badgePartial": "החזר חלקי",
+      "body": "‏{restaurantName} ביצע החזר כספי על ההזמנה שלך. הסכום המופיע למטה הוחזר לאמצעי התשלום המקורי שלך.",
+      "amountLabel": "סכום ההחזר",
+      "timing": "ייתכן שיחלפו 5–10 ימי עסקים עד שההחזר יופיע בדף החשבון שלך.",
+      "contactLine": "אם יש לך שאלות, פשוט השב לאימייל זה."
     }
   },
   "marketing": {

@@ -3662,6 +3662,19 @@
       "enjoy": "{firstName} 様、どうぞお楽しみください！",
       "firstTimeNotice": "初めてご利用のお客様は、詳細確認のためお電話を差し上げる場合がございます。",
       "subject": "リマインダー — 注文 #{orderNumber} はご指定の時刻にお届け予定です"
+    },
+    "orderRefund": {
+      "preview": "注文 {orderNumber} の返金",
+      "subject": "注文 {orderNumber} の返金",
+      "title": "返金処理が完了しました",
+      "subtitle": "注文 {orderNumber}",
+      "greeting": "{customerName} 様",
+      "badgeFull": "全額返金",
+      "badgePartial": "一部返金",
+      "body": "{restaurantName} がお客様のご注文に対して返金を行いました。下記の金額が元のお支払い方法に返金されています。",
+      "amountLabel": "返金額",
+      "timing": "ご利用明細に反映されるまで5〜10営業日かかる場合があります。",
+      "contactLine": "ご不明な点がございましたら、このメールにご返信ください。"
     }
   },
   "marketing": {

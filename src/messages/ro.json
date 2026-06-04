@@ -3662,6 +3662,19 @@
       "enjoy": "Poftă bună, {firstName}!",
       "firstTimeNotice": "Dacă sunteți client pentru prima dată, este posibil să primiți un apel telefonic pentru verificarea datelor dvs.",
       "subject": "Reminder prietenos — comanda dvs. #{orderNumber} este pe drum"
+    },
+    "orderRefund": {
+      "preview": "Rambursare pentru comanda {orderNumber}",
+      "subject": "Rambursare pentru comanda {orderNumber}",
+      "title": "Rambursare efectuată",
+      "subtitle": "Comanda {orderNumber}",
+      "greeting": "Bună, {customerName},",
+      "badgeFull": "Rambursare integrală",
+      "badgePartial": "Rambursare parțială",
+      "body": "{restaurantName} a efectuat o rambursare pentru comanda ta. Suma de mai jos a fost returnată pe metoda ta de plată inițială.",
+      "amountLabel": "Suma rambursată",
+      "timing": "Pot trece între 5 și 10 zile lucrătoare până când suma apare pe extrasul tău.",
+      "contactLine": "Dacă ai întrebări, răspunde pur și simplu la acest e-mail."
     }
   },
   "marketing": {

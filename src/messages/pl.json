@@ -3662,6 +3662,19 @@
       "enjoy": "Smacznego, {firstName}!",
       "firstTimeNotice": "Jeśli zamawiasz u nas po raz pierwszy, możesz otrzymać telefon w celu weryfikacji Twoich danych.",
       "subject": "Przypomnienie — Twoje zamówienie #{orderNumber} jest w drodze"
+    },
+    "orderRefund": {
+      "preview": "Zwrot za zamówienie {orderNumber}",
+      "subject": "Zwrot za zamówienie {orderNumber}",
+      "title": "Zwrot został zrealizowany",
+      "subtitle": "Zamówienie {orderNumber}",
+      "greeting": "Cześć {customerName},",
+      "badgeFull": "Pełny zwrot",
+      "badgePartial": "Częściowy zwrot",
+      "body": "{restaurantName} zrealizowała zwrot za Twoje zamówienie. Poniższa kwota została zwrócona na Twoją pierwotną metodę płatności.",
+      "amountLabel": "Kwota zwrotu",
+      "timing": "Zaksięgowanie na Twoim wyciągu może potrwać od 5 do 10 dni roboczych.",
+      "contactLine": "W razie pytań wystarczy odpowiedzieć na tę wiadomość."
     }
   },
   "marketing": {

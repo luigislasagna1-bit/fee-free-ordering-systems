@@ -3662,6 +3662,19 @@
       "enjoy": "Uživajte, {firstName}!",
       "firstTimeNotice": "Ako ste novi kupac, možete primiti telefonski poziv radi provjere vaših podataka.",
       "subject": "Podsjetnik — vaša narudžba #{orderNumber} je na putu"
+    },
+    "orderRefund": {
+      "preview": "Povrat sredstava za narudžbu {orderNumber}",
+      "subject": "Povrat sredstava za narudžbu {orderNumber}",
+      "title": "Povrat sredstava izvršen",
+      "subtitle": "Narudžba {orderNumber}",
+      "greeting": "Pozdrav {customerName},",
+      "badgeFull": "Potpuni povrat",
+      "badgePartial": "Djelomični povrat",
+      "body": "{restaurantName} izvršio je povrat sredstava za vašu narudžbu. Iznos naveden u nastavku vraćen je na vaš izvorni način plaćanja.",
+      "amountLabel": "Iznos povrata",
+      "timing": "Može potrajati od 5 do 10 radnih dana da se iznos prikaže na vašem izvodu.",
+      "contactLine": "Ako imate bilo kakvih pitanja, jednostavno odgovorite na ovu e-poruku."
     }
   },
   "marketing": {

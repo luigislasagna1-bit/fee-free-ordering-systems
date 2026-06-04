@@ -3662,6 +3662,19 @@
       "enjoy": "Buon appetito, {firstName}!",
       "firstTimeNotice": "Se sei un cliente alla prima esperienza, potresti ricevere una telefonata per verificare i tuoi dati.",
       "subject": "Promemoria — il tuo ordine #{orderNumber} è in arrivo"
+    },
+    "orderRefund": {
+      "preview": "Rimborso per l'ordine {orderNumber}",
+      "subject": "Rimborso per l'ordine {orderNumber}",
+      "title": "Rimborso effettuato",
+      "subtitle": "Ordine {orderNumber}",
+      "greeting": "Ciao {customerName},",
+      "badgeFull": "Rimborso totale",
+      "badgePartial": "Rimborso parziale",
+      "body": "{restaurantName} ha effettuato un rimborso sul tuo ordine. L'importo indicato di seguito è stato restituito sul tuo metodo di pagamento originale.",
+      "amountLabel": "Importo del rimborso",
+      "timing": "Potrebbero essere necessari da 5 a 10 giorni lavorativi prima che compaia sul tuo estratto conto.",
+      "contactLine": "Se hai domande, rispondi semplicemente a questa email."
     }
   },
   "marketing": {

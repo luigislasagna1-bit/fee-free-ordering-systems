@@ -3662,6 +3662,19 @@
       "enjoy": "Geniet ervan, {firstName}!",
       "firstTimeNotice": "Als u een nieuwe klant bent, kunt u een telefoontje ontvangen om uw gegevens te verifiëren.",
       "subject": "Herinnering — uw bestelling #{orderNumber} is onderweg"
+    },
+    "orderRefund": {
+      "preview": "Terugbetaling voor bestelling {orderNumber}",
+      "subject": "Terugbetaling voor bestelling {orderNumber}",
+      "title": "Terugbetaling verwerkt",
+      "subtitle": "Bestelling {orderNumber}",
+      "greeting": "Hallo {customerName},",
+      "badgeFull": "Volledige terugbetaling",
+      "badgePartial": "Gedeeltelijke terugbetaling",
+      "body": "{restaurantName} heeft een terugbetaling op je bestelling uitgevoerd. Het onderstaande bedrag is teruggestort naar je oorspronkelijke betaalmethode.",
+      "amountLabel": "Terugbetaald bedrag",
+      "timing": "Het kan 5–10 werkdagen duren voordat dit op je afschrift verschijnt.",
+      "contactLine": "Heb je vragen? Beantwoord dan gewoon deze e-mail."
     }
   },
   "marketing": {

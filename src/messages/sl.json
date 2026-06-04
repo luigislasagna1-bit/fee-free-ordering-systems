@@ -3662,6 +3662,19 @@
       "enjoy": "Dober tek, {firstName}!",
       "firstTimeNotice": "Če ste nova stranka, boste morda prejeli telefonski klic za potrditev vaših podatkov.",
       "subject": "Prijazni opomnik — vaše naročilo #{orderNumber} je na poti"
+    },
+    "orderRefund": {
+      "preview": "Vračilo za naročilo {orderNumber}",
+      "subject": "Vračilo za naročilo {orderNumber}",
+      "title": "Vračilo izvedeno",
+      "subtitle": "Naročilo {orderNumber}",
+      "greeting": "Pozdravljeni, {customerName},",
+      "badgeFull": "Celotno vračilo",
+      "badgePartial": "Delno vračilo",
+      "body": "{restaurantName} je izvedel vračilo za vaše naročilo. Spodnji znesek je bil vrnjen na vaš prvotni način plačila.",
+      "amountLabel": "Znesek vračila",
+      "timing": "Lahko traja od 5 do 10 delovnih dni, da se prikaže na vašem izpisku.",
+      "contactLine": "Če imate kakršna koli vprašanja, preprosto odgovorite na to e-poštno sporočilo."
     }
   },
   "marketing": {

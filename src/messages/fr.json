@@ -3662,6 +3662,19 @@
       "enjoy": "Bon appétit, {firstName} !",
       "firstTimeNotice": "Si vous êtes un nouveau client, vous pourriez recevoir un appel téléphonique pour vérifier vos coordonnées.",
       "subject": "Rappel amical — votre commande #{orderNumber} est en route"
+    },
+    "orderRefund": {
+      "preview": "Remboursement de la commande {orderNumber}",
+      "subject": "Remboursement de la commande {orderNumber}",
+      "title": "Remboursement effectué",
+      "subtitle": "Commande {orderNumber}",
+      "greeting": "Bonjour {customerName},",
+      "badgeFull": "Remboursement intégral",
+      "badgePartial": "Remboursement partiel",
+      "body": "{restaurantName} a effectué un remboursement sur votre commande. Le montant ci-dessous a été reversé sur votre moyen de paiement d'origine.",
+      "amountLabel": "Montant remboursé",
+      "timing": "L'opération peut prendre 5 à 10 jours ouvrés avant d'apparaître sur votre relevé.",
+      "contactLine": "Si vous avez des questions, il vous suffit de répondre à cet e-mail."
     }
   },
   "marketing": {

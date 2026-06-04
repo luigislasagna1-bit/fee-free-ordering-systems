@@ -3662,6 +3662,19 @@
       "enjoy": "Nauti ateriastasi, {firstName}!",
       "firstTimeNotice": "Jos olet ensikertalaisasiakas, saatat saada puhelun tietojesi vahvistamiseksi.",
       "subject": "Muistutus — tilauksesi #{orderNumber} on matkalla"
+    },
+    "orderRefund": {
+      "preview": "Hyvitys tilauksesta {orderNumber}",
+      "subject": "Hyvitys tilauksesta {orderNumber}",
+      "title": "Hyvitys tehty",
+      "subtitle": "Tilaus {orderNumber}",
+      "greeting": "Hei {customerName},",
+      "badgeFull": "Täysi hyvitys",
+      "badgePartial": "Osittainen hyvitys",
+      "body": "{restaurantName} on tehnyt hyvityksen tilauksestasi. Alla oleva summa on palautettu alkuperäiseen maksutapaasi.",
+      "amountLabel": "Hyvityksen summa",
+      "timing": "Summa voi näkyä tiliotteellasi 5–10 arkipäivän kuluessa.",
+      "contactLine": "Jos sinulla on kysyttävää, vastaa vain tähän sähköpostiin."
     }
   },
   "marketing": {

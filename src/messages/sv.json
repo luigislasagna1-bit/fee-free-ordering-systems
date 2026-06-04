@@ -3662,6 +3662,19 @@
       "enjoy": "Smaklig måltid, {firstName}!",
       "firstTimeNotice": "Om du är ny kund kan du komma att bli uppringd för att bekräfta dina uppgifter.",
       "subject": "Påminnelse — din beställning #{orderNumber} är på väg"
+    },
+    "orderRefund": {
+      "preview": "Återbetalning för beställning {orderNumber}",
+      "subject": "Återbetalning för beställning {orderNumber}",
+      "title": "Återbetalning utförd",
+      "subtitle": "Beställning {orderNumber}",
+      "greeting": "Hej {customerName},",
+      "badgeFull": "Full återbetalning",
+      "badgePartial": "Delvis återbetalning",
+      "body": "{restaurantName} har utfärdat en återbetalning för din beställning. Beloppet nedan har återförts till din ursprungliga betalningsmetod.",
+      "amountLabel": "Återbetalat belopp",
+      "timing": "Det kan ta 5–10 bankdagar innan det syns på ditt kontoutdrag.",
+      "contactLine": "Om du har några frågor är det bara att svara på detta mejl."
     }
   },
   "marketing": {

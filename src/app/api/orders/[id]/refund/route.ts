@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { after } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { refundDirectPayment } from "@/lib/stripe";
+import { sendOrderRefundEmail } from "@/lib/email";
+import { formatCurrency } from "@/lib/utils";
 
 // Zero-decimal currencies — Stripe expects whole units, not cents.
 // Mirrors the set in /api/public/payment-intent so refund amounts are
@@ -46,7 +49,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       paymentIntentId: true,
       total: true,
       refundedAmount: true,
-      restaurant: { select: { currency: true } },
+      orderNumber: true,
+      customerName: true,
+      customerEmail: true,
+      restaurant: { select: { currency: true, name: true, defaultLanguage: true } },
     },
   });
   if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
@@ -138,6 +144,23 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     },
     select: { refundedAmount: true, refundStatus: true, paymentStatus: true },
   });
+
+  // Transactional email — the customer always gets a written record of the
+  // refund (amount + partial/full). Fire-and-forget so a slow/failed email
+  // never blocks the refund response. Skipped when there's no email on file.
+  if (order.customerEmail) {
+    after(
+      sendOrderRefundEmail({
+        to: order.customerEmail,
+        restaurantName: order.restaurant.name,
+        orderNumber: order.orderNumber,
+        customerName: order.customerName,
+        refundAmountLabel: formatCurrency(amount, currency),
+        isFull,
+        locale: order.restaurant.defaultLanguage || "en",
+      }).catch((e) => console.error("[refund email]", e instanceof Error ? e.message : e)),
+    );
+  }
 
   return NextResponse.json({ success: true, ...updated });
 }

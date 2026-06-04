@@ -3662,6 +3662,19 @@
       "enjoy": "¡Que lo disfrutes, {firstName}!",
       "firstTimeNotice": "Si eres cliente por primera vez, es posible que recibas una llamada telefónica para verificar tus datos.",
       "subject": "Recordatorio — tu pedido #{orderNumber} está en camino"
+    },
+    "orderRefund": {
+      "preview": "Reembolso del pedido {orderNumber}",
+      "subject": "Reembolso del pedido {orderNumber}",
+      "title": "Reembolso emitido",
+      "subtitle": "Pedido {orderNumber}",
+      "greeting": "Hola {customerName}:",
+      "badgeFull": "Reembolso total",
+      "badgePartial": "Reembolso parcial",
+      "body": "{restaurantName} ha emitido un reembolso de tu pedido. El importe indicado a continuación se ha devuelto a tu método de pago original.",
+      "amountLabel": "Importe del reembolso",
+      "timing": "Puede tardar entre 5 y 10 días hábiles en aparecer en tu estado de cuenta.",
+      "contactLine": "Si tienes alguna pregunta, solo responde a este correo electrónico."
     }
   },
   "marketing": {

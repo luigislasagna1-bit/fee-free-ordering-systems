@@ -6,10 +6,20 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "checkout";
-const CONTEXT = "a restaurant ordering checkout; this hint sits under a small map where the customer drags a pin to mark the exact delivery spot for the driver";
+const NS = "email.orderRefund";
+const CONTEXT = "a transactional email sent to a restaurant customer when their card order is refunded (partial or full). Keep {placeholders} exactly. Keep the email tone clear and reassuring";
 const EN = {
-  dragPinHint: "Drag the pin to the exact spot for delivery.",
+  preview: "Refund for order {orderNumber}",
+  subject: "Refund for order {orderNumber}",
+  title: "Refund issued",
+  subtitle: "Order {orderNumber}",
+  greeting: "Hi {customerName},",
+  badgeFull: "Full refund",
+  badgePartial: "Partial refund",
+  body: "{restaurantName} has issued a refund on your order. The amount below has been returned to your original payment method.",
+  amountLabel: "Refund amount",
+  timing: "It may take 5–10 business days to appear on your statement.",
+  contactLine: "If you have any questions, just reply to this email.",
 };
 const KEYS = Object.keys(EN);
 

@@ -3662,6 +3662,19 @@
       "enjoy": "Bon profit, {firstName}!",
       "firstTimeNotice": "Si sou un client nou, és possible que rebeu una trucada telefònica per verificar les vostres dades.",
       "subject": "Recordatori amistós — la vostra comanda #{orderNumber} ja ve de camí"
+    },
+    "orderRefund": {
+      "preview": "Reembossament de la comanda {orderNumber}",
+      "subject": "Reembossament de la comanda {orderNumber}",
+      "title": "Reembossament emès",
+      "subtitle": "Comanda {orderNumber}",
+      "greeting": "Hola {customerName},",
+      "badgeFull": "Reembossament total",
+      "badgePartial": "Reembossament parcial",
+      "body": "{restaurantName} ha emès un reembossament de la teva comanda. L'import indicat a continuació s'ha retornat al teu mètode de pagament original.",
+      "amountLabel": "Import del reembossament",
+      "timing": "Pot trigar de 5 a 10 dies hàbils a aparèixer al teu extracte.",
+      "contactLine": "Si tens cap pregunta, només cal que responguis aquest correu."
     }
   },
   "marketing": {

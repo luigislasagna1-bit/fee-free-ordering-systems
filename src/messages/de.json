@@ -3662,6 +3662,19 @@
       "enjoy": "Guten Appetit, {firstName}!",
       "firstTimeNotice": "Falls Sie Erstkunde sind, erhalten Sie möglicherweise einen Anruf zur Verifizierung Ihrer Angaben.",
       "subject": "Erinnerung – Ihre Bestellung #{orderNumber} ist unterwegs"
+    },
+    "orderRefund": {
+      "preview": "Erstattung für Bestellung {orderNumber}",
+      "subject": "Erstattung für Bestellung {orderNumber}",
+      "title": "Erstattung veranlasst",
+      "subtitle": "Bestellung {orderNumber}",
+      "greeting": "Hallo {customerName},",
+      "badgeFull": "Vollständige Erstattung",
+      "badgePartial": "Teilweise Erstattung",
+      "body": "{restaurantName} hat eine Erstattung für Ihre Bestellung veranlasst. Der unten genannte Betrag wurde auf Ihre ursprüngliche Zahlungsmethode zurückerstattet.",
+      "amountLabel": "Erstattungsbetrag",
+      "timing": "Es kann 5–10 Werktage dauern, bis der Betrag auf Ihrem Kontoauszug erscheint.",
+      "contactLine": "Bei Fragen antworten Sie einfach auf diese E-Mail."
     }
   },
   "marketing": {

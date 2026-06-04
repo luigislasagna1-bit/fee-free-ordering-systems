@@ -3662,6 +3662,19 @@
       "enjoy": "God fornøjelse, {firstName}!",
       "firstTimeNotice": "Er du ny kunde, kan du modtage et opkald for at bekræfte dine oplysninger.",
       "subject": "Venlig påmindelse — din ordre #{orderNumber} er på vej"
+    },
+    "orderRefund": {
+      "preview": "Refusion for ordre {orderNumber}",
+      "subject": "Refusion for ordre {orderNumber}",
+      "title": "Refusion gennemført",
+      "subtitle": "Ordre {orderNumber}",
+      "greeting": "Hej {customerName},",
+      "badgeFull": "Fuld refusion",
+      "badgePartial": "Delvis refusion",
+      "body": "{restaurantName} har gennemført en refusion på din ordre. Beløbet nedenfor er blevet tilbageført til din oprindelige betalingsmetode.",
+      "amountLabel": "Refusionsbeløb",
+      "timing": "Der kan gå 5-10 hverdage, før det fremgår af din kontoudskrift.",
+      "contactLine": "Hvis du har spørgsmål, kan du blot svare på denne e-mail."
     }
   },
   "marketing": {

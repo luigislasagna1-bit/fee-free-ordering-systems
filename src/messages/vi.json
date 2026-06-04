@@ -3662,6 +3662,19 @@
       "enjoy": "Chúc bạn ngon miệng, {firstName}!",
       "firstTimeNotice": "Nếu bạn là khách hàng lần đầu, bạn có thể nhận được cuộc gọi điện thoại để xác minh thông tin.",
       "subject": "Nhắc nhở thân thiện — đơn hàng #{orderNumber} của bạn đang trên đường"
+    },
+    "orderRefund": {
+      "preview": "Hoàn tiền cho đơn hàng {orderNumber}",
+      "subject": "Hoàn tiền cho đơn hàng {orderNumber}",
+      "title": "Đã hoàn tiền",
+      "subtitle": "Đơn hàng {orderNumber}",
+      "greeting": "Chào {customerName},",
+      "badgeFull": "Hoàn tiền toàn bộ",
+      "badgePartial": "Hoàn tiền một phần",
+      "body": "{restaurantName} đã hoàn tiền cho đơn hàng của bạn. Số tiền dưới đây đã được trả lại về phương thức thanh toán ban đầu của bạn.",
+      "amountLabel": "Số tiền hoàn lại",
+      "timing": "Có thể mất 5–10 ngày làm việc để khoản tiền hiển thị trên sao kê của bạn.",
+      "contactLine": "Nếu bạn có bất kỳ thắc mắc nào, chỉ cần trả lời email này."
     }
   },
   "marketing": {

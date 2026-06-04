@@ -3662,6 +3662,19 @@
       "enjoy": "Enjoy, {firstName}!",
       "firstTimeNotice": "If you are a first-time customer you may receive a phone call to verify your details.",
       "subject": "Friendly reminder — your order #{orderNumber} is on the way"
+    },
+    "orderRefund": {
+      "preview": "Refund for order {orderNumber}",
+      "subject": "Refund for order {orderNumber}",
+      "title": "Refund issued",
+      "subtitle": "Order {orderNumber}",
+      "greeting": "Hi {customerName},",
+      "badgeFull": "Full refund",
+      "badgePartial": "Partial refund",
+      "body": "{restaurantName} has issued a refund on your order. The amount below has been returned to your original payment method.",
+      "amountLabel": "Refund amount",
+      "timing": "It may take 5–10 business days to appear on your statement.",
+      "contactLine": "If you have any questions, just reply to this email."
     }
   },
   "marketing": {

@@ -3662,6 +3662,19 @@
       "enjoy": "God appetitt, {firstName}!",
       "firstTimeNotice": "Er du førstegangskunde, kan det hende du mottar en telefonsamtale for å bekrefte opplysningene dine.",
       "subject": "Påminnelse — bestillingen din #{orderNumber} er på vei"
+    },
+    "orderRefund": {
+      "preview": "Refusjon for bestilling {orderNumber}",
+      "subject": "Refusjon for bestilling {orderNumber}",
+      "title": "Refusjon utstedt",
+      "subtitle": "Bestilling {orderNumber}",
+      "greeting": "Hei {customerName},",
+      "badgeFull": "Full refusjon",
+      "badgePartial": "Delvis refusjon",
+      "body": "{restaurantName} har utstedt en refusjon på bestillingen din. Beløpet nedenfor er returnert til den opprinnelige betalingsmåten din.",
+      "amountLabel": "Refundert beløp",
+      "timing": "Det kan ta 5–10 virkedager før det vises på kontoutskriften din.",
+      "contactLine": "Har du spørsmål, er det bare å svare på denne e-posten."
     }
   },
   "marketing": {

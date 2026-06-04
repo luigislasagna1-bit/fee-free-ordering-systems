@@ -3662,6 +3662,19 @@
       "enjoy": "Bom apetite, {firstName}!",
       "firstTimeNotice": "Se é cliente pela primeira vez, poderá receber uma chamada telefónica para verificar os seus dados.",
       "subject": "Lembrete — a sua encomenda #{orderNumber} está a caminho"
+    },
+    "orderRefund": {
+      "preview": "Reembolso do pedido {orderNumber}",
+      "subject": "Reembolso do pedido {orderNumber}",
+      "title": "Reembolso emitido",
+      "subtitle": "Pedido {orderNumber}",
+      "greeting": "Olá {customerName},",
+      "badgeFull": "Reembolso total",
+      "badgePartial": "Reembolso parcial",
+      "body": "A {restaurantName} emitiu um reembolso do seu pedido. O valor abaixo foi devolvido para o seu método de pagamento original.",
+      "amountLabel": "Valor reembolsado",
+      "timing": "Pode demorar 5 a 10 dias úteis a aparecer no seu extrato.",
+      "contactLine": "Se tiver alguma questão, basta responder a este e-mail."
     }
   },
   "marketing": {

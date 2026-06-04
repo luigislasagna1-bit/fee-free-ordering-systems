@@ -3662,6 +3662,19 @@
       "enjoy": "Dobrú chuť, {firstName}!",
       "firstTimeNotice": "Ak ste prvýkrát u nás, môžete dostať telefonát na overenie vašich údajov.",
       "subject": "Pripomienka — vaša objednávka #{orderNumber} je na ceste"
+    },
+    "orderRefund": {
+      "preview": "Vrátenie platby za objednávku {orderNumber}",
+      "subject": "Vrátenie platby za objednávku {orderNumber}",
+      "title": "Platba bola vrátená",
+      "subtitle": "Objednávka {orderNumber}",
+      "greeting": "Dobrý deň {customerName},",
+      "badgeFull": "Úplné vrátenie platby",
+      "badgePartial": "Čiastočné vrátenie platby",
+      "body": "{restaurantName} vrátila platbu za vašu objednávku. Nižšie uvedená suma bola vrátená na váš pôvodný spôsob platby.",
+      "amountLabel": "Vrátená suma",
+      "timing": "Zobrazenie na vašom výpise môže trvať 5 – 10 pracovných dní.",
+      "contactLine": "Ak máte akékoľvek otázky, jednoducho odpovedzte na tento e-mail."
     }
   },
   "marketing": {
