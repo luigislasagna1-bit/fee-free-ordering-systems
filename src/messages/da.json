@@ -1490,7 +1490,10 @@
       "failedToDetach": "Kunne ikke frakoble",
       "removed": "Fjernet",
       "limitedAvailabilityTitle": "Denne ret er kun tilgængelig på udvalgte dage/tidspunkter",
-      "limitedDaysBadge": "Udvalgte dage"
+      "limitedDaysBadge": "Udvalgte dage",
+      "duplicateCategory": "Duplikér kategori",
+      "categoryDuplicated": "Kategorien blev duplikeret — kopien er skjult, indtil du publicerer den.",
+      "failedToDuplicateCategory": "Kategorien kunne ikke duplikeres. Prøv igen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

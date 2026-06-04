@@ -1490,7 +1490,10 @@
       "failedToDetach": "Det gick inte att ta bort bifogning",
       "removed": "Borttagen",
       "limitedAvailabilityTitle": "Den här rätten är endast tillgänglig på utvalda dagar/tider",
-      "limitedDaysBadge": "Utvalda dagar"
+      "limitedDaysBadge": "Utvalda dagar",
+      "duplicateCategory": "Duplicera kategori",
+      "categoryDuplicated": "Kategorin har duplicerats – kopian är dold tills du publicerar den.",
+      "failedToDuplicateCategory": "Det gick inte att duplicera kategorin. Försök igen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1490,7 +1490,10 @@
       "failedToDetach": "Falha ao desanexar",
       "removed": "Removido",
       "limitedAvailabilityTitle": "Este prato só está disponível em dias/horários selecionados",
-      "limitedDaysBadge": "Dias selecionados"
+      "limitedDaysBadge": "Dias selecionados",
+      "duplicateCategory": "Duplicar categoria",
+      "categoryDuplicated": "Categoria duplicada — a cópia fica oculta até você publicá-la.",
+      "failedToDuplicateCategory": "Não foi possível duplicar a categoria. Tente novamente."
     },
     "promotionsList": {
       "stackingMaster": "Master",

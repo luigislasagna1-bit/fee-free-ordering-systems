@@ -1490,7 +1490,10 @@
       "failedToDetach": "Ontkoppelen mislukt",
       "removed": "Verwijderd",
       "limitedAvailabilityTitle": "Dit gerecht is alleen op geselecteerde dagen/tijden verkrijgbaar",
-      "limitedDaysBadge": "Geselecteerde dagen"
+      "limitedDaysBadge": "Geselecteerde dagen",
+      "duplicateCategory": "Categorie dupliceren",
+      "categoryDuplicated": "Categorie gedupliceerd — de kopie is verborgen totdat je deze publiceert.",
+      "failedToDuplicateCategory": "Categorie kon niet worden gedupliceerd. Probeer het opnieuw."
     },
     "promotionsList": {
       "stackingMaster": "Master",

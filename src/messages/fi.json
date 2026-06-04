@@ -1490,7 +1490,10 @@
       "failedToDetach": "Irrottaminen epäonnistui",
       "removed": "Poistettu",
       "limitedAvailabilityTitle": "Tämä annos on saatavilla vain valittuina päivinä/aikoina",
-      "limitedDaysBadge": "Valitut päivät"
+      "limitedDaysBadge": "Valitut päivät",
+      "duplicateCategory": "Monista kategoria",
+      "categoryDuplicated": "Kategoria monistettu — kopio on piilotettu, kunnes julkaiset sen.",
+      "failedToDuplicateCategory": "Kategorian monistaminen epäonnistui. Yritä uudelleen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

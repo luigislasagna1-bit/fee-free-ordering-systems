@@ -1453,7 +1453,10 @@
       "failedToDetach": "Nie udało się odłączyć",
       "removed": "Usunięto",
       "limitedAvailabilityTitle": "To danie jest dostępne tylko w wybrane dni/godziny",
-      "limitedDaysBadge": "Wybrane dni"
+      "limitedDaysBadge": "Wybrane dni",
+      "duplicateCategory": "Duplikuj kategorię",
+      "categoryDuplicated": "Kategoria została zduplikowana — kopia jest ukryta do momentu jej opublikowania.",
+      "failedToDuplicateCategory": "Nie udało się zduplikować kategorii. Spróbuj ponownie."
     },
     "promotionsList": {
       "stackingMaster": "Master",

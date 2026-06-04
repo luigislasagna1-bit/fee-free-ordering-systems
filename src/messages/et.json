@@ -1490,7 +1490,10 @@
       "failedToDetach": "Eemaldamine ebaõnnestus",
       "removed": "Eemaldatud",
       "limitedAvailabilityTitle": "See roog on saadaval ainult valitud päevadel/kellaaegadel",
-      "limitedDaysBadge": "Valitud päevad"
+      "limitedDaysBadge": "Valitud päevad",
+      "duplicateCategory": "Dubleeri kategooria",
+      "categoryDuplicated": "Kategooria dubleeritud — koopia on peidetud, kuni selle avaldate.",
+      "failedToDuplicateCategory": "Kategooria dubleerimine ebaõnnestus. Palun proovige uuesti."
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

@@ -1453,7 +1453,10 @@
       "failedToDetach": "Leválasztás sikertelen",
       "removed": "Eltávolítva",
       "limitedAvailabilityTitle": "Ez az étel csak a kijelölt napokon/időpontokban érhető el",
-      "limitedDaysBadge": "Kijelölt napok"
+      "limitedDaysBadge": "Kijelölt napok",
+      "duplicateCategory": "Kategória duplikálása",
+      "categoryDuplicated": "A kategória megkettőzve — a másolat rejtve marad, amíg közzé nem teszi.",
+      "failedToDuplicateCategory": "A kategória duplikálása nem sikerült. Kérjük, próbálja újra."
     },
     "promotionsList": {
       "stackingMaster": "Master",

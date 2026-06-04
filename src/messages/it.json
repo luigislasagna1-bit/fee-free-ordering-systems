@@ -1490,7 +1490,10 @@
       "failedToDetach": "Rimozione allegato non riuscita",
       "removed": "Rimosso",
       "limitedAvailabilityTitle": "Questo piatto è disponibile solo in giorni/orari selezionati",
-      "limitedDaysBadge": "Giorni selezionati"
+      "limitedDaysBadge": "Giorni selezionati",
+      "duplicateCategory": "Duplica categoria",
+      "categoryDuplicated": "Categoria duplicata — la copia è nascosta finché non la pubblichi.",
+      "failedToDuplicateCategory": "Impossibile duplicare la categoria. Riprova."
     },
     "promotionsList": {
       "stackingMaster": "Master",

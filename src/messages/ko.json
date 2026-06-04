@@ -1490,7 +1490,10 @@
       "failedToDetach": "연결 해제에 실패했습니다",
       "removed": "제거됨",
       "limitedAvailabilityTitle": "이 메뉴는 지정된 요일/시간에만 주문할 수 있습니다",
-      "limitedDaysBadge": "지정된 요일"
+      "limitedDaysBadge": "지정된 요일",
+      "duplicateCategory": "카테고리 복제",
+      "categoryDuplicated": "카테고리가 복제되었습니다 — 게시하기 전까지 복사본은 숨겨집니다.",
+      "failedToDuplicateCategory": "카테고리를 복제하지 못했습니다. 다시 시도해 주세요."
     },
     "promotionsList": {
       "stackingMaster": "마스터",

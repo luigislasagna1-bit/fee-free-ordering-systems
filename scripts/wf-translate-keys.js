@@ -7,10 +7,11 @@ export const meta = {
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
 const NS = "admin.menuEditor";
-const CONTEXT = "the restaurant's menu-management screen; these label a dish that has a day/time availability restriction (GloriaFood-style reminder badge)";
+const CONTEXT = "the restaurant's menu-management screen; these are for a Duplicate Category action (clone a whole category with its items)";
 const EN = {
-  limitedAvailabilityTitle: "This dish is only available on selected days/times",
-  limitedDaysBadge: "Selected days",
+  duplicateCategory: "Duplicate category",
+  categoryDuplicated: "Category duplicated — the copy is hidden until you publish it.",
+  failedToDuplicateCategory: "Couldn’t duplicate the category. Please try again.",
 };
 const KEYS = Object.keys(EN);
 

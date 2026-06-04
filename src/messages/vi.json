@@ -1453,7 +1453,10 @@
       "failedToDetach": "Gỡ đính kèm thất bại",
       "removed": "Đã gỡ",
       "limitedAvailabilityTitle": "Món này chỉ phục vụ vào các ngày/giờ đã chọn",
-      "limitedDaysBadge": "Ngày đã chọn"
+      "limitedDaysBadge": "Ngày đã chọn",
+      "duplicateCategory": "Nhân bản danh mục",
+      "categoryDuplicated": "Đã nhân bản danh mục — bản sao bị ẩn cho đến khi bạn xuất bản nó.",
+      "failedToDuplicateCategory": "Không thể nhân bản danh mục. Vui lòng thử lại."
     },
     "promotionsList": {
       "stackingMaster": "Master",

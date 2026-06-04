@@ -1490,7 +1490,10 @@
       "failedToDetach": "הניתוק נכשל",
       "removed": "הוסר",
       "limitedAvailabilityTitle": "מנה זו זמינה רק בימים/בשעות נבחרים",
-      "limitedDaysBadge": "ימים נבחרים"
+      "limitedDaysBadge": "ימים נבחרים",
+      "duplicateCategory": "שכפול קטגוריה",
+      "categoryDuplicated": "הקטגוריה שוכפלה — העותק מוסתר עד שתפרסמו אותו.",
+      "failedToDuplicateCategory": "לא ניתן היה לשכפל את הקטגוריה. נסו שוב."
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

@@ -1490,7 +1490,10 @@
       "failedToDetach": "削除に失敗しました",
       "removed": "削除しました",
       "limitedAvailabilityTitle": "この料理は指定された曜日・時間帯のみ提供されます",
-      "limitedDaysBadge": "指定された曜日"
+      "limitedDaysBadge": "指定された曜日",
+      "duplicateCategory": "カテゴリを複製",
+      "categoryDuplicated": "カテゴリを複製しました。公開するまでコピーは非表示になります。",
+      "failedToDuplicateCategory": "カテゴリを複製できませんでした。もう一度お試しください。"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

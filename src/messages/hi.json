@@ -1806,7 +1806,10 @@
       "failedToDetach": "हटाने में विफल",
       "removed": "हटाया गया",
       "limitedAvailabilityTitle": "यह व्यंजन केवल चुनिंदा दिनों/समय पर उपलब्ध है",
-      "limitedDaysBadge": "चुनिंदा दिन"
+      "limitedDaysBadge": "चुनिंदा दिन",
+      "duplicateCategory": "श्रेणी की प्रतिलिपि बनाएँ",
+      "categoryDuplicated": "श्रेणी की प्रतिलिपि बन गई — प्रकाशित करने तक प्रतिलिपि छिपी रहेगी।",
+      "failedToDuplicateCategory": "श्रेणी की प्रतिलिपि नहीं बनाई जा सकी। कृपया पुनः प्रयास करें।"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

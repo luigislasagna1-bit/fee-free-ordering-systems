@@ -1490,7 +1490,10 @@
       "failedToDetach": "Odlaganje nije uspelo",
       "removed": "Uklonjeno",
       "limitedAvailabilityTitle": "Ovo jelo je dostupno samo određenim danima/u određeno vreme",
-      "limitedDaysBadge": "Izabrani dani"
+      "limitedDaysBadge": "Izabrani dani",
+      "duplicateCategory": "Dupliraj kategoriju",
+      "categoryDuplicated": "Kategorija je duplirana — kopija je skrivena dok je ne objavite.",
+      "failedToDuplicateCategory": "Dupliranje kategorije nije uspelo. Pokušajte ponovo."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1490,7 +1490,10 @@
       "failedToDetach": "Échec du détachement",
       "removed": "Retiré",
       "limitedAvailabilityTitle": "Ce plat n'est disponible que certains jours/horaires",
-      "limitedDaysBadge": "Jours sélectionnés"
+      "limitedDaysBadge": "Jours sélectionnés",
+      "duplicateCategory": "Dupliquer la catégorie",
+      "categoryDuplicated": "Catégorie dupliquée — la copie reste masquée jusqu'à sa publication.",
+      "failedToDuplicateCategory": "Impossible de dupliquer la catégorie. Veuillez réessayer."
     },
     "promotionsList": {
       "stackingMaster": "Maître",

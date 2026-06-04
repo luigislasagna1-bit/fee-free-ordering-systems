@@ -1490,7 +1490,10 @@
       "failedToDetach": "Не удалось отвязать",
       "removed": "Удалено",
       "limitedAvailabilityTitle": "Это блюдо доступно только в определённые дни/часы",
-      "limitedDaysBadge": "Определённые дни"
+      "limitedDaysBadge": "Определённые дни",
+      "duplicateCategory": "Дублировать категорию",
+      "categoryDuplicated": "Категория продублирована — копия скрыта, пока вы её не опубликуете.",
+      "failedToDuplicateCategory": "Не удалось продублировать категорию. Попробуйте ещё раз."
     },
     "promotionsList": {
       "stackingMaster": "Мастер",

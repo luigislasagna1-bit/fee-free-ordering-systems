@@ -1490,7 +1490,10 @@
       "failedToDetach": "Atdalīšana neizdevās",
       "removed": "Noņemts",
       "limitedAvailabilityTitle": "Šis ēdiens ir pieejams tikai noteiktās dienās/laikos",
-      "limitedDaysBadge": "Noteiktas dienas"
+      "limitedDaysBadge": "Noteiktas dienas",
+      "duplicateCategory": "Dublēt kategoriju",
+      "categoryDuplicated": "Kategorija dublēta — kopija ir paslēpta, līdz to publicēsiet.",
+      "failedToDuplicateCategory": "Neizdevās dublēt kategoriju. Lūdzu, mēģiniet vēlreiz."
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

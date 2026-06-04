@@ -1490,7 +1490,10 @@
       "failedToDetach": "ถอดออกล้มเหลว",
       "removed": "ลบออกแล้ว",
       "limitedAvailabilityTitle": "เมนูนี้มีให้บริการเฉพาะในวัน/เวลาที่กำหนดเท่านั้น",
-      "limitedDaysBadge": "วันที่กำหนด"
+      "limitedDaysBadge": "วันที่กำหนด",
+      "duplicateCategory": "ทำสำเนาหมวดหมู่",
+      "categoryDuplicated": "ทำสำเนาหมวดหมู่แล้ว — สำเนาจะถูกซ่อนไว้จนกว่าคุณจะเผยแพร่",
+      "failedToDuplicateCategory": "ไม่สามารถทำสำเนาหมวดหมู่ได้ กรุณาลองใหม่อีกครั้ง"
     },
     "promotionsList": {
       "stackingMaster": "Master",

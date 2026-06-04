@@ -1490,7 +1490,10 @@
       "failedToDetach": "Неуспешно откачване",
       "removed": "Премахнато",
       "limitedAvailabilityTitle": "Това ястие е достъпно само в избрани дни/часове",
-      "limitedDaysBadge": "Избрани дни"
+      "limitedDaysBadge": "Избрани дни",
+      "duplicateCategory": "Дублиране на категория",
+      "categoryDuplicated": "Категорията е дублирана — копието е скрито, докато не го публикувате.",
+      "failedToDuplicateCategory": "Категорията не можа да бъде дублирана. Моля, опитайте отново."
     },
     "promotionsList": {
       "stackingMaster": "Главна",

@@ -2150,7 +2150,10 @@
       "failedToDetach": "Odpojenie zlyhalo",
       "removed": "Odstránené",
       "limitedAvailabilityTitle": "Toto jedlo je dostupné iba vo vybrané dni/časy",
-      "limitedDaysBadge": "Vybrané dni"
+      "limitedDaysBadge": "Vybrané dni",
+      "duplicateCategory": "Duplikovať kategóriu",
+      "categoryDuplicated": "Kategória bola duplikovaná — kópia je skrytá, kým ju nezverejníte.",
+      "failedToDuplicateCategory": "Kategóriu sa nepodarilo duplikovať. Skúste to znova."
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

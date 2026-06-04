@@ -1490,7 +1490,10 @@
       "failedToDetach": "فشل الفصل",
       "removed": "تمت الإزالة",
       "limitedAvailabilityTitle": "هذا الطبق متاح فقط في أيام/أوقات محددة",
-      "limitedDaysBadge": "أيام محددة"
+      "limitedDaysBadge": "أيام محددة",
+      "duplicateCategory": "تكرار الفئة",
+      "categoryDuplicated": "تم تكرار الفئة — النسخة مخفية إلى أن تقوم بنشرها.",
+      "failedToDuplicateCategory": "تعذّر تكرار الفئة. يُرجى المحاولة مرة أخرى."
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

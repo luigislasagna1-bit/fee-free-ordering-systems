@@ -1490,7 +1490,10 @@
       "failedToDetach": "Trennen fehlgeschlagen",
       "removed": "Entfernt",
       "limitedAvailabilityTitle": "Dieses Gericht ist nur an ausgewählten Tagen/Uhrzeiten verfügbar",
-      "limitedDaysBadge": "Ausgewählte Tage"
+      "limitedDaysBadge": "Ausgewählte Tage",
+      "duplicateCategory": "Kategorie duplizieren",
+      "categoryDuplicated": "Kategorie dupliziert — die Kopie bleibt ausgeblendet, bis Sie sie veröffentlichen.",
+      "failedToDuplicateCategory": "Die Kategorie konnte nicht dupliziert werden. Bitte versuchen Sie es erneut."
     },
     "promotionsList": {
       "stackingMaster": "Master",

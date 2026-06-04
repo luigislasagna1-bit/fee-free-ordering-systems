@@ -1490,7 +1490,10 @@
       "failedToDetach": "移除失败",
       "removed": "已移除",
       "limitedAvailabilityTitle": "本菜品仅在指定日期/时间供应",
-      "limitedDaysBadge": "指定日期"
+      "limitedDaysBadge": "指定日期",
+      "duplicateCategory": "复制分类",
+      "categoryDuplicated": "分类已复制 — 副本在发布前处于隐藏状态。",
+      "failedToDuplicateCategory": "无法复制该分类。请重试。"
     },
     "promotionsList": {
       "stackingMaster": "主控",

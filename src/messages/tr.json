@@ -1453,7 +1453,10 @@
       "failedToDetach": "Kaldırılamadı",
       "removed": "Kaldırıldı",
       "limitedAvailabilityTitle": "Bu yemek yalnızca belirli gün/saatlerde sunulur",
-      "limitedDaysBadge": "Belirli günler"
+      "limitedDaysBadge": "Belirli günler",
+      "duplicateCategory": "Kategoriyi çoğalt",
+      "categoryDuplicated": "Kategori çoğaltıldı — kopya, yayımlayana kadar gizli kalır.",
+      "failedToDuplicateCategory": "Kategori çoğaltılamadı. Lütfen tekrar deneyin."
     },
     "promotionsList": {
       "stackingMaster": "Ana",

@@ -1295,7 +1295,7 @@ function SortableItemRow({
 
 function SortableCategoryBlock({
   cat, expanded, onToggleExpand, onAddItem, onEditItem, onDeleteItem,
-  onToggleItem, onEditCategory, onDeleteCategory, onItemsReordered, categories,
+  onToggleItem, onEditCategory, onDeleteCategory, onDuplicateCategory, onItemsReordered, categories,
   onAttach, onDetach, onReorderGroups,
   selectMode, isSelected, onToggleSelect,
 }: {
@@ -1303,7 +1303,7 @@ function SortableCategoryBlock({
   onToggleExpand: () => void; onAddItem: () => void;
   onEditItem: (item: MenuItem) => void; onDeleteItem: (id: string) => void;
   onToggleItem: (id: string, field: "isAvailable" | "isSoldOut" | "isHidden", val: boolean) => void;
-  onEditCategory: () => void; onDeleteCategory: () => void;
+  onEditCategory: () => void; onDeleteCategory: () => void; onDuplicateCategory: () => void;
   onItemsReordered: (catId: string, ids: string[]) => void;
   categories: Category[];
   onAttach: (libraryGroupId: string, menuItemId?: string, categoryId?: string) => void;
@@ -1412,6 +1412,7 @@ function SortableCategoryBlock({
             <Plus className="w-3.5 h-3.5" /> {t("addItem")}
           </button>
           <button onClick={onEditCategory} className="p-1.5 text-gray-400 hover:text-blue-500 rounded"><Edit2 className="w-3.5 h-3.5" /></button>
+          <button onClick={onDuplicateCategory} title={t("duplicateCategory")} className="p-1.5 text-gray-400 hover:text-emerald-600 rounded"><Copy className="w-3.5 h-3.5" /></button>
           <button onClick={onDeleteCategory} className="p-1.5 text-gray-400 hover:text-red-500 rounded"><Trash2 className="w-3.5 h-3.5" /></button>
         </div>
         {expanded ? <ChevronUp className="w-4 h-4 text-gray-400 flex-shrink-0 mt-1" /> : <ChevronRight className="w-4 h-4 text-gray-400 flex-shrink-0 mt-1" />}
@@ -2257,6 +2258,17 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
     await reload();
   };
 
+  const duplicateCategory = async (id: string) => {
+    const res = await fetch(`/api/menu/categories/${id}/duplicate`, { method: "POST" });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      toast.error(body.error || t("failedToDuplicateCategory"));
+      return;
+    }
+    toast.success(t("categoryDuplicated"));
+    await reload();
+  };
+
   const deleteCategory = (id: string) => {
     setConfirmDialog({
       title: t("deleteCategoryTitle"),
@@ -2571,6 +2583,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
                     onToggleItem={toggleItem}
                     onEditCategory={() => setCatModal({ cat })}
                     onDeleteCategory={() => deleteCategory(cat.id)}
+                    onDuplicateCategory={() => duplicateCategory(cat.id)}
                     onItemsReordered={handleItemsReordered}
                     categories={categories}
                     onAttach={attachModifier}

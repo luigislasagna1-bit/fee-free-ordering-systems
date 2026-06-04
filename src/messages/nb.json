@@ -1490,7 +1490,10 @@
       "failedToDetach": "Kunne ikke fjerne tilordning",
       "removed": "Fjernet",
       "limitedAvailabilityTitle": "Denne retten er bare tilgjengelig på utvalgte dager/tidspunkter",
-      "limitedDaysBadge": "Utvalgte dager"
+      "limitedDaysBadge": "Utvalgte dager",
+      "duplicateCategory": "Dupliser kategori",
+      "categoryDuplicated": "Kategorien er duplisert — kopien er skjult til du publiserer den.",
+      "failedToDuplicateCategory": "Kunne ikke duplisere kategorien. Prøv igjen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

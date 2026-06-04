@@ -1490,7 +1490,10 @@
       "failedToDetach": "Odpojení selhalo",
       "removed": "Odebráno",
       "limitedAvailabilityTitle": "Toto jídlo je dostupné pouze ve vybrané dny/časy",
-      "limitedDaysBadge": "Vybrané dny"
+      "limitedDaysBadge": "Vybrané dny",
+      "duplicateCategory": "Duplikovat kategorii",
+      "categoryDuplicated": "Kategorie byla duplikována — kopie zůstane skrytá, dokud ji nezveřejníte.",
+      "failedToDuplicateCategory": "Kategorii se nepodařilo duplikovat. Zkuste to prosím znovu."
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

@@ -1490,7 +1490,10 @@
       "failedToDetach": "No s'ha pogut desadjuntar",
       "removed": "Eliminat",
       "limitedAvailabilityTitle": "Aquest plat només està disponible en dies/hores seleccionats",
-      "limitedDaysBadge": "Dies seleccionats"
+      "limitedDaysBadge": "Dies seleccionats",
+      "duplicateCategory": "Duplica la categoria",
+      "categoryDuplicated": "Categoria duplicada — la còpia queda amagada fins que la publiquis.",
+      "failedToDuplicateCategory": "No s'ha pogut duplicar la categoria. Torna-ho a provar."
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

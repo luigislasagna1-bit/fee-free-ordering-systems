@@ -1490,7 +1490,10 @@
       "failedToDetach": "Не вдалося від'єднати",
       "removed": "Видалено",
       "limitedAvailabilityTitle": "Ця страва доступна лише в певні дні/години",
-      "limitedDaysBadge": "Обрані дні"
+      "limitedDaysBadge": "Обрані дні",
+      "duplicateCategory": "Дублювати категорію",
+      "categoryDuplicated": "Категорію продубльовано — копія прихована, доки ви її не опублікуєте.",
+      "failedToDuplicateCategory": "Не вдалося продублювати категорію. Спробуйте ще раз."
     },
     "promotionsList": {
       "stackingMaster": "Майстер",

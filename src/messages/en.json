@@ -1806,7 +1806,10 @@
       "failedToDetach": "Failed to detach",
       "removed": "Removed",
       "limitedAvailabilityTitle": "This dish is only available on selected days/times",
-      "limitedDaysBadge": "Selected days"
+      "limitedDaysBadge": "Selected days",
+      "duplicateCategory": "Duplicate category",
+      "categoryDuplicated": "Category duplicated — the copy is hidden until you publish it.",
+      "failedToDuplicateCategory": "Couldn’t duplicate the category. Please try again."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1490,7 +1490,10 @@
       "failedToDetach": "Gagal melepas",
       "removed": "Dihapus",
       "limitedAvailabilityTitle": "Hidangan ini hanya tersedia pada hari/waktu tertentu",
-      "limitedDaysBadge": "Hari tertentu"
+      "limitedDaysBadge": "Hari tertentu",
+      "duplicateCategory": "Duplikat kategori",
+      "categoryDuplicated": "Kategori berhasil diduplikat — salinannya disembunyikan hingga Anda menerbitkannya.",
+      "failedToDuplicateCategory": "Tidak dapat menduplikat kategori. Silakan coba lagi."
     },
     "promotionsList": {
       "stackingMaster": "Master",

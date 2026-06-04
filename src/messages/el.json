@@ -1490,7 +1490,10 @@
       "failedToDetach": "Αποτυχία αποσύνδεσης",
       "removed": "Αφαιρέθηκε",
       "limitedAvailabilityTitle": "Αυτό το πιάτο είναι διαθέσιμο μόνο σε επιλεγμένες ημέρες/ώρες",
-      "limitedDaysBadge": "Επιλεγμένες ημέρες"
+      "limitedDaysBadge": "Επιλεγμένες ημέρες",
+      "duplicateCategory": "Αντιγραφή κατηγορίας",
+      "categoryDuplicated": "Η κατηγορία αντιγράφηκε — το αντίγραφο παραμένει κρυφό μέχρι να το δημοσιεύσετε.",
+      "failedToDuplicateCategory": "Δεν ήταν δυνατή η αντιγραφή της κατηγορίας. Δοκιμάστε ξανά."
     },
     "promotionsList": {
       "stackingMaster": "Master",

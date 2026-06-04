@@ -2150,7 +2150,10 @@
       "failedToDetach": "Nepavyko atsegti",
       "removed": "Pašalinta",
       "limitedAvailabilityTitle": "Šis patiekalas tiekiamas tik pasirinktomis dienomis ir (arba) valandomis",
-      "limitedDaysBadge": "Pasirinktos dienos"
+      "limitedDaysBadge": "Pasirinktos dienos",
+      "duplicateCategory": "Dubliuoti kategoriją",
+      "categoryDuplicated": "Kategorija dubliuota — kopija paslėpta, kol jos nepaskelbsite.",
+      "failedToDuplicateCategory": "Nepavyko dubliuoti kategorijos. Bandykite dar kartą."
     },
     "promotionsList": {
       "stackingMaster": "Master",

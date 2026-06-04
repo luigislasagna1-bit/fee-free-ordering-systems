@@ -1490,7 +1490,10 @@
       "failedToDetach": "Odložitev ni uspela",
       "removed": "Odstranjeno",
       "limitedAvailabilityTitle": "Ta jed je na voljo samo ob izbranih dneh/urah",
-      "limitedDaysBadge": "Izbrani dnevi"
+      "limitedDaysBadge": "Izbrani dnevi",
+      "duplicateCategory": "Podvoji kategorijo",
+      "categoryDuplicated": "Kategorija je bila podvojena — kopija je skrita, dokler je ne objavite.",
+      "failedToDuplicateCategory": "Kategorije ni bilo mogoče podvojiti. Poskusite znova."
     },
     "promotionsList": {
       "stackingMaster": "Master",
