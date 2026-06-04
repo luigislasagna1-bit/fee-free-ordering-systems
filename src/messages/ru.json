@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: выберите не менее {n}",
       "paymentFailed": "Ошибка платежа. Попробуйте ещё раз.",
       "selectVariant": "Пожалуйста, выберите вариант"
-    }
+    },
+    "searchMenu": "Поиск по меню…",
+    "signIn": "Войти",
+    "signInTooltip": "Войдите или создайте аккаунт, чтобы отслеживать купоны и историю заказов"
   },
   "pizza": {
     "chooseSize": "Выберите размер",
@@ -359,7 +362,13 @@
     "noNotes": "Без примечаний",
     "locatingAddress": "Определяем ваш адрес…",
     "youreIn": "Вы в зоне {zone} — стоимость {fee}, ~{minutes} мин.",
-    "outsideStandard": "За пределами стандартных зон доставки."
+    "outsideStandard": "За пределами стандартных зон доставки.",
+    "freeDelivery": "Бесплатная доставка",
+    "aptUnitPlaceholder": "Квартира / корпус / офис (необязательно)",
+    "buzzerPlaceholder": "Код домофона (необязательно)",
+    "deliveryInstructionsPlaceholder": "Инструкции для курьера — оставить у двери, боковой вход, позвонить дважды и т.д. (необязательно)",
+    "pickATimePlaceholder": "Выберите время…",
+    "customAmount": "Другая сумма"
   },
   "reservation": {
     "title": "Забронировать столик",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Не удалось создать аккаунт. Попробуйте ещё раз.",
       "errorEmailTaken": "Этот email уже зарегистрирован."
     }
+  },
+  "addressBook": {
+    "loading": "Загрузка адресов…",
+    "empty": "Сохранённых адресов пока нет. Добавьте адрес, чтобы не вводить его снова при оформлении.",
+    "defaultBadge": "По умолчанию",
+    "addressFallback": "Адрес",
+    "makeDefault": "Сделать основным",
+    "delete": "Удалить",
+    "confirmDelete": "Удалить этот адрес?",
+    "streetCityRequired": "Улица и город обязательны.",
+    "labelPlaceholder": "Название (например, Дом, Работа)",
+    "streetPlaceholder": "Улица и номер дома",
+    "cityPlaceholder": "Город",
+    "postalPlaceholder": "Почтовый индекс",
+    "cancel": "Отмена",
+    "save": "Сохранить адрес",
+    "saving": "Сохранение…",
+    "addAddress": "Добавить адрес"
   }
 }

@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: избери поне {n}",
       "paymentFailed": "Плащането е неуспешно. Моля, опитай отново.",
       "selectVariant": "Моля, избери вариант"
-    }
+    },
+    "searchMenu": "Търсене в менюто…",
+    "signIn": "Вход",
+    "signInTooltip": "Влезте или създайте акаунт, за да следите купони и история на поръчките"
   },
   "pizza": {
     "chooseSize": "Избери размер",
@@ -359,7 +362,13 @@
     "noNotes": "Без бележки",
     "locatingAddress": "Търсим адреса…",
     "youreIn": "Намираш се в {zone} — Такса {fee}, ~{minutes} мин.",
-    "outsideStandard": "Извън стандартните ни зони за доставка."
+    "outsideStandard": "Извън стандартните ни зони за доставка.",
+    "freeDelivery": "Безплатна доставка",
+    "aptUnitPlaceholder": "Апартамент / блок / вход (незадължително)",
+    "buzzerPlaceholder": "Код за домофон (незадължително)",
+    "deliveryInstructionsPlaceholder": "Инструкции за доставка — оставете на вратата, страничен вход, позвънете два пъти и т.н. (незадължително)",
+    "pickATimePlaceholder": "Изберете час…",
+    "customAmount": "Друга сума"
   },
   "reservation": {
     "title": "Резервирай маса",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Акаунтът не може да бъде създаден. Моля, опитай отново.",
       "errorEmailTaken": "Този имейл вече е регистриран."
     }
+  },
+  "addressBook": {
+    "loading": "Зареждане на адреси…",
+    "empty": "Няма запазени адреси. Добавете един, за да не въвеждате данните при всяка поръчка.",
+    "defaultBadge": "По подразбиране",
+    "addressFallback": "Адрес",
+    "makeDefault": "Задай като основен",
+    "delete": "Изтрий",
+    "confirmDelete": "Изтриване на адреса?",
+    "streetCityRequired": "Улицата и градът са задължителни.",
+    "labelPlaceholder": "Етикет (напр. Вкъщи, Работа)",
+    "streetPlaceholder": "Улица и номер",
+    "cityPlaceholder": "Град",
+    "postalPlaceholder": "Пощенски код",
+    "cancel": "Отказ",
+    "save": "Запази адрес",
+    "saving": "Запазване…",
+    "addAddress": "Добави адрес"
   }
 }

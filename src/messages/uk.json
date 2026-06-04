@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: виберіть щонайменше {n}",
       "paymentFailed": "Оплата не пройшла. Спробуйте знову.",
       "selectVariant": "Будь ласка, виберіть варіант"
-    }
+    },
+    "searchMenu": "Пошук у меню…",
+    "signIn": "Увійти",
+    "signInTooltip": "Увійдіть або створіть акаунт, щоб відстежувати купони та історію замовлень"
   },
   "pizza": {
     "chooseSize": "Оберіть розмір",
@@ -359,7 +362,13 @@
     "noNotes": "Без приміток",
     "locatingAddress": "Пошук вашої адреси…",
     "youreIn": "Ви в зоні {zone} — Вартість {fee}, ~{minutes} хв.",
-    "outsideStandard": "За межами стандартних зон доставки."
+    "outsideStandard": "За межами стандартних зон доставки.",
+    "freeDelivery": "Безкоштовна доставка",
+    "aptUnitPlaceholder": "Квартира / блок / офіс (необов'язково)",
+    "buzzerPlaceholder": "Код домофону (необов'язково)",
+    "deliveryInstructionsPlaceholder": "Інструкції для доставки — залишити біля дверей, бічний вхід, подзвонити двічі тощо (необов'язково)",
+    "pickATimePlaceholder": "Оберіть час…",
+    "customAmount": "Інша сума"
   },
   "reservation": {
     "title": "Забронювати столик",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Не вдалося створити акаунт. Спробуйте знову.",
       "errorEmailTaken": "Цей email вже зареєстровано."
     }
+  },
+  "addressBook": {
+    "loading": "Завантаження адрес…",
+    "empty": "Збережених адрес ще немає. Додайте одну, щоб не вводити дані знову при оформленні.",
+    "defaultBadge": "Основна",
+    "addressFallback": "Адреса",
+    "makeDefault": "Зробити основною",
+    "delete": "Видалити",
+    "confirmDelete": "Видалити цю адресу?",
+    "streetCityRequired": "Вулиця та місто обов'язкові.",
+    "labelPlaceholder": "Мітка (напр. Дім, Робота)",
+    "streetPlaceholder": "Вулиця",
+    "cityPlaceholder": "Місто",
+    "postalPlaceholder": "Поштовий індекс",
+    "cancel": "Скасувати",
+    "save": "Зберегти адресу",
+    "saving": "Збереження…",
+    "addAddress": "Додати адресу"
   }
 }

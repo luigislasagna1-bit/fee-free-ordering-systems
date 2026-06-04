@@ -62,13 +62,26 @@ export const SUPPORTED_CURRENCIES: Array<{ code: string; label: string; symbol: 
   { code: "MXN", label: "Mexican Peso",     symbol: "$" },
 ];
 
-export function formatDate(date: Date | string): string {
-  return new Intl.DateTimeFormat("en-US", {
+/**
+ * Render a date/time for display.
+ *
+ * Backward-compatible: called with just a date it renders in en-US (legacy
+ * behaviour). Pass `{ locale, timeZone }` to render in the restaurant's
+ * locale and timezone so customer-facing dates (order confirmations,
+ * receipts, kitchen) read correctly worldwide instead of in the server's
+ * UTC / the browser's en-US.
+ */
+export function formatDate(
+  date: Date | string,
+  opts?: { locale?: string; timeZone?: string },
+): string {
+  return new Intl.DateTimeFormat(opts?.locale ?? "en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    ...(opts?.timeZone ? { timeZone: opts.timeZone } : {}),
   }).format(new Date(date));
 }
 

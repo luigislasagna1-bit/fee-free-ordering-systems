@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: 少なくとも {n} つ選んでください",
       "paymentFailed": "お支払いに失敗しました。もう一度お試しください。",
       "selectVariant": "オプションを選択してください"
-    }
+    },
+    "searchMenu": "メニューを検索…",
+    "signIn": "ログイン",
+    "signInTooltip": "ログインまたはアカウントを作成してクーポンや注文履歴を管理"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -359,7 +362,13 @@
     "noNotes": "備考なし",
     "locatingAddress": "住所を確認中…",
     "youreIn": "{zone} エリア内 — 料金 {fee}、約{minutes}分",
-    "outsideStandard": "通常のデリバリーエリア外です。"
+    "outsideStandard": "通常のデリバリーエリア外です。",
+    "freeDelivery": "配達無料",
+    "aptUnitPlaceholder": "部屋番号・号室（任意）",
+    "buzzerPlaceholder": "インターホン番号（任意）",
+    "deliveryInstructionsPlaceholder": "配達の注意事項 — ドア前に置く、横の入口から、2回押すなど（任意）",
+    "pickATimePlaceholder": "時間を選択…",
+    "customAmount": "金額を指定"
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "アカウントを作成できませんでした。もう一度お試しください。",
       "errorEmailTaken": "そのメールアドレスはすでに登録されています。"
     }
+  },
+  "addressBook": {
+    "loading": "住所を読み込み中…",
+    "empty": "保存済みの住所はありません。追加するとチェックアウト時の入力を省略できます。",
+    "defaultBadge": "デフォルト",
+    "addressFallback": "住所",
+    "makeDefault": "デフォルトに設定",
+    "delete": "削除",
+    "confirmDelete": "この住所を削除しますか？",
+    "streetCityRequired": "番地と市区町村は必須です。",
+    "labelPlaceholder": "ラベル（例：自宅、職場）",
+    "streetPlaceholder": "番地・建物名",
+    "cityPlaceholder": "市区町村",
+    "postalPlaceholder": "郵便番号",
+    "cancel": "キャンセル",
+    "save": "住所を保存",
+    "saving": "保存中…",
+    "addAddress": "住所を追加"
   }
 }

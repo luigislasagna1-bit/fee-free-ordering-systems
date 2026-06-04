@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Loader2, MapPin, Plus, Trash2, Check, X } from "lucide-react";
 
 type Address = {
@@ -14,6 +15,7 @@ type Address = {
 };
 
 export function AddressBook() {
+  const t = useTranslations("addressBook");
   const [list, setList] = useState<Address[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -40,7 +42,7 @@ export function AddressBook() {
 
   const add = async () => {
     if (!street.trim() || !city.trim()) {
-      setErr("Street and city are required.");
+      setErr(t("streetCityRequired"));
       return;
     }
     setSaving(true);
@@ -75,7 +77,7 @@ export function AddressBook() {
   };
 
   const remove = async (id: string) => {
-    if (!confirm("Delete this address?")) return;
+    if (!confirm(t("confirmDelete"))) return;
     await fetch(`/api/public/restaurant-customer/addresses/${id}`, { method: "DELETE" });
     load();
   };
@@ -83,7 +85,7 @@ export function AddressBook() {
   if (loading) {
     return (
       <div className="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-2 text-sm text-gray-500">
-        <Loader2 className="w-4 h-4 animate-spin" /> Loading addresses…
+        <Loader2 className="w-4 h-4 animate-spin" /> {t("loading")}
       </div>
     );
   }
@@ -92,7 +94,7 @@ export function AddressBook() {
     <div className="space-y-2">
       {list.length === 0 && !showForm && (
         <div className="bg-white rounded-xl border border-gray-200 p-4 text-center text-sm text-gray-500">
-          No saved addresses yet. Add one to skip retyping at checkout.
+          {t("empty")}
         </div>
       )}
       {list.map((a) => (
@@ -102,10 +104,10 @@ export function AddressBook() {
         >
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-semibold text-gray-900">{a.label ?? "Address"}</span>
+              <span className="text-sm font-semibold text-gray-900">{a.label ?? t("addressFallback")}</span>
               {a.isDefault && (
                 <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full">
-                  Default
+                  {t("defaultBadge")}
                 </span>
               )}
             </div>
@@ -121,7 +123,7 @@ export function AddressBook() {
               <button
                 onClick={() => setDefault(a.id)}
                 className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold px-2 py-1"
-                title="Make default"
+                title={t("makeDefault")}
               >
                 <Check className="w-4 h-4" />
               </button>
@@ -129,7 +131,7 @@ export function AddressBook() {
             <button
               onClick={() => remove(a.id)}
               className="text-gray-400 hover:text-red-600 px-2 py-1"
-              title="Delete"
+              title={t("delete")}
             >
               <Trash2 className="w-4 h-4" />
             </button>
@@ -141,14 +143,14 @@ export function AddressBook() {
         <div className="bg-gray-50 rounded-xl border border-gray-200 p-3 space-y-2">
           <input
             className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            placeholder="Label (e.g. Home, Work)"
+            placeholder={t("labelPlaceholder")}
             value={label}
             onChange={(e) => setLabel(e.target.value)}
             maxLength={30}
           />
           <input
             className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            placeholder="Street address"
+            placeholder={t("streetPlaceholder")}
             value={street}
             onChange={(e) => setStreet(e.target.value)}
             maxLength={200}
@@ -156,14 +158,14 @@ export function AddressBook() {
           <div className="grid grid-cols-2 gap-2">
             <input
               className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              placeholder="City"
+              placeholder={t("cityPlaceholder")}
               value={city}
               onChange={(e) => setCity(e.target.value)}
               maxLength={100}
             />
             <input
               className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              placeholder="Postal code"
+              placeholder={t("postalPlaceholder")}
               value={zip}
               onChange={(e) => setZip(e.target.value)}
               maxLength={20}
@@ -176,7 +178,7 @@ export function AddressBook() {
               disabled={saving}
               className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"
             >
-              <X className="w-3.5 h-3.5" /> Cancel
+              <X className="w-3.5 h-3.5" /> {t("cancel")}
             </button>
             <button
               onClick={add}
@@ -184,7 +186,7 @@ export function AddressBook() {
               className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 disabled:opacity-50"
             >
               {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
-              {saving ? "Saving…" : "Save address"}
+              {saving ? t("saving") : t("save")}
             </button>
           </div>
         </div>
@@ -193,7 +195,7 @@ export function AddressBook() {
           onClick={() => setShowForm(true)}
           className="w-full bg-white border border-dashed border-gray-300 rounded-xl px-3 py-3 text-sm text-gray-600 hover:border-emerald-300 hover:text-emerald-700 transition flex items-center justify-center gap-1.5"
         >
-          <Plus className="w-4 h-4" /> Add an address
+          <Plus className="w-4 h-4" /> {t("addAddress")}
         </button>
       )}
     </div>

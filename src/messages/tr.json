@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: en az {n} seçin",
       "paymentFailed": "Ödeme başarısız. Lütfen tekrar deneyin.",
       "selectVariant": "Lütfen bir seçenek seçin"
-    }
+    },
+    "searchMenu": "Menüde ara…",
+    "signIn": "Giriş yap",
+    "signInTooltip": "Kupon ve sipariş geçmişinizi takip etmek için giriş yapın veya hesap oluşturun"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -359,7 +362,13 @@
     "noNotes": "Not yok",
     "locatingAddress": "Adresiniz bulunuyor…",
     "youreIn": "{zone} bölgesindesiniz — Ücret {fee}, ~{minutes} dk.",
-    "outsideStandard": "Standart teslimat bölgelerimiz dışında."
+    "outsideStandard": "Standart teslimat bölgelerimiz dışında.",
+    "freeDelivery": "Ücretsiz teslimat",
+    "aptUnitPlaceholder": "Daire / Birim / Kat (isteğe bağlı)",
+    "buzzerPlaceholder": "Kapı zil kodu (isteğe bağlı)",
+    "deliveryInstructionsPlaceholder": "Teslimat talimatları — kapıya bırak, yan giriş, iki kez zil çal vb. (isteğe bağlı)",
+    "pickATimePlaceholder": "Bir saat seçin…",
+    "customAmount": "Özel tutar"
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Hesabınız oluşturulamadı. Lütfen tekrar deneyin.",
       "errorEmailTaken": "Bu e-posta zaten kayıtlı."
     }
+  },
+  "addressBook": {
+    "loading": "Adresler yükleniyor…",
+    "empty": "Henüz kayıtlı adres yok. Ödeme sırasında tekrar yazmamak için bir adres ekleyin.",
+    "defaultBadge": "Varsayılan",
+    "addressFallback": "Adres",
+    "makeDefault": "Varsayılan yap",
+    "delete": "Sil",
+    "confirmDelete": "Bu adres silinsin mi?",
+    "streetCityRequired": "Sokak ve şehir zorunludur.",
+    "labelPlaceholder": "Etiket (örn. Ev, İş)",
+    "streetPlaceholder": "Sokak adresi",
+    "cityPlaceholder": "Şehir",
+    "postalPlaceholder": "Posta kodu",
+    "cancel": "İptal",
+    "save": "Adresi kaydet",
+    "saving": "Kaydediliyor…",
+    "addAddress": "Adres ekle"
   }
 }

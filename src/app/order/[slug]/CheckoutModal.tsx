@@ -350,7 +350,7 @@ export function CheckoutModal({
                   <div className="flex items-center justify-between text-xs">
                     <div className="flex items-center gap-1.5 text-emerald-700 font-medium">
                       <span aria-hidden>🚚</span>
-                      <span>Free delivery</span>
+                      <span>{tc("freeDelivery")}</span>
                     </div>
                     <div className="font-semibold text-emerald-800 whitespace-nowrap ml-2">
                       − {formatCurrency(baseDeliveryFee)}
@@ -592,14 +592,14 @@ export function CheckoutModal({
                         the full string. */}
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       <input
-                        type="text" placeholder="Apt / Unit / Suite (optional)"
+                        type="text" placeholder={tc("aptUnitPlaceholder")}
                         className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                         style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                         value={customerInfo.unit || ""}
                         onChange={e => setCustomerInfo({ ...customerInfo, unit: e.target.value })}
                       />
                       <input
-                        type="text" placeholder="Buzzer code (optional)"
+                        type="text" placeholder={tc("buzzerPlaceholder")}
                         className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                         style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                         value={customerInfo.buzzer || ""}
@@ -610,7 +610,7 @@ export function CheckoutModal({
                         (which is kitchen-facing). These reach the driver
                         at dispatch time. */}
                     <textarea
-                      placeholder="Delivery instructions — leave at door, side entrance, ring twice, etc. (optional)"
+                      placeholder={tc("deliveryInstructionsPlaceholder")}
                       rows={3}
                       className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 resize-none"
                       style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
@@ -792,7 +792,7 @@ export function CheckoutModal({
                             <option value="">{datePart ? "Closed this day" : "Pick a date first"}</option>
                           ) : (
                             <>
-                              <option value="">Pick a time…</option>
+                              <option value="">{tc("pickATimePlaceholder")}</option>
                               {slots.map((s) => (
                                 <option key={s} value={s}>{s}</option>
                               ))}
@@ -947,7 +947,7 @@ export function CheckoutModal({
                       Caps at 50% so a stray drag can't tank the customer. */}
                   <div>
                     <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
-                      <span>Custom amount</span>
+                      <span>{tc("customAmount")}</span>
                       <span className="font-mono font-semibold text-gray-700">
                         {tipPercent}% ({formatCurrency(tipAmount)})
                       </span>

@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: pilih minimal {n}",
       "paymentFailed": "Pembayaran gagal. Silakan coba lagi.",
       "selectVariant": "Silakan pilih opsi"
-    }
+    },
+    "searchMenu": "Cari menu…",
+    "signIn": "Masuk",
+    "signInTooltip": "Masuk atau buat akun untuk melacak kupon dan riwayat pesanan"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -359,7 +362,13 @@
     "noNotes": "Tidak ada catatan",
     "locatingAddress": "Menemukan alamat Anda…",
     "youreIn": "Anda berada di {zone} — Biaya {fee}, ~{minutes} mnt.",
-    "outsideStandard": "Di luar area pengiriman standar kami."
+    "outsideStandard": "Di luar area pengiriman standar kami.",
+    "freeDelivery": "Gratis ongkir",
+    "aptUnitPlaceholder": "Apt / Unit / Suite (opsional)",
+    "buzzerPlaceholder": "Kode buzzer (opsional)",
+    "deliveryInstructionsPlaceholder": "Instruksi pengiriman — tinggalkan di depan pintu, pintu samping, ketuk dua kali, dll. (opsional)",
+    "pickATimePlaceholder": "Pilih waktu…",
+    "customAmount": "Jumlah lain"
   },
   "reservation": {
     "title": "Pesan meja",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Tidak dapat membuat akun Anda. Silakan coba lagi.",
       "errorEmailTaken": "Email tersebut sudah terdaftar."
     }
+  },
+  "addressBook": {
+    "loading": "Memuat alamat…",
+    "empty": "Belum ada alamat tersimpan. Tambahkan satu agar tidak perlu mengetik ulang saat checkout.",
+    "defaultBadge": "Utama",
+    "addressFallback": "Alamat",
+    "makeDefault": "Jadikan utama",
+    "delete": "Hapus",
+    "confirmDelete": "Hapus alamat ini?",
+    "streetCityRequired": "Jalan dan kota wajib diisi.",
+    "labelPlaceholder": "Label (mis. Rumah, Kantor)",
+    "streetPlaceholder": "Alamat jalan",
+    "cityPlaceholder": "Kota",
+    "postalPlaceholder": "Kode pos",
+    "cancel": "Batal",
+    "save": "Simpan alamat",
+    "saving": "Menyimpan…",
+    "addAddress": "Tambah alamat"
   }
 }

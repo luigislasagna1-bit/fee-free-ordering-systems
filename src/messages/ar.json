@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: اختر {n} على الأقل",
       "paymentFailed": "فشل الدفع. يرجى المحاولة مجدداً.",
       "selectVariant": "يرجى اختيار خيار"
-    }
+    },
+    "searchMenu": "ابحث في القائمة…",
+    "signIn": "تسجيل الدخول",
+    "signInTooltip": "سجّل دخولك أو أنشئ حساباً لمتابعة الكوبونات وسجل الطلبات"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",
@@ -359,7 +362,13 @@
     "noNotes": "لا ملاحظات",
     "locatingAddress": "جارٍ تحديد موقع عنوانك…",
     "youreIn": "أنت في {zone} — الرسوم {fee}، ~{minutes} د.",
-    "outsideStandard": "خارج مناطق التوصيل المعتادة."
+    "outsideStandard": "خارج مناطق التوصيل المعتادة.",
+    "freeDelivery": "توصيل مجاني",
+    "aptUnitPlaceholder": "شقة / وحدة / جناح (اختياري)",
+    "buzzerPlaceholder": "رمز الجرس (اختياري)",
+    "deliveryInstructionsPlaceholder": "تعليمات التوصيل — اتركه عند الباب، المدخل الجانبي، اقرع مرتين، إلخ. (اختياري)",
+    "pickATimePlaceholder": "اختر وقتاً…",
+    "customAmount": "مبلغ مخصص"
   },
   "reservation": {
     "title": "احجز طاولة",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "تعذّر إنشاء حسابك. يرجى المحاولة مجدداً.",
       "errorEmailTaken": "هذا البريد الإلكتروني مسجّل بالفعل."
     }
+  },
+  "addressBook": {
+    "loading": "جارٍ تحميل العناوين…",
+    "empty": "لا توجد عناوين محفوظة بعد. أضف عنواناً لتجنب إعادة الكتابة عند الدفع.",
+    "defaultBadge": "افتراضي",
+    "addressFallback": "العنوان",
+    "makeDefault": "تعيين كافتراضي",
+    "delete": "حذف",
+    "confirmDelete": "حذف هذا العنوان؟",
+    "streetCityRequired": "الشارع والمدينة مطلوبان.",
+    "labelPlaceholder": "تسمية (مثلاً: المنزل، العمل)",
+    "streetPlaceholder": "عنوان الشارع",
+    "cityPlaceholder": "المدينة",
+    "postalPlaceholder": "الرمز البريدي",
+    "cancel": "إلغاء",
+    "save": "حفظ العنوان",
+    "saving": "جارٍ الحفظ…",
+    "addAddress": "إضافة عنوان"
   }
 }

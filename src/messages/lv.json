@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: izvēlieties vismaz {n}",
       "paymentFailed": "Maksājums neizdevās. Lūdzu, mēģiniet vēlreiz.",
       "selectVariant": "Lūdzu, izvēlieties opciju"
-    }
+    },
+    "searchMenu": "Meklēt ēdienkartē…",
+    "signIn": "Pierakstīties",
+    "signInTooltip": "Pierakstieties vai izveidojiet kontu, lai sekotu kuponiem un pasūtījumu vēsturei"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -359,7 +362,13 @@
     "noNotes": "Nav piezīmju",
     "locatingAddress": "Atrod jūsu adresi…",
     "youreIn": "Jūs atrodaties {zone} — Maksa {fee}, ~{minutes} min.",
-    "outsideStandard": "Ārpus mūsu standarta piegādes zonām."
+    "outsideStandard": "Ārpus mūsu standarta piegādes zonām.",
+    "freeDelivery": "Bezmaksas piegāde",
+    "aptUnitPlaceholder": "Dzīvoklis / vienība / birojs (neobligāti)",
+    "buzzerPlaceholder": "Durvju zvana kods (neobligāti)",
+    "deliveryInstructionsPlaceholder": "Piegādes norādījumi — atstāt pie durvīm, sānu ieeja, zvanīt divreiz u.tml. (neobligāti)",
+    "pickATimePlaceholder": "Izvēlieties laiku…",
+    "customAmount": "Cita summa"
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Nevarēja izveidot jūsu kontu. Lūdzu, mēģiniet vēlreiz.",
       "errorEmailTaken": "Šis e-pasts jau ir reģistrēts."
     }
+  },
+  "addressBook": {
+    "loading": "Ielādē adreses…",
+    "empty": "Saglabātu adrešu vēl nav. Pievienojiet vienu, lai norēķināšanās laikā netiktu rakstīts no jauna.",
+    "defaultBadge": "Noklusējums",
+    "addressFallback": "Adrese",
+    "makeDefault": "Iestatīt kā noklusējumu",
+    "delete": "Dzēst",
+    "confirmDelete": "Dzēst šo adresi?",
+    "streetCityRequired": "Iela un pilsēta ir obligāti lauki.",
+    "labelPlaceholder": "Nosaukums (piemēram, Mājas, Darbs)",
+    "streetPlaceholder": "Ielas adrese",
+    "cityPlaceholder": "Pilsēta",
+    "postalPlaceholder": "Pasta indekss",
+    "cancel": "Atcelt",
+    "save": "Saglabāt adresi",
+    "saving": "Saglabā…",
+    "addAddress": "Pievienot adresi"
   }
 }

@@ -211,7 +211,10 @@
       "paymentFailed": "Pago fallido. Inténtalo de nuevo.",
       "selectVariant": "Por favor, selecciona una opción"
     },
-    "followUs": "Síguenos"
+    "followUs": "Síguenos",
+    "searchMenu": "Buscar en el menú…",
+    "signIn": "Iniciar sesión",
+    "signInTooltip": "Inicia sesión o crea una cuenta para seguir cupones e historial de pedidos"
   },
   "pizza": {
     "chooseSize": "Elegir tamaño",
@@ -359,7 +362,13 @@
     "youreIn": "Estás en {zone} — Coste {fee}, ~{minutes} min.",
     "outsideStandard": "Fuera de nuestras zonas de entrega estándar.",
     "cardOnPickup": "Pago con tarjeta al recoger",
-    "cardOnDelivery": "Pago con tarjeta en la entrega"
+    "cardOnDelivery": "Pago con tarjeta en la entrega",
+    "freeDelivery": "Entrega gratis",
+    "aptUnitPlaceholder": "Apto / Unidad / Suite (opcional)",
+    "buzzerPlaceholder": "Código de timbre (opcional)",
+    "deliveryInstructionsPlaceholder": "Instrucciones de entrega — dejar en la puerta, entrada lateral, tocar dos veces, etc. (opcional)",
+    "pickATimePlaceholder": "Elige un horario…",
+    "customAmount": "Monto personalizado"
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "No se pudo crear tu cuenta. Inténtalo de nuevo.",
       "errorEmailTaken": "Este correo ya está registrado."
     }
+  },
+  "addressBook": {
+    "loading": "Cargando direcciones…",
+    "empty": "Aún no tienes direcciones guardadas. Agrega una para no tener que reescribirla al pagar.",
+    "defaultBadge": "Predeterminada",
+    "addressFallback": "Dirección",
+    "makeDefault": "Establecer como predeterminada",
+    "delete": "Eliminar",
+    "confirmDelete": "¿Eliminar esta dirección?",
+    "streetCityRequired": "La calle y la ciudad son obligatorias.",
+    "labelPlaceholder": "Etiqueta (p. ej. Casa, Trabajo)",
+    "streetPlaceholder": "Dirección",
+    "cityPlaceholder": "Ciudad",
+    "postalPlaceholder": "Código postal",
+    "cancel": "Cancelar",
+    "save": "Guardar dirección",
+    "saving": "Guardando…",
+    "addAddress": "Agregar una dirección"
   }
 }

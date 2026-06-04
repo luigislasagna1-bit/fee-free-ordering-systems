@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: chọn ít nhất {n}",
       "paymentFailed": "Thanh toán thất bại. Vui lòng thử lại.",
       "selectVariant": "Vui lòng chọn một tùy chọn"
-    }
+    },
+    "searchMenu": "Tìm kiếm thực đơn…",
+    "signIn": "Đăng nhập",
+    "signInTooltip": "Đăng nhập hoặc tạo tài khoản để theo dõi phiếu giảm giá và lịch sử đặt hàng"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -359,7 +362,13 @@
     "noNotes": "Không có ghi chú",
     "locatingAddress": "Đang định vị địa chỉ…",
     "youreIn": "Bạn ở {zone} — Phí {fee}, ~{minutes} phút.",
-    "outsideStandard": "Ngoài khu vực giao hàng tiêu chuẩn."
+    "outsideStandard": "Ngoài khu vực giao hàng tiêu chuẩn.",
+    "freeDelivery": "Miễn phí giao hàng",
+    "aptUnitPlaceholder": "Căn hộ / Phòng / Suite (tùy chọn)",
+    "buzzerPlaceholder": "Mã chuông (tùy chọn)",
+    "deliveryInstructionsPlaceholder": "Hướng dẫn giao hàng — để trước cửa, lối vào bên hông, bấm chuông hai lần, v.v. (tùy chọn)",
+    "pickATimePlaceholder": "Chọn giờ…",
+    "customAmount": "Số tiền tùy chỉnh"
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Không thể tạo tài khoản. Vui lòng thử lại.",
       "errorEmailTaken": "Email này đã được đăng ký."
     }
+  },
+  "addressBook": {
+    "loading": "Đang tải địa chỉ…",
+    "empty": "Chưa có địa chỉ đã lưu. Thêm một địa chỉ để bỏ qua bước nhập lại khi thanh toán.",
+    "defaultBadge": "Mặc định",
+    "addressFallback": "Địa chỉ",
+    "makeDefault": "Đặt làm mặc định",
+    "delete": "Xóa",
+    "confirmDelete": "Xóa địa chỉ này?",
+    "streetCityRequired": "Tên đường và thành phố là bắt buộc.",
+    "labelPlaceholder": "Nhãn (ví dụ: Nhà, Công ty)",
+    "streetPlaceholder": "Địa chỉ đường phố",
+    "cityPlaceholder": "Thành phố",
+    "postalPlaceholder": "Mã bưu chính",
+    "cancel": "Hủy",
+    "save": "Lưu địa chỉ",
+    "saving": "Đang lưu…",
+    "addAddress": "Thêm địa chỉ"
   }
 }

@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: Wählen Sie mindestens {n}",
       "paymentFailed": "Zahlung fehlgeschlagen. Bitte versuchen Sie es erneut.",
       "selectVariant": "Bitte wählen Sie eine Option"
-    }
+    },
+    "searchMenu": "Speisekarte durchsuchen…",
+    "signIn": "Anmelden",
+    "signInTooltip": "Anmelden oder Konto erstellen, um Gutscheine und Bestellverlauf zu verfolgen"
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -359,7 +362,13 @@
     "noNotes": "Keine Hinweise",
     "locatingAddress": "Adresse wird ermittelt…",
     "youreIn": "Sie befinden sich in {zone} — Gebühr {fee}, ~{minutes} Min.",
-    "outsideStandard": "Außerhalb unserer Standard-Lieferzonen."
+    "outsideStandard": "Außerhalb unserer Standard-Lieferzonen.",
+    "freeDelivery": "Kostenlose Lieferung",
+    "aptUnitPlaceholder": "Wohnung / Einheit / Suite (optional)",
+    "buzzerPlaceholder": "Türklingelcode (optional)",
+    "deliveryInstructionsPlaceholder": "Lieferhinweise — vor der Tür lassen, Seiteneingang, zweimal klingeln usw. (optional)",
+    "pickATimePlaceholder": "Uhrzeit wählen…",
+    "customAmount": "Eigener Betrag"
   },
   "reservation": {
     "title": "Tisch reservieren",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Konto konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
       "errorEmailTaken": "Diese E-Mail-Adresse ist bereits registriert."
     }
+  },
+  "addressBook": {
+    "loading": "Adressen werden geladen…",
+    "empty": "Noch keine gespeicherten Adressen. Füge eine hinzu, um beim Checkout Zeit zu sparen.",
+    "defaultBadge": "Standard",
+    "addressFallback": "Adresse",
+    "makeDefault": "Als Standard festlegen",
+    "delete": "Löschen",
+    "confirmDelete": "Diese Adresse löschen?",
+    "streetCityRequired": "Straße und Stadt sind erforderlich.",
+    "labelPlaceholder": "Bezeichnung (z. B. Zuhause, Arbeit)",
+    "streetPlaceholder": "Straße und Hausnummer",
+    "cityPlaceholder": "Stadt",
+    "postalPlaceholder": "Postleitzahl",
+    "cancel": "Abbrechen",
+    "save": "Adresse speichern",
+    "saving": "Wird gespeichert…",
+    "addAddress": "Adresse hinzufügen"
   }
 }

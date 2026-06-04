@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: válasszon legalább {n} darabot",
       "paymentFailed": "A fizetés nem sikerült. Kérjük, próbálja újra.",
       "selectVariant": "Kérjük, válasszon lehetőséget"
-    }
+    },
+    "searchMenu": "Keresés az étlapon…",
+    "signIn": "Bejelentkezés",
+    "signInTooltip": "Jelentkezzen be vagy hozzon létre fiókot a kuponok és a rendelési előzmények követéséhez"
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -359,7 +362,13 @@
     "noNotes": "Nincs megjegyzés",
     "locatingAddress": "Cím keresése…",
     "youreIn": "Ön a(z) {zone} zónában van — Díj: {fee}, ~{minutes} perc.",
-    "outsideStandard": "A standard szállítási területen kívül."
+    "outsideStandard": "A standard szállítási területen kívül.",
+    "freeDelivery": "Ingyenes kiszállítás",
+    "aptUnitPlaceholder": "Emelet / ajtó / apartman (opcionális)",
+    "buzzerPlaceholder": "Kaputelefon kód (opcionális)",
+    "deliveryInstructionsPlaceholder": "Szállítási megjegyzés — ajtó előtt hagyja, oldalsó bejárat, csöngessen kétszer stb. (opcionális)",
+    "pickATimePlaceholder": "Válasszon időpontot…",
+    "customAmount": "Egyéni összeg"
   },
   "reservation": {
     "title": "Asztal foglalása",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Nem sikerült létrehozni a fiókot. Kérjük, próbálja újra.",
       "errorEmailTaken": "Ez az e-mail-cím már regisztrálva van."
     }
+  },
+  "addressBook": {
+    "loading": "Címek betöltése…",
+    "empty": "Még nincs mentett cím. Adjon hozzá egyet, hogy a pénztárnál ne kelljen újra begépelni.",
+    "defaultBadge": "Alapértelmezett",
+    "addressFallback": "Cím",
+    "makeDefault": "Alapértelmezettként beállít",
+    "delete": "Törlés",
+    "confirmDelete": "Törli ezt a címet?",
+    "streetCityRequired": "Az utca és a város megadása kötelező.",
+    "labelPlaceholder": "Címke (pl. Otthon, Munka)",
+    "streetPlaceholder": "Utca, házszám",
+    "cityPlaceholder": "Város",
+    "postalPlaceholder": "Irányítószám",
+    "cancel": "Mégse",
+    "save": "Cím mentése",
+    "saving": "Mentés…",
+    "addAddress": "Cím hozzáadása"
   }
 }

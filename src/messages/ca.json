@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: trieu com a mínim {n}",
       "paymentFailed": "Error en el pagament. Torneu-ho a intentar.",
       "selectVariant": "Seleccioneu una opció"
-    }
+    },
+    "searchMenu": "Cerca al menú…",
+    "signIn": "Inicia sessió",
+    "signInTooltip": "Inicia sessió o crea un compte per fer seguiment de cupons i historial de comandes"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -359,7 +362,13 @@
     "noNotes": "Sense notes",
     "locatingAddress": "Localitzant la vostra adreça…",
     "youreIn": "Sou a {zone} — Tarifa {fee}, ~{minutes} min.",
-    "outsideStandard": "Fora de les nostres zones de lliurament estàndard."
+    "outsideStandard": "Fora de les nostres zones de lliurament estàndard.",
+    "freeDelivery": "Lliurament gratuït",
+    "aptUnitPlaceholder": "Pis / Unitat / Suite (opcional)",
+    "buzzerPlaceholder": "Codi del porter automàtic (opcional)",
+    "deliveryInstructionsPlaceholder": "Instruccions de lliurament — deixar a la porta, entrada lateral, trucar dos cops, etc. (opcional)",
+    "pickATimePlaceholder": "Tria una hora…",
+    "customAmount": "Import personalitzat"
   },
   "reservation": {
     "title": "Reservar taula",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "No s'ha pogut crear el vostre compte. Torneu-ho a intentar.",
       "errorEmailTaken": "Aquest correu ja està registrat."
     }
+  },
+  "addressBook": {
+    "loading": "Carregant adreces…",
+    "empty": "Encara no hi ha adreces desades. Afegeix-ne una per estalviar temps a la caixa.",
+    "defaultBadge": "Per defecte",
+    "addressFallback": "Adreça",
+    "makeDefault": "Establir per defecte",
+    "delete": "Eliminar",
+    "confirmDelete": "Eliminar aquesta adreça?",
+    "streetCityRequired": "El carrer i la ciutat són obligatoris.",
+    "labelPlaceholder": "Etiqueta (p. ex. Casa, Feina)",
+    "streetPlaceholder": "Adreça postal",
+    "cityPlaceholder": "Ciutat",
+    "postalPlaceholder": "Codi postal",
+    "cancel": "Cancel·lar",
+    "save": "Desar adreça",
+    "saving": "Desant…",
+    "addAddress": "Afegir una adreça"
   }
 }

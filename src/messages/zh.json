@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}：至少选择 {n} 项",
       "paymentFailed": "支付失败，请重试。",
       "selectVariant": "请选择一个选项"
-    }
+    },
+    "searchMenu": "搜索菜单…",
+    "signIn": "登录",
+    "signInTooltip": "登录或注册账户，查看优惠券和历史订单"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -359,7 +362,13 @@
     "noNotes": "无备注",
     "locatingAddress": "正在定位地址…",
     "youreIn": "您在 {zone} 区域 — 费用 {fee}，约 {minutes} 分钟。",
-    "outsideStandard": "超出我们的标准配送范围。"
+    "outsideStandard": "超出我们的标准配送范围。",
+    "freeDelivery": "免费配送",
+    "aptUnitPlaceholder": "门牌 / 单元 / 套房（可选）",
+    "buzzerPlaceholder": "门铃密码（可选）",
+    "deliveryInstructionsPlaceholder": "配送备注 — 放门口、侧门、按两次门铃等（可选）",
+    "pickATimePlaceholder": "选择时间…",
+    "customAmount": "自定义金额"
   },
   "reservation": {
     "title": "预订餐桌",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "账户创建失败，请重试。",
       "errorEmailTaken": "该邮箱已被注册。"
     }
+  },
+  "addressBook": {
+    "loading": "正在加载地址…",
+    "empty": "暂无保存的地址。添加后，结账时无需重复填写。",
+    "defaultBadge": "默认",
+    "addressFallback": "地址",
+    "makeDefault": "设为默认",
+    "delete": "删除",
+    "confirmDelete": "确定删除此地址？",
+    "streetCityRequired": "街道和城市为必填项。",
+    "labelPlaceholder": "标签（如：家、公司）",
+    "streetPlaceholder": "街道地址",
+    "cityPlaceholder": "城市",
+    "postalPlaceholder": "邮政编码",
+    "cancel": "取消",
+    "save": "保存地址",
+    "saving": "保存中…",
+    "addAddress": "添加地址"
   }
 }

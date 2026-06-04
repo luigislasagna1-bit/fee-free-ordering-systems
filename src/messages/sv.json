@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: välj minst {n}",
       "paymentFailed": "Betalningen misslyckades. Försök igen.",
       "selectVariant": "Välj ett alternativ"
-    }
+    },
+    "searchMenu": "Sök i menyn…",
+    "signIn": "Logga in",
+    "signInTooltip": "Logga in eller skapa ett konto för att spåra kuponger och orderhistorik"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -359,7 +362,13 @@
     "noNotes": "Inga anteckningar",
     "locatingAddress": "Hittar din adress…",
     "youreIn": "Du är i {zone} — Avgift {fee}, ~{minutes} min.",
-    "outsideStandard": "Utanför våra vanliga leveransområden."
+    "outsideStandard": "Utanför våra vanliga leveransområden.",
+    "freeDelivery": "Gratis leverans",
+    "aptUnitPlaceholder": "Lägenhet / enhet / svit (valfritt)",
+    "buzzerPlaceholder": "Porttelefon / kod (valfritt)",
+    "deliveryInstructionsPlaceholder": "Leveransinstruktioner — lämna vid dörren, sidoingång, ring två gånger, osv. (valfritt)",
+    "pickATimePlaceholder": "Välj en tid…",
+    "customAmount": "Eget belopp"
   },
   "reservation": {
     "title": "Boka ett bord",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Det gick inte att skapa ditt konto. Försök igen.",
       "errorEmailTaken": "Den e-postadressen är redan registrerad."
     }
+  },
+  "addressBook": {
+    "loading": "Laddar adresser…",
+    "empty": "Inga sparade adresser ännu. Lägg till en för att slippa skriva in igen vid kassan.",
+    "defaultBadge": "Standard",
+    "addressFallback": "Adress",
+    "makeDefault": "Ange som standard",
+    "delete": "Ta bort",
+    "confirmDelete": "Ta bort den här adressen?",
+    "streetCityRequired": "Gatuadress och stad krävs.",
+    "labelPlaceholder": "Etikett (t.ex. Hem, Jobbet)",
+    "streetPlaceholder": "Gatuadress",
+    "cityPlaceholder": "Stad",
+    "postalPlaceholder": "Postnummer",
+    "cancel": "Avbryt",
+    "save": "Spara adress",
+    "saving": "Sparar…",
+    "addAddress": "Lägg till en adress"
   }
 }

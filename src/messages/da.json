@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: vælg mindst {n}",
       "paymentFailed": "Betaling mislykkedes. Prøv igen.",
       "selectVariant": "Vælg venligst en mulighed"
-    }
+    },
+    "searchMenu": "Søg i menuen…",
+    "signIn": "Log ind",
+    "signInTooltip": "Log ind eller opret en konto for at følge kuponer og ordrehistorik"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
@@ -359,7 +362,13 @@
     "noNotes": "Ingen noter",
     "locatingAddress": "Finder din adresse…",
     "youreIn": "Du er i {zone} — Gebyr {fee}, ~{minutes} min.",
-    "outsideStandard": "Uden for vores standard leveringsområder."
+    "outsideStandard": "Uden for vores standard leveringsområder.",
+    "freeDelivery": "Gratis levering",
+    "aptUnitPlaceholder": "Lejlighed / Enhed / Suite (valgfrit)",
+    "buzzerPlaceholder": "Porttelefon-kode (valgfrit)",
+    "deliveryInstructionsPlaceholder": "Leveringsinstruktioner — efterlad ved dør, sideindgang, ring to gange osv. (valgfrit)",
+    "pickATimePlaceholder": "Vælg et tidspunkt…",
+    "customAmount": "Valgfrit beløb"
   },
   "reservation": {
     "title": "Book et bord",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Kunne ikke oprette din konto. Prøv igen.",
       "errorEmailTaken": "Den e-mail er allerede registreret."
     }
+  },
+  "addressBook": {
+    "loading": "Indlæser adresser…",
+    "empty": "Ingen gemte adresser endnu. Tilføj én for at springe genindtastning over ved betaling.",
+    "defaultBadge": "Standard",
+    "addressFallback": "Adresse",
+    "makeDefault": "Gør til standard",
+    "delete": "Slet",
+    "confirmDelete": "Slet denne adresse?",
+    "streetCityRequired": "Gade og by er påkrævet.",
+    "labelPlaceholder": "Etiket (f.eks. Hjem, Arbejde)",
+    "streetPlaceholder": "Vejadresse",
+    "cityPlaceholder": "By",
+    "postalPlaceholder": "Postnummer",
+    "cancel": "Annuller",
+    "save": "Gem adresse",
+    "saving": "Gemmer…",
+    "addAddress": "Tilføj en adresse"
   }
 }

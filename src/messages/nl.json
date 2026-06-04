@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: kies minimaal {n}",
       "paymentFailed": "Betaling mislukt. Probeer het opnieuw.",
       "selectVariant": "Selecteer een optie"
-    }
+    },
+    "searchMenu": "Zoek in het menu…",
+    "signIn": "Inloggen",
+    "signInTooltip": "Log in of maak een account aan om kortingsbonnen en bestelgeschiedenis bij te houden"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -359,7 +362,13 @@
     "noNotes": "Geen opmerkingen",
     "locatingAddress": "Adres opzoeken…",
     "youreIn": "U bent in {zone} — Kosten {fee}, ~{minutes} min.",
-    "outsideStandard": "Buiten onze standaard bezorggebieden."
+    "outsideStandard": "Buiten onze standaard bezorggebieden.",
+    "freeDelivery": "Gratis bezorging",
+    "aptUnitPlaceholder": "Appartement / eenheid / suite (optioneel)",
+    "buzzerPlaceholder": "Bel-/intercomcode (optioneel)",
+    "deliveryInstructionsPlaceholder": "Bezorginstructies — bij deur achterlaten, zijingang, twee keer bellen, enz. (optioneel)",
+    "pickATimePlaceholder": "Kies een tijdstip…",
+    "customAmount": "Aangepast bedrag"
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Account kon niet worden aangemaakt. Probeer het opnieuw.",
       "errorEmailTaken": "Dat e-mailadres is al geregistreerd."
     }
+  },
+  "addressBook": {
+    "loading": "Adressen laden…",
+    "empty": "Nog geen opgeslagen adressen. Voeg er een toe om bij het afrekenen niet opnieuw te hoeven typen.",
+    "defaultBadge": "Standaard",
+    "addressFallback": "Adres",
+    "makeDefault": "Instellen als standaard",
+    "delete": "Verwijderen",
+    "confirmDelete": "Dit adres verwijderen?",
+    "streetCityRequired": "Straat en stad zijn verplicht.",
+    "labelPlaceholder": "Label (bijv. Thuis, Werk)",
+    "streetPlaceholder": "Straatnaam en huisnummer",
+    "cityPlaceholder": "Stad",
+    "postalPlaceholder": "Postcode",
+    "cancel": "Annuleren",
+    "save": "Adres opslaan",
+    "saving": "Opslaan…",
+    "addAddress": "Adres toevoegen"
   }
 }

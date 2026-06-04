@@ -211,7 +211,10 @@
       "paymentFailed": "Falha no pagamento. Tente novamente.",
       "selectVariant": "Selecione uma opção"
     },
-    "followUs": "Siga-nos"
+    "followUs": "Siga-nos",
+    "searchMenu": "Pesquisar no menu…",
+    "signIn": "Entrar",
+    "signInTooltip": "Entre ou crie uma conta para acompanhar cupões e histórico de encomendas"
   },
   "pizza": {
     "chooseSize": "Escolher tamanho",
@@ -359,7 +362,13 @@
     "youreIn": "Você está em {zone} — Taxa {fee}, ~{minutes} min.",
     "outsideStandard": "Fora da nossa área de entrega padrão.",
     "cardOnPickup": "Cartão na retirada",
-    "cardOnDelivery": "Cartão na entrega"
+    "cardOnDelivery": "Cartão na entrega",
+    "freeDelivery": "Entrega gratuita",
+    "aptUnitPlaceholder": "Andar / Fração / Apartamento (opcional)",
+    "buzzerPlaceholder": "Código da campainha (opcional)",
+    "deliveryInstructionsPlaceholder": "Instruções de entrega — deixar à porta, entrada lateral, tocar duas vezes, etc. (opcional)",
+    "pickATimePlaceholder": "Escolha uma hora…",
+    "customAmount": "Valor personalizado"
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Não foi possível criar sua conta. Tente novamente.",
       "errorEmailTaken": "Este e-mail já está cadastrado."
     }
+  },
+  "addressBook": {
+    "loading": "A carregar moradas…",
+    "empty": "Ainda não tem moradas guardadas. Adicione uma para não ter de repetir os dados no checkout.",
+    "defaultBadge": "Predefinida",
+    "addressFallback": "Morada",
+    "makeDefault": "Definir como predefinida",
+    "delete": "Eliminar",
+    "confirmDelete": "Eliminar esta morada?",
+    "streetCityRequired": "A rua e a cidade são obrigatórias.",
+    "labelPlaceholder": "Etiqueta (ex.: Casa, Trabalho)",
+    "streetPlaceholder": "Rua",
+    "cityPlaceholder": "Cidade",
+    "postalPlaceholder": "Código postal",
+    "cancel": "Cancelar",
+    "save": "Guardar morada",
+    "saving": "A guardar…",
+    "addAddress": "Adicionar uma morada"
   }
 }

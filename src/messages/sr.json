@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: izaberite najmanje {n}",
       "paymentFailed": "Plaćanje nije uspelo. Pokušajte ponovo.",
       "selectVariant": "Molimo izaberite opciju"
-    }
+    },
+    "searchMenu": "Pretražite meni…",
+    "signIn": "Prijavite se",
+    "signInTooltip": "Prijavite se ili napravite nalog da biste pratili kupone i istoriju narudžbina"
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",
@@ -359,7 +362,13 @@
     "noNotes": "Bez napomena",
     "locatingAddress": "Pronalaženje vaše adrese…",
     "youreIn": "Vi ste u {zone} — Naknada {fee}, ~{minutes} min.",
-    "outsideStandard": "Van naše standardne zone dostave."
+    "outsideStandard": "Van naše standardne zone dostave.",
+    "freeDelivery": "Besplatna dostava",
+    "aptUnitPlaceholder": "Stan / Jedinica / Apartman (opciono)",
+    "buzzerPlaceholder": "Kod interfona (opciono)",
+    "deliveryInstructionsPlaceholder": "Uputstva za dostavu — ostavite na vratima, bočni ulaz, zakucajte dva puta itd. (opciono)",
+    "pickATimePlaceholder": "Odaberite vreme…",
+    "customAmount": "Prilagođeni iznos"
   },
   "reservation": {
     "title": "Rezerviši sto",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Nije moguće kreirati nalog. Pokušajte ponovo.",
       "errorEmailTaken": "Ta email adresa je već registrovana."
     }
+  },
+  "addressBook": {
+    "loading": "Učitavanje adresa…",
+    "empty": "Nema sačuvanih adresa. Dodajte jednu da preskočite unos pri plaćanju.",
+    "defaultBadge": "Podrazumevana",
+    "addressFallback": "Adresa",
+    "makeDefault": "Postavi kao podrazumevanu",
+    "delete": "Obriši",
+    "confirmDelete": "Obrisati ovu adresu?",
+    "streetCityRequired": "Ulica i grad su obavezni.",
+    "labelPlaceholder": "Oznaka (npr. Kuća, Posao)",
+    "streetPlaceholder": "Ulica i broj",
+    "cityPlaceholder": "Grad",
+    "postalPlaceholder": "Poštanski broj",
+    "cancel": "Otkaži",
+    "save": "Sačuvaj adresu",
+    "saving": "Čuvanje…",
+    "addAddress": "Dodaj adresu"
   }
 }

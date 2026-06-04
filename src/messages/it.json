@@ -211,7 +211,10 @@
       "paymentFailed": "Pagamento fallito. Riprova.",
       "selectVariant": "Seleziona un'opzione"
     },
-    "followUs": "Seguici"
+    "followUs": "Seguici",
+    "searchMenu": "Cerca nel menu…",
+    "signIn": "Accedi",
+    "signInTooltip": "Accedi o crea un account per monitorare i coupon e la cronologia degli ordini"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
@@ -359,7 +362,13 @@
     "youreIn": "Sei in {zone} — Costo {fee}, ~{minutes} min.",
     "outsideStandard": "Fuori dalla nostra zona di consegna standard.",
     "cardOnPickup": "Carta al ritiro",
-    "cardOnDelivery": "Carta alla consegna"
+    "cardOnDelivery": "Carta alla consegna",
+    "freeDelivery": "Consegna gratuita",
+    "aptUnitPlaceholder": "Interno / Unità / Suite (opzionale)",
+    "buzzerPlaceholder": "Codice citofono (opzionale)",
+    "deliveryInstructionsPlaceholder": "Istruzioni per la consegna — lascia alla porta, ingresso laterale, suona due volte, ecc. (opzionale)",
+    "pickATimePlaceholder": "Scegli un orario…",
+    "customAmount": "Importo personalizzato"
   },
   "reservation": {
     "title": "Prenota un tavolo",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Impossibile creare l'account. Riprova.",
       "errorEmailTaken": "Questa e-mail è già registrata."
     }
+  },
+  "addressBook": {
+    "loading": "Caricamento indirizzi…",
+    "empty": "Nessun indirizzo salvato. Aggiungine uno per non doverlo reinserire al momento del pagamento.",
+    "defaultBadge": "Predefinito",
+    "addressFallback": "Indirizzo",
+    "makeDefault": "Imposta come predefinito",
+    "delete": "Elimina",
+    "confirmDelete": "Eliminare questo indirizzo?",
+    "streetCityRequired": "Via e città sono obbligatorie.",
+    "labelPlaceholder": "Etichetta (es. Casa, Lavoro)",
+    "streetPlaceholder": "Via e numero civico",
+    "cityPlaceholder": "Città",
+    "postalPlaceholder": "Codice postale",
+    "cancel": "Annulla",
+    "save": "Salva indirizzo",
+    "saving": "Salvataggio…",
+    "addAddress": "Aggiungi un indirizzo"
   }
 }

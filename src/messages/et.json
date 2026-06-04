@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: vali vähemalt {n}",
       "paymentFailed": "Makse ebaõnnestus. Palun proovi uuesti.",
       "selectVariant": "Palun vali variant"
-    }
+    },
+    "searchMenu": "Otsi menüüst…",
+    "signIn": "Logi sisse",
+    "signInTooltip": "Logi sisse või loo konto, et jälgida kupongide ja tellimuste ajalugu"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -359,7 +362,13 @@
     "noNotes": "Märkusi pole",
     "locatingAddress": "Sinu aadressi otsimine…",
     "youreIn": "Sa oled piirkonnas {zone} — Tasu {fee}, ~{minutes} min.",
-    "outsideStandard": "Väljaspool meie standardseid tarnepiirkondi."
+    "outsideStandard": "Väljaspool meie standardseid tarnepiirkondi.",
+    "freeDelivery": "Tasuta kohaletoimetamine",
+    "aptUnitPlaceholder": "Korter / üksus / sviit (valikuline)",
+    "buzzerPlaceholder": "Uksekell / kood (valikuline)",
+    "deliveryInstructionsPlaceholder": "Tarnejuhised — jäta ukse ette, külgsissepääs, helista kaks korda jne. (valikuline)",
+    "pickATimePlaceholder": "Vali aeg…",
+    "customAmount": "Kohandatud summa"
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Konto loomine ebaõnnestus. Palun proovi uuesti.",
       "errorEmailTaken": "See e-posti aadress on juba registreeritud."
     }
+  },
+  "addressBook": {
+    "loading": "Laadin aadresse…",
+    "empty": "Salvestatud aadresse pole. Lisa üks, et kassas uuesti tippimist vältida.",
+    "defaultBadge": "Vaikimisi",
+    "addressFallback": "Aadress",
+    "makeDefault": "Tee vaikimisi",
+    "delete": "Kustuta",
+    "confirmDelete": "Kustuta see aadress?",
+    "streetCityRequired": "Tänav ja linn on kohustuslikud.",
+    "labelPlaceholder": "Silt (nt Kodu, Töö)",
+    "streetPlaceholder": "Tänava aadress",
+    "cityPlaceholder": "Linn",
+    "postalPlaceholder": "Postiindeks",
+    "cancel": "Tühista",
+    "save": "Salvesta aadress",
+    "saving": "Salvestamine…",
+    "addAddress": "Lisa aadress"
   }
 }

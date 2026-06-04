@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: wybierz co najmniej {n}",
       "paymentFailed": "Płatność nie powiodła się. Spróbuj ponownie.",
       "selectVariant": "Proszę wybrać opcję"
-    }
+    },
+    "searchMenu": "Szukaj w menu…",
+    "signIn": "Zaloguj się",
+    "signInTooltip": "Zaloguj się lub utwórz konto, aby śledzić kupony i historię zamówień"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",
@@ -359,7 +362,13 @@
     "noNotes": "Brak uwag",
     "locatingAddress": "Lokalizowanie adresu…",
     "youreIn": "Jesteś w strefie {zone} — Opłata {fee}, ~{minutes} min.",
-    "outsideStandard": "Poza naszymi standardowymi strefami dostawy."
+    "outsideStandard": "Poza naszymi standardowymi strefami dostawy.",
+    "freeDelivery": "Bezpłatna dostawa",
+    "aptUnitPlaceholder": "Numer lokalu / mieszkania (opcjonalnie)",
+    "buzzerPlaceholder": "Kod domofonu (opcjonalnie)",
+    "deliveryInstructionsPlaceholder": "Wskazówki dla dostawcy — zostaw przy drzwiach, wejście boczne, zadzwoń dwa razy itp. (opcjonalnie)",
+    "pickATimePlaceholder": "Wybierz godzinę…",
+    "customAmount": "Inna kwota"
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Nie udało się utworzyć konta. Spróbuj ponownie.",
       "errorEmailTaken": "Ten e-mail jest już zarejestrowany."
     }
+  },
+  "addressBook": {
+    "loading": "Ładowanie adresów…",
+    "empty": "Brak zapisanych adresów. Dodaj adres, aby nie wpisywać go przy każdym zamówieniu.",
+    "defaultBadge": "Domyślny",
+    "addressFallback": "Adres",
+    "makeDefault": "Ustaw jako domyślny",
+    "delete": "Usuń",
+    "confirmDelete": "Usunąć ten adres?",
+    "streetCityRequired": "Ulica i miasto są wymagane.",
+    "labelPlaceholder": "Etykieta (np. Dom, Praca)",
+    "streetPlaceholder": "Ulica i numer",
+    "cityPlaceholder": "Miasto",
+    "postalPlaceholder": "Kod pocztowy",
+    "cancel": "Anuluj",
+    "save": "Zapisz adres",
+    "saving": "Zapisywanie…",
+    "addAddress": "Dodaj adres"
   }
 }

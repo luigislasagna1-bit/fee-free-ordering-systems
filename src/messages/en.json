@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: choose at least {n}",
       "paymentFailed": "Payment failed. Please try again.",
       "selectVariant": "Please select an option"
-    }
+    },
+    "searchMenu": "Search the menu…",
+    "signIn": "Sign in",
+    "signInTooltip": "Sign in or create an account to track coupons and order history"
   },
   "pizza": {
     "chooseSize": "Choose Size",
@@ -359,7 +362,13 @@
     "noNotes": "No notes",
     "locatingAddress": "Locating your address…",
     "youreIn": "You're in {zone} — Fee {fee}, ~{minutes} min.",
-    "outsideStandard": "Outside our standard delivery areas."
+    "outsideStandard": "Outside our standard delivery areas.",
+    "freeDelivery": "Free delivery",
+    "aptUnitPlaceholder": "Apt / Unit / Suite (optional)",
+    "buzzerPlaceholder": "Buzzer code (optional)",
+    "deliveryInstructionsPlaceholder": "Delivery instructions — leave at door, side entrance, ring twice, etc. (optional)",
+    "pickATimePlaceholder": "Pick a time…",
+    "customAmount": "Custom amount"
   },
   "reservation": {
     "title": "Book a table",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Couldn't create your account. Please try again.",
       "errorEmailTaken": "That email is already registered."
     }
+  },
+  "addressBook": {
+    "loading": "Loading addresses…",
+    "empty": "No saved addresses yet. Add one to skip retyping at checkout.",
+    "defaultBadge": "Default",
+    "addressFallback": "Address",
+    "makeDefault": "Make default",
+    "delete": "Delete",
+    "confirmDelete": "Delete this address?",
+    "streetCityRequired": "Street and city are required.",
+    "labelPlaceholder": "Label (e.g. Home, Work)",
+    "streetPlaceholder": "Street address",
+    "cityPlaceholder": "City",
+    "postalPlaceholder": "Postal code",
+    "cancel": "Cancel",
+    "save": "Save address",
+    "saving": "Saving…",
+    "addAddress": "Add an address"
   }
 }

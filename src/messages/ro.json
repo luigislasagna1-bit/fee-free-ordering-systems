@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: alege cel puțin {n}",
       "paymentFailed": "Plata a eșuat. Încearcă din nou.",
       "selectVariant": "Te rugăm să selectezi o opțiune"
-    }
+    },
+    "searchMenu": "Caută în meniu…",
+    "signIn": "Autentificare",
+    "signInTooltip": "Autentifică-te sau creează un cont pentru a urmări cupoanele și istoricul comenzilor"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -359,7 +362,13 @@
     "noNotes": "Fără observații",
     "locatingAddress": "Se localizează adresa…",
     "youreIn": "Ești în {zone} — Taxă {fee}, ~{minutes} min.",
-    "outsideStandard": "În afara zonelor noastre standard de livrare."
+    "outsideStandard": "În afara zonelor noastre standard de livrare.",
+    "freeDelivery": "Livrare gratuită",
+    "aptUnitPlaceholder": "Apartament / Unitate / Etaj (opțional)",
+    "buzzerPlaceholder": "Cod interfon (opțional)",
+    "deliveryInstructionsPlaceholder": "Instrucțiuni de livrare — lasă la ușă, intrare laterală, sună de două ori etc. (opțional)",
+    "pickATimePlaceholder": "Alege o oră…",
+    "customAmount": "Sumă personalizată"
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Nu s-a putut crea contul. Te rugăm să încerci din nou.",
       "errorEmailTaken": "Acel email este deja înregistrat."
     }
+  },
+  "addressBook": {
+    "loading": "Se încarcă adresele…",
+    "empty": "Nicio adresă salvată. Adaugă una pentru a sări peste reintroducere la checkout.",
+    "defaultBadge": "Implicită",
+    "addressFallback": "Adresă",
+    "makeDefault": "Setează ca implicită",
+    "delete": "Șterge",
+    "confirmDelete": "Ștergi această adresă?",
+    "streetCityRequired": "Strada și orașul sunt obligatorii.",
+    "labelPlaceholder": "Etichetă (ex. Acasă, Serviciu)",
+    "streetPlaceholder": "Adresă stradă",
+    "cityPlaceholder": "Oraș",
+    "postalPlaceholder": "Cod poștal",
+    "cancel": "Anulează",
+    "save": "Salvează adresa",
+    "saving": "Se salvează…",
+    "addAddress": "Adaugă o adresă"
   }
 }

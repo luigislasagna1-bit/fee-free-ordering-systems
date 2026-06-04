@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: escolha pelo menos {n}",
       "paymentFailed": "Falha no pagamento. Tente novamente.",
       "selectVariant": "Por favor, selecione uma opção"
-    }
+    },
+    "searchMenu": "Buscar no cardápio…",
+    "signIn": "Entrar",
+    "signInTooltip": "Entre ou crie uma conta para acompanhar cupons e histórico de pedidos"
   },
   "pizza": {
     "chooseSize": "Escolha o Tamanho",
@@ -359,7 +362,13 @@
     "noNotes": "Sem observações",
     "locatingAddress": "Localizando seu endereço…",
     "youreIn": "Você está em {zone} — Taxa {fee}, ~{minutes} min.",
-    "outsideStandard": "Fora das nossas áreas de entrega padrão."
+    "outsideStandard": "Fora das nossas áreas de entrega padrão.",
+    "freeDelivery": "Entrega grátis",
+    "aptUnitPlaceholder": "Apto / Unidade / Conjunto (opcional)",
+    "buzzerPlaceholder": "Código do interfone (opcional)",
+    "deliveryInstructionsPlaceholder": "Instruções de entrega — deixar na porta, entrada lateral, tocar duas vezes etc. (opcional)",
+    "pickATimePlaceholder": "Escolha um horário…",
+    "customAmount": "Valor personalizado"
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Não foi possível criar sua conta. Tente novamente.",
       "errorEmailTaken": "Esse e-mail já está registrado."
     }
+  },
+  "addressBook": {
+    "loading": "Carregando endereços…",
+    "empty": "Nenhum endereço salvo ainda. Adicione um para não precisar digitar novamente no checkout.",
+    "defaultBadge": "Padrão",
+    "addressFallback": "Endereço",
+    "makeDefault": "Definir como padrão",
+    "delete": "Excluir",
+    "confirmDelete": "Excluir este endereço?",
+    "streetCityRequired": "Rua e cidade são obrigatórias.",
+    "labelPlaceholder": "Rótulo (ex.: Casa, Trabalho)",
+    "streetPlaceholder": "Logradouro",
+    "cityPlaceholder": "Cidade",
+    "postalPlaceholder": "CEP",
+    "cancel": "Cancelar",
+    "save": "Salvar endereço",
+    "saving": "Salvando…",
+    "addAddress": "Adicionar endereço"
   }
 }

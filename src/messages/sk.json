@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: vyberte aspoň {n}",
       "paymentFailed": "Platba zlyhala. Skúste to znova.",
       "selectVariant": "Prosím, vyberte možnosť"
-    }
+    },
+    "searchMenu": "Hľadať v menu…",
+    "signIn": "Prihlásiť sa",
+    "signInTooltip": "Prihláste sa alebo vytvorte účet na sledovanie kupónov a histórie objednávok"
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",
@@ -359,7 +362,13 @@
     "noNotes": "Žiadne poznámky",
     "locatingAddress": "Hľadám vašu adresu…",
     "youreIn": "Ste v {zone} — Poplatok {fee}, ~{minutes} min.",
-    "outsideStandard": "Mimo štandardných oblastí doručenia."
+    "outsideStandard": "Mimo štandardných oblastí doručenia.",
+    "freeDelivery": "Doručenie zadarmo",
+    "aptUnitPlaceholder": "Byt / jednotka / suite (voliteľné)",
+    "buzzerPlaceholder": "Kód zvončeka (voliteľné)",
+    "deliveryInstructionsPlaceholder": "Pokyny k doručeniu — nechajte pri dverách, bočný vchod, zazvoniť dvakrát atď. (voliteľné)",
+    "pickATimePlaceholder": "Vyberte čas…",
+    "customAmount": "Vlastná suma"
   },
   "reservation": {
     "title": "Rezervovať stôl",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Účet sa nepodarilo vytvoriť. Skúste to znova.",
       "errorEmailTaken": "Tento e-mail je už zaregistrovaný."
     }
+  },
+  "addressBook": {
+    "loading": "Načítavanie adries…",
+    "empty": "Zatiaľ žiadne uložené adresy. Pridajte jednu, aby ste nemuseli adresu zadávať pri každej objednávke.",
+    "defaultBadge": "Predvolená",
+    "addressFallback": "Adresa",
+    "makeDefault": "Nastaviť ako predvolenú",
+    "delete": "Odstrániť",
+    "confirmDelete": "Odstrániť túto adresu?",
+    "streetCityRequired": "Ulica a mesto sú povinné.",
+    "labelPlaceholder": "Označenie (napr. Domov, Práca)",
+    "streetPlaceholder": "Ulica a číslo",
+    "cityPlaceholder": "Mesto",
+    "postalPlaceholder": "PSČ",
+    "cancel": "Zrušiť",
+    "save": "Uložiť adresu",
+    "saving": "Ukladanie…",
+    "addAddress": "Pridať adresu"
   }
 }

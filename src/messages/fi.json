@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: valitse vähintään {n}",
       "paymentFailed": "Maksu epäonnistui. Yritä uudelleen.",
       "selectVariant": "Valitse vaihtoehto"
-    }
+    },
+    "searchMenu": "Hae menuusta…",
+    "signIn": "Kirjaudu sisään",
+    "signInTooltip": "Kirjaudu sisään tai luo tili kuponkien ja tilaushistorian seurantaa varten"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -359,7 +362,13 @@
     "noNotes": "Ei muistiinpanoja",
     "locatingAddress": "Paikannetaan osoitettasi…",
     "youreIn": "Olet {zone} alueella — Maksu {fee}, ~{minutes} min.",
-    "outsideStandard": "Vakiotoimitusvyöhykkeidemme ulkopuolella."
+    "outsideStandard": "Vakiotoimitusvyöhykkeidemme ulkopuolella.",
+    "freeDelivery": "Ilmainen toimitus",
+    "aptUnitPlaceholder": "Asunto / huoneisto (valinnainen)",
+    "buzzerPlaceholder": "Ovikoodi (valinnainen)",
+    "deliveryInstructionsPlaceholder": "Toimitusohjeet — jätä ovelle, sivusisäänkäynti, soita kahdesti jne. (valinnainen)",
+    "pickATimePlaceholder": "Valitse aika…",
+    "customAmount": "Muu summa"
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Tilin luominen epäonnistui. Yritä uudelleen.",
       "errorEmailTaken": "Tämä sähköpostiosoite on jo rekisteröity."
     }
+  },
+  "addressBook": {
+    "loading": "Ladataan osoitteita…",
+    "empty": "Ei tallennettuja osoitteita. Lisää osoite, niin sinun ei tarvitse kirjoittaa sitä uudelleen kassalla.",
+    "defaultBadge": "Oletus",
+    "addressFallback": "Osoite",
+    "makeDefault": "Aseta oletukseksi",
+    "delete": "Poista",
+    "confirmDelete": "Poistetaanko tämä osoite?",
+    "streetCityRequired": "Katuosoite ja kaupunki ovat pakollisia.",
+    "labelPlaceholder": "Nimi (esim. Koti, Työ)",
+    "streetPlaceholder": "Katuosoite",
+    "cityPlaceholder": "Kaupunki",
+    "postalPlaceholder": "Postinumero",
+    "cancel": "Peruuta",
+    "save": "Tallenna osoite",
+    "saving": "Tallennetaan…",
+    "addAddress": "Lisää osoite"
   }
 }

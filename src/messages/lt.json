@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: pasirinkite bent {n}",
       "paymentFailed": "Mokėjimas nepavyko. Bandykite dar kartą.",
       "selectVariant": "Pasirinkite variantą"
-    }
+    },
+    "searchMenu": "Ieškoti meniu…",
+    "signIn": "Prisijungti",
+    "signInTooltip": "Prisijunkite arba sukurkite paskyrą, kad galėtumėte sekti kuponus ir užsakymų istoriją"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -359,7 +362,13 @@
     "noNotes": "Nėra pastabų",
     "locatingAddress": "Ieškoma jūsų adreso…",
     "youreIn": "Jūs esate zonoje {zone} — Mokestis {fee}, ~{minutes} min.",
-    "outsideStandard": "Už standartinių pristatymo zonų."
+    "outsideStandard": "Už standartinių pristatymo zonų.",
+    "freeDelivery": "Nemokamas pristatymas",
+    "aptUnitPlaceholder": "Butas / Patalpa / Apartamentai (neprivaloma)",
+    "buzzerPlaceholder": "Durų skambučio kodas (neprivaloma)",
+    "deliveryInstructionsPlaceholder": "Pristatymo instrukcijos — palikti prie durų, šoninis įėjimas, skambinti du kartus ir pan. (neprivaloma)",
+    "pickATimePlaceholder": "Pasirinkite laiką…",
+    "customAmount": "Kita suma"
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Nepavyko sukurti paskyros. Bandykite dar kartą.",
       "errorEmailTaken": "Šis el. paštas jau užregistruotas."
     }
+  },
+  "addressBook": {
+    "loading": "Kraunami adresai…",
+    "empty": "Dar nėra išsaugotų adresų. Pridėkite vieną, kad nereikėtų jo vėl vesti prie kasos.",
+    "defaultBadge": "Numatytasis",
+    "addressFallback": "Adresas",
+    "makeDefault": "Nustatyti kaip numatytąjį",
+    "delete": "Ištrinti",
+    "confirmDelete": "Ištrinti šį adresą?",
+    "streetCityRequired": "Gatvė ir miestas yra privalomi.",
+    "labelPlaceholder": "Žyma (pvz. Namai, Darbas)",
+    "streetPlaceholder": "Gatvės adresas",
+    "cityPlaceholder": "Miestas",
+    "postalPlaceholder": "Pašto kodas",
+    "cancel": "Atšaukti",
+    "save": "Išsaugoti adresą",
+    "saving": "Saugoma…",
+    "addAddress": "Pridėti adresą"
   }
 }

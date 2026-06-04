@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: เลือกอย่างน้อย {n}",
       "paymentFailed": "การชำระเงินล้มเหลว กรุณาลองอีกครั้ง",
       "selectVariant": "กรุณาเลือกตัวเลือก"
-    }
+    },
+    "searchMenu": "ค้นหาเมนู…",
+    "signIn": "เข้าสู่ระบบ",
+    "signInTooltip": "เข้าสู่ระบบหรือสร้างบัญชีเพื่อติดตามคูปองและประวัติการสั่งอาหาร"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",
@@ -359,7 +362,13 @@
     "noNotes": "ไม่มีหมายเหตุ",
     "locatingAddress": "กำลังค้นหาที่อยู่…",
     "youreIn": "คุณอยู่ใน {zone} — ค่าจัดส่ง {fee}, ~{minutes} นาที",
-    "outsideStandard": "นอกเขตจัดส่งมาตรฐาน"
+    "outsideStandard": "นอกเขตจัดส่งมาตรฐาน",
+    "freeDelivery": "จัดส่งฟรี",
+    "aptUnitPlaceholder": "ห้อง / ยูนิต / ชุด (ไม่บังคับ)",
+    "buzzerPlaceholder": "รหัสกริ่ง (ไม่บังคับ)",
+    "deliveryInstructionsPlaceholder": "คำแนะนำการจัดส่ง — วางไว้หน้าประตู, ทางเข้าด้านข้าง, กดกริ่งสองครั้ง ฯลฯ (ไม่บังคับ)",
+    "pickATimePlaceholder": "เลือกเวลา…",
+    "customAmount": "จำนวนที่กำหนดเอง"
   },
   "reservation": {
     "title": "จองโต๊ะ",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "ไม่สามารถสร้างบัญชีได้ กรุณาลองอีกครั้ง",
       "errorEmailTaken": "อีเมลนั้นถูกลงทะเบียนแล้ว"
     }
+  },
+  "addressBook": {
+    "loading": "กำลังโหลดที่อยู่…",
+    "empty": "ยังไม่มีที่อยู่ที่บันทึกไว้ เพิ่มที่อยู่เพื่อข้ามการพิมพ์ซ้ำตอนชำระเงิน",
+    "defaultBadge": "ค่าเริ่มต้น",
+    "addressFallback": "ที่อยู่",
+    "makeDefault": "ตั้งเป็นค่าเริ่มต้น",
+    "delete": "ลบ",
+    "confirmDelete": "ลบที่อยู่นี้?",
+    "streetCityRequired": "กรุณากรอกถนนและเมือง",
+    "labelPlaceholder": "ชื่อป้ายกำกับ (เช่น บ้าน, ที่ทำงาน)",
+    "streetPlaceholder": "ที่อยู่ถนน",
+    "cityPlaceholder": "เมือง",
+    "postalPlaceholder": "รหัสไปรษณีย์",
+    "cancel": "ยกเลิก",
+    "save": "บันทึกที่อยู่",
+    "saving": "กำลังบันทึก…",
+    "addAddress": "เพิ่มที่อยู่"
   }
 }

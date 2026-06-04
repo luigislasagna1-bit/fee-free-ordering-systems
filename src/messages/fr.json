@@ -211,7 +211,10 @@
       "paymentFailed": "Échec du paiement. Veuillez réessayer.",
       "selectVariant": "Veuillez sélectionner une option"
     },
-    "followUs": "Suivez-nous"
+    "followUs": "Suivez-nous",
+    "searchMenu": "Rechercher dans le menu…",
+    "signIn": "Se connecter",
+    "signInTooltip": "Connectez-vous ou créez un compte pour suivre vos coupons et l'historique de vos commandes"
   },
   "pizza": {
     "chooseSize": "Choisir la taille",
@@ -359,7 +362,13 @@
     "youreIn": "Vous êtes dans {zone} — Frais {fee}, ~{minutes} min.",
     "outsideStandard": "Hors de notre zone de livraison standard.",
     "cardOnPickup": "Paiement par carte au retrait",
-    "cardOnDelivery": "Paiement par carte à la livraison"
+    "cardOnDelivery": "Paiement par carte à la livraison",
+    "freeDelivery": "Livraison gratuite",
+    "aptUnitPlaceholder": "Apt / Unité / Suite (facultatif)",
+    "buzzerPlaceholder": "Code d'entrée (facultatif)",
+    "deliveryInstructionsPlaceholder": "Instructions de livraison — laisser à la porte, entrée latérale, sonner deux fois, etc. (facultatif)",
+    "pickATimePlaceholder": "Choisir une heure…",
+    "customAmount": "Montant personnalisé"
   },
   "reservation": {
     "title": "Réserver une table",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Impossible de créer votre compte. Veuillez réessayer.",
       "errorEmailTaken": "Cette adresse e-mail est déjà inscrite."
     }
+  },
+  "addressBook": {
+    "loading": "Chargement des adresses…",
+    "empty": "Aucune adresse enregistrée. Ajoutez-en une pour gagner du temps à la commande.",
+    "defaultBadge": "Par défaut",
+    "addressFallback": "Adresse",
+    "makeDefault": "Définir par défaut",
+    "delete": "Supprimer",
+    "confirmDelete": "Supprimer cette adresse ?",
+    "streetCityRequired": "La rue et la ville sont obligatoires.",
+    "labelPlaceholder": "Étiquette (ex. Domicile, Travail)",
+    "streetPlaceholder": "Adresse",
+    "cityPlaceholder": "Ville",
+    "postalPlaceholder": "Code postal",
+    "cancel": "Annuler",
+    "save": "Enregistrer l'adresse",
+    "saving": "Enregistrement…",
+    "addAddress": "Ajouter une adresse"
   }
 }

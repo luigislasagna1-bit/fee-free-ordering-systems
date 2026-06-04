@@ -344,6 +344,7 @@ function MenuSearchBar({
   onChange: (v: string) => void;
   theme: ReturnType<typeof parseTheme>;
 }) {
+  const t = useTranslations("ordering");
   return (
     <div className="relative mb-3">
       <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -351,7 +352,7 @@ function MenuSearchBar({
         type="search"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Search the menu…"
+        placeholder={t("searchMenu")}
         className="w-full pl-9 pr-9 py-2.5 rounded-full text-sm focus:outline-none focus:ring-2 transition"
         style={{
           backgroundColor: theme.cardBackground,
@@ -1977,10 +1978,10 @@ export function OrderingPageClient({
                     href={`/order/${restaurant.slug}/account/login`}
                     className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full border-2 transition hover:bg-gray-50"
                     style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
-                    title="Sign in or create an account to track coupons and order history"
+                    title={t("signInTooltip")}
                   >
                     <LogIn className="w-4 h-4 flex-shrink-0" />
-                    <span className="hidden sm:inline">Sign in</span>
+                    <span className="hidden sm:inline">{t("signIn")}</span>
                   </a>
                 )
               )}

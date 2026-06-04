@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: 최소 {n}개를 선택하세요",
       "paymentFailed": "결제에 실패했습니다. 다시 시도해 주세요.",
       "selectVariant": "옵션을 선택해 주세요"
-    }
+    },
+    "searchMenu": "메뉴 검색…",
+    "signIn": "로그인",
+    "signInTooltip": "로그인하거나 계정을 만들어 쿠폰과 주문 내역을 확인하세요"
   },
   "pizza": {
     "chooseSize": "크기 선택",
@@ -359,7 +362,13 @@
     "noNotes": "메모 없음",
     "locatingAddress": "주소를 확인 중입니다…",
     "youreIn": "{zone} 구역 — 배달료 {fee}, 약 {minutes}분.",
-    "outsideStandard": "표준 배달 구역 외 지역입니다."
+    "outsideStandard": "표준 배달 구역 외 지역입니다.",
+    "freeDelivery": "무료 배달",
+    "aptUnitPlaceholder": "동/호수/상세주소 (선택)",
+    "buzzerPlaceholder": "공동현관 비밀번호 (선택)",
+    "deliveryInstructionsPlaceholder": "배달 요청사항 — 문 앞에 놓기, 측면 출입구, 두 번 벨 등 (선택)",
+    "pickATimePlaceholder": "시간 선택…",
+    "customAmount": "직접 입력"
   },
   "reservation": {
     "title": "테이블 예약",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "계정을 만들 수 없습니다. 다시 시도해 주세요.",
       "errorEmailTaken": "이미 등록된 이메일입니다."
     }
+  },
+  "addressBook": {
+    "loading": "주소 불러오는 중…",
+    "empty": "저장된 주소가 없습니다. 주소를 추가하면 다음 주문 시 간편하게 이용할 수 있습니다.",
+    "defaultBadge": "기본",
+    "addressFallback": "주소",
+    "makeDefault": "기본으로 설정",
+    "delete": "삭제",
+    "confirmDelete": "이 주소를 삭제하시겠습니까?",
+    "streetCityRequired": "도로명 주소와 도시는 필수입니다.",
+    "labelPlaceholder": "레이블 (예: 집, 직장)",
+    "streetPlaceholder": "도로명 주소",
+    "cityPlaceholder": "도시",
+    "postalPlaceholder": "우편번호",
+    "cancel": "취소",
+    "save": "주소 저장",
+    "saving": "저장 중…",
+    "addAddress": "주소 추가"
   }
 }

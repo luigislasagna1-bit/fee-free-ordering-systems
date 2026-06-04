@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: בחר לפחות {n}",
       "paymentFailed": "התשלום נכשל. אנא נסה שוב.",
       "selectVariant": "אנא בחר אפשרות"
-    }
+    },
+    "searchMenu": "חפש בתפריט…",
+    "signIn": "התחברות",
+    "signInTooltip": "התחבר או צור חשבון כדי לעקוב אחר קופונים והיסטוריית הזמנות"
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -359,7 +362,13 @@
     "noNotes": "ללא הערות",
     "locatingAddress": "מאתר את כתובתך…",
     "youreIn": "אתה באזור {zone} — עלות {fee}, ~{minutes} דק'.",
-    "outsideStandard": "מחוץ לאזורי המשלוח הרגילים שלנו."
+    "outsideStandard": "מחוץ לאזורי המשלוח הרגילים שלנו.",
+    "freeDelivery": "משלוח חינם",
+    "aptUnitPlaceholder": "דירה / יחידה / סוויטה (אופציונלי)",
+    "buzzerPlaceholder": "קוד אינטרקום (אופציונלי)",
+    "deliveryInstructionsPlaceholder": "הוראות משלוח — להשאיר ליד הדלת, כניסה צדדית, לצלצל פעמיים וכו' (אופציונלי)",
+    "pickATimePlaceholder": "בחר שעה…",
+    "customAmount": "סכום מותאם"
   },
   "reservation": {
     "title": "הזמן שולחן",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "לא ניתן ליצור את חשבונך. אנא נסה שוב.",
       "errorEmailTaken": "דואר אלקטרוני זה כבר רשום."
     }
+  },
+  "addressBook": {
+    "loading": "טוען כתובות…",
+    "empty": "אין כתובות שמורות עדיין. הוסף אחת כדי לדלג על הקלדה חוזרת בקופה.",
+    "defaultBadge": "ברירת מחדל",
+    "addressFallback": "כתובת",
+    "makeDefault": "הגדר כברירת מחדל",
+    "delete": "מחק",
+    "confirmDelete": "למחוק את הכתובת הזו?",
+    "streetCityRequired": "שם רחוב ועיר הם שדות חובה.",
+    "labelPlaceholder": "תווית (למשל: בית, עבודה)",
+    "streetPlaceholder": "כתובת רחוב",
+    "cityPlaceholder": "עיר",
+    "postalPlaceholder": "מיקוד",
+    "cancel": "ביטול",
+    "save": "שמור כתובת",
+    "saving": "שומר…",
+    "addAddress": "הוסף כתובת"
   }
 }

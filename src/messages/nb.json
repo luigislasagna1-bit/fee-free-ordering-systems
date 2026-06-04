@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: velg minst {n}",
       "paymentFailed": "Betaling mislyktes. Prøv igjen.",
       "selectVariant": "Vennligst velg et alternativ"
-    }
+    },
+    "searchMenu": "Søk i menyen…",
+    "signIn": "Logg inn",
+    "signInTooltip": "Logg inn eller opprett en konto for å spore kuponger og ordrehistorikk"
   },
   "pizza": {
     "chooseSize": "Velg størrelse",
@@ -359,7 +362,13 @@
     "noNotes": "Ingen notater",
     "locatingAddress": "Finner adressen din…",
     "youreIn": "Du er i {zone} — Gebyr {fee}, ~{minutes} min.",
-    "outsideStandard": "Utenfor våre vanlige leveringsområder."
+    "outsideStandard": "Utenfor våre vanlige leveringsområder.",
+    "freeDelivery": "Gratis levering",
+    "aptUnitPlaceholder": "Leilighet / enhet / suite (valgfritt)",
+    "buzzerPlaceholder": "Ringekodenummer (valgfritt)",
+    "deliveryInstructionsPlaceholder": "Leveringsinstruksjoner — legg ved døren, sideinngangen, ring to ganger, osv. (valgfritt)",
+    "pickATimePlaceholder": "Velg et tidspunkt…",
+    "customAmount": "Egendefinert beløp"
   },
   "reservation": {
     "title": "Bestill bord",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Kunne ikke opprette kontoen din. Prøv igjen.",
       "errorEmailTaken": "Den e-postadressen er allerede registrert."
     }
+  },
+  "addressBook": {
+    "loading": "Laster adresser…",
+    "empty": "Ingen lagrede adresser ennå. Legg til én for å slippe å skrive den inn igjen ved kassen.",
+    "defaultBadge": "Standard",
+    "addressFallback": "Adresse",
+    "makeDefault": "Angi som standard",
+    "delete": "Slett",
+    "confirmDelete": "Slette denne adressen?",
+    "streetCityRequired": "Gate og by er påkrevd.",
+    "labelPlaceholder": "Etikett (f.eks. Hjem, Jobb)",
+    "streetPlaceholder": "Gateadresse",
+    "cityPlaceholder": "By",
+    "postalPlaceholder": "Postnummer",
+    "cancel": "Avbryt",
+    "save": "Lagre adresse",
+    "saving": "Lagrer…",
+    "addAddress": "Legg til en adresse"
   }
 }

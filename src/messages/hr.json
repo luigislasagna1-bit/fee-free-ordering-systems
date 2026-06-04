@@ -211,7 +211,10 @@
       "chooseAtLeast": "{name}: odaberite najmanje {n}",
       "paymentFailed": "Plaćanje nije uspjelo. Pokušajte ponovo.",
       "selectVariant": "Molimo odaberite opciju"
-    }
+    },
+    "searchMenu": "Pretraži jelovnik…",
+    "signIn": "Prijava",
+    "signInTooltip": "Prijavite se ili stvorite račun za praćenje kupona i povijesti narudžbi"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",
@@ -359,7 +362,13 @@
     "noNotes": "Bez napomena",
     "locatingAddress": "Lociranje vaše adrese…",
     "youreIn": "Nalazite se u {zone} — Naknada {fee}, ~{minutes} min.",
-    "outsideStandard": "Izvan naših standardnih zona dostave."
+    "outsideStandard": "Izvan naših standardnih zona dostave.",
+    "freeDelivery": "Besplatna dostava",
+    "aptUnitPlaceholder": "Stan / jedinica / apartman (neobavezno)",
+    "buzzerPlaceholder": "Kod interfona (neobavezno)",
+    "deliveryInstructionsPlaceholder": "Upute za dostavu — ostavite na vratima, bočni ulaz, zazvonite dva puta itd. (neobavezno)",
+    "pickATimePlaceholder": "Odaberite vrijeme…",
+    "customAmount": "Prilagođeni iznos"
   },
   "reservation": {
     "title": "Rezervirajte stol",
@@ -3651,5 +3660,23 @@
       "errorGeneric": "Nije moguće kreirati vaš račun. Pokušajte ponovo.",
       "errorEmailTaken": "Ta e-mail adresa je već registrirana."
     }
+  },
+  "addressBook": {
+    "loading": "Učitavanje adresa…",
+    "empty": "Još nema spremljenih adresa. Dodajte jednu kako biste preskočili unos pri plaćanju.",
+    "defaultBadge": "Zadana",
+    "addressFallback": "Adresa",
+    "makeDefault": "Postavi kao zadanu",
+    "delete": "Izbriši",
+    "confirmDelete": "Izbrisati ovu adresu?",
+    "streetCityRequired": "Ulica i grad su obavezni.",
+    "labelPlaceholder": "Oznaka (npr. Dom, Posao)",
+    "streetPlaceholder": "Ulica i kućni broj",
+    "cityPlaceholder": "Grad",
+    "postalPlaceholder": "Poštanski broj",
+    "cancel": "Odustani",
+    "save": "Spremi adresu",
+    "saving": "Spremanje…",
+    "addAddress": "Dodaj adresu"
   }
 }
