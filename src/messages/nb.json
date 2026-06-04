@@ -3506,7 +3506,17 @@
       "labelWhen": "Når",
       "labelWhere": "Hvor",
       "labelSpecialRequests": "Spesielle ønsker",
-      "closing": "Vi gleder oss til å se deg. Dersom planene dine endrer seg, ber vi deg kontakte oss så snart som mulig ved hjelp av opplysningene nedenfor."
+      "closing": "Vi gleder oss til å se deg. Dersom planene dine endrer seg, ber vi deg kontakte oss så snart som mulig ved hjelp av opplysningene nedenfor.",
+      "headerTitleRequested": "Reservasjonsforespørsel mottatt",
+      "headerTitleDeclined": "Oppdatering om reservasjonen din",
+      "introRequested": "Tusen takk! Vi har mottatt din reservasjonsforespørsel for {restaurantName}. Den venter på bekreftelse — vi sender deg en e-post så snart restauranten bekrefter.",
+      "introDeclined": "Vi beklager, men {restaurantName} hadde dessverre ikke mulighet til å imøtekomme din reservasjonsforespørsel denne gangen.",
+      "badgeRequested": "Venter på bekreftelse",
+      "badgeDeclined": "Avslått",
+      "closingRequested": "Vi tar kontakt med deg snart. Takk for tålmodigheten!",
+      "closingDeclined": "Vi beklager ulempene dette medfører. Prøv gjerne en annen dato eller et annet tidspunkt, eller ta direkte kontakt med restauranten.",
+      "subjectRequested": "Reservasjonsforespørsel mottatt — venter på bekreftelse",
+      "subjectDeclined": "Oppdatering om din reservasjonsforespørsel"
     },
     "newReservation": {
       "subject": "Ny reservasjon — {restaurant}",

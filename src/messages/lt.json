@@ -3506,7 +3506,17 @@
       "labelWhen": "Kada",
       "labelWhere": "Kur",
       "labelSpecialRequests": "Ypatingi pageidavimai",
-      "closing": "Laukiame jūsų apsilankymo. Jei planai keistųsi, kuo greičiau susisiekite su mumis, naudodami toliau pateiktus kontaktus."
+      "closing": "Laukiame jūsų apsilankymo. Jei planai keistųsi, kuo greičiau susisiekite su mumis, naudodami toliau pateiktus kontaktus.",
+      "headerTitleRequested": "Rezervacija pateikta",
+      "headerTitleDeclined": "Rezervacijos atnaujinimas",
+      "introRequested": "Ačiū! Gavome jūsų rezervacijos užklausą restoranui {restaurantName}. Ji laukia patvirtinimo — kai restoranas patvirtins, nedelsdami informuosime el. paštu.",
+      "introDeclined": "Deja, {restaurantName} šį kartą negalėjo patenkinti jūsų rezervacijos užklausos.",
+      "badgeRequested": "Laukiama patvirtinimo",
+      "badgeDeclined": "Atmesta",
+      "closingRequested": "Netrukus susisieksime su jumis. Dėkojame už kantrybę!",
+      "closingDeclined": "Atsiprašome už nepatogumus. Pabandykite pasirinkti kitą datą ar laiką arba susisiekite su restoranu tiesiogiai.",
+      "subjectRequested": "Rezervacijos užklausa gauta — laukiama patvirtinimo",
+      "subjectDeclined": "Informacija apie jūsų rezervacijos užklausą"
     },
     "newReservation": {
       "subject": "Nauja rezervacija — {restaurant}",

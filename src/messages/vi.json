@@ -3506,7 +3506,17 @@
       "labelWhen": "Thời gian",
       "labelWhere": "Địa điểm",
       "labelSpecialRequests": "Yêu cầu đặc biệt",
-      "closing": "Chúng tôi rất mong được đón tiếp bạn. Nếu kế hoạch thay đổi, vui lòng liên hệ với chúng tôi càng sớm càng tốt theo thông tin bên dưới."
+      "closing": "Chúng tôi rất mong được đón tiếp bạn. Nếu kế hoạch thay đổi, vui lòng liên hệ với chúng tôi càng sớm càng tốt theo thông tin bên dưới.",
+      "headerTitleRequested": "Yêu cầu đặt bàn",
+      "headerTitleDeclined": "Cập nhật đặt bàn",
+      "introRequested": "Cảm ơn bạn! Chúng tôi đã nhận được yêu cầu đặt bàn của bạn tại {restaurantName}. Yêu cầu đang chờ xác nhận — chúng tôi sẽ gửi email cho bạn ngay khi nhà hàng xác nhận.",
+      "introDeclined": "Rất tiếc, {restaurantName} không thể đáp ứng yêu cầu đặt bàn của bạn lần này.",
+      "badgeRequested": "Chờ xác nhận",
+      "badgeDeclined": "Đã từ chối",
+      "closingRequested": "Chúng tôi sẽ liên hệ với bạn sớm. Cảm ơn bạn đã kiên nhẫn chờ đợi!",
+      "closingDeclined": "Chúng tôi xin lỗi vì sự bất tiện này. Vui lòng thử chọn ngày hoặc giờ khác, hoặc liên hệ trực tiếp với nhà hàng.",
+      "subjectRequested": "Đã nhận yêu cầu đặt bàn — chờ xác nhận",
+      "subjectDeclined": "Cập nhật về yêu cầu đặt bàn của bạn"
     },
     "newReservation": {
       "subject": "Đặt bàn mới — {restaurant}",

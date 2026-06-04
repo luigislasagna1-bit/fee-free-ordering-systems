@@ -3506,7 +3506,17 @@
       "labelWhen": "时间",
       "labelWhere": "地点",
       "labelSpecialRequests": "特殊要求",
-      "closing": "期待您的光临。如果您的计划有变，请尽快通过以下联系方式与我们联系。"
+      "closing": "期待您的光临。如果您的计划有变，请尽快通过以下联系方式与我们联系。",
+      "headerTitleRequested": "预订申请已提交",
+      "headerTitleDeclined": "预订状态更新",
+      "introRequested": "感谢您！我们已收到您在 {restaurantName} 的预订申请，目前正等待餐厅确认 — 一旦确认完成，我们将立即通过邮件通知您。",
+      "introDeclined": "非常遗憾，{restaurantName} 本次无法接受您的预订申请。",
+      "badgeRequested": "待确认",
+      "badgeDeclined": "已婉拒",
+      "closingRequested": "我们会尽快与您联系，感谢您的耐心等待！",
+      "closingDeclined": "对此带来的不便深感抱歉，您可以尝试选择其他日期或时间，或直接联系餐厅进行安排。",
+      "subjectRequested": "预订申请已收到 — 等待确认中",
+      "subjectDeclined": "您的预订申请最新状态"
     },
     "newReservation": {
       "subject": "新预订 — {restaurant}",

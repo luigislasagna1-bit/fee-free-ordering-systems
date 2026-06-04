@@ -3506,7 +3506,17 @@
       "labelWhen": "Milloin",
       "labelWhere": "Missä",
       "labelSpecialRequests": "Erityistoiveet",
-      "closing": "Odotamme innolla tapaamistamme. Jos suunnitelmasi muuttuvat, ota yhteyttä mahdollisimman pian alla olevien tietojen avulla."
+      "closing": "Odotamme innolla tapaamistamme. Jos suunnitelmasi muuttuvat, ota yhteyttä mahdollisimman pian alla olevien tietojen avulla.",
+      "headerTitleRequested": "Pöytävaraus vastaanotettu",
+      "headerTitleDeclined": "Päivitys varauksestasi",
+      "introRequested": "Kiitos! Olemme vastaanottaneet pöytävarauspyyntösi ravintolaan {restaurantName}. Pyyntö odottaa vahvistusta — lähetämme sinulle sähköpostin heti, kun ravintola on vahvistanut varauksen.",
+      "introDeclined": "Valitettavasti {restaurantName} ei pysty tällä kertaa ottamaan varauspyyntöäsi vastaan.",
+      "badgeRequested": "Odottaa vahvistusta",
+      "badgeDeclined": "Hylätty",
+      "closingRequested": "Otamme sinuun pian yhteyttä. Kiitos kärsivällisyydestäsi!",
+      "closingDeclined": "Pahoittelemme aiheutunutta haittaa. Kokeile toista päivää tai kellonaikaa, tai ota yhteyttä ravintolaan suoraan.",
+      "subjectRequested": "Varauspyyntö vastaanotettu — odottaa vahvistusta",
+      "subjectDeclined": "Päivitys varauspyyntöösi"
     },
     "newReservation": {
       "subject": "Uusi varaus — {restaurant}",

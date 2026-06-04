@@ -3506,7 +3506,17 @@
       "labelWhen": "Wann",
       "labelWhere": "Wo",
       "labelSpecialRequests": "Besondere Wünsche",
-      "closing": "Wir freuen uns auf Ihren Besuch. Falls sich Ihre Pläne ändern, wenden Sie sich bitte so bald wie möglich an uns – die Kontaktdaten finden Sie unten."
+      "closing": "Wir freuen uns auf Ihren Besuch. Falls sich Ihre Pläne ändern, wenden Sie sich bitte so bald wie möglich an uns – die Kontaktdaten finden Sie unten.",
+      "headerTitleRequested": "Reservierungsanfrage eingegangen",
+      "headerTitleDeclined": "Aktualisierung Ihrer Reservierung",
+      "introRequested": "Vielen Dank! Wir haben Ihre Reservierungsanfrage für {restaurantName} erhalten. Sie wartet derzeit auf Bestätigung — wir melden uns per E-Mail, sobald das Restaurant Ihre Anfrage bestätigt hat.",
+      "introDeclined": "Leider war es {restaurantName} diesmal nicht möglich, Ihrer Reservierungsanfrage nachzukommen.",
+      "badgeRequested": "Bestätigung ausstehend",
+      "badgeDeclined": "Abgelehnt",
+      "closingRequested": "Wir werden uns in Kürze bei Ihnen melden. Vielen Dank für Ihre Geduld!",
+      "closingDeclined": "Wir entschuldigen uns für die Unannehmlichkeiten. Bitte versuchen Sie es mit einem anderen Datum oder einer anderen Uhrzeit, oder wenden Sie sich direkt an das Restaurant.",
+      "subjectRequested": "Reservierungsanfrage eingegangen — Bestätigung ausstehend",
+      "subjectDeclined": "Aktualisierung zu Ihrer Reservierungsanfrage"
     },
     "newReservation": {
       "subject": "Neue Reservierung — {restaurant}",

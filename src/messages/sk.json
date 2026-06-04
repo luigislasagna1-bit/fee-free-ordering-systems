@@ -3506,7 +3506,17 @@
       "labelWhen": "Kedy",
       "labelWhere": "Kde",
       "labelSpecialRequests": "Špeciálne požiadavky",
-      "closing": "Tešíme sa na vás. Ak sa vaše plány zmenia, kontaktujte nás čo najskôr pomocou nižšie uvedených kontaktných údajov."
+      "closing": "Tešíme sa na vás. Ak sa vaše plány zmenia, kontaktujte nás čo najskôr pomocou nižšie uvedených kontaktných údajov.",
+      "headerTitleRequested": "Rezervácia bola odoslaná",
+      "headerTitleDeclined": "Aktualizácia rezervácie",
+      "introRequested": "Ďakujeme! Vašu žiadosť o rezerváciu v reštaurácii {restaurantName} sme prijali. Čaká na potvrdenie — e-mailom vás upozorníme hneď, ako ju reštaurácia potvrdí.",
+      "introDeclined": "Ľutujeme, reštaurácia {restaurantName} tentokrát nemohla vašu žiadosť o rezerváciu prijať.",
+      "badgeRequested": "Čaká na potvrdenie",
+      "badgeDeclined": "Zamietnutá",
+      "closingRequested": "Čoskoro sa vám ozveme. Ďakujeme za vašu trpezlivosť!",
+      "closingDeclined": "Ospravedlňujeme sa za nepríjemnosti. Skúste prosím iný dátum alebo čas, prípadne kontaktujte reštauráciu priamo.",
+      "subjectRequested": "Žiadosť o rezerváciu bola prijatá — čaká na potvrdenie",
+      "subjectDeclined": "Aktualizácia vašej žiadosti o rezerváciu"
     },
     "newReservation": {
       "subject": "Nová rezervácia — {restaurant}",

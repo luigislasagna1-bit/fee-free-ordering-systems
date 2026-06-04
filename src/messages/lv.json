@@ -3506,7 +3506,17 @@
       "labelWhen": "Kad",
       "labelWhere": "Kur",
       "labelSpecialRequests": "Īpaši pieprasījumi",
-      "closing": "Ar prieku gaidīsim jūs pie mums. Ja plāni mainās, lūdzu, pēc iespējas ātrāk sazinieties ar mums, izmantojot tālāk norādīto kontaktinformāciju."
+      "closing": "Ar prieku gaidīsim jūs pie mums. Ja plāni mainās, lūdzu, pēc iespējas ātrāk sazinieties ar mums, izmantojot tālāk norādīto kontaktinformāciju.",
+      "headerTitleRequested": "Rezervācijas pieprasījums",
+      "headerTitleDeclined": "Informācija par rezervāciju",
+      "introRequested": "Paldies! Mēs esam saņēmuši jūsu rezervācijas pieprasījumu restorānā {restaurantName}. Tas gaida apstiprinājumu — mēs jums rakstīsim, tiklīdz restorāns to apstiprinās.",
+      "introDeclined": "Diemžēl {restaurantName} šoreiz nevarēja izmitināt jūsu rezervācijas pieprasījumu.",
+      "badgeRequested": "Gaida apstiprinājumu",
+      "badgeDeclined": "Noraidīts",
+      "closingRequested": "Mēs drīzumā sazināsimies ar jums. Paldies par pacietību!",
+      "closingDeclined": "Atvainojamies par sagādātajām neērtībām. Lūdzu, mēģiniet izvēlēties citu datumu vai laiku vai sazinieties ar restorānu tieši.",
+      "subjectRequested": "Rezervācijas pieprasījums saņemts — gaida apstiprinājumu",
+      "subjectDeclined": "Informācija par jūsu rezervācijas pieprasījumu"
     },
     "newReservation": {
       "subject": "Jauna rezervācija — {restaurant}",

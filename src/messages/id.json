@@ -3506,7 +3506,17 @@
       "labelWhen": "Kapan",
       "labelWhere": "Lokasi",
       "labelSpecialRequests": "Permintaan khusus",
-      "closing": "Kami berharap dapat menyambut Anda. Jika rencana Anda berubah, silakan hubungi kami sesegera mungkin menggunakan informasi di bawah ini."
+      "closing": "Kami berharap dapat menyambut Anda. Jika rencana Anda berubah, silakan hubungi kami sesegera mungkin menggunakan informasi di bawah ini.",
+      "headerTitleRequested": "Permintaan reservasi diterima",
+      "headerTitleDeclined": "Pembaruan reservasi",
+      "introRequested": "Terima kasih! Kami telah menerima permintaan reservasi Anda untuk {restaurantName}. Reservasi sedang menunggu konfirmasi — kami akan mengirimkan email segera setelah restoran mengonfirmasi.",
+      "introDeclined": "Mohon maaf, {restaurantName} tidak dapat memenuhi permintaan reservasi Anda kali ini.",
+      "badgeRequested": "Menunggu konfirmasi",
+      "badgeDeclined": "Ditolak",
+      "closingRequested": "Kami akan segera menghubungi Anda kembali. Terima kasih atas kesabaran Anda!",
+      "closingDeclined": "Kami mohon maaf atas ketidaknyamanan ini. Silakan coba tanggal atau waktu lain, atau hubungi restoran secara langsung.",
+      "subjectRequested": "Permintaan reservasi diterima — menunggu konfirmasi",
+      "subjectDeclined": "Pembaruan mengenai permintaan reservasi Anda"
     },
     "newReservation": {
       "subject": "Reservasi baru — {restaurant}",

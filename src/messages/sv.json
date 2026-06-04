@@ -3506,7 +3506,17 @@
       "labelWhen": "När",
       "labelWhere": "Var",
       "labelSpecialRequests": "Särskilda önskemål",
-      "closing": "Vi ser fram emot att välkomna dig. Om dina planer förändras ber vi dig kontakta oss så snart som möjligt via uppgifterna nedan."
+      "closing": "Vi ser fram emot att välkomna dig. Om dina planer förändras ber vi dig kontakta oss så snart som möjligt via uppgifterna nedan.",
+      "headerTitleRequested": "Bokningsförfrågan mottagen",
+      "headerTitleDeclined": "Uppdatering om din bokning",
+      "introRequested": "Tack! Vi har tagit emot din bokningsförfrågan till {restaurantName}. Den inväntar bekräftelse — vi skickar ett e-postmeddelande så snart restaurangen bekräftar.",
+      "introDeclined": "Tyvärr kunde inte {restaurantName} ta emot din bokningsförfrågan den här gången.",
+      "badgeRequested": "Inväntar bekräftelse",
+      "badgeDeclined": "Avböjd",
+      "closingRequested": "Vi återkommer inom kort. Tack för ditt tålamod!",
+      "closingDeclined": "Vi beklagar besväret. Prova gärna ett annat datum eller en annan tid, eller kontakta restaurangen direkt.",
+      "subjectRequested": "Bokningsförfrågan mottagen — inväntar bekräftelse",
+      "subjectDeclined": "Uppdatering om din bokningsförfrågan"
     },
     "newReservation": {
       "subject": "Ny reservation — {restaurant}",

@@ -3506,7 +3506,17 @@
       "labelWhen": "Millal",
       "labelWhere": "Kus",
       "labelSpecialRequests": "Erioovid",
-      "closing": "Ootame teid rõõmuga. Kui teie plaanid muutuvad, võtke palun esimesel võimalusel ühendust allpool toodud kontaktandmete kaudu."
+      "closing": "Ootame teid rõõmuga. Kui teie plaanid muutuvad, võtke palun esimesel võimalusel ühendust allpool toodud kontaktandmete kaudu.",
+      "headerTitleRequested": "Reserveerimise päring esitatud",
+      "headerTitleDeclined": "Värskendus teie reserveeringu kohta",
+      "introRequested": "Täname! Oleme saanud teie reserveerimise päringu restorani {restaurantName} jaoks. Päring ootab kinnitamist — saadame teile e-kirja kohe, kui restoran on kinnituse andnud.",
+      "introDeclined": "Kahjuks ei saanud {restaurantName} seekord teie reserveerimise päringut täita.",
+      "badgeRequested": "Ootab kinnitamist",
+      "badgeDeclined": "Keeldutud",
+      "closingRequested": "Võtame teiega peagi ühendust. Täname kannatlikkuse eest!",
+      "closingDeclined": "Vabandame ebamugavuste pärast. Palun proovige teist kuupäeva või kellaaega või võtke otse restoraniga ühendust.",
+      "subjectRequested": "Reserveerimise päring vastu võetud — ootab kinnitamist",
+      "subjectDeclined": "Värskendus teie reserveerimise päringu kohta"
     },
     "newReservation": {
       "subject": "Uus broneering — {restaurant}",

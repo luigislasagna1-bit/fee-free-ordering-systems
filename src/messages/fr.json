@@ -3506,7 +3506,17 @@
       "labelWhen": "Quand",
       "labelWhere": "Où",
       "labelSpecialRequests": "Demandes spéciales",
-      "closing": "Nous nous réjouissons de vous accueillir. Si vos projets changent, veuillez nous contacter dès que possible en utilisant les coordonnées ci-dessous."
+      "closing": "Nous nous réjouissons de vous accueillir. Si vos projets changent, veuillez nous contacter dès que possible en utilisant les coordonnées ci-dessous.",
+      "headerTitleRequested": "Demande de réservation",
+      "headerTitleDeclined": "Mise à jour de votre réservation",
+      "introRequested": "Merci ! Nous avons bien reçu votre demande de réservation chez {restaurantName}. Elle est en attente de confirmation — nous vous enverrons un e-mail dès que le restaurant aura validé votre demande.",
+      "introDeclined": "Malheureusement, {restaurantName} n'a pas été en mesure de donner suite à votre demande de réservation cette fois-ci.",
+      "badgeRequested": "En attente de confirmation",
+      "badgeDeclined": "Refusée",
+      "closingRequested": "Nous reviendrons vers vous très prochainement. Merci de votre patience !",
+      "closingDeclined": "Nous vous prions de nous excuser pour la gêne occasionnée. N'hésitez pas à choisir une autre date ou un autre horaire, ou à contacter le restaurant directement.",
+      "subjectRequested": "Demande de réservation reçue — en attente de confirmation",
+      "subjectDeclined": "Mise à jour concernant votre demande de réservation"
     },
     "newReservation": {
       "subject": "Nouvelle réservation — {restaurant}",

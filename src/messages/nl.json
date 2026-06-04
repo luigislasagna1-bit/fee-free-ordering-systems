@@ -3506,7 +3506,17 @@
       "labelWhen": "Wanneer",
       "labelWhere": "Waar",
       "labelSpecialRequests": "Speciale verzoeken",
-      "closing": "We kijken ernaar uit u te verwelkomen. Mochten uw plannen wijzigen, neem dan zo snel mogelijk contact met ons op via de onderstaande gegevens."
+      "closing": "We kijken ernaar uit u te verwelkomen. Mochten uw plannen wijzigen, neem dan zo snel mogelijk contact met ons op via de onderstaande gegevens.",
+      "headerTitleRequested": "Reservering aangevraagd",
+      "headerTitleDeclined": "Update over uw reservering",
+      "introRequested": "Bedankt! We hebben uw reserveringsverzoek voor {restaurantName} ontvangen. Het wacht nog op bevestiging — zodra het restaurant bevestigt, ontvangt u een e-mail.",
+      "introDeclined": "Helaas kon {restaurantName} uw reserveringsverzoek dit keer niet inwilligen.",
+      "badgeRequested": "Wacht op bevestiging",
+      "badgeDeclined": "Geweigerd",
+      "closingRequested": "We nemen spoedig contact met u op. Bedankt voor uw geduld!",
+      "closingDeclined": "Onze excuses voor het ongemak. Probeer een andere datum of tijd, of neem rechtstreeks contact op met het restaurant.",
+      "subjectRequested": "Reserveringsverzoek ontvangen — wacht op bevestiging",
+      "subjectDeclined": "Update over uw reserveringsverzoek"
     },
     "newReservation": {
       "subject": "Nieuwe reservering — {restaurant}",

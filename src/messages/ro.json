@@ -3506,7 +3506,17 @@
       "labelWhen": "Când",
       "labelWhere": "Unde",
       "labelSpecialRequests": "Cereri speciale",
-      "closing": "Așteptăm cu nerăbdare să vă întâlnim. Dacă planurile dvs. se schimbă, vă rugăm să ne contactați cât mai curând posibil folosind datele de mai jos."
+      "closing": "Așteptăm cu nerăbdare să vă întâlnim. Dacă planurile dvs. se schimbă, vă rugăm să ne contactați cât mai curând posibil folosind datele de mai jos.",
+      "headerTitleRequested": "Rezervare solicitată",
+      "headerTitleDeclined": "Actualizare rezervare",
+      "introRequested": "Mulțumim! Am primit cererea dvs. de rezervare la {restaurantName}. Aceasta este în așteptarea confirmării — vă vom trimite un email de îndată ce restaurantul confirmă.",
+      "introDeclined": "Din păcate, {restaurantName} nu a putut onora cererea dvs. de rezervare de această dată.",
+      "badgeRequested": "În așteptarea confirmării",
+      "badgeDeclined": "Refuzată",
+      "closingRequested": "Vă vom contacta în curând. Vă mulțumim pentru răbdare!",
+      "closingDeclined": "Ne cerem scuze pentru inconveniență. Vă rugăm să încercați o altă dată sau oră, sau să contactați direct restaurantul.",
+      "subjectRequested": "Cerere de rezervare primită — în așteptarea confirmării",
+      "subjectDeclined": "Actualizare privind cererea dvs. de rezervare"
     },
     "newReservation": {
       "subject": "Rezervare nouă — {restaurant}",

@@ -3506,7 +3506,17 @@
       "labelWhen": "When",
       "labelWhere": "Where",
       "labelSpecialRequests": "Special requests",
-      "closing": "We look forward to seeing you. If your plans change, please contact us as soon as possible using the details below."
+      "closing": "We look forward to seeing you. If your plans change, please contact us as soon as possible using the details below.",
+      "headerTitleRequested": "Reservation requested",
+      "headerTitleDeclined": "Reservation update",
+      "introRequested": "Thanks! We have received your reservation request for {restaurantName}. It is pending confirmation — we will email you as soon as the restaurant confirms.",
+      "introDeclined": "Unfortunately, {restaurantName} was not able to accommodate your reservation request this time.",
+      "badgeRequested": "Pending confirmation",
+      "badgeDeclined": "Declined",
+      "closingRequested": "We will be in touch shortly. Thank you for your patience!",
+      "closingDeclined": "We are sorry for the inconvenience. Please try a different date or time, or contact the restaurant directly.",
+      "subjectRequested": "Reservation request received — pending confirmation",
+      "subjectDeclined": "Update on your reservation request"
     },
     "newReservation": {
       "subject": "New reservation — {restaurant}",

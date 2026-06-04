@@ -3506,7 +3506,17 @@
       "labelWhen": "Quando",
       "labelWhere": "Dove",
       "labelSpecialRequests": "Richieste speciali",
-      "closing": "Non vediamo l'ora di vederti. Se i tuoi piani cambiano, ti preghiamo di contattarci il prima possibile utilizzando i recapiti riportati di seguito."
+      "closing": "Non vediamo l'ora di vederti. Se i tuoi piani cambiano, ti preghiamo di contattarci il prima possibile utilizzando i recapiti riportati di seguito.",
+      "headerTitleRequested": "Prenotazione richiesta",
+      "headerTitleDeclined": "Aggiornamento sulla prenotazione",
+      "introRequested": "Grazie! Abbiamo ricevuto la tua richiesta di prenotazione per {restaurantName}. È in attesa di conferma — ti invieremo una email non appena il ristorante la confermerà.",
+      "introDeclined": "Purtroppo, {restaurantName} non è riuscito ad accogliere la tua richiesta di prenotazione questa volta.",
+      "badgeRequested": "In attesa di conferma",
+      "badgeDeclined": "Non accettata",
+      "closingRequested": "Ti contatteremo a breve. Grazie per la tua pazienza!",
+      "closingDeclined": "Ci scusiamo per l'inconveniente. Ti invitiamo a provare con una data o un orario diversi, oppure a contattare direttamente il ristorante.",
+      "subjectRequested": "Richiesta di prenotazione ricevuta — in attesa di conferma",
+      "subjectDeclined": "Aggiornamento sulla tua richiesta di prenotazione"
     },
     "newReservation": {
       "subject": "Nuova prenotazione — {restaurant}",

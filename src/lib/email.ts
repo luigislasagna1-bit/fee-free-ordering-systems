@@ -540,7 +540,7 @@ export async function sendReservationConfirmation(params: {
   date: string;
   time: string;
   confirmationCode: string;
-  status: "pending" | "confirmed";
+  status: "requested" | "confirmed" | "declined";
   depositPaid?: boolean;
   depositAmount?: number;
   preOrderTotal?: number;
@@ -550,6 +550,7 @@ export async function sendReservationConfirmation(params: {
   const html = await renderEmail(
     ReservationConfirmation({
       t,
+      status: params.status,
       customerName: params.customerName,
       reservationNumber: params.confirmationCode,
       restaurantName: params.restaurantName,
@@ -558,9 +559,10 @@ export async function sendReservationConfirmation(params: {
       imprint: currentImprint(),
     })
   );
+  const subjectSuffix = params.status === "declined" ? "Declined" : params.status === "requested" ? "Requested" : "";
   return send({
     to: params.to,
-    subject: t("email.reservationConfirmed.subject"),
+    subject: t(`email.reservationConfirmed.subject${subjectSuffix}`),
     html,
   });
 }

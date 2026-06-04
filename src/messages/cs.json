@@ -3506,7 +3506,17 @@
       "labelWhen": "Kdy",
       "labelWhere": "Kde",
       "labelSpecialRequests": "Zvláštní požadavky",
-      "closing": "Těšíme se na vaši návštěvu. Pokud dojde ke změně vašich plánů, kontaktujte nás co nejdříve pomocí níže uvedených údajů."
+      "closing": "Těšíme se na vaši návštěvu. Pokud dojde ke změně vašich plánů, kontaktujte nás co nejdříve pomocí níže uvedených údajů.",
+      "headerTitleRequested": "Žádost o rezervaci",
+      "headerTitleDeclined": "Aktualizace rezervace",
+      "introRequested": "Děkujeme! Vaši žádost o rezervaci v restauraci {restaurantName} jsme přijali. Čeká na potvrzení — jakmile ji restaurace potvrdí, budeme vás neprodleně informovat e-mailem.",
+      "introDeclined": "Bohužel restaurace {restaurantName} tentokrát nemohla vaší žádosti o rezervaci vyhovět.",
+      "badgeRequested": "Čeká na potvrzení",
+      "badgeDeclined": "Zamítnuto",
+      "closingRequested": "Brzy se vám ozveme. Děkujeme za vaši trpělivost!",
+      "closingDeclined": "Omlouváme se za způsobené nepříjemnosti. Zkuste prosím jiný termín nebo čas, případně se obraťte přímo na restauraci.",
+      "subjectRequested": "Žádost o rezervaci přijata — čeká na potvrzení",
+      "subjectDeclined": "Aktualizace vaší žádosti o rezervaci"
     },
     "newReservation": {
       "subject": "Nová rezervace — {restaurant}",

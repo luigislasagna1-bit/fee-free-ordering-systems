@@ -3506,7 +3506,17 @@
       "labelWhen": "Quan",
       "labelWhere": "On",
       "labelSpecialRequests": "Sol·licituds especials",
-      "closing": "Us esperem amb moltes ganes. Si els vostres plans canvien, poseu-vos en contacte amb nosaltres el més aviat possible mitjançant les dades que trobareu a continuació."
+      "closing": "Us esperem amb moltes ganes. Si els vostres plans canvien, poseu-vos en contacte amb nosaltres el més aviat possible mitjançant les dades que trobareu a continuació.",
+      "headerTitleRequested": "Sol·licitud de reserva rebuda",
+      "headerTitleDeclined": "Actualització de la reserva",
+      "introRequested": "Gràcies! Hem rebut la vostra sol·licitud de reserva a {restaurantName}. Està pendent de confirmació — us enviarem un correu tan aviat com el restaurant la confirmi.",
+      "introDeclined": "Lamentablement, {restaurantName} no ha pogut acceptar la vostra sol·licitud de reserva en aquesta ocasió.",
+      "badgeRequested": "Pendent de confirmació",
+      "badgeDeclined": "No acceptada",
+      "closingRequested": "Ens posarem en contacte amb vosaltres aviat. Gràcies per la vostra paciència!",
+      "closingDeclined": "Us demanem disculpes per les molèsties. Si us plau, proveu una data o hora diferent, o contacteu directament amb el restaurant.",
+      "subjectRequested": "Sol·licitud de reserva rebuda — pendent de confirmació",
+      "subjectDeclined": "Actualització sobre la vostra sol·licitud de reserva"
     },
     "newReservation": {
       "subject": "Nova reserva — {restaurant}",

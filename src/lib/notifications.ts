@@ -391,7 +391,7 @@ export type CustomerEventPayload =
    *  always gets this (no toggle gate) because a delay is the kind of news
    *  a paying customer should hear about regardless of restaurant settings. */
   | { event: "orderDelayed"; customerName: string; orderNumber: string; newEstimatedReady: Date; delayMinutes: number; reason: string | null }
-  | { event: "reservationConfirmation"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending"; depositPaid?: boolean; depositAmount?: number; preOrderTotal?: number };
+  | { event: "reservationConfirmation"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "requested" | "confirmed" | "declined"; depositPaid?: boolean; depositAmount?: number; preOrderTotal?: number };
 
 /**
  * Send a customer-facing email gated by the matching `Restaurant.customerEmail*`

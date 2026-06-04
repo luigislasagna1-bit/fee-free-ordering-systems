@@ -3506,7 +3506,17 @@
       "labelWhen": "Ne zaman",
       "labelWhere": "Nerede",
       "labelSpecialRequests": "Özel istekler",
-      "closing": "Sizi görmekten mutluluk duyarız. Planlarınız değişirse, lütfen aşağıdaki iletişim bilgilerini kullanarak en kısa sürede bizimle iletişime geçin."
+      "closing": "Sizi görmekten mutluluk duyarız. Planlarınız değişirse, lütfen aşağıdaki iletişim bilgilerini kullanarak en kısa sürede bizimle iletişime geçin.",
+      "headerTitleRequested": "Rezervasyon talebi alındı",
+      "headerTitleDeclined": "Rezervasyon güncellemesi",
+      "introRequested": "Teşekkürler! {restaurantName} için rezervasyon talebinizi aldık. Onay bekleniyor — restoran onayladığında size e-posta ile haber vereceğiz.",
+      "introDeclined": "Üzgünüz, {restaurantName} bu sefer rezervasyon talebinizi karşılayamadı.",
+      "badgeRequested": "Onay bekleniyor",
+      "badgeDeclined": "Reddedildi",
+      "closingRequested": "En kısa sürede sizinle iletişime geçeceğiz. Sabrınız için teşekkür ederiz!",
+      "closingDeclined": "Yaşanan aksaklık için özür dileriz. Lütfen farklı bir tarih veya saat deneyin ya da restoranla doğrudan iletişime geçin.",
+      "subjectRequested": "Rezervasyon talebiniz alındı — onay bekleniyor",
+      "subjectDeclined": "Rezervasyon talebinizle ilgili güncelleme"
     },
     "newReservation": {
       "subject": "Yeni rezervasyon — {restaurant}",

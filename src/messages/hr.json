@@ -3506,7 +3506,17 @@
       "labelWhen": "Kada",
       "labelWhere": "Gdje",
       "labelSpecialRequests": "Posebni zahtjevi",
-      "closing": "Veselimo se vašem dolasku. Ako se vaši planovi promijene, molimo obavijestite nas što je prije moguće koristeći podatke navedene ispod."
+      "closing": "Veselimo se vašem dolasku. Ako se vaši planovi promijene, molimo obavijestite nas što je prije moguće koristeći podatke navedene ispod.",
+      "headerTitleRequested": "Zahtjev za rezervaciju",
+      "headerTitleDeclined": "Obavijest o rezervaciji",
+      "introRequested": "Hvala! Primili smo vaš zahtjev za rezervaciju u restoranu {restaurantName}. Rezervacija je na čekanju — obavijestit ćemo vas čim je restoran potvrdi.",
+      "introDeclined": "Nažalost, restoran {restaurantName} ovaj put nije u mogućnosti prihvatiti vaš zahtjev za rezervaciju.",
+      "badgeRequested": "Na čekanju",
+      "badgeDeclined": "Odbijeno",
+      "closingRequested": "Uskoro ćemo vas kontaktirati. Hvala na strpljenju!",
+      "closingDeclined": "Ispričavamo se zbog neugodnosti. Molimo pokušajte s drugim datumom ili terminom, ili se obratite restoranu izravno.",
+      "subjectRequested": "Zahtjev za rezervaciju primljen — čeka se potvrda",
+      "subjectDeclined": "Obavijest o vašem zahtjevu za rezervaciju"
     },
     "newReservation": {
       "subject": "Nova rezervacija — {restaurant}",

@@ -179,7 +179,10 @@ export async function POST(req: NextRequest) {
 
     // ── Notifications (toggle-aware fan-out) ─────────────────────────────
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
-    const status = initialStatus === "confirmed" ? "confirmed" : "pending";
+    // Customer copy distinguishes "requested" (pending manual acceptance) from
+    // "confirmed". Staff copy keeps "pending" (their action item). Luigi 2026-06-04.
+    const customerStatus = initialStatus === "confirmed" ? "confirmed" : "requested";
+    const staffStatus = initialStatus === "confirmed" ? "confirmed" : "pending";
     notifyCustomer({
       restaurantId: restaurant.id,
       customerEmail: reservation.customerEmail,
@@ -191,7 +194,7 @@ export async function POST(req: NextRequest) {
         date: reservation.date,
         time: reservation.time,
         confirmationCode: reservation.confirmationCode,
-        status,
+        status: customerStatus,
         depositAmount: reservation.depositAmount,
         preOrderTotal: preOrderTotal ?? undefined,
       },
@@ -205,7 +208,7 @@ export async function POST(req: NextRequest) {
         date: reservation.date,
         time: reservation.time,
         confirmationCode: reservation.confirmationCode,
-        status,
+        status: staffStatus,
         dashboardUrl: `${baseUrl}/admin/reservations`,
       },
     }).catch((e) => console.error("[notifyStaff reservation]", e));

@@ -3506,7 +3506,17 @@
       "labelWhen": "일시",
       "labelWhere": "장소",
       "labelSpecialRequests": "특별 요청 사항",
-      "closing": "방문을 기대하고 있겠습니다. 일정이 변경되시면 가능한 빨리 아래 연락처를 통해 알려주세요."
+      "closing": "방문을 기대하고 있겠습니다. 일정이 변경되시면 가능한 빨리 아래 연락처를 통해 알려주세요.",
+      "headerTitleRequested": "예약 요청 완료",
+      "headerTitleDeclined": "예약 관련 안내",
+      "introRequested": "감사합니다! {restaurantName}에 예약 요청이 정상적으로 접수되었습니다. 현재 확인 대기 중이며 — 레스토랑에서 확정되는 즉시 이메일로 알려드리겠습니다.",
+      "introDeclined": "죄송합니다. {restaurantName}에서 이번 예약 요청을 수용하기 어려운 상황입니다.",
+      "badgeRequested": "확인 대기 중",
+      "badgeDeclined": "예약 거절됨",
+      "closingRequested": "곧 연락드리겠습니다. 기다려 주셔서 감사합니다!",
+      "closingDeclined": "불편을 드려 대단히 죄송합니다. 다른 날짜나 시간대로 다시 시도하시거나, 레스토랑에 직접 문의해 주시기 바랍니다.",
+      "subjectRequested": "예약 요청이 접수되었습니다 — 확인 대기 중",
+      "subjectDeclined": "예약 요청 처리 결과 안내"
     },
     "newReservation": {
       "subject": "새 예약 — {restaurant}",

@@ -3506,7 +3506,17 @@
       "labelWhen": "Kiedy",
       "labelWhere": "Gdzie",
       "labelSpecialRequests": "Specjalne życzenia",
-      "closing": "Czekamy na Twoje przybycie. Jeśli Twoje plany się zmienią, prosimy o jak najszybszy kontakt, korzystając z danych podanych poniżej."
+      "closing": "Czekamy na Twoje przybycie. Jeśli Twoje plany się zmienią, prosimy o jak najszybszy kontakt, korzystając z danych podanych poniżej.",
+      "headerTitleRequested": "Prośba o rezerwację",
+      "headerTitleDeclined": "Aktualizacja rezerwacji",
+      "introRequested": "Dziękujemy! Otrzymaliśmy Twoją prośbę o rezerwację w restauracji {restaurantName}. Oczekuje ona na potwierdzenie — wyślemy Ci e-mail, gdy tylko restauracja zatwierdzi rezerwację.",
+      "introDeclined": "Niestety, restauracja {restaurantName} nie była w stanie tym razem zrealizować Twojej prośby o rezerwację.",
+      "badgeRequested": "Oczekuje na potwierdzenie",
+      "badgeDeclined": "Odrzucona",
+      "closingRequested": "Wkrótce się z Tobą skontaktujemy. Dziękujemy za cierpliwość!",
+      "closingDeclined": "Przepraszamy za niedogodności. Spróbuj wybrać inny termin lub skontaktuj się bezpośrednio z restauracją.",
+      "subjectRequested": "Prośba o rezerwację przyjęta — oczekuje na potwierdzenie",
+      "subjectDeclined": "Aktualizacja dotycząca Twojej prośby o rezerwację"
     },
     "newReservation": {
       "subject": "Nowa rezerwacja — {restaurant}",

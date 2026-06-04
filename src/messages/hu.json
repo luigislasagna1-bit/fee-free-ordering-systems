@@ -3506,7 +3506,17 @@
       "labelWhen": "Időpont",
       "labelWhere": "Helyszín",
       "labelSpecialRequests": "Különleges kérések",
-      "closing": "Örömmel várjuk! Ha tervei megváltoznak, kérjük, minél hamarabb értesítsen bennünket az alábbi elérhetőségeken."
+      "closing": "Örömmel várjuk! Ha tervei megváltoznak, kérjük, minél hamarabb értesítsen bennünket az alábbi elérhetőségeken.",
+      "headerTitleRequested": "Foglalási kérelem beérkezett",
+      "headerTitleDeclined": "Foglalással kapcsolatos értesítés",
+      "introRequested": "Köszönjük! Megkaptuk a(z) {restaurantName} étterembe küldött foglalási kérelmét. Az asztalfoglalás megerősítésre vár — amint az étterem visszaigazolja, e-mailben értesítjük.",
+      "introDeclined": "Sajnálattal értesítjük, hogy a(z) {restaurantName} ezúttal nem tudja teljesíteni foglalási kérelmét.",
+      "badgeRequested": "Megerősítésre vár",
+      "badgeDeclined": "Elutasítva",
+      "closingRequested": "Hamarosan visszajelzünk. Köszönjük türelmét!",
+      "closingDeclined": "Elnézést kérünk a kellemetlenségért. Kérjük, válasszon másik időpontot, vagy vegye fel a kapcsolatot közvetlenül az étteremmel.",
+      "subjectRequested": "Foglalási kérelem beérkezett — megerősítésre vár",
+      "subjectDeclined": "Tájékoztatás foglalási kérelmével kapcsolatban"
     },
     "newReservation": {
       "subject": "Új foglalás — {restaurant}",

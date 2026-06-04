@@ -8,6 +8,9 @@ import { EmailBody, P, InfoCard, Badge } from "../components/EmailParts";
 
 export type ReservationConfirmationProps = {
   t: Translator;
+  /** "requested" = received, awaiting manual confirmation; "confirmed" =
+   *  accepted; "declined" = rejected by the restaurant. Drives the copy. */
+  status?: "requested" | "confirmed" | "declined";
   customerName: string;
   reservationNumber: string;
   restaurantName: string;
@@ -24,24 +27,31 @@ export type ReservationConfirmationProps = {
 };
 
 export default function ReservationConfirmation(props: ReservationConfirmationProps) {
-  const { t, customerName, reservationNumber, restaurantName, dateTime, partySize,
+  const { t, status = "confirmed", customerName, reservationNumber, restaurantName, dateTime, partySize,
     specialRequests, restaurantAddress, restaurantUrl, restaurantEmail,
     restaurantPhone, imprint } = props;
+
+  const suffix = status === "declined" ? "Declined" : status === "requested" ? "Requested" : "";
+  const k = (base: string) => `email.reservationConfirmed.${base}${suffix}`;
+  const statusBadge =
+    status === "declined" ? <Badge color="rose">{t("email.reservationConfirmed.badgeDeclined")}</Badge>
+    : status === "requested" ? <Badge color="slate">{t("email.reservationConfirmed.badgeRequested")}</Badge>
+    : <Badge color="emerald">{t("email.reservationConfirmed.badgeConfirmed")}</Badge>;
 
   return (
     <EmailLayout preview={t("email.reservationConfirmed.preview", { dateTime, partySize: String(partySize) })}>
       <EmailHeader
         variant="status"
-        title={t("email.reservationConfirmed.headerTitle")}
+        title={t(k("headerTitle"))}
         subtitle={dateTime}
       />
       <EmailBody>
         <P>{t("email.reservationConfirmed.greeting", { customerName })}</P>
         <P>
-          {t("email.reservationConfirmed.intro", { restaurantName: `<strong>${restaurantName}</strong>` })}
+          {t(k("intro"), { restaurantName })}
         </P>
         <div style={{ margin: "8px 0 16px" }}>
-          <Badge color="emerald">{t("email.reservationConfirmed.badgeConfirmed")}</Badge>{" "}
+          {statusBadge}{" "}
           <Badge color="slate">{t("email.reservationConfirmed.badgeReservation", { reservationNumber })}</Badge>
         </div>
 
@@ -64,7 +74,7 @@ export default function ReservationConfirmation(props: ReservationConfirmationPr
           </InfoCard>
         )}
 
-        <P>{t("email.reservationConfirmed.closing")}</P>
+        <P>{t(k("closing"))}</P>
       </EmailBody>
       <EmailFooter
         restaurantName={restaurantName}
