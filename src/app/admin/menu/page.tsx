@@ -61,9 +61,11 @@ export default async function MenuPage() {
     select: {
       parentRestaurantId: true,
       parentRestaurant: { select: { name: true } },
+      hoursFormat: true,
     },
   });
   const isChildOnCustomMenu = !!selfRow?.parentRestaurantId;
+  const menuHoursFormat = selfRow?.hoursFormat === "12h" ? "12h" : "24h";
 
   // Brand-parent banner data — count how many child locations are
   // currently inheriting this menu so the owner sees "edits flow
@@ -126,6 +128,7 @@ export default async function MenuPage() {
         categories={categories as any}
         libraryGroups={libraryGroups as any}
         restaurantId={restaurantId || ""}
+        hoursFormat={menuHoursFormat}
       />
     </>
   );

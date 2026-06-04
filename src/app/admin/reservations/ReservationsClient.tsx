@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
+import { formatTime, type HoursFormat } from "@/lib/format-time";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -152,7 +153,7 @@ function ReservationFormModal({ reservation, onClose, onSaved }: {
 
 // ─── Reservations List Tab ────────────────────────────────────────────────────
 
-function ReservationsTab() {
+function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
   const t = useTranslations("admin.reservationsList");
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
@@ -260,7 +261,7 @@ function ReservationsTab() {
                       <span className="text-xs text-gray-400 font-mono">#{r.confirmationCode}</span>
                     </div>
                     <div className="flex items-center gap-3 mt-1 text-sm text-gray-600">
-                      <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{r.date} {r.time}</span>
+                      <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{r.date} {formatTime(r.time, hoursFormat)}</span>
                       <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5" />{t("guests", { n: r.partySize })}</span>
                       {r.table && <span className="flex items-center gap-1"><Table2 className="w-3.5 h-3.5" />{r.table.name}</span>}
                     </div>
@@ -292,7 +293,7 @@ function ReservationsTab() {
           <div className="space-y-1 text-sm">
             {detail.customerPhone && <div className="flex items-center gap-2 text-gray-700"><Phone className="w-3.5 h-3.5 text-gray-400" />{detail.customerPhone}</div>}
             {detail.customerEmail && <div className="flex items-center gap-2 text-gray-700"><Mail className="w-3.5 h-3.5 text-gray-400" />{detail.customerEmail}</div>}
-            <div className="flex items-center gap-2 text-gray-700"><Clock className="w-3.5 h-3.5 text-gray-400" />{detail.date} at {detail.time} ({detail.durationMinutes} min)</div>
+            <div className="flex items-center gap-2 text-gray-700"><Clock className="w-3.5 h-3.5 text-gray-400" />{detail.date} at {formatTime(detail.time, hoursFormat)} ({detail.durationMinutes} min)</div>
             <div className="flex items-center gap-2 text-gray-700"><Users className="w-3.5 h-3.5 text-gray-400" />{t("guests", { n: detail.partySize })}</div>
             {detail.table && <div className="flex items-center gap-2 text-gray-700"><Table2 className="w-3.5 h-3.5 text-gray-400" />{detail.table.name}{detail.table.section ? ` (${detail.table.section})` : ""}</div>}
           </div>
@@ -713,7 +714,7 @@ function NumberRow({
 
 type Tab = "reservations" | "settings";
 
-export function ReservationsClient() {
+export function ReservationsClient({ hoursFormat = "24h" }: { hoursFormat?: HoursFormat }) {
   const t = useTranslations("admin.reservationsList");
   const [activeTab, setActiveTab] = useState<Tab>("reservations");
 
@@ -750,7 +751,7 @@ export function ReservationsClient() {
       </div>
 
       <div className="flex-1 overflow-y-auto min-h-0">
-        {activeTab === "reservations" && <ReservationsTab />}
+        {activeTab === "reservations" && <ReservationsTab hoursFormat={hoursFormat} />}
         {activeTab === "settings"     && <SettingsTab />}
       </div>
     </div>

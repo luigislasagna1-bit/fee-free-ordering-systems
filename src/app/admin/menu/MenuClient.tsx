@@ -1,5 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
+import { formatTime, type HoursFormat } from "@/lib/format-time";
 import { useState, useCallback, createContext, useContext, useEffect, useRef } from "react";
 import {
   Plus, GripVertical, ChevronDown, ChevronRight, Eye, EyeOff,
@@ -1136,6 +1137,10 @@ function ModifierChip({ group, inherited, categoryLevel, onRemove, sortable }: {
 
 // ─── Sortable Item Row ────────────────────────────────────────────────────────
 
+/** Restaurant 12h/24h preference, provided once by MenuClient and read by the
+ *  item rows for the availability badge — avoids threading through every level. */
+const MenuHoursFormatCtx = createContext<HoursFormat>("24h");
+
 /** Day-or-time availability reminder badge text for the menu list.
  *  Returns null when the item is available all week, all day. Shows the
  *  time window when set; otherwise a generic "limited days" label. The
@@ -1144,6 +1149,7 @@ function ModifierChip({ group, inherited, categoryLevel, onRemove, sortable }: {
 function availabilityBadgeText(
   item: { availableDays?: number[] | string | null; availableFrom?: string | null; availableTo?: string | null },
   t: (k: string) => string,
+  hoursFormat: HoursFormat = "24h",
 ): string | null {
   let days: number[] | null = null;
   const d = item.availableDays;
@@ -1155,9 +1161,8 @@ function availabilityBadgeText(
   if (timeLimited) {
     // Time window is the clearest reminder ("lunch only"); append a small
     // calendar mark when days are ALSO restricted.
-    return dayLimited
-      ? `${item.availableFrom}–${item.availableTo} 📅`
-      : `${item.availableFrom}–${item.availableTo}`;
+    const win = `${formatTime(item.availableFrom!, hoursFormat)}–${formatTime(item.availableTo!, hoursFormat)}`;
+    return dayLimited ? `${win} 📅` : win;
   }
   return t("limitedDaysBadge");
 }
@@ -1175,6 +1180,7 @@ function SortableItemRow({
   onReorderGroups: (itemId: string, orderedIds: string[]) => void;
 }) {
   const t = useTranslations("admin.menuEditor");
+  const itemHoursFormat = useContext(MenuHoursFormatCtx);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: item.id });
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
@@ -1234,7 +1240,7 @@ function SortableItemRow({
             <span className="text-xs bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">🍕 Pizza</span>
           )}
           {(() => {
-            const lbl = availabilityBadgeText(item, t);
+            const lbl = availabilityBadgeText(item, t, itemHoursFormat);
             return lbl ? (
               <span
                 className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded inline-flex items-center gap-1"
@@ -2123,9 +2129,9 @@ function PdfImportModal({ categories, onClose, onImported }: {
 
 // ─── Main MenuClient ──────────────────────────────────────────────────────────
 
-interface Props { categories: Category[]; libraryGroups: ModifierGroup[]; restaurantId: string }
+interface Props { categories: Category[]; libraryGroups: ModifierGroup[]; restaurantId: string; hoursFormat?: HoursFormat }
 
-export function MenuClient({ categories: initial, libraryGroups: initialGroups }: Props) {
+export function MenuClient({ categories: initial, libraryGroups: initialGroups, hoursFormat = "24h" }: Props) {
   const t = useTranslations("admin.menuEditor");
   const [categories, setCategories] = useState(initial);
   const [libraryGroups, setLibraryGroups] = useState(initialGroups);
@@ -2422,6 +2428,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
   const hoverValue: HoverState = { hoveredLibId, setHovered: setHoveredLibId };
 
   return (
+    <MenuHoursFormatCtx.Provider value={hoursFormat}>
     <MenuHoverContext.Provider value={hoverValue}>
     <div className="flex flex-col h-full">
       {/* Header */}
@@ -2658,5 +2665,6 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups }
       )}
     </div>
     </MenuHoverContext.Provider>
+    </MenuHoursFormatCtx.Provider>
   );
 }

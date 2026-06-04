@@ -25,6 +25,8 @@ interface Props {
    *  further transitions are surfaced. In "tracking" mode the full
    *  state machine is visible. */
   workflowMode?: "simple" | "tracking";
+  /** Restaurant 12h/24h preference for the order timestamps shown here. */
+  hoursFormat?: "12h" | "24h";
 }
 
 const STATUS_LABEL: Record<string, string> = {
@@ -37,12 +39,12 @@ const STATUS_LABEL: Record<string, string> = {
   cancelled: "Cancelled",
 };
 
-function fmtTime(d: string | Date | null | undefined) {
+function fmtTime(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h") {
   if (!d) return "—";
-  return new Date(d).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true });
+  return new Date(d).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
 }
 
-export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple" }: Props) {
+export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple", hoursFormat = "12h" }: Props) {
   const isSimpleMode = workflowMode === "simple";
   const tk = useTranslations("kitchen");
   const tc = useTranslations("checkout");
@@ -214,7 +216,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           </button>
           <div>
             <div className={`font-bold text-lg ${t.text}`}>{tk("orderNumber")}{order.orderNumber}</div>
-            <div className={`text-xs ${t.muted}`}>{fmtTime(order.createdAt)}</div>
+            <div className={`text-xs ${t.muted}`}>{fmtTime(order.createdAt, hoursFormat)}</div>
           </div>
           <StatusBadge />
           {order.viaMarketplace && (
@@ -261,10 +263,10 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           {(order.acceptedAt || order.estimatedReady || order.completedAt) && (
             <Section title={tk("estimatedTime")} t={t}>
               <div className="space-y-1.5">
-                {order.acceptedAt && <Row icon={<CheckCircle className="w-4 h-4 text-green-500" />} t={t}>{tk("accepted")}: {fmtTime(order.acceptedAt)}</Row>}
-                {order.estimatedReady && <Row icon={<Clock className="w-4 h-4 text-blue-500" />} t={t}>{tk("ready")}: {fmtTime(order.estimatedReady)}</Row>}
+                {order.acceptedAt && <Row icon={<CheckCircle className="w-4 h-4 text-green-500" />} t={t}>{tk("accepted")}: {fmtTime(order.acceptedAt, hoursFormat)}</Row>}
+                {order.estimatedReady && <Row icon={<Clock className="w-4 h-4 text-blue-500" />} t={t}>{tk("ready")}: {fmtTime(order.estimatedReady, hoursFormat)}</Row>}
                 {order.preparationTime && <Row icon={<Clock className="w-4 h-4" />} t={t}>{tk("preparationTime")}: {order.preparationTime} {tk("minAway", { minutes: "" })}</Row>}
-                {order.completedAt && <Row icon={<Package className="w-4 h-4 text-gray-500" />} t={t}>{tk("completed")}: {fmtTime(order.completedAt)}</Row>}
+                {order.completedAt && <Row icon={<Package className="w-4 h-4 text-gray-500" />} t={t}>{tk("completed")}: {fmtTime(order.completedAt, hoursFormat)}</Row>}
               </div>
 
               {/* Live countdown — ticks once per second once the order is

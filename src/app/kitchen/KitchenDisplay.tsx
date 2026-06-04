@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { formatCurrency } from "@/lib/utils";
+import { formatTime } from "@/lib/format-time";
 import {
   Bell, Printer, RefreshCw, LogOut, ChefHat, Sun, Moon,
   Package, Clock, Truck, ShoppingBag, CheckCircle, Trash2,
@@ -57,13 +58,15 @@ function ReservationStatusBadge({ status, t }: { status: string; t: T }) {
 }
 
 function ReservationCard({
-  r, t, onStatusChange, onPrint, compact, dayChip,
+  r, t, onStatusChange, onPrint, compact, dayChip, hoursFormat = "24h",
 }: {
   r: KitchenReservation;
   t: T;
   onStatusChange: (id: string, status: string) => void;
   onPrint: (id: string) => void;
   compact?: boolean;
+  /** Restaurant 12h/24h preference for the reservation time. */
+  hoursFormat?: "12h" | "24h";
   /** When present (LATER group in the In Progress tab), a small
    *  day-of-week pill (TUE/FRI/…) is rendered next to the customer
    *  name so the kitchen can scan upcoming-day items at a glance,
@@ -90,7 +93,7 @@ function ReservationCard({
             )}
           </div>
           <div className={`text-xs ${t.muted} mt-1 flex gap-3 flex-wrap`}>
-            <span>{r.date} · {r.time}</span>
+            <span>{r.date} · {formatTime(r.time, hoursFormat)}</span>
             <span>{tk("partyOf", { n: r.partySize })}</span>
             {r.table && <span>{r.table.name}</span>}
             {!compact && r.customerPhone && <span>📞 {r.customerPhone}</span>}
@@ -506,6 +509,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const [workflowMode, setWorkflowMode] = useState<"simple" | "tracking">(
     (restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple"),
   );
+  // 12h/24h display preference for reservation + order times in the kitchen.
+  const hoursFmt: "12h" | "24h" = restaurant?.hoursFormat === "12h" ? "12h" : "24h";
   // PrintNode opt-in flag. When false (default), the PrintNode setup
   // UI is hidden from the kitchen header — Direct LAN printer is the
   // main path. Admin enables PrintNode from /admin/orders as an
@@ -2300,6 +2305,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               key={r.id}
               r={r}
               t={t}
+              hoursFormat={hoursFmt}
               onStatusChange={updateReservationStatus}
               onPrint={printReservation}
             />
@@ -2524,6 +2530,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                   key={`r-${it.r.id}`}
                   r={it.r}
                   t={t}
+                  hoursFormat={hoursFmt}
                   onStatusChange={updateReservationStatus}
                   onPrint={printReservation}
                   compact
@@ -2548,6 +2555,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               onPrint={doPrint}
               printerReady={printerReady}
               workflowMode={workflowMode}
+              hoursFormat={hoursFmt}
             />
           </div>
         ) : (
