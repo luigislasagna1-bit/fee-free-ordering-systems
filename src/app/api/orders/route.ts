@@ -3,7 +3,7 @@ import { after } from "next/server";
 import prisma from "@/lib/db";
 import { generateOrderNumber, formatCurrency } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
-import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, holidayNameForToday } from "@/lib/restaurant-hours";
+import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, holidayNameForToday, localDowAndHHMM } from "@/lib/restaurant-hours";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
@@ -30,6 +30,26 @@ const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "catering"] as con
 const ALLOWED_PAYMENT_METHODS = ["cash", "card", "card_in_person", "paypal"] as const;
 const MAX_ITEMS = 50;
 const MAX_STRING = 500;
+
+/** Server-side mirror of the customer page's isItemAvailableNow — evaluates
+ *  a menu item's day/time availability window in the RESTAURANT's timezone.
+ *  availableDays is stored as a JSON string column. */
+function isMenuItemAvailableNow(
+  item: { availableDays?: string | number[] | null; availableFrom?: string | null; availableTo?: string | null },
+  timezone?: string,
+): boolean {
+  const { dow, hhmm } = localDowAndHHMM(new Date(), timezone);
+  if (item.availableDays) {
+    let days: number[] | null = null;
+    if (Array.isArray(item.availableDays)) days = item.availableDays;
+    else { try { const a = JSON.parse(item.availableDays); if (Array.isArray(a)) days = a; } catch { /* ignore */ } }
+    if (days && days.length > 0 && !days.includes(dow)) return false;
+  }
+  if (item.availableFrom && item.availableTo) {
+    if (hhmm < item.availableFrom || hhmm > item.availableTo) return false;
+  }
+  return true;
+}
 
 function sanitize(s: unknown, max = MAX_STRING): string {
   return String(s ?? "").trim().slice(0, max);
@@ -287,6 +307,17 @@ export async function POST(req: NextRequest) {
       const menuItem = menuItemMap.get(String(raw.menuItemId));
       if (!menuItem) {
         return NextResponse.json({ error: `Menu item not found: ${raw.menuItemId}` }, { status: 400 });
+      }
+
+      // Day/time availability guard (server-side defence). The customer page
+      // already hides out-of-window items, but a crafted request could still
+      // include one — the restaurant set the limit for a reason (lunch-only,
+      // weekend special, etc.), so enforce it here in the RESTAURANT tz.
+      if (!isMenuItemAvailableNow(menuItem, (restaurant as any).timezone)) {
+        return NextResponse.json(
+          { error: `"${menuItem.name}" isn't available at this time.`, code: "item_unavailable_now" },
+          { status: 400 },
+        );
       }
 
       const qty = Math.max(1, Math.min(99, parseInt(raw.quantity, 10) || 1));

@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Allegato alla categoria",
       "attachedToItem": "Allegato all'articolo",
       "failedToDetach": "Rimozione allegato non riuscita",
-      "removed": "Rimosso"
+      "removed": "Rimosso",
+      "limitedAvailabilityTitle": "Questo piatto è disponibile solo in giorni/orari selezionati",
+      "limitedDaysBadge": "Giorni selezionati"
     },
     "promotionsList": {
       "stackingMaster": "Master",

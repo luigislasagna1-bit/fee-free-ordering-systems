@@ -1804,7 +1804,9 @@
       "attachedToCategory": "श्रेणी से जोड़ा गया",
       "attachedToItem": "आइटम से जोड़ा गया",
       "failedToDetach": "हटाने में विफल",
-      "removed": "हटाया गया"
+      "removed": "हटाया गया",
+      "limitedAvailabilityTitle": "यह व्यंजन केवल चुनिंदा दिनों/समय पर उपलब्ध है",
+      "limitedDaysBadge": "चुनिंदा दिन"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

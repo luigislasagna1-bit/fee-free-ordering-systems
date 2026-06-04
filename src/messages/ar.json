@@ -1488,7 +1488,9 @@
       "attachedToCategory": "تم الإرفاق بالفئة",
       "attachedToItem": "تم الإرفاق بالصنف",
       "failedToDetach": "فشل الفصل",
-      "removed": "تمت الإزالة"
+      "removed": "تمت الإزالة",
+      "limitedAvailabilityTitle": "هذا الطبق متاح فقط في أيام/أوقات محددة",
+      "limitedDaysBadge": "أيام محددة"
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

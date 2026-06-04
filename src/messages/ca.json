@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Adjuntat a la categoria",
       "attachedToItem": "Adjuntat a l'article",
       "failedToDetach": "No s'ha pogut desadjuntar",
-      "removed": "Eliminat"
+      "removed": "Eliminat",
+      "limitedAvailabilityTitle": "Aquest plat només està disponible en dies/hores seleccionats",
+      "limitedDaysBadge": "Dies seleccionats"
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

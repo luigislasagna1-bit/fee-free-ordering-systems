@@ -1488,7 +1488,9 @@
       "attachedToCategory": "แนบกับหมวดหมู่แล้ว",
       "attachedToItem": "แนบกับรายการแล้ว",
       "failedToDetach": "ถอดออกล้มเหลว",
-      "removed": "ลบออกแล้ว"
+      "removed": "ลบออกแล้ว",
+      "limitedAvailabilityTitle": "เมนูนี้มีให้บริการเฉพาะในวัน/เวลาที่กำหนดเท่านั้น",
+      "limitedDaysBadge": "วันที่กำหนด"
     },
     "promotionsList": {
       "stackingMaster": "Master",

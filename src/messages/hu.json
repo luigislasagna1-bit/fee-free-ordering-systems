@@ -1451,7 +1451,9 @@
       "attachedToCategory": "Csatolva a kategóriához",
       "attachedToItem": "Csatolva a tételhez",
       "failedToDetach": "Leválasztás sikertelen",
-      "removed": "Eltávolítva"
+      "removed": "Eltávolítva",
+      "limitedAvailabilityTitle": "Ez az étel csak a kijelölt napokon/időpontokban érhető el",
+      "limitedDaysBadge": "Kijelölt napok"
     },
     "promotionsList": {
       "stackingMaster": "Master",

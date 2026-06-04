@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Prilagano kategoriji",
       "attachedToItem": "Prilagano stavci",
       "failedToDetach": "Odlaganje nije uspjelo",
-      "removed": "Uklonjeno"
+      "removed": "Uklonjeno",
+      "limitedAvailabilityTitle": "Ovo jelo dostupno je samo određenim danima/u određeno vrijeme",
+      "limitedDaysBadge": "Odabrani dani"
     },
     "promotionsList": {
       "stackingMaster": "Master",

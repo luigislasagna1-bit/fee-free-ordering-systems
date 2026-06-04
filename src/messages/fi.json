@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Liitetty kategoriaan",
       "attachedToItem": "Liitetty tuotteeseen",
       "failedToDetach": "Irrottaminen epäonnistui",
-      "removed": "Poistettu"
+      "removed": "Poistettu",
+      "limitedAvailabilityTitle": "Tämä annos on saatavilla vain valittuina päivinä/aikoina",
+      "limitedDaysBadge": "Valitut päivät"
     },
     "promotionsList": {
       "stackingMaster": "Master",

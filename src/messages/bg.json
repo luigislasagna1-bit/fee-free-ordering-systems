@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Прикачено към категория",
       "attachedToItem": "Прикачено към артикул",
       "failedToDetach": "Неуспешно откачване",
-      "removed": "Премахнато"
+      "removed": "Премахнато",
+      "limitedAvailabilityTitle": "Това ястие е достъпно само в избрани дни/часове",
+      "limitedDaysBadge": "Избрани дни"
     },
     "promotionsList": {
       "stackingMaster": "Главна",

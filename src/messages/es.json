@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Adjunto a la categoría",
       "attachedToItem": "Adjunto al artículo",
       "failedToDetach": "Error al desadjuntar",
-      "removed": "Eliminado"
+      "removed": "Eliminado",
+      "limitedAvailabilityTitle": "Este plato solo está disponible en días/horarios seleccionados",
+      "limitedDaysBadge": "Días seleccionados"
     },
     "promotionsList": {
       "stackingMaster": "Maestro",

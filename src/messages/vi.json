@@ -1451,7 +1451,9 @@
       "attachedToCategory": "Đã đính kèm vào danh mục",
       "attachedToItem": "Đã đính kèm vào món",
       "failedToDetach": "Gỡ đính kèm thất bại",
-      "removed": "Đã gỡ"
+      "removed": "Đã gỡ",
+      "limitedAvailabilityTitle": "Món này chỉ phục vụ vào các ngày/giờ đã chọn",
+      "limitedDaysBadge": "Ngày đã chọn"
     },
     "promotionsList": {
       "stackingMaster": "Master",

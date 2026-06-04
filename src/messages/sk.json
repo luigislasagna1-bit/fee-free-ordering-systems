@@ -2148,7 +2148,9 @@
       "attachedToCategory": "Pripojené ku kategórii",
       "attachedToItem": "Pripojené k položke",
       "failedToDetach": "Odpojenie zlyhalo",
-      "removed": "Odstránené"
+      "removed": "Odstránené",
+      "limitedAvailabilityTitle": "Toto jedlo je dostupné iba vo vybrané dni/časy",
+      "limitedDaysBadge": "Vybrané dni"
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

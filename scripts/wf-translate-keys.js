@@ -6,21 +6,11 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "kitchen";
-const CONTEXT = "the kitchen order-management screen of a restaurant ordering platform; these strings are for a Refund action (full or partial card refund via Stripe)";
+const NS = "admin.menuEditor";
+const CONTEXT = "the restaurant's menu-management screen; these label a dish that has a day/time availability restriction (GloriaFood-style reminder badge)";
 const EN = {
-  refund: "Refund",
-  refundFull: "Full refund",
-  refundPartial: "Partial",
-  refundAmountLabel: "Amount to refund",
-  refundConfirm: "Issue refund",
-  refundRemaining: "Refundable",
-  refundedSoFar: "Refunded so far: {amount}",
-  refundedSoFarShort: "Already refunded",
-  refundInvalidAmount: "Enter a valid refund amount.",
-  refundExceeds: "Amount exceeds the refundable balance.",
-  refundFailed: "Refund failed. Please try again.",
-  refundSuccess: "Refund issued.",
+  limitedAvailabilityTitle: "This dish is only available on selected days/times",
+  limitedDaysBadge: "Selected days",
 };
 const KEYS = Object.keys(EN);
 

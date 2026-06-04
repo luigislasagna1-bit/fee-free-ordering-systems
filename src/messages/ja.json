@@ -1488,7 +1488,9 @@
       "attachedToCategory": "カテゴリーに添付しました",
       "attachedToItem": "商品に添付しました",
       "failedToDetach": "削除に失敗しました",
-      "removed": "削除しました"
+      "removed": "削除しました",
+      "limitedAvailabilityTitle": "この料理は指定された曜日・時間帯のみ提供されます",
+      "limitedDaysBadge": "指定された曜日"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Bifogad till kategori",
       "attachedToItem": "Bifogad till artikel",
       "failedToDetach": "Det gick inte att ta bort bifogning",
-      "removed": "Borttagen"
+      "removed": "Borttagen",
+      "limitedAvailabilityTitle": "Den här rätten är endast tillgänglig på utvalda dagar/tider",
+      "limitedDaysBadge": "Utvalda dagar"
     },
     "promotionsList": {
       "stackingMaster": "Master",

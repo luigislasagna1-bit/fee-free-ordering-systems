@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Tilordnet til kategori",
       "attachedToItem": "Tilordnet til vare",
       "failedToDetach": "Kunne ikke fjerne tilordning",
-      "removed": "Fjernet"
+      "removed": "Fjernet",
+      "limitedAvailabilityTitle": "Denne retten er bare tilgjengelig på utvalgte dager/tidspunkter",
+      "limitedDaysBadge": "Utvalgte dager"
     },
     "promotionsList": {
       "stackingMaster": "Master",

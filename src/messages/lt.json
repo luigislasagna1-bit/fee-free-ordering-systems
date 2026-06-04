@@ -2148,7 +2148,9 @@
       "attachedToCategory": "Prisegta prie kategorijos",
       "attachedToItem": "Prisegta prie prekės",
       "failedToDetach": "Nepavyko atsegti",
-      "removed": "Pašalinta"
+      "removed": "Pašalinta",
+      "limitedAvailabilityTitle": "Šis patiekalas tiekiamas tik pasirinktomis dienomis ir (arba) valandomis",
+      "limitedDaysBadge": "Pasirinktos dienos"
     },
     "promotionsList": {
       "stackingMaster": "Master",

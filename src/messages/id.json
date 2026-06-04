@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Dilampirkan ke kategori",
       "attachedToItem": "Dilampirkan ke item",
       "failedToDetach": "Gagal melepas",
-      "removed": "Dihapus"
+      "removed": "Dihapus",
+      "limitedAvailabilityTitle": "Hidangan ini hanya tersedia pada hari/waktu tertentu",
+      "limitedDaysBadge": "Hari tertentu"
     },
     "promotionsList": {
       "stackingMaster": "Master",

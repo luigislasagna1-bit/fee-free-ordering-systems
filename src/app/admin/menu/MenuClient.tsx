@@ -1136,6 +1136,32 @@ function ModifierChip({ group, inherited, categoryLevel, onRemove, sortable }: {
 
 // ─── Sortable Item Row ────────────────────────────────────────────────────────
 
+/** Day-or-time availability reminder badge text for the menu list.
+ *  Returns null when the item is available all week, all day. Shows the
+ *  time window when set; otherwise a generic "limited days" label. The
+ *  badge reminds the restaurant a dish has a day/time restriction
+ *  (GloriaFood-style). */
+function availabilityBadgeText(
+  item: { availableDays?: number[] | string | null; availableFrom?: string | null; availableTo?: string | null },
+  t: (k: string) => string,
+): string | null {
+  let days: number[] | null = null;
+  const d = item.availableDays;
+  if (Array.isArray(d)) days = d;
+  else if (typeof d === "string" && d) { try { const a = JSON.parse(d); if (Array.isArray(a)) days = a; } catch { /* ignore */ } }
+  const dayLimited = days !== null && days.length > 0 && days.length < 7;
+  const timeLimited = !!(item.availableFrom && item.availableTo);
+  if (!dayLimited && !timeLimited) return null;
+  if (timeLimited) {
+    // Time window is the clearest reminder ("lunch only"); append a small
+    // calendar mark when days are ALSO restricted.
+    return dayLimited
+      ? `${item.availableFrom}–${item.availableTo} 📅`
+      : `${item.availableFrom}–${item.availableTo}`;
+  }
+  return t("limitedDaysBadge");
+}
+
 function SortableItemRow({
   item, categoryModGroups, onEdit, onDelete, onToggle, onAttach, onDetach, onReorderGroups,
 }: {
@@ -1207,6 +1233,17 @@ function SortableItemRow({
           {item.pizzaConfig && (() => { try { return JSON.parse(item.pizzaConfig!)?.isPizza; } catch { return false; } })() && (
             <span className="text-xs bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">🍕 Pizza</span>
           )}
+          {(() => {
+            const lbl = availabilityBadgeText(item, t);
+            return lbl ? (
+              <span
+                className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded inline-flex items-center gap-1"
+                title={t("limitedAvailabilityTitle")}
+              >
+                <Clock className="w-3 h-3" /> {lbl}
+              </span>
+            ) : null;
+          })()}
         </div>
         {item.description && <div className="text-xs text-gray-400 truncate mt-0.5">{item.description}</div>}
         {(ownGroups.length > 0 || inheritedGroups.length > 0) && (

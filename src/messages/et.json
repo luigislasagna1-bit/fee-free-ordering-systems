@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Manustatud kategooriale",
       "attachedToItem": "Manustatud tootele",
       "failedToDetach": "Eemaldamine ebaõnnestus",
-      "removed": "Eemaldatud"
+      "removed": "Eemaldatud",
+      "limitedAvailabilityTitle": "See roog on saadaval ainult valitud päevadel/kellaaegadel",
+      "limitedDaysBadge": "Valitud päevad"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

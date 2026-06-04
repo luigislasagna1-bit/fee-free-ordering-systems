@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Συνδέθηκε στην κατηγορία",
       "attachedToItem": "Συνδέθηκε στο αντικείμενο",
       "failedToDetach": "Αποτυχία αποσύνδεσης",
-      "removed": "Αφαιρέθηκε"
+      "removed": "Αφαιρέθηκε",
+      "limitedAvailabilityTitle": "Αυτό το πιάτο είναι διαθέσιμο μόνο σε επιλεγμένες ημέρες/ώρες",
+      "limitedDaysBadge": "Επιλεγμένες ημέρες"
     },
     "promotionsList": {
       "stackingMaster": "Master",

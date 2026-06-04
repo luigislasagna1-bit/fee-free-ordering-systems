@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Привязано к категории",
       "attachedToItem": "Привязано к позиции",
       "failedToDetach": "Не удалось отвязать",
-      "removed": "Удалено"
+      "removed": "Удалено",
+      "limitedAvailabilityTitle": "Это блюдо доступно только в определённые дни/часы",
+      "limitedDaysBadge": "Определённые дни"
     },
     "promotionsList": {
       "stackingMaster": "Мастер",

@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Připojeno ke kategorii",
       "attachedToItem": "Připojeno k položce",
       "failedToDetach": "Odpojení selhalo",
-      "removed": "Odebráno"
+      "removed": "Odebráno",
+      "limitedAvailabilityTitle": "Toto jídlo je dostupné pouze ve vybrané dny/časy",
+      "limitedDaysBadge": "Vybrané dny"
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

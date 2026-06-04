@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Atașat la categorie",
       "attachedToItem": "Atașat la produs",
       "failedToDetach": "Detașarea a eșuat",
-      "removed": "Eliminat"
+      "removed": "Eliminat",
+      "limitedAvailabilityTitle": "Acest preparat este disponibil doar în anumite zile/intervale orare",
+      "limitedDaysBadge": "Zile selectate"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1488,7 +1488,9 @@
       "attachedToCategory": "חובר לקטגוריה",
       "attachedToItem": "חובר לפריט",
       "failedToDetach": "הניתוק נכשל",
-      "removed": "הוסר"
+      "removed": "הוסר",
+      "limitedAvailabilityTitle": "מנה זו זמינה רק בימים/בשעות נבחרים",
+      "limitedDaysBadge": "ימים נבחרים"
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

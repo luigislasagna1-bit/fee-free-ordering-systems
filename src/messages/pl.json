@@ -1451,7 +1451,9 @@
       "attachedToCategory": "Dołączono do kategorii",
       "attachedToItem": "Dołączono do pozycji",
       "failedToDetach": "Nie udało się odłączyć",
-      "removed": "Usunięto"
+      "removed": "Usunięto",
+      "limitedAvailabilityTitle": "To danie jest dostępne tylko w wybrane dni/godziny",
+      "limitedDaysBadge": "Wybrane dni"
     },
     "promotionsList": {
       "stackingMaster": "Master",

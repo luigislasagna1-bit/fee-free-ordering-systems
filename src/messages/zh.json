@@ -1488,7 +1488,9 @@
       "attachedToCategory": "已附加到分类",
       "attachedToItem": "已附加到商品",
       "failedToDetach": "移除失败",
-      "removed": "已移除"
+      "removed": "已移除",
+      "limitedAvailabilityTitle": "本菜品仅在指定日期/时间供应",
+      "limitedDaysBadge": "指定日期"
     },
     "promotionsList": {
       "stackingMaster": "主控",

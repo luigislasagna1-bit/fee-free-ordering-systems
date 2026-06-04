@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Прикріплено до категорії",
       "attachedToItem": "Прикріплено до позиції",
       "failedToDetach": "Не вдалося від'єднати",
-      "removed": "Видалено"
+      "removed": "Видалено",
+      "limitedAvailabilityTitle": "Ця страва доступна лише в певні дні/години",
+      "limitedDaysBadge": "Обрані дні"
     },
     "promotionsList": {
       "stackingMaster": "Майстер",

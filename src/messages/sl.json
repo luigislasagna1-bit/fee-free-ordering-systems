@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Priloženo kategoriji",
       "attachedToItem": "Priloženo artiklu",
       "failedToDetach": "Odložitev ni uspela",
-      "removed": "Odstranjeno"
+      "removed": "Odstranjeno",
+      "limitedAvailabilityTitle": "Ta jed je na voljo samo ob izbranih dneh/urah",
+      "limitedDaysBadge": "Izbrani dnevi"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1488,7 +1488,9 @@
       "attachedToCategory": "An Kategorie angehängt",
       "attachedToItem": "An Artikel angehängt",
       "failedToDetach": "Trennen fehlgeschlagen",
-      "removed": "Entfernt"
+      "removed": "Entfernt",
+      "limitedAvailabilityTitle": "Dieses Gericht ist nur an ausgewählten Tagen/Uhrzeiten verfügbar",
+      "limitedDaysBadge": "Ausgewählte Tage"
     },
     "promotionsList": {
       "stackingMaster": "Master",

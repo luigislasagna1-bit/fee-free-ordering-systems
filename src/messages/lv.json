@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Piesaistīts kategorijai",
       "attachedToItem": "Piesaistīts precei",
       "failedToDetach": "Atdalīšana neizdevās",
-      "removed": "Noņemts"
+      "removed": "Noņemts",
+      "limitedAvailabilityTitle": "Šis ēdiens ir pieejams tikai noteiktās dienās/laikos",
+      "limitedDaysBadge": "Noteiktas dienas"
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

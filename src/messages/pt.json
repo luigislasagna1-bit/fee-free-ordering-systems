@@ -1488,7 +1488,9 @@
       "attachedToCategory": "Anexado à categoria",
       "attachedToItem": "Anexado ao item",
       "failedToDetach": "Falha ao desanexar",
-      "removed": "Removido"
+      "removed": "Removido",
+      "limitedAvailabilityTitle": "Este prato só está disponível em determinados dias/horas",
+      "limitedDaysBadge": "Dias selecionados"
     },
     "promotionsList": {
       "stackingMaster": "Master",

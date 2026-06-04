@@ -1804,7 +1804,9 @@
       "attachedToCategory": "Attached to category",
       "attachedToItem": "Attached to item",
       "failedToDetach": "Failed to detach",
-      "removed": "Removed"
+      "removed": "Removed",
+      "limitedAvailabilityTitle": "This dish is only available on selected days/times",
+      "limitedDaysBadge": "Selected days"
     },
     "promotionsList": {
       "stackingMaster": "Master",
