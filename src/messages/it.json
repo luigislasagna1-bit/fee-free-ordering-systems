@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Codice citofono (opzionale)",
     "deliveryInstructionsPlaceholder": "Istruzioni per la consegna — lascia alla porta, ingresso laterale, suona due volte, ecc. (opzionale)",
     "pickATimePlaceholder": "Scegli un orario…",
-    "customAmount": "Importo personalizzato"
+    "customAmount": "Importo personalizzato",
+    "closedSchedulePrompt": "🌙 Siamo chiusi in questo momento. Scegli un orario in cui siamo aperti — il primo disponibile è mostrato qui sotto.",
+    "nextOpening": "Prossima apertura: {date}",
+    "closedAndCatering": "🌙🎉 Siamo chiusi E il tuo carrello contiene articoli per catering. Il primo orario disponibile è il più tardi tra la prossima apertura e <strong>{hours}h</strong> da adesso.",
+    "cateringOnly": "🎉 Il tuo carrello contiene articoli per catering — gli ordini devono essere programmati con almeno <strong>{hours}h</strong> di anticipo. L'opzione Prima possibile non è disponibile con articoli per catering nel carrello."
   },
   "reservation": {
     "title": "Prenota un tavolo",

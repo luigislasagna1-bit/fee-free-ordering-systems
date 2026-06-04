@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Codi del porter automàtic (opcional)",
     "deliveryInstructionsPlaceholder": "Instruccions de lliurament — deixar a la porta, entrada lateral, trucar dos cops, etc. (opcional)",
     "pickATimePlaceholder": "Tria una hora…",
-    "customAmount": "Import personalitzat"
+    "customAmount": "Import personalitzat",
+    "closedSchedulePrompt": "🌙 Ara mateix estem tancats. Tria una hora en què estiguem oberts — a continuació es mostra la primera disponible.",
+    "nextOpening": "Pròxima obertura: {date}",
+    "closedAndCatering": "🌙🎉 Estem tancats I la teva comanda inclou articles de càtering. El primer horari disponible és el més tardà entre la pròxima obertura i <strong>{hours}h</strong> a partir d'ara.",
+    "cateringOnly": "🎉 La teva comanda inclou articles de càtering — les comandes s'han de programar amb almenys <strong>{hours}h</strong> d'antelació. L'opció «El més aviat possible» no està disponible quan hi ha articles de càtering a la comanda."
   },
   "reservation": {
     "title": "Reservar taula",

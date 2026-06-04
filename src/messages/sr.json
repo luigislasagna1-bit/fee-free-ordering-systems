@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Kod interfona (opciono)",
     "deliveryInstructionsPlaceholder": "Uputstva za dostavu — ostavite na vratima, bočni ulaz, zakucajte dva puta itd. (opciono)",
     "pickATimePlaceholder": "Odaberite vreme…",
-    "customAmount": "Prilagođeni iznos"
+    "customAmount": "Prilagođeni iznos",
+    "closedSchedulePrompt": "🌙 Trenutno smo zatvoreni. Izaberite vreme kada radimo — najranije dostupno je prikazano ispod.",
+    "nextOpening": "Sledeće otvaranje: {date}",
+    "closedAndCatering": "🌙🎉 Zatvoreni smo I vaša korpa sadrži stavke za ketering. Najranije dostupno vreme je kasnije od sledećeg otvaranja i <strong>{hours}h</strong> od sada.",
+    "cateringOnly": "🎉 Vaša korpa sadrži stavke za ketering — porudžbine moraju biti zakazane najmanje <strong>{hours}h</strong> unapred. Opcija „odmah“ nije dostupna kada korpa sadrži stavke za ketering."
   },
   "reservation": {
     "title": "Rezerviši sto",

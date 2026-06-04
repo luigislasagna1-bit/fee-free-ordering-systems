@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Código de timbre (opcional)",
     "deliveryInstructionsPlaceholder": "Instrucciones de entrega — dejar en la puerta, entrada lateral, tocar dos veces, etc. (opcional)",
     "pickATimePlaceholder": "Elige un horario…",
-    "customAmount": "Monto personalizado"
+    "customAmount": "Monto personalizado",
+    "closedSchedulePrompt": "🌙 Ahora estamos cerrados. Elige un horario en el que estemos abiertos — a continuación se muestra el más próximo disponible.",
+    "nextOpening": "Próxima apertura: {date}",
+    "closedAndCatering": "🌙🎉 Estamos cerrados Y tu carrito incluye artículos de catering. El horario disponible más temprano es el más tardío entre la próxima apertura y <strong>{hours}h</strong> a partir de ahora.",
+    "cateringOnly": "🎉 Tu carrito incluye artículos de catering — los pedidos deben programarse con al menos <strong>{hours}h</strong> de anticipación. La opción «lo antes posible» no está disponible con artículos de catering en el carrito."
   },
   "reservation": {
     "title": "Reservar mesa",

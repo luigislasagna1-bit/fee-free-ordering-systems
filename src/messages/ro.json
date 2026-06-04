@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Cod interfon (opțional)",
     "deliveryInstructionsPlaceholder": "Instrucțiuni de livrare — lasă la ușă, intrare laterală, sună de două ori etc. (opțional)",
     "pickATimePlaceholder": "Alege o oră…",
-    "customAmount": "Sumă personalizată"
+    "customAmount": "Sumă personalizată",
+    "closedSchedulePrompt": "🌙 Momentan suntem închiși. Alege o oră când suntem deschiși — cel mai devreme moment disponibil este afișat mai jos.",
+    "nextOpening": "Următoarea deschidere: {date}",
+    "closedAndCatering": "🌙🎉 Suntem închiși ȘI coșul tău conține articole de catering. Cel mai devreme moment disponibil este cel mai târziu dintre următoarea deschidere și <strong>{hours}h</strong> de acum.",
+    "cateringOnly": "🎉 Coșul tău conține articole de catering — comenzile trebuie programate cu cel puțin <strong>{hours}h</strong> în avans. Opțiunea \"Cât mai curând\" nu este disponibilă când coșul conține articole de catering."
   },
   "reservation": {
     "title": "Rezervă o masă",

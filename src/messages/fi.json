@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Ovikoodi (valinnainen)",
     "deliveryInstructionsPlaceholder": "Toimitusohjeet — jätä ovelle, sivusisäänkäynti, soita kahdesti jne. (valinnainen)",
     "pickATimePlaceholder": "Valitse aika…",
-    "customAmount": "Muu summa"
+    "customAmount": "Muu summa",
+    "closedSchedulePrompt": "🌙 Olemme juuri nyt kiinni. Valitse aika, jolloin olemme auki — aikaisin saatavilla oleva aika näkyy alla.",
+    "nextOpening": "Seuraava aukioloaika: {date}",
+    "closedAndCatering": "🌙🎉 Olemme kiinni JA ostoskorissasi on pitopalvelutilauksia. Aikaisin saatavilla oleva aika on se myöhäisempi — seuraava aukioloaika tai <strong>{hours}h</strong> tästä hetkestä.",
+    "cateringOnly": "🎉 Ostoskorissasi on pitopalvelutilauksia — tilaukset on ajoitettava vähintään <strong>{hours}h</strong> etukäteen. Pikimmiten-toimitus ei ole käytettävissä, kun korissa on pitopalvelutilauksia."
   },
   "reservation": {
     "title": "Varaa pöytä",

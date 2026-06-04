@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Ringekodenummer (valgfritt)",
     "deliveryInstructionsPlaceholder": "Leveringsinstruksjoner — legg ved døren, sideinngangen, ring to ganger, osv. (valgfritt)",
     "pickATimePlaceholder": "Velg et tidspunkt…",
-    "customAmount": "Egendefinert beløp"
+    "customAmount": "Egendefinert beløp",
+    "closedSchedulePrompt": "🌙 Vi er stengt akkurat nå. Velg et tidspunkt når vi er åpne — tidligst tilgjengelig vises nedenfor.",
+    "nextOpening": "Neste åpning: {date}",
+    "closedAndCatering": "🌙🎉 Vi er stengt OG handlekurven inneholder cateringvarer. Tidligst tilgjengelig tid er den seneste av neste åpning og <strong>{hours}h</strong> fra nå.",
+    "cateringOnly": "🎉 Handlekurven inneholder cateringvarer — bestillinger må planlegges minst <strong>{hours}h</strong> i forveien. Raskest mulig er ikke tilgjengelig når det er cateringvarer i handlekurven."
   },
   "reservation": {
     "title": "Bestill bord",

@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Mã chuông (tùy chọn)",
     "deliveryInstructionsPlaceholder": "Hướng dẫn giao hàng — để trước cửa, lối vào bên hông, bấm chuông hai lần, v.v. (tùy chọn)",
     "pickATimePlaceholder": "Chọn giờ…",
-    "customAmount": "Số tiền tùy chỉnh"
+    "customAmount": "Số tiền tùy chỉnh",
+    "closedSchedulePrompt": "🌙 Chúng tôi hiện đang đóng cửa. Vui lòng chọn thời gian khi chúng tôi mở cửa — thời gian sớm nhất có thể được hiển thị bên dưới.",
+    "nextOpening": "Lần mở cửa tiếp theo: {date}",
+    "closedAndCatering": "🌙🎉 Chúng tôi đang đóng cửa VÀ giỏ hàng của bạn có các món đặt tiệc. Thời gian sớm nhất có thể là thời điểm muộn hơn giữa lần mở cửa tiếp theo và <strong>{hours}h</strong> kể từ bây giờ.",
+    "cateringOnly": "🎉 Giỏ hàng của bạn có các món đặt tiệc — đơn hàng phải được đặt lịch trước ít nhất <strong>{hours}h</strong>. Tùy chọn \"ngay bây giờ\" không khả dụng khi giỏ hàng có món đặt tiệc."
   },
   "reservation": {
     "title": "Đặt bàn",

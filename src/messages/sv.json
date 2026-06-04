@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Porttelefon / kod (valfritt)",
     "deliveryInstructionsPlaceholder": "Leveransinstruktioner — lämna vid dörren, sidoingång, ring två gånger, osv. (valfritt)",
     "pickATimePlaceholder": "Välj en tid…",
-    "customAmount": "Eget belopp"
+    "customAmount": "Eget belopp",
+    "closedSchedulePrompt": "🌙 Vi har stängt just nu. Välj en tid när vi är öppna — tidigast tillgängliga tid visas nedan.",
+    "nextOpening": "Nästa öppning: {date}",
+    "closedAndCatering": "🌙🎉 Vi har stängt OCH din kundvagn innehåller cateringartiklar. Tidigast tillgängliga tid är det senare av nästa öppning och <strong>{hours}h</strong> från och med nu.",
+    "cateringOnly": "🎉 Din kundvagn innehåller cateringartiklar — beställningar måste läggas minst <strong>{hours}h</strong> i förväg. Snarast möjligt är inte tillgängligt när kundvagnen innehåller cateringartiklar."
   },
   "reservation": {
     "title": "Boka ett bord",

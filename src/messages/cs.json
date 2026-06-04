@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Kód domovního zvonku (volitelné)",
     "deliveryInstructionsPlaceholder": "Pokyny k doručení — zanechat u dveří, boční vchod, zazvonit dvakrát apod. (volitelné)",
     "pickATimePlaceholder": "Vyberte čas…",
-    "customAmount": "Vlastní částka"
+    "customAmount": "Vlastní částka",
+    "closedSchedulePrompt": "🌙 Momentálně jsme zavřeni. Vyberte čas, kdy máme otevřeno — níže se zobrazí nejbližší dostupný termín.",
+    "nextOpening": "Nejbližší otevření: {date}",
+    "closedAndCatering": "🌙🎉 Máme zavřeno A váš košík obsahuje cateringové položky. Nejbližší dostupný čas je pozdější z těchto možností: příští otevření nebo <strong>{hours}h</strong> od teď.",
+    "cateringOnly": "🎉 Váš košík obsahuje cateringové položky — objednávky musí být naplánovány alespoň <strong>{hours}h</strong> předem. Možnost „Co nejdříve“ není při cateringu dostupná."
   },
   "reservation": {
     "title": "Rezervovat stůl",

@@ -653,29 +653,28 @@ export function CheckoutModal({
                     <div className="rounded-lg border border-amber-200 bg-amber-50 text-amber-800 px-3 py-2 text-xs">
                       {scheduleReason === "closed" ? (
                         <>
-                          🌙 We&apos;re closed right now. Pick a time when we&apos;re open —
-                          earliest available is shown below.
+                          {tc("closedSchedulePrompt")}
                           {closedNextOpenLocal && (
                             <span className="block mt-1 text-amber-900 font-semibold">
-                              Next opening: {new Date(closedNextOpenLocal).toLocaleString(undefined, {
-                                weekday: "short", month: "short", day: "numeric",
-                                hour: "numeric", minute: "2-digit",
+                              {tc("nextOpening", {
+                                date: new Date(closedNextOpenLocal).toLocaleString(undefined, {
+                                  weekday: "short", month: "short", day: "numeric",
+                                  hour: "numeric", minute: "2-digit",
+                                }),
                               })}
                             </span>
                           )}
                         </>
                       ) : scheduleReason === "both" ? (
-                        <>
-                          🌙🎉 We&apos;re closed AND your cart includes catering items.
-                          Earliest available time is the later of next opening and{" "}
-                          <strong>{cateringNoticeHours ?? 24}h</strong> from now.
-                        </>
+                        tc.rich("closedAndCatering", {
+                          hours: cateringNoticeHours ?? 24,
+                          strong: (c) => <strong>{c}</strong>,
+                        })
                       ) : (
-                        <>
-                          🎉 Your cart includes catering items — orders must be scheduled at
-                          least <strong>{cateringNoticeHours ?? 24}h</strong> in advance.
-                          ASAP isn&apos;t available with catering items in the cart.
-                        </>
+                        tc.rich("cateringOnly", {
+                          hours: cateringNoticeHours ?? 24,
+                          strong: (c) => <strong>{c}</strong>,
+                        })
                       )}
                     </div>
                   )}

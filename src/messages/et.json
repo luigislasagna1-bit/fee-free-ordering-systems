@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Uksekell / kood (valikuline)",
     "deliveryInstructionsPlaceholder": "Tarnejuhised — jäta ukse ette, külgsissepääs, helista kaks korda jne. (valikuline)",
     "pickATimePlaceholder": "Vali aeg…",
-    "customAmount": "Kohandatud summa"
+    "customAmount": "Kohandatud summa",
+    "closedSchedulePrompt": "🌙 Oleme praegu suletud. Vali aeg, mil oleme avatud — allpool on näidatud varaseim võimalik aeg.",
+    "nextOpening": "Järgmine avamine: {date}",
+    "closedAndCatering": "🌙🎉 Oleme suletud JA sinu ostukorvis on cateringu tooted. Varaseim võimalik aeg on hilisem järgmisest avamisajast ja <strong>{hours}h</strong> praegusest hetkest.",
+    "cateringOnly": "🎉 Sinu ostukorvis on cateringu tooted — tellimused tuleb ajastada vähemalt <strong>{hours}h</strong> ette. Esimesel võimalusel ei ole cateringu toodetega saadaval."
   },
   "reservation": {
     "title": "Broneeri laud",

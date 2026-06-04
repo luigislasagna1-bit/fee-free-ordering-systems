@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Koda zvonca (neobvezno)",
     "deliveryInstructionsPlaceholder": "Navodila za dostavo — pustite pri vratih, stranski vhod, dvakrat pozvonite itd. (neobvezno)",
     "pickATimePlaceholder": "Izberite uro…",
-    "customAmount": "Poljuben znesek"
+    "customAmount": "Poljuben znesek",
+    "closedSchedulePrompt": "🌙 Trenutno smo zaprti. Izberite čas, ko smo odprti — spodaj je prikazan najzgodnejši razpoložljivi termin.",
+    "nextOpening": "Naslednje odprtje: {date}",
+    "closedAndCatering": "🌙🎉 Zaprti smo IN vaša košarica vsebuje naročila za catering. Najzgodnejši razpoložljivi čas je kasnejši od naslednjega odprtja ali <strong>{hours}h</strong> od zdaj.",
+    "cateringOnly": "🎉 Vaša košarica vsebuje naročila za catering — naročila je treba načrtovati vsaj <strong>{hours}h</strong> vnaprej. Možnost »čim prej« ni na voljo, ko so v košarici artikli za catering."
   },
   "reservation": {
     "title": "Rezerviraj mizo",

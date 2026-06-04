@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Durvju zvana kods (neobligāti)",
     "deliveryInstructionsPlaceholder": "Piegādes norādījumi — atstāt pie durvīm, sānu ieeja, zvanīt divreiz u.tml. (neobligāti)",
     "pickATimePlaceholder": "Izvēlieties laiku…",
-    "customAmount": "Cita summa"
+    "customAmount": "Cita summa",
+    "closedSchedulePrompt": "🌙 Šobrīd esam slēgti. Izvēlieties laiku, kad strādājam — zemāk redzams agrākais pieejamais laiks.",
+    "nextOpening": "Nākamā atvēršana: {date}",
+    "closedAndCatering": "🌙🎉 Esam slēgti UN jūsu grozā ir ēdināšanas pasūtījuma preces. Agrākais pieejamais laiks ir vēlākais no nākamās atvēršanas un <strong>{hours}h</strong> no šī brīža.",
+    "cateringOnly": "🎉 Jūsu grozā ir ēdināšanas pasūtījuma preces — pasūtījumi jāieplāno vismaz <strong>{hours}h</strong> iepriekš. Opcija \"Pēc iespējas ātrāk\" nav pieejama, ja grozā ir ēdināšanas preces."
   },
   "reservation": {
     "title": "Rezervēt galdu",

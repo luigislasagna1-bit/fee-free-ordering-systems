@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Kaputelefon kód (opcionális)",
     "deliveryInstructionsPlaceholder": "Szállítási megjegyzés — ajtó előtt hagyja, oldalsó bejárat, csöngessen kétszer stb. (opcionális)",
     "pickATimePlaceholder": "Válasszon időpontot…",
-    "customAmount": "Egyéni összeg"
+    "customAmount": "Egyéni összeg",
+    "closedSchedulePrompt": "🌙 Jelenleg zárva vagyunk. Válassz egy időpontot, amikor nyitva vagyunk — a legkorábbi elérhető időpont alább látható.",
+    "nextOpening": "Következő nyitás: {date}",
+    "closedAndCatering": "🌙🎉 Zárva vagyunk, ÉS a kosaradban rendezvényi tételek is szerepelnek. A legkorábbi elérhető időpont a következő nyitás és a mostantól számított <strong>{hours}h</strong> közül a későbbi.",
+    "cateringOnly": "🎉 A kosaradban rendezvényi tételek szerepelnek — a rendeléseket legalább <strong>{hours}h</strong> előre kell ütemezni. Az \"Amilyen hamar csak lehet\" lehetőség nem érhető el, ha rendezvényi tételek vannak a kosárban."
   },
   "reservation": {
     "title": "Asztal foglalása",

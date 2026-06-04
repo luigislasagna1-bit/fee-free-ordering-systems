@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Código do interfone (opcional)",
     "deliveryInstructionsPlaceholder": "Instruções de entrega — deixar na porta, entrada lateral, tocar duas vezes etc. (opcional)",
     "pickATimePlaceholder": "Escolha um horário…",
-    "customAmount": "Valor personalizado"
+    "customAmount": "Valor personalizado",
+    "closedSchedulePrompt": "🌙 Estamos fechados agora. Escolha um horário em que estamos abertos — o mais cedo disponível está mostrado abaixo.",
+    "nextOpening": "Próxima abertura: {date}",
+    "closedAndCatering": "🌙🎉 Estamos fechados E seu carrinho inclui itens de catering. O horário disponível mais cedo é o maior entre a próxima abertura e <strong>{hours}h</strong> a partir de agora.",
+    "cateringOnly": "🎉 Seu carrinho inclui itens de catering — os pedidos devem ser agendados com pelo menos <strong>{hours}h</strong> de antecedência. A opção \"o mais rápido possível\" não está disponível com itens de catering no carrinho."
   },
   "reservation": {
     "title": "Reservar mesa",

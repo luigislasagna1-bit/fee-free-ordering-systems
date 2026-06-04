@@ -368,7 +368,11 @@
     "buzzerPlaceholder": "Kod domofonu (opcjonalnie)",
     "deliveryInstructionsPlaceholder": "Wskazówki dla dostawcy — zostaw przy drzwiach, wejście boczne, zadzwoń dwa razy itp. (opcjonalnie)",
     "pickATimePlaceholder": "Wybierz godzinę…",
-    "customAmount": "Inna kwota"
+    "customAmount": "Inna kwota",
+    "closedSchedulePrompt": "🌙 Jesteśmy teraz zamknięci. Wybierz godzinę, kiedy jesteśmy otwarci — najwcześniejszy dostępny termin widoczny jest poniżej.",
+    "nextOpening": "Najbliższe otwarcie: {date}",
+    "closedAndCatering": "🌙🎉 Jesteśmy zamknięci, a Twój koszyk zawiera pozycje cateringowe. Najwcześniejszy dostępny termin to późniejsza z dat — najbliższe otwarcie lub <strong>{hours}h</strong> od teraz.",
+    "cateringOnly": "🎉 Twój koszyk zawiera pozycje cateringowe — zamówienia muszą być zaplanowane z wyprzedzeniem co najmniej <strong>{hours}h</strong>. Opcja „jak najszybciej” nie jest dostępna, gdy w koszyku znajdują się pozycje cateringowe."
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
