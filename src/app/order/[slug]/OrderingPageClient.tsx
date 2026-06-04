@@ -4,7 +4,7 @@ import { trackEvent } from "@/lib/visit-tracker";
 import {
   ShoppingCart, MapPin, Phone, Clock, Plus, Minus, X,
   AlertCircle, Tag, Loader2, ChevronDown, Star, Info, Calendar,
-  Truck, ShoppingBag, Image as ImageIcon, ChevronLeft, ChevronRight,
+  Truck, ShoppingBag, ChevronLeft, ChevronRight,
   UserCircle, LogIn, Search,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
@@ -293,27 +293,33 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
       className={`flex-shrink-0 text-left rounded-2xl overflow-hidden shadow-sm transition group ${isSold ? "opacity-60 cursor-not-allowed" : "hover:shadow-md"}`}
       style={{ width: 168, backgroundColor: theme.cardBackground, border: "1px solid #e5e7eb" }}
     >
-      <div className="relative overflow-hidden" style={{ height: 110 }}>
-        {item.imageUrl ? (
+      {/* Image block renders ONLY when the item has an image — no broken/gray
+          placeholder for image-less items (Luigi 2026-06-04). Featured + sold-out
+          badges (which used to overlay the image) move inline below when there's
+          no image, so that info is never lost. */}
+      {item.imageUrl && (
+        <div className="relative overflow-hidden" style={{ height: 110 }}>
           <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${theme.primaryColor}22, ${theme.backgroundColor})` }}>
-            <ImageIcon className="w-8 h-8 text-gray-300" />
-          </div>
-        )}
-        {item.isFeatured && (
-          <div className="absolute top-1.5 left-1.5 bg-yellow-400 text-yellow-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
-            <Star className="w-2.5 h-2.5 fill-yellow-900" />
-          </div>
-        )}
-        {isSold && (
-          <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-            <span className="bg-white text-gray-800 text-xs font-bold px-2 py-1 rounded-full">{t("soldOut")}</span>
-          </div>
-        )}
-      </div>
+          {item.isFeatured && (
+            <div className="absolute top-1.5 left-1.5 bg-yellow-400 text-yellow-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+              <Star className="w-2.5 h-2.5 fill-yellow-900" />
+            </div>
+          )}
+          {isSold && (
+            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <span className="bg-white text-gray-800 text-xs font-bold px-2 py-1 rounded-full">{t("soldOut")}</span>
+            </div>
+          )}
+        </div>
+      )}
       <div className="p-2.5">
-        <p className="text-sm font-semibold leading-snug line-clamp-2" style={{ color: theme.textColor }}>{item.name}</p>
+        <p className="text-sm font-semibold leading-snug line-clamp-2 flex items-center gap-1" style={{ color: theme.textColor }}>
+          {!item.imageUrl && item.isFeatured && <Star className="w-3 h-3 flex-shrink-0 fill-yellow-500 text-yellow-500" />}
+          {item.name}
+        </p>
+        {!item.imageUrl && isSold && (
+          <span className="inline-block mt-1 bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{t("soldOut")}</span>
+        )}
         <div className="flex items-center justify-between mt-2">
           <span className="text-sm font-bold" style={{ color: theme.primaryColor }}>
             {item.hasVariants ? `from ${fmt(basePrice)}` : fmt(basePrice)}
@@ -390,28 +396,40 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
       className={`text-left rounded-2xl border overflow-hidden shadow-sm transition group ${isSold ? "opacity-60 cursor-not-allowed border-gray-100" : "hover:shadow-lg"}`}
       style={{ backgroundColor: theme.cardBackground, borderColor: "#e5e7eb" }}
     >
-      <div className="relative overflow-hidden" style={{ aspectRatio: "16/9" }}>
-        {item.imageUrl ? (
+      {/* Image block renders ONLY when the item has an image — no broken/gray
+          placeholder for image-less items (Luigi 2026-06-04). Featured + sold-out
+          badges move inline below the title when there's no image so the info
+          is preserved. */}
+      {item.imageUrl && (
+        <div className="relative overflow-hidden" style={{ aspectRatio: "16/9" }}>
           <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${theme.primaryColor}15, #f3f4f6)` }}>
-            <ImageIcon className="w-10 h-10 text-gray-200" />
-          </div>
-        )}
-        {item.isFeatured && (
-          <div className="absolute top-2 left-2 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-            <Star className="w-3 h-3 fill-yellow-900" /> Featured
-          </div>
-        )}
-        {isSold && (
-          <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-            <span className="bg-white text-gray-800 text-xs font-bold px-3 py-1.5 rounded-full">{t("soldOut")}</span>
-          </div>
-        )}
-      </div>
+          {item.isFeatured && (
+            <div className="absolute top-2 left-2 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+              <Star className="w-3 h-3 fill-yellow-900" /> {t("featured")}
+            </div>
+          )}
+          {isSold && (
+            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <span className="bg-white text-gray-800 text-xs font-bold px-3 py-1.5 rounded-full">{t("soldOut")}</span>
+            </div>
+          )}
+        </div>
+      )}
       <div className="p-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
+            {!item.imageUrl && (item.isFeatured || isSold) && (
+              <div className="flex items-center gap-1.5 mb-1">
+                {item.isFeatured && (
+                  <span className="inline-flex items-center gap-1 bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    <Star className="w-2.5 h-2.5 fill-yellow-800" /> {t("featured")}
+                  </span>
+                )}
+                {isSold && (
+                  <span className="inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{t("soldOut")}</span>
+                )}
+              </div>
+            )}
             <p className="font-semibold leading-snug transition" style={{ color: theme.textColor }}>{item.name}</p>
             {item.description && <p className="text-sm text-gray-500 mt-1 line-clamp-2 leading-relaxed">{item.description}</p>}
           </div>
@@ -1662,6 +1680,20 @@ export function OrderingPageClient({
       setEditingSection("ordering");
       focusField("checkout-delivery-address");
       toast.error(tT("addressRequired"));
+      return;
+    }
+    // City + postal code are required for delivery so the kitchen/driver has a
+    // complete, geocodable address (Luigi 2026-06-04). Mirrored server-side.
+    if (orderType === "delivery" && !customerInfo.city.trim()) {
+      setEditingSection("ordering");
+      focusField("checkout-delivery-city");
+      toast.error(tT("cityRequired"));
+      return;
+    }
+    if (orderType === "delivery" && !customerInfo.zip.trim()) {
+      setEditingSection("ordering");
+      focusField("checkout-delivery-zip");
+      toast.error(tT("zipRequired"));
       return;
     }
     if (cart.length === 0) { toast.error(tT("cartEmpty")); return; }

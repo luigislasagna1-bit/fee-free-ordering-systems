@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, CheckCircle2, Lock } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * New-password form. Submits to
@@ -12,6 +13,7 @@ import { Loader2, CheckCircle2, Lock } from "lucide-react";
  * dashboard already authenticated.
  */
 export function ResetPasswordForm({ slug, token }: { slug: string; token: string }) {
+  const t = useTranslations("customer.resetForm");
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -24,11 +26,11 @@ export function ResetPasswordForm({ slug, token }: { slug: string; token: string
     if (submitting) return;
     setError(null);
     if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
+      setError(t("passwordTooShort"));
       return;
     }
     if (password !== confirm) {
-      setError("Passwords don't match.");
+      setError(t("passwordMismatch"));
       return;
     }
     setSubmitting(true);
@@ -40,7 +42,7 @@ export function ResetPasswordForm({ slug, token }: { slug: string; token: string
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data?.error || "Reset failed. Try requesting a new link.");
+        setError(data?.error || t("resetFailed"));
         setSubmitting(false);
         return;
       }
@@ -49,7 +51,7 @@ export function ResetPasswordForm({ slug, token }: { slug: string; token: string
       // we bounce them into the dashboard.
       setTimeout(() => router.replace(`/order/${slug}/account`), 800);
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "Network error");
+      setError(e instanceof Error ? e.message : t("networkError"));
       setSubmitting(false);
     }
   }
@@ -58,9 +60,9 @@ export function ResetPasswordForm({ slug, token }: { slug: string; token: string
     return (
       <div className="mt-6 text-center space-y-3 py-4">
         <CheckCircle2 className="w-14 h-14 mx-auto text-emerald-500" />
-        <h2 className="text-lg font-bold text-gray-900">Password updated</h2>
+        <h2 className="text-lg font-bold text-gray-900">{t("passwordUpdated")}</h2>
         <p className="text-sm text-gray-600">
-          Signing you in…
+          {t("signingIn")}
         </p>
       </div>
     );
@@ -70,7 +72,7 @@ export function ResetPasswordForm({ slug, token }: { slug: string; token: string
     <form onSubmit={onSubmit} className="mt-6 space-y-3">
       <label className="block">
         <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
-          New password <span className="text-red-500">*</span>
+          {t("newPasswordLabel")} <span className="text-red-500">*</span>
         </span>
         <div className="mt-1 relative">
           <Lock className="w-4 h-4 absolute left-3 top-3.5 text-gray-400" />
@@ -81,7 +83,7 @@ export function ResetPasswordForm({ slug, token }: { slug: string; token: string
             minLength={8}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="At least 8 characters"
+            placeholder={t("newPasswordPlaceholder")}
             className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
           />
         </div>
@@ -89,7 +91,7 @@ export function ResetPasswordForm({ slug, token }: { slug: string; token: string
 
       <label className="block">
         <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
-          Confirm password <span className="text-red-500">*</span>
+          {t("confirmPasswordLabel")} <span className="text-red-500">*</span>
         </span>
         <div className="mt-1 relative">
           <Lock className="w-4 h-4 absolute left-3 top-3.5 text-gray-400" />
@@ -99,7 +101,7 @@ export function ResetPasswordForm({ slug, token }: { slug: string; token: string
             minLength={8}
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
-            placeholder="Type the password again"
+            placeholder={t("confirmPasswordPlaceholder")}
             className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
           />
         </div>
@@ -115,16 +117,16 @@ export function ResetPasswordForm({ slug, token }: { slug: string; token: string
         className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-bold px-6 py-3 rounded-xl text-sm transition flex items-center justify-center gap-2"
       >
         {submitting ? (
-          <><Loader2 className="w-4 h-4 animate-spin" /> Updating…</>
+          <><Loader2 className="w-4 h-4 animate-spin" /> {t("updating")}</>
         ) : (
-          "Update password"
+          t("updatePassword")
         )}
       </button>
 
       <p className="text-center text-xs text-gray-500 pt-2">
-        Reset links expire after one hour. If yours has expired, request a new one from the{" "}
+        {t("expiredLinkNotice")}{" "}
         <a href={`/order/${slug}/account/forgot-password`} className="text-emerald-600 font-semibold hover:underline">
-          forgot-password page
+          {t("forgotPasswordPage")}
         </a>.
       </p>
     </form>

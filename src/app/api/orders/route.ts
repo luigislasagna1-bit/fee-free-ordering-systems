@@ -82,8 +82,20 @@ export async function POST(req: NextRequest) {
     if (sanitize(customerName).length < 2) {
       return NextResponse.json({ error: "Invalid customer name" }, { status: 400 });
     }
-    if (type === "delivery" && !deliveryAddress) {
-      return NextResponse.json({ error: "Delivery address required" }, { status: 400 });
+    // Delivery requires a complete address: street, city, AND postal code —
+    // so the kitchen/driver can actually find + geocode it (Luigi 2026-06-04).
+    // Defense-in-depth: the client validates these first with localized toasts;
+    // this guards against direct API calls that bypass the form.
+    if (type === "delivery") {
+      if (!deliveryAddress) {
+        return NextResponse.json({ error: "Delivery address required" }, { status: 400 });
+      }
+      if (!deliveryCity || !String(deliveryCity).trim()) {
+        return NextResponse.json({ error: "Delivery city required" }, { status: 400 });
+      }
+      if (!deliveryZip || !String(deliveryZip).trim()) {
+        return NextResponse.json({ error: "Delivery postal code required" }, { status: 400 });
+      }
     }
 
     // ── Load restaurant ─────────────────────────────────────────────────────

@@ -850,6 +850,22 @@ export function AdminSidebar({
       </nav>
 
       <div className="border-t border-gray-700 p-4 space-y-2">
+        {/* Quick access to the Kitchen Display — persistent bottom-left link so
+            staff can jump to /kitchen without typing the URL (Luigi 2026-06-04).
+            Opens in a new tab so the admin panel stays put. Visible collapsed
+            (icon only) and expanded (icon + label). */}
+        <Link
+          href="/kitchen"
+          target="_blank"
+          title={tr("kitchenDisplay", "Kitchen Display")}
+          className={cn(
+            "flex items-center gap-2 text-sm font-medium text-emerald-400 hover:text-emerald-300 transition",
+            collapsed && "justify-center"
+          )}
+        >
+          <ChefHat className="w-4 h-4 flex-shrink-0" />
+          {!collapsed && tr("kitchenDisplay", "Kitchen Display")}
+        </Link>
         {restaurantSlug && !collapsed && (
           <Link
             href={`/order/${restaurantSlug}`}

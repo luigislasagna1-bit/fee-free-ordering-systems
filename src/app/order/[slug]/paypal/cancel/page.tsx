@@ -13,26 +13,27 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ArrowLeft, Info } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function PaypalCancelPage() {
   const params = useParams<{ slug: string }>();
+  const t = useTranslations("customer.paypalCancel");
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 max-w-md w-full text-center">
         <div className="w-12 h-12 mx-auto rounded-full bg-amber-100 flex items-center justify-center">
           <Info className="w-6 h-6 text-amber-600" />
         </div>
-        <h1 className="mt-4 text-lg font-bold text-gray-900">Payment cancelled</h1>
+        <h1 className="mt-4 text-lg font-bold text-gray-900">{t("heading")}</h1>
         <p className="mt-2 text-sm text-gray-600">
-          You cancelled the PayPal payment. No charge was made. You can return
-          to the menu and place a new order, or pick a different payment method.
+          {t("body")}
         </p>
         <Link
           href={`/order/${params.slug}`}
           className="inline-flex items-center gap-2 mt-5 bg-gray-900 hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded-lg text-sm"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to menu
+          {t("backToMenu")}
         </Link>
       </div>
     </div>

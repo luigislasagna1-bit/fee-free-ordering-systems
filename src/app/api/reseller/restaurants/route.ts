@@ -190,7 +190,10 @@ export async function POST(req: NextRequest) {
     restaurantName,
     subject: `Set up your ${restaurantName} account`,
     headline: `Welcome to Fee Free Ordering`,
-    body: `${user.name || "Your reseller"} has set up an account for <strong>${restaurantName}</strong> on Fee Free Ordering. Click below to set your password and log in.`,
+    // Plain text only — the email template renders `body` as escaped text
+    // (<P>{body}</P>), so HTML tags like <strong> would show up literally in
+    // the inbox. Keep the restaurant name unwrapped. (Bug fix, Luigi 2026-06-04.)
+    body: `${user.name || "Your reseller"} has set up an account for ${restaurantName} on Fee Free Ordering. Click below to set your password and log in.`,
     ctaLabel: "Set my password",
     ctaUrl: setupUrl,
   }).catch(() => {});

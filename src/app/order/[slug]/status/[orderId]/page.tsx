@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import {
   CheckCircle, Clock, ChefHat, Package, XCircle, Loader2,
@@ -17,19 +18,6 @@ import { use } from "react";
 // the kitchen never visibly transitions through is confusing and makes
 // the order look stuck. "tracking" restaurants use the full state
 // machine and see all 5 steps.
-const TRACKING_STEPS = [
-  { key: "pending", label: "Order Received", icon: Clock, desc: "Your order is waiting for confirmation" },
-  { key: "accepted", label: "Accepted", icon: CheckCircle, desc: "The restaurant confirmed your order" },
-  { key: "preparing", label: "Preparing", icon: ChefHat, desc: "Your food is being prepared" },
-  { key: "ready", label: "Ready!", icon: Package, desc: "Your order is ready for pickup/delivery" },
-  { key: "completed", label: "Completed", icon: CheckCircle, desc: "Order complete. Enjoy your meal!" },
-];
-const SIMPLE_STEPS = [
-  { key: "pending", label: "Order Received", icon: Clock, desc: "Your order is waiting for confirmation" },
-  { key: "accepted", label: "Confirmed — being prepared", icon: ChefHat, desc: "The restaurant is preparing your order" },
-  { key: "completed", label: "Complete", icon: CheckCircle, desc: "Order complete. Enjoy your meal!" },
-];
-
 // Marketplace support email — surfaced in the "Need help?" panel for
 // orders placed via the marketplace flow (viaMarketplace=true). Keep in
 // sync with the support contact email used in transactional templates.
@@ -38,6 +26,20 @@ const MARKETPLACE_SUPPORT_EMAIL = "support@feefreefood.com";
 export default function OrderStatusPage({ params }: { params: Promise<{ slug: string; orderId: string }> }) {
   const { slug, orderId } = use(params);
   const router = useRouter();
+  const t = useTranslations("customer.orderStatus");
+
+  const TRACKING_STEPS = [
+    { key: "pending", label: t("stepPendingLabel"), icon: Clock, desc: t("stepPendingDesc") },
+    { key: "accepted", label: t("stepAcceptedLabel"), icon: CheckCircle, desc: t("stepAcceptedDesc") },
+    { key: "preparing", label: t("stepPreparingLabel"), icon: ChefHat, desc: t("stepPreparingDesc") },
+    { key: "ready", label: t("stepReadyLabel"), icon: Package, desc: t("stepReadyDesc") },
+    { key: "completed", label: t("stepCompletedLabel"), icon: CheckCircle, desc: t("stepCompletedDesc") },
+  ];
+  const SIMPLE_STEPS = [
+    { key: "pending", label: t("stepPendingLabel"), icon: Clock, desc: t("stepPendingDesc") },
+    { key: "accepted", label: t("stepSimpleAcceptedLabel"), icon: ChefHat, desc: t("stepSimpleAcceptedDesc") },
+    { key: "completed", label: t("stepSimpleCompletedLabel"), icon: CheckCircle, desc: t("stepCompletedDesc") },
+  ];
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [reordering, setReordering] = useState(false);
@@ -186,7 +188,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   const handleShare = useCallback(async () => {
     if (typeof window === "undefined") return;
     const url = window.location.href;
-    const title = order ? `Order #${order.orderNumber} at ${order.restaurant.name}` : "My order";
+    const title = order ? `Order #${order.orderNumber} at ${order.restaurant.name}` : t("myOrder");
     try {
       if (navigator.share) {
         await navigator.share({ title, url });
@@ -206,7 +208,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
 
   if (!order) return (
     <div className="min-h-screen flex flex-col items-center justify-center text-gray-500 px-4 text-center">
-      <div>Order not found</div>
+      <div>{t("orderNotFound")}</div>
       {fetchError && (
         <div className="text-xs text-gray-400 mt-3 max-w-md font-mono">{fetchError}</div>
       )}
@@ -243,7 +245,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   // without bouncing through the grid.
   const cameFromMarketplace = !!order.viaMarketplace;
   const backHref = cameFromMarketplace ? "/" : `/order/${slug}`;
-  const backLabel = cameFromMarketplace ? "← Browse other restaurants" : "← Back to menu";
+  const backLabel = cameFromMarketplace ? t("browseOtherRestaurantsBack") : t("backToMenu");
 
   // ── Promo snapshot parse ─────────────────────────────────────────
   // Same shape used by the confirmation page + receipt template.
@@ -299,16 +301,16 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
             className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 font-medium"
           >
             <span aria-hidden="true">←</span>
-            {cameFromMarketplace ? "All my orders" : `Back to my account`}
+            {cameFromMarketplace ? t("allMyOrders") : t("backToMyAccount")}
           </Link>
         </div>
         <div className="max-w-lg mx-auto pt-4">
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-gray-900">{order.restaurant.name}</h1>
-            <div className="text-gray-500 mt-1">Order #{order.orderNumber}</div>
+            <div className="text-gray-500 mt-1">{t("orderNumber", { number: order.orderNumber })}</div>
             {!isTerminal && (
               <div className="no-print inline-block mt-2 text-sm bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full font-medium">
-                Auto-refreshes every 10 seconds
+                {t("autoRefreshes")}
               </div>
             )}
           </div>
@@ -317,22 +319,22 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
             <div className="bg-white rounded-2xl shadow-sm border border-red-100 p-8 text-center mb-6">
               <XCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
               <h2 className="text-xl font-bold text-gray-900 mb-2">
-                {order.status === "rejected" ? "Order Rejected" : "Order Cancelled"}
+                {order.status === "rejected" ? t("orderRejected") : t("orderCancelled")}
               </h2>
-              {order.rejectionReason && <p className="text-gray-600 mb-4">Reason: {order.rejectionReason}</p>}
+              {order.rejectionReason && <p className="text-gray-600 mb-4">{t("rejectionReason", { reason: order.rejectionReason })}</p>}
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <Link
                   href={cameFromMarketplace ? "/" : `/order/${slug}`}
                   className="text-emerald-500 font-medium hover:underline"
                 >
-                  {cameFromMarketplace ? "Browse other restaurants" : "Place a new order"}
+                  {cameFromMarketplace ? t("browseOtherRestaurants") : t("placeNewOrder")}
                 </Link>
                 {cameFromMarketplace && (
                   <Link
                     href={`/order/${slug}`}
                     className="text-gray-500 text-sm hover:text-gray-700"
                   >
-                    · Try {order.restaurant.name} again
+                    {t("tryRestaurantAgain", { name: order.restaurant.name })}
                   </Link>
                 )}
               </div>
@@ -387,13 +389,13 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
               {order.status === "completed" && (
                 <div className="no-print mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
                   <div className="text-sm font-semibold text-emerald-900 text-center">
-                    {ratingSubmitted ? "Thanks for the feedback!" : "How was your order?"}
+                    {ratingSubmitted ? t("ratingThanks") : t("ratingPrompt")}
                   </div>
                   <div className="mt-3 flex justify-center gap-3">
                     <button
                       onClick={() => submitRating(1)}
                       disabled={ratingSaving}
-                      aria-label="Thumbs up"
+                      aria-label={t("thumbsUp")}
                       className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition disabled:opacity-50 ${
                         ratingScore === 1
                           ? "bg-emerald-500 border-emerald-500 text-white"
@@ -405,7 +407,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                     <button
                       onClick={() => submitRating(-1)}
                       disabled={ratingSaving}
-                      aria-label="Thumbs down"
+                      aria-label={t("thumbsDown")}
                       className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition disabled:opacity-50 ${
                         ratingScore === -1
                           ? "bg-red-500 border-red-500 text-white"
@@ -420,7 +422,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                       <textarea
                         className="w-full border border-red-200 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-red-400 focus:outline-none resize-none"
                         rows={2}
-                        placeholder="What went wrong? (optional, helps the restaurant improve)"
+                        placeholder={t("ratingCommentPlaceholder")}
                         value={ratingComment}
                         onChange={(e) => setRatingComment(e.target.value)}
                         maxLength={500}
@@ -431,7 +433,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                           disabled={ratingSaving}
                           className="text-xs font-semibold text-red-700 hover:text-red-800 disabled:opacity-50"
                         >
-                          {ratingSaving ? "Sending…" : "Submit feedback"}
+                          {ratingSaving ? t("ratingSending") : t("submitFeedback")}
                         </button>
                       </div>
                     </div>
@@ -464,15 +466,15 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 if (isPending) {
                   // Soft language during pending — no "Ready now!" copy
                   // because the kitchen hasn't actually started prep.
-                  line = `Estimated ${verb} in ~${minLeft} min`;
+                  line = t("etaEstimated", { verb, min: minLeft });
                 } else if (msLeft <= -60_000) {
-                  line = `Ready now — ${order.type === "delivery" ? "on the way" : "pickup time"}!`;
+                  line = order.type === "delivery" ? t("etaReadyNowDelivery") : t("etaReadyNowPickup");
                 } else if (msLeft <= 60_000) {
-                  line = "Ready in less than 1 min";
+                  line = t("etaReadyLessThan1Min");
                 } else if (minLeft === 1) {
-                  line = "Ready in ~1 min";
+                  line = t("etaReady1Min");
                 } else {
-                  line = `Ready in ~${minLeft} min`;
+                  line = t("etaReadyNMin", { min: minLeft });
                 }
                 const targetLabel = new Date(target).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
                 return (
@@ -488,8 +490,12 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                       isPending ? "text-gray-500" : "text-emerald-700/70"
                     }`}>
                       {isPending
-                        ? `Waiting for restaurant to confirm · estimated ${order.type === "delivery" ? "arrival" : "ready"} at ${targetLabel}`
-                        : `Estimated ${order.type === "delivery" ? "arrival" : "ready"} at ${targetLabel}`}
+                        ? (order.type === "delivery"
+                          ? t("etaWaitingDelivery", { time: targetLabel })
+                          : t("etaWaitingPickup", { time: targetLabel }))
+                        : (order.type === "delivery"
+                          ? t("etaConfirmedDelivery", { time: targetLabel })
+                          : t("etaConfirmedPickup", { time: targetLabel }))}
                     </div>
                   </div>
                 );
@@ -501,7 +507,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
               Mirrors the confirmation page: line items + bundle children
               + struck-through delivery fee + promos box. */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6 print-container">
-            <div className="font-semibold text-gray-900 mb-3">Your order</div>
+            <div className="font-semibold text-gray-900 mb-3">{t("yourOrder")}</div>
             <div className="space-y-2">
               {(order.items ?? []).map((item: any) => {
                 const bundle = Array.isArray(item.bundleItems) ? item.bundleItems : null;
@@ -539,7 +545,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                       </div>
                     )}
                     {item.notes && (
-                      <div className="mt-0.5 pl-3 text-xs italic text-gray-400">Note: {item.notes}</div>
+                      <div className="mt-0.5 pl-3 text-xs italic text-gray-400">{t("itemNote", { notes: item.notes })}</div>
                     )}
                   </div>
                 );
@@ -552,7 +558,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 <div className="rounded-xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-green-50 p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <span aria-hidden>🎉</span>
-                    <div className="text-sm font-bold text-emerald-800">Promos applied</div>
+                    <div className="text-sm font-bold text-emerald-800">{t("promosApplied")}</div>
                   </div>
                   <div className="space-y-1">
                     {appliedPromos.map((p, i) => (
@@ -567,7 +573,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                           )}
                         </div>
                         <div className="font-semibold text-emerald-800 whitespace-nowrap ml-2">
-                          {p.discount > 0 ? `− ${formatCurrency(p.discount)}` : "FREE"}
+                          {p.discount > 0 ? `− ${formatCurrency(p.discount)}` : t("free")}
                         </div>
                       </div>
                     ))}
@@ -578,21 +584,21 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
 
             {/* Totals breakdown */}
             <div className="border-t border-gray-100 mt-3 pt-3 space-y-1 text-sm">
-              <div className="flex justify-between text-gray-600"><span>Subtotal</span><span>{formatCurrency(order.subtotal)}</span></div>
+              <div className="flex justify-between text-gray-600"><span>{t("subtotal")}</span><span>{formatCurrency(order.subtotal)}</span></div>
               {cartDiscountTotal > 0 && (
                 <div className="flex justify-between text-emerald-700 font-medium">
-                  <span>Promo discount</span>
+                  <span>{t("promoDiscount")}</span>
                   <span>− {formatCurrency(cartDiscountTotal)}</span>
                 </div>
               )}
               {order.type === "delivery" && (
                 <div className="flex justify-between text-gray-600">
-                  <span>Delivery</span>
+                  <span>{t("delivery")}</span>
                   <span>
                     {savedDeliveryFee > 0 ? (
                       <>
                         <span className="line-through text-gray-400 mr-1.5">{formatCurrency(savedDeliveryFee)}</span>
-                        <span className="text-emerald-600 font-semibold">FREE</span>
+                        <span className="text-emerald-600 font-semibold">{t("free")}</span>
                       </>
                     ) : (
                       formatCurrency(order.deliveryFee)
@@ -601,19 +607,19 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 </div>
               )}
               {order.taxAmount > 0 && (
-                <div className="flex justify-between text-gray-600"><span>Tax</span><span>{formatCurrency(order.taxAmount)}</span></div>
+                <div className="flex justify-between text-gray-600"><span>{t("tax")}</span><span>{formatCurrency(order.taxAmount)}</span></div>
               )}
               {order.tip > 0 && (
-                <div className="flex justify-between text-gray-600"><span>Tip</span><span>{formatCurrency(order.tip)}</span></div>
+                <div className="flex justify-between text-gray-600"><span>{t("tip")}</span><span>{formatCurrency(order.tip)}</span></div>
               )}
-              <div className="flex justify-between font-bold text-gray-900 pt-1"><span>Total</span><span>{formatCurrency(order.total)}</span></div>
+              <div className="flex justify-between font-bold text-gray-900 pt-1"><span>{t("total")}</span><span>{formatCurrency(order.total)}</span></div>
             </div>
 
             {/* Order metadata */}
             <div className="border-t border-gray-100 mt-3 pt-3 text-xs text-gray-500 space-y-0.5">
-              <div className="flex justify-between"><span>Order type</span><span className="capitalize">{order.type}</span></div>
-              <div className="flex justify-between"><span>Payment</span><span className="capitalize">{order.paymentMethod}</span></div>
-              <div className="flex justify-between"><span>Placed</span><span>{new Date(order.createdAt).toLocaleString()}</span></div>
+              <div className="flex justify-between"><span>{t("orderType")}</span><span className="capitalize">{order.type}</span></div>
+              <div className="flex justify-between"><span>{t("payment")}</span><span className="capitalize">{order.paymentMethod}</span></div>
+              <div className="flex justify-between"><span>{t("placed")}</span><span>{new Date(order.createdAt).toLocaleString()}</span></div>
             </div>
           </div>
 
@@ -621,7 +627,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
           {order.type === "delivery" && order.deliveryAddress && (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6 print-container">
               <div className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-emerald-500" /> Delivery to
+                <MapPin className="w-4 h-4 text-emerald-500" /> {t("deliveryTo")}
               </div>
               <div className="text-sm text-gray-700">
                 {order.deliveryAddress}
@@ -637,7 +643,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
           {/* ── Customer note ──────────────────────────────────────── */}
           {order.notes && (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6 print-container">
-              <div className="font-semibold text-gray-900 mb-2 text-sm">Your note</div>
+              <div className="font-semibold text-gray-900 mb-2 text-sm">{t("yourNote")}</div>
               <div className="text-sm text-gray-700 whitespace-pre-line">{order.notes}</div>
             </div>
           )}
@@ -650,23 +656,23 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
               className="flex items-center justify-center gap-1.5 bg-emerald-500 text-white font-semibold py-3 rounded-xl hover:bg-emerald-600 transition disabled:opacity-50 text-sm"
             >
               {reordering ? <Loader2 className="w-4 h-4 animate-spin" /> : <Repeat className="w-4 h-4" />}
-              <span className="hidden sm:inline">Reorder</span>
-              <span className="sm:hidden">Again</span>
+              <span className="hidden sm:inline">{t("reorder")}</span>
+              <span className="sm:hidden">{t("again")}</span>
             </button>
             <button
               onClick={handlePrint}
               className="flex items-center justify-center gap-1.5 bg-white border border-gray-300 text-gray-700 font-semibold py-3 rounded-xl hover:bg-gray-50 transition text-sm"
             >
               <Printer className="w-4 h-4" />
-              <span className="hidden sm:inline">Print</span>
-              <span className="sm:hidden">Print</span>
+              <span className="hidden sm:inline">{t("print")}</span>
+              <span className="sm:hidden">{t("print")}</span>
             </button>
             <button
               onClick={handleShare}
               className="flex items-center justify-center gap-1.5 bg-white border border-gray-300 text-gray-700 font-semibold py-3 rounded-xl hover:bg-gray-50 transition text-sm"
             >
               <Share2 className="w-4 h-4" />
-              <span>{shareCopied ? "Copied!" : "Share"}</span>
+              <span>{shareCopied ? t("copied") : t("share")}</span>
             </button>
           </div>
           {reorderMsg && (
@@ -685,7 +691,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 onClick={() => setShowCancelConfirm(true)}
                 className="w-full flex items-center justify-center gap-2 bg-white border border-red-200 text-red-600 font-semibold py-3 rounded-xl hover:bg-red-50 transition text-sm"
               >
-                <X className="w-4 h-4" /> Cancel order
+                <X className="w-4 h-4" /> {t("cancelOrder")}
               </button>
             </div>
           )}
@@ -693,11 +699,11 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
           {/* ── Need help? (contact restaurant + marketplace) ──────── */}
           <div className="no-print bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">
             <div className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-emerald-500" /> Need help with this order?
+              <HelpCircle className="w-4 h-4 text-emerald-500" /> {t("needHelp")}
             </div>
             <div className="space-y-2 text-sm">
               <div className="text-xs uppercase tracking-wide text-gray-400 font-semibold pb-1">
-                Contact {order.restaurant.name}
+                {t("contactRestaurant", { name: order.restaurant.name })}
               </div>
               {order.restaurant.phone && (
                 <a
@@ -719,13 +725,13 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
               )}
               {!order.restaurant.phone && !order.restaurant.email && (
                 <div className="text-xs text-gray-500 italic">
-                  The restaurant has not added a contact yet.
+                  {t("noContactYet")}
                 </div>
               )}
               {cameFromMarketplace && (
                 <>
                   <div className="text-xs uppercase tracking-wide text-gray-400 font-semibold pt-3 pb-1 border-t border-gray-100 mt-2">
-                    Marketplace support
+                    {t("marketplaceSupport")}
                   </div>
                   <a
                     href={`mailto:${MARKETPLACE_SUPPORT_EMAIL}?subject=${supportSubject}&body=${encodeURIComponent(
@@ -747,7 +753,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
             </Link>
             {cameFromMarketplace && (
               <Link href={`/order/${slug}`} className="text-gray-400 text-xs hover:text-gray-600 block">
-                Or reorder from {order.restaurant.name}
+                {t("orReorderFrom", { name: order.restaurant.name })}
               </Link>
             )}
           </div>
@@ -758,10 +764,9 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
       {showCancelConfirm && (
         <div className="no-print fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6">
-            <h3 className="text-lg font-bold text-gray-900">Cancel this order?</h3>
+            <h3 className="text-lg font-bold text-gray-900">{t("cancelModalTitle")}</h3>
             <p className="text-sm text-gray-600 mt-2">
-              This will release the hold on your card and tell {order.restaurant.name}
-              {" "}not to prepare it. You can always place a new order if you change your mind.
+              {t("cancelModalBody", { name: order.restaurant.name })}
             </p>
             {cancelError && (
               <div className="mt-3 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-xs text-red-700">
@@ -774,7 +779,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 className="flex-1 bg-white border border-gray-300 text-gray-700 font-semibold py-2.5 rounded-lg hover:bg-gray-50 text-sm"
                 disabled={cancelling}
               >
-                Keep order
+                {t("keepOrder")}
               </button>
               <button
                 onClick={handleCancel}
@@ -782,7 +787,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 className="flex-1 flex items-center justify-center gap-2 bg-red-500 text-white font-semibold py-2.5 rounded-lg hover:bg-red-600 disabled:opacity-50 text-sm"
               >
                 {cancelling && <Loader2 className="w-4 h-4 animate-spin" />}
-                {cancelling ? "Cancelling…" : "Yes, cancel"}
+                {cancelling ? t("cancellingInProgress") : t("yesCancel")}
               </button>
             </div>
           </div>

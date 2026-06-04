@@ -18,8 +18,10 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function PaypalReturnPage() {
+  const t = useTranslations("customer.paypalReturn");
   const router = useRouter();
   const params = useParams<{ slug: string }>();
   const search = useSearchParams();
@@ -34,7 +36,7 @@ export default function PaypalReturnPage() {
     firedRef.current = true;
     if (!orderId) {
       setState("error");
-      setError("Missing order id");
+      setError(t("missingOrderId"));
       return;
     }
     (async () => {
@@ -45,7 +47,7 @@ export default function PaypalReturnPage() {
         const data = await res.json().catch(() => ({}));
         if (!res.ok) {
           setState("error");
-          setError(data.error ?? "Could not finalize your PayPal payment.");
+          setError(data.error ?? t("couldNotFinalize"));
           return;
         }
         setState("success");
@@ -56,7 +58,7 @@ export default function PaypalReturnPage() {
         }, 1200);
       } catch {
         setState("error");
-        setError("Network error finalizing PayPal payment.");
+        setError(t("networkError"));
       }
     })();
   }, [orderId, params.slug, router]);
@@ -67,28 +69,28 @@ export default function PaypalReturnPage() {
         {state === "authorizing" && (
           <>
             <Loader2 className="w-10 h-10 mx-auto text-blue-500 animate-spin" />
-            <h1 className="mt-4 text-lg font-bold text-gray-900">Finalizing your PayPal payment&hellip;</h1>
-            <p className="mt-1 text-sm text-gray-500">Hold on a moment, don&apos;t close this page.</p>
+            <h1 className="mt-4 text-lg font-bold text-gray-900">{t("authorizingHeading")}</h1>
+            <p className="mt-1 text-sm text-gray-500">{t("authorizingBody")}</p>
           </>
         )}
         {state === "success" && (
           <>
             <CheckCircle className="w-10 h-10 mx-auto text-emerald-500" />
-            <h1 className="mt-4 text-lg font-bold text-gray-900">Order placed!</h1>
-            <p className="mt-1 text-sm text-gray-500">Taking you to your order tracking page&hellip;</p>
+            <h1 className="mt-4 text-lg font-bold text-gray-900">{t("successHeading")}</h1>
+            <p className="mt-1 text-sm text-gray-500">{t("successBody")}</p>
           </>
         )}
         {state === "error" && (
           <>
             <AlertCircle className="w-10 h-10 mx-auto text-rose-500" />
-            <h1 className="mt-4 text-lg font-bold text-gray-900">Payment couldn&apos;t be finalized</h1>
+            <h1 className="mt-4 text-lg font-bold text-gray-900">{t("errorHeading")}</h1>
             <p className="mt-2 text-sm text-gray-600">{error}</p>
             <div className="mt-4 flex gap-2 justify-center">
               <Link
                 href={`/order/${params.slug}`}
                 className="bg-gray-900 hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded-lg text-sm"
               >
-                Back to menu
+                {t("backToMenu")}
               </Link>
             </div>
           </>

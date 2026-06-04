@@ -9,11 +9,13 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { Loader2, ShieldCheck, ArrowLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 function CheckoutForm({ orderId, slug }: { orderId: string; slug: string }) {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
+  const t = useTranslations("customer.payment");
   const [paying, setPaying] = useState(false);
   const [error, setError] = useState("");
 
@@ -31,7 +33,7 @@ function CheckoutForm({ orderId, slug }: { orderId: string; slug: string }) {
     });
 
     if (stripeError) {
-      setError(stripeError.message ?? "Payment failed");
+      setError(stripeError.message ?? t("paymentFailed"));
       setPaying(false);
     }
     // On success, Stripe redirects to return_url automatically
@@ -51,7 +53,7 @@ function CheckoutForm({ orderId, slug }: { orderId: string; slug: string }) {
         className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50"
       >
         {paying && <Loader2 className="w-5 h-5 animate-spin" />}
-        {paying ? "Processing…" : "Pay Now"}
+        {paying ? t("processing") : t("payNow")}
       </button>
     </form>
   );
@@ -60,6 +62,7 @@ function CheckoutForm({ orderId, slug }: { orderId: string; slug: string }) {
 export function PaymentPageClient({ slug }: { slug: string }) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const t = useTranslations("customer.payment");
   const orderId = searchParams.get("orderId") ?? "";
   const clientSecret = searchParams.get("clientSecret") ?? "";
   const pk = searchParams.get("pk") ?? "";
@@ -78,7 +81,7 @@ export function PaymentPageClient({ slug }: { slug: string }) {
   if (!clientSecret || !pk || !orderId) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center text-gray-500">Invalid payment link.</div>
+        <div className="text-center text-gray-500">{t("invalidPaymentLink")}</div>
       </div>
     );
   }
@@ -94,14 +97,14 @@ export function PaymentPageClient({ slug }: { slug: string }) {
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">Complete Payment</h1>
-            <p className="text-sm text-gray-500">Your order is reserved while you pay</p>
+            <h1 className="text-xl font-bold text-gray-900">{t("completePayment")}</h1>
+            <p className="text-sm text-gray-500">{t("orderReserved")}</p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 text-xs text-gray-500 bg-gray-50 rounded-xl p-3">
           <ShieldCheck className="w-4 h-4 text-green-500 flex-shrink-0" />
-          Secured by Stripe. We never store your card details.
+          {t("securedByStripe")}
         </div>
 
         {stripePromise && (

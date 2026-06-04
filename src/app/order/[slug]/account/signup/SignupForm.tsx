@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function SignupForm({ slug, restaurantName }: { slug: string; restaurantName: string }) {
+  const t = useTranslations("customer.signupForm");
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,12 +24,12 @@ export function SignupForm({ slug, restaurantName }: { slug: string; restaurantN
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data.error ?? "Sign-up failed. Try again.");
+        setError(data.error ?? t("signUpFailed"));
         return;
       }
       router.replace(`/order/${slug}/account`);
     } catch {
-      setError("Network error. Try again.");
+      setError(t("networkError"));
     } finally {
       setBusy(false);
     }
@@ -36,39 +38,39 @@ export function SignupForm({ slug, restaurantName }: { slug: string; restaurantN
   return (
     <form onSubmit={submit} className="mt-6 space-y-3">
       <div>
-        <label className="block text-xs font-semibold text-gray-700 mb-1">Your name</label>
+        <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelName")}</label>
         <input
           type="text"
           required
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          placeholder="Maria Rossi"
+          placeholder={t("placeholderName")}
         />
       </div>
       <div>
-        <label className="block text-xs font-semibold text-gray-700 mb-1">Email</label>
+        <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelEmail")}</label>
         <input
           type="email"
           required
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          placeholder="you@example.com"
+          placeholder={t("placeholderEmail")}
         />
       </div>
       <div>
-        <label className="block text-xs font-semibold text-gray-700 mb-1">Phone (optional)</label>
+        <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelPhone")}</label>
         <input
           type="tel"
           value={form.phone}
           onChange={(e) => setForm({ ...form, phone: e.target.value })}
           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          placeholder="555-123-4567"
+          placeholder={t("placeholderPhone")}
         />
       </div>
       <div>
-        <label className="block text-xs font-semibold text-gray-700 mb-1">Password</label>
+        <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelPassword")}</label>
         <input
           type="password"
           required
@@ -76,7 +78,7 @@ export function SignupForm({ slug, restaurantName }: { slug: string; restaurantN
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          placeholder="At least 8 characters"
+          placeholder={t("placeholderPassword")}
         />
       </div>
       {error && (
@@ -88,7 +90,7 @@ export function SignupForm({ slug, restaurantName }: { slug: string; restaurantN
         className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-bold py-2.5 rounded-lg text-sm flex items-center justify-center gap-2 transition"
       >
         {busy && <Loader2 className="w-4 h-4 animate-spin" />}
-        Create my account at {restaurantName}
+        {t("createAccount", { restaurantName })}
       </button>
     </form>
   );

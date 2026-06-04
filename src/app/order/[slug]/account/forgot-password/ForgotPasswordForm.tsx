@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Loader2, CheckCircle2, Mail } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * Per-restaurant "request reset link" form. POSTs to
@@ -10,6 +11,7 @@ import { Loader2, CheckCircle2, Mail } from "lucide-react";
  * whether the email matched.
  */
 export function ForgotPasswordForm({ slug }: { slug: string }) {
+  const t = useTranslations("customer.forgotForm");
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -28,13 +30,13 @@ export function ForgotPasswordForm({ slug }: { slug: string }) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data?.error || "Something went wrong");
+        setError(data?.error || t("somethingWentWrong"));
         setSubmitting(false);
         return;
       }
       setSubmitted(true);
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "Something went wrong");
+      setError(e instanceof Error ? e.message : t("somethingWentWrong"));
     } finally {
       setSubmitting(false);
     }
@@ -44,25 +46,25 @@ export function ForgotPasswordForm({ slug }: { slug: string }) {
     return (
       <div className="mt-6 text-center space-y-3 py-4">
         <CheckCircle2 className="w-14 h-14 mx-auto text-emerald-500" />
-        <h2 className="text-lg font-bold text-gray-900">Check your inbox</h2>
+        <h2 className="text-lg font-bold text-gray-900">{t("checkYourInbox")}</h2>
         <p className="text-sm text-gray-600">
-          If there&apos;s an account with that email, we just sent a reset link. It&apos;s valid for one hour.
+          {t("resetLinkSent")}
         </p>
         <p className="text-xs text-gray-500 mt-4">
-          Didn&apos;t see the email? Check your spam folder, or{" "}
+          {t("didntSeeEmail")}{" "}
           <button
             type="button"
             onClick={() => { setSubmitted(false); setEmail(""); }}
             className="text-emerald-600 font-semibold hover:underline"
           >
-            try a different email
+            {t("tryDifferentEmail")}
           </button>.
         </p>
         <a
           href={`/order/${slug}/account/login`}
           className="block text-sm text-emerald-600 font-semibold hover:underline mt-4"
         >
-          Back to sign in
+          {t("backToSignIn")}
         </a>
       </div>
     );
@@ -72,7 +74,7 @@ export function ForgotPasswordForm({ slug }: { slug: string }) {
     <form onSubmit={onSubmit} className="mt-6 space-y-3">
       <label className="block">
         <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
-          Email <span className="text-red-500">*</span>
+          {t("emailLabel")} <span className="text-red-500">*</span>
         </span>
         <div className="mt-1 relative">
           <Mail className="w-4 h-4 absolute left-3 top-3.5 text-gray-400" />
@@ -82,7 +84,7 @@ export function ForgotPasswordForm({ slug }: { slug: string }) {
             autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
+            placeholder={t("emailPlaceholder")}
             className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
           />
         </div>
@@ -98,9 +100,9 @@ export function ForgotPasswordForm({ slug }: { slug: string }) {
         className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-bold px-6 py-3 rounded-xl text-sm transition flex items-center justify-center gap-2"
       >
         {submitting ? (
-          <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</>
+          <><Loader2 className="w-4 h-4 animate-spin" /> {t("sending")}</>
         ) : (
-          "Send reset link"
+          t("sendResetLink")
         )}
       </button>
     </form>

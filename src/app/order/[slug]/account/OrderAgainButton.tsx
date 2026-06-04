@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Repeat } from "lucide-react";
 
@@ -23,6 +24,7 @@ export function OrderAgainButton({
   className?: string;
   children?: React.ReactNode;
 }) {
+  const t = useTranslations("customer.orderAgain");
   const router = useRouter();
   const handle = () => {
     try {
@@ -39,7 +41,7 @@ export function OrderAgainButton({
       className={`inline-flex items-center gap-1.5 ${className}`}
     >
       <Repeat className="w-3.5 h-3.5" />
-      {children ?? "Order again"}
+      {children ?? t("orderAgain")}
     </button>
   );
 }

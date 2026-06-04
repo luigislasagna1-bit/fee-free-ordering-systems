@@ -15,6 +15,7 @@
  * easy to find + pick the freebie.
  */
 import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { formatCurrency } from "@/lib/utils";
 
 type MenuItemLite = {
@@ -43,6 +44,7 @@ export function FreebiePromptModal({
   onAddFreebie,
   onClose,
 }: Props) {
+  const t = useTranslations("customer.freebie");
   const unlocked = cartSubtotal >= triggerAmount;
   const missing = Math.max(0, triggerAmount - cartSubtotal);
 
@@ -59,14 +61,14 @@ export function FreebiePromptModal({
         <div className="sticky top-0 bg-white z-10 px-5 py-4 border-b border-gray-100 flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-0.5">
-              Free item offer
+              {t("freeItemOffer")}
             </div>
             <h2 className="text-lg font-bold text-gray-900 truncate">{promoName}</h2>
           </div>
           <button
             onClick={onClose}
             className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 flex-shrink-0"
-            aria-label="Close"
+            aria-label={t("closeAriaLabel")}
           >
             <X className="w-5 h-5" />
           </button>
@@ -79,12 +81,14 @@ export function FreebiePromptModal({
               className="rounded-xl p-4 text-sm font-medium"
               style={{ backgroundColor: `${primaryColor}15`, color: primaryColor }}
             >
-              You&apos;ve unlocked a free item! Pick one below:
+              {t("unlockedBanner")}
             </div>
           ) : (
             <div className="rounded-xl p-4 text-sm font-medium bg-amber-50 text-amber-800 border border-amber-200">
-              Add <strong>{formatCurrency(missing)}</strong> more to your cart to unlock this
-              freebie. Eligible items below.
+              {t.rich("lockedBanner", {
+                amount: formatCurrency(missing),
+                strong: (chunks) => <strong>{chunks}</strong>,
+              })}
             </div>
           )}
         </div>
@@ -92,7 +96,7 @@ export function FreebiePromptModal({
         {/* Freebie pool */}
         <div className="p-5">
           {eligibleItems.length === 0 ? (
-            <p className="text-sm text-gray-500 text-center py-8">No eligible items configured.</p>
+            <p className="text-sm text-gray-500 text-center py-8">{t("noEligibleItems")}</p>
           ) : (
             <div className="grid sm:grid-cols-2 gap-3">
               {eligibleItems.map((item) => (
@@ -127,7 +131,7 @@ export function FreebiePromptModal({
                         className="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full"
                         style={{ backgroundColor: `${primaryColor}22`, color: primaryColor }}
                       >
-                        FREE
+                        {t("freeBadge")}
                       </span>
                     )}
                   </div>
@@ -143,7 +147,7 @@ export function FreebiePromptModal({
             onClick={onClose}
             className="font-semibold px-4 py-2.5 rounded-xl text-sm border border-gray-200 text-gray-700 hover:bg-gray-50"
           >
-            {unlocked ? "Maybe later" : "Close"}
+            {unlocked ? t("maybeLater") : t("close")}
           </button>
         </div>
       </div>

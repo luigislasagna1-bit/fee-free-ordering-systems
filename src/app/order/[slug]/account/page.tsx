@@ -21,6 +21,7 @@ import { LogoutButton } from "./LogoutButton";
 import { ProfileEditor } from "./ProfileEditor";
 import { OrderAgainButton } from "./OrderAgainButton";
 import { AddressBook } from "./AddressBook";
+import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
 
@@ -29,6 +30,7 @@ export default async function RestaurantAccountDashboard({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const t = await getTranslations("customer.accountPage");
   const { slug } = await params;
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
@@ -99,15 +101,15 @@ export default async function RestaurantAccountDashboard({
           className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900"
         >
           <ChevronLeft className="w-4 h-4" />
-          Back to {restaurant.name}
+          {t("backTo", { name: restaurant.name })}
         </Link>
 
         <div className="mt-4 bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <h1 className="text-xl font-bold text-gray-900">Hi, {me.name}</h1>
+              <h1 className="text-xl font-bold text-gray-900">{t("greeting", { name: me.name })}</h1>
               <p className="text-sm text-gray-500 mt-0.5">
-                {me.email ?? "No email on file"}
+                {me.email ?? t("noEmailOnFile")}
                 {me.phone && <> · {me.phone}</>}
               </p>
               <div className="mt-2">
@@ -127,18 +129,18 @@ export default async function RestaurantAccountDashboard({
         <div className="mt-6">
           <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
             <Tag className="w-4 h-4 text-emerald-500" />
-            Your coupons ({usableCoupons.length})
+            {t("yourCoupons", { count: usableCoupons.length })}
           </h2>
           {usableCoupons.length === 0 ? (
             <div className="bg-white rounded-xl border border-gray-200 p-6 text-center text-sm text-gray-500">
-              No coupons right now. {restaurant.name} can send you personalised codes —
-              they&apos;ll show up here.
+              {t("noCoupons", { name: restaurant.name })}
             </div>
           ) : (
             <ul className="space-y-2">
               {usableCoupons.map((c) => {
-                const remaining = c.maxUses === null ? "Unlimited uses" :
-                  `${Math.max(0, c.maxUses - c.usedCount)} use${(c.maxUses - c.usedCount) === 1 ? "" : "s"} left`;
+                const remaining = c.maxUses === null
+                  ? t("unlimitedUses")
+                  : t("usesLeft", { n: Math.max(0, c.maxUses - c.usedCount) });
                 const discount = c.discountType === "percentage"
                   ? `${c.discountValue}% off`
                   : `${formatCurrency(c.discountValue)} off`;
@@ -147,12 +149,12 @@ export default async function RestaurantAccountDashboard({
                     <div className="min-w-0">
                       <div className="font-bold text-emerald-700">{discount}</div>
                       <div className="text-xs text-gray-500 mt-0.5">
-                        {c.description ?? "Personal coupon"}
+                        {c.description ?? t("personalCoupon")}
                       </div>
                       <div className="text-[11px] text-gray-400 mt-1">
                         {remaining}
-                        {c.minimumOrder > 0 && <> · Min. order {formatCurrency(c.minimumOrder)}</>}
-                        {c.expiresAt && <> · Expires {new Date(c.expiresAt).toLocaleDateString()}</>}
+                        {c.minimumOrder > 0 && <> · {t("minOrder", { amount: formatCurrency(c.minimumOrder) })}</>}
+                        {c.expiresAt && <> · {t("expires", { date: new Date(c.expiresAt).toLocaleDateString() })}</>}
                       </div>
                     </div>
                     <div className="flex-shrink-0">
@@ -171,7 +173,7 @@ export default async function RestaurantAccountDashboard({
         <div className="mt-6">
           <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
             <MapPin className="w-4 h-4 text-emerald-500" />
-            Saved delivery addresses
+            {t("savedAddresses")}
           </h2>
           <AddressBook />
         </div>
@@ -184,7 +186,7 @@ export default async function RestaurantAccountDashboard({
           <div className="mt-6">
             <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
               <Repeat className="w-4 h-4 text-emerald-500" />
-              Order again
+              {t("orderAgain")}
             </h2>
             <div className="grid sm:grid-cols-3 gap-3">
               {orderAgainBaskets.map((o) => {
@@ -198,7 +200,7 @@ export default async function RestaurantAccountDashboard({
                       {new Date(o.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
                     </div>
                     <div className="text-xs text-gray-700 line-clamp-2 min-h-[2.5em]">
-                      {itemNames || "Order"}
+                      {itemNames || t("orderFallback")}
                     </div>
                     <div className="flex items-center justify-between mt-1">
                       <div className="text-sm font-semibold text-gray-900">
@@ -221,13 +223,13 @@ export default async function RestaurantAccountDashboard({
         <div className="mt-6">
           <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
             <ShoppingBag className="w-4 h-4 text-emerald-500" />
-            Recent orders ({orders.length})
+            {t("recentOrders", { count: orders.length })}
           </h2>
           {orders.length === 0 ? (
             <div className="bg-white rounded-xl border border-gray-200 p-6 text-center text-sm text-gray-500">
-              You haven&apos;t placed any orders here yet.{" "}
+              {t("noOrdersYet")}{" "}
               <Link href={`/order/${slug}`} className="text-emerald-600 font-semibold hover:underline">
-                Order now →
+                {t("orderNow")}
               </Link>
             </div>
           ) : (

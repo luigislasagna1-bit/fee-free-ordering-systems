@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, MailCheck } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function LoginForm({ slug }: { slug: string }) {
+  const t = useTranslations("customer.loginForm");
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,16 +32,16 @@ export function LoginForm({ slug }: { slug: string }) {
       });
       const data = await res.json().catch(() => ({}));
       if (res.status === 409 && data?.code === "needs_password_setup") {
-        setNeedsSetup(data.message ?? "We've emailed you a link to set your password.");
+        setNeedsSetup(data.message ?? t("emailedPasswordLink"));
         return;
       }
       if (!res.ok) {
-        setError(data.error ?? "Sign-in failed. Try again.");
+        setError(data.error ?? t("signInFailed"));
         return;
       }
       router.replace(`/order/${slug}/account`);
     } catch {
-      setError("Network error. Try again.");
+      setError(t("networkError"));
     } finally {
       setBusy(false);
     }
@@ -48,18 +50,18 @@ export function LoginForm({ slug }: { slug: string }) {
   return (
     <form onSubmit={submit} className="mt-6 space-y-3">
       <div>
-        <label className="block text-xs font-semibold text-gray-700 mb-1">Email</label>
+        <label className="block text-xs font-semibold text-gray-700 mb-1">{t("emailLabel")}</label>
         <input
           type="email"
           required
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          placeholder="you@example.com"
+          placeholder={t("emailPlaceholder")}
         />
       </div>
       <div>
-        <label className="block text-xs font-semibold text-gray-700 mb-1">Password</label>
+        <label className="block text-xs font-semibold text-gray-700 mb-1">{t("passwordLabel")}</label>
         <input
           type="password"
           required
@@ -75,7 +77,7 @@ export function LoginForm({ slug }: { slug: string }) {
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 flex items-start gap-2">
           <MailCheck className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
           <div className="text-xs text-emerald-900 leading-relaxed">
-            <p className="font-semibold mb-1">Welcome back!</p>
+            <p className="font-semibold mb-1">{t("welcomeBack")}</p>
             <p>{needsSetup}</p>
           </div>
         </div>
@@ -85,7 +87,7 @@ export function LoginForm({ slug }: { slug: string }) {
           href={`/order/${slug}/account/forgot-password`}
           className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold"
         >
-          Forgot password?
+          {t("forgotPassword")}
         </a>
       </div>
       <button
@@ -94,7 +96,7 @@ export function LoginForm({ slug }: { slug: string }) {
         className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-bold py-2.5 rounded-lg text-sm flex items-center justify-center gap-2 transition"
       >
         {busy && <Loader2 className="w-4 h-4 animate-spin" />}
-        Sign in
+        {t("signIn")}
       </button>
     </form>
   );

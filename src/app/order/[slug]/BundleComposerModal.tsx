@@ -21,6 +21,7 @@
 import { useMemo, useState } from "react";
 import { X, Check } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 type MenuItemLite = {
   id: string;
@@ -94,6 +95,7 @@ export function BundleComposerModal({
    * `picks[slotIndex]` = array of menuItemIds chosen for that slot. A
    * slot's selection is a multi-select bounded by [minCount, maxCount].
    */
+  const t = useTranslations("customer.bundle");
   const [picks, setPicks] = useState<string[][]>(() => groups.map(() => []));
 
   /** Items pool per slot — memoised because we do this off the menu
@@ -193,20 +195,20 @@ export function BundleComposerModal({
         <div className="sticky top-0 bg-white z-10 px-5 py-4 border-b border-gray-100 flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-0.5">
-              {isSpeciality ? "Meal bundle with speciality" : "Meal bundle"}
+              {isSpeciality ? t("mealBundleWithSpeciality") : t("mealBundle")}
             </div>
             <h2 className="text-lg font-bold text-gray-900 truncate">{promoName}</h2>
             <p className="text-sm text-gray-500 mt-0.5">
-              Bundle price: <strong>{formatCurrency(bundlePrice)}</strong>
+              {t("bundlePriceLabel")} <strong>{formatCurrency(bundlePrice)}</strong>
               {isSpeciality && (
-                <span className="text-xs text-gray-400 ml-2">(speciality items add an upcharge)</span>
+                <span className="text-xs text-gray-400 ml-2">{t("specialityUpchargeNote")}</span>
               )}
             </p>
           </div>
           <button
             onClick={onClose}
             className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 flex-shrink-0"
-            aria-label="Close"
+            aria-label={t("closeAriaLabel")}
           >
             <X className="w-5 h-5" />
           </button>
@@ -216,7 +218,7 @@ export function BundleComposerModal({
         <div className="p-5 space-y-5">
           {groups.length === 0 ? (
             <p className="text-sm text-gray-500 text-center py-8">
-              This bundle has no item groups configured.
+              {t("noGroupsConfigured")}
             </p>
           ) : (
             groups.map((group, slotIndex) => {
@@ -230,14 +232,14 @@ export function BundleComposerModal({
                   <div className="flex items-center justify-between mb-2">
                     <div className="font-semibold text-gray-900 text-sm flex items-center gap-2">
                       {slotComplete && <Check className="w-4 h-4" style={{ color: primaryColor }} />}
-                      {group.label ?? `Slot ${slotIndex + 1}`}
+                      {group.label ?? t("slotFallbackLabel", { n: slotIndex + 1 })}
                     </div>
                     <div className="text-xs text-gray-400">
-                      Pick {min === max ? min : `${min}–${max}`} ({picked.length}/{max})
+                      {t("pickCount", { range: min === max ? String(min) : `${min}–${max}`, picked: picked.length, max })}
                     </div>
                   </div>
                   {slotItems[slotIndex].length === 0 ? (
-                    <p className="text-xs text-gray-400 italic">No eligible items for this slot.</p>
+                    <p className="text-xs text-gray-400 italic">{t("noEligibleItems")}</p>
                   ) : (
                     <div className="grid sm:grid-cols-2 gap-2">
                       {slotItems[slotIndex].map((item) => {
@@ -273,10 +275,10 @@ export function BundleComposerModal({
                               <div className="text-xs text-gray-500">
                                 {isSpeciality && fee > 0 ? (
                                   <span className="font-semibold" style={{ color: primaryColor }}>
-                                    +{formatCurrency(fee)} speciality
+                                    {t("specialityFee", { fee: formatCurrency(fee) })}
                                   </span>
                                 ) : (
-                                  "Included"
+                                  t("included")
                                 )}
                               </div>
                             </div>
@@ -297,11 +299,11 @@ export function BundleComposerModal({
         {/* Footer */}
         <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex items-center justify-between gap-3">
           <div className="text-sm">
-            <span className="text-gray-500">Total: </span>
+            <span className="text-gray-500">{t("totalLabel")} </span>
             <span className="font-bold text-gray-900">{formatCurrency(lineTotal)}</span>
             {isSpeciality && specialityTotal > 0 && (
               <span className="text-xs text-gray-400 ml-2">
-                ({formatCurrency(bundlePrice)} + {formatCurrency(specialityTotal)} speciality)
+                {t("totalBreakdown", { base: formatCurrency(bundlePrice), speciality: formatCurrency(specialityTotal) })}
               </span>
             )}
           </div>
@@ -311,7 +313,7 @@ export function BundleComposerModal({
             className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm disabled:opacity-40 disabled:cursor-not-allowed"
             style={{ backgroundColor: primaryColor }}
           >
-            Add bundle to cart
+            {t("addBundleToCart")}
           </button>
         </div>
       </div>

@@ -581,14 +581,16 @@ export function CheckoutModal({
                     )}
                     <div className="grid grid-cols-2 gap-2">
                       <input
-                        type="text" placeholder={tc("cityPlaceholder")}
+                        id="checkout-delivery-city"
+                        type="text" placeholder={`${tc("cityPlaceholder")} *`}
                         className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                         style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                         value={customerInfo.city}
                         onChange={e => setCustomerInfo({ ...customerInfo, city: e.target.value })}
                       />
                       <input
-                        type="text" placeholder={tc("zipPlaceholder")}
+                        id="checkout-delivery-zip"
+                        type="text" placeholder={`${tc("zipPlaceholder")} *`}
                         className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                         style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                         value={customerInfo.zip}

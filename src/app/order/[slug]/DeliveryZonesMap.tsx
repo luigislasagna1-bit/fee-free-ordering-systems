@@ -1,5 +1,6 @@
 "use client";
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { GoogleMap, Marker, Circle } from "@react-google-maps/api";
 import { MapContainer, TileLayer, Marker as LMarker, Circle as LCircle, Tooltip as LTooltip } from "react-leaflet";
 import L from "leaflet";
@@ -29,13 +30,14 @@ interface Props {
 }
 
 export default function DeliveryZonesMap(props: Props) {
+  const t = useTranslations("customer.deliveryZones");
   const provider = props.provider ?? "leaflet";
   if (provider === "google") {
     if (!props.googleMapsApiKey) {
       return (
         <Placeholder
           compact={props.compact}
-          msg="Google Maps API key missing — set it in Admin → Map Settings."
+          msg={t("googleMapsKeyMissing")}
         />
       );
     }
@@ -61,6 +63,7 @@ function Placeholder({ compact, msg, error }: { compact?: boolean; msg: string; 
 function GoogleVariant({
   restaurantLat, restaurantLng, zones, customerLat, customerLng, compact, apiKey,
 }: Props & { apiKey: string }) {
+  const t = useTranslations("customer.deliveryZones");
   const { isLoaded, loadError } = useGoogleMaps(apiKey);
   const center = useMemo(() => ({ lat: restaurantLat, lng: restaurantLng }), [restaurantLat, restaurantLng]);
   const sortedZones = useMemo(
@@ -70,7 +73,7 @@ function GoogleVariant({
 
   const containerStyle = { width: "100%", height: compact ? 280 : 420, borderRadius: 12 };
 
-  if (loadError) return <Placeholder compact={compact} msg="Couldn't load Google Maps. Check your API key restrictions." error />;
+  if (loadError) return <Placeholder compact={compact} msg={t("googleMapsLoadError")} error />;
   if (!isLoaded) return <div style={containerStyle} className="bg-gray-100 animate-pulse" />;
 
   const onLoad = (map: google.maps.Map) => {
@@ -88,7 +91,7 @@ function GoogleVariant({
       onLoad={onLoad}
       options={{ scrollwheel: false, streetViewControl: false, mapTypeControl: false, fullscreenControl: false }}
     >
-      <Marker position={center} title="Restaurant" />
+      <Marker position={center} title={t("restaurantMarker")} />
       {sortedZones.map((zone) => (
         <Circle key={zone.id} center={center} radius={zone.radiusKm * 1000}
           options={{ strokeColor: zone.color, strokeOpacity: 0.9, strokeWeight: 1.5, fillColor: zone.color, fillOpacity: 0.13, clickable: false }}
@@ -97,7 +100,7 @@ function GoogleVariant({
       {customerLat != null && customerLng != null && (
         <Marker
           position={{ lat: customerLat, lng: customerLng }}
-          title="Your address"
+          title={t("yourAddress")}
           icon={{ path: google.maps.SymbolPath.CIRCLE, scale: 7, fillColor: "#2563eb", fillOpacity: 1, strokeColor: "#ffffff", strokeWeight: 2 }}
         />
       )}
@@ -118,6 +121,7 @@ const customerIcon = L.divIcon({
 function LeafletVariant({
   restaurantLat, restaurantLng, zones, customerLat, customerLng, compact,
 }: Props) {
+  const t = useTranslations("customer.deliveryZones");
   const sortedZones = useMemo(
     () => zones.filter((z) => z.isActive).slice().sort((a, b) => b.radiusKm - a.radiusKm),
     [zones],
@@ -139,7 +143,7 @@ function LeafletVariant({
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       />
       <LMarker position={[restaurantLat, restaurantLng]} icon={restaurantIcon}>
-        <LTooltip>Restaurant</LTooltip>
+        <LTooltip>{t("restaurantMarker")}</LTooltip>
       </LMarker>
       {sortedZones.map((zone) => (
         <LCircle
@@ -150,15 +154,15 @@ function LeafletVariant({
         >
           <LTooltip sticky>
             <strong>{zone.name}</strong>
-            <br />Fee: ${zone.deliveryFee.toFixed(2)}
-            {zone.minimumOrder > 0 && <><br />Min: ${zone.minimumOrder.toFixed(2)}</>}
-            <br />ETA: ~{zone.estimatedMinutes} min
+            <br />{t("tooltipFee", { fee: zone.deliveryFee.toFixed(2) })}
+            {zone.minimumOrder > 0 && <><br />{t("tooltipMin", { min: zone.minimumOrder.toFixed(2) })}</>}
+            <br />{t("tooltipEta", { minutes: zone.estimatedMinutes })}
           </LTooltip>
         </LCircle>
       ))}
       {customerLat != null && customerLng != null && (
         <LMarker position={[customerLat, customerLng]} icon={customerIcon}>
-          <LTooltip>Your address</LTooltip>
+          <LTooltip>{t("yourAddress")}</LTooltip>
         </LMarker>
       )}
     </MapContainer>

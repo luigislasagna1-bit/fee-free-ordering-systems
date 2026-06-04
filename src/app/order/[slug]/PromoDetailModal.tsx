@@ -16,6 +16,7 @@
  *   find the eligible items faster.
  */
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { getPromoTypeMeta } from "@/lib/promo-types";
@@ -236,45 +237,47 @@ function minToHHMM(min: number): string {
   return `${h12}:${mm.toString().padStart(2, "0")} ${ampm}`;
 }
 
-function buildWhatYouGet(promo: Promo, rules: RuleConfig): string[] {
+type TFunction = ReturnType<typeof useTranslations<"customer.promoDetail">>;
+
+function buildWhatYouGet(promo: Promo, rules: RuleConfig, t: TFunction): string[] {
   const out: string[] = [];
   const pct = rules.discountPercent;
   const amt = rules.discountAmount;
   const bundlePrice = rules.bundlePrice;
   switch (promo.promotionType) {
     case "percentage_off":
-      out.push(pct ? `${pct}% off the eligible items` : "Percentage off the eligible items");
+      out.push(pct ? t("whatYouGetPercentageOff", { pct }) : t("whatYouGetPercentageOffDefault"));
       break;
     case "free_delivery":
-      out.push("100% discount to delivery fee");
+      out.push(t("whatYouGetFreeDelivery"));
       break;
     case "bogo":
-      out.push("Buy one item, get another free (or discounted)");
+      out.push(t("whatYouGetBogo"));
       break;
     case "fixed_cart":
-      out.push(amt ? `${formatCurrency(amt)} off your order` : "Fixed dollar discount on your order");
+      out.push(amt ? t("whatYouGetFixedCart", { amount: formatCurrency(amt) }) : t("whatYouGetFixedCartDefault"));
       break;
     case "payment_reward":
-      out.push(pct ? `${pct}% off when paying with the selected method` : "Discount for paying with the selected method");
+      out.push(pct ? t("whatYouGetPaymentReward", { pct }) : t("whatYouGetPaymentRewardDefault"));
       break;
     case "free_item":
-      out.push("A free item from the curated list");
+      out.push(t("whatYouGetFreeItem"));
       break;
     case "meal_bundle":
     case "meal_bundle_speciality":
-      out.push(bundlePrice ? `Bundle deal for ${formatCurrency(bundlePrice)}` : "Mix-and-match bundle at a fixed price");
+      out.push(bundlePrice ? t("whatYouGetMealBundle", { price: formatCurrency(bundlePrice) }) : t("whatYouGetMealBundleDefault"));
       break;
     case "buy_n_get_free":
-      out.push("Add N qualifying items, get one free");
+      out.push(t("whatYouGetBuyNGetFree"));
       break;
     case "free_dish_meal":
-      out.push("Order the trigger items, get a dish free");
+      out.push(t("whatYouGetFreeDishMeal"));
       break;
     case "fixed_combo":
-      out.push(amt ? `${formatCurrency(amt)} off when buying the combo` : "Fixed dollar discount on the combo");
+      out.push(amt ? t("whatYouGetFixedCombo", { amount: formatCurrency(amt) }) : t("whatYouGetFixedComboDefault"));
       break;
     case "percentage_combo":
-      out.push(pct ? `${pct}% off when buying the combo` : "Percentage off the combo");
+      out.push(pct ? t("whatYouGetPercentageCombo", { pct }) : t("whatYouGetPercentageComboDefault"));
       break;
     default:
       out.push(promo.description ?? promo.name);
@@ -282,39 +285,39 @@ function buildWhatYouGet(promo: Promo, rules: RuleConfig): string[] {
   return out;
 }
 
-function buildConditions(promo: Promo, zones: DeliveryZoneLite[]): string[] {
+function buildConditions(promo: Promo, zones: DeliveryZoneLite[], t: TFunction): string[] {
   const out: string[] = [];
 
   // Frequency
-  if (promo.onceLifetimePerClient) out.push("Only once per customer (lifetime)");
-  else out.push("Only once in cart");
+  if (promo.onceLifetimePerClient) out.push(t("conditionOnceLifetime"));
+  else out.push(t("conditionOnceInCart"));
 
   // Cart value
   if (promo.minimumOrder > 0) {
-    out.push(`Sub-total: greater than or equal to ${formatCurrency(promo.minimumOrder)}`);
+    out.push(t("conditionMinOrder", { amount: formatCurrency(promo.minimumOrder) }));
   }
 
   // Order channel
   if (promo.orderType && promo.orderType !== "both") {
     const channels = promo.orderType.startsWith("[")
-      ? safeJsonArray(promo.orderType).map(formatChannel).join(", ")
-      : formatChannel(promo.orderType);
-    out.push(`Order Type: ${channels}`);
+      ? safeJsonArray(promo.orderType).map((s) => formatChannel(s, t)).join(", ")
+      : formatChannel(promo.orderType, t);
+    out.push(t("conditionOrderType", { channels }));
   }
 
   // Client type
   if (promo.customerType && promo.customerType !== "any") {
     const label =
-      promo.customerType === "new" ? "New customers only" :
-      promo.customerType === "returning" ? "Returning customers only" :
-      promo.customerType === "member" ? "Signed-in members only" : promo.customerType;
+      promo.customerType === "new" ? t("conditionNewCustomers") :
+      promo.customerType === "returning" ? t("conditionReturningCustomers") :
+      promo.customerType === "member" ? t("conditionMembersOnly") : promo.customerType;
     out.push(label);
   }
 
   // Payment
   const paymentSlugs = safeJsonArray(promo.paymentMethodSlugs);
   if (paymentSlugs.length > 0) {
-    out.push(`Payment Method: ${paymentSlugs.map(formatPayment).join(", ")}`);
+    out.push(t("conditionPaymentMethod", { methods: paymentSlugs.map((s) => formatPayment(s, t)).join(", ") }));
   }
 
   // Delivery area
@@ -324,51 +327,53 @@ function buildConditions(promo: Promo, zones: DeliveryZoneLite[]): string[] {
       .map((id) => zones.find((z) => z.id === id)?.name ?? null)
       .filter(Boolean) as string[];
     if (zoneNames.length > 0) {
-      out.push(`For delivery, the address must be in the following zones: ${zoneNames.join(", ")}`);
+      out.push(t("conditionDeliveryZones", { zones: zoneNames.join(", ") }));
     } else {
-      out.push("Restricted to specific delivery zones");
+      out.push(t("conditionDeliveryZonesRestricted"));
     }
   }
 
   // Day-of-week
   const days = safeJsonArray(promo.daysOfWeek).map((d) => parseInt(d, 10)).filter((n) => Number.isFinite(n));
   if (days.length > 0 && days.length < 7) {
-    out.push(`Available on: ${days.sort((a, b) => a - b).map((d) => DAY_NAMES[d]).join(", ")}`);
+    out.push(t("conditionAvailableOn", { days: days.sort((a, b) => a - b).map((d) => DAY_NAMES[d]).join(", ") }));
   }
 
   // Hour-of-day
   if (typeof promo.usableHourStart === "number" && typeof promo.usableHourEnd === "number") {
-    out.push(`Available between ${minToHHMM(promo.usableHourStart)} – ${minToHHMM(promo.usableHourEnd)}`);
+    out.push(t("conditionAvailableBetween", { start: minToHHMM(promo.usableHourStart), end: minToHHMM(promo.usableHourEnd) }));
   }
 
   // Expiration
   if (promo.startsAt && new Date(promo.startsAt) > new Date()) {
-    out.push(`Starts ${new Date(promo.startsAt).toLocaleDateString()}`);
+    out.push(t("conditionStarts", { date: new Date(promo.startsAt).toLocaleDateString() }));
   }
   if (promo.endsAt) {
-    out.push(`Expires ${new Date(promo.endsAt).toLocaleDateString()}`);
+    out.push(t("conditionExpires", { date: new Date(promo.endsAt).toLocaleDateString() }));
   }
 
   return out;
 }
 
-function formatChannel(slug: string): string {
-  return {
-    pickup: "Pickup",
-    delivery: "Delivery",
-    dine_in: "Dine-In",
-    catering: "Catering",
-    takeout: "Take Out",
-  }[slug] ?? slug;
+function formatChannel(slug: string, t: TFunction): string {
+  const map: Record<string, string> = {
+    pickup: t("channelPickup"),
+    delivery: t("channelDelivery"),
+    dine_in: t("channelDineIn"),
+    catering: t("channelCatering"),
+    takeout: t("channelTakeout"),
+  };
+  return map[slug] ?? slug;
 }
 
-function formatPayment(slug: string): string {
-  return {
-    cash: "Cash",
-    card_in_person: "Card at pickup / door",
-    online_card: "Card online",
-    paypal: "PayPal",
-  }[slug] ?? slug;
+function formatPayment(slug: string, t: TFunction): string {
+  const map: Record<string, string> = {
+    cash: t("paymentCash"),
+    card_in_person: t("paymentCardInPerson"),
+    online_card: t("paymentOnlineCard"),
+    paypal: t("paymentPaypal"),
+  };
+  return map[slug] ?? slug;
 }
 
 function SummaryPanel({ promo, rules, deliveryZones }: {
@@ -376,20 +381,21 @@ function SummaryPanel({ promo, rules, deliveryZones }: {
   rules: RuleConfig;
   deliveryZones: DeliveryZoneLite[];
 }) {
-  const benefits = buildWhatYouGet(promo, rules);
-  const conditions = buildConditions(promo, deliveryZones);
+  const t = useTranslations("customer.promoDetail");
+  const benefits = buildWhatYouGet(promo, rules, t);
+  const conditions = buildConditions(promo, deliveryZones, t);
   const autoApply = promo.autoApply !== false;
   return (
     <div className="space-y-4 mb-5 pb-5 border-b border-gray-100">
       <div>
-        <div className="text-sm font-bold text-gray-900 mb-1.5">What you get:</div>
+        <div className="text-sm font-bold text-gray-900 mb-1.5">{t("whatYouGet")}</div>
         <ul className="list-disc pl-5 space-y-0.5 text-sm text-gray-700">
           {benefits.map((b, i) => <li key={i}>{b}</li>)}
         </ul>
       </div>
       {conditions.length > 0 && (
         <div>
-          <div className="text-sm font-bold text-gray-900 mb-1.5">Conditions:</div>
+          <div className="text-sm font-bold text-gray-900 mb-1.5">{t("conditions")}</div>
           <ul className="list-disc pl-5 space-y-0.5 text-sm text-gray-700">
             {conditions.map((c, i) => <li key={i}>{c}</li>)}
           </ul>
@@ -397,13 +403,14 @@ function SummaryPanel({ promo, rules, deliveryZones }: {
       )}
       {promo.couponCode && !autoApply && (
         <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-800">
-          Enter the code <span className="font-mono font-bold">{promo.couponCode}</span> in
-          the coupon field at checkout to apply this deal.
+          {t("couponInstructionBefore")}{" "}
+          <span className="font-mono font-bold">{promo.couponCode}</span>{" "}
+          {t("couponInstructionAfter")}
         </div>
       )}
       {autoApply && (
         <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-800 text-center">
-          Deal is applied automatically when all conditions are met.
+          {t("autoApplyNote")}
         </div>
       )}
     </div>
@@ -424,6 +431,7 @@ export function PromoDetailModal({
   onOpenItem,
   onClose,
 }: Props) {
+  const t = useTranslations("customer.promoDetail");
   const meta = getPromoTypeMeta(promo.promotionType);
   const rules = useMemo(() => parseRuleConfig(promo), [promo]);
   const headline = promo.bannerHeadline?.trim() || promo.name;
@@ -488,7 +496,7 @@ export function PromoDetailModal({
         <div className="sticky top-0 bg-white z-10 px-5 py-4 border-b border-gray-100 flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-0.5">
-              {meta?.name ?? "Promo"}
+              {meta?.name ?? t("promo")}
             </div>
             <h2 className="text-lg font-bold text-gray-900 truncate">{headline}</h2>
             {promo.description && (
@@ -498,7 +506,7 @@ export function PromoDetailModal({
           <button
             onClick={onClose}
             className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 flex-shrink-0"
-            aria-label="Close"
+            aria-label={t("close")}
           >
             <X className="w-5 h-5" />
           </button>
@@ -534,7 +542,7 @@ export function PromoDetailModal({
               className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm"
               style={{ backgroundColor: primaryColor }}
             >
-              Switch to delivery
+              {t("switchToDelivery")}
             </button>
           ) : (
             <button
@@ -543,8 +551,8 @@ export function PromoDetailModal({
               style={{ backgroundColor: primaryColor }}
             >
               {promo.promotionType === "percentage_off" || promo.promotionType === "bogo"
-                ? "Start adding items"
-                : "Got it"}
+                ? t("startAddingItems")
+                : t("gotIt")}
             </button>
           )}
         </div>
@@ -570,6 +578,7 @@ function PromoBody({
   primaryColor: string;
   onScrollToItem: (itemId: string) => void;
 }) {
+  const t = useTranslations("customer.promoDetail");
   const groups = (rules.groups ?? rules.itemGroups ?? []) as RuleConfigGroup[];
 
   const InfoCard = ({ children }: { children: React.ReactNode }) => (
@@ -584,7 +593,7 @@ function PromoBody({
   const renderGroupItems = (group: RuleConfigGroup, badge?: string | null) => {
     const items = collectGroupItems(group, allMenuItems);
     if (items.length === 0) {
-      return <p className="text-xs text-gray-400 italic">No eligible items available.</p>;
+      return <p className="text-xs text-gray-400 italic">{t("noEligibleItems")}</p>;
     }
     return (
       <div className="space-y-2">
@@ -608,12 +617,13 @@ function PromoBody({
         <>
           <InfoCard>
             <strong>{pct}% off</strong>
-            {promo.minimumOrder > 0 ? ` on orders of ${formatCurrency(promo.minimumOrder)}+` : " on your order"}.
-            {groups.length > 0 && " Applies to the items below."}
+            {promo.minimumOrder > 0
+              ? ` on orders of ${formatCurrency(promo.minimumOrder)}+`
+              : " on your order"}
+            {"."}
+            {groups.length > 0 && t("percentageOffAppliesToItems")}
             {promo.couponCode && (
-              <>
-                {" "}Enter code <span className="font-mono font-bold">{promo.couponCode}</span> at checkout.
-              </>
+              <>{t("percentageOffCoupon", { code: promo.couponCode })}</>
             )}
           </InfoCard>
           {groups.map((g, i) => (
@@ -631,12 +641,12 @@ function PromoBody({
       return (
         <>
           <InfoCard>
-            {pct === 100 ? <strong>Free delivery</strong> : <strong>{pct}% off delivery</strong>}
-            {promo.minimumOrder > 0 ? ` on orders of ${formatCurrency(promo.minimumOrder)}+` : ""}.
+            {pct === 100 ? <strong>{t("freeDeliveryFull")}</strong> : <strong>{t("freeDeliveryPartial", { pct })}</strong>}
+            {promo.minimumOrder > 0 ? t("freeDeliveryOnMinOrder", { minOrder: formatCurrency(promo.minimumOrder) }) : ""}.
           </InfoCard>
           {deliveryZones.length > 0 && (
             <div className="mb-4">
-              <div className="font-semibold text-gray-900 text-sm mb-2">Eligible delivery zones</div>
+              <div className="font-semibold text-gray-900 text-sm mb-2">{t("eligibleDeliveryZones")}</div>
               <div className="flex flex-wrap gap-2">
                 {deliveryZones.map((z) => (
                   <span
@@ -663,15 +673,15 @@ function PromoBody({
       const strategy = (rules.discountStrategy ?? "cheapest") as string;
       const cheapestPct = Number(rules.cheapestDiscount ?? 100);
       const expPct = Number(rules.mostExpensiveDiscount ?? 100);
-      let strategyHint = "Cheapest item is fully free.";
+      let strategyHint = t("bogoCheapestItemDefault");
       if (strategy === "cheapest") {
         strategyHint = cheapestPct >= 100
-          ? "The cheapest qualifying item is FREE."
-          : `The cheapest qualifying item gets ${cheapestPct}% off.`;
+          ? t("bogoCheapestFree")
+          : t("bogoCheapestDiscount", { pct: cheapestPct });
       } else if (strategy === "most_expensive") {
         strategyHint = expPct >= 100
-          ? "The most expensive qualifying item is FREE."
-          : `The most expensive qualifying item gets ${expPct}% off.`;
+          ? t("bogoMostExpensiveFree")
+          : t("bogoMostExpensiveDiscount", { pct: expPct });
       }
       const freeBadge = strategy === "most_expensive"
         ? (expPct >= 100 ? "FREE" : `${expPct}% off`)
@@ -679,18 +689,17 @@ function PromoBody({
       return (
         <>
           <InfoCard>
-            Add a paid item from the first group — get one from the second group{" "}
-            <strong>{freeBadge.toLowerCase() === "free" ? "free" : freeBadge}</strong>.
+            {t("bogoInfo", { badge: freeBadge.toLowerCase() === "free" ? freeBadge.toLowerCase() : freeBadge })}
             <div className="mt-1.5 text-[11px] text-gray-500">{strategyHint}</div>
           </InfoCard>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <div className="font-semibold text-gray-900 text-sm mb-2">{paidGroup?.label ?? "Add a paid item"}</div>
-              {paidGroup ? renderGroupItems(paidGroup) : <p className="text-xs text-gray-400">No items.</p>}
+              <div className="font-semibold text-gray-900 text-sm mb-2">{paidGroup?.label ?? t("bogoAddPaidItem")}</div>
+              {paidGroup ? renderGroupItems(paidGroup) : <p className="text-xs text-gray-400">{t("noItems")}</p>}
             </div>
             <div>
-              <div className="font-semibold text-gray-900 text-sm mb-2">{freeGroup?.label ?? "Get one free"}</div>
-              {freeGroup ? renderGroupItems(freeGroup, freeBadge) : <p className="text-xs text-gray-400">No items.</p>}
+              <div className="font-semibold text-gray-900 text-sm mb-2">{freeGroup?.label ?? t("bogoGetOneFree")}</div>
+              {freeGroup ? renderGroupItems(freeGroup, freeBadge) : <p className="text-xs text-gray-400">{t("noItems")}</p>}
             </div>
           </div>
         </>
@@ -701,22 +710,21 @@ function PromoBody({
       const amount = rules.discountAmount ?? rules.fixedDiscountAmount ?? 0;
       return (
         <InfoCard>
-          Spend{" "}
-          <strong>
-            {promo.minimumOrder > 0 ? formatCurrency(promo.minimumOrder) : "any amount"}
-          </strong>{" "}
-          to save <strong>{formatCurrency(amount)}</strong>.
+          {promo.minimumOrder > 0
+            ? t("fixedCartInfo", { minOrder: formatCurrency(promo.minimumOrder), amount: formatCurrency(amount) })
+            : t("fixedCartInfoAnyAmount", { amount: formatCurrency(amount) })}
         </InfoCard>
       );
     }
 
     case "payment_reward": {
       const pct = rules.discountPercent ?? 0;
-      const method = rules.paymentMethod ?? "the eligible payment method";
+      const method = rules.paymentMethod ?? t("paymentMethodDefault");
       return (
         <InfoCard>
-          Get <strong>{pct}% off</strong> when you pay with <strong>{method}</strong>
-          {promo.minimumOrder > 0 ? ` on orders of ${formatCurrency(promo.minimumOrder)}+` : ""}.
+          {promo.minimumOrder > 0
+            ? t("paymentRewardInfo", { pct, method, minOrder: formatCurrency(promo.minimumOrder) })
+            : t("paymentRewardInfoNoMin", { pct, method })}
         </InfoCard>
       );
     }
@@ -725,13 +733,12 @@ function PromoBody({
       return (
         <>
           <InfoCard>
-            Add the qualifying items below — the cheapest one is <strong>free</strong> (per the
-            promo's configured discount ladder).
+            {t("buyNGetFreeInfo")}
           </InfoCard>
           {groups.map((g, i) => (
             <div key={g.id ?? i} className="mb-4">
               <div className="font-semibold text-gray-900 text-sm mb-2">
-                {g.label ?? `Item ${i + 1}`}
+                {g.label ?? t("itemLabel", { n: i + 1 })}
               </div>
               {renderGroupItems(g)}
             </div>
@@ -747,15 +754,14 @@ function PromoBody({
       return (
         <>
           <InfoCard>
-            Order the matching combo — one of the items below comes <strong>free</strong> with
-            the meal.
+            {t("freeDishMealInfo")}
           </InfoCard>
           {groups.map((g, i) => {
             const isFreeGroup = i === groups.length - 1;
             return (
               <div key={g.id ?? i} className="mb-4">
                 <div className="font-semibold text-gray-900 text-sm mb-2">
-                  {g.label ?? `Item ${i + 1}`}{" "}
+                  {g.label ?? t("itemLabel", { n: i + 1 })}{" "}
                   {isFreeGroup && (
                     <span
                       className="text-[10px] font-bold px-2 py-0.5 rounded-full ml-1"
@@ -782,12 +788,12 @@ function PromoBody({
       return (
         <>
           <InfoCard>
-            Add ONE item from each of the groups below to save <strong>{value}</strong>.
+            {t("comboInfo", { value })}
           </InfoCard>
           {groups.map((g, i) => (
             <div key={g.id ?? i} className="mb-4">
               <div className="font-semibold text-gray-900 text-sm mb-2">
-                {g.label ?? `Item ${i + 1}`}
+                {g.label ?? t("itemLabel", { n: i + 1 })}
               </div>
               {renderGroupItems(g)}
             </div>
@@ -799,7 +805,7 @@ function PromoBody({
     default:
       return (
         <InfoCard>
-          {promo.description ?? "Check the menu — eligible items will trigger this promo automatically."}
+          {promo.description ?? t("defaultPromoInfo")}
         </InfoCard>
       );
   }

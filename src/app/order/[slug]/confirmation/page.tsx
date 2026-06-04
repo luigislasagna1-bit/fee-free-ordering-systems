@@ -4,6 +4,7 @@ import { formatCurrency, formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { CheckCircle, Clock, MapPin, ArrowRight } from "lucide-react";
 import { OrderPlacedTracker } from "@/components/order/OrderPlacedTracker";
+import { getTranslations } from "next-intl/server";
 
 export default async function ConfirmationPage({
   params,
@@ -12,6 +13,7 @@ export default async function ConfirmationPage({
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ orderId?: string }>;
 }) {
+  const t = await getTranslations("customer.confirmation");
   const { slug } = await params;
   const { orderId } = await searchParams;
   if (!orderId) notFound();
@@ -38,13 +40,13 @@ export default async function ConfirmationPage({
           <CheckCircle className="w-10 h-10 text-green-500" />
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Order Placed!</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t("orderPlaced")}</h1>
         <p className="text-gray-500 mb-6">
-          Your order has been received and is waiting for confirmation from {order.restaurant.name}.
+          {t("orderReceivedWaiting", { restaurantName: order.restaurant.name })}
         </p>
 
         <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6">
-          <div className="text-sm text-gray-600 mb-1">Order Number</div>
+          <div className="text-sm text-gray-600 mb-1">{t("orderNumber")}</div>
           <div className="text-2xl font-bold text-emerald-500">{order.orderNumber}</div>
         </div>
 
@@ -52,7 +54,7 @@ export default async function ConfirmationPage({
           <div className="flex items-center gap-3 text-sm">
             <Clock className="w-5 h-5 text-gray-400" />
             <span className="text-gray-600">
-              Estimated {order.type}: {order.type === "pickup" ? order.restaurant.estimatedPickup : order.restaurant.estimatedDelivery} min
+              {t("estimatedTime", { type: order.type, minutes: order.type === "pickup" ? order.restaurant.estimatedPickup : order.restaurant.estimatedDelivery })}
             </span>
           </div>
           {order.type === "delivery" && order.deliveryAddress && (
@@ -65,7 +67,7 @@ export default async function ConfirmationPage({
 
         {/* Order items */}
         <div className="border border-gray-100 rounded-xl p-4 mb-6 text-left">
-          <div className="text-sm font-semibold text-gray-700 mb-3">Order Summary</div>
+          <div className="text-sm font-semibold text-gray-700 mb-3">{t("orderSummary")}</div>
           <div className="space-y-2">
             {order.items.map((item) => {
               const bundle = Array.isArray((item as any).bundleItems)
@@ -114,7 +116,7 @@ export default async function ConfirmationPage({
                     <div className="flex items-center gap-2 mb-2">
                       <span aria-hidden>🎉</span>
                       <div className="text-sm font-bold text-emerald-800">
-                        Promos applied
+                        {t("promosApplied")}
                       </div>
                     </div>
                     <div className="space-y-1">
@@ -130,7 +132,7 @@ export default async function ConfirmationPage({
                             )}
                           </div>
                           <div className="font-semibold text-emerald-800 whitespace-nowrap ml-2">
-                            {p.discount > 0 ? `− ${formatCurrency(p.discount)}` : "FREE"}
+                            {p.discount > 0 ? `− ${formatCurrency(p.discount)}` : t("free")}
                           </div>
                         </div>
                       ))}
@@ -159,23 +161,23 @@ export default async function ConfirmationPage({
             const isDelivery = (order as any).type === "delivery";
             return (
               <div className="border-t border-gray-100 mt-3 pt-3 space-y-1 text-sm">
-                <div className="flex justify-between text-gray-600"><span>Subtotal</span><span>{formatCurrency(order.subtotal)}</span></div>
+                <div className="flex justify-between text-gray-600"><span>{t("subtotal")}</span><span>{formatCurrency(order.subtotal)}</span></div>
                 {cartDiscountTotal > 0 && (
                   <div className="flex justify-between text-emerald-700 font-medium">
-                    <span>Promo discount</span>
+                    <span>{t("promoDiscount")}</span>
                     <span>− {formatCurrency(cartDiscountTotal)}</span>
                   </div>
                 )}
                 {isDelivery && (
                   <div className="flex justify-between text-gray-600">
-                    <span>Delivery</span>
+                    <span>{t("delivery")}</span>
                     <span>
                       {savedDeliveryFee > 0 ? (
                         <>
                           <span className="line-through text-gray-400 mr-1.5">
                             {formatCurrency(savedDeliveryFee)}
                           </span>
-                          <span className="text-emerald-600 font-semibold">FREE</span>
+                          <span className="text-emerald-600 font-semibold">{t("free")}</span>
                         </>
                       ) : (
                         formatCurrency(order.deliveryFee)
@@ -183,8 +185,8 @@ export default async function ConfirmationPage({
                     </span>
                   </div>
                 )}
-                {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>Tax</span><span>{formatCurrency(order.taxAmount)}</span></div>}
-                <div className="flex justify-between font-bold text-gray-900"><span>Total</span><span>{formatCurrency(order.total)}</span></div>
+                {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>{t("tax")}</span><span>{formatCurrency(order.taxAmount)}</span></div>}
+                <div className="flex justify-between font-bold text-gray-900"><span>{t("total")}</span><span>{formatCurrency(order.total)}</span></div>
               </div>
             );
           })()}
@@ -195,18 +197,18 @@ export default async function ConfirmationPage({
             href={`/order/${slug}/status/${order.id}`}
             className="flex items-center justify-center gap-2 bg-emerald-500 text-white font-semibold py-3 rounded-xl hover:bg-emerald-600 transition"
           >
-            Track Order Status <ArrowRight className="w-4 h-4" />
+            {t("trackOrderStatus")} <ArrowRight className="w-4 h-4" />
           </Link>
           {/* Send marketplace customers back to the grid (where they were
               browsing). Direct-customers get the restaurant-menu link as
               before. Same logic as the status page. */}
           {order.viaMarketplace ? (
             <Link href="/" className="text-gray-500 text-sm hover:text-gray-700 transition">
-              ← Browse other restaurants
+              {t("browseOtherRestaurants")}
             </Link>
           ) : (
             <Link href={`/order/${slug}`} className="text-gray-500 text-sm hover:text-gray-700 transition">
-              Place another order
+              {t("placeAnotherOrder")}
             </Link>
           )}
         </div>
