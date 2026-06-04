@@ -217,6 +217,12 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
 
   const isRejected = order.status === "rejected" || order.status === "cancelled";
   const isTerminal = isRejected || order.status === "completed";
+  // A SCHEDULED order (customer picked a future time) should show that time —
+  // not a "ready in ~20 min" prep countdown, which is meaningless for an order
+  // placed for next week (reseller report). Once the scheduled time passes we
+  // fall back to the normal countdown/ready logic. nowTick keeps it reactive.
+  const scheduledForFuture =
+    !!order.scheduledFor && new Date(order.scheduledFor).getTime() > nowTick;
   // Format every price label on this status page in the restaurant's
   // chosen currency. Falls back to USD if the column is unset (legacy
   // rows pre-currency-column).
@@ -456,7 +462,19 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                       kitchen's confirmed promise. Acceptance overwrites
                       estimatedReady server-side so the countdown stays
                       precise. */}
-              {order.estimatedReady && (order.status === "pending" || order.status === "accepted") && (() => {
+              {/* Scheduled order → show the chosen date/time, not a prep countdown. */}
+              {scheduledForFuture && (order.status === "pending" || order.status === "accepted") && (
+                <div className="mt-6 rounded-xl p-4 text-center border bg-emerald-50 border-emerald-200">
+                  <div className="text-2xl font-bold text-emerald-700">
+                    {new Date(order.scheduledFor).toLocaleString(undefined, {
+                      weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+                      ...(order.restaurant?.timezone ? { timeZone: order.restaurant.timezone } : {}),
+                    })}
+                  </div>
+                  <div className="text-xs mt-0.5 text-emerald-700/70">{t("scheduledTitle")}</div>
+                </div>
+              )}
+              {!scheduledForFuture && order.estimatedReady && (order.status === "pending" || order.status === "accepted") && (() => {
                 const target = new Date(order.estimatedReady).getTime();
                 const msLeft = target - nowTick;
                 const minLeft = Math.max(1, Math.round(msLeft / 60000));

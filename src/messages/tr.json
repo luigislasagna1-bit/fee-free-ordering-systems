@@ -3886,7 +3886,8 @@
       "total": "Toplam",
       "trackOrderStatus": "Sipariş Durumunu Takip Et",
       "browseOtherRestaurants": "← Diğer restoranlara göz at",
-      "placeAnotherOrder": "Yeni sipariş ver"
+      "placeAnotherOrder": "Yeni sipariş ver",
+      "scheduledFor": "{time} için planlandı"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API anahtarı eksik — Admin → Harita Ayarları bölümünden ekleyin.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Evet, iptal et",
       "orderNotFound": "Sipariş bulunamadı",
       "orderNumber": "Sipariş #{number}",
-      "myOrder": "Siparişim"
+      "myOrder": "Siparişim",
+      "scheduledTitle": "Planlanmış sipariş"
     },
     "payment": {
       "paymentFailed": "Ödeme başarısız",

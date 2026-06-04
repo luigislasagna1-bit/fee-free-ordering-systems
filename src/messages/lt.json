@@ -3886,7 +3886,8 @@
       "total": "Iš viso",
       "trackOrderStatus": "Sekti užsakymo būseną",
       "browseOtherRestaurants": "← Naršyti kitus restoranus",
-      "placeAnotherOrder": "Pateikti kitą užsakymą"
+      "placeAnotherOrder": "Pateikti kitą užsakymą",
+      "scheduledFor": "Suplanuota {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Trūksta Google Maps API rakto — nustatykite jį Administravimas → Žemėlapio nustatymai.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Taip, atšaukti",
       "orderNotFound": "Užsakymas nerastas",
       "orderNumber": "Užsakymas #{number}",
-      "myOrder": "Mano užsakymas"
+      "myOrder": "Mano užsakymas",
+      "scheduledTitle": "Suplanuotas užsakymas"
     },
     "payment": {
       "paymentFailed": "Mokėjimas nepavyko",

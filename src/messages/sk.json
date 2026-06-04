@@ -3886,7 +3886,8 @@
       "total": "Celkom",
       "trackOrderStatus": "Sledovať stav objednávky",
       "browseOtherRestaurants": "← Prezerať iné reštaurácie",
-      "placeAnotherOrder": "Zadať ďalšiu objednávku"
+      "placeAnotherOrder": "Zadať ďalšiu objednávku",
+      "scheduledFor": "Naplánované na {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Chýba kľúč Google Maps API — nastavte ho v Administrácii → Nastavenia mapy.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Áno, zrušiť",
       "orderNotFound": "Objednávka sa nenašla",
       "orderNumber": "Objednávka č. {number}",
-      "myOrder": "Moja objednávka"
+      "myOrder": "Moja objednávka",
+      "scheduledTitle": "Naplánovaná objednávka"
     },
     "payment": {
       "paymentFailed": "Platba zlyhala",

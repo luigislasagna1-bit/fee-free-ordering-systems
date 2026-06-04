@@ -3886,7 +3886,8 @@
       "total": "Tổng cộng",
       "trackOrderStatus": "Theo dõi trạng thái đơn hàng",
       "browseOtherRestaurants": "← Xem nhà hàng khác",
-      "placeAnotherOrder": "Đặt thêm đơn hàng"
+      "placeAnotherOrder": "Đặt thêm đơn hàng",
+      "scheduledFor": "Đã lên lịch cho {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Thiếu API key Google Maps — hãy cài đặt trong Quản trị → Cài đặt bản đồ.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Đồng ý, huỷ",
       "orderNotFound": "Không tìm thấy đơn hàng",
       "orderNumber": "Đơn #{number}",
-      "myOrder": "Đơn hàng của tôi"
+      "myOrder": "Đơn hàng của tôi",
+      "scheduledTitle": "Đơn hàng đã đặt lịch"
     },
     "payment": {
       "paymentFailed": "Thanh toán thất bại",

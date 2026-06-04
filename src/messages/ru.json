@@ -3886,7 +3886,8 @@
       "total": "Итого",
       "trackOrderStatus": "Отследить статус заказа",
       "browseOtherRestaurants": "← Другие рестораны",
-      "placeAnotherOrder": "Сделать ещё один заказ"
+      "placeAnotherOrder": "Сделать ещё один заказ",
+      "scheduledFor": "Запланировано на {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Отсутствует ключ API Google Maps — укажите его в Администрирование → Настройки карты.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Да, отменить",
       "orderNotFound": "Заказ не найден",
       "orderNumber": "Заказ #{number}",
-      "myOrder": "Мой заказ"
+      "myOrder": "Мой заказ",
+      "scheduledTitle": "Запланированный заказ"
     },
     "payment": {
       "paymentFailed": "Ошибка оплаты",

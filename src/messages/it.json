@@ -3886,7 +3886,8 @@
       "total": "Totale",
       "trackOrderStatus": "Traccia lo stato dell'ordine",
       "browseOtherRestaurants": "← Sfoglia altri ristoranti",
-      "placeAnotherOrder": "Effettua un altro ordine"
+      "placeAnotherOrder": "Effettua un altro ordine",
+      "scheduledFor": "Programmato per {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Chiave API Google Maps mancante — impostala in Admin → Impostazioni mappa.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Sì, annulla",
       "orderNotFound": "Ordine non trovato",
       "orderNumber": "Ordine #{number}",
-      "myOrder": "Il mio ordine"
+      "myOrder": "Il mio ordine",
+      "scheduledTitle": "Ordine programmato"
     },
     "payment": {
       "paymentFailed": "Pagamento non riuscito",

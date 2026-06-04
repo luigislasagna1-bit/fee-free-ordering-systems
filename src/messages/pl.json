@@ -3886,7 +3886,8 @@
       "total": "Razem",
       "trackOrderStatus": "Śledź status zamówienia",
       "browseOtherRestaurants": "← Przeglądaj inne restauracje",
-      "placeAnotherOrder": "Złóż kolejne zamówienie"
+      "placeAnotherOrder": "Złóż kolejne zamówienie",
+      "scheduledFor": "Zaplanowane na {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Brak klucza API Google Maps — ustaw go w Panelu → Ustawienia mapy.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Tak, anuluj",
       "orderNotFound": "Nie znaleziono zamówienia",
       "orderNumber": "Zamówienie #{number}",
-      "myOrder": "Moje zamówienie"
+      "myOrder": "Moje zamówienie",
+      "scheduledTitle": "Zamówienie zaplanowane"
     },
     "payment": {
       "paymentFailed": "Płatność nie powiodła się",

@@ -3886,7 +3886,8 @@
       "total": "कुल",
       "trackOrderStatus": "ऑर्डर स्थिति ट्रैक करें",
       "browseOtherRestaurants": "← अन्य रेस्तरां देखें",
-      "placeAnotherOrder": "एक और ऑर्डर दें"
+      "placeAnotherOrder": "एक और ऑर्डर दें",
+      "scheduledFor": "{time} के लिए निर्धारित"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API कुंजी नहीं मिली — इसे Admin → Map Settings में सेट करें।",
@@ -4023,7 +4024,8 @@
       "yesCancel": "हाँ, रद्द करें",
       "orderNotFound": "ऑर्डर नहीं मिला",
       "orderNumber": "ऑर्डर #{number}",
-      "myOrder": "मेरा ऑर्डर"
+      "myOrder": "मेरा ऑर्डर",
+      "scheduledTitle": "निर्धारित ऑर्डर"
     },
     "payment": {
       "paymentFailed": "भुगतान विफल रहा",

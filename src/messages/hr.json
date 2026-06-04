@@ -3886,7 +3886,8 @@
       "total": "Ukupno",
       "trackOrderStatus": "Prati status narudžbe",
       "browseOtherRestaurants": "← Pregledaj ostale restorane",
-      "placeAnotherOrder": "Naruči još jednom"
+      "placeAnotherOrder": "Naruči još jednom",
+      "scheduledFor": "Zakazano za {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Nedostaje API ključ za Google Maps — postavite ga u Admin → Postavke karte.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Da, otkaži",
       "orderNotFound": "Narudžba nije pronađena",
       "orderNumber": "Narudžba #{number}",
-      "myOrder": "Moja narudžba"
+      "myOrder": "Moja narudžba",
+      "scheduledTitle": "Zakazana narudžba"
     },
     "payment": {
       "paymentFailed": "Plaćanje nije uspjelo",

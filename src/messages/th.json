@@ -3886,7 +3886,8 @@
       "total": "รวมทั้งหมด",
       "trackOrderStatus": "ติดตามสถานะคำสั่งซื้อ",
       "browseOtherRestaurants": "← ดูร้านอาหารอื่น",
-      "placeAnotherOrder": "สั่งอาหารอีกครั้ง"
+      "placeAnotherOrder": "สั่งอาหารอีกครั้ง",
+      "scheduledFor": "กำหนดเวลาสำหรับ {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "ไม่พบ Google Maps API key — ตั้งค่าได้ที่ Admin → ตั้งค่าแผนที่",
@@ -4023,7 +4024,8 @@
       "yesCancel": "ยืนยันการยกเลิก",
       "orderNotFound": "ไม่พบคำสั่งซื้อ",
       "orderNumber": "คำสั่งซื้อ #{number}",
-      "myOrder": "คำสั่งซื้อของฉัน"
+      "myOrder": "คำสั่งซื้อของฉัน",
+      "scheduledTitle": "คำสั่งซื้อที่กำหนดเวลาไว้"
     },
     "payment": {
       "paymentFailed": "การชำระเงินล้มเหลว",

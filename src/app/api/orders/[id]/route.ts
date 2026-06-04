@@ -61,6 +61,9 @@ const PUBLIC_ORDER_SELECT = {
       address: true, city: true, state: true, zip: true,
       estimatedPickup: true, estimatedDelivery: true,
       kitchenWorkflowMode: true,
+      // Timezone so the status page renders a scheduled order's date/time in
+      // the restaurant's local clock, not the viewer's browser zone.
+      timezone: true,
       // Surface the restaurant's chosen currency so the customer
       // status page formats $/€/£ to match what they paid in. Without
       // this, a European customer who paid €20 would see "$20.00" on

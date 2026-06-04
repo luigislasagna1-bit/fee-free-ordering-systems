@@ -3886,7 +3886,8 @@
       "total": "Total",
       "trackOrderStatus": "Seguir l'estat de la comanda",
       "browseOtherRestaurants": "← Veure altres restaurants",
-      "placeAnotherOrder": "Fer una altra comanda"
+      "placeAnotherOrder": "Fer una altra comanda",
+      "scheduledFor": "Programada per a {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Falta la clau de l'API de Google Maps — configura-la a Admin → Configuració del mapa.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Sí, cancel·lar",
       "orderNotFound": "Comanda no trobada",
       "orderNumber": "Comanda #{number}",
-      "myOrder": "La meva comanda"
+      "myOrder": "La meva comanda",
+      "scheduledTitle": "Comanda programada"
     },
     "payment": {
       "paymentFailed": "El pagament ha fallat",

@@ -3886,7 +3886,8 @@
       "total": "Total",
       "trackOrderStatus": "Urmărește statusul comenzii",
       "browseOtherRestaurants": "← Explorează alte restaurante",
-      "placeAnotherOrder": "Plasează o altă comandă"
+      "placeAnotherOrder": "Plasează o altă comandă",
+      "scheduledFor": "Programat pentru {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Cheia API Google Maps lipsește — setați-o în Admin → Setări hartă.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Da, anulează",
       "orderNotFound": "Comanda nu a fost găsită",
       "orderNumber": "Comanda #{number}",
-      "myOrder": "Comanda mea"
+      "myOrder": "Comanda mea",
+      "scheduledTitle": "Comandă programată"
     },
     "payment": {
       "paymentFailed": "Plata a eșuat",

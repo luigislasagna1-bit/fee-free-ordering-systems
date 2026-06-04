@@ -3886,7 +3886,8 @@
       "total": "Yhteensä",
       "trackOrderStatus": "Seuraa tilauksen tilaa",
       "browseOtherRestaurants": "← Selaa muita ravintoloita",
-      "placeAnotherOrder": "Tee uusi tilaus"
+      "placeAnotherOrder": "Tee uusi tilaus",
+      "scheduledFor": "Ajoitettu: {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-avain puuttuu — aseta se Hallintapaneelissa → Karttojen asetukset.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Kyllä, peruuta",
       "orderNotFound": "Tilausta ei löydy",
       "orderNumber": "Tilaus #{number}",
-      "myOrder": "Tilaukseni"
+      "myOrder": "Tilaukseni",
+      "scheduledTitle": "Ajoitettu tilaus"
     },
     "payment": {
       "paymentFailed": "Maksu epäonnistui",

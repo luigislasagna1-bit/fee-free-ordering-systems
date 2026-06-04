@@ -3886,7 +3886,8 @@
       "total": "Kokku",
       "trackOrderStatus": "Jälgi tellimuse olekut",
       "browseOtherRestaurants": "← Sirvi teisi restorane",
-      "placeAnotherOrder": "Esita uus tellimus"
+      "placeAnotherOrder": "Esita uus tellimus",
+      "scheduledFor": "Ajastatud kellaajaks {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Mapsi API võti puudub — seadista see Admin → Kaardi seaded.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Jah, tühista",
       "orderNotFound": "Tellimust ei leitud",
       "orderNumber": "Tellimus #{number}",
-      "myOrder": "Minu tellimus"
+      "myOrder": "Minu tellimus",
+      "scheduledTitle": "Ajastatud tellimus"
     },
     "payment": {
       "paymentFailed": "Makse ebaõnnestus",

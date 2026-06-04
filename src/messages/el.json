@@ -3886,7 +3886,8 @@
       "total": "Σύνολο",
       "trackOrderStatus": "Παρακολούθηση κατάστασης παραγγελίας",
       "browseOtherRestaurants": "← Περιήγηση σε άλλα εστιατόρια",
-      "placeAnotherOrder": "Νέα παραγγελία"
+      "placeAnotherOrder": "Νέα παραγγελία",
+      "scheduledFor": "Προγραμματισμένο για {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Λείπει το κλειδί Google Maps API — ορίστε το στο Admin → Ρυθμίσεις χάρτη.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Ναι, ακύρωση",
       "orderNotFound": "Η παραγγελία δεν βρέθηκε",
       "orderNumber": "Παραγγελία #{number}",
-      "myOrder": "Η παραγγελία μου"
+      "myOrder": "Η παραγγελία μου",
+      "scheduledTitle": "Προγραμματισμένη παραγγελία"
     },
     "payment": {
       "paymentFailed": "Η πληρωμή απέτυχε",

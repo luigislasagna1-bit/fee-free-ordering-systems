@@ -3886,7 +3886,8 @@
       "total": "Разом",
       "trackOrderStatus": "Відстежити статус замовлення",
       "browseOtherRestaurants": "← Переглянути інші ресторани",
-      "placeAnotherOrder": "Зробити ще одне замовлення"
+      "placeAnotherOrder": "Зробити ще одне замовлення",
+      "scheduledFor": "Заплановано на {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Відсутній ключ Google Maps API — вкажіть його в Адмін → Налаштування карти.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Так, скасувати",
       "orderNotFound": "Замовлення не знайдено",
       "orderNumber": "Замовлення #{number}",
-      "myOrder": "Моє замовлення"
+      "myOrder": "Моє замовлення",
+      "scheduledTitle": "Заплановане замовлення"
     },
     "payment": {
       "paymentFailed": "Помилка оплати",

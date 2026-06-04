@@ -3886,7 +3886,8 @@
       "total": "合計",
       "trackOrderStatus": "注文状況を確認する",
       "browseOtherRestaurants": "← 他のレストランを見る",
-      "placeAnotherOrder": "続けて注文する"
+      "placeAnotherOrder": "続けて注文する",
+      "scheduledFor": "{time} にご予約"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps APIキーがありません。管理画面 → マップ設定で設定してください。",
@@ -4023,7 +4024,8 @@
       "yesCancel": "はい、キャンセルします",
       "orderNotFound": "注文が見つかりません",
       "orderNumber": "注文 #{number}",
-      "myOrder": "マイオーダー"
+      "myOrder": "マイオーダー",
+      "scheduledTitle": "予約注文"
     },
     "payment": {
       "paymentFailed": "お支払いに失敗しました",

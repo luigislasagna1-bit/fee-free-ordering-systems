@@ -3886,7 +3886,8 @@
       "total": "الإجمالي",
       "trackOrderStatus": "تتبع حالة الطلب",
       "browseOtherRestaurants": "← تصفح مطاعم أخرى",
-      "placeAnotherOrder": "قدّم طلباً آخر"
+      "placeAnotherOrder": "قدّم طلباً آخر",
+      "scheduledFor": "مجدوَل لـ {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "مفتاح Google Maps API مفقود — قم بتعيينه في الإدارة ← إعدادات الخريطة.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "نعم، ألغِ",
       "orderNotFound": "لم يُعثر على الطلب",
       "orderNumber": "الطلب #{number}",
-      "myOrder": "طلبي"
+      "myOrder": "طلبي",
+      "scheduledTitle": "طلب مجدوَل"
     },
     "payment": {
       "paymentFailed": "فشل الدفع",

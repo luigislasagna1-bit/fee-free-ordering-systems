@@ -3886,7 +3886,8 @@
       "total": "סה\"כ",
       "trackOrderStatus": "עקוב אחר סטטוס ההזמנה",
       "browseOtherRestaurants": "← עיין במסעדות אחרות",
-      "placeAnotherOrder": "בצע הזמנה נוספת"
+      "placeAnotherOrder": "בצע הזמנה נוספת",
+      "scheduledFor": "מתוזמן לשעה {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "מפתח Google Maps API חסר — הגדר אותו בניהול → הגדרות מפה.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "כן, בטל",
       "orderNotFound": "ההזמנה לא נמצאה",
       "orderNumber": "הזמנה #{number}",
-      "myOrder": "ההזמנה שלי"
+      "myOrder": "ההזמנה שלי",
+      "scheduledTitle": "הזמנה מתוזמנת"
     },
     "payment": {
       "paymentFailed": "התשלום נכשל",

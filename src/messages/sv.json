@@ -3886,7 +3886,8 @@
       "total": "Totalt",
       "trackOrderStatus": "Följ orderstatus",
       "browseOtherRestaurants": "← Utforska andra restauranger",
-      "placeAnotherOrder": "Lägg en ny beställning"
+      "placeAnotherOrder": "Lägg en ny beställning",
+      "scheduledFor": "Schemalagd för {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-nyckel saknas — ange den i Admin → Kartinställningar.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Ja, avboka",
       "orderNotFound": "Beställningen hittades inte",
       "orderNumber": "Beställning #{number}",
-      "myOrder": "Min beställning"
+      "myOrder": "Min beställning",
+      "scheduledTitle": "Schemalagd beställning"
     },
     "payment": {
       "paymentFailed": "Betalningen misslyckades",

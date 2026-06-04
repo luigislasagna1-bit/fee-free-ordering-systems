@@ -54,7 +54,14 @@ export default async function ConfirmationPage({
           <div className="flex items-center gap-3 text-sm">
             <Clock className="w-5 h-5 text-gray-400" />
             <span className="text-gray-600">
-              {t("estimatedTime", { type: order.type, minutes: order.type === "pickup" ? order.restaurant.estimatedPickup : order.restaurant.estimatedDelivery })}
+              {order.scheduledFor && new Date(order.scheduledFor).getTime() > Date.now()
+                ? t("scheduledFor", {
+                    time: new Date(order.scheduledFor).toLocaleString(undefined, {
+                      weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+                      ...(order.restaurant.timezone ? { timeZone: order.restaurant.timezone } : {}),
+                    }),
+                  })
+                : t("estimatedTime", { type: order.type, minutes: order.type === "pickup" ? order.restaurant.estimatedPickup : order.restaurant.estimatedDelivery })}
             </span>
           </div>
           {order.type === "delivery" && order.deliveryAddress && (

@@ -3886,7 +3886,8 @@
       "total": "Kopā",
       "trackOrderStatus": "Sekot pasūtījuma statusam",
       "browseOtherRestaurants": "← Apskatīt citus restorānus",
-      "placeAnotherOrder": "Veikt vēl vienu pasūtījumu"
+      "placeAnotherOrder": "Veikt vēl vienu pasūtījumu",
+      "scheduledFor": "Ieplānots {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Trūkst Google Maps API atslēgas — iestatiet to Administrācija → Kartes iestatījumi.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Jā, atcelt",
       "orderNotFound": "Pasūtījums nav atrasts",
       "orderNumber": "Pasūtījums #{number}",
-      "myOrder": "Mans pasūtījums"
+      "myOrder": "Mans pasūtījums",
+      "scheduledTitle": "Ieplānots pasūtījums"
     },
     "payment": {
       "paymentFailed": "Maksājums neizdevās",

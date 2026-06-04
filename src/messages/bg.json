@@ -3886,7 +3886,8 @@
       "total": "Общо",
       "trackOrderStatus": "Проследи статуса на поръчката",
       "browseOtherRestaurants": "← Разгледай други ресторанти",
-      "placeAnotherOrder": "Направи нова поръчка"
+      "placeAnotherOrder": "Направи нова поръчка",
+      "scheduledFor": "Планирано за {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Липсва API ключ за Google Maps — задай го в Администрация → Настройки на картата.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Да, отмени",
       "orderNotFound": "Поръчката не е намерена",
       "orderNumber": "Поръчка №{number}",
-      "myOrder": "Моята поръчка"
+      "myOrder": "Моята поръчка",
+      "scheduledTitle": "Планирана поръчка"
     },
     "payment": {
       "paymentFailed": "Плащането не бе успешно",

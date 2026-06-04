@@ -3886,7 +3886,8 @@
       "total": "Total",
       "trackOrderStatus": "Lacak Status Pesanan",
       "browseOtherRestaurants": "← Jelajahi restoran lain",
-      "placeAnotherOrder": "Buat pesanan lagi"
+      "placeAnotherOrder": "Buat pesanan lagi",
+      "scheduledFor": "Dijadwalkan untuk {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "API key Google Maps tidak ada — atur di Admin → Pengaturan Peta.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Ya, batalkan",
       "orderNotFound": "Pesanan tidak ditemukan",
       "orderNumber": "Pesanan #{number}",
-      "myOrder": "Pesanan saya"
+      "myOrder": "Pesanan saya",
+      "scheduledTitle": "Pesanan terjadwal"
     },
     "payment": {
       "paymentFailed": "Pembayaran gagal",

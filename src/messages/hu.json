@@ -3886,7 +3886,8 @@
       "total": "Összesen",
       "trackOrderStatus": "Rendelés állapotának követése",
       "browseOtherRestaurants": "← Más éttermek böngészése",
-      "placeAnotherOrder": "Új rendelés leadása"
+      "placeAnotherOrder": "Új rendelés leadása",
+      "scheduledFor": "Időpontra ütemezve: {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Hiányzik a Google Maps API-kulcs – add meg az Admin → Térképbeállítások menüben.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Igen, mondom le",
       "orderNotFound": "A rendelés nem található",
       "orderNumber": "#{number}. rendelés",
-      "myOrder": "A rendelésedem"
+      "myOrder": "A rendelésedem",
+      "scheduledTitle": "Ütemezett rendelés"
     },
     "payment": {
       "paymentFailed": "Fizetés sikertelen",

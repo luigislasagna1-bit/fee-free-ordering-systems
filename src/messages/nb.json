@@ -3886,7 +3886,8 @@
       "total": "Totalt",
       "trackOrderStatus": "Følg bestillingsstatus",
       "browseOtherRestaurants": "← Se andre restauranter",
-      "placeAnotherOrder": "Legg inn en ny bestilling"
+      "placeAnotherOrder": "Legg inn en ny bestilling",
+      "scheduledFor": "Planlagt til {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-nøkkel mangler — angi den i Admin → Kartinnstillinger.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Ja, kanseller",
       "orderNotFound": "Bestilling ikke funnet",
       "orderNumber": "Bestilling #{number}",
-      "myOrder": "Min bestilling"
+      "myOrder": "Min bestilling",
+      "scheduledTitle": "Planlagt bestilling"
     },
     "payment": {
       "paymentFailed": "Betaling mislyktes",

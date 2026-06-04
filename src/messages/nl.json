@@ -3886,7 +3886,8 @@
       "total": "Totaal",
       "trackOrderStatus": "Bestelstatus volgen",
       "browseOtherRestaurants": "← Andere restaurants bekijken",
-      "placeAnotherOrder": "Nog een bestelling plaatsen"
+      "placeAnotherOrder": "Nog een bestelling plaatsen",
+      "scheduledFor": "Gepland voor {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-sleutel ontbreekt — stel deze in via Beheer → Kaartinstellingen.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Ja, annuleren",
       "orderNotFound": "Bestelling niet gevonden",
       "orderNumber": "Bestelling #{number}",
-      "myOrder": "Mijn bestelling"
+      "myOrder": "Mijn bestelling",
+      "scheduledTitle": "Geplande bestelling"
     },
     "payment": {
       "paymentFailed": "Betaling mislukt",

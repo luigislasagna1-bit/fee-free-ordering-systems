@@ -3886,7 +3886,8 @@
       "total": "Total",
       "trackOrderStatus": "Track Order Status",
       "browseOtherRestaurants": "← Browse other restaurants",
-      "placeAnotherOrder": "Place another order"
+      "placeAnotherOrder": "Place another order",
+      "scheduledFor": "Scheduled for {time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API key missing — set it in Admin → Map Settings.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "Yes, cancel",
       "orderNotFound": "Order not found",
       "orderNumber": "Order #{number}",
-      "myOrder": "My order"
+      "myOrder": "My order",
+      "scheduledTitle": "Scheduled order"
     },
     "payment": {
       "paymentFailed": "Payment failed",

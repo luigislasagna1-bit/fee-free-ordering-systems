@@ -3886,7 +3886,8 @@
       "total": "합계",
       "trackOrderStatus": "주문 상태 추적",
       "browseOtherRestaurants": "← 다른 식당 둘러보기",
-      "placeAnotherOrder": "다시 주문하기"
+      "placeAnotherOrder": "다시 주문하기",
+      "scheduledFor": "{time}에 예약됨"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API 키가 없습니다 — 관리자 → 지도 설정에서 등록해 주세요.",
@@ -4023,7 +4024,8 @@
       "yesCancel": "네, 취소합니다",
       "orderNotFound": "주문을 찾을 수 없습니다",
       "orderNumber": "주문 #{number}",
-      "myOrder": "내 주문"
+      "myOrder": "내 주문",
+      "scheduledTitle": "예약 주문"
     },
     "payment": {
       "paymentFailed": "결제 실패",

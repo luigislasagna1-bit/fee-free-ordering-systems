@@ -3886,7 +3886,8 @@
       "total": "合计",
       "trackOrderStatus": "追踪订单状态",
       "browseOtherRestaurants": "← 浏览其他餐厅",
-      "placeAnotherOrder": "再下一单"
+      "placeAnotherOrder": "再下一单",
+      "scheduledFor": "预约时间：{time}"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "缺少 Google Maps API 密钥——请在管理后台 → 地图设置中配置。",
@@ -4023,7 +4024,8 @@
       "yesCancel": "是的，取消",
       "orderNotFound": "未找到订单",
       "orderNumber": "订单 #{number}",
-      "myOrder": "我的订单"
+      "myOrder": "我的订单",
+      "scheduledTitle": "预约订单"
     },
     "payment": {
       "paymentFailed": "支付失败",
