@@ -27,7 +27,6 @@ export async function generateMetadata(
 }
 import { VisitTracker } from "@/components/order/VisitTracker";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
-import { stripeReady, getPublishableKey } from "@/lib/stripe";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { holidayNameForToday } from "@/lib/restaurant-hours";
@@ -252,34 +251,36 @@ export default async function OrderingPage({
     menuCategories: typeof menuCategories;
   };
 
-  // Card payments require THREE things to all be true:
-  //   1. The platform has Stripe configured (PlatformSettings, see stripeReady())
-  //   2. THIS restaurant has Stripe Connect onboarded with charges enabled
-  //   3. THIS restaurant has the card_payments entitlement (via Online Payments
-  //      add-on subscription in /admin/billing/add-ons)
-  // The legacy PaymentProvider table is intentionally ignored — it predates
-  // the entitlement model and we don't populate it for new restaurants.
-  const [platformReady, hasCardPayments] = await Promise.all([
-    stripeReady(),
+  // Card payments (KEY-ONLY model) require BOTH:
+  //   1. THIS restaurant has saved active Stripe API keys (PaymentProvider)
+  //      via Settings → Payments — i.e. their own publishable + secret key.
+  //   2. THIS restaurant has the card_payments entitlement (via Online
+  //      Payments add-on subscription in /admin/billing/add-ons).
+  // The old Stripe Connect path (stripeAccountId / stripeChargesEnabled /
+  // platform stripeReady) is gone — restaurants connect with their own keys.
+  const [provider, hasCardPayments] = await Promise.all([
+    prisma.paymentProvider.findUnique({
+      where: { restaurantId: restaurant.id },
+      select: { isActive: true, publishableKey: true },
+    }),
     hasFeature(restaurant.id, "card_payments"),
   ]);
-  const connectReady = !!(
-    (restaurant as any).stripeAccountId && (restaurant as any).stripeChargesEnabled
-  );
-  const cardPaymentEnabled = platformReady && connectReady && hasCardPayments;
+  const providerReady = !!(provider?.isActive && provider.publishableKey);
+  const cardPaymentEnabled = providerReady && hasCardPayments;
 
   // PayPal mirrors the card-payments gate but uses the per-restaurant
-  // PayPal connection instead of platform Stripe + restaurant Connect.
-  // Shares the `card_payments` entitlement so restaurants paying for
-  // Online Payments get both processors for the same subscription.
+  // PayPal connection. Shares the `card_payments` entitlement so
+  // restaurants paying for Online Payments get both processors for the
+  // same subscription.
   const paypalEnabled =
     (restaurant as any).paypalAccountStatus === "connected" && hasCardPayments;
 
-  // Pull the PLATFORM publishable key — destination-charge model means the
-  // platform's key (not the restaurant's) is what the Stripe Elements
-  // confirms the PaymentIntent with.
+  // The restaurant's OWN publishable key (key-only model). The actual
+  // per-order PaymentIntent + matching publishable key come back from
+  // /api/public/payment-intent at checkout time; this prop is kept for any
+  // UI that needs to know a key is present.
   const stripePublishableKey = cardPaymentEnabled
-    ? await getPublishableKey().catch(() => null)
+    ? provider?.publishableKey ?? null
     : null;
 
   // Resolve effective locale: cookie override → restaurant default → "en".

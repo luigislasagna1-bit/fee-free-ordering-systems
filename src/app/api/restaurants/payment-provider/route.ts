@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { encrypt, decrypt } from "@/lib/encrypt";
+import { resetRestaurantStripeCache } from "@/lib/stripe";
 
 function maskKey(key: string): string {
   if (!key || key.length < 8) return key;
@@ -94,6 +95,10 @@ export async function PUT(req: NextRequest) {
     update: data,
     create: { restaurantId, ...data },
   });
+
+  // Drop the cached per-restaurant Stripe client so the very next charge
+  // picks up the new key(s) instead of a stale 60s-cached client.
+  resetRestaurantStripeCache(restaurantId);
 
   return NextResponse.json({
     success: true,

@@ -12,16 +12,19 @@
 
 import prisma from "@/lib/db";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
-import { refundDirectPayment, stripeReady, voidPayment } from "@/lib/stripe";
+import { refundDirectPayment, voidPayment } from "@/lib/stripe";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 
 /** Minutes a regular pending order can sit before we auto-reject.
- *  Matches the kitchen-display visual countdown (3 min) so the bell
- *  doesn't keep ringing past the URGENT cue. The KitchenDisplay client
- *  also triggers an instant reject the moment the countdown elapses,
- *  but this cron is the safety net for when the tablet is offline /
- *  not loaded. Tunable via AUTO_REJECT_TIMEOUT_MINUTES env. */
-const DEFAULT_TIMEOUT_MINUTES = 3;
+ *  Matches the kitchen-display visual countdown (4 min) so the bell —
+ *  including the full-length 4-minute GloriaFood alert — plays out for
+ *  the whole window instead of being cut short when the order is
+ *  rejected. The KitchenDisplay client also triggers an instant reject
+ *  the moment the countdown elapses, but this cron is the safety net for
+ *  when the tablet is offline / not loaded. MUST stay in sync with the
+ *  kitchen countdown (KitchenDisplay.tsx `totalMs`). Tunable via
+ *  AUTO_REJECT_TIMEOUT_MINUTES env. */
+const DEFAULT_TIMEOUT_MINUTES = 4;
 /** Closed-when-placed orders get a longer window — staff may be a few
  *  minutes late arriving after open, and the kitchen UI gives them
  *  15 min from alertAt before flashing URGENT. Keep auto-reject aligned. */
@@ -61,7 +64,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
   //
   // Two timeout buckets:
   //   • Regular orders (placedWhileClosed=false): cutoff = createdAt +
-  //     3 min, matching the kitchen UI's countdown.
+  //     4 min, matching the kitchen UI's countdown.
   //   • Closed-when-placed orders: cutoff = alertAt + 15 min. These sit
   //     parked in the queue until the restaurant opens; the 15-min
   //     window starts when alertAt fires, not when the order was placed.
@@ -171,12 +174,11 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
 
   if (candidates.length === 0) return result;
 
-  const stripeOk = await stripeReady();
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
 
   for (const order of candidates) {
     // Per-order reason: closed-placed orders saw a 15-min window from
-    // alertAt, regulars saw the (configurable) 3-min window. Customer
+    // alertAt, regulars saw the (configurable) 4-min window. Customer
     // sees this in the rejection email and on the status page.
     const orderTimeout = order.placedWhileClosed ? CLOSED_PLACED_TIMEOUT_MINUTES : timeoutMinutes;
     const reasonText = `Auto-rejected: not accepted within ${orderTimeout} minutes.`;
@@ -212,11 +214,11 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       //
       // Cash and card_in_person orders never collected money, skip.
       const isCard =
-        order.paymentMethod === "card" && !!order.paymentIntentId && !!order.restaurant.stripeAccountId;
+        order.paymentMethod === "card" && !!order.paymentIntentId;
 
-      if (isCard && stripeOk) {
+      if (isCard) {
         const piId = order.paymentIntentId!;
-        const acctId = order.restaurant.stripeAccountId!;
+        const rId = order.restaurantId;
 
         if (order.paymentStatus === "authorized") {
           // Authorization only — release the hold. No charge, no fee,
@@ -224,7 +226,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
           try {
             await voidPayment({
               paymentIntentId: piId,
-              restaurantStripeAccountId: acctId,
+              restaurantId: rId,
             });
             await prisma.order.update({
               where: { id: order.id },
@@ -248,7 +250,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
             });
             await refundDirectPayment({
               paymentIntentId: piId,
-              restaurantStripeAccountId: acctId,
+              restaurantId: rId,
               reason: "requested_by_customer",
             });
             await prisma.order.update({
@@ -275,9 +277,6 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
             }
           }
         }
-      } else if (isCard && !stripeOk) {
-        result.refundFailed += 1;
-        result.errors.push({ orderId: order.id, reason: "Stripe not configured" });
       }
 
       // Customer notification. Fire-and-forget — never block the cron

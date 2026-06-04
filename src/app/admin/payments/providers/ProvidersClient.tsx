@@ -6,31 +6,38 @@ import {
   CreditCard, CheckCircle, XCircle, AlertCircle, Loader2,
   ExternalLink, Shield, Zap, Lock, HelpCircle, ChevronDown, ChevronUp,
 } from "lucide-react";
-import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 type RestaurantState = {
-  stripeAccountId: string | null;
-  stripeAccountStatus: string | null;
-  stripeChargesEnabled: boolean;
-  stripePayoutsEnabled: boolean;
   paypalAccountStatus: string | null;
   paypalEnvironment: string | null;
   paypalMerchantEmail: string | null;
 } | null;
 
+/** Non-secret view of the restaurant's own Stripe keys (key-only model). */
+type StripeState = {
+  mode: string;
+  publishableKey: string;
+  /** Whether a secret key is already stored (encrypted). We never send the
+   *  secret itself to the browser. */
+  hasSecret: boolean;
+  isActive: boolean;
+  lastTestedAt: string | null;
+  lastTestStatus: string | null;
+} | null;
+
 interface Props {
   restaurant: RestaurantState;
-  stripeConfigured: boolean;
+  /** The restaurant's own Stripe API-key state, or null if never saved. */
+  stripe: StripeState;
   /** True when the restaurant has subscribed to the Online Payments add-on
-   *  (i.e. has the `card_payments` feature). Required before connecting
-   *  Stripe is actually useful — without it, the /api/public/payment-intent
-   *  gate rejects card charges. */
+   *  (i.e. has the `card_payments` feature). Required before card payments
+   *  are actually useful — without it, the /api/public/payment-intent gate
+   *  rejects card charges. */
   hasOnlinePaymentsAddOn: boolean;
   /** True when "online_card" is currently in the restaurant's Accepted
    *  Methods. An owner can subscribe to the add-on but choose not to
-   *  surface online card payment to customers — Stripe onboarding shouldn't
-   *  feel mandatory in that case. */
+   *  surface online card payment to customers. */
   onlineCardEnabled: boolean;
   /** True when "paypal" is currently in the restaurant's Accepted Methods. */
   paypalEnabled: boolean;
@@ -38,22 +45,105 @@ interface Props {
 
 export function ProvidersClient({
   restaurant,
-  stripeConfigured,
+  stripe,
   hasOnlinePaymentsAddOn,
   onlineCardEnabled,
   paypalEnabled,
 }: Props) {
   const t = useTranslations("admin.paymentProviders");
-  const params = useSearchParams();
-  const justConnected = params.get("status") === "connected";
 
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const connected = !!restaurant?.stripeAccountId;
-  const charges = !!restaurant?.stripeChargesEnabled;
-  const payouts = !!restaurant?.stripePayoutsEnabled;
-  const status = restaurant?.stripeAccountStatus || "not_connected";
+  // ── Stripe key-only state ────────────────────────────────────────────────
+  const stripeActive = !!stripe?.isActive;
+  const [form, setForm] = useState({
+    mode: (stripe?.mode === "live" ? "live" : "test") as "test" | "live",
+    publishableKey: stripe?.publishableKey ?? "",
+    secretKey: "",
+  });
+  const [showStripeSecret, setShowStripeSecret] = useState(false);
+  const [savedMsg, setSavedMsg] = useState<string | null>(null);
+  const [testMsg, setTestMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [showStripeInstructions, setShowStripeInstructions] = useState(false);
+
+  const hasKeysReady = !!(form.publishableKey.trim() && (form.secretKey.trim() || stripe?.hasSecret));
+
+  async function saveKeys(activate?: boolean) {
+    if (!form.publishableKey.trim() || (!form.secretKey.trim() && !stripe?.hasSecret)) {
+      setError(t("errorKeysRequired"));
+      return;
+    }
+    setBusy("save-keys");
+    setError(null);
+    setSavedMsg(null);
+    try {
+      const body: Record<string, unknown> = {
+        mode: form.mode,
+        publishableKey: form.publishableKey.trim(),
+      };
+      if (form.secretKey.trim()) body.secretKey = form.secretKey.trim();
+      if (activate !== undefined) body.isActive = activate;
+      const res = await fetch("/api/restaurants/payment-provider", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || t("errorSaveFailed"));
+        return;
+      }
+      setSavedMsg(t("stripeKeySaved"));
+      // Clear the secret out of in-memory state — the server has it
+      // encrypted now and never echoes it back.
+      setForm((f) => ({ ...f, secretKey: "" }));
+      setTimeout(() => window.location.reload(), 700);
+    } catch {
+      setError(t("errorSaveFailed"));
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  async function testConnection() {
+    setBusy("test-keys");
+    setTestMsg(null);
+    setError(null);
+    try {
+      const res = await fetch("/api/restaurants/payment-provider/test", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) {
+        setTestMsg({ ok: false, text: data.error || t("stripeKeyTestFailed") });
+        return;
+      }
+      setTestMsg({ ok: true, text: t("stripeKeyTestOk") });
+    } catch {
+      setTestMsg({ ok: false, text: t("stripeKeyTestFailed") });
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  async function toggleActive(next: boolean) {
+    setBusy("toggle-active");
+    setError(null);
+    try {
+      const res = await fetch("/api/restaurants/payment-provider", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isActive: next }),
+      });
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        setError(d.error || t("errorSaveFailed"));
+        return;
+      }
+      window.location.reload();
+    } finally {
+      setBusy(null);
+    }
+  }
 
   // ── PayPal state ────────────────────────────────────────────────────────
   const paypalConnected = restaurant?.paypalAccountStatus === "connected";
@@ -120,56 +210,6 @@ export function ProvidersClient({
     }
   }
 
-  async function startOnboarding() {
-    setBusy("onboard");
-    setError(null);
-    try {
-      const res = await fetch("/api/stripe/connect", { method: "POST" });
-      const data = await res.json();
-      if (!res.ok || !data.url) {
-        setError(data.error || t("errorCouldNotStartOnboarding"));
-        return;
-      }
-      window.location.href = data.url;
-    } catch {
-      setError(t("errorCouldNotStartOnboarding"));
-    } finally {
-      setBusy(null);
-    }
-  }
-
-  async function refreshStatus() {
-    setBusy("refresh");
-    setError(null);
-    try {
-      const res = await fetch("/api/stripe/connect/status");
-      if (!res.ok) {
-        setError(t("errorCouldNotRefreshStatus"));
-        return;
-      }
-      window.location.reload();
-    } finally {
-      setBusy(null);
-    }
-  }
-
-  async function disconnect() {
-    if (!confirm(t("stripeDisconnectConfirm"))) return;
-    setBusy("disconnect");
-    setError(null);
-    try {
-      const res = await fetch("/api/stripe/connect", { method: "DELETE" });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        setError(data.error || t("errorCouldNotDisconnect"));
-        return;
-      }
-      window.location.reload();
-    } finally {
-      setBusy(null);
-    }
-  }
-
   return (
     <div className="p-6 max-w-3xl mx-auto space-y-6">
       <div>
@@ -179,23 +219,11 @@ export function ProvidersClient({
         </p>
       </div>
 
-      {!stripeConfigured && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3">
-          <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-semibold text-amber-800">{t("stripeNotEnabledTitle")}</p>
-            <p className="text-sm text-amber-700 mt-1">
-              {t("stripeNotEnabledBody")}
-            </p>
-          </div>
-        </div>
-      )}
-
       {/* Entitlement gate — if the restaurant hasn't subscribed to Online
-          Payments, connecting Stripe alone doesn't unlock card charges. The
-          customer-side /api/public/payment-intent rejects with 402 until
+          Payments, entering Stripe keys alone doesn't unlock card charges.
+          The customer-side /api/public/payment-intent rejects with 402 until
           hasFeature(card_payments) returns true. Lead with the add-on. */}
-      {stripeConfigured && !hasOnlinePaymentsAddOn && (
+      {!hasOnlinePaymentsAddOn && (
         <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5 flex gap-4">
           <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
             <Lock className="w-5 h-5" />
@@ -220,29 +248,11 @@ export function ProvidersClient({
         </div>
       )}
 
-      {/* Has the add-on, has online_card enabled in Accepted Methods, but no
-          Stripe yet. This is the only state where we should push connecting
-          Stripe prominently — otherwise the owner has consciously opted out
-          of online card payment and we shouldn't nag. */}
-      {stripeConfigured && hasOnlinePaymentsAddOn && onlineCardEnabled && !restaurant?.stripeAccountId && (
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex gap-3">
-          <Zap className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-semibold text-blue-900">
-              {t("subscribedOneStepLeftTitle")}
-            </p>
-            <p className="text-sm text-blue-800 mt-1">
-              {t("subscribedOneStepLeftBody")}
-            </p>
-          </div>
-        </div>
-      )}
-
       {/* Has the add-on, but online_card is NOT in Accepted Methods. The
           owner is paying for the entitlement but hasn't actually turned
           card payment on for customers. Surface that and link to the
-          right place — don't push Stripe Connect. */}
-      {stripeConfigured && hasOnlinePaymentsAddOn && !onlineCardEnabled && (
+          right place. */}
+      {hasOnlinePaymentsAddOn && !onlineCardEnabled && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3">
           <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
@@ -263,18 +273,6 @@ export function ProvidersClient({
         </div>
       )}
 
-      {justConnected && (
-        <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex gap-3">
-          <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-semibold text-green-800">{t("returnedFromStripeTitle")}</p>
-            <p className="text-sm text-green-700 mt-1">
-              {t("returnedFromStripeBody")}
-            </p>
-          </div>
-        </div>
-      )}
-
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex gap-2 text-sm text-red-700">
           <XCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
@@ -282,6 +280,7 @@ export function ProvidersClient({
         </div>
       )}
 
+      {/* ── Stripe (key-only) ───────────────────────────────────────────── */}
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50">
           <div className="flex items-center gap-3">
@@ -290,107 +289,189 @@ export function ProvidersClient({
             </div>
             <div>
               <div className="font-semibold text-gray-900">Stripe</div>
-              <div className="text-xs text-gray-500">{t("stripeSubheading")}</div>
+              <div className="text-xs text-gray-500">{t("stripeKeySubheading")}</div>
             </div>
           </div>
-          {connected && (
-            <div
-              className={`flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${
-                charges
-                  ? "bg-green-100 text-green-700"
-                  : "bg-yellow-100 text-yellow-700"
-              }`}
-            >
-              {charges ? <CheckCircle className="w-3.5 h-3.5" /> : <AlertCircle className="w-3.5 h-3.5" />}
-              {charges ? t("badgeConnected") : t("badgeSetupIncomplete")}
-            </div>
-          )}
+          <div
+            className={`flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${
+              stripeActive ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"
+            }`}
+          >
+            {stripeActive ? <CheckCircle className="w-3.5 h-3.5" /> : <AlertCircle className="w-3.5 h-3.5" />}
+            {stripeActive ? t("stripeOnBadge") : t("stripeOffBadge")}
+          </div>
         </div>
 
         <div className="p-6 space-y-5">
-          {!connected && (
-            <>
-              <div className="space-y-3">
-                <Feature
-                  icon={<Zap className="w-4 h-4" />}
-                  title={t("featureOnboardingTitle")}
-                  body={t("featureOnboardingBody")}
-                />
-                <Feature
-                  icon={<Shield className="w-4 h-4" />}
-                  title={t("featureNoCardDataTitle")}
-                  body={t("featureNoCardDataBody")}
-                />
-                <Feature
-                  icon={<CreditCard className="w-4 h-4" />}
-                  title={t("featureMoneyLandsTitle")}
-                  body={t("featureMoneyLandsBody")}
-                />
-              </div>
-              <button
-                onClick={startOnboarding}
-                disabled={busy !== null || !stripeConfigured}
-                className="w-full flex items-center justify-center gap-2 bg-[#635BFF] hover:bg-[#5048df] text-white font-semibold px-5 py-3 rounded-xl text-sm transition disabled:opacity-50"
-              >
-                {busy === "onboard" ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <CreditCard className="w-4 h-4" />
-                )}
-                {t("btnConnectWithStripe")}
-              </button>
-            </>
+          <div className="text-sm text-gray-600 space-y-2">
+            <p>{t("stripeKeyIntro")}</p>
+            <button
+              type="button"
+              onClick={() => setShowStripeInstructions((v) => !v)}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#635BFF] hover:text-[#5048df]"
+            >
+              <HelpCircle className="w-3.5 h-3.5" />
+              {showStripeInstructions ? t("stripeKeyHideWhere") : t("stripeKeyShowWhere")}
+              {showStripeInstructions ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+
+          {showStripeInstructions && (
+            <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-4 space-y-2 text-xs text-indigo-900 leading-relaxed">
+              <h3 className="text-sm font-bold flex items-center gap-2">
+                <Shield className="w-4 h-4" />
+                {t("stripeKeyWhereTitle")}
+              </h3>
+              <p>
+                {t.rich("stripeKeyWhereBody", {
+                  strong: (c) => <strong>{c}</strong>,
+                  a: (c) => (
+                    <a
+                      href="https://dashboard.stripe.com/apikeys"
+                      target="_blank" rel="noopener noreferrer"
+                      className="underline font-semibold inline-flex items-center gap-0.5"
+                    >
+                      {c}
+                      <ExternalLink className="w-2.5 h-2.5" />
+                    </a>
+                  ),
+                })}
+              </p>
+            </div>
           )}
 
-          {connected && (
-            <>
-              <div className="grid grid-cols-2 gap-3">
-                <StatusTile
-                  label={t("tileAcceptCharges")}
-                  ok={charges}
-                  hint={charges ? t("tileLive") : t("tilePendingVerification")}
-                />
-                <StatusTile
-                  label={t("tileBankPayouts")}
-                  ok={payouts}
-                  hint={payouts ? t("tileEnabled") : t("tilePending")}
-                />
-              </div>
-              <p className="text-xs text-gray-500">
-                {t("accountStatusLabel")} <span className="font-mono">{status}</span>
-              </p>
-              {!charges && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 text-sm text-yellow-800">
-                  {t("stripeNeedsMoreInfo")}
-                </div>
-              )}
-              <div className="flex flex-wrap gap-2">
-                {!charges && (
-                  <button
-                    onClick={startOnboarding}
-                    disabled={busy !== null}
-                    className="flex items-center gap-2 bg-[#635BFF] hover:bg-[#5048df] text-white font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
-                  >
-                    {busy === "onboard" ? <Loader2 className="w-4 h-4 animate-spin" /> : <ExternalLink className="w-4 h-4" />}
-                    {t("btnFinishOnboarding")}
-                  </button>
-                )}
+          {/* Mode */}
+          <div>
+            <label className="block text-xs font-semibold text-gray-700 mb-1">{t("stripeKeyModeLabel")}</label>
+            <div className="grid grid-cols-2 gap-2">
+              {(["test", "live"] as const).map((m) => (
                 <button
-                  onClick={refreshStatus}
-                  disabled={busy !== null}
-                  className="flex items-center gap-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
+                  key={m}
+                  type="button"
+                  onClick={() => setForm({ ...form, mode: m })}
+                  className={`py-2 px-3 rounded-lg border-2 text-xs font-semibold transition ${
+                    form.mode === m
+                      ? "border-[#635BFF] bg-indigo-50 text-[#635BFF]"
+                      : "border-gray-200 text-gray-600 hover:border-gray-300"
+                  }`}
                 >
-                  {busy === "refresh" ? <Loader2 className="w-4 h-4 animate-spin" /> : t("btnRefreshStatus")}
+                  {m === "live" ? t("stripeKeyModeLive") : t("stripeKeyModeTest")}
                 </button>
-                <button
-                  onClick={disconnect}
-                  disabled={busy !== null}
-                  className="flex items-center gap-2 bg-white border border-red-200 hover:bg-red-50 text-red-600 font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
-                >
-                  {busy === "disconnect" ? <Loader2 className="w-4 h-4 animate-spin" /> : t("btnDisconnect")}
-                </button>
+              ))}
+            </div>
+            <p className="text-[11px] text-gray-500 mt-1">{t("stripeKeyModeHint")}</p>
+          </div>
+
+          {/* Publishable key */}
+          <div>
+            <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelPublishableKey")}</label>
+            <input
+              type="text"
+              autoComplete="off"
+              spellCheck={false}
+              value={form.publishableKey}
+              onChange={(e) => setForm({ ...form, publishableKey: e.target.value })}
+              placeholder={form.mode === "live" ? "pk_live_..." : "pk_test_..."}
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#635BFF]"
+            />
+            <p className="text-[11px] text-gray-500 mt-1">{t("publishableKeyHint")}</p>
+          </div>
+
+          {/* Secret key */}
+          <div>
+            <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelSecretKey")}</label>
+            <div className="relative">
+              <input
+                type={showStripeSecret ? "text" : "password"}
+                autoComplete="off"
+                spellCheck={false}
+                value={form.secretKey}
+                onChange={(e) => setForm({ ...form, secretKey: e.target.value })}
+                placeholder={
+                  stripe?.hasSecret
+                    ? t("stripeKeySecretSavedPlaceholder")
+                    : form.mode === "live" ? "sk_live_..." : "sk_test_..."
+                }
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 pr-20 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#635BFF]"
+              />
+              <button
+                type="button"
+                onClick={() => setShowStripeSecret(!showStripeSecret)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-500 hover:text-gray-700 font-semibold"
+              >
+                {showStripeSecret ? t("btnHide") : t("btnShow")}
+              </button>
+            </div>
+            <p className="text-[11px] text-gray-500 mt-1">{t("secretKeyHint")}</p>
+          </div>
+
+          {savedMsg && (
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex gap-2 text-sm text-emerald-700">
+              <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              {savedMsg}
+            </div>
+          )}
+          {testMsg && (
+            <div
+              className={`rounded-xl p-3 flex gap-2 text-sm border ${
+                testMsg.ok
+                  ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+                  : "bg-red-50 border-red-200 text-red-700"
+              }`}
+            >
+              {testMsg.ok ? <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" /> : <XCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />}
+              {testMsg.text}
+            </div>
+          )}
+
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => saveKeys()}
+              disabled={busy !== null || !hasKeysReady}
+              className="flex items-center gap-2 bg-[#635BFF] hover:bg-[#5048df] text-white font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
+            >
+              {busy === "save-keys" ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
+              {t("btnSaveKeys")}
+            </button>
+            <button
+              onClick={testConnection}
+              disabled={busy !== null || !stripe?.hasSecret}
+              className="flex items-center gap-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50"
+            >
+              {busy === "test-keys" ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
+              {t("btnTestConnection")}
+            </button>
+          </div>
+
+          {/* On/off toggle — only meaningful once keys are saved. */}
+          {stripe?.hasSecret && (
+            <div
+              className={`rounded-xl border p-4 flex items-start justify-between gap-3 ${
+                stripeActive ? "border-green-200 bg-green-50" : "border-gray-200 bg-gray-50"
+              }`}
+            >
+              <div>
+                <p className={`text-sm font-semibold ${stripeActive ? "text-green-800" : "text-gray-700"}`}>
+                  {stripeActive ? t("stripeActiveTitle") : t("stripeInactiveTitle")}
+                </p>
+                <p className={`text-xs mt-1 ${stripeActive ? "text-green-700" : "text-gray-500"}`}>
+                  {stripeActive ? t("stripeActiveBody") : t("stripeInactiveBody")}
+                </p>
               </div>
-            </>
+              <button
+                onClick={() => toggleActive(!stripeActive)}
+                disabled={busy !== null || (!stripeActive && !stripe?.publishableKey)}
+                className={`flex-shrink-0 flex items-center gap-2 font-semibold px-4 py-2 rounded-lg text-sm transition disabled:opacity-50 ${
+                  stripeActive
+                    ? "bg-white border border-red-200 hover:bg-red-50 text-red-600"
+                    : "bg-emerald-500 hover:bg-emerald-600 text-white"
+                }`}
+              >
+                {busy === "toggle-active" ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : stripeActive ? t("btnTurnOff") : t("btnTurnOn")}
+              </button>
+            </div>
           )}
         </div>
       </div>
@@ -697,20 +778,6 @@ export function ProvidersClient({
             </>
           )}
         </div>
-      </div>
-    </div>
-  );
-}
-
-function Feature({ icon, title, body }: { icon: React.ReactNode; title: string; body: string }) {
-  return (
-    <div className="flex gap-3">
-      <div className="w-7 h-7 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center flex-shrink-0">
-        {icon}
-      </div>
-      <div>
-        <div className="text-sm font-semibold text-gray-900">{title}</div>
-        <div className="text-xs text-gray-500">{body}</div>
       </div>
     </div>
   );

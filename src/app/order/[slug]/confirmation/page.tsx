@@ -5,18 +5,30 @@ import Link from "next/link";
 import { CheckCircle, Clock, MapPin, ArrowRight } from "lucide-react";
 import { OrderPlacedTracker } from "@/components/order/OrderPlacedTracker";
 import { getTranslations } from "next-intl/server";
+import { verifyAndReleaseOrderPayment } from "@/lib/stripe/verify-order-payment";
 
 export default async function ConfirmationPage({
   params,
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ orderId?: string }>;
+  searchParams: Promise<{ orderId?: string; payment_intent?: string }>;
 }) {
   const t = await getTranslations("customer.confirmation");
   const { slug } = await params;
-  const { orderId } = await searchParams;
+  const { orderId, payment_intent } = await searchParams;
   if (!orderId) notFound();
+
+  // KEY-ONLY model: the restaurant's own Stripe account does not webhook
+  // the platform, so this is where we verify the authorization server-side
+  // (via the restaurant's own key) and RELEASE the card order to the
+  // kitchen. Fully idempotent — safe on every render. Best-effort: never
+  // block rendering the confirmation if verification hiccups.
+  try {
+    await verifyAndReleaseOrderPayment({ orderId, paymentIntentId: payment_intent });
+  } catch (e) {
+    console.error("[confirmation] payment verification failed:", e);
+  }
 
   const order = await prisma.order.findUnique({
     where: { id: orderId },

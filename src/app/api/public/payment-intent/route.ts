@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
-import {
-  createDirectPaymentIntent,
-  getPublishableKey,
-  stripeReady,
-} from "@/lib/stripe";
+import { createDirectPaymentIntent } from "@/lib/stripe";
 import { hasFeature } from "@/lib/entitlements";
 
 // Currencies we support charging in across Stripe + PayPal + our UI.
@@ -17,11 +13,11 @@ const ALLOWED_CURRENCIES = new Set([
 const MAX_AMOUNT = 10_000; // $10,000 hard cap
 
 /**
- * Create a Stripe PaymentIntent for a customer order via Connect destination
- * charge. The platform's secret key creates the intent; funds (minus the
- * platform application fee) settle into the restaurant's connected Express
- * account. The client confirms the payment using the platform's publishable
- * key — no per-restaurant publishable key needed.
+ * Create a Stripe PaymentIntent for a customer order on the RESTAURANT'S OWN
+ * Stripe account (key-only model). The restaurant's own secret key creates a
+ * manual-capture authorization; 100% of funds land in their balance. The
+ * client confirms using the restaurant's OWN publishable key (returned here),
+ * loaded WITHOUT a `stripeAccount` option. No Connect, no platform fee.
  */
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
@@ -45,17 +41,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "orderId is required" }, { status: 400 });
   }
 
-  if (!(await stripeReady())) {
-    return NextResponse.json({ error: "Online payment is not configured on the platform" }, { status: 503 });
-  }
-
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug: restaurantSlug, isActive: true },
     select: {
       id: true,
-      name: true,
-      stripeAccountId: true,
-      stripeChargesEnabled: true,
       // The restaurant's chosen settlement currency. We OVERRIDE the
       // client-supplied currency with this so customers can't trigger
       // a USD charge against a EUR-configured account (Stripe would
@@ -63,11 +52,15 @@ export async function POST(req: NextRequest) {
       // `currency` is kept as a sanity probe — if it disagrees with
       // the restaurant's, we trust the restaurant.
       currency: true,
+      // Key-only model: card payments are available iff the restaurant
+      // saved active Stripe keys. We don't need the keys here — the
+      // charge helper loads + decrypts them — only to gate cleanly.
+      paymentProvider: { select: { isActive: true, publishableKey: true } },
     },
   });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
-  if (!restaurant.stripeAccountId || !restaurant.stripeChargesEnabled) {
+  if (!restaurant.paymentProvider?.isActive || !restaurant.paymentProvider.publishableKey) {
     return NextResponse.json(
       { error: "Restaurant hasn't finished payment setup yet" },
       { status: 400 }
@@ -105,19 +98,18 @@ export async function POST(req: NextRequest) {
     const intent = await createDirectPaymentIntent({
       amountCents: amountMinor,
       currency: chargeCurrency,
-      restaurantStripeAccountId: restaurant.stripeAccountId,
-      orderId,
       restaurantId: restaurant.id,
-      restaurantName: restaurant.name,
+      orderId,
+      // Idempotent per order: a double-submit / retry returns the SAME
+      // authorization instead of placing a second hold on the card.
+      idempotencyKey: `pi_create_${orderId}`,
     });
     return NextResponse.json({
       clientSecret: intent.clientSecret,
-      publishableKey: await getPublishableKey(),
-      // Stripe.js needs the connected account ID to confirm a direct-charge
-      // PaymentIntent. Pass it through to the client; PaymentPageClient
-      // initialises loadStripe(pk, { stripeAccount }) with it so the
-      // confirmation call hits the right account.
-      stripeAccount: restaurant.stripeAccountId,
+      // The restaurant's OWN publishable key — the client loads Stripe.js
+      // with this and NO stripeAccount option (key-only model).
+      publishableKey: intent.publishableKey,
+      stripeAccount: null,
     });
   } catch (err: unknown) {
     console.error("[payment-intent]", err instanceof Error ? err.message : err);

@@ -6,7 +6,6 @@ import { notifyStaff, notifyCustomer, staffAcceptEventForOrderType } from "@/lib
 import {
   capturePayment,
   refundDirectPayment,
-  stripeReady,
   voidPayment,
 } from "@/lib/stripe";
 import {
@@ -169,25 +168,17 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     newStatus === "accepted" &&
     existing.paymentMethod === "card" &&
     existing.paymentStatus === "authorized" &&
-    existing.paymentIntentId &&
-    existing.restaurant.stripeAccountId
+    existing.paymentIntentId
   ) {
-    if (!(await stripeReady())) {
-      return NextResponse.json(
-        { error: "Online payments are not configured. Cannot capture authorization." },
-        { status: 503 },
-      );
-    }
     try {
       await capturePayment({
         paymentIntentId: existing.paymentIntentId,
-        restaurantStripeAccountId: existing.restaurant.stripeAccountId,
+        restaurantId: existing.restaurantId,
       });
-      // Stripe will fire payment_intent.succeeded → webhook sets
-      // paymentStatus="paid". To avoid a brief window where the kitchen
-      // shows "accepted" but paymentStatus still says "authorized" (which
-      // some UI / cron paths key off), flip it ourselves now too. The
-      // webhook update is idempotent.
+      // Key-only model: the restaurant's own account does NOT webhook the
+      // platform, so we flip paymentStatus="paid" ourselves below (inline
+      // in `updates`) — there is no webhook backstop. The capture call
+      // above is the source of truth for "money moved".
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       // Partial-failure retry trap (audit 2026-05-30): a previous accept
@@ -351,8 +342,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   //   - paymentStatus = "voided" / "refunded" → already in a terminal state,
   //       nothing more to do.
   const isKilled = newStatus === "cancelled" || newStatus === "rejected";
-  const accountId = existing.restaurant.stripeAccountId;
-  if (isKilled && existing.paymentIntentId && accountId) {
+  if (isKilled && existing.paymentIntentId) {
     const piId = existing.paymentIntentId;
     if (existing.paymentStatus === "authorized") {
       // Void the authorization — no charge, no fee, no refund.
@@ -361,11 +351,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           try {
             await voidPayment({
               paymentIntentId: piId,
-              restaurantStripeAccountId: accountId,
+              restaurantId: existing.restaurantId,
             });
-            // Webhook (payment_intent.canceled) will flip paymentStatus
-            // to "voided"; flip it here too so the admin UI updates
-            // immediately. Idempotent.
+            // Key-only model: no webhook backstop — flip paymentStatus to
+            // "voided" here so the admin UI updates immediately.
             await prisma.order.update({
               where: { id },
               data: { paymentStatus: "voided" },
@@ -383,7 +372,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       after(
         (async () => {
           try {
-            await refundCapturedOrder(id, piId, accountId);
+            await refundCapturedOrder(id, piId, existing.restaurantId);
           } catch (e) {
             console.error("[orders PATCH] refundCapturedOrder:", e);
           }
@@ -691,25 +680,19 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 async function refundCapturedOrder(
   orderId: string,
   paymentIntentId: string,
-  restaurantStripeAccountId: string,
+  restaurantId: string,
 ) {
   try {
     await prisma.order.update({ where: { id: orderId }, data: { refundStatus: "pending" } });
 
-    if (!(await stripeReady())) {
-      await prisma.order.update({ where: { id: orderId }, data: { refundStatus: "failed" } });
-      return;
-    }
-
     await refundDirectPayment({
       paymentIntentId,
-      restaurantStripeAccountId,
+      restaurantId,
       reason: "requested_by_customer",
     });
 
-    // The actual paymentStatus → "refunded" transition is driven by the
-    // charge.refunded webhook for idempotency; we mark refundStatus optimistically
-    // here so the admin UI reflects the in-flight state immediately.
+    // Key-only model: no webhook backstop — set paymentStatus → "refunded"
+    // inline so the admin UI reflects the terminal state immediately.
     await prisma.order.update({
       where: { id: orderId },
       data: { refundStatus: "refunded", paymentStatus: "refunded" },

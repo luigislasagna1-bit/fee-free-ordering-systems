@@ -27,7 +27,7 @@ import { after } from "next/server";
 import prisma from "@/lib/db";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
 import { getCurrentCustomer } from "@/lib/customer-session";
-import { voidPayment, stripeReady } from "@/lib/stripe";
+import { voidPayment } from "@/lib/stripe";
 import { voidPaypalAuthorization } from "@/lib/paypal";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 
@@ -126,18 +126,15 @@ export async function POST(_req: NextRequest, ctx: { params: Promise<{ id: strin
   if (
     order.paymentMethod === "card" &&
     order.paymentStatus === "authorized" &&
-    order.paymentIntentId &&
-    order.restaurant.stripeAccountId
+    order.paymentIntentId
   ) {
     const piId = order.paymentIntentId;
-    const acctId = order.restaurant.stripeAccountId;
+    const rId = order.restaurantId;
     after(
       (async () => {
         try {
-          if (await stripeReady()) {
-            await voidPayment({ paymentIntentId: piId, restaurantStripeAccountId: acctId });
-            await prisma.order.update({ where: { id }, data: { paymentStatus: "voided" } });
-          }
+          await voidPayment({ paymentIntentId: piId, restaurantId: rId });
+          await prisma.order.update({ where: { id }, data: { paymentStatus: "voided" } });
         } catch (e) {
           console.error(`[public cancel] stripe void failed for order ${id}:`, e);
         }

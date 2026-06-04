@@ -390,33 +390,109 @@ export function buildStatementDescriptorSuffix(restaurantName: string | null | u
  * "money moved," not "card OK"). Connect events arrive on the same
  * webhook endpoint with `event.account` set to the connected account.
  */
+// ─── KEY-ONLY customer payments (restaurant's own Stripe account) ───────────
+//
+// The restaurant pastes their OWN Stripe publishable + secret API keys
+// (Settings → Payments). We decrypt the secret and build a Stripe client
+// bound to THEIR account. Charges / captures / refunds happen directly on
+// the restaurant's own Stripe — no Connect, no platform application fee,
+// money lands in their balance from the first authorization. This replaces
+// the old Stripe Connect model entirely.
+
+type RestaurantStripe = { client: Stripe; publishableKey: string; mode: string };
+const _restaurantStripe = new Map<string, RestaurantStripe & { loadedAt: number }>();
+
+/** Drop the cached per-restaurant Stripe client. Call after a key change
+ *  (the payment-provider PUT route does this) so the next charge re-reads. */
+export function resetRestaurantStripeCache(restaurantId?: string) {
+  if (restaurantId) _restaurantStripe.delete(restaurantId);
+  else _restaurantStripe.clear();
+}
+
+/**
+ * Build (or return a cached) Stripe client bound to a restaurant's OWN
+ * account, using the keys they saved in PaymentProvider. Returns null when
+ * the restaurant has not set up active, complete keys — callers treat that
+ * as "card payments not available for this restaurant".
+ *
+ * The decrypted secret key is held only in the per-process cache and is
+ * NEVER logged or returned to any caller.
+ */
+export async function getRestaurantStripe(
+  restaurantId: string,
+): Promise<RestaurantStripe | null> {
+  const hit = _restaurantStripe.get(restaurantId);
+  if (hit && Date.now() - hit.loadedAt < CACHE_TTL_MS) {
+    return { client: hit.client, publishableKey: hit.publishableKey, mode: hit.mode };
+  }
+  const p = await prisma.paymentProvider.findUnique({ where: { restaurantId } });
+  if (
+    !p ||
+    !p.isActive ||
+    !p.publishableKey ||
+    !p.secretKeyEnc ||
+    !p.secretKeyIv ||
+    !p.secretKeyTag
+  ) {
+    return null;
+  }
+  let secret: string;
+  try {
+    secret = decrypt(p.secretKeyEnc, p.secretKeyIv, p.secretKeyTag);
+  } catch {
+    // Never log key material. A decrypt failure means the row is corrupt or
+    // ENCRYPTION_KEY rotated — treat as "no card payments" rather than throw
+    // into a customer checkout.
+    console.error(`[stripe] failed to decrypt restaurant secret key for ${restaurantId}`);
+    return null;
+  }
+  if (!secret) return null;
+  const client = new Stripe(secret, {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    apiVersion: "2025-09-30.clover" as any,
+    typescript: true,
+  });
+  _restaurantStripe.set(restaurantId, {
+    client,
+    publishableKey: p.publishableKey,
+    mode: p.mode,
+    loadedAt: Date.now(),
+  });
+  return { client, publishableKey: p.publishableKey, mode: p.mode };
+}
+
+/**
+ * Create a card authorization on the restaurant's OWN Stripe account.
+ * capture_method "manual" — this only places a hold; the funds move when
+ * the kitchen accepts the order (`capturePayment`). No application fee, no
+ * stripeAccount header: the call is made with the restaurant's own secret
+ * key so the money is theirs from the start.
+ *
+ * Payment-method config is intentionally omitted — Stripe defaults
+ * `automatic_payment_methods: { enabled: true }`, which is what the
+ * customer-facing <PaymentElement /> renders against.
+ *
+ * `idempotencyKey` (REQUIRED) guards against duplicate authorizations on
+ * double-submit / retry — Stripe returns the same PaymentIntent for the
+ * same key. Throws when the restaurant has no active keys.
+ */
 export async function createDirectPaymentIntent(params: {
   amountCents: number;
   currency: string;
-  restaurantStripeAccountId: string;
-  orderId: string;
   restaurantId: string;
-  /** Restaurant display name. Kept on the params for backwards-compat
-   *  with callers but NO LONGER used as a statement-descriptor suffix.
-   *  See note below — direct charges inherit the descriptor from the
-   *  connected account's business profile; adding a suffix doubled it
-   *  up on the bank statement. */
-  restaurantName?: string | null;
-}) {
-  const stripe = await getStripe();
-  // ⚠️ Do NOT set statement_descriptor_suffix on direct charges.
-  // The connected restaurant's Stripe profile already defines the
-  // statement descriptor (e.g. "LUIGIS LASAGNA & PIZZE"). Adding a
-  // suffix here used to produce "LUIGIS LA* LUIGIS LASAGNA" because
-  // Stripe prepends the profile-truncated prefix AND appends our
-  // suffix — both derived from the restaurant name. Task #71 fix.
-  //
-  // If a restaurant ever shows a bad descriptor it's because their
-  // connected account's business profile is misconfigured — they need
-  // to fix it in their Stripe dashboard (Connect → Account → Branding
-  // → Statement descriptor). Don't paper over it here.
-  void params.restaurantName; // retained on the API for callsite compat
-  const intent = await stripe.paymentIntents.create(
+  orderId: string;
+  idempotencyKey: string;
+}): Promise<{
+  clientSecret: string | null;
+  id: string;
+  publishableKey: string;
+  platformFeeCents: number;
+}> {
+  const rs = await getRestaurantStripe(params.restaurantId);
+  if (!rs) {
+    throw new Error("Restaurant has not configured Stripe card payments");
+  }
+  const intent = await rs.client.paymentIntents.create(
     {
       amount: params.amountCents,
       currency: params.currency,
@@ -426,15 +502,13 @@ export async function createDirectPaymentIntent(params: {
         restaurantId: params.restaurantId,
       },
     },
-    // Direct charge: API call is made AS the connected account. Funds
-    // land in their balance; no transfer needed; no application fee.
-    { stripeAccount: params.restaurantStripeAccountId },
+    { idempotencyKey: params.idempotencyKey },
   );
   return {
     clientSecret: intent.client_secret,
     id: intent.id,
-    /** Always 0 under the Fee Free model. Kept on the return shape so
-     *  the public route doesn't need to special-case it. */
+    publishableKey: rs.publishableKey,
+    /** Always 0 — the restaurant keeps 100% under the Fee Free model. */
     platformFeeCents: 0,
   };
 }
@@ -453,13 +527,13 @@ export async function createDirectPaymentIntent(params: {
  */
 export async function capturePayment(params: {
   paymentIntentId: string;
-  restaurantStripeAccountId: string;
+  restaurantId: string;
 }): Promise<{ id: string; status: string | null }> {
-  const stripe = await getStripe();
-  const captured = await stripe.paymentIntents.capture(
+  const rs = await getRestaurantStripe(params.restaurantId);
+  if (!rs) throw new Error("Restaurant has not configured Stripe card payments");
+  const captured = await rs.client.paymentIntents.capture(
     params.paymentIntentId,
     {}, // no params — capture the full authorized amount
-    { stripeAccount: params.restaurantStripeAccountId },
   );
   return { id: captured.id, status: captured.status };
 }
@@ -475,13 +549,13 @@ export async function capturePayment(params: {
  */
 export async function voidPayment(params: {
   paymentIntentId: string;
-  restaurantStripeAccountId: string;
+  restaurantId: string;
 }): Promise<{ id: string; status: string | null }> {
-  const stripe = await getStripe();
-  const cancelled = await stripe.paymentIntents.cancel(
+  const rs = await getRestaurantStripe(params.restaurantId);
+  if (!rs) throw new Error("Restaurant has not configured Stripe card payments");
+  const cancelled = await rs.client.paymentIntents.cancel(
     params.paymentIntentId,
     { cancellation_reason: "requested_by_customer" },
-    { stripeAccount: params.restaurantStripeAccountId },
   );
   return { id: cancelled.id, status: cancelled.status };
 }
@@ -504,60 +578,15 @@ export async function voidPayment(params: {
  */
 export async function refundDirectPayment(params: {
   paymentIntentId: string;
-  restaurantStripeAccountId: string;
+  restaurantId: string;
   reason?: "duplicate" | "fraudulent" | "requested_by_customer";
 }): Promise<{ id: string; status: string | null }> {
-  const stripe = await getStripe();
-  const refund = await stripe.refunds.create(
-    {
-      payment_intent: params.paymentIntentId,
-      reason: params.reason,
-    },
-    { stripeAccount: params.restaurantStripeAccountId },
-  );
+  const rs = await getRestaurantStripe(params.restaurantId);
+  if (!rs) throw new Error("Restaurant has not configured Stripe card payments");
+  const refund = await rs.client.refunds.create({
+    payment_intent: params.paymentIntentId,
+    reason: params.reason,
+  });
   return { id: refund.id, status: refund.status };
 }
 
-/**
- * Legacy name kept temporarily to avoid breaking the customer-facing
- * payment-intent route during the cutover. Same behavior as
- * `createDirectPaymentIntent`. New code should use the new name.
- *
- * @deprecated Use `createDirectPaymentIntent`. Remove after Phase G.
- */
-export async function createDestinationPaymentIntent(params: {
-  amountCents: number;
-  currency: string;
-  restaurantStripeAccountId: string;
-  orderId: string;
-  restaurantId: string;
-  restaurantName?: string | null;
-}) {
-  return createDirectPaymentIntent(params);
-}
-
-/**
- * Refund a previously-captured order payment. Thin wrapper over
- * `refundDirectPayment` that preserves the older return shape so
- * existing callers don't break.
- *
- * Under the new direct-charge model the `reverseTransferDeferred`
- * concept is meaningless (no transfer to reverse — money lives in the
- * connected account from the start). Always returns false for that
- * field so call sites that branch on it just hit the "normal" path.
- */
-export async function refundDestinationPayment(params: {
-  paymentIntentId: string;
-  restaurantStripeAccountId: string;
-  /** Kept for back-compat with the old destination-charge signature.
-   *  Ignored — direct-charge refunds don't need this flag. */
-  refundApplicationFee?: boolean;
-  reason?: "duplicate" | "fraudulent" | "requested_by_customer";
-}): Promise<{ id: string; status: string | null; reverseTransferDeferred: boolean }> {
-  const result = await refundDirectPayment({
-    paymentIntentId: params.paymentIntentId,
-    restaurantStripeAccountId: params.restaurantStripeAccountId,
-    reason: params.reason,
-  });
-  return { ...result, reverseTransferDeferred: false };
-}
