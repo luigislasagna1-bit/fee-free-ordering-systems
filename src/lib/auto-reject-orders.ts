@@ -241,8 +241,10 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
             // Best-effort: if void fails (auth already expired), the
             // customer isn't charged anyway. Don't count as refundFailed.
           }
-        } else if (order.paymentStatus === "paid") {
-          // Captured — need a real refund. Rare path.
+        } else if (order.paymentStatus === "paid" || order.paymentStatus === "partially_refunded") {
+          // Captured (possibly partially refunded already) — refund the
+          // remaining balance. refundDirectPayment with no amount refunds
+          // whatever is left unrefunded on the PaymentIntent.
           try {
             await prisma.order.update({
               where: { id: order.id },
@@ -255,7 +257,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
             });
             await prisma.order.update({
               where: { id: order.id },
-              data: { refundStatus: "refunded", paymentStatus: "refunded" },
+              data: { refundStatus: "refunded", paymentStatus: "refunded", refundedAmount: order.total },
             });
             result.refunded += 1;
           } catch (e) {

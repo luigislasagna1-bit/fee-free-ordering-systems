@@ -370,12 +370,17 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           }
         })(),
       );
-    } else if (existing.paymentStatus === "paid") {
-      // Real refund — post-capture cancellation. Rare path.
+    } else if (
+      existing.paymentStatus === "paid" ||
+      existing.paymentStatus === "partially_refunded"
+    ) {
+      // Real refund — post-capture cancellation. Also covers an order that
+      // was PARTIALLY refunded earlier: refundDirectPayment with no amount
+      // refunds Stripe's remaining balance, so cancelling refunds the rest.
       after(
         (async () => {
           try {
-            await refundCapturedOrder(id, piId, existing.restaurantId);
+            await refundCapturedOrder(id, piId, existing.restaurantId, existing.total);
           } catch (e) {
             console.error("[orders PATCH] refundCapturedOrder:", e);
           }
@@ -684,10 +689,13 @@ async function refundCapturedOrder(
   orderId: string,
   paymentIntentId: string,
   restaurantId: string,
+  orderTotal?: number,
 ) {
   try {
     await prisma.order.update({ where: { id: orderId }, data: { refundStatus: "pending" } });
 
+    // No amount → Stripe refunds the remaining (unrefunded) balance, so this
+    // correctly tops up an order that was already partially refunded.
     await refundDirectPayment({
       paymentIntentId,
       restaurantId,
@@ -695,10 +703,15 @@ async function refundCapturedOrder(
     });
 
     // Key-only model: no webhook backstop — set paymentStatus → "refunded"
-    // inline so the admin UI reflects the terminal state immediately.
+    // inline so the admin UI reflects the terminal state immediately. The whole
+    // order is now refunded, so refundedAmount = the full total.
     await prisma.order.update({
       where: { id: orderId },
-      data: { refundStatus: "refunded", paymentStatus: "refunded" },
+      data: {
+        refundStatus: "refunded",
+        paymentStatus: "refunded",
+        ...(typeof orderTotal === "number" ? { refundedAmount: orderTotal } : {}),
+      },
     });
   } catch (err) {
     console.error("[refund]", err instanceof Error ? err.message : err);
