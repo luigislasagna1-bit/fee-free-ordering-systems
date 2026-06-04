@@ -49,6 +49,7 @@ export const LOCALE_LABELS = {
   ko: "한국어",
   ar: "العربية",
   he: "עברית",
+  hi: "हिन्दी",
 } as const;
 
 export type Locale = keyof typeof LOCALE_LABELS;
