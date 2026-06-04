@@ -506,7 +506,19 @@
       "printFailed": "Štampanje nije uspelo"
     },
     "complete": "Završi",
-    "clearOrders": "Obriši porudžbine"
+    "clearOrders": "Obriši porudžbine",
+    "refund": "Povraćaj sredstava",
+    "refundFull": "Pun povraćaj",
+    "refundPartial": "Delimično",
+    "refundAmountLabel": "Iznos za povraćaj",
+    "refundConfirm": "Izvrši povraćaj",
+    "refundRemaining": "Moguć povraćaj",
+    "refundedSoFar": "Do sada vraćeno: {amount}",
+    "refundedSoFarShort": "Već vraćeno",
+    "refundInvalidAmount": "Unesite ispravan iznos za povraćaj.",
+    "refundExceeds": "Iznos prelazi raspoloživi iznos za povraćaj.",
+    "refundFailed": "Povraćaj nije uspeo. Pokušajte ponovo.",
+    "refundSuccess": "Povraćaj je izvršen."
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazad",

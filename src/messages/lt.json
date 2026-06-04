@@ -506,7 +506,19 @@
       "printFailed": "Nepavyko spausdinti"
     },
     "complete": "Užbaigti",
-    "clearOrders": "Išvalyti užsakymus"
+    "clearOrders": "Išvalyti užsakymus",
+    "refund": "Grąžinimas",
+    "refundFull": "Pilnas grąžinimas",
+    "refundPartial": "Dalinis",
+    "refundAmountLabel": "Grąžintina suma",
+    "refundConfirm": "Atlikti grąžinimą",
+    "refundRemaining": "Galima grąžinti",
+    "refundedSoFar": "Grąžinta iki šiol: {amount}",
+    "refundedSoFarShort": "Jau grąžinta",
+    "refundInvalidAmount": "Įveskite teisingą grąžinimo sumą.",
+    "refundExceeds": "Suma viršija galimą grąžinti likutį.",
+    "refundFailed": "Grąžinimas nepavyko. Bandykite dar kartą.",
+    "refundSuccess": "Grąžinimas atliktas."
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

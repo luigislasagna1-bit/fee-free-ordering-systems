@@ -506,7 +506,19 @@
       "printFailed": "Printimine ebaõnnestus"
     },
     "complete": "Lõpeta",
-    "clearOrders": "Tühjenda tellimused"
+    "clearOrders": "Tühjenda tellimused",
+    "refund": "Tagasimakse",
+    "refundFull": "Täielik tagasimakse",
+    "refundPartial": "Osaline",
+    "refundAmountLabel": "Tagasimakstav summa",
+    "refundConfirm": "Tee tagasimakse",
+    "refundRemaining": "Tagasimakstav",
+    "refundedSoFar": "Seni tagasi makstud: {amount}",
+    "refundedSoFarShort": "Juba tagasi makstud",
+    "refundInvalidAmount": "Sisesta kehtiv tagasimakse summa.",
+    "refundExceeds": "Summa ületab tagasimakstava jäägi.",
+    "refundFailed": "Tagasimakse ebaõnnestus. Palun proovi uuesti.",
+    "refundSuccess": "Tagasimakse tehtud."
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

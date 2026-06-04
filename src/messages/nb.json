@@ -506,7 +506,19 @@
       "printFailed": "Utskrift mislyktes"
     },
     "complete": "Fullfør",
-    "clearOrders": "Fjern bestillinger"
+    "clearOrders": "Fjern bestillinger",
+    "refund": "Refunder",
+    "refundFull": "Full refusjon",
+    "refundPartial": "Delvis",
+    "refundAmountLabel": "Beløp som skal refunderes",
+    "refundConfirm": "Utfør refusjon",
+    "refundRemaining": "Refunderbart",
+    "refundedSoFar": "Refundert så langt: {amount}",
+    "refundedSoFarShort": "Allerede refundert",
+    "refundInvalidAmount": "Angi et gyldig refusjonsbeløp.",
+    "refundExceeds": "Beløpet overstiger den refunderbare saldoen.",
+    "refundFailed": "Refusjonen mislyktes. Prøv igjen.",
+    "refundSuccess": "Refusjon utført."
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",

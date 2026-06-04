@@ -506,7 +506,19 @@
       "printFailed": "प्रिंट करने में विफल"
     },
     "complete": "पूर्ण करें",
-    "clearOrders": "ऑर्डर साफ़ करें"
+    "clearOrders": "ऑर्डर साफ़ करें",
+    "refund": "रिफंड",
+    "refundFull": "पूरा रिफंड",
+    "refundPartial": "आंशिक",
+    "refundAmountLabel": "रिफंड की राशि",
+    "refundConfirm": "रिफंड जारी करें",
+    "refundRemaining": "रिफंड योग्य",
+    "refundedSoFar": "अब तक रिफंड किया गया: {amount}",
+    "refundedSoFarShort": "पहले ही रिफंड किया गया",
+    "refundInvalidAmount": "कृपया एक मान्य रिफंड राशि दर्ज करें।",
+    "refundExceeds": "राशि रिफंड योग्य शेष से अधिक है।",
+    "refundFailed": "रिफंड विफल रहा। कृपया फिर से प्रयास करें।",
+    "refundSuccess": "रिफंड जारी कर दिया गया।"
   },
   "admin": {
     "comingSoonPlaceholder": {

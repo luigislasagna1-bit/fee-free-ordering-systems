@@ -506,7 +506,19 @@
       "printFailed": "Afdrukken mislukt"
     },
     "complete": "Voltooien",
-    "clearOrders": "Bestellingen wissen"
+    "clearOrders": "Bestellingen wissen",
+    "refund": "Terugbetaling",
+    "refundFull": "Volledige terugbetaling",
+    "refundPartial": "Gedeeltelijk",
+    "refundAmountLabel": "Terug te betalen bedrag",
+    "refundConfirm": "Terugbetaling uitvoeren",
+    "refundRemaining": "Terugbetaalbaar",
+    "refundedSoFar": "Tot nu toe terugbetaald: {amount}",
+    "refundedSoFarShort": "Al terugbetaald",
+    "refundInvalidAmount": "Voer een geldig terugbetalingsbedrag in.",
+    "refundExceeds": "Bedrag overschrijdt het terugbetaalbare saldo.",
+    "refundFailed": "Terugbetaling mislukt. Probeer het opnieuw.",
+    "refundSuccess": "Terugbetaling uitgevoerd."
   },
   "admin": {
     "welcomeBack": "Welkom terug",

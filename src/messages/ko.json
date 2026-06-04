@@ -506,7 +506,19 @@
       "printFailed": "인쇄 실패"
     },
     "complete": "완료",
-    "clearOrders": "주문 초기화"
+    "clearOrders": "주문 초기화",
+    "refund": "환불",
+    "refundFull": "전액 환불",
+    "refundPartial": "부분 환불",
+    "refundAmountLabel": "환불 금액",
+    "refundConfirm": "환불 처리",
+    "refundRemaining": "환불 가능",
+    "refundedSoFar": "현재까지 환불됨: {amount}",
+    "refundedSoFarShort": "이미 환불됨",
+    "refundInvalidAmount": "유효한 환불 금액을 입력하세요.",
+    "refundExceeds": "금액이 환불 가능 잔액을 초과합니다.",
+    "refundFailed": "환불에 실패했습니다. 다시 시도해 주세요.",
+    "refundSuccess": "환불이 처리되었습니다."
   },
   "admin": {
     "welcomeBack": "환영합니다",

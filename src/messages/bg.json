@@ -506,7 +506,19 @@
       "printFailed": "Печатът е неуспешен"
     },
     "complete": "Завърши",
-    "clearOrders": "Изчисти поръчките"
+    "clearOrders": "Изчисти поръчките",
+    "refund": "Възстановяване",
+    "refundFull": "Пълно възстановяване",
+    "refundPartial": "Частично",
+    "refundAmountLabel": "Сума за възстановяване",
+    "refundConfirm": "Издаване на възстановяване",
+    "refundRemaining": "Подлежи на възстановяване",
+    "refundedSoFar": "Възстановено досега: {amount}",
+    "refundedSoFarShort": "Вече възстановено",
+    "refundInvalidAmount": "Въведете валидна сума за възстановяване.",
+    "refundExceeds": "Сумата надвишава подлежащия на възстановяване остатък.",
+    "refundFailed": "Възстановяването е неуспешно. Моля, опитайте отново.",
+    "refundSuccess": "Възстановяването е издадено."
   },
   "admin": {
     "welcomeBack": "Добре дошъл отново",

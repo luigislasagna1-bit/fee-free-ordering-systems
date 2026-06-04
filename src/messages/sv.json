@@ -506,7 +506,19 @@
       "printFailed": "Utskriften misslyckades"
     },
     "complete": "Avsluta",
-    "clearOrders": "Rensa beställningar"
+    "clearOrders": "Rensa beställningar",
+    "refund": "Återbetalning",
+    "refundFull": "Full återbetalning",
+    "refundPartial": "Delvis",
+    "refundAmountLabel": "Belopp att återbetala",
+    "refundConfirm": "Genomför återbetalning",
+    "refundRemaining": "Återbetalningsbart",
+    "refundedSoFar": "Återbetalat hittills: {amount}",
+    "refundedSoFarShort": "Redan återbetalat",
+    "refundInvalidAmount": "Ange ett giltigt återbetalningsbelopp.",
+    "refundExceeds": "Beloppet överstiger det återbetalningsbara saldot.",
+    "refundFailed": "Återbetalningen misslyckades. Försök igen.",
+    "refundSuccess": "Återbetalning genomförd."
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",

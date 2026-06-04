@@ -506,7 +506,19 @@
       "printFailed": "ההדפסה נכשלה"
     },
     "complete": "הושלם",
-    "clearOrders": "נקה הזמנות"
+    "clearOrders": "נקה הזמנות",
+    "refund": "החזר כספי",
+    "refundFull": "החזר מלא",
+    "refundPartial": "חלקי",
+    "refundAmountLabel": "סכום להחזר",
+    "refundConfirm": "בצע החזר",
+    "refundRemaining": "ניתן להחזר",
+    "refundedSoFar": "הוחזר עד כה: {amount}",
+    "refundedSoFarShort": "כבר הוחזר",
+    "refundInvalidAmount": "הזן סכום החזר תקין.",
+    "refundExceeds": "הסכום חורג מהיתרה הניתנת להחזר.",
+    "refundFailed": "ההחזר נכשל. נסה שוב.",
+    "refundSuccess": "ההחזר בוצע."
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

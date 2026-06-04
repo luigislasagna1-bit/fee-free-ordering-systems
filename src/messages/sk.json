@@ -506,7 +506,19 @@
       "printFailed": "Tlač zlyhala"
     },
     "complete": "Dokončiť",
-    "clearOrders": "Vymazať objednávky"
+    "clearOrders": "Vymazať objednávky",
+    "refund": "Vrátenie platby",
+    "refundFull": "Vrátiť celú sumu",
+    "refundPartial": "Čiastočné",
+    "refundAmountLabel": "Suma na vrátenie",
+    "refundConfirm": "Vrátiť platbu",
+    "refundRemaining": "Možné vrátiť",
+    "refundedSoFar": "Doteraz vrátené: {amount}",
+    "refundedSoFarShort": "Už vrátené",
+    "refundInvalidAmount": "Zadajte platnú sumu na vrátenie.",
+    "refundExceeds": "Suma presahuje zostatok, ktorý je možné vrátiť.",
+    "refundFailed": "Vrátenie platby zlyhalo. Skúste to znova.",
+    "refundSuccess": "Platba bola vrátená."
   },
   "admin": {
     "welcomeBack": "Vitajte späť",

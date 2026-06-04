@@ -506,7 +506,19 @@
       "printFailed": "Tiskanje ni uspelo"
     },
     "complete": "Dokončaj",
-    "clearOrders": "Počisti naročila"
+    "clearOrders": "Počisti naročila",
+    "refund": "Povračilo",
+    "refundFull": "Celotno povračilo",
+    "refundPartial": "Delno",
+    "refundAmountLabel": "Znesek za povračilo",
+    "refundConfirm": "Izvedi povračilo",
+    "refundRemaining": "Na voljo za povračilo",
+    "refundedSoFar": "Doslej vrnjeno: {amount}",
+    "refundedSoFarShort": "Že vrnjeno",
+    "refundInvalidAmount": "Vnesite veljaven znesek povračila.",
+    "refundExceeds": "Znesek presega razpoložljivo stanje za povračilo.",
+    "refundFailed": "Povračilo ni uspelo. Poskusite znova.",
+    "refundSuccess": "Povračilo je bilo izvedeno."
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",

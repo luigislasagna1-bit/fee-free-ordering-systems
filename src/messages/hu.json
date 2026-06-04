@@ -506,7 +506,19 @@
       "printFailed": "Nyomtatás sikertelen"
     },
     "complete": "Teljesítés",
-    "clearOrders": "Rendelések törlése"
+    "clearOrders": "Rendelések törlése",
+    "refund": "Visszatérítés",
+    "refundFull": "Teljes visszatérítés",
+    "refundPartial": "Részleges",
+    "refundAmountLabel": "Visszatérítendő összeg",
+    "refundConfirm": "Visszatérítés kiadása",
+    "refundRemaining": "Visszatéríthető",
+    "refundedSoFar": "Eddig visszatérítve: {amount}",
+    "refundedSoFarShort": "Már visszatérítve",
+    "refundInvalidAmount": "Adjon meg érvényes visszatérítési összeget.",
+    "refundExceeds": "Az összeg meghaladja a visszatéríthető egyenleget.",
+    "refundFailed": "A visszatérítés sikertelen. Kérjük, próbálja újra.",
+    "refundSuccess": "Visszatérítés kiadva."
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

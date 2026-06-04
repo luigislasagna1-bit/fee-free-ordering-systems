@@ -506,7 +506,19 @@
       "printFailed": "Drucken fehlgeschlagen"
     },
     "complete": "Abschließen",
-    "clearOrders": "Bestellungen löschen"
+    "clearOrders": "Bestellungen löschen",
+    "refund": "Erstattung",
+    "refundFull": "Vollständige Erstattung",
+    "refundPartial": "Teilweise",
+    "refundAmountLabel": "Zu erstattender Betrag",
+    "refundConfirm": "Erstattung auslösen",
+    "refundRemaining": "Erstattbar",
+    "refundedSoFar": "Bisher erstattet: {amount}",
+    "refundedSoFarShort": "Bereits erstattet",
+    "refundInvalidAmount": "Geben Sie einen gültigen Erstattungsbetrag ein.",
+    "refundExceeds": "Der Betrag übersteigt das erstattbare Guthaben.",
+    "refundFailed": "Erstattung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "refundSuccess": "Erstattung ausgelöst."
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

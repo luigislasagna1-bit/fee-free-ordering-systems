@@ -506,7 +506,19 @@
       "printFailed": "Не вдалося надрукувати"
     },
     "complete": "Завершити",
-    "clearOrders": "Очистити замовлення"
+    "clearOrders": "Очистити замовлення",
+    "refund": "Повернення коштів",
+    "refundFull": "Повне повернення",
+    "refundPartial": "Часткове",
+    "refundAmountLabel": "Сума повернення",
+    "refundConfirm": "Повернути кошти",
+    "refundRemaining": "Доступно до повернення",
+    "refundedSoFar": "Уже повернено: {amount}",
+    "refundedSoFarShort": "Уже повернено",
+    "refundInvalidAmount": "Введіть дійсну суму повернення.",
+    "refundExceeds": "Сума перевищує доступний для повернення залишок.",
+    "refundFailed": "Не вдалося повернути кошти. Спробуйте ще раз.",
+    "refundSuccess": "Кошти повернено."
   },
   "admin": {
     "welcomeBack": "З поверненням",

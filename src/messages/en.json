@@ -506,7 +506,19 @@
       "printFailed": "Failed to print"
     },
     "complete": "Complete",
-    "clearOrders": "Clear orders"
+    "clearOrders": "Clear orders",
+    "refund": "Refund",
+    "refundFull": "Full refund",
+    "refundPartial": "Partial",
+    "refundAmountLabel": "Amount to refund",
+    "refundConfirm": "Issue refund",
+    "refundRemaining": "Refundable",
+    "refundedSoFar": "Refunded so far: {amount}",
+    "refundedSoFarShort": "Already refunded",
+    "refundInvalidAmount": "Enter a valid refund amount.",
+    "refundExceeds": "Amount exceeds the refundable balance.",
+    "refundFailed": "Refund failed. Please try again.",
+    "refundSuccess": "Refund issued."
   },
   "admin": {
     "comingSoonPlaceholder": {

@@ -506,7 +506,19 @@
       "printFailed": "การพิมพ์ล้มเหลว"
     },
     "complete": "เสร็จสิ้น",
-    "clearOrders": "ล้างออเดอร์"
+    "clearOrders": "ล้างออเดอร์",
+    "refund": "คืนเงิน",
+    "refundFull": "คืนเงินเต็มจำนวน",
+    "refundPartial": "บางส่วน",
+    "refundAmountLabel": "จำนวนเงินที่จะคืน",
+    "refundConfirm": "ดำเนินการคืนเงิน",
+    "refundRemaining": "คืนเงินได้",
+    "refundedSoFar": "คืนเงินไปแล้ว: {amount}",
+    "refundedSoFarShort": "คืนเงินไปแล้ว",
+    "refundInvalidAmount": "กรุณากรอกจำนวนเงินที่จะคืนให้ถูกต้อง",
+    "refundExceeds": "จำนวนเงินเกินยอดที่สามารถคืนได้",
+    "refundFailed": "การคืนเงินล้มเหลว กรุณาลองใหม่อีกครั้ง",
+    "refundSuccess": "ดำเนินการคืนเงินเรียบร้อยแล้ว"
   },
   "admin": {
     "welcomeBack": "ยินดีต้อนรับกลับ",

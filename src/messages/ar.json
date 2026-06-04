@@ -506,7 +506,19 @@
       "printFailed": "فشلت الطباعة"
     },
     "complete": "اكتمل",
-    "clearOrders": "مسح الطلبات"
+    "clearOrders": "مسح الطلبات",
+    "refund": "استرداد المبلغ",
+    "refundFull": "استرداد كامل",
+    "refundPartial": "جزئي",
+    "refundAmountLabel": "المبلغ المراد استرداده",
+    "refundConfirm": "إصدار الاسترداد",
+    "refundRemaining": "قابل للاسترداد",
+    "refundedSoFar": "المسترد حتى الآن: {amount}",
+    "refundedSoFarShort": "تم استرداده مسبقًا",
+    "refundInvalidAmount": "أدخل مبلغ استرداد صالحًا.",
+    "refundExceeds": "المبلغ يتجاوز الرصيد القابل للاسترداد.",
+    "refundFailed": "فشل الاسترداد. يرجى المحاولة مرة أخرى.",
+    "refundSuccess": "تم إصدار الاسترداد."
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",

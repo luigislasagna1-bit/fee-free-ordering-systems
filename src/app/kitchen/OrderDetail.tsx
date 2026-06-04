@@ -66,6 +66,20 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
   const [delayMinutes, setDelayMinutes] = useState<number>(10);
   const [delayReason, setDelayReason] = useState("");
   const [delaying, setDelaying] = useState(false);
+  // ── Refund (Refund Offer) state ──────────────────────────────────────
+  // Card (Stripe) orders that are captured ("paid") can be partially or
+  // fully refunded from here. Hits POST /api/orders/[id]/refund which runs
+  // on the restaurant's own Stripe key. Parent poll refreshes the badge.
+  const [showRefund, setShowRefund] = useState(false);
+  const [refundMode, setRefundMode] = useState<"full" | "partial">("full");
+  const [refundAmount, setRefundAmount] = useState("");
+  const [refunding, setRefunding] = useState(false);
+  const alreadyRefunded = order.refundedAmount ?? 0;
+  const refundRemaining = Math.max(0, order.total - alreadyRefunded);
+  const canRefund =
+    order.paymentMethod === "card" &&
+    (order.paymentStatus === "paid" || order.paymentStatus === "partially_refunded") &&
+    refundRemaining > 0.005;
 
   // ── Live countdown to estimatedReady ──────────────────────────────
   // Re-render once per second while the order is `accepted` so the
@@ -122,6 +136,40 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
   const act = async (fn: () => Promise<void>) => {
     setBusy(true);
     try { await fn(); } finally { setBusy(false); }
+  };
+
+  const submitRefund = async () => {
+    const isPartial = refundMode === "partial";
+    const amt = isPartial ? parseFloat(refundAmount) : refundRemaining;
+    if (isPartial && (!Number.isFinite(amt) || amt <= 0)) {
+      toast.error(tk("refundInvalidAmount"));
+      return;
+    }
+    if (amt > refundRemaining + 0.005) {
+      toast.error(tk("refundExceeds"));
+      return;
+    }
+    setRefunding(true);
+    try {
+      const res = await fetch(`/api/orders/${order.id}/refund`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(isPartial ? { amount: amt } : { full: true }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        toast.error(data.error || tk("refundFailed"));
+        return;
+      }
+      toast.success(tk("refundSuccess"));
+      setShowRefund(false);
+      setRefundAmount("");
+      setRefundMode("full");
+    } catch {
+      toast.error(tk("refundFailed"));
+    } finally {
+      setRefunding(false);
+    }
   };
 
   const print = async (type: "kitchen" | "customer" | "both") => {
@@ -427,6 +475,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                 {order.refundStatus && (
                   <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
                     order.refundStatus === "refunded" ? "bg-blue-500/20 text-blue-600" :
+                    order.refundStatus === "partial" ? "bg-blue-500/20 text-blue-600" :
                     order.refundStatus === "pending" ? "bg-yellow-500/20 text-yellow-700" :
                     "bg-red-500/20 text-red-600"
                   }`}>
@@ -434,6 +483,11 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                   </span>
                 )}
               </div>
+              {alreadyRefunded > 0 && (
+                <div className={`text-xs ${t.muted}`}>
+                  {tk("refundedSoFar", { amount: formatCurrency(alreadyRefunded) })}
+                </div>
+              )}
             </div>
           </Section>
         </div>
@@ -502,6 +556,16 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           <PrintBtn label={tk("print")} icon={<ReceiptText className="w-3.5 h-3.5" />} onClick={() => print("customer")} loading={printing === "customer"} t={t} />
           <PrintBtn label={tCommon("all")} icon={<RefreshCw className="w-3.5 h-3.5" />} onClick={() => print("both")} loading={printing === "both"} t={t} />
         </div>
+
+        {/* Refund (card orders that have captured money) */}
+        {canRefund && (
+          <button
+            onClick={() => { setRefundMode("full"); setRefundAmount(""); setShowRefund(true); }}
+            className={`w-full flex items-center justify-center gap-1.5 border ${t.border} ${t.btn} hover:text-blue-600 font-semibold py-2 rounded-xl text-sm transition`}
+          >
+            <RefreshCw className="w-4 h-4" /> {tk("refund")}
+          </button>
+        )}
 
         {/* Cancel */}
         {!["completed", "rejected", "cancelled"].includes(order.status) && (
@@ -607,6 +671,64 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               {delaying ? "Saving…" : `Delay by ${delayMinutes || 0} min`}
             </button>
             <button onClick={() => setShowDelay(false)} className={`flex-1 ${t.btn} py-2.5 rounded-xl text-sm transition`}>
+              {tCommon("back")}
+            </button>
+          </div>
+        </Modal>
+      )}
+
+      {/* Refund modal — full or partial refund of a captured card order.
+          Runs on the restaurant's own Stripe key (key-only model). */}
+      {showRefund && (
+        <Modal title={tk("refund")} t={t} onClose={() => setShowRefund(false)}>
+          <div className={`text-sm ${t.muted} mb-3 space-y-0.5`}>
+            <div className="flex justify-between"><span>{tCommon("total")}</span><span className={t.text}>{formatCurrency(order.total)}</span></div>
+            {alreadyRefunded > 0 && (
+              <div className="flex justify-between"><span>{tk("refundedSoFarShort")}</span><span className={t.text}>−{formatCurrency(alreadyRefunded)}</span></div>
+            )}
+            <div className="flex justify-between font-semibold"><span>{tk("refundRemaining")}</span><span className={t.text}>{formatCurrency(refundRemaining)}</span></div>
+          </div>
+          <div className="grid grid-cols-2 gap-2 mb-3">
+            <button
+              type="button"
+              onClick={() => setRefundMode("full")}
+              className={`py-2 rounded-lg text-sm font-bold transition ${refundMode === "full" ? "bg-blue-500 text-white" : t.btn}`}
+            >
+              {tk("refundFull")}
+            </button>
+            <button
+              type="button"
+              onClick={() => setRefundMode("partial")}
+              className={`py-2 rounded-lg text-sm font-bold transition ${refundMode === "partial" ? "bg-blue-500 text-white" : t.btn}`}
+            >
+              {tk("refundPartial")}
+            </button>
+          </div>
+          {refundMode === "partial" && (
+            <div className="mb-4">
+              <label className={`text-xs ${t.muted} block mb-1`}>{tk("refundAmountLabel")}</label>
+              <input
+                type="number"
+                min={0.01}
+                max={refundRemaining}
+                step={0.01}
+                value={refundAmount}
+                onChange={(e) => setRefundAmount(e.target.value)}
+                placeholder={refundRemaining.toFixed(2)}
+                className={`w-full rounded-xl px-3 py-2 text-sm border ${t.input} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              />
+            </div>
+          )}
+          <div className="flex gap-3">
+            <button
+              onClick={submitRefund}
+              disabled={refunding}
+              className="flex-1 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2"
+            >
+              {refunding ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+              {refunding ? tCommon("loading") : tk("refundConfirm")}
+            </button>
+            <button onClick={() => setShowRefund(false)} className={`flex-1 ${t.btn} py-2.5 rounded-xl text-sm transition`}>
               {tCommon("back")}
             </button>
           </div>

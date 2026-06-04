@@ -506,7 +506,19 @@
       "printFailed": "Error en imprimir"
     },
     "complete": "Completar",
-    "clearOrders": "Esborrar comandes"
+    "clearOrders": "Esborrar comandes",
+    "refund": "Reemborsament",
+    "refundFull": "Reemborsament total",
+    "refundPartial": "Parcial",
+    "refundAmountLabel": "Import a reemborsar",
+    "refundConfirm": "Emetre reemborsament",
+    "refundRemaining": "Reemborsable",
+    "refundedSoFar": "Reemborsat fins ara: {amount}",
+    "refundedSoFarShort": "Ja reemborsat",
+    "refundInvalidAmount": "Introduïu un import de reemborsament vàlid.",
+    "refundExceeds": "L'import supera el saldo reemborsable.",
+    "refundFailed": "El reemborsament ha fallat. Torneu-ho a provar.",
+    "refundSuccess": "Reemborsament emès."
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

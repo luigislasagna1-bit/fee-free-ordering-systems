@@ -506,7 +506,19 @@
       "printFailed": "Ispis nije uspio"
     },
     "complete": "Završi",
-    "clearOrders": "Obriši narudžbe"
+    "clearOrders": "Obriši narudžbe",
+    "refund": "Povrat sredstava",
+    "refundFull": "Puni povrat",
+    "refundPartial": "Djelomični",
+    "refundAmountLabel": "Iznos za povrat",
+    "refundConfirm": "Izvrši povrat",
+    "refundRemaining": "Moguć povrat",
+    "refundedSoFar": "Dosad vraćeno: {amount}",
+    "refundedSoFarShort": "Već vraćeno",
+    "refundInvalidAmount": "Unesite valjani iznos povrata.",
+    "refundExceeds": "Iznos premašuje raspoloživi iznos za povrat.",
+    "refundFailed": "Povrat nije uspio. Pokušajte ponovno.",
+    "refundSuccess": "Povrat je izvršen."
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",

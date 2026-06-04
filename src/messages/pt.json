@@ -506,7 +506,19 @@
       "printFailed": "Falha na impressão"
     },
     "complete": "Pronto",
-    "clearOrders": "Limpar pedidos"
+    "clearOrders": "Limpar pedidos",
+    "refund": "Reembolso",
+    "refundFull": "Reembolso total",
+    "refundPartial": "Parcial",
+    "refundAmountLabel": "Montante a reembolsar",
+    "refundConfirm": "Emitir reembolso",
+    "refundRemaining": "Reembolsável",
+    "refundedSoFar": "Reembolsado até agora: {amount}",
+    "refundedSoFarShort": "Já reembolsado",
+    "refundInvalidAmount": "Introduza um montante de reembolso válido.",
+    "refundExceeds": "O montante excede o saldo reembolsável.",
+    "refundFailed": "O reembolso falhou. Tente novamente.",
+    "refundSuccess": "Reembolso emitido."
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",

@@ -506,7 +506,19 @@
       "printFailed": "Ошибка печати"
     },
     "complete": "Завершить",
-    "clearOrders": "Очистить заказы"
+    "clearOrders": "Очистить заказы",
+    "refund": "Возврат",
+    "refundFull": "Полный возврат",
+    "refundPartial": "Частичный",
+    "refundAmountLabel": "Сумма возврата",
+    "refundConfirm": "Оформить возврат",
+    "refundRemaining": "Доступно к возврату",
+    "refundedSoFar": "Возвращено: {amount}",
+    "refundedSoFarShort": "Уже возвращено",
+    "refundInvalidAmount": "Введите корректную сумму возврата.",
+    "refundExceeds": "Сумма превышает доступный остаток для возврата.",
+    "refundFailed": "Не удалось выполнить возврат. Попробуйте ещё раз.",
+    "refundSuccess": "Возврат оформлен."
   },
   "admin": {
     "welcomeBack": "С возвращением",

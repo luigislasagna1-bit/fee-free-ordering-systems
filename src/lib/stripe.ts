@@ -580,13 +580,25 @@ export async function refundDirectPayment(params: {
   paymentIntentId: string;
   restaurantId: string;
   reason?: "duplicate" | "fraudulent" | "requested_by_customer";
+  /** Minor units (cents) to refund for a PARTIAL refund. Omit for a full
+   *  refund of the remaining capturable amount. */
+  amountCents?: number;
+  /** Stripe idempotency key — guards against a double-click issuing two
+   *  refunds for the same money. */
+  idempotencyKey?: string;
 }): Promise<{ id: string; status: string | null }> {
   const rs = await getRestaurantStripe(params.restaurantId);
   if (!rs) throw new Error("Restaurant has not configured Stripe card payments");
-  const refund = await rs.client.refunds.create({
-    payment_intent: params.paymentIntentId,
-    reason: params.reason,
-  });
+  const refund = await rs.client.refunds.create(
+    {
+      payment_intent: params.paymentIntentId,
+      reason: params.reason,
+      ...(params.amountCents && params.amountCents > 0
+        ? { amount: Math.round(params.amountCents) }
+        : {}),
+    },
+    params.idempotencyKey ? { idempotencyKey: params.idempotencyKey } : undefined,
+  );
   return { id: refund.id, status: refund.status };
 }
 

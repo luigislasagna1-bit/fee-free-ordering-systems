@@ -506,7 +506,19 @@
       "printFailed": "Imprimarea a eșuat"
     },
     "complete": "Finalizează",
-    "clearOrders": "Șterge comenzile"
+    "clearOrders": "Șterge comenzile",
+    "refund": "Rambursare",
+    "refundFull": "Rambursare integrală",
+    "refundPartial": "Parțială",
+    "refundAmountLabel": "Sumă de rambursat",
+    "refundConfirm": "Emite rambursarea",
+    "refundRemaining": "Rambursabil",
+    "refundedSoFar": "Rambursat până acum: {amount}",
+    "refundedSoFarShort": "Deja rambursat",
+    "refundInvalidAmount": "Introduceți o sumă de rambursare validă.",
+    "refundExceeds": "Suma depășește soldul rambursabil.",
+    "refundFailed": "Rambursarea a eșuat. Încercați din nou.",
+    "refundSuccess": "Rambursare emisă."
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

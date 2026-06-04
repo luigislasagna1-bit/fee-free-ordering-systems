@@ -506,7 +506,19 @@
       "printFailed": "Tulostus epäonnistui"
     },
     "complete": "Suorita",
-    "clearOrders": "Tyhjennä tilaukset"
+    "clearOrders": "Tyhjennä tilaukset",
+    "refund": "Hyvitä",
+    "refundFull": "Täysi hyvitys",
+    "refundPartial": "Osittainen",
+    "refundAmountLabel": "Hyvitettävä summa",
+    "refundConfirm": "Tee hyvitys",
+    "refundRemaining": "Hyvitettävissä",
+    "refundedSoFar": "Hyvitetty tähän mennessä: {amount}",
+    "refundedSoFarShort": "Jo hyvitetty",
+    "refundInvalidAmount": "Anna kelvollinen hyvityssumma.",
+    "refundExceeds": "Summa ylittää hyvitettävän saldon.",
+    "refundFailed": "Hyvitys epäonnistui. Yritä uudelleen.",
+    "refundSuccess": "Hyvitys tehty."
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

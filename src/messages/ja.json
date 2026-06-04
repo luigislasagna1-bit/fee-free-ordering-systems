@@ -506,7 +506,19 @@
       "printFailed": "印刷に失敗しました"
     },
     "complete": "完了",
-    "clearOrders": "注文をクリア"
+    "clearOrders": "注文をクリア",
+    "refund": "返金",
+    "refundFull": "全額返金",
+    "refundPartial": "一部",
+    "refundAmountLabel": "返金額",
+    "refundConfirm": "返金する",
+    "refundRemaining": "返金可能額",
+    "refundedSoFar": "返金済み: {amount}",
+    "refundedSoFarShort": "返金済み",
+    "refundInvalidAmount": "有効な返金額を入力してください。",
+    "refundExceeds": "金額が返金可能残高を超えています。",
+    "refundFailed": "返金に失敗しました。もう一度お試しください。",
+    "refundSuccess": "返金を処理しました。"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

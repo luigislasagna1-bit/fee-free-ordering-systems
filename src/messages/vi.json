@@ -506,7 +506,19 @@
       "printFailed": "In thất bại"
     },
     "complete": "Hoàn thành",
-    "clearOrders": "Xóa đơn"
+    "clearOrders": "Xóa đơn",
+    "refund": "Hoàn tiền",
+    "refundFull": "Hoàn toàn bộ",
+    "refundPartial": "Một phần",
+    "refundAmountLabel": "Số tiền cần hoàn",
+    "refundConfirm": "Thực hiện hoàn tiền",
+    "refundRemaining": "Có thể hoàn",
+    "refundedSoFar": "Đã hoàn cho đến nay: {amount}",
+    "refundedSoFarShort": "Đã hoàn tiền",
+    "refundInvalidAmount": "Vui lòng nhập số tiền hoàn hợp lệ.",
+    "refundExceeds": "Số tiền vượt quá số dư có thể hoàn.",
+    "refundFailed": "Hoàn tiền thất bại. Vui lòng thử lại.",
+    "refundSuccess": "Đã thực hiện hoàn tiền."
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

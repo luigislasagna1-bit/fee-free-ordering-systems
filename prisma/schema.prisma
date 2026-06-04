@@ -756,7 +756,12 @@ model Order {
   paypalOrderId         String?
   paypalAuthorizationId String?
   paypalCaptureId       String?
-  refundStatus          String? // null | "pending" | "refunded" | "failed"
+  refundStatus          String? // null | "pending" | "refunded" | "partial" | "failed"
+  /// Cumulative amount refunded to the customer (major currency units, e.g.
+  /// euros) via the manual Refund action. null/0 = nothing refunded yet.
+  /// A partial refund leaves the order paymentStatus "partially_refunded";
+  /// a full refund (refundedAmount >= total) sets paymentStatus "refunded".
+  refundedAmount        Float?
   /// Set when the order has been "released" to the kitchen + customer
   /// (i.e. notifications fired, kitchen display picks it up). For cash
   /// orders this is set immediately in /api/orders POST. For online-card

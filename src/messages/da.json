@@ -506,7 +506,19 @@
       "printFailed": "Udskrivning mislykkedes"
     },
     "complete": "Afslut",
-    "clearOrders": "Ryd ordrer"
+    "clearOrders": "Ryd ordrer",
+    "refund": "Refunder",
+    "refundFull": "Fuld refusion",
+    "refundPartial": "Delvis",
+    "refundAmountLabel": "Beløb til refusion",
+    "refundConfirm": "Udsted refusion",
+    "refundRemaining": "Refunderbart",
+    "refundedSoFar": "Refunderet indtil videre: {amount}",
+    "refundedSoFarShort": "Allerede refunderet",
+    "refundInvalidAmount": "Indtast et gyldigt refusionsbeløb.",
+    "refundExceeds": "Beløbet overstiger den refunderbare saldo.",
+    "refundFailed": "Refusion mislykkedes. Prøv igen.",
+    "refundSuccess": "Refusion udstedt."
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",

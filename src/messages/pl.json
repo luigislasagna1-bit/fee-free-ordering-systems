@@ -506,7 +506,19 @@
       "printFailed": "Drukowanie nie powiodło się"
     },
     "complete": "Zakończ",
-    "clearOrders": "Wyczyść zamówienia"
+    "clearOrders": "Wyczyść zamówienia",
+    "refund": "Zwrot",
+    "refundFull": "Pełny zwrot",
+    "refundPartial": "Częściowy",
+    "refundAmountLabel": "Kwota do zwrotu",
+    "refundConfirm": "Wykonaj zwrot",
+    "refundRemaining": "Do zwrotu",
+    "refundedSoFar": "Zwrócono dotychczas: {amount}",
+    "refundedSoFarShort": "Już zwrócono",
+    "refundInvalidAmount": "Podaj prawidłową kwotę zwrotu.",
+    "refundExceeds": "Kwota przekracza saldo dostępne do zwrotu.",
+    "refundFailed": "Zwrot nie powiódł się. Spróbuj ponownie.",
+    "refundSuccess": "Zwrot został wykonany."
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

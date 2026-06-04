@@ -13,6 +13,7 @@ export function paymentStatusLabel(status: string | null | undefined): {
     case "paid":             return { label: "PAID",                       tone: "green" };
     case "authorized":       return { label: "AUTHORIZED",                 tone: "green" };
     case "refunded":         return { label: "REFUNDED",                   tone: "blue" };
+    case "partially_refunded": return { label: "PARTIALLY REFUNDED",       tone: "blue" };
     case "voided":           return { label: "VOIDED",                     tone: "gray" };
     case "failed":           return { label: "FAILED",                     tone: "red" };
     case "requires_action":  return { label: "AWAITING AUTHENTICATION",    tone: "yellow" };
@@ -55,6 +56,9 @@ export type Order = {
   rejectedAt: string | null;
   rejectionReason: string | null;
   refundStatus: string | null;
+  /** Cumulative amount refunded so far (major currency units). Drives the
+   *  Refund modal's "remaining" calc + the partial-refund badge. */
+  refundedAmount: number | null;
   subtotal: number;
   taxAmount: number;
   deliveryFee: number;

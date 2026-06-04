@@ -506,7 +506,19 @@
       "printFailed": "Yazdırma başarısız"
     },
     "complete": "Tamamla",
-    "clearOrders": "Siparişleri Temizle"
+    "clearOrders": "Siparişleri Temizle",
+    "refund": "İade",
+    "refundFull": "Tam iade",
+    "refundPartial": "Kısmi",
+    "refundAmountLabel": "İade edilecek tutar",
+    "refundConfirm": "İade yap",
+    "refundRemaining": "İade edilebilir",
+    "refundedSoFar": "Şu ana kadar iade edilen: {amount}",
+    "refundedSoFarShort": "Zaten iade edildi",
+    "refundInvalidAmount": "Geçerli bir iade tutarı girin.",
+    "refundExceeds": "Tutar, iade edilebilir bakiyeyi aşıyor.",
+    "refundFailed": "İade başarısız oldu. Lütfen tekrar deneyin.",
+    "refundSuccess": "İade yapıldı."
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

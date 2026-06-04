@@ -506,7 +506,19 @@
       "printFailed": "Druka neizdevās"
     },
     "complete": "Pabeigt",
-    "clearOrders": "Iztīrīt pasūtījumus"
+    "clearOrders": "Iztīrīt pasūtījumus",
+    "refund": "Atmaksa",
+    "refundFull": "Pilna atmaksa",
+    "refundPartial": "Daļēja",
+    "refundAmountLabel": "Atmaksājamā summa",
+    "refundConfirm": "Veikt atmaksu",
+    "refundRemaining": "Atmaksājams",
+    "refundedSoFar": "Līdz šim atmaksāts: {amount}",
+    "refundedSoFarShort": "Jau atmaksāts",
+    "refundInvalidAmount": "Ievadiet derīgu atmaksas summu.",
+    "refundExceeds": "Summa pārsniedz atmaksājamo atlikumu.",
+    "refundFailed": "Atmaksa neizdevās. Lūdzu, mēģiniet vēlreiz.",
+    "refundSuccess": "Atmaksa veikta."
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

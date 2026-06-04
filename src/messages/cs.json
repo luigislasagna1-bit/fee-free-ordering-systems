@@ -506,7 +506,19 @@
       "printFailed": "Tisk se nezdařil"
     },
     "complete": "Dokončit",
-    "clearOrders": "Vymazat objednávky"
+    "clearOrders": "Vymazat objednávky",
+    "refund": "Vrátit platbu",
+    "refundFull": "Plná refundace",
+    "refundPartial": "Částečná",
+    "refundAmountLabel": "Částka k vrácení",
+    "refundConfirm": "Vrátit platbu",
+    "refundRemaining": "K vrácení",
+    "refundedSoFar": "Dosud vráceno: {amount}",
+    "refundedSoFarShort": "Již vráceno",
+    "refundInvalidAmount": "Zadejte platnou částku k vrácení.",
+    "refundExceeds": "Částka přesahuje zůstatek, který lze vrátit.",
+    "refundFailed": "Vrácení platby se nezdařilo. Zkuste to prosím znovu.",
+    "refundSuccess": "Platba byla vrácena."
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",

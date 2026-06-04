@@ -506,7 +506,19 @@
       "printFailed": "Αποτυχία εκτύπωσης"
     },
     "complete": "Ολοκλήρωση",
-    "clearOrders": "Εκκαθάριση παραγγελιών"
+    "clearOrders": "Εκκαθάριση παραγγελιών",
+    "refund": "Επιστροφή χρημάτων",
+    "refundFull": "Πλήρης επιστροφή",
+    "refundPartial": "Μερική",
+    "refundAmountLabel": "Ποσό προς επιστροφή",
+    "refundConfirm": "Έκδοση επιστροφής",
+    "refundRemaining": "Επιστρέψιμο",
+    "refundedSoFar": "Επιστράφηκαν έως τώρα: {amount}",
+    "refundedSoFarShort": "Ήδη επιστράφηκαν",
+    "refundInvalidAmount": "Εισαγάγετε έγκυρο ποσό επιστροφής.",
+    "refundExceeds": "Το ποσό υπερβαίνει το επιστρέψιμο υπόλοιπο.",
+    "refundFailed": "Η επιστροφή χρημάτων απέτυχε. Δοκιμάστε ξανά.",
+    "refundSuccess": "Η επιστροφή χρημάτων εκδόθηκε."
   },
   "admin": {
     "welcomeBack": "Καλώς ορίσατε",

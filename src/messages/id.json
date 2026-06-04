@@ -506,7 +506,19 @@
       "printFailed": "Gagal mencetak"
     },
     "complete": "Selesai",
-    "clearOrders": "Bersihkan pesanan"
+    "clearOrders": "Bersihkan pesanan",
+    "refund": "Pengembalian dana",
+    "refundFull": "Pengembalian penuh",
+    "refundPartial": "Sebagian",
+    "refundAmountLabel": "Jumlah yang dikembalikan",
+    "refundConfirm": "Proses pengembalian dana",
+    "refundRemaining": "Dapat dikembalikan",
+    "refundedSoFar": "Sudah dikembalikan: {amount}",
+    "refundedSoFarShort": "Sudah dikembalikan",
+    "refundInvalidAmount": "Masukkan jumlah pengembalian dana yang valid.",
+    "refundExceeds": "Jumlah melebihi saldo yang dapat dikembalikan.",
+    "refundFailed": "Pengembalian dana gagal. Silakan coba lagi.",
+    "refundSuccess": "Pengembalian dana diproses."
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

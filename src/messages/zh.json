@@ -506,7 +506,19 @@
       "printFailed": "打印失败"
     },
     "complete": "完成",
-    "clearOrders": "清除订单"
+    "clearOrders": "清除订单",
+    "refund": "退款",
+    "refundFull": "全额退款",
+    "refundPartial": "部分",
+    "refundAmountLabel": "退款金额",
+    "refundConfirm": "发起退款",
+    "refundRemaining": "可退款",
+    "refundedSoFar": "已退款：{amount}",
+    "refundedSoFarShort": "已退款",
+    "refundInvalidAmount": "请输入有效的退款金额。",
+    "refundExceeds": "金额超出可退款余额。",
+    "refundFailed": "退款失败。请重试。",
+    "refundSuccess": "退款已发起。"
   },
   "admin": {
     "welcomeBack": "欢迎回来",
