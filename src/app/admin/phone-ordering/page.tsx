@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Phone, Sparkles, Mic, Bot, Clock, ArrowRight, Rocket } from "lucide-react";
 import { getSessionUser } from "@/lib/session";
+import { getTranslations } from "next-intl/server";
 
 /**
  * Phone Ordering — "Coming Soon" teaser page.
@@ -31,6 +32,8 @@ export default async function PhoneOrderingPage() {
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
 
+  const t = await getTranslations("admin.phoneOrderingPage");
+
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div>
@@ -38,7 +41,7 @@ export default async function PhoneOrderingPage() {
           href="/admin"
           className="text-sm text-gray-600 hover:text-gray-900"
         >
-          &larr; Back to admin
+          &larr; {t("backToAdmin")}
         </Link>
         <div className="flex items-center gap-3 mt-2">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white flex items-center justify-center shadow-md">
@@ -46,14 +49,14 @@ export default async function PhoneOrderingPage() {
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-2xl font-bold text-gray-900">Automated Phone Ordering</h1>
+              <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
               <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
                 <Rocket className="w-3 h-3" />
-                Coming Soon
+                {t("comingSoon")}
               </span>
             </div>
             <p className="text-sm text-gray-600 mt-1">
-              An AI agent that answers your restaurant&apos;s phone 24/7, takes orders, and drops them straight into your kitchen display.
+              {t("pageSubtitle")}
             </p>
           </div>
         </div>
@@ -63,29 +66,26 @@ export default async function PhoneOrderingPage() {
       <div className="rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-blue-600 text-white p-6 sm:p-8 shadow-lg">
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider opacity-90 mb-2">
           <Sparkles className="w-4 h-4" />
-          In active development
+          {t("heroBadge")}
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-          Never miss another phone order
+          {t("heroHeadline")}
         </h2>
         <p className="mt-3 text-white/90 text-sm sm:text-base leading-relaxed max-w-2xl">
-          Every call answered, every order taken, every time — even during your busiest rush.
-          Our AI agent handles the phone so your staff can focus on the food. Orders flow
-          directly into your kitchen display alongside online orders. Customers get the
-          same fast, friendly experience whether they tap or talk.
+          {t("heroBody")}
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
           <div className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium">
             <Clock className="w-3.5 h-3.5" />
-            Available 24/7
+            {t("chip247")}
           </div>
           <div className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium">
             <Bot className="w-3.5 h-3.5" />
-            Trained on your menu
+            {t("chipMenuTrained")}
           </div>
           <div className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium">
             <Mic className="w-3.5 h-3.5" />
-            Natural conversation
+            {t("chipNaturalConversation")}
           </div>
         </div>
       </div>
@@ -94,23 +94,23 @@ export default async function PhoneOrderingPage() {
       <div className="grid md:grid-cols-2 gap-4">
         <FeatureCard
           icon={<Phone className="w-5 h-5" />}
-          title="Dedicated phone number"
-          body="Get a local number for your restaurant — keep your existing line for emergencies, or forward it to ours during busy hours."
+          title={t("featurePhoneTitle")}
+          body={t("featurePhoneBody")}
         />
         <FeatureCard
           icon={<Bot className="w-5 h-5" />}
-          title="Menu-aware AI"
-          body="The agent knows every item, every modifier, every variant on your menu. Pricing, allergens, prep time — all answered correctly, every time."
+          title={t("featureAiTitle")}
+          body={t("featureAiBody")}
         />
         <FeatureCard
           icon={<Mic className="w-5 h-5" />}
-          title="Sounds human"
-          body="Natural conversation, not a robotic phone tree. Customers won't realize they're talking to AI. Handles accents, background noise, and the inevitable &quot;wait can you change that to&quot;."
+          title={t("featureVoiceTitle")}
+          body={t("featureVoiceBody")}
         />
         <FeatureCard
           icon={<Sparkles className="w-5 h-5" />}
-          title="Same kitchen flow"
-          body="Phone orders land in your existing kitchen display alongside online orders. No new app, no new training — your team accepts them the same way."
+          title={t("featureKitchenTitle")}
+          body={t("featureKitchenBody")}
         />
       </div>
 
@@ -118,25 +118,20 @@ export default async function PhoneOrderingPage() {
       <div className="rounded-xl border border-amber-200 bg-amber-50 p-5">
         <h3 className="font-bold text-amber-900 mb-2 flex items-center gap-2">
           <Rocket className="w-4 h-4" />
-          Where this stands today
+          {t("statusHeading")}
         </h3>
         <p className="text-sm text-amber-900 leading-relaxed">
-          We&apos;re heads-down building the foundation. The voice agent, the Twilio
-          integration, the kitchen handoff — all in active development. We expect
-          to roll this out to early-access restaurants soon after the main platform
-          launches.
+          {t("statusBody1")}
         </p>
         <p className="text-sm text-amber-900 leading-relaxed mt-2">
-          When it&apos;s ready you&apos;ll be able to subscribe to it from your
-          billing page like any other add-on. Until then this page is just a heads-up
-          that it&apos;s coming.
+          {t("statusBody2")}
         </p>
         <div className="mt-4">
           <Link
             href="/admin/billing/add-ons"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-700 hover:text-amber-900 transition"
           >
-            See the full add-on catalog
+            {t("addonCatalogLink")}
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

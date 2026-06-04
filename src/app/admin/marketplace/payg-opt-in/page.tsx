@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { Sparkles, AlertCircle, CreditCard, CheckCircle2, Truck, ArrowRight } from "lucide-react";
@@ -30,6 +31,7 @@ export default async function PaygOptInPage({
 }: {
   searchParams: Promise<{ card_saved?: string }>;
 }) {
+  const t = await getTranslations("admin.paygOptInPage");
   const user = await getSessionUser();
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
@@ -103,15 +105,14 @@ export default async function PaygOptInPage({
     <div className="max-w-2xl mx-auto p-4 sm:p-6 space-y-6">
       <div>
         <Link href="/admin/marketplace" className="text-sm text-gray-600 hover:text-gray-900">
-          &larr; Back
+          &larr; {t("backLink")}
         </Link>
         <h1 className="text-2xl font-bold text-gray-900 mt-2 flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-emerald-500" />
-          Pay-as-you-go Marketplace
+          {t("pageTitle")}
         </h1>
         <p className="text-sm text-gray-600 mt-1">
-          No subscription. You only pay when customers actually order through
-          our marketplace. Opt out any time.
+          {t("pageSubtitle")}
         </p>
       </div>
 
@@ -130,16 +131,16 @@ export default async function PaygOptInPage({
             <div className="flex-1 min-w-0">
               <h2 className="font-bold text-red-900">
                 {eligibility.reason === "not_published"
-                  ? "Publish your restaurant first"
+                  ? t("eligibility.notPublished")
                   : eligibility.reason === "needs_online_payments"
-                  ? "Online card payments required"
+                  ? t("eligibility.needsOnlinePayments")
                   : eligibility.reason === "needs_stripe_connect"
-                  ? "Finish Stripe Connect setup"
+                  ? t("eligibility.needsStripeConnect")
                   : eligibility.reason === "needs_driver_pool"
-                  ? "Driver Pool add-on required"
+                  ? t("eligibility.needsDriverPool")
                   : eligibility.reason === "needs_delivery_source_set"
-                  ? "Choose a delivery source"
-                  : "Setup required before marketplace signup"}
+                  ? t("eligibility.needsDeliverySource")
+                  : t("eligibility.setupRequired")}
               </h2>
               <p className="text-sm text-red-800 mt-1 leading-relaxed">
                 {eligibility.blockerMessage}
@@ -149,7 +150,7 @@ export default async function PaygOptInPage({
                   href={eligibility.blockerHref}
                   className="mt-3 inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-lg text-sm shadow transition"
                 >
-                  Fix this <ArrowRight className="w-4 h-4" />
+                  {t("eligibility.fixThisButton")} <ArrowRight className="w-4 h-4" />
                 </Link>
               )}
             </div>
@@ -177,13 +178,13 @@ export default async function PaygOptInPage({
           <div className="flex-1 min-w-0">
             <h2 className={`font-bold ${hasCard ? "text-emerald-900" : "text-emerald-900"}`}>
               {hasCard
-                ? (justSavedCard ? "Card saved — you're ready to opt in" : "Card on file ✓")
-                : "Step 1: Add a payment method"}
+                ? (justSavedCard ? t("card.savedReady") : t("card.onFile"))
+                : t("card.step1AddCard")}
             </h2>
             <p className={`text-sm mt-0.5 leading-relaxed ${hasCard ? "text-emerald-800" : "text-emerald-800"}`}>
               {hasCard
-                ? "We'll use your saved card to auto-charge the monthly PAYG bill at the end of each billing cycle. You can update it any time from your Stripe billing portal."
-                : "PAYG bills you monthly via Stripe based on the orders you got that month. We need a card on file before you can opt in — otherwise we'd have no way to collect at month-end."}
+                ? t("card.savedDescription")
+                : t("card.noCardDescription")}
             </p>
             {!hasCard && <AddCardButton />}
           </div>
@@ -194,62 +195,55 @@ export default async function PaygOptInPage({
         !hasCard ? "opacity-60 pointer-events-none" : ""
       }`}>
         <h2 className="font-bold text-gray-900">
-          {hasCard ? "What you're agreeing to" : "Step 2: Confirm the PAYG terms"}
+          {hasCard ? t("terms.heading") : t("terms.step2Heading")}
         </h2>
 
         <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 text-xs text-blue-900 leading-relaxed">
-          💡 <strong>You picked well.</strong> We recommend Pay-As-You-Go until
-          you&apos;re consistently doing <strong>60–70 marketplace orders/month</strong>.
-          That&apos;s when Monthly ($199.99 flat, unlimited) starts saving money
-          vs. PAYG ($3 × 70 = $210). You can switch any time.
+          {t.rich("terms.pickWellNote", {
+            strong: (chunks) => <strong>{chunks}</strong>,
+          })}
         </div>
         <ul className="space-y-2 text-sm text-gray-700">
           <li className="flex items-start gap-2">
             <span className="text-emerald-500 font-bold flex-shrink-0">$0</span>
-            <span>charged today. <strong>You will NOT be charged $199.99 upfront.</strong></span>
+            <span>{t.rich("terms.chargedToday", { strong: (chunks) => <strong>{chunks}</strong> })}</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-emerald-500 font-bold flex-shrink-0">$3</span>
-            <span>per marketplace order — accrued and billed once per month after the fact via Stripe.</span>
+            <span>{t("terms.perOrder")}</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-emerald-500 font-bold flex-shrink-0">$249.99</span>
-            <span>monthly cap. Above ~83 orders/month, every additional marketplace order is <strong>free</strong>.</span>
+            <span>{t.rich("terms.monthlyCap", { strong: (chunks) => <strong>{chunks}</strong> })}</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-amber-500 font-bold flex-shrink-0">
               {tax.ratePct > 0 ? `+${tax.ratePct}%` : "0%"}
             </span>
             <span>
-              tax on top of the monthly bill ({tax.label}). All amounts in USD;
-              Canadian restaurants are charged the destination-province
-              GST/HST per CRA; US/international restaurants are tax-exempt.
+              {t("terms.taxNote", { taxLabel: tax.label })}
             </span>
           </li>
         </ul>
 
         <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3 text-xs text-emerald-900 leading-relaxed">
-          <strong className="block mb-0.5">Orders from your own website / widget stay FREE.</strong>
-          We only charge when an order originates from our Marketplace
-          app. Direct customers ordering at <code className="bg-white px-1 rounded">/order/your-slug</code> or
-          via your widget never trigger this fee.
+          <strong className="block mb-0.5">{t("terms.directOrdersFreeHeading")}</strong>
+          {t.rich("terms.directOrdersFreeBody", {
+            code: (chunks) => <code className="bg-white px-1 rounded">{chunks}</code>,
+          })}
         </div>
 
         <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 flex gap-2 text-xs text-amber-900">
           <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
-            <strong>Driver Pool is NOT included</strong> on PAYG. If you want
-            ShipDay overflow delivery, either subscribe to Driver Pool
-            ($19.99/mo) separately, or switch to the Marketplace Monthly plan
-            ($199.99/mo) where it&apos;s bundled.
+            {t.rich("terms.driverPoolNotIncluded", { strong: (chunks) => <strong>{chunks}</strong> })}
           </div>
         </div>
 
         <p className="text-[11px] text-gray-500 leading-snug">
-          By clicking the button below, you authorize Fee Free Ordering Systems
-          to bill the $3-per-order fee monthly via Stripe (capped at $249.99/month
-          plus any applicable tax) until you cancel. Opt out any time from
-          <Link href="/admin/marketplace" className="text-emerald-600 hover:underline">{" "}/admin/marketplace</Link>.
+          {t.rich("terms.authorization", {
+            link: (chunks) => <Link href="/admin/marketplace" className="text-emerald-600 hover:underline">{chunks}</Link>,
+          })}
         </p>
       </div>
 
@@ -257,29 +251,31 @@ export default async function PaygOptInPage({
         disabled={!hasCard || !eligibility.eligible}
         blockerLabel={
           !hasCard
-            ? "Add a payment method to continue"
+            ? t("blocker.addPaymentMethod")
             : !eligibility.eligible
             ? eligibility.reason === "not_published"
-              ? "Publish your restaurant first"
+              ? t("blocker.publishFirst")
               : eligibility.reason === "needs_online_payments"
-              ? "Activate Online Payments add-on first"
+              ? t("blocker.activateOnlinePayments")
               : eligibility.reason === "needs_stripe_connect"
-              ? "Finish Stripe Connect setup first"
+              ? t("blocker.finishStripeConnect")
               : eligibility.reason === "needs_driver_pool"
-              ? "Subscribe to Driver Pool first"
+              ? t("blocker.subscribeDriverPool")
               : eligibility.reason === "needs_delivery_source_set"
-              ? "Choose a delivery source first"
-              : "Resolve the issue above to continue"
+              ? t("blocker.chooseDeliverySource")
+              : t("blocker.resolveAbove")
             : undefined
         }
       />
 
       <div className="text-center text-xs text-gray-500">
-        Prefer a flat predictable bill?{" "}
-        <Link href="/admin/billing/add-ons" className="text-emerald-600 hover:underline font-semibold">
-          Subscribe to Marketplace Monthly ($199.99/mo)
-        </Link>{" "}
-        — unlimited orders, Driver Pool included, charged upfront.
+        {t.rich("monthlyUpsell", {
+          link: (chunks) => (
+            <Link href="/admin/billing/add-ons" className="text-emerald-600 hover:underline font-semibold">
+              {chunks}
+            </Link>
+          ),
+        })}
       </div>
     </div>
   );
@@ -301,13 +297,14 @@ export default async function PaygOptInPage({
  * unlimited orders, Driver Pool bundled. PAYG ($3/order) only kicks
  * in after the cycle closes; no proration, no surprise charges.
  */
-function SwitchFromMonthlyView({
+async function SwitchFromMonthlyView({
   switchPending,
   switchAt,
 }: {
   switchPending: boolean;
   switchAt: Date | null;
 }) {
+  const t = await getTranslations("admin.paygOptInPage");
   const switchDateLabel = switchAt
     ? new Date(switchAt).toLocaleDateString(undefined, {
         month: "long",
@@ -320,15 +317,14 @@ function SwitchFromMonthlyView({
     <div className="max-w-2xl mx-auto p-4 sm:p-6 space-y-6">
       <div>
         <Link href="/admin/billing" className="text-sm text-gray-600 hover:text-gray-900">
-          &larr; Back to billing
+          &larr; {t("switch.backToBilling")}
         </Link>
         <h1 className="text-2xl font-bold text-gray-900 mt-2 flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-emerald-500" />
-          Switch to Pay-As-You-Go
+          {t("switch.pageTitle")}
         </h1>
         <p className="text-sm text-gray-600 mt-1">
-          You&apos;re currently on the <strong>Monthly Unlimited</strong> plan.
-          Here&apos;s what happens when you switch.
+          {t.rich("switch.pageSubtitle", { strong: (chunks) => <strong>{chunks}</strong> })}
         </p>
       </div>
 
@@ -339,12 +335,12 @@ function SwitchFromMonthlyView({
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="font-bold text-emerald-900">Switch scheduled</h2>
+              <h2 className="font-bold text-emerald-900">{t("switch.scheduledHeading")}</h2>
               <p className="text-sm text-emerald-800 mt-1 leading-relaxed">
-                Your Monthly plan continues until <strong>{switchDateLabel ?? "the end of your current cycle"}</strong>.
-                On that date, Pay-As-You-Go kicks in automatically — $3 per
-                marketplace order, capped at $249.99/month. Your listing stays
-                live throughout; no gap in service.
+                {t.rich("switch.scheduledBody", {
+                  strong: (chunks) => <strong>{chunks}</strong>,
+                  switchDate: switchDateLabel ?? t("switch.endOfCycle"),
+                })}
               </p>
             </div>
           </div>
@@ -363,22 +359,16 @@ function SwitchFromMonthlyView({
               </div>
               <div className="flex-1 min-w-0">
                 <h2 className="font-bold text-amber-900">
-                  Driver Pool ends with the Monthly plan
+                  {t("switch.driverPoolEndsHeading")}
                 </h2>
                 <p className="text-sm text-amber-900 mt-1 leading-relaxed">
-                  Pay-As-You-Go does <strong>not</strong> include the ShipDay
-                  Driver Pool. Without an active Driver Pool subscription on
-                  the switch date, you&apos;ll lose third-party driver
-                  dispatch — and Marketplace orders, which require drivers,
-                  can&apos;t be fulfilled. Subscribe to the standalone
-                  Driver Pool add-on ($9.99/mo) before the switch date to
-                  keep things running.
+                  {t.rich("switch.driverPoolEndsBody", { strong: (chunks) => <strong>{chunks}</strong> })}
                 </p>
                 <Link
                   href="/admin/billing/add-ons#driver_pool"
                   className="inline-flex items-center gap-1.5 mt-3 px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold transition"
                 >
-                  Subscribe to Driver Pool →
+                  {t("switch.subscribeDriverPool")}
                 </Link>
               </div>
             </div>
@@ -390,40 +380,32 @@ function SwitchFromMonthlyView({
       {!switchPending && (
         <>
           <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 space-y-4">
-            <h2 className="font-bold text-gray-900">What happens when you switch</h2>
+            <h2 className="font-bold text-gray-900">{t("switch.whatHappensHeading")}</h2>
             <ul className="space-y-3 text-sm text-gray-700">
               <li className="flex items-start gap-3">
-                <span className="text-emerald-500 font-bold flex-shrink-0 w-16">Now</span>
+                <span className="text-emerald-500 font-bold flex-shrink-0 w-16">{t("switch.timelineNow")}</span>
                 <span>
-                  We schedule your Monthly subscription to cancel at the end
-                  of the current cycle. <strong>You keep Monthly benefits
-                  (unlimited orders, Driver Pool bundled) until then.</strong>
+                  {t.rich("switch.timelineNowBody", { strong: (chunks) => <strong>{chunks}</strong> })}
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-emerald-500 font-bold flex-shrink-0 w-16">
-                  {switchDateLabel ?? "Cycle end"}
+                  {switchDateLabel ?? t("switch.cycleEnd")}
                 </span>
                 <span>
-                  PAYG kicks in. From this date forward you&apos;re billed
-                  $3 per marketplace order (capped at $249.99/month). Your
-                  listing stays live — no gap in service.
+                  {t("switch.timelineSwitchDateBody")}
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-amber-500 font-bold flex-shrink-0 w-16">After</span>
+                <span className="text-amber-500 font-bold flex-shrink-0 w-16">{t("switch.timelineAfter")}</span>
                 <span>
-                  Driver Pool is no longer included. If you rely on it,
-                  subscribe to the standalone Driver Pool add-on
-                  ($19.99/mo) before the switch date.
+                  {t("switch.timelineAfterBody")}
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-blue-500 font-bold flex-shrink-0 w-16">Undo</span>
+                <span className="text-blue-500 font-bold flex-shrink-0 w-16">{t("switch.timelineUndo")}</span>
                 <span>
-                  You can undo the switch any time before the cycle ends
-                  — just click the &quot;Stay on Monthly&quot; button that
-                  appears after you confirm.
+                  {t.rich("switch.timelineUndoBody", { q: (chunks) => <>&quot;{chunks}&quot;</> })}
                 </span>
               </li>
             </ul>
@@ -432,10 +414,7 @@ function SwitchFromMonthlyView({
           <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 flex gap-2 text-xs text-amber-900">
             <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
             <div>
-              <strong>Reminder:</strong> PAYG starts billing $3 per marketplace
-              order from the switch date forward. Direct orders (your own
-              ordering page, widget, or branded mobile app) stay FREE forever
-              — PAYG only charges for the marketplace channel.
+              {t.rich("switch.reminderNote", { strong: (chunks) => <strong>{chunks}</strong> })}
             </div>
           </div>
 
@@ -444,10 +423,13 @@ function SwitchFromMonthlyView({
       )}
 
       <div className="text-center text-xs text-gray-500">
-        Changed your mind?{" "}
-        <Link href="/admin/billing" className="text-emerald-600 hover:underline font-semibold">
-          Back to billing
-        </Link>
+        {t.rich("switch.changedMind", {
+          link: (chunks) => (
+            <Link href="/admin/billing" className="text-emerald-600 hover:underline font-semibold">
+              {chunks}
+            </Link>
+          ),
+        })}
       </div>
     </div>
   );

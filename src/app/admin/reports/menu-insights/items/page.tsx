@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
@@ -26,11 +27,12 @@ export default async function MenuInsightsItemsPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const sp = await searchParams;
+  const t = await getTranslations("admin.reportMenuItems");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const range = parseDateRange(sp);
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   // groupBy the easy way — Prisma does the heavy lifting server-side.
   const rows = await prisma.orderItem.groupBy({
@@ -54,8 +56,8 @@ export default async function MenuInsightsItemsPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Menu Insights — Items</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Top 100 items by revenue · {formatRangeLabel(range)}</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+          <p className="text-sm text-gray-500 mt-0.5">{t("pageSubtitle", { rangeLabel: formatRangeLabel(range) })}</p>
         </div>
         <DateRangePicker />
       </header>
@@ -65,16 +67,16 @@ export default async function MenuInsightsItemsPage({
         <table className="w-full text-sm min-w-[640px]">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
-              <th className="py-2.5 px-4 font-semibold">Item</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Units sold</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Order lines</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Revenue</th>
-              <th className="py-2.5 px-4 font-semibold text-right">% of revenue</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colItem")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colUnitsSold")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colOrderLines")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colRevenue")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colRevenuePercent")}</th>
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 && (
-              <tr><td colSpan={5} className="py-6 px-4 text-center text-gray-400 italic">No items sold in this range.</td></tr>
+              <tr><td colSpan={5} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
             )}
             {rows.map((r) => {
               const revenue = r._sum.subtotal ?? 0;

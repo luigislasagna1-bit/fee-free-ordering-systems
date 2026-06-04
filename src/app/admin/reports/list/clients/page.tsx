@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
@@ -24,13 +25,14 @@ export default async function ListClientsPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const t = await getTranslations("admin.reportClientsList");
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const range = parseDateRange(sp);
   const page = Math.max(1, Number(Array.isArray(sp.page) ? sp.page[0] : sp.page) || 1);
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   // For "customers in range" we groupBy customerId on Order within
   // the date range, then resolve names in a second query. Two
@@ -70,8 +72,8 @@ export default async function ListClientsPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">List View — Clients</h1>
-          <p className="text-sm text-gray-500 mt-0.5">{totalCustomers.toLocaleString()} customer(s) ordered · {formatRangeLabel(range)}</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+          <p className="text-sm text-gray-500 mt-0.5">{t("customersOrderedDescription", { count: totalCustomers, rangeLabel: formatRangeLabel(range) })}</p>
         </div>
         <DateRangePicker />
       </header>
@@ -81,17 +83,17 @@ export default async function ListClientsPage({
         <table className="w-full text-sm min-w-[760px]">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
-              <th className="py-2.5 px-4 font-semibold">Customer</th>
-              <th className="py-2.5 px-4 font-semibold">Contact</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Orders in range</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Spend in range</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Lifetime orders</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Lifetime spend</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colCustomer")}</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colContact")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colOrdersInRange")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colSpendInRange")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colLifetimeOrders")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colLifetimeSpend")}</th>
             </tr>
           </thead>
           <tbody>
             {grouped.length === 0 && (
-              <tr><td colSpan={6} className="py-6 px-4 text-center text-gray-400 italic">No customers ordered in this range.</td></tr>
+              <tr><td colSpan={6} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
             )}
             {grouped.map((g) => {
               const c = byId.get(g.customerId!);
@@ -106,7 +108,7 @@ export default async function ListClientsPage({
                     <a
                       href={`/admin/customers/${c.id}`}
                       className="hover:text-emerald-700 hover:underline"
-                      title="Open in Customers (CRM) — assign coupons, notes, contact"
+                      title={t("linkTitle")}
                     >
                       {c.name}
                     </a>
@@ -131,19 +133,19 @@ export default async function ListClientsPage({
         </div>
       </div>
 
-      {pageCount > 1 && <Pagination current={page} total={pageCount} sp={sp} />}
+      {pageCount > 1 && <Pagination current={page} total={pageCount} sp={sp} t={t} />}
     </div>
   );
 }
 
-function Pagination({ current, total, sp }: { current: number; total: number; sp: Record<string, string | string[] | undefined> }) {
+function Pagination({ current, total, sp, t }: { current: number; total: number; sp: Record<string, string | string[] | undefined>; t: Awaited<ReturnType<typeof getTranslations>> }) {
   const mk = (p: number) => { const u = new URLSearchParams(buildQuery(sp)); u.set("page", String(p)); return `?${u.toString()}`; };
   return (
     <div className="flex items-center justify-between mt-4 text-xs text-gray-600">
-      <span>Page {current} of {total}</span>
+      <span>{t("paginationLabel", { current, total })}</span>
       <div className="flex gap-1">
-        {current > 1 && <a href={mk(current - 1)} className="px-3 py-1.5 rounded border border-gray-200 hover:bg-gray-50">Previous</a>}
-        {current < total && <a href={mk(current + 1)} className="px-3 py-1.5 rounded border border-gray-200 hover:bg-gray-50">Next</a>}
+        {current > 1 && <a href={mk(current - 1)} className="px-3 py-1.5 rounded border border-gray-200 hover:bg-gray-50">{t("paginationPrevious")}</a>}
+        {current < total && <a href={mk(current + 1)} className="px-3 py-1.5 rounded border border-gray-200 hover:bg-gray-50">{t("paginationNext")}</a>}
       </div>
     </div>
   );

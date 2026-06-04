@@ -5,6 +5,7 @@ import { parseDateRange, previousPeriod, eachDay, formatChartDate, formatRangeLa
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ChartTableToggle } from "@/components/admin/reports/ChartTableToggle";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
+import { getTranslations } from "next-intl/server";
 
 /**
  * /admin/reports/sales/trend
@@ -34,7 +35,9 @@ export default async function SalesTrendPage({
   const metric = pickMetric(sp.metric);
   const compare = sp.compare === "1";
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  const t = await getTranslations("admin.reportSalesTrend");
+
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   // Fetch the current-period daily orders. Same column-explicit select
   // pattern as Dashboard (avoids pulling new schema columns pre-push).
@@ -83,14 +86,14 @@ export default async function SalesTrendPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Sales Trend</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {labelForMetric(metric)} over time · {formatRangeLabel(range)}
+            {labelForMetric(metric, t)} {t("overTime")} · {formatRangeLabel(range)}
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
-          <MetricSwitcher current={metric} sp={sp} />
-          <CompareToggle on={compare} sp={sp} />
+          <MetricSwitcher current={metric} sp={sp} t={t} />
+          <CompareToggle on={compare} sp={sp} t={t} />
           <ChartTableToggle />
           <DateRangePicker />
         </div>
@@ -98,9 +101,9 @@ export default async function SalesTrendPage({
 
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 relative">
         {view === "chart" ? (
-          <ChartView rows={rows} max={maxVal} metric={metric} compare={compare} />
+          <ChartView rows={rows} max={maxVal} metric={metric} compare={compare} t={t} />
         ) : (
-          <TableView rows={rows} metric={metric} compare={compare} />
+          <TableView rows={rows} metric={metric} compare={compare} t={t} />
         )}
 
         {/* Export menu lives in the bottom-right of the card so it's
@@ -128,8 +131,8 @@ function pickMetric(raw: string | string[] | undefined): Metric {
   return "revenue";
 }
 
-function labelForMetric(m: Metric): string {
-  return m === "revenue" ? "Total revenue" : m === "orders" ? "Orders" : "Average order";
+function labelForMetric(m: Metric, t: (k: string) => string): string {
+  return m === "revenue" ? t("metricRevenue") : m === "orders" ? t("metricOrders") : t("metricAvg");
 }
 
 function valueOf(b: DayBucket, m: Metric): number {
@@ -159,12 +162,13 @@ function bucketByDay(orders: { total: number; createdAt: Date }[], days: Date[])
 }
 
 function ChartView({
-  rows, max, metric, compare,
+  rows, max, metric, compare, t,
 }: {
   rows: { cur: DayBucket; prev?: DayBucket }[];
   max: number;
   metric: Metric;
   compare: boolean;
+  t: (k: string) => string;
 }) {
   // Hand-drawn SVG line chart — no Recharts dependency. At our data
   // scale (≤90 points for Last 90, typically 7-28) this is plenty
@@ -189,7 +193,7 @@ function ChartView({
 
   return (
     <div className="overflow-x-auto">
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full min-w-[600px]" role="img" aria-label="Sales trend chart">
+      <svg viewBox={`0 0 ${width} ${height}`} className="w-full min-w-[600px]" role="img" aria-label={t("chartAriaLabel")}>
         {/* Grid baseline */}
         <line x1={padX} y1={padY + innerH} x2={padX + innerW} y2={padY + innerH} stroke="#e5e7eb" strokeWidth="1" />
 
@@ -207,7 +211,7 @@ function ChartView({
             <circle cx={xFor(i)} cy={yFor(valueOf(r.cur, metric))} r="3.5" fill="#a855f7" />
             <title>
               {formatChartDate(r.cur.date)}: {formatVal(valueOf(r.cur, metric), metric)}
-              {r.prev !== undefined && ` · prev: ${formatVal(valueOf(r.prev, metric), metric)}`}
+              {r.prev !== undefined && ` · ${t("tooltipPrev")}: ${formatVal(valueOf(r.prev, metric), metric)}`}
             </title>
           </g>
         ))}
@@ -235,20 +239,21 @@ function ChartView({
 }
 
 function TableView({
-  rows, metric, compare,
+  rows, metric, compare, t,
 }: {
   rows: { cur: DayBucket; prev?: DayBucket }[];
   metric: Metric;
   compare: boolean;
+  t: (k: string) => string;
 }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
           <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100">
-            <th className="py-2 px-3 font-semibold">Date</th>
-            <th className="py-2 px-3 font-semibold text-right">{labelForMetric(metric)}</th>
-            {compare && <th className="py-2 px-3 font-semibold text-right">Previous period</th>}
+            <th className="py-2 px-3 font-semibold">{t("colDate")}</th>
+            <th className="py-2 px-3 font-semibold text-right">{labelForMetric(metric, t)}</th>
+            {compare && <th className="py-2 px-3 font-semibold text-right">{t("colPreviousPeriod")}</th>}
             {compare && <th className="py-2 px-3 font-semibold text-right">Δ</th>}
           </tr>
         </thead>
@@ -276,7 +281,7 @@ function TableView({
   );
 }
 
-function MetricSwitcher({ current, sp }: { current: Metric; sp: Record<string, string | string[] | undefined> }) {
+function MetricSwitcher({ current, sp, t }: { current: Metric; sp: Record<string, string | string[] | undefined>; t: (k: string) => string }) {
   // Server-rendered set of links — no client JS needed for a 3-choice
   // pill. Each link preserves the other query params via buildQuery().
   const mkHref = (m: Metric) => {
@@ -295,14 +300,14 @@ function MetricSwitcher({ current, sp }: { current: Metric; sp: Record<string, s
             current === m ? "bg-emerald-50 text-emerald-700" : "text-gray-500 hover:text-gray-800"
           }`}
         >
-          {labelForMetric(m)}
+          {labelForMetric(m, t)}
         </a>
       ))}
     </div>
   );
 }
 
-function CompareToggle({ on, sp }: { on: boolean; sp: Record<string, string | string[] | undefined> }) {
+function CompareToggle({ on, sp, t }: { on: boolean; sp: Record<string, string | string[] | undefined>; t: (k: string) => string }) {
   const u = new URLSearchParams(buildQuery(sp));
   if (on) u.delete("compare"); else u.set("compare", "1");
   return (
@@ -315,7 +320,7 @@ function CompareToggle({ on, sp }: { on: boolean; sp: Record<string, string | st
       }`}
     >
       <span className={`w-2 h-2 rounded-full ${on ? "bg-purple-500" : "bg-gray-300"}`} />
-      Show previous period
+      {t("showPreviousPeriod")}
     </a>
   );
 }

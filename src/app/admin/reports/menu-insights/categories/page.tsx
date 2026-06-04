@@ -4,6 +4,7 @@ import { formatCurrency } from "@/lib/utils";
 import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
+import { getTranslations } from "next-intl/server";
 
 /**
  * /admin/reports/menu-insights/categories
@@ -23,11 +24,12 @@ export default async function MenuInsightsCategoriesPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const sp = await searchParams;
+  const t = await getTranslations("admin.reportMenuCategories");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const range = parseDateRange(sp);
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   // We pull OrderItem rows with their MenuItem→MenuCategory chain.
   // For restaurants with high OrderItem volume this is the heaviest
@@ -69,8 +71,8 @@ export default async function MenuInsightsCategoriesPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Menu Insights — Categories</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Sales grouped by menu category · {formatRangeLabel(range)}</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+          <p className="text-sm text-gray-500 mt-0.5">{t("pageSubtitle", { range: formatRangeLabel(range) })}</p>
         </div>
         <DateRangePicker />
       </header>
@@ -80,15 +82,15 @@ export default async function MenuInsightsCategoriesPage({
         <table className="w-full text-sm min-w-[640px]">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
-              <th className="py-2.5 px-4 font-semibold">Category</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Items sold</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Revenue</th>
-              <th className="py-2.5 px-4 font-semibold text-right">% of revenue</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colCategory")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colItemsSold")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colRevenue")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colPctOfRevenue")}</th>
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 && (
-              <tr><td colSpan={4} className="py-6 px-4 text-center text-gray-400 italic">No items sold in this range.</td></tr>
+              <tr><td colSpan={4} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
             )}
             {rows.map((r) => {
               const pct = totalRevenue > 0 ? (r.revenue / totalRevenue) * 100 : 0;

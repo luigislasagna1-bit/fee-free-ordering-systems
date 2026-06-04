@@ -1,4 +1,5 @@
 import { Construction, Database } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 /**
@@ -17,7 +18,7 @@ import type { ReactNode } from "react";
  * Drop this file the moment EVERY report under /admin/reports/** has
  * been fully built — currently most are still placeholders.
  */
-export function ComingSoonPlaceholder({
+export async function ComingSoonPlaceholder({
   title, subtitle, what, requires, eta, children,
 }: {
   title: string;
@@ -33,6 +34,7 @@ export function ComingSoonPlaceholder({
   /** Optional in-line extra content (e.g. an upsell CTA). */
   children?: ReactNode;
 }) {
+  const t = await getTranslations("admin.comingSoonPlaceholder");
   return (
     <div>
       <div className="mb-5">
@@ -46,12 +48,12 @@ export function ComingSoonPlaceholder({
             <Construction className="w-5 h-5" />
           </div>
           <div className="flex-1 min-w-0">
-            <h2 className="font-semibold text-gray-900 mb-1">Coming soon</h2>
+            <h2 className="font-semibold text-gray-900 mb-1">{t("comingSoon")}</h2>
             <p className="text-sm text-gray-600 mb-4">{what}</p>
 
             <div className="bg-gray-50 rounded-lg p-3 mb-4">
               <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2 flex items-center gap-1.5">
-                <Database className="w-3 h-3" /> Data requirements
+                <Database className="w-3 h-3" /> {t("dataRequirements")}
               </div>
               <ul className="space-y-1.5">
                 {requires.map((r) => (
@@ -67,7 +69,7 @@ export function ComingSoonPlaceholder({
                         r.status === "collecting" ? "text-emerald-600" : "text-gray-400"
                       }`}
                     >
-                      · {r.status === "collecting" ? "collecting" : "not started"}
+                      · {r.status === "collecting" ? t("statusCollecting") : t("statusNotStarted")}
                     </span>
                   </li>
                 ))}
@@ -75,7 +77,7 @@ export function ComingSoonPlaceholder({
             </div>
 
             <p className="text-xs text-gray-500">
-              <span className="font-semibold text-gray-700">Planned:</span> {eta}
+              <span className="font-semibold text-gray-700">{t("planned")}</span> {eta}
             </p>
 
             {children && <div className="mt-4">{children}</div>}

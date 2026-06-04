@@ -4,6 +4,7 @@ import { parseDateRange, formatRangeLabel, toISODate } from "@/lib/reports/date-
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ComingSoonPlaceholder } from "@/components/admin/reports/ComingSoonPlaceholder";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 /**
  * /admin/reports/online-ordering/reservations
@@ -26,8 +27,9 @@ export default async function ReservationsReportPage({
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const range = parseDateRange(sp);
+  const t = await getTranslations("admin.reportReservations");
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   // groupBy.status — matches the GloriaFood report shape and is cheap.
   // _count and _sum are wrapped in an object form so Prisma's TS types
@@ -46,20 +48,20 @@ export default async function ReservationsReportPage({
   if (rows.length === 0) {
     return (
       <ComingSoonPlaceholder
-        title="Table Reservations"
-        subtitle={`No reservations in ${formatRangeLabel(range)}.`}
-        what="Reservation volumes, no-show rate, average party size, peak times — all the metrics you need to staff the floor for the right number of covers."
+        title={t("title")}
+        subtitle={t("emptySubtitle", { range: formatRangeLabel(range) })}
+        what={t("what")}
         requires={[
-          { label: "Reservations service enabled", status: "collecting" },
-          { label: "Bookings flowing in within the selected range", status: "not_started" },
+          { label: t("requiresServiceEnabled"), status: "collecting" },
+          { label: t("requiresBookingsInRange"), status: "not_started" },
         ]}
-        eta="Activates automatically once you have reservations in the system."
+        eta={t("eta")}
       >
         <Link
           href="/admin/services"
           className="inline-flex items-center px-3 py-1.5 bg-emerald-500 text-white text-xs font-semibold rounded hover:bg-emerald-600 transition"
         >
-          Enable service
+          {t("enableService")}
         </Link>
       </ComingSoonPlaceholder>
     );
@@ -72,8 +74,8 @@ export default async function ReservationsReportPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Table Reservations</h1>
-          <p className="text-sm text-gray-500 mt-0.5">{total.toLocaleString()} bookings · {totalGuests.toLocaleString()} guests · {formatRangeLabel(range)}</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
+          <p className="text-sm text-gray-500 mt-0.5">{t("summary", { bookings: total.toLocaleString(), guests: totalGuests.toLocaleString(), range: formatRangeLabel(range) })}</p>
         </div>
         <DateRangePicker />
       </header>
@@ -83,10 +85,10 @@ export default async function ReservationsReportPage({
         <table className="w-full text-sm min-w-[560px]">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
-              <th className="py-2.5 px-4 font-semibold">Status</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Bookings</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Guests</th>
-              <th className="py-2.5 px-4 font-semibold text-right">% of total</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colStatus")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colBookings")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colGuests")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colPctOfTotal")}</th>
             </tr>
           </thead>
           <tbody>

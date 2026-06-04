@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
 import { runSeoHealthChecks, type SeoCheck } from "@/lib/seo/health-check";
 import { CheckCircle2, AlertTriangle, HelpCircle, ExternalLink, LineChart } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 /**
  * /admin/reports/online-ordering/google-rank
@@ -27,9 +28,10 @@ import { CheckCircle2, AlertTriangle, HelpCircle, ExternalLink, LineChart } from
  * on a customer hot path.
  */
 export default async function GoogleRankReportPage() {
+  const t = await getTranslations("admin.reportGoogleRank");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   const [restaurant, hasHostedSite] = await Promise.all([
     prisma.restaurant.findUnique({
@@ -42,7 +44,7 @@ export default async function GoogleRankReportPage() {
     }),
     hasFeature(restaurantId, "hosted_marketing_page"),
   ]);
-  if (!restaurant) return <p className="text-sm text-gray-500">Restaurant not found.</p>;
+  if (!restaurant) return <p className="text-sm text-gray-500">{t("restaurantNotFound")}</p>;
 
   const checks = await runSeoHealthChecks(restaurant, { hasHostedSite });
   const problemCount = checks.reduce((s, c) => s + (c.status === "fix" ? c.problemCount : 0), 0);
@@ -52,9 +54,9 @@ export default async function GoogleRankReportPage() {
   return (
     <div>
       <header className="mb-5">
-        <h1 className="text-2xl font-bold text-gray-900">Google Ranking</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
         <p className="text-sm text-gray-500 mt-0.5">
-          Where you appear in Google + the SEO factors that move the needle.
+          {t("pageSubtitle")}
         </p>
       </header>
 
@@ -74,13 +76,11 @@ export default async function GoogleRankReportPage() {
         )}
         <div className="flex-1">
           <div className={`font-bold text-lg ${problemCount === 0 ? "text-emerald-900" : problemCount <= 2 ? "text-amber-900" : "text-red-900"}`}>
-            {okCount} of {checks.length} factors look good
-            {problemCount > 0 && ` · ${problemCount} problem${problemCount === 1 ? "" : "s"} to fix`}
+            {t("summaryFactors", { okCount, total: checks.length })}
+            {problemCount > 0 && ` · ${t("summaryProblems", { count: problemCount })}`}
           </div>
           <p className="text-xs text-gray-600 mt-0.5">
-            Google ranks restaurants on a mix of content, technical, and trust signals.
-            The checks below are the ones most-published restaurants are missing — fixing
-            even 1-2 of them typically moves rankings within weeks.
+            {t("summaryDescription")}
           </p>
         </div>
       </div>
@@ -100,21 +100,20 @@ export default async function GoogleRankReportPage() {
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
         <div className="flex items-center gap-2 mb-3">
           <LineChart className="w-5 h-5 text-gray-400" />
-          <h2 className="font-semibold text-gray-900">Ranking position over time</h2>
+          <h2 className="font-semibold text-gray-900">{t("rankingChartTitle")}</h2>
         </div>
         {serpApiConfigured ? (
           <p className="text-xs text-gray-500 italic">
-            SerpAPI is configured but no rank scans have run yet. The chart appears here
-            after the first nightly scan (3am UTC).
+            {t("serpApiConfiguredNoScans")}
           </p>
         ) : (
           <div className="rounded-lg bg-amber-50 border border-amber-200 p-4">
-            <p className="text-xs text-amber-900 font-semibold mb-1">Daily rank tracking is off</p>
+            <p className="text-xs text-amber-900 font-semibold mb-1">{t("rankTrackingOff")}</p>
             <p className="text-xs text-amber-900 leading-relaxed">
-              To track your ranking position over time for searches like &ldquo;{restaurant.cuisineType ?? "<your cuisine>"} {restaurant.city ?? "<your city>"}&rdquo;,
-              we need an external search-engine probe. Configure <code className="bg-amber-100 px-1 rounded">SERPAPI_KEY</code> in
-              your environment to enable it — SerpAPI&apos;s free tier covers up to 100
-              searches/month, plenty for daily checks.
+              {t("rankTrackingOffDescription", {
+                cuisine: restaurant.cuisineType ?? t("yourCuisineFallback"),
+                city: restaurant.city ?? t("yourCityFallback"),
+              })} <code className="bg-amber-100 px-1 rounded">SERPAPI_KEY</code> {t("rankTrackingOffDescriptionSuffix")}
             </p>
           </div>
         )}
@@ -123,7 +122,8 @@ export default async function GoogleRankReportPage() {
   );
 }
 
-function CheckRow({ check, isLast }: { check: SeoCheck; isLast: boolean }) {
+async function CheckRow({ check, isLast }: { check: SeoCheck; isLast: boolean }) {
+  const t = await getTranslations("admin.reportGoogleRank");
   const Icon =
     check.status === "ok" ? CheckCircle2 :
     check.status === "unknown" ? HelpCircle :
@@ -133,9 +133,9 @@ function CheckRow({ check, isLast }: { check: SeoCheck; isLast: boolean }) {
     check.status === "unknown" ? "text-gray-400" :
     "text-amber-500";
   const statusLabel =
-    check.status === "ok" ? "OK" :
-    check.status === "unknown" ? "Unknown" :
-    `Fix ${check.problemCount} problem${check.problemCount === 1 ? "" : "s"}`;
+    check.status === "ok" ? t("checkStatusOk") :
+    check.status === "unknown" ? t("checkStatusUnknown") :
+    t("checkStatusFix", { count: check.problemCount });
   const statusCls =
     check.status === "ok" ? "bg-emerald-50 text-emerald-700" :
     check.status === "unknown" ? "bg-gray-100 text-gray-500" :
@@ -160,7 +160,7 @@ function CheckRow({ check, isLast }: { check: SeoCheck; isLast: boolean }) {
             target="_blank"
             rel="noreferrer"
             className="ml-1 hover:text-amber-900"
-            title="Open Google Business Profile"
+            title={t("openGmbTitle")}
           >
             <ExternalLink className="w-3 h-3" />
           </a>

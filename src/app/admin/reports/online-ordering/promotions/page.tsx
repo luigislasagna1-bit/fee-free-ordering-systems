@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
@@ -21,12 +22,13 @@ export default async function PromotionsReportPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const t = await getTranslations("admin.reportPromotions");
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const range = parseDateRange(sp);
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   const rows = await prisma.order.groupBy({
     by: ["couponId"],
@@ -58,9 +60,9 @@ export default async function PromotionsReportPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Promotions Stats</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {totalRedemptions.toLocaleString()} redemption(s) · {formatCurrency(totalDiscount)} discounts given · {formatRangeLabel(range)}
+            {t("subtitle", { redemptions: totalRedemptions.toLocaleString(), discounts: formatCurrency(totalDiscount), range: formatRangeLabel(range) })}
           </p>
         </div>
         <DateRangePicker />
@@ -71,17 +73,17 @@ export default async function PromotionsReportPage({
         <table className="w-full text-sm min-w-[760px]">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
-              <th className="py-2.5 px-4 font-semibold">Coupon</th>
-              <th className="py-2.5 px-4 font-semibold">Description</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Redemptions</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Discount given</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Revenue generated</th>
-              <th className="py-2.5 px-4 font-semibold text-right">% of revenue</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colCoupon")}</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colDescription")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colRedemptions")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colDiscountGiven")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colRevenueGenerated")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colPercentOfRevenue")}</th>
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 && (
-              <tr><td colSpan={6} className="py-6 px-4 text-center text-gray-400 italic">No coupon redemptions in this range.</td></tr>
+              <tr><td colSpan={6} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
             )}
             {rows.map((r) => {
               const c = byId.get(r.couponId!);
@@ -109,7 +111,7 @@ export default async function PromotionsReportPage({
       </div>
 
       <p className="text-xs text-gray-400 italic mt-3">
-        Promotion-engine redemptions (non-coupon, like "Buy 1 Get 1") are tracked separately and will join this report once the unified promo-redemption table ships.
+        {t("footerNote")}
       </p>
     </div>
   );

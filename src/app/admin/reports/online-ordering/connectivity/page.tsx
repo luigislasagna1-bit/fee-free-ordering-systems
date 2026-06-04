@@ -4,6 +4,7 @@ import { Wifi, AlertCircle } from "lucide-react";
 import { eachDay, parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { FRESHNESS_MS } from "@/lib/kitchen-devices";
+import { getTranslations } from "next-intl/server";
 
 /**
  * /admin/reports/online-ordering/connectivity
@@ -31,11 +32,12 @@ export default async function ConnectivityReportPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const sp = await searchParams;
+  const t = await getTranslations("admin.reportConnectivity");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const range = parseDateRange(sp);
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   const [devices, events] = await Promise.all([
     prisma.kitchenDevice.findMany({
@@ -155,9 +157,9 @@ export default async function ConnectivityReportPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Connectivity Health</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            Are your kitchen devices online? · {formatRangeLabel(range)}
+            {t("pageDescription")} · {formatRangeLabel(range)}
           </p>
         </div>
         <DateRangePicker />
@@ -177,14 +179,13 @@ export default async function ConnectivityReportPage({
         <Wifi className={`w-6 h-6 mt-0.5 ${overallPct >= 95 ? "text-emerald-600" : overallPct >= 80 ? "text-amber-600" : "text-red-600"}`} />
         <div className="flex-1">
           <div className={`font-bold text-lg ${overallPct >= 95 ? "text-emerald-900" : overallPct >= 80 ? "text-amber-900" : "text-red-900"}`}>
-            {overallPct.toFixed(1)}% Connectivity health
+            {t("connectivityHealthScore", { pct: overallPct.toFixed(1) })}
           </div>
           <p className="text-xs text-gray-600 mt-0.5">
-            Kitchen reachable (at least one device online) over {dayStats.length} day(s). Target: 95% or higher.
+            {t("kitchenReachable", { days: dayStats.length })}
             {events.length === 0 && (
               <span className="italic block mt-1">
-                The transition log is empty — the timeline below populates as devices come and go.
-                Current online/offline status is shown from the live heartbeat.
+                {t("emptyLog")}
               </span>
             )}
           </p>
@@ -196,24 +197,24 @@ export default async function ConnectivityReportPage({
         <div className="bg-white rounded-xl border border-emerald-200 shadow-sm p-5">
           <div className="flex items-center gap-2 mb-1">
             <Wifi className="w-5 h-5 text-emerald-600" />
-            <span className="text-xs uppercase tracking-wider font-semibold text-emerald-700">Online now</span>
+            <span className="text-xs uppercase tracking-wider font-semibold text-emerald-700">{t("onlineNow")}</span>
           </div>
           <div className="text-3xl font-bold text-emerald-700">{onlineNow.length}</div>
-          <div className="text-xs text-gray-500 mt-1">device(s) reporting in</div>
+          <div className="text-xs text-gray-500 mt-1">{t("devicesReportingIn")}</div>
         </div>
         <div className={`bg-white rounded-xl border ${offlineNow.length > 0 ? "border-red-200" : "border-gray-100"} shadow-sm p-5`}>
           <div className="flex items-center gap-2 mb-1">
             <AlertCircle className={`w-5 h-5 ${offlineNow.length > 0 ? "text-red-500" : "text-gray-400"}`} />
-            <span className="text-xs uppercase tracking-wider font-semibold text-gray-500">Offline now</span>
+            <span className="text-xs uppercase tracking-wider font-semibold text-gray-500">{t("offlineNow")}</span>
           </div>
           <div className={`text-3xl font-bold ${offlineNow.length > 0 ? "text-red-600" : "text-gray-400"}`}>{offlineNow.length}</div>
-          <div className="text-xs text-gray-500 mt-1">not heard from in &gt;{Math.round(OFFLINE_AFTER_MS / 1000)}s</div>
+          <div className="text-xs text-gray-500 mt-1">{t("notHeardFrom", { seconds: Math.round(OFFLINE_AFTER_MS / 1000) })}</div>
         </div>
       </div>
 
       {/* Per-day timeline bars */}
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-4">
-        <h2 className="font-semibold text-gray-900 mb-3">Daily uptime</h2>
+        <h2 className="font-semibold text-gray-900 mb-3">{t("dailyUptime")}</h2>
         <div className="space-y-2">
           {dayStats.map((d) => (
             <div key={d.date.toISOString()}>
@@ -242,28 +243,28 @@ export default async function ConnectivityReportPage({
         <table className="w-full text-sm min-w-[720px]">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
-              <th className="py-2.5 px-4 font-semibold">Device</th>
-              <th className="py-2.5 px-4 font-semibold">User agent</th>
-              <th className="py-2.5 px-4 font-semibold">First seen</th>
-              <th className="py-2.5 px-4 font-semibold">Last seen</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Status</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colDevice")}</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colUserAgent")}</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colFirstSeen")}</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colLastSeen")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colStatus")}</th>
             </tr>
           </thead>
           <tbody>
             {devices.length === 0 && (
-              <tr><td colSpan={5} className="py-6 px-4 text-center text-gray-400 italic">No kitchen devices registered. Open the kitchen page on a tablet to see it here.</td></tr>
+              <tr><td colSpan={5} className="py-6 px-4 text-center text-gray-400 italic">{t("noDevices")}</td></tr>
             )}
             {devices.map((d) => {
               const isOnline = d.lastSeenAt && Date.now() - d.lastSeenAt.getTime() < OFFLINE_AFTER_MS;
               return (
                 <tr key={d.id} className="border-b border-gray-50 hover:bg-gray-50/50">
-                  <td className="py-2.5 px-4 font-medium text-gray-800">{d.label || "Unnamed device"}</td>
+                  <td className="py-2.5 px-4 font-medium text-gray-800">{d.label || t("unnamedDevice")}</td>
                   <td className="py-2.5 px-4 text-xs text-gray-500 max-w-xs truncate">{d.userAgent ?? "—"}</td>
                   <td className="py-2.5 px-4 text-xs text-gray-500">{d.firstSeenAt?.toLocaleString() ?? "—"}</td>
                   <td className="py-2.5 px-4 text-xs text-gray-500">{d.lastSeenAt?.toLocaleString() ?? "—"}</td>
                   <td className="py-2.5 px-4 text-right">
                     <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${isOnline ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-700"}`}>
-                      {isOnline ? "Online" : "Offline"}
+                      {isOnline ? t("statusOnline") : t("statusOffline")}
                     </span>
                   </td>
                 </tr>

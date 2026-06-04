@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ExternalLink } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import { hasFeature } from "@/lib/entitlements";
 import prisma from "@/lib/db";
@@ -19,6 +20,7 @@ import { WebsiteEditorClient } from "./WebsiteEditorClient";
  * right initial state (no client-side flash from defaults → saved).
  */
 export default async function WebsiteEditorPage() {
+  const t = await getTranslations("admin.websiteEditorPage");
   const user = await getSessionUser();
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
@@ -49,18 +51,19 @@ export default async function WebsiteEditorPage() {
       <div className="max-w-3xl mx-auto p-6">
         <div className="rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-6">
           <h1 className="text-xl font-bold text-emerald-900">
-            Sales Optimized Website add-on required
+            {t("upsellTitle")}
           </h1>
           <p className="text-sm text-emerald-800 mt-2 leading-relaxed">
-            The website editor lets you customize the hosted marketing
-            page at <code className="bg-white px-1 rounded">{restaurant.subdomain ?? restaurant.slug}.feefreeordering.com</code>.
-            Activate the add-on to unlock it.
+            {t.rich("upsellDescription", {
+              domain: `${restaurant.subdomain ?? restaurant.slug}.feefreeordering.com`,
+              code: (chunks) => <code className="bg-white px-1 rounded">{chunks}</code>,
+            })}
           </p>
           <Link
             href="/admin/billing/add-ons"
             className="mt-4 inline-block px-4 py-2 rounded-lg bg-emerald-500 text-white font-semibold text-sm hover:bg-emerald-600 transition"
           >
-            View add-ons
+            {t("viewAddOns")}
           </Link>
         </div>
       </div>
@@ -75,11 +78,9 @@ export default async function WebsiteEditorPage() {
     <div className="max-w-5xl mx-auto p-4 sm:p-6 space-y-5">
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Website editor</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-600 mt-1">
-            Customize what appears on your hosted site. All your menu and
-            restaurant info still flows from your existing setup — this
-            editor just controls layout, visibility, and a few overrides.
+            {t("pageDescription")}
           </p>
         </div>
         <div className="flex gap-2">
@@ -89,7 +90,7 @@ export default async function WebsiteEditorPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold text-gray-700 hover:bg-gray-50 transition"
           >
-            Preview <ExternalLink className="w-3.5 h-3.5" />
+            {t("previewButton")} <ExternalLink className="w-3.5 h-3.5" />
           </Link>
           <Link
             href={liveUrl}
@@ -97,7 +98,7 @@ export default async function WebsiteEditorPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-600 transition"
           >
-            Live site <ExternalLink className="w-3.5 h-3.5" />
+            {t("liveSiteButton")} <ExternalLink className="w-3.5 h-3.5" />
           </Link>
         </div>
       </div>

@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { Info } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 /**
  * /admin/reports/online-ordering/funnel
@@ -31,35 +32,28 @@ import { Info } from "lucide-react";
  *     With sensible (restaurantId, createdAt) index hits + a typical
  *     few thousand sessions/day, this stays under 50ms.
  */
-const FUNNEL_STEPS = [
-  { id: "visit",          label: "Visited order page",   wired: true },
-  // scroll past 200px on the order page
-  { id: "menu_browsed",   label: "Browsed the menu",     wired: true },
-  // cart.length goes 0 → 1+
-  { id: "item_added",     label: "Added an item to cart", wired: true },
-  // checkout modal opens (post-cart-review)
-  { id: "checkout_open",  label: "Opened checkout",      wired: true },
-  // name + phone both validated client-side
-  { id: "checkout_info",  label: "Filled customer info", wired: true },
-  // fired right before navigating to /payment for card orders only
-  // (cash / in-person orders skip the payment step entirely)
-  { id: "payment_open",   label: "Reached payment",      wired: true },
-  // OrderPlacedTracker on the confirmation page — fires once per
-  // successful order regardless of payment method.
-  { id: "order_placed",   label: "Placed an order",      wired: true },
-] as const;
-
 export default async function FunnelReportPage({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const t = await getTranslations("admin.reportFunnel");
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const range = parseDateRange(sp);
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
+
+  const FUNNEL_STEPS = [
+    { id: "visit",         label: t("stepVisit"),        wired: true },
+    { id: "menu_browsed",  label: t("stepMenuBrowsed"),  wired: true },
+    { id: "item_added",    label: t("stepItemAdded"),    wired: true },
+    { id: "checkout_open", label: t("stepCheckoutOpen"), wired: true },
+    { id: "checkout_info", label: t("stepCheckoutInfo"), wired: true },
+    { id: "payment_open",  label: t("stepPaymentOpen"),  wired: true },
+    { id: "order_placed",  label: t("stepOrderPlaced"),  wired: true },
+  ] as const;
 
   // groupBy(step, sessionHash) gives one row per (step, distinct session).
   // Count rows per step → number of distinct sessions at that step.
@@ -81,16 +75,19 @@ export default async function FunnelReportPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Website Funnel</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("heading")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            Where customers drop off · {formatRangeLabel(range)}
+            {t("subheading", { range: formatRangeLabel(range) })}
           </p>
         </div>
         <DateRangePicker />
       </header>
 
       {visitCount === 0 ? (
-        <EmptyState />
+        <EmptyState
+          emptyHeading={t("emptyHeading")}
+          emptyBody={t("emptyBody")}
+        />
       ) : (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
           {/* Headline conversion rate — the single number owners want
@@ -100,10 +97,10 @@ export default async function FunnelReportPage({
             const rate = visitCount > 0 ? (orderPlaced / visitCount) * 100 : 0;
             return (
               <div className="grid grid-cols-3 gap-3 mb-5 pb-5 border-b border-gray-100">
-                <SummaryStat label="Visits" value={visitCount.toLocaleString()} />
-                <SummaryStat label="Orders placed" value={orderPlaced.toLocaleString()} />
+                <SummaryStat label={t("statVisits")} value={visitCount.toLocaleString()} />
+                <SummaryStat label={t("statOrdersPlaced")} value={orderPlaced.toLocaleString()} />
                 <SummaryStat
-                  label="Conversion rate"
+                  label={t("statConversionRate")}
                   value={`${rate.toFixed(2)}%`}
                   accent={rate >= 5 ? "good" : rate >= 1 ? "ok" : "low"}
                 />
@@ -111,17 +108,17 @@ export default async function FunnelReportPage({
             );
           })()}
 
-          <FunnelBars steps={stepCounts} />
+          <FunnelBars
+            steps={stepCounts}
+            notTrackedLabel={t("notTrackedYet")}
+            ofPrevLabel={t("ofPrev")}
+          />
 
           <div className="mt-5 pt-4 border-t border-gray-100 bg-emerald-50/40 -m-5 mt-5 p-4 rounded-b-xl">
             <div className="flex items-start gap-2 text-xs text-emerald-800">
               <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
               <p>
-                All seven funnel steps are tracked. Note: &ldquo;Reached payment&rdquo;
-                fires only on card-payment orders; cash and in-person orders
-                skip straight to &ldquo;Placed an order&rdquo;, so the drop between
-                those last two steps is expected for restaurants with mixed
-                payment methods.
+                {t("infoNote")}
               </p>
             </div>
           </div>
@@ -131,15 +128,13 @@ export default async function FunnelReportPage({
   );
 }
 
-function EmptyState() {
+function EmptyState({ emptyHeading, emptyBody }: { emptyHeading: string; emptyBody: string }) {
   return (
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-8 text-center">
       <div className="text-3xl mb-2">🛒</div>
-      <p className="text-sm text-gray-700 font-semibold mb-1">No funnel data yet.</p>
+      <p className="text-sm text-gray-700 font-semibold mb-1">{emptyHeading}</p>
       <p className="text-xs text-gray-500 max-w-md mx-auto">
-        The funnel needs at least one visit to your order page. Share your order
-        link — the analytics beacon fires automatically and this view will populate
-        within a few minutes.
+        {emptyBody}
       </p>
     </div>
   );
@@ -162,7 +157,15 @@ function SummaryStat({ label, value, accent }: { label: string; value: string; a
   );
 }
 
-function FunnelBars({ steps }: { steps: { id: string; label: string; count: number; wired: boolean }[] }) {
+function FunnelBars({
+  steps,
+  notTrackedLabel,
+  ofPrevLabel,
+}: {
+  steps: { id: string; label: string; count: number; wired: boolean }[];
+  notTrackedLabel: string;
+  ofPrevLabel: string;
+}) {
   const max = Math.max(...steps.map((s) => s.count), 1);
   return (
     <div className="space-y-2">
@@ -177,13 +180,13 @@ function FunnelBars({ steps }: { steps: { id: string; label: string; count: numb
             <div className="flex justify-between text-xs mb-1">
               <span className={s.wired ? "text-gray-800" : "text-gray-400 italic"}>
                 {s.label}
-                {!s.wired && <span className="ml-2 text-[10px] uppercase tracking-wider text-gray-400">not tracked yet</span>}
+                {!s.wired && <span className="ml-2 text-[10px] uppercase tracking-wider text-gray-400">{notTrackedLabel}</span>}
               </span>
               <span className="font-semibold text-gray-900">
                 {s.count.toLocaleString()}
                 {conversion !== null && (
                   <span className="ml-2 text-[10px] font-medium text-gray-500">
-                    {conversion >= 100 ? "+" : ""}{conversion.toFixed(0)}% of prev
+                    {conversion >= 100 ? "+" : ""}{conversion.toFixed(0)}% {ofPrevLabel}
                   </span>
                 )}
               </span>

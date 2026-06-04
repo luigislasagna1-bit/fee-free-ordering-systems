@@ -4,6 +4,7 @@ import { parseDateRange, eachDay, formatChartDate, formatRangeLabel } from "@/li
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ChartTableToggle } from "@/components/admin/reports/ChartTableToggle";
 import { CHANNELS, getChannel, type ChannelSlug } from "@/lib/reports/channels";
+import { getTranslations } from "next-intl/server";
 
 /**
  * /admin/reports/online-ordering/visits
@@ -27,12 +28,13 @@ export default async function VisitsReportPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const sp = await searchParams;
+  const t = await getTranslations("admin.reportVisits");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const range = parseDateRange(sp);
   const view = sp.view === "table" ? "table" : "chart";
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   const visits = await prisma.websiteVisit.findMany({
     where: { restaurantId, createdAt: { gte: range.from, lte: range.to } },
@@ -70,9 +72,9 @@ export default async function VisitsReportPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Website Visits</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {totalVisits.toLocaleString()} visits · {formatRangeLabel(range)}
+            {t("visitsSummary", { count: totalVisits.toLocaleString(), rangeLabel: formatRangeLabel(range) })}
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
@@ -82,13 +84,13 @@ export default async function VisitsReportPage({
       </header>
 
       {totalVisits === 0 ? (
-        <EmptyState />
+        <EmptyState t={t} />
       ) : (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
           {view === "chart" ? (
-            <StackedBarChart days={days} buckets={buckets} activeChannels={activeChannels} />
+            <StackedBarChart days={days} buckets={buckets} activeChannels={activeChannels} t={t} />
           ) : (
-            <Table days={days} buckets={buckets} activeChannels={activeChannels} totals={totals} />
+            <Table days={days} buckets={buckets} activeChannels={activeChannels} totals={totals} t={t} />
           )}
 
           <Legend channels={activeChannels} totals={totals} />
@@ -98,26 +100,25 @@ export default async function VisitsReportPage({
   );
 }
 
-function EmptyState() {
+function EmptyState({ t }: { t: (key: string) => string }) {
   return (
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-8 text-center">
       <div className="text-3xl mb-2">📈</div>
-      <p className="text-sm text-gray-700 font-semibold mb-1">No visits yet in this range.</p>
+      <p className="text-sm text-gray-700 font-semibold mb-1">{t("emptyTitle")}</p>
       <p className="text-xs text-gray-500 max-w-md mx-auto">
-        Once customers land on your order page, this chart will show where
-        they came from — direct, organic search, social media, paid ads,
-        and more. Share your order link to start collecting data.
+        {t("emptyDescription")}
       </p>
     </div>
   );
 }
 
 function StackedBarChart({
-  days, buckets, activeChannels,
+  days, buckets, activeChannels, t,
 }: {
   days: Date[];
   buckets: Map<string, Map<ChannelSlug, number>>;
   activeChannels: typeof CHANNELS;
+  t: (key: string) => string;
 }) {
   const dailyTotals = days.map((d) => {
     const m = buckets.get(d.toDateString())!;
@@ -139,7 +140,7 @@ function StackedBarChart({
 
   return (
     <div className="overflow-x-auto">
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full min-w-[600px]" role="img" aria-label="Website visits by channel">
+      <svg viewBox={`0 0 ${width} ${height}`} className="w-full min-w-[600px]" role="img" aria-label={t("chartAriaLabel")}>
         <line x1={padX} y1={padY + innerH} x2={padX + innerW} y2={padY + innerH} stroke="#e5e7eb" strokeWidth="1" />
 
         {days.map((d, i) => {
@@ -181,19 +182,20 @@ function StackedBarChart({
 }
 
 function Table({
-  days, buckets, activeChannels, totals,
+  days, buckets, activeChannels, totals, t,
 }: {
   days: Date[];
   buckets: Map<string, Map<ChannelSlug, number>>;
   activeChannels: typeof CHANNELS;
   totals: Map<ChannelSlug, number>;
+  t: (key: string) => string;
 }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
           <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100">
-            <th className="py-2 px-3 font-semibold">Date</th>
+            <th className="py-2 px-3 font-semibold">{t("columnDate")}</th>
             {activeChannels.map((c) => (
               <th key={c.slug} className="py-2 px-3 font-semibold text-right whitespace-nowrap">
                 <span className="inline-flex items-center gap-1.5">
@@ -202,7 +204,7 @@ function Table({
                 </span>
               </th>
             ))}
-            <th className="py-2 px-3 font-semibold text-right">Total</th>
+            <th className="py-2 px-3 font-semibold text-right">{t("columnTotal")}</th>
           </tr>
         </thead>
         <tbody>
@@ -220,7 +222,7 @@ function Table({
             );
           })}
           <tr className="font-semibold bg-gray-50">
-            <td className="py-2 px-3 text-gray-900">Total</td>
+            <td className="py-2 px-3 text-gray-900">{t("rowTotal")}</td>
             {activeChannels.map((c) => (
               <td key={c.slug} className="py-2 px-3 text-right text-gray-900">{totals.get(c.slug) ?? 0}</td>
             ))}

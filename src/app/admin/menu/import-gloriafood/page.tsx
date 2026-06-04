@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import { isInheritingMenu } from "@/lib/brand";
 import { ImportGloriaFoodClient } from "./ImportGloriaFoodClient";
+import { getTranslations } from "next-intl/server";
 
 export const metadata = {
   title: "Import from GloriaFood — Fee Free Ordering",
@@ -20,6 +21,7 @@ export const metadata = {
  * Backed by /api/menu/import-gloriafood (POST = preview, PUT = commit).
  */
 export default async function ImportGloriaFoodPage() {
+  const t = await getTranslations("admin.importGloriaFoodPage");
   const user = await getSessionUser();
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
@@ -30,10 +32,9 @@ export default async function ImportGloriaFoodPage() {
   if (await isInheritingMenu(user.restaurantId)) {
     return (
       <div className="max-w-2xl mx-auto p-8">
-        <h1 className="text-2xl font-bold mb-4">Import from GloriaFood</h1>
+        <h1 className="text-2xl font-bold mb-4">{t("inheritingHeading")}</h1>
         <div className="rounded-xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-900">
-          This location uses the brand menu. To import a different menu, first
-          customize the menu for this location from the Menu page.
+          {t("inheritingBody")}
         </div>
       </div>
     );

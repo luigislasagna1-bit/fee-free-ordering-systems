@@ -5,6 +5,7 @@ import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { haversineKm } from "@/lib/geocode";
 import { ComingSoonPlaceholder } from "@/components/admin/reports/ComingSoonPlaceholder";
 import { HeatmapLoader } from "./HeatmapLoader";
+import { getTranslations } from "next-intl/server";
 
 /**
  * /admin/reports/online-ordering/heatmap
@@ -40,11 +41,12 @@ export default async function HeatmapReportPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const sp = await searchParams;
+  const t = await getTranslations("admin.reportHeatmapPage");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const range = parseDateRange(sp);
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   // Load restaurant + zones for the map center & overlays.
   const restaurant = await prisma.restaurant.findUnique({
@@ -58,7 +60,7 @@ export default async function HeatmapReportPage({
       },
     },
   });
-  if (!restaurant) return <p className="text-sm text-gray-500">Restaurant not found.</p>;
+  if (!restaurant) return <p className="text-sm text-gray-500">{t("restaurantNotFound")}</p>;
 
   // If the restaurant hasn't set coordinates yet, we can't center
   // the map — fall back to the placeholder so the owner sees what
@@ -66,14 +68,14 @@ export default async function HeatmapReportPage({
   if (restaurant.lat == null || restaurant.lng == null) {
     return (
       <ComingSoonPlaceholder
-        title="Delivery Heatmap"
-        subtitle="Where your delivery orders come from on a map."
-        what="Leaflet heatmap overlay showing the geographical density of delivery orders. Hot zones reveal where your customers cluster."
+        title={t("placeholderTitle")}
+        subtitle={t("placeholderSubtitle")}
+        what={t("placeholderWhat")}
         requires={[
-          { label: "Restaurant location coordinates configured", status: "not_started" },
-          { label: "At least one delivery order with a resolvable address", status: "not_started" },
+          { label: t("requiresCoordinates"), status: "not_started" },
+          { label: t("requiresDeliveryOrder"), status: "not_started" },
         ]}
-        eta="Activates as soon as you set your restaurant's address on the Profile page."
+        eta={t("placeholderEta")}
       />
     );
   }
@@ -116,9 +118,9 @@ export default async function HeatmapReportPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Delivery Heatmap</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {points.length.toLocaleString()} delivery point(s) plotted · {formatRangeLabel(range)}
+            {t("pointsPlotted", { count: points.length.toLocaleString(), range: formatRangeLabel(range) })}
           </p>
         </div>
         <DateRangePicker />
@@ -139,15 +141,15 @@ export default async function HeatmapReportPage({
           number more than the visual heatmap itself. */}
       {restaurant.deliveryZones.length > 0 && points.length > 0 && (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-          <h2 className="font-semibold text-gray-900 mb-3">Orders by zone</h2>
+          <h2 className="font-semibold text-gray-900 mb-3">{t("ordersByZone")}</h2>
           <div className="overflow-x-auto">
           <table className="w-full text-sm min-w-[520px]">
             <thead>
               <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100">
-                <th className="py-2 px-3 font-semibold">Zone</th>
-                <th className="py-2 px-3 font-semibold text-right">Radius</th>
-                <th className="py-2 px-3 font-semibold text-right">Orders</th>
-                <th className="py-2 px-3 font-semibold text-right">Share</th>
+                <th className="py-2 px-3 font-semibold">{t("colZone")}</th>
+                <th className="py-2 px-3 font-semibold text-right">{t("colRadius")}</th>
+                <th className="py-2 px-3 font-semibold text-right">{t("colOrders")}</th>
+                <th className="py-2 px-3 font-semibold text-right">{t("colShare")}</th>
               </tr>
             </thead>
             <tbody>
@@ -169,7 +171,7 @@ export default async function HeatmapReportPage({
               })}
               {outsideAllZones > 0 && (
                 <tr className="border-b border-gray-50">
-                  <td className="py-2 px-3 text-gray-500 italic">Outside all zones</td>
+                  <td className="py-2 px-3 text-gray-500 italic">{t("outsideAllZones")}</td>
                   <td className="py-2 px-3 text-right text-gray-400">—</td>
                   <td className="py-2 px-3 text-right font-semibold text-gray-700">{outsideAllZones.toLocaleString()}</td>
                   <td className="py-2 px-3 text-right text-gray-500">{((outsideAllZones / points.length) * 100).toFixed(1)}%</td>

@@ -6,8 +6,10 @@ import { listKitchenDevices, FRESHNESS_MS } from "@/lib/kitchen-devices";
 import { hasFeature } from "@/lib/entitlements";
 import { Globe, Code2, Smartphone, CheckCircle2, AlertCircle, Lock, Tablet } from "lucide-react";
 import { PublishToggleClient } from "./PublishToggleClient";
+import { getTranslations } from "next-intl/server";
 
 export default async function PublishingHubPage() {
+  const t = await getTranslations("admin.publishingPage");
   const user = await getSessionUser();
   // See add-ons/page.tsx for the rationale on this two-step. Superadmins
   // hit /login → re-auth → bounce here → loop. Sending them to /superadmin
@@ -29,12 +31,9 @@ export default async function PublishingHubPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Publishing</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
         <p className="text-sm text-gray-600 mt-1">
-          Where customers can place orders. <strong>Use any combination of these at the same time</strong> —
-          they&apos;re independent surfaces that all feed into the same kitchen, menu, and payment system. Most
-          restaurants run the free widget on their existing website AND the hosted Sales Optimized site
-          in parallel for maximum reach.
+          {t.rich("pageDescription", { strong: (chunks) => <strong>{chunks}</strong> })}
         </p>
       </div>
 
@@ -60,19 +59,17 @@ export default async function PublishingHubPage() {
         <div className="flex-1 min-w-0">
           <h2 className="font-semibold text-gray-900">
             {isPublished
-              ? "Your restaurant is published"
+              ? t("statusPublished")
               : publishReady
-              ? "You're ready to publish"
-              : "Finish setup before publishing"}
+              ? t("statusReadyToPublish")
+              : t("statusFinishSetup")}
           </h2>
           <p className="text-sm text-gray-700 mt-1">
             {isPublished
-              ? `Published ${state.publishedAt!.toLocaleDateString()}. Customers can now order via the widget snippet below.`
+              ? t("statusPublishedDetail", { date: state.publishedAt!.toLocaleDateString() })
               : publishReady
-              ? "Click Publish to make your ordering widget live."
-              : `${progress?.requiredStepsRemaining.length ?? 0} required step${
-                  progress?.requiredStepsRemaining.length === 1 ? "" : "s"
-                } remaining.`}
+              ? t("statusReadyDetail")
+              : t("statusStepsRemaining", { count: progress?.requiredStepsRemaining.length ?? 0 })}
           </p>
           {!publishReady && progress && progress.requiredStepsRemaining.length > 0 && (
             <ul className="mt-3 space-y-1 text-sm">
@@ -98,25 +95,23 @@ export default async function PublishingHubPage() {
           <div>
             <h2 className="font-semibold text-gray-900 flex items-center gap-2">
               <Tablet className="w-5 h-5 text-gray-500" />
-              Order-taking app
+              {t("orderTakingAppTitle")}
             </h2>
             <p className="text-sm text-gray-600 mt-1">
               {liveDevices.length > 0 ? (
                 <>
                   <span className="text-green-700 font-medium">
-                    {liveDevices.length} device{liveDevices.length === 1 ? "" : "s"} connected
+                    {t("devicesConnected", { count: liveDevices.length })}
                   </span>{" "}
-                  &middot; presence refreshes every minute
+                  &middot; {t("presenceRefreshes")}
                 </>
               ) : devices.length > 0 ? (
                 <>
-                  No devices online right now. Last seen{" "}
-                  {Math.round((Date.now() - devices[0].lastSeenAt.getTime()) / 60_000)} min ago.
+                  {t("noDevicesOnline", { mins: Math.round((Date.now() - devices[0].lastSeenAt.getTime()) / 60_000) })}
                 </>
               ) : (
                 <>
-                  No kitchen device has checked in yet. Open <code>/kitchen</code> on a tablet
-                  to register it.
+                  {t.rich("noDeviceRegistered", { code: (chunks) => <code>{chunks}</code> })}
                 </>
               )}
             </p>
@@ -125,7 +120,7 @@ export default async function PublishingHubPage() {
             href="/kitchen"
             className="text-sm font-medium text-emerald-600 hover:underline whitespace-nowrap"
           >
-            Open Kitchen &rarr;
+            {t("openKitchen")}
           </Link>
         </div>
         {devices.length > 0 && (
@@ -146,7 +141,7 @@ export default async function PublishingHubPage() {
                     </span>
                   </div>
                   <span className="text-xs text-gray-500 whitespace-nowrap">
-                    {fresh ? "online" : `${mins} min ago`}
+                    {fresh ? t("deviceOnline") : t("deviceLastSeen", { mins })}
                   </span>
                 </li>
               );
@@ -165,15 +160,15 @@ export default async function PublishingHubPage() {
           <div className="flex items-start justify-between">
             <Code2 className="w-8 h-8 text-emerald-500" />
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700">
-              Free
+              {t("badgeFree")}
             </span>
           </div>
-          <h3 className="font-semibold text-gray-900 mt-3">Legacy Website widget</h3>
+          <h3 className="font-semibold text-gray-900 mt-3">{t("legacyWidgetTitle")}</h3>
           <p className="text-sm text-gray-600 mt-1">
-            Paste a snippet into your existing website and start taking online orders.
+            {t("legacyWidgetDescription")}
           </p>
           <div className="mt-3 text-sm text-emerald-600 font-medium group-hover:underline">
-            Get install code &rarr;
+            {t("getInstallCode")}
           </div>
         </Link>
 
@@ -188,15 +183,15 @@ export default async function PublishingHubPage() {
             <div className="flex items-start justify-between">
               <Globe className="w-8 h-8 text-emerald-500" />
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700">
-                Active
+                {t("badgeActive")}
               </span>
             </div>
-            <h3 className="font-semibold text-gray-900 mt-3">Sales Optimized Website</h3>
+            <h3 className="font-semibold text-gray-900 mt-3">{t("salesOptimizedTitle")}</h3>
             <p className="text-sm text-gray-600 mt-1">
-              Your hosted marketing page is live.
+              {t("hostedSiteLive")}
             </p>
             <div className="mt-3 text-sm text-emerald-600 font-medium group-hover:underline">
-              View site &rarr;
+              {t("viewSite")}
             </div>
           </Link>
         ) : (
@@ -204,18 +199,18 @@ export default async function PublishingHubPage() {
             <div className="flex items-start justify-between">
               <Globe className="w-8 h-8 text-gray-400" />
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 flex items-center gap-1">
-                <Lock className="w-3 h-3" /> Add-on
+                <Lock className="w-3 h-3" /> {t("badgeAddon")}
               </span>
             </div>
-            <h3 className="font-semibold text-gray-700 mt-3">Sales Optimized Website</h3>
+            <h3 className="font-semibold text-gray-700 mt-3">{t("salesOptimizedTitle")}</h3>
             <p className="text-sm text-gray-500 mt-1">
-              We'll host a marketing page at <code className="text-xs">your-slug.feefreeordering.com</code>.
+              {t.rich("hostedSiteLockedDescription", { code: (chunks) => <code className="text-xs">{chunks}</code> })}
             </p>
             <Link
               href="/admin/billing/add-ons"
               className="mt-3 inline-block text-sm text-gray-600 font-medium hover:underline"
             >
-              Upgrade to unlock &rarr;
+              {t("upgradeToUnlock")}
             </Link>
           </div>
         )}
@@ -225,18 +220,18 @@ export default async function PublishingHubPage() {
           <div className="flex items-start justify-between">
             <Smartphone className="w-8 h-8 text-gray-400" />
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 flex items-center gap-1">
-              <Lock className="w-3 h-3" /> Add-on
+              <Lock className="w-3 h-3" /> {t("badgeAddon")}
             </span>
           </div>
-          <h3 className="font-semibold text-gray-700 mt-3">Branded Mobile App</h3>
+          <h3 className="font-semibold text-gray-700 mt-3">{t("brandedAppTitle")}</h3>
           <p className="text-sm text-gray-500 mt-1">
-            Submit your own app to iOS &amp; Android app stores with your branding.
+            {t("brandedAppDescription")}
           </p>
           <Link
             href="/admin/billing/add-ons"
             className="mt-3 inline-block text-sm text-gray-600 font-medium hover:underline"
           >
-            Upgrade to unlock &rarr;
+            {t("upgradeToUnlock")}
           </Link>
         </div>
       </div>

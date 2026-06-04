@@ -1,11 +1,13 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import { ensureWidgetPublicId, getPublishState } from "@/lib/publishing";
 import prisma from "@/lib/db";
 import { LegacyWidgetClient } from "./LegacyWidgetClient";
 
 export default async function LegacyWebsitePage() {
+  const t = await getTranslations("admin.legacyWebsitePage");
   const user = await getSessionUser();
   // See add-ons/page.tsx for the rationale.
   if (!user) redirect("/login");
@@ -34,13 +36,13 @@ export default async function LegacyWebsitePage() {
           href="/admin/publishing"
           className="text-sm text-gray-600 hover:text-gray-900"
         >
-          &larr; Back to publishing
+          &larr; {t("backToPublishing")}
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900 mt-2">Legacy Website widget</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mt-2">{t("pageTitle")}</h1>
         <p className="text-sm text-gray-600 mt-1">
-          Already have a website? Paste this snippet into the <code>&lt;body&gt;</code> of any page where you want
-          customers to be able to order. A floating "Order Online" button will appear; clicking it
-          opens your full ordering experience in an overlay.
+          {t.rich("pageDescription", {
+            code: (chunks) => <code>{chunks}</code>,
+          })}
         </p>
       </div>
 
@@ -53,12 +55,12 @@ export default async function LegacyWebsitePage() {
       />
 
       <div className="rounded-lg border border-gray-200 bg-white p-5">
-        <h3 className="font-semibold text-gray-900">Installation tips</h3>
+        <h3 className="font-semibold text-gray-900">{t("installationTipsTitle")}</h3>
         <ul className="mt-2 text-sm text-gray-700 space-y-1 list-disc list-inside">
-          <li>Place the snippet just before <code>&lt;/body&gt;</code>. It loads asynchronously and won't slow your page.</li>
-          <li>Works on any platform that lets you edit raw HTML: WordPress, Wix, Shopify, Squarespace, raw HTML, etc.</li>
-          <li>The widget refuses to render until you click <strong>Publish</strong> on the previous page.</li>
-          <li>Change the button color with <code>data-color="#hex"</code> and label with <code>data-label="Order Now"</code>.</li>
+          <li>{t.rich("tipPlacement", { code: (chunks) => <code>{chunks}</code> })}</li>
+          <li>{t("tipPlatforms")}</li>
+          <li>{t.rich("tipPublish", { strong: (chunks) => <strong>{chunks}</strong> })}</li>
+          <li>{t.rich("tipCustomize", { code: (chunks) => <code>{chunks}</code> })}</li>
         </ul>
       </div>
     </div>

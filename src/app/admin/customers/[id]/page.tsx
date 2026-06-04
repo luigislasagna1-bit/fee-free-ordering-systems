@@ -16,6 +16,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, Mail, Phone, KeyRound, ShoppingBag, Tag, Calendar, DollarSign } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { formatCurrency, formatDate } from "@/lib/utils";
@@ -29,6 +30,7 @@ export default async function CustomerDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const t = await getTranslations("admin.customerDetailPage");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) notFound();
@@ -80,7 +82,7 @@ export default async function CustomerDetailPage({
     <div className="max-w-4xl">
       <Link href="/admin/customers" className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 mb-4">
         <ChevronLeft className="w-4 h-4" />
-        All customers
+        {t("allCustomers")}
       </Link>
 
       {/* Profile header */}
@@ -91,16 +93,16 @@ export default async function CustomerDetailPage({
               <h1 className="text-2xl font-bold text-gray-900">{customer.name}</h1>
               {hasAccount ? (
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
-                  <KeyRound className="w-3 h-3" />Signed up
+                  <KeyRound className="w-3 h-3" />{t("badgeSignedUp")}
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-                  Guest customer
+                  {t("badgeGuest")}
                 </span>
               )}
               {customer.chainCustomerId && (
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
-                  Multi-location
+                  {t("badgeMultiLocation")}
                 </span>
               )}
             </div>
@@ -122,29 +124,29 @@ export default async function CustomerDetailPage({
           <div className="grid grid-cols-2 gap-4 text-right">
             <div>
               <div className="text-2xl font-bold text-gray-900">{customer.totalOrders}</div>
-              <div className="text-[10px] uppercase tracking-wider text-gray-500">orders</div>
+              <div className="text-[10px] uppercase tracking-wider text-gray-500">{t("statOrders")}</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-gray-900">{formatCurrency(customer.totalSpent)}</div>
-              <div className="text-[10px] uppercase tracking-wider text-gray-500">spent</div>
+              <div className="text-[10px] uppercase tracking-wider text-gray-500">{t("statSpent")}</div>
             </div>
           </div>
         </div>
         <div className="mt-4 pt-4 border-t border-gray-100 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-gray-600">
           <div>
             <Calendar className="w-3.5 h-3.5 inline mr-1 text-gray-400" />
-            First seen <strong>{formatDate(customer.createdAt)}</strong>
+            {t.rich("firstSeen", { date: formatDate(customer.createdAt), strong: (chunks) => <strong>{chunks}</strong> })}
           </div>
           {customer.lastOrderAt && (
             <div>
               <ShoppingBag className="w-3.5 h-3.5 inline mr-1 text-gray-400" />
-              Last order <strong>{formatDate(customer.lastOrderAt)}</strong>
+              {t.rich("lastOrder", { date: formatDate(customer.lastOrderAt), strong: (chunks) => <strong>{chunks}</strong> })}
             </div>
           )}
           {hasAccount && customer.lastLoginAt && (
             <div>
               <KeyRound className="w-3.5 h-3.5 inline mr-1 text-gray-400" />
-              Last login <strong>{formatDate(customer.lastLoginAt)}</strong>
+              {t.rich("lastLogin", { date: formatDate(customer.lastLoginAt), strong: (chunks) => <strong>{chunks}</strong> })}
             </div>
           )}
         </div>
@@ -163,13 +165,13 @@ export default async function CustomerDetailPage({
       <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
         <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
           <Tag className="w-5 h-5 text-emerald-500" />
-          Assign a personal coupon
+          {t("assignCouponHeading")}
         </h2>
         <p className="text-sm text-gray-500 mt-1">
-          Creates a code only <strong>{customer.name}</strong> can redeem.
+          {t.rich("assignCouponDescription", { name: customer.name, strong: (chunks) => <strong>{chunks}</strong> })}
           {hasAccount
-            ? " It'll show up in their account dashboard automatically."
-            : " They'll need to sign up first to see it in their account — but you can also share the code directly."}
+            ? " " + t("assignCouponHasAccount")
+            : " " + t("assignCouponGuest")}
         </p>
         <AssignCouponForm customerId={customer.id} customerName={customer.name} />
 
@@ -177,18 +179,21 @@ export default async function CustomerDetailPage({
         {coupons.length > 0 && (
           <div className="mt-6 pt-6 border-t border-gray-100">
             <h3 className="text-sm font-bold text-gray-900 mb-3">
-              Coupons assigned to this customer ({coupons.length})
+              {t("assignedCouponsHeading", { count: coupons.length })}
             </h3>
             <ul className="space-y-2">
               {coupons.map((c) => {
                 const discount = c.discountType === "percentage"
-                  ? `${c.discountValue}% off`
-                  : `${formatCurrency(c.discountValue)} off`;
-                const status = !c.isActive ? "Disabled"
-                  : c.expiresAt && new Date(c.expiresAt) < now ? "Expired"
-                  : c.maxUses !== null && c.usedCount >= c.maxUses ? "Used up"
-                  : "Active";
-                const statusClass = status === "Active"
+                  ? t("discountPercent", { value: c.discountValue })
+                  : t("discountFixed", { value: formatCurrency(c.discountValue) });
+                const isActiveStatus = c.isActive
+                  && !(c.expiresAt && new Date(c.expiresAt) < now)
+                  && !(c.maxUses !== null && c.usedCount >= c.maxUses);
+                const status = !c.isActive ? t("statusDisabled")
+                  : c.expiresAt && new Date(c.expiresAt) < now ? t("statusExpired")
+                  : c.maxUses !== null && c.usedCount >= c.maxUses ? t("statusUsedUp")
+                  : t("statusActive");
+                const statusClass = isActiveStatus
                   ? "bg-emerald-100 text-emerald-700"
                   : "bg-gray-100 text-gray-600";
                 return (
@@ -199,9 +204,9 @@ export default async function CustomerDetailPage({
                       </div>
                       <div className="text-[11px] text-gray-500 mt-0.5">
                         {c.description}
-                        {c.minimumOrder > 0 && <> · Min {formatCurrency(c.minimumOrder)}</>}
-                        {c.maxUses !== null && <> · {c.usedCount}/{c.maxUses} used</>}
-                        {c.expiresAt && <> · Expires {new Date(c.expiresAt).toLocaleDateString()}</>}
+                        {c.minimumOrder > 0 && <> · {t("couponMin", { amount: formatCurrency(c.minimumOrder) })}</>}
+                        {c.maxUses !== null && <> · {t("couponUsed", { used: c.usedCount, max: c.maxUses })}</>}
+                        {c.expiresAt && <> · {t("couponExpires", { date: new Date(c.expiresAt).toLocaleDateString() })}</>}
                       </div>
                     </div>
                     <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${statusClass}`}>
@@ -220,12 +225,12 @@ export default async function CustomerDetailPage({
         <div className="px-6 py-4 border-b border-gray-100">
           <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
             <ShoppingBag className="w-5 h-5 text-emerald-500" />
-            Order history
+            {t("orderHistoryHeading")}
           </h2>
         </div>
         {orders.length === 0 ? (
           <div className="p-10 text-center text-sm text-gray-500">
-            No orders yet.
+            {t("noOrders")}
           </div>
         ) : (
           <ul className="divide-y divide-gray-100">

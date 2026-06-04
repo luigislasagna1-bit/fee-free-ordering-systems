@@ -4,6 +4,7 @@ import { formatCurrency } from "@/lib/utils";
 import { parseDateRange, previousPeriod, formatRangeLabel } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { Users, UserPlus, Repeat, TrendingUp } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 /**
  * /admin/reports/online-ordering/clients
@@ -25,8 +26,9 @@ export default async function ClientsDashboardPage({
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const range = parseDateRange(sp);
+  const t = await getTranslations("admin.reportOnlineClients");
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   // Three groupBy queries, all on the (restaurantId, createdAt) index.
   // The "new vs returning" split is computed in two passes:
@@ -57,34 +59,34 @@ export default async function ClientsDashboardPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Clients</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Who's ordering · {formatRangeLabel(range)}</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+          <p className="text-sm text-gray-500 mt-0.5">{t("pageSubtitle", { range: formatRangeLabel(range) })}</p>
         </div>
         <DateRangePicker />
       </header>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <Kpi icon={Users}      accent="blue"    label="Total clients"     value={inRange.length.toLocaleString()} />
-        <Kpi icon={UserPlus}   accent="emerald" label="New clients"       value={newInRange.length.toLocaleString()} />
-        <Kpi icon={Repeat}     accent="purple"  label="Returning clients" value={returning.length.toLocaleString()} />
-        <Kpi icon={TrendingUp} accent="amber"   label="Avg orders/client" value={avgOrders.toFixed(1)} />
+        <Kpi icon={Users}      accent="blue"    label={t("kpiTotalClients")}     value={inRange.length.toLocaleString()} />
+        <Kpi icon={UserPlus}   accent="emerald" label={t("kpiNewClients")}       value={newInRange.length.toLocaleString()} />
+        <Kpi icon={Repeat}     accent="purple"  label={t("kpiReturningClients")} value={returning.length.toLocaleString()} />
+        <Kpi icon={TrendingUp} accent="amber"   label={t("kpiAvgOrdersPerClient")} value={avgOrders.toFixed(1)} />
       </div>
 
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-4">
-        <h2 className="font-semibold text-gray-900 mb-3">Spend overview</h2>
+        <h2 className="font-semibold text-gray-900 mb-3">{t("spendOverviewTitle")}</h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <div className="text-xs text-gray-500 mb-1">Total spend in range</div>
+            <div className="text-xs text-gray-500 mb-1">{t("totalSpendInRange")}</div>
             <div className="text-xl font-bold text-gray-900">{formatCurrency(totalSpend)}</div>
           </div>
           <div>
-            <div className="text-xs text-gray-500 mb-1">Spend from returning clients</div>
+            <div className="text-xs text-gray-500 mb-1">{t("spendFromReturningClients")}</div>
             <div className="text-xl font-bold text-gray-900">
               {formatCurrency(returning.reduce((s, r) => s + (r._sum.total ?? 0), 0))}
             </div>
             <div className="text-[10px] text-gray-400 mt-0.5">
               {inRange.length > 0
-                ? `${((returning.length / inRange.length) * 100).toFixed(0)}% of clients are returning`
+                ? t("returningClientsPercent", { pct: ((returning.length / inRange.length) * 100).toFixed(0) })
                 : "—"}
             </div>
           </div>
@@ -92,7 +94,9 @@ export default async function ClientsDashboardPage({
       </div>
 
       <p className="text-xs text-gray-400 italic mt-2">
-        Full per-client table at <a href="/admin/reports/list/clients" className="text-emerald-600 hover:underline">List View → Clients</a>.
+        {t.rich("listViewLink", {
+          a: (chunks) => <a href="/admin/reports/list/clients" className="text-emerald-600 hover:underline">{chunks}</a>,
+        })}
       </p>
     </div>
   );

@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
@@ -41,6 +42,7 @@ export default async function ReportsDashboardPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const t = await getTranslations("admin.reportsHome");
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
@@ -55,7 +57,7 @@ export default async function ReportsDashboardPage({
     if (payload) {
       return (
         <div>
-          <ReportHeader title="Dashboard" subtitle="Chain-wide overview across all your locations." />
+          <ReportHeader title={t("dashboardTitle")} subtitle={t("chainwideSubtitle")} />
           <BrandReports payload={payload} />
         </div>
       );
@@ -65,8 +67,8 @@ export default async function ReportsDashboardPage({
   if (!restaurantId) {
     return (
       <div>
-        <ReportHeader title="Dashboard" />
-        <p className="text-sm text-gray-500">No restaurant context — sign in as a restaurant admin.</p>
+        <ReportHeader title={t("dashboardTitle")} />
+        <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>
       </div>
     );
   }
@@ -157,19 +159,33 @@ export default async function ReportsDashboardPage({
     return (
       <div>
         <ReportHeader
-          title="Dashboard"
-          subtitle="Reports light up as soon as your first orders come in."
+          title={t("dashboardTitle")}
+          subtitle={t("reportsReadySubtitle")}
         />
-        <FirstOrderWelcome />
+        <FirstOrderWelcome
+          welcomeTitle={t("welcomeTitle")}
+          welcomeBody={t("welcomeBody")}
+          shareOrderLinkTitle={t("shareOrderLinkTitle")}
+          shareOrderLinkDesc={t("shareOrderLinkDesc")}
+          firstOrderPromoTitle={t("firstOrderPromoTitle")}
+          firstOrderPromoDesc={t("firstOrderPromoDesc")}
+          welcomeFootnote={t("welcomeFootnote")}
+        />
       </div>
     );
   }
 
+  const orderTypeLabelMap = {
+    pickup: t("pickup"),
+    delivery: t("delivery"),
+    dine_in: t("dineIn"),
+  };
+
   return (
     <div>
       <ReportHeader
-        title="Dashboard"
-        subtitle={`Headline metrics for ${formatRangeLabel(range)}.`}
+        title={t("dashboardTitle")}
+        subtitle={t("headlineMetricsSubtitle", { range: formatRangeLabel(range) })}
       />
 
       {/* KPI cards with vs-previous-period deltas. The arrow + percentage
@@ -177,32 +193,40 @@ export default async function ReportsDashboardPage({
           mirroring the GloriaFood "vs restaurant average" pattern. */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <KpiCard
-          label="Revenue"
+          label={t("kpiRevenue")}
           value={formatCurrency(curRevenue)}
           deltaPct={pctChange(curRevenue, prevRevenue)}
           icon={DollarSign}
           accent="emerald"
+          vsPrevLabel={t("vsPrev")}
+          vsPrevPctLabel={(pct) => t("vsPrevPct", { pct })}
         />
         <KpiCard
-          label="Completed orders"
+          label={t("kpiCompletedOrders")}
           value={curCompletedCount.toLocaleString()}
           deltaPct={pctChange(curCompletedCount, prevCompletedCount)}
           icon={ShoppingBag}
           accent="blue"
+          vsPrevLabel={t("vsPrev")}
+          vsPrevPctLabel={(pct) => t("vsPrevPct", { pct })}
         />
         <KpiCard
-          label="Average order"
+          label={t("kpiAverageOrder")}
           value={formatCurrency(avgOrder)}
           deltaPct={pctChange(avgOrder, prevAvgOrder)}
           icon={Receipt}
           accent="amber"
+          vsPrevLabel={t("vsPrev")}
+          vsPrevPctLabel={(pct) => t("vsPrevPct", { pct })}
         />
         <KpiCard
-          label="Customers served"
+          label={t("kpiCustomersServed")}
           value={curCustomers.toLocaleString()}
           deltaPct={pctChange(curCustomers, prevCustomers)}
           icon={Users}
           accent="purple"
+          vsPrevLabel={t("vsPrev")}
+          vsPrevPctLabel={(pct) => t("vsPrevPct", { pct })}
         />
       </div>
 
@@ -211,14 +235,14 @@ export default async function ReportsDashboardPage({
           common "how's it going?" question in one screen. */}
       <div className="grid lg:grid-cols-2 gap-5 mb-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-          <h2 className="font-semibold text-gray-900 mb-4">Daily revenue</h2>
+          <h2 className="font-semibold text-gray-900 mb-4">{t("dailyRevenue")}</h2>
           <div className="space-y-2.5">
             {days.map((d) => (
               <div key={d.date.toISOString()}>
                 <div className="flex justify-between text-xs mb-1">
                   <span className="text-gray-600">{formatChartDate(d.date)}</span>
                   <span className="font-semibold text-gray-900">
-                    {d.count} orders · {formatCurrency(d.revenue)}
+                    {t("ordersCount", { count: d.count, revenue: formatCurrency(d.revenue) })}
                   </span>
                 </div>
                 <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
@@ -230,22 +254,22 @@ export default async function ReportsDashboardPage({
               </div>
             ))}
             {days.every((d) => d.count === 0) && (
-              <p className="text-gray-400 text-sm italic">No completed orders in this range.</p>
+              <p className="text-gray-400 text-sm italic">{t("noOrdersInRange")}</p>
             )}
           </div>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-          <h2 className="font-semibold text-gray-900 mb-4">Top selling items</h2>
+          <h2 className="font-semibold text-gray-900 mb-4">{t("topSellingItems")}</h2>
           {topItems.length === 0 ? (
-            <p className="text-gray-400 text-sm italic">No items sold in this range.</p>
+            <p className="text-gray-400 text-sm italic">{t("noItemsSoldInRange")}</p>
           ) : (
             <div className="space-y-2.5">
               {topItems.map((it) => (
                 <div key={it.name} className="flex items-center justify-between">
                   <span className="text-sm text-gray-800 truncate flex-1">{it.name}</span>
                   <div className="flex items-center gap-3 ml-3 flex-shrink-0">
-                    <span className="text-xs text-gray-500">{it._count} sold</span>
+                    <span className="text-xs text-gray-500">{t("sold", { count: it._count })}</span>
                     <span className="text-sm font-semibold text-gray-900">
                       {formatCurrency(it._sum.subtotal || 0)}
                     </span>
@@ -261,19 +285,19 @@ export default async function ReportsDashboardPage({
           on the second screenshot Luigi shared. Color-coded so pickup vs
           delivery is readable in a glance. */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-6">
-        <h2 className="font-semibold text-gray-900 mb-4">Order types</h2>
+        <h2 className="font-semibold text-gray-900 mb-4">{t("orderTypes")}</h2>
         <div className="grid grid-cols-3 gap-3">
-          {(["pickup", "delivery", "dine_in"] as const).map((t) => {
-            const row = typeBreakdown.find((r) => r.type === t);
+          {(["pickup", "delivery", "dine_in"] as const).map((orderType) => {
+            const row = typeBreakdown.find((r) => r.type === orderType);
             const count = row?._count ?? 0;
             const palette = {
               pickup:   "bg-blue-50    text-blue-700",
               delivery: "bg-emerald-50 text-emerald-700",
               dine_in:  "bg-amber-50   text-amber-700",
-            }[t];
-            const label = t === "dine_in" ? "Dine-in" : t.charAt(0).toUpperCase() + t.slice(1);
+            }[orderType];
+            const label = orderTypeLabelMap[orderType];
             return (
-              <div key={t} className={`p-4 rounded-xl text-center ${palette}`}>
+              <div key={orderType} className={`p-4 rounded-xl text-center ${palette}`}>
                 <div className="text-2xl font-bold">{count}</div>
                 <div className="text-xs mt-1 opacity-80">{label}</div>
               </div>
@@ -287,28 +311,31 @@ export default async function ReportsDashboardPage({
           related growth levers. Each card deep-links into the relevant
           report so owners learn the IA by clicking. */}
       <div>
-        <h2 className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-wider">Grow your restaurant</h2>
+        <h2 className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-wider">{t("growYourRestaurant")}</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           <ActionCard
             icon={MousePointerClick}
-            title="More visitors"
-            description="See where your traffic comes from and the conversion funnel."
+            title={t("moreVisitorsTitle")}
+            description={t("moreVisitorsDesc")}
             href="/admin/reports/online-ordering/visits"
             accent="bg-blue-100 text-blue-700"
+            seeReport={t("seeReport")}
           />
           <ActionCard
             icon={Sparkles}
-            title="More orders"
-            description="Find your top promotions and which items convert best."
+            title={t("moreOrdersTitle")}
+            description={t("moreOrdersDesc")}
             href="/admin/reports/online-ordering/promotions"
             accent="bg-emerald-100 text-emerald-700"
+            seeReport={t("seeReport")}
           />
           <ActionCard
             icon={UserPlus}
-            title="More returning clients"
-            description="Spot your repeat customers and re-engage the lapsed ones."
+            title={t("moreClientsTitle")}
+            description={t("moreClientsDesc")}
             href="/admin/reports/online-ordering/clients"
             accent="bg-purple-100 text-purple-700"
+            seeReport={t("seeReport")}
           />
         </div>
       </div>
@@ -334,13 +361,15 @@ function ReportHeader({ title, subtitle }: { title: string; subtitle?: string })
 
 /** Single KPI card with delta vs previous-period. */
 function KpiCard({
-  label, value, deltaPct, icon: Icon, accent,
+  label, value, deltaPct, icon: Icon, accent, vsPrevLabel, vsPrevPctLabel,
 }: {
   label: string;
   value: string;
   deltaPct: number | null;
   icon: typeof DollarSign;
   accent: "emerald" | "blue" | "amber" | "purple";
+  vsPrevLabel: string;
+  vsPrevPctLabel: (pct: string) => string;
 }) {
   const ring = {
     emerald: "bg-emerald-50 text-emerald-600",
@@ -353,14 +382,14 @@ function KpiCard({
   // than infinity / NaN. Up arrow + green when positive, down + red
   // when negative; matches GloriaFood color semantics.
   const renderDelta = () => {
-    if (deltaPct === null) return <span className="text-xs text-gray-400">— vs prev</span>;
+    if (deltaPct === null) return <span className="text-xs text-gray-400">{vsPrevLabel}</span>;
     const positive = deltaPct >= 0;
     const Arrow = positive ? TrendingUp : TrendingDown;
     const color = positive ? "text-emerald-600" : "text-red-500";
     return (
       <span className={`inline-flex items-center gap-1 text-xs font-semibold ${color}`}>
         <Arrow className="w-3 h-3" />
-        {Math.abs(deltaPct).toFixed(1)}% vs prev
+        {vsPrevPctLabel(Math.abs(deltaPct).toFixed(1))}
       </span>
     );
   };
@@ -381,13 +410,14 @@ function KpiCard({
 
 /** Quick-action card linking to a related report. */
 function ActionCard({
-  icon: Icon, title, description, href, accent,
+  icon: Icon, title, description, href, accent, seeReport,
 }: {
   icon: typeof DollarSign;
   title: string;
   description: string;
   href: string;
   accent: string;
+  seeReport: string;
 }) {
   return (
     <Link
@@ -400,7 +430,7 @@ function ActionCard({
       <h3 className="font-semibold text-gray-900 mb-1">{title}</h3>
       <p className="text-xs text-gray-500 mb-2">{description}</p>
       <span className="text-xs font-semibold text-emerald-600 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-        See report <ArrowRight className="w-3 h-3" />
+        {seeReport} <ArrowRight className="w-3 h-3" />
       </span>
     </Link>
   );
@@ -425,7 +455,23 @@ function pctChange(curr: number, prev: number): number | null {
  * launch owners don't need to learn the chart UI before their first
  * order.
  */
-function FirstOrderWelcome() {
+function FirstOrderWelcome({
+  welcomeTitle,
+  welcomeBody,
+  shareOrderLinkTitle,
+  shareOrderLinkDesc,
+  firstOrderPromoTitle,
+  firstOrderPromoDesc,
+  welcomeFootnote,
+}: {
+  welcomeTitle: string;
+  welcomeBody: string;
+  shareOrderLinkTitle: string;
+  shareOrderLinkDesc: string;
+  firstOrderPromoTitle: string;
+  firstOrderPromoDesc: string;
+  welcomeFootnote: string;
+}) {
   return (
     <div className="space-y-4">
       <div className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-6">
@@ -434,12 +480,9 @@ function FirstOrderWelcome() {
             🎉
           </div>
           <div className="flex-1">
-            <h2 className="text-lg font-bold text-gray-900 mb-1">Your reports are ready — waiting for the first order.</h2>
+            <h2 className="text-lg font-bold text-gray-900 mb-1">{welcomeTitle}</h2>
             <p className="text-sm text-gray-600 mb-4 leading-relaxed">
-              The moment a customer places their first order, every report on this
-              page lights up: revenue + completed orders + average order value, top
-              selling items, channel breakdown, the funnel, the delivery heatmap. No
-              setup needed beyond what you&apos;ve already done.
+              {welcomeBody}
             </p>
             <div className="grid sm:grid-cols-2 gap-3">
               <Link
@@ -449,8 +492,8 @@ function FirstOrderWelcome() {
                 <div className="flex items-start gap-2">
                   <div className="text-emerald-500 mt-0.5">→</div>
                   <div>
-                    <div className="text-sm font-semibold text-gray-900">Share your order link</div>
-                    <div className="text-xs text-gray-500 mt-0.5">Open the publishing page to grab QR codes + a social share kit.</div>
+                    <div className="text-sm font-semibold text-gray-900">{shareOrderLinkTitle}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">{shareOrderLinkDesc}</div>
                   </div>
                 </div>
               </Link>
@@ -461,8 +504,8 @@ function FirstOrderWelcome() {
                 <div className="flex items-start gap-2">
                   <div className="text-emerald-500 mt-0.5">→</div>
                   <div>
-                    <div className="text-sm font-semibold text-gray-900">Launch a first-order promo</div>
-                    <div className="text-xs text-gray-500 mt-0.5">Set up "$5 off first order" or a free-delivery coupon to convert visitors.</div>
+                    <div className="text-sm font-semibold text-gray-900">{firstOrderPromoTitle}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">{firstOrderPromoDesc}</div>
                   </div>
                 </div>
               </Link>
@@ -472,8 +515,7 @@ function FirstOrderWelcome() {
       </div>
 
       <div className="text-xs text-gray-400 italic">
-        Once orders start flowing, this page becomes the GloriaFood-style dashboard with
-        KPI cards, trend charts, and a "Grow your restaurant" panel of deep-link reports.
+        {welcomeFootnote}
       </div>
     </div>
   );

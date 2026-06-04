@@ -5,6 +5,7 @@ import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 /**
  * /admin/reports/list/orders
@@ -25,12 +26,13 @@ export default async function ListOrdersPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const sp = await searchParams;
+  const t = await getTranslations("admin.reportOrdersList");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const range = parseDateRange(sp);
   const page = Math.max(1, Number(Array.isArray(sp.page) ? sp.page[0] : sp.page) || 1);
 
-  if (!restaurantId) return <p className="text-sm text-gray-500">No restaurant context.</p>;
+  if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   // Run count + page query in parallel. count is cheap (uses the
   // composite index) so we get the total in the same round-trip.
@@ -61,8 +63,8 @@ export default async function ListOrdersPage({
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">List View — Orders</h1>
-          <p className="text-sm text-gray-500 mt-0.5">{total.toLocaleString()} order(s) · {formatRangeLabel(range)}</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+          <p className="text-sm text-gray-500 mt-0.5">{t("orderCountLabel", { count: total, range: formatRangeLabel(range) })}</p>
         </div>
         <DateRangePicker />
       </header>
@@ -72,18 +74,18 @@ export default async function ListOrdersPage({
         <table className="w-full text-sm min-w-[720px]">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
-              <th className="py-2.5 px-4 font-semibold">#</th>
-              <th className="py-2.5 px-4 font-semibold">Date</th>
-              <th className="py-2.5 px-4 font-semibold">Customer</th>
-              <th className="py-2.5 px-4 font-semibold">Type</th>
-              <th className="py-2.5 px-4 font-semibold">Payment</th>
-              <th className="py-2.5 px-4 font-semibold">Status</th>
-              <th className="py-2.5 px-4 font-semibold text-right">Total</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colNumber")}</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colDate")}</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colCustomer")}</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colType")}</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colPayment")}</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colStatus")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{t("colTotal")}</th>
             </tr>
           </thead>
           <tbody>
             {orders.length === 0 && (
-              <tr><td colSpan={7} className="py-6 px-4 text-center text-gray-400 italic">No orders in this range.</td></tr>
+              <tr><td colSpan={7} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
             )}
             {orders.map((o) => (
               <tr key={o.id} className="border-b border-gray-50 hover:bg-gray-50/50">
@@ -94,7 +96,7 @@ export default async function ListOrdersPage({
                 </td>
                 <td className="py-2.5 px-4 text-gray-600 text-xs">{o.createdAt.toLocaleString()}</td>
                 <td className="py-2.5 px-4 text-gray-800">{o.customerName}</td>
-                <td className="py-2.5 px-4 text-gray-600">{o.type === "dine_in" ? "Dine-in" : o.type.charAt(0).toUpperCase() + o.type.slice(1)}</td>
+                <td className="py-2.5 px-4 text-gray-600">{o.type === "dine_in" ? t("typeDineIn") : o.type.charAt(0).toUpperCase() + o.type.slice(1)}</td>
                 <td className="py-2.5 px-4 text-gray-600 capitalize">{o.paymentMethod}</td>
                 <td className="py-2.5 px-4"><StatusBadge status={o.status} /></td>
                 <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(o.total)}</td>
@@ -110,7 +112,7 @@ export default async function ListOrdersPage({
       </div>
 
       {pageCount > 1 && (
-        <Pagination current={page} total={pageCount} sp={sp} />
+        <Pagination current={page} total={pageCount} sp={sp} labelPage={t("paginationPage", { current: page, total: pageCount })} labelPrevious={t("paginationPrevious")} labelNext={t("paginationNext")} />
       )}
     </div>
   );
@@ -132,14 +134,14 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
-function Pagination({ current, total, sp }: { current: number; total: number; sp: Record<string, string | string[] | undefined> }) {
+function Pagination({ current, total, sp, labelPage, labelPrevious, labelNext }: { current: number; total: number; sp: Record<string, string | string[] | undefined>; labelPage: string; labelPrevious: string; labelNext: string }) {
   const mk = (p: number) => { const u = new URLSearchParams(buildQuery(sp)); u.set("page", String(p)); return `?${u.toString()}`; };
   return (
     <div className="flex items-center justify-between mt-4 text-xs text-gray-600">
-      <span>Page {current} of {total}</span>
+      <span>{labelPage}</span>
       <div className="flex gap-1">
-        {current > 1 && <a href={mk(current - 1)} className="px-3 py-1.5 rounded border border-gray-200 hover:bg-gray-50">Previous</a>}
-        {current < total && <a href={mk(current + 1)} className="px-3 py-1.5 rounded border border-gray-200 hover:bg-gray-50">Next</a>}
+        {current > 1 && <a href={mk(current - 1)} className="px-3 py-1.5 rounded border border-gray-200 hover:bg-gray-50">{labelPrevious}</a>}
+        {current < total && <a href={mk(current + 1)} className="px-3 py-1.5 rounded border border-gray-200 hover:bg-gray-50">{labelNext}</a>}
       </div>
     </div>
   );

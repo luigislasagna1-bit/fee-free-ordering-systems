@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import {
@@ -21,11 +22,12 @@ import { MarketplaceSettingsClient } from "./MarketplaceSettingsClient";
  *      tagline, categories, tags, banner override
  */
 export default async function MarketplaceAdminPage() {
+  const t = await getTranslations("admin.marketplacePage");
   const user = await getSessionUser();
   if (!user?.restaurantId) {
     return (
       <div className="p-6">
-        <p className="text-sm text-gray-600">Please log in to manage your marketplace listing.</p>
+        <p className="text-sm text-gray-600">{t("loginRequired")}</p>
       </div>
     );
   }
@@ -44,7 +46,7 @@ export default async function MarketplaceAdminPage() {
     where: { restaurantId: user.restaurantId },
   });
   if (!listing) {
-    return <div className="p-6 text-sm text-red-600">Failed to create marketplace listing — try refreshing.</div>;
+    return <div className="p-6 text-sm text-red-600">{t("listingCreateFailed")}</div>;
   }
 
   const restaurant = await prisma.restaurant.findUnique({
@@ -71,7 +73,7 @@ export default async function MarketplaceAdminPage() {
         marketplaceFeatured: listing.marketplaceFeatured,
       }}
       restaurant={{
-        name: restaurant?.name ?? "Your Restaurant",
+        name: restaurant?.name ?? t("yourRestaurant"),
         slug: restaurant?.slug ?? "",
         city: restaurant?.city ?? null,
         cuisineType: restaurant?.cuisineType ?? null,
