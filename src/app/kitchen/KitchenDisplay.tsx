@@ -782,6 +782,25 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const audioCtxRef = useRef<AudioContext | null>(null);
   const audioUnlockedRef = useRef(false);
 
+  // Full-length "GloriaFood" new-order alert (Luigi 2026-06-04): a ~4-minute
+  // MP3 that plays ONCE per alerting period — until the kitchen accepts or the
+  // track ends — instead of a short ding looped on a cadence. We stream it via
+  // a plain HTMLAudioElement (NOT the Web Audio decoded-buffer path) because a
+  // 4-minute file would otherwise hold ~tens of MB of decoded PCM in memory
+  // and the cadence loop would restart it every couple seconds. The element is
+  // created lazily + unlocked on the same first-gesture as the AudioContext.
+  const longAlertRef = useRef<HTMLAudioElement | null>(null);
+  const getLongAlert = useCallback(() => {
+    if (typeof window === "undefined") return null;
+    if (!longAlertRef.current) {
+      const a = new Audio("/sounds/gloriafood-alert.mp3");
+      a.preload = "auto";
+      a.loop = false; // play once through, then stop ("until the time is up")
+      longAlertRef.current = a;
+    }
+    return longAlertRef.current;
+  }, []);
+
   // Decoded GloriaFood sample as a Web Audio buffer. We use the
   // AudioContext + decodeAudioData path instead of an HTMLAudioElement
   // for three reasons:
@@ -1048,6 +1067,16 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         audioCtxRef.current = ctx;
         if (ctx.state === "suspended") ctx.resume().catch(() => {});
         audioUnlockedRef.current = true;
+      } catch {}
+      // Also unlock the long-alert <audio> element on the same gesture so the
+      // 4-min new-order alert can autoplay later (browsers gate HTMLAudio
+      // playback on a user gesture, separately from the AudioContext).
+      try {
+        const a = getLongAlert();
+        if (a) {
+          a.muted = true;
+          a.play().then(() => { a.pause(); a.currentTime = 0; a.muted = false; }).catch(() => { a.muted = false; });
+        }
       } catch {}
     };
     window.addEventListener("pointerdown", unlock, { once: true });
@@ -1321,6 +1350,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   };
   useEffect(() => {
     if (!alerting || alertMuted || alertVolume <= 0) return;
+    // The "gloriafood" alert is now the full-length track played once by the
+    // dedicated long-alert effect below — it must NOT also be re-fired on this
+    // short-ding cadence (which would restart it every couple seconds).
+    if (alertSound === "gloriafood") return;
     let cancelled = false;
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
@@ -1346,6 +1379,26 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (timeoutId) clearTimeout(timeoutId);
     };
   }, [alerting, alertMuted, alertVolume, ringBellOnce]);
+
+  // Full-length GloriaFood alert: play ONCE per alerting period, stop the
+  // moment the kitchen accepts (alerting → false) or the track ends. Streams
+  // via the HTMLAudioElement so we never restart a 4-min file mid-playback.
+  // Luigi 2026-06-04. Only active when "gloriafood" is the chosen sound.
+  useEffect(() => {
+    const a = getLongAlert();
+    if (!a) return;
+    const shouldPlay = alerting && alertSound === "gloriafood" && !alertMuted && alertVolume > 0;
+    if (shouldPlay) {
+      a.volume = Math.max(0, Math.min(1, alertVolume));
+      if (a.paused) {
+        try { a.currentTime = 0; } catch {}
+        a.play().catch(() => { /* autoplay blocked until a gesture — unlock effect handles it */ });
+      }
+    } else {
+      if (!a.paused) a.pause();
+      try { a.currentTime = 0; } catch {}
+    }
+  }, [alerting, alertSound, alertMuted, alertVolume, getLongAlert]);
 
   const testAlertSound = useCallback(() => {
     // ONE strike only — restaurants confused "I keep hearing it" with
