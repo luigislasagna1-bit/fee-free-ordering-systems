@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Autentificare restaurant",
     "noMatchesTitle": "Niciun rezultat",
     "noMatchesBody": "Încearcă un alt termen de căutare sau şterge filtrele.",
-    "clearFilters": "Şterg filtrele"
+    "clearFilters": "Şterg filtrele",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Comandă de la restaurante locale fără prețuri umflate sau comisioane de 30%. Restaurantele din Marketplace-ul nostru plătesc o taxă lunară fixă în loc de comisioane per comandă — așa prețurile rămân mici și meniurile complete."
   }
 }

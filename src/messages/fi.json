@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Ravintolan kirjautuminen",
     "noMatchesTitle": "Ei tuloksia",
     "noMatchesBody": "Kokeile eri hakusanaa tai poista suodattimet.",
-    "clearFilters": "Tyhjennä suodattimet"
+    "clearFilters": "Tyhjennä suodattimet",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Tilaa lähiravintoloista ilman ylikorkoja tai 30% provisioita. Fee Free Ordering Marketplace -palvelun ravintolat maksavat kiinteän kuukausimaksun tilauskohtaisten välityspalkkioiden sijaan — hinnat pysyvät alhaisina ja menuissa on kaikki tarjolla."
   }
 }

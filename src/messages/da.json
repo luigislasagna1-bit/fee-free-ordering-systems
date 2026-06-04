@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Restaurant log ind",
     "noMatchesTitle": "Ingen resultater",
     "noMatchesBody": "Prøv et andet søgeord, eller ryd filtrene.",
-    "clearFilters": "Ryd filtre"
+    "clearFilters": "Ryd filtre",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Bestil fra lokale restauranter uden prisforhøjelser eller 30% kommission. Restauranter på vores Marketplace betaler et fast månedligt gebyr i stedet for provision pr. ordre — så priserne forbliver lave og menuerne fulde."
   }
 }

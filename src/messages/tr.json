@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Restoran girişi",
     "noMatchesTitle": "Sonuç bulunamadı",
     "noMatchesBody": "Farklı bir arama terimi deneyin veya filtreleri temizleyin.",
-    "clearFilters": "Filtreleri temizle"
+    "clearFilters": "Filtreleri temizle",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Yerel restoranlardan fiyat artışı veya 30% komisyon olmadan sipariş verin. Marketplace'imizdeki restoranlar, sipariş başına ödeme yerine sabit bir aylık ücret öder — böylece fiyatlar düşük, menüler eksiksiz kalır."
   }
 }

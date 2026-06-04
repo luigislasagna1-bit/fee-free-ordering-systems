@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Logowanie dla restauracji",
     "noMatchesTitle": "Brak wyników",
     "noMatchesBody": "Spróbuj innego wyszukiwania lub wyczyść filtry.",
-    "clearFilters": "Wyczyść filtry"
+    "clearFilters": "Wyczyść filtry",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Zamawiaj z lokalnych restauracji bez dynamicznych cen i prowizji do 30%. Restauracje w naszym Marketplace płacą stały miesięczny abonament zamiast opłat od każdego zamówienia — dzięki temu ceny pozostają niskie, a menu pełne."
   }
 }

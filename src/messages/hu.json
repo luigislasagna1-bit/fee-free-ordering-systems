@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Éttermi bejelentkezés",
     "noMatchesTitle": "Nincs találat",
     "noMatchesBody": "Próbálj más keresőszót, vagy töröld a szűrőket.",
-    "clearFilters": "Szűrők törlése"
+    "clearFilters": "Szűrők törlése",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Rendelj helyi éttermekből felárak és 30%-os jutalékok nélkül. A Marketplace éttermeink átalánydíjas havi előfizetéssel működnek — nem rendelésenkénti elvonással —, így az árak alacsonyak maradnak és az étlapok teljesek."
   }
 }

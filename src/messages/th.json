@@ -3714,6 +3714,8 @@
     "restaurantLogin": "เข้าสู่ระบบสำหรับร้านอาหาร",
     "noMatchesTitle": "ไม่พบผลลัพธ์",
     "noMatchesBody": "ลองใช้คำค้นหาอื่น หรือล้างตัวกรองแล้วลองใหม่",
-    "clearFilters": "ล้างตัวกรอง"
+    "clearFilters": "ล้างตัวกรอง",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "สั่งอาหารจากร้านในละแวกคุณโดยไม่มีค่าคอมมิชชัน 30% หรือราคาพุ่งสูงในช่วงเร่งด่วน — ร้านค้าบน Fee Free Ordering Marketplace จ่ายค่าบริการรายเดือนแบบคงที่ ราคาเมนูจึงถูกและครบทุกรายการ"
   }
 }

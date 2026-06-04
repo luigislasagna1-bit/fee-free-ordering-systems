@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Sparkles, User, Smartphone, Rocket } from "lucide-react";
@@ -19,25 +20,28 @@ import { getCurrentCustomer } from "@/lib/customer-session";
  * state without a roundtrip.
  */
 
-export const metadata = {
-  title: "Marketplace — Fee Free Ordering",
-  description:
-    "Order from local restaurants without surge pricing or 30% commissions. Restaurants on our marketplace pay a flat monthly fee instead of per-order kickbacks, so prices stay low and menus stay full.",
-  // PWA wiring — phones get an "Add to Home Screen" prompt that
-  // installs the marketplace as a standalone app. This is the
-  // poor-man's native app: no App Store review cycle, no separate
-  // codebase, but a real home-screen icon + splash + standalone
-  // chrome (no browser address bar). The native Capacitor wrapper
-  // for marketplace remains a separate later effort that needs
-  // app-store certificates + icon design.
-  manifest: "/manifest-marketplace.webmanifest",
-  themeColor: "#10B981",
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default" as const,
-    title: "Marketplace",
-  },
-};
+// Localized SEO metadata. Resolves the request locale via next-intl's
+// getTranslations so the <title>/description render in the visitor's language
+// (the last English-only surface on the marketplace). The PWA wiring
+// (manifest / theme / apple-web-app) stays static — "Marketplace" is the
+// brand-level home-screen name and shouldn't be translated per request.
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("marketplace");
+  return {
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+    // PWA wiring — phones get an "Add to Home Screen" prompt that installs the
+    // marketplace as a standalone app (home-screen icon + splash + standalone
+    // chrome). The native Capacitor wrapper remains a separate later effort.
+    manifest: "/manifest-marketplace.webmanifest",
+    themeColor: "#10B981",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "default",
+      title: "Marketplace",
+    },
+  };
+}
 
 export default async function MarketplacePage() {
   const [raw, currentCustomer, t] = await Promise.all([

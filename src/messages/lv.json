@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Restorāna pieteikšanās",
     "noMatchesTitle": "Nav rezultātu",
     "noMatchesBody": "Izmēģiniet citu meklēšanas terminu vai notīriet filtrus.",
-    "clearFilters": "Notīrīt filtrus"
+    "clearFilters": "Notīrīt filtrus",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Pasūti ēdienu no vietējiem restorāniem bez cenu uzcenojumiem vai 30% komisijām. Marketplace restorāni maksā fiksētu ikmēneša maksu, nevis komisiju par katru pasūtījumu — tāpēc cenas paliek zemas un izvēlne pilna."
   }
 }

@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Accesso ristoratori",
     "noMatchesTitle": "Nessun risultato",
     "noMatchesBody": "Prova un termine di ricerca diverso o rimuovi i filtri.",
-    "clearFilters": "Rimuovi filtri"
+    "clearFilters": "Rimuovi filtri",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Ordina dai ristoranti locali senza prezzi gonfiati né commissioni del 30%. I ristoranti sul nostro Marketplace pagano una tariffa mensile fissa anziché percentuali su ogni ordine — così i prezzi restano bassi e i menù restano completi."
   }
 }

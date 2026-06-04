@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Restorano prisijungimas",
     "noMatchesTitle": "Nieko nerasta",
     "noMatchesBody": "Pabandykite kitą paieškos frazę arba išvalykite filtrus.",
-    "clearFilters": "Išvalyti filtrus"
+    "clearFilters": "Išvalyti filtrus",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Užsisakykite maistą iš vietinių restoranų be papildomų mokesčių ir 30% komisinių. Mūsų Marketplace esantys restoranai moka fiksuotą mėnesinį mokestį, o ne komisinį nuo kiekvieno užsakymo — todėl kainos išlieka žemos, o meniu — pilni."
   }
 }

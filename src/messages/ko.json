@@ -3714,6 +3714,8 @@
     "restaurantLogin": "음식점 로그인",
     "noMatchesTitle": "검색 결과 없음",
     "noMatchesBody": "다른 검색어를 사용하거나 필터를 초기화해 보세요.",
-    "clearFilters": "필터 초기화"
+    "clearFilters": "필터 초기화",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "수수료 없이 동네 맛집에서 주문하세요. Fee Free Ordering Marketplace 입점 레스토랑은 주문당 30% 수수료 대신 월 정액제를 이용하기 때문에 가격은 저렴하고 메뉴는 그대로입니다."
   }
 }

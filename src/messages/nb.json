@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Restaurantinnlogging",
     "noMatchesTitle": "Ingen treff",
     "noMatchesBody": "Prøv et annet søkeord eller fjern filtrene.",
-    "clearFilters": "Fjern filtre"
+    "clearFilters": "Fjern filtre",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Bestill fra lokale restauranter uten prisøkninger eller 30% provisjoner. Restauranter i vår Marketplace betaler en fast månedlig avgift i stedet for per-bestilling-gebyrer — slik holder prisene seg lave og menyen komplett."
   }
 }

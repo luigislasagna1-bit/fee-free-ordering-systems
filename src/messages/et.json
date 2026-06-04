@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Restorani sisselogimine",
     "noMatchesTitle": "Tulemusi pole",
     "noMatchesBody": "Proovi teist otsingusõna või tühjenda filtrid.",
-    "clearFilters": "Tühjenda filtrid"
+    "clearFilters": "Tühjenda filtrid",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Telli kohalikest restoranidest ilma hinnatõusude või 30% komisjonitasudeta. Fee Free Ordering Marketplace'i restoranid maksavad ühtset kuutasu, mitte tellimuspõhiseid lõive — hinnad püsivad madalad ja menüüd täielikud."
   }
 }

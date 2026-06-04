@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Prijava za restavracije",
     "noMatchesTitle": "Ni zadetkov",
     "noMatchesBody": "Poskusite z drugačnim iskalnim izrazom ali počistite filtre.",
-    "clearFilters": "Počisti filtre"
+    "clearFilters": "Počisti filtre",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Naročite hrano iz lokalnih restavracij brez provizij ali 30% odbitkov. Restavracije v našem Marketplace plačujejo fiksno mesečno naročnino namesto provizij na vsako naročilo — cene ostanejo nizke, meniji pa polni."
   }
 }

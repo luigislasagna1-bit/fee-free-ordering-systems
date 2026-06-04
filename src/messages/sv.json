@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Restauranginloggning",
     "noMatchesTitle": "Inga träffar",
     "noMatchesBody": "Prova ett annat sökord eller rensa filtren.",
-    "clearFilters": "Rensa filter"
+    "clearFilters": "Rensa filter",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Beställ från lokala restauranger utan pristoppar eller 30% provisioner. Restauranger på vårt Marketplace betalar en fast månadsavgift istället för avgifter per order — så priserna förblir låga och menyerna fullständiga."
   }
 }

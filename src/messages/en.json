@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Restaurant log in",
     "noMatchesTitle": "No matches",
     "noMatchesBody": "Try a different search term or clear the filters.",
-    "clearFilters": "Clear filters"
+    "clearFilters": "Clear filters",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Order from local restaurants without surge pricing or 30% commissions. Restaurants on our marketplace pay a flat monthly fee instead of per-order kickbacks, so prices stay low and menus stay full."
   }
 }

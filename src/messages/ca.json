@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Accés per a restaurants",
     "noMatchesTitle": "Sense resultats",
     "noMatchesBody": "Prova un terme de cerca diferent o esborra els filtres.",
-    "clearFilters": "Esborra els filtres"
+    "clearFilters": "Esborra els filtres",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Demana als teus restaurants locals sense preus inflats ni comissions del 30%. Els restaurants del nostre Marketplace paguen una quota mensual fixa en lloc de percentatges per comanda — els preus es mantenen baixos i els menús, complets."
   }
 }

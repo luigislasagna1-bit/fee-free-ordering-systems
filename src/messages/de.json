@@ -3714,6 +3714,8 @@
     "restaurantLogin": "Restaurant-Anmeldung",
     "noMatchesTitle": "Keine Treffer",
     "noMatchesBody": "Versuchen Sie einen anderen Suchbegriff oder entfernen Sie die Filter.",
-    "clearFilters": "Filter zurücksetzen"
+    "clearFilters": "Filter zurücksetzen",
+    "metaTitle": "Marketplace — Fee Free Ordering",
+    "metaDescription": "Bestell bei lokalen Restaurants ohne Preisaufschläge oder 30% Provisionen. Restaurants im Fee Free Ordering Marketplace zahlen eine monatliche Pauschalgebühr statt Aufschläge pro Bestellung — damit bleiben die Preise fair und die Speisekarten vollständig."
   }
 }
