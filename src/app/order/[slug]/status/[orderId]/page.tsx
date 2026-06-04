@@ -363,7 +363,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                     return null;
                   })();
                   const tsLabel = stepTs && (done || active)
-                    ? stepTs.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
+                    ? stepTs.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hour12: order.restaurant?.hoursFormat !== "24h" })
                     : null;
                   return (
                     <div key={step.key} className="flex items-start gap-4">
@@ -468,6 +468,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                   <div className="text-2xl font-bold text-emerald-700">
                     {new Date(order.scheduledFor).toLocaleString(undefined, {
                       weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+                      hour12: order.restaurant?.hoursFormat !== "24h",
                       ...(order.restaurant?.timezone ? { timeZone: order.restaurant.timezone } : {}),
                     })}
                   </div>

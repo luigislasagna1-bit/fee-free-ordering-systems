@@ -63,6 +63,9 @@ const PUBLIC_ORDER_SELECT = {
       // Timezone so the status page renders a scheduled order's date/time in
       // the restaurant's local clock, not the viewer's browser zone.
       timezone: true,
+      // 12h/24h preference so the status page renders scheduled times +
+      // step timestamps in the restaurant's chosen format.
+      hoursFormat: true,
       // Surface the restaurant's chosen currency so the customer
       // status page formats $/€/£ to match what they paid in. Without
       // this, a European customer who paid €20 would see "$20.00" on

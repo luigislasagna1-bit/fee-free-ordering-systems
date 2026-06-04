@@ -3310,6 +3310,7 @@ export function OrderingPageClient({
           restaurantTimezone={(restaurant as any).timezone}
           requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}
           requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}
+          hoursFormat={hoursFmt}
           onClose={() => setCheckoutOpen(false)}
         />
       )}

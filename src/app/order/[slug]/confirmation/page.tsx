@@ -70,6 +70,8 @@ export default async function ConfirmationPage({
                 ? t("scheduledFor", {
                     time: new Date(order.scheduledFor).toLocaleString(undefined, {
                       weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+                      // Honour the restaurant's 12h/24h choice, not the browser default.
+                      hour12: (order.restaurant as any).hoursFormat !== "24h",
                       ...(order.restaurant.timezone ? { timeZone: order.restaurant.timezone } : {}),
                     }),
                   })

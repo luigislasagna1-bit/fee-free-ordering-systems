@@ -8,6 +8,7 @@ import { Autocomplete, GoogleMap, Marker } from "@react-google-maps/api";
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { pickHoursForService } from "@/lib/service-hours";
 import { parseTheme } from "@/lib/theme";
+import { formatTime } from "@/lib/format-time";
 import { useGoogleMaps } from "@/lib/use-google-maps";
 import { useTranslations } from "next-intl";
 
@@ -196,6 +197,9 @@ interface Props {
   requireCustomerEmail?: boolean;
   /** Whether phone is mandatory on the checkout contact form. */
   requireCustomerPhone?: boolean;
+  /** Restaurant's chosen 12h/24h display format — scheduled-time slot labels
+   *  + the scheduled summary follow it (Luigi 2026-06-04). */
+  hoursFormat?: "12h" | "24h";
 }
 
 export function CheckoutModal({
@@ -216,6 +220,7 @@ export function CheckoutModal({
   openingHours = [],
   requireCustomerEmail = true,
   requireCustomerPhone = true,
+  hoursFormat = "24h",
   cateringNoticeHours,
   scheduleReason = null,
   closedNextOpenLocal,
@@ -289,7 +294,15 @@ export function CheckoutModal({
     : `Pickup`;
 
   const timeSummary = customerInfo.scheduledFor
-    ? `Scheduled for ${new Date(customerInfo.scheduledFor).toLocaleString()}`
+    ? (() => {
+        // Format the scheduled time in the restaurant's chosen 12h/24h format
+        // (NOT the browser default) so it matches the slot picker + Hours page.
+        const [dPart, tPart] = customerInfo.scheduledFor.split("T");
+        const dateLabel = dPart
+          ? new Date(`${dPart}T00:00`).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })
+          : "";
+        return `Scheduled for ${dateLabel} ${formatTime((tPart || "").slice(0, 5), hoursFormat)}`.trim();
+      })()
     : cateringMode
       ? `Catering — choose a time ≥ ${cateringNoticeHours ?? 24}h ahead`
       : `ASAP · ~${orderType === "delivery" ? estimatedDeliveryMinutes : estimatedPickupMinutes} min`;
@@ -849,7 +862,7 @@ export function CheckoutModal({
                             <>
                               <option value="">{tc("pickATimePlaceholder")}</option>
                               {slots.map((s) => (
-                                <option key={s} value={s}>{s}</option>
+                                <option key={s} value={s}>{formatTime(s, hoursFormat)}</option>
                               ))}
                             </>
                           )}
