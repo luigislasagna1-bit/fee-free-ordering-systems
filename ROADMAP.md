@@ -26,7 +26,10 @@ currencies; timezones triple-checked. Full plan: `~/.claude/plans/zazzy-beaming-
     2. **CheckoutModal scheduling-explanation block** — the 3-branch closed/catering notice (4 keys, `tc.rich` for `<strong>{hours}h</strong>`, `{date}` placeholder) now localized in all 37 languages.
     3. **Marketplace landing page** — new `marketplace` namespace (30 keys) across `page.tsx` (server, `getTranslations` + `t.rich`) and `MarketplaceGrid.tsx` (client). The last English-only customer surface is now localized.
   - Final parity after 4b: **3,292 keys, 0 missing / 0 extra / 0 placeholder-arg mismatch** across all 36 non-English locales.
-  - **Remaining (lower priority):** static `<head>` SEO metadata on `/marketplace` (title/description) is still English — localizing needs `generateMetadata` + `getLocale`; deferred. A pre-existing batch-4/5 issue where a few admin keys dropped `<strong>`/`<q>` rich tags in some locales is flagged for a separate cleanup task.
+  - **Phase 4c ✅ shipped 2026-06-04:**
+    - **Hindi (हिन्दी) added — language #38.** Full `hi.json` across all 106 namespace units (customer + 66 admin screens), translated per-screen and assembled at perfect parity (3,293 keys, 0 missing/extra/placeholder/tag). Registered in single-source `LOCALE_LABELS` so every switcher + the request resolver pick it up automatically. LTR. India keeps its English default (Hindi selectable).
+    - **Rich-tag cleanup done** — restored the dropped `<strong>`/`<q>` tags in `legacyWidget.wixWarn1` (nb/et/tr/uk/id/vi), `legacyWidget.wordpressStep2` (sr/ja/ko), `paygOptInPage.switch.timelineUndoBody` (lt), `marketplaceLocked.recommendationBody` (ja). All **38 locales** now match en.json's tag multiset exactly.
+  - **Remaining (lower priority):** static `<head>` SEO metadata on `/marketplace` (title/description) is still English — localizing needs `generateMetadata` + `getLocale`; deferred.
 
 ## 🔬 Shipped 2026-05-21 → 2026-05-22 (this sprint)
 
