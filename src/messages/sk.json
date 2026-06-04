@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Momentálne sme zatvorení. Vyberte si čas, keď máme otvorené — najskorší dostupný termín je zobrazený nižšie.",
     "nextOpening": "Najbližšie otvorenie: {date}",
     "closedAndCatering": "🌙🎉 Sme zatvorení A váš košík obsahuje catering položky. Najskorší dostupný termín je neskorší z najbližšieho otvorenia a <strong>{hours}h</strong> od teraz.",
-    "cateringOnly": "🎉 Váš košík obsahuje catering položky — objednávky musia byť naplánované aspoň <strong>{hours}h</strong> vopred. Možnosť „čo najskôr“ nie je dostupná pri catering položkách v košíku."
+    "cateringOnly": "🎉 Váš košík obsahuje catering položky — objednávky musia byť naplánované aspoň <strong>{hours}h</strong> vopred. Možnosť „čo najskôr“ nie je dostupná pri catering položkách v košíku.",
+    "dragPinHint": "Presuňte špendlík na presné miesto doručenia."
   },
   "reservation": {
     "title": "Rezervovať stôl",

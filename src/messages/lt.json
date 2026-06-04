@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Šiuo metu mes nedirbame. Pasirinkite laiką, kai dirbsime — žemiau rodomas artimiausias galimas laikas.",
     "nextOpening": "Kitas atidarymas: {date}",
     "closedAndCatering": "🌙🎉 Šiuo metu nedirbame IR jūsų krepšelyje yra maisto užsakymo renginių prekių. Artimiausias galimas laikas — vėlesnis iš dviejų: kitas atidarymas arba <strong>{hours}h</strong> nuo dabar.",
-    "cateringOnly": "🎉 Jūsų krepšelyje yra maisto užsakymo renginių prekių — užsakymai turi būti planuojami bent <strong>{hours}h</strong> iš anksto. Kuo greičiau negalima, kai krepšelyje yra tokių prekių."
+    "cateringOnly": "🎉 Jūsų krepšelyje yra maisto užsakymo renginių prekių — užsakymai turi būti planuojami bent <strong>{hours}h</strong> iš anksto. Kuo greičiau negalima, kai krepšelyje yra tokių prekių.",
+    "dragPinHint": "Nutempkite žymeklį į tikslią pristatymo vietą."
   },
   "reservation": {
     "title": "Rezervuoti stalą",

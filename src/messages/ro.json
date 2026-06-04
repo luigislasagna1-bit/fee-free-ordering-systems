@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Momentan suntem închiși. Alege o oră când suntem deschiși — cel mai devreme moment disponibil este afișat mai jos.",
     "nextOpening": "Următoarea deschidere: {date}",
     "closedAndCatering": "🌙🎉 Suntem închiși ȘI coșul tău conține articole de catering. Cel mai devreme moment disponibil este cel mai târziu dintre următoarea deschidere și <strong>{hours}h</strong> de acum.",
-    "cateringOnly": "🎉 Coșul tău conține articole de catering — comenzile trebuie programate cu cel puțin <strong>{hours}h</strong> în avans. Opțiunea \"Cât mai curând\" nu este disponibilă când coșul conține articole de catering."
+    "cateringOnly": "🎉 Coșul tău conține articole de catering — comenzile trebuie programate cu cel puțin <strong>{hours}h</strong> în avans. Opțiunea \"Cât mai curând\" nu este disponibilă când coșul conține articole de catering.",
+    "dragPinHint": "Trageți pinul în locul exact pentru livrare."
   },
   "reservation": {
     "title": "Rezervă o masă",

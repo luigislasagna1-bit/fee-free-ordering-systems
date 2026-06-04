@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Vi har stängt just nu. Välj en tid när vi är öppna — tidigast tillgängliga tid visas nedan.",
     "nextOpening": "Nästa öppning: {date}",
     "closedAndCatering": "🌙🎉 Vi har stängt OCH din kundvagn innehåller cateringartiklar. Tidigast tillgängliga tid är det senare av nästa öppning och <strong>{hours}h</strong> från och med nu.",
-    "cateringOnly": "🎉 Din kundvagn innehåller cateringartiklar — beställningar måste läggas minst <strong>{hours}h</strong> i förväg. Snarast möjligt är inte tillgängligt när kundvagnen innehåller cateringartiklar."
+    "cateringOnly": "🎉 Din kundvagn innehåller cateringartiklar — beställningar måste läggas minst <strong>{hours}h</strong> i förväg. Snarast möjligt är inte tillgängligt när kundvagnen innehåller cateringartiklar.",
+    "dragPinHint": "Dra nålen till den exakta platsen för leverans."
   },
   "reservation": {
     "title": "Boka ett bord",

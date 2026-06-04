@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Šobrīd esam slēgti. Izvēlieties laiku, kad strādājam — zemāk redzams agrākais pieejamais laiks.",
     "nextOpening": "Nākamā atvēršana: {date}",
     "closedAndCatering": "🌙🎉 Esam slēgti UN jūsu grozā ir ēdināšanas pasūtījuma preces. Agrākais pieejamais laiks ir vēlākais no nākamās atvēršanas un <strong>{hours}h</strong> no šī brīža.",
-    "cateringOnly": "🎉 Jūsu grozā ir ēdināšanas pasūtījuma preces — pasūtījumi jāieplāno vismaz <strong>{hours}h</strong> iepriekš. Opcija \"Pēc iespējas ātrāk\" nav pieejama, ja grozā ir ēdināšanas preces."
+    "cateringOnly": "🎉 Jūsu grozā ir ēdināšanas pasūtījuma preces — pasūtījumi jāieplāno vismaz <strong>{hours}h</strong> iepriekš. Opcija \"Pēc iespējas ātrāk\" nav pieejama, ja grozā ir ēdināšanas preces.",
+    "dragPinHint": "Velciet atzīmi uz precīzo piegādes vietu."
   },
   "reservation": {
     "title": "Rezervēt galdu",

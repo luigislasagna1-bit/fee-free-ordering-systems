@@ -4,7 +4,7 @@ import {
   X, User, Truck, ShoppingBag, Clock, CreditCard, Heart, Edit2, Tag,
   AlertCircle, Loader2, ChevronDown,
 } from "lucide-react";
-import { Autocomplete } from "@react-google-maps/api";
+import { Autocomplete, GoogleMap, Marker } from "@react-google-maps/api";
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { pickHoursForService } from "@/lib/service-hours";
 import { parseTheme } from "@/lib/theme";
@@ -33,6 +33,9 @@ type CustomerInfo = {
    *  CASL / GDPR compliance. */
   marketingConsent: boolean;
   notes: string; paymentMethod: string; scheduledFor: string;
+  /** Precise delivery pin coords (Google-maps restaurants). */
+  lat: number | null;
+  lng: number | null;
 };
 
 type CartLine = {
@@ -235,6 +238,13 @@ export function CheckoutModal({
   const googleEnabled = mapProvider === "google" && !!googleMapsApiKey;
   const { isLoaded: gmapsLoaded } = useGoogleMaps(googleEnabled ? googleMapsApiKey! : "");
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  // Map center is set when an address is picked, but NOT updated while the
+  // customer drags the pin — so the map doesn't snap back mid-drag.
+  const [mapCenter, setMapCenter] = useState<{ lat: number; lng: number } | null>(
+    customerInfo.lat != null && customerInfo.lng != null
+      ? { lat: customerInfo.lat, lng: customerInfo.lng }
+      : null,
+  );
 
   const handlePlaceChanged = () => {
     const place = autocompleteRef.current?.getPlace();
@@ -249,11 +259,19 @@ export function CheckoutModal({
     const city = get("locality") || get("sublocality") || get("administrative_area_level_2");
     const zip = get("postal_code");
 
+    // Capture the precise coordinates so we can show + fine-tune a map pin
+    // and send exact coords to the driver.
+    const loc = place.geometry?.location;
+    const lat = loc ? loc.lat() : null;
+    const lng = loc ? loc.lng() : null;
+    if (lat != null && lng != null) setMapCenter({ lat, lng });
+
     setCustomerInfo({
       ...customerInfo,
       address: street || place.formatted_address || customerInfo.address,
       city: city || customerInfo.city,
       zip: zip || customerInfo.zip,
+      ...(lat != null && lng != null ? { lat, lng } : {}),
     });
   };
 
@@ -597,6 +615,34 @@ export function CheckoutModal({
                         onChange={e => setCustomerInfo({ ...customerInfo, zip: e.target.value })}
                       />
                     </div>
+                    {/* Draggable delivery pin (Google-maps restaurants). Shows
+                        once an address is picked; the customer can drag the
+                        marker to the exact door so the driver gets the right
+                        spot. The dragged coords are sent with the order. */}
+                    {googleEnabled && gmapsLoaded && mapCenter && (
+                      <div className="rounded-lg overflow-hidden border border-gray-200">
+                        <GoogleMap
+                          mapContainerStyle={{ width: "100%", height: "180px" }}
+                          center={mapCenter}
+                          zoom={16}
+                          options={{ disableDefaultUI: true, zoomControl: true, gestureHandling: "cooperative" }}
+                        >
+                          <Marker
+                            position={{
+                              lat: customerInfo.lat ?? mapCenter.lat,
+                              lng: customerInfo.lng ?? mapCenter.lng,
+                            }}
+                            draggable
+                            onDragEnd={(e) => {
+                              const la = e.latLng?.lat();
+                              const ln = e.latLng?.lng();
+                              if (la != null && ln != null) setCustomerInfo({ ...customerInfo, lat: la, lng: ln });
+                            }}
+                          />
+                        </GoogleMap>
+                        <p className="text-[11px] text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
+                      </div>
+                    )}
                     {/* Apt/Unit + Buzzer (optional) — concatenated into
                         deliveryAddress on submit so kitchen receipt sees
                         the full string. */}

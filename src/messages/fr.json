@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Nous sommes actuellement fermés. Choisissez un créneau lorsque nous sommes ouverts — le plus tôt disponible est indiqué ci-dessous.",
     "nextOpening": "Prochaine ouverture : {date}",
     "closedAndCatering": "🌙🎉 Nous sommes fermés ET votre panier contient des articles de traiteur. Le créneau le plus tôt disponible est le plus tardif entre la prochaine ouverture et <strong>{hours}h</strong> à partir de maintenant.",
-    "cateringOnly": "🎉 Votre panier contient des articles de traiteur — les commandes doivent être planifiées au moins <strong>{hours}h</strong> à l'avance. La livraison dès que possible n'est pas disponible avec des articles de traiteur dans le panier."
+    "cateringOnly": "🎉 Votre panier contient des articles de traiteur — les commandes doivent être planifiées au moins <strong>{hours}h</strong> à l'avance. La livraison dès que possible n'est pas disponible avec des articles de traiteur dans le panier.",
+    "dragPinHint": "Faites glisser le repère jusqu'à l'emplacement exact pour la livraison."
   },
   "reservation": {
     "title": "Réserver une table",

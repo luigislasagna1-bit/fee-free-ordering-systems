@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Estamos fechados agora. Escolha um horário em que estamos abertos — o mais cedo disponível está mostrado abaixo.",
     "nextOpening": "Próxima abertura: {date}",
     "closedAndCatering": "🌙🎉 Estamos fechados E seu carrinho inclui itens de catering. O horário disponível mais cedo é o maior entre a próxima abertura e <strong>{hours}h</strong> a partir de agora.",
-    "cateringOnly": "🎉 Seu carrinho inclui itens de catering — os pedidos devem ser agendados com pelo menos <strong>{hours}h</strong> de antecedência. A opção \"o mais rápido possível\" não está disponível com itens de catering no carrinho."
+    "cateringOnly": "🎉 Seu carrinho inclui itens de catering — os pedidos devem ser agendados com pelo menos <strong>{hours}h</strong> de antecedência. A opção \"o mais rápido possível\" não está disponível com itens de catering no carrinho.",
+    "dragPinHint": "Arraste o marcador até o ponto exato para a entrega."
   },
   "reservation": {
     "title": "Reservar mesa",

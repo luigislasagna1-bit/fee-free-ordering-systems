@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 我们目前已打烊。请选择一个营业时段 — 最早可用时间显示如下。",
     "nextOpening": "下次营业时间：{date}",
     "closedAndCatering": "🌙🎉 我们目前已打烊，且您的购物车中包含外卖餐饮项目。最早可用时间为下次营业时间与距现在 <strong>{hours}h</strong> 中较晚的那个。",
-    "cateringOnly": "🎉 您的购物车中包含外卖餐饮项目 — 此类订单至少需提前 <strong>{hours}h</strong> 预约。购物车中含外卖餐饮项目时，不支持即时下单。"
+    "cateringOnly": "🎉 您的购物车中包含外卖餐饮项目 — 此类订单至少需提前 <strong>{hours}h</strong> 预约。购物车中含外卖餐饮项目时，不支持即时下单。",
+    "dragPinHint": "拖动图钉，标出准确的配送位置。"
   },
   "reservation": {
     "title": "预订餐桌",

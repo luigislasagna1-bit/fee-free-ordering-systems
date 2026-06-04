@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 We’re closed right now. Pick a time when we’re open — earliest available is shown below.",
     "nextOpening": "Next opening: {date}",
     "closedAndCatering": "🌙🎉 We’re closed AND your cart includes catering items. Earliest available time is the later of next opening and <strong>{hours}h</strong> from now.",
-    "cateringOnly": "🎉 Your cart includes catering items — orders must be scheduled at least <strong>{hours}h</strong> in advance. ASAP isn’t available with catering items in the cart."
+    "cateringOnly": "🎉 Your cart includes catering items — orders must be scheduled at least <strong>{hours}h</strong> in advance. ASAP isn’t available with catering items in the cart.",
+    "dragPinHint": "Drag the pin to the exact spot for delivery."
   },
   "reservation": {
     "title": "Book a table",

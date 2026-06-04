@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Vi er stengt akkurat nå. Velg et tidspunkt når vi er åpne — tidligst tilgjengelig vises nedenfor.",
     "nextOpening": "Neste åpning: {date}",
     "closedAndCatering": "🌙🎉 Vi er stengt OG handlekurven inneholder cateringvarer. Tidligst tilgjengelig tid er den seneste av neste åpning og <strong>{hours}h</strong> fra nå.",
-    "cateringOnly": "🎉 Handlekurven inneholder cateringvarer — bestillinger må planlegges minst <strong>{hours}h</strong> i forveien. Raskest mulig er ikke tilgjengelig når det er cateringvarer i handlekurven."
+    "cateringOnly": "🎉 Handlekurven inneholder cateringvarer — bestillinger må planlegges minst <strong>{hours}h</strong> i forveien. Raskest mulig er ikke tilgjengelig når det er cateringvarer i handlekurven.",
+    "dragPinHint": "Dra nålen til det nøyaktige stedet for levering."
   },
   "reservation": {
     "title": "Bestill bord",

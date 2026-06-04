@@ -736,6 +736,12 @@ export function OrderingPageClient({
     // they type a recognised email (see the consent-lookup effect below).
     // Luigi 2026-06-03.
     marketingConsent: currentCustomer?.marketingConsent ?? true,
+    // Precise delivery pin coords (Google-maps restaurants only). Set when the
+    // customer picks an autocomplete suggestion or drags the map marker; sent
+    // to the order so the driver gets an exact location, overriding the
+    // server-side address geocode. Null when no pin chosen.
+    lat: null as number | null,
+    lng: null as number | null,
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
   // Default starts at the SUGGESTED amount (15%). Customer can drag the
@@ -1706,6 +1712,9 @@ export function OrderingPageClient({
     customerName: customerInfo.name, customerEmail: customerInfo.email,
     customerPhone: customerInfo.phone, deliveryAddress: fullDeliveryAddress,
     deliveryCity: customerInfo.city, deliveryZip: customerInfo.zip,
+    // Precise map-pin coords (delivery only) — driver gets an exact spot.
+    deliveryLat: orderType === "delivery" ? customerInfo.lat : null,
+    deliveryLng: orderType === "delivery" ? customerInfo.lng : null,
     notes: combinedNotes, paymentMethod: customerInfo.paymentMethod,
     scheduledFor: customerInfo.scheduledFor || null,
     // Only honour the consent flag if we actually have an email to send

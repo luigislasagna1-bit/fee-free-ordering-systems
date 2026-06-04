@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Kami sedang tutup sekarang. Pilih waktu saat kami buka — waktu paling awal yang tersedia ditampilkan di bawah.",
     "nextOpening": "Pembukaan berikutnya: {date}",
     "closedAndCatering": "🌙🎉 Kami sedang tutup DAN keranjang Anda memuat item katering. Waktu paling awal yang tersedia adalah yang lebih lambat antara pembukaan berikutnya dan <strong>{hours}h</strong> dari sekarang.",
-    "cateringOnly": "🎉 Keranjang Anda memuat item katering — pesanan harus dijadwalkan setidaknya <strong>{hours}h</strong> sebelumnya. Opsi Sesegera Mungkin tidak tersedia jika ada item katering di keranjang."
+    "cateringOnly": "🎉 Keranjang Anda memuat item katering — pesanan harus dijadwalkan setidaknya <strong>{hours}h</strong> sebelumnya. Opsi Sesegera Mungkin tidak tersedia jika ada item katering di keranjang.",
+    "dragPinHint": "Seret pin ke titik yang tepat untuk pengiriman."
   },
   "reservation": {
     "title": "Pesan meja",

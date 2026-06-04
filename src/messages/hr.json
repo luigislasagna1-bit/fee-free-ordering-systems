@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Trenutno smo zatvoreni. Odaberite vrijeme kada smo otvoreni — najranije dostupno prikazano je u nastavku.",
     "nextOpening": "Sljedeće otvaranje: {date}",
     "closedAndCatering": "🌙🎉 Zatvoreni smo I vaša košarica sadrži catering stavke. Najranije dostupno vrijeme je ono koje je kasnije — sljedeće otvaranje ili <strong>{hours}h</strong> od sada.",
-    "cateringOnly": "🎉 Vaša košarica sadrži catering stavke — narudžbe moraju biti zakazane najmanje <strong>{hours}h</strong> unaprijed. Opcija „što prije“ nije dostupna uz catering stavke u košarici."
+    "cateringOnly": "🎉 Vaša košarica sadrži catering stavke — narudžbe moraju biti zakazane najmanje <strong>{hours}h</strong> unaprijed. Opcija „što prije“ nije dostupna uz catering stavke u košarici.",
+    "dragPinHint": "Povucite oznaku na točno mjesto za dostavu."
   },
   "reservation": {
     "title": "Rezervirajte stol",

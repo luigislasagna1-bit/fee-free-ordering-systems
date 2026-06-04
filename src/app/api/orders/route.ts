@@ -548,13 +548,26 @@ export async function POST(req: NextRequest) {
     // the result is free.
     let deliveryCoords: { lat: number; lng: number } | null = null;
 
+    // Precise customer-dropped map pin (Google-maps restaurants). When the
+    // customer picked an autocomplete suggestion / dragged the marker, trust
+    // those exact coords over a server-side address geocode — the driver
+    // gets the real spot. Validated to plausible lat/lng ranges.
+    const pinLat = Number(body.deliveryLat);
+    const pinLng = Number(body.deliveryLng);
+    const hasPin =
+      Number.isFinite(pinLat) && Number.isFinite(pinLng) &&
+      Math.abs(pinLat) <= 90 && Math.abs(pinLng) <= 180 &&
+      !(pinLat === 0 && pinLng === 0);
+
     if (type === "delivery") {
+      if (hasPin) deliveryCoords = { lat: pinLat, lng: pinLng };
       const zones = await prisma.deliveryZone.findMany({
         where: { restaurantId: restaurant.id, isActive: true },
       });
       if (zones.length > 0 && restaurant.lat != null && restaurant.lng != null && deliveryAddress) {
         const addrParts = [deliveryAddress, deliveryCity, deliveryZip].filter(Boolean).join(", ");
-        const coords = await geocodeAddress(addrParts);
+        // Reuse the pin coords if we have them; only geocode when we don't.
+        const coords = deliveryCoords ?? (await geocodeAddress(addrParts));
         deliveryCoords = coords;
         if (coords) {
           const resolved = findZoneForPoint(

@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Wir haben gerade geschlossen. Wähle einen Zeitpunkt, zu dem wir geöffnet sind — der frühestmögliche Termin wird unten angezeigt.",
     "nextOpening": "Nächste Öffnung: {date}",
     "closedAndCatering": "🌙🎉 Wir haben geschlossen UND dein Warenkorb enthält Catering-Artikel. Der frühestmögliche Termin ist der spätere von: nächste Öffnung oder <strong>{hours}h</strong> ab jetzt.",
-    "cateringOnly": "🎉 Dein Warenkorb enthält Catering-Artikel — Bestellungen müssen mindestens <strong>{hours}h</strong> im Voraus geplant werden. „Schnellstmöglich“ ist bei Catering-Artikeln im Warenkorb nicht verfügbar."
+    "cateringOnly": "🎉 Dein Warenkorb enthält Catering-Artikel — Bestellungen müssen mindestens <strong>{hours}h</strong> im Voraus geplant werden. „Schnellstmöglich“ ist bei Catering-Artikeln im Warenkorb nicht verfügbar.",
+    "dragPinHint": "Ziehen Sie den Stecknadel-Marker genau an die Stelle für die Lieferung."
   },
   "reservation": {
     "title": "Tisch reservieren",

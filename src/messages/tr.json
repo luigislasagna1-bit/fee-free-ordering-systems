@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Şu an kapalıyız. Açık olduğumuz bir zaman seçin — en erken uygun saat aşağıda gösterilmektedir.",
     "nextOpening": "Sonraki açılış: {date}",
     "closedAndCatering": "🌙🎉 Kapalıyız VE sepetinizde catering ürünleri bulunuyor. En erken uygun saat, sonraki açılış ile şu andan itibaren <strong>{hours}h</strong> sürenin geç olanıdır.",
-    "cateringOnly": "🎉 Sepetinizde catering ürünleri var — siparişlerin en az <strong>{hours}h</strong> önceden planlanması gerekmektedir. Sepette catering ürünü varken \"En Kısa Sürede\" seçeneği kullanılamaz."
+    "cateringOnly": "🎉 Sepetinizde catering ürünleri var — siparişlerin en az <strong>{hours}h</strong> önceden planlanması gerekmektedir. Sepette catering ürünü varken \"En Kısa Sürede\" seçeneği kullanılamaz.",
+    "dragPinHint": "İğneyi teslimat için tam noktaya sürükleyin."
   },
   "reservation": {
     "title": "Masa Rezervasyonu",

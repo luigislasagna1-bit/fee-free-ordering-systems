@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 Trenutno smo zaprti. Izberite čas, ko smo odprti — spodaj je prikazan najzgodnejši razpoložljivi termin.",
     "nextOpening": "Naslednje odprtje: {date}",
     "closedAndCatering": "🌙🎉 Zaprti smo IN vaša košarica vsebuje naročila za catering. Najzgodnejši razpoložljivi čas je kasnejši od naslednjega odprtja ali <strong>{hours}h</strong> od zdaj.",
-    "cateringOnly": "🎉 Vaša košarica vsebuje naročila za catering — naročila je treba načrtovati vsaj <strong>{hours}h</strong> vnaprej. Možnost »čim prej« ni na voljo, ko so v košarici artikli za catering."
+    "cateringOnly": "🎉 Vaša košarica vsebuje naročila za catering — naročila je treba načrtovati vsaj <strong>{hours}h</strong> vnaprej. Možnost »čim prej« ni na voljo, ko so v košarici artikli za catering.",
+    "dragPinHint": "Povlecite zatič na točno mesto za dostavo."
   },
   "reservation": {
     "title": "Rezerviraj mizo",

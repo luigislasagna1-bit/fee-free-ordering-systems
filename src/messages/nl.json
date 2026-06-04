@@ -381,7 +381,8 @@
     "closedSchedulePrompt": "🌙 We zijn momenteel gesloten. Kies een moment waarop we open zijn — de vroegst beschikbare tijd staat hieronder.",
     "nextOpening": "Volgende opening: {date}",
     "closedAndCatering": "🌙🎉 We zijn gesloten én je winkelwagen bevat cateringartikelen. De vroegst beschikbare tijd is de laatste van de volgende opening en <strong>{hours}h</strong> vanaf nu.",
-    "cateringOnly": "🎉 Je winkelwagen bevat cateringartikelen — bestellingen moeten minimaal <strong>{hours}h</strong> van tevoren worden ingepland. Zo snel mogelijk is niet beschikbaar met cateringartikelen in je winkelwagen."
+    "cateringOnly": "🎉 Je winkelwagen bevat cateringartikelen — bestellingen moeten minimaal <strong>{hours}h</strong> van tevoren worden ingepland. Zo snel mogelijk is niet beschikbaar met cateringartikelen in je winkelwagen.",
+    "dragPinHint": "Sleep de speld naar de exacte plek voor de bezorging."
   },
   "reservation": {
     "title": "Tafel reserveren",

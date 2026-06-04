@@ -6,17 +6,10 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "@root"; // keys below are FULL dotted paths (multi-namespace batch)
-const CONTEXT = "a restaurant ordering platform; an 'auto phone-call' feature that telephones the restaurant with a spoken message when a new order isn't accepted in ~90s. The autoCallMessage value is SPOKEN ALOUD over the phone — keep it natural for text-to-speech";
+const NS = "checkout";
+const CONTEXT = "a restaurant ordering checkout; this hint sits under a small map where the customer drags a pin to mark the exact delivery spot for the driver";
 const EN = {
-  "kitchen.autoCallMessage": "New order {number} at {restaurant} is waiting and has not been accepted yet. Please open your kitchen display to accept or reject it.",
-  "admin.kitchenWorkflowToggle.autoCallLabel": "Auto phone-call alert",
-  "admin.kitchenWorkflowToggle.autoCallStatusOn": "On — we call your phone if a new order is not accepted within ~90 seconds.",
-  "admin.kitchenWorkflowToggle.autoCallStatusOff": "Off — new orders alert on the kitchen display only.",
-  "admin.kitchenWorkflowToggle.autoCallToggleAriaLabel": "Toggle auto phone-call alert",
-  "admin.kitchenWorkflowToggle.autoCallFooterNote": "If a new order sits unaccepted for about 90 seconds, we place an automated call to your restaurant phone so you never miss an order — even if the tablet is unattended.",
-  "admin.kitchenWorkflowToggle.autoCallEnabledToast": "Auto phone-call alert enabled.",
-  "admin.kitchenWorkflowToggle.autoCallDisabledToast": "Auto phone-call alert disabled.",
+  dragPinHint: "Drag the pin to the exact spot for delivery.",
 };
 const KEYS = Object.keys(EN);
 
