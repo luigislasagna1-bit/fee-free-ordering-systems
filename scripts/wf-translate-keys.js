@@ -6,11 +6,28 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "admin.websiteThemeClient";
-const CONTEXT = "the restaurant's website theme editor; choosing the customer ordering-page menu layout. 'List' shows a food photo on the left and text on the right (GloriaFood style)";
+const NS = "admin.billing";
+const CONTEXT = "the restaurant's billing screen; a form to enter fiscal/company details (legal name, VAT/tax ID, billing address) used on platform-service invoices for their accountant. 'SDI' and 'PEC' are Italian e-invoicing terms — keep them as-is";
 const EN = {
-  menuList: "List (photos left)",
-  menuLayoutHint: "Carousel: compact horizontal scrolling cards per category. Grid: traditional 2-column layout. List: photo on the left, text on the right (GloriaFood style).",
+  fiscalTitle: "Fiscal / billing details",
+  fiscalSubtitle: "Used on your platform-service invoices so you can give your accountant a proper proof of purchase.",
+  fiscalLegalName: "Registered company name",
+  fiscalLegalNamePlaceholder: "e.g. Luigi’s Lasagna S.r.l.",
+  fiscalTaxIdType: "Tax ID type",
+  fiscalTaxId: "VAT / tax ID",
+  fiscalBillingEmail: "Billing email",
+  fiscalAddress1: "Address line 1",
+  fiscalAddress2: "Address line 2",
+  fiscalCity: "City",
+  fiscalState: "State / province",
+  fiscalPostalCode: "Postal code",
+  fiscalCountry: "Country (ISO code)",
+  fiscalSdi: "SDI code (Italy e-invoicing)",
+  fiscalPec: "Certified email (PEC, Italy)",
+  fiscalSave: "Save fiscal details",
+  fiscalSaved: "Saved",
+  fiscalHint: "These details are added to your Stripe billing profile and appear on future invoices and receipts.",
+  loading: "Loading…",
 };
 const KEYS = Object.keys(EN);
 

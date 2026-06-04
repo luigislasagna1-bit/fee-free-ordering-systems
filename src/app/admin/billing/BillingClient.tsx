@@ -8,6 +8,7 @@ import {
   ShoppingBag, Plus, XCircle,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { FiscalDataCard } from "./FiscalDataCard";
 
 type Invoice = {
   id: string;
@@ -243,6 +244,8 @@ export function BillingClient({
           </ul>
         </div>
       </div>
+
+      <FiscalDataCard />
 
       {invoices.length > 0 && (
         <div className="mt-10">

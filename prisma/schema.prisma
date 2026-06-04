@@ -260,6 +260,7 @@ model Restaurant {
   printerSettings        PrinterSettings?
   autopilotCampaigns     AutopilotCampaign[]
   paymentProvider        PaymentProvider?
+  billingProfile         RestaurantBillingProfile?
   printLogs              PrintLog[]
   reservationSettings    ReservationSettings?
   reservationTables      ReservationTable[]
@@ -1728,6 +1729,32 @@ model ServiceFee {
   restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 
   @@index([restaurantId])
+}
+
+/// Fiscal / billing identity the restaurant provides for proof-of-purchase
+/// on their platform-service invoices (subscriptions + add-ons). Synced to
+/// the platform Stripe customer (name / email / address / VAT tax id) so it
+/// appears on the hosted invoice + PDF the owner gives their accountant.
+/// 1:1 with Restaurant; sparse — kept off the hot Restaurant row.
+model RestaurantBillingProfile {
+  id           String   @id @default(cuid())
+  restaurantId String   @unique
+  legalName    String   @default("") // registered company / sole-trader name
+  taxId        String   @default("") // VAT number / tax code
+  taxIdType    String   @default("") // Stripe tax_id type, e.g. eu_vat, gb_vat, us_ein
+  billingEmail String   @default("")
+  addressLine1 String   @default("")
+  addressLine2 String   @default("")
+  city         String   @default("")
+  state        String   @default("")
+  postalCode   String   @default("")
+  country      String   @default("") // ISO-3166 alpha-2
+  sdiCode      String   @default("") // Italy e-invoicing recipient code
+  pec          String   @default("") // Italy certified email
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 }
 
 model PaymentProvider {
