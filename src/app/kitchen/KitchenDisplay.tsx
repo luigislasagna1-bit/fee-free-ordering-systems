@@ -196,7 +196,7 @@ function Countdown({
   const reference = alertAt ?? notifiedAt ?? createdAt;
   // Closed-placed orders get a 15-minute initial buffer (staff may be
   // a few min late arriving after open). Normal orders keep 3 min.
-  const totalMs = placedWhileClosed ? 15 * 60 * 1000 : 3 * 60 * 1000;
+  const totalMs = placedWhileClosed ? 15 * 60 * 1000 : 4 * 60 * 1000;
   const ms = totalMs - (now - new Date(reference).getTime());
   if (ms <= 0) return <span className="text-xs font-bold text-red-500 animate-pulse">URGENT</span>;
   const m = Math.floor(ms / 60000);
@@ -243,7 +243,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   // attention with live pending orders.
   const alertParked = !!order.alertAt && new Date(order.alertAt).getTime() > (now || 0);
   const countdownReference = order.alertAt ?? order.notifiedAt ?? order.createdAt;
-  const totalCountdownMs = order.placedWhileClosed ? 15 * 60 * 1000 : 3 * 60 * 1000;
+  const totalCountdownMs = order.placedWhileClosed ? 15 * 60 * 1000 : 4 * 60 * 1000;
   const msLeft = now && !alertParked
     ? totalCountdownMs - (now - new Date(countdownReference).getTime())
     : Number.POSITIVE_INFINITY;
@@ -1452,7 +1452,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
   useEffect(() => { localStorage.setItem("kds-theme", themeMode); }, [themeMode]);
 
-  // ── Client-side auto-reject when the 3-min countdown elapses ──────────
+  // ── Client-side auto-reject when the 4-min countdown elapses ──────────
   // The cron (auto-reject-stale-orders) is the server-side safety net but
   // runs every 5 min — so without this client trigger, the bell can ring
   // for up to ~5 minutes past the visual countdown ending. The trigger
@@ -1473,13 +1473,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       // yet — alertAt is the future moment when their countdown begins.
       if (order.alertAt && new Date(order.alertAt).getTime() > now) continue;
       const reference = order.alertAt ?? order.notifiedAt ?? order.createdAt;
-      const totalMs = order.placedWhileClosed ? 15 * 60 * 1000 : 3 * 60 * 1000;
+      const totalMs = order.placedWhileClosed ? 15 * 60 * 1000 : 4 * 60 * 1000;
       const elapsed = now - new Date(reference).getTime();
       // 5-second grace past the countdown — lets the URGENT pulse render
       // for a beat before we kill the row.
       if (elapsed < totalMs + 5_000) continue;
       autoRejectingRef.current.add(order.id);
-      const reason = `Auto-rejected: not accepted within ${order.placedWhileClosed ? 15 : 3} minutes.`;
+      const reason = `Auto-rejected: not accepted within ${order.placedWhileClosed ? 15 : 4} minutes.`;
       fetch(`/api/orders/${order.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
