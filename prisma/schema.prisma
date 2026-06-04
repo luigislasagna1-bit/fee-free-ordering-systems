@@ -1714,6 +1714,11 @@ model Reservation {
   durationMinutes  Int      @default(90)
   notes            String?
   staffNotes       String?
+  /// Kitchen "Clear" on the Reservations tab (Luigi 2026-06-04). Hides the
+  /// reservation from the Reservations tab ONLY — it stays visible in the
+  /// In Progress tab (pending bookings still need accept/decline) and the
+  /// All tab. The booking itself isn't deleted.
+  clearedFromReservationsAt DateTime?
   depositAmount    Float    @default(0)
   depositPaid      Boolean  @default(false)
   preOrderTotal    Float    @default(0)

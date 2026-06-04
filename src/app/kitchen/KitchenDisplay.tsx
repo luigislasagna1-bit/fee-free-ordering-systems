@@ -468,6 +468,8 @@ type KitchenReservation = {
   depositPaid: boolean;
   depositAmount: number;
   table: { name: string; number: number | null } | null;
+  /** Set when cleared from the Reservations tab — hides it there only. */
+  clearedFromReservationsAt?: string | null;
   /** When the reservation row was inserted in our DB. Used so the
    *  All / In Progress tabs can interleave reservations with orders
    *  in the same "newest first" order as the orders list — sorted
@@ -1426,7 +1428,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // useEffect below can wipe the historical localStorage entries
   // without breaking. Drop the migration block in a follow-up once
   // every kitchen device has loaded the new build at least once.
-  const [clearConfirm, setClearConfirm] = useState<"orders" | "complete" | null>(null);
+  const [clearConfirm, setClearConfirm] = useState<"orders" | "complete" | "reservations" | null>(null);
 
   const seenIdsRef = useRef<Set<string>>(new Set(initialOrders.map(o => o.id)));
   // Stable ref to ringBellOnce so fetchOrders (deps=[]) can call the
@@ -2004,6 +2006,43 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     );
   };
 
+  // Clear the Reservations tab — hides those bookings from THIS tab only
+  // (In Progress + All keep showing them). Mirrors the per-tab order clear.
+  const handleClearReservations = (visible: KitchenReservation[]) => {
+    setClearConfirm(null);
+    const ids = visible.filter((r) => !r.clearedFromReservationsAt).map((r) => r.id);
+    if (ids.length === 0) return;
+    const idSet = new Set(ids);
+    // Optimistic: vanish from the Reservations tab immediately. In Progress
+    // doesn't filter this flag, so those bookings stay there.
+    setReservations((prev) =>
+      prev.map((r) => (idSet.has(r.id) ? { ...r, clearedFromReservationsAt: new Date().toISOString() } : r)),
+    );
+    (async () => {
+      try {
+        const res = await fetch("/api/kitchen/reservations/clear", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ reservationIds: ids }),
+        });
+        if (res.status === 401) {
+          const body = await res.json().catch(() => null);
+          if (body?.code === "session_superseded") return;
+          toast.error("Not signed in — please log in again.");
+          return;
+        }
+        if (!res.ok) {
+          const body = await res.json().catch(() => null);
+          toast.error(body?.error ?? "Failed to clear reservations.");
+          return;
+        }
+        fetchOrdersRef.current?.();
+      } catch (e: any) {
+        toast.error(e?.message ?? "Network error clearing reservations.");
+      }
+    })();
+  };
+
   // Tab data. PER-TAB clear (Luigi 2026-06-04): each tab hides only the
   // orders cleared FROM THAT TAB, so clearing one tab never empties another.
   // The In Progress tab has no clear button → no flag → always shows.
@@ -2058,6 +2097,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const inProgressReservations = reservations.filter(
     r => r.status === "confirmed" || r.status === "seated",
   );
+  // Reservations tab list — hides only what was cleared FROM the Reservations
+  // tab (In Progress + All keep showing those bookings). Luigi 2026-06-04.
+  const reservationsTabItems = reservations.filter(
+    (r) => !r.clearedFromReservationsAt,
+  );
   // Complete tab visibility rule (Luigi 2026-06-02 spec):
   //   "Orders only show in Complete once they DISAPPEAR from In Progress
   //    — i.e. at end-of-day. When the clock goes 11:59 → 12:00, today's
@@ -2107,7 +2151,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     orders: ordersTabItems.length,
     inprogress: inProgressItems.length,
     complete: completeItems.length,
-    reservations: reservations.filter(r => r.status === "pending" || r.status === "confirmed").length,
+    reservations: reservationsTabItems.filter(r => r.status === "pending" || r.status === "confirmed").length,
   };
 
   // pendingCount is declared above next to `alerting`.
@@ -2287,10 +2331,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         {/* Clear history button — shown only for the relevant tabs. Icon-only on
             mobile, icon + "Clear orders" label on tablet/desktop. */}
         {((activeTab === "orders" && tabCounts.orders > 0) ||
-          (activeTab === "complete" && tabCounts.complete > 0)) && (
+          (activeTab === "complete" && tabCounts.complete > 0) ||
+          (activeTab === "reservations" && reservationsTabItems.length > 0)) && (
           <button
             type="button"
-            onClick={() => setClearConfirm(activeTab === "orders" ? "orders" : "complete")}
+            onClick={() => setClearConfirm(
+              activeTab === "orders" ? "orders" : activeTab === "complete" ? "complete" : "reservations",
+            )}
             aria-label={tk("clearOrders")}
             title={tk("clearOrders")}
             className={`flex-shrink-0 my-1.5 mx-1.5 sm:mr-3 flex items-center gap-1.5 text-xs font-semibold px-2 sm:px-3 py-1.5 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 active:bg-red-500/20 transition touch-manipulation cursor-pointer`}
@@ -2307,12 +2354,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       {/* ── Reservations panel (replaces the order list when this tab is active) ── */}
       {activeTab === "reservations" && (
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
-          {reservations.length === 0 ? (
+          {reservationsTabItems.length === 0 ? (
             <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
               <Clock className="w-10 h-10 mb-3 opacity-30" />
               <p className="text-sm">{tk("noReservations")}</p>
             </div>
-          ) : reservations.map(r => (
+          ) : reservationsTabItems.map(r => (
             <ReservationCard
               key={r.id}
               r={r}
@@ -2729,6 +2776,16 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           message="Remove the completed orders shown in the Complete tab? Orders pinned in the In Progress tab are not affected. This cannot be undone."
           confirmLabel="Yes, Clear History"
           onConfirm={() => handleClearComplete(completeItems)}
+          onCancel={() => setClearConfirm(null)}
+        />
+      )}
+      {clearConfirm === "reservations" && (
+        <ConfirmModal
+          t={t}
+          title="Clear Reservations"
+          message="Remove the reservations shown in the Reservations tab? Bookings still awaiting acceptance remain in the In Progress tab. This cannot be undone."
+          confirmLabel="Yes, Clear"
+          onConfirm={() => handleClearReservations(reservationsTabItems)}
           onCancel={() => setClearConfirm(null)}
         />
       )}
