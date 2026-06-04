@@ -59,6 +59,9 @@ export type Order = {
   /** Cumulative amount refunded so far (major currency units). Drives the
    *  Refund modal's "remaining" calc + the partial-refund badge. */
   refundedAmount: number | null;
+  /** Per-tab kitchen clear flags — each tab filters by its own. */
+  clearedFromAllAt?: string | null;
+  clearedFromCompleteAt?: string | null;
   subtotal: number;
   taxAmount: number;
   deliveryFee: number;

@@ -1941,17 +1941,16 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // that polls /api/kitchen/orders sees the same hidden set. Optimistic
   // local update + refresh keeps the UI snappy; the next poll
   // reconciles in case the server count differs.
-  const callClear = async (orderIds: string[]) => {
+  const callClear = async (tab: "all" | "complete", orderIds: string[]) => {
     if (orderIds.length === 0) return;
     try {
       const res = await fetch("/api/kitchen/orders/clear", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        // Clear EXACTLY the orders visible in the tab the user is clearing
-        // from (by id) — never a broad status sweep. This stops "Clear
-        // Complete" from also wiping today's completed orders that are
-        // pinned in the In Progress tab. (Luigi 2026-06-04)
-        body: JSON.stringify({ orderIds }),
+        // Per-tab clear: hide these exact orders FROM THIS TAB ONLY. The
+        // server sets the matching per-tab flag, so the same order stays
+        // visible in the other tabs. (Luigi 2026-06-04)
+        body: JSON.stringify({ tab, orderIds }),
       });
       if (res.status === 401) {
         const body = await res.json().catch(() => null);
@@ -1981,7 +1980,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // accepted/rejected first), so a clear on one tab never touches another.
   const handleClearOrders = (visible: Order[]) => {
     const eligible = visible.filter(
-      (o) => o.status !== "pending" && !(o as any).clearedFromKitchenAt,
+      (o) => o.status !== "pending" && !(o as any).clearedFromAllAt,
     );
     if (eligible.length === 0) {
       toast.error(
@@ -1993,21 +1992,22 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     setSelectedId(null);
     setClearConfirm(null);
     setAcknowledged(true); // silence any stale bell from prior cleared-pending bug
-    callClear(eligible.map((o) => o.id));
+    callClear("all", eligible.map((o) => o.id));
   };
 
   const handleClearComplete = (visible: Order[]) => {
     setSelectedId(null);
     setClearConfirm(null);
     callClear(
-      visible.filter((o) => !(o as any).clearedFromKitchenAt).map((o) => o.id),
+      "complete",
+      visible.filter((o) => !(o as any).clearedFromCompleteAt).map((o) => o.id),
     );
   };
 
-  // Tab data (Luigi 2026-06-02): clearedFromKitchenAt is now filtered
-  // server-side in /api/kitchen/orders, so the client doesn't need its
-  // own localStorage cleared-set. Tabs just split by status.
-  const ordersTabItems = orders;
+  // Tab data. PER-TAB clear (Luigi 2026-06-04): each tab hides only the
+  // orders cleared FROM THAT TAB, so clearing one tab never empties another.
+  // The In Progress tab has no clear button → no flag → always shows.
+  const ordersTabItems = orders.filter((o) => !(o as any).clearedFromAllAt);
   // In-progress tab (Luigi 2026-06-02 v3, full GloriaFood parity):
   //
   //   Every order that was accepted TODAY stays in In Progress all day,
@@ -2083,6 +2083,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   })();
   const completeItems = orders.filter(o => {
     if (!COMPLETE_STATUSES.includes(o.status)) return false;
+    // Hide only what was cleared from the Complete tab itself.
+    if ((o as any).clearedFromCompleteAt) return false;
     // Simple mode only — tracking-mode kitchens explicitly click
     // "Complete" and expect the order in the Complete tab immediately.
     // Their In Progress tab also doesn't pin "completed" orders, so

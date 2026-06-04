@@ -67,14 +67,15 @@ export async function GET() {
         // Filters out pending-payment cards so the kitchen never starts
         // cooking food that hasn't been paid for.
         notifiedAt: { not: null },
-        // Server-side cleared-orders filter (Luigi 2026-06-02 follow-up).
-        // The "Clear orders" / "Clear complete" buttons now write
-        // clearedFromKitchenAt = NOW() instead of mutating a per-device
-        // localStorage Set. Every kitchen device sees the same hidden
-        // set so opening the page elsewhere matches the device you
-        // came from — no GloriaFood-style "where did those orders go?"
-        // confusion.
+        // Legacy global clear (orders cleared before the per-tab model).
         clearedFromKitchenAt: null,
+        // PER-TAB clear (Luigi 2026-06-04). Each kitchen tab clears
+        // independently, so we only DROP an order from the feed entirely
+        // once it's been cleared from BOTH clearable tabs (All + Complete).
+        // Anything cleared from only one tab is still returned so it can
+        // show in the other tab (and In Progress, which never clears).
+        // The client filters each tab by its own flag.
+        NOT: { clearedFromAllAt: { not: null }, clearedFromCompleteAt: { not: null } },
       },
       orderBy: { createdAt: "desc" },
       take: 500,

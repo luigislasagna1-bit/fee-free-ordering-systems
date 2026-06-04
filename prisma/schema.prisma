@@ -886,6 +886,14 @@ model Order {
   /// up). The order itself isn't deleted — admin reports + customer
   /// status pages still see it. Just hidden from the kitchen list.
   clearedFromKitchenAt DateTime?
+  /// PER-TAB kitchen clear (Luigi 2026-06-04). Each kitchen tab clears
+  /// independently — the SAME order can be dismissed from the All tab while
+  /// staying visible in In Progress / Complete, and vice-versa. The In
+  /// Progress tab has no clear button, so it has no flag and always shows
+  /// its orders. Legacy clearedFromKitchenAt (above) still hides globally
+  /// for orders cleared before this change.
+  clearedFromAllAt      DateTime?
+  clearedFromCompleteAt DateTime?
 
   restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
   customer     Customer?     @relation(fields: [customerId], references: [id])

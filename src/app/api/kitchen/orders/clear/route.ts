@@ -28,7 +28,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser, checkKitchenSessionFresh } from "@/lib/session";
 import prisma from "@/lib/db";
 
-const COMPLETE_STATUSES = ["completed", "rejected", "cancelled"];
 
 export async function POST(req: NextRequest) {
   try {
@@ -54,40 +53,35 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json().catch(() => ({} as any));
 
-    // NEW (Luigi 2026-06-04): clear EXACTLY the orders the kitchen tab is
-    // showing, passed by id. This stops "Clear Complete" from also sweeping
-    // today's completed orders that are pinned in the In Progress tab (and
-    // vice-versa). Capped + restaurant-scoped + never-pending for safety.
+    // PER-TAB clear (Luigi 2026-06-04). Hide EXACTLY the orders the kitchen
+    // tab is showing (passed by id) FROM THAT TAB ONLY — set the matching
+    // per-tab flag so the same order stays visible in the other tabs.
     const orderIds: string[] = Array.isArray(body?.orderIds)
       ? body.orderIds.filter((x: unknown) => typeof x === "string").slice(0, 1000)
       : [];
 
-    // Back-compat: if an old client still sends a broad `scope`, honour it.
-    const legacyScope: "orders" | "complete" | null =
-      body?.scope === "complete" ? "complete" : body?.scope === "orders" ? "orders" : null;
+    // Which tab? "all" → clearedFromAllAt, "complete" → clearedFromCompleteAt.
+    // Legacy `scope` ("orders"/"complete") maps onto the same two tabs.
+    const tabRaw = body?.tab ?? body?.scope;
+    const tab: "all" | "complete" =
+      tabRaw === "complete" ? "complete" : "all";
 
-    const now = new Date();
-
-    // Base scope is ALWAYS the restaurant + not-already-cleared + never-pending.
-    const where: Record<string, unknown> = {
-      restaurantId,
-      clearedFromKitchenAt: null,
-      status: { not: "pending" },
-    };
-
-    if (orderIds.length > 0) {
-      where.id = { in: orderIds };
-    } else if (legacyScope === "complete") {
-      where.status = { in: COMPLETE_STATUSES };
-    } else if (legacyScope === "orders") {
-      // status:{not:"pending"} already set above — sweeps the All tab.
-    } else {
+    if (orderIds.length === 0) {
       return NextResponse.json({ ok: true, cleared: 0 });
     }
 
+    const now = new Date();
     const res = await prisma.order.updateMany({
-      where: where as any,
-      data: { clearedFromKitchenAt: now },
+      where: {
+        restaurantId,
+        id: { in: orderIds },
+        // Never hide a still-pending order without an explicit accept/reject.
+        status: { not: "pending" },
+      },
+      data:
+        tab === "complete"
+          ? { clearedFromCompleteAt: now }
+          : { clearedFromAllAt: now },
     });
 
     return NextResponse.json({ ok: true, cleared: res.count });
