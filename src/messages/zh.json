@@ -204,7 +204,7 @@
       "invalidCoupon": "优惠券无效或已过期",
       "couponMinimumNotMet": "优惠券要求更高的小计金额",
       "addressLookupFailed": "无法找到该地址",
-      "outOfArea": "抱歉——您的地址超出我们的配送范围。",
+      "outOfArea": "我们不配送到该地址",
       "modifierRequired": "请完成必选项",
       "chooseSize": "请选择规格",
       "pleaseSelect": "请选择 {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 仅自取",
     "promoDeliveryOnlyBadge": "🚚 仅外送",
     "promoPickupOnlyTitle": "此优惠仅适用于自取订单",
-    "promoDeliveryOnlyTitle": "此优惠仅适用于外送订单"
+    "promoDeliveryOnlyTitle": "此优惠仅适用于外送订单",
+    "outOfAreaBlockedTitle": "超出我们的配送范围。",
+    "outOfAreaBlockedBody": "我们不配送到此地址。请切换至自取，或输入其他配送地址。"
   },
   "pizza": {
     "chooseSize": "选择大小",

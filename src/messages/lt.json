@@ -204,7 +204,7 @@
       "invalidCoupon": "Neteisingas arba pasibaigęs kuponas",
       "couponMinimumNotMet": "Kuponui reikalinga didesnė tarpinė suma",
       "addressLookupFailed": "Nepavyko rasti adreso",
-      "outOfArea": "Atsiprašome — jūsų adresas yra už mūsų pristatymo zonos.",
+      "outOfArea": "Į šį adresą mes nepristatome",
       "modifierRequired": "Atlikite privalomą pasirinkimą",
       "chooseSize": "Pasirinkite dydį",
       "pleaseSelect": "Pasirinkite {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Tik atsiėmimas",
     "promoDeliveryOnlyBadge": "🚚 Tik pristatymas",
     "promoPickupOnlyTitle": "Šis pasiūlymas taikomas tik atsiėmimo užsakymams",
-    "promoDeliveryOnlyTitle": "Šis pasiūlymas taikomas tik pristatymo užsakymams"
+    "promoDeliveryOnlyTitle": "Šis pasiūlymas taikomas tik pristatymo užsakymams",
+    "outOfAreaBlockedTitle": "Už mūsų pristatymo zonos ribų.",
+    "outOfAreaBlockedBody": "Į šį adresą mes nepristatome. Pasirinkite atsiėmimą arba įveskite kitą pristatymo adresą."
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",

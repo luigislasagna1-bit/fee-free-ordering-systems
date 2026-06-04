@@ -204,7 +204,7 @@
       "invalidCoupon": "Geçersiz veya süresi dolmuş kupon",
       "couponMinimumNotMet": "Kupon daha yüksek bir ara toplam gerektiriyor",
       "addressLookupFailed": "Bu adres bulunamadı",
-      "outOfArea": "Üzgünüz — adresiniz teslimat bölgemiz dışında.",
+      "outOfArea": "Bu adrese teslimat yapmıyoruz",
       "modifierRequired": "Lütfen zorunlu bir seçim yapın",
       "chooseSize": "Lütfen bir boyut seçin",
       "pleaseSelect": "Lütfen {name} seçin",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Yalnızca gel-al",
     "promoDeliveryOnlyBadge": "🚚 Yalnızca teslimat",
     "promoPickupOnlyTitle": "Bu fırsat yalnızca gel-al siparişleri için geçerlidir",
-    "promoDeliveryOnlyTitle": "Bu fırsat yalnızca teslimat siparişleri için geçerlidir"
+    "promoDeliveryOnlyTitle": "Bu fırsat yalnızca teslimat siparişleri için geçerlidir",
+    "outOfAreaBlockedTitle": "Teslimat bölgemiz dışında.",
+    "outOfAreaBlockedBody": "Bu adrese teslimat yapamıyoruz. Gel al seçeneğine geçin ya da farklı bir teslimat adresi girin."
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",

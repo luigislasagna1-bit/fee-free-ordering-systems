@@ -204,7 +204,7 @@
       "invalidCoupon": "Ongeldige of verlopen coupon",
       "couponMinimumNotMet": "Coupon vereist een hoger subtotaal",
       "addressLookupFailed": "Kon dat adres niet vinden",
-      "outOfArea": "Sorry — uw adres valt buiten ons bezorggebied.",
+      "outOfArea": "We bezorgen niet op dit adres",
       "modifierRequired": "Maak een verplichte keuze",
       "chooseSize": "Kies een maat",
       "pleaseSelect": "Selecteer {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Alleen afhalen",
     "promoDeliveryOnlyBadge": "🚚 Alleen bezorging",
     "promoPickupOnlyTitle": "Deze aanbieding geldt alleen voor afhaalbestellingen",
-    "promoDeliveryOnlyTitle": "Deze aanbieding geldt alleen voor bezorgbestellingen"
+    "promoDeliveryOnlyTitle": "Deze aanbieding geldt alleen voor bezorgbestellingen",
+    "outOfAreaBlockedTitle": "Buiten ons bezorggebied.",
+    "outOfAreaBlockedBody": "We bezorgen niet op dit adres. Kies voor afhalen of voer een ander bezorgadres in."
   },
   "pizza": {
     "chooseSize": "Kies maat",

@@ -204,7 +204,7 @@
       "invalidCoupon": "Neplatný nebo vypršelý kupón",
       "couponMinimumNotMet": "Kupón vyžaduje vyšší mezisoučet",
       "addressLookupFailed": "Nepodařilo se nalézt tuto adresu",
-      "outOfArea": "Omlouváme se — vaše adresa je mimo naši oblast doručení.",
+      "outOfArea": "Na tuto adresu nedoručujeme",
       "modifierRequired": "Proveďte prosím povinný výběr",
       "chooseSize": "Vyberte prosím velikost",
       "pleaseSelect": "Vyberte prosím {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Pouze vyzvednutí",
     "promoDeliveryOnlyBadge": "🚚 Pouze rozvoz",
     "promoPickupOnlyTitle": "Tato nabídka platí pouze pro objednávky s vyzvednutím",
-    "promoDeliveryOnlyTitle": "Tato nabídka platí pouze pro objednávky s rozvozem"
+    "promoDeliveryOnlyTitle": "Tato nabídka platí pouze pro objednávky s rozvozem",
+    "outOfAreaBlockedTitle": "Mimo naši doručovací oblast.",
+    "outOfAreaBlockedBody": "Na tuto adresu nedoručujeme. Přepněte na vyzvednutí, nebo zadejte jinou doručovací adresu."
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",

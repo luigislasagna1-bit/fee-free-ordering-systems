@@ -204,7 +204,7 @@
       "invalidCoupon": "Nederīgs vai beidzies kupons",
       "couponMinimumNotMet": "Kuponam nepieciešama lielāka starpsumma",
       "addressLookupFailed": "Nevarēja atrast šo adresi",
-      "outOfArea": "Atvainojiet — jūsu adrese atrodas ārpus mūsu piegādes zonas.",
+      "outOfArea": "Mēs nepiegādājam uz šo adresi",
       "modifierRequired": "Lūdzu, veiciet obligāto izvēli",
       "chooseSize": "Lūdzu, izvēlieties izmēru",
       "pleaseSelect": "Lūdzu, izvēlieties {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Tikai paņemšanai",
     "promoDeliveryOnlyBadge": "🚚 Tikai piegādei",
     "promoPickupOnlyTitle": "Šis piedāvājums attiecas tikai uz paņemšanas pasūtījumiem",
-    "promoDeliveryOnlyTitle": "Šis piedāvājums attiecas tikai uz piegādes pasūtījumiem"
+    "promoDeliveryOnlyTitle": "Šis piedāvājums attiecas tikai uz piegādes pasūtījumiem",
+    "outOfAreaBlockedTitle": "Ārpus mūsu piegādes zonas.",
+    "outOfAreaBlockedBody": "Mēs nepiegādājam uz šo adresi. Izvēlieties saņemšanu uz vietas vai ievadiet citu piegādes adresi."
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",

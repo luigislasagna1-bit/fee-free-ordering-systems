@@ -1735,6 +1735,17 @@ export function OrderingPageClient({
       toast.error(tT("zipRequired"));
       return;
     }
+    // Block delivery orders to a geocoded address that falls OUTSIDE every
+    // delivery zone — restaurants shouldn't have to manually reject these
+    // (reseller report). Only blocks when we positively know it's out of zone
+    // (resolvedZone exists but inside=false); ungeocodable addresses are
+    // handled separately by the address-lookup error. Luigi 2026-06-04.
+    if (orderType === "delivery" && resolvedZone && !resolvedZone.inside) {
+      setEditingSection("ordering");
+      focusField("checkout-delivery-address");
+      toast.error(tT("outOfArea"));
+      return;
+    }
     if (cart.length === 0) { toast.error(tT("cartEmpty")); return; }
     setOrderLoading(true);
     try {
@@ -3026,11 +3037,12 @@ export function OrderingPageClient({
                   <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-100 mt-1"><span>{t("total")}</span><span>{fmt(total)}</span></div>
                 </div>
 
-                {/* Out-of-area warning */}
+                {/* Out-of-area BLOCK — the address is outside every delivery
+                    zone, so we don't take the order (reseller report: the
+                    restaurant shouldn't have to reject it manually). */}
                 {orderType === "delivery" && resolvedZone && !resolvedZone.inside && (
-                  <div className="mx-4 mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
-                    <strong>{t("headsUp")}</strong> {t("outOfAreaWarning")}{" "}
-                    {t("feeEta", { fee: fmt(resolvedZone.zone.deliveryFee), minutes: resolvedZone.zone.estimatedMinutes })}
+                  <div className="mx-4 mt-3 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800">
+                    <strong>{t("outOfAreaBlockedTitle")}</strong> {t("outOfAreaBlockedBody")}
                   </div>
                 )}
 

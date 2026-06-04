@@ -204,7 +204,7 @@
       "invalidCoupon": "คูปองไม่ถูกต้องหรือหมดอายุ",
       "couponMinimumNotMet": "คูปองต้องการยอดสั่งซื้อขั้นต่ำสูงกว่านี้",
       "addressLookupFailed": "ไม่พบที่อยู่นั้น",
-      "outOfArea": "ขออภัย — ที่อยู่ของคุณอยู่นอกเขตจัดส่ง",
+      "outOfArea": "เราไม่จัดส่งไปยังที่อยู่นั้น",
       "modifierRequired": "กรุณาเลือกตัวเลือกที่จำเป็น",
       "chooseSize": "กรุณาเลือกขนาด",
       "pleaseSelect": "กรุณาเลือก {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 รับที่ร้านเท่านั้น",
     "promoDeliveryOnlyBadge": "🚚 จัดส่งเท่านั้น",
     "promoPickupOnlyTitle": "โปรโมชันนี้ใช้ได้เฉพาะคำสั่งซื้อแบบรับที่ร้านเท่านั้น",
-    "promoDeliveryOnlyTitle": "โปรโมชันนี้ใช้ได้เฉพาะคำสั่งซื้อแบบจัดส่งเท่านั้น"
+    "promoDeliveryOnlyTitle": "โปรโมชันนี้ใช้ได้เฉพาะคำสั่งซื้อแบบจัดส่งเท่านั้น",
+    "outOfAreaBlockedTitle": "อยู่นอกเขตจัดส่งของเรา",
+    "outOfAreaBlockedBody": "เราไม่จัดส่งไปยังที่อยู่นี้ กรุณาเลือกรับด้วยตนเอง หรือกรอกที่อยู่จัดส่งอื่น"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",

@@ -203,7 +203,7 @@
       "invalidCoupon": "Coupon non valido o scaduto",
       "couponMinimumNotMet": "Il coupon richiede un subtotale più alto",
       "addressLookupFailed": "Impossibile localizzare l'indirizzo",
-      "outOfArea": "Spiacenti — il tuo indirizzo è fuori dalla zona di consegna.",
+      "outOfArea": "Non effettuiamo consegne a questo indirizzo",
       "modifierRequired": "Effettua una selezione obbligatoria",
       "chooseSize": "Seleziona una taglia",
       "pleaseSelect": "Seleziona {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Solo ritiro",
     "promoDeliveryOnlyBadge": "🚚 Solo consegna",
     "promoPickupOnlyTitle": "Questa offerta è valida solo per gli ordini con ritiro",
-    "promoDeliveryOnlyTitle": "Questa offerta è valida solo per gli ordini con consegna"
+    "promoDeliveryOnlyTitle": "Questa offerta è valida solo per gli ordini con consegna",
+    "outOfAreaBlockedTitle": "Fuori dalla nostra area di consegna.",
+    "outOfAreaBlockedBody": "Non effettuiamo consegne a questo indirizzo. Passa al ritiro in sede oppure inserisci un indirizzo di consegna diverso."
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",

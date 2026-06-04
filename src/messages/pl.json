@@ -204,7 +204,7 @@
       "invalidCoupon": "Nieprawidłowy lub wygasły kupon",
       "couponMinimumNotMet": "Kupon wymaga wyższej sumy częściowej",
       "addressLookupFailed": "Nie można zlokalizować tego adresu",
-      "outOfArea": "Przepraszamy — Twój adres jest poza naszą strefą dostawy.",
+      "outOfArea": "Nie dostarczamy pod ten adres",
       "modifierRequired": "Proszę dokonać wymaganego wyboru",
       "chooseSize": "Proszę wybrać rozmiar",
       "pleaseSelect": "Proszę wybrać {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Tylko odbiór",
     "promoDeliveryOnlyBadge": "🚚 Tylko dostawa",
     "promoPickupOnlyTitle": "Ta oferta dotyczy wyłącznie zamówień na odbiór",
-    "promoDeliveryOnlyTitle": "Ta oferta dotyczy wyłącznie zamówień z dostawą"
+    "promoDeliveryOnlyTitle": "Ta oferta dotyczy wyłącznie zamówień z dostawą",
+    "outOfAreaBlockedTitle": "Poza naszym obszarem dostawy.",
+    "outOfAreaBlockedBody": "Nie realizujemy dostaw pod ten adres. Wybierz odbiór osobisty lub podaj inny adres dostawy."
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",

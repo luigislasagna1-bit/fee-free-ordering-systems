@@ -204,7 +204,7 @@
       "invalidCoupon": "كوبون غير صالح أو منتهي الصلاحية",
       "couponMinimumNotMet": "الكوبون يتطلب مبلغاً أعلى",
       "addressLookupFailed": "تعذّر تحديد موقع هذا العنوان",
-      "outOfArea": "عذراً — عنوانك خارج نطاق التوصيل.",
+      "outOfArea": "لا نقوم بالتوصيل إلى هذا العنوان",
       "modifierRequired": "يرجى إجراء اختيار مطلوب",
       "chooseSize": "يرجى اختيار حجم",
       "pleaseSelect": "يرجى اختيار {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 استلام فقط",
     "promoDeliveryOnlyBadge": "🚚 توصيل فقط",
     "promoPickupOnlyTitle": "هذا العرض ينطبق فقط على طلبات الاستلام",
-    "promoDeliveryOnlyTitle": "هذا العرض ينطبق فقط على طلبات التوصيل"
+    "promoDeliveryOnlyTitle": "هذا العرض ينطبق فقط على طلبات التوصيل",
+    "outOfAreaBlockedTitle": "خارج نطاق التوصيل لدينا.",
+    "outOfAreaBlockedBody": "لا نقوم بالتوصيل إلى هذا العنوان. يمكنك التبديل إلى الاستلام الشخصي، أو إدخال عنوان توصيل مختلف."
   },
   "pizza": {
     "chooseSize": "اختر الحجم",

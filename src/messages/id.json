@@ -204,7 +204,7 @@
       "invalidCoupon": "Kupon tidak valid atau sudah kadaluarsa",
       "couponMinimumNotMet": "Kupon memerlukan subtotal yang lebih tinggi",
       "addressLookupFailed": "Tidak dapat menemukan alamat tersebut",
-      "outOfArea": "Maaf — alamat Anda berada di luar area pengiriman kami.",
+      "outOfArea": "Kami tidak melayani pengiriman ke alamat tersebut",
       "modifierRequired": "Silakan buat pilihan yang diperlukan",
       "chooseSize": "Silakan pilih ukuran",
       "pleaseSelect": "Silakan pilih {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Hanya ambil di tempat",
     "promoDeliveryOnlyBadge": "🚚 Hanya pengiriman",
     "promoPickupOnlyTitle": "Promo ini hanya berlaku untuk pesanan ambil di tempat",
-    "promoDeliveryOnlyTitle": "Promo ini hanya berlaku untuk pesanan pengiriman"
+    "promoDeliveryOnlyTitle": "Promo ini hanya berlaku untuk pesanan pengiriman",
+    "outOfAreaBlockedTitle": "Di luar area pengiriman kami.",
+    "outOfAreaBlockedBody": "Kami tidak melayani pengiriman ke alamat ini. Pilih ambil sendiri, atau masukkan alamat pengiriman yang berbeda."
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",

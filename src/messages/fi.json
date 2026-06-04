@@ -204,7 +204,7 @@
       "invalidCoupon": "Virheellinen tai vanhentunut kuponki",
       "couponMinimumNotMet": "Kuponki vaatii suuremman välisumman",
       "addressLookupFailed": "Osoitetta ei löydy",
-      "outOfArea": "Pahoittelemme — osoitteesi on toimitusvyöhykkeidemme ulkopuolella.",
+      "outOfArea": "Emme toimita kyseiseen osoitteeseen",
       "modifierRequired": "Tee pakollinen valinta",
       "chooseSize": "Valitse koko",
       "pleaseSelect": "Valitse {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Vain nouto",
     "promoDeliveryOnlyBadge": "🚚 Vain toimitus",
     "promoPickupOnlyTitle": "Tämä tarjous koskee vain noutotilauksia",
-    "promoDeliveryOnlyTitle": "Tämä tarjous koskee vain toimitustilauksia"
+    "promoDeliveryOnlyTitle": "Tämä tarjous koskee vain toimitustilauksia",
+    "outOfAreaBlockedTitle": "Toimitusosoite on toimitusalueemme ulkopuolella.",
+    "outOfAreaBlockedBody": "Emme valitettavasti toimita tähän osoitteeseen. Valitse nouto tai syötä toinen toimitusosoite."
   },
   "pizza": {
     "chooseSize": "Valitse koko",

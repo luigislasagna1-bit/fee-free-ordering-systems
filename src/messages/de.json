@@ -204,7 +204,7 @@
       "invalidCoupon": "Ungültiger oder abgelaufener Gutschein",
       "couponMinimumNotMet": "Gutschein erfordert einen höheren Bestellwert",
       "addressLookupFailed": "Adresse konnte nicht gefunden werden",
-      "outOfArea": "Leider liegt Ihre Adresse außerhalb unseres Liefergebiets.",
+      "outOfArea": "Wir liefern nicht an diese Adresse",
       "modifierRequired": "Bitte treffen Sie eine erforderliche Auswahl",
       "chooseSize": "Bitte wählen Sie eine Größe",
       "pleaseSelect": "Bitte wählen Sie {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Nur Abholung",
     "promoDeliveryOnlyBadge": "🚚 Nur Lieferung",
     "promoPickupOnlyTitle": "Dieses Angebot gilt nur für Abholbestellungen",
-    "promoDeliveryOnlyTitle": "Dieses Angebot gilt nur für Lieferbestellungen"
+    "promoDeliveryOnlyTitle": "Dieses Angebot gilt nur für Lieferbestellungen",
+    "outOfAreaBlockedTitle": "Außerhalb unseres Liefergebiets.",
+    "outOfAreaBlockedBody": "Wir liefern leider nicht an diese Adresse. Bitte wählen Sie Abholung oder geben Sie eine andere Lieferadresse ein."
   },
   "pizza": {
     "chooseSize": "Größe wählen",

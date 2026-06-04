@@ -204,7 +204,7 @@
       "invalidCoupon": "Nevažeći ili istekli kupon",
       "couponMinimumNotMet": "Kupon zahteva veći međuzbir",
       "addressLookupFailed": "Nije moguće pronaći tu adresu",
-      "outOfArea": "Žao nam je — vaša adresa je van naše zone dostave.",
+      "outOfArea": "Ne dostavljamo na tu adresu",
       "modifierRequired": "Molimo izvršite obavezan izbor",
       "chooseSize": "Molimo izaberite veličinu",
       "pleaseSelect": "Molimo izaberite {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Samo preuzimanje",
     "promoDeliveryOnlyBadge": "🚚 Samo dostava",
     "promoPickupOnlyTitle": "Ova ponuda važi samo za narudžbe sa preuzimanjem",
-    "promoDeliveryOnlyTitle": "Ova ponuda važi samo za narudžbe sa dostavom"
+    "promoDeliveryOnlyTitle": "Ova ponuda važi samo za narudžbe sa dostavom",
+    "outOfAreaBlockedTitle": "Van naše zone dostave.",
+    "outOfAreaBlockedBody": "Ne dostavljamo na ovu adresu. Prebacite se na preuzimanje ili unesite drugu adresu za dostavu."
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",

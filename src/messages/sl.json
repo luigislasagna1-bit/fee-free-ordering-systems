@@ -204,7 +204,7 @@
       "invalidCoupon": "Neveljaven ali potekel kupon",
       "couponMinimumNotMet": "Kupon zahteva višjo vmesno vsoto",
       "addressLookupFailed": "Tega naslova ni bilo mogoče najti",
-      "outOfArea": "Oprostite — vaš naslov je zunaj našega območja dostave.",
+      "outOfArea": "Na ta naslov ne dostavljamo",
       "modifierRequired": "Prosimo, izberite obvezno možnost",
       "chooseSize": "Prosimo, izberite velikost",
       "pleaseSelect": "Prosimo, izberite {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Samo prevzem",
     "promoDeliveryOnlyBadge": "🚚 Samo dostava",
     "promoPickupOnlyTitle": "Ta ponudba velja samo za naročila s prevzemom",
-    "promoDeliveryOnlyTitle": "Ta ponudba velja samo za naročila z dostavo"
+    "promoDeliveryOnlyTitle": "Ta ponudba velja samo za naročila z dostavo",
+    "outOfAreaBlockedTitle": "Izven našega območja dostave.",
+    "outOfAreaBlockedBody": "Na ta naslov ne dostavljamo. Izberite prevzem ali vnesite drug naslov za dostavo."
   },
   "pizza": {
     "chooseSize": "Izberite velikost",

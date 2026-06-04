@@ -204,7 +204,7 @@
       "invalidCoupon": "Ogiltig eller utgången kupong",
       "couponMinimumNotMet": "Kupongen kräver ett högre delsumma",
       "addressLookupFailed": "Kunde inte hitta den adressen",
-      "outOfArea": "Tyvärr — din adress ligger utanför vårt leveransområde.",
+      "outOfArea": "Vi levererar inte till den adressen",
       "modifierRequired": "Gör ett obligatoriskt val",
       "chooseSize": "Välj en storlek",
       "pleaseSelect": "Välj {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Endast avhämtning",
     "promoDeliveryOnlyBadge": "🚚 Endast leverans",
     "promoPickupOnlyTitle": "Detta erbjudande gäller endast avhämtningsbeställningar",
-    "promoDeliveryOnlyTitle": "Detta erbjudande gäller endast leveransbeställningar"
+    "promoDeliveryOnlyTitle": "Detta erbjudande gäller endast leveransbeställningar",
+    "outOfAreaBlockedTitle": "Utanför vårt leveransområde.",
+    "outOfAreaBlockedBody": "Vi levererar tyvärr inte till den här adressen. Välj hämtning i stället, eller ange en annan leveransadress."
   },
   "pizza": {
     "chooseSize": "Välj storlek",

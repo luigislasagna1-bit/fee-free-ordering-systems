@@ -204,7 +204,7 @@
       "invalidCoupon": "קופון לא תקין או שפג תוקפו",
       "couponMinimumNotMet": "הקופון דורש סכום ביניים גבוה יותר",
       "addressLookupFailed": "לא ניתן לאתר את הכתובת",
-      "outOfArea": "מצטערים — כתובתך מחוץ לאזור המשלוח שלנו.",
+      "outOfArea": "אנחנו לא מבצעים משלוח לכתובת זו",
       "modifierRequired": "אנא בצע בחירה חובה",
       "chooseSize": "אנא בחר גודל",
       "pleaseSelect": "אנא בחר {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 איסוף בלבד",
     "promoDeliveryOnlyBadge": "🚚 משלוח בלבד",
     "promoPickupOnlyTitle": "המבצע הזה חל על הזמנות איסוף בלבד",
-    "promoDeliveryOnlyTitle": "המבצע הזה חל על הזמנות משלוח בלבד"
+    "promoDeliveryOnlyTitle": "המבצע הזה חל על הזמנות משלוח בלבד",
+    "outOfAreaBlockedTitle": "מחוץ לאזור המשלוח שלנו.",
+    "outOfAreaBlockedBody": "אנחנו לא מבצעים משלוח לכתובת זו. עברו לאיסוף עצמי, או הזינו כתובת משלוח אחרת."
   },
   "pizza": {
     "chooseSize": "בחר גודל",

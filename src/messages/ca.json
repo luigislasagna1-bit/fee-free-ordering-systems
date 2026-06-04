@@ -204,7 +204,7 @@
       "invalidCoupon": "Cupó no vàlid o caducat",
       "couponMinimumNotMet": "El cupó requereix un subtotal més alt",
       "addressLookupFailed": "No s'ha pogut localitzar l'adreça",
-      "outOfArea": "Ho sentim — la vostra adreça és fora de la nostra zona de lliurament.",
+      "outOfArea": "No fem entregues a aquesta adreça",
       "modifierRequired": "Feu una selecció obligatòria",
       "chooseSize": "Seleccioneu una mida",
       "pleaseSelect": "Seleccioneu {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Només recollida",
     "promoDeliveryOnlyBadge": "🚚 Només a domicili",
     "promoPickupOnlyTitle": "Aquesta oferta només s'aplica a les comandes de recollida",
-    "promoDeliveryOnlyTitle": "Aquesta oferta només s'aplica a les comandes a domicili"
+    "promoDeliveryOnlyTitle": "Aquesta oferta només s'aplica a les comandes a domicili",
+    "outOfAreaBlockedTitle": "Fora de la nostra àrea de lliurament.",
+    "outOfAreaBlockedBody": "No fem entregues a aquesta adreça. Canvieu a recollida al local o introduïu una adreça de lliurament diferent."
   },
   "pizza": {
     "chooseSize": "Tria la mida",

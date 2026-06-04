@@ -204,7 +204,7 @@
       "invalidCoupon": "Ugyldig eller udløbet kupon",
       "couponMinimumNotMet": "Kuponen kræver en højere subtotal",
       "addressLookupFailed": "Kunne ikke finde den adresse",
-      "outOfArea": "Beklager — din adresse er uden for vores leveringsområde.",
+      "outOfArea": "Vi leverer desværre ikke til den adresse",
       "modifierRequired": "Foretag venligst et påkrævet valg",
       "chooseSize": "Vælg venligst en størrelse",
       "pleaseSelect": "Vælg venligst {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Kun afhentning",
     "promoDeliveryOnlyBadge": "🚚 Kun levering",
     "promoPickupOnlyTitle": "Dette tilbud gælder kun ved afhentning",
-    "promoDeliveryOnlyTitle": "Dette tilbud gælder kun ved levering"
+    "promoDeliveryOnlyTitle": "Dette tilbud gælder kun ved levering",
+    "outOfAreaBlockedTitle": "Uden for vores leveringsområde.",
+    "outOfAreaBlockedBody": "Vi leverer ikke til denne adresse. Skift til afhentning, eller indtast en anden leveringsadresse."
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",

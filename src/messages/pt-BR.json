@@ -204,7 +204,7 @@
       "invalidCoupon": "Cupom inválido ou expirado",
       "couponMinimumNotMet": "O cupom exige um subtotal maior",
       "addressLookupFailed": "Não foi possível localizar esse endereço",
-      "outOfArea": "Desculpe — seu endereço está fora da nossa área de entrega.",
+      "outOfArea": "Não entregamos nesse endereço",
       "modifierRequired": "Por favor, faça uma seleção obrigatória",
       "chooseSize": "Por favor, escolha um tamanho",
       "pleaseSelect": "Por favor, selecione {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Somente retirada",
     "promoDeliveryOnlyBadge": "🚚 Somente entrega",
     "promoPickupOnlyTitle": "Esta oferta é válida apenas para pedidos com retirada",
-    "promoDeliveryOnlyTitle": "Esta oferta é válida apenas para pedidos com entrega"
+    "promoDeliveryOnlyTitle": "Esta oferta é válida apenas para pedidos com entrega",
+    "outOfAreaBlockedTitle": "Fora da nossa área de entrega.",
+    "outOfAreaBlockedBody": "Não realizamos entregas neste endereço. Escolha a opção de retirada ou informe um endereço de entrega diferente."
   },
   "pizza": {
     "chooseSize": "Escolha o Tamanho",

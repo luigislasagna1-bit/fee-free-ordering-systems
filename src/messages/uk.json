@@ -204,7 +204,7 @@
       "invalidCoupon": "Недійсний або прострочений купон",
       "couponMinimumNotMet": "Купон потребує вищої підсуми",
       "addressLookupFailed": "Не вдалося знайти цю адресу",
-      "outOfArea": "Вибачте — ваша адреса за межами нашої зони доставки.",
+      "outOfArea": "Ми не доставляємо за цією адресою",
       "modifierRequired": "Будь ласка, зробіть обов'язковий вибір",
       "chooseSize": "Будь ласка, виберіть розмір",
       "pleaseSelect": "Будь ласка, виберіть {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Лише самовивіз",
     "promoDeliveryOnlyBadge": "🚚 Лише доставка",
     "promoPickupOnlyTitle": "Ця акція діє лише для замовлень із самовивозом",
-    "promoDeliveryOnlyTitle": "Ця акція діє лише для замовлень із доставкою"
+    "promoDeliveryOnlyTitle": "Ця акція діє лише для замовлень із доставкою",
+    "outOfAreaBlockedTitle": "Поза зоною доставки.",
+    "outOfAreaBlockedBody": "Ми не доставляємо за цією адресою. Оберіть самовивіз або вкажіть іншу адресу доставки."
   },
   "pizza": {
     "chooseSize": "Оберіть розмір",

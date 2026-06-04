@@ -204,7 +204,7 @@
       "invalidCoupon": "Невалиден или изтекъл купон",
       "couponMinimumNotMet": "Купонът изисква по-висока междинна сума",
       "addressLookupFailed": "Адресът не може да бъде открит",
-      "outOfArea": "Съжаляваме — адресът ти е извън зоната ни за доставка.",
+      "outOfArea": "Не доставяме до този адрес",
       "modifierRequired": "Моля, направи задължителен избор",
       "chooseSize": "Моля, избери размер",
       "pleaseSelect": "Моля, избери {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Само вземане",
     "promoDeliveryOnlyBadge": "🚚 Само доставка",
     "promoPickupOnlyTitle": "Тази оферта важи само за поръчки за вземане",
-    "promoDeliveryOnlyTitle": "Тази оферта важи само за поръчки с доставка"
+    "promoDeliveryOnlyTitle": "Тази оферта важи само за поръчки с доставка",
+    "outOfAreaBlockedTitle": "Извън зоната ни за доставка.",
+    "outOfAreaBlockedBody": "Не доставяме до този адрес. Изберете вземане на място или въведете друг адрес за доставка."
   },
   "pizza": {
     "chooseSize": "Избери размер",

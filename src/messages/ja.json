@@ -204,7 +204,7 @@
       "invalidCoupon": "無効または期限切れのクーポンです",
       "couponMinimumNotMet": "クーポン利用には最低注文金額が必要です",
       "addressLookupFailed": "その住所を特定できませんでした",
-      "outOfArea": "申し訳ありませんが、ご住所はデリバリーエリア外です。",
+      "outOfArea": "そのご住所へのデリバリーは対応しておりません",
       "modifierRequired": "必須の選択肢を選んでください",
       "chooseSize": "サイズを選んでください",
       "pleaseSelect": "{name} を選択してください",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 店頭受取のみ",
     "promoDeliveryOnlyBadge": "🚚 配達のみ",
     "promoPickupOnlyTitle": "このセールは店頭受取注文にのみ適用されます",
-    "promoDeliveryOnlyTitle": "このセールは配達注文にのみ適用されます"
+    "promoDeliveryOnlyTitle": "このセールは配達注文にのみ適用されます",
+    "outOfAreaBlockedTitle": "デリバリーエリア外です。",
+    "outOfAreaBlockedBody": "このご住所へのデリバリーは対応しておりません。お持ち帰りに変更するか、別のデリバリー先住所をご入力ください。"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

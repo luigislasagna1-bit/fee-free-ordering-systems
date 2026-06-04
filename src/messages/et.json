@@ -204,7 +204,7 @@
       "invalidCoupon": "Kehtetu või aegunud kupong",
       "couponMinimumNotMet": "Kupong nõuab suuremat vahesummat",
       "addressLookupFailed": "Seda aadressi ei leitud",
-      "outOfArea": "Vabandame — sinu aadress asub väljaspool meie tarnepiirkonda.",
+      "outOfArea": "Me ei tarni sellele aadressile",
       "modifierRequired": "Palun tee nõutav valik",
       "chooseSize": "Palun vali suurus",
       "pleaseSelect": "Palun vali {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Ainult kaasavõtmiseks",
     "promoDeliveryOnlyBadge": "🚚 Ainult kojuveoks",
     "promoPickupOnlyTitle": "See pakkumine kehtib ainult kaasavõtmistellimustele",
-    "promoDeliveryOnlyTitle": "See pakkumine kehtib ainult kojuveotellimustele"
+    "promoDeliveryOnlyTitle": "See pakkumine kehtib ainult kojuveotellimustele",
+    "outOfAreaBlockedTitle": "Väljaspool meie tarnepiirkonda.",
+    "outOfAreaBlockedBody": "Me ei tarni sellele aadressile. Valige järeletulek või sisestage muu tarneaadress."
   },
   "pizza": {
     "chooseSize": "Vali suurus",

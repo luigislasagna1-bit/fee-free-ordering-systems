@@ -204,7 +204,7 @@
       "invalidCoupon": "अमान्य या समाप्त कूपन",
       "couponMinimumNotMet": "कूपन के लिए अधिक उप-कुल आवश्यक है",
       "addressLookupFailed": "वह पता नहीं मिल सका",
-      "outOfArea": "खेद है — आपका पता हमारे डिलीवरी क्षेत्र से बाहर है।",
+      "outOfArea": "हम उस पते पर डिलीवरी नहीं करते",
       "modifierRequired": "कृपया एक ज़रूरी विकल्प चुनें",
       "chooseSize": "कृपया एक आकार चुनें",
       "pleaseSelect": "कृपया {name} चुनें",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 केवल पिकअप",
     "promoDeliveryOnlyBadge": "🚚 केवल डिलीवरी",
     "promoPickupOnlyTitle": "यह ऑफर केवल पिकअप ऑर्डर पर लागू होता है",
-    "promoDeliveryOnlyTitle": "यह ऑफर केवल डिलीवरी ऑर्डर पर लागू होता है"
+    "promoDeliveryOnlyTitle": "यह ऑफर केवल डिलीवरी ऑर्डर पर लागू होता है",
+    "outOfAreaBlockedTitle": "हमारे डिलीवरी क्षेत्र से बाहर।",
+    "outOfAreaBlockedBody": "हम इस पते पर डिलीवरी नहीं करते। कृपया पिकअप चुनें, या कोई अलग डिलीवरी पता दर्ज करें।"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",

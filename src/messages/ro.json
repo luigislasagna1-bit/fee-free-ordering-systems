@@ -204,7 +204,7 @@
       "invalidCoupon": "Cupon invalid sau expirat",
       "couponMinimumNotMet": "Cuponul necesită un subtotal mai mare",
       "addressLookupFailed": "Adresa nu a putut fi găsită",
-      "outOfArea": "Ne pare rău — adresa ta este în afara zonei noastre de livrare.",
+      "outOfArea": "Nu livrăm la această adresă",
       "modifierRequired": "Te rugăm să faci o selecție obligatorie",
       "chooseSize": "Te rugăm să alegi o mărime",
       "pleaseSelect": "Te rugăm să selectezi {name}",
@@ -221,7 +221,9 @@
     "promoPickupOnlyBadge": "🥡 Doar ridicare",
     "promoDeliveryOnlyBadge": "🚚 Doar livrare",
     "promoPickupOnlyTitle": "Această ofertă se aplică doar comenzilor cu ridicare",
-    "promoDeliveryOnlyTitle": "Această ofertă se aplică doar comenzilor cu livrare"
+    "promoDeliveryOnlyTitle": "Această ofertă se aplică doar comenzilor cu livrare",
+    "outOfAreaBlockedTitle": "În afara zonei noastre de livrare.",
+    "outOfAreaBlockedBody": "Nu livrăm la această adresă. Alegeți ridicarea personală sau introduceți o altă adresă de livrare."
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
