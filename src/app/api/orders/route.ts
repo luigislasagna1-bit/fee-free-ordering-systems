@@ -3,7 +3,7 @@ import { after } from "next/server";
 import prisma from "@/lib/db";
 import { generateOrderNumber, formatCurrency } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
-import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
+import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, holidayNameForToday } from "@/lib/restaurant-hours";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
@@ -110,6 +110,9 @@ export async function POST(req: NextRequest) {
       where: { slug: sanitize(restaurantSlug, 100), isActive: true },
       include: {
         openingHours: { orderBy: { dayOfWeek: "asc" } },
+        // One-off holiday closures — force "closed today" so holiday orders
+        // are routed through the closed/schedule-for-later flow. Luigi 2026-06-04.
+        holidays: true,
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
@@ -918,11 +921,12 @@ export async function POST(req: NextRequest) {
       ?? (restaurant as any).hours
       ?? [];
     const restaurantTz = (restaurant as any).timezone ?? undefined;
+    const holidayToday = holidayNameForToday((restaurant as any).holidays, restaurantTz);
     const liveStatus = liveOpenStatus(
       openingHoursForCheck,
       new Date(),
       restaurant.hoursFormat === "12h" ? "12h" : "24h",
-      undefined,
+      holidayToday ? { name: holidayToday } : undefined,
       restaurantTz,
     );
     const isClosedNow = liveStatus.kind !== "open";

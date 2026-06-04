@@ -464,9 +464,14 @@ export function OrderingPageClient({
   hostedSiteBackUrl,
   promoBanners = [],
   currentCustomer = null,
+  todayHolidayName = null,
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
+  /** Name of today's one-off holiday closure (restaurant tz), or null. When
+   *  set, the live open/closed status is forced to "closed today" so the
+   *  customer sees the closed banner + must schedule for the next open day. */
+  todayHolidayName?: string | null;
   /** Active promotions to display as banners above the menu (per Fabrizio
    *  2026-05-28). Server-filtered for visibility (active, in date range,
    *  matches today's day-of-week, showOnBanner=true). The hour-of-day
@@ -1263,7 +1268,7 @@ export function OrderingPageClient({
     (restaurant.openingHours ?? []) as any,
     new Date(),
     hoursFmt,
-    undefined,
+    todayHolidayName ? { name: todayHolidayName } : undefined,
     restaurantTz,
   );
   const restaurantIsClosedNow = liveStatusForClient.kind !== "open";

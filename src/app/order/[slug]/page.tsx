@@ -30,6 +30,7 @@ import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { stripeReady, getPublishableKey } from "@/lib/stripe";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
+import { holidayNameForToday } from "@/lib/restaurant-hours";
 
 export default async function OrderingPage({
   params,
@@ -93,6 +94,9 @@ export default async function OrderingPage({
     where: { slug, isActive: true },
     include: {
       openingHours: { orderBy: { dayOfWeek: "asc" } },
+      // One-off holiday closures — drive the "closed today (holiday)" banner +
+      // schedule-for-later flow on the customer page. Luigi 2026-06-04.
+      holidays: true,
       deliveryZones: {
         where: { isActive: true },
         orderBy: [{ radiusKm: "asc" }, { sortOrder: "asc" }],
@@ -347,6 +351,7 @@ export default async function OrderingPage({
         fromHostedSite={fromHostedSite}
         hostedSiteBackUrl={hostedSiteBackUrl}
         promoBanners={promoBanners}
+        todayHolidayName={holidayNameForToday((restaurant as any).holidays, (restaurant as any).timezone)}
         currentCustomer={currentCustomer
           ? {
               id: currentCustomer.id,

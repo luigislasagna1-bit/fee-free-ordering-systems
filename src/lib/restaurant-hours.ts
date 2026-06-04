@@ -415,3 +415,26 @@ export function dateKeyInTimezone(date: Date, timezone: string): string {
     return date.toISOString().slice(0, 10);
   }
 }
+
+/**
+ * Returns the holiday/closure name if TODAY (in the restaurant's timezone)
+ * matches a configured one-off closure (RestaurantHoliday), else null. Pass
+ * the result as `liveOpenStatus(..., todayIsHoliday)` to force "closed today".
+ * RestaurantHoliday.date is @db.Date (midnight UTC = a calendar date), so we
+ * compare its UTC date-key to today's date-key in the restaurant zone.
+ */
+export function holidayNameForToday(
+  holidays: Array<{ date: Date | string; name?: string | null }> | null | undefined,
+  timezone: string | undefined,
+  now: Date = new Date(),
+): string | null {
+  if (!holidays || holidays.length === 0) return null;
+  const tz = timezone || "UTC";
+  const todayKey = dateKeyInTimezone(now, tz);
+  for (const h of holidays) {
+    const d = typeof h.date === "string" ? new Date(h.date) : h.date;
+    if (!d || Number.isNaN(d.getTime())) continue;
+    if (dateKeyInTimezone(d, "UTC") === todayKey) return h.name || "Holiday";
+  }
+  return null;
+}
