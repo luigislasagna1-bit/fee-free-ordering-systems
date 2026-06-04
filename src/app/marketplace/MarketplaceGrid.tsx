@@ -1,5 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Search, MapPin, Star, Sparkles, X } from "lucide-react";
 
@@ -35,6 +36,7 @@ type SortMode = "default" | "newest" | "alphabetical";
  * Restaurant.cuisineType + a tags table.
  */
 export function MarketplaceGrid({ listings }: { listings: GridListing[] }) {
+  const t = useTranslations("marketplace");
   const [query, setQuery] = useState("");
   const [activeCuisine, setActiveCuisine] = useState<string | null>(null);
   const [sort, setSort] = useState<SortMode>("default");
@@ -105,14 +107,14 @@ export function MarketplaceGrid({ listings }: { listings: GridListing[] }) {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search restaurants, cuisines, cities, dishes…"
+                placeholder={t("searchPlaceholder")}
                 className="w-full pl-10 pr-9 py-2.5 rounded-full border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:bg-white focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
               />
               {query && (
                 <button
                   type="button"
                   onClick={() => setQuery("")}
-                  aria-label="Clear search"
+                  aria-label={t("clearSearch")}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
                   <X className="w-4 h-4" />
@@ -123,11 +125,11 @@ export function MarketplaceGrid({ listings }: { listings: GridListing[] }) {
               value={sort}
               onChange={(e) => setSort(e.target.value as SortMode)}
               className="rounded-full border border-gray-200 bg-gray-50 text-sm px-3 py-2.5 focus:outline-none focus:bg-white focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
-              aria-label="Sort restaurants"
+              aria-label={t("sortAria")}
             >
-              <option value="default">Sort: Featured first</option>
-              <option value="newest">Sort: Newest</option>
-              <option value="alphabetical">Sort: A → Z</option>
+              <option value="default">{t("sortFeatured")}</option>
+              <option value="newest">{t("sortNewest")}</option>
+              <option value="alphabetical">{t("sortAlpha")}</option>
             </select>
           </div>
 
@@ -142,7 +144,7 @@ export function MarketplaceGrid({ listings }: { listings: GridListing[] }) {
                     : "bg-white text-gray-700 border-gray-200 hover:border-emerald-300"
                 }`}
               >
-                All cuisines
+                {t("allCuisines")}
               </button>
               {cuisines.map((c) => (
                 <button
@@ -179,7 +181,7 @@ export function MarketplaceGrid({ listings }: { listings: GridListing[] }) {
               <section className="mb-8">
                 <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 flex items-center gap-2">
                   <Star className="w-4 h-4 text-emerald-500 fill-emerald-500" />
-                  Featured
+                  {t("featured")}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {featured.map((l) => (
@@ -192,7 +194,7 @@ export function MarketplaceGrid({ listings }: { listings: GridListing[] }) {
             <section>
               {showFeaturedSection && (
                 <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3">
-                  All restaurants
+                  {t("allRestaurants")}
                 </h2>
               )}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -217,6 +219,7 @@ function NoResults({
   hasFilters: boolean;
   onClear: () => void;
 }) {
+  const t = useTranslations("marketplace");
   if (isEmpty) {
     return (
       <div className="text-center py-16">
@@ -224,18 +227,18 @@ function NoResults({
           <Sparkles className="w-7 h-7 text-emerald-500" />
         </div>
         <h2 className="text-xl font-bold text-gray-900 mb-2">
-          We&apos;re just getting started
+          {t("emptyTitle")}
         </h2>
         <p className="text-sm text-gray-500 max-w-md mx-auto">
-          No restaurants on the marketplace yet. If you run a restaurant, subscribe to the
-          <span className="font-semibold text-emerald-600"> Marketplace Listing</span> add-on
-          from your admin dashboard to get listed here.
+          {t.rich("emptyBody", {
+            b: (c) => <span className="font-semibold text-emerald-600">{c}</span>,
+          })}
         </p>
         <Link
           href="/login"
           className="inline-block mt-5 px-5 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold text-sm hover:bg-emerald-600 transition"
         >
-          Restaurant log in
+          {t("restaurantLogin")}
         </Link>
       </div>
     );
@@ -245,9 +248,9 @@ function NoResults({
       <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
         <Search className="w-7 h-7 text-gray-400" />
       </div>
-      <h2 className="text-xl font-bold text-gray-900 mb-2">No matches</h2>
+      <h2 className="text-xl font-bold text-gray-900 mb-2">{t("noMatchesTitle")}</h2>
       <p className="text-sm text-gray-500 max-w-md mx-auto mb-4">
-        Try a different search term or clear the filters.
+        {t("noMatchesBody")}
       </p>
       {hasFilters && (
         <button
@@ -255,7 +258,7 @@ function NoResults({
           onClick={onClear}
           className="inline-block px-5 py-2.5 rounded-xl bg-emerald-500 text-white font-semibold text-sm hover:bg-emerald-600 transition"
         >
-          Clear filters
+          {t("clearFilters")}
         </button>
       )}
     </div>
@@ -270,6 +273,7 @@ function RestaurantTile({
   listing: GridListing;
   featured?: boolean;
 }) {
+  const t = useTranslations("marketplace");
   const bannerUrl = listing.marketplaceBanner || listing.bannerUrl || null;
 
   return (
@@ -290,7 +294,7 @@ function RestaurantTile({
         )}
         {featured && (
           <span className="absolute top-2 right-2 bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
-            <Star className="w-3 h-3 fill-white" /> Featured
+            <Star className="w-3 h-3 fill-white" /> {t("featured")}
           </span>
         )}
         {listing.logoUrl && (

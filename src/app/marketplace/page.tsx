@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { Sparkles, User, Smartphone, Rocket } from "lucide-react";
 import { listPublicMarketplaceListings } from "@/lib/marketplace";
 import { MarketplaceGrid, type GridListing } from "./MarketplaceGrid";
@@ -39,9 +40,10 @@ export const metadata = {
 };
 
 export default async function MarketplacePage() {
-  const [raw, currentCustomer] = await Promise.all([
+  const [raw, currentCustomer, t] = await Promise.all([
     listPublicMarketplaceListings(),
     getCurrentCustomer(),
+    getTranslations("marketplace"),
   ]);
 
   // Serialise to plain JSON for the client boundary. We strip Prisma Decimal
@@ -82,7 +84,7 @@ export default async function MarketplacePage() {
             <div className="min-w-0">
               <div className="text-base sm:text-lg font-bold leading-tight truncate">Fee Free Marketplace</div>
               <div className="text-[11px] sm:text-xs text-white/85 leading-tight truncate">
-                0% commission · Local restaurants · No surge pricing
+                {t("headerTagline")}
               </div>
             </div>
           </div>
@@ -92,8 +94,8 @@ export default async function MarketplacePage() {
           >
             <User className="w-3.5 h-3.5" />
             {currentCustomer
-              ? (currentCustomer.name?.split(" ")[0] || "My account")
-              : "Sign in"}
+              ? (currentCustomer.name?.split(" ")[0] || t("myAccount"))
+              : t("signIn")}
           </Link>
         </div>
       </header>
@@ -109,24 +111,24 @@ export default async function MarketplacePage() {
         <div className="max-w-6xl mx-auto px-4 py-12 sm:py-16">
           <div className="text-center mb-8 max-w-2xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 leading-tight">
-              Order local. Keep more in their pockets.
+              {t("pitchTitle")}
             </h2>
             <p className="text-gray-600 leading-relaxed">
-              Every restaurant here pays a flat monthly subscription — never a 30% commission. Menu prices are the menu prices. No service fees. No surge. No upsells. Just food.
+              {t("pitchBody")}
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 text-center">
               <div className="font-bold text-3xl text-emerald-600">$0</div>
-              <div className="text-sm text-gray-600 mt-1">in extra customer fees</div>
+              <div className="text-sm text-gray-600 mt-1">{t("statFeesLabel")}</div>
             </div>
             <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 text-center">
               <div className="font-bold text-3xl text-emerald-600">0%</div>
-              <div className="text-sm text-gray-600 mt-1">commission to restaurants</div>
+              <div className="text-sm text-gray-600 mt-1">{t("statCommissionLabel")}</div>
             </div>
             <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 text-center">
               <div className="font-bold text-3xl text-emerald-600">100%</div>
-              <div className="text-sm text-gray-600 mt-1">independent local restaurants</div>
+              <div className="text-sm text-gray-600 mt-1">{t("statIndependentLabel")}</div>
             </div>
           </div>
         </div>
@@ -145,16 +147,16 @@ export default async function MarketplacePage() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap mb-1">
-                <h3 className="text-sm font-bold text-amber-900">Native iOS &amp; Android apps</h3>
+                <h3 className="text-sm font-bold text-amber-900">{t("nativeAppsTitle")}</h3>
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full">
                   <Rocket className="w-2.5 h-2.5" />
-                  Coming Soon
+                  {t("comingSoon")}
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-amber-900/90 leading-relaxed">
-                The full-fat native apps are in the pipeline. In the meantime, tap your browser&apos;s
-                <span className="font-semibold"> share menu</span> and choose
-                <span className="font-semibold"> &ldquo;Add to Home Screen&rdquo;</span> — you&apos;ll get the marketplace as a real app icon, splash screen and full-screen experience. No App Store required.
+                {t.rich("nativeAppsBody", {
+                  b: (c) => <span className="font-semibold">{c}</span>,
+                })}
               </p>
             </div>
           </div>
@@ -166,13 +168,12 @@ export default async function MarketplacePage() {
         <div className="max-w-6xl mx-auto px-4 py-10 sm:py-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
             <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              Restaurant owner? Get listed.
+              {t("ownerTitle")}
             </h3>
             <p className="text-sm text-gray-600 leading-relaxed">
-              Flat <span className="font-bold text-gray-900">$199.99/month max</span> (or per-order, whichever is cheaper)
-              — no commissions, no extra customer fees, no exclusivity contracts. UberEats charges
-              about <span className="font-bold text-gray-900">$200 in commission on $660 of orders.</span> On our
-              marketplace, $200 buys you unlimited orders for the entire month.
+              {t.rich("ownerBody", {
+                b: (c) => <span className="font-bold text-gray-900">{c}</span>,
+              })}
             </p>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center md:justify-end">
@@ -180,13 +181,13 @@ export default async function MarketplacePage() {
               href="/signup"
               className="px-5 py-3 rounded-xl bg-emerald-500 text-white font-semibold text-sm hover:bg-emerald-600 transition text-center"
             >
-              Get listed for free
+              {t("getListedFree")}
             </Link>
             <Link
               href="/pricing"
               className="px-5 py-3 rounded-xl border border-gray-300 text-gray-700 font-semibold text-sm hover:bg-gray-50 transition text-center"
             >
-              See pricing
+              {t("seePricing")}
             </Link>
           </div>
         </div>
