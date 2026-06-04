@@ -3363,6 +3363,26 @@
       "statusCollecting": "raccolta in corso",
       "statusNotStarted": "non avviato",
       "planned": "Pianificato:"
+    },
+    "invoice": {
+      "title": "Fattura",
+      "from": "Da",
+      "billedTo": "Fatturato a",
+      "invoiceNumber": "N. fattura",
+      "issueDate": "Data",
+      "period": "Periodo di fatturazione",
+      "description": "Descrizione",
+      "servicesLine": "Abbonamento alla piattaforma e componenti aggiuntivi",
+      "amount": "Importo",
+      "subtotal": "Subtotale",
+      "total": "Totale",
+      "statusPaid": "Pagata",
+      "statusDue": "Da pagare",
+      "vatId": "Partita IVA / Codice fiscale",
+      "download": "Scarica / Stampa",
+      "thankYou": "Grazie per averci scelto.",
+      "notFound": "Fattura non trovata.",
+      "back": "Torna alla fatturazione"
     }
   },
   "impersonation": {

@@ -3363,6 +3363,26 @@
       "statusCollecting": "zbiranje",
       "statusNotStarted": "ni začeto",
       "planned": "Načrtovano:"
+    },
+    "invoice": {
+      "title": "Račun",
+      "from": "Od",
+      "billedTo": "Zaračunano",
+      "invoiceNumber": "Št. računa",
+      "issueDate": "Datum",
+      "period": "Obračunsko obdobje",
+      "description": "Opis",
+      "servicesLine": "Naročnina na platformo in dodatki",
+      "amount": "Znesek",
+      "subtotal": "Vmesni seštevek",
+      "total": "Skupaj",
+      "statusPaid": "Plačano",
+      "statusDue": "Zapadlo",
+      "vatId": "ID za DDV / davčna številka",
+      "download": "Prenesi / natisni",
+      "thankYou": "Hvala za vaše sodelovanje.",
+      "notFound": "Računa ni mogoče najti.",
+      "back": "Nazaj na obračun"
     }
   },
   "impersonation": {

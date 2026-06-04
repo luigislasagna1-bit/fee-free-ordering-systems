@@ -3363,6 +3363,26 @@
       "statusCollecting": "recopilant",
       "statusNotStarted": "no iniciat",
       "planned": "Planificat:"
+    },
+    "invoice": {
+      "title": "Factura",
+      "from": "De",
+      "billedTo": "Facturat a",
+      "invoiceNumber": "Núm. de factura",
+      "issueDate": "Data",
+      "period": "Període de facturació",
+      "description": "Descripció",
+      "servicesLine": "Subscripció a la plataforma i complements",
+      "amount": "Import",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "statusPaid": "Pagada",
+      "statusDue": "Pendent",
+      "vatId": "IVA / NIF",
+      "download": "Baixa / Imprimeix",
+      "thankYou": "Gràcies per la vostra confiança.",
+      "notFound": "No s'ha trobat la factura.",
+      "back": "Torna a Facturació"
     }
   },
   "impersonation": {

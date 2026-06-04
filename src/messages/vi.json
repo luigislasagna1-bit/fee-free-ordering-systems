@@ -3363,6 +3363,26 @@
       "statusCollecting": "đang thu thập",
       "statusNotStarted": "chưa bắt đầu",
       "planned": "Dự kiến:"
+    },
+    "invoice": {
+      "title": "Hóa đơn",
+      "from": "Từ",
+      "billedTo": "Xuất hóa đơn cho",
+      "invoiceNumber": "Số hóa đơn",
+      "issueDate": "Ngày",
+      "period": "Kỳ thanh toán",
+      "description": "Mô tả",
+      "servicesLine": "Gói đăng ký nền tảng & tiện ích bổ sung",
+      "amount": "Số tiền",
+      "subtotal": "Tạm tính",
+      "total": "Tổng cộng",
+      "statusPaid": "Đã thanh toán",
+      "statusDue": "Cần thanh toán",
+      "vatId": "Mã số thuế / VAT",
+      "download": "Tải xuống / In",
+      "thankYou": "Cảm ơn quý khách đã hợp tác.",
+      "notFound": "Không tìm thấy hóa đơn.",
+      "back": "Quay lại Thanh toán"
     }
   },
   "impersonation": {

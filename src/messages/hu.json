@@ -3363,6 +3363,26 @@
       "statusCollecting": "gyűjtés folyamatban",
       "statusNotStarted": "még nem indult el",
       "planned": "Tervezett:"
+    },
+    "invoice": {
+      "title": "Számla",
+      "from": "Kiállító",
+      "billedTo": "Vevő",
+      "invoiceNumber": "Számlaszám",
+      "issueDate": "Dátum",
+      "period": "Elszámolási időszak",
+      "description": "Megnevezés",
+      "servicesLine": "Platform-előfizetés és kiegészítők",
+      "amount": "Összeg",
+      "subtotal": "Részösszeg",
+      "total": "Végösszeg",
+      "statusPaid": "Fizetve",
+      "statusDue": "Fizetendő",
+      "vatId": "Adószám / közösségi adószám",
+      "download": "Letöltés / Nyomtatás",
+      "thankYou": "Köszönjük, hogy minket választott.",
+      "notFound": "A számla nem található.",
+      "back": "Vissza a számlázáshoz"
     }
   },
   "impersonation": {

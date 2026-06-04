@@ -3363,6 +3363,26 @@
       "firstOrderPromoTitle": "Launch a first-order promo",
       "firstOrderPromoDesc": "Set up \"$5 off first order\" or a free-delivery coupon to convert visitors.",
       "welcomeFootnote": "Once orders start flowing, this page becomes the GloriaFood-style dashboard with KPI cards, trend charts, and a \"Grow your restaurant\" panel of deep-link reports."
+    },
+    "invoice": {
+      "title": "Invoice",
+      "from": "From",
+      "billedTo": "Billed to",
+      "invoiceNumber": "Invoice no.",
+      "issueDate": "Date",
+      "period": "Billing period",
+      "description": "Description",
+      "servicesLine": "Platform subscription & add-ons",
+      "amount": "Amount",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "statusPaid": "Paid",
+      "statusDue": "Due",
+      "vatId": "VAT / Tax ID",
+      "download": "Download / Print",
+      "thankYou": "Thank you for your business.",
+      "notFound": "Invoice not found.",
+      "back": "Back to Billing"
     }
   },
   "impersonation": {

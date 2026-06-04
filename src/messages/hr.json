@@ -3363,6 +3363,26 @@
       "statusCollecting": "prikupljanje",
       "statusNotStarted": "nije započeto",
       "planned": "Planirano:"
+    },
+    "invoice": {
+      "title": "Račun",
+      "from": "Od",
+      "billedTo": "Naplaćeno",
+      "invoiceNumber": "Broj računa",
+      "issueDate": "Datum",
+      "period": "Obračunsko razdoblje",
+      "description": "Opis",
+      "servicesLine": "Pretplata na platformu i dodaci",
+      "amount": "Iznos",
+      "subtotal": "Međuzbroj",
+      "total": "Ukupno",
+      "statusPaid": "Plaćeno",
+      "statusDue": "Dospjelo",
+      "vatId": "PDV / Porezni broj",
+      "download": "Preuzmi / Ispiši",
+      "thankYou": "Hvala na suradnji.",
+      "notFound": "Račun nije pronađen.",
+      "back": "Natrag na naplatu"
     }
   },
   "impersonation": {

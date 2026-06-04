@@ -3363,6 +3363,26 @@
       "statusCollecting": "sbíráme",
       "statusNotStarted": "nezahájeno",
       "planned": "Plánováno:"
+    },
+    "invoice": {
+      "title": "Faktura",
+      "from": "Od",
+      "billedTo": "Fakturováno na",
+      "invoiceNumber": "Č. faktury",
+      "issueDate": "Datum",
+      "period": "Zúčtovací období",
+      "description": "Popis",
+      "servicesLine": "Předplatné platformy a doplňky",
+      "amount": "Částka",
+      "subtotal": "Mezisoučet",
+      "total": "Celkem",
+      "statusPaid": "Uhrazeno",
+      "statusDue": "Splatné",
+      "vatId": "DIČ / daňové číslo",
+      "download": "Stáhnout / Tisk",
+      "thankYou": "Děkujeme za vaši důvěru.",
+      "notFound": "Faktura nebyla nalezena.",
+      "back": "Zpět na Fakturaci"
     }
   },
   "impersonation": {

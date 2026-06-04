@@ -3363,6 +3363,26 @@
       "statusCollecting": "collecte en cours",
       "statusNotStarted": "pas encore commencé",
       "planned": "Prévu :"
+    },
+    "invoice": {
+      "title": "Facture",
+      "from": "Émetteur",
+      "billedTo": "Facturé à",
+      "invoiceNumber": "Facture n°",
+      "issueDate": "Date",
+      "period": "Période de facturation",
+      "description": "Description",
+      "servicesLine": "Abonnement à la plateforme et modules complémentaires",
+      "amount": "Montant",
+      "subtotal": "Sous-total",
+      "total": "Total",
+      "statusPaid": "Payée",
+      "statusDue": "À régler",
+      "vatId": "N° de TVA / identifiant fiscal",
+      "download": "Télécharger / Imprimer",
+      "thankYou": "Merci de votre confiance.",
+      "notFound": "Facture introuvable.",
+      "back": "Retour à la facturation"
     }
   },
   "impersonation": {

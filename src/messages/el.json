@@ -3363,6 +3363,26 @@
       "statusCollecting": "συλλογή",
       "statusNotStarted": "δεν έχει ξεκινήσει",
       "planned": "Προγραμματισμένο:"
+    },
+    "invoice": {
+      "title": "Τιμολόγιο",
+      "from": "Από",
+      "billedTo": "Χρέωση προς",
+      "invoiceNumber": "Αρ. τιμολογίου",
+      "issueDate": "Ημερομηνία",
+      "period": "Περίοδος χρέωσης",
+      "description": "Περιγραφή",
+      "servicesLine": "Συνδρομή πλατφόρμας & πρόσθετα",
+      "amount": "Ποσό",
+      "subtotal": "Μερικό σύνολο",
+      "total": "Σύνολο",
+      "statusPaid": "Εξοφλήθηκε",
+      "statusDue": "Οφειλόμενο",
+      "vatId": "ΑΦΜ / Φορολογικός αριθμός",
+      "download": "Λήψη / Εκτύπωση",
+      "thankYou": "Σας ευχαριστούμε για τη συνεργασία.",
+      "notFound": "Το τιμολόγιο δεν βρέθηκε.",
+      "back": "Επιστροφή στη Χρέωση"
     }
   },
   "impersonation": {

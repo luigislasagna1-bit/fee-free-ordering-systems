@@ -3363,6 +3363,26 @@
       "statusCollecting": "wird erfasst",
       "statusNotStarted": "noch nicht gestartet",
       "planned": "Geplant:"
+    },
+    "invoice": {
+      "title": "Rechnung",
+      "from": "Von",
+      "billedTo": "Rechnungsempfänger",
+      "invoiceNumber": "Rechnungsnr.",
+      "issueDate": "Datum",
+      "period": "Abrechnungszeitraum",
+      "description": "Beschreibung",
+      "servicesLine": "Plattform-Abonnement & Add-ons",
+      "amount": "Betrag",
+      "subtotal": "Zwischensumme",
+      "total": "Gesamtbetrag",
+      "statusPaid": "Bezahlt",
+      "statusDue": "Fällig",
+      "vatId": "USt-IdNr. / Steuernummer",
+      "download": "Herunterladen / Drucken",
+      "thankYou": "Vielen Dank für Ihr Vertrauen.",
+      "notFound": "Rechnung nicht gefunden.",
+      "back": "Zurück zur Abrechnung"
     }
   },
   "impersonation": {

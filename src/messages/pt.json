@@ -3363,6 +3363,26 @@
       "statusCollecting": "coletando",
       "statusNotStarted": "não iniciado",
       "planned": "Planejado:"
+    },
+    "invoice": {
+      "title": "Fatura",
+      "from": "De",
+      "billedTo": "Faturado a",
+      "invoiceNumber": "Fatura n.º",
+      "issueDate": "Data",
+      "period": "Período de faturação",
+      "description": "Descrição",
+      "servicesLine": "Subscrição da plataforma e extras",
+      "amount": "Montante",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "statusPaid": "Pago",
+      "statusDue": "Em dívida",
+      "vatId": "NIF / Número de contribuinte",
+      "download": "Transferir / Imprimir",
+      "thankYou": "Obrigado pela sua preferência.",
+      "notFound": "Fatura não encontrada.",
+      "back": "Voltar à Faturação"
     }
   },
   "impersonation": {

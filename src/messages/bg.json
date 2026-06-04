@@ -3363,6 +3363,26 @@
       "statusCollecting": "събиране",
       "statusNotStarted": "не е започнало",
       "planned": "Планирано:"
+    },
+    "invoice": {
+      "title": "Фактура",
+      "from": "От",
+      "billedTo": "Фактурирано на",
+      "invoiceNumber": "Фактура №",
+      "issueDate": "Дата",
+      "period": "Период на фактуриране",
+      "description": "Описание",
+      "servicesLine": "Абонамент за платформата и добавки",
+      "amount": "Сума",
+      "subtotal": "Междинна сума",
+      "total": "Общо",
+      "statusPaid": "Платено",
+      "statusDue": "Дължимо",
+      "vatId": "ДДС / Данъчен номер",
+      "download": "Изтегляне / Печат",
+      "thankYou": "Благодарим Ви за доверието.",
+      "notFound": "Фактурата не е намерена.",
+      "back": "Обратно към Плащания"
     }
   },
   "impersonation": {

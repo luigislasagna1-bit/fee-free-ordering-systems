@@ -3363,6 +3363,26 @@
       "statusCollecting": "сбор данных",
       "statusNotStarted": "не начато",
       "planned": "Планируется:"
+    },
+    "invoice": {
+      "title": "Счёт",
+      "from": "От",
+      "billedTo": "Кому выставлен",
+      "invoiceNumber": "Счёт №",
+      "issueDate": "Дата",
+      "period": "Расчётный период",
+      "description": "Описание",
+      "servicesLine": "Подписка на платформу и дополнения",
+      "amount": "Сумма",
+      "subtotal": "Промежуточный итог",
+      "total": "Итого",
+      "statusPaid": "Оплачено",
+      "statusDue": "К оплате",
+      "vatId": "ИНН / НДС",
+      "download": "Скачать / Печать",
+      "thankYou": "Благодарим за сотрудничество.",
+      "notFound": "Счёт не найден.",
+      "back": "Назад к оплате"
     }
   },
   "impersonation": {

@@ -3363,6 +3363,26 @@
       "statusCollecting": "збирається",
       "statusNotStarted": "не розпочато",
       "planned": "Заплановано:"
+    },
+    "invoice": {
+      "title": "Рахунок-фактура",
+      "from": "Від кого",
+      "billedTo": "Платник",
+      "invoiceNumber": "Рахунок №",
+      "issueDate": "Дата",
+      "period": "Розрахунковий період",
+      "description": "Опис",
+      "servicesLine": "Підписка на платформу та додаткові послуги",
+      "amount": "Сума",
+      "subtotal": "Проміжний підсумок",
+      "total": "Разом",
+      "statusPaid": "Сплачено",
+      "statusDue": "До сплати",
+      "vatId": "ПДВ / Податковий номер",
+      "download": "Завантажити / Друк",
+      "thankYou": "Дякуємо за співпрацю.",
+      "notFound": "Рахунок не знайдено.",
+      "back": "Назад до оплати"
     }
   },
   "impersonation": {

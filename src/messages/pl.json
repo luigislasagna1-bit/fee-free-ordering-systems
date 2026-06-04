@@ -3363,6 +3363,26 @@
       "statusCollecting": "zbieranie",
       "statusNotStarted": "nie rozpoczęto",
       "planned": "Planowane:"
+    },
+    "invoice": {
+      "title": "Faktura",
+      "from": "Od",
+      "billedTo": "Nabywca",
+      "invoiceNumber": "Nr faktury",
+      "issueDate": "Data",
+      "period": "Okres rozliczeniowy",
+      "description": "Opis",
+      "servicesLine": "Subskrypcja platformy i dodatki",
+      "amount": "Kwota",
+      "subtotal": "Suma częściowa",
+      "total": "Razem",
+      "statusPaid": "Opłacone",
+      "statusDue": "Do zapłaty",
+      "vatId": "NIP / numer podatkowy",
+      "download": "Pobierz / Drukuj",
+      "thankYou": "Dziękujemy za współpracę.",
+      "notFound": "Nie znaleziono faktury.",
+      "back": "Powrót do rozliczeń"
     }
   },
   "impersonation": {

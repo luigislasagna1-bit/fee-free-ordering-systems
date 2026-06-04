@@ -3363,6 +3363,26 @@
       "statusCollecting": "收集中",
       "statusNotStarted": "未开始",
       "planned": "计划中："
+    },
+    "invoice": {
+      "title": "发票",
+      "from": "开票方",
+      "billedTo": "收票方",
+      "invoiceNumber": "发票编号",
+      "issueDate": "日期",
+      "period": "账单周期",
+      "description": "说明",
+      "servicesLine": "平台订阅及附加服务",
+      "amount": "金额",
+      "subtotal": "小计",
+      "total": "总计",
+      "statusPaid": "已付款",
+      "statusDue": "待付款",
+      "vatId": "增值税 / 税号",
+      "download": "下载 / 打印",
+      "thankYou": "感谢您的惠顾。",
+      "notFound": "未找到发票。",
+      "back": "返回账单"
     }
   },
   "impersonation": {

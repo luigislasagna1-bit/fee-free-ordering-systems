@@ -3363,6 +3363,26 @@
       "statusCollecting": "kerätään",
       "statusNotStarted": "ei aloitettu",
       "planned": "Suunniteltu:"
+    },
+    "invoice": {
+      "title": "Lasku",
+      "from": "Lähettäjä",
+      "billedTo": "Laskutetaan",
+      "invoiceNumber": "Laskun nro",
+      "issueDate": "Päivämäärä",
+      "period": "Laskutuskausi",
+      "description": "Kuvaus",
+      "servicesLine": "Alustan tilaus ja lisäpalvelut",
+      "amount": "Määrä",
+      "subtotal": "Välisumma",
+      "total": "Yhteensä",
+      "statusPaid": "Maksettu",
+      "statusDue": "Erääntynyt",
+      "vatId": "ALV-/verotunnus",
+      "download": "Lataa / Tulosta",
+      "thankYou": "Kiitos asioinnistasi.",
+      "notFound": "Laskua ei löytynyt.",
+      "back": "Takaisin laskutukseen"
     }
   },
   "impersonation": {

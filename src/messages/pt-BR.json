@@ -3363,6 +3363,26 @@
       "statusCollecting": "coletando",
       "statusNotStarted": "não iniciado",
       "planned": "Planejado:"
+    },
+    "invoice": {
+      "title": "Fatura",
+      "from": "De",
+      "billedTo": "Faturado para",
+      "invoiceNumber": "Fatura nº",
+      "issueDate": "Data",
+      "period": "Período de faturamento",
+      "description": "Descrição",
+      "servicesLine": "Assinatura da plataforma e complementos",
+      "amount": "Valor",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "statusPaid": "Pago",
+      "statusDue": "A pagar",
+      "vatId": "CNPJ / Inscrição fiscal",
+      "download": "Baixar / Imprimir",
+      "thankYou": "Agradecemos a sua preferência.",
+      "notFound": "Fatura não encontrada.",
+      "back": "Voltar para Faturamento"
     }
   },
   "impersonation": {

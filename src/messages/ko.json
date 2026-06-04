@@ -3363,6 +3363,26 @@
       "statusCollecting": "수집 중",
       "statusNotStarted": "시작되지 않음",
       "planned": "예정:"
+    },
+    "invoice": {
+      "title": "청구서",
+      "from": "공급자",
+      "billedTo": "청구 대상",
+      "invoiceNumber": "청구서 번호",
+      "issueDate": "발행일",
+      "period": "청구 기간",
+      "description": "내역",
+      "servicesLine": "플랫폼 구독 및 부가 기능",
+      "amount": "금액",
+      "subtotal": "소계",
+      "total": "합계",
+      "statusPaid": "결제 완료",
+      "statusDue": "미결제",
+      "vatId": "부가세 / 사업자 등록 번호",
+      "download": "다운로드 / 인쇄",
+      "thankYou": "이용해 주셔서 감사합니다.",
+      "notFound": "청구서를 찾을 수 없습니다.",
+      "back": "결제 관리로 돌아가기"
     }
   },
   "impersonation": {

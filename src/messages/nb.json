@@ -3363,6 +3363,26 @@
       "statusCollecting": "samler inn",
       "statusNotStarted": "ikke startet",
       "planned": "Planlagt:"
+    },
+    "invoice": {
+      "title": "Faktura",
+      "from": "Fra",
+      "billedTo": "Fakturert til",
+      "invoiceNumber": "Fakturanr.",
+      "issueDate": "Dato",
+      "period": "Faktureringsperiode",
+      "description": "Beskrivelse",
+      "servicesLine": "Plattformabonnement og tillegg",
+      "amount": "Beløp",
+      "subtotal": "Delsum",
+      "total": "Totalt",
+      "statusPaid": "Betalt",
+      "statusDue": "Forfaller",
+      "vatId": "MVA-/organisasjonsnr.",
+      "download": "Last ned / Skriv ut",
+      "thankYou": "Takk for at du handler hos oss.",
+      "notFound": "Fakturaen ble ikke funnet.",
+      "back": "Tilbake til fakturering"
     }
   },
   "impersonation": {

@@ -3363,6 +3363,26 @@
       "statusCollecting": "verzamelen",
       "statusNotStarted": "nog niet gestart",
       "planned": "Gepland:"
+    },
+    "invoice": {
+      "title": "Factuur",
+      "from": "Van",
+      "billedTo": "Gefactureerd aan",
+      "invoiceNumber": "Factuurnr.",
+      "issueDate": "Datum",
+      "period": "Factureringsperiode",
+      "description": "Omschrijving",
+      "servicesLine": "Platformabonnement & add-ons",
+      "amount": "Bedrag",
+      "subtotal": "Subtotaal",
+      "total": "Totaal",
+      "statusPaid": "Betaald",
+      "statusDue": "Te betalen",
+      "vatId": "Btw-/fiscaal nummer",
+      "download": "Downloaden / Afdrukken",
+      "thankYou": "Bedankt voor uw vertrouwen.",
+      "notFound": "Factuur niet gevonden.",
+      "back": "Terug naar Facturering"
     }
   },
   "impersonation": {

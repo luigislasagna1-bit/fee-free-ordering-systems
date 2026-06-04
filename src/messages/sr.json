@@ -3363,6 +3363,26 @@
       "statusCollecting": "prikupljanje",
       "statusNotStarted": "nije započeto",
       "planned": "Planirano:"
+    },
+    "invoice": {
+      "title": "Faktura",
+      "from": "Od",
+      "billedTo": "Naplaćeno za",
+      "invoiceNumber": "Br. fakture",
+      "issueDate": "Datum",
+      "period": "Obračunski period",
+      "description": "Opis",
+      "servicesLine": "Pretplata na platformu i dodaci",
+      "amount": "Iznos",
+      "subtotal": "Međuzbir",
+      "total": "Ukupno",
+      "statusPaid": "Plaćeno",
+      "statusDue": "Dospelo",
+      "vatId": "PIB / poreski broj",
+      "download": "Preuzmi / Štampaj",
+      "thankYou": "Hvala na poverenju.",
+      "notFound": "Faktura nije pronađena.",
+      "back": "Nazad na naplatu"
     }
   },
   "impersonation": {

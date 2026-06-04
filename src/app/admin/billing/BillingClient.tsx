@@ -278,16 +278,14 @@ export function BillingClient({
                       <div className="font-bold text-gray-900">
                         {formatCurrency(inv.amountPaid / 100)}
                       </div>
-                      {inv.hostedInvoiceUrl && (
-                        <a
-                          href={inv.hostedInvoiceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-700 text-xs font-semibold inline-flex items-center gap-1 mt-1"
-                        >
-                          {t("invoiceView")} <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
+                      <a
+                        href={`/billing-invoice/${inv.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-700 text-xs font-semibold inline-flex items-center gap-1 mt-1"
+                      >
+                        {t("invoiceView")} <ExternalLink className="w-3 h-3" />
+                      </a>
                     </div>
                   </div>
                 </li>
@@ -327,16 +325,14 @@ export function BillingClient({
                       </span>
                     </td>
                     <td className="px-4 py-3 text-right">
-                      {inv.hostedInvoiceUrl && (
-                        <a
-                          href={inv.hostedInvoiceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-700 text-xs font-medium inline-flex items-center gap-1"
-                        >
-                          {t("invoiceView")} <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
+                      <a
+                        href={`/billing-invoice/${inv.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-700 text-xs font-medium inline-flex items-center gap-1"
+                      >
+                        {t("invoiceView")} <ExternalLink className="w-3 h-3" />
+                      </a>
                     </td>
                   </tr>
                 ))}

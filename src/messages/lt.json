@@ -3363,6 +3363,26 @@
       "statusCollecting": "renkama",
       "statusNotStarted": "nepradėta",
       "planned": "Planuojama:"
+    },
+    "invoice": {
+      "title": "Sąskaita faktūra",
+      "from": "Pardavėjas",
+      "billedTo": "Pirkėjas",
+      "invoiceNumber": "Sąskaitos nr.",
+      "issueDate": "Data",
+      "period": "Atsiskaitymo laikotarpis",
+      "description": "Aprašymas",
+      "servicesLine": "Platformos prenumerata ir papildiniai",
+      "amount": "Suma",
+      "subtotal": "Tarpinė suma",
+      "total": "Iš viso",
+      "statusPaid": "Apmokėta",
+      "statusDue": "Mokėtina",
+      "vatId": "PVM / mokesčių mokėtojo kodas",
+      "download": "Atsisiųsti / spausdinti",
+      "thankYou": "Dėkojame, kad naudojatės mūsų paslaugomis.",
+      "notFound": "Sąskaita faktūra nerasta.",
+      "back": "Atgal į atsiskaitymus"
     }
   },
   "impersonation": {

@@ -3363,6 +3363,26 @@
       "statusCollecting": "indsamler",
       "statusNotStarted": "ikke startet",
       "planned": "Planlagt:"
+    },
+    "invoice": {
+      "title": "Faktura",
+      "from": "Fra",
+      "billedTo": "Faktureret til",
+      "invoiceNumber": "Fakturanr.",
+      "issueDate": "Dato",
+      "period": "Faktureringsperiode",
+      "description": "Beskrivelse",
+      "servicesLine": "Platformsabonnement og tilkøb",
+      "amount": "Beløb",
+      "subtotal": "Subtotal",
+      "total": "I alt",
+      "statusPaid": "Betalt",
+      "statusDue": "Forfalden",
+      "vatId": "CVR / Skattenr.",
+      "download": "Download / Udskriv",
+      "thankYou": "Tak for din handel.",
+      "notFound": "Fakturaen blev ikke fundet.",
+      "back": "Tilbage til Fakturering"
     }
   },
   "impersonation": {

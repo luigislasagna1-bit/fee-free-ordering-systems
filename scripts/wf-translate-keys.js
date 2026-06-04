@@ -6,20 +6,27 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "email.orderRefund";
-const CONTEXT = "a transactional email sent to a restaurant customer when their card order is refunded (partial or full). Keep {placeholders} exactly. Keep the email tone clear and reassuring";
+const NS = "admin.invoice";
+const CONTEXT = "a downloadable billing invoice document a restaurant owner gets for the platform services they paid for. Formal/financial tone. 'VAT / Tax ID' and 'Invoice no.' are accounting terms";
 const EN = {
-  preview: "Refund for order {orderNumber}",
-  subject: "Refund for order {orderNumber}",
-  title: "Refund issued",
-  subtitle: "Order {orderNumber}",
-  greeting: "Hi {customerName},",
-  badgeFull: "Full refund",
-  badgePartial: "Partial refund",
-  body: "{restaurantName} has issued a refund on your order. The amount below has been returned to your original payment method.",
-  amountLabel: "Refund amount",
-  timing: "It may take 5–10 business days to appear on your statement.",
-  contactLine: "If you have any questions, just reply to this email.",
+  title: "Invoice",
+  from: "From",
+  billedTo: "Billed to",
+  invoiceNumber: "Invoice no.",
+  issueDate: "Date",
+  period: "Billing period",
+  description: "Description",
+  servicesLine: "Platform subscription & add-ons",
+  amount: "Amount",
+  subtotal: "Subtotal",
+  total: "Total",
+  statusPaid: "Paid",
+  statusDue: "Due",
+  vatId: "VAT / Tax ID",
+  download: "Download / Print",
+  thankYou: "Thank you for your business.",
+  notFound: "Invoice not found.",
+  back: "Back to Billing",
 };
 const KEYS = Object.keys(EN);
 

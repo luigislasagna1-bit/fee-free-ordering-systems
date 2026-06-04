@@ -3363,6 +3363,26 @@
       "statusCollecting": "جارٍ الجمع",
       "statusNotStarted": "لم يبدأ",
       "planned": "مخطط:"
+    },
+    "invoice": {
+      "title": "فاتورة",
+      "from": "من",
+      "billedTo": "فُوتر إلى",
+      "invoiceNumber": "رقم الفاتورة",
+      "issueDate": "التاريخ",
+      "period": "فترة الفوترة",
+      "description": "الوصف",
+      "servicesLine": "اشتراك المنصة والإضافات",
+      "amount": "المبلغ",
+      "subtotal": "المجموع الفرعي",
+      "total": "الإجمالي",
+      "statusPaid": "مدفوعة",
+      "statusDue": "مستحقة",
+      "vatId": "الرقم الضريبي / ضريبة القيمة المضافة",
+      "download": "تنزيل / طباعة",
+      "thankYou": "شكرًا لتعاملكم معنا.",
+      "notFound": "لم يتم العثور على الفاتورة.",
+      "back": "العودة إلى الفوترة"
     }
   },
   "impersonation": {

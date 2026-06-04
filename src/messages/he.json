@@ -3363,6 +3363,26 @@
       "statusCollecting": "אוסף",
       "statusNotStarted": "לא התחיל",
       "planned": "מתוכנן:"
+    },
+    "invoice": {
+      "title": "חשבונית",
+      "from": "מאת",
+      "billedTo": "חיוב עבור",
+      "invoiceNumber": "חשבונית מס'",
+      "issueDate": "תאריך",
+      "period": "תקופת החיוב",
+      "description": "תיאור",
+      "servicesLine": "מנוי לפלטפורמה ותוספות",
+      "amount": "סכום",
+      "subtotal": "סכום ביניים",
+      "total": "סך הכול",
+      "statusPaid": "שולם",
+      "statusDue": "לתשלום",
+      "vatId": "מספר עוסק / ח.פ.",
+      "download": "הורדה / הדפסה",
+      "thankYou": "תודה שעשיתם איתנו עסקים.",
+      "notFound": "החשבונית לא נמצאה.",
+      "back": "חזרה לחיובים"
     }
   },
   "impersonation": {

@@ -3363,6 +3363,26 @@
       "statusCollecting": "se colectează",
       "statusNotStarted": "neînceput",
       "planned": "Planificat:"
+    },
+    "invoice": {
+      "title": "Factură",
+      "from": "De la",
+      "billedTo": "Facturat către",
+      "invoiceNumber": "Nr. factură",
+      "issueDate": "Dată",
+      "period": "Perioadă de facturare",
+      "description": "Descriere",
+      "servicesLine": "Abonament platformă și suplimente",
+      "amount": "Sumă",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "statusPaid": "Plătită",
+      "statusDue": "De plată",
+      "vatId": "Cod TVA / Cod fiscal",
+      "download": "Descarcă / Tipărește",
+      "thankYou": "Vă mulțumim pentru colaborare.",
+      "notFound": "Factura nu a fost găsită.",
+      "back": "Înapoi la Facturare"
     }
   },
   "impersonation": {

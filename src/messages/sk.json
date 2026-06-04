@@ -3363,6 +3363,26 @@
       "statusCollecting": "zbiera sa",
       "statusNotStarted": "nezačaté",
       "planned": "Plánované:"
+    },
+    "invoice": {
+      "title": "Faktúra",
+      "from": "Od",
+      "billedTo": "Fakturované pre",
+      "invoiceNumber": "Č. faktúry",
+      "issueDate": "Dátum",
+      "period": "Fakturačné obdobie",
+      "description": "Popis",
+      "servicesLine": "Predplatné platformy a doplnky",
+      "amount": "Suma",
+      "subtotal": "Medzisúčet",
+      "total": "Celkom",
+      "statusPaid": "Zaplatené",
+      "statusDue": "Na úhradu",
+      "vatId": "IČ DPH / DIČ",
+      "download": "Stiahnuť / Vytlačiť",
+      "thankYou": "Ďakujeme za vašu dôveru.",
+      "notFound": "Faktúra sa nenašla.",
+      "back": "Späť na fakturáciu"
     }
   },
   "impersonation": {

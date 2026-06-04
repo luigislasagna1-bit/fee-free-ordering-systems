@@ -3363,6 +3363,26 @@
       "statusCollecting": "kogumine",
       "statusNotStarted": "alustamata",
       "planned": "Planeeritud:"
+    },
+    "invoice": {
+      "title": "Arve",
+      "from": "Kellelt",
+      "billedTo": "Arve saaja",
+      "invoiceNumber": "Arve nr",
+      "issueDate": "Kuupäev",
+      "period": "Arveldusperiood",
+      "description": "Kirjeldus",
+      "servicesLine": "Platvormi tellimus ja lisateenused",
+      "amount": "Summa",
+      "subtotal": "Vahesumma",
+      "total": "Kokku",
+      "statusPaid": "Makstud",
+      "statusDue": "Tasumisele kuuluv",
+      "vatId": "KMKR / maksukohustuslase number",
+      "download": "Laadi alla / Prindi",
+      "thankYou": "Täname koostöö eest.",
+      "notFound": "Arvet ei leitud.",
+      "back": "Tagasi arvelduse juurde"
     }
   },
   "impersonation": {

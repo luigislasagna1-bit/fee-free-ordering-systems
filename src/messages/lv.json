@@ -3363,6 +3363,26 @@
       "statusCollecting": "vāc datus",
       "statusNotStarted": "nav sākts",
       "planned": "Plānots:"
+    },
+    "invoice": {
+      "title": "Rēķins",
+      "from": "No",
+      "billedTo": "Rēķins izrakstīts",
+      "invoiceNumber": "Rēķina Nr.",
+      "issueDate": "Datums",
+      "period": "Norēķinu periods",
+      "description": "Apraksts",
+      "servicesLine": "Platformas abonements un papildinājumi",
+      "amount": "Summa",
+      "subtotal": "Starpsumma",
+      "total": "Kopā",
+      "statusPaid": "Apmaksāts",
+      "statusDue": "Apmaksājams",
+      "vatId": "PVN / nodokļu maksātāja Nr.",
+      "download": "Lejupielādēt / drukāt",
+      "thankYou": "Paldies par sadarbību.",
+      "notFound": "Rēķins nav atrasts.",
+      "back": "Atpakaļ uz norēķiniem"
     }
   },
   "impersonation": {

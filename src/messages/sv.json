@@ -3363,6 +3363,26 @@
       "statusCollecting": "samlar in",
       "statusNotStarted": "ej påbörjad",
       "planned": "Planerat:"
+    },
+    "invoice": {
+      "title": "Faktura",
+      "from": "Från",
+      "billedTo": "Faktureras till",
+      "invoiceNumber": "Fakturanr.",
+      "issueDate": "Datum",
+      "period": "Faktureringsperiod",
+      "description": "Beskrivning",
+      "servicesLine": "Plattformsabonnemang och tillägg",
+      "amount": "Belopp",
+      "subtotal": "Delsumma",
+      "total": "Totalt",
+      "statusPaid": "Betald",
+      "statusDue": "Förfaller",
+      "vatId": "Moms-/skattenummer",
+      "download": "Ladda ner / Skriv ut",
+      "thankYou": "Tack för ditt förtroende.",
+      "notFound": "Fakturan kunde inte hittas.",
+      "back": "Tillbaka till Fakturering"
     }
   },
   "impersonation": {

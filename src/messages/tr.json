@@ -3363,6 +3363,26 @@
       "statusCollecting": "toplanıyor",
       "statusNotStarted": "başlamadı",
       "planned": "Planlanan:"
+    },
+    "invoice": {
+      "title": "Fatura",
+      "from": "Gönderen",
+      "billedTo": "Fatura adresi",
+      "invoiceNumber": "Fatura no.",
+      "issueDate": "Tarih",
+      "period": "Faturalandırma dönemi",
+      "description": "Açıklama",
+      "servicesLine": "Platform aboneliği ve ek hizmetler",
+      "amount": "Tutar",
+      "subtotal": "Ara toplam",
+      "total": "Toplam",
+      "statusPaid": "Ödendi",
+      "statusDue": "Ödenecek",
+      "vatId": "KDV / Vergi No",
+      "download": "İndir / Yazdır",
+      "thankYou": "İş birliğiniz için teşekkür ederiz.",
+      "notFound": "Fatura bulunamadı.",
+      "back": "Faturalandırmaya dön"
     }
   },
   "impersonation": {

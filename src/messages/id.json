@@ -3363,6 +3363,26 @@
       "statusCollecting": "mengumpulkan",
       "statusNotStarted": "belum dimulai",
       "planned": "Direncanakan:"
+    },
+    "invoice": {
+      "title": "Faktur",
+      "from": "Dari",
+      "billedTo": "Ditagihkan kepada",
+      "invoiceNumber": "No. faktur",
+      "issueDate": "Tanggal",
+      "period": "Periode penagihan",
+      "description": "Deskripsi",
+      "servicesLine": "Langganan platform & pengaya",
+      "amount": "Jumlah",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "statusPaid": "Lunas",
+      "statusDue": "Jatuh tempo",
+      "vatId": "NPWP / ID Pajak",
+      "download": "Unduh / Cetak",
+      "thankYou": "Terima kasih atas kepercayaan Anda.",
+      "notFound": "Faktur tidak ditemukan.",
+      "back": "Kembali ke Penagihan"
     }
   },
   "impersonation": {

@@ -3363,6 +3363,26 @@
       "statusCollecting": "収集中",
       "statusNotStarted": "未開始",
       "planned": "予定："
+    },
+    "invoice": {
+      "title": "請求書",
+      "from": "請求元",
+      "billedTo": "請求先",
+      "invoiceNumber": "請求書番号",
+      "issueDate": "日付",
+      "period": "請求期間",
+      "description": "内容",
+      "servicesLine": "プラットフォーム利用料 & アドオン",
+      "amount": "金額",
+      "subtotal": "小計",
+      "total": "合計",
+      "statusPaid": "支払済み",
+      "statusDue": "未払い",
+      "vatId": "VAT / 税務ID",
+      "download": "ダウンロード / 印刷",
+      "thankYou": "ご利用いただきありがとうございます。",
+      "notFound": "請求書が見つかりません。",
+      "back": "請求情報に戻る"
     }
   },
   "impersonation": {
