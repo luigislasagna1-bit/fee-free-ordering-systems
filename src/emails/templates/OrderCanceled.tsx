@@ -5,10 +5,12 @@
  * canceling (rare), the customer canceling, or the auto-cancel from a
  * Stripe dispute. Refund treatment same as rejection.
  */
-import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
+import type { Translator } from "@/lib/i18n-dict";
+import { EmailLayout, EmailHeader, EmailFooter, COLORS } from "../components/EmailLayout";
 import { EmailBody, P, InfoCard, Badge } from "../components/EmailParts";
 
 export type OrderCanceledProps = {
+  t: Translator;
   customerName: string;
   orderNumber: string;
   restaurantName: string;
@@ -21,32 +23,35 @@ export type OrderCanceledProps = {
 };
 
 export default function OrderCanceled(props: OrderCanceledProps) {
-  const { customerName, orderNumber, restaurantName, reason, paidOnline,
+  const { t, customerName, orderNumber, restaurantName, reason, paidOnline,
     imprint, restaurantUrl, restaurantEmail, restaurantPhone } = props;
   return (
-    <EmailLayout preview={`Order #${orderNumber} canceled`}>
+    <EmailLayout preview={t("email.orderCanceled.preview", { orderNumber })}>
       <EmailHeader
         variant="transactional"
-        title="Order canceled"
-        subtitle={`Order #${orderNumber}`}
+        title={t("email.orderCanceled.title")}
+        subtitle={t("email.orderCanceled.subtitle", { orderNumber })}
       />
       <EmailBody>
-        <P>Hello {customerName},</P>
+        <P>{t("email.orderCanceled.greeting", { customerName })}</P>
         <div style={{ margin: "8px 0 16px" }}>
-          <Badge color="rose">Canceled</Badge>
+          <Badge color="rose">{t("email.orderCanceled.badge")}</Badge>
         </div>
-        <P>Your order at <strong>{restaurantName}</strong> has been canceled.</P>
+        <p
+          style={{ fontSize: 15, lineHeight: 1.55, color: COLORS.text, margin: "0 0 14px" }}
+          dangerouslySetInnerHTML={{ __html: t("email.orderCanceled.body", { restaurantName: `<strong>${restaurantName}</strong>` }) }}
+        />
         {reason && (
-          <InfoCard label="Reason" accent="amber">
+          <InfoCard label={t("email.orderCanceled.reasonLabel")} accent="amber">
             {reason}
           </InfoCard>
         )}
         {paidOnline && (
-          <InfoCard label="Refund" accent="emerald">
-            A refund has been issued for the full amount. It typically takes <strong>5–10 business days</strong> to appear on your statement.
+          <InfoCard label={t("email.orderCanceled.refundLabel")} accent="emerald">
+            <span dangerouslySetInnerHTML={{ __html: t("email.orderCanceled.refundBody") }} />
           </InfoCard>
         )}
-        <P>If you have questions, please contact the restaurant directly using the details below.</P>
+        <P>{t("email.orderCanceled.contactLine")}</P>
       </EmailBody>
       <EmailFooter
         restaurantName={restaurantName}

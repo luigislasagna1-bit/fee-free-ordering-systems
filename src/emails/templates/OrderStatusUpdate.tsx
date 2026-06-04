@@ -13,10 +13,12 @@
  * Visual: status-colored header (emerald for positive, rose for negative),
  * status badge, body copy, optional rejection-reason callout, tracking CTA.
  */
+import type { Translator } from "@/lib/i18n-dict";
 import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
 import { EmailBody, P, EmailButton, Badge, InfoCard } from "../components/EmailParts";
 
 export type OrderStatusUpdateProps = {
+  t: Translator;
   customerName: string;
   orderNumber: string;
   restaurantName: string;
@@ -40,49 +42,56 @@ export type OrderStatusUpdateProps = {
   imprint?: string;
 };
 
-type StatusCopy = {
-  title: string;
-  body: string;
-  badge: string;
+type StatusCopyKeys = {
+  titleKey: string;
+  bodyKey: string;
+  badgeKey: string;
   badgeColor: "emerald" | "amber" | "rose" | "sky";
   isNegative: boolean;
 };
 
-const STATUS_COPY: Record<string, StatusCopy> = {
-  accepted:  {
-    title: "Order confirmed",
-    body: "Great news — the restaurant accepted your order and the kitchen is starting on it now.",
-    badge: "Confirmed", badgeColor: "emerald", isNegative: false,
+const STATUS_COPY_KEYS: Record<string, StatusCopyKeys> = {
+  accepted: {
+    titleKey: "email.orderStatus.acceptedTitle",
+    bodyKey: "email.orderStatus.acceptedBody",
+    badgeKey: "email.orderStatus.acceptedBadge",
+    badgeColor: "emerald", isNegative: false,
   },
   preparing: {
-    title: "Your order is being made",
-    body: "The kitchen is hard at work on your order right now.",
-    badge: "Preparing", badgeColor: "emerald", isNegative: false,
+    titleKey: "email.orderStatus.preparingTitle",
+    bodyKey: "email.orderStatus.preparingBody",
+    badgeKey: "email.orderStatus.preparingBadge",
+    badgeColor: "emerald", isNegative: false,
   },
   ready: {
-    title: "Your order is ready!",
-    body: "Your order is ready. Please pick it up — or it's now out for delivery.",
-    badge: "Ready", badgeColor: "emerald", isNegative: false,
+    titleKey: "email.orderStatus.readyTitle",
+    bodyKey: "email.orderStatus.readyBody",
+    badgeKey: "email.orderStatus.readyBadge",
+    badgeColor: "emerald", isNegative: false,
   },
   completed: {
-    title: "Your order is complete",
-    body: "Thanks for ordering with us. We hope to see you again soon!",
-    badge: "Completed", badgeColor: "emerald", isNegative: false,
+    titleKey: "email.orderStatus.completedTitle",
+    bodyKey: "email.orderStatus.completedBody",
+    badgeKey: "email.orderStatus.completedBadge",
+    badgeColor: "emerald", isNegative: false,
   },
   rejected: {
-    title: "Order not accepted",
-    body: "Unfortunately the restaurant wasn't able to accept your order. If you paid online, any authorization will be released automatically — you won't be charged.",
-    badge: "Not accepted", badgeColor: "rose", isNegative: true,
+    titleKey: "email.orderStatus.rejectedTitle",
+    bodyKey: "email.orderStatus.rejectedBody",
+    badgeKey: "email.orderStatus.rejectedBadge",
+    badgeColor: "rose", isNegative: true,
   },
   cancelled: {
-    title: "Order cancelled",
-    body: "The restaurant cancelled your order. If you paid online, a refund is on its way and should appear on your statement within a few business days.",
-    badge: "Cancelled", badgeColor: "rose", isNegative: true,
+    titleKey: "email.orderStatus.cancelledTitle",
+    bodyKey: "email.orderStatus.cancelledBody",
+    badgeKey: "email.orderStatus.cancelledBadge",
+    badgeColor: "rose", isNegative: true,
   },
 };
 
 export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
   const {
+    t,
     customerName, orderNumber, restaurantName, status, statusMessage, rejectionReason,
     paidOnline, paymentMethod,
     trackingUrl, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
@@ -90,10 +99,12 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
   const normalized = status.toLowerCase();
   // Map "canceled" (US) → "cancelled" (UK) so both spellings hit the same copy.
   const key = normalized === "canceled" ? "cancelled" : normalized;
-  const copy: StatusCopy = STATUS_COPY[key] ?? {
-    title: "Order update", body: statusMessage ?? "Your order status has changed.",
-    badge: status, badgeColor: "sky", isNegative: false,
-  };
+  const copyKeys: StatusCopyKeys | undefined = STATUS_COPY_KEYS[key];
+  const title = copyKeys ? t(copyKeys.titleKey) : t("email.orderStatus.fallbackTitle");
+  const body = copyKeys ? t(copyKeys.bodyKey) : t("email.orderStatus.fallbackBody");
+  const badge = copyKeys ? t(copyKeys.badgeKey) : status;
+  const badgeColor = copyKeys?.badgeColor ?? "sky";
+  const isNegative = copyKeys?.isNegative ?? false;
   const reason = rejectionReason?.trim();
 
   // Refund disclosure shown ONLY on rejected/cancelled emails. Customer's
@@ -105,53 +116,48 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
   const isCardPay = paymentMethod === "card" || paymentMethod === "online_card";
   const isPaypal = paymentMethod === "paypal";
   const isCashIsh = paymentMethod === "cash" || paymentMethod === "card_in_person";
-  const refundCopy = copy.isNegative
+  const refundCopy = isNegative
     ? isCashIsh || paidOnline === false
-      ? "You haven't been charged for this order — no payment was taken, so there's nothing to refund."
+      ? t("email.orderStatus.refundCash")
       : isCardPay
-        ? "Your card was authorized but not charged. The authorization is being released automatically — depending on your bank it may show as a pending charge for a few hours, then disappear. If you were already charged, a full refund will reach your card within 5–10 business days."
+        ? t("email.orderStatus.refundCard")
         : isPaypal
-          ? "Your PayPal authorization is being released automatically. If a charge was already captured, the full amount will be returned to your PayPal balance (or original funding source) within 3–5 business days."
+          ? t("email.orderStatus.refundPaypal")
           : paidOnline === true
-            ? "If you paid online, the full amount is being refunded automatically. Card refunds typically take 5–10 business days; PayPal refunds 3–5 business days."
+            ? t("email.orderStatus.refundGeneric")
             : null
     : null;
 
   return (
-    <EmailLayout preview={`Order #${orderNumber} — ${copy.title}`}>
-      <EmailHeader variant="status" title={copy.title} subtitle={`Order #${orderNumber}`} />
+    <EmailLayout preview={`${t("email.orderStatus.previewPrefix", { orderNumber })} — ${title}`}>
+      <EmailHeader variant="status" title={title} subtitle={`${t("email.orderStatus.orderLabel")} #${orderNumber}`} />
       <EmailBody>
-        <P>Hello {customerName},</P>
+        <P>{t("email.orderStatus.greeting", { customerName })}</P>
         <div style={{ margin: "8px 0 16px" }}>
-          <Badge color={copy.badgeColor}>{copy.badge}</Badge>
+          <Badge color={badgeColor}>{badge}</Badge>
         </div>
-        <P>{statusMessage ?? copy.body}</P>
-        {copy.isNegative && reason && (
-          <InfoCard label="Reason from the restaurant" accent="rose">
+        <P>{statusMessage ?? body}</P>
+        {isNegative && reason && (
+          <InfoCard label={t("email.orderStatus.reasonLabel")} accent="rose">
             {reason}
           </InfoCard>
         )}
         {refundCopy && (
-          <InfoCard label="About your payment" accent="amber">
+          <InfoCard label={t("email.orderStatus.paymentLabel")} accent="amber">
             {refundCopy}
           </InfoCard>
         )}
-        {copy.isNegative && restaurantPhone && (
+        {isNegative && restaurantPhone && (
           // Lifted from the footer onto a prominent body line on
           // negative-status emails (rejected / cancelled). A customer
           // whose order was just turned down or cancelled is most
           // likely to want to call the restaurant — making them scroll
           // past the refund disclosure to find the number was a fair
           // gripe from Fabrizio (2026-06-01).
-          <P>
-            Questions or need help? Call <strong>{restaurantName}</strong>:{" "}
-            <a href={`tel:${restaurantPhone.replace(/[^0-9+]/g, "")}`} style={{ color: "#047857", fontWeight: 600, textDecoration: "none" }}>
-              {restaurantPhone}
-            </a>
-          </P>
+          <P>{t("email.orderStatus.callUs", { restaurantName, phone: restaurantPhone })}</P>
         )}
-        {!copy.isNegative && (
-          <EmailButton href={trackingUrl}>View order status</EmailButton>
+        {!isNegative && (
+          <EmailButton href={trackingUrl}>{t("email.orderStatus.trackingCta")}</EmailButton>
         )}
       </EmailBody>
       <EmailFooter

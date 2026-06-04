@@ -14,10 +14,12 @@
  * with scheduledFor in the next 15±2 minute window. (TODO: wire when
  * we ship scheduled ordering — for now the template is ready.)
  */
+import type { Translator } from "@/lib/i18n-dict";
 import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
 import { EmailBody, P, InfoCard, Badge } from "../components/EmailParts";
 
 export type ScheduledOrderReminderProps = {
+  t: Translator;
   customerName: string;
   orderNumber: string;
   restaurantName: string;
@@ -33,42 +35,45 @@ export type ScheduledOrderReminderProps = {
 
 export default function ScheduledOrderReminder(props: ScheduledOrderReminderProps) {
   const {
-    customerName, orderNumber, restaurantName, scheduledWindow, orderType,
+    t, customerName, orderNumber, restaurantName, scheduledWindow, orderType,
     deliveryAddress, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
   } = props;
   const isDelivery = orderType === "delivery";
 
   return (
-    <EmailLayout preview={`Friendly reminder — your order #${orderNumber} is on the way`}>
+    <EmailLayout preview={t("email.scheduledReminder.preview", { orderNumber })}>
       <EmailHeader
         variant="status"
-        title="Friendly reminder"
+        title={t("email.scheduledReminder.headerTitle")}
         subtitle={`Order #${orderNumber}`}
       />
       <EmailBody>
-        <P>Hello {customerName},</P>
+        <P>{t("email.scheduledReminder.greeting", { customerName })}</P>
         <P>
-          Your scheduled order for <strong>{scheduledWindow}</strong> is{" "}
-          {isDelivery ? "on its way" : "almost ready for pickup"}.
+          {t("email.scheduledReminder.bodyPre")}{" "}
+          <strong>{scheduledWindow}</strong>{" "}
+          {isDelivery
+            ? t("email.scheduledReminder.bodyDeliveryPost")
+            : t("email.scheduledReminder.bodyPickupPost")}
         </P>
 
         <div style={{ margin: "8px 0 16px" }}>
-          <Badge color="emerald">{isDelivery ? "Delivery" : "Pickup"}</Badge>{" "}
-          <Badge color="amber">Scheduled</Badge>
+          <Badge color="emerald">{isDelivery ? t("email.scheduledReminder.badgeDelivery") : t("email.scheduledReminder.badgePickup")}</Badge>{" "}
+          <Badge color="amber">{t("email.scheduledReminder.badgeScheduled")}</Badge>
         </div>
 
         {isDelivery && deliveryAddress && (
-          <InfoCard label="Your delivery address" accent="emerald">
+          <InfoCard label={t("email.scheduledReminder.deliveryAddressLabel")} accent="emerald">
             {deliveryAddress}
           </InfoCard>
         )}
 
-        <P>{isDelivery ? "Please be there when we deliver." : "Please be on time to pick up your order."}</P>
+        <P>{isDelivery ? t("email.scheduledReminder.readyDelivery") : t("email.scheduledReminder.readyPickup")}</P>
 
-        <P>Enjoy, {customerName.split(" ")[0]}!</P>
+        <P>{t("email.scheduledReminder.enjoy", { firstName: customerName.split(" ")[0] })}</P>
 
         <P size="sm" muted>
-          If you are a first-time customer you may receive a phone call to verify your details.
+          {t("email.scheduledReminder.firstTimeNotice")}
         </P>
       </EmailBody>
       <EmailFooter

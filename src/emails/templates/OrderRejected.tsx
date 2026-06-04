@@ -7,10 +7,12 @@
  *
  * Visual: amber/slate header (not emerald — this is not a happy email).
  */
+import type { Translator } from "@/lib/i18n-dict";
 import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
 import { EmailBody, P, InfoCard, Badge } from "../components/EmailParts";
 
 export type OrderRejectedProps = {
+  t: Translator;
   customerName: string;
   orderNumber: string;
   restaurantName: string;
@@ -29,48 +31,54 @@ export type OrderRejectedProps = {
 };
 
 export default function OrderRejected(props: OrderRejectedProps) {
-  const { customerName, orderNumber, restaurantName, reason, paidOnline, paymentCaptured,
+  const { t, customerName, orderNumber, restaurantName, reason, paidOnline, paymentCaptured,
     restaurantUrl, restaurantEmail, restaurantPhone, imprint } = props;
   return (
-    <EmailLayout preview={`Order #${orderNumber} could not be accepted`}>
+    <EmailLayout preview={t("email.orderRejected.preview", { orderNumber })}>
       <EmailHeader
         variant="transactional"
-        title="Order not accepted"
-        subtitle={`Order #${orderNumber}`}
+        title={t("email.orderRejected.title")}
+        subtitle={t("email.orderRejected.subtitle", { orderNumber })}
       />
       <EmailBody>
-        <P>Hello {customerName},</P>
+        <P>{t("email.orderRejected.greeting", { customerName })}</P>
         <div style={{ margin: "8px 0 16px" }}>
-          <Badge color="rose">Rejected</Badge>
+          <Badge color="rose">{t("email.orderRejected.badgeRejected")}</Badge>
         </div>
-        <P>
-          We&apos;re sorry — <strong>{restaurantName}</strong> wasn&apos;t able to accept your order this time.
-        </P>
+        <P>{t("email.orderRejected.sorryLine", { restaurantName })}</P>
         {reason && (
-          <InfoCard label="Reason given by the restaurant" accent="amber">
+          <InfoCard label={t("email.orderRejected.reasonLabel")} accent="amber">
             {reason}
           </InfoCard>
         )}
         {paidOnline && (
           paymentCaptured ? (
-            <InfoCard label="Refund" accent="emerald">
-              Your payment will be automatically refunded to the card you used. It typically takes <strong>5–10 business days</strong> to appear on your statement.
+            <InfoCard label={t("email.orderRejected.refundLabel")} accent="emerald">
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: t("email.orderRejected.refundBody", { days: "<strong>5–10 business days</strong>" }),
+                }}
+              />
             </InfoCard>
           ) : (
-            <InfoCard label="Payment" accent="emerald">
-              <strong>Your card was not charged.</strong> The authorization hold on your card will drop off automatically within a few business days.
+            <InfoCard label={t("email.orderRejected.paymentLabel")} accent="emerald">
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: t("email.orderRejected.notChargedBody"),
+                }}
+              />
             </InfoCard>
           )
         )}
         {restaurantPhone && (
           <P>
-            Questions? Call the restaurant directly:{" "}
+            {t("email.orderRejected.questionsLine")}{" "}
             <a href={`tel:${restaurantPhone.replace(/[^0-9+]/g, "")}`} style={{ color: "#047857", fontWeight: 600 }}>
               {restaurantPhone}
             </a>
           </P>
         )}
-        <P>We&apos;re sorry for the inconvenience. Try ordering again later, or reach out to the restaurant if you have questions.</P>
+        <P>{t("email.orderRejected.closingLine")}</P>
       </EmailBody>
       <EmailFooter
         restaurantName={restaurantName}

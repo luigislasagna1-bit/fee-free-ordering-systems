@@ -266,6 +266,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
   const subject = t("email.orderConfirmed.subject", { orderNumber: params.orderNumber });
   const html = await renderEmail(
     OrderConfirmation({
+      t,
       customerName: params.customerName,
       orderNumber: params.orderNumber,
       restaurantName: params.restaurantName,
@@ -386,6 +387,7 @@ export async function sendOrderStatusUpdateEmail(params: {
   const subject = t("email.orderStatus.subject", { orderNumber: params.orderNumber });
   const html = await renderEmail(
     OrderStatusUpdate({
+      t,
       customerName: params.customerName,
       orderNumber: params.orderNumber,
       restaurantName: params.restaurantName,
@@ -430,11 +432,11 @@ export async function sendOrderDelayedEmail(params: {
   restaurantUrl?: string | null;
   locale?: string;
 }) {
-  // Subject line lives inline rather than in the dict because this is
-  // a brand-new event and translations would land later anyway.
-  const subject = `Order #${params.orderNumber} — running about ${params.delayMinutes} min behind`;
+  const t = await getDict(params.locale);
+  const subject = t("email.orderDelayed.subject", { orderNumber: params.orderNumber, delayMinutes: params.delayMinutes });
   const html = await renderEmail(
     OrderDelayed({
+      t,
       customerName: params.customerName,
       orderNumber: params.orderNumber,
       restaurantName: params.restaurantName,
@@ -476,6 +478,7 @@ export async function sendOrderRejectedEmail(params: {
   const t = await getDict(params.locale);
   const html = await renderEmail(
     OrderRejected({
+      t,
       customerName: params.customerName,
       orderNumber: params.orderNumber,
       restaurantName: params.restaurantName,
@@ -510,6 +513,7 @@ export async function sendOrderCanceledEmail(params: {
   const t = await getDict(params.locale);
   const html = await renderEmail(
     OrderCanceled({
+      t,
       customerName: params.customerName,
       orderNumber: params.orderNumber,
       restaurantName: params.restaurantName,
@@ -545,6 +549,7 @@ export async function sendReservationConfirmation(params: {
   const t = await getDict(params.locale);
   const html = await renderEmail(
     ReservationConfirmation({
+      t,
       customerName: params.customerName,
       reservationNumber: params.confirmationCode,
       restaurantName: params.restaurantName,
@@ -1063,8 +1068,10 @@ export async function sendScheduledOrderReminderEmail(params: {
   restaurantPhone?: string;
   locale?: string;
 }) {
+  const t = await getDict(params.locale);
   const html = await renderEmail(
     ScheduledOrderReminder({
+      t,
       customerName: params.customerName,
       orderNumber: params.orderNumber,
       restaurantName: params.restaurantName,
@@ -1079,7 +1086,7 @@ export async function sendScheduledOrderReminderEmail(params: {
   );
   return send({
     to: params.to,
-    subject: `Friendly reminder — your order #${params.orderNumber} is on the way`,
+    subject: t("email.scheduledReminder.subject", { orderNumber: params.orderNumber }),
     html,
   });
 }

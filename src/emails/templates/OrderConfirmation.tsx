@@ -24,6 +24,7 @@ import {
   OrderItemsTable, OrderTotals, EmailOrderItem,
 } from "../components/EmailParts";
 import { EmailFooter } from "../components/EmailLayout";
+import type { Translator } from "@/lib/i18n-dict";
 
 export type OrderConfirmationProps = {
   customerName: string;
@@ -59,14 +60,7 @@ export type OrderConfirmationProps = {
     discount: number;
     couponCode?: string;
   }>;
-};
-
-const ORDER_TYPE_LABEL: Record<string, string> = {
-  delivery: "Delivery",
-  pickup: "Pickup",
-  dine_in: "Dine-In",
-  takeout: "Pickup",
-  curbside: "Curbside",
+  t: Translator;
 };
 
 export default function OrderConfirmation(props: OrderConfirmationProps) {
@@ -75,7 +69,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
     estimatedMinutes, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
     discount, total, deliveryAddress, trackingUrl, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, currency,
-    appliedPromos,
+    appliedPromos, t,
   } = props;
   const cur = currency ?? "usd";
   const promoList = Array.isArray(appliedPromos) ? appliedPromos : [];
@@ -83,41 +77,52 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
   // one fired) so the totals block can render "Delivery fee: ~~$7.99~~ FREE".
   const freeDelivery = promoList.find((p) => p.type === "free_delivery");
   const savedDeliveryFee = freeDelivery ? freeDelivery.discount : 0;
+
+  const ORDER_TYPE_LABEL: Record<string, string> = {
+    delivery: t("email.orderConfirmed.orderTypeDelivery"),
+    pickup: t("email.orderConfirmed.orderTypePickup"),
+    dine_in: t("email.orderConfirmed.orderTypeDineIn"),
+    takeout: t("email.orderConfirmed.orderTypePickup"),
+    curbside: t("email.orderConfirmed.orderTypeCurbside"),
+  };
+
   const orderTypeLabel = ORDER_TYPE_LABEL[orderType] ?? orderType;
-  const timeLabel = orderType === "delivery" ? "Estimated delivery" : "Estimated ready";
+  const timeLabel = orderType === "delivery"
+    ? t("email.orderConfirmed.timeLabelDelivery")
+    : t("email.orderConfirmed.timeLabelReady");
 
   return (
-    <EmailLayout preview={`Order #${orderNumber} received — awaiting restaurant confirmation`}>
+    <EmailLayout preview={t("email.orderConfirmed.preview", { orderNumber })}>
       <EmailHeader
         variant="status"
-        title="Order received"
-        subtitle="Awaiting restaurant confirmation"
+        title={t("email.orderConfirmed.headerTitle")}
+        subtitle={t("email.orderConfirmed.headerSubtitle")}
       />
       <EmailBody>
-        <P>Hello {customerName},</P>
+        <P>{t("email.orderConfirmed.greeting", { customerName })}</P>
         <P>
-          Thanks for your order at <strong>{restaurantName}</strong>! We&apos;ve
-          received order <strong>#{orderNumber}</strong> and the restaurant
-          will confirm it shortly. You&apos;ll get a follow-up email the moment
-          they accept &mdash; with the final {timeLabel.toLowerCase()} time
-          (currently estimated at <strong>{estimatedMinutes} min</strong>).
+          {t("email.orderConfirmed.bodyThanks", { restaurantName })}{" "}
+          {t("email.orderConfirmed.bodyReceived", { orderNumber })}{" "}
+          {t("email.orderConfirmed.bodyFollowUp", { timeLabel: timeLabel.toLowerCase(), estimatedMinutes })}
         </P>
 
         <div style={{ margin: "8px 0 16px" }}>
           <Badge color="emerald">{orderTypeLabel}</Badge>{" "}
           <Badge color={paidOnline ? "sky" : "amber"}>
-            {paidOnline ? "Paid online" : "Pay at store"}
+            {paidOnline
+              ? t("email.orderConfirmed.badgePaidOnline")
+              : t("email.orderConfirmed.badgePayAtStore")}
           </Badge>
         </div>
 
         {orderType === "delivery" && deliveryAddress && (
-          <InfoCard label="Your delivery address" accent="emerald">
+          <InfoCard label={t("email.orderConfirmed.deliveryAddressLabel")} accent="emerald">
             {deliveryAddress}
           </InfoCard>
         )}
 
         <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", color: "#6b7280", marginTop: 20, marginBottom: 4 }}>
-          Your order details
+          {t("email.orderConfirmed.orderDetailsSectionHeading")}
         </div>
         <OrderItemsTable items={items} currency={currency ?? "usd"} />
 
@@ -142,7 +147,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
                 marginBottom: 8,
               }}
             >
-              🎉 Promos applied
+              {t("email.orderConfirmed.promosAppliedHeading")}
             </div>
             {promoList.map((p, i) => (
               <div
@@ -175,7 +180,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
                   )}
                 </span>
                 <span style={{ color: "#065f46", fontWeight: 700 }}>
-                  {p.discount > 0 ? `− ${formatCurrency(p.discount, cur)}` : "FREE"}
+                  {p.discount > 0 ? `− ${formatCurrency(p.discount, cur)}` : t("email.orderConfirmed.promoFreeLabel")}
                 </span>
               </div>
             ))}
@@ -194,10 +199,10 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           currency={currency ?? "usd"}
         />
 
-        <EmailButton href={trackingUrl}>Track your order</EmailButton>
+        <EmailButton href={trackingUrl}>{t("email.orderConfirmed.trackOrderButton")}</EmailButton>
 
         <P size="sm" muted>
-          If you have any questions about your order, please contact the restaurant directly using the details below.
+          {t("email.orderConfirmed.contactRestaurantNote")}
         </P>
       </EmailBody>
       <EmailFooter

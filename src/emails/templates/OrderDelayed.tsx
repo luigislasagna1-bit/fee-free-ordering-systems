@@ -13,10 +13,12 @@
  * Tone: apologetic but not panicky. The customer paid; they're allowed
  * to know things are slipping.
  */
+import type { Translator } from "@/lib/i18n-dict";
 import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
 import { EmailBody, P, EmailButton, InfoCard } from "../components/EmailParts";
 
 export type OrderDelayedProps = {
+  t: Translator;
   customerName: string;
   orderNumber: string;
   restaurantName: string;
@@ -36,6 +38,7 @@ export type OrderDelayedProps = {
 
 export default function OrderDelayed(props: OrderDelayedProps) {
   const {
+    t,
     customerName, orderNumber, restaurantName, newEstimatedReady, delayMinutes, reason,
     trackingUrl, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
   } = props;
@@ -45,30 +48,31 @@ export default function OrderDelayed(props: OrderDelayedProps) {
     minute: "2-digit",
   });
 
+  const minutesWord = delayMinutes === 1
+    ? t("email.orderDelayed.minuteSingular")
+    : t("email.orderDelayed.minutePlural");
+
   return (
-    <EmailLayout preview={`Order #${orderNumber} — running about ${delayMinutes} min behind`}>
+    <EmailLayout preview={t("email.orderDelayed.preview", { orderNumber, delayMinutes })}>
       <EmailHeader
         variant="status"
-        title="Your order is running a bit behind"
-        subtitle={`Order #${orderNumber}`}
+        title={t("email.orderDelayed.title")}
+        subtitle={`#${orderNumber}`}
       />
       <EmailBody>
-        <P>Hello {customerName},</P>
+        <P>{t("email.orderDelayed.greeting", { customerName })}</P>
         <P>
-          {restaurantName} let us know your order is running about{" "}
-          <strong>{delayMinutes} {delayMinutes === 1 ? "minute" : "minutes"}</strong>{" "}
-          behind schedule. The new estimated ready time is{" "}
-          <strong>{etaLabel}</strong>.
+          {t("email.orderDelayed.delayBody", { restaurantName, delayMinutes, minutesWord, etaLabel })}
         </P>
         {reason && (
-          <InfoCard label="Note from the restaurant" accent="amber">
+          <InfoCard label={t("email.orderDelayed.noteLabel")} accent="amber">
             {reason}
           </InfoCard>
         )}
         <P>
-          Thanks for your patience — we&apos;ll let you know the moment it&apos;s ready.
+          {t("email.orderDelayed.patience")}
         </P>
-        <EmailButton href={trackingUrl}>View order status</EmailButton>
+        <EmailButton href={trackingUrl}>{t("email.orderDelayed.cta")}</EmailButton>
       </EmailBody>
       <EmailFooter
         restaurantName={restaurantName}
