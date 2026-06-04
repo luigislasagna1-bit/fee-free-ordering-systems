@@ -75,6 +75,7 @@ export async function GET(
         select: {
           name: true, phone: true, email: true,
           address: true, city: true, state: true, zip: true, currency: true,
+          timezone: true,
         },
       },
     },
@@ -103,6 +104,7 @@ export async function GET(
     phone: order.restaurant.phone,
     email: order.restaurant.email,
     currency: order.restaurant.currency,
+    timezone: order.restaurant.timezone,
   };
 
   const receiptOrder: ReceiptOrder = {

@@ -541,6 +541,10 @@ export interface ReceiptRestaurant {
   email?: string | null;
   /** ISO 4217 currency code. Drives money formatting on the receipt. */
   currency?: string | null;
+  /** IANA timezone (e.g. "Europe/Rome"). Drives the printed order time so it
+   *  reads in the restaurant's local clock, not the server's UTC. Optional —
+   *  falls back to the runtime default when absent (legacy behaviour). */
+  timezone?: string | null;
 }
 
 // ── Format helpers ────────────────────────────────────────────────────────────
@@ -551,15 +555,38 @@ export interface ReceiptRestaurant {
 let activeReceiptCurrency = "usd";
 function fmt(n: number) { return formatCurrency(n, activeReceiptCurrency); }
 
+// Module-scoped active timezone for the receipt being built. Set at the top of
+// each public builder from the restaurant's timezone. WHY this matters: order
+// timestamps are stored in UTC and Node on Vercel runs in UTC, so without an
+// explicit timeZone the printed time was the SERVER's UTC clock — a Rome
+// restaurant's 20:00 order printed as 18:00/19:00. Passing the restaurant's
+// IANA timezone fixes the printed time to the restaurant's local clock.
+//
+// DELIBERATELY locale-FROZEN to "en-US": thermal printers render a limited
+// code page (CP437) and text() only ASCII-sanitizes a fixed set of glyphs.
+// A localized month/day-period ("févr.", "1月", Arabic AM/PM) would print as
+// garbage. en-US keeps output pure ASCII ("Jan", "3:45 PM") on every printer.
+// This changes ONLY the date STRING content — the ESC/POS byte pipeline (the
+// locked GOLDEN path) is untouched. Defaults to undefined → runtime default
+// (legacy behaviour) when a caller hasn't threaded a timezone through.
+let activeReceiptTimezone: string | undefined = undefined;
+
 function fmtTime(d: string | Date | null | undefined) {
   if (!d) return "";
-  return new Date(d).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+  return new Date(d).toLocaleTimeString("en-US", {
+    hour: "numeric", minute: "2-digit", hour12: true,
+    ...(activeReceiptTimezone ? { timeZone: activeReceiptTimezone } : {}),
+  });
 }
 
 function fmtDateTime(d: string | Date | null | undefined) {
   if (!d) return "";
   const dt = new Date(d);
-  return dt.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + " " + fmtTime(dt);
+  const date = dt.toLocaleDateString("en-US", {
+    month: "short", day: "numeric",
+    ...(activeReceiptTimezone ? { timeZone: activeReceiptTimezone } : {}),
+  });
+  return date + " " + fmtTime(dt);
 }
 
 // ── Kitchen section renderer ──────────────────────────────────────────────────
@@ -938,6 +965,7 @@ export async function buildKitchenReceiptFromConfig(
 ): Promise<Buffer> {
   console.log(`[receipt] Kitchen print — lang=${lang} paper=${paperWidth} locale=${locale} sections=${config.sections.filter(s => s.enabled).length}`);
   activeReceiptCurrency = restaurant.currency ?? "usd";
+  activeReceiptTimezone = restaurant.timezone ?? undefined;
   const r = new EscPos(paperWidth, lang);
   const t = await getDict(locale);
   r.init();
@@ -956,6 +984,7 @@ export async function buildCustomerReceiptFromConfig(
 ): Promise<Buffer> {
   console.log(`[receipt] Customer print — lang=${lang} paper=${paperWidth} locale=${locale} sections=${config.sections.filter(s => s.enabled).length}`);
   activeReceiptCurrency = restaurant.currency ?? "usd";
+  activeReceiptTimezone = restaurant.timezone ?? undefined;
   const r = new EscPos(paperWidth, lang);
   const t = await getDict(locale);
   r.init();
@@ -984,6 +1013,9 @@ export interface ReservationReceiptData {
   createdAt: Date;
   /** ISO 4217 currency code for money on the reservation receipt. */
   currency?: string | null;
+  /** IANA timezone for the printed "printed at" time. Optional — falls back to
+   *  the runtime default when absent. */
+  timezone?: string | null;
 }
 
 export async function buildReservationReceipt(
@@ -993,6 +1025,7 @@ export async function buildReservationReceipt(
   locale: string = "en",
 ): Promise<Buffer> {
   activeReceiptCurrency = data.currency ?? "usd";
+  activeReceiptTimezone = data.timezone ?? undefined;
   const r = new EscPos(paperWidth, lang);
   const t = await getDict(locale);
   r.init();
@@ -1004,7 +1037,7 @@ export async function buildReservationReceipt(
 
   r.left().bold(true).line(`#${data.confirmationCode}`).bold(false);
   r.line(`${t("receipt.reservation.status")}: ${data.status.toUpperCase()}`);
-  r.line(`${t("receipt.reservation.printed")}: ${data.createdAt.toLocaleString()}`);
+  r.line(`${t("receipt.reservation.printed")}: ${fmtDateTime(data.createdAt)}`);
   r.divider("-");
 
   r.bold(true).line(t("receipt.reservation.guest")).bold(false);

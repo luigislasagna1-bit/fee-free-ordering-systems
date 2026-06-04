@@ -54,7 +54,7 @@ export async function GET(
     where: { id, restaurantId },
     include: {
       table: { select: { name: true } },
-      restaurant: { select: { name: true, defaultLanguage: true, currency: true } },
+      restaurant: { select: { name: true, defaultLanguage: true, currency: true, timezone: true } },
     },
   });
 
@@ -79,6 +79,7 @@ export async function GET(
     status: reservation.status,
     createdAt: new Date(),
     currency: reservation.restaurant.currency,
+    timezone: reservation.restaurant.timezone,
   };
   const locale = reservation.restaurant.defaultLanguage || "en";
 

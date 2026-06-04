@@ -173,14 +173,27 @@ function blankLines(r: LinesBuilder, px: number) {
 let activeCurrency = "usd";
 function fmt(n: number) { return formatCurrency(n, activeCurrency); }
 
+// Module-scoped active timezone, set at the top of each builder from the
+// restaurant's timezone. Order timestamps are UTC and the server runs in UTC,
+// so without an explicit timeZone these previewed/printed times showed the
+// server clock, not the restaurant's. Defaults to undefined → runtime default
+// (legacy behaviour) when a caller hasn't threaded a timezone through. Unlike
+// the thermal builder this path renders to HTML (no code-page limit), so the
+// locale is free to localize too — but we change only the timezone here to
+// keep parity with the thermal receipt's frozen-locale behaviour.
+let activeTimezone: string | undefined = undefined;
+
 function fmtDateTime(d: Date | string): string {
   const dt = typeof d === "string" ? new Date(d) : d;
-  return dt.toLocaleString();
+  return dt.toLocaleString(undefined, activeTimezone ? { timeZone: activeTimezone } : undefined);
 }
 
 function fmtTime(d: Date | string): string {
   const dt = typeof d === "string" ? new Date(d) : d;
-  return dt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  return dt.toLocaleTimeString([], {
+    hour: "2-digit", minute: "2-digit",
+    ...(activeTimezone ? { timeZone: activeTimezone } : {}),
+  });
 }
 
 function tOrderTypeUpper(type: string, t: Translator): string {
@@ -529,6 +542,7 @@ export async function buildKitchenReceiptLines(
   locale: string = "en",
 ): Promise<ReceiptLine[]> {
   activeCurrency = restaurant.currency ?? "usd";
+  activeTimezone = restaurant.timezone ?? undefined;
   const r = new LinesBuilder(paperWidth);
   const t = await getDict(locale);
   renderSections(r, config, order, restaurant, t);
@@ -545,6 +559,7 @@ export async function buildCustomerReceiptLines(
   locale: string = "en",
 ): Promise<ReceiptLine[]> {
   activeCurrency = restaurant.currency ?? "usd";
+  activeTimezone = restaurant.timezone ?? undefined;
   const r = new LinesBuilder(paperWidth);
   const t = await getDict(locale);
   renderSections(r, config, order, restaurant, t);
@@ -569,6 +584,7 @@ export async function buildReservationReceiptLines(
   locale: string = "en",
 ): Promise<ReceiptLine[]> {
   activeCurrency = data.currency ?? "usd";
+  activeTimezone = data.timezone ?? undefined;
   const r = new LinesBuilder(paperWidth);
   const t = await getDict(locale);
 
@@ -579,7 +595,7 @@ export async function buildReservationReceiptLines(
 
   r.left().bold(true).line(`#${data.confirmationCode}`).bold(false);
   r.line(`${t("receipt.reservation.status")}: ${data.status.toUpperCase()}`);
-  r.line(`${t("receipt.reservation.printed")}: ${data.createdAt.toLocaleString()}`);
+  r.line(`${t("receipt.reservation.printed")}: ${fmtDateTime(data.createdAt)}`);
   r.divider("-");
 
   r.bold(true).line(t("receipt.reservation.guest")).bold(false);
