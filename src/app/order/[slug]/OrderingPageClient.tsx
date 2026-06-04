@@ -2205,8 +2205,11 @@ export function OrderingPageClient({
                 // icon-only (Sign in, Restaurant Info) per Luigi's
                 // explicit ask. Desktop keeps the longer
                 // "Table Reservation" label it already used.
-                <button
-                  onClick={() => setReservationOpen(true)}
+                // Book a Table opens the DEDICATED reservation screen
+                // (separate from the takeout/delivery ordering flow), per
+                // report cmpxeacks — not an overlay modal on the order page.
+                <a
+                  href={`/order/${restaurant.slug}/reservation`}
                   className="flex items-center gap-1.5 sm:gap-2 text-sm sm:text-sm font-bold px-4 sm:px-4 py-2.5 sm:py-2.5 rounded-full text-white transition hover:opacity-90 shadow-md ring-1 ring-white/10"
                   style={{ backgroundColor: theme.primaryColor }}
                   title={t("tableReservation")}
@@ -2214,7 +2217,7 @@ export function OrderingPageClient({
                   <Calendar className="w-[18px] h-[18px] sm:w-4 sm:h-4 flex-shrink-0" />
                   <span className="sm:hidden">{t("bookATable")}</span>
                   <span className="hidden sm:inline">{t("tableReservation")}</span>
-                </button>
+                </a>
               )}
               <a
                 href={infoLink}
