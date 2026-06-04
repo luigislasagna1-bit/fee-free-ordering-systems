@@ -2559,7 +2559,7 @@
       "wixStep5": "Dán mã cài đặt từ trên.",
       "wixStep6": "Name: <em>Fee Free Ordering Widget</em>. Add to: <strong>All pages, load code once</strong>. Place in: <strong>Body — end</strong>.",
       "wixStep7": "Nhấp <strong>Apply</strong>, rồi xuất bản site Wix.",
-      "wixWarn1": "⚠️ KHÔNG dán mã này vào phần tử \"Embed HTML\" trên trang. Wix sandboxes chúng trong iframe và modal đặt hàng sẽ không mở toàn màn hình.",
+      "wixWarn1": "⚠️ <strong>KHÔNG</strong> dán mã này vào phần tử \"Embed HTML\" trên trang. Wix sandboxes chúng trong iframe và modal đặt hàng sẽ không mở toàn màn hình.",
       "wixWarn2": "<strong>Không thấy nút trên site thật?</strong> Nếu bạn bật Wix Chat, nó ngồi ở góc dưới-phải và có thể che nút. Chuyển <em>Button position</em> ở trên sang \"Floating, bottom-left\" (hoặc top-right) và sao chép lại mã. Bạn không cần dán lại vào Wix — chỉ chỉnh sửa đoạn hiện có để thêm <code>data-position=\"bl\"</code>.",
       "squarespaceGuideTitle": "Squarespace — Code Injection",
       "squarespaceStep1": "Trong bảng điều khiển Squarespace, vào <strong>Settings → Developer Tools → Code Injection</strong>.",

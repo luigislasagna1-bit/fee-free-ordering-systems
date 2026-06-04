@@ -2567,7 +2567,7 @@
       "squarespaceStep3": "<strong>저장</strong>을 클릭하세요. 위젯이 모든 페이지에 자동으로 로드됩니다.",
       "wordpressGuideTitle": "WordPress — 푸터 스니펫",
       "wordpressStep1": "<strong>가장 쉬운 방법:</strong> 플러그인 → 새로 추가에서 무료 플러그인 <em>Insert Headers and Footers</em> (또는 <em>WPCode</em>)를 설치하세요.",
-      "wordpressStep2": "플러그인 설정을 여세요. <strong>푸터</strong> / 「&lt;/body&gt; 앞」 박스에 설치 코드를 붙여넣으세요.",
+      "wordpressStep2": "플러그인 설정을 여세요. <strong>푸터</strong> / 「</body> 앞」 박스에 설치 코드를 붙여넣으세요.",
       "wordpressStep3": "변경사항 저장.",
       "wordpressStep4": "<strong>대안 (개발자용):</strong> 테마의 <code>footer.php</code>를 편집하여 <code></body></code> 바로 앞에 스니펫을 붙여넣으세요.",
       "shopifyGuideTitle": "Shopify — 테마 편집",

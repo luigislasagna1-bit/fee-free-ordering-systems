@@ -2890,7 +2890,7 @@
         "timelineAfter": "Po to",
         "timelineAfterBody": "Driver Pool nebėra įtrauktas. Jei nuo jo priklausote, prieš perjungimo datą užsisakykite atskirą Driver Pool priedą ($19.99/mėn.).",
         "timelineUndo": "Atšaukti",
-        "timelineUndoBody": "Galite atšaukti perjungimą bet kada prieš ciklo pabaigą — tiesiog spustelėkite mygtuką Likti mėnesiniame plane, kuris pasirodys po patvirtinimo.",
+        "timelineUndoBody": "Galite atšaukti perjungimą bet kada prieš ciklo pabaigą — tiesiog spustelėkite mygtuką <q>Likti mėnesiniame plane</q>, kuris pasirodys po patvirtinimo.",
         "reminderNote": "<strong>Priminimas:</strong> PAYG pradeda skaičiuoti $3 už rinkos užsakymą nuo perjungimo datos. Tiesioginiai užsakymai (jūsų užsakymų puslapis, valdiklis ar pažymėta mobilioji programa) visada išlieka NEMOKAMI — PAYG apmokestina tik rinkos kanalą.",
         "changedMind": "Pakeitėte nuomonę? <link>Atgal į atsiskaitymą</link>"
       },
@@ -2941,7 +2941,7 @@
       "switch.timelineAfter": "Po to",
       "switch.timelineAfterBody": "Driver Pool nebėra įtrauktas. Jei nuo jo priklausote, prieš perjungimo datą užsisakykite atskirą Driver Pool priedą ($19.99/mėn.).",
       "switch.timelineUndo": "Atšaukti",
-      "switch.timelineUndoBody": "Galite atšaukti perjungimą bet kada prieš ciklo pabaigą — tiesiog spustelėkite mygtuką Likti mėnesiniame plane, kuris pasirodys po patvirtinimo.",
+      "switch.timelineUndoBody": "Galite atšaukti perjungimą bet kada prieš ciklo pabaigą — tiesiog spustelėkite mygtuką <q>Likti mėnesiniame plane</q>, kuris pasirodys po patvirtinimo.",
       "switch.reminderNote": "<strong>Priminimas:</strong> PAYG pradeda skaičiuoti $3 už rinkos užsakymą nuo perjungimo datos. Tiesioginiai užsakymai (jūsų užsakymų puslapis, valdiklis ar pažymėta mobilioji programa) visada išlieka NEMOKAMI — PAYG apmokestina tik rinkos kanalą.",
       "switch.changedMind": "Pakeitėte nuomonę? <link>Atgal į atsiskaitymą</link>"
     },

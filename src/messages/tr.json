@@ -2559,7 +2559,7 @@
       "wixStep5": "Yukarıdaki kurulum kodunu yapıştırın.",
       "wixStep6": "Ad: <em>Fee Free Ordering Widget</em>. Ekle: <strong>Tüm sayfalar, kodu bir kez yükle</strong>. Yerleştir: <strong>Gövde — son</strong>.",
       "wixStep7": "<strong>Uygula</strong>'ya tıklayın, ardından Wix sitenizi yayınlayın.",
-      "wixWarn1": "⚠️ Bu kodu sayfadaki bir \"HTML Gömme\" öğesine yapıştırmayın. Wix bunları iframe'lerde sandbox'a alır ve sipariş modalı tam boyutta açılmaz.",
+      "wixWarn1": "⚠️ Bu kodu sayfadaki bir \"HTML Gömme\" öğesine <strong>yapıştırmayın</strong>. Wix bunları iframe'lerde sandbox'a alır ve sipariş modalı tam boyutta açılmaz.",
       "wixWarn2": "<strong>Canlı sitenizde düğmeyi görmüyor musunuz?</strong> Wix Chat etkinse sağ alt köşeye oturur ve bizim düğmemizi kapatabilir. Yukarıdaki <em>Düğme konumu</em>'nu \"Yüzen, sol alt\" (veya sağ üst) olarak değiştirin ve kodu yeniden kopyalayın. Wix'e yeniden yapıştırmanız gerekmez — yalnızca mevcut snippet'i düzenleyerek <code>data-position=\"bl\"</code> ekleyin.",
       "squarespaceGuideTitle": "Squarespace — Kod Enjeksiyonu",
       "squarespaceStep1": "Squarespace panelinizde <strong>Ayarlar → Geliştirici Araçları → Kod Enjeksiyonu</strong>'na gidin.",

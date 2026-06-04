@@ -2567,7 +2567,7 @@
       "squarespaceStep3": "Kliknite <strong>Sačuvaj</strong>. Widget se automatski učitava na svakoj stranici.",
       "wordpressGuideTitle": "WordPress — Isečak podnožja",
       "wordpressStep1": "<strong>Najlakše:</strong> instalirajte besplatni plugin <em>Insert Headers and Footers</em> (ili <em>WPCode</em>) iz Dodaci → Dodaj novi.",
-      "wordpressStep2": "Otvorite podešavanja plugina. Nalepite instalacioni kod u kutiju <strong>Podnožje</strong> / \"Pre <“/body>\".",
+      "wordpressStep2": "Otvorite podešavanja plugina. Nalepite instalacioni kod u kutiju <strong>Podnožje</strong> / \"Pre </body>\".",
       "wordpressStep3": "Sačuvajte izmene.",
       "wordpressStep4": "<strong>Alternativa (programeri):</strong> uredite <code>footer.php</code> vaše teme i nalepite isečak tik pre <code></body></code>.",
       "shopifyGuideTitle": "Shopify — Uređivanje teme",

@@ -2559,7 +2559,7 @@
       "wixStep5": "Kleebi ülaltoodud paigalduskood.",
       "wixStep6": "Nimi: <em>Fee Free Ordering vidin</em>. Lisa: <strong>Kõikidele lehtedele, laadi kood üks kord</strong>. Paiguta: <strong>Keha — lõpp</strong>.",
       "wixStep7": "Klõpsa <strong>Rakenda</strong>, seejärel avalda oma Wixi sait.",
-      "wixWarn1": "⚠️ Ära kleebi seda koodi lehe „Manusta HTML“ elemendile. Wix isoleerib need iframe'idesse ja tellimismodaal ei avane täisekraanina.",
+      "wixWarn1": "⚠️ <strong>Ära</strong> kleebi seda koodi lehe „Manusta HTML“ elemendile. Wix isoleerib need iframe'idesse ja tellimismodaal ei avane täisekraanina.",
       "wixWarn2": "<strong>Ei näe nuppu oma otsesaidil?</strong> Kui sul on Wix Chat lubatud, asub see alumises paremas nurgas ja võib meie nupu katta. Lülita ülaltoodud <em>Nupu asend</em> väljale „Ujuv, alumine vasak“ (või ülemine parem) ja kopeeri kood uuesti. Wixi ei pea uuesti kleepima — muuda lihtsalt olemasolevat fragmenti, lisades <code>data-position=\"bl\"</code>.",
       "squarespaceGuideTitle": "Squarespace — koodisüst",
       "squarespaceStep1": "Oma Squarespace'i armatuurlaual mine <strong>Seaded → Arendajatööriistad → Koodisüst</strong>.",

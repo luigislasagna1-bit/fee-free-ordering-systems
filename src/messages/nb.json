@@ -2559,7 +2559,7 @@
       "wixStep5": "Lim inn installasjonskoden ovenfor.",
       "wixStep6": "Navn: <em>Fee Free Ordering Widget</em>. Legg til: <strong>Alle sider, last inn kode én gang</strong>. Plasser i: <strong>Bunn av body</strong>.",
       "wixStep7": "Klikk <strong>Bruk</strong>, publiser deretter Wix-nettstedet ditt.",
-      "wixWarn1": "⚠️ IKKE lim inn denne koden i et «Bygg inn HTML»-element på en side. Wix sandboxer disse i iframer og bestillingsmodalen åpnes ikke fullstørrelse.",
+      "wixWarn1": "⚠️ <strong>IKKE</strong> lim inn denne koden i et «Bygg inn HTML»-element på en side. Wix sandboxer disse i iframer og bestillingsmodalen åpnes ikke fullstørrelse.",
       "wixWarn2": "<strong>Ser du ikke knappen på live-nettstedet?</strong> Hvis du har Wix Chat aktivert, sitter den i hjørnet nede til høyre og kan dekke knappen vår. Bytt <em>Knappposisjon</em> ovenfor til «Flytende, nede til venstre» (eller oppe til høyre) og kopier koden på nytt. Du trenger ikke lime inn i Wix igjen — bare rediger eksisterende snutt for å legge til <code>data-position=\"bl\"</code>.",
       "squarespaceGuideTitle": "Squarespace — kodeinjeksjon",
       "squarespaceStep1": "Gå til <strong>Innstillinger → Utviklerverktøy → Kodeinjeksjon</strong> i Squarespace-dashbordet.",

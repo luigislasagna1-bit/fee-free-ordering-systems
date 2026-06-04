@@ -2559,7 +2559,7 @@
       "wixStep5": "Tempel kode instalasi dari atas.",
       "wixStep6": "Name: <em>Fee Free Ordering Widget</em>. Add to: <strong>All pages, load code once</strong>. Place in: <strong>Body — end</strong>.",
       "wixStep7": "Klik <strong>Apply</strong>, lalu publikasikan situs Wix Anda.",
-      "wixWarn1": "⚠️ JANGAN tempel kode ini ke elemen \"Embed HTML\" di halaman. Wix menempatkan elemen tersebut dalam iframe dan modal pemesanan tidak akan terbuka dalam ukuran penuh.",
+      "wixWarn1": "⚠️ <strong>JANGAN</strong> tempel kode ini ke elemen \"Embed HTML\" di halaman. Wix menempatkan elemen tersebut dalam iframe dan modal pemesanan tidak akan terbuka dalam ukuran penuh.",
       "wixWarn2": "<strong>Tombol tidak muncul di situs aktif Anda?</strong> Jika Wix Chat diaktifkan, tombol berada di sudut kanan bawah dan dapat menutupi tombol kami. Ganti <em>Posisi tombol</em> di atas ke \"Mengambang, kiri bawah\" (atau kanan atas) dan salin ulang kode. Anda tidak perlu tempel ulang ke Wix — cukup edit cuplikan yang ada untuk menambahkan <code>data-position=\"bl\"</code>.",
       "squarespaceGuideTitle": "Squarespace — Code Injection",
       "squarespaceStep1": "Di dashboard Squarespace Anda, buka <strong>Settings → Developer Tools → Code Injection</strong>.",
