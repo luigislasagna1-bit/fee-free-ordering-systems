@@ -216,7 +216,8 @@
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
-    "signInTooltip": "Masuk atau buat akun untuk melacak kupon dan riwayat pesanan"
+    "signInTooltip": "Masuk atau buat akun untuk melacak kupon dan riwayat pesanan",
+    "promoUnlockNudge": "Tambah {amount} lagi untuk membuka {name}!"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",

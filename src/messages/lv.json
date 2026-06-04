@@ -216,7 +216,8 @@
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
-    "signInTooltip": "Pierakstieties vai izveidojiet kontu, lai sekotu kuponiem un pasūtījumu vēsturei"
+    "signInTooltip": "Pierakstieties vai izveidojiet kontu, lai sekotu kuponiem un pasūtījumu vēsturei",
+    "promoUnlockNudge": "Pievieno vēl {amount}, lai atbloķētu {name}!"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",

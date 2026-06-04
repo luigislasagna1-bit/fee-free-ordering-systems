@@ -216,7 +216,8 @@
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",
-    "signInTooltip": "Log ind eller opret en konto for at følge kuponer og ordrehistorik"
+    "signInTooltip": "Log ind eller opret en konto for at følge kuponer og ordrehistorik",
+    "promoUnlockNudge": "Tilføj {amount} mere for at låse {name} op!"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",

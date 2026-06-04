@@ -216,7 +216,8 @@
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
-    "signInTooltip": "ログインまたはアカウントを作成してクーポンや注文履歴を管理"
+    "signInTooltip": "ログインまたはアカウントを作成してクーポンや注文履歴を管理",
+    "promoUnlockNudge": "あと{amount}追加で{name}がゲットできます！"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

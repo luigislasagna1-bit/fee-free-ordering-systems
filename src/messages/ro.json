@@ -216,7 +216,8 @@
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
-    "signInTooltip": "Autentifică-te sau creează un cont pentru a urmări cupoanele și istoricul comenzilor"
+    "signInTooltip": "Autentifică-te sau creează un cont pentru a urmări cupoanele și istoricul comenzilor",
+    "promoUnlockNudge": "Adaugă încă {amount} pentru a debloca {name}!"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",

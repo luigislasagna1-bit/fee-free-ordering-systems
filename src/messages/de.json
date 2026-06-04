@@ -216,7 +216,8 @@
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",
-    "signInTooltip": "Anmelden oder Konto erstellen, um Gutscheine und Bestellverlauf zu verfolgen"
+    "signInTooltip": "Anmelden oder Konto erstellen, um Gutscheine und Bestellverlauf zu verfolgen",
+    "promoUnlockNudge": "Noch {amount} mehr und du erhältst {name}!"
   },
   "pizza": {
     "chooseSize": "Größe wählen",

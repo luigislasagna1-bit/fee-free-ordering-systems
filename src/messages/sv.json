@@ -216,7 +216,8 @@
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",
-    "signInTooltip": "Logga in eller skapa ett konto för att spåra kuponger och orderhistorik"
+    "signInTooltip": "Logga in eller skapa ett konto för att spåra kuponger och orderhistorik",
+    "promoUnlockNudge": "Lägg till {amount} till för att låsa upp {name}!"
   },
   "pizza": {
     "chooseSize": "Välj storlek",

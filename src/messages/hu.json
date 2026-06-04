@@ -216,7 +216,8 @@
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
-    "signInTooltip": "Jelentkezzen be vagy hozzon létre fiókot a kuponok és a rendelési előzmények követéséhez"
+    "signInTooltip": "Jelentkezzen be vagy hozzon létre fiókot a kuponok és a rendelési előzmények követéséhez",
+    "promoUnlockNudge": "Adj hozzá még {amount}-t, és feloldod a(z) {name} akciót!"
   },
   "pizza": {
     "chooseSize": "Méret választása",

@@ -216,7 +216,8 @@
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
-    "signInTooltip": "Prisijunkite arba sukurkite paskyrą, kad galėtumėte sekti kuponus ir užsakymų istoriją"
+    "signInTooltip": "Prisijunkite arba sukurkite paskyrą, kad galėtumėte sekti kuponus ir užsakymų istoriją",
+    "promoUnlockNudge": "Pridėkite dar {amount} ir atrakinkite {name}!"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",

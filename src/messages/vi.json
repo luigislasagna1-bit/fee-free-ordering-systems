@@ -216,7 +216,8 @@
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",
-    "signInTooltip": "Đăng nhập hoặc tạo tài khoản để theo dõi phiếu giảm giá và lịch sử đặt hàng"
+    "signInTooltip": "Đăng nhập hoặc tạo tài khoản để theo dõi phiếu giảm giá và lịch sử đặt hàng",
+    "promoUnlockNudge": "Thêm {amount} nữa để mở khóa {name}!"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",

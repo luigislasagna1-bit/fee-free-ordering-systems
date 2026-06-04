@@ -216,7 +216,8 @@
     "followUs": "Síguenos",
     "searchMenu": "Buscar en el menú…",
     "signIn": "Iniciar sesión",
-    "signInTooltip": "Inicia sesión o crea una cuenta para seguir cupones e historial de pedidos"
+    "signInTooltip": "Inicia sesión o crea una cuenta para seguir cupones e historial de pedidos",
+    "promoUnlockNudge": "¡Agrega {amount} más para desbloquear {name}!"
   },
   "pizza": {
     "chooseSize": "Elegir tamaño",

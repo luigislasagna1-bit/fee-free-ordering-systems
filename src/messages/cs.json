@@ -216,7 +216,8 @@
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",
-    "signInTooltip": "Přihlaste se nebo vytvořte účet pro sledování kupónů a historie objednávek"
+    "signInTooltip": "Přihlaste se nebo vytvořte účet pro sledování kupónů a historie objednávek",
+    "promoUnlockNudge": "Přidej ještě {amount} a odemkni {name}!"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",

@@ -216,7 +216,8 @@
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
-    "signInTooltip": "Inicia sessió o crea un compte per fer seguiment de cupons i historial de comandes"
+    "signInTooltip": "Inicia sessió o crea un compte per fer seguiment de cupons i historial de comandes",
+    "promoUnlockNudge": "Afegeix {amount} més per desbloquejar {name}!"
   },
   "pizza": {
     "chooseSize": "Tria la mida",

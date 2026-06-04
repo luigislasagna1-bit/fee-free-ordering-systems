@@ -216,7 +216,8 @@
     },
     "searchMenu": "메뉴 검색…",
     "signIn": "로그인",
-    "signInTooltip": "로그인하거나 계정을 만들어 쿠폰과 주문 내역을 확인하세요"
+    "signInTooltip": "로그인하거나 계정을 만들어 쿠폰과 주문 내역을 확인하세요",
+    "promoUnlockNudge": "{amount} 더 추가하면 {name} 혜택을 받을 수 있어요!"
   },
   "pizza": {
     "chooseSize": "크기 선택",

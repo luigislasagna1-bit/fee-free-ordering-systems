@@ -216,7 +216,8 @@
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
-    "signInTooltip": "Zaloguj się lub utwórz konto, aby śledzić kupony i historię zamówień"
+    "signInTooltip": "Zaloguj się lub utwórz konto, aby śledzić kupony i historię zamówień",
+    "promoUnlockNudge": "Dodaj jeszcze {amount}, aby odblokować {name}!"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",

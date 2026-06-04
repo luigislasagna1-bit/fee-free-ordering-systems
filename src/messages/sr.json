@@ -216,7 +216,8 @@
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",
-    "signInTooltip": "Prijavite se ili napravite nalog da biste pratili kupone i istoriju narudžbina"
+    "signInTooltip": "Prijavite se ili napravite nalog da biste pratili kupone i istoriju narudžbina",
+    "promoUnlockNudge": "Dodaj još {amount} i otključaj {name}!"
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",

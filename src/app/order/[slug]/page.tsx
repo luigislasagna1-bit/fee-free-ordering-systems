@@ -163,6 +163,9 @@ export default async function OrderingPage({
       usableHourStart: true,
       usableHourEnd: true,
       minimumOrder: true,
+      // Drives the customer-facing "Add €X more to unlock!" nudge when the
+      // cart is within highlightThreshold of an auto-promo's minimum.
+      highlightThreshold: true,
       orderType: true,
       couponCode: true,
       // ruleConfig + rules feed the customer-facing PromoDetailModal so

@@ -216,7 +216,8 @@
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
-    "signInTooltip": "Kirjaudu sisään tai luo tili kuponkien ja tilaushistorian seurantaa varten"
+    "signInTooltip": "Kirjaudu sisään tai luo tili kuponkien ja tilaushistorian seurantaa varten",
+    "promoUnlockNudge": "Lisää vielä {amount} niin saat {name}!"
   },
   "pizza": {
     "chooseSize": "Valitse koko",

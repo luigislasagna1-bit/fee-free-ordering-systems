@@ -483,6 +483,7 @@ export function OrderingPageClient({
     usableHourStart: number | null;
     usableHourEnd: number | null;
     minimumOrder: number;
+    highlightThreshold?: number | null;
     orderType: string;
     couponCode: string | null;
     /** Type-specific config (Phase 2a). Drives the PromoDetailModal's
@@ -1199,6 +1200,25 @@ export function OrderingPageClient({
   }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
+  // "Add €X more to unlock!" nudge — the highlightThreshold feature was set in
+  // the admin promo wizard but never surfaced to customers (reseller report).
+  // Among auto-apply promos whose order-type matches, find the one the cart is
+  // CLOSEST to unlocking (subtotal still below minimum, but within the promo's
+  // highlightThreshold), and nudge the customer to spend the difference.
+  const promoNudge = (() => {
+    if (subtotal <= 0) return null;
+    let best: { name: string; remaining: number } | null = null;
+    for (const p of promoBanners) {
+      const ht = p.highlightThreshold ?? 0;
+      if (!p.autoApply || ht <= 0 || !(p.minimumOrder > 0)) continue;
+      if (p.orderType && p.orderType !== "both" && p.orderType !== orderType) continue;
+      const remaining = p.minimumOrder - subtotal;
+      if (remaining > 0 && remaining <= ht && (!best || remaining < best.remaining)) {
+        best = { name: p.name, remaining };
+      }
+    }
+    return best;
+  })();
 
   // ── Catering detection ─────────────────────────────────────────────
   // An item is treated as catering when EITHER its own isCatering flag
@@ -2218,6 +2238,14 @@ export function OrderingPageClient({
             one is attached) and / or opens a details modal. Hour-of-day
             usability is enforced at order calculation, not visibility —
             a lunch promo still shows at 9 AM so customers can pre-order. */}
+        {promoNudge && (
+          <div className="mb-4 rounded-xl border-2 border-dashed border-emerald-300 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-800">
+            🎯 {t("promoUnlockNudge", {
+              amount: formatCurrency(promoNudge.remaining, restaurant.currency ?? "usd"),
+              name: promoNudge.name,
+            })}
+          </div>
+        )}
         {promoBanners.length > 0 && (
           <div className="mb-6 flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
             {promoBanners.map((promo) => {

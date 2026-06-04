@@ -216,7 +216,8 @@
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
-    "signInTooltip": "Kupon ve sipariş geçmişinizi takip etmek için giriş yapın veya hesap oluşturun"
+    "signInTooltip": "Kupon ve sipariş geçmişinizi takip etmek için giriş yapın veya hesap oluşturun",
+    "promoUnlockNudge": "{name} fırsatını açmak için {amount} daha ekle!"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",

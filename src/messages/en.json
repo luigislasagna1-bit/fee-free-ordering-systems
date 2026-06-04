@@ -216,7 +216,8 @@
     },
     "searchMenu": "Search the menu…",
     "signIn": "Sign in",
-    "signInTooltip": "Sign in or create an account to track coupons and order history"
+    "signInTooltip": "Sign in or create an account to track coupons and order history",
+    "promoUnlockNudge": "Add {amount} more to unlock {name}!"
   },
   "pizza": {
     "chooseSize": "Choose Size",

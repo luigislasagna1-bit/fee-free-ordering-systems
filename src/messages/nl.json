@@ -216,7 +216,8 @@
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
-    "signInTooltip": "Log in of maak een account aan om kortingsbonnen en bestelgeschiedenis bij te houden"
+    "signInTooltip": "Log in of maak een account aan om kortingsbonnen en bestelgeschiedenis bij te houden",
+    "promoUnlockNudge": "Voeg nog {amount} toe om {name} te ontgrendelen!"
   },
   "pizza": {
     "chooseSize": "Kies maat",

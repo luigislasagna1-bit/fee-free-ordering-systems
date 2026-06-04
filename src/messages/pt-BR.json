@@ -216,7 +216,8 @@
     },
     "searchMenu": "Buscar no cardápio…",
     "signIn": "Entrar",
-    "signInTooltip": "Entre ou crie uma conta para acompanhar cupons e histórico de pedidos"
+    "signInTooltip": "Entre ou crie uma conta para acompanhar cupons e histórico de pedidos",
+    "promoUnlockNudge": "Adicione mais {amount} para desbloquear {name}!"
   },
   "pizza": {
     "chooseSize": "Escolha o Tamanho",

@@ -216,7 +216,8 @@
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",
     "signIn": "Accedi",
-    "signInTooltip": "Accedi o crea un account per monitorare i coupon e la cronologia degli ordini"
+    "signInTooltip": "Accedi o crea un account per monitorare i coupon e la cronologia degli ordini",
+    "promoUnlockNudge": "Aggiungi ancora {amount} per sbloccare {name}!"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
