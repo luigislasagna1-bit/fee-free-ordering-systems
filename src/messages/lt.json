@@ -1391,7 +1391,7 @@
       "menuLayout": "Meniu išdėstymas",
       "menuCarousel": "Karuselė (kompaktiška)",
       "menuGrid": "Tinklelis (klasikinis)",
-      "menuLayoutHint": "Karuselė: kompaktiškos horizontaliai slenkančios kortelės kiekvienai kategorijai. Tinklelis: tradicinis 2 stulpelių išdėstymas.",
+      "menuLayoutHint": "Karuselė: kompaktiškos horizontaliai slenkamos kortelės pagal kategoriją. Tinklelis: tradicinis 2 stulpelių išdėstymas. Sąrašas: nuotrauka kairėje, tekstas dešinėje (GloriaFood stilius).",
       "showCategoryImages": "Rodyti kategorijų vaizdus",
       "showCategoryImagesHint": "Rodyti kategorijų miniatiūras naršymo mygtukuose",
       "sectionPreview": "Peržiūra",
@@ -1404,7 +1404,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "Tai supaprastinta peržiūra.",
-      "previewLivePage": "Žiūrėti tiesioginį puslapį →"
+      "previewLivePage": "Žiūrėti tiesioginį puslapį →",
+      "menuList": "Sąrašas (nuotraukos kairėje)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kur pridėti šiuos įrašus?",

@@ -2461,7 +2461,7 @@
       "menuLayout": "Menu Layout",
       "menuCarousel": "Carousel (compact)",
       "menuGrid": "Grid (classic)",
-      "menuLayoutHint": "Carousel: compact horizontal scrolling cards per category. Grid: traditional 2-column layout.",
+      "menuLayoutHint": "Carousel: compact horizontal scrolling cards per category. Grid: traditional 2-column layout. List: photo on the left, text on the right (GloriaFood style).",
       "showCategoryImages": "Show Category Images",
       "showCategoryImagesHint": "Display category thumbnails in the nav pills",
       "sectionPreview": "Preview",
@@ -2474,7 +2474,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "This is a simplified preview.",
-      "previewLivePage": "View live page →"
+      "previewLivePage": "View live page →",
+      "menuList": "List (photos left)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Where do I add these records?",

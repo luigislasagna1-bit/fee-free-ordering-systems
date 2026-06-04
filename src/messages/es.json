@@ -2160,7 +2160,7 @@
       "menuLayout": "Diseño del menú",
       "menuCarousel": "Carrusel (compacto)",
       "menuGrid": "Cuadrícula (clásico)",
-      "menuLayoutHint": "Carrusel: tarjetas horizontales compactas con desplazamiento por categoría. Cuadrícula: diseño clásico de 2 columnas.",
+      "menuLayoutHint": "Carrusel: tarjetas compactas con desplazamiento horizontal por categoría. Cuadrícula: diseño tradicional de 2 columnas. Lista: foto a la izquierda, texto a la derecha (estilo GloriaFood).",
       "showCategoryImages": "Mostrar imágenes de categoría",
       "showCategoryImagesHint": "Muestra miniaturas de categoría en las pestañas de navegación",
       "sectionPreview": "Vista previa",
@@ -2173,7 +2173,8 @@
       "previewItem2": "Pollo BBQ",
       "previewItem3": "Vegetal",
       "previewNote": "Esta es una vista previa simplificada.",
-      "previewLivePage": "Ver página en vivo →"
+      "previewLivePage": "Ver página en vivo →",
+      "menuList": "Lista (fotos a la izquierda)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "¿Dónde añado estos registros?",

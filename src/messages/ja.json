@@ -2160,7 +2160,7 @@
       "menuLayout": "メニューレイアウト",
       "menuCarousel": "カルーセル（コンパクト）",
       "menuGrid": "グリッド（クラシック）",
-      "menuLayoutHint": "カルーセル：カテゴリーごとの横スクロールコンパクトカード。グリッド：従来の2列レイアウト。",
+      "menuLayoutHint": "カルーセル: カテゴリーごとにコンパクトな横スクロールカードを表示。グリッド: 従来の2カラムレイアウト。リスト: 写真を左、テキストを右に表示（GloriaFood スタイル）。",
       "showCategoryImages": "カテゴリー画像を表示",
       "showCategoryImagesHint": "ナビゲーションのカテゴリーサムネイルを表示",
       "sectionPreview": "プレビュー",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQチキン",
       "previewItem3": "ベジタリアン",
       "previewNote": "これは簡略化されたプレビューです。",
-      "previewLivePage": "ライブページを見る →"
+      "previewLivePage": "ライブページを見る →",
+      "menuList": "リスト（写真が左）"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "レコードはどこに追加しますか？",

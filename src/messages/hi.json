@@ -2461,7 +2461,7 @@
       "menuLayout": "मेनू लेआउट",
       "menuCarousel": "कैरोसेल (संक्षिप्त)",
       "menuGrid": "ग्रिड (क्लासिक)",
-      "menuLayoutHint": "कैरोसेल: प्रत्येक श्रेणी के लिए संक्षिप्त क्षैतिज स्क्रॉलिंग कार्ड। ग्रिड: पारंपरिक 2-कॉलम लेआउट।",
+      "menuLayoutHint": "कैरसेल: हर श्रेणी के लिए कॉम्पैक्ट क्षैतिज स्क्रॉलिंग कार्ड। ग्रिड: पारंपरिक 2-कॉलम लेआउट। सूची: फ़ोटो बाईं ओर, टेक्स्ट दाईं ओर (GloriaFood शैली)।",
       "showCategoryImages": "श्रेणी इमेज दिखाएं",
       "showCategoryImagesHint": "नेव पिल्स में श्रेणी थंबनेल प्रदर्शित करें",
       "sectionPreview": "पूर्वावलोकन",
@@ -2474,7 +2474,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "यह एक सरलीकृत पूर्वावलोकन है।",
-      "previewLivePage": "लाइव पेज देखें →"
+      "previewLivePage": "लाइव पेज देखें →",
+      "menuList": "सूची (फ़ोटो बाएँ)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "मैं ये रिकॉर्ड कहाँ जोड़ूँ?",

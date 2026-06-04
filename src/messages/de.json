@@ -2160,7 +2160,7 @@
       "menuLayout": "Speisekarten-Layout",
       "menuCarousel": "Karussell (kompakt)",
       "menuGrid": "Raster (klassisch)",
-      "menuLayoutHint": "Karussell: kompakte horizontal scrollbare Karten pro Kategorie. Raster: klassisches 2-Spalten-Layout.",
+      "menuLayoutHint": "Karussell: kompakte, horizontal scrollende Karten pro Kategorie. Raster: klassisches 2-spaltiges Layout. Liste: Foto links, Text rechts (GloriaFood-Stil).",
       "showCategoryImages": "Kategoriebilder anzeigen",
       "showCategoryImagesHint": "Kategorie-Miniaturansichten in den Navigations-Pills anzeigen",
       "sectionPreview": "Vorschau",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "Dies ist eine vereinfachte Vorschau.",
-      "previewLivePage": "Live-Seite anzeigen →"
+      "previewLivePage": "Live-Seite anzeigen →",
+      "menuList": "Liste (Fotos links)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Wo füge ich diese Einträge hinzu?",

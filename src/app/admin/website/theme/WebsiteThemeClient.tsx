@@ -193,13 +193,13 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">{t("menuLayout")}</label>
                 <div className="flex gap-2">
-                  {(["carousel", "grid"] as const).map(m => (
+                  {(["carousel", "grid", "list"] as const).map(m => (
                     <button
                       key={m}
                       onClick={() => set("menuLayout", m)}
                       className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition ${theme.menuLayout === m ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
                     >
-                      {m === "carousel" ? t("menuCarousel") : t("menuGrid")}
+                      {m === "carousel" ? t("menuCarousel") : m === "grid" ? t("menuGrid") : t("menuList")}
                     </button>
                   ))}
                 </div>

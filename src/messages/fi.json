@@ -2131,7 +2131,7 @@
       "menuLayout": "Menun asettelu",
       "menuCarousel": "Karuselli (tiivis)",
       "menuGrid": "Ruudukko (perinteinen)",
-      "menuLayoutHint": "Karuselli: tiiviit vaakasuorat vierityskortit per kategoria. Ruudukko: perinteinen 2-sarakkeen asettelu.",
+      "menuLayoutHint": "Karuselli: tiiviit vaakasuunnassa vieritettävät kortit kategoriaa kohden. Ruudukko: perinteinen kaksisarakkeinen asettelu. Lista: kuva vasemmalla, teksti oikealla (GloriaFood-tyyli).",
       "showCategoryImages": "Näytä kategorioiden kuvat",
       "showCategoryImagesHint": "Näytä kategorioiden pienoiskuvat navigointipilleissä",
       "sectionPreview": "Esikatselu",
@@ -2144,7 +2144,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "Tämä on yksinkertaistettu esikatselu.",
-      "previewLivePage": "Katso live-sivu →"
+      "previewLivePage": "Katso live-sivu →",
+      "menuList": "Lista (kuvat vasemmalla)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Mistä lisään nämä tietueet?",

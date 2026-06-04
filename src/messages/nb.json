@@ -2160,7 +2160,7 @@
       "menuLayout": "Menyoppsett",
       "menuCarousel": "Karusell (kompakt)",
       "menuGrid": "Rutenett (klassisk)",
-      "menuLayoutHint": "Karusell: kompakte horisontalt scrollbare kort per kategori. Rutenett: tradisjonelt 2-kolonneoppsett.",
+      "menuLayoutHint": "Karusell: kompakte, horisontalt rullende kort per kategori. Rutenett: tradisjonelt oppsett med to kolonner. Liste: bilde til venstre, tekst til høyre (GloriaFood-stil).",
       "showCategoryImages": "Vis kategoribilder",
       "showCategoryImagesHint": "Vis kategoriminiaturbilder i navigasjonspillene",
       "sectionPreview": "Forhåndsvisning",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "Dette er en forenklet forhåndsvisning.",
-      "previewLivePage": "Vis live side →"
+      "previewLivePage": "Vis live side →",
+      "menuList": "Liste (bilder til venstre)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hvor legger jeg til disse oppføringene?",

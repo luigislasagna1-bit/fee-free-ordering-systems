@@ -2160,7 +2160,7 @@
       "menuLayout": "تخطيط القائمة",
       "menuCarousel": "دوّار (مدمج)",
       "menuGrid": "شبكة (كلاسيكي)",
-      "menuLayoutHint": "الدوّار: بطاقات أفقية مدمجة قابلة للتمرير لكل فئة. الشبكة: تخطيط عمودين تقليدي.",
+      "menuLayoutHint": "شريط منزلق: بطاقات أفقية متراصة قابلة للتمرير لكل فئة. شبكة: تخطيط تقليدي بعمودين. قائمة: الصورة على اليسار، والنص على اليمين (بأسلوب GloriaFood).",
       "showCategoryImages": "إظهار صور الفئات",
       "showCategoryImagesHint": "عرض صور مصغّرة للفئات في الأزرار",
       "sectionPreview": "معاينة",
@@ -2173,7 +2173,8 @@
       "previewItem2": "دجاج باربكيو",
       "previewItem3": "نباتي",
       "previewNote": "هذه معاينة مبسّطة.",
-      "previewLivePage": "عرض الصفحة المباشرة →"
+      "previewLivePage": "عرض الصفحة المباشرة →",
+      "menuList": "قائمة (الصور على اليسار)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "أين أضيف هذه السجلات؟",

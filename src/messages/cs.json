@@ -2160,7 +2160,7 @@
       "menuLayout": "Rozvržení menu",
       "menuCarousel": "Karusel (kompaktní)",
       "menuGrid": "Mřížka (klasická)",
-      "menuLayoutHint": "Karusel: kompaktní horizontálně posuvné karty v každé kategorii. Mřížka: tradiční dvousloupcové rozvržení.",
+      "menuLayoutHint": "Karusel: kompaktní vodorovně posuvné karty pro každou kategorii. Mřížka: tradiční rozložení do dvou sloupců. Seznam: fotka vlevo, text vpravo (styl GloriaFood).",
       "showCategoryImages": "Zobrazit obrázky kategorií",
       "showCategoryImagesHint": "Zobrazit miniatury kategorií v navigačních tlačítkách",
       "sectionPreview": "Náhled",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ kuře",
       "previewItem3": "Vegetariánská",
       "previewNote": "Toto je zjednodušený náhled.",
-      "previewLivePage": "Zobrazit živou stránku →"
+      "previewLivePage": "Zobrazit živou stránku →",
+      "menuList": "Seznam (fotky vlevo)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kde přidám tyto záznamy?",

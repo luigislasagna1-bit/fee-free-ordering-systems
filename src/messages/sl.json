@@ -2160,7 +2160,7 @@
       "menuLayout": "Postavitev menija",
       "menuCarousel": "Vrtiljak (kompaktno)",
       "menuGrid": "Mreža (klasično)",
-      "menuLayoutHint": "Vrtiljak: kompaktne kartice z vodoravnim drsenjem po kategoriji. Mreža: tradicionalna postavitev z 2 stolpcema.",
+      "menuLayoutHint": "Vrtiljak: kompaktne vodoravno drsljive kartice po kategorijah. Mreža: tradicionalna postavitev z 2 stolpcema. Seznam: fotografija na levi, besedilo na desni (slog GloriaFood).",
       "showCategoryImages": "Prikaži slike kategorij",
       "showCategoryImagesHint": "Prikažite sličice kategorij v navigacijskih zavihkih",
       "sectionPreview": "Predogled",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "To je poenostavljen predogled.",
-      "previewLivePage": "Ogled žive strani →"
+      "previewLivePage": "Ogled žive strani →",
+      "menuList": "Seznam (fotografije levo)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kje dodajem te zapise?",

@@ -2160,7 +2160,7 @@
       "menuLayout": "Układ menu",
       "menuCarousel": "Karuzela (kompaktowa)",
       "menuGrid": "Siatka (klasyczna)",
-      "menuLayoutHint": "Karuzela: kompaktowe poziome karty z przewijaniem dla każdej kategorii. Siatka: tradycyjny układ dwukolumnowy.",
+      "menuLayoutHint": "Karuzela: kompaktowe, poziomo przewijane karty dla każdej kategorii. Siatka: tradycyjny układ dwukolumnowy. Lista: zdjęcie po lewej, tekst po prawej (styl GloriaFood).",
       "showCategoryImages": "Pokaż zdjęcia kategorii",
       "showCategoryImagesHint": "Wyświetlaj miniatury kategorii w nawigacji",
       "sectionPreview": "Podgląd",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Wegetariańska",
       "previewNote": "To jest uproszczony podgląd.",
-      "previewLivePage": "Zobacz stronę na żywo →"
+      "previewLivePage": "Zobacz stronę na żywo →",
+      "menuList": "Lista (zdjęcia po lewej)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gdzie dodać te rekordy?",

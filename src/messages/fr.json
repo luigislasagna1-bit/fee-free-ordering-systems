@@ -2160,7 +2160,7 @@
       "menuLayout": "Mise en page du menu",
       "menuCarousel": "Carrousel (compact)",
       "menuGrid": "Grille (classique)",
-      "menuLayoutHint": "Carrousel : cartes horizontales compactes par catégorie. Grille : mise en page classique à 2 colonnes.",
+      "menuLayoutHint": "Carrousel : cartes horizontales compactes défilantes par catégorie. Grille : disposition traditionnelle en 2 colonnes. Liste : photo à gauche, texte à droite (style GloriaFood).",
       "showCategoryImages": "Afficher les images de catégorie",
       "showCategoryImagesHint": "Afficher les miniatures de catégorie dans les onglets de navigation",
       "sectionPreview": "Aperçu",
@@ -2173,7 +2173,8 @@
       "previewItem2": "Poulet BBQ",
       "previewItem3": "Végétarien",
       "previewNote": "Ceci est un aperçu simplifié.",
-      "previewLivePage": "Voir la page en ligne →"
+      "previewLivePage": "Voir la page en ligne →",
+      "menuList": "Liste (photos à gauche)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Où ajouter ces enregistrements ?",

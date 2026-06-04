@@ -2160,7 +2160,7 @@
       "menuLayout": "Étlap elrendezése",
       "menuCarousel": "Körhinta (kompakt)",
       "menuGrid": "Rács (klasszikus)",
-      "menuLayoutHint": "Körhinta: kompakt vízszintes görgethető kártyák kategóriánként. Rács: hagyományos 2 oszlopos elrendezés.",
+      "menuLayoutHint": "Körhinta: kompakt, vízszintesen görgethető kártyák kategóriánként. Rács: hagyományos, kétoszlopos elrendezés. Lista: fotó balra, szöveg jobbra (GloriaFood-stílus).",
       "showCategoryImages": "Kategóriaképek megjelenítése",
       "showCategoryImagesHint": "Kategória miniatűrök megjelenítése a navigációs gombokon",
       "sectionPreview": "Előnézet",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ csirke",
       "previewItem3": "Vegetáriánus",
       "previewNote": "Ez egy egyszerűsített előnézet.",
-      "previewLivePage": "Élő oldal megtekintése →"
+      "previewLivePage": "Élő oldal megtekintése →",
+      "menuList": "Lista (fotók balra)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hol adhatom hozzá ezeket a rekordokat?",

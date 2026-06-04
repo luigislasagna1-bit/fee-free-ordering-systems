@@ -2160,7 +2160,7 @@
       "menuLayout": "菜单布局",
       "menuCarousel": "轮播（紧凑）",
       "menuGrid": "网格（经典）",
-      "menuLayoutHint": "轮播：每个分类按水平滚动的紧凑卡片显示。网格：传统两栏布局。",
+      "menuLayoutHint": "轮播：每个分类以紧凑的横向滚动卡片展示。网格：传统的双列布局。列表：图片在左，文字在右（GloriaFood 风格）。",
       "showCategoryImages": "显示分类图片",
       "showCategoryImagesHint": "在导航标签中显示分类缩略图",
       "sectionPreview": "预览",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ 鸡肉",
       "previewItem3": "素食",
       "previewNote": "这是简化预览。",
-      "previewLivePage": "查看线上页面 →"
+      "previewLivePage": "查看线上页面 →",
+      "menuList": "列表（图片在左）"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "在哪里添加这些记录？",

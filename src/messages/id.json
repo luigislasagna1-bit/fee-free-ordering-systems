@@ -2160,7 +2160,7 @@
       "menuLayout": "Tata Letak Menu",
       "menuCarousel": "Carousel (kompak)",
       "menuGrid": "Grid (klasik)",
-      "menuLayoutHint": "Carousel: kartu gulir horizontal kompak per kategori. Grid: tata letak 2 kolom tradisional.",
+      "menuLayoutHint": "Carousel: kartu gulir horizontal yang ringkas per kategori. Grid: tata letak 2 kolom tradisional. Daftar: foto di kiri, teks di kanan (gaya GloriaFood).",
       "showCategoryImages": "Tampilkan Gambar Kategori",
       "showCategoryImagesHint": "Tampilkan gambar mini kategori di pil navigasi",
       "sectionPreview": "Pratinjau",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "Ini adalah pratinjau sederhana.",
-      "previewLivePage": "Lihat halaman aktif →"
+      "previewLivePage": "Lihat halaman aktif →",
+      "menuList": "Daftar (foto di kiri)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Di mana saya menambahkan record ini?",

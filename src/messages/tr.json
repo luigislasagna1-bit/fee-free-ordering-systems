@@ -2160,7 +2160,7 @@
       "menuLayout": "Menü Düzeni",
       "menuCarousel": "Carousel (kompakt)",
       "menuGrid": "Izgara (klasik)",
-      "menuLayoutHint": "Carousel: kategori başına yatay kayan kompakt kartlar. Izgara: geleneksel 2 sütunlu düzen.",
+      "menuLayoutHint": "Karusel: kategori başına kompakt, yatay kaydırmalı kartlar. Izgara: geleneksel 2 sütunlu düzen. Liste: fotoğraf solda, metin sağda (GloriaFood tarzı).",
       "showCategoryImages": "Kategori Görsellerini Göster",
       "showCategoryImagesHint": "Gezinme haplarında kategori küçük resimlerini görüntüle",
       "sectionPreview": "Önizleme",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Tavuk",
       "previewItem3": "Vejetaryen",
       "previewNote": "Bu basitleştirilmiş bir önizlemedir.",
-      "previewLivePage": "Canlı sayfayı gör →"
+      "previewLivePage": "Canlı sayfayı gör →",
+      "menuList": "Liste (fotoğraflar solda)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Bu kayıtları nereye ekliyorum?",

@@ -2160,7 +2160,7 @@
       "menuLayout": "Bố cục thực đơn",
       "menuCarousel": "Carousel (gọn)",
       "menuGrid": "Lưới (cổ điển)",
-      "menuLayoutHint": "Carousel: thẻ cuộn ngang gọn theo danh mục. Lưới: bố cục 2 cột truyền thống.",
+      "menuLayoutHint": "Băng chuyền: thẻ cuộn ngang nhỏ gọn theo từng danh mục. Lưới: bố cục 2 cột truyền thống. Danh sách: ảnh bên trái, văn bản bên phải (kiểu GloriaFood).",
       "showCategoryImages": "Hiển thị ảnh danh mục",
       "showCategoryImagesHint": "Hiển thị ảnh thu nhỏ danh mục trong các pill điều hướng",
       "sectionPreview": "Xem trước",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "Đây là bản xem trước đơn giản.",
-      "previewLivePage": "Xem trang trực tiếp →"
+      "previewLivePage": "Xem trang trực tiếp →",
+      "menuList": "Danh sách (ảnh bên trái)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Tôi thêm các bản ghi này ở đâu?",

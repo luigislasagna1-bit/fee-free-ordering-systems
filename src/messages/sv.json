@@ -2160,7 +2160,7 @@
       "menuLayout": "Menylayout",
       "menuCarousel": "Karusell (kompakt)",
       "menuGrid": "Rutnät (klassisk)",
-      "menuLayoutHint": "Karusell: kompakta horisontellt rullningsbara kort per kategori. Rutnät: traditionell 2-kolumnslayout.",
+      "menuLayoutHint": "Karusell: kompakta, horisontellt rullande kort per kategori. Rutnät: traditionell tvåkolumnslayout. Lista: foto till vänster, text till höger (GloriaFood-stil).",
       "showCategoryImages": "Visa kategoribilder",
       "showCategoryImagesHint": "Visa kategoriminiatyrer i navigeringsknapparna",
       "sectionPreview": "Förhandsvisning",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ-kyckling",
       "previewItem3": "Vegetarisk",
       "previewNote": "Detta är en förenklad förhandsvisning.",
-      "previewLivePage": "Visa live-sidan →"
+      "previewLivePage": "Visa live-sidan →",
+      "menuList": "Lista (foton till vänster)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Var lägger jag till dessa poster?",

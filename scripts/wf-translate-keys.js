@@ -6,12 +6,11 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "admin.menuEditor";
-const CONTEXT = "the restaurant's menu-management screen; these are for a Duplicate Category action (clone a whole category with its items)";
+const NS = "admin.websiteThemeClient";
+const CONTEXT = "the restaurant's website theme editor; choosing the customer ordering-page menu layout. 'List' shows a food photo on the left and text on the right (GloriaFood style)";
 const EN = {
-  duplicateCategory: "Duplicate category",
-  categoryDuplicated: "Category duplicated — the copy is hidden until you publish it.",
-  failedToDuplicateCategory: "Couldn’t duplicate the category. Please try again.",
+  menuList: "List (photos left)",
+  menuLayoutHint: "Carousel: compact horizontal scrolling cards per category. Grid: traditional 2-column layout. List: photo on the left, text on the right (GloriaFood style).",
 };
 const KEYS = Object.keys(EN);
 

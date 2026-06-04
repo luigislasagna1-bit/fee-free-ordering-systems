@@ -2160,7 +2160,7 @@
       "menuLayout": "Raspored jelovnika",
       "menuCarousel": "Karusel (kompaktno)",
       "menuGrid": "Mreža (klasično)",
-      "menuLayoutHint": "Karusel: kompaktno horizontalno listanje kartica po kategoriji. Mreža: tradicionalni raspored u 2 stupca.",
+      "menuLayoutHint": "Vrtuljak: kompaktne kartice s vodoravnim pomicanjem po kategorijama. Mreža: tradicionalni raspored u 2 stupca. Popis: fotografija lijevo, tekst desno (stil GloriaFood).",
       "showCategoryImages": "Prikaži slike kategorija",
       "showCategoryImagesHint": "Prikaži minijature kategorija u navigacijskim pilulama",
       "sectionPreview": "Pregled",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "Ovo je pojednostavljeni pregled.",
-      "previewLivePage": "Pogledaj aktivnu stranicu →"
+      "previewLivePage": "Pogledaj aktivnu stranicu →",
+      "menuList": "Popis (fotografije lijevo)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gdje dodajem ove zapise?",

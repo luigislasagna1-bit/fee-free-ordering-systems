@@ -2160,7 +2160,7 @@
       "menuLayout": "Menu-indeling",
       "menuCarousel": "Carrousel (compact)",
       "menuGrid": "Raster (klassiek)",
-      "menuLayoutHint": "Carrousel: compacte horizontaal scrollende kaarten per categorie. Raster: traditionele 2-kolomsindeling.",
+      "menuLayoutHint": "Carrousel: compacte horizontaal scrollende kaarten per categorie. Raster: traditionele indeling met 2 kolommen. Lijst: foto links, tekst rechts (GloriaFood-stijl).",
       "showCategoryImages": "Categorieafbeeldingen tonen",
       "showCategoryImagesHint": "Categorieduimnagels weergeven in de navigatiepillen",
       "sectionPreview": "Voorbeeld",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Kip",
       "previewItem3": "Vegetarisch",
       "previewNote": "Dit is een vereenvoudigd voorbeeld.",
-      "previewLivePage": "Bekijk live pagina →"
+      "previewLivePage": "Bekijk live pagina →",
+      "menuList": "Lijst (foto's links)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Waar voeg ik deze records toe?",

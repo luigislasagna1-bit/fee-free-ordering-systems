@@ -2160,7 +2160,7 @@
       "menuLayout": "เลย์เอาต์เมนู",
       "menuCarousel": "แบบสไลด์ (กะทัดรัด)",
       "menuGrid": "แบบกริด (คลาสสิก)",
-      "menuLayoutHint": "แบบสไลด์: การ์ดเลื่อนแนวนอนกะทัดรัดต่อหมวดหมู่ แบบกริด: เลย์เอาต์ 2 คอลัมน์แบบดั้งเดิม",
+      "menuLayoutHint": "คารูเซล: การ์ดเลื่อนแนวนอนแบบกะทัดรัดต่อหมวดหมู่ กริด: เลย์เอาต์ 2 คอลัมน์แบบดั้งเดิม รายการ: รูปภาพอยู่ด้านซ้าย ข้อความอยู่ด้านขวา (สไตล์ GloriaFood)",
       "showCategoryImages": "แสดงรูปหมวดหมู่",
       "showCategoryImagesHint": "แสดงภาพย่อหมวดหมู่ในแท็บนำทาง",
       "sectionPreview": "ตัวอย่าง",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "นี่คือตัวอย่างแบบย่อ",
-      "previewLivePage": "ดูหน้าสดๆ →"
+      "previewLivePage": "ดูหน้าสดๆ →",
+      "menuList": "รายการ (รูปภาพด้านซ้าย)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "ฉันเพิ่มระเบียนเหล่านี้ที่ไหน?",

@@ -2160,7 +2160,7 @@
       "menuLayout": "Ēdienkartes izkārtojums",
       "menuCarousel": "Karuselis (kompakts)",
       "menuGrid": "Režģis (klasisks)",
-      "menuLayoutHint": "Karuselis: kompaktas horizontāli ritināmas kartes katrai kategorijai. Režģis: tradicionāls 2 kolonnu izkārtojums.",
+      "menuLayoutHint": "Karuselis: kompaktas, horizontāli ritināmas kartītes katrai kategorijai. Režģis: tradicionāls 2 kolonnu izkārtojums. Saraksts: foto pa kreisi, teksts pa labi (GloriaFood stilā).",
       "showCategoryImages": "Rādīt kategoriju attēlus",
       "showCategoryImagesHint": "Rādīt kategoriju sīktēlus navigācijas pogās",
       "sectionPreview": "Priekšskatījums",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "Šis ir vienkāršots priekšskatījums.",
-      "previewLivePage": "Skatīt tiešsaistes lapu →"
+      "previewLivePage": "Skatīt tiešsaistes lapu →",
+      "menuList": "Saraksts (foto pa kreisi)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kur pievienot šos ierakstus?",

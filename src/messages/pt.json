@@ -2160,7 +2160,7 @@
       "menuLayout": "Layout do menu",
       "menuCarousel": "Carrossel (compacto)",
       "menuGrid": "Grade (clássico)",
-      "menuLayoutHint": "Carrossel: cards compactos com rolagem horizontal por categoria. Grade: layout tradicional em 2 colunas.",
+      "menuLayoutHint": "Carrossel: cartões compactos com deslocamento horizontal por categoria. Grelha: disposição tradicional em 2 colunas. Lista: foto à esquerda, texto à direita (estilo GloriaFood).",
       "showCategoryImages": "Mostrar imagens de categorias",
       "showCategoryImagesHint": "Exibir miniaturas de categorias nas pílulas de navegação",
       "sectionPreview": "Pré-visualização",
@@ -2173,7 +2173,8 @@
       "previewItem2": "Frango BBQ",
       "previewItem3": "Vegetariana",
       "previewNote": "Esta é uma pré-visualização simplificada.",
-      "previewLivePage": "Ver página ao vivo →"
+      "previewLivePage": "Ver página ao vivo →",
+      "menuList": "Lista (fotos à esquerda)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Onde adiciono esses registros?",

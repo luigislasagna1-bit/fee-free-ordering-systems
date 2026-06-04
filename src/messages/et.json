@@ -2160,7 +2160,7 @@
       "menuLayout": "Menüü paigutus",
       "menuCarousel": "Karussell (kompaktne)",
       "menuGrid": "Ruudustik (klassikaline)",
-      "menuLayoutHint": "Karussell: kompaktsed horisontaalselt keritavad kaardid kategooria kohta. Ruudustik: traditsiooniline 2-veerune paigutus.",
+      "menuLayoutHint": "Karussell: kompaktsed horisontaalselt keritavad kaardid kategooria kaupa. Ruudustik: traditsiooniline 2-veeruline paigutus. Loend: foto vasakul, tekst paremal (GloriaFood stiil).",
       "showCategoryImages": "Näita kategooriate pilte",
       "showCategoryImagesHint": "Kuva kategooriate pisipildid nav-pillides",
       "sectionPreview": "Eelvaade",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ kana",
       "previewItem3": "Vegetaarne",
       "previewNote": "See on lihtsustatud eelvaade.",
-      "previewLivePage": "Vaata otselehte →"
+      "previewLivePage": "Vaata otselehte →",
+      "menuList": "Loend (fotod vasakul)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kust lisan need kirjed?",

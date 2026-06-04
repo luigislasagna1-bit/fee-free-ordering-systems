@@ -2160,7 +2160,7 @@
       "menuLayout": "Disseny de la carta",
       "menuCarousel": "Carrusel (compacte)",
       "menuGrid": "Graella (clàssic)",
-      "menuLayoutHint": "Carrusel: targetes de desplaçament horitzontal compactes per categoria. Graella: disseny tradicional de 2 columnes.",
+      "menuLayoutHint": "Carrusel: targetes compactes amb desplaçament horitzontal per categoria. Quadrícula: disposició tradicional de 2 columnes. Llista: foto a l'esquerra, text a la dreta (estil GloriaFood).",
       "showCategoryImages": "Mostra imatges de categoria",
       "showCategoryImagesHint": "Mostra miniatures de categoria a les pestanyes de navegació",
       "sectionPreview": "Vista prèvia",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Vegetariana",
       "previewNote": "Aquesta és una vista prèvia simplificada.",
-      "previewLivePage": "Veure la pàgina en viu →"
+      "previewLivePage": "Veure la pàgina en viu →",
+      "menuList": "Llista (fotos a l'esquerra)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "On afegeixo aquests registres?",

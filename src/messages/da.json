@@ -2160,7 +2160,7 @@
       "menuLayout": "Menulayout",
       "menuCarousel": "Karrusel (kompakt)",
       "menuGrid": "Gitter (klassisk)",
-      "menuLayoutHint": "Karrusel: kompakte vandrette scrollkort pr. kategori. Gitter: traditionelt 2-kolonnet layout.",
+      "menuLayoutHint": "Karrusel: kompakte vandret rullende kort pr. kategori. Gitter: traditionelt layout med 2 kolonner. Liste: billede til venstre, tekst til højre (GloriaFood-stil).",
       "showCategoryImages": "Vis kategoriikoner",
       "showCategoryImagesHint": "Vis kategoriminiaturer i navigationspillerne",
       "sectionPreview": "Forhåndsvisning",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "Dette er en forenklet forhåndsvisning.",
-      "previewLivePage": "Se live side →"
+      "previewLivePage": "Se live side →",
+      "menuList": "Liste (billeder til venstre)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hvor tilføjer jeg disse poster?",

@@ -2160,7 +2160,7 @@
       "menuLayout": "Layout menu",
       "menuCarousel": "Carosello (compatto)",
       "menuGrid": "Griglia (classico)",
-      "menuLayoutHint": "Carosello: schede orizzontali scorrevoli compatte per categoria. Griglia: layout tradizionale a 2 colonne.",
+      "menuLayoutHint": "Carosello: schede compatte a scorrimento orizzontale per categoria. Griglia: layout tradizionale a 2 colonne. Elenco: foto a sinistra, testo a destra (stile GloriaFood).",
       "showCategoryImages": "Mostra immagini categorie",
       "showCategoryImagesHint": "Visualizza miniature delle categorie nelle pill di navigazione",
       "sectionPreview": "Anteprima",
@@ -2173,7 +2173,8 @@
       "previewItem2": "Pollo BBQ",
       "previewItem3": "Vegetariana",
       "previewNote": "Questa è un'anteprima semplificata.",
-      "previewLivePage": "Visualizza pagina live →"
+      "previewLivePage": "Visualizza pagina live →",
+      "menuList": "Elenco (foto a sinistra)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Dove aggiungo questi record?",

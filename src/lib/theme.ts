@@ -9,7 +9,7 @@ export type ThemeSettings = {
   bannerPosition: "top" | "center" | "bottom";
   headerLayout: "left" | "center";
   showCategoryImages: boolean;
-  menuLayout: "carousel" | "grid";
+  menuLayout: "carousel" | "grid" | "list";
 };
 
 export const DEFAULT_THEME: ThemeSettings = {

@@ -155,6 +155,27 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
     );
   }
 
+  if (theme.menuLayout === "list") {
+    // "List" layout (GloriaFood-style): a vertical list with a small food
+    // photo on the LEFT and text on the RIGHT. Image-less items simply have
+    // no thumbnail — no blank placeholder (Luigi report cmpxe0ufs).
+    return (
+      <div ref={onRef as any}>
+        <div className="flex items-center gap-3 mb-4 sticky top-0 py-2 z-10" style={{ backgroundColor: theme.backgroundColor }}>
+          {cat.imageUrl && theme.showCategoryImages && (
+            <img src={cat.imageUrl} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
+          )}
+          <h2 className="text-xl font-bold" style={{ color: theme.textColor }}>{cat.name}</h2>
+        </div>
+        <div className="flex flex-col gap-2">
+          {cat.menuItems.map(item => (
+            <ListCard key={item.id} item={item} theme={theme} onOpen={onOpen} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   // "Carousel" layout — single horizontal scroller on BOTH mobile and
   // desktop (Luigi 2026-05-30: previous grid-on-desktop variant didn't
   // look right, restore the original carousel). Desktop interaction:
@@ -444,6 +465,63 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
             )}
           </div>
         </div>
+      </div>
+    </button>
+  );
+}
+
+function ListCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<typeof parseTheme>; onOpen: (i: MenuItem) => void }) {
+  const t = useTranslations("ordering");
+  const fmt = useCurrencyFormat();
+  const isSold = item.isSoldOut;
+  const basePrice = item.hasVariants && item.variants?.length
+    ? Math.min(...item.variants.map(v => v.price))
+    : item.price;
+  return (
+    <button
+      id={`menu-item-${item.id}`}
+      onClick={() => !isSold && onOpen(item)}
+      disabled={isSold}
+      className={`w-full text-left rounded-2xl border overflow-hidden shadow-sm transition group flex items-stretch ${isSold ? "opacity-60 cursor-not-allowed border-gray-100" : "hover:shadow-lg"}`}
+      style={{ backgroundColor: theme.cardBackground, borderColor: "#e5e7eb" }}
+    >
+      {/* Photo on the LEFT — rendered ONLY when present (no blank placeholder). */}
+      {item.imageUrl && (
+        <div className="relative flex-shrink-0 w-24 sm:w-28 self-stretch overflow-hidden">
+          <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          {isSold && (
+            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <span className="bg-white text-gray-800 text-[10px] font-bold px-2 py-1 rounded-full">{t("soldOut")}</span>
+            </div>
+          )}
+        </div>
+      )}
+      {/* Text on the RIGHT. */}
+      <div className="flex-1 min-w-0 p-3 sm:p-4 flex items-start justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          {(item.isFeatured || (isSold && !item.imageUrl)) && (
+            <div className="flex items-center gap-1.5 mb-1">
+              {item.isFeatured && (
+                <span className="inline-flex items-center gap-1 bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <Star className="w-2.5 h-2.5 fill-yellow-800" /> {t("featured")}
+                </span>
+              )}
+              {isSold && !item.imageUrl && (
+                <span className="inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{t("soldOut")}</span>
+              )}
+            </div>
+          )}
+          <p className="font-semibold leading-snug transition" style={{ color: theme.textColor }}>{item.name}</p>
+          {item.description && <p className="text-sm text-gray-500 mt-1 line-clamp-2 leading-relaxed">{item.description}</p>}
+          <div className="font-bold text-base mt-2" style={{ color: theme.textColor }}>
+            {item.hasVariants ? `from ${fmt(basePrice)}` : fmt(basePrice)}
+          </div>
+        </div>
+        {!isSold && (
+          <div className="flex-shrink-0 self-center w-9 h-9 rounded-full flex items-center justify-center shadow-sm transition" style={{ backgroundColor: theme.primaryColor }}>
+            <Plus className="w-5 h-5 text-white" />
+          </div>
+        )}
       </div>
     </button>
   );

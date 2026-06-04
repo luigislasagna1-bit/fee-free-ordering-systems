@@ -2160,7 +2160,7 @@
       "menuLayout": "Layout meniu",
       "menuCarousel": "Carusel (compact)",
       "menuGrid": "Grilă (clasic)",
-      "menuLayoutHint": "Carusel: carduri compacte cu derulare orizontală pe categorie. Grilă: layout clasic cu 2 coloane.",
+      "menuLayoutHint": "Carusel: carduri compacte cu derulare orizontală pe categorie. Grilă: aspect tradițional pe 2 coloane. Listă: foto în stânga, text în dreapta (stil GloriaFood).",
       "showCategoryImages": "Afișează imagini categorie",
       "showCategoryImagesHint": "Afișează miniaturi de categorie în butoanele de navigare",
       "sectionPreview": "Previzualizare",
@@ -2173,7 +2173,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "Aceasta este o previzualizare simplificată.",
-      "previewLivePage": "Vezi pagina live →"
+      "previewLivePage": "Vezi pagina live →",
+      "menuList": "Listă (foto în stânga)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Unde adaug aceste înregistrări?",

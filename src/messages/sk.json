@@ -1404,7 +1404,7 @@
       "menuLayout": "Rozloženie menu",
       "menuCarousel": "Karusel (kompaktný)",
       "menuGrid": "Mriežka (klasická)",
-      "menuLayoutHint": "Karusel: kompaktné horizontálne rolovacie karty podľa kategórie. Mriežka: tradičné dvojstĺpcové rozloženie.",
+      "menuLayoutHint": "Karusel: kompaktné horizontálne posúvateľné karty pre každú kategóriu. Mriežka: tradičné dvojstĺpcové rozloženie. Zoznam: fotografia vľavo, text vpravo (štýl GloriaFood).",
       "showCategoryImages": "Zobraziť obrázky kategórií",
       "showCategoryImagesHint": "Zobrazovať miniatúry kategórií v navigačných tlačidlách",
       "sectionPreview": "Náhľad",
@@ -1417,7 +1417,8 @@
       "previewItem2": "BBQ Chicken",
       "previewItem3": "Veggie",
       "previewNote": "Toto je zjednodušený náhľad.",
-      "previewLivePage": "Zobraziť živú stránku →"
+      "previewLivePage": "Zobraziť živú stránku →",
+      "menuList": "Zoznam (fotografie vľavo)"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kde pridám tieto záznamy?",
