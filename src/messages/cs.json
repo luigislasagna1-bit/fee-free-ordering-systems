@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Zadejte platnou částku k vrácení.",
     "refundExceeds": "Částka přesahuje zůstatek, který lze vrátit.",
     "refundFailed": "Vrácení platby se nezdařilo. Zkuste to prosím znovu.",
-    "refundSuccess": "Platba byla vrácena."
+    "refundSuccess": "Platba byla vrácena.",
+    "autoCallMessage": "Nová objednávka {number} v podniku {restaurant} čeká a zatím nebyla přijata. Otevřete prosím kuchyňský displej a objednávku přijměte nebo odmítněte."
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "Záloha PrintNode povolena — kuchyň nyní zobrazuje možnost nastavení PrintNode",
       "printNodeDisabledToast": "Záloha PrintNode zakázána — zobrazuje se pouze přímý tisk přes WiFi/LAN",
       "printNodeFooterNote": "<strong>Přímý tisk přes WiFi/LAN</strong> (prostřednictvím nativní aplikace Fee Free Kitchen na tabletu Android/iOS) je hlavní připojení tiskárny — automaticky ji najde v síti bez účtu PrintNode nebo měsíčních poplatků. PrintNode povolte pouze jako zálohu, pokud nemůžete nainstalovat nativní aplikaci nebo provozujete kuchyni v prohlížeči Windows.",
-      "saveErrorToast": "Uložení selhalo — zkuste to prosím znovu"
+      "saveErrorToast": "Uložení selhalo — zkuste to prosím znovu",
+      "autoCallLabel": "Automatické telefonické upozornění",
+      "autoCallStatusOn": "Zapnuto — pokud nová objednávka není přijata do cca 90 sekund, zavoláme vám na telefon.",
+      "autoCallStatusOff": "Vypnuto — nové objednávky se zobrazují pouze na kuchyňském displeji.",
+      "autoCallToggleAriaLabel": "Přepnout automatické telefonické upozornění",
+      "autoCallFooterNote": "Pokud nová objednávka zůstane nepřijatá přibližně 90 sekund, automaticky zavoláme na telefon vaší restaurace, abyste žádnou objednávku nezmeškali — i když tablet nikdo nesleduje.",
+      "autoCallEnabledToast": "Automatické telefonické upozornění bylo zapnuto.",
+      "autoCallDisabledToast": "Automatické telefonické upozornění bylo vypnuto."
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaše restaurace",

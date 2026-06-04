@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Voer een geldig terugbetalingsbedrag in.",
     "refundExceeds": "Bedrag overschrijdt het terugbetaalbare saldo.",
     "refundFailed": "Terugbetaling mislukt. Probeer het opnieuw.",
-    "refundSuccess": "Terugbetaling uitgevoerd."
+    "refundSuccess": "Terugbetaling uitgevoerd.",
+    "autoCallMessage": "Nieuwe bestelling {number} bij {restaurant} staat te wachten en is nog niet geaccepteerd. Open je keukenscherm om de bestelling te accepteren of te weigeren."
   },
   "admin": {
     "welcomeBack": "Welkom terug",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "PrintNode-reserve ingeschakeld — keuken toont nu PrintNode-installatieoptie",
       "printNodeDisabledToast": "PrintNode-reserve uitgeschakeld — alleen directe WiFi/LAN-printing getoond",
       "printNodeFooterNote": "<strong>Directe WiFi/LAN-printing</strong> (via de Fee Free Kitchen-app op Android/iOS-tablet) is de primaire printerverbinding — hij detecteert je printer automatisch op het netwerk, zonder PrintNode-account of maandelijkse kosten. Schakel PrintNode alleen in als reserve als je de native app niet kunt installeren of de keuken op een Windows-browser draait.",
-      "saveErrorToast": "Opslaan mislukt — probeer opnieuw"
+      "saveErrorToast": "Opslaan mislukt — probeer opnieuw",
+      "autoCallLabel": "Automatische telefoonoproep-melding",
+      "autoCallStatusOn": "Aan — we bellen je telefoon als een nieuwe bestelling niet binnen ~90 seconden wordt geaccepteerd.",
+      "autoCallStatusOff": "Uit — nieuwe bestellingen worden alleen op het keukenscherm gemeld.",
+      "autoCallToggleAriaLabel": "Automatische telefoonoproep-melding in- of uitschakelen",
+      "autoCallFooterNote": "Als een nieuwe bestelling ongeveer 90 seconden niet wordt geaccepteerd, plaatsen we een automatische oproep naar de telefoon van je restaurant, zodat je nooit een bestelling mist — zelfs als de tablet onbeheerd is.",
+      "autoCallEnabledToast": "Automatische telefoonoproep-melding ingeschakeld.",
+      "autoCallDisabledToast": "Automatische telefoonoproep-melding uitgeschakeld."
     },
     "receiptRenderer": {
       "yourRestaurant": "Uw restaurant",

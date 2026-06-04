@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Geben Sie einen gültigen Erstattungsbetrag ein.",
     "refundExceeds": "Der Betrag übersteigt das erstattbare Guthaben.",
     "refundFailed": "Erstattung fehlgeschlagen. Bitte versuchen Sie es erneut.",
-    "refundSuccess": "Erstattung ausgelöst."
+    "refundSuccess": "Erstattung ausgelöst.",
+    "autoCallMessage": "Eine neue Bestellung {number} bei {restaurant} wartet und wurde noch nicht angenommen. Bitte öffnen Sie Ihre Küchenanzeige, um sie anzunehmen oder abzulehnen."
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "PrintNode-Backup aktiviert — Küche zeigt jetzt PrintNode-Einrichtungsoption",
       "printNodeDisabledToast": "PrintNode-Backup deaktiviert — nur direktes WLAN/LAN-Drucken wird angezeigt",
       "printNodeFooterNote": "<strong>Direktes WLAN/LAN-Drucken</strong> (über die native Fee Free Kitchen App auf Android/iOS-Tablet) ist die Hauptdruckerverbindung — sie erkennt Ihren Drucker automatisch im Netzwerk, kein PrintNode-Konto oder monatliche Gebühr erforderlich. Aktivieren Sie PrintNode nur als Backup, wenn Sie die native App nicht installieren können oder die Küche in einem Windows-Browser betreiben.",
-      "saveErrorToast": "Speichern fehlgeschlagen — bitte erneut versuchen"
+      "saveErrorToast": "Speichern fehlgeschlagen — bitte erneut versuchen",
+      "autoCallLabel": "Automatischer Telefonanruf-Alarm",
+      "autoCallStatusOn": "Ein — wir rufen Ihr Telefon an, wenn eine neue Bestellung nicht innerhalb von ca. 90 Sekunden angenommen wird.",
+      "autoCallStatusOff": "Aus — neue Bestellungen werden nur auf der Küchenanzeige gemeldet.",
+      "autoCallToggleAriaLabel": "Automatischen Telefonanruf-Alarm umschalten",
+      "autoCallFooterNote": "Wenn eine neue Bestellung etwa 90 Sekunden lang nicht angenommen wird, tätigen wir einen automatischen Anruf an Ihr Restauranttelefon, damit Sie keine Bestellung verpassen — selbst wenn das Tablet unbeaufsichtigt ist.",
+      "autoCallEnabledToast": "Automatischer Telefonanruf-Alarm aktiviert.",
+      "autoCallDisabledToast": "Automatischer Telefonanruf-Alarm deaktiviert."
     },
     "receiptRenderer": {
       "yourRestaurant": "Ihr Restaurant",

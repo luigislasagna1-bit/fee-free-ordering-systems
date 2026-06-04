@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Masukkan jumlah pengembalian dana yang valid.",
     "refundExceeds": "Jumlah melebihi saldo yang dapat dikembalikan.",
     "refundFailed": "Pengembalian dana gagal. Silakan coba lagi.",
-    "refundSuccess": "Pengembalian dana diproses."
+    "refundSuccess": "Pengembalian dana diproses.",
+    "autoCallMessage": "Pesanan baru {number} di {restaurant} sedang menunggu dan belum diterima. Silakan buka layar dapur Anda untuk menerima atau menolaknya."
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "Cadangan PrintNode diaktifkan — dapur kini menampilkan opsi pengaturan PrintNode",
       "printNodeDisabledToast": "Cadangan PrintNode dinonaktifkan — hanya pencetakan WiFi/LAN langsung yang ditampilkan",
       "printNodeFooterNote": "<strong>Pencetakan WiFi/LAN langsung</strong> (melalui aplikasi native Fee Free Kitchen di tablet Android/iOS) adalah koneksi printer utama — secara otomatis menemukan printer Anda di jaringan, tanpa akun PrintNode atau biaya bulanan. Aktifkan PrintNode hanya sebagai cadangan jika tidak dapat menginstal aplikasi native atau menjalankan dapur di browser Windows.",
-      "saveErrorToast": "Gagal menyimpan — silakan coba lagi"
+      "saveErrorToast": "Gagal menyimpan — silakan coba lagi",
+      "autoCallLabel": "Peringatan panggilan telepon otomatis",
+      "autoCallStatusOn": "Aktif — kami menelepon Anda jika pesanan baru tidak diterima dalam waktu sekitar 90 detik.",
+      "autoCallStatusOff": "Nonaktif — pesanan baru hanya diberi tahu di layar dapur.",
+      "autoCallToggleAriaLabel": "Alihkan peringatan panggilan telepon otomatis",
+      "autoCallFooterNote": "Jika pesanan baru belum diterima selama sekitar 90 detik, kami melakukan panggilan otomatis ke telepon restoran Anda agar Anda tidak pernah melewatkan pesanan — bahkan jika tablet tidak diawasi.",
+      "autoCallEnabledToast": "Peringatan panggilan telepon otomatis diaktifkan.",
+      "autoCallDisabledToast": "Peringatan panggilan telepon otomatis dinonaktifkan."
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoran Anda",

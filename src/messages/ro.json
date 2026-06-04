@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Introduceți o sumă de rambursare validă.",
     "refundExceeds": "Suma depășește soldul rambursabil.",
     "refundFailed": "Rambursarea a eșuat. Încercați din nou.",
-    "refundSuccess": "Rambursare emisă."
+    "refundSuccess": "Rambursare emisă.",
+    "autoCallMessage": "Comanda nouă {number} de la {restaurant} așteaptă și nu a fost încă acceptată. Vă rugăm să deschideți afișajul de bucătărie pentru a o accepta sau a o refuza."
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "Rezerva PrintNode activată — bucătăria afișează acum opțiunea de configurare PrintNode",
       "printNodeDisabledToast": "Rezerva PrintNode dezactivată — se afișează doar imprimarea directă WiFi/LAN",
       "printNodeFooterNote": "<strong>Imprimarea directă WiFi/LAN</strong> (prin aplicația nativă Fee Free Kitchen pe tabletă Android/iOS) este conexiunea principală la imprimantă — descoperă automat imprimanta în rețea, fără cont PrintNode sau abonament lunar. Activează PrintNode doar ca rezervă dacă nu poți instala aplicația nativă sau rulezi bucătăria într-un browser Windows.",
-      "saveErrorToast": "Salvarea a eșuat — încearcă din nou"
+      "saveErrorToast": "Salvarea a eșuat — încearcă din nou",
+      "autoCallLabel": "Alertă prin apel telefonic automat",
+      "autoCallStatusOn": "Activat — vă apelăm telefonul dacă o comandă nouă nu este acceptată în aproximativ 90 de secunde.",
+      "autoCallStatusOff": "Dezactivat — comenzile noi sunt semnalate doar pe afișajul de bucătărie.",
+      "autoCallToggleAriaLabel": "Comutați alerta prin apel telefonic automat",
+      "autoCallFooterNote": "Dacă o comandă nouă rămâne neacceptată timp de aproximativ 90 de secunde, plasăm un apel automat către telefonul restaurantului dvs., astfel încât să nu pierdeți nicio comandă — chiar dacă tableta este nesupravegheată.",
+      "autoCallEnabledToast": "Alerta prin apel telefonic automat a fost activată.",
+      "autoCallDisabledToast": "Alerta prin apel telefonic automat a fost dezactivată."
     },
     "receiptRenderer": {
       "yourRestaurant": "Restaurantul tău",

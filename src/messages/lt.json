@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Įveskite teisingą grąžinimo sumą.",
     "refundExceeds": "Suma viršija galimą grąžinti likutį.",
     "refundFailed": "Grąžinimas nepavyko. Bandykite dar kartą.",
-    "refundSuccess": "Grąžinimas atliktas."
+    "refundSuccess": "Grąžinimas atliktas.",
+    "autoCallMessage": "Naujas užsakymas {number} restorane {restaurant} laukia ir dar nebuvo priimtas. Atidarykite virtuvės ekraną, kad jį priimtumėte arba atmestumėte."
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "PrintNode atsarginė įjungta — virtuvėje dabar rodoma PrintNode sąrankos parinktis",
       "printNodeDisabledToast": "PrintNode atsarginė išjungta — rodoma tik tiesioginė WiFi / LAN spauda",
       "printNodeFooterNote": "<strong>Tiesioginė WiFi / LAN spauda</strong> (per Fee Free Kitchen vietinę programėlę Android / iOS planšetėje) yra pagrindinis spausdintuvo ryšys — automatiškai aptinka spausdintuvą tinkle, nereikia PrintNode paskyros ar mėnesinio mokesčio. PrintNode įjunkite tik kaip atsarginę, jei negalite įdiegti vietinės programėlės arba virtuvė veikia Windows naršyklėje.",
-      "saveErrorToast": "Nepavyko įrašyti — bandykite dar kartą"
+      "saveErrorToast": "Nepavyko įrašyti — bandykite dar kartą",
+      "autoCallLabel": "Automatinio skambučio įspėjimas",
+      "autoCallStatusOn": "Įjungta — paskambinsime jums, jei naujas užsakymas nebus priimtas per maždaug 90 sekundžių.",
+      "autoCallStatusOff": "Išjungta — apie naujus užsakymus įspėjama tik virtuvės ekrane.",
+      "autoCallToggleAriaLabel": "Perjungti automatinio skambučio įspėjimą",
+      "autoCallFooterNote": "Jei naujas užsakymas lieka nepriimtas maždaug 90 sekundžių, automatiškai paskambiname į jūsų restorano telefoną, kad niekada nepraleistumėte užsakymo — net jei planšetė lieka be priežiūros.",
+      "autoCallEnabledToast": "Automatinio skambučio įspėjimas įjungtas.",
+      "autoCallDisabledToast": "Automatinio skambučio įspėjimas išjungtas."
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsų restoranas",

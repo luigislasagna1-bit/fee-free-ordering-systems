@@ -32,8 +32,18 @@ for (const item of arr) {
   const file = path.join(MSG, `${item.code}.json`);
   if (!fs.existsSync(file)) { problems.push(`${item.code}: missing file`); continue; }
   const json = JSON.parse(fs.readFileSync(file, "utf8"));
-  const target = nsRef(json, NS);
-  for (const [k, v] of Object.entries(item.obj)) target[k] = unescapeTags(v);
+  if (NS === "@root") {
+    // Keys are FULL dotted paths from the root (multi-namespace batch).
+    for (const [k, v] of Object.entries(item.obj)) {
+      const parts = k.split(".");
+      const leaf = parts.pop();
+      const parent = nsRef(json, parts.join("."));
+      parent[leaf] = unescapeTags(v);
+    }
+  } else {
+    const target = nsRef(json, NS);
+    for (const [k, v] of Object.entries(item.obj)) target[k] = unescapeTags(v);
+  }
   fs.writeFileSync(file, JSON.stringify(json, null, 2) + "\n");
   merged++;
 }

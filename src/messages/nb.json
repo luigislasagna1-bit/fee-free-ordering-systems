@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Angi et gyldig refusjonsbeløp.",
     "refundExceeds": "Beløpet overstiger den refunderbare saldoen.",
     "refundFailed": "Refusjonen mislyktes. Prøv igjen.",
-    "refundSuccess": "Refusjon utført."
+    "refundSuccess": "Refusjon utført.",
+    "autoCallMessage": "Ny bestilling {number} hos {restaurant} venter og er ennå ikke godtatt. Vennligst åpne kjøkkenskjermen for å godta eller avvise den."
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "PrintNode-reserve aktivert — kjøkkenet viser nå PrintNode-oppsettvalg",
       "printNodeDisabledToast": "PrintNode-reserve deaktivert — kun direkte WiFi/LAN-utskrift vises",
       "printNodeFooterNote": "<strong>Direkte WiFi/LAN-utskrift</strong> (via Fee Free Kitchen-appen for Android/iOS-nettbrett) er den primære skriveropplysningen — den oppdager automatisk skriveren din på nettverket, ingen PrintNode-konto eller månedlig avgift nødvendig. Aktiver PrintNode kun som reserve hvis du ikke kan installere den innebygde appen eller kjører kjøkkenet i en Windows-nettleser.",
-      "saveErrorToast": "Klarte ikke å lagre — prøv igjen"
+      "saveErrorToast": "Klarte ikke å lagre — prøv igjen",
+      "autoCallLabel": "Varsel via automatisk telefonoppringning",
+      "autoCallStatusOn": "På – vi ringer telefonen din hvis en ny bestilling ikke godtas innen ca. 90 sekunder.",
+      "autoCallStatusOff": "Av – nye bestillinger varsles kun på kjøkkenskjermen.",
+      "autoCallToggleAriaLabel": "Slå av/på varsel via automatisk telefonoppringning",
+      "autoCallFooterNote": "Hvis en ny bestilling forblir uakseptert i omtrent 90 sekunder, ringer vi automatisk restaurantens telefon, slik at du aldri går glipp av en bestilling – selv om nettbrettet står uten tilsyn.",
+      "autoCallEnabledToast": "Varsel via automatisk telefonoppringning er aktivert.",
+      "autoCallDisabledToast": "Varsel via automatisk telefonoppringning er deaktivert."
     },
     "receiptRenderer": {
       "yourRestaurant": "Din restaurant",

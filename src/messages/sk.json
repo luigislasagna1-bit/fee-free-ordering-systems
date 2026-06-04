@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Zadajte platnú sumu na vrátenie.",
     "refundExceeds": "Suma presahuje zostatok, ktorý je možné vrátiť.",
     "refundFailed": "Vrátenie platby zlyhalo. Skúste to znova.",
-    "refundSuccess": "Platba bola vrátená."
+    "refundSuccess": "Platba bola vrátená.",
+    "autoCallMessage": "Nová objednávka {number} v podniku {restaurant} čaká a zatiaľ nebola prijatá. Otvorte prosím kuchynský displej a prijmite ju alebo odmietnite."
   },
   "admin": {
     "welcomeBack": "Vitajte späť",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "Záloha PrintNode zapnutá — kuchyňa teraz zobrazuje možnosť nastavenia PrintNode",
       "printNodeDisabledToast": "Záloha PrintNode vypnutá — zobrazuje sa iba priame tlačenie cez WiFi/LAN",
       "printNodeFooterNote": "<strong>Priame tlačenie cez WiFi/LAN</strong> (cez natívnu aplikáciu Fee Free Kitchen na tablete s Androidom/iOS) je hlavné pripojenie tlačiarne — automaticky objaví vašu tlačiareň v sieti, nie je potrebný účet PrintNode ani mesačný poplatok. PrintNode aktivujte iba ako zálohu, ak nemôžete nainštalovať natívnu aplikáciu alebo kuchyňu prevádzkujete v prehliadači na Windows.",
-      "saveErrorToast": "Uloženie zlyhalo — skúste to znova"
+      "saveErrorToast": "Uloženie zlyhalo — skúste to znova",
+      "autoCallLabel": "Upozornenie automatickým telefonátom",
+      "autoCallStatusOn": "Zapnuté — zavoláme vám na telefón, ak nová objednávka nebude prijatá do približne 90 sekúnd.",
+      "autoCallStatusOff": "Vypnuté — nové objednávky sa zobrazujú len na kuchynskom displeji.",
+      "autoCallToggleAriaLabel": "Prepnúť upozornenie automatickým telefonátom",
+      "autoCallFooterNote": "Ak nová objednávka zostane neprijatá približne 90 sekúnd, zavoláme automaticky na telefón vašej reštaurácie, aby vám neunikla žiadna objednávka — aj keď je tablet bez dozoru.",
+      "autoCallEnabledToast": "Upozornenie automatickým telefonátom je zapnuté.",
+      "autoCallDisabledToast": "Upozornenie automatickým telefonátom je vypnuté."
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaša reštaurácia",

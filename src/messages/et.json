@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Sisesta kehtiv tagasimakse summa.",
     "refundExceeds": "Summa ületab tagasimakstava jäägi.",
     "refundFailed": "Tagasimakse ebaõnnestus. Palun proovi uuesti.",
-    "refundSuccess": "Tagasimakse tehtud."
+    "refundSuccess": "Tagasimakse tehtud.",
+    "autoCallMessage": "Uus tellimus {number} restoranis {restaurant} ootab ja seda pole veel vastu võetud. Palun avage köögiekraan, et see vastu võtta või tagasi lükata."
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "PrintNode varu lubatud — köök näitab nüüd PrintNode seadistuse valikut",
       "printNodeDisabledToast": "PrintNode varu keelatud — näidatakse ainult otse WiFi/LAN-printimist",
       "printNodeFooterNote": "<strong>Otse WiFi/LAN-printimine</strong> (Fee Free Kitchen rakenduse kaudu Android/iOS tahvelarvutil) on peamine printerühendus — see leiab printeri võrgus automaatselt ilma PrintNode konto või kuutasuta. Luba PrintNode ainult varuvõimalusena, kui ei saa rakendust installida või kasutad kööki Windowsi brauseris.",
-      "saveErrorToast": "Salvestamine ebaõnnestus — palun proovi uuesti"
+      "saveErrorToast": "Salvestamine ebaõnnestus — palun proovi uuesti",
+      "autoCallLabel": "Automaatne telefonikõne hoiatus",
+      "autoCallStatusOn": "Sees — helistame teie telefonile, kui uut tellimust ei võeta vastu umbes 90 sekundi jooksul.",
+      "autoCallStatusOff": "Väljas — uutest tellimustest teavitatakse ainult köögiekraanil.",
+      "autoCallToggleAriaLabel": "Lülita automaatse telefonikõne hoiatus sisse või välja",
+      "autoCallFooterNote": "Kui uus tellimus jääb umbes 90 sekundiks vastu võtmata, teeme automaatse kõne teie restorani telefonile, et te ei jätaks ühtegi tellimust kahe silma vahele — isegi kui tahvelarvuti on järelevalveta.",
+      "autoCallEnabledToast": "Automaatne telefonikõne hoiatus on sisse lülitatud.",
+      "autoCallDisabledToast": "Automaatne telefonikõne hoiatus on välja lülitatud."
     },
     "receiptRenderer": {
       "yourRestaurant": "Sinu restoran",

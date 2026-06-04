@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Vui lòng nhập số tiền hoàn hợp lệ.",
     "refundExceeds": "Số tiền vượt quá số dư có thể hoàn.",
     "refundFailed": "Hoàn tiền thất bại. Vui lòng thử lại.",
-    "refundSuccess": "Đã thực hiện hoàn tiền."
+    "refundSuccess": "Đã thực hiện hoàn tiền.",
+    "autoCallMessage": "Đơn hàng mới {number} tại {restaurant} đang chờ và chưa được chấp nhận. Vui lòng mở màn hình bếp để chấp nhận hoặc từ chối đơn hàng."
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "Đã bật dự phòng PrintNode — bếp hiện hiển thị tùy chọn thiết lập PrintNode",
       "printNodeDisabledToast": "Đã tắt dự phòng PrintNode — chỉ hiển thị in qua WiFi/LAN trực tiếp",
       "printNodeFooterNote": "<strong>In qua WiFi/LAN trực tiếp</strong> (thông qua ứng dụng native Fee Free Kitchen trên máy tính bảng Android/iOS) là kết nối máy in chính — tự động phát hiện máy in trên mạng, không cần tài khoản PrintNode hay phí hàng tháng. Chỉ bật PrintNode làm dự phòng nếu bạn không thể cài ứng dụng native hoặc đang chạy bếp trên trình duyệt Windows.",
-      "saveErrorToast": "Lưu thất bại — vui lòng thử lại"
+      "saveErrorToast": "Lưu thất bại — vui lòng thử lại",
+      "autoCallLabel": "Cảnh báo gọi điện tự động",
+      "autoCallStatusOn": "Bật — chúng tôi sẽ gọi vào điện thoại của bạn nếu một đơn hàng mới không được chấp nhận trong khoảng 90 giây.",
+      "autoCallStatusOff": "Tắt — đơn hàng mới chỉ cảnh báo trên màn hình bếp.",
+      "autoCallToggleAriaLabel": "Bật/tắt cảnh báo gọi điện tự động",
+      "autoCallFooterNote": "Nếu một đơn hàng mới chưa được chấp nhận trong khoảng 90 giây, chúng tôi sẽ thực hiện cuộc gọi tự động đến điện thoại nhà hàng của bạn để bạn không bao giờ bỏ lỡ đơn hàng — ngay cả khi không có ai bên cạnh máy tính bảng.",
+      "autoCallEnabledToast": "Đã bật cảnh báo gọi điện tự động.",
+      "autoCallDisabledToast": "Đã tắt cảnh báo gọi điện tự động."
     },
     "receiptRenderer": {
       "yourRestaurant": "Nhà hàng của bạn",

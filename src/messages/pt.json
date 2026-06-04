@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Introduza um montante de reembolso válido.",
     "refundExceeds": "O montante excede o saldo reembolsável.",
     "refundFailed": "O reembolso falhou. Tente novamente.",
-    "refundSuccess": "Reembolso emitido."
+    "refundSuccess": "Reembolso emitido.",
+    "autoCallMessage": "O novo pedido {number} em {restaurant} está em espera e ainda não foi aceite. Por favor, abra o ecrã da cozinha para o aceitar ou rejeitar."
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "Backup PrintNode ativado — a cozinha agora mostra a opção de configuração PrintNode",
       "printNodeDisabledToast": "Backup PrintNode desativado — apenas impressão direta via WiFi/LAN é exibida",
       "printNodeFooterNote": "<strong>Impressão direta via WiFi/LAN</strong> (através do aplicativo nativo Fee Free Kitchen no tablet Android/iOS) é a ligação principal da impressora — descobre automaticamente a sua impressora na rede, sem conta PrintNode nem mensalidade. Ative o PrintNode apenas como backup se não conseguir instalar o aplicativo nativo ou estiver a usar a cozinha num navegador Windows.",
-      "saveErrorToast": "Falha ao guardar — tente novamente"
+      "saveErrorToast": "Falha ao guardar — tente novamente",
+      "autoCallLabel": "Alerta por chamada telefónica automática",
+      "autoCallStatusOn": "Ativo — ligamos para o seu telefone se um novo pedido não for aceite no prazo de cerca de 90 segundos.",
+      "autoCallStatusOff": "Inativo — os novos pedidos são assinalados apenas no ecrã da cozinha.",
+      "autoCallToggleAriaLabel": "Alternar alerta por chamada telefónica automática",
+      "autoCallFooterNote": "Se um novo pedido ficar por aceitar durante cerca de 90 segundos, fazemos uma chamada automática para o telefone do seu restaurante, para que nunca perca um pedido — mesmo que o tablet esteja sem ninguém a vigiá-lo.",
+      "autoCallEnabledToast": "Alerta por chamada telefónica automática ativado.",
+      "autoCallDisabledToast": "Alerta por chamada telefónica automática desativado."
     },
     "receiptRenderer": {
       "yourRestaurant": "O Seu Restaurante",

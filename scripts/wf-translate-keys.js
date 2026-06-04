@@ -6,28 +6,17 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "admin.billing";
-const CONTEXT = "the restaurant's billing screen; a form to enter fiscal/company details (legal name, VAT/tax ID, billing address) used on platform-service invoices for their accountant. 'SDI' and 'PEC' are Italian e-invoicing terms — keep them as-is";
+const NS = "@root"; // keys below are FULL dotted paths (multi-namespace batch)
+const CONTEXT = "a restaurant ordering platform; an 'auto phone-call' feature that telephones the restaurant with a spoken message when a new order isn't accepted in ~90s. The autoCallMessage value is SPOKEN ALOUD over the phone — keep it natural for text-to-speech";
 const EN = {
-  fiscalTitle: "Fiscal / billing details",
-  fiscalSubtitle: "Used on your platform-service invoices so you can give your accountant a proper proof of purchase.",
-  fiscalLegalName: "Registered company name",
-  fiscalLegalNamePlaceholder: "e.g. Luigi’s Lasagna S.r.l.",
-  fiscalTaxIdType: "Tax ID type",
-  fiscalTaxId: "VAT / tax ID",
-  fiscalBillingEmail: "Billing email",
-  fiscalAddress1: "Address line 1",
-  fiscalAddress2: "Address line 2",
-  fiscalCity: "City",
-  fiscalState: "State / province",
-  fiscalPostalCode: "Postal code",
-  fiscalCountry: "Country (ISO code)",
-  fiscalSdi: "SDI code (Italy e-invoicing)",
-  fiscalPec: "Certified email (PEC, Italy)",
-  fiscalSave: "Save fiscal details",
-  fiscalSaved: "Saved",
-  fiscalHint: "These details are added to your Stripe billing profile and appear on future invoices and receipts.",
-  loading: "Loading…",
+  "kitchen.autoCallMessage": "New order {number} at {restaurant} is waiting and has not been accepted yet. Please open your kitchen display to accept or reject it.",
+  "admin.kitchenWorkflowToggle.autoCallLabel": "Auto phone-call alert",
+  "admin.kitchenWorkflowToggle.autoCallStatusOn": "On — we call your phone if a new order is not accepted within ~90 seconds.",
+  "admin.kitchenWorkflowToggle.autoCallStatusOff": "Off — new orders alert on the kitchen display only.",
+  "admin.kitchenWorkflowToggle.autoCallToggleAriaLabel": "Toggle auto phone-call alert",
+  "admin.kitchenWorkflowToggle.autoCallFooterNote": "If a new order sits unaccepted for about 90 seconds, we place an automated call to your restaurant phone so you never miss an order — even if the tablet is unattended.",
+  "admin.kitchenWorkflowToggle.autoCallEnabledToast": "Auto phone-call alert enabled.",
+  "admin.kitchenWorkflowToggle.autoCallDisabledToast": "Auto phone-call alert disabled.",
 };
 const KEYS = Object.keys(EN);
 

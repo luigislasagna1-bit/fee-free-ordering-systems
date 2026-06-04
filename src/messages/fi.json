@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Anna kelvollinen hyvityssumma.",
     "refundExceeds": "Summa ylittää hyvitettävän saldon.",
     "refundFailed": "Hyvitys epäonnistui. Yritä uudelleen.",
-    "refundSuccess": "Hyvitys tehty."
+    "refundSuccess": "Hyvitys tehty.",
+    "autoCallMessage": "Uusi tilaus {number} ravintolassa {restaurant} odottaa eikä sitä ole vielä hyväksytty. Avaa keittiönäyttö hyväksyäksesi tai hylätäksesi sen."
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "PrintNode-varatieto käytössä — keittiö näyttää nyt PrintNode-asetusvaihtoehdon",
       "printNodeDisabledToast": "PrintNode-varatieto poistettu käytöstä — näytetään vain suora WiFi/LAN-tulostus",
       "printNodeFooterNote": "<strong>Suora WiFi/LAN-tulostus</strong> (Fee Free Kitchen -natiivisovelluksen kautta Android/iOS-tabletilla) on päätulostinyhteys — se löytää tulostimesi automaattisesti verkosta ilman PrintNode-tiliä tai kuukausimaksua. Ota PrintNode käyttöön vain varana, jos natiivisovellusta ei voi asentaa tai keittiö toimii Windows-selaimella.",
-      "saveErrorToast": "Tallennus epäonnistui — yritä uudelleen"
+      "saveErrorToast": "Tallennus epäonnistui — yritä uudelleen",
+      "autoCallLabel": "Automaattinen puhelinhälytys",
+      "autoCallStatusOn": "Päällä — soitamme puhelimeesi, jos uutta tilausta ei hyväksytä noin 90 sekunnin kuluessa.",
+      "autoCallStatusOff": "Pois päältä — uusista tilauksista ilmoitetaan vain keittiönäytöllä.",
+      "autoCallToggleAriaLabel": "Ota automaattinen puhelinhälytys käyttöön tai pois käytöstä",
+      "autoCallFooterNote": "Jos uusi tilaus jää hyväksymättä noin 90 sekunniksi, soitamme automaattisesti ravintolasi puhelimeen, jotta et koskaan jää paitsi tilauksesta — vaikka tabletti olisi ilman valvontaa.",
+      "autoCallEnabledToast": "Automaattinen puhelinhälytys otettu käyttöön.",
+      "autoCallDisabledToast": "Automaattinen puhelinhälytys poistettu käytöstä."
     },
     "receiptRenderer": {
       "yourRestaurant": "Ravintolasi",

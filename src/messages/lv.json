@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Ievadiet derīgu atmaksas summu.",
     "refundExceeds": "Summa pārsniedz atmaksājamo atlikumu.",
     "refundFailed": "Atmaksa neizdevās. Lūdzu, mēģiniet vēlreiz.",
-    "refundSuccess": "Atmaksa veikta."
+    "refundSuccess": "Atmaksa veikta.",
+    "autoCallMessage": "Jauns pasūtījums {number} restorānā {restaurant} gaida un vēl nav pieņemts. Lūdzu, atveriet virtuves displeju, lai to pieņemtu vai noraidītu."
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "PrintNode rezerve iespējota — virtuve tagad rāda PrintNode iestatīšanas opciju",
       "printNodeDisabledToast": "PrintNode rezerve atspējota — rādīta tikai tiešā WiFi/LAN drukāšana",
       "printNodeFooterNote": "<strong>Tiešā WiFi/LAN drukāšana</strong> (izmantojot Fee Free Kitchen vietējo lietotni Android/iOS planšetdatorā) ir galvenais printera savienojums — tas automātiski atrod printeri tīklā, nav nepieciešams PrintNode konts vai ikmēneša maksa. Iespējojiet PrintNode tikai kā rezervi, ja nevarat instalēt vietējo lietotni vai virtuve darbojas Windows pārlūkprogrammā.",
-      "saveErrorToast": "Neizdevās saglabāt — lūdzu, mēģiniet vēlreiz"
+      "saveErrorToast": "Neizdevās saglabāt — lūdzu, mēģiniet vēlreiz",
+      "autoCallLabel": "Automātiskā tālruņa zvana brīdinājums",
+      "autoCallStatusOn": "Ieslēgts — mēs piezvanām uz jūsu tālruni, ja jauns pasūtījums netiek pieņemts aptuveni 90 sekunžu laikā.",
+      "autoCallStatusOff": "Izslēgts — par jauniem pasūtījumiem brīdina tikai virtuves displejs.",
+      "autoCallToggleAriaLabel": "Pārslēgt automātiskā tālruņa zvana brīdinājumu",
+      "autoCallFooterNote": "Ja jauns pasūtījums paliek nepieņemts aptuveni 90 sekundes, mēs veicam automātisku zvanu uz jūsu restorāna tālruni, lai jūs nekad nepalaistu garām pasūtījumu — pat ja planšete ir bez uzraudzības.",
+      "autoCallEnabledToast": "Automātiskā tālruņa zvana brīdinājums ieslēgts.",
+      "autoCallDisabledToast": "Automātiskā tālruņa zvana brīdinājums izslēgts."
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsu restorāns",

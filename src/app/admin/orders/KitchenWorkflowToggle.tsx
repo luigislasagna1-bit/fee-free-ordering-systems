@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Zap, Activity, ChevronDown, ChevronUp, Info, Printer, ServerCrash } from "lucide-react";
+import { Zap, Activity, ChevronDown, ChevronUp, Info, Printer, ServerCrash, PhoneCall } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 /**
@@ -29,14 +29,18 @@ import { useTranslations } from "next-intl";
 export function KitchenWorkflowToggle({
   initialMode,
   initialPrintNodeEnabled = false,
+  initialAutoCall = false,
 }: {
   initialMode: "simple" | "tracking";
   initialPrintNodeEnabled?: boolean;
+  initialAutoCall?: boolean;
 }) {
   const t = useTranslations("admin.kitchenWorkflowToggle");
   const [mode, setMode] = useState<"simple" | "tracking">(initialMode);
   const [printNodeEnabled, setPrintNodeEnabled] = useState<boolean>(initialPrintNodeEnabled);
   const [savingPrintNode, setSavingPrintNode] = useState(false);
+  const [autoCall, setAutoCall] = useState<boolean>(initialAutoCall);
+  const [savingAutoCall, setSavingAutoCall] = useState(false);
   const [saving, setSaving] = useState(false);
   // Auto-expand when the choice is the non-default ("tracking") so an
   // existing customer who already picked tracking sees their setting
@@ -64,6 +68,25 @@ export function KitchenWorkflowToggle({
       toast.error(t("saveErrorToast"));
     } finally {
       setSavingPrintNode(false);
+    }
+  }
+
+  async function toggleAutoCall(enabled: boolean) {
+    setSavingAutoCall(true);
+    setAutoCall(enabled); // optimistic
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ autoCallOnNewOrder: enabled }),
+      });
+      if (!res.ok) throw new Error("Failed to save");
+      toast.success(enabled ? t("autoCallEnabledToast") : t("autoCallDisabledToast"));
+    } catch {
+      setAutoCall(!enabled);
+      toast.error(t("saveErrorToast"));
+    } finally {
+      setSavingAutoCall(false);
     }
   }
 
@@ -221,6 +244,50 @@ export function KitchenWorkflowToggle({
                 strong: (chunks) => <strong>{chunks}</strong>,
               })}
             </span>
+          </p>
+        </div>
+      </div>
+
+      {/* ── Auto phone-call alert ───────────────────────────────────────
+          When a new order isn't accepted within ~90s, ring the restaurant's
+          phone with an automated message so an unattended tablet doesn't
+          drop the order (GloriaFood-style). Default OFF. Requires the
+          platform Twilio voice credentials + a restaurant phone number. */}
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+        <div className="px-5 py-3.5 flex items-center gap-3">
+          <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
+            autoCall ? "bg-rose-100 text-rose-700" : "bg-gray-100 text-gray-400"
+          }`}>
+            <PhoneCall className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+              {t("autoCallLabel")}
+            </div>
+            <div className="text-sm text-gray-900 mt-0.5 leading-snug">
+              {autoCall ? t("autoCallStatusOn") : t("autoCallStatusOff")}
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => toggleAutoCall(!autoCall)}
+            disabled={savingAutoCall}
+            aria-label={t("autoCallToggleAriaLabel")}
+            className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
+              autoCall ? "bg-rose-500" : "bg-gray-300"
+            } ${savingAutoCall ? "opacity-50" : ""}`}
+          >
+            <div
+              className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${
+                autoCall ? "translate-x-6" : "translate-x-0"
+              }`}
+            />
+          </button>
+        </div>
+        <div className="border-t border-gray-100 px-5 py-3 bg-gray-50/50">
+          <p className="text-[11px] text-gray-600 leading-relaxed flex items-start gap-2">
+            <PhoneCall className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-gray-400" />
+            <span>{t("autoCallFooterNote")}</span>
           </p>
         </div>
       </div>

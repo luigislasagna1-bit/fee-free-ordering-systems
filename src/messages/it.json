@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Inserisci un importo di rimborso valido.",
     "refundExceeds": "L'importo supera il saldo rimborsabile.",
     "refundFailed": "Rimborso non riuscito. Riprova.",
-    "refundSuccess": "Rimborso emesso."
+    "refundSuccess": "Rimborso emesso.",
+    "autoCallMessage": "Il nuovo ordine {number} presso {restaurant} è in attesa e non è ancora stato accettato. Apri il display della cucina per accettarlo o rifiutarlo."
   },
   "admin": {
     "welcomeBack": "Bentornato",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "Backup PrintNode attivato — la cucina mostra ora l'opzione di configurazione PrintNode",
       "printNodeDisabledToast": "Backup PrintNode disattivato — mostrata solo la stampa diretta WiFi/LAN",
       "printNodeFooterNote": "<strong>La stampa diretta WiFi/LAN</strong> (tramite l'app nativa Fee Free Kitchen su tablet Android/iOS) è la connessione principale alla stampante — rileva automaticamente la stampante sulla rete, senza account PrintNode né canone mensile. Abilita PrintNode solo come backup se non riesci a installare l'app nativa o stai usando la cucina su un browser Windows.",
-      "saveErrorToast": "Salvataggio non riuscito — riprova"
+      "saveErrorToast": "Salvataggio non riuscito — riprova",
+      "autoCallLabel": "Avviso con chiamata automatica",
+      "autoCallStatusOn": "Attivo — chiamiamo il tuo telefono se un nuovo ordine non viene accettato entro circa 90 secondi.",
+      "autoCallStatusOff": "Disattivato — i nuovi ordini vengono segnalati solo sul display della cucina.",
+      "autoCallToggleAriaLabel": "Attiva/disattiva l'avviso con chiamata automatica",
+      "autoCallFooterNote": "Se un nuovo ordine resta non accettato per circa 90 secondi, effettuiamo una chiamata automatica al telefono del tuo ristorante, così non perdi mai un ordine, anche se il tablet è incustodito.",
+      "autoCallEnabledToast": "Avviso con chiamata automatica attivato.",
+      "autoCallDisabledToast": "Avviso con chiamata automatica disattivato."
     },
     "receiptRenderer": {
       "yourRestaurant": "Il tuo ristorante",

@@ -51,6 +51,7 @@ export async function PUT(req: NextRequest) {
     defaultLanguage,
     kitchenWorkflowMode,
     printNodeEnabled,
+    autoCallOnNewOrder,
     scheduledOrderInterval,
     requireCustomerEmail,
     requireCustomerPhone,
@@ -186,6 +187,7 @@ export async function PUT(req: NextRequest) {
     updateData.kitchenWorkflowMode = kitchenWorkflowMode;
   }
   if (printNodeEnabled !== undefined) updateData.printNodeEnabled = !!printNodeEnabled;
+  if (autoCallOnNewOrder !== undefined) updateData.autoCallOnNewOrder = !!autoCallOnNewOrder;
   // Scheduled-order slot interval (Luigi 2026-05-31). Whitelist values
   // so we don't accidentally accept 1-minute (kitchen chaos) or 1440
   // (no slots in a day). 10/15/20/30/60 covers every real workflow.

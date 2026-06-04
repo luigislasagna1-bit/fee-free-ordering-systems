@@ -20,7 +20,7 @@ export default async function OrdersPage() {
     restaurantId
       ? prisma.restaurant.findUnique({
           where: { id: restaurantId },
-          select: { kitchenWorkflowMode: true, printNodeEnabled: true },
+          select: { kitchenWorkflowMode: true, printNodeEnabled: true, autoCallOnNewOrder: true },
         })
       : null,
   ]);
@@ -29,10 +29,11 @@ export default async function OrdersPage() {
     | "simple"
     | "tracking";
   const printNodeEnabled = !!restaurant?.printNodeEnabled;
+  const autoCall = !!restaurant?.autoCallOnNewOrder;
 
   return (
     <div className="space-y-6">
-      <KitchenWorkflowToggle initialMode={mode} initialPrintNodeEnabled={printNodeEnabled} />
+      <KitchenWorkflowToggle initialMode={mode} initialPrintNodeEnabled={printNodeEnabled} initialAutoCall={autoCall} />
       <OrdersClient orders={orders as any} />
     </div>
   );

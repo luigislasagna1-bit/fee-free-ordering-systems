@@ -138,6 +138,11 @@ model Restaurant {
   /// Default true because the kitchen needs to call customers about
   /// delivery / pickup hand-offs.
   requireCustomerPhone Boolean @default(true)
+  /// Auto phone-call alert (report cmpxeph4l): when on, a new order left
+  /// unaccepted for ~90s triggers an automated voice call to the
+  /// restaurant's phone so an unattended tablet doesn't drop the order.
+  /// Requires the platform Twilio voice creds + a restaurant phone number.
+  autoCallOnNewOrder   Boolean @default(false)
   // Stripe Connect (Layer C — restaurant collects payments from customers)
   stripeAccountId      String?
   stripeAccountStatus  String? @default("not_connected")
@@ -789,6 +794,10 @@ model Order {
   /// until now reaches alertAt.
   placedWhileClosed     Boolean   @default(false)
   alertAt               DateTime?
+  /// When the "nearly-missed order" auto phone-call was placed to the
+  /// restaurant (report cmpxeph4l). Set once so the every-minute cron never
+  /// double-calls for the same order. Null = no call placed yet.
+  alertCallAt           DateTime?
 
   /// Marketplace channel attribution. True when the customer came from
   /// our /marketplace browse page (detected via ?from=marketplace at

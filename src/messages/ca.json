@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Introduïu un import de reemborsament vàlid.",
     "refundExceeds": "L'import supera el saldo reemborsable.",
     "refundFailed": "El reemborsament ha fallat. Torneu-ho a provar.",
-    "refundSuccess": "Reemborsament emès."
+    "refundSuccess": "Reemborsament emès.",
+    "autoCallMessage": "La comanda nova {number} a {restaurant} està esperant i encara no s'ha acceptat. Si us plau, obriu la pantalla de cuina per acceptar-la o rebutjar-la."
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "Còpia de seguretat PrintNode activada — la cuina ara mostra l'opció de configuració de PrintNode",
       "printNodeDisabledToast": "Còpia de seguretat PrintNode desactivada — només es mostra la impressió directa per WiFi/LAN",
       "printNodeFooterNote": "<strong>La impressió directa per WiFi/LAN</strong> (mitjançant l'aplicació nativa Fee Free Kitchen a tauleta Android/iOS) és la connexió principal d'impressora — descobreix automàticament la vostra impressora a la xarxa, sense compte PrintNode ni quota mensual. Activeu PrintNode només com a còpia de seguretat si no podeu instal·lar l'aplicació nativa o executeu la cuina en un navegador Windows.",
-      "saveErrorToast": "No s'ha pogut desar — torneu-ho a intentar"
+      "saveErrorToast": "No s'ha pogut desar — torneu-ho a intentar",
+      "autoCallLabel": "Alerta de trucada telefònica automàtica",
+      "autoCallStatusOn": "Activada: us truquem al telèfon si una comanda nova no s'accepta en uns 90 segons.",
+      "autoCallStatusOff": "Desactivada: les comandes noves només avisen a la pantalla de cuina.",
+      "autoCallToggleAriaLabel": "Activa o desactiva l'alerta de trucada telefònica automàtica",
+      "autoCallFooterNote": "Si una comanda nova queda sense acceptar durant uns 90 segons, fem una trucada automàtica al telèfon del restaurant perquè no perdeu mai cap comanda, fins i tot si la tauleta està desatesa.",
+      "autoCallEnabledToast": "Alerta de trucada telefònica automàtica activada.",
+      "autoCallDisabledToast": "Alerta de trucada telefònica automàtica desactivada."
     },
     "receiptRenderer": {
       "yourRestaurant": "El vostre restaurant",

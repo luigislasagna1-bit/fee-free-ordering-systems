@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Adjon meg érvényes visszatérítési összeget.",
     "refundExceeds": "Az összeg meghaladja a visszatéríthető egyenleget.",
     "refundFailed": "A visszatérítés sikertelen. Kérjük, próbálja újra.",
-    "refundSuccess": "Visszatérítés kiadva."
+    "refundSuccess": "Visszatérítés kiadva.",
+    "autoCallMessage": "A(z) {number} számú új rendelés a(z) {restaurant} étteremben várakozik, és még nincs elfogadva. Kérjük, nyissa meg a konyhai kijelzőt az elfogadáshoz vagy elutasításhoz."
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "PrintNode tartalék engedélyezve — a konyha mostantól mutatja a PrintNode-beállítási lehetőséget",
       "printNodeDisabledToast": "PrintNode tartalék letiltva — csak közvetlen WiFi/LAN nyomtatás látható",
       "printNodeFooterNote": "<strong>A közvetlen WiFi/LAN nyomtatás</strong> (a Fee Free Kitchen natív alkalmazáson keresztül Android/iOS táblagépen) az elsődleges nyomtatókapcsolat — automatikusan felismeri a nyomtatót a hálózaton, nincs szükség PrintNode-fiókra vagy havi díjra. A PrintNode-ot csak tartalékként engedélyezze, ha nem tudja telepíteni a natív alkalmazást, vagy a konyhát Windows böngészőből üzemelteti.",
-      "saveErrorToast": "Nem sikerült menteni — kérjük, próbálja újra"
+      "saveErrorToast": "Nem sikerült menteni — kérjük, próbálja újra",
+      "autoCallLabel": "Automatikus telefonhívásos riasztás",
+      "autoCallStatusOn": "Bekapcsolva — felhívjuk a telefonját, ha egy új rendelést nem fogadnak el körülbelül 90 másodpercen belül.",
+      "autoCallStatusOff": "Kikapcsolva — az új rendelésekről csak a konyhai kijelzőn jelenik meg riasztás.",
+      "autoCallToggleAriaLabel": "Automatikus telefonhívásos riasztás be- és kikapcsolása",
+      "autoCallFooterNote": "Ha egy új rendelés körülbelül 90 másodpercig elfogadatlan marad, automatikus hívást indítunk az étterem telefonszámára, hogy soha ne maradjon le egyetlen rendelésről sem — még akkor sem, ha a táblagép felügyelet nélkül van.",
+      "autoCallEnabledToast": "Automatikus telefonhívásos riasztás engedélyezve.",
+      "autoCallDisabledToast": "Automatikus telefonhívásos riasztás letiltva."
     },
     "receiptRenderer": {
       "yourRestaurant": "Az Ön étterme",

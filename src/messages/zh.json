@@ -518,7 +518,8 @@
     "refundInvalidAmount": "请输入有效的退款金额。",
     "refundExceeds": "金额超出可退款余额。",
     "refundFailed": "退款失败。请重试。",
-    "refundSuccess": "退款已发起。"
+    "refundSuccess": "退款已发起。",
+    "autoCallMessage": "{restaurant} 的新订单 {number} 正在等待，尚未被接受。请打开您的厨房显示屏，接受或拒绝该订单。"
   },
   "admin": {
     "welcomeBack": "欢迎回来",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "PrintNode 备用已启用 — 厨房现在显示 PrintNode 设置选项",
       "printNodeDisabledToast": "PrintNode 备用已禁用 — 仅显示直接 WiFi/LAN 打印",
       "printNodeFooterNote": "<strong>直接 WiFi/LAN 打印</strong>（通过 Android/iOS 平板上的 Fee Free 厨房原生应用）是主要打印连接方式 — 它会自动在网络上发现您的打印机，无需 PrintNode 账户或月费。仅当您无法安装原生应用或在 Windows 浏览器上运行厨房时，才启用 PrintNode 作为备用。",
-      "saveErrorToast": "保存失败 — 请重试"
+      "saveErrorToast": "保存失败 — 请重试",
+      "autoCallLabel": "自动电话提醒",
+      "autoCallStatusOn": "已开启 — 如果新订单在约 90 秒内未被接受，我们会致电您的电话。",
+      "autoCallStatusOff": "已关闭 — 新订单仅在厨房显示屏上提醒。",
+      "autoCallToggleAriaLabel": "切换自动电话提醒",
+      "autoCallFooterNote": "如果新订单约 90 秒内仍未被接受，我们会自动致电您的餐厅电话，确保您绝不漏单 — 即使平板电脑无人看管。",
+      "autoCallEnabledToast": "已启用自动电话提醒。",
+      "autoCallDisabledToast": "已停用自动电话提醒。"
     },
     "receiptRenderer": {
       "yourRestaurant": "您的餐厅",

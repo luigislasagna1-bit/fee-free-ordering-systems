@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Enter a valid refund amount.",
     "refundExceeds": "Amount exceeds the refundable balance.",
     "refundFailed": "Refund failed. Please try again.",
-    "refundSuccess": "Refund issued."
+    "refundSuccess": "Refund issued.",
+    "autoCallMessage": "New order {number} at {restaurant} is waiting and has not been accepted yet. Please open your kitchen display to accept or reject it."
   },
   "admin": {
     "comingSoonPlaceholder": {
@@ -1071,7 +1072,14 @@
       "printNodeEnabledToast": "PrintNode backup enabled — kitchen now shows PrintNode setup option",
       "printNodeDisabledToast": "PrintNode backup disabled — only direct WiFi/LAN printing shown",
       "printNodeFooterNote": "<strong>Direct WiFi/LAN printing</strong> (via the Fee Free Kitchen native app on Android/iOS tablet) is the main printer connection — it auto-discovers your printer on the network, no PrintNode account or monthly fee needed. Enable PrintNode only as a backup if you can't install the native app or are running the kitchen on a Windows browser.",
-      "saveErrorToast": "Failed to save — please try again"
+      "saveErrorToast": "Failed to save — please try again",
+      "autoCallLabel": "Auto phone-call alert",
+      "autoCallStatusOn": "On — we call your phone if a new order is not accepted within ~90 seconds.",
+      "autoCallStatusOff": "Off — new orders alert on the kitchen display only.",
+      "autoCallToggleAriaLabel": "Toggle auto phone-call alert",
+      "autoCallFooterNote": "If a new order sits unaccepted for about 90 seconds, we place an automated call to your restaurant phone so you never miss an order — even if the tablet is unattended.",
+      "autoCallEnabledToast": "Auto phone-call alert enabled.",
+      "autoCallDisabledToast": "Auto phone-call alert disabled."
     },
     "customers": {
       "title": "Customers",

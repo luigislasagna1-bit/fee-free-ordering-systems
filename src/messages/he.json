@@ -518,7 +518,8 @@
     "refundInvalidAmount": "הזן סכום החזר תקין.",
     "refundExceeds": "הסכום חורג מהיתרה הניתנת להחזר.",
     "refundFailed": "ההחזר נכשל. נסה שוב.",
-    "refundSuccess": "ההחזר בוצע."
+    "refundSuccess": "ההחזר בוצע.",
+    "autoCallMessage": "הזמנה חדשה {number} ב{restaurant} ממתינה ועדיין לא אושרה. אנא פתחו את מסך המטבח כדי לאשר או לדחות אותה."
   },
   "admin": {
     "welcomeBack": "ברוך שובך",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "גיבוי PrintNode הופעל — המטבח מציג כעת אפשרות הגדרת PrintNode",
       "printNodeDisabledToast": "גיבוי PrintNode כובה — מוצגת הדפסה ישירה בלבד דרך WiFi/LAN",
       "printNodeFooterNote": "<strong>הדפסה ישירה דרך WiFi/LAN</strong> (דרך אפליקציית Fee Free Kitchen המקורית לטאבלט Android/iOS) היא חיבור המדפסת הראשי — היא מאתרת אוטומטית את המדפסת ברשת, ללא חשבון PrintNode או עלות חודשית. הפעל PrintNode רק כגיבוי אם אינך יכול להתקין את האפליקציה המקורית או שאתה מפעיל את המטבח בדפדפן Windows.",
-      "saveErrorToast": "השמירה נכשלה — נסה שוב"
+      "saveErrorToast": "השמירה נכשלה — נסה שוב",
+      "autoCallLabel": "התראת שיחת טלפון אוטומטית",
+      "autoCallStatusOn": "פעיל — אנחנו מתקשרים לטלפון שלכם אם הזמנה חדשה לא מאושרת בתוך כ-90 שניות.",
+      "autoCallStatusOff": "כבוי — הזמנות חדשות מתריעות במסך המטבח בלבד.",
+      "autoCallToggleAriaLabel": "החלפת מצב התראת שיחת טלפון אוטומטית",
+      "autoCallFooterNote": "אם הזמנה חדשה נשארת לא מאושרת במשך כ-90 שניות, אנחנו מבצעים שיחה אוטומטית לטלפון של המסעדה כדי שלעולם לא תפספסו הזמנה — גם אם הטאבלט אינו מאויש.",
+      "autoCallEnabledToast": "התראת שיחת טלפון אוטומטית הופעלה.",
+      "autoCallDisabledToast": "התראת שיחת טלפון אוטומטית כובתה."
     },
     "receiptRenderer": {
       "yourRestaurant": "המסעדה שלך",

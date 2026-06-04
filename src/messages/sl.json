@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Vnesite veljaven znesek povračila.",
     "refundExceeds": "Znesek presega razpoložljivo stanje za povračilo.",
     "refundFailed": "Povračilo ni uspelo. Poskusite znova.",
-    "refundSuccess": "Povračilo je bilo izvedeno."
+    "refundSuccess": "Povračilo je bilo izvedeno.",
+    "autoCallMessage": "Novo naročilo {number} pri {restaurant} čaka in še ni bilo sprejeto. Prosimo, odprite kuhinjski zaslon, da ga sprejmete ali zavrnete."
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "Rezerva PrintNode omogočena — kuhinja zdaj prikazuje možnost nastavitve PrintNode",
       "printNodeDisabledToast": "Rezerva PrintNode onemogočena — prikazano je samo neposredno tiskanje WiFi/LAN",
       "printNodeFooterNote": "<strong>Neposredno tiskanje WiFi/LAN</strong> (prek domače aplikacije Fee Free Kitchen na tablici Android/iOS) je glavna povezava tiskalnika — samodejno zazna vaš tiskalnik v omrežju, brez računa PrintNode ali mesečnih stroškov. Omogočite PrintNode samo kot rezervo, če ne morete namestiti domače aplikacije ali upravljate kuhinjo prek brskalnika Windows.",
-      "saveErrorToast": "Shranjevanje ni uspelo — poskusite znova"
+      "saveErrorToast": "Shranjevanje ni uspelo — poskusite znova",
+      "autoCallLabel": "Samodejno telefonsko opozorilo",
+      "autoCallStatusOn": "Vklopljeno — na vaš telefon pokličemo, če novo naročilo ni sprejeto v približno 90 sekundah.",
+      "autoCallStatusOff": "Izklopljeno — nova naročila se prikažejo samo na kuhinjskem zaslonu.",
+      "autoCallToggleAriaLabel": "Preklopi samodejno telefonsko opozorilo",
+      "autoCallFooterNote": "Če novo naročilo ostane nesprejeto približno 90 sekund, samodejno pokličemo na telefon vaše restavracije, da ne zamudite nobenega naročila — tudi če tablica ni pod nadzorom.",
+      "autoCallEnabledToast": "Samodejno telefonsko opozorilo je omogočeno.",
+      "autoCallDisabledToast": "Samodejno telefonsko opozorilo je onemogočeno."
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaša restavracija",

@@ -518,7 +518,8 @@
     "refundInvalidAmount": "Unesite valjani iznos povrata.",
     "refundExceeds": "Iznos premašuje raspoloživi iznos za povrat.",
     "refundFailed": "Povrat nije uspio. Pokušajte ponovno.",
-    "refundSuccess": "Povrat je izvršen."
+    "refundSuccess": "Povrat je izvršen.",
+    "autoCallMessage": "Nova narudžba {number} u restoranu {restaurant} čeka i još nije prihvaćena. Otvorite kuhinjski zaslon kako biste je prihvatili ili odbili."
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",
@@ -2759,7 +2760,14 @@
       "printNodeEnabledToast": "PrintNode rezerva omogućena — kuhinja sada prikazuje opciju postavljanja PrintNode",
       "printNodeDisabledToast": "PrintNode rezerva onemogućena — prikazuje se samo izravno WiFi/LAN ispisivanje",
       "printNodeFooterNote": "<strong>Izravno WiFi/LAN ispisivanje</strong> (putem Fee Free Kitchen izvorne aplikacije na Android/iOS tabletu) je glavna veza pisača — automatski otkriva vaš pisač na mreži, nije potreban PrintNode račun ni mjesečna naknada. Omogućite PrintNode samo kao rezervu ako ne možete instalirati izvorne aplikacije ili koristite kuhinju u Windows pregledniku.",
-      "saveErrorToast": "Spremanje nije uspjelo — pokušajte ponovo"
+      "saveErrorToast": "Spremanje nije uspjelo — pokušajte ponovo",
+      "autoCallLabel": "Upozorenje automatskim telefonskim pozivom",
+      "autoCallStatusOn": "Uključeno — nazivamo vaš telefon ako nova narudžba ne bude prihvaćena unutar otprilike 90 sekundi.",
+      "autoCallStatusOff": "Isključeno — nove narudžbe javljaju se samo na kuhinjskom zaslonu.",
+      "autoCallToggleAriaLabel": "Uključi/isključi upozorenje automatskim telefonskim pozivom",
+      "autoCallFooterNote": "Ako nova narudžba ostane neprihvaćena otprilike 90 sekundi, automatski nazivamo telefon vašeg restorana kako nikada ne biste propustili narudžbu — čak i ako tablet nije pod nadzorom.",
+      "autoCallEnabledToast": "Upozorenje automatskim telefonskim pozivom omogućeno.",
+      "autoCallDisabledToast": "Upozorenje automatskim telefonskim pozivom onemogućeno."
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaš restoran",
