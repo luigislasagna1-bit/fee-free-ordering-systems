@@ -2040,7 +2040,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "First Order",
       "badgeOptedIn": "✓ Opted in",
-      "analyticsHint": "Looking for spend / lifetime metrics over a date range? <link>Reports → Clients (List view)</link> — same customers, with date-range filtering and CSV export."
+      "analyticsHint": "Looking for spend / lifetime metrics over a date range? <link>Reports → Clients (List view)</link> — same customers, with date-range filtering and CSV export.",
+      "badgeOptedOut": "✕ Opt out"
     },
     "couponsAdmin": {
       "pageTitle": "Coupons & Promotions",

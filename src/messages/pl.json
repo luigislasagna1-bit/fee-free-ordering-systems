@@ -1687,7 +1687,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Pierwsze zamówienie",
       "badgeOptedIn": "✓ Wyrażono zgodę",
-      "analyticsHint": "Szukasz metryk wydatków / długookresowych w zakresie dat? <link>Raporty → Klienci (widok listy)</link> — ci sami klienci, z filtrowaniem dat i eksportem CSV."
+      "analyticsHint": "Szukasz metryk wydatków / długookresowych w zakresie dat? <link>Raporty → Klienci (widok listy)</link> — ci sami klienci, z filtrowaniem dat i eksportem CSV.",
+      "badgeOptedOut": "✕ Rezygnacja"
     },
     "couponsAdmin": {
       "pageTitle": "Kupony i Promocje",

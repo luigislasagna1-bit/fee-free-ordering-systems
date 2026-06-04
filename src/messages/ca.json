@@ -1724,7 +1724,8 @@
       "colMarketing": "Màrqueting",
       "colFirstOrder": "Primera comanda",
       "badgeOptedIn": "✓ Acceptat",
-      "analyticsHint": "Voleu mètriques de despesa/vida útil en un interval de dates? <link>Informes → Clients (Vista de llista)</link> — mateixos clients, amb filtratge per interval de dates i exportació CSV."
+      "analyticsHint": "Voleu mètriques de despesa/vida útil en un interval de dates? <link>Informes → Clients (Vista de llista)</link> — mateixos clients, amb filtratge per interval de dates i exportació CSV.",
+      "badgeOptedOut": "✕ No subscrit"
     },
     "couponsAdmin": {
       "pageTitle": "Cupons i Promocions",

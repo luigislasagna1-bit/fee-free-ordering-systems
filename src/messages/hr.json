@@ -1724,7 +1724,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Prva narudžba",
       "badgeOptedIn": "✓ Prijavljen",
-      "analyticsHint": "Tražite potrošnju / cjeloživotne metrike kroz vremenski raspon? <link>Izvještaji → Klijenti (popis)</link> — isti kupci, s filtriranjem vremenskog raspona i izvozom CSV-a."
+      "analyticsHint": "Tražite potrošnju / cjeloživotne metrike kroz vremenski raspon? <link>Izvještaji → Klijenti (popis)</link> — isti kupci, s filtriranjem vremenskog raspona i izvozom CSV-a.",
+      "badgeOptedOut": "✕ Odjava"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponi i promocije",

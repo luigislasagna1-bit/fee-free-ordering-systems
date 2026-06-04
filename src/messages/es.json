@@ -1724,7 +1724,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Primer pedido",
       "badgeOptedIn": "✓ Suscrito",
-      "analyticsHint": "¿Buscas métricas de gasto/historial por rango de fechas? <link>Informes → Clientes (vista de lista)</link> — los mismos clientes, con filtro por fechas y exportación CSV."
+      "analyticsHint": "¿Buscas métricas de gasto/historial por rango de fechas? <link>Informes → Clientes (vista de lista)</link> — los mismos clientes, con filtro por fechas y exportación CSV.",
+      "badgeOptedOut": "✕ Dado de baja"
     },
     "couponsAdmin": {
       "pageTitle": "Cupones y promociones",

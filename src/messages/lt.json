@@ -2354,7 +2354,8 @@
       "colMarketing": "Rinkodara",
       "colFirstOrder": "Pirmas užsakymas",
       "badgeOptedIn": "✓ Sutiko",
-      "analyticsHint": "Ieškote išlaidų / viso laikotarpio rodiklių pagal datų intervalą? <link>Ataskaitos → Klientai (Sąrašo rodinys)</link> — tie patys klientai su datų intervalo filtravimu ir CSV eksportu."
+      "analyticsHint": "Ieškote išlaidų / viso laikotarpio rodiklių pagal datų intervalą? <link>Ataskaitos → Klientai (Sąrašo rodinys)</link> — tie patys klientai su datų intervalo filtravimu ir CSV eksportu.",
+      "badgeOptedOut": "✕ Atsisakyta"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponai ir akcijos",

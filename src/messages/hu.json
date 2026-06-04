@@ -1687,7 +1687,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Első rendelés",
       "badgeOptedIn": "✓ Feliratkozott",
-      "analyticsHint": "Dátumtartományra vonatkozó költési / életkori mutatókat keres? <link>Jelentések → Ügyfelek (lista nézet)</link> — ugyanazok az ügyfelek, dátumtartomány-szűrővel és CSV exporttal."
+      "analyticsHint": "Dátumtartományra vonatkozó költési / életkori mutatókat keres? <link>Jelentések → Ügyfelek (lista nézet)</link> — ugyanazok az ügyfelek, dátumtartomány-szűrővel és CSV exporttal.",
+      "badgeOptedOut": "✕ Leiratkozott"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponok & Promóciók",

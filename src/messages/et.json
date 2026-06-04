@@ -1724,7 +1724,8 @@
       "colMarketing": "Turundus",
       "colFirstOrder": "Esimene tellimus",
       "badgeOptedIn": "✓ Nõustunud",
-      "analyticsHint": "Otsite kulutuste / eluea näitajaid kuupäevavahemiku järgi? <link>Aruanded → Kliendid (loendi vaade)</link> — samad kliendid, kuupäevavahemiku filtreerimise ja CSV ekspordiga."
+      "analyticsHint": "Otsite kulutuste / eluea näitajaid kuupäevavahemiku järgi? <link>Aruanded → Kliendid (loendi vaade)</link> — samad kliendid, kuupäevavahemiku filtreerimise ja CSV ekspordiga.",
+      "badgeOptedOut": "✕ Loobumisel"
     },
     "couponsAdmin": {
       "pageTitle": "Kupongid ja kampaaniad",

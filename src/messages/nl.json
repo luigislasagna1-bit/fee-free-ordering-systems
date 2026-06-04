@@ -1724,7 +1724,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Eerste bestelling",
       "badgeOptedIn": "✓ Aangemeld",
-      "analyticsHint": "Zoekt u bestedingen / levenslange statistieken over een datumbereik? <link>Rapporten → Klanten (lijstweergave)</link> — dezelfde klanten, met datumbereikfiltering en CSV-export."
+      "analyticsHint": "Zoekt u bestedingen / levenslange statistieken over een datumbereik? <link>Rapporten → Klanten (lijstweergave)</link> — dezelfde klanten, met datumbereikfiltering en CSV-export.",
+      "badgeOptedOut": "✕ Afgemeld"
     },
     "couponsAdmin": {
       "pageTitle": "Coupons en promoties",

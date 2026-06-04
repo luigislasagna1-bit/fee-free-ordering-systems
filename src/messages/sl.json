@@ -1724,7 +1724,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Prvo naročilo",
       "badgeOptedIn": "✓ Prijavljen",
-      "analyticsHint": "Iščete metrike porabe / življenjske vrednosti za določeno obdobje? <link>Poročila → Stranke (pogled seznama)</link> — iste stranke z filtriranjem po datumih in izvozom CSV."
+      "analyticsHint": "Iščete metrike porabe / življenjske vrednosti za določeno obdobje? <link>Poročila → Stranke (pogled seznama)</link> — iste stranke z filtriranjem po datumih in izvozom CSV.",
+      "badgeOptedOut": "✕ Odjava"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponi in promocije",

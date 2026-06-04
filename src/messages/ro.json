@@ -1724,7 +1724,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Prima comandă",
       "badgeOptedIn": "✓ Înscris",
-      "analyticsHint": "Cauți statistici de cheltuieli / lifetime pe un interval de date? <link>Rapoarte → Clienți (vedere Listă)</link> — aceiași clienți, cu filtrare după interval de date și export CSV."
+      "analyticsHint": "Cauți statistici de cheltuieli / lifetime pe un interval de date? <link>Rapoarte → Clienți (vedere Listă)</link> — aceiași clienți, cu filtrare după interval de date și export CSV.",
+      "badgeOptedOut": "✕ Dezabonat"
     },
     "couponsAdmin": {
       "pageTitle": "Cupoane & Promoții",

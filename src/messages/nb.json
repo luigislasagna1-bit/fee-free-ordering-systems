@@ -1724,7 +1724,8 @@
       "colMarketing": "Markedsføring",
       "colFirstOrder": "Første bestilling",
       "badgeOptedIn": "✓ Påmeldt",
-      "analyticsHint": "Leter du etter forbruks- og livstidsmålinger over en datoperiode? <link>Rapporter → Kunder (Listevisning)</link> — samme kunder, med datoperiodefiltrering og CSV-eksport."
+      "analyticsHint": "Leter du etter forbruks- og livstidsmålinger over en datoperiode? <link>Rapporter → Kunder (Listevisning)</link> — samme kunder, med datoperiodefiltrering og CSV-eksport.",
+      "badgeOptedOut": "✕ Meldt av"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponger og kampanjer",

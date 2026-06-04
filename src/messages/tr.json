@@ -1687,7 +1687,8 @@
       "colMarketing": "Pazarlama",
       "colFirstOrder": "İlk Sipariş",
       "badgeOptedIn": "✓ Onay verildi",
-      "analyticsHint": "Tarih aralığına göre harcama / ömür boyu metrikler mi arıyorsunuz? <link>Raporlar → Müşteriler (Liste görünümü)</link> — aynı müşteriler, tarih aralığı filtresi ve CSV dışa aktarmayla."
+      "analyticsHint": "Tarih aralığına göre harcama / ömür boyu metrikler mi arıyorsunuz? <link>Raporlar → Müşteriler (Liste görünümü)</link> — aynı müşteriler, tarih aralığı filtresi ve CSV dışa aktarmayla.",
+      "badgeOptedOut": "✕ Çıkış yapıldı"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponlar & Promosyonlar",

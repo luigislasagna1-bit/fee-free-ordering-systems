@@ -1724,7 +1724,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Pesanan Pertama",
       "badgeOptedIn": "✓ Setuju",
-      "analyticsHint": "Mencari metrik pengeluaran / seumur hidup berdasarkan rentang tanggal? <link>Laporan → Klien (Tampilan daftar)</link> — pelanggan yang sama, dengan filter rentang tanggal dan ekspor CSV."
+      "analyticsHint": "Mencari metrik pengeluaran / seumur hidup berdasarkan rentang tanggal? <link>Laporan → Klien (Tampilan daftar)</link> — pelanggan yang sama, dengan filter rentang tanggal dan ekspor CSV.",
+      "badgeOptedOut": "✕ Batal Langganan"
     },
     "couponsAdmin": {
       "pageTitle": "Kupon & Promosi",

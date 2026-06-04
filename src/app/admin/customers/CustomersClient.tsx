@@ -192,9 +192,13 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
                               <KeyRound className="w-2.5 h-2.5" />{t("badgeAccount")}
                             </span>
                           )}
-                          {c.marketingConsent && (
+                          {c.marketingConsent ? (
                             <span className="inline-flex items-center text-[9px] font-bold uppercase tracking-wider bg-sky-100 text-sky-700 px-1.5 py-0.5 rounded">
                               {t("badgeMarketing")}
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center text-[9px] font-bold uppercase tracking-wider bg-red-100 text-red-700 px-1.5 py-0.5 rounded">
+                              {t("badgeOptedOut")}
                             </span>
                           )}
                         </div>
@@ -270,7 +274,9 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
                             {t("badgeOptedIn")}
                           </span>
                         ) : (
-                          <span className="text-xs text-gray-400">—</span>
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-red-100 text-red-700 px-2 py-0.5 rounded">
+                            {t("badgeOptedOut")}
+                          </span>
                         )}
                       </td>
                       <td className="px-4 py-3 text-gray-500">{formatDate(c.createdAt)}</td>

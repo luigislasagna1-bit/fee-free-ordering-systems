@@ -1724,7 +1724,8 @@
       "colMarketing": "Mārketings",
       "colFirstOrder": "Pirmais pasūtījums",
       "badgeOptedIn": "✓ Pieteicies",
-      "analyticsHint": "Meklējat izdevumu / mūža metriku pēc datumu diapazona? <link>Atskaites → Klienti (Saraksta skats)</link> — tie paši klienti ar datumu diapazona filtrēšanu un CSV eksportu."
+      "analyticsHint": "Meklējat izdevumu / mūža metriku pēc datumu diapazona? <link>Atskaites → Klienti (Saraksta skats)</link> — tie paši klienti ar datumu diapazona filtrēšanu un CSV eksportu.",
+      "badgeOptedOut": "✕ Atteikties"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponi un akcijas",

@@ -1724,7 +1724,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Première commande",
       "badgeOptedIn": "✓ Consentement donné",
-      "analyticsHint": "Vous cherchez des métriques de dépenses / valeur à vie sur une période ? <link>Rapports → Clients (vue liste)</link> — mêmes clients, avec filtrage par période et export CSV."
+      "analyticsHint": "Vous cherchez des métriques de dépenses / valeur à vie sur une période ? <link>Rapports → Clients (vue liste)</link> — mêmes clients, avec filtrage par période et export CSV.",
+      "badgeOptedOut": "✕ Désabonné"
     },
     "couponsAdmin": {
       "pageTitle": "Coupons & Promotions",

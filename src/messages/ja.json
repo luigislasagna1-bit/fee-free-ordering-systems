@@ -1724,7 +1724,8 @@
       "colMarketing": "マーケティング",
       "colFirstOrder": "初回注文",
       "badgeOptedIn": "✓ 同意済み",
-      "analyticsHint": "期間別の利用金額・生涯指標をお探しですか？<link>レポート → 顧客（リスト表示）</link> — 同じ顧客データを期間フィルターと CSV エクスポートで確認できます。"
+      "analyticsHint": "期間別の利用金額・生涯指標をお探しですか？<link>レポート → 顧客（リスト表示）</link> — 同じ顧客データを期間フィルターと CSV エクスポートで確認できます。",
+      "badgeOptedOut": "✕ 配信停止"
     },
     "couponsAdmin": {
       "pageTitle": "クーポン＆プロモーション",

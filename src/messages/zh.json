@@ -1724,7 +1724,8 @@
       "colMarketing": "营销",
       "colFirstOrder": "首次下单",
       "badgeOptedIn": "✓ 已订阅",
-      "analyticsHint": "需要按日期范围查看消费/生命周期指标？请前往<link>报表 → 客户（列表视图）</link>——同样的顾客数据，支持日期范围筛选和 CSV 导出。"
+      "analyticsHint": "需要按日期范围查看消费/生命周期指标？请前往<link>报表 → 客户（列表视图）</link>——同样的顾客数据，支持日期范围筛选和 CSV 导出。",
+      "badgeOptedOut": "✕ 已退订"
     },
     "couponsAdmin": {
       "pageTitle": "优惠券与促销",

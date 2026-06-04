@@ -1724,7 +1724,8 @@
       "colMarketing": "마케팅",
       "colFirstOrder": "첫 주문",
       "badgeOptedIn": "✓ 동의함",
-      "analyticsHint": "기간별 결제/생애 지표를 찾고 계신가요? <link>보고서 → 고객 (목록 보기)</link> — 동일한 고객, 기간 필터 및 CSV 내보내기 지원."
+      "analyticsHint": "기간별 결제/생애 지표를 찾고 계신가요? <link>보고서 → 고객 (목록 보기)</link> — 동일한 고객, 기간 필터 및 CSV 내보내기 지원.",
+      "badgeOptedOut": "✕ 수신 거부"
     },
     "couponsAdmin": {
       "pageTitle": "쿠폰 및 프로모션",

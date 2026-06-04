@@ -1724,7 +1724,8 @@
       "colMarketing": "Markkinointi",
       "colFirstOrder": "Ensimmäinen tilaus",
       "badgeOptedIn": "✓ Hyväksytty",
-      "analyticsHint": "Etsitkö kulutus- tai elinkaarianalytiikkaa päivämääräväliltä? <link>Raportit → Asiakkaat (Listaustila)</link> — samat asiakkaat päivämääräsuodatuksella ja CSV-viennillä."
+      "analyticsHint": "Etsitkö kulutus- tai elinkaarianalytiikkaa päivämääräväliltä? <link>Raportit → Asiakkaat (Listaustila)</link> — samat asiakkaat päivämääräsuodatuksella ja CSV-viennillä.",
+      "badgeOptedOut": "✕ Peruutettu"
     },
     "couponsAdmin": {
       "pageTitle": "Kupongit & tarjoukset",

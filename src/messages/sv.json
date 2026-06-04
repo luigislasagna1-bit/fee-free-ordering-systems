@@ -1724,7 +1724,8 @@
       "colMarketing": "Marknadsföring",
       "colFirstOrder": "Första beställning",
       "badgeOptedIn": "✓ Anmäld",
-      "analyticsHint": "Letar du efter utgifts- och livstidsmätningar för ett datumintervall? <link>Rapporter → Kunder (listvy)</link> — samma kunder, med datumfiltrering och CSV-export."
+      "analyticsHint": "Letar du efter utgifts- och livstidsmätningar för ett datumintervall? <link>Rapporter → Kunder (listvy)</link> — samma kunder, med datumfiltrering och CSV-export.",
+      "badgeOptedOut": "✕ Avanmäld"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponger och kampanjer",

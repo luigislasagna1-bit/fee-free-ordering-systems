@@ -1687,7 +1687,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Đơn Đầu Tiên",
       "badgeOptedIn": "✓ Đã đồng ý",
-      "analyticsHint": "Muốn xem số liệu chi tiêu / vòng đời theo khoảng thời gian? <link>Báo cáo → Khách hàng (Dạng danh sách)</link> — cùng danh sách khách, có lọc theo ngày và xuất CSV."
+      "analyticsHint": "Muốn xem số liệu chi tiêu / vòng đời theo khoảng thời gian? <link>Báo cáo → Khách hàng (Dạng danh sách)</link> — cùng danh sách khách, có lọc theo ngày và xuất CSV.",
+      "badgeOptedOut": "✕ Hủy đăng ký"
     },
     "couponsAdmin": {
       "pageTitle": "Phiếu Giảm Giá & Khuyến Mãi",

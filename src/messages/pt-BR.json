@@ -1724,7 +1724,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Primeiro Pedido",
       "badgeOptedIn": "✓ Inscrito",
-      "analyticsHint": "Procurando métricas de gastos / lifetime em um intervalo de datas? <link>Relatórios → Clientes (visualização em lista)</link> — mesmos clientes, com filtro por período e exportação CSV."
+      "analyticsHint": "Procurando métricas de gastos / lifetime em um intervalo de datas? <link>Relatórios → Clientes (visualização em lista)</link> — mesmos clientes, com filtro por período e exportação CSV.",
+      "badgeOptedOut": "✕ Descadastrado"
     },
     "couponsAdmin": {
       "pageTitle": "Cupons & Promoções",

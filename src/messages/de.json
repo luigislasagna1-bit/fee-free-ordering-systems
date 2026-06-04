@@ -1724,7 +1724,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Erste Bestellung",
       "badgeOptedIn": "✓ Zugestimmt",
-      "analyticsHint": "Ausgaben- / Lifetime-Kennzahlen über einen Zeitraum? <link>Berichte → Kunden (Listenansicht)</link> — dieselben Kunden mit Datumbereichsfilterung und CSV-Export."
+      "analyticsHint": "Ausgaben- / Lifetime-Kennzahlen über einen Zeitraum? <link>Berichte → Kunden (Listenansicht)</link> — dieselben Kunden mit Datumbereichsfilterung und CSV-Export.",
+      "badgeOptedOut": "✕ Abgemeldet"
     },
     "couponsAdmin": {
       "pageTitle": "Gutscheine & Aktionen",

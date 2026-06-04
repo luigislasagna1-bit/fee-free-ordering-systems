@@ -1724,7 +1724,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "První objednávka",
       "badgeOptedIn": "✓ Přihlášen",
-      "analyticsHint": "Hledáte metriky útrat a celoživotní hodnoty zákazníka za datové rozmezí? <link>Reporty → Klienti (zobrazení seznamu)</link> — stejní zákazníci s filtrováním datového rozsahu a exportem CSV."
+      "analyticsHint": "Hledáte metriky útrat a celoživotní hodnoty zákazníka za datové rozmezí? <link>Reporty → Klienti (zobrazení seznamu)</link> — stejní zákazníci s filtrováním datového rozsahu a exportem CSV.",
+      "badgeOptedOut": "✕ Odhlášen"
     },
     "couponsAdmin": {
       "pageTitle": "Kupóny a akce",

@@ -114,6 +114,10 @@ interface Props {
   taxRate: number;
   customerInfo: CustomerInfo;
   setCustomerInfo: (ci: CustomerInfo) => void;
+  /** Marketing-checkbox toggle. Routed through the parent so it can record
+   *  that the customer manually set consent for THIS email — which stops the
+   *  async consent pre-fill from later overriding their choice. */
+  onMarketingToggle?: (checked: boolean) => void;
   editingSection: SectionKey;
   setEditingSection: (s: SectionKey) => void;
   orderLoading: boolean;
@@ -198,7 +202,7 @@ export function CheckoutModal({
   appliedPromos = [], hasFreeDelivery = false, baseDeliveryFee = 0,
   deliveryFee, appliedServiceFees, taxAmount,
   tipAmount, tipPercent, setTipPercent, tipsEnabled = true, total, taxRate,
-  customerInfo, setCustomerInfo,
+  customerInfo, setCustomerInfo, onMarketingToggle,
   editingSection, setEditingSection,
   orderLoading, placeOrder,
   cardPaymentEnabled,
@@ -494,7 +498,11 @@ export function CheckoutModal({
                       // belt-and-suspenders means a stale bundle or any
                       // missing-field path still pre-ticks the box.
                       checked={customerInfo.marketingConsent ?? true}
-                      onChange={e => setCustomerInfo({ ...customerInfo, marketingConsent: e.target.checked })}
+                      onChange={e =>
+                        onMarketingToggle
+                          ? onMarketingToggle(e.target.checked)
+                          : setCustomerInfo({ ...customerInfo, marketingConsent: e.target.checked })
+                      }
                       style={{ accentColor: theme.primaryColor }}
                     />
                     <span>

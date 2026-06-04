@@ -2354,7 +2354,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Prvá objednávka",
       "badgeOptedIn": "✓ Prihlásený",
-      "analyticsHint": "Hľadáte metriky útraty / životnej hodnoty za časové obdobie? <link>Reporty → Klienti (zobrazenie zoznamu)</link> — tí istí zákazníci s filtrovaním podľa dátumu a exportom CSV."
+      "analyticsHint": "Hľadáte metriky útraty / životnej hodnoty za časové obdobie? <link>Reporty → Klienti (zobrazenie zoznamu)</link> — tí istí zákazníci s filtrovaním podľa dátumu a exportom CSV.",
+      "badgeOptedOut": "✕ Odhlásiť sa"
     },
     "couponsAdmin": {
       "pageTitle": "Kupóny a promo akcie",

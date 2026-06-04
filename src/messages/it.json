@@ -1724,7 +1724,8 @@
       "colMarketing": "Marketing",
       "colFirstOrder": "Primo ordine",
       "badgeOptedIn": "✓ Consenso prestato",
-      "analyticsHint": "Cerchi metriche di spesa / lifetime in un intervallo di date? <link>Report → Clienti (Vista elenco)</link> — stessi clienti, con filtro date e export CSV."
+      "analyticsHint": "Cerchi metriche di spesa / lifetime in un intervallo di date? <link>Report → Clienti (Vista elenco)</link> — stessi clienti, con filtro date e export CSV.",
+      "badgeOptedOut": "✕ Disiscritto"
     },
     "couponsAdmin": {
       "pageTitle": "Coupon e promozioni",
