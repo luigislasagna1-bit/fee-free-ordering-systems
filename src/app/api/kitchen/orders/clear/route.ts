@@ -53,25 +53,40 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json().catch(() => ({} as any));
-    const scope: "orders" | "complete" =
-      body?.scope === "complete" ? "complete" : "orders";
+
+    // NEW (Luigi 2026-06-04): clear EXACTLY the orders the kitchen tab is
+    // showing, passed by id. This stops "Clear Complete" from also sweeping
+    // today's completed orders that are pinned in the In Progress tab (and
+    // vice-versa). Capped + restaurant-scoped + never-pending for safety.
+    const orderIds: string[] = Array.isArray(body?.orderIds)
+      ? body.orderIds.filter((x: unknown) => typeof x === "string").slice(0, 1000)
+      : [];
+
+    // Back-compat: if an old client still sends a broad `scope`, honour it.
+    const legacyScope: "orders" | "complete" | null =
+      body?.scope === "complete" ? "complete" : body?.scope === "orders" ? "orders" : null;
 
     const now = new Date();
-    const baseWhere = {
+
+    // Base scope is ALWAYS the restaurant + not-already-cleared + never-pending.
+    const where: Record<string, unknown> = {
       restaurantId,
-      clearedFromKitchenAt: null as Date | null,
+      clearedFromKitchenAt: null,
+      status: { not: "pending" },
     };
 
-    const where =
-      scope === "complete"
-        ? { ...baseWhere, status: { in: COMPLETE_STATUSES } }
-        : // "orders" sweeps everything that's currently visible on the All
-          // tab. We explicitly exclude pending so an unanswered customer
-          // order can't be hidden without a real accept/reject decision.
-          { ...baseWhere, status: { not: "pending" } };
+    if (orderIds.length > 0) {
+      where.id = { in: orderIds };
+    } else if (legacyScope === "complete") {
+      where.status = { in: COMPLETE_STATUSES };
+    } else if (legacyScope === "orders") {
+      // status:{not:"pending"} already set above — sweeps the All tab.
+    } else {
+      return NextResponse.json({ ok: true, cleared: 0 });
+    }
 
     const res = await prisma.order.updateMany({
-      where,
+      where: where as any,
       data: { clearedFromKitchenAt: now },
     });
 

@@ -1941,12 +1941,17 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // that polls /api/kitchen/orders sees the same hidden set. Optimistic
   // local update + refresh keeps the UI snappy; the next poll
   // reconciles in case the server count differs.
-  const callClear = async (scope: "orders" | "complete") => {
+  const callClear = async (orderIds: string[]) => {
+    if (orderIds.length === 0) return;
     try {
       const res = await fetch("/api/kitchen/orders/clear", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ scope }),
+        // Clear EXACTLY the orders visible in the tab the user is clearing
+        // from (by id) — never a broad status sweep. This stops "Clear
+        // Complete" from also wiping today's completed orders that are
+        // pinned in the In Progress tab. (Luigi 2026-06-04)
+        body: JSON.stringify({ orderIds }),
       });
       if (res.status === 401) {
         const body = await res.json().catch(() => null);
@@ -1971,8 +1976,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     }
   };
 
-  const handleClearOrders = () => {
-    const eligible = orders.filter(
+  // `visible` = the orders currently shown in the tab being cleared. We only
+  // ever clear THOSE (minus any still-pending order, which must be
+  // accepted/rejected first), so a clear on one tab never touches another.
+  const handleClearOrders = (visible: Order[]) => {
+    const eligible = visible.filter(
       (o) => o.status !== "pending" && !(o as any).clearedFromKitchenAt,
     );
     if (eligible.length === 0) {
@@ -1985,13 +1993,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     setSelectedId(null);
     setClearConfirm(null);
     setAcknowledged(true); // silence any stale bell from prior cleared-pending bug
-    callClear("orders");
+    callClear(eligible.map((o) => o.id));
   };
 
-  const handleClearComplete = () => {
+  const handleClearComplete = (visible: Order[]) => {
     setSelectedId(null);
     setClearConfirm(null);
-    callClear("complete");
+    callClear(
+      visible.filter((o) => !(o as any).clearedFromKitchenAt).map((o) => o.id),
+    );
   };
 
   // Tab data (Luigi 2026-06-02): clearedFromKitchenAt is now filtered
@@ -2706,7 +2716,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           title="Clear Order History"
           message="Remove non-pending orders from the Orders tab? Pending orders MUST be Accepted or Rejected first — they can't be cleared while still waiting for staff action. In-progress orders remain in the In Progress tab. New orders will still appear here. This cannot be undone."
           confirmLabel="Yes, Clear History"
-          onConfirm={handleClearOrders}
+          onConfirm={() => handleClearOrders(ordersTabItems)}
           onCancel={() => setClearConfirm(null)}
         />
       )}
@@ -2714,9 +2724,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         <ConfirmModal
           t={t}
           title="Clear Completed History"
-          message="Remove all completed orders from the Complete tab? This cannot be undone."
+          message="Remove the completed orders shown in the Complete tab? Orders pinned in the In Progress tab are not affected. This cannot be undone."
           confirmLabel="Yes, Clear History"
-          onConfirm={handleClearComplete}
+          onConfirm={() => handleClearComplete(completeItems)}
           onCancel={() => setClearConfirm(null)}
         />
       )}
