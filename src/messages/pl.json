@@ -682,7 +682,10 @@
       "dineIn": "Na miejscu",
       "catering": "Catering",
       "takeOut": "Na wynos",
-      "reservations": "Rezerwacje stolików"
+      "reservations": "Rezerwacje stolików",
+      "slotInterval": "Interwał harmonogramu",
+      "slotIntervalDefault": "Domyślny (użyj globalnego)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Strefy dostawy",

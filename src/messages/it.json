@@ -682,7 +682,10 @@
       "dineIn": "Sul posto",
       "catering": "Catering",
       "takeOut": "Asporto",
-      "reservations": "Prenotazione tavolo"
+      "reservations": "Prenotazione tavolo",
+      "slotInterval": "Intervallo di pianificazione",
+      "slotIntervalDefault": "Predefinito (usa globale)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Zone di consegna",

@@ -682,7 +682,10 @@
       "dineIn": "В зале",
       "catering": "Кейтеринг",
       "takeOut": "Навынос",
-      "reservations": "Бронирование столиков"
+      "reservations": "Бронирование столиков",
+      "slotInterval": "Интервал слотов расписания",
+      "slotIntervalDefault": "По умолчанию (использовать глобальный)",
+      "slotIntervalMin": "{min} мин"
     },
     "delivery": {
       "title": "Зоны доставки",

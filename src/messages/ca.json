@@ -682,7 +682,10 @@
       "dineIn": "A la taula",
       "catering": "Càtering",
       "takeOut": "Per emportar",
-      "reservations": "Reserves de taula"
+      "reservations": "Reserves de taula",
+      "slotInterval": "Interval de franges horàries",
+      "slotIntervalDefault": "Per defecte (usa el global)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Zones de lliurament",

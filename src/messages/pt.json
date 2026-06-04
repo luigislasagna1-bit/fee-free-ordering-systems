@@ -682,7 +682,10 @@
       "dineIn": "No local",
       "catering": "Catering",
       "takeOut": "Para viagem",
-      "reservations": "Reserva de mesa"
+      "reservations": "Reserva de mesa",
+      "slotInterval": "Intervalo de agendamento",
+      "slotIntervalDefault": "Predefinição (usar global)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Áreas de entrega",

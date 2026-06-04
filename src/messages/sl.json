@@ -682,7 +682,10 @@
       "dineIn": "V restavraciji",
       "catering": "Catering",
       "takeOut": "Za s seboj",
-      "reservations": "Rezervacije miz"
+      "reservations": "Rezervacije miz",
+      "slotInterval": "Interval razporejanja terminov",
+      "slotIntervalDefault": "Privzeto (uporabi globalno)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Območja dostave",

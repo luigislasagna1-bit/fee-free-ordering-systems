@@ -705,7 +705,10 @@
       "dineIn": "Dine-In",
       "catering": "Catering",
       "takeOut": "Take Out",
-      "reservations": "Table Reservations"
+      "reservations": "Table Reservations",
+      "slotInterval": "शेड्यूलिंग स्लॉट अंतराल",
+      "slotIntervalDefault": "डिफ़ॉल्ट (वैश्विक उपयोग करें)",
+      "slotIntervalMin": "{min} मिनट"
     },
     "delivery": {
       "title": "डिलीवरी क्षेत्र",

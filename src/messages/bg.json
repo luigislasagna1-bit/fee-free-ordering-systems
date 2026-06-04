@@ -682,7 +682,10 @@
       "dineIn": "На място",
       "catering": "Кетъринг",
       "takeOut": "За вкъщи",
-      "reservations": "Резервации на маси"
+      "reservations": "Резервации на маси",
+      "slotInterval": "Интервал за планиране на слот",
+      "slotIntervalDefault": "По подразбиране (използвай глобалното)",
+      "slotIntervalMin": "{min} мин"
     },
     "delivery": {
       "title": "Зони за доставка",

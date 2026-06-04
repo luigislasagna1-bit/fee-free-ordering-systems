@@ -682,7 +682,10 @@
       "dineIn": "אכילה במקום",
       "catering": "קייטרינג",
       "takeOut": "לקחת",
-      "reservations": "הזמנות שולחנות"
+      "reservations": "הזמנות שולחנות",
+      "slotInterval": "מרווח זמן לתזמון",
+      "slotIntervalDefault": "ברירת מחדל (השתמש בגלובלי)",
+      "slotIntervalMin": "{min} דקות"
     },
     "delivery": {
       "title": "אזורי משלוח",

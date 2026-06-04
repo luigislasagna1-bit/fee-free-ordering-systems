@@ -682,7 +682,10 @@
       "dineIn": "Φαγητό εντός",
       "catering": "Catering",
       "takeOut": "Take Away",
-      "reservations": "Κρατήσεις τραπεζιών"
+      "reservations": "Κρατήσεις τραπεζιών",
+      "slotInterval": "Διάστημα προγραμματισμού",
+      "slotIntervalDefault": "Προεπιλογή (χρήση καθολικής ρύθμισης)",
+      "slotIntervalMin": "{min} λεπτά"
     },
     "delivery": {
       "title": "Ζώνες παράδοσης",

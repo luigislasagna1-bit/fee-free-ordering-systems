@@ -682,7 +682,10 @@
       "dineIn": "La restaurant",
       "catering": "Catering",
       "takeOut": "De luat",
-      "reservations": "Rezervări masă"
+      "reservations": "Rezervări masă",
+      "slotInterval": "Intervalul de programare",
+      "slotIntervalDefault": "Implicit (folosește global)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Zone de livrare",

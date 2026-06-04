@@ -682,7 +682,10 @@
       "dineIn": "Helyben fogyasztás",
       "catering": "Catering",
       "takeOut": "Elvitel",
-      "reservations": "Asztalfoglalás"
+      "reservations": "Asztalfoglalás",
+      "slotInterval": "Ütemezési időköz",
+      "slotIntervalDefault": "Alapértelmezett (globális beállítás)",
+      "slotIntervalMin": "{min} perc"
     },
     "delivery": {
       "title": "Szállítási zónák",

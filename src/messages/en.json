@@ -705,7 +705,10 @@
       "dineIn": "Dine-In",
       "catering": "Catering",
       "takeOut": "Take Out",
-      "reservations": "Table Reservations"
+      "reservations": "Table Reservations",
+      "slotInterval": "Scheduling slot interval",
+      "slotIntervalDefault": "Default (use global)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Delivery Zones",

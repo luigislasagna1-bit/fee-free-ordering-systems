@@ -682,7 +682,10 @@
       "dineIn": "Kohapeal söömine",
       "catering": "Toitlustus",
       "takeOut": "Kaasavõtt",
-      "reservations": "Laua broneeringud"
+      "reservations": "Laua broneeringud",
+      "slotInterval": "Tellimuse ajastamise intervall",
+      "slotIntervalDefault": "Vaikimisi (kasuta globaalset)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Tarnepiirkonnad",

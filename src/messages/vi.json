@@ -682,7 +682,10 @@
       "dineIn": "Ăn tại quán",
       "catering": "Đặt tiệc",
       "takeOut": "Mang về",
-      "reservations": "Đặt bàn"
+      "reservations": "Đặt bàn",
+      "slotInterval": "Khoảng thời gian đặt lịch",
+      "slotIntervalDefault": "Mặc định (dùng cài đặt chung)",
+      "slotIntervalMin": "{min} phút"
     },
     "delivery": {
       "title": "Khu vực giao hàng",

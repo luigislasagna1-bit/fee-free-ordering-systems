@@ -682,7 +682,10 @@
       "dineIn": "Konzumacija u restoranu",
       "catering": "Ketering",
       "takeOut": "Poneti",
-      "reservations": "Rezervacije stolova"
+      "reservations": "Rezervacije stolova",
+      "slotInterval": "Interval zakazivanja termina",
+      "slotIntervalDefault": "Podrazumevano (koristi globalno)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Zone dostave",

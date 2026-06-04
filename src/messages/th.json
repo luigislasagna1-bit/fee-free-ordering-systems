@@ -682,7 +682,10 @@
       "dineIn": "ทานที่ร้าน",
       "catering": "จัดเลี้ยง",
       "takeOut": "ซื้อกลับบ้าน",
-      "reservations": "จองโต๊ะ"
+      "reservations": "จองโต๊ะ",
+      "slotInterval": "ช่วงเวลานัดหมาย",
+      "slotIntervalDefault": "ค่าเริ่มต้น (ใช้การตั้งค่าส่วนกลาง)",
+      "slotIntervalMin": "{min} นาที"
     },
     "delivery": {
       "title": "เขตจัดส่ง",

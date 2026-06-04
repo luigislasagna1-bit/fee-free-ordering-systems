@@ -1344,6 +1344,20 @@ export function OrderingPageClient({
   const tipAmount = tipsEnabled ? Math.round((subtotal * (tipPercent / 100)) * 100) / 100 : 0;
   const totalDiscount = couponDiscount + promoDiscount;
   const feeOrderType: "pickup" | "delivery" = orderType === "delivery" ? "delivery" : "pickup";
+  // Per-service scheduling slot interval: each service can override the
+  // restaurant-wide default (Restaurant.scheduledOrderInterval) via its
+  // serviceSettings entry — e.g. 30-min delivery slots, 15-min pickup. Falls
+  // back to the global value, then 15. Reactive to orderType so the schedule
+  // picker re-buckets when the customer flips pickup ⇄ delivery.
+  const perServiceSlotInterval = (() => {
+    try {
+      const raw = (restaurant as any).serviceSettings;
+      const ss = raw ? JSON.parse(raw) : null;
+      const v = ss?.[feeOrderType]?.slotInterval;
+      if (typeof v === "number" && v > 0) return v;
+    } catch { /* malformed serviceSettings — fall back to the global default */ }
+    return (restaurant as any).scheduledOrderInterval ?? 15;
+  })();
   const appliedServiceFees = evaluateApplicableFees(
     (restaurant.serviceFees ?? []) as ServiceFeeRow[],
     { subtotal, type: feeOrderType, at: new Date() },
@@ -3156,7 +3170,7 @@ export function OrderingPageClient({
           cateringNoticeHours={cateringNoticeHours}
           scheduleReason={scheduleReason}
           closedNextOpenLocal={closedMinScheduledLocal}
-          schedulingInterval={(restaurant as any).scheduledOrderInterval ?? 15}
+          schedulingInterval={perServiceSlotInterval}
           openingHours={(restaurant as any).openingHours ?? []}
           restaurantTimezone={(restaurant as any).timezone}
           requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}

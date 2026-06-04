@@ -682,7 +682,10 @@
       "dineIn": "Spis her",
       "catering": "Catering",
       "takeOut": "Tag med",
-      "reservations": "Bordbooking"
+      "reservations": "Bordbooking",
+      "slotInterval": "Planlægningsinterval",
+      "slotIntervalDefault": "Standard (brug global)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Leveringszoner",

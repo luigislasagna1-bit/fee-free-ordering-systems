@@ -682,7 +682,10 @@
       "dineIn": "Ravintolassa",
       "catering": "Catering",
       "takeOut": "Mukaan",
-      "reservations": "Pöytävaraukset"
+      "reservations": "Pöytävaraukset",
+      "slotInterval": "Aikataulutusväli",
+      "slotIntervalDefault": "Oletus (käytä globaalia)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Toimitusalueet",

@@ -682,7 +682,10 @@
       "dineIn": "Ēšana uz vietas",
       "catering": "Ēdināšana",
       "takeOut": "Līdzņemšana",
-      "reservations": "Galda rezervācijas"
+      "reservations": "Galda rezervācijas",
+      "slotInterval": "Pasūtījumu plānošanas intervāls",
+      "slotIntervalDefault": "Noklusējums (izmantot globālo)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Piegādes zonas",

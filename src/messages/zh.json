@@ -682,7 +682,10 @@
       "dineIn": "堂食",
       "catering": "外卖承办",
       "takeOut": "打包带走",
-      "reservations": "餐桌预订"
+      "reservations": "餐桌预订",
+      "slotInterval": "预约时间间隔",
+      "slotIntervalDefault": "默认（使用全局设置）",
+      "slotIntervalMin": "{min} 分钟"
     },
     "delivery": {
       "title": "配送区域",

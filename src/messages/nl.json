@@ -682,7 +682,10 @@
       "dineIn": "Ter plaatse",
       "catering": "Catering",
       "takeOut": "Meenemen",
-      "reservations": "Tafelreserveringen"
+      "reservations": "Tafelreserveringen",
+      "slotInterval": "Planningsinterval",
+      "slotIntervalDefault": "Standaard (gebruik globaal)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Bezorgzones",

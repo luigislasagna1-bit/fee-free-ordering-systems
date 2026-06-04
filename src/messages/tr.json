@@ -682,7 +682,10 @@
       "dineIn": "Yerinde Ye",
       "catering": "Catering",
       "takeOut": "Paket",
-      "reservations": "Masa Rezervasyonları"
+      "reservations": "Masa Rezervasyonları",
+      "slotInterval": "Zamanlama aralığı",
+      "slotIntervalDefault": "Varsayılan (genel ayarı kullan)",
+      "slotIntervalMin": "{min} dk"
     },
     "delivery": {
       "title": "Teslimat Bölgeleri",

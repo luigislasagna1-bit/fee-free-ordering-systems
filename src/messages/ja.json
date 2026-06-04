@@ -682,7 +682,10 @@
       "dineIn": "店内飲食",
       "catering": "ケータリング",
       "takeOut": "持ち帰り",
-      "reservations": "テーブル予約"
+      "reservations": "テーブル予約",
+      "slotInterval": "スケジュールのスロット間隔",
+      "slotIntervalDefault": "デフォルト（グローバル設定を使用）",
+      "slotIntervalMin": "{min}分"
     },
     "delivery": {
       "title": "デリバリーエリア",

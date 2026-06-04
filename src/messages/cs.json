@@ -682,7 +682,10 @@
       "dineIn": "Na místě",
       "catering": "Catering",
       "takeOut": "S sebou",
-      "reservations": "Stolní rezervace"
+      "reservations": "Stolní rezervace",
+      "slotInterval": "Interval plánování objednávek",
+      "slotIntervalDefault": "Výchozí (použít globální)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Oblasti doručení",

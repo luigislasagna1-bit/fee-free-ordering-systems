@@ -682,7 +682,10 @@
       "dineIn": "매장 식사",
       "catering": "케이터링",
       "takeOut": "포장",
-      "reservations": "테이블 예약"
+      "reservations": "테이블 예약",
+      "slotInterval": "스케줄링 슬롯 간격",
+      "slotIntervalDefault": "기본값 (전체 설정 사용)",
+      "slotIntervalMin": "{min}분"
     },
     "delivery": {
       "title": "배달 구역",

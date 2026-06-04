@@ -682,7 +682,10 @@
       "dineIn": "Vor Ort",
       "catering": "Catering",
       "takeOut": "Mitnehmen",
-      "reservations": "Tischreservierungen"
+      "reservations": "Tischreservierungen",
+      "slotInterval": "Zeitfenster-Intervall",
+      "slotIntervalDefault": "Standard (global verwenden)",
+      "slotIntervalMin": "{min} Min."
     },
     "delivery": {
       "title": "Lieferzonen",

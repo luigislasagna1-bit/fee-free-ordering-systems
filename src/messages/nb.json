@@ -682,7 +682,10 @@
       "dineIn": "Spis her",
       "catering": "Catering",
       "takeOut": "Ta med",
-      "reservations": "Bordreservasjoner"
+      "reservations": "Bordreservasjoner",
+      "slotInterval": "Tidsintervall for planlegging",
+      "slotIntervalDefault": "Standard (bruk global)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Leveringssoner",

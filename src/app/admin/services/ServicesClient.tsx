@@ -22,6 +22,10 @@ interface ServiceConfig {
   displayName: string;
   description: string;
   estimatedTime: number;
+  /** Per-service scheduling slot cadence in minutes. 0/undefined = fall back
+   *  to the restaurant-wide default (Restaurant.scheduledOrderInterval). Lets
+   *  e.g. delivery use 30-min slots while pickup uses 15. Luigi 2026-06-04. */
+  slotInterval?: number;
 }
 
 export function ServicesClient() {
@@ -195,6 +199,24 @@ export function ServicesClient() {
                         value={settings[key].estimatedTime}
                         onChange={e => updateSetting(key, "estimatedTime", parseInt(e.target.value) || 0)}
                       />
+                    </div>
+                  )}
+                  {/* Per-service scheduling cadence. "Default" leaves it on the
+                      restaurant-wide slot interval; a specific value overrides
+                      it for THIS service only (e.g. slower kitchens on delivery). */}
+                  {key !== "reservations" && (
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">{t("slotInterval")}</label>
+                      <select
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"
+                        value={settings[key].slotInterval ?? 0}
+                        onChange={e => updateSetting(key, "slotInterval", parseInt(e.target.value) || 0)}
+                      >
+                        <option value={0}>{t("slotIntervalDefault")}</option>
+                        {[10, 15, 20, 30, 60].map(m => (
+                          <option key={m} value={m}>{t("slotIntervalMin", { min: m })}</option>
+                        ))}
+                      </select>
                     </div>
                   )}
                   {key === "reservations" && (

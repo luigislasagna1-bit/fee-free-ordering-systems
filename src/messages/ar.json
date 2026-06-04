@@ -682,7 +682,10 @@
       "dineIn": "تناول في المطعم",
       "catering": "ضيافة",
       "takeOut": "طلب خارجي",
-      "reservations": "حجوزات الطاولات"
+      "reservations": "حجوزات الطاولات",
+      "slotInterval": "فترة جدولة المواعيد",
+      "slotIntervalDefault": "افتراضي (استخدام الإعداد العام)",
+      "slotIntervalMin": "{min} دقيقة"
     },
     "delivery": {
       "title": "مناطق التوصيل",

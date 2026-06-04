@@ -682,7 +682,10 @@
       "dineIn": "Valgymas vietoje",
       "catering": "Catering",
       "takeOut": "Pasiimti",
-      "reservations": "Stalo rezervacijos"
+      "reservations": "Stalo rezervacijos",
+      "slotInterval": "Užsakymų planavimo intervalas",
+      "slotIntervalDefault": "Numatytasis (naudoti globalinį)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Pristatymo zonos",

@@ -682,7 +682,10 @@
       "dineIn": "Äta på plats",
       "catering": "Catering",
       "takeOut": "Ta med",
-      "reservations": "Bordsreservationer"
+      "reservations": "Bordsreservationer",
+      "slotInterval": "Schemaläggningsintervall",
+      "slotIntervalDefault": "Standard (använd global)",
+      "slotIntervalMin": "{min} min"
     },
     "delivery": {
       "title": "Leveranszoner",

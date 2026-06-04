@@ -682,7 +682,10 @@
       "dineIn": "Makan di Tempat",
       "catering": "Katering",
       "takeOut": "Bawa Pulang",
-      "reservations": "Reservasi Meja"
+      "reservations": "Reservasi Meja",
+      "slotInterval": "Interval slot penjadwalan",
+      "slotIntervalDefault": "Default (gunakan global)",
+      "slotIntervalMin": "{min} menit"
     },
     "delivery": {
       "title": "Zona Pengiriman",
