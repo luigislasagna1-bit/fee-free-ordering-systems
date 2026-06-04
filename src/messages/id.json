@@ -217,7 +217,11 @@
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
     "signInTooltip": "Masuk atau buat akun untuk melacak kupon dan riwayat pesanan",
-    "promoUnlockNudge": "Tambah {amount} lagi untuk membuka {name}!"
+    "promoUnlockNudge": "Tambah {amount} lagi untuk membuka {name}!",
+    "promoPickupOnlyBadge": "🥡 Hanya ambil di tempat",
+    "promoDeliveryOnlyBadge": "🚚 Hanya pengiriman",
+    "promoPickupOnlyTitle": "Promo ini hanya berlaku untuk pesanan ambil di tempat",
+    "promoDeliveryOnlyTitle": "Promo ini hanya berlaku untuk pesanan pengiriman"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",

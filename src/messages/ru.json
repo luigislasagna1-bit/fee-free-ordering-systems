@@ -217,7 +217,11 @@
     "searchMenu": "Поиск по меню…",
     "signIn": "Войти",
     "signInTooltip": "Войдите или создайте аккаунт, чтобы отслеживать купоны и историю заказов",
-    "promoUnlockNudge": "Добавьте ещё {amount}, чтобы разблокировать {name}!"
+    "promoUnlockNudge": "Добавьте ещё {amount}, чтобы разблокировать {name}!",
+    "promoPickupOnlyBadge": "🥡 Только самовывоз",
+    "promoDeliveryOnlyBadge": "🚚 Только доставка",
+    "promoPickupOnlyTitle": "Это предложение распространяется только на заказы с самовывозом",
+    "promoDeliveryOnlyTitle": "Это предложение распространяется только на заказы с доставкой"
   },
   "pizza": {
     "chooseSize": "Выберите размер",

@@ -2473,11 +2473,11 @@ export function OrderingPageClient({
                             className="bg-black/55 backdrop-blur rounded-full px-2 py-0.5"
                             title={
                               onlyPickup
-                                ? "This deal only applies to pickup orders"
-                                : "This deal only applies to delivery orders"
+                                ? t("promoPickupOnlyTitle")
+                                : t("promoDeliveryOnlyTitle")
                             }
                           >
-                            {onlyPickup ? "🥡 Pickup only" : "🚚 Delivery only"}
+                            {onlyPickup ? t("promoPickupOnlyBadge") : t("promoDeliveryOnlyBadge")}
                           </span>
                         );
                       })()}

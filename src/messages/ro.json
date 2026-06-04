@@ -217,7 +217,11 @@
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
     "signInTooltip": "Autentifică-te sau creează un cont pentru a urmări cupoanele și istoricul comenzilor",
-    "promoUnlockNudge": "Adaugă încă {amount} pentru a debloca {name}!"
+    "promoUnlockNudge": "Adaugă încă {amount} pentru a debloca {name}!",
+    "promoPickupOnlyBadge": "🥡 Doar ridicare",
+    "promoDeliveryOnlyBadge": "🚚 Doar livrare",
+    "promoPickupOnlyTitle": "Această ofertă se aplică doar comenzilor cu ridicare",
+    "promoDeliveryOnlyTitle": "Această ofertă se aplică doar comenzilor cu livrare"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",

@@ -217,7 +217,11 @@
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
     "signInTooltip": "Kirjaudu sisään tai luo tili kuponkien ja tilaushistorian seurantaa varten",
-    "promoUnlockNudge": "Lisää vielä {amount} niin saat {name}!"
+    "promoUnlockNudge": "Lisää vielä {amount} niin saat {name}!",
+    "promoPickupOnlyBadge": "🥡 Vain nouto",
+    "promoDeliveryOnlyBadge": "🚚 Vain toimitus",
+    "promoPickupOnlyTitle": "Tämä tarjous koskee vain noutotilauksia",
+    "promoDeliveryOnlyTitle": "Tämä tarjous koskee vain toimitustilauksia"
   },
   "pizza": {
     "chooseSize": "Valitse koko",

@@ -217,7 +217,11 @@
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
     "signInTooltip": "Jelentkezzen be vagy hozzon létre fiókot a kuponok és a rendelési előzmények követéséhez",
-    "promoUnlockNudge": "Adj hozzá még {amount}-t, és feloldod a(z) {name} akciót!"
+    "promoUnlockNudge": "Adj hozzá még {amount}-t, és feloldod a(z) {name} akciót!",
+    "promoPickupOnlyBadge": "🥡 Csak elvitelre",
+    "promoDeliveryOnlyBadge": "🚚 Csak kiszállításra",
+    "promoPickupOnlyTitle": "Ez az ajánlat csak elviteles rendelésekre érvényes",
+    "promoDeliveryOnlyTitle": "Ez az ajánlat csak kiszállításos rendelésekre érvényes"
   },
   "pizza": {
     "chooseSize": "Méret választása",

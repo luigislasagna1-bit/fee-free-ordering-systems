@@ -217,7 +217,11 @@
     "searchMenu": "Search the menu…",
     "signIn": "Sign in",
     "signInTooltip": "Sign in or create an account to track coupons and order history",
-    "promoUnlockNudge": "Add {amount} more to unlock {name}!"
+    "promoUnlockNudge": "Add {amount} more to unlock {name}!",
+    "promoPickupOnlyBadge": "🥡 Pickup only",
+    "promoDeliveryOnlyBadge": "🚚 Delivery only",
+    "promoPickupOnlyTitle": "This deal only applies to pickup orders",
+    "promoDeliveryOnlyTitle": "This deal only applies to delivery orders"
   },
   "pizza": {
     "chooseSize": "Choose Size",

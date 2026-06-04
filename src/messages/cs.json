@@ -217,7 +217,11 @@
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",
     "signInTooltip": "Přihlaste se nebo vytvořte účet pro sledování kupónů a historie objednávek",
-    "promoUnlockNudge": "Přidej ještě {amount} a odemkni {name}!"
+    "promoUnlockNudge": "Přidej ještě {amount} a odemkni {name}!",
+    "promoPickupOnlyBadge": "🥡 Pouze vyzvednutí",
+    "promoDeliveryOnlyBadge": "🚚 Pouze rozvoz",
+    "promoPickupOnlyTitle": "Tato nabídka platí pouze pro objednávky s vyzvednutím",
+    "promoDeliveryOnlyTitle": "Tato nabídka platí pouze pro objednávky s rozvozem"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",

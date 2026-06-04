@@ -217,7 +217,11 @@
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",
     "signInTooltip": "Anmelden oder Konto erstellen, um Gutscheine und Bestellverlauf zu verfolgen",
-    "promoUnlockNudge": "Noch {amount} mehr und du erhältst {name}!"
+    "promoUnlockNudge": "Noch {amount} mehr und du erhältst {name}!",
+    "promoPickupOnlyBadge": "🥡 Nur Abholung",
+    "promoDeliveryOnlyBadge": "🚚 Nur Lieferung",
+    "promoPickupOnlyTitle": "Dieses Angebot gilt nur für Abholbestellungen",
+    "promoDeliveryOnlyTitle": "Dieses Angebot gilt nur für Lieferbestellungen"
   },
   "pizza": {
     "chooseSize": "Größe wählen",

@@ -217,7 +217,11 @@
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
     "signInTooltip": "Inicia sessió o crea un compte per fer seguiment de cupons i historial de comandes",
-    "promoUnlockNudge": "Afegeix {amount} més per desbloquejar {name}!"
+    "promoUnlockNudge": "Afegeix {amount} més per desbloquejar {name}!",
+    "promoPickupOnlyBadge": "🥡 Només recollida",
+    "promoDeliveryOnlyBadge": "🚚 Només a domicili",
+    "promoPickupOnlyTitle": "Aquesta oferta només s'aplica a les comandes de recollida",
+    "promoDeliveryOnlyTitle": "Aquesta oferta només s'aplica a les comandes a domicili"
   },
   "pizza": {
     "chooseSize": "Tria la mida",

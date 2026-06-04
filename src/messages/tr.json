@@ -217,7 +217,11 @@
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
     "signInTooltip": "Kupon ve sipariş geçmişinizi takip etmek için giriş yapın veya hesap oluşturun",
-    "promoUnlockNudge": "{name} fırsatını açmak için {amount} daha ekle!"
+    "promoUnlockNudge": "{name} fırsatını açmak için {amount} daha ekle!",
+    "promoPickupOnlyBadge": "🥡 Yalnızca gel-al",
+    "promoDeliveryOnlyBadge": "🚚 Yalnızca teslimat",
+    "promoPickupOnlyTitle": "Bu fırsat yalnızca gel-al siparişleri için geçerlidir",
+    "promoDeliveryOnlyTitle": "Bu fırsat yalnızca teslimat siparişleri için geçerlidir"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",

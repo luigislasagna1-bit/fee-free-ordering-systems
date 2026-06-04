@@ -217,7 +217,11 @@
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",
     "signInTooltip": "Prijavite se ili stvorite račun za praćenje kupona i povijesti narudžbi",
-    "promoUnlockNudge": "Dodaj još {amount} i otključaj {name}!"
+    "promoUnlockNudge": "Dodaj još {amount} i otključaj {name}!",
+    "promoPickupOnlyBadge": "🥡 Samo preuzimanje",
+    "promoDeliveryOnlyBadge": "🚚 Samo dostava",
+    "promoPickupOnlyTitle": "Ova ponuda vrijedi samo za narudžbe s preuzimanjem",
+    "promoDeliveryOnlyTitle": "Ova ponuda vrijedi samo za narudžbe s dostavom"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",

@@ -217,7 +217,11 @@
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
     "signInTooltip": "Prisijunkite arba sukurkite paskyrą, kad galėtumėte sekti kuponus ir užsakymų istoriją",
-    "promoUnlockNudge": "Pridėkite dar {amount} ir atrakinkite {name}!"
+    "promoUnlockNudge": "Pridėkite dar {amount} ir atrakinkite {name}!",
+    "promoPickupOnlyBadge": "🥡 Tik atsiėmimas",
+    "promoDeliveryOnlyBadge": "🚚 Tik pristatymas",
+    "promoPickupOnlyTitle": "Šis pasiūlymas taikomas tik atsiėmimo užsakymams",
+    "promoDeliveryOnlyTitle": "Šis pasiūlymas taikomas tik pristatymo užsakymams"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",

@@ -217,7 +217,11 @@
     "searchMenu": "搜索菜单…",
     "signIn": "登录",
     "signInTooltip": "登录或注册账户，查看优惠券和历史订单",
-    "promoUnlockNudge": "再加 {amount} 即可解锁 {name}！"
+    "promoUnlockNudge": "再加 {amount} 即可解锁 {name}！",
+    "promoPickupOnlyBadge": "🥡 仅自取",
+    "promoDeliveryOnlyBadge": "🚚 仅外送",
+    "promoPickupOnlyTitle": "此优惠仅适用于自取订单",
+    "promoDeliveryOnlyTitle": "此优惠仅适用于外送订单"
   },
   "pizza": {
     "chooseSize": "选择大小",

@@ -217,7 +217,11 @@
     "searchMenu": "ค้นหาเมนู…",
     "signIn": "เข้าสู่ระบบ",
     "signInTooltip": "เข้าสู่ระบบหรือสร้างบัญชีเพื่อติดตามคูปองและประวัติการสั่งอาหาร",
-    "promoUnlockNudge": "เพิ่มอีก {amount} เพื่อปลดล็อก {name}!"
+    "promoUnlockNudge": "เพิ่มอีก {amount} เพื่อปลดล็อก {name}!",
+    "promoPickupOnlyBadge": "🥡 รับที่ร้านเท่านั้น",
+    "promoDeliveryOnlyBadge": "🚚 จัดส่งเท่านั้น",
+    "promoPickupOnlyTitle": "โปรโมชันนี้ใช้ได้เฉพาะคำสั่งซื้อแบบรับที่ร้านเท่านั้น",
+    "promoDeliveryOnlyTitle": "โปรโมชันนี้ใช้ได้เฉพาะคำสั่งซื้อแบบจัดส่งเท่านั้น"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",

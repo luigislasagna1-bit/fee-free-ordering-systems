@@ -217,7 +217,11 @@
     "searchMenu": "मेनू खोजें…",
     "signIn": "साइन इन करें",
     "signInTooltip": "कूपन और ऑर्डर इतिहास ट्रैक करने के लिए साइन इन करें या अकाउंट बनाएं",
-    "promoUnlockNudge": "बस {amount} और जोड़ें और {name} पाएं!"
+    "promoUnlockNudge": "बस {amount} और जोड़ें और {name} पाएं!",
+    "promoPickupOnlyBadge": "🥡 केवल पिकअप",
+    "promoDeliveryOnlyBadge": "🚚 केवल डिलीवरी",
+    "promoPickupOnlyTitle": "यह ऑफर केवल पिकअप ऑर्डर पर लागू होता है",
+    "promoDeliveryOnlyTitle": "यह ऑफर केवल डिलीवरी ऑर्डर पर लागू होता है"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",

@@ -217,7 +217,11 @@
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
     "signInTooltip": "ログインまたはアカウントを作成してクーポンや注文履歴を管理",
-    "promoUnlockNudge": "あと{amount}追加で{name}がゲットできます！"
+    "promoUnlockNudge": "あと{amount}追加で{name}がゲットできます！",
+    "promoPickupOnlyBadge": "🥡 店頭受取のみ",
+    "promoDeliveryOnlyBadge": "🚚 配達のみ",
+    "promoPickupOnlyTitle": "このセールは店頭受取注文にのみ適用されます",
+    "promoDeliveryOnlyTitle": "このセールは配達注文にのみ適用されます"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

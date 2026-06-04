@@ -217,7 +217,11 @@
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",
     "signInTooltip": "Đăng nhập hoặc tạo tài khoản để theo dõi phiếu giảm giá và lịch sử đặt hàng",
-    "promoUnlockNudge": "Thêm {amount} nữa để mở khóa {name}!"
+    "promoUnlockNudge": "Thêm {amount} nữa để mở khóa {name}!",
+    "promoPickupOnlyBadge": "🥡 Chỉ mang về",
+    "promoDeliveryOnlyBadge": "🚚 Chỉ giao hàng",
+    "promoPickupOnlyTitle": "Ưu đãi này chỉ áp dụng cho đơn mang về",
+    "promoDeliveryOnlyTitle": "Ưu đãi này chỉ áp dụng cho đơn giao hàng"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",

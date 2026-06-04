@@ -217,7 +217,11 @@
     "searchMenu": "Pesquisar no menu…",
     "signIn": "Entrar",
     "signInTooltip": "Entre ou crie uma conta para acompanhar cupões e histórico de encomendas",
-    "promoUnlockNudge": "Adiciona mais {amount} para desbloquear {name}!"
+    "promoUnlockNudge": "Adiciona mais {amount} para desbloquear {name}!",
+    "promoPickupOnlyBadge": "🥡 Apenas take-away",
+    "promoDeliveryOnlyBadge": "🚚 Apenas entrega",
+    "promoPickupOnlyTitle": "Esta promoção aplica-se apenas a encomendas para take-away",
+    "promoDeliveryOnlyTitle": "Esta promoção aplica-se apenas a encomendas para entrega"
   },
   "pizza": {
     "chooseSize": "Escolher tamanho",

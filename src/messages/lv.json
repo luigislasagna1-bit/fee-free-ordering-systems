@@ -217,7 +217,11 @@
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
     "signInTooltip": "Pierakstieties vai izveidojiet kontu, lai sekotu kuponiem un pasūtījumu vēsturei",
-    "promoUnlockNudge": "Pievieno vēl {amount}, lai atbloķētu {name}!"
+    "promoUnlockNudge": "Pievieno vēl {amount}, lai atbloķētu {name}!",
+    "promoPickupOnlyBadge": "🥡 Tikai paņemšanai",
+    "promoDeliveryOnlyBadge": "🚚 Tikai piegādei",
+    "promoPickupOnlyTitle": "Šis piedāvājums attiecas tikai uz paņemšanas pasūtījumiem",
+    "promoDeliveryOnlyTitle": "Šis piedāvājums attiecas tikai uz piegādes pasūtījumiem"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",

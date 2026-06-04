@@ -217,7 +217,11 @@
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
     "signInTooltip": "Log in of maak een account aan om kortingsbonnen en bestelgeschiedenis bij te houden",
-    "promoUnlockNudge": "Voeg nog {amount} toe om {name} te ontgrendelen!"
+    "promoUnlockNudge": "Voeg nog {amount} toe om {name} te ontgrendelen!",
+    "promoPickupOnlyBadge": "🥡 Alleen afhalen",
+    "promoDeliveryOnlyBadge": "🚚 Alleen bezorging",
+    "promoPickupOnlyTitle": "Deze aanbieding geldt alleen voor afhaalbestellingen",
+    "promoDeliveryOnlyTitle": "Deze aanbieding geldt alleen voor bezorgbestellingen"
   },
   "pizza": {
     "chooseSize": "Kies maat",

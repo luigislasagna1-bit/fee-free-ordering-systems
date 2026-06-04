@@ -217,7 +217,11 @@
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",
     "signInTooltip": "Prijavite se ali ustvarite račun za sledenje kuponom in zgodovini naročil",
-    "promoUnlockNudge": "Dodaj še {amount} in odkleni {name}!"
+    "promoUnlockNudge": "Dodaj še {amount} in odkleni {name}!",
+    "promoPickupOnlyBadge": "🥡 Samo prevzem",
+    "promoDeliveryOnlyBadge": "🚚 Samo dostava",
+    "promoPickupOnlyTitle": "Ta ponudba velja samo za naročila s prevzemom",
+    "promoDeliveryOnlyTitle": "Ta ponudba velja samo za naročila z dostavo"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",

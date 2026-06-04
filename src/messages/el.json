@@ -217,7 +217,11 @@
     "searchMenu": "Αναζήτηση στο μενού…",
     "signIn": "Σύνδεση",
     "signInTooltip": "Συνδεθείτε ή δημιουργήστε λογαριασμό για να παρακολουθείτε κουπόνια και ιστορικό παραγγελιών",
-    "promoUnlockNudge": "Πρόσθεσε {amount} ακόμα για να ξεκλειδώσεις το {name}!"
+    "promoUnlockNudge": "Πρόσθεσε {amount} ακόμα για να ξεκλειδώσεις το {name}!",
+    "promoPickupOnlyBadge": "🥡 Μόνο παραλαβή",
+    "promoDeliveryOnlyBadge": "🚚 Μόνο διανομή",
+    "promoPickupOnlyTitle": "Αυτή η προσφορά ισχύει μόνο για παραγγελίες παραλαβής",
+    "promoDeliveryOnlyTitle": "Αυτή η προσφορά ισχύει μόνο για παραγγελίες διανομής"
   },
   "pizza": {
     "chooseSize": "Επιλογή μεγέθους",

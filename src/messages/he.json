@@ -217,7 +217,11 @@
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",
     "signInTooltip": "התחבר או צור חשבון כדי לעקוב אחר קופונים והיסטוריית הזמנות",
-    "promoUnlockNudge": "הוסיפו עוד {amount} כדי לפתוח את {name}!"
+    "promoUnlockNudge": "הוסיפו עוד {amount} כדי לפתוח את {name}!",
+    "promoPickupOnlyBadge": "🥡 איסוף בלבד",
+    "promoDeliveryOnlyBadge": "🚚 משלוח בלבד",
+    "promoPickupOnlyTitle": "המבצע הזה חל על הזמנות איסוף בלבד",
+    "promoDeliveryOnlyTitle": "המבצע הזה חל על הזמנות משלוח בלבד"
   },
   "pizza": {
     "chooseSize": "בחר גודל",

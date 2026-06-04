@@ -217,7 +217,11 @@
     "searchMenu": "Пошук у меню…",
     "signIn": "Увійти",
     "signInTooltip": "Увійдіть або створіть акаунт, щоб відстежувати купони та історію замовлень",
-    "promoUnlockNudge": "Додайте ще {amount}, щоб розблокувати {name}!"
+    "promoUnlockNudge": "Додайте ще {amount}, щоб розблокувати {name}!",
+    "promoPickupOnlyBadge": "🥡 Лише самовивіз",
+    "promoDeliveryOnlyBadge": "🚚 Лише доставка",
+    "promoPickupOnlyTitle": "Ця акція діє лише для замовлень із самовивозом",
+    "promoDeliveryOnlyTitle": "Ця акція діє лише для замовлень із доставкою"
   },
   "pizza": {
     "chooseSize": "Оберіть розмір",

@@ -217,7 +217,11 @@
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",
     "signInTooltip": "Logga in eller skapa ett konto för att spåra kuponger och orderhistorik",
-    "promoUnlockNudge": "Lägg till {amount} till för att låsa upp {name}!"
+    "promoUnlockNudge": "Lägg till {amount} till för att låsa upp {name}!",
+    "promoPickupOnlyBadge": "🥡 Endast avhämtning",
+    "promoDeliveryOnlyBadge": "🚚 Endast leverans",
+    "promoPickupOnlyTitle": "Detta erbjudande gäller endast avhämtningsbeställningar",
+    "promoDeliveryOnlyTitle": "Detta erbjudande gäller endast leveransbeställningar"
   },
   "pizza": {
     "chooseSize": "Välj storlek",

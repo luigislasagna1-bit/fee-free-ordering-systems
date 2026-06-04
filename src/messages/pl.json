@@ -217,7 +217,11 @@
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
     "signInTooltip": "Zaloguj się lub utwórz konto, aby śledzić kupony i historię zamówień",
-    "promoUnlockNudge": "Dodaj jeszcze {amount}, aby odblokować {name}!"
+    "promoUnlockNudge": "Dodaj jeszcze {amount}, aby odblokować {name}!",
+    "promoPickupOnlyBadge": "🥡 Tylko odbiór",
+    "promoDeliveryOnlyBadge": "🚚 Tylko dostawa",
+    "promoPickupOnlyTitle": "Ta oferta dotyczy wyłącznie zamówień na odbiór",
+    "promoDeliveryOnlyTitle": "Ta oferta dotyczy wyłącznie zamówień z dostawą"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",

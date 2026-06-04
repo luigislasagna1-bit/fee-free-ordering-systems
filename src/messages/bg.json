@@ -217,7 +217,11 @@
     "searchMenu": "Търсене в менюто…",
     "signIn": "Вход",
     "signInTooltip": "Влезте или създайте акаунт, за да следите купони и история на поръчките",
-    "promoUnlockNudge": "Добави още {amount} и отключи {name}!"
+    "promoUnlockNudge": "Добави още {amount} и отключи {name}!",
+    "promoPickupOnlyBadge": "🥡 Само вземане",
+    "promoDeliveryOnlyBadge": "🚚 Само доставка",
+    "promoPickupOnlyTitle": "Тази оферта важи само за поръчки за вземане",
+    "promoDeliveryOnlyTitle": "Тази оферта важи само за поръчки с доставка"
   },
   "pizza": {
     "chooseSize": "Избери размер",

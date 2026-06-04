@@ -217,7 +217,11 @@
     "searchMenu": "메뉴 검색…",
     "signIn": "로그인",
     "signInTooltip": "로그인하거나 계정을 만들어 쿠폰과 주문 내역을 확인하세요",
-    "promoUnlockNudge": "{amount} 더 추가하면 {name} 혜택을 받을 수 있어요!"
+    "promoUnlockNudge": "{amount} 더 추가하면 {name} 혜택을 받을 수 있어요!",
+    "promoPickupOnlyBadge": "🥡 픽업 전용",
+    "promoDeliveryOnlyBadge": "🚚 배달 전용",
+    "promoPickupOnlyTitle": "이 할인은 픽업 주문에만 적용됩니다",
+    "promoDeliveryOnlyTitle": "이 할인은 배달 주문에만 적용됩니다"
   },
   "pizza": {
     "chooseSize": "크기 선택",

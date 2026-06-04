@@ -217,7 +217,11 @@
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",
     "signInTooltip": "Log ind eller opret en konto for at følge kuponer og ordrehistorik",
-    "promoUnlockNudge": "Tilføj {amount} mere for at låse {name} op!"
+    "promoUnlockNudge": "Tilføj {amount} mere for at låse {name} op!",
+    "promoPickupOnlyBadge": "🥡 Kun afhentning",
+    "promoDeliveryOnlyBadge": "🚚 Kun levering",
+    "promoPickupOnlyTitle": "Dette tilbud gælder kun ved afhentning",
+    "promoDeliveryOnlyTitle": "Dette tilbud gælder kun ved levering"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
