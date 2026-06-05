@@ -4,9 +4,11 @@
  * Same access gate as the list page; same auth philosophy (unauthed →
  * /login, not notFound, so the route doesn't leak).
  */
+import { after } from "next/server";
 import { notFound, redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { getReportAccess } from "@/lib/reseller-reports-access";
+import { markReportSeen } from "@/lib/reseller-reports-workflow";
 import { ReportDetailClient } from "./ReportDetailClient";
 
 export const dynamic = "force-dynamic";
@@ -42,6 +44,10 @@ export default async function ReportDetailPage({
     },
   });
   if (!report) notFound();
+
+  // Opening the report clears its in-app NEW badge for this viewer. Deferred
+  // so the write never delays the page render. Luigi 2026-06-05.
+  after(() => markReportSeen(id, access.email));
 
   // Resolve the canonical reporter identity. Falls back to author when
   // reportedByEmail is null (self-filed).

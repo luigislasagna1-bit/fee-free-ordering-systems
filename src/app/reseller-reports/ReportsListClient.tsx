@@ -34,6 +34,9 @@ interface ReportRow {
   upvotesCount: number;
   verificationsCount: number;
   attachmentsCount: number;
+  /** True when this report has activity (comment / status change) since the
+   *  viewer last opened it — drives the in-app NEW badge + bold title. */
+  isNew?: boolean;
 }
 
 interface InviteRow {
@@ -233,7 +236,16 @@ function StatusSection({ status, rows }: { status: ReportStatus; rows: ReportRow
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-semibold text-gray-900 truncate">{r.title}</span>
+                    {r.isNew && (
+                      <span
+                        title="New activity since you last viewed"
+                        className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-emerald-500 text-white"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                        New
+                      </span>
+                    )}
+                    <span className={`truncate ${r.isNew ? "font-extrabold text-gray-900" : "font-semibold text-gray-900"}`}>{r.title}</span>
                     <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${TYPE_BADGE[r.type as ReportType] ?? "bg-gray-100 text-gray-700 border-gray-200"}`}>
                       {TYPE_LABEL[r.type as ReportType] ?? r.type}
                     </span>

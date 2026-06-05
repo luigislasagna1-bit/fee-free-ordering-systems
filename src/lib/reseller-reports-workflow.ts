@@ -92,6 +92,53 @@ async function notifyAll(
   );
 }
 
+/**
+ * Mark a report as "seen" by a viewer right now — clears the in-app NEW badge
+ * for them. Upsert keyed on (reportId, viewerEmail). Best-effort; never throws.
+ * Called when a viewer opens a report, comments, or changes its status.
+ * Luigi 2026-06-05.
+ */
+export async function markReportSeen(reportId: string, viewerEmail: string): Promise<void> {
+  const email = (viewerEmail || "").trim().toLowerCase();
+  if (!email) return;
+  try {
+    await prisma.resellerReportSeen.upsert({
+      where: { reportId_viewerEmail: { reportId, viewerEmail: email } },
+      update: { seenAt: new Date() },
+      create: { reportId, viewerEmail: email, seenAt: new Date() },
+    });
+  } catch (e) {
+    console.error("[reseller-reports] markReportSeen failed", { reportId, email, e });
+  }
+}
+
+/**
+ * Count reports that have NEW activity for a viewer (for the nav badge) —
+ * i.e. updatedAt newer than their seenAt, or never seen. Best-effort; returns
+ * 0 on error. Fine to scan all reports at our scale (<1k); revisit with a
+ * narrower query if the tracker ever grows large. Luigi 2026-06-05.
+ */
+export async function countNewReportsForViewer(viewerEmail: string): Promise<number> {
+  const email = (viewerEmail || "").trim().toLowerCase();
+  if (!email) return 0;
+  try {
+    const [reports, seen] = await Promise.all([
+      prisma.resellerReport.findMany({ select: { id: true, updatedAt: true } }),
+      prisma.resellerReportSeen.findMany({ where: { viewerEmail: email }, select: { reportId: true, seenAt: true } }),
+    ]);
+    const seenMap = new Map(seen.map((s) => [s.reportId, s.seenAt.getTime()]));
+    let n = 0;
+    for (const r of reports) {
+      const s = seenMap.get(r.id);
+      if (s === undefined || r.updatedAt.getTime() > s) n++;
+    }
+    return n;
+  } catch (e) {
+    console.error("[reseller-reports] countNewReportsForViewer failed", e);
+    return 0;
+  }
+}
+
 /** Human-readable status label for emails. */
 function prettyStatus(s: string): string {
   switch (s) {

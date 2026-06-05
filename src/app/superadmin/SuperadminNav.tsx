@@ -18,15 +18,21 @@ const items = [
   { href: "/superadmin/settings/email", label: "Email Settings", icon: Mail },
 ];
 
-export function SuperadminNav() {
+export function SuperadminNav({ reportsNewCount = 0 }: { reportsNewCount?: number }) {
   const path = usePathname();
   return (
     <nav className="flex-1 py-3">
       {items.map(({ href, label, icon: Icon, exact }) => {
         const active = exact ? path === href : path.startsWith(href);
+        const showBadge = href === "/reseller-reports" && reportsNewCount > 0;
         return (
           <Link key={href} href={href} className={cn("flex items-center gap-3 px-4 py-3 text-sm font-medium mx-2 rounded-lg mb-1 transition", active ? "bg-emerald-500 text-white" : "text-gray-300 hover:bg-gray-800")}>
-            <Icon className="w-4 h-4" /> {label}
+            <Icon className="w-4 h-4" /> <span className="flex-1">{label}</span>
+            {showBadge && (
+              <span className="ml-auto inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full bg-rose-500 text-white text-[11px] font-bold">
+                {reportsNewCount > 99 ? "99+" : reportsNewCount}
+              </span>
+            )}
           </Link>
         );
       })}

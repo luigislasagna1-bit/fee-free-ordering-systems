@@ -32,7 +32,8 @@ export default async function ReportsListPage() {
   // place an unauthed visitor lands on any auth-required surface.
   if (!access.canView) redirect("/login");
 
-  const [reports, invites] = await Promise.all([
+  const viewerEmail = access.email.trim().toLowerCase();
+  const [reports, invites, seenRows] = await Promise.all([
     prisma.resellerReport.findMany({
       orderBy: [{ updatedAt: "desc" }],
       select: {
@@ -60,7 +61,15 @@ export default async function ReportsListPage() {
     access.canInvite
       ? prisma.resellerReportInvite.findMany({ orderBy: { invitedAt: "desc" } })
       : Promise.resolve([]),
+    // This viewer's "last seen" markers — drives the in-app NEW badge.
+    prisma.resellerReportSeen.findMany({
+      where: { viewerEmail },
+      select: { reportId: true, seenAt: true },
+    }),
   ]);
+
+  // reportId → last-seen timestamp for this viewer.
+  const seenMap = new Map(seenRows.map((s) => [s.reportId, s.seenAt.getTime()]));
 
   return (
     <ReportsListClient
@@ -88,6 +97,12 @@ export default async function ReportsListPage() {
         upvotesCount: r._count.upvotes,
         verificationsCount: r._count.verifications,
         attachmentsCount: countImageUrls(r.imageUrls),
+        // NEW for this viewer when there's been activity since they last opened
+        // it (or they never have). Comment/status changes touch updatedAt.
+        isNew: (() => {
+          const seen = seenMap.get(r.id);
+          return seen === undefined ? true : r.updatedAt.getTime() > seen;
+        })(),
       }))}
       invites={invites.map((i) => ({
         id: i.id,

@@ -21,7 +21,7 @@ import {
   type ReportStatus,
   type ReportPriority,
 } from "@/lib/reseller-reports-access";
-import { notifyReportStatusChange } from "@/lib/reseller-reports-workflow";
+import { notifyReportStatusChange, markReportSeen } from "@/lib/reseller-reports-workflow";
 
 export async function GET(
   _req: NextRequest,
@@ -187,6 +187,8 @@ export async function PATCH(
   if (statusChanged) {
     const sc = statusChanged;
     after(async () => {
+      // The actor has seen the report — keep their own change from marking it new.
+      await markReportSeen(id, access.email);
       try {
         await notifyReportStatusChange(id, {
           actorEmail: access.email,

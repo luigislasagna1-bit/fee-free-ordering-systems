@@ -5,11 +5,15 @@ import Link from "next/link";
 import { ChefHat, LayoutDashboard, Store, LogOut, CreditCard } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { SuperadminNav } from "./SuperadminNav";
+import { countNewReportsForViewer } from "@/lib/reseller-reports-workflow";
 
 export default async function SuperadminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/login");
   if ((session.user as any)?.role !== "superadmin") redirect("/admin");
+
+  // New-activity count for the Reseller Reports nav badge.
+  const reportsNewCount = await countNewReportsForViewer((session.user as any)?.email ?? "");
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
@@ -18,7 +22,7 @@ export default async function SuperadminLayout({ children }: { children: React.R
           <ChefHat className="w-6 h-6 text-emerald-400 mr-2" />
           <span className="font-bold text-emerald-400">Super Admin</span>
         </div>
-        <SuperadminNav />
+        <SuperadminNav reportsNewCount={reportsNewCount} />
         <div className="p-4 border-t border-gray-700 text-xs text-gray-500">
           {(session.user as any)?.email}
         </div>

@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { after } from "next/server";
 import prisma from "@/lib/db";
 import { getReportAccess } from "@/lib/reseller-reports-access";
-import { notifyReportComment } from "@/lib/reseller-reports-workflow";
+import { notifyReportComment, markReportSeen } from "@/lib/reseller-reports-workflow";
 
 export async function POST(
   req: NextRequest,
@@ -73,6 +73,9 @@ export async function POST(
   // commenters), minus the author of this comment. Fire-and-forget so the
   // comment POST stays fast even if Resend is slow. Luigi 2026-06-05.
   after(async () => {
+    // The commenter has obviously seen the report — clear their NEW badge so
+    // their own comment doesn't mark the report unread for them.
+    await markReportSeen(id, access.email);
     try {
       await notifyReportComment(id, {
         actorEmail: access.email,

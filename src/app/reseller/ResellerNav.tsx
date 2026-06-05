@@ -119,7 +119,7 @@ function pathMatchesGroup(path: string, group: Group): boolean {
   return false;
 }
 
-export function ResellerNav({ canViewReports = false }: { canViewReports?: boolean }) {
+export function ResellerNav({ canViewReports = false, reportsNewCount = 0 }: { canViewReports?: boolean; reportsNewCount?: number }) {
   const path = usePathname();
   // Invited resellers (added via the report center's "Manage access") also
   // get a "Reports & Requests" entry that opens the shared bug/feature
@@ -153,7 +153,12 @@ export function ResellerNav({ canViewReports = false }: { canViewReports?: boole
                   : "text-gray-300 hover:bg-gray-800"
               )}
             >
-              <Icon className="w-4 h-4" /> {group.label}
+              <Icon className="w-4 h-4" /> <span className="flex-1">{group.label}</span>
+              {group.id === "reports" && reportsNewCount > 0 && (
+                <span className="ml-auto inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full bg-rose-500 text-white text-[11px] font-bold">
+                  {reportsNewCount > 99 ? "99+" : reportsNewCount}
+                </span>
+              )}
             </Link>
           );
         }

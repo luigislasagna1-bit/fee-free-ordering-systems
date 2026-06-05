@@ -2589,10 +2589,27 @@ model ResellerReport {
   verifications ResellerReportVerification[]
   upvotes       ResellerReportUpvote[]
   activity      ResellerReportActivity[]
+  seen          ResellerReportSeen[]
 
   @@index([status, createdAt])
   @@index([type])
   @@index([authorEmail])
+}
+
+/// Per-viewer "last seen" marker for the in-app new-activity badge. One row
+/// per (report, viewer email). A report shows a NEW badge for a viewer when
+/// its updatedAt is newer than their seenAt (or they have no row yet). Marked
+/// seen when the viewer opens the report, comments, or changes its status.
+/// Luigi 2026-06-05.
+model ResellerReportSeen {
+  id          String   @id @default(cuid())
+  reportId    String
+  viewerEmail String
+  seenAt      DateTime @default(now())
+  report      ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@unique([reportId, viewerEmail])
+  @@index([viewerEmail])
 }
 
 /// Verification poll. Once a report is marked IN_TESTING / FIXED any
