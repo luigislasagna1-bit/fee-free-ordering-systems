@@ -208,6 +208,27 @@ function Countdown({
   return <span className={`text-xs ${color} font-mono`}>{m}:{s.toString().padStart(2, "0")}</span>;
 }
 
+/**
+ * Format a "time until due" value UNAMBIGUOUSLY so kitchen staff can never
+ * misread hours as minutes (reseller report 2026-06-04 — staff seeing "02:00"
+ * couldn't tell 2 hours from 2 minutes):
+ *   - ≥ 1 hour  → "2h 05m"   — explicit unit suffixes, NO colon
+ *   - < 1 hour  → "14:31"    — MM:SS ticking timer; the colon format now ONLY
+ *                              ever means minutes:seconds, since hours never
+ *                              use it — so a bare "NN:NN" is always minutes
+ *   - past due  → "00:00"
+ * Returns the text plus a `unit` tag so callers can colour hours distinctly.
+ */
+function formatDueCountdown(diffMs: number): { text: string; unit: "hours" | "minutes" | "due" } {
+  if (diffMs <= 0) return { text: "00:00", unit: "due" };
+  const totalSec = Math.floor(diffMs / 1000);
+  const hh = Math.floor(totalSec / 3600);
+  const mm = Math.floor((totalSec % 3600) / 60);
+  const ss = totalSec % 60;
+  if (hh > 0) return { text: `${hh}h ${String(mm).padStart(2, "0")}m`, unit: "hours" };
+  return { text: `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`, unit: "minutes" };
+}
+
 // ── Order row ─────────────────────────────────────────────────────────────────
 function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown }: {
   order: Order; selected: boolean; onClick: () => void; t: T; now: number;
@@ -261,9 +282,9 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   // in the In Progress tab behaves, and means the list never goes
   // mute on the orders the kitchen most needs to see.
   //
-  // Format:
-  //   ≥ 1 hour → "HH:MM"   e.g. 03:24
-  //   < 1 hour → "MM:SS"   e.g. 14:31  (small enough to be useful at a glance)
+  // Format (see formatDueCountdown — unambiguous hours vs minutes):
+  //   ≥ 1 hour → "2h 05m"  (explicit units)
+  //   < 1 hour → "14:31"   (MM:SS ticking)
   //   past due  → "00:00"
   const dueTs = (() => {
     const scheduled = (order as any).scheduledFor ? new Date((order as any).scheduledFor).getTime() : NaN;
@@ -272,19 +293,8 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
     if (Number.isFinite(er)) return er;
     return NaN;
   })();
-  const readyCountdown = (() => {
-    if (!now || !Number.isFinite(dueTs)) return null;
-    const diffMs = dueTs - now;
-    if (diffMs <= 0) return "00:00";
-    const totalSec = Math.floor(diffMs / 1000);
-    const hh = Math.floor(totalSec / 3600);
-    const mm = Math.floor((totalSec % 3600) / 60);
-    const ss = totalSec % 60;
-    return hh > 0
-      ? `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`
-      : `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`;
-  })();
-  const countdownIsPast = readyCountdown === "00:00";
+  const readyCountdown = (!now || !Number.isFinite(dueTs)) ? null : formatDueCountdown(dueTs - now);
+  const countdownIsPast = readyCountdown?.unit === "due";
 
   const isTest = order.customerName.startsWith("[TEST]");
 
@@ -372,10 +382,15 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
           {readyCountdown && order.status !== "pending" && !(hideZeroCountdown && countdownIsPast) && (
             <div className="mt-2 text-right">
               <div
-                className={`text-xl font-bold tabular-nums leading-none ${t.text}`}
+                className={`text-xl font-bold tabular-nums leading-none whitespace-nowrap ${
+                  // Hours-away orders render in a calmer sky tone so staff
+                  // instantly read "this is far out, not imminent"; minute
+                  // timers keep the normal emphatic colour. (Report 2026-06-04.)
+                  readyCountdown.unit === "hours" ? "text-sky-600 dark:text-sky-300" : t.text
+                }`}
                 title="Promised ready time"
               >
-                {readyCountdown}
+                {readyCountdown.text}
               </div>
               {!countdownIsPast && (
                 <div className={`text-[10px] uppercase tracking-wider mt-0.5 ${t.muted}`}>
@@ -2523,22 +2538,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 if (!Number.isFinite(sortTs)) return undefined;
                 const diffMs = sortTs - nowMs;
                 // > 24 HOURS away → show the weekday name the order is due
-                // (e.g. "Thursday"). ≤ 24h → a live HH:MM / MM:SS countdown.
+                // (e.g. "Thursday"). ≤ 24h → an unambiguous countdown:
+                //   ≥ 1h → "2h 05m", < 1h → "14:31" (see formatDueCountdown).
                 // Threshold is 24h from NOW, not the next calendar day: a 1am
                 // booking made at 10pm shows a ~3h countdown, not "tomorrow".
                 // (Luigi 2026-06-04.)
                 if (diffMs > 24 * 60 * 60 * 1000) {
                   return new Date(sortTs).toLocaleDateString(undefined, { weekday: "long" });
                 }
-                if (diffMs <= 0) return "00:00";
-                const totalSec = Math.floor(diffMs / 1000);
-                const hh = Math.floor(totalSec / 3600);
-                const mm = Math.floor((totalSec % 3600) / 60);
-                const ss = totalSec % 60;
-                if (hh > 0) {
-                  return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
-                }
-                return `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`;
+                return formatDueCountdown(diffMs).text;
               };
               return (
                 <>
