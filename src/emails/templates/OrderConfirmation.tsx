@@ -33,6 +33,9 @@ export type OrderConfirmationProps = {
   orderType: string;        // "delivery" | "pickup" | "dine_in" — capitalized in render
   paidOnline: boolean;
   estimatedMinutes: number;
+  /** Pre-formatted scheduled slot (restaurant tz + customer locale). When set,
+   *  the email shows an "order for later" line instead of the ASAP ETA. */
+  scheduledLabel?: string | null;
   items: EmailOrderItem[];
   subtotal: number;
   taxAmount?: number;
@@ -66,7 +69,7 @@ export type OrderConfirmationProps = {
 export default function OrderConfirmation(props: OrderConfirmationProps) {
   const {
     customerName, orderNumber, restaurantName, orderType, paidOnline,
-    estimatedMinutes, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
+    estimatedMinutes, scheduledLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
     discount, total, deliveryAddress, trackingUrl, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, currency,
     appliedPromos, t,
@@ -102,9 +105,20 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
         <P>{t("email.orderConfirmed.greeting", { customerName })}</P>
         <P>
           {t("email.orderConfirmed.bodyThanks", { restaurantName })}{" "}
-          {t("email.orderConfirmed.bodyReceived", { orderNumber })}{" "}
-          {t("email.orderConfirmed.bodyFollowUp", { timeLabel: timeLabel.toLowerCase(), estimatedMinutes })}
+          {t("email.orderConfirmed.bodyReceived", { orderNumber })}
+          {scheduledLabel
+            ? ""
+            : " " + t("email.orderConfirmed.bodyFollowUp", { timeLabel: timeLabel.toLowerCase(), estimatedMinutes })}
         </P>
+
+        {/* Prominent "order for later" line for scheduled orders. */}
+        {scheduledLabel && (
+          <div style={{ margin: "0 0 16px", padding: "10px 14px", borderRadius: 8, background: "#e0f2fe", border: "1px solid #bae6fd" }}>
+            <strong style={{ color: "#075985" }}>
+              {t("email.orderConfirmed.scheduledFor", { time: scheduledLabel })}
+            </strong>
+          </div>
+        )}
 
         <div style={{ margin: "8px 0 16px" }}>
           <Badge color="emerald">{orderTypeLabel}</Badge>{" "}

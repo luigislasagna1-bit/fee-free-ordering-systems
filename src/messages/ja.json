@@ -537,7 +537,9 @@
     "refundSuccess": "返金を処理しました。",
     "autoCallMessage": "{restaurant}の新しい注文 {number} が承認待ちです。キッチンディスプレイを開いて、承認または拒否してください。",
     "outsideZoneNote": "この注文は通常の配達エリア外の可能性があります",
-    "readyIn": "あと"
+    "readyIn": "あと",
+    "asap": "ASAP",
+    "orderForLater": "予約注文"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",
@@ -3482,6 +3484,10 @@
       "date": "日付",
       "time": "時間",
       "confirmationCode": "確認コード"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "予約注文"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 適用されたプロモーション",
       "promoFreeLabel": "無料",
       "trackOrderButton": "注文状況を確認する",
-      "contactRestaurantNote": "ご注文に関するご質問は、以下の連絡先よりレストランに直接お問い合わせください。"
+      "contactRestaurantNote": "ご注文に関するご質問は、以下の連絡先よりレストランに直接お問い合わせください。",
+      "scheduledFor": "これは予約注文です — {time} に予定されています。"
     },
     "newOrder": {
       "subject": "新規注文 #{orderNumber} — {restaurant}",

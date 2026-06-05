@@ -537,7 +537,9 @@
     "refundSuccess": "تم إصدار الاسترداد.",
     "autoCallMessage": "الطلب الجديد {number} في {restaurant} في الانتظار ولم يتم قبوله بعد. يُرجى فتح شاشة المطبخ لقبوله أو رفضه.",
     "outsideZoneNote": "قد يقع هذا الطلب خارج نطاق التوصيل المعتاد لديك",
-    "readyIn": "جاهز خلال"
+    "readyIn": "جاهز خلال",
+    "asap": "في أقرب وقت",
+    "orderForLater": "طلب لوقت لاحق"
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",
@@ -3482,6 +3484,10 @@
       "date": "التاريخ",
       "time": "الوقت",
       "confirmationCode": "رمز التأكيد"
+    },
+    "scheduling": {
+      "asap": "في أقرب وقت",
+      "orderForLater": "طلب لوقت لاحق"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 العروض المطبّقة",
       "promoFreeLabel": "مجاناً",
       "trackOrderButton": "تتبع طلبك",
-      "contactRestaurantNote": "إذا كان لديك أي استفسار حول طلبك، يرجى التواصل مع المطعم مباشرةً عبر التفاصيل الواردة أدناه."
+      "contactRestaurantNote": "إذا كان لديك أي استفسار حول طلبك، يرجى التواصل مع المطعم مباشرةً عبر التفاصيل الواردة أدناه.",
+      "scheduledFor": "هذا طلب لوقت لاحق — مُجدول في {time}."
     },
     "newOrder": {
       "subject": "طلب جديد #{orderNumber} — {restaurant}",

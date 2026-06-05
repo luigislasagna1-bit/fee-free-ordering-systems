@@ -537,7 +537,9 @@
     "refundSuccess": "Povračilo je bilo izvedeno.",
     "autoCallMessage": "Novo naročilo {number} pri {restaurant} čaka in še ni bilo sprejeto. Prosimo, odprite kuhinjski zaslon, da ga sprejmete ali zavrnete.",
     "outsideZoneNote": "To naročilo je morda zunaj vašega običajnega dostavnega območja",
-    "readyIn": "Pripravljeno čez"
+    "readyIn": "Pripravljeno čez",
+    "asap": "ASAP",
+    "orderForLater": "Naročilo za pozneje"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",
@@ -3482,6 +3484,10 @@
       "date": "Datum",
       "time": "Čas",
       "confirmationCode": "Koda potrditve"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "NAROČILO ZA POZNEJE"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Uveljavljene promocije",
       "promoFreeLabel": "BREZPLAČNO",
       "trackOrderButton": "Sledite svojemu naročilu",
-      "contactRestaurantNote": "Če imate kakršna koli vprašanja o svojem naročilu, se obrnite neposredno na restavracijo z uporabo spodnjih podatkov."
+      "contactRestaurantNote": "Če imate kakršna koli vprašanja o svojem naročilu, se obrnite neposredno na restavracijo z uporabo spodnjih podatkov.",
+      "scheduledFor": "To je naročilo za pozneje — predvideno za {time}."
     },
     "newOrder": {
       "subject": "Novo naročilo #{orderNumber} — {restaurant}",

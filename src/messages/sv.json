@@ -537,7 +537,9 @@
     "refundSuccess": "Återbetalning genomförd.",
     "autoCallMessage": "Ny beställning {number} hos {restaurant} väntar och har ännu inte accepterats. Öppna din köksskärm för att acceptera eller avvisa den.",
     "outsideZoneNote": "Den här beställningen kan ligga utanför ditt vanliga leveransområde",
-    "readyIn": "Klar om"
+    "readyIn": "Klar om",
+    "asap": "ASAP",
+    "orderForLater": "Beställning för senare"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",
@@ -3482,6 +3484,10 @@
       "date": "Datum",
       "time": "Tid",
       "confirmationCode": "Bekräftelsekod"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "BESTÄLLNING FÖR SENARE"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Kampanjer tillagda",
       "promoFreeLabel": "GRATIS",
       "trackOrderButton": "Följ din beställning",
-      "contactRestaurantNote": "Har du frågor om din beställning är du välkommen att kontakta restaurangen direkt via uppgifterna nedan."
+      "contactRestaurantNote": "Har du frågor om din beställning är du välkommen att kontakta restaurangen direkt via uppgifterna nedan.",
+      "scheduledFor": "Detta är en beställning för senare — schemalagd till {time}."
     },
     "newOrder": {
       "subject": "Ny beställning #{orderNumber} — {restaurant}",

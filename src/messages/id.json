@@ -537,7 +537,9 @@
     "refundSuccess": "Pengembalian dana diproses.",
     "autoCallMessage": "Pesanan baru {number} di {restaurant} sedang menunggu dan belum diterima. Silakan buka layar dapur Anda untuk menerima atau menolaknya.",
     "outsideZoneNote": "Pesanan ini mungkin berada di luar zona pengiriman reguler Anda",
-    "readyIn": "Siap dalam"
+    "readyIn": "Siap dalam",
+    "asap": "ASAP",
+    "orderForLater": "Pesan untuk nanti"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",
@@ -3482,6 +3484,10 @@
       "date": "Tanggal",
       "time": "Waktu",
       "confirmationCode": "Kode konfirmasi"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "PESAN UNTUK NANTI"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Promo diterapkan",
       "promoFreeLabel": "GRATIS",
       "trackOrderButton": "Lacak pesanan Anda",
-      "contactRestaurantNote": "Jika Anda memiliki pertanyaan tentang pesanan Anda, silakan hubungi restoran langsung menggunakan informasi di bawah ini."
+      "contactRestaurantNote": "Jika Anda memiliki pertanyaan tentang pesanan Anda, silakan hubungi restoran langsung menggunakan informasi di bawah ini.",
+      "scheduledFor": "Ini adalah pesanan untuk nanti — dijadwalkan pada {time}."
     },
     "newOrder": {
       "subject": "Pesanan baru #{orderNumber} — {restaurant}",

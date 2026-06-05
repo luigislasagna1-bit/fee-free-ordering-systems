@@ -537,7 +537,9 @@
     "refundSuccess": "Reemborsament emès.",
     "autoCallMessage": "La comanda nova {number} a {restaurant} està esperant i encara no s'ha acceptat. Si us plau, obriu la pantalla de cuina per acceptar-la o rebutjar-la.",
     "outsideZoneNote": "Aquesta comanda pot estar fora de la teva zona de repartiment habitual",
-    "readyIn": "A punt en"
+    "readyIn": "A punt en",
+    "asap": "ASAP",
+    "orderForLater": "Comanda per a més tard"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",
@@ -3482,6 +3484,10 @@
       "date": "Data",
       "time": "Hora",
       "confirmationCode": "Codi de confirmació"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "COMANDA PER A MÉS TARD"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Promocions aplicades",
       "promoFreeLabel": "GRATIS",
       "trackOrderButton": "Seguiu la vostra comanda",
-      "contactRestaurantNote": "Si teniu alguna pregunta sobre la vostra comanda, poseu-vos en contacte directament amb el restaurant mitjançant les dades que trobareu a continuació."
+      "contactRestaurantNote": "Si teniu alguna pregunta sobre la vostra comanda, poseu-vos en contacte directament amb el restaurant mitjançant les dades que trobareu a continuació.",
+      "scheduledFor": "Aquesta és una comanda per a més tard, programada per a {time}."
     },
     "newOrder": {
       "subject": "Nova comanda #{orderNumber} — {restaurant}",

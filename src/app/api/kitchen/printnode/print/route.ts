@@ -420,6 +420,7 @@ export async function POST(req: NextRequest) {
       paymentMethod:   order.paymentMethod,
       paymentStatus:   order.paymentStatus,
       createdAt:       order.createdAt,
+      scheduledFor:    (order as any).scheduledFor ?? null,
       estimatedReady:  order.estimatedReady,
       preparationTime: order.preparationTime,
       items: order.items.map((item) => ({

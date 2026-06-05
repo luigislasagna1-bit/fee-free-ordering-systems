@@ -7,9 +7,13 @@ export const meta = {
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
 const NS = "@root";
-const CONTEXT = "a transactional order-status email to a restaurant customer. {time} is an already-formatted date/time string (e.g. 'Thu, Jun 11, 8:45 PM') — keep the {time} placeholder EXACTLY as-is, do not translate or reformat it. Concise.";
+const CONTEXT = "a restaurant ordering app distinguishing ASAP orders from SCHEDULED ('order for later') orders. kitchen.* and receipt.scheduling.* are short labels shown on the kitchen screen and the printed receipt (receipt ones are uppercase to stand out). email.orderConfirmed.scheduledFor is a line on the confirmation email; {time} is an already-formatted date/time (e.g. 'Thursday, Jun 11, 8:45 PM') — keep the {time} placeholder EXACTLY as-is. 'ASAP' may stay as 'ASAP' where that's natural. Concise.";
 const EN = {
-  "email.orderStatus.estimatedReady": "Estimated ready: {time}.",
+  "kitchen.asap": "ASAP",
+  "kitchen.orderForLater": "Order for later",
+  "receipt.scheduling.asap": "ASAP",
+  "receipt.scheduling.orderForLater": "ORDER FOR LATER",
+  "email.orderConfirmed.scheduledFor": "This is an order for later — scheduled for {time}.",
 };
 const KEYS = Object.keys(EN);
 

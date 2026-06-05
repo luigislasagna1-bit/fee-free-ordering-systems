@@ -450,6 +450,8 @@
     "inProgress": "In Progress",
     "ready": "Ready",
     "readyIn": "Ready in",
+    "asap": "ASAP",
+    "orderForLater": "Order for later",
     "completed": "Completed",
     "allOrders": "All Orders",
     "reservations": "Reservations",
@@ -3425,6 +3427,10 @@
     "backToSuperadmin": "Back to Superadmin"
   },
   "receipt": {
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "ORDER FOR LATER"
+    },
     "orderTypes": {
       "pickup": "PICKUP",
       "delivery": "DELIVERY",
@@ -3507,6 +3513,7 @@
       "bodyThanks": "Thanks for your order at {restaurantName}!",
       "bodyReceived": "We've received order #{orderNumber} and the restaurant will confirm it shortly.",
       "bodyFollowUp": "You'll get a follow-up email the moment they accept — with the final {timeLabel} time (currently estimated at {estimatedMinutes} min).",
+      "scheduledFor": "This is an order for later — scheduled for {time}.",
       "orderTypeDelivery": "Delivery",
       "orderTypePickup": "Pickup",
       "orderTypeDineIn": "Dine-In",

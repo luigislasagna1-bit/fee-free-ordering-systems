@@ -537,7 +537,9 @@
     "refundSuccess": "ההחזר בוצע.",
     "autoCallMessage": "הזמנה חדשה {number} ב{restaurant} ממתינה ועדיין לא אושרה. אנא פתחו את מסך המטבח כדי לאשר או לדחות אותה.",
     "outsideZoneNote": "ייתכן שהזמנה זו מחוץ לאזור המשלוחים הרגיל שלך",
-    "readyIn": "מוכן בעוד"
+    "readyIn": "מוכן בעוד",
+    "asap": "ASAP",
+    "orderForLater": "הזמנה לאחר כך"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",
@@ -3482,6 +3484,10 @@
       "date": "תאריך",
       "time": "שעה",
       "confirmationCode": "קוד אישור"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "הזמנה לאחר כך"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 מבצעים שהוחלו",
       "promoFreeLabel": "חינם",
       "trackOrderButton": "עקוב אחר ההזמנה",
-      "contactRestaurantNote": "אם יש לך שאלות לגבי הזמנתך, אנא פנה ישירות למסעדה באמצעות הפרטים שבהמשך."
+      "contactRestaurantNote": "אם יש לך שאלות לגבי הזמנתך, אנא פנה ישירות למסעדה באמצעות הפרטים שבהמשך.",
+      "scheduledFor": "זוהי הזמנה לאחר כך — מתוזמנת ל-{time}."
     },
     "newOrder": {
       "subject": "הזמנה חדשה #{orderNumber} — {restaurant}",

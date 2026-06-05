@@ -537,7 +537,9 @@
     "refundSuccess": "Refusjon utført.",
     "autoCallMessage": "Ny bestilling {number} hos {restaurant} venter og er ennå ikke godtatt. Vennligst åpne kjøkkenskjermen for å godta eller avvise den.",
     "outsideZoneNote": "Denne bestillingen kan være utenfor det vanlige leveringsområdet ditt",
-    "readyIn": "Klar om"
+    "readyIn": "Klar om",
+    "asap": "ASAP",
+    "orderForLater": "Bestilling til senere"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",
@@ -3482,6 +3484,10 @@
       "date": "Dato",
       "time": "Tid",
       "confirmationCode": "Bekreftelseskode"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "BESTILLING TIL SENERE"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Tilbud benyttet",
       "promoFreeLabel": "GRATIS",
       "trackOrderButton": "Spor bestillingen din",
-      "contactRestaurantNote": "Har du spørsmål om bestillingen din, kan du kontakte restauranten direkte ved hjelp av opplysningene nedenfor."
+      "contactRestaurantNote": "Har du spørsmål om bestillingen din, kan du kontakte restauranten direkte ved hjelp av opplysningene nedenfor.",
+      "scheduledFor": "Dette er en bestilling til senere – planlagt til {time}."
     },
     "newOrder": {
       "subject": "Ny bestilling #{orderNumber} — {restaurant}",

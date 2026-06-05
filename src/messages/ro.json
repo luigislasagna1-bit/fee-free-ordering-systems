@@ -537,7 +537,9 @@
     "refundSuccess": "Rambursare emisă.",
     "autoCallMessage": "Comanda nouă {number} de la {restaurant} așteaptă și nu a fost încă acceptată. Vă rugăm să deschideți afișajul de bucătărie pentru a o accepta sau a o refuza.",
     "outsideZoneNote": "Această comandă ar putea fi în afara zonei dvs. obișnuite de livrare",
-    "readyIn": "Gata în"
+    "readyIn": "Gata în",
+    "asap": "ASAP",
+    "orderForLater": "Comandă pentru mai târziu"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",
@@ -3482,6 +3484,10 @@
       "date": "Data",
       "time": "Ora",
       "confirmationCode": "Cod de confirmare"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "COMANDĂ PENTRU MAI TÂRZIU"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Promoții aplicate",
       "promoFreeLabel": "GRATUIT",
       "trackOrderButton": "Urmărește comanda",
-      "contactRestaurantNote": "Dacă aveți întrebări despre comanda dvs., vă rugăm să contactați direct restaurantul folosind datele de mai jos."
+      "contactRestaurantNote": "Dacă aveți întrebări despre comanda dvs., vă rugăm să contactați direct restaurantul folosind datele de mai jos.",
+      "scheduledFor": "Aceasta este o comandă pentru mai târziu — programată pentru {time}."
     },
     "newOrder": {
       "subject": "Comandă nouă #{orderNumber} — {restaurant}",

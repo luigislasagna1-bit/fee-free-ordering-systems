@@ -537,7 +537,9 @@
     "refundSuccess": "İade yapıldı.",
     "autoCallMessage": "{restaurant} işletmesindeki {number} numaralı yeni sipariş beklemede ve henüz kabul edilmedi. Lütfen siparişi kabul etmek veya reddetmek için mutfak ekranınızı açın.",
     "outsideZoneNote": "Bu sipariş normal teslimat bölgenizin dışında olabilir",
-    "readyIn": "Hazır olma süresi"
+    "readyIn": "Hazır olma süresi",
+    "asap": "ASAP",
+    "orderForLater": "İleri tarihli sipariş"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",
@@ -3482,6 +3484,10 @@
       "date": "Tarih",
       "time": "Saat",
       "confirmationCode": "Onay kodu"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "İLERİ TARİHLİ SİPARİŞ"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Uygulanan promosyonlar",
       "promoFreeLabel": "ÜCRETSİZ",
       "trackOrderButton": "Siparişinizi takip edin",
-      "contactRestaurantNote": "Siparişinizle ilgili sorularınız için lütfen aşağıdaki iletişim bilgilerini kullanarak restoranla doğrudan iletişime geçin."
+      "contactRestaurantNote": "Siparişinizle ilgili sorularınız için lütfen aşağıdaki iletişim bilgilerini kullanarak restoranla doğrudan iletişime geçin.",
+      "scheduledFor": "Bu, ileri tarihli bir siparıştir — {time} için planlandı."
     },
     "newOrder": {
       "subject": "Yeni #{orderNumber} numaralı sipariş — {restaurant}",

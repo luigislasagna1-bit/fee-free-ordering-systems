@@ -537,7 +537,9 @@
     "refundSuccess": "Tagasimakse tehtud.",
     "autoCallMessage": "Uus tellimus {number} restoranis {restaurant} ootab ja seda pole veel vastu võetud. Palun avage köögiekraan, et see vastu võtta või tagasi lükata.",
     "outsideZoneNote": "See tellimus võib jääda väljapoole teie tavapärast tarnepiirkonda",
-    "readyIn": "Valmis"
+    "readyIn": "Valmis",
+    "asap": "ASAP",
+    "orderForLater": "Tellimus hilisemaks"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",
@@ -3482,6 +3484,10 @@
       "date": "Kuupäev",
       "time": "Kellaaeg",
       "confirmationCode": "Kinnituskood"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "TELLIMUS HILISEMAKS"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Rakendatud soodustused",
       "promoFreeLabel": "TASUTA",
       "trackOrderButton": "Jälgi oma tellimust",
-      "contactRestaurantNote": "Kui teil on tellimuse kohta küsimusi, võtke palun otse ühendust restoraniga allpool toodud kontaktandmete kaudu."
+      "contactRestaurantNote": "Kui teil on tellimuse kohta küsimusi, võtke palun otse ühendust restoraniga allpool toodud kontaktandmete kaudu.",
+      "scheduledFor": "See on tellimus hilisemaks — planeeritud ajaks {time}."
     },
     "newOrder": {
       "subject": "Uus tellimus #{orderNumber} — {restaurant}",

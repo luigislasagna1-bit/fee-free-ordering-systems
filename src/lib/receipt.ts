@@ -505,6 +505,9 @@ export interface ReceiptOrder {
   paymentMethod: string;
   paymentStatus: string;
   createdAt: string | Date;
+  /** Customer-chosen slot for a scheduled ("order for later") order. Null/absent
+   *  = ASAP. Drives the prominent ASAP / ORDER FOR LATER line on receipts. */
+  scheduledFor?: string | Date | null;
   estimatedReady?: string | Date | null;
   preparationTime?: number | null;
   items: ReceiptItem[];
@@ -618,6 +621,14 @@ async function renderKitchenSection(
 
     case "k_datetime":
       r.line(fmtDateTime(order.createdAt));
+      // ASAP vs scheduled — prominent so the kitchen instantly sees whether to
+      // make it now or hold it for a later slot. Luigi 2026-06-05.
+      if (order.scheduledFor) {
+        r.line(`** ${t("receipt.scheduling.orderForLater")} **`);
+        r.line(fmtDateTime(order.scheduledFor));
+      } else {
+        r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
+      }
       if (order.estimatedReady) r.line(`${t("kitchen.ready")} : ${fmtTime(order.estimatedReady)}`);
       break;
 
@@ -750,6 +761,12 @@ async function renderCustomerSection(
       r.line(`${t("receipt.customer.orderNumber")}${order.orderNumber}`);
       r.line(t("receipt.customer.title", { type: tOrderTypeUpper(order.type, t) }));
       r.line(`${t("receipt.customer.date")}: ${fmtDateTime(order.createdAt)}`);
+      if (order.scheduledFor) {
+        r.line(`${t("receipt.scheduling.orderForLater")}:`);
+        r.line(fmtDateTime(order.scheduledFor));
+      } else {
+        r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
+      }
       break;
 
     case "customer_info":

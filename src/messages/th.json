@@ -537,7 +537,9 @@
     "refundSuccess": "ดำเนินการคืนเงินเรียบร้อยแล้ว",
     "autoCallMessage": "ออเดอร์ใหม่ {number} ที่ {restaurant} กำลังรออยู่และยังไม่ได้รับการยอมรับ กรุณาเปิดหน้าจอครัวของคุณเพื่อยอมรับหรือปฏิเสธออเดอร์",
     "outsideZoneNote": "คำสั่งซื้อนี้อาจอยู่นอกเขตจัดส่งปกติของคุณ",
-    "readyIn": "พร้อมใน"
+    "readyIn": "พร้อมใน",
+    "asap": "ASAP",
+    "orderForLater": "สั่งล่วงหน้า"
   },
   "admin": {
     "welcomeBack": "ยินดีต้อนรับกลับ",
@@ -3482,6 +3484,10 @@
       "date": "วันที่",
       "time": "เวลา",
       "confirmationCode": "รหัสยืนยัน"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "สั่งล่วงหน้า"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 โปรโมชันที่ใช้งาน",
       "promoFreeLabel": "ฟรี",
       "trackOrderButton": "ติดตามออร์เดอร์ของคุณ",
-      "contactRestaurantNote": "หากมีข้อสงสัยเกี่ยวกับออร์เดอร์ กรุณาติดต่อร้านอาหารโดยตรงโดยใช้ข้อมูลด้านล่าง"
+      "contactRestaurantNote": "หากมีข้อสงสัยเกี่ยวกับออร์เดอร์ กรุณาติดต่อร้านอาหารโดยตรงโดยใช้ข้อมูลด้านล่าง",
+      "scheduledFor": "นี่คือคำสั่งซื้อแบบสั่งล่วงหน้า — กำหนดเวลาไว้ {time}"
     },
     "newOrder": {
       "subject": "ออเดอร์ใหม่ #{orderNumber} — {restaurant}",

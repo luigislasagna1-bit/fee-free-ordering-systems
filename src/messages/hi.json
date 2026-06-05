@@ -537,7 +537,9 @@
     "refundSuccess": "रिफंड जारी कर दिया गया।",
     "autoCallMessage": "{restaurant} पर नया ऑर्डर {number} प्रतीक्षा कर रहा है और अभी तक स्वीकार नहीं किया गया है। कृपया इसे स्वीकार या अस्वीकार करने के लिए अपना किचन डिस्प्ले खोलें।",
     "outsideZoneNote": "यह ऑर्डर आपके नियमित डिलीवरी ज़ोन के बाहर हो सकता है",
-    "readyIn": "तैयार होगा"
+    "readyIn": "तैयार होगा",
+    "asap": "ASAP",
+    "orderForLater": "बाद के लिए ऑर्डर"
   },
   "admin": {
     "comingSoonPlaceholder": {
@@ -3482,6 +3484,10 @@
       "date": "तारीख",
       "time": "समय",
       "confirmationCode": "पुष्टि कोड"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "बाद के लिए ऑर्डर"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 प्रोमो लागू हुए",
       "promoFreeLabel": "मुफ़्त",
       "trackOrderButton": "अपना ऑर्डर ट्रैक करें",
-      "contactRestaurantNote": "यदि आपके ऑर्डर के बारे में कोई प्रश्न हो, तो कृपया नीचे दिए गए विवरण का उपयोग करके सीधे रेस्तराँ से संपर्क करें।"
+      "contactRestaurantNote": "यदि आपके ऑर्डर के बारे में कोई प्रश्न हो, तो कृपया नीचे दिए गए विवरण का उपयोग करके सीधे रेस्तराँ से संपर्क करें।",
+      "scheduledFor": "यह बाद के लिए एक ऑर्डर है — {time} के लिए निर्धारित।"
     },
     "newOrder": {
       "subject": "नया ऑर्डर #{orderNumber} — {restaurant}",

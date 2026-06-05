@@ -45,6 +45,18 @@ function fmtTime(d: string | Date | null | undefined, hoursFormat: "12h" | "24h"
   return new Date(d).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
 }
 
+/** Time only (no date) — used for the ASAP "received at" line. */
+function fmtTimeOnly(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h") {
+  if (!d) return "—";
+  return new Date(d).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
+}
+
+/** Full weekday + date + time — used for the scheduled "order for later" line. */
+function fmtDateTime(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h") {
+  if (!d) return "—";
+  return new Date(d).toLocaleString(undefined, { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
+}
+
 export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple", hoursFormat = "12h" }: Props) {
   const isSimpleMode = workflowMode === "simple";
   const tk = useTranslations("kitchen");
@@ -251,6 +263,24 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               )}
             </div>
           </Section>
+
+          {/* ASAP vs ORDER FOR LATER — prominent so staff instantly know
+              whether to make it now or hold it for a scheduled slot. Two lines:
+              the label, then the date/time. Luigi 2026-06-05. */}
+          {(() => {
+            const schedMs = (order as any).scheduledFor ? new Date((order as any).scheduledFor).getTime() : NaN;
+            const isLater = Number.isFinite(schedMs) && schedMs > Date.now();
+            return (
+              <div className={`rounded-xl px-4 py-3 ${isLater ? "bg-sky-500/10 border border-sky-500/30" : "bg-emerald-500/10 border border-emerald-500/30"}`}>
+                <div className={`text-xs font-extrabold uppercase tracking-wide ${isLater ? "text-sky-700 dark:text-sky-300" : "text-emerald-700 dark:text-emerald-300"}`}>
+                  {isLater ? tk("orderForLater") : tk("asap")}
+                </div>
+                <div className={`text-lg font-bold mt-0.5 ${t.text}`}>
+                  {isLater ? fmtDateTime((order as any).scheduledFor, hoursFormat) : fmtTimeOnly(order.createdAt, hoursFormat)}
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Timing */}
           {(order.acceptedAt || order.estimatedReady || order.completedAt) && (

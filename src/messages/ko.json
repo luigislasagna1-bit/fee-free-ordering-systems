@@ -537,7 +537,9 @@
     "refundSuccess": "환불이 처리되었습니다.",
     "autoCallMessage": "{restaurant}의 신규 주문 {number}번이 대기 중이며 아직 접수되지 않았습니다. 주방 디스플레이를 열어 주문을 접수하거나 거절해 주세요.",
     "outsideZoneNote": "이 주문은 정규 배달 구역을 벗어날 수 있습니다",
-    "readyIn": "준비 완료까지"
+    "readyIn": "준비 완료까지",
+    "asap": "ASAP",
+    "orderForLater": "나중에 주문"
   },
   "admin": {
     "welcomeBack": "환영합니다",
@@ -3482,6 +3484,10 @@
       "date": "날짜",
       "time": "시간",
       "confirmationCode": "확인 코드"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "나중에 주문"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 프로모션 적용됨",
       "promoFreeLabel": "무료",
       "trackOrderButton": "주문 추적하기",
-      "contactRestaurantNote": "주문에 관한 문의 사항이 있으시면 아래 연락처를 통해 레스토랑에 직접 문의해 주세요."
+      "contactRestaurantNote": "주문에 관한 문의 사항이 있으시면 아래 연락처를 통해 레스토랑에 직접 문의해 주세요.",
+      "scheduledFor": "나중에 받을 주문입니다 — {time}에 예약되었습니다."
     },
     "newOrder": {
       "subject": "신규 주문 #{orderNumber} — {restaurant}",

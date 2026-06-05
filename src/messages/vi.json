@@ -537,7 +537,9 @@
     "refundSuccess": "Đã thực hiện hoàn tiền.",
     "autoCallMessage": "Đơn hàng mới {number} tại {restaurant} đang chờ và chưa được chấp nhận. Vui lòng mở màn hình bếp để chấp nhận hoặc từ chối đơn hàng.",
     "outsideZoneNote": "Đơn hàng này có thể nằm ngoài khu vực giao hàng thông thường của bạn",
-    "readyIn": "Sẵn sàng sau"
+    "readyIn": "Sẵn sàng sau",
+    "asap": "ASAP",
+    "orderForLater": "Đơn đặt sau"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",
@@ -3482,6 +3484,10 @@
       "date": "Ngày",
       "time": "Giờ",
       "confirmationCode": "Mã xác nhận"
+    },
+    "scheduling": {
+      "asap": "CÀNG SỚM CÀNG TỐT",
+      "orderForLater": "ĐƠN ĐẶT SAU"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Khuyến mãi đã áp dụng",
       "promoFreeLabel": "MIỄN PHÍ",
       "trackOrderButton": "Theo dõi đơn hàng của bạn",
-      "contactRestaurantNote": "Nếu bạn có thắc mắc về đơn hàng, vui lòng liên hệ trực tiếp với nhà hàng theo thông tin bên dưới."
+      "contactRestaurantNote": "Nếu bạn có thắc mắc về đơn hàng, vui lòng liên hệ trực tiếp với nhà hàng theo thông tin bên dưới.",
+      "scheduledFor": "Đây là đơn đặt sau — được lên lịch vào {time}."
     },
     "newOrder": {
       "subject": "Đơn mới #{orderNumber} — {restaurant}",

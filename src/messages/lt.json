@@ -537,7 +537,9 @@
     "refundSuccess": "Grąžinimas atliktas.",
     "autoCallMessage": "Naujas užsakymas {number} restorane {restaurant} laukia ir dar nebuvo priimtas. Atidarykite virtuvės ekraną, kad jį priimtumėte arba atmestumėte.",
     "outsideZoneNote": "Šis užsakymas gali būti už įprastos pristatymo zonos ribų",
-    "readyIn": "Bus paruošta po"
+    "readyIn": "Bus paruošta po",
+    "asap": "ASAP",
+    "orderForLater": "Užsakymas vėlesniam laikui"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",
@@ -3482,6 +3484,10 @@
       "date": "Data",
       "time": "Laikas",
       "confirmationCode": "Patvirtinimo kodas"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "UŽSAKYMAS VĖLESNIAM LAIKUI"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Pritaikytos akcijos",
       "promoFreeLabel": "NEMOKAMAI",
       "trackOrderButton": "Sekti užsakymą",
-      "contactRestaurantNote": "Jei turite klausimų dėl savo užsakymo, susisiekite tiesiogiai su restoranu, naudodami toliau pateiktus kontaktus."
+      "contactRestaurantNote": "Jei turite klausimų dėl savo užsakymo, susisiekite tiesiogiai su restoranu, naudodami toliau pateiktus kontaktus.",
+      "scheduledFor": "Tai užsakymas vėlesniam laikui — suplanuotas {time}."
     },
     "newOrder": {
       "subject": "Naujas užsakymas #{orderNumber} — {restaurant}",

@@ -537,7 +537,9 @@
     "refundSuccess": "Atmaksa veikta.",
     "autoCallMessage": "Jauns pasūtījums {number} restorānā {restaurant} gaida un vēl nav pieņemts. Lūdzu, atveriet virtuves displeju, lai to pieņemtu vai noraidītu.",
     "outsideZoneNote": "Šis pasūtījums var būt ārpus jūsu parastās piegādes zonas",
-    "readyIn": "Gatavs pēc"
+    "readyIn": "Gatavs pēc",
+    "asap": "Tūlīt",
+    "orderForLater": "Pasūtījums vēlākam laikam"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",
@@ -3482,6 +3484,10 @@
       "date": "Datums",
       "time": "Laiks",
       "confirmationCode": "Apstiprinājuma kods"
+    },
+    "scheduling": {
+      "asap": "TŪLĪT",
+      "orderForLater": "PASŪTĪJUMS VĒLĀKAM LAIKAM"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Piemērotās akcijas",
       "promoFreeLabel": "BEZMAKSAS",
       "trackOrderButton": "Izsekot pasūtījumam",
-      "contactRestaurantNote": "Ja jums ir jautājumi par jūsu pasūtījumu, lūdzu, sazinieties ar restorānu tieši, izmantojot tālāk norādīto kontaktinformāciju."
+      "contactRestaurantNote": "Ja jums ir jautājumi par jūsu pasūtījumu, lūdzu, sazinieties ar restorānu tieši, izmantojot tālāk norādīto kontaktinformāciju.",
+      "scheduledFor": "Šis ir pasūtījums vēlākam laikam — ieplānots uz {time}."
     },
     "newOrder": {
       "subject": "Jauns pasūtījums #{orderNumber} — {restaurant}",

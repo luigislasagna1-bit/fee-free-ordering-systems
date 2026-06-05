@@ -537,7 +537,9 @@
     "refundSuccess": "Erstattung ausgelöst.",
     "autoCallMessage": "Eine neue Bestellung {number} bei {restaurant} wartet und wurde noch nicht angenommen. Bitte öffnen Sie Ihre Küchenanzeige, um sie anzunehmen oder abzulehnen.",
     "outsideZoneNote": "Diese Bestellung liegt möglicherweise außerhalb Ihres regulären Liefergebiets",
-    "readyIn": "Fertig in"
+    "readyIn": "Fertig in",
+    "asap": "Sofort",
+    "orderForLater": "Bestellung für später"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",
@@ -3482,6 +3484,10 @@
       "date": "Datum",
       "time": "Uhrzeit",
       "confirmationCode": "Bestätigungscode"
+    },
+    "scheduling": {
+      "asap": "SOFORT",
+      "orderForLater": "BESTELLUNG FÜR SPÄTER"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Aktionen angewendet",
       "promoFreeLabel": "GRATIS",
       "trackOrderButton": "Bestellung verfolgen",
-      "contactRestaurantNote": "Bei Fragen zu Ihrer Bestellung wenden Sie sich bitte direkt an das Restaurant – die Kontaktdaten finden Sie unten."
+      "contactRestaurantNote": "Bei Fragen zu Ihrer Bestellung wenden Sie sich bitte direkt an das Restaurant – die Kontaktdaten finden Sie unten.",
+      "scheduledFor": "Dies ist eine Bestellung für später — geplant für {time}."
     },
     "newOrder": {
       "subject": "Neue Bestellung #{orderNumber} — {restaurant}",

@@ -537,7 +537,9 @@
     "refundSuccess": "Rimborso emesso.",
     "autoCallMessage": "Il nuovo ordine {number} presso {restaurant} è in attesa e non è ancora stato accettato. Apri il display della cucina per accettarlo o rifiutarlo.",
     "outsideZoneNote": "Questo ordine potrebbe trovarsi fuori dalla tua zona di consegna abituale",
-    "readyIn": "Pronto tra"
+    "readyIn": "Pronto tra",
+    "asap": "ASAP",
+    "orderForLater": "Ordine programmato"
   },
   "admin": {
     "welcomeBack": "Bentornato",
@@ -3482,6 +3484,10 @@
       "date": "Data",
       "time": "Ora",
       "confirmationCode": "Codice di conferma"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "ORDINE PROGRAMMATO"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Promozioni applicate",
       "promoFreeLabel": "GRATIS",
       "trackOrderButton": "Monitora il tuo ordine",
-      "contactRestaurantNote": "Per qualsiasi domanda sul tuo ordine, ti preghiamo di contattare direttamente il ristorante utilizzando i recapiti riportati di seguito."
+      "contactRestaurantNote": "Per qualsiasi domanda sul tuo ordine, ti preghiamo di contattare direttamente il ristorante utilizzando i recapiti riportati di seguito.",
+      "scheduledFor": "Questo è un ordine programmato — previsto per {time}."
     },
     "newOrder": {
       "subject": "Nuovo ordine #{orderNumber} — {restaurant}",

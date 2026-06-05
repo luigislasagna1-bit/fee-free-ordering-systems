@@ -131,6 +131,7 @@ export async function GET(
     paymentMethod: (order as any).paymentMethod ?? "",
     paymentStatus: (order as any).paymentStatus ?? "pending",
     createdAt: order.createdAt,
+    scheduledFor: (order as any).scheduledFor ?? null,
     estimatedReady: (order as any).estimatedReady ?? null,
     preparationTime: (order as any).preparationTime ?? null,
     items: order.items.map((it: any) => ({

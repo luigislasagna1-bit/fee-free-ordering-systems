@@ -537,7 +537,9 @@
     "refundSuccess": "Terugbetaling uitgevoerd.",
     "autoCallMessage": "Nieuwe bestelling {number} bij {restaurant} staat te wachten en is nog niet geaccepteerd. Open je keukenscherm om de bestelling te accepteren of te weigeren.",
     "outsideZoneNote": "Deze bestelling valt mogelijk buiten je gebruikelijke bezorggebied",
-    "readyIn": "Klaar over"
+    "readyIn": "Klaar over",
+    "asap": "ASAP",
+    "orderForLater": "Bestelling voor later"
   },
   "admin": {
     "welcomeBack": "Welkom terug",
@@ -3482,6 +3484,10 @@
       "date": "Datum",
       "time": "Tijd",
       "confirmationCode": "Bevestigingscode"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "BESTELLING VOOR LATER"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Promoties toegepast",
       "promoFreeLabel": "GRATIS",
       "trackOrderButton": "Volg uw bestelling",
-      "contactRestaurantNote": "Heeft u vragen over uw bestelling, neem dan rechtstreeks contact op met het restaurant via de onderstaande gegevens."
+      "contactRestaurantNote": "Heeft u vragen over uw bestelling, neem dan rechtstreeks contact op met het restaurant via de onderstaande gegevens.",
+      "scheduledFor": "Dit is een bestelling voor later — gepland voor {time}."
     },
     "newOrder": {
       "subject": "Nieuwe bestelling #{orderNumber} — {restaurant}",

@@ -537,7 +537,9 @@
     "refundSuccess": "Hyvitys tehty.",
     "autoCallMessage": "Uusi tilaus {number} ravintolassa {restaurant} odottaa eikä sitä ole vielä hyväksytty. Avaa keittiönäyttö hyväksyäksesi tai hylätäksesi sen.",
     "outsideZoneNote": "Tämä tilaus saattaa olla tavallisen toimitusalueesi ulkopuolella",
-    "readyIn": "Valmis"
+    "readyIn": "Valmis",
+    "asap": "ASAP",
+    "orderForLater": "Tilaus myöhemmäksi"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",
@@ -3482,6 +3484,10 @@
       "date": "Päivämäärä",
       "time": "Aika",
       "confirmationCode": "Vahvistuskoodi"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "TILAUS MYÖHEMMÄKSI"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Käytetyt tarjoukset",
       "promoFreeLabel": "ILMAINEN",
       "trackOrderButton": "Seuraa tilaustasi",
-      "contactRestaurantNote": "Jos sinulla on kysyttävää tilauksestasi, ota yhteyttä suoraan ravintolaan alla olevien tietojen avulla."
+      "contactRestaurantNote": "Jos sinulla on kysyttävää tilauksestasi, ota yhteyttä suoraan ravintolaan alla olevien tietojen avulla.",
+      "scheduledFor": "Tämä on tilaus myöhemmäksi — ajoitettu ajankohtaan {time}."
     },
     "newOrder": {
       "subject": "Uusi tilaus #{orderNumber} — {restaurant}",

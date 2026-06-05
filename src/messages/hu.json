@@ -537,7 +537,9 @@
     "refundSuccess": "Visszatérítés kiadva.",
     "autoCallMessage": "A(z) {number} számú új rendelés a(z) {restaurant} étteremben várakozik, és még nincs elfogadva. Kérjük, nyissa meg a konyhai kijelzőt az elfogadáshoz vagy elutasításhoz.",
     "outsideZoneNote": "Ez a rendelés a megszokott kiszállítási zónán kívül eshet",
-    "readyIn": "Kész"
+    "readyIn": "Kész",
+    "asap": "ASAP",
+    "orderForLater": "Rendelés későbbre"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",
@@ -3482,6 +3484,10 @@
       "date": "Dátum",
       "time": "Időpont",
       "confirmationCode": "Visszaigazolási kód"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "RENDELÉS KÉSŐBBRE"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Alkalmazott kedvezmények",
       "promoFreeLabel": "INGYENES",
       "trackOrderButton": "Rendelés nyomon követése",
-      "contactRestaurantNote": "Ha kérdése van a rendelésével kapcsolatban, forduljon közvetlenül az étteremhez az alábbi elérhetőségeken."
+      "contactRestaurantNote": "Ha kérdése van a rendelésével kapcsolatban, forduljon közvetlenül az étteremhez az alábbi elérhetőségeken.",
+      "scheduledFor": "Ez egy későbbre szóló rendelés — időpontja: {time}."
     },
     "newOrder": {
       "subject": "Új #{orderNumber}. rendelés — {restaurant}",

@@ -91,6 +91,9 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       estimatedTime: order.type === "pickup"
         ? order.restaurant.estimatedPickup
         : order.restaurant.estimatedDelivery,
+      // Scheduled ("order for later") slot — drives the prominent scheduled
+      // line on the confirmation email. Null = ASAP. Luigi 2026-06-05.
+      scheduledFor: (order as any).scheduledFor ?? null,
       trackingUrl: `${baseUrl}/order/${order.restaurant.slug}/status/${order.id}`,
       appliedPromos: appliedPromosForEmail,
     },

@@ -537,7 +537,9 @@
     "refundSuccess": "Platba bola vrátená.",
     "autoCallMessage": "Nová objednávka {number} v podniku {restaurant} čaká a zatiaľ nebola prijatá. Otvorte prosím kuchynský displej a prijmite ju alebo odmietnite.",
     "outsideZoneNote": "Táto objednávka môže byť mimo vašej bežnej rozvozovej zóny",
-    "readyIn": "Pripravené o"
+    "readyIn": "Pripravené o",
+    "asap": "ASAP",
+    "orderForLater": "Objednávka na neskôr"
   },
   "admin": {
     "welcomeBack": "Vitajte späť",
@@ -3482,6 +3484,10 @@
       "date": "Dátum",
       "time": "Čas",
       "confirmationCode": "Potvrdzovací kód"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "OBJEDNÁVKA NA NESKÔR"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Uplatnené akcie",
       "promoFreeLabel": "ZADARMO",
       "trackOrderButton": "Sledovať objednávku",
-      "contactRestaurantNote": "Ak máte akékoľvek otázky ohľadom vašej objednávky, obráťte sa priamo na reštauráciu pomocou nižšie uvedených kontaktných údajov."
+      "contactRestaurantNote": "Ak máte akékoľvek otázky ohľadom vašej objednávky, obráťte sa priamo na reštauráciu pomocou nižšie uvedených kontaktných údajov.",
+      "scheduledFor": "Toto je objednávka na neskôr — naplánovaná na {time}."
     },
     "newOrder": {
       "subject": "Nová objednávka č. {orderNumber} — {restaurant}",

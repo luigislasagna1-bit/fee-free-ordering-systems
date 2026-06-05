@@ -240,6 +240,13 @@ function renderKitchenSection(
 
     case "k_datetime":
       r.line(fmtDateTime(order.createdAt));
+      // ASAP vs scheduled — prominent for the kitchen. Luigi 2026-06-05.
+      if (order.scheduledFor) {
+        r.line(`** ${t("receipt.scheduling.orderForLater")} **`);
+        r.line(fmtDateTime(order.scheduledFor));
+      } else {
+        r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
+      }
       if (order.estimatedReady) r.line(`${t("kitchen.ready")} : ${fmtTime(order.estimatedReady)}`);
       break;
 
@@ -356,6 +363,12 @@ function renderCustomerSection(
       r.line(`${t("receipt.customer.orderNumber")}${order.orderNumber}`);
       r.line(t("receipt.customer.title", { type: tOrderTypeUpper(order.type, t) }));
       r.line(`${t("receipt.customer.date")}: ${fmtDateTime(order.createdAt)}`);
+      if (order.scheduledFor) {
+        r.line(`${t("receipt.scheduling.orderForLater")}:`);
+        r.line(fmtDateTime(order.scheduledFor));
+      } else {
+        r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
+      }
       break;
 
     case "customer_info":

@@ -231,6 +231,11 @@ interface OrderEmailParams {
   total: number;
   orderType: string;
   estimatedTime: number;
+  /** Scheduled ("order for later") slot. When set, the confirmation email shows
+   *  a prominent "Order for later: <date/time>" line instead of the ASAP ETA. */
+  scheduledFor?: Date | string | null;
+  /** Restaurant IANA timezone — formats scheduledFor in the customer's local time. */
+  timezone?: string;
   trackingUrl: string;
   /** Restaurant defaultLanguage. Defaults to "en". */
   locale?: string;
@@ -265,6 +270,15 @@ interface OrderEmailParams {
 export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
   const t = await getDict(params.locale);
   const subject = t("email.orderConfirmed.subject", { orderNumber: params.orderNumber });
+  // Pre-format the scheduled slot in the restaurant's timezone + customer
+  // locale (only for future-dated "order for later" orders). Luigi 2026-06-05.
+  const schedDate = params.scheduledFor ? new Date(params.scheduledFor) : null;
+  const scheduledLabel = schedDate && schedDate.getTime() > Date.now()
+    ? schedDate.toLocaleString(params.locale || undefined, {
+        timeZone: params.timezone || "UTC",
+        weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+      })
+    : null;
   const html = await renderEmail(
     OrderConfirmation({
       t,
@@ -274,6 +288,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       orderType: localizeOrderType(params.orderType, t),
       paidOnline: params.paidOnline ?? false,
       estimatedMinutes: params.estimatedTime,
+      scheduledLabel,
       items: params.items as EmailOrderItem[],
       subtotal: params.subtotal ?? params.total,
       taxAmount: params.taxAmount,

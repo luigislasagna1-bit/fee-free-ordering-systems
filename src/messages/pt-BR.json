@@ -537,7 +537,9 @@
     "refundSuccess": "Reembolso emitido.",
     "autoCallMessage": "O novo pedido {number} em {restaurant} está aguardando e ainda não foi aceito. Por favor, abra o seu painel da cozinha para aceitá-lo ou recusá-lo.",
     "outsideZoneNote": "Este pedido pode estar fora da sua zona de entrega habitual",
-    "readyIn": "Pronto em"
+    "readyIn": "Pronto em",
+    "asap": "ASAP",
+    "orderForLater": "Pedido para depois"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",
@@ -3482,6 +3484,10 @@
       "date": "Data",
       "time": "Horário",
       "confirmationCode": "Código de confirmação"
+    },
+    "scheduling": {
+      "asap": "ASAP",
+      "orderForLater": "PEDIDO PARA DEPOIS"
     }
   },
   "email": {
@@ -3520,7 +3526,8 @@
       "promosAppliedHeading": "🎉 Promoções aplicadas",
       "promoFreeLabel": "GRÁTIS",
       "trackOrderButton": "Acompanhar pedido",
-      "contactRestaurantNote": "Se tiver alguma dúvida sobre seu pedido, entre em contato diretamente com o restaurante usando as informações abaixo."
+      "contactRestaurantNote": "Se tiver alguma dúvida sobre seu pedido, entre em contato diretamente com o restaurante usando as informações abaixo.",
+      "scheduledFor": "Este é um pedido para depois — agendado para {time}."
     },
     "newOrder": {
       "subject": "Novo pedido #{orderNumber} — {restaurant}",
