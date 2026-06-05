@@ -536,7 +536,8 @@
     "refundFailed": "Terugbetaling mislukt. Probeer het opnieuw.",
     "refundSuccess": "Terugbetaling uitgevoerd.",
     "autoCallMessage": "Nieuwe bestelling {number} bij {restaurant} staat te wachten en is nog niet geaccepteerd. Open je keukenscherm om de bestelling te accepteren of te weigeren.",
-    "outsideZoneNote": "Deze bestelling valt mogelijk buiten je gebruikelijke bezorggebied"
+    "outsideZoneNote": "Deze bestelling valt mogelijk buiten je gebruikelijke bezorggebied",
+    "readyIn": "Klaar over"
   },
   "admin": {
     "welcomeBack": "Welkom terug",
@@ -3531,7 +3532,7 @@
       "subject": "Update over bestelling #{orderNumber}",
       "title": "Bestelupdate",
       "body": "Uw bestelling #{orderNumber} is nu {status}.",
-      "estimatedReady": "Geschatte gereedtijd",
+      "estimatedReady": "Geschatte gereedtijd: {time}.",
       "reason": "Reden",
       "acceptedTitle": "Bestelling bevestigd",
       "acceptedBody": "Goed nieuws — het restaurant heeft uw bestelling geaccepteerd en de keuken is er nu mee aan de slag.",

@@ -536,7 +536,8 @@
     "refundFailed": "Povračilo ni uspelo. Poskusite znova.",
     "refundSuccess": "Povračilo je bilo izvedeno.",
     "autoCallMessage": "Novo naročilo {number} pri {restaurant} čaka in še ni bilo sprejeto. Prosimo, odprite kuhinjski zaslon, da ga sprejmete ali zavrnete.",
-    "outsideZoneNote": "To naročilo je morda zunaj vašega običajnega dostavnega območja"
+    "outsideZoneNote": "To naročilo je morda zunaj vašega običajnega dostavnega območja",
+    "readyIn": "Pripravljeno čez"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",
@@ -3531,7 +3532,7 @@
       "subject": "Posodobitev naročila #{orderNumber}",
       "title": "Posodobitev naročila",
       "body": "Vaše naročilo #{orderNumber} je zdaj {status}.",
-      "estimatedReady": "Predvidena pripravljenost",
+      "estimatedReady": "Predvideno pripravljeno: {time}.",
       "reason": "Razlog",
       "acceptedTitle": "Naročilo potrjeno",
       "acceptedBody": "Odlična novica — restavracija je sprejela vaše naročilo in kuhinja je že začela z delom.",

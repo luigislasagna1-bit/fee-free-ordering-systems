@@ -34,6 +34,38 @@ export function formatTime(
   return `${hour}:${String(m).padStart(2, "0")} ${ampm}`;
 }
 
+/**
+ * Format a "time until due" duration UNAMBIGUOUSLY for the kitchen display so
+ * staff never misread hours as minutes:
+ *   - ≥ 1 hour  → "2h 05m"   (explicit unit suffixes, no colon)
+ *   - < 1 hour  → "14:31"    (MM:SS — the colon ONLY ever means minutes:seconds)
+ *   - past due  → "00:00"
+ */
+export function formatDueCountdown(diffMs: number): { text: string; unit: "hours" | "minutes" | "due" } {
+  if (diffMs <= 0) return { text: "00:00", unit: "due" };
+  const totalSec = Math.floor(diffMs / 1000);
+  const hh = Math.floor(totalSec / 3600);
+  const mm = Math.floor((totalSec % 3600) / 60);
+  const ss = totalSec % 60;
+  if (hh > 0) return { text: `${hh}h ${String(mm).padStart(2, "0")}m`, unit: "hours" };
+  return { text: `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`, unit: "minutes" };
+}
+
+/**
+ * Due-time label that caps the countdown at 24h: anything further out shows the
+ * WEEKDAY NAME the order is due (e.g. "Thursday") instead of an unwieldy
+ * multi-day hours value like "158h 33m". ≤ 24h → the hours/minutes countdown.
+ * `kind` lets callers colour day/hours rows distinctly from minute timers.
+ */
+export function formatDueLabel(dueTs: number, nowMs: number): { text: string; kind: "day" | "hours" | "minutes" | "due" } {
+  const diffMs = dueTs - nowMs;
+  if (diffMs > 24 * 60 * 60 * 1000) {
+    return { text: new Date(dueTs).toLocaleDateString(undefined, { weekday: "long" }), kind: "day" };
+  }
+  const c = formatDueCountdown(diffMs);
+  return { text: c.text, kind: c.unit };
+}
+
 /** Format a minutes-since-midnight number (0..1440). Used by promo
  *  usable-hours windows which store minutes, not HH:MM strings. */
 export function formatMinutes(min: number | null | undefined, format: HoursFormat = "24h"): string {

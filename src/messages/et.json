@@ -536,7 +536,8 @@
     "refundFailed": "Tagasimakse ebaõnnestus. Palun proovi uuesti.",
     "refundSuccess": "Tagasimakse tehtud.",
     "autoCallMessage": "Uus tellimus {number} restoranis {restaurant} ootab ja seda pole veel vastu võetud. Palun avage köögiekraan, et see vastu võtta või tagasi lükata.",
-    "outsideZoneNote": "See tellimus võib jääda väljapoole teie tavapärast tarnepiirkonda"
+    "outsideZoneNote": "See tellimus võib jääda väljapoole teie tavapärast tarnepiirkonda",
+    "readyIn": "Valmis"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",
@@ -3531,7 +3532,7 @@
       "subject": "Uuendus tellimuse #{orderNumber} kohta",
       "title": "Tellimuse uuendus",
       "body": "Teie tellimus #{orderNumber} on nüüd {status}.",
-      "estimatedReady": "Eeldatav valmimisaeg",
+      "estimatedReady": "Eeldatav valmimisaeg: {time}.",
       "reason": "Põhjus",
       "acceptedTitle": "Tellimus kinnitatud",
       "acceptedBody": "Suurepärane uudis — restoran võttis teie tellimuse vastu ja köök alustab selle valmistamisega kohe.",

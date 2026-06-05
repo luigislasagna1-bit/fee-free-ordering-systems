@@ -536,7 +536,8 @@
     "refundFailed": "A visszatérítés sikertelen. Kérjük, próbálja újra.",
     "refundSuccess": "Visszatérítés kiadva.",
     "autoCallMessage": "A(z) {number} számú új rendelés a(z) {restaurant} étteremben várakozik, és még nincs elfogadva. Kérjük, nyissa meg a konyhai kijelzőt az elfogadáshoz vagy elutasításhoz.",
-    "outsideZoneNote": "Ez a rendelés a megszokott kiszállítási zónán kívül eshet"
+    "outsideZoneNote": "Ez a rendelés a megszokott kiszállítási zónán kívül eshet",
+    "readyIn": "Kész"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",
@@ -3531,7 +3532,7 @@
       "subject": "Frissítés a #{orderNumber}. rendelésről",
       "title": "Rendelés frissítése",
       "body": "A #{orderNumber}. rendelés állapota: {status}.",
-      "estimatedReady": "Becsült elkészülési idő",
+      "estimatedReady": "Várható elkészülés: {time}.",
       "reason": "Ok",
       "acceptedTitle": "Rendelés visszaigazolva",
       "acceptedBody": "Nagyszerű hír — az étterem elfogadta a rendelését, és a konyha már el is kezdte a készítést.",

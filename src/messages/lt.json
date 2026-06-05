@@ -536,7 +536,8 @@
     "refundFailed": "Grąžinimas nepavyko. Bandykite dar kartą.",
     "refundSuccess": "Grąžinimas atliktas.",
     "autoCallMessage": "Naujas užsakymas {number} restorane {restaurant} laukia ir dar nebuvo priimtas. Atidarykite virtuvės ekraną, kad jį priimtumėte arba atmestumėte.",
-    "outsideZoneNote": "Šis užsakymas gali būti už įprastos pristatymo zonos ribų"
+    "outsideZoneNote": "Šis užsakymas gali būti už įprastos pristatymo zonos ribų",
+    "readyIn": "Bus paruošta po"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",
@@ -3531,7 +3532,7 @@
       "subject": "Atnaujinta informacija apie užsakymą #{orderNumber}",
       "title": "Užsakymo atnaujinimas",
       "body": "Jūsų užsakymo #{orderNumber} būsena: {status}.",
-      "estimatedReady": "Numatomas paruošimo laikas",
+      "estimatedReady": "Numatomas paruošimo laikas: {time}.",
       "reason": "Priežastis",
       "acceptedTitle": "Užsakymas patvirtintas",
       "acceptedBody": "Puiku — restoranas priėmė jūsų užsakymą ir virtuvė jau pradėjo jį ruošti.",

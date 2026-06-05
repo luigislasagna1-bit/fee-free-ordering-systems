@@ -303,6 +303,24 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                     </div>
                   ))}
                 </div>
+              ) : theme.menuLayout === "list" ? (
+                /* List (GloriaFood-style): small photo on the LEFT, text on
+                   the right — mirrors ListCard on the live page. */
+                <div className="flex flex-col gap-2 px-3 pb-3" style={{ backgroundColor: theme.backgroundColor }}>
+                  {[t("previewItem1"), t("previewItem2"), t("previewItem3")].map(name => (
+                    <div
+                      key={name}
+                      className="flex items-center gap-2 rounded-xl overflow-hidden shadow-sm p-1.5"
+                      style={{ backgroundColor: theme.cardBackground, border: "1px solid #e5e7eb" }}
+                    >
+                      <div className="flex-shrink-0 rounded-lg" style={{ width: 40, height: 40, backgroundColor: "#f3f4f6" }} />
+                      <div className="min-w-0 flex-1">
+                        <div className="text-xs font-semibold truncate" style={{ color: theme.textColor }}>{name}</div>
+                        <div className="text-xs" style={{ color: theme.primaryColor }}>$12.99</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               ) : (
                 <div className="grid grid-cols-2 gap-2 px-3 pb-3" style={{ backgroundColor: theme.backgroundColor }}>
                   {[t("previewItem1"), t("previewItem2")].map(name => (

@@ -536,7 +536,8 @@
     "refundFailed": "환불에 실패했습니다. 다시 시도해 주세요.",
     "refundSuccess": "환불이 처리되었습니다.",
     "autoCallMessage": "{restaurant}의 신규 주문 {number}번이 대기 중이며 아직 접수되지 않았습니다. 주방 디스플레이를 열어 주문을 접수하거나 거절해 주세요.",
-    "outsideZoneNote": "이 주문은 정규 배달 구역을 벗어날 수 있습니다"
+    "outsideZoneNote": "이 주문은 정규 배달 구역을 벗어날 수 있습니다",
+    "readyIn": "준비 완료까지"
   },
   "admin": {
     "welcomeBack": "환영합니다",
@@ -3531,7 +3532,7 @@
       "subject": "주문 #{orderNumber} 업데이트",
       "title": "주문 업데이트",
       "body": "주문 #{orderNumber}의 상태가 {status}(으)로 변경되었습니다.",
-      "estimatedReady": "예상 준비 시간",
+      "estimatedReady": "예상 준비 완료: {time}.",
       "reason": "사유",
       "acceptedTitle": "주문 확인됨",
       "acceptedBody": "좋은 소식입니다 — 레스토랑에서 주문을 수락했으며, 주방에서 지금 바로 준비를 시작합니다.",

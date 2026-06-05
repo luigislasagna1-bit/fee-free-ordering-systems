@@ -536,7 +536,8 @@
     "refundFailed": "Återbetalningen misslyckades. Försök igen.",
     "refundSuccess": "Återbetalning genomförd.",
     "autoCallMessage": "Ny beställning {number} hos {restaurant} väntar och har ännu inte accepterats. Öppna din köksskärm för att acceptera eller avvisa den.",
-    "outsideZoneNote": "Den här beställningen kan ligga utanför ditt vanliga leveransområde"
+    "outsideZoneNote": "Den här beställningen kan ligga utanför ditt vanliga leveransområde",
+    "readyIn": "Klar om"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",
@@ -3531,7 +3532,7 @@
       "subject": "Uppdatering om beställning #{orderNumber}",
       "title": "Orderuppdatering",
       "body": "Din beställning #{orderNumber} är nu {status}.",
-      "estimatedReady": "Beräknad klar",
+      "estimatedReady": "Beräknad klar: {time}.",
       "reason": "Anledning",
       "acceptedTitle": "Beställning bekräftad",
       "acceptedBody": "Goda nyheter — restaurangen har accepterat din beställning och köket börjar nu förbereda den.",

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { formatCurrency } from "@/lib/utils";
-import { formatTime } from "@/lib/format-time";
+import { formatTime, formatDueLabel } from "@/lib/format-time";
 import {
   Bell, Printer, RefreshCw, LogOut, ChefHat, Sun, Moon,
   Package, Clock, Truck, ShoppingBag, CheckCircle, Trash2,
@@ -181,15 +181,15 @@ function Countdown({
   if (alertAt) {
     const alertMs = new Date(alertAt).getTime();
     if (alertMs > now) {
-      const diff = alertMs - now;
-      const hrs = Math.floor(diff / 3600000);
-      const mins = Math.floor((diff % 3600000) / 60000);
-      const when = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
+      // Cap at 24h → weekday name (e.g. "OPENS THURSDAY") so a scheduled order
+      // days out never shows "OPENS IN 158H 0M". Luigi 2026-06-05.
+      const label = formatDueLabel(alertMs, now);
+      const badge = label.kind === "day" ? label.text.toUpperCase() : `OPENS IN ${label.text.toUpperCase()}`;
       return (
         <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300"
-          title={`Alert fires in ${when} (at ${new Date(alertAt).toLocaleString(undefined, { hour: "numeric", minute: "2-digit" })})`}
+          title={`Alert at ${new Date(alertAt).toLocaleString(undefined, { weekday: "short", hour: "numeric", minute: "2-digit" })}`}
         >
-          OPENS IN {when.toUpperCase()}
+          {badge}
         </span>
       );
     }
@@ -208,42 +208,6 @@ function Countdown({
   return <span className={`text-xs ${color} font-mono`}>{m}:{s.toString().padStart(2, "0")}</span>;
 }
 
-/**
- * Format a "time until due" value UNAMBIGUOUSLY so kitchen staff can never
- * misread hours as minutes (reseller report 2026-06-04 — staff seeing "02:00"
- * couldn't tell 2 hours from 2 minutes):
- *   - ≥ 1 hour  → "2h 05m"   — explicit unit suffixes, NO colon
- *   - < 1 hour  → "14:31"    — MM:SS ticking timer; the colon format now ONLY
- *                              ever means minutes:seconds, since hours never
- *                              use it — so a bare "NN:NN" is always minutes
- *   - past due  → "00:00"
- * Returns the text plus a `unit` tag so callers can colour hours distinctly.
- */
-function formatDueCountdown(diffMs: number): { text: string; unit: "hours" | "minutes" | "due" } {
-  if (diffMs <= 0) return { text: "00:00", unit: "due" };
-  const totalSec = Math.floor(diffMs / 1000);
-  const hh = Math.floor(totalSec / 3600);
-  const mm = Math.floor((totalSec % 3600) / 60);
-  const ss = totalSec % 60;
-  if (hh > 0) return { text: `${hh}h ${String(mm).padStart(2, "0")}m`, unit: "hours" };
-  return { text: `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`, unit: "minutes" };
-}
-
-/**
- * Due-time label for kitchen rows. Caps the countdown at 24h: anything further
- * out shows the WEEKDAY NAME the order is due (e.g. "Thursday") rather than an
- * unwieldy multi-day hours value like "304h 24m" (Fabrizio report 2026-06-05).
- * ≤ 24h falls through to the unambiguous hours/minutes countdown.
- * `kind` lets callers colour day/hours rows distinctly from minute timers.
- */
-function formatDueLabel(dueTs: number, nowMs: number): { text: string; kind: "day" | "hours" | "minutes" | "due" } {
-  const diffMs = dueTs - nowMs;
-  if (diffMs > 24 * 60 * 60 * 1000) {
-    return { text: new Date(dueTs).toLocaleDateString(undefined, { weekday: "long" }), kind: "day" };
-  }
-  const c = formatDueCountdown(diffMs);
-  return { text: c.text, kind: c.unit };
-}
 
 // ── Order row ─────────────────────────────────────────────────────────────────
 function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown }: {

@@ -6,6 +6,7 @@ import {
   ReceiptText, User, Plus, Timer,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { formatDueLabel } from "@/lib/format-time";
 import toast from "react-hot-toast";
 import type { T, Order } from "./kitchen-types";
 import { paymentStatusLabel } from "./kitchen-types";
@@ -95,22 +96,14 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
     const id = setInterval(() => setNowTick(Date.now()), 1000);
     return () => clearInterval(id);
   }, [order.status]);
-  const countdownMs = order.estimatedReady
-    ? new Date(order.estimatedReady).getTime() - nowTick
-    : null;
-  // Countdown to estimatedReady (Luigi 2026-06-02 polish): clamps at
-  // 0:00. We never display a negative ("overdue by") timer anymore —
-  // when the deadline passes the widget just locks at 0:00, normal
-  // colour, no red, no "overdue" label. The kitchen can still see the
-  // order is at its promised time without the row screaming red.
-  const countdownLabel = (() => {
-    if (countdownMs == null) return null;
-    const safeMs = Math.max(0, countdownMs);
-    const totalSec = Math.round(safeMs / 1000);
-    const m = Math.floor(totalSec / 60);
-    const s = totalSec % 60;
-    return `${m}:${String(s).padStart(2, "0")}`;
-  })();
+  // Due time: prefer the customer's scheduled slot (scheduledFor) over the
+  // kitchen's estimatedReady, so a Thursday pickup counts down to THURSDAY, not
+  // to a now+prep estimate. Matches the kitchen list-row logic. Luigi 2026-06-05.
+  const dueRaw = (order as any).scheduledFor ?? order.estimatedReady;
+  const dueMs = dueRaw ? new Date(dueRaw).getTime() : null;
+  // Unambiguous label, capped at 24h → weekday name ("Thursday"); ≤ 24h shows
+  // "2h 05m" / "14:31"; past due → "00:00". (formatDueLabel.)
+  const countdownInfo = dueMs == null ? null : formatDueLabel(dueMs, nowTick);
 
   const submitDelay = async () => {
     const minutes = Math.max(1, Math.min(240, Math.round(delayMinutes || 0)));
@@ -275,14 +268,18 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                   normal styling (Luigi 2026-06-02): no red, no
                   pulsation, no "overdue by" label. Hidden for terminal
                   states. */}
-              {order.status === "accepted" && countdownLabel && (
+              {order.status === "accepted" && countdownInfo && (
                 <div className="mt-3 rounded-lg px-3 py-2.5 border flex items-center justify-between gap-2 bg-blue-500/10 border-blue-500/30 text-blue-700 dark:text-blue-300">
                   <div className="flex items-center gap-2">
                     <Timer className="w-4 h-4" />
-                    <span className="text-sm font-semibold">Ready in</span>
+                    {/* "Ready Thursday" for day-out slots; "Ready in 14:31" for
+                        same-day countdowns. */}
+                    <span className="text-sm font-semibold">
+                      {countdownInfo.kind === "day" ? tk("ready") : tk("readyIn")}
+                    </span>
                   </div>
-                  <span className="text-2xl font-mono font-bold tabular-nums">
-                    {countdownLabel}
+                  <span className={`font-mono font-bold tabular-nums ${countdownInfo.kind === "day" ? "text-xl" : "text-2xl"}`}>
+                    {countdownInfo.text}
                   </span>
                 </div>
               )}

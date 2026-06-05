@@ -536,7 +536,8 @@
     "refundFailed": "Povraćaj nije uspeo. Pokušajte ponovo.",
     "refundSuccess": "Povraćaj je izvršen.",
     "autoCallMessage": "Nova porudžbina {number} u restoranu {restaurant} čeka i još nije prihvaćena. Otvorite ekran kuhinje da biste je prihvatili ili odbili.",
-    "outsideZoneNote": "Ova porudžbina je možda izvan vaše uobičajene zone dostave"
+    "outsideZoneNote": "Ova porudžbina je možda izvan vaše uobičajene zone dostave",
+    "readyIn": "Gotovo za"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazad",
@@ -3531,7 +3532,7 @@
       "subject": "Ažuriranje porudžbine #{orderNumber}",
       "title": "Ažuriranje porudžbine",
       "body": "Vaša porudžbina #{orderNumber} je sada {status}.",
-      "estimatedReady": "Procenjeno vreme pripreme",
+      "estimatedReady": "Procenjeno spremno: {time}.",
       "reason": "Razlog",
       "acceptedTitle": "Porudžbina potvrđena",
       "acceptedBody": "Odlične vesti — restoran je prihvatio vašu porudžbinu i kuhinja je upravo počela sa pripremom.",

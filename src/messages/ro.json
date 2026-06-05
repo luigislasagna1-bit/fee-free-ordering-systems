@@ -536,7 +536,8 @@
     "refundFailed": "Rambursarea a eșuat. Încercați din nou.",
     "refundSuccess": "Rambursare emisă.",
     "autoCallMessage": "Comanda nouă {number} de la {restaurant} așteaptă și nu a fost încă acceptată. Vă rugăm să deschideți afișajul de bucătărie pentru a o accepta sau a o refuza.",
-    "outsideZoneNote": "Această comandă ar putea fi în afara zonei dvs. obișnuite de livrare"
+    "outsideZoneNote": "Această comandă ar putea fi în afara zonei dvs. obișnuite de livrare",
+    "readyIn": "Gata în"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",
@@ -3531,7 +3532,7 @@
       "subject": "Actualizare pentru comanda #{orderNumber}",
       "title": "Actualizare comandă",
       "body": "Comanda ta #{orderNumber} este acum {status}.",
-      "estimatedReady": "Gata estimativ",
+      "estimatedReady": "Estimat gata: {time}.",
       "reason": "Motiv",
       "acceptedTitle": "Comandă confirmată",
       "acceptedBody": "Vești bune — restaurantul a acceptat comanda dvs. și bucătăria a început deja să o prepare.",

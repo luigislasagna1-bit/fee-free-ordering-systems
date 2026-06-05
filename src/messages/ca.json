@@ -536,7 +536,8 @@
     "refundFailed": "El reemborsament ha fallat. Torneu-ho a provar.",
     "refundSuccess": "Reemborsament emès.",
     "autoCallMessage": "La comanda nova {number} a {restaurant} està esperant i encara no s'ha acceptat. Si us plau, obriu la pantalla de cuina per acceptar-la o rebutjar-la.",
-    "outsideZoneNote": "Aquesta comanda pot estar fora de la teva zona de repartiment habitual"
+    "outsideZoneNote": "Aquesta comanda pot estar fora de la teva zona de repartiment habitual",
+    "readyIn": "A punt en"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",
@@ -3531,7 +3532,7 @@
       "subject": "Actualització de la comanda #{orderNumber}",
       "title": "Actualització de la comanda",
       "body": "La vostra comanda #{orderNumber} ara és {status}.",
-      "estimatedReady": "Temps estimat",
+      "estimatedReady": "Llest aproximadament a les: {time}.",
       "reason": "Motiu",
       "acceptedTitle": "Comanda confirmada",
       "acceptedBody": "Bones notícies — el restaurant ha acceptat la vostra comanda i la cuina ja hi està treballant.",

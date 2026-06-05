@@ -536,7 +536,8 @@
     "refundFailed": "Atmaksa neizdevās. Lūdzu, mēģiniet vēlreiz.",
     "refundSuccess": "Atmaksa veikta.",
     "autoCallMessage": "Jauns pasūtījums {number} restorānā {restaurant} gaida un vēl nav pieņemts. Lūdzu, atveriet virtuves displeju, lai to pieņemtu vai noraidītu.",
-    "outsideZoneNote": "Šis pasūtījums var būt ārpus jūsu parastās piegādes zonas"
+    "outsideZoneNote": "Šis pasūtījums var būt ārpus jūsu parastās piegādes zonas",
+    "readyIn": "Gatavs pēc"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",
@@ -3531,7 +3532,7 @@
       "subject": "Atjauninājums par pasūtījumu #{orderNumber}",
       "title": "Pasūtījuma atjauninājums",
       "body": "Jūsu pasūtījums #{orderNumber} tagad ir {status}.",
-      "estimatedReady": "Paredzamais gatavošanas laiks",
+      "estimatedReady": "Paredzamais gatavošanas laiks: {time}.",
       "reason": "Iemesls",
       "acceptedTitle": "Pasūtījums apstiprināts",
       "acceptedBody": "Lieliskas ziņas — restorāns ir pieņēmis jūsu pasūtījumu, un virtuve jau sāk to gatavot.",

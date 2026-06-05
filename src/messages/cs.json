@@ -536,7 +536,8 @@
     "refundFailed": "Vrácení platby se nezdařilo. Zkuste to prosím znovu.",
     "refundSuccess": "Platba byla vrácena.",
     "autoCallMessage": "Nová objednávka {number} v podniku {restaurant} čeká a zatím nebyla přijata. Otevřete prosím kuchyňský displej a objednávku přijměte nebo odmítněte.",
-    "outsideZoneNote": "Tato objednávka může být mimo vaši běžnou doručovací zónu"
+    "outsideZoneNote": "Tato objednávka může být mimo vaši běžnou doručovací zónu",
+    "readyIn": "Hotovo za"
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",
@@ -3531,7 +3532,7 @@
       "subject": "Aktualizace objednávky #{orderNumber}",
       "title": "Aktualizace objednávky",
       "body": "Vaše objednávka č. {orderNumber} má nyní stav {status}.",
-      "estimatedReady": "Předpokládaná doba přípravy",
+      "estimatedReady": "Předpokládaná příprava: {time}.",
       "reason": "Důvod",
       "acceptedTitle": "Objednávka potvrzena",
       "acceptedBody": "Skvělá zpráva — restaurace přijala vaši objednávku a kuchyně se do ní pustila.",

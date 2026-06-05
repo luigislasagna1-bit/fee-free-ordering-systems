@@ -536,7 +536,8 @@
     "refundFailed": "Zwrot nie powiódł się. Spróbuj ponownie.",
     "refundSuccess": "Zwrot został wykonany.",
     "autoCallMessage": "Nowe zamówienie {number} w {restaurant} czeka i nie zostało jeszcze zaakceptowane. Otwórz ekran kuchni, aby je przyjąć lub odrzucić.",
-    "outsideZoneNote": "To zamówienie może znajdować się poza Twoją standardową strefą dostawy"
+    "outsideZoneNote": "To zamówienie może znajdować się poza Twoją standardową strefą dostawy",
+    "readyIn": "Gotowe za"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",
@@ -3531,7 +3532,7 @@
       "subject": "Aktualizacja zamówienia #{orderNumber}",
       "title": "Aktualizacja zamówienia",
       "body": "Twoje zamówienie #{orderNumber} ma teraz status: {status}.",
-      "estimatedReady": "Szacowany czas gotowości",
+      "estimatedReady": "Szacowany czas gotowości: {time}.",
       "reason": "Powód",
       "acceptedTitle": "Zamówienie potwierdzone",
       "acceptedBody": "Świetna wiadomość — restauracja przyjęła Twoje zamówienie i kuchnia już się nim zajęła.",

@@ -536,7 +536,8 @@
     "refundFailed": "Hoàn tiền thất bại. Vui lòng thử lại.",
     "refundSuccess": "Đã thực hiện hoàn tiền.",
     "autoCallMessage": "Đơn hàng mới {number} tại {restaurant} đang chờ và chưa được chấp nhận. Vui lòng mở màn hình bếp để chấp nhận hoặc từ chối đơn hàng.",
-    "outsideZoneNote": "Đơn hàng này có thể nằm ngoài khu vực giao hàng thông thường của bạn"
+    "outsideZoneNote": "Đơn hàng này có thể nằm ngoài khu vực giao hàng thông thường của bạn",
+    "readyIn": "Sẵn sàng sau"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",
@@ -3531,7 +3532,7 @@
       "subject": "Cập nhật đơn #{orderNumber}",
       "title": "Cập nhật đơn hàng",
       "body": "Đơn #{orderNumber} của bạn hiện {status}.",
-      "estimatedReady": "Dự kiến sẵn sàng",
+      "estimatedReady": "Dự kiến sẵn sàng: {time}.",
       "reason": "Lý do",
       "acceptedTitle": "Đơn hàng đã được xác nhận",
       "acceptedBody": "Tin vui — nhà hàng đã chấp nhận đơn hàng của bạn và bếp đang bắt đầu chế biến ngay bây giờ.",

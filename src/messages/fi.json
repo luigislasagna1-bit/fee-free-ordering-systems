@@ -536,7 +536,8 @@
     "refundFailed": "Hyvitys epäonnistui. Yritä uudelleen.",
     "refundSuccess": "Hyvitys tehty.",
     "autoCallMessage": "Uusi tilaus {number} ravintolassa {restaurant} odottaa eikä sitä ole vielä hyväksytty. Avaa keittiönäyttö hyväksyäksesi tai hylätäksesi sen.",
-    "outsideZoneNote": "Tämä tilaus saattaa olla tavallisen toimitusalueesi ulkopuolella"
+    "outsideZoneNote": "Tämä tilaus saattaa olla tavallisen toimitusalueesi ulkopuolella",
+    "readyIn": "Valmis"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",
@@ -3531,7 +3532,7 @@
       "subject": "Päivitys tilaukseen #{orderNumber}",
       "title": "Tilauksen päivitys",
       "body": "Tilauksesi #{orderNumber} on nyt tilassa {status}.",
-      "estimatedReady": "Arvioitu valmistumisaika",
+      "estimatedReady": "Arvioitu valmistumisaika: {time}.",
       "reason": "Syy",
       "acceptedTitle": "Tilaus vahvistettu",
       "acceptedBody": "Hyvä uutinen — ravintola hyväksyi tilauksesi ja keittiö aloittaa sen valmistamisen nyt.",

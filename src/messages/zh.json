@@ -536,7 +536,8 @@
     "refundFailed": "退款失败。请重试。",
     "refundSuccess": "退款已发起。",
     "autoCallMessage": "{restaurant} 的新订单 {number} 正在等待，尚未被接受。请打开您的厨房显示屏，接受或拒绝该订单。",
-    "outsideZoneNote": "此订单可能超出您的常规配送范围"
+    "outsideZoneNote": "此订单可能超出您的常规配送范围",
+    "readyIn": "还有"
   },
   "admin": {
     "welcomeBack": "欢迎回来",
@@ -3531,7 +3532,7 @@
       "subject": "订单 #{orderNumber} 状态更新",
       "title": "订单更新",
       "body": "您的订单 #{orderNumber} 当前状态为 {status}。",
-      "estimatedReady": "预计准备好",
+      "estimatedReady": "预计备好时间：{time}。",
       "reason": "原因",
       "acceptedTitle": "订单已确认",
       "acceptedBody": "好消息 — 餐厅已接受您的订单，厨房正在开始备餐。",

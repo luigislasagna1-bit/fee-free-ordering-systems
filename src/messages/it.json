@@ -536,7 +536,8 @@
     "refundFailed": "Rimborso non riuscito. Riprova.",
     "refundSuccess": "Rimborso emesso.",
     "autoCallMessage": "Il nuovo ordine {number} presso {restaurant} è in attesa e non è ancora stato accettato. Apri il display della cucina per accettarlo o rifiutarlo.",
-    "outsideZoneNote": "Questo ordine potrebbe trovarsi fuori dalla tua zona di consegna abituale"
+    "outsideZoneNote": "Questo ordine potrebbe trovarsi fuori dalla tua zona di consegna abituale",
+    "readyIn": "Pronto tra"
   },
   "admin": {
     "welcomeBack": "Bentornato",
@@ -3531,7 +3532,7 @@
       "subject": "Aggiornamento ordine #{orderNumber}",
       "title": "Aggiornamento ordine",
       "body": "Il tuo ordine #{orderNumber} è ora {status}.",
-      "estimatedReady": "Pronto verso",
+      "estimatedReady": "Pronto previsto: {time}.",
       "reason": "Motivo",
       "acceptedTitle": "Ordine confermato",
       "acceptedBody": "Ottima notizia — il ristorante ha accettato il tuo ordine e la cucina sta già lavorando.",

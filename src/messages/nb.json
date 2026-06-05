@@ -536,7 +536,8 @@
     "refundFailed": "Refusjonen mislyktes. Prøv igjen.",
     "refundSuccess": "Refusjon utført.",
     "autoCallMessage": "Ny bestilling {number} hos {restaurant} venter og er ennå ikke godtatt. Vennligst åpne kjøkkenskjermen for å godta eller avvise den.",
-    "outsideZoneNote": "Denne bestillingen kan være utenfor det vanlige leveringsområdet ditt"
+    "outsideZoneNote": "Denne bestillingen kan være utenfor det vanlige leveringsområdet ditt",
+    "readyIn": "Klar om"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",
@@ -3531,7 +3532,7 @@
       "subject": "Oppdatering på bestilling #{orderNumber}",
       "title": "Bestillingsoppdatering",
       "body": "Bestillingen din #{orderNumber} er nå {status}.",
-      "estimatedReady": "Estimert klar",
+      "estimatedReady": "Beregnet klar: {time}.",
       "reason": "Årsak",
       "acceptedTitle": "Bestilling bekreftet",
       "acceptedBody": "Gode nyheter — restauranten har godtatt bestillingen din, og kjøkkenet er i gang nå.",

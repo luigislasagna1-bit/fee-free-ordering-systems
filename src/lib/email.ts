@@ -383,9 +383,25 @@ export async function sendOrderStatusUpdateEmail(params: {
   restaurantEmail?: string | null;
   restaurantUrl?: string | null;
   locale?: string;
+  /** Restaurant IANA timezone — formats "Estimated ready" in the customer's
+   *  local time instead of the server's UTC. Falls back to UTC when unset. */
+  timezone?: string;
 }) {
   const t = await getDict(params.locale);
   const subject = t("email.orderStatus.subject", { orderNumber: params.orderNumber });
+  // Format the estimated-ready instant in the RESTAURANT's timezone + the
+  // customer's locale (was bare toLocaleString() → server UTC, so a Thursday
+  // 8:45 PM slot showed the wrong time). Luigi 2026-06-05.
+  const readyStr = params.estimatedReady
+    ? params.estimatedReady.toLocaleString(params.locale || undefined, {
+        timeZone: params.timezone || "UTC",
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+      })
+    : null;
   const html = await renderEmail(
     OrderStatusUpdate({
       t,
@@ -393,8 +409,8 @@ export async function sendOrderStatusUpdateEmail(params: {
       orderNumber: params.orderNumber,
       restaurantName: params.restaurantName,
       status: params.status,
-      statusMessage: params.estimatedReady
-        ? `${t("email.orderStatus.body", { orderNumber: params.orderNumber, status: params.status })} Estimated ready: ${params.estimatedReady.toLocaleString()}.`
+      statusMessage: readyStr
+        ? `${t("email.orderStatus.body", { orderNumber: params.orderNumber, status: params.status })} ${t("email.orderStatus.estimatedReady", { time: readyStr })}`
         : undefined,
       // Forward the rejection reason (if any) so the template can surface
       // it. Previously dropped on the floor — customer never saw WHY their

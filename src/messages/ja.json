@@ -536,7 +536,8 @@
     "refundFailed": "返金に失敗しました。もう一度お試しください。",
     "refundSuccess": "返金を処理しました。",
     "autoCallMessage": "{restaurant}の新しい注文 {number} が承認待ちです。キッチンディスプレイを開いて、承認または拒否してください。",
-    "outsideZoneNote": "この注文は通常の配達エリア外の可能性があります"
+    "outsideZoneNote": "この注文は通常の配達エリア外の可能性があります",
+    "readyIn": "あと"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",
@@ -3531,7 +3532,7 @@
       "subject": "注文 #{orderNumber} の状況",
       "title": "注文の更新",
       "body": "注文 #{orderNumber} のステータスが {status} になりました。",
-      "estimatedReady": "目安時間",
+      "estimatedReady": "準備完了予定: {time}。",
       "reason": "理由",
       "acceptedTitle": "注文が確定しました",
       "acceptedBody": "よいお知らせです — レストランがご注文を受け付け、現在キッチンで準備を開始しました。",

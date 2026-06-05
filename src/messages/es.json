@@ -536,7 +536,8 @@
     "refundFailed": "El reembolso falló. Inténtalo de nuevo.",
     "refundSuccess": "Reembolso emitido.",
     "autoCallMessage": "El nuevo pedido {number} en {restaurant} está esperando y aún no se ha aceptado. Por favor, abra su pantalla de cocina para aceptarlo o rechazarlo.",
-    "outsideZoneNote": "Este pedido puede estar fuera de tu zona de reparto habitual"
+    "outsideZoneNote": "Este pedido puede estar fuera de tu zona de reparto habitual",
+    "readyIn": "Listo en"
   },
   "admin": {
     "welcomeBack": "Bienvenido de nuevo",
@@ -3531,7 +3532,7 @@
       "subject": "Actualización del pedido #{orderNumber}",
       "title": "Actualización del pedido",
       "body": "Tu pedido #{orderNumber} ahora está {status}.",
-      "estimatedReady": "Listo aprox.",
+      "estimatedReady": "Listo aproximadamente: {time}.",
       "reason": "Razón",
       "acceptedTitle": "Pedido confirmado",
       "acceptedBody": "Buenas noticias — el restaurante aceptó tu pedido y la cocina ya está preparándolo.",

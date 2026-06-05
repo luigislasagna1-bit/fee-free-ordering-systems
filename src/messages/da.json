@@ -536,7 +536,8 @@
     "refundFailed": "Refusion mislykkedes. Prøv igen.",
     "refundSuccess": "Refusion udstedt.",
     "autoCallMessage": "Ny ordre {number} hos {restaurant} venter og er endnu ikke blevet accepteret. Åbn venligst dit køkkendisplay for at acceptere eller afvise den.",
-    "outsideZoneNote": "Denne ordre er muligvis uden for dit normale leveringsområde"
+    "outsideZoneNote": "Denne ordre er muligvis uden for dit normale leveringsområde",
+    "readyIn": "Klar om"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",
@@ -3531,7 +3532,7 @@
       "subject": "Opdatering om ordre #{orderNumber}",
       "title": "Ordreopdatering",
       "body": "Din ordre #{orderNumber} er nu {status}.",
-      "estimatedReady": "Estimeret klar",
+      "estimatedReady": "Forventet klar: {time}.",
       "reason": "Årsag",
       "acceptedTitle": "Ordre bekræftet",
       "acceptedBody": "Godt nyt — restauranten har accepteret din ordre, og køkkenet er allerede i gang.",

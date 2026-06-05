@@ -536,7 +536,8 @@
     "refundFailed": "Pengembalian dana gagal. Silakan coba lagi.",
     "refundSuccess": "Pengembalian dana diproses.",
     "autoCallMessage": "Pesanan baru {number} di {restaurant} sedang menunggu dan belum diterima. Silakan buka layar dapur Anda untuk menerima atau menolaknya.",
-    "outsideZoneNote": "Pesanan ini mungkin berada di luar zona pengiriman reguler Anda"
+    "outsideZoneNote": "Pesanan ini mungkin berada di luar zona pengiriman reguler Anda",
+    "readyIn": "Siap dalam"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",
@@ -3531,7 +3532,7 @@
       "subject": "Pembaruan pesanan #{orderNumber}",
       "title": "Pembaruan pesanan",
       "body": "Pesanan Anda #{orderNumber} sekarang berstatus {status}.",
-      "estimatedReady": "Perkiraan siap",
+      "estimatedReady": "Perkiraan siap: {time}.",
       "reason": "Alasan",
       "acceptedTitle": "Pesanan dikonfirmasi",
       "acceptedBody": "Kabar baik — restoran telah menerima pesanan Anda dan dapur sedang mulai memprosesnya.",

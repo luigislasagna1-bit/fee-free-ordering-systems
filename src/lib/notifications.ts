@@ -437,6 +437,8 @@ export async function notifyCustomer(args: {
       email: true,
       defaultLanguage: true,
       currency: true,
+      // Formats the "Estimated ready" time in the restaurant's local zone.
+      timezone: true,
       // Per-toggle email switches — let owners mute individual status
       // notifications without affecting the others.
       customerEmailOrderConfirm: true,
@@ -559,6 +561,7 @@ export async function notifyCustomer(args: {
           restaurantEmail: restaurant.email,
           restaurantUrl: `${baseUrlForStatus}/order/${restaurant.slug}`,
           locale,
+          timezone: (restaurant as any).timezone || undefined,
         });
       });
       await fireSms();

@@ -536,7 +536,8 @@
     "refundFailed": "ההחזר נכשל. נסה שוב.",
     "refundSuccess": "ההחזר בוצע.",
     "autoCallMessage": "הזמנה חדשה {number} ב{restaurant} ממתינה ועדיין לא אושרה. אנא פתחו את מסך המטבח כדי לאשר או לדחות אותה.",
-    "outsideZoneNote": "ייתכן שהזמנה זו מחוץ לאזור המשלוחים הרגיל שלך"
+    "outsideZoneNote": "ייתכן שהזמנה זו מחוץ לאזור המשלוחים הרגיל שלך",
+    "readyIn": "מוכן בעוד"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",
@@ -3531,7 +3532,7 @@
       "subject": "עדכון על הזמנה #{orderNumber}",
       "title": "עדכון הזמנה",
       "body": "הזמנתך #{orderNumber} כעת {status}.",
-      "estimatedReady": "מוכן בערך ב-",
+      "estimatedReady": "מוכן בערך ב: {time}.",
       "reason": "סיבה",
       "acceptedTitle": "ההזמנה אושרה",
       "acceptedBody": "בשורות טובות — המסעדה קיבלה את הזמנתך והמטבח כבר עובד עליה.",

@@ -536,7 +536,8 @@
     "refundFailed": "Erstattung fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "refundSuccess": "Erstattung ausgelöst.",
     "autoCallMessage": "Eine neue Bestellung {number} bei {restaurant} wartet und wurde noch nicht angenommen. Bitte öffnen Sie Ihre Küchenanzeige, um sie anzunehmen oder abzulehnen.",
-    "outsideZoneNote": "Diese Bestellung liegt möglicherweise außerhalb Ihres regulären Liefergebiets"
+    "outsideZoneNote": "Diese Bestellung liegt möglicherweise außerhalb Ihres regulären Liefergebiets",
+    "readyIn": "Fertig in"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",
@@ -3531,7 +3532,7 @@
       "subject": "Aktualisierung zu Bestellung #{orderNumber}",
       "title": "Bestellungsaktualisierung",
       "body": "Ihre Bestellung #{orderNumber} hat jetzt den Status: {status}.",
-      "estimatedReady": "Voraussichtlich fertig",
+      "estimatedReady": "Voraussichtlich fertig: {time}.",
       "reason": "Grund",
       "acceptedTitle": "Bestellung bestätigt",
       "acceptedBody": "Gute Neuigkeiten – das Restaurant hat Ihre Bestellung angenommen und die Küche fängt jetzt damit an.",

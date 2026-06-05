@@ -136,6 +136,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       viaMarketplace: true,
       marketplaceCounterApplied: true,
       total: true,
+      // Scheduled slot — on accept we set estimatedReady to this (not now+prep)
+      // so a future pickup/delivery shows its real ready time, not "20 min".
+      scheduledFor: true,
       // ShipDay tracking — used by the dispatch path on accept and the
       // cancel path on reject/cancel.
       type: true,
@@ -306,7 +309,21 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       !isNaN(explicitPrepTime) && explicitPrepTime > 0 && explicitPrepTime <= 240
         ? explicitPrepTime
         : fallbackPrepTime;
-    if (finalPrepTime && finalPrepTime > 0) {
+    // SCHEDULED orders: the ready time is the customer's chosen slot (e.g. a
+    // Thursday pickup), NOT now + prepTime. Accepting must never turn a
+    // 5-days-out order into "ready in 20 min" — that wrong estimatedReady was
+    // leaking into the kitchen countdown, the customer email, the status page
+    // and the Complete tab. ASAP orders keep the prep-clock-starts-now
+    // behaviour. Luigi 2026-06-05.
+    const scheduledMs = existing.scheduledFor ? new Date(existing.scheduledFor).getTime() : NaN;
+    if (Number.isFinite(scheduledMs) && scheduledMs > Date.now()) {
+      updates.estimatedReady = new Date(scheduledMs);
+      // Keep an explicit prep time if the kitchen entered one (informational);
+      // otherwise leave preparationTime untouched — it's irrelevant to a slot.
+      if (!isNaN(explicitPrepTime) && explicitPrepTime > 0 && explicitPrepTime <= 240) {
+        updates.preparationTime = explicitPrepTime;
+      }
+    } else if (finalPrepTime && finalPrepTime > 0) {
       updates.preparationTime = finalPrepTime;
       updates.estimatedReady = new Date(Date.now() + finalPrepTime * 60 * 1000);
     }
