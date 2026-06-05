@@ -6,14 +6,38 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "@root";
-const CONTEXT = "a restaurant ordering app distinguishing ASAP orders from SCHEDULED ('order for later') orders. kitchen.* and receipt.scheduling.* are short labels shown on the kitchen screen and the printed receipt (receipt ones are uppercase to stand out). email.orderConfirmed.scheduledFor is a line on the confirmation email; {time} is an already-formatted date/time (e.g. 'Thursday, Jun 11, 8:45 PM') — keep the {time} placeholder EXACTLY as-is. 'ASAP' may stay as 'ASAP' where that's natural. Concise.";
+const NS = "admin.menus";
+const CONTEXT = "a restaurant admin 'multi-menu manager' — the owner has several named menu versions (e.g. Summer, Winter), edits a draft while the current one stays live, can duplicate a menu, set one live, and SCHEDULE one to go live at a future date/time. {n} is a number, {name} a menu name, {time} an already-formatted date/time — keep {n}/{name}/{time} placeholders EXACTLY as-is. Concise admin-dashboard tone.";
 const EN = {
-  "kitchen.asap": "ASAP",
-  "kitchen.orderForLater": "Order for later",
-  "receipt.scheduling.asap": "ASAP",
-  "receipt.scheduling.orderForLater": "ORDER FOR LATER",
-  "email.orderConfirmed.scheduledFor": "This is an order for later — scheduled for {time}.",
+  "live": "Live",
+  "categories": "{n} categories",
+  "scheduled": "scheduled",
+  "setLive": "Set live",
+  "newMenu": "New menu",
+  "duplicate": "Duplicate this menu",
+  "rename": "Rename",
+  "delete": "Delete menu",
+  "failed": "Something went wrong",
+  "created": "Menu created",
+  "duplicated": "Menu duplicated",
+  "renamed": "Menu renamed",
+  "activated": "Menu is now live",
+  "deleted": "Menu deleted",
+  "newMenuPrompt": "Name your new menu:",
+  "newMenuDefault": "New menu",
+  "duplicatePrompt": "Name for the duplicated menu:",
+  "renamePrompt": "Rename this menu:",
+  "activateConfirm": "Make \"{name}\" the live menu customers see right now?",
+  "deleteConfirm": "Delete \"{name}\" and all its categories/items? This can't be undone.",
+  "schedule": "Schedule go-live",
+  "scheduleGoLive": "Go live on:",
+  "scheduleSave": "Schedule",
+  "scheduledForLabel": "Goes live {time}",
+  "change": "Change",
+  "clearSchedule": "Clear",
+  "scheduleSaved": "Go-live scheduled",
+  "scheduleCleared": "Schedule cleared",
+  "cancel": "Cancel",
 };
 const KEYS = Object.keys(EN);
 

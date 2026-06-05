@@ -4,22 +4,29 @@ import prisma from "@/lib/db";
 import { blockIfInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveActiveMenuId } from "@/lib/menu";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   // Inheriting locations read the brand's menu through this endpoint
   // (used by MenuClient.reload() after edits). Resolve up to the parent
-  // when applicable so the client sees the same items the customer page
-  // sees.
+  // when applicable so the client sees the same items the customer page sees.
   const menuRestaurantId = await resolveMenuRestaurantId(restaurantId);
-  // Scope to the active menu (Phase 1). With one menu this equals all the
-  // restaurant's categories; Phase 2 will let the client pass a menuId to edit
-  // a non-active draft.
-  const activeMenuId = await resolveActiveMenuId(menuRestaurantId);
+
+  // The editor may target a specific menu version via ?menuId= (Phase 2). We
+  // validate it belongs to the menu-source restaurant; otherwise default to the
+  // active menu. With one menu this equals all the restaurant's categories.
+  const requestedMenuId = req.nextUrl.searchParams.get("menuId");
+  let scopeMenuId: string | null = null;
+  if (requestedMenuId) {
+    const owned = await prisma.menu.findFirst({ where: { id: requestedMenuId, restaurantId: menuRestaurantId }, select: { id: true } });
+    scopeMenuId = owned?.id ?? null;
+  }
+  if (!scopeMenuId) scopeMenuId = await resolveActiveMenuId(menuRestaurantId);
+
   const cats = await prisma.menuCategory.findMany({
-    where: activeMenuId ? { menuId: activeMenuId } : { restaurantId: menuRestaurantId },
+    where: scopeMenuId ? { menuId: scopeMenuId } : { restaurantId: menuRestaurantId },
     orderBy: { sortOrder: "asc" },
     include: {
       modifierGroups: {
@@ -52,19 +59,24 @@ export async function POST(req: NextRequest) {
   if (blocked) return blocked;
 
   const body = await req.json();
-  const { name, description, imageUrl, isHidden, isCatering } = body;
+  const { name, description, imageUrl, isHidden, isCatering, menuId: bodyMenuId } = body;
   if (!name?.trim()) return NextResponse.json({ error: "Name required" }, { status: 400 });
 
-  // New categories belong to the restaurant's active menu so they appear on the
-  // customer page (which now reads the active menu). Phase 2 will let the editor
-  // target a specific draft menu instead.
-  const activeMenuId = await resolveActiveMenuId(restaurantId);
+  // New categories belong to the targeted menu (the one being edited) — or the
+  // active menu when none is given — so they show up where expected.
+  let targetMenuId: string | null = null;
+  if (bodyMenuId) {
+    const owned = await prisma.menu.findFirst({ where: { id: bodyMenuId, restaurantId }, select: { id: true } });
+    targetMenuId = owned?.id ?? null;
+  }
+  if (!targetMenuId) targetMenuId = await resolveActiveMenuId(restaurantId);
+
   const existing = await prisma.menuCategory.count({
-    where: activeMenuId ? { menuId: activeMenuId } : { restaurantId },
+    where: targetMenuId ? { menuId: targetMenuId } : { restaurantId },
   });
   const cat = await prisma.menuCategory.create({
     data: {
-      restaurantId, menuId: activeMenuId ?? undefined,
+      restaurantId, menuId: targetMenuId ?? undefined,
       name: name.trim(), description, imageUrl,
       isHidden: isHidden ?? false,
       isCatering: !!isCatering,

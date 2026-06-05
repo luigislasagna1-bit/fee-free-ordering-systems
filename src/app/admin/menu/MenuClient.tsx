@@ -1140,6 +1140,9 @@ function ModifierChip({ group, inherited, categoryLevel, onRemove, sortable }: {
 /** Restaurant 12h/24h preference, provided once by MenuClient and read by the
  *  item rows for the availability badge — avoids threading through every level. */
 const MenuHoursFormatCtx = createContext<HoursFormat>("24h");
+/** The menu version currently being edited — so new categories land in the
+ *  right menu (a draft, not necessarily the live one). Multi-menu Phase 2. */
+const MenuEditCtx = createContext<{ menuId?: string }>({});
 
 /** Day-or-time availability reminder badge text for the menu list.
  *  Returns null when the item is available all week, all day. Shows the
@@ -1706,13 +1709,17 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
   });
   const [saving, setSaving] = useState(false);
 
+  const { menuId: editMenuId } = useContext(MenuEditCtx);
   const save = async () => {
     if (!form.name.trim()) { toast.error(t("categoryNameRequired")); return; }
     setSaving(true);
     try {
       const url = isNew ? "/api/menu/categories" : `/api/menu/categories/${cat!.id}`;
       const method = isNew ? "POST" : "PATCH";
-      await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
+      // On create, tell the server which menu version this category belongs to
+      // (the one being edited) so it doesn't default to the live menu.
+      const payload = isNew ? { ...form, menuId: editMenuId } : form;
+      await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       toast.success(isNew ? t("categoryAdded") : t("categoryUpdated"));
       onSaved();
     } catch { toast.error(t("saveFailed")); }
@@ -2129,9 +2136,9 @@ function PdfImportModal({ categories, onClose, onImported }: {
 
 // ─── Main MenuClient ──────────────────────────────────────────────────────────
 
-interface Props { categories: Category[]; libraryGroups: ModifierGroup[]; restaurantId: string; hoursFormat?: HoursFormat }
+interface Props { categories: Category[]; libraryGroups: ModifierGroup[]; restaurantId: string; hoursFormat?: HoursFormat; menuId?: string }
 
-export function MenuClient({ categories: initial, libraryGroups: initialGroups, hoursFormat = "24h" }: Props) {
+export function MenuClient({ categories: initial, libraryGroups: initialGroups, hoursFormat = "24h", menuId }: Props) {
   const t = useTranslations("admin.menuEditor");
   const [categories, setCategories] = useState(initial);
   const [libraryGroups, setLibraryGroups] = useState(initialGroups);
@@ -2164,12 +2171,12 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
 
   const reload = useCallback(async () => {
     const [catRes, modRes] = await Promise.all([
-      fetch("/api/menu/categories"),
+      fetch(`/api/menu/categories${menuId ? `?menuId=${encodeURIComponent(menuId)}` : ""}`),
       fetch("/api/menu/modifiers"),
     ]);
     if (catRes.ok) setCategories(await catRes.json());
     if (modRes.ok) setLibraryGroups(await modRes.json());
-  }, []);
+  }, [menuId]);
 
   const handleCatDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
@@ -2428,6 +2435,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
   const hoverValue: HoverState = { hoveredLibId, setHovered: setHoveredLibId };
 
   return (
+    <MenuEditCtx.Provider value={{ menuId }}>
     <MenuHoursFormatCtx.Provider value={hoursFormat}>
     <MenuHoverContext.Provider value={hoverValue}>
     <div className="flex flex-col h-full">
@@ -2666,5 +2674,6 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
     </div>
     </MenuHoverContext.Provider>
     </MenuHoursFormatCtx.Provider>
+    </MenuEditCtx.Provider>
   );
 }

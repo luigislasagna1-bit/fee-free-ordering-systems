@@ -1,12 +1,18 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { MenuClient } from "./MenuClient";
+import { MenuSwitcher, type MenuLite } from "./MenuSwitcher";
 import { RevertToBrandMenuBanner } from "./RevertToBrandMenuBanner";
 import { InheritedMenuView } from "./InheritedMenuView";
 import { MasterMenuBanner } from "./MasterMenuBanner";
 import { isInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
+import { resolveActiveMenuId } from "@/lib/menu";
 
-export default async function MenuPage() {
+export default async function MenuPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ menu?: string }>;
+}) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
 
@@ -22,13 +28,15 @@ export default async function MenuPage() {
   const inheriting = await isInheritingMenu(restaurantId);
   if (inheriting) {
     const menuRestaurantId = await resolveMenuRestaurantId(restaurantId);
+    // Mirror the brand's ACTIVE menu only (multi-menu) — not every version.
+    const brandActiveMenuId = await resolveActiveMenuId(menuRestaurantId);
     const [parent, categories] = await Promise.all([
       prisma.restaurant.findUnique({
         where: { id: menuRestaurantId },
         select: { id: true, name: true },
       }),
       prisma.menuCategory.findMany({
-        where: { restaurantId: menuRestaurantId },
+        where: brandActiveMenuId ? { menuId: brandActiveMenuId } : { restaurantId: menuRestaurantId },
         orderBy: { sortOrder: "asc" },
         select: {
           id: true,
@@ -67,12 +75,38 @@ export default async function MenuPage() {
   const isChildOnCustomMenu = !!selfRow?.parentRestaurantId;
   const menuHoursFormat = selfRow?.hoursFormat === "12h" ? "12h" : "24h";
 
+  // Multi-menu: which menu version is being edited? ?menu=<id> (validated to
+  // belong to this restaurant) or the active menu. Phase 2. Luigi 2026-06-05.
+  const sp = await searchParams;
+  const activeMenuId = await resolveActiveMenuId(restaurantId);
+  let selectedMenuId = activeMenuId;
+  if (sp.menu) {
+    const owned = await prisma.menu.findFirst({ where: { id: sp.menu, restaurantId }, select: { id: true } });
+    if (owned) selectedMenuId = owned.id;
+  }
+  const menusRaw = await prisma.menu.findMany({
+    where: { restaurantId },
+    orderBy: [{ isActive: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
+    select: {
+      id: true, name: true, isActive: true, isArchived: true,
+      scheduledActivateAt: true, publishedAt: true,
+      _count: { select: { categories: true } },
+    },
+  });
+  const menus = menusRaw.map((m) => ({
+    id: m.id, name: m.name, isActive: m.isActive, isArchived: m.isArchived,
+    scheduledActivateAt: m.scheduledActivateAt?.toISOString() ?? null,
+    publishedAt: m.publishedAt?.toISOString() ?? null,
+    categoryCount: m._count.categories,
+  }));
+
   // Brand-parent banner data — count how many child locations are
   // currently inheriting this menu so the owner sees "edits flow
   // downstream" before they touch anything.
   const [categories, libraryGroups, childCounts] = await Promise.all([
     prisma.menuCategory.findMany({
-      where: { restaurantId },
+      // Edit the SELECTED menu version (defaults to the live one).
+      where: selectedMenuId ? { menuId: selectedMenuId } : { restaurantId },
       orderBy: { sortOrder: "asc" },
       include: {
         modifierGroups: {
@@ -124,11 +158,15 @@ export default async function MenuPage() {
         inheritingCount={childCounts.inheriting}
         totalChildCount={childCounts.total}
       />
+      {menus.length > 0 && selectedMenuId && (
+        <MenuSwitcher menus={menus as MenuLite[]} selectedMenuId={selectedMenuId} />
+      )}
       <MenuClient
         categories={categories as any}
         libraryGroups={libraryGroups as any}
         restaurantId={restaurantId || ""}
         hoursFormat={menuHoursFormat}
+        menuId={selectedMenuId ?? undefined}
       />
     </>
   );
