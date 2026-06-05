@@ -7,6 +7,7 @@ import {
 } from "@/lib/menu-extractor";
 import { extractMenuWithSplitting } from "@/lib/menu-pdf-splitter";
 import { blockIfInheritingMenu } from "@/lib/brand";
+import { resolveActiveMenuId } from "@/lib/menu";
 
 // PDF parsing is slow — large print-designed menus can take 60-90 seconds
 // to extract. The legacy 60s cap was the Hobby plan ceiling. On Pro plan
@@ -232,6 +233,9 @@ export async function PUT(req: NextRequest) {
     }>;
   };
 
+  // Imported categories belong to the active menu (so they show to customers).
+  const activeMenuId = await resolveActiveMenuId(restaurantId);
+
   if (!Array.isArray(body.categories) || body.categories.length === 0) {
     return NextResponse.json({ error: "categories array required" }, { status: 400 });
   }
@@ -266,6 +270,7 @@ export async function PUT(req: NextRequest) {
         const created = await tx.menuCategory.create({
           data: {
             restaurantId,
+            menuId: activeMenuId ?? undefined,
             name: (cat.name || "Menu").slice(0, 60),
             sortOrder: nextCatSort++,
             isActive: true,

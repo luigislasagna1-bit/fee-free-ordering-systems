@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
+import { resolveActiveMenuId } from "@/lib/menu";
 import {
   fetchGloriaFoodMenu,
   fetchGloriaFoodPictures,
@@ -124,6 +125,9 @@ export async function PUT(req: NextRequest) {
 
   const blocked = await blockIfInheritingMenu(restaurantId);
   if (blocked) return blocked;
+
+  // Imported categories belong to the active menu (so they show to customers).
+  const activeMenuId = await resolveActiveMenuId(restaurantId);
 
   const body = (await req.json().catch(() => ({}))) as {
     preview?: ImportPreview;
@@ -322,6 +326,7 @@ export async function PUT(req: NextRequest) {
           const created = await tx.menuCategory.create({
             data: {
               restaurantId,
+              menuId: activeMenuId ?? undefined,
               name: cat.name,
               description: cat.description,
               imageUrl: cat.sourceImageUrl ? (blobUrlBySource.get(cat.sourceImageUrl) ?? null) : null,

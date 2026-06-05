@@ -150,6 +150,13 @@ export async function copyBrandMenuToLocation(parentRestaurantId: string, childR
     existingChildCategories.map((c) => [c.name.toLowerCase(), c.id]),
   );
 
+  // Copied categories land in the child's active menu so they show to customers
+  // (the ordering page reads only the active menu). Multi-menu. Luigi 2026-06-05.
+  const childActiveMenu = await prisma.menu.findFirst({
+    where: { restaurantId: childRestaurantId, isActive: true },
+    select: { id: true },
+  });
+
   let categoriesCopied = 0;
   let itemsCopied = 0;
 
@@ -159,6 +166,7 @@ export async function copyBrandMenuToLocation(parentRestaurantId: string, childR
       const newCat = await prisma.menuCategory.create({
         data: {
           restaurantId: childRestaurantId,
+          menuId: childActiveMenu?.id ?? undefined,
           name: parentCat.name,
           description: parentCat.description,
           imageUrl: parentCat.imageUrl,
@@ -189,6 +197,8 @@ export async function copyBrandMenuToLocation(parentRestaurantId: string, childR
         data: {
           restaurantId: childRestaurantId,
           categoryId: childCatId,
+          // Preserve lineage from the brand item (promo remap across versions).
+          lineageId: (parentItem as any).lineageId ?? parentItem.id,
           name: parentItem.name,
           description: parentItem.description,
           price: parentItem.price,

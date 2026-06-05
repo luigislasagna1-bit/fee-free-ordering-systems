@@ -29,6 +29,7 @@ import { VisitTracker } from "@/components/order/VisitTracker";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
+import { resolveActiveMenuId } from "@/lib/menu";
 import { holidayNameForToday } from "@/lib/restaurant-hours";
 
 export default async function OrderingPage({
@@ -208,8 +209,14 @@ export default async function OrderingPage({
     }
   });
 
+  // Multi-menu: serve only the menu-source restaurant's ACTIVE menu. Falls
+  // back to a restaurant-wide query if (somehow) there's no active menu, so the
+  // ordering page never goes blank. Luigi 2026-06-05.
+  const activeMenuId = await resolveActiveMenuId(menuRestaurantId);
   const menuCategories = await prisma.menuCategory.findMany({
-    where: { restaurantId: menuRestaurantId, isActive: true },
+    where: activeMenuId
+      ? { menuId: activeMenuId, isActive: true }
+      : { restaurantId: menuRestaurantId, isActive: true },
     orderBy: { sortOrder: "asc" },
     include: {
       // Category-level modifier groups (inherited by all items in the category)

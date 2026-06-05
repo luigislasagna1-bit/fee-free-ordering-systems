@@ -55,6 +55,8 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
     const cat = await tx.menuCategory.create({
       data: {
         restaurantId,
+        // Keep the copy in the SAME menu version as the source.
+        menuId: (source as any).menuId ?? undefined,
         name: `${source.name} (copy)`,
         description: source.description,
         imageUrl: source.imageUrl,
@@ -100,6 +102,9 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
         data: {
           restaurantId,
           categoryId: cat.id,
+          // Preserve lineage so promotions referencing this item can be
+          // remapped across menu versions (Phase 4).
+          lineageId: (item as any).lineageId ?? item.id,
           name: item.name,
           description: item.description,
           price: item.price,
