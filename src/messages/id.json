@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Promo ini hanya berlaku untuk pesanan ambil di tempat",
     "promoDeliveryOnlyTitle": "Promo ini hanya berlaku untuk pesanan pengiriman",
     "outOfAreaBlockedTitle": "Di luar area pengiriman kami.",
-    "outOfAreaBlockedBody": "Kami tidak melayani pengiriman ke alamat ini. Pilih ambil sendiri, atau masukkan alamat pengiriman yang berbeda."
+    "outOfAreaBlockedBody": "Kami tidak melayani pengiriman ke alamat ini. Pilih ambil sendiri, atau masukkan alamat pengiriman yang berbeda.",
+    "expandAll": "Buka semua",
+    "collapseAll": "Tutup semua"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Veggie",
       "previewNote": "Ini adalah pratinjau sederhana.",
       "previewLivePage": "Lihat halaman aktif →",
-      "menuList": "Daftar (foto di kiri)"
+      "menuList": "Daftar (foto di kiri)",
+      "collapsibleCategories": "Kategori yang dapat dilipat di perangkat seluler",
+      "collapsibleCategoriesHint": "Di ponsel, pelanggan mengetuk kategori untuk membuka itemnya (gaya GloriaFood), dengan kontrol Buka semua / Tutup semua. Tampilan desktop tidak terpengaruh."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Di mana saya menambahkan record ini?",

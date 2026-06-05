@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Această ofertă se aplică doar comenzilor cu ridicare",
     "promoDeliveryOnlyTitle": "Această ofertă se aplică doar comenzilor cu livrare",
     "outOfAreaBlockedTitle": "În afara zonei noastre de livrare.",
-    "outOfAreaBlockedBody": "Nu livrăm la această adresă. Alegeți ridicarea personală sau introduceți o altă adresă de livrare."
+    "outOfAreaBlockedBody": "Nu livrăm la această adresă. Alegeți ridicarea personală sau introduceți o altă adresă de livrare.",
+    "expandAll": "Extinde tot",
+    "collapseAll": "Restrânge tot"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Veggie",
       "previewNote": "Aceasta este o previzualizare simplificată.",
       "previewLivePage": "Vezi pagina live →",
-      "menuList": "Listă (foto în stânga)"
+      "menuList": "Listă (foto în stânga)",
+      "collapsibleCategories": "Categorii pliabile pe mobil",
+      "collapsibleCategoriesHint": "Pe telefoane, clienții ating o categorie pentru a-i extinde produsele (în stil GloriaFood), cu butoane Extinde tot / Restrânge tot. Versiunea pentru desktop nu este afectată."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Unde adaug aceste înregistrări?",

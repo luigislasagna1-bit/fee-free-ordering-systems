@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "המבצע הזה חל על הזמנות איסוף בלבד",
     "promoDeliveryOnlyTitle": "המבצע הזה חל על הזמנות משלוח בלבד",
     "outOfAreaBlockedTitle": "מחוץ לאזור המשלוח שלנו.",
-    "outOfAreaBlockedBody": "אנחנו לא מבצעים משלוח לכתובת זו. עברו לאיסוף עצמי, או הזינו כתובת משלוח אחרת."
+    "outOfAreaBlockedBody": "אנחנו לא מבצעים משלוח לכתובת זו. עברו לאיסוף עצמי, או הזינו כתובת משלוח אחרת.",
+    "expandAll": "הרחב הכול",
+    "collapseAll": "כווץ הכול"
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -2225,7 +2227,9 @@
       "previewItem3": "צמחוני",
       "previewNote": "זוהי תצוגה מקדימה מפושטת.",
       "previewLivePage": "צפה בדף החי →",
-      "menuList": "רשימה (תמונות משמאל)"
+      "menuList": "רשימה (תמונות משמאל)",
+      "collapsibleCategories": "קטגוריות מתכווצות בנייד",
+      "collapsibleCategoriesHint": "בטלפונים, לקוחות מקישים על קטגוריה כדי להרחיב את הפריטים שלה (בסגנון GloriaFood), עם פקדי הרחב הכול / כווץ הכול. אין השפעה על מחשב שולחני."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "איפה מוסיפים את הרשומות האלה?",

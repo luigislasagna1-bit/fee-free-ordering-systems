@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Bu fırsat yalnızca gel-al siparişleri için geçerlidir",
     "promoDeliveryOnlyTitle": "Bu fırsat yalnızca teslimat siparişleri için geçerlidir",
     "outOfAreaBlockedTitle": "Teslimat bölgemiz dışında.",
-    "outOfAreaBlockedBody": "Bu adrese teslimat yapamıyoruz. Gel al seçeneğine geçin ya da farklı bir teslimat adresi girin."
+    "outOfAreaBlockedBody": "Bu adrese teslimat yapamıyoruz. Gel al seçeneğine geçin ya da farklı bir teslimat adresi girin.",
+    "expandAll": "Tümünü genişlet",
+    "collapseAll": "Tümünü daralt"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Vejetaryen",
       "previewNote": "Bu basitleştirilmiş bir önizlemedir.",
       "previewLivePage": "Canlı sayfayı gör →",
-      "menuList": "Liste (fotoğraflar solda)"
+      "menuList": "Liste (fotoğraflar solda)",
+      "collapsibleCategories": "Mobilde daraltılabilir kategoriler",
+      "collapsibleCategoriesHint": "Telefonlarda müşteriler bir kategoriye dokunarak ürünlerini genişletir (GloriaFood tarzı); Tümünü genişlet / Tümünü daralt denetimleriyle birlikte. Masaüstü bundan etkilenmez."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Bu kayıtları nereye ekliyorum?",

@@ -7,10 +7,12 @@ export const meta = {
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
 const NS = "@root";
-const CONTEXT = "a restaurant delivery ordering app. checkout.zoneMinimum tells the customer the minimum order value for their delivery zone ({min} is a formatted currency amount, e.g. $20.00). kitchen.outsideZoneNote is a heads-up shown to kitchen staff when a delivery address falls outside the restaurant's normal delivery zones. Concise, natural";
+const CONTEXT = "a restaurant ordering app. ordering.expandAll / ordering.collapseAll are buttons that expand or collapse ALL menu categories at once on a mobile menu accordion. admin.websiteThemeClient.collapsibleCategories is an admin toggle label; its Hint explains that on phones customers tap a category to expand its items (GloriaFood-style). Keep the brand name 'GloriaFood' untranslated. Concise, natural";
 const EN = {
-  "checkout.zoneMinimum": "Minimum order {min}.",
-  "kitchen.outsideZoneNote": "This order may be outside your regular delivery zone",
+  "ordering.expandAll": "Expand all",
+  "ordering.collapseAll": "Collapse all",
+  "admin.websiteThemeClient.collapsibleCategories": "Collapsible categories on mobile",
+  "admin.websiteThemeClient.collapsibleCategoriesHint": "On phones, customers tap a category to expand its items (GloriaFood-style), with Expand all / Collapse all controls. Desktop is unaffected.",
 };
 const KEYS = Object.keys(EN);
 

@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Ova ponuda vrijedi samo za narudžbe s preuzimanjem",
     "promoDeliveryOnlyTitle": "Ova ponuda vrijedi samo za narudžbe s dostavom",
     "outOfAreaBlockedTitle": "Izvan naše zone dostave.",
-    "outOfAreaBlockedBody": "Na ovu adresu ne dostavljamo. Odaberite preuzimanje ili unesite drugu adresu za dostavu."
+    "outOfAreaBlockedBody": "Na ovu adresu ne dostavljamo. Odaberite preuzimanje ili unesite drugu adresu za dostavu.",
+    "expandAll": "Proširi sve",
+    "collapseAll": "Sažmi sve"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Veggie",
       "previewNote": "Ovo je pojednostavljeni pregled.",
       "previewLivePage": "Pogledaj aktivnu stranicu →",
-      "menuList": "Popis (fotografije lijevo)"
+      "menuList": "Popis (fotografije lijevo)",
+      "collapsibleCategories": "Sažimljive kategorije na mobitelu",
+      "collapsibleCategoriesHint": "Na mobitelima kupci dodirnu kategoriju kako bi proširili njezine stavke (u stilu GloriaFood), uz kontrole Proširi sve / Sažmi sve. Na računalu nema promjena."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gdje dodajem ove zapise?",

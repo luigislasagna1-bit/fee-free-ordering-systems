@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Ưu đãi này chỉ áp dụng cho đơn mang về",
     "promoDeliveryOnlyTitle": "Ưu đãi này chỉ áp dụng cho đơn giao hàng",
     "outOfAreaBlockedTitle": "Ngoài khu vực giao hàng của chúng tôi.",
-    "outOfAreaBlockedBody": "Chúng tôi không giao hàng đến địa chỉ này. Vui lòng chuyển sang hình thức tự đến lấy, hoặc nhập địa chỉ giao hàng khác."
+    "outOfAreaBlockedBody": "Chúng tôi không giao hàng đến địa chỉ này. Vui lòng chuyển sang hình thức tự đến lấy, hoặc nhập địa chỉ giao hàng khác.",
+    "expandAll": "Mở rộng tất cả",
+    "collapseAll": "Thu gọn tất cả"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Veggie",
       "previewNote": "Đây là bản xem trước đơn giản.",
       "previewLivePage": "Xem trang trực tiếp →",
-      "menuList": "Danh sách (ảnh bên trái)"
+      "menuList": "Danh sách (ảnh bên trái)",
+      "collapsibleCategories": "Danh mục có thể thu gọn trên di động",
+      "collapsibleCategoriesHint": "Trên điện thoại, khách hàng chạm vào một danh mục để mở rộng các món trong đó (kiểu GloriaFood), kèm nút Mở rộng tất cả / Thu gọn tất cả. Máy tính để bàn không bị ảnh hưởng."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Tôi thêm các bản ghi này ở đâu?",

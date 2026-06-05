@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Tato nabídka platí pouze pro objednávky s vyzvednutím",
     "promoDeliveryOnlyTitle": "Tato nabídka platí pouze pro objednávky s rozvozem",
     "outOfAreaBlockedTitle": "Mimo naši doručovací oblast.",
-    "outOfAreaBlockedBody": "Na tuto adresu nedoručujeme. Přepněte na vyzvednutí, nebo zadejte jinou doručovací adresu."
+    "outOfAreaBlockedBody": "Na tuto adresu nedoručujeme. Přepněte na vyzvednutí, nebo zadejte jinou doručovací adresu.",
+    "expandAll": "Rozbalit vše",
+    "collapseAll": "Sbalit vše"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Vegetariánská",
       "previewNote": "Toto je zjednodušený náhled.",
       "previewLivePage": "Zobrazit živou stránku →",
-      "menuList": "Seznam (fotky vlevo)"
+      "menuList": "Seznam (fotky vlevo)",
+      "collapsibleCategories": "Sbalitelné kategorie na mobilu",
+      "collapsibleCategoriesHint": "Na telefonech zákazníci klepnutím na kategorii rozbalí její položky (ve stylu GloriaFood), s ovládacími prvky Rozbalit vše / Sbalit vše. Počítače to neovlivní."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kde přidám tyto záznamy?",

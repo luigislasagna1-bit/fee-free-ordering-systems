@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Šis piedāvājums attiecas tikai uz paņemšanas pasūtījumiem",
     "promoDeliveryOnlyTitle": "Šis piedāvājums attiecas tikai uz piegādes pasūtījumiem",
     "outOfAreaBlockedTitle": "Ārpus mūsu piegādes zonas.",
-    "outOfAreaBlockedBody": "Mēs nepiegādājam uz šo adresi. Izvēlieties saņemšanu uz vietas vai ievadiet citu piegādes adresi."
+    "outOfAreaBlockedBody": "Mēs nepiegādājam uz šo adresi. Izvēlieties saņemšanu uz vietas vai ievadiet citu piegādes adresi.",
+    "expandAll": "Izvērst visu",
+    "collapseAll": "Sakļaut visu"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Veggie",
       "previewNote": "Šis ir vienkāršots priekšskatījums.",
       "previewLivePage": "Skatīt tiešsaistes lapu →",
-      "menuList": "Saraksts (foto pa kreisi)"
+      "menuList": "Saraksts (foto pa kreisi)",
+      "collapsibleCategories": "Sakļaujamas kategorijas mobilajā ierīcē",
+      "collapsibleCategoriesHint": "Tālrunī klienti pieskaras kategorijai, lai izvērstu tās produktus (GloriaFood stilā), izmantojot vadīklas “Izvērst visu” / “Sakļaut visu”. Galddatorā tas neko neietekmē."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kur pievienot šos ierakstus?",

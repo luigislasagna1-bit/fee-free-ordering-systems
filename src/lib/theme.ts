@@ -10,6 +10,11 @@ export type ThemeSettings = {
   headerLayout: "left" | "center";
   showCategoryImages: boolean;
   menuLayout: "carousel" | "grid" | "list";
+  /** When true, menu categories collapse into a tappable accordion on MOBILE
+   *  (GloriaFood-style) — each category starts collapsed and the customer
+   *  expands the ones they want, with Expand all / Collapse all controls.
+   *  Desktop is unaffected. Default false (categories always expanded). */
+  mobileCollapsibleCategories: boolean;
 };
 
 export const DEFAULT_THEME: ThemeSettings = {
@@ -24,6 +29,7 @@ export const DEFAULT_THEME: ThemeSettings = {
   headerLayout: "left",
   showCategoryImages: true,
   menuLayout: "carousel",
+  mobileCollapsibleCategories: false,
 };
 
 export function parseTheme(raw: string | null | undefined): ThemeSettings {

@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Aquesta oferta només s'aplica a les comandes de recollida",
     "promoDeliveryOnlyTitle": "Aquesta oferta només s'aplica a les comandes a domicili",
     "outOfAreaBlockedTitle": "Fora de la nostra àrea de lliurament.",
-    "outOfAreaBlockedBody": "No fem entregues a aquesta adreça. Canvieu a recollida al local o introduïu una adreça de lliurament diferent."
+    "outOfAreaBlockedBody": "No fem entregues a aquesta adreça. Canvieu a recollida al local o introduïu una adreça de lliurament diferent.",
+    "expandAll": "Desplega-ho tot",
+    "collapseAll": "Replega-ho tot"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Vegetariana",
       "previewNote": "Aquesta és una vista prèvia simplificada.",
       "previewLivePage": "Veure la pàgina en viu →",
-      "menuList": "Llista (fotos a l'esquerra)"
+      "menuList": "Llista (fotos a l'esquerra)",
+      "collapsibleCategories": "Categories desplegables al mòbil",
+      "collapsibleCategoriesHint": "Al telèfon, els clients toquen una categoria per desplegar-ne els articles (estil GloriaFood), amb controls per desplegar-ho i replegar-ho tot. L'ordinador no es veu afectat."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "On afegeixo aquests registres?",

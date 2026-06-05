@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Deze aanbieding geldt alleen voor afhaalbestellingen",
     "promoDeliveryOnlyTitle": "Deze aanbieding geldt alleen voor bezorgbestellingen",
     "outOfAreaBlockedTitle": "Buiten ons bezorggebied.",
-    "outOfAreaBlockedBody": "We bezorgen niet op dit adres. Kies voor afhalen of voer een ander bezorgadres in."
+    "outOfAreaBlockedBody": "We bezorgen niet op dit adres. Kies voor afhalen of voer een ander bezorgadres in.",
+    "expandAll": "Alles uitvouwen",
+    "collapseAll": "Alles invouwen"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Vegetarisch",
       "previewNote": "Dit is een vereenvoudigd voorbeeld.",
       "previewLivePage": "Bekijk live pagina →",
-      "menuList": "Lijst (foto's links)"
+      "menuList": "Lijst (foto's links)",
+      "collapsibleCategories": "Inklapbare categorieën op mobiel",
+      "collapsibleCategoriesHint": "Op telefoons tikken klanten op een categorie om de items ervan uit te vouwen (GloriaFood-stijl), met knoppen om alles uit of in te vouwen. Desktop blijft ongewijzigd."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Waar voeg ik deze records toe?",

@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "이 할인은 픽업 주문에만 적용됩니다",
     "promoDeliveryOnlyTitle": "이 할인은 배달 주문에만 적용됩니다",
     "outOfAreaBlockedTitle": "배달 가능 지역을 벗어났습니다.",
-    "outOfAreaBlockedBody": "이 주소로는 배달이 되지 않습니다. 포장 주문으로 변경하시거나 다른 배달 주소를 입력해 주세요."
+    "outOfAreaBlockedBody": "이 주소로는 배달이 되지 않습니다. 포장 주문으로 변경하시거나 다른 배달 주소를 입력해 주세요.",
+    "expandAll": "모두 펼치기",
+    "collapseAll": "모두 접기"
   },
   "pizza": {
     "chooseSize": "크기 선택",
@@ -2225,7 +2227,9 @@
       "previewItem3": "베지",
       "previewNote": "이것은 간략한 미리보기입니다.",
       "previewLivePage": "라이브 페이지 보기 →",
-      "menuList": "목록형 (사진 왼쪽)"
+      "menuList": "목록형 (사진 왼쪽)",
+      "collapsibleCategories": "모바일에서 카테고리 접기/펼치기",
+      "collapsibleCategoriesHint": "휴대폰에서는 고객이 카테고리를 탭하여 해당 항목을 펼치며(GloriaFood 방식), 모두 펼치기 / 모두 접기 컨트롤이 제공됩니다. 데스크톱에는 영향을 주지 않습니다."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "이 레코드를 어디에 추가하나요?",

@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "See pakkumine kehtib ainult kaasavõtmistellimustele",
     "promoDeliveryOnlyTitle": "See pakkumine kehtib ainult kojuveotellimustele",
     "outOfAreaBlockedTitle": "Väljaspool meie tarnepiirkonda.",
-    "outOfAreaBlockedBody": "Me ei tarni sellele aadressile. Valige järeletulek või sisestage muu tarneaadress."
+    "outOfAreaBlockedBody": "Me ei tarni sellele aadressile. Valige järeletulek või sisestage muu tarneaadress.",
+    "expandAll": "Laienda kõik",
+    "collapseAll": "Ahenda kõik"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Vegetaarne",
       "previewNote": "See on lihtsustatud eelvaade.",
       "previewLivePage": "Vaata otselehte →",
-      "menuList": "Loend (fotod vasakul)"
+      "menuList": "Loend (fotod vasakul)",
+      "collapsibleCategories": "Ahendatavad kategooriad mobiilis",
+      "collapsibleCategoriesHint": "Telefonis puudutavad kliendid kategooriat, et selle tooteid laiendada (GloriaFood-stiilis), koos nuppudega Laienda kõik / Ahenda kõik. Lauaarvutit see ei mõjuta."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kust lisan need kirjed?",

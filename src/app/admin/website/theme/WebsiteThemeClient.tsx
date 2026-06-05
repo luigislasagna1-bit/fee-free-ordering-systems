@@ -220,6 +220,19 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                   <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${theme.showCategoryImages ? "translate-x-6" : "translate-x-0"}`} />
                 </button>
               </div>
+
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div>
+                  <div className="text-sm font-medium text-gray-700">{t("collapsibleCategories")}</div>
+                  <div className="text-xs text-gray-500">{t("collapsibleCategoriesHint")}</div>
+                </div>
+                <button
+                  onClick={() => set("mobileCollapsibleCategories", !theme.mobileCollapsibleCategories)}
+                  className={`w-12 h-6 rounded-full transition-colors ${theme.mobileCollapsibleCategories ? "bg-emerald-500" : "bg-gray-300"}`}
+                >
+                  <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${theme.mobileCollapsibleCategories ? "translate-x-6" : "translate-x-0"}`} />
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "此优惠仅适用于自取订单",
     "promoDeliveryOnlyTitle": "此优惠仅适用于外送订单",
     "outOfAreaBlockedTitle": "超出我们的配送范围。",
-    "outOfAreaBlockedBody": "我们不配送到此地址。请切换至自取，或输入其他配送地址。"
+    "outOfAreaBlockedBody": "我们不配送到此地址。请切换至自取，或输入其他配送地址。",
+    "expandAll": "全部展开",
+    "collapseAll": "全部收起"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -2225,7 +2227,9 @@
       "previewItem3": "素食",
       "previewNote": "这是简化预览。",
       "previewLivePage": "查看线上页面 →",
-      "menuList": "列表（图片在左）"
+      "menuList": "列表（图片在左）",
+      "collapsibleCategories": "移动端可折叠分类",
+      "collapsibleCategoriesHint": "在手机上，顾客点击分类即可展开其中的菜品（GloriaFood 风格），并提供\"全部展开/全部收起\"控件。桌面端不受影响。"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "在哪里添加这些记录？",

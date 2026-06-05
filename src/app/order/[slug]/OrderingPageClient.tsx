@@ -109,14 +109,35 @@ function isItemAvailableNow(item: MenuItem, timezone?: string): boolean {
   return true;
 }
 
+// ─── Mobile detection ────────────────────────────────────────────────────────
+// SSR-safe: starts false (desktop) and corrects on mount via matchMedia, so the
+// mobile-only category accordion never affects desktop or the server render.
+function useIsMobile(breakpointPx = 640): boolean {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${breakpointPx - 0.02}px)`);
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [breakpointPx]);
+  return isMobile;
+}
+
 // ─── Category Section (carousel or grid) ─────────────────────────────────────
 
-function CategorySection({ cat, theme, onRef, onOpen }: {
+function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, collapsed = false, onToggleCollapse }: {
   cat: Category;
   theme: ReturnType<typeof parseTheme>;
   onRef: (el: HTMLElement | null) => void;
   onOpen: (item: MenuItem) => void;
+  /** Mobile accordion: when true the category header toggles its items. */
+  collapsible?: boolean;
+  collapsed?: boolean;
+  onToggleCollapse?: () => void;
 }) {
+  // Only hide items when collapsing is actually active AND this one is closed.
+  const collapsedNow = collapsible && collapsed;
   const scrollRef = useRef<HTMLDivElement>(null);
   // Track drag state via refs (not state) so we never re-render mid-drag.
   //   • `armed`     — pointer is down; we MIGHT be about to drag.
@@ -146,17 +167,26 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
   if (theme.menuLayout === "grid") {
     return (
       <div ref={onRef as any}>
-        <div className="flex items-center gap-3 mb-4 sticky top-0 py-2 z-10" style={{ backgroundColor: theme.backgroundColor }}>
+        <div
+          className={`flex items-center gap-3 mb-4 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
+          style={{ backgroundColor: theme.backgroundColor }}
+          onClick={collapsible ? onToggleCollapse : undefined}
+        >
           {cat.imageUrl && theme.showCategoryImages && (
             <img src={cat.imageUrl} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
           )}
-          <h2 className="text-xl font-bold" style={{ color: theme.textColor }}>{cat.name}</h2>
+          <h2 className="text-xl font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
+          {collapsible && (
+            <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
+          )}
         </div>
-        <div className="grid sm:grid-cols-2 gap-4">
-          {cat.menuItems.map(item => (
-            <GridCard key={item.id} item={item} theme={theme} onOpen={onOpen} />
-          ))}
-        </div>
+        {!collapsedNow && (
+          <div className="grid sm:grid-cols-2 gap-4">
+            {cat.menuItems.map(item => (
+              <GridCard key={item.id} item={item} theme={theme} onOpen={onOpen} />
+            ))}
+          </div>
+        )}
       </div>
     );
   }
@@ -167,17 +197,26 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
     // no thumbnail — no blank placeholder (Luigi report cmpxe0ufs).
     return (
       <div ref={onRef as any}>
-        <div className="flex items-center gap-3 mb-4 sticky top-0 py-2 z-10" style={{ backgroundColor: theme.backgroundColor }}>
+        <div
+          className={`flex items-center gap-3 mb-4 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
+          style={{ backgroundColor: theme.backgroundColor }}
+          onClick={collapsible ? onToggleCollapse : undefined}
+        >
           {cat.imageUrl && theme.showCategoryImages && (
             <img src={cat.imageUrl} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
           )}
-          <h2 className="text-xl font-bold" style={{ color: theme.textColor }}>{cat.name}</h2>
+          <h2 className="text-xl font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
+          {collapsible && (
+            <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
+          )}
         </div>
-        <div className="flex flex-col gap-2">
-          {cat.menuItems.map(item => (
-            <ListCard key={item.id} item={item} theme={theme} onOpen={onOpen} />
-          ))}
-        </div>
+        {!collapsedNow && (
+          <div className="flex flex-col gap-2">
+            {cat.menuItems.map(item => (
+              <ListCard key={item.id} item={item} theme={theme} onOpen={onOpen} />
+            ))}
+          </div>
+        )}
       </div>
     );
   }
@@ -193,20 +232,29 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
   // Mobile interaction is unchanged: native touch swipe (snap-x).
   return (
     <div ref={onRef as any}>
-      <div className="flex items-center gap-3 mb-3 sticky top-0 py-2 z-10" style={{ backgroundColor: theme.backgroundColor }}>
+      <div
+        className={`flex items-center gap-3 mb-3 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
+        style={{ backgroundColor: theme.backgroundColor }}
+        onClick={collapsible ? onToggleCollapse : undefined}
+      >
         {cat.imageUrl && theme.showCategoryImages && (
           <img src={cat.imageUrl} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
         )}
         <h2 className="text-lg font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
-        <div className="flex gap-1">
-          <button onClick={() => scroll(-1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }} aria-label="Scroll left">
-            <ChevronLeft className="w-4 h-4 text-gray-500" />
-          </button>
-          <button onClick={() => scroll(1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }} aria-label="Scroll right">
-            <ChevronRight className="w-4 h-4 text-gray-500" />
-          </button>
-        </div>
+        {collapsible ? (
+          <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
+        ) : (
+          <div className="flex gap-1">
+            <button onClick={() => scroll(-1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }} aria-label="Scroll left">
+              <ChevronLeft className="w-4 h-4 text-gray-500" />
+            </button>
+            <button onClick={() => scroll(1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }} aria-label="Scroll right">
+              <ChevronRight className="w-4 h-4 text-gray-500" />
+            </button>
+          </div>
+        )}
       </div>
+      {!collapsedNow && (
       <div
         ref={scrollRef}
         className="flex gap-3 overflow-x-auto pb-2 snap-x select-none"
@@ -301,6 +349,7 @@ function CategorySection({ cat, theme, onRef, onOpen }: {
           <CarouselCard key={item.id} item={item} theme={theme} onOpen={onOpen} />
         ))}
       </div>
+      )}
     </div>
   );
 }
@@ -1223,6 +1272,37 @@ export function OrderingPageClient({
     if (visibleCategories.length && !activeCategory) setActiveCategory(visibleCategories[0].id);
   }, [visibleCategories.length]);
 
+  // ── Mobile collapsible categories (GloriaFood-style accordion) ───────────
+  // Opt-in per restaurant (theme.mobileCollapsibleCategories) and ONLY on
+  // mobile. When active, every category starts collapsed; the customer expands
+  // the ones they want, with Expand all / Collapse all controls.
+  const isMobile = useIsMobile();
+  // Accordion is suspended while a search is active so matching items are
+  // always visible (a collapsed header would hide the very results they want).
+  const collapsibleActive =
+    !!(theme as any).mobileCollapsibleCategories && isMobile && !menuSearchQuery.trim();
+  const [collapsedCats, setCollapsedCats] = useState<Set<string>>(new Set());
+  // Seed "all collapsed" the first time the accordion becomes active (so it
+  // doesn't fight the customer if they later expand things). When a search
+  // filters the menu we leave their open/closed choices intact.
+  const collapseSeededRef = useRef(false);
+  useEffect(() => {
+    if (collapsibleActive && !collapseSeededRef.current && visibleCategories.length) {
+      collapseSeededRef.current = true;
+      setCollapsedCats(new Set(visibleCategories.map((c) => c.id)));
+    }
+    if (!collapsibleActive) collapseSeededRef.current = false;
+  }, [collapsibleActive, visibleCategories.length]);
+  const toggleCatCollapsed = (id: string) =>
+    setCollapsedCats((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  const expandAllCats = () => setCollapsedCats(new Set());
+  const collapseAllCats = () => setCollapsedCats(new Set(visibleCategories.map((c) => c.id)));
+
   // Debounced geocode + zone lookup whenever the delivery address changes.
   useEffect(() => {
     if (orderType !== "delivery" || !hasZones) {
@@ -1985,6 +2065,16 @@ export function OrderingPageClient({
 
   const scrollToCategory = (catId: string) => {
     setActiveCategory(catId);
+    // In the mobile accordion, tapping a category pill expands that category
+    // so the customer lands on its items, not a collapsed header.
+    if (collapsibleActive) {
+      setCollapsedCats((prev) => {
+        if (!prev.has(catId)) return prev;
+        const next = new Set(prev);
+        next.delete(catId);
+        return next;
+      });
+    }
     const el = categoryRefs.current[catId];
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -2749,6 +2839,19 @@ export function OrderingPageClient({
           )}
         </div>
 
+        {/* Expand all / Collapse all — only in the mobile accordion. */}
+        {collapsibleActive && visibleCategories.length > 0 && (
+          <div className="flex items-center justify-end gap-4 mb-3 text-sm font-semibold">
+            <button onClick={expandAllCats} style={{ color: theme.primaryColor }}>
+              {t("expandAll")}
+            </button>
+            <span className="text-gray-300">|</span>
+            <button onClick={collapseAllCats} style={{ color: theme.primaryColor }}>
+              {t("collapseAll")}
+            </button>
+          </div>
+        )}
+
         {/* ── Menu ─────────────────────────────────────────────────────── */}
         <div className="space-y-10">
           {visibleCategories.map(cat => (
@@ -2756,6 +2859,9 @@ export function OrderingPageClient({
               key={cat.id}
               cat={cat}
               theme={theme}
+              collapsible={collapsibleActive}
+              collapsed={collapsedCats.has(cat.id)}
+              onToggleCollapse={() => toggleCatCollapsed(cat.id)}
               onRef={(el: HTMLElement | null) => { if (el) categoryRefs.current[cat.id] = el; }}
               onOpen={openItem}
             />

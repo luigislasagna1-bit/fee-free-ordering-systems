@@ -216,6 +216,8 @@
       "fieldRequired": "Please enter {field}"
     },
     "searchMenu": "Search the menu…",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
     "signIn": "Sign in",
     "signInTooltip": "Sign in or create an account to track coupons and order history",
     "promoUnlockNudge": "Add {amount} more to unlock {name}!",
@@ -2522,6 +2524,8 @@
       "menuLayoutHint": "Carousel: compact horizontal scrolling cards per category. Grid: traditional 2-column layout. List: photo on the left, text on the right (GloriaFood style).",
       "showCategoryImages": "Show Category Images",
       "showCategoryImagesHint": "Display category thumbnails in the nav pills",
+      "collapsibleCategories": "Collapsible categories on mobile",
+      "collapsibleCategoriesHint": "On phones, customers tap a category to expand its items (GloriaFood-style), with Expand all / Collapse all controls. Desktop is unaffected.",
       "sectionPreview": "Preview",
       "previewRestaurantName": "Your Restaurant",
       "previewSlogan": "Slogan here",

@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Tämä tarjous koskee vain noutotilauksia",
     "promoDeliveryOnlyTitle": "Tämä tarjous koskee vain toimitustilauksia",
     "outOfAreaBlockedTitle": "Toimitusosoite on toimitusalueemme ulkopuolella.",
-    "outOfAreaBlockedBody": "Emme valitettavasti toimita tähän osoitteeseen. Valitse nouto tai syötä toinen toimitusosoite."
+    "outOfAreaBlockedBody": "Emme valitettavasti toimita tähän osoitteeseen. Valitse nouto tai syötä toinen toimitusosoite.",
+    "expandAll": "Laajenna kaikki",
+    "collapseAll": "Tiivistä kaikki"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -2196,7 +2198,9 @@
       "previewItem3": "Veggie",
       "previewNote": "Tämä on yksinkertaistettu esikatselu.",
       "previewLivePage": "Katso live-sivu →",
-      "menuList": "Lista (kuvat vasemmalla)"
+      "menuList": "Lista (kuvat vasemmalla)",
+      "collapsibleCategories": "Tiivistettävät kategoriat mobiilissa",
+      "collapsibleCategoriesHint": "Puhelimissa asiakkaat napauttavat kategoriaa laajentaakseen sen tuotteet (GloriaFood-tyyliin), ja käytössä on Laajenna kaikki / Tiivistä kaikki -painikkeet. Työpöytänäkymä ei muutu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Mistä lisään nämä tietueet?",

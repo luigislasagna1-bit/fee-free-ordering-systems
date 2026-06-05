@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "هذا العرض ينطبق فقط على طلبات الاستلام",
     "promoDeliveryOnlyTitle": "هذا العرض ينطبق فقط على طلبات التوصيل",
     "outOfAreaBlockedTitle": "خارج نطاق التوصيل لدينا.",
-    "outOfAreaBlockedBody": "لا نقوم بالتوصيل إلى هذا العنوان. يمكنك التبديل إلى الاستلام الشخصي، أو إدخال عنوان توصيل مختلف."
+    "outOfAreaBlockedBody": "لا نقوم بالتوصيل إلى هذا العنوان. يمكنك التبديل إلى الاستلام الشخصي، أو إدخال عنوان توصيل مختلف.",
+    "expandAll": "توسيع الكل",
+    "collapseAll": "طي الكل"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",
@@ -2225,7 +2227,9 @@
       "previewItem3": "نباتي",
       "previewNote": "هذه معاينة مبسّطة.",
       "previewLivePage": "عرض الصفحة المباشرة →",
-      "menuList": "قائمة (الصور على اليسار)"
+      "menuList": "قائمة (الصور على اليسار)",
+      "collapsibleCategories": "فئات قابلة للطي على الهاتف",
+      "collapsibleCategoriesHint": "على الهواتف، ينقر العملاء على فئة لتوسيع عناصرها (بأسلوب GloriaFood)، مع عناصر تحكم لتوسيع الكل / طي الكل. لا يتأثر سطح المكتب بذلك."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "أين أضيف هذه السجلات؟",

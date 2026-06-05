@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Esta oferta solo aplica a pedidos de recogida",
     "promoDeliveryOnlyTitle": "Esta oferta solo aplica a pedidos de entrega",
     "outOfAreaBlockedTitle": "Fuera de nuestra zona de entrega.",
-    "outOfAreaBlockedBody": "No realizamos entregas en esta dirección. Cambie a recogida en local o ingrese una dirección de entrega diferente."
+    "outOfAreaBlockedBody": "No realizamos entregas en esta dirección. Cambie a recogida en local o ingrese una dirección de entrega diferente.",
+    "expandAll": "Expandir todo",
+    "collapseAll": "Contraer todo"
   },
   "pizza": {
     "chooseSize": "Elegir tamaño",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Vegetal",
       "previewNote": "Esta es una vista previa simplificada.",
       "previewLivePage": "Ver página en vivo →",
-      "menuList": "Lista (fotos a la izquierda)"
+      "menuList": "Lista (fotos a la izquierda)",
+      "collapsibleCategories": "Categorías plegables en móvil",
+      "collapsibleCategoriesHint": "En teléfonos, los clientes tocan una categoría para expandir sus elementos (estilo GloriaFood), con controles de Expandir todo / Contraer todo. El escritorio no se ve afectado."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "¿Dónde añado estos registros?",

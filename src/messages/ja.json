@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "このセールは店頭受取注文にのみ適用されます",
     "promoDeliveryOnlyTitle": "このセールは配達注文にのみ適用されます",
     "outOfAreaBlockedTitle": "デリバリーエリア外です。",
-    "outOfAreaBlockedBody": "このご住所へのデリバリーは対応しておりません。お持ち帰りに変更するか、別のデリバリー先住所をご入力ください。"
+    "outOfAreaBlockedBody": "このご住所へのデリバリーは対応しておりません。お持ち帰りに変更するか、別のデリバリー先住所をご入力ください。",
+    "expandAll": "すべて展開",
+    "collapseAll": "すべて折りたたむ"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -2225,7 +2227,9 @@
       "previewItem3": "ベジタリアン",
       "previewNote": "これは簡略化されたプレビューです。",
       "previewLivePage": "ライブページを見る →",
-      "menuList": "リスト（写真が左）"
+      "menuList": "リスト（写真が左）",
+      "collapsibleCategories": "モバイルで折りたたみ可能なカテゴリ",
+      "collapsibleCategoriesHint": "スマートフォンでは、お客様がカテゴリをタップして商品を展開します（GloriaFood風）。「すべて展開」「すべて折りたたむ」の操作も利用できます。デスクトップには影響しません。"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "レコードはどこに追加しますか？",

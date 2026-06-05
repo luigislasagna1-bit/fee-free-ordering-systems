@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Detta erbjudande gäller endast avhämtningsbeställningar",
     "promoDeliveryOnlyTitle": "Detta erbjudande gäller endast leveransbeställningar",
     "outOfAreaBlockedTitle": "Utanför vårt leveransområde.",
-    "outOfAreaBlockedBody": "Vi levererar tyvärr inte till den här adressen. Välj hämtning i stället, eller ange en annan leveransadress."
+    "outOfAreaBlockedBody": "Vi levererar tyvärr inte till den här adressen. Välj hämtning i stället, eller ange en annan leveransadress.",
+    "expandAll": "Expandera alla",
+    "collapseAll": "Fäll ihop alla"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Vegetarisk",
       "previewNote": "Detta är en förenklad förhandsvisning.",
       "previewLivePage": "Visa live-sidan →",
-      "menuList": "Lista (foton till vänster)"
+      "menuList": "Lista (foton till vänster)",
+      "collapsibleCategories": "Hopfällbara kategorier på mobil",
+      "collapsibleCategoriesHint": "På telefoner trycker kunderna på en kategori för att expandera dess artiklar (GloriaFood-stil), med kontrollerna Expandera alla / Fäll ihop alla. Datorvyn påverkas inte."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Var lägger jag till dessa poster?",

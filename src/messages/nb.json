@@ -224,7 +224,9 @@
     "promoPickupOnlyTitle": "Dette tilbudet gjelder kun for hentingsordrer",
     "promoDeliveryOnlyTitle": "Dette tilbudet gjelder kun for leveringsordrer",
     "outOfAreaBlockedTitle": "Utenfor vårt leveringsområde.",
-    "outOfAreaBlockedBody": "Vi leverer ikke til denne adressen. Bytt til henting, eller oppgi en annen leveringsadresse."
+    "outOfAreaBlockedBody": "Vi leverer ikke til denne adressen. Bytt til henting, eller oppgi en annen leveringsadresse.",
+    "expandAll": "Utvid alle",
+    "collapseAll": "Skjul alle"
   },
   "pizza": {
     "chooseSize": "Velg størrelse",
@@ -2225,7 +2227,9 @@
       "previewItem3": "Veggie",
       "previewNote": "Dette er en forenklet forhåndsvisning.",
       "previewLivePage": "Vis live side →",
-      "menuList": "Liste (bilder til venstre)"
+      "menuList": "Liste (bilder til venstre)",
+      "collapsibleCategories": "Sammenleggbare kategorier på mobil",
+      "collapsibleCategoriesHint": "På mobil trykker kundene på en kategori for å utvide elementene (GloriaFood-stil), med kontroller for Utvid alle / Skjul alle. Skrivebord påvirkes ikke."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hvor legger jeg til disse oppføringene?",
