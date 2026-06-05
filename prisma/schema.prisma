@@ -92,6 +92,11 @@ model Restaurant {
   cateringNoticeHours  Int     @default(24)
   minimumOrder         Float   @default(0)
   deliveryFee          Float   @default(0)
+  /// Delivery advanced setting (GloriaFood-parity, Luigi 2026-06-04): when
+  /// true, customers may place a delivery order even if their address falls
+  /// OUTSIDE every configured delivery zone. Default false = block out-of-zone
+  /// orders at checkout (the restaurant must opt in to accept them).
+  acceptOutsideZoneOrders Boolean @default(false)
   estimatedPickup      Int     @default(20)
   estimatedDelivery    Int     @default(45)
   taxRate              Float   @default(0)

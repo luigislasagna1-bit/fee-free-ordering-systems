@@ -723,7 +723,12 @@
       "sortOrder": "ترتيب الفرز",
       "confirmDelete": "هل تريد حذف منطقة التوصيل هذه؟",
       "deliveryRadius": "نطاق التوصيل",
-      "centerOnRestaurant": "توسيط على المطعم"
+      "centerOnRestaurant": "توسيط على المطعم",
+      "advancedSettings": "إعدادات متقدمة",
+      "outsideZoneTitle": "قبول الطلبات خارج مناطقك",
+      "outsideZoneDesc": "اسمح للعملاء بتقديم طلبات التوصيل إلى عناوين خارج كل منطقة رسمتها. عند الإيقاف، يتم حظر هذه الطلبات عند الدفع.",
+      "outsideZoneEnabled": "أصبحت الطلبات خارج المنطقة مسموحة الآن",
+      "outsideZoneDisabled": "أصبحت الطلبات خارج المنطقة محظورة الآن"
     },
     "reservations": {
       "title": "الحجوزات",

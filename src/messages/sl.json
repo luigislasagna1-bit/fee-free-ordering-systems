@@ -723,7 +723,12 @@
       "sortOrder": "Vrstni red",
       "confirmDelete": "Izbrišete to območje dostave?",
       "deliveryRadius": "Polmer dostave",
-      "centerOnRestaurant": "Centriraj na restavracijo"
+      "centerOnRestaurant": "Centriraj na restavracijo",
+      "advancedSettings": "Napredne nastavitve",
+      "outsideZoneTitle": "Sprejemanje naročil zunaj vaših con",
+      "outsideZoneDesc": "Strankam omogočite oddajo naročil za dostavo na naslove zunaj vseh con, ki ste jih narisali. Ko je možnost izklopljena, so taka naročila ob zaključku nakupa blokirana.",
+      "outsideZoneEnabled": "Naročila zunaj cone so zdaj dovoljena",
+      "outsideZoneDisabled": "Naročila zunaj cone so zdaj blokirana"
     },
     "reservations": {
       "title": "Rezervacije",

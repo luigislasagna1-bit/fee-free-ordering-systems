@@ -723,7 +723,12 @@
       "sortOrder": "Ordem",
       "confirmDelete": "Excluir esta área de entrega?",
       "deliveryRadius": "Raio de entrega",
-      "centerOnRestaurant": "Centralizar no restaurante"
+      "centerOnRestaurant": "Centralizar no restaurante",
+      "advancedSettings": "Definições avançadas",
+      "outsideZoneTitle": "Aceitar pedidos fora das suas zonas",
+      "outsideZoneDesc": "Permita que os clientes façam pedidos de entrega para moradas fora de todas as zonas que delineou. Quando desativado, esses pedidos são bloqueados na finalização da compra.",
+      "outsideZoneEnabled": "Os pedidos fora da zona estão agora permitidos",
+      "outsideZoneDisabled": "Os pedidos fora da zona estão agora bloqueados"
     },
     "reservations": {
       "title": "Reservas",

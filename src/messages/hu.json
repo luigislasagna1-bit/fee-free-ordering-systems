@@ -723,7 +723,12 @@
       "sortOrder": "Sorrend",
       "confirmDelete": "Törli ezt a szállítási zónát?",
       "deliveryRadius": "Szállítási sugár",
-      "centerOnRestaurant": "Középpont az étteremnél"
+      "centerOnRestaurant": "Középpont az étteremnél",
+      "advancedSettings": "Speciális beállítások",
+      "outsideZoneTitle": "Rendelések elfogadása a zónákon kívül",
+      "outsideZoneDesc": "Engedélyezd, hogy a vásárlók olyan címekre adjanak le kiszállítási rendelést, amelyek minden megrajzolt zónán kívül esnek. Kikapcsolt állapotban ezeket a rendeléseket a rendszer letiltja a fizetésnél.",
+      "outsideZoneEnabled": "A zónán kívüli rendelések mostantól engedélyezettek",
+      "outsideZoneDisabled": "A zónán kívüli rendelések mostantól le vannak tiltva"
     },
     "reservations": {
       "title": "Foglalások",

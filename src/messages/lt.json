@@ -723,7 +723,12 @@
       "sortOrder": "Rūšiavimo tvarka",
       "confirmDelete": "Ištrinti šią pristatymo zoną?",
       "deliveryRadius": "Pristatymo spindulys",
-      "centerOnRestaurant": "Centruoti restorane"
+      "centerOnRestaurant": "Centruoti restorane",
+      "advancedSettings": "Išplėstiniai nustatymai",
+      "outsideZoneTitle": "Priimti užsakymus už jūsų zonų ribų",
+      "outsideZoneDesc": "Leiskite klientams pateikti pristatymo užsakymus adresais, esančiais už visų jūsų nubrėžtų zonų ribų. Kai išjungta, tokie užsakymai atmetami atsiskaitymo metu.",
+      "outsideZoneEnabled": "Užsakymai už zonų ribų dabar leidžiami",
+      "outsideZoneDisabled": "Užsakymai už zonų ribų dabar blokuojami"
     },
     "reservations": {
       "title": "Rezervacijos",

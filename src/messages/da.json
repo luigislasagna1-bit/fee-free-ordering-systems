@@ -723,7 +723,12 @@
       "sortOrder": "Sorteringsrækkefølge",
       "confirmDelete": "Slet denne leveringszone?",
       "deliveryRadius": "Leveringsradius",
-      "centerOnRestaurant": "Centrer på restauranten"
+      "centerOnRestaurant": "Centrer på restauranten",
+      "advancedSettings": "Avancerede indstillinger",
+      "outsideZoneTitle": "Modtag ordrer uden for dine zoner",
+      "outsideZoneDesc": "Lad kunder afgive leveringsordrer til adresser uden for alle de zoner, du har tegnet. Når funktionen er slået fra, blokeres disse ordrer ved kassen.",
+      "outsideZoneEnabled": "Ordrer uden for zonen er nu tilladt",
+      "outsideZoneDisabled": "Ordrer uden for zonen er nu blokeret"
     },
     "reservations": {
       "title": "Reservationer",

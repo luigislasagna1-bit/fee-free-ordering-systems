@@ -723,7 +723,12 @@
       "sortOrder": "Sorteringsordning",
       "confirmDelete": "Ta bort den här leveranszonen?",
       "deliveryRadius": "Leveransradie",
-      "centerOnRestaurant": "Centrera på restaurangen"
+      "centerOnRestaurant": "Centrera på restaurangen",
+      "advancedSettings": "Avancerade inställningar",
+      "outsideZoneTitle": "Acceptera beställningar utanför dina zoner",
+      "outsideZoneDesc": "Låt kunder lägga leveransbeställningar till adresser utanför alla zoner du har ritat. När det är avstängt blockeras dessa beställningar i kassan.",
+      "outsideZoneEnabled": "Beställningar utanför zonen är nu tillåtna",
+      "outsideZoneDisabled": "Beställningar utanför zonen är nu blockerade"
     },
     "reservations": {
       "title": "Reservationer",

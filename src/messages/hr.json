@@ -723,7 +723,12 @@
       "sortOrder": "Redoslijed sortiranja",
       "confirmDelete": "Izbrisati ovu zonu dostave?",
       "deliveryRadius": "Radijus dostave",
-      "centerOnRestaurant": "Centriraj na restoran"
+      "centerOnRestaurant": "Centriraj na restoran",
+      "advancedSettings": "Napredne postavke",
+      "outsideZoneTitle": "Prihvati narudžbe izvan vaših zona",
+      "outsideZoneDesc": "Dopustite kupcima da naručuju dostavu na adrese izvan svih zona koje ste ucrtali. Kad je isključeno, takve se narudžbe blokiraju pri naplati.",
+      "outsideZoneEnabled": "Narudžbe izvan zone sada su dopuštene",
+      "outsideZoneDisabled": "Narudžbe izvan zone sada su blokirane"
     },
     "reservations": {
       "title": "Rezervacije",

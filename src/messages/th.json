@@ -723,7 +723,12 @@
       "sortOrder": "ลำดับการจัดเรียง",
       "confirmDelete": "ลบเขตจัดส่งนี้?",
       "deliveryRadius": "รัศมีการจัดส่ง",
-      "centerOnRestaurant": "ตั้งศูนย์กลางที่ร้าน"
+      "centerOnRestaurant": "ตั้งศูนย์กลางที่ร้าน",
+      "advancedSettings": "การตั้งค่าขั้นสูง",
+      "outsideZoneTitle": "รับออร์เดอร์นอกเขตจัดส่งของคุณ",
+      "outsideZoneDesc": "ให้ลูกค้าสั่งจัดส่งไปยังที่อยู่ที่อยู่นอกทุกเขตที่คุณวาดไว้ เมื่อปิด ออร์เดอร์เหล่านั้นจะถูกบล็อกตอนชำระเงิน",
+      "outsideZoneEnabled": "อนุญาตออร์เดอร์นอกเขตแล้ว",
+      "outsideZoneDisabled": "บล็อกออร์เดอร์นอกเขตแล้ว"
     },
     "reservations": {
       "title": "การจอง",

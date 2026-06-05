@@ -723,7 +723,12 @@
       "sortOrder": "Kārtošanas secība",
       "confirmDelete": "Dzēst šo piegādes zonu?",
       "deliveryRadius": "Piegādes rādiuss",
-      "centerOnRestaurant": "Centrēt uz restorānu"
+      "centerOnRestaurant": "Centrēt uz restorānu",
+      "advancedSettings": "Papildu iestatījumi",
+      "outsideZoneTitle": "Pieņemt pasūtījumus ārpus jūsu zonām",
+      "outsideZoneDesc": "Ļaujiet klientiem veikt piegādes pasūtījumus uz adresēm ārpus visām jūsu uzzīmētajām zonām. Kad izslēgts, šādi pasūtījumi tiek bloķēti norēķinu brīdī.",
+      "outsideZoneEnabled": "Pasūtījumi ārpus zonas tagad ir atļauti",
+      "outsideZoneDisabled": "Pasūtījumi ārpus zonas tagad ir bloķēti"
     },
     "reservations": {
       "title": "Rezervācijas",

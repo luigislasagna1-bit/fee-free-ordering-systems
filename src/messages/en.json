@@ -746,7 +746,12 @@
       "sortOrder": "Sort order",
       "confirmDelete": "Delete this delivery zone?",
       "deliveryRadius": "Delivery radius",
-      "centerOnRestaurant": "Center on restaurant"
+      "centerOnRestaurant": "Center on restaurant",
+      "advancedSettings": "Advanced settings",
+      "outsideZoneTitle": "Accept orders outside your zones",
+      "outsideZoneDesc": "Let customers place delivery orders to addresses outside every zone you've drawn. When off, those orders are blocked at checkout.",
+      "outsideZoneEnabled": "Out-of-zone orders are now allowed",
+      "outsideZoneDisabled": "Out-of-zone orders are now blocked"
     },
     "reservations": {
       "title": "Reservations",

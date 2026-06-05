@@ -1823,11 +1823,16 @@ export function OrderingPageClient({
       return;
     }
     // Block delivery orders to a geocoded address that falls OUTSIDE every
-    // delivery zone — restaurants shouldn't have to manually reject these
-    // (reseller report). Only blocks when we positively know it's out of zone
-    // (resolvedZone exists but inside=false); ungeocodable addresses are
-    // handled separately by the address-lookup error. Luigi 2026-06-04.
-    if (orderType === "delivery" && resolvedZone && !resolvedZone.inside) {
+    // delivery zone — UNLESS the restaurant has opted to accept out-of-zone
+    // orders (Delivery → Advanced settings). Only blocks when we positively
+    // know it's out of zone (resolvedZone exists but inside=false);
+    // ungeocodable addresses are handled separately. Luigi 2026-06-04.
+    if (
+      orderType === "delivery" &&
+      resolvedZone &&
+      !resolvedZone.inside &&
+      !(restaurant as any).acceptOutsideZoneOrders
+    ) {
       setEditingSection("ordering");
       focusField("checkout-delivery-address");
       toast.error(tT("outOfArea"));

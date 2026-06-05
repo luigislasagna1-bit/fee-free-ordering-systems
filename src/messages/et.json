@@ -723,7 +723,12 @@
       "sortOrder": "Sortimisjärjekord",
       "confirmDelete": "Kustuta see tarnepiirkond?",
       "deliveryRadius": "Tarneraadius",
-      "centerOnRestaurant": "Keskusta restoranile"
+      "centerOnRestaurant": "Keskusta restoranile",
+      "advancedSettings": "Täpsemad seaded",
+      "outsideZoneTitle": "Võta vastu tellimusi väljaspool tsoone",
+      "outsideZoneDesc": "Luba klientidel esitada tarnetellimusi aadressidele, mis jäävad väljapoole kõiki sinu joonistatud tsoone. Kui see on välja lülitatud, blokeeritakse sellised tellimused vormistamisel.",
+      "outsideZoneEnabled": "Tsooniväliste tellimuste vastuvõtmine on nüüd lubatud",
+      "outsideZoneDisabled": "Tsooniväliste tellimuste vastuvõtmine on nüüd blokeeritud"
     },
     "reservations": {
       "title": "Broneeringud",

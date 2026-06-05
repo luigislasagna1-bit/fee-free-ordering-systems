@@ -723,7 +723,12 @@
       "sortOrder": "Urutan tampilan",
       "confirmDelete": "Hapus zona pengiriman ini?",
       "deliveryRadius": "Radius pengiriman",
-      "centerOnRestaurant": "Pusatkan pada restoran"
+      "centerOnRestaurant": "Pusatkan pada restoran",
+      "advancedSettings": "Pengaturan lanjutan",
+      "outsideZoneTitle": "Terima pesanan di luar zona Anda",
+      "outsideZoneDesc": "Izinkan pelanggan memesan pengiriman ke alamat di luar semua zona yang telah Anda gambar. Saat nonaktif, pesanan tersebut diblokir saat checkout.",
+      "outsideZoneEnabled": "Pesanan di luar zona kini diizinkan",
+      "outsideZoneDisabled": "Pesanan di luar zona kini diblokir"
     },
     "reservations": {
       "title": "Reservasi",

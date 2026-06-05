@@ -723,7 +723,12 @@
       "sortOrder": "Kolejność sortowania",
       "confirmDelete": "Usunąć tę strefę dostawy?",
       "deliveryRadius": "Promień dostawy",
-      "centerOnRestaurant": "Wyśrodkuj na restauracji"
+      "centerOnRestaurant": "Wyśrodkuj na restauracji",
+      "advancedSettings": "Ustawienia zaawansowane",
+      "outsideZoneTitle": "Przyjmuj zamówienia spoza Twoich stref",
+      "outsideZoneDesc": "Pozwól klientom składać zamówienia z dostawą na adresy spoza wszystkich narysowanych przez Ciebie stref. Gdy opcja jest wyłączona, takie zamówienia są blokowane podczas finalizacji.",
+      "outsideZoneEnabled": "Zamówienia spoza strefy są teraz dozwolone",
+      "outsideZoneDisabled": "Zamówienia spoza strefy są teraz blokowane"
     },
     "reservations": {
       "title": "Rezerwacje",

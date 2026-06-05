@@ -723,7 +723,12 @@
       "sortOrder": "Poradie zoradenia",
       "confirmDelete": "Odstrániť túto zónu doručenia?",
       "deliveryRadius": "Polomer doručenia",
-      "centerOnRestaurant": "Centrovať na reštauráciu"
+      "centerOnRestaurant": "Centrovať na reštauráciu",
+      "advancedSettings": "Rozšírené nastavenia",
+      "outsideZoneTitle": "Prijímať objednávky mimo vašich zón",
+      "outsideZoneDesc": "Umožnite zákazníkom zadávať objednávky s doručením na adresy mimo všetkých zón, ktoré ste nakreslili. Keď je možnosť vypnutá, takéto objednávky sa pri pokladni zablokujú.",
+      "outsideZoneEnabled": "Objednávky mimo zóny sú teraz povolené",
+      "outsideZoneDisabled": "Objednávky mimo zóny sú teraz zablokované"
     },
     "reservations": {
       "title": "Rezervácie",

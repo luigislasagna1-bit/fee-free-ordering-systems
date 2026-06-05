@@ -54,6 +54,7 @@ type Restaurant = {
   name: string | null;
   mapProvider?: "leaflet" | "google";
   googleMapsApiKey?: string | null;
+  acceptOutsideZoneOrders?: boolean;
 };
 
 const emptyForm = {
@@ -103,6 +104,31 @@ export function DeliveryClient({
   );
 
   const locationSet = hasValidCoords(restaurantLat, restaurantLng);
+
+  // Advanced: allow customers to order to addresses outside every zone.
+  const [acceptOutsideZone, setAcceptOutsideZone] = useState<boolean>(
+    !!restaurant?.acceptOutsideZoneOrders
+  );
+  const [savingOutsideZone, setSavingOutsideZone] = useState(false);
+
+  const toggleOutsideZone = async () => {
+    const next = !acceptOutsideZone;
+    setAcceptOutsideZone(next); // optimistic
+    setSavingOutsideZone(true);
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ acceptOutsideZoneOrders: next }),
+      });
+      if (!res.ok) throw new Error("Failed");
+      toast.success(next ? t("outsideZoneEnabled") : t("outsideZoneDisabled"));
+    } catch {
+      setAcceptOutsideZone(!next); // revert
+      toast.error(tToasts("saveFailed"));
+    }
+    setSavingOutsideZone(false);
+  };
 
   const reload = async () => {
     const res = await fetch("/api/restaurants/delivery");
@@ -436,6 +462,35 @@ export function DeliveryClient({
               ))}
             </div>
           )}
+
+          {/* Advanced: accept out-of-zone orders */}
+          <div className="border-t border-gray-100 p-4">
+            <h3 className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-3">
+              {t("advancedSettings")}
+            </h3>
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-gray-900">{t("outsideZoneTitle")}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{t("outsideZoneDesc")}</p>
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={acceptOutsideZone}
+                disabled={savingOutsideZone}
+                onClick={toggleOutsideZone}
+                className={`relative inline-flex h-6 w-11 flex-shrink-0 items-center rounded-full transition disabled:opacity-60 ${
+                  acceptOutsideZone ? "bg-emerald-500" : "bg-gray-300"
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition ${
+                    acceptOutsideZone ? "translate-x-6" : "translate-x-1"
+                  }`}
+                />
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Legend */}

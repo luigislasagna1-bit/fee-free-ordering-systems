@@ -723,7 +723,12 @@
       "sortOrder": "סדר מיון",
       "confirmDelete": "למחוק אזור משלוח זה?",
       "deliveryRadius": "רדיוס משלוח",
-      "centerOnRestaurant": "מרכז על המסעדה"
+      "centerOnRestaurant": "מרכז על המסעדה",
+      "advancedSettings": "הגדרות מתקדמות",
+      "outsideZoneTitle": "קבלת הזמנות מחוץ לאזורים שלך",
+      "outsideZoneDesc": "אפשרו ללקוחות לבצע הזמנות משלוח לכתובות מחוץ לכל אזור שסימנתם. כשהאפשרות כבויה, הזמנות אלו נחסמות בקופה.",
+      "outsideZoneEnabled": "הזמנות מחוץ לאזור מותרות כעת",
+      "outsideZoneDisabled": "הזמנות מחוץ לאזור חסומות כעת"
     },
     "reservations": {
       "title": "הזמנות שולחנות",

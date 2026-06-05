@@ -6,27 +6,14 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "admin.invoice";
-const CONTEXT = "a downloadable billing invoice document a restaurant owner gets for the platform services they paid for. Formal/financial tone. 'VAT / Tax ID' and 'Invoice no.' are accounting terms";
+const NS = "admin.delivery";
+const CONTEXT = "delivery-zone settings in a restaurant admin panel. A toggle that lets the restaurant accept delivery orders to addresses OUTSIDE the delivery zones they drew on a map. Concise SaaS dashboard tone";
 const EN = {
-  title: "Invoice",
-  from: "From",
-  billedTo: "Billed to",
-  invoiceNumber: "Invoice no.",
-  issueDate: "Date",
-  period: "Billing period",
-  description: "Description",
-  servicesLine: "Platform subscription & add-ons",
-  amount: "Amount",
-  subtotal: "Subtotal",
-  total: "Total",
-  statusPaid: "Paid",
-  statusDue: "Due",
-  vatId: "VAT / Tax ID",
-  download: "Download / Print",
-  thankYou: "Thank you for your business.",
-  notFound: "Invoice not found.",
-  back: "Back to Billing",
+  advancedSettings: "Advanced settings",
+  outsideZoneTitle: "Accept orders outside your zones",
+  outsideZoneDesc: "Let customers place delivery orders to addresses outside every zone you've drawn. When off, those orders are blocked at checkout.",
+  outsideZoneEnabled: "Out-of-zone orders are now allowed",
+  outsideZoneDisabled: "Out-of-zone orders are now blocked",
 };
 const KEYS = Object.keys(EN);
 

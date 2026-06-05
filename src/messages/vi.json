@@ -723,7 +723,12 @@
       "sortOrder": "Thứ tự",
       "confirmDelete": "Xóa khu vực giao hàng này?",
       "deliveryRadius": "Bán kính giao hàng",
-      "centerOnRestaurant": "Lấy nhà hàng làm trung tâm"
+      "centerOnRestaurant": "Lấy nhà hàng làm trung tâm",
+      "advancedSettings": "Cài đặt nâng cao",
+      "outsideZoneTitle": "Chấp nhận đơn hàng ngoài khu vực của bạn",
+      "outsideZoneDesc": "Cho phép khách hàng đặt đơn giao hàng đến các địa chỉ nằm ngoài mọi khu vực bạn đã vẽ. Khi tắt, những đơn hàng đó sẽ bị chặn khi thanh toán.",
+      "outsideZoneEnabled": "Đơn hàng ngoài khu vực hiện được cho phép",
+      "outsideZoneDisabled": "Đơn hàng ngoài khu vực hiện bị chặn"
     },
     "reservations": {
       "title": "Đặt bàn",

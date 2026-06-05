@@ -723,7 +723,12 @@
       "sortOrder": "並び順",
       "confirmDelete": "このデリバリーゾーンを削除しますか？",
       "deliveryRadius": "デリバリー範囲",
-      "centerOnRestaurant": "レストランを中心にする"
+      "centerOnRestaurant": "レストランを中心にする",
+      "advancedSettings": "詳細設定",
+      "outsideZoneTitle": "配達ゾーン外の注文を受け付ける",
+      "outsideZoneDesc": "設定したすべての配達ゾーンの外にある住所への配達注文を、お客様が行えるようにします。オフの場合、これらの注文はチェックアウト時にブロックされます。",
+      "outsideZoneEnabled": "ゾーン外の注文が許可されました",
+      "outsideZoneDisabled": "ゾーン外の注文がブロックされました"
     },
     "reservations": {
       "title": "予約",

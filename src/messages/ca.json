@@ -723,7 +723,12 @@
       "sortOrder": "Ordre",
       "confirmDelete": "Elimineu aquesta zona de lliurament?",
       "deliveryRadius": "Radi de lliurament",
-      "centerOnRestaurant": "Centrar en el restaurant"
+      "centerOnRestaurant": "Centrar en el restaurant",
+      "advancedSettings": "Configuració avançada",
+      "outsideZoneTitle": "Accepta comandes fora de les teves zones",
+      "outsideZoneDesc": "Permet que els clients facin comandes a domicili a adreces fora de qualsevol zona que hagis dibuixat. Quan està desactivat, aquestes comandes es bloquegen en finalitzar la compra.",
+      "outsideZoneEnabled": "Ara es permeten les comandes fora de zona",
+      "outsideZoneDisabled": "Ara es bloquegen les comandes fora de zona"
     },
     "reservations": {
       "title": "Reserves",

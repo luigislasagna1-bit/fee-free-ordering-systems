@@ -723,7 +723,12 @@
       "sortOrder": "Ordine sortare",
       "confirmDelete": "Ștergi această zonă de livrare?",
       "deliveryRadius": "Raza de livrare",
-      "centerOnRestaurant": "Centrează pe restaurant"
+      "centerOnRestaurant": "Centrează pe restaurant",
+      "advancedSettings": "Setări avansate",
+      "outsideZoneTitle": "Acceptați comenzi în afara zonelor",
+      "outsideZoneDesc": "Permiteți clienților să plaseze comenzi cu livrare la adrese aflate în afara tuturor zonelor pe care le-ați desenat. Când opțiunea este dezactivată, aceste comenzi sunt blocate la finalizarea comenzii.",
+      "outsideZoneEnabled": "Comenzile din afara zonei sunt acum permise",
+      "outsideZoneDisabled": "Comenzile din afara zonei sunt acum blocate"
     },
     "reservations": {
       "title": "Rezervări",

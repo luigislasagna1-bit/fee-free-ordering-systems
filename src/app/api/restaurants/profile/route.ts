@@ -56,6 +56,7 @@ export async function PUT(req: NextRequest) {
     requireCustomerEmail,
     requireCustomerPhone,
     showCustomerMenuSearch,
+    acceptOutsideZoneOrders,
   } = data;
 
   const ALLOWED_LOCALES: readonly string[] = SUPPORTED_LOCALES;
@@ -188,6 +189,10 @@ export async function PUT(req: NextRequest) {
   }
   if (printNodeEnabled !== undefined) updateData.printNodeEnabled = !!printNodeEnabled;
   if (autoCallOnNewOrder !== undefined) updateData.autoCallOnNewOrder = !!autoCallOnNewOrder;
+  // Allow customers to place delivery orders to addresses OUTSIDE every active
+  // delivery zone. Default false = block at checkout (restaurant opts in).
+  // Reflected on the customer page (OrderingPageClient out-of-zone guard).
+  if (acceptOutsideZoneOrders !== undefined) updateData.acceptOutsideZoneOrders = !!acceptOutsideZoneOrders;
   // Scheduled-order slot interval (Luigi 2026-05-31). Whitelist values
   // so we don't accidentally accept 1-minute (kitchen chaos) or 1440
   // (no slots in a day). 10/15/20/30/60 covers every real workflow.

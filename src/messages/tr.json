@@ -723,7 +723,12 @@
       "sortOrder": "Sıralama",
       "confirmDelete": "Bu teslimat bölgesi silinsin mi?",
       "deliveryRadius": "Teslimat Yarıçapı",
-      "centerOnRestaurant": "Restoran üzerinde ortala"
+      "centerOnRestaurant": "Restoran üzerinde ortala",
+      "advancedSettings": "Gelişmiş ayarlar",
+      "outsideZoneTitle": "Bölgeleriniz dışındaki siparişleri kabul edin",
+      "outsideZoneDesc": "Müşterilerinizin, çizdiğiniz tüm bölgelerin dışındaki adreslere teslimat siparişi vermesine izin verin. Kapalıyken bu siparişler ödeme adımında engellenir.",
+      "outsideZoneEnabled": "Bölge dışı siparişlere artık izin veriliyor",
+      "outsideZoneDisabled": "Bölge dışı siparişler artık engelleniyor"
     },
     "reservations": {
       "title": "Rezervasyonlar",

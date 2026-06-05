@@ -723,7 +723,12 @@
       "sortOrder": "Sorteervolgorde",
       "confirmDelete": "Deze bezorgzone verwijderen?",
       "deliveryRadius": "Bezorgstraal",
-      "centerOnRestaurant": "Centreren op restaurant"
+      "centerOnRestaurant": "Centreren op restaurant",
+      "advancedSettings": "Geavanceerde instellingen",
+      "outsideZoneTitle": "Bestellingen buiten je zones accepteren",
+      "outsideZoneDesc": "Laat klanten bezorgbestellingen plaatsen op adressen buiten elke zone die je hebt getekend. Wanneer dit uitstaat, worden die bestellingen geblokkeerd bij het afrekenen.",
+      "outsideZoneEnabled": "Bestellingen buiten de zone zijn nu toegestaan",
+      "outsideZoneDisabled": "Bestellingen buiten de zone zijn nu geblokkeerd"
     },
     "reservations": {
       "title": "Reserveringen",

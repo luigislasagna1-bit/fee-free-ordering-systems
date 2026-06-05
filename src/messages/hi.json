@@ -746,7 +746,12 @@
       "sortOrder": "क्रम",
       "confirmDelete": "यह डिलीवरी क्षेत्र हटाएँ?",
       "deliveryRadius": "डिलीवरी दायरा",
-      "centerOnRestaurant": "रेस्टोरेंट पर केंद्रित करें"
+      "centerOnRestaurant": "रेस्टोरेंट पर केंद्रित करें",
+      "advancedSettings": "उन्नत सेटिंग्स",
+      "outsideZoneTitle": "अपने ज़ोन के बाहर ऑर्डर स्वीकार करें",
+      "outsideZoneDesc": "ग्राहकों को उन पतों पर डिलीवरी ऑर्डर देने दें जो आपके द्वारा बनाए गए हर ज़ोन के बाहर हैं। बंद होने पर, ऐसे ऑर्डर चेकआउट पर ब्लॉक कर दिए जाते हैं।",
+      "outsideZoneEnabled": "ज़ोन के बाहर के ऑर्डर अब अनुमत हैं",
+      "outsideZoneDisabled": "ज़ोन के बाहर के ऑर्डर अब ब्लॉक हैं"
     },
     "reservations": {
       "title": "आरक्षण",

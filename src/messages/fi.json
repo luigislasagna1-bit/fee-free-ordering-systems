@@ -723,7 +723,12 @@
       "sortOrder": "Järjestys",
       "confirmDelete": "Poistetaanko tämä toimitusalue?",
       "deliveryRadius": "Toimitussäde",
-      "centerOnRestaurant": "Keskitä ravintolaan"
+      "centerOnRestaurant": "Keskitä ravintolaan",
+      "advancedSettings": "Lisäasetukset",
+      "outsideZoneTitle": "Hyväksy tilaukset alueidesi ulkopuolelta",
+      "outsideZoneDesc": "Anna asiakkaiden tehdä toimitustilauksia osoitteisiin, jotka ovat kaikkien piirtämiesi alueiden ulkopuolella. Kun asetus on pois päältä, tällaiset tilaukset estetään kassalla.",
+      "outsideZoneEnabled": "Alueen ulkopuoliset tilaukset ovat nyt sallittuja",
+      "outsideZoneDisabled": "Alueen ulkopuoliset tilaukset on nyt estetty"
     },
     "reservations": {
       "title": "Varaukset",

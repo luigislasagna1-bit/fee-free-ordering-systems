@@ -723,7 +723,12 @@
       "sortOrder": "排序",
       "confirmDelete": "确认删除此配送区域？",
       "deliveryRadius": "配送半径",
-      "centerOnRestaurant": "以餐厅为中心"
+      "centerOnRestaurant": "以餐厅为中心",
+      "advancedSettings": "高级设置",
+      "outsideZoneTitle": "接受配送区域外的订单",
+      "outsideZoneDesc": "允许顾客向您已绘制的所有区域之外的地址下达配送订单。关闭后，这些订单将在结账时被拦截。",
+      "outsideZoneEnabled": "现已允许区域外订单",
+      "outsideZoneDisabled": "现已拦截区域外订单"
     },
     "reservations": {
       "title": "预订",
