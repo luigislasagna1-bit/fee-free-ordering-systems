@@ -6,8 +6,10 @@
  * 5,000 chars to prevent a runaway paste.
  */
 import { NextRequest, NextResponse } from "next/server";
+import { after } from "next/server";
 import prisma from "@/lib/db";
 import { getReportAccess } from "@/lib/reseller-reports-access";
+import { notifyReportComment } from "@/lib/reseller-reports-workflow";
 
 export async function POST(
   req: NextRequest,
@@ -66,5 +68,21 @@ export async function POST(
       kind: "COMMENTED",
     },
   });
+
+  // Email everyone following this report (reporter + upvoters + prior
+  // commenters), minus the author of this comment. Fire-and-forget so the
+  // comment POST stays fast even if Resend is slow. Luigi 2026-06-05.
+  after(async () => {
+    try {
+      await notifyReportComment(id, {
+        actorEmail: access.email,
+        actorName: access.name,
+        snippet: text,
+      });
+    } catch (e) {
+      console.error("[reseller-reports comment] notify failed", e);
+    }
+  });
+
   return NextResponse.json({ comment });
 }

@@ -12,6 +12,7 @@
  *   reverts to being attributed to its author.
  */
 import { NextRequest, NextResponse } from "next/server";
+import { after } from "next/server";
 import prisma from "@/lib/db";
 import {
   getReportAccess,
@@ -20,6 +21,7 @@ import {
   type ReportStatus,
   type ReportPriority,
 } from "@/lib/reseller-reports-access";
+import { notifyReportStatusChange } from "@/lib/reseller-reports-workflow";
 
 export async function GET(
   _req: NextRequest,
@@ -175,6 +177,27 @@ export async function PATCH(
   }
   if (activityRows.length > 0) {
     await prisma.resellerReportActivity.createMany({ data: activityRows });
+  }
+
+  // Notify the reporter + upvoters of a status change (excluding the actor).
+  // Fire-and-forget. The IN_TESTING "please verify" + auto-FIXED "resolved"
+  // flows have their own richer emails via markFixShipped/onVerificationVote,
+  // but the generic dropdown path (e.g. New → In progress, or a manual Fixed)
+  // had no notification at all until now. Luigi 2026-06-05.
+  if (statusChanged) {
+    const sc = statusChanged;
+    after(async () => {
+      try {
+        await notifyReportStatusChange(id, {
+          actorEmail: access.email,
+          actorName: access.name,
+          fromStatus: sc.from,
+          toStatus: sc.to,
+        });
+      } catch (e) {
+        console.error("[reseller-reports status] notify failed", e);
+      }
+    });
   }
 
   return NextResponse.json({ ok: true, ...data });

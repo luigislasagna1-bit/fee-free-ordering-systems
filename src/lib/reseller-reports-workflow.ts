@@ -92,6 +92,111 @@ async function notifyAll(
   );
 }
 
+/** Human-readable status label for emails. */
+function prettyStatus(s: string): string {
+  switch (s) {
+    case "NEW": return "New";
+    case "IN_PROGRESS": return "In progress";
+    case "IN_TESTING": return "In testing";
+    case "FIXED": return "Fixed";
+    case "WONT_FIX": return "Won't fix";
+    default: return s;
+  }
+}
+
+/** Drop the person who triggered the event — nobody needs an email about
+ *  their own comment / status change. Case-insensitive. */
+function excludeActor(recipients: RecipientLite[], actorEmail: string): RecipientLite[] {
+  const a = (actorEmail || "").trim().toLowerCase();
+  return recipients.filter((r) => r.email !== a);
+}
+
+/**
+ * Notify everyone following a report that a NEW COMMENT landed — the reporter,
+ * everyone who upvoted, and anyone who previously commented (so a back-and-forth
+ * keeps the whole thread in the loop) — except the person who just commented.
+ * Best-effort; never throws. Luigi 2026-06-05.
+ */
+export async function notifyReportComment(
+  reportId: string,
+  opts: { actorEmail: string; actorName: string; snippet?: string | null },
+): Promise<{ notified: number }> {
+  const report = await prisma.resellerReport.findUnique({
+    where: { id: reportId },
+    select: {
+      id: true, title: true,
+      authorEmail: true, authorName: true,
+      reportedByEmail: true, reportedByName: true,
+      upvotes: { select: { voterEmail: true, voterName: true } },
+      comments: { select: { authorEmail: true, authorName: true } },
+    },
+  });
+  if (!report) return { notified: 0 };
+
+  // reporter + upvoters, then merge in prior distinct commenters.
+  const byEmail = new Map<string, RecipientLite>();
+  for (const r of collectRecipients(report, report.upvotes)) byEmail.set(r.email, r);
+  for (const c of report.comments) {
+    const e = (c.authorEmail || "").trim().toLowerCase();
+    if (e && !byEmail.has(e)) byEmail.set(e, { email: e, name: c.authorName });
+  }
+  const recipients = excludeActor([...byEmail.values()], opts.actorEmail);
+  if (recipients.length === 0) return { notified: 0 };
+
+  const snippet = opts.snippet?.trim()
+    ? `\n\n"${opts.snippet.trim().slice(0, 200)}${opts.snippet.trim().length > 200 ? "…" : ""}"`
+    : "";
+  await notifyAll(recipients, (r) => ({
+    to: r.email,
+    recipientName: r.name?.split(" ")[0] ?? null,
+    subject: `New comment: ${report.title}`,
+    title: `${opts.actorName} commented on your report`,
+    subtitle: report.title,
+    body: `${opts.actorName} added a comment to a report you're following.${snippet}\n\nOpen the report to read the full thread and reply.`,
+    ctaLabel: "View the discussion",
+    ctaUrl: reportUrl(reportId),
+  }));
+  return { notified: recipients.length };
+}
+
+/**
+ * Notify the reporter + upvoters that a report's STATUS CHANGED (e.g.
+ * New → In progress, or marked Fixed by the superadmin). Excludes the actor.
+ * Covers the manual paths; the IN_TESTING / auto-FIXED transitions have their
+ * own richer "please verify" / "resolved" emails via markFixShipped /
+ * onVerificationVote. Best-effort; never throws. Luigi 2026-06-05.
+ */
+export async function notifyReportStatusChange(
+  reportId: string,
+  opts: { actorEmail: string; actorName: string; fromStatus: string; toStatus: string },
+): Promise<{ notified: number }> {
+  const report = await prisma.resellerReport.findUnique({
+    where: { id: reportId },
+    select: {
+      id: true, title: true,
+      authorEmail: true, authorName: true,
+      reportedByEmail: true, reportedByName: true,
+      upvotes: { select: { voterEmail: true, voterName: true } },
+    },
+  });
+  if (!report) return { notified: 0 };
+
+  const recipients = excludeActor(collectRecipients(report, report.upvotes), opts.actorEmail);
+  if (recipients.length === 0) return { notified: 0 };
+
+  await notifyAll(recipients, (r) => ({
+    to: r.email,
+    recipientName: r.name?.split(" ")[0] ?? null,
+    subject: `Status updated: ${report.title}`,
+    title: `Your report is now "${prettyStatus(opts.toStatus)}"`,
+    subtitle: report.title,
+    body: `The status of a report you're following changed from ${prettyStatus(opts.fromStatus)} to ${prettyStatus(opts.toStatus)}.`,
+    ctaLabel: "View the report",
+    ctaUrl: reportUrl(reportId),
+  }));
+  return { notified: recipients.length };
+}
+
 /**
  * Mark a report's fix as shipped. Human-triggered (SA button / endpoint).
  * Moves NEW/IN_PROGRESS → IN_TESTING, drops a comment, and asks the
