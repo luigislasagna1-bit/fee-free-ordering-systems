@@ -139,6 +139,48 @@ export async function countNewReportsForViewer(viewerEmail: string): Promise<num
   }
 }
 
+/** Unread in-app notification count for a viewer (drives the bell badge). */
+export async function countUnreadNotifications(viewerEmail: string): Promise<number> {
+  const email = (viewerEmail || "").trim().toLowerCase();
+  if (!email) return 0;
+  try {
+    return await prisma.resellerNotification.count({ where: { recipientEmail: email, readAt: null } });
+  } catch (e) {
+    console.error("[reseller-reports] countUnreadNotifications failed", e);
+    return 0;
+  }
+}
+
+/** Latest notifications for a viewer (newest first), capped. */
+export async function listNotifications(viewerEmail: string, take = 50) {
+  const email = (viewerEmail || "").trim().toLowerCase();
+  if (!email) return [];
+  try {
+    return await prisma.resellerNotification.findMany({
+      where: { recipientEmail: email },
+      orderBy: { createdAt: "desc" },
+      take,
+    });
+  } catch (e) {
+    console.error("[reseller-reports] listNotifications failed", e);
+    return [];
+  }
+}
+
+/** Mark all of a viewer's notifications read (called when they open the feed). */
+export async function markAllNotificationsRead(viewerEmail: string): Promise<void> {
+  const email = (viewerEmail || "").trim().toLowerCase();
+  if (!email) return;
+  try {
+    await prisma.resellerNotification.updateMany({
+      where: { recipientEmail: email, readAt: null },
+      data: { readAt: new Date() },
+    });
+  } catch (e) {
+    console.error("[reseller-reports] markAllNotificationsRead failed", e);
+  }
+}
+
 /** Human-readable status label for emails. */
 function prettyStatus(s: string): string {
   switch (s) {
@@ -156,6 +198,30 @@ function prettyStatus(s: string): string {
 function excludeActor(recipients: RecipientLite[], actorEmail: string): RecipientLite[] {
   const a = (actorEmail || "").trim().toLowerCase();
   return recipients.filter((r) => r.email !== a);
+}
+
+/** Create one in-app notification row per recipient (best-effort). Powers the
+ *  reseller/superadmin notification bell + feed. Runs alongside the emails. */
+async function createNotifications(
+  recipients: RecipientLite[],
+  n: { kind: string; title: string; body?: string | null; linkUrl?: string | null; reportId?: string | null; actorName?: string | null },
+): Promise<void> {
+  if (recipients.length === 0) return;
+  try {
+    await prisma.resellerNotification.createMany({
+      data: recipients.map((r) => ({
+        recipientEmail: r.email,
+        kind: n.kind,
+        title: n.title,
+        body: n.body ?? null,
+        linkUrl: n.linkUrl ?? null,
+        reportId: n.reportId ?? null,
+        actorName: n.actorName ?? null,
+      })),
+    });
+  } catch (e) {
+    console.error("[reseller-reports] createNotifications failed", e);
+  }
 }
 
 /**
@@ -193,6 +259,15 @@ export async function notifyReportComment(
   const snippet = opts.snippet?.trim()
     ? `\n\n"${opts.snippet.trim().slice(0, 200)}${opts.snippet.trim().length > 200 ? "…" : ""}"`
     : "";
+  // In-app feed rows (bell) + emails, same recipient set.
+  await createNotifications(recipients, {
+    kind: "report_comment",
+    title: `${opts.actorName} replied to "${report.title}"`,
+    body: opts.snippet?.trim() ? opts.snippet.trim().slice(0, 200) : null,
+    linkUrl: `/reseller-reports/${reportId}`,
+    reportId,
+    actorName: opts.actorName,
+  });
   await notifyAll(recipients, (r) => ({
     to: r.email,
     recipientName: r.name?.split(" ")[0] ?? null,
@@ -231,6 +306,14 @@ export async function notifyReportStatusChange(
   const recipients = excludeActor(collectRecipients(report, report.upvotes), opts.actorEmail);
   if (recipients.length === 0) return { notified: 0 };
 
+  await createNotifications(recipients, {
+    kind: "report_status",
+    title: `"${report.title}" is now ${prettyStatus(opts.toStatus)}`,
+    body: `Status changed from ${prettyStatus(opts.fromStatus)} to ${prettyStatus(opts.toStatus)}.`,
+    linkUrl: `/reseller-reports/${reportId}`,
+    reportId,
+    actorName: opts.actorName,
+  });
   await notifyAll(recipients, (r) => ({
     to: r.email,
     recipientName: r.name?.split(" ")[0] ?? null,

@@ -14,6 +14,7 @@ import {
   GraduationCap,
   Palette,
   Bug,
+  Bell,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
@@ -119,13 +120,18 @@ function pathMatchesGroup(path: string, group: Group): boolean {
   return false;
 }
 
-export function ResellerNav({ canViewReports = false, reportsNewCount = 0 }: { canViewReports?: boolean; reportsNewCount?: number }) {
+export function ResellerNav({ canViewReports = false, reportsNewCount = 0, notificationsCount = 0 }: { canViewReports?: boolean; reportsNewCount?: number; notificationsCount?: number }) {
   const path = usePathname();
   // Invited resellers (added via the report center's "Manage access") also
   // get a "Reports & Requests" entry that opens the shared bug/feature
-  // tracker at /reseller-reports. Non-invited resellers don't see it.
+  // tracker at /reseller-reports, plus a Notifications feed. Non-invited
+  // resellers don't see either.
   const navGroups: Group[] = canViewReports
-    ? [...groups, { id: "reports", label: "Reports & Requests", icon: Bug, href: "/reseller-reports" }]
+    ? [
+        ...groups,
+        { id: "reports", label: "Reports & Requests", icon: Bug, href: "/reseller-reports" },
+        { id: "notifications", label: "Notifications", icon: Bell, href: "/reseller-reports/notifications" },
+      ]
     : groups;
   // Track which group is currently expanded. Default to whichever group
   // contains the active route so the user lands inside the right section.
@@ -157,6 +163,11 @@ export function ResellerNav({ canViewReports = false, reportsNewCount = 0 }: { c
               {group.id === "reports" && reportsNewCount > 0 && (
                 <span className="ml-auto inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full bg-rose-500 text-white text-[11px] font-bold">
                   {reportsNewCount > 99 ? "99+" : reportsNewCount}
+                </span>
+              )}
+              {group.id === "notifications" && notificationsCount > 0 && (
+                <span className="ml-auto inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full bg-rose-500 text-white text-[11px] font-bold">
+                  {notificationsCount > 99 ? "99+" : notificationsCount}
                 </span>
               )}
             </Link>

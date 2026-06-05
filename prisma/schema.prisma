@@ -2596,6 +2596,30 @@ model ResellerReport {
   @@index([authorEmail])
 }
 
+/// In-app notification feed for the reseller platform (+ superadmin). One row
+/// per recipient per event — e.g. "X replied to your report", "status changed".
+/// Created alongside the existing notification emails. The recipient sees a
+/// bell-style unread count + a feed; rows are marked read on view. Luigi 2026-06-05.
+model ResellerNotification {
+  id             String    @id @default(cuid())
+  /// Lowercased recipient email (matches reseller / SA login email).
+  recipientEmail String
+  /// "report_comment" | "report_status" — drives the icon/copy.
+  kind           String
+  title          String
+  body           String?
+  /// Where clicking the notification navigates (e.g. /reseller-reports/<id>).
+  linkUrl        String?
+  /// Loose ref to the source report (no FK so report deletion can't orphan-fail).
+  reportId       String?
+  actorName      String?
+  readAt         DateTime?
+  createdAt      DateTime  @default(now())
+
+  @@index([recipientEmail, readAt])
+  @@index([recipientEmail, createdAt])
+}
+
 /// Per-viewer "last seen" marker for the in-app new-activity badge. One row
 /// per (report, viewer email). A report shows a NEW badge for a viewer when
 /// its updatedAt is newer than their seenAt (or they have no row yet). Marked
