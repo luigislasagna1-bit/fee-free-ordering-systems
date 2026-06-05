@@ -70,6 +70,9 @@ export async function generateMetadata({
   return {
     title,
     description,
+    // Owner-uploaded favicon as the browser tab icon (falls back to the
+    // platform default when unset). Luigi 2026-06-05.
+    ...(r.faviconUrl ? { icons: { icon: r.faviconUrl } } : {}),
     openGraph: {
       title,
       description,

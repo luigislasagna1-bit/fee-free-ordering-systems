@@ -28,6 +28,7 @@ export interface HostedSiteData {
   country: string;
   cuisineType: string | null;
   logoUrl: string | null;
+  faviconUrl: string | null;
   bannerUrl: string | null;
   socialLinks: Record<string, string> | null;
   themeSettings: Record<string, unknown> | null;
@@ -127,6 +128,10 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       id: true, name: true, slug: true, slogan: true, description: true,
       phone: true, email: true, address: true, city: true, state: true,
       zip: true, country: true, cuisineType: true, logoUrl: true,
+      // Owner-uploaded favicon — used as the browser tab icon on the hosted
+      // website (was never selected, so the site kept the platform default
+      // even after the owner set one). Luigi 2026-06-05.
+      faviconUrl: true,
       bannerUrl: true, socialLinks: true, themeSettings: true,
       hostedSiteSettings: true,
       lat: true, lng: true, mapProvider: true, googleMapsApiKey: true,
@@ -285,6 +290,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       country: restaurant.country,
       cuisineType: restaurant.cuisineType,
       logoUrl: restaurant.logoUrl,
+      faviconUrl: restaurant.faviconUrl,
       bannerUrl: restaurant.bannerUrl,
       socialLinks: safeJson(restaurant.socialLinks),
       themeSettings: safeJson(restaurant.themeSettings),

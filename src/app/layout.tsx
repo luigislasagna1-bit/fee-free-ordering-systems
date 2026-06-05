@@ -12,6 +12,13 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Fee Free Ordering Systems",
   description: "Online ordering for restaurants — no per-order fees, ever.",
+  // Platform default favicon (served from /public/favicon.ico). It lives here
+  // — NOT as the file-convention src/app/favicon.ico — so that per-restaurant
+  // routes (/order, /site) can REPLACE it with the owner's uploaded favicon via
+  // their own `icons` metadata. The file convention auto-injected a second,
+  // sized <link rel="icon"> that browsers preferred, so a custom favicon was
+  // emitted but never won. Luigi 2026-06-05.
+  icons: { icon: "/favicon.ico" },
   // We render our own translated UI via next-intl. Opt out of browser
   // auto-translation (Google Translate, Edge / Microsoft Translator, etc.) —
   // otherwise those extensions mutate the DOM after server render and cause
