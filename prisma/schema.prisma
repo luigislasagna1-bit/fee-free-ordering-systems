@@ -262,6 +262,7 @@ model Restaurant {
   users                  User[]
   menuCategories         MenuCategory[]
   menuItems              MenuItem[]
+  menus                  Menu[]
   modifierGroups         ModifierGroup[]
   orders                 Order[]
   orderRatings           OrderRating[]
@@ -604,9 +605,41 @@ model PasswordResetToken {
   @@index([userId])
 }
 
+/// A named menu version owned by a restaurant (e.g. "Main", "Summer",
+/// "Winter"). Exactly ONE menu per restaurant is active (isActive=true) at a
+/// time — that's the one customers see. Others are drafts/archived that the
+/// owner can edit off-line and schedule to go live. Categories belong to a
+/// menu via MenuCategory.menuId. Multi-menu manager Phase 0. Luigi 2026-06-05.
+model Menu {
+  id                  String    @id @default(cuid())
+  restaurantId        String
+  name                String    @default("Main Menu")
+  /// The single live menu for the restaurant. App logic guarantees one active.
+  isActive            Boolean   @default(false)
+  /// When set + in the future, a cron flips this menu live at that moment
+  /// (deactivating whichever menu was active). Cleared once published.
+  scheduledActivateAt DateTime?
+  /// Last time this menu went live (audit / "published on" display).
+  publishedAt         DateTime?
+  isArchived          Boolean   @default(false)
+  sortOrder           Int       @default(0)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  restaurant Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  categories MenuCategory[]
+
+  @@index([restaurantId, isActive])
+  @@index([scheduledActivateAt])
+}
+
 model MenuCategory {
   id           String   @id @default(cuid())
   restaurantId String
+  /// Which menu version this category belongs to. Nullable during the Phase 0
+  /// migration; backfilled to the restaurant's default "Main Menu". The
+  /// customer page reads only the ACTIVE menu's categories.
+  menuId       String?
   name         String
   description  String?
   imageUrl     String?
@@ -623,16 +656,24 @@ model MenuCategory {
   updatedAt    DateTime @updatedAt
 
   restaurant     Restaurant      @relation(fields: [restaurantId], references: [id])
+  menu           Menu?           @relation(fields: [menuId], references: [id])
   menuItems      MenuItem[]
   modifierGroups ModifierGroup[]
 
   @@index([restaurantId, isActive])
+  @@index([menuId])
 }
 
 model MenuItem {
   id            String   @id @default(cuid())
   restaurantId  String
   categoryId    String
+  /// Stable identity that survives across menu versions: when a menu is
+  /// duplicated, the copy's items keep the SAME lineageId as their source.
+  /// Lets promotions (which reference item ids) be remapped old→new on
+  /// publish, and lets reports group an item across versions. Backfilled to
+  /// the item's own id for pre-existing items. Multi-menu Phase 0.
+  lineageId     String?
   name          String
   description   String?
   price         Float
