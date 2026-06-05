@@ -229,6 +229,22 @@ function formatDueCountdown(diffMs: number): { text: string; unit: "hours" | "mi
   return { text: `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`, unit: "minutes" };
 }
 
+/**
+ * Due-time label for kitchen rows. Caps the countdown at 24h: anything further
+ * out shows the WEEKDAY NAME the order is due (e.g. "Thursday") rather than an
+ * unwieldy multi-day hours value like "304h 24m" (Fabrizio report 2026-06-05).
+ * ≤ 24h falls through to the unambiguous hours/minutes countdown.
+ * `kind` lets callers colour day/hours rows distinctly from minute timers.
+ */
+function formatDueLabel(dueTs: number, nowMs: number): { text: string; kind: "day" | "hours" | "minutes" | "due" } {
+  const diffMs = dueTs - nowMs;
+  if (diffMs > 24 * 60 * 60 * 1000) {
+    return { text: new Date(dueTs).toLocaleDateString(undefined, { weekday: "long" }), kind: "day" };
+  }
+  const c = formatDueCountdown(diffMs);
+  return { text: c.text, kind: c.unit };
+}
+
 // ── Order row ─────────────────────────────────────────────────────────────────
 function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown }: {
   order: Order; selected: boolean; onClick: () => void; t: T; now: number;
@@ -293,8 +309,8 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
     if (Number.isFinite(er)) return er;
     return NaN;
   })();
-  const readyCountdown = (!now || !Number.isFinite(dueTs)) ? null : formatDueCountdown(dueTs - now);
-  const countdownIsPast = readyCountdown?.unit === "due";
+  const readyCountdown = (!now || !Number.isFinite(dueTs)) ? null : formatDueLabel(dueTs, now);
+  const countdownIsPast = readyCountdown?.kind === "due";
 
   const isTest = order.customerName.startsWith("[TEST]");
 
@@ -383,10 +399,13 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
             <div className="mt-2 text-right">
               <div
                 className={`text-xl font-bold tabular-nums leading-none whitespace-nowrap ${
-                  // Hours-away orders render in a calmer sky tone so staff
-                  // instantly read "this is far out, not imminent"; minute
-                  // timers keep the normal emphatic colour. (Report 2026-06-04.)
-                  readyCountdown.unit === "hours" ? "text-sky-600 dark:text-sky-300" : t.text
+                  // Day-away ("Thursday") and hours-away orders render in a
+                  // calmer sky tone so staff instantly read "this is far out,
+                  // not imminent"; minute timers keep the normal emphatic
+                  // colour. (Reports 2026-06-04 / 2026-06-05.)
+                  readyCountdown.kind === "hours" || readyCountdown.kind === "day"
+                    ? "text-sky-600 dark:text-sky-300"
+                    : t.text
                 }`}
                 title="Promised ready time"
               >
@@ -2536,17 +2555,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               // grey and a day chip reads in sky-blue).
               const chipFor = (sortTs: number): string | undefined => {
                 if (!Number.isFinite(sortTs)) return undefined;
-                const diffMs = sortTs - nowMs;
-                // > 24 HOURS away → show the weekday name the order is due
-                // (e.g. "Thursday"). ≤ 24h → an unambiguous countdown:
-                //   ≥ 1h → "2h 05m", < 1h → "14:31" (see formatDueCountdown).
-                // Threshold is 24h from NOW, not the next calendar day: a 1am
-                // booking made at 10pm shows a ~3h countdown, not "tomorrow".
-                // (Luigi 2026-06-04.)
-                if (diffMs > 24 * 60 * 60 * 1000) {
-                  return new Date(sortTs).toLocaleDateString(undefined, { weekday: "long" });
-                }
-                return formatDueCountdown(diffMs).text;
+                // > 24h away → weekday name ("Thursday"); ≤ 24h → unambiguous
+                // hours/minutes countdown. Single source: formatDueLabel.
+                return formatDueLabel(sortTs, nowMs).text;
               };
               return (
                 <>
