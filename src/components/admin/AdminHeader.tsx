@@ -4,6 +4,7 @@ import { Bell, AlertCircle, Menu } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { LocationSwitcher, type LocationOption } from "./LocationSwitcher";
+import { StaffLanguageSwitcher } from "@/components/StaffLanguageSwitcher";
 import type { SetupProgress } from "@/lib/setup-checklist";
 import { useSetupProgress } from "@/components/admin/SetupProgressProvider";
 
@@ -114,6 +115,11 @@ export function AdminHeader({
             <span className="hidden sm:inline">{tOrders("pending")}</span>
           </Link>
         )}
+        {/* Per-staff console language — independent of the customer-facing
+            language, so it only changes THIS user's admin/kitchen. */}
+        <div className="hidden sm:block">
+          <StaffLanguageSwitcher />
+        </div>
         <div className="relative p-2 text-gray-400 hidden sm:block">
           <Bell className="w-5 h-5" />
           {pendingOrders > 0 && (

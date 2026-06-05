@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { getServerSession } from "next-auth";
 import { NextIntlClientProvider } from "next-intl";
 import { kitchenAuthOptions } from "@/lib/auth-kitchen";
-import { resolveLocale, loadMessages } from "@/lib/i18n-server";
+import { resolveStaffLocale, loadMessages } from "@/lib/i18n-server";
 import { KitchenSessionProvider } from "./KitchenSessionProvider";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 
@@ -27,9 +27,10 @@ export const viewport: Viewport = {
 };
 
 export default async function KitchenLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(kitchenAuthOptions);
-  const restaurantId = (session?.user as any)?.restaurantId as string | undefined;
-  const locale = await resolveLocale({ restaurantId });
+  await getServerSession(kitchenAuthOptions);
+  // Staff UI language is per-user (own cookie / browser), NOT the restaurant's
+  // customer-facing default. See resolveStaffLocale. Luigi 2026-06-05.
+  const locale = await resolveStaffLocale();
   const messages = await loadMessages(locale);
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>

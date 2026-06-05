@@ -603,16 +603,12 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
         }
       }
 
-      // Compare the form's language to the *live effective locale* (the cookie),
-      // not the DB value. Superadmin impersonation can leave behind a stale
-      // `fee-free-locale` cookie from a previous restaurant, so even when the
-      // DB already matches `form.defaultLanguage` the rendered UI may not.
-      // Treating any cookie/form mismatch as "needs reload" makes Save always
-      // bring the visible language in line with what the admin picked.
-      const cookieMatch = document.cookie.match(/(?:^|; )fee-free-locale=([^;]+)/);
-      const currentCookieLocale = cookieMatch ? decodeURIComponent(cookieMatch[1]) : "";
-      const languageChanged = currentCookieLocale !== form.defaultLanguage;
-
+      // NOTE: `defaultLanguage` here is the CUSTOMER-facing ordering-page
+      // default. It is intentionally DECOUPLED from the staff console language
+      // (which each user sets for themselves via the header's Console-language
+      // switcher → ff-staff-locale cookie). So changing this no longer reloads
+      // or re-languages the admin — it only sets what customers see by default.
+      // Luigi 2026-06-05.
       const res = await fetch("/api/restaurants/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -632,14 +628,6 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
 
       if (!res.ok) throw new Error("Failed");
       toast.success("Profile saved!");
-
-      if (languageChanged) {
-        // Align the cookie with the saved restaurant default so admin /
-        // kitchen / ordering surfaces all immediately reflect the new
-        // language on the next render — and reload to apply it.
-        document.cookie = `fee-free-locale=${encodeURIComponent(form.defaultLanguage)}; path=/; max-age=${60 * 60 * 24 * 365}`;
-        setTimeout(() => window.location.reload(), 400);
-      }
     } catch {
       toast.error("Failed to save profile");
     }

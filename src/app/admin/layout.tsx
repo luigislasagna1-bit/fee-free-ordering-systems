@@ -8,7 +8,7 @@ import { EmailVerificationBanner } from "@/components/admin/EmailVerificationBan
 import { GuidedSetupPill } from "@/components/admin/GuidedSetupPill";
 import { SetupProgressProvider } from "@/components/admin/SetupProgressProvider";
 import { getSessionUser } from "@/lib/session";
-import { resolveLocale, loadMessages } from "@/lib/i18n-server";
+import { resolveStaffLocale, loadMessages } from "@/lib/i18n-server";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -148,7 +148,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     }
   }
 
-  const locale = await resolveLocale({ restaurantId });
+  // Staff UI language is per-user (own cookie / browser), NOT the restaurant's
+  // customer-facing default — so changing the customer language can't flip the
+  // owner's admin to another language. See resolveStaffLocale. Luigi 2026-06-05.
+  const locale = await resolveStaffLocale();
   const messages = await loadMessages(locale);
 
   return (
