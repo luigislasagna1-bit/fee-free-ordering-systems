@@ -94,7 +94,7 @@ export default async function RefundPolicyPage() {
 
       <h2>7. Contact</h2>
       <p>Refund questions: <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a><br />
-      Billing questions (subscriptions, marketplace fees): <a href="mailto:billing@feefreeordering.com">billing@feefreeordering.com</a></p>
+      Billing questions (subscriptions, marketplace fees): <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a></p>
     </LegalPageShell>
   );
 }

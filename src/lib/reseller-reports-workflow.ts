@@ -35,10 +35,10 @@ import { VERIFY_QUORUM } from "@/lib/reseller-reports-constants";
 export { VERIFY_QUORUM };
 
 /** Synthetic actor for activity rows the system writes (auto-close). */
-const SYSTEM_ACTOR = { email: "system@feefreeordering.com", name: "Auto-verify" };
+const SYSTEM_ACTOR = { email: "support@feefreeordering.com", name: "Auto-verify" };
 
 /** Where "a fix was disputed" alerts go. Defaults to the superadmin. */
-const OPS_EMAIL = process.env.REPORTS_OPS_EMAIL || "admin@feefreeordering.com";
+const OPS_EMAIL = process.env.REPORTS_OPS_EMAIL || "support@feefreeordering.com";
 
 /** Absolute base URL for links in emails. NEXT_PUBLIC_APP_URL is localhost
  *  in laptop dev; fall back to the real domain so prod links never point

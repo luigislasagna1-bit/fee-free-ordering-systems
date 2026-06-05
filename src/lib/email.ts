@@ -97,9 +97,9 @@ export const EMAIL_ENABLED = true;
  * Override the display name on the From header while keeping the email
  * address on our verified sending domain.
  *
- * Example: platform default `from` is `Fee Free Ordering <orders@feefreeordering.com>`.
+ * Example: platform default `from` is `Fee Free Ordering <support@feefreeordering.com>`.
  * Calling `applyFromName(from, "Luigi's Lasagna")` returns
- *   `Luigi's Lasagna <orders@feefreeordering.com>`
+ *   `Luigi's Lasagna <support@feefreeordering.com>`
  * so the customer's inbox shows the restaurant's name as the sender,
  * but Resend still ships from our DKIM-signed domain (no per-restaurant
  * domain verification needed).

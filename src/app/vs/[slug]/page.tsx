@@ -253,7 +253,7 @@ export default async function ComparisonPage({
               </table>
             </div>
             <p className="text-center text-xs text-gray-500 mt-4 max-w-2xl mx-auto">
-              Facts checked against {c.name}&apos;s public pricing as of {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}. We update this page when their pricing changes — flag anything stale at <a href="mailto:hello@feefreeordering.com" className="text-emerald-700 hover:underline">hello@feefreeordering.com</a>.
+              Facts checked against {c.name}&apos;s public pricing as of {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}. We update this page when their pricing changes — flag anything stale at <a href="mailto:support@feefreeordering.com" className="text-emerald-700 hover:underline">support@feefreeordering.com</a>.
             </p>
           </div>
         </section>
@@ -293,7 +293,7 @@ export default async function ComparisonPage({
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <a
-                href={`mailto:hello@feefreeordering.com?subject=${encodeURIComponent(`Switching from ${c.name}`)}`}
+                href={`mailto:support@feefreeordering.com?subject=${encodeURIComponent(`Switching from ${c.name}`)}`}
                 className="inline-flex items-center justify-center gap-2 text-white font-bold px-7 py-3.5 rounded-xl text-base hover:bg-white/10 transition border-2 border-white/40"
               >
                 Email us — we&apos;ll move your menu

@@ -63,10 +63,10 @@ export default function ResellerPartnerResourcesPage() {
           we&apos;ll prioritize it.
         </p>
         <a
-          href="mailto:partners@feefreeordering.com?subject=Partner%20resource%20request"
+          href="mailto:support@feefreeordering.com?subject=Partner%20resource%20request"
           className="inline-flex items-center gap-1.5 text-xs text-emerald-700 font-bold hover:underline"
         >
-          partners@feefreeordering.com <ExternalLink className="w-3 h-3" />
+          support@feefreeordering.com <ExternalLink className="w-3 h-3" />
         </a>
       </div>
 

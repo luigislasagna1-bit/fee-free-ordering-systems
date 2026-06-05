@@ -45,7 +45,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
   const useReseller = !!(reseller?.whiteLabelStatus === "active" && reseller.companyName);
   const biller = useReseller
     ? { name: reseller!.companyName as string, line: reseller!.imprint ?? "", logo: reseller!.brandLogoUrl ?? null }
-    : { name: "Fee Free Ordering", line: "billing@feefreeordering.com", logo: null as string | null };
+    : { name: "Fee Free Ordering", line: "support@feefreeordering.com", logo: null as string | null };
 
   // ── Bill-to: saved fiscal details, falling back to the restaurant record ──
   const bp = restaurant.billingProfile;

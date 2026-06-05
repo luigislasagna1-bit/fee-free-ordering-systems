@@ -45,7 +45,7 @@ export default async function TermsPage() {
         <li>You must be at least 18 years old to create an account or place an order.</li>
         <li>To be a Restaurant Owner, you must operate a real, legal restaurant business with the right to serve and sell food in your jurisdiction.</li>
         <li>You must provide accurate, current information when you sign up and keep it updated.</li>
-        <li>You&rsquo;re responsible for everything that happens under your account — keep your password safe. Notify us at <a href="mailto:security@feefreeordering.com">security@feefreeordering.com</a> immediately if you suspect unauthorized access.</li>
+        <li>You&rsquo;re responsible for everything that happens under your account — keep your password safe. Notify us at <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a> immediately if you suspect unauthorized access.</li>
       </ul>
 
       <h2>4. The Fee Free service for restaurants</h2>
@@ -108,7 +108,7 @@ export default async function TermsPage() {
       <ul>
         <li>Use the platform for any illegal purpose or in violation of any applicable law (food safety, tax, consumer protection, sanctions, etc.)</li>
         <li>Scrape, crawl, or otherwise extract data from the platform without our written permission</li>
-        <li>Interfere with the operation of the platform, attempt to gain unauthorized access, or probe for vulnerabilities (responsible disclosure to <a href="mailto:security@feefreeordering.com">security@feefreeordering.com</a> is welcome)</li>
+        <li>Interfere with the operation of the platform, attempt to gain unauthorized access, or probe for vulnerabilities (responsible disclosure to <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a> is welcome)</li>
         <li>Resell or reverse-engineer the platform</li>
         <li>Use the marketplace for menus or content that&rsquo;s deceptive, hateful, sexually explicit, or otherwise inappropriate for a public food directory</li>
         <li>Send spam through our notification or email systems</li>
@@ -133,8 +133,8 @@ export default async function TermsPage() {
 
       <h2>17. Contact</h2>
       <p>General questions: <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a><br />
-      Legal notices: <a href="mailto:legal@feefreeordering.com">legal@feefreeordering.com</a><br />
-      Security disclosures: <a href="mailto:security@feefreeordering.com">security@feefreeordering.com</a></p>
+      Legal notices: <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a><br />
+      Security disclosures: <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a></p>
     </LegalPageShell>
   );
 }

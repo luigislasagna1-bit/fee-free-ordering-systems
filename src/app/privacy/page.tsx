@@ -36,7 +36,7 @@ export default async function PrivacyPage() {
         <li>We collect the minimum needed to make the platform work — restaurant + staff accounts, customer orders, payment routing through Stripe.</li>
         <li>We don&rsquo;t sell your data. Ever.</li>
         <li>We share data only with the third parties needed to deliver the service: Stripe (payments), Resend (transactional email), PrintNode (printer bridge — until our native app replaces it), ShipDay (optional driver dispatch), Google Maps (delivery zones), Sentry (error monitoring).</li>
-        <li>You can request a copy of your data or ask us to delete it at any time by emailing <a href="mailto:privacy@feefreeordering.com">privacy@feefreeordering.com</a>.</li>
+        <li>You can request a copy of your data or ask us to delete it at any time by emailing <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a>.</li>
       </ul>
 
       <h2>2. Information we collect</h2>
@@ -113,7 +113,7 @@ export default async function PrivacyPage() {
         <li><strong>Withdraw consent</strong> — for any processing that relies on your consent (e.g. marketing emails)</li>
         <li><strong>Complain</strong> — to the Office of the Privacy Commissioner of Canada or your local data protection authority</li>
       </ul>
-      <p>To exercise any of these rights, email <a href="mailto:privacy@feefreeordering.com">privacy@feefreeordering.com</a> from the email on your account. We respond within 30 days.</p>
+      <p>To exercise any of these rights, email <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a> from the email on your account. We respond within 30 days.</p>
 
       <h2>7. Cookies + tracking</h2>
       <p>We use a small number of cookies, all functional:</p>
@@ -125,19 +125,19 @@ export default async function PrivacyPage() {
       <p>We do not use third-party advertising cookies. We do not run Google Analytics, Facebook Pixel, or similar tracking on the customer-facing ordering pages.</p>
 
       <h2>8. Children</h2>
-      <p>The platform is intended for adults aged 18+. We do not knowingly collect personal information from anyone under 16. If you believe a child has provided us information, email <a href="mailto:privacy@feefreeordering.com">privacy@feefreeordering.com</a> and we&rsquo;ll delete it.</p>
+      <p>The platform is intended for adults aged 18+. We do not knowingly collect personal information from anyone under 16. If you believe a child has provided us information, email <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a> and we&rsquo;ll delete it.</p>
 
       <h2>9. International transfers</h2>
       <p>Our servers and our service providers may be located outside Canada (primarily the United States and the European Union). Your data may be processed in those jurisdictions. We rely on standard contractual clauses or equivalent safeguards where applicable.</p>
 
       <h2>10. Security</h2>
-      <p>We use industry-standard security practices: TLS encryption in transit, hashed passwords (bcrypt), encrypted storage of third-party API credentials, role-based access control for our team, and continuous monitoring for unauthorized access. No system is perfectly secure; we encourage you to use a strong, unique password and to email us immediately at <a href="mailto:security@feefreeordering.com">security@feefreeordering.com</a> if you suspect your account has been compromised.</p>
+      <p>We use industry-standard security practices: TLS encryption in transit, hashed passwords (bcrypt), encrypted storage of third-party API credentials, role-based access control for our team, and continuous monitoring for unauthorized access. No system is perfectly secure; we encourage you to use a strong, unique password and to email us immediately at <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a> if you suspect your account has been compromised.</p>
 
       <h2>11. Changes to this policy</h2>
       <p>We may update this Privacy Policy from time to time. If we make a material change, we&rsquo;ll notify account holders by email and post a notice on this page. Continuing to use the service after a change means you accept the updated policy.</p>
 
       <h2>12. Contact</h2>
-      <p>Questions, concerns, or data requests? Email <a href="mailto:privacy@feefreeordering.com">privacy@feefreeordering.com</a>. We&rsquo;re a small team and we answer every message.</p>
+      <p>Questions, concerns, or data requests? Email <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a>. We&rsquo;re a small team and we answer every message.</p>
     </LegalPageShell>
   );
 }
