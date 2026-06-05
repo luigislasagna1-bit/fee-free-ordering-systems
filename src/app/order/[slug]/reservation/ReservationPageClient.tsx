@@ -21,22 +21,28 @@ export function ReservationPageClient({ restaurant }: { restaurant: any }) {
   const router = useRouter();
   const theme = parseTheme(restaurant.themeSettings);
 
+  // Full-bleed banner background (Luigi 2026-06-05): the restaurant's banner
+  // photo covers the ENTIRE page behind the reservation card — no white gap —
+  // with a dark overlay (respecting the theme's banner opacity) so the form
+  // stays legible. Falls back to the flat theme background when no banner.
+  const hasBanner = !!restaurant.bannerUrl;
   return (
     <div
-      className="min-h-screen flex flex-col"
-      style={{ backgroundColor: theme.backgroundColor, color: theme.textColor }}
+      className="min-h-screen bg-cover bg-center bg-fixed"
+      style={{
+        backgroundColor: theme.backgroundColor,
+        color: theme.textColor,
+        backgroundImage: hasBanner ? `url(${restaurant.bannerUrl})` : undefined,
+      }}
     >
-      {/* Optional banner — gives the page a visual identity that
-          matches the rest of the brand surface. If the restaurant
-          hasn't uploaded one, we let the gradient show through. */}
-      {restaurant.bannerUrl && (
-        <div
-          className="w-full h-32 sm:h-48 bg-cover bg-center"
-          style={{ backgroundImage: `url(${restaurant.bannerUrl})` }}
-        />
-      )}
-
-      <div className="flex-1 flex items-center justify-center p-4">
+      <div
+        className="min-h-screen flex items-center justify-center p-4"
+        style={{
+          backgroundColor: hasBanner
+            ? `rgba(0,0,0,${Math.min(0.85, (theme.bannerOpacity ?? 60) / 100)})`
+            : undefined,
+        }}
+      >
         <ReservationModal
           restaurantSlug={restaurant.slug}
           restaurantName={restaurant.name}
