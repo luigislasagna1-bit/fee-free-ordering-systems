@@ -102,19 +102,11 @@ export async function listPublicMarketplaceListings(): Promise<PublicListing[]> 
         // for restaurants that got their listing created back when
         // publishing-before-marketplace wasn't enforced.
         publishedAt: { not: null },
-        // CHARGES-ENABLED. Marketplace orders are card-only by platform
-        // contract — a restaurant whose Stripe can't take charges is a
-        // broken promise to customers (they'd see "Pay online coming
-        // soon" mid-checkout). The right gate is stripeChargesEnabled
-        // alone, NOT our derived `stripeAccountStatus`. Status strings
-        // diverge from the Stripe-side truth during the bank-payout
-        // verification window: account.charges_enabled flips to true
-        // first (account is ready to take customer money), then
-        // payouts_enabled trails by hours/days while Stripe verifies
-        // the bank. Our webhook may not always observe both flag flips
-        // in sync. Gating on chargesEnabled alone correctly admits a
-        // restaurant the moment it can actually charge customers.
-        stripeChargesEnabled: true,
+        // CARD-CAPABLE filtering happens in the post-filter below (it's an OR
+        // across the legacy Connect flag and the key-only capability, which is
+        // awkward to express in one Prisma WHERE). We pull stripeChargesEnabled
+        // + the PaymentProvider + add-ons here to evaluate it in JS. Marketplace
+        // orders are card-only by platform contract. Luigi 2026-06-04.
       },
     },
     include: {
@@ -128,6 +120,8 @@ export async function listPublicMarketplaceListings(): Promise<PublicListing[]> 
           bannerUrl: true,
           logoUrl: true,
           createdAt: true,
+          stripeChargesEnabled: true,
+          paymentProvider: { select: { isActive: true, publishableKey: true } },
           addOns: {
             where: { status: { in: ["active", "trialing"] } },
             include: { addOn: { select: { enabledFeatures: true } } },
@@ -162,6 +156,21 @@ export async function listPublicMarketplaceListings(): Promise<PublicListing[]> 
       });
     }
     if (!granted) continue;
+    // CARD-CAPABLE post-filter — accept EITHER the legacy Stripe-Connect flag
+    // OR the key-only capability (active PaymentProvider w/ publishable key AND
+    // the card_payments entitlement). This mirrors restaurantCanTakeCardOnline()
+    // without an N+1, and is additive so no currently-listed restaurant drops.
+    const keyOnlyReady =
+      !!(r.restaurant.paymentProvider?.isActive && r.restaurant.paymentProvider?.publishableKey) &&
+      r.restaurant.addOns.some((sub) => {
+        try {
+          const f = JSON.parse(sub.addOn.enabledFeatures || "[]");
+          return Array.isArray(f) && f.includes("card_payments");
+        } catch {
+          return false;
+        }
+      });
+    if (!(r.restaurant.stripeChargesEnabled || keyOnlyReady)) continue;
     out.push({
       id: r.id,
       restaurantId: r.restaurantId,

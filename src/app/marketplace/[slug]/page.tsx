@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { isOnMarketplace } from "@/lib/marketplace";
+import { restaurantCanTakeCardOnline } from "@/lib/stripe";
 
 /**
  * Marketplace restaurant detail page. For M1, we simply redirect to
@@ -29,7 +30,8 @@ export default async function MarketplaceRestaurantPage({
       id: true,
       isActive: true,
       publishedAt: true,
-      stripeAccountStatus: true,
+      // Legacy Stripe-Connect charges flag — still honored so restaurants that
+      // haven't migrated to key-only Stripe aren't dropped (no regression).
       stripeChargesEnabled: true,
       marketplaceListing: { select: { isListed: true } },
     },
@@ -46,14 +48,16 @@ export default async function MarketplaceRestaurantPage({
     redirect("/marketplace");
   }
 
-  // CHARGES-ENABLED gate. Marketplace orders are card-only by
-  // platform contract — if Stripe can't take charges, the customer
-  // would hit "Pay online coming soon" mid-checkout. Bounce them
-  // back to /marketplace where the listing is filtered out anyway.
-  // Gate on stripeChargesEnabled directly (the Stripe-side truth)
-  // rather than our derived `stripeAccountStatus` label, which can
-  // lag behind during the bank-payout verification window.
-  if (!restaurant.stripeChargesEnabled) {
+  // CARD-CAPABLE gate. Marketplace orders are card-only by platform contract —
+  // if the restaurant can't take card payments online, the customer would hit
+  // a cash-only checkout. Accept EITHER path so nobody currently listed drops:
+  //   - legacy Stripe Connect (stripeChargesEnabled), OR
+  //   - the key-only model (own active Stripe keys + card_payments entitlement).
+  // The key-only branch is the successor to the Connect flag (always false for
+  // restaurants that migrated), and is what made Luigi's link bounce. 2026-06-04.
+  const cardCapable =
+    restaurant.stripeChargesEnabled || (await restaurantCanTakeCardOnline(restaurant.id));
+  if (!cardCapable) {
     redirect("/marketplace");
   }
 

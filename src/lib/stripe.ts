@@ -462,6 +462,31 @@ export async function getRestaurantStripe(
 }
 
 /**
+ * Key-only "can this restaurant take card payments online RIGHT NOW?" gate.
+ *
+ * True iff BOTH:
+ *   1. The restaurant has an active PaymentProvider with a publishable key
+ *      (their own Stripe keys, entered via Settings → Payments).
+ *   2. They hold the `card_payments` entitlement (Online Payments add-on).
+ *
+ * This is the key-only successor to the old Stripe-Connect `stripeChargesEnabled`
+ * flag. Use it anywhere the Connect-era code gated on charges-enabled — e.g.
+ * the marketplace listing visibility + detail page, which are card-only by
+ * platform contract. Luigi 2026-06-04.
+ */
+export async function restaurantCanTakeCardOnline(restaurantId: string): Promise<boolean> {
+  const { hasFeature } = await import("@/lib/entitlements");
+  const [provider, hasCard] = await Promise.all([
+    prisma.paymentProvider.findUnique({
+      where: { restaurantId },
+      select: { isActive: true, publishableKey: true },
+    }),
+    hasFeature(restaurantId, "card_payments"),
+  ]);
+  return !!(provider?.isActive && provider.publishableKey && hasCard);
+}
+
+/**
  * Create a card authorization on the restaurant's OWN Stripe account.
  * capture_method "manual" — this only places a hold; the funds move when
  * the kitchen accepts the order (`capturePayment`). No application fee, no

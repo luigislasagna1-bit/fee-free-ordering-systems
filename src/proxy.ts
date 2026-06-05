@@ -161,8 +161,14 @@ export async function proxy(req: NextRequest) {
       MARKETPLACE_DOMAIN &&
       pathname.startsWith("/marketplace")
     ) {
+      // Keep the FULL /marketplace[/...] path on the marketplace domain. The
+      // marketplace app serves the grid at /marketplace and restaurant detail
+      // at /marketplace/<slug> — matching the sitemap (buildMarketplaceSitemap)
+      // and the grid tile links. The previous code STRIPPED the /marketplace
+      // prefix, producing feefreefood.com/<slug>, which has no route and 404s.
+      // That was the dead "View your live listing" link. Luigi 2026-06-04.
       const url = new URL(
-        `https://${MARKETPLACE_DOMAIN}${pathname === "/marketplace" ? "/" : pathname.replace(/^\/marketplace/, "")}${req.nextUrl.search}`
+        `https://${MARKETPLACE_DOMAIN}${pathname}${req.nextUrl.search}`
       );
       const res = NextResponse.redirect(url, 301);
       res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
