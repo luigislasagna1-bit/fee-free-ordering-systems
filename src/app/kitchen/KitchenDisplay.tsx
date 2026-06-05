@@ -2424,7 +2424,6 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             const nowMs = now > 0 ? now : Date.now();
             const todayStartMs = startOfDay(nowMs);
             const tomorrowStartMs = todayStartMs + 24 * 60 * 60 * 1000;
-            const DAY_ABBR = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
             type Mixed =
               | { kind: "order"; sortTs: number; order: Order }
@@ -2515,10 +2514,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               // grey and a day chip reads in sky-blue).
               const chipFor = (sortTs: number): string | undefined => {
                 if (!Number.isFinite(sortTs)) return undefined;
-                if (sortTs >= tomorrowStartMs) {
-                  return DAY_ABBR[new Date(sortTs).getDay()];
-                }
                 const diffMs = sortTs - nowMs;
+                // > 24 HOURS away → show the weekday name the order is due
+                // (e.g. "Thursday"). ≤ 24h → a live HH:MM / MM:SS countdown.
+                // Threshold is 24h from NOW, not the next calendar day: a 1am
+                // booking made at 10pm shows a ~3h countdown, not "tomorrow".
+                // (Luigi 2026-06-04.)
+                if (diffMs > 24 * 60 * 60 * 1000) {
+                  return new Date(sortTs).toLocaleDateString(undefined, { weekday: "long" });
+                }
                 if (diffMs <= 0) return "00:00";
                 const totalSec = Math.floor(diffMs / 1000);
                 const hh = Math.floor(totalSec / 3600);
