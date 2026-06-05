@@ -212,7 +212,8 @@
       "paymentFailed": "Plata a eșuat. Încearcă din nou.",
       "selectVariant": "Te rugăm să selectezi o opțiune",
       "cityRequired": "Orașul este obligatoriu pentru livrare",
-      "zipRequired": "Codul poștal este obligatoriu pentru livrare"
+      "zipRequired": "Codul poștal este obligatoriu pentru livrare",
+      "fieldRequired": "Introdu {field}"
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
@@ -382,7 +383,19 @@
     "nextOpening": "Următoarea deschidere: {date}",
     "closedAndCatering": "🌙🎉 Suntem închiși ȘI coșul tău conține articole de catering. Cel mai devreme moment disponibil este cel mai târziu dintre următoarea deschidere și <strong>{hours}h</strong> de acum.",
     "cateringOnly": "🎉 Coșul tău conține articole de catering — comenzile trebuie programate cu cel puțin <strong>{hours}h</strong> în avans. Opțiunea \"Cât mai curând\" nu este disponibilă când coșul conține articole de catering.",
-    "dragPinHint": "Trageți pinul în locul exact pentru livrare."
+    "dragPinHint": "Trageți pinul în locul exact pentru livrare.",
+    "addressFields": {
+      "street": "Adresă (stradă și număr)",
+      "city": "Localitate / Oraș",
+      "postcode": "Cod poștal",
+      "neighbourhood": "Cartier",
+      "building": "Bloc / Clădire",
+      "intercom": "Interfon",
+      "floor": "Etaj",
+      "apartment": "Apartament",
+      "parking": "Unde se poate parca"
+    },
+    "zoneMinimum": "Comandă minimă {min}."
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -520,7 +533,8 @@
     "refundExceeds": "Suma depășește soldul rambursabil.",
     "refundFailed": "Rambursarea a eșuat. Încercați din nou.",
     "refundSuccess": "Rambursare emisă.",
-    "autoCallMessage": "Comanda nouă {number} de la {restaurant} așteaptă și nu a fost încă acceptată. Vă rugăm să deschideți afișajul de bucătărie pentru a o accepta sau a o refuza."
+    "autoCallMessage": "Comanda nouă {number} de la {restaurant} așteaptă și nu a fost încă acceptată. Vă rugăm să deschideți afișajul de bucătărie pentru a o accepta sau a o refuza.",
+    "outsideZoneNote": "Această comandă ar putea fi în afara zonei dvs. obișnuite de livrare"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Acceptați comenzi în afara zonelor",
       "outsideZoneDesc": "Permiteți clienților să plaseze comenzi cu livrare la adrese aflate în afara tuturor zonelor pe care le-ați desenat. Când opțiunea este dezactivată, aceste comenzi sunt blocate la finalizarea comenzii.",
       "outsideZoneEnabled": "Comenzile din afara zonei sunt acum permise",
-      "outsideZoneDisabled": "Comenzile din afara zonei sunt acum blocate"
+      "outsideZoneDisabled": "Comenzile din afara zonei sunt acum blocate",
+      "addressForm": {
+        "title": "Formular pentru adresa de livrare",
+        "desc": "Alege ce câmpuri de adresă completează clienții la finalizarea comenzii și care sunt obligatorii.",
+        "modeDefault": "Implicit",
+        "modeCustom": "Personalizat",
+        "modeHint": "Modul implicit afișează Strada, Localitatea/Orașul și Codul poștal (obligatorii), plus Apartamentul (opțional).",
+        "colField": "Câmp",
+        "colShow": "Afișează",
+        "colRequired": "Obligatoriu",
+        "saved": "Formularul pentru adresa de livrare a fost actualizat"
+      }
     },
     "reservations": {
       "title": "Rezervări",

@@ -212,7 +212,8 @@
       "paymentFailed": "Pembayaran gagal. Silakan coba lagi.",
       "selectVariant": "Silakan pilih opsi",
       "cityRequired": "Kota wajib diisi untuk pengiriman",
-      "zipRequired": "Kode pos wajib diisi untuk pengiriman"
+      "zipRequired": "Kode pos wajib diisi untuk pengiriman",
+      "fieldRequired": "Mohon masukkan {field}"
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
@@ -382,7 +383,19 @@
     "nextOpening": "Pembukaan berikutnya: {date}",
     "closedAndCatering": "🌙🎉 Kami sedang tutup DAN keranjang Anda memuat item katering. Waktu paling awal yang tersedia adalah yang lebih lambat antara pembukaan berikutnya dan <strong>{hours}h</strong> dari sekarang.",
     "cateringOnly": "🎉 Keranjang Anda memuat item katering — pesanan harus dijadwalkan setidaknya <strong>{hours}h</strong> sebelumnya. Opsi Sesegera Mungkin tidak tersedia jika ada item katering di keranjang.",
-    "dragPinHint": "Seret pin ke titik yang tepat untuk pengiriman."
+    "dragPinHint": "Seret pin ke titik yang tepat untuk pengiriman.",
+    "addressFields": {
+      "street": "Alamat jalan",
+      "city": "Kota / Kabupaten",
+      "postcode": "Kode pos",
+      "neighbourhood": "Lingkungan",
+      "building": "Blok / Gedung",
+      "intercom": "Interkom",
+      "floor": "Lantai",
+      "apartment": "Apartemen",
+      "parking": "Lokasi parkir"
+    },
+    "zoneMinimum": "Pesanan minimum {min}."
   },
   "reservation": {
     "title": "Pesan meja",
@@ -520,7 +533,8 @@
     "refundExceeds": "Jumlah melebihi saldo yang dapat dikembalikan.",
     "refundFailed": "Pengembalian dana gagal. Silakan coba lagi.",
     "refundSuccess": "Pengembalian dana diproses.",
-    "autoCallMessage": "Pesanan baru {number} di {restaurant} sedang menunggu dan belum diterima. Silakan buka layar dapur Anda untuk menerima atau menolaknya."
+    "autoCallMessage": "Pesanan baru {number} di {restaurant} sedang menunggu dan belum diterima. Silakan buka layar dapur Anda untuk menerima atau menolaknya.",
+    "outsideZoneNote": "Pesanan ini mungkin berada di luar zona pengiriman reguler Anda"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Terima pesanan di luar zona Anda",
       "outsideZoneDesc": "Izinkan pelanggan memesan pengiriman ke alamat di luar semua zona yang telah Anda gambar. Saat nonaktif, pesanan tersebut diblokir saat checkout.",
       "outsideZoneEnabled": "Pesanan di luar zona kini diizinkan",
-      "outsideZoneDisabled": "Pesanan di luar zona kini diblokir"
+      "outsideZoneDisabled": "Pesanan di luar zona kini diblokir",
+      "addressForm": {
+        "title": "Formulir alamat pengiriman",
+        "desc": "Pilih kolom alamat mana yang diisi pelanggan saat checkout, dan mana yang wajib diisi.",
+        "modeDefault": "Default",
+        "modeCustom": "Kustom",
+        "modeHint": "Default menampilkan Jalan, Kota/Kabupaten, dan Kode pos (wajib) serta Apartemen (opsional).",
+        "colField": "Kolom",
+        "colShow": "Tampilkan",
+        "colRequired": "Wajib",
+        "saved": "Formulir alamat pengiriman diperbarui"
+      }
     },
     "reservations": {
       "title": "Reservasi",

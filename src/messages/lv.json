@@ -212,7 +212,8 @@
       "paymentFailed": "Maksājums neizdevās. Lūdzu, mēģiniet vēlreiz.",
       "selectVariant": "Lūdzu, izvēlieties opciju",
       "cityRequired": "Pilsēta ir obligāta piegādei",
-      "zipRequired": "Pasta indekss ir obligāts piegādei"
+      "zipRequired": "Pasta indekss ir obligāts piegādei",
+      "fieldRequired": "Lūdzu, ievadiet: {field}"
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
@@ -382,7 +383,19 @@
     "nextOpening": "Nākamā atvēršana: {date}",
     "closedAndCatering": "🌙🎉 Esam slēgti UN jūsu grozā ir ēdināšanas pasūtījuma preces. Agrākais pieejamais laiks ir vēlākais no nākamās atvēršanas un <strong>{hours}h</strong> no šī brīža.",
     "cateringOnly": "🎉 Jūsu grozā ir ēdināšanas pasūtījuma preces — pasūtījumi jāieplāno vismaz <strong>{hours}h</strong> iepriekš. Opcija \"Pēc iespējas ātrāk\" nav pieejama, ja grozā ir ēdināšanas preces.",
-    "dragPinHint": "Velciet atzīmi uz precīzo piegādes vietu."
+    "dragPinHint": "Velciet atzīmi uz precīzo piegādes vietu.",
+    "addressFields": {
+      "street": "Ielas adrese",
+      "city": "Pilsēta",
+      "postcode": "Pasta indekss",
+      "neighbourhood": "Apkaime",
+      "building": "Korpuss / ēka",
+      "intercom": "Domofons",
+      "floor": "Stāvs",
+      "apartment": "Dzīvoklis",
+      "parking": "Kur novietot transportu"
+    },
+    "zoneMinimum": "Minimālais pasūtījums {min}."
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -520,7 +533,8 @@
     "refundExceeds": "Summa pārsniedz atmaksājamo atlikumu.",
     "refundFailed": "Atmaksa neizdevās. Lūdzu, mēģiniet vēlreiz.",
     "refundSuccess": "Atmaksa veikta.",
-    "autoCallMessage": "Jauns pasūtījums {number} restorānā {restaurant} gaida un vēl nav pieņemts. Lūdzu, atveriet virtuves displeju, lai to pieņemtu vai noraidītu."
+    "autoCallMessage": "Jauns pasūtījums {number} restorānā {restaurant} gaida un vēl nav pieņemts. Lūdzu, atveriet virtuves displeju, lai to pieņemtu vai noraidītu.",
+    "outsideZoneNote": "Šis pasūtījums var būt ārpus jūsu parastās piegādes zonas"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Pieņemt pasūtījumus ārpus jūsu zonām",
       "outsideZoneDesc": "Ļaujiet klientiem veikt piegādes pasūtījumus uz adresēm ārpus visām jūsu uzzīmētajām zonām. Kad izslēgts, šādi pasūtījumi tiek bloķēti norēķinu brīdī.",
       "outsideZoneEnabled": "Pasūtījumi ārpus zonas tagad ir atļauti",
-      "outsideZoneDisabled": "Pasūtījumi ārpus zonas tagad ir bloķēti"
+      "outsideZoneDisabled": "Pasūtījumi ārpus zonas tagad ir bloķēti",
+      "addressForm": {
+        "title": "Piegādes adreses forma",
+        "desc": "Izvēlieties, kurus adreses laukus klienti aizpilda norēķinu laikā un kuri ir obligāti.",
+        "modeDefault": "Noklusējums",
+        "modeCustom": "Pielāgots",
+        "modeHint": "Noklusējumā tiek rādīts iela, pilsēta un pasta indekss (obligāti), kā arī dzīvoklis (neobligāti).",
+        "colField": "Lauks",
+        "colShow": "Rādīt",
+        "colRequired": "Obligāts",
+        "saved": "Piegādes adreses forma atjaunināta"
+      }
     },
     "reservations": {
       "title": "Rezervācijas",

@@ -9,6 +9,13 @@ import {
 } from "lucide-react";
 import NextLink from "next/link";
 import { useTranslations } from "next-intl";
+import {
+  DELIVERY_ADDRESS_FIELDS,
+  resolveDeliveryAddressConfig,
+  isCustomDeliveryForm,
+  type DeliveryAddressConfig,
+  type DeliveryFieldKey,
+} from "@/lib/delivery-address-fields";
 
 const DeliveryMap = dynamic(() => import("./DeliveryMap"), {
   ssr: false,
@@ -55,6 +62,7 @@ type Restaurant = {
   mapProvider?: "leaflet" | "google";
   googleMapsApiKey?: string | null;
   acceptOutsideZoneOrders?: boolean;
+  deliveryAddressConfig?: unknown;
 };
 
 const emptyForm = {
@@ -128,6 +136,46 @@ export function DeliveryClient({
       toast.error(tToasts("saveFailed"));
     }
     setSavingOutsideZone(false);
+  };
+
+  // ── Customizable delivery-address form builder ────────────────────────────
+  const tAddr = useTranslations("checkout.addressFields");
+  const tForm = useTranslations("admin.delivery.addressForm");
+  const [formCustom, setFormCustom] = useState<boolean>(
+    isCustomDeliveryForm(restaurant?.deliveryAddressConfig)
+  );
+  const [formCfg, setFormCfg] = useState<DeliveryAddressConfig>(
+    resolveDeliveryAddressConfig(restaurant?.deliveryAddressConfig)
+  );
+  const [savingForm, setSavingForm] = useState(false);
+
+  const setFieldFlag = (key: DeliveryFieldKey, flag: "show" | "required", value: boolean) => {
+    setFormCfg((prev) => {
+      const next = { ...prev, [key]: { ...prev[key] } };
+      next[key][flag] = value;
+      // A hidden field can never be required.
+      if (flag === "show" && !value) next[key].required = false;
+      if (flag === "required" && value) next[key].show = true;
+      return next;
+    });
+  };
+
+  const saveAddressForm = async () => {
+    setSavingForm(true);
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        // Custom → send the config object; Default → send null (server reverts).
+        body: JSON.stringify({ deliveryAddressConfig: formCustom ? formCfg : null }),
+      });
+      if (!res.ok) throw new Error("Failed");
+      toast.success(tForm("saved"));
+      router.refresh();
+    } catch {
+      toast.error(tToasts("saveFailed"));
+    }
+    setSavingForm(false);
   };
 
   const reload = async () => {
@@ -488,6 +536,77 @@ export function DeliveryClient({
                     acceptOutsideZone ? "translate-x-6" : "translate-x-1"
                   }`}
                 />
+              </button>
+            </div>
+
+            {/* Customizable delivery address form */}
+            <div className="mt-6 pt-5 border-t border-gray-100">
+              <p className="text-sm font-semibold text-gray-900">{tForm("title")}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{tForm("desc")}</p>
+
+              {/* Default / Custom mode */}
+              <div className="mt-3 inline-flex rounded-lg border border-gray-200 p-0.5 bg-gray-50">
+                <button
+                  type="button"
+                  onClick={() => setFormCustom(false)}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition ${
+                    !formCustom ? "bg-white shadow text-gray-900" : "text-gray-500"
+                  }`}
+                >
+                  {tForm("modeDefault")}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormCustom(true)}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition ${
+                    formCustom ? "bg-white shadow text-gray-900" : "text-gray-500"
+                  }`}
+                >
+                  {tForm("modeCustom")}
+                </button>
+              </div>
+
+              {!formCustom ? (
+                <p className="text-xs text-gray-400 mt-2">{tForm("modeHint")}</p>
+              ) : (
+                <div className="mt-3 space-y-1">
+                  <div className="flex items-center text-[11px] font-medium uppercase tracking-wide text-gray-400 px-1">
+                    <span className="flex-1">{tForm("colField")}</span>
+                    <span className="w-12 text-center">{tForm("colShow")}</span>
+                    <span className="w-16 text-center">{tForm("colRequired")}</span>
+                  </div>
+                  {DELIVERY_ADDRESS_FIELDS.map((f) => (
+                    <div key={f.key} className="flex items-center py-1.5 px-1 rounded hover:bg-gray-50">
+                      <span className="flex-1 text-sm text-gray-800">{tAddr(f.key)}</span>
+                      <span className="w-12 flex justify-center">
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 accent-emerald-500"
+                          checked={formCfg[f.key].show}
+                          onChange={(e) => setFieldFlag(f.key, "show", e.target.checked)}
+                        />
+                      </span>
+                      <span className="w-16 flex justify-center">
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 accent-emerald-500 disabled:opacity-40"
+                          disabled={!formCfg[f.key].show}
+                          checked={formCfg[f.key].required}
+                          onChange={(e) => setFieldFlag(f.key, "required", e.target.checked)}
+                        />
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <button
+                type="button"
+                onClick={saveAddressForm}
+                disabled={savingForm}
+                className="mt-4 w-full bg-emerald-500 text-white text-sm font-semibold py-2 rounded-lg hover:bg-emerald-600 transition disabled:opacity-60"
+              >
+                {savingForm ? tCommon("loading") : tCommon("save")}
               </button>
             </div>
           </div>

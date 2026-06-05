@@ -211,7 +211,8 @@
       "paymentFailed": "Falha no pagamento. Tente novamente.",
       "selectVariant": "Selecione uma opção",
       "cityRequired": "Cidade obrigatória para entrega",
-      "zipRequired": "Código postal obrigatório para entrega"
+      "zipRequired": "Código postal obrigatório para entrega",
+      "fieldRequired": "Indique {field}"
     },
     "followUs": "Siga-nos",
     "searchMenu": "Pesquisar no menu…",
@@ -382,7 +383,19 @@
     "nextOpening": "Próxima abertura: {date}",
     "closedAndCatering": "🌙🎉 Estamos fechados E o seu carrinho inclui artigos de catering. O horário mais cedo disponível é o mais tardio entre a próxima abertura e <strong>{hours}h</strong> a partir de agora.",
     "cateringOnly": "🎉 O seu carrinho inclui artigos de catering — os pedidos têm de ser agendados com pelo menos <strong>{hours}h</strong> de antecedência. A opção \"o mais rápido possível\" não está disponível com artigos de catering no carrinho.",
-    "dragPinHint": "Arraste o pino para o local exato da entrega."
+    "dragPinHint": "Arraste o pino para o local exato da entrega.",
+    "addressFields": {
+      "street": "Morada",
+      "city": "Localidade / Cidade",
+      "postcode": "Código postal",
+      "neighbourhood": "Bairro",
+      "building": "Bloco / Edifício",
+      "intercom": "Intercomunicador",
+      "floor": "Andar",
+      "apartment": "Apartamento",
+      "parking": "Onde estacionar"
+    },
+    "zoneMinimum": "Pedido mínimo {min}."
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -520,7 +533,8 @@
     "refundExceeds": "O montante excede o saldo reembolsável.",
     "refundFailed": "O reembolso falhou. Tente novamente.",
     "refundSuccess": "Reembolso emitido.",
-    "autoCallMessage": "O novo pedido {number} em {restaurant} está em espera e ainda não foi aceite. Por favor, abra o ecrã da cozinha para o aceitar ou rejeitar."
+    "autoCallMessage": "O novo pedido {number} em {restaurant} está em espera e ainda não foi aceite. Por favor, abra o ecrã da cozinha para o aceitar ou rejeitar.",
+    "outsideZoneNote": "Esta encomenda poderá estar fora da sua zona de entrega habitual"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Aceitar pedidos fora das suas zonas",
       "outsideZoneDesc": "Permita que os clientes façam pedidos de entrega para moradas fora de todas as zonas que delineou. Quando desativado, esses pedidos são bloqueados na finalização da compra.",
       "outsideZoneEnabled": "Os pedidos fora da zona estão agora permitidos",
-      "outsideZoneDisabled": "Os pedidos fora da zona estão agora bloqueados"
+      "outsideZoneDisabled": "Os pedidos fora da zona estão agora bloqueados",
+      "addressForm": {
+        "title": "Formulário de morada de entrega",
+        "desc": "Escolha que campos de morada os clientes preenchem na finalização da compra e quais são obrigatórios.",
+        "modeDefault": "Predefinido",
+        "modeCustom": "Personalizado",
+        "modeHint": "A predefinição mostra Morada, Localidade/Cidade e Código postal (obrigatórios) e Apartamento (opcional).",
+        "colField": "Campo",
+        "colShow": "Mostrar",
+        "colRequired": "Obrigatório",
+        "saved": "Formulário de morada de entrega atualizado"
+      }
     },
     "reservations": {
       "title": "Reservas",

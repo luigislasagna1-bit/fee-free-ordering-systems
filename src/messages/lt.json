@@ -212,7 +212,8 @@
       "paymentFailed": "Mokėjimas nepavyko. Bandykite dar kartą.",
       "selectVariant": "Pasirinkite variantą",
       "cityRequired": "Miestas būtinas pristatymui",
-      "zipRequired": "Pašto kodas būtinas pristatymui"
+      "zipRequired": "Pašto kodas būtinas pristatymui",
+      "fieldRequired": "Įveskite {field}"
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
@@ -382,7 +383,19 @@
     "nextOpening": "Kitas atidarymas: {date}",
     "closedAndCatering": "🌙🎉 Šiuo metu nedirbame IR jūsų krepšelyje yra maisto užsakymo renginių prekių. Artimiausias galimas laikas — vėlesnis iš dviejų: kitas atidarymas arba <strong>{hours}h</strong> nuo dabar.",
     "cateringOnly": "🎉 Jūsų krepšelyje yra maisto užsakymo renginių prekių — užsakymai turi būti planuojami bent <strong>{hours}h</strong> iš anksto. Kuo greičiau negalima, kai krepšelyje yra tokių prekių.",
-    "dragPinHint": "Nutempkite žymeklį į tikslią pristatymo vietą."
+    "dragPinHint": "Nutempkite žymeklį į tikslią pristatymo vietą.",
+    "addressFields": {
+      "street": "Gatvės adresas",
+      "city": "Miestas",
+      "postcode": "Pašto kodas",
+      "neighbourhood": "Rajonas",
+      "building": "Korpusas / pastatas",
+      "intercom": "Domofonas",
+      "floor": "Aukštas",
+      "apartment": "Butas",
+      "parking": "Kur parkuoti"
+    },
+    "zoneMinimum": "Minimali užsakymo suma {min}."
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -520,7 +533,8 @@
     "refundExceeds": "Suma viršija galimą grąžinti likutį.",
     "refundFailed": "Grąžinimas nepavyko. Bandykite dar kartą.",
     "refundSuccess": "Grąžinimas atliktas.",
-    "autoCallMessage": "Naujas užsakymas {number} restorane {restaurant} laukia ir dar nebuvo priimtas. Atidarykite virtuvės ekraną, kad jį priimtumėte arba atmestumėte."
+    "autoCallMessage": "Naujas užsakymas {number} restorane {restaurant} laukia ir dar nebuvo priimtas. Atidarykite virtuvės ekraną, kad jį priimtumėte arba atmestumėte.",
+    "outsideZoneNote": "Šis užsakymas gali būti už įprastos pristatymo zonos ribų"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Priimti užsakymus už jūsų zonų ribų",
       "outsideZoneDesc": "Leiskite klientams pateikti pristatymo užsakymus adresais, esančiais už visų jūsų nubrėžtų zonų ribų. Kai išjungta, tokie užsakymai atmetami atsiskaitymo metu.",
       "outsideZoneEnabled": "Užsakymai už zonų ribų dabar leidžiami",
-      "outsideZoneDisabled": "Užsakymai už zonų ribų dabar blokuojami"
+      "outsideZoneDisabled": "Užsakymai už zonų ribų dabar blokuojami",
+      "addressForm": {
+        "title": "Pristatymo adreso forma",
+        "desc": "Pasirinkite, kuriuos adreso laukus klientai pildo atsiskaitydami ir kurie yra privalomi.",
+        "modeDefault": "Numatytasis",
+        "modeCustom": "Pasirinktinis",
+        "modeHint": "Numatytuoju atveju rodomi Gatvė, Miestas ir Pašto kodas (privaloma) bei Butas (neprivaloma).",
+        "colField": "Laukas",
+        "colShow": "Rodyti",
+        "colRequired": "Privaloma",
+        "saved": "Pristatymo adreso forma atnaujinta"
+      }
     },
     "reservations": {
       "title": "Rezervacijos",

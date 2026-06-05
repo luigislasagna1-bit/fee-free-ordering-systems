@@ -212,7 +212,8 @@
       "paymentFailed": "Maksu epäonnistui. Yritä uudelleen.",
       "selectVariant": "Valitse vaihtoehto",
       "cityRequired": "Kaupunki vaaditaan toimitusta varten",
-      "zipRequired": "Postinumero vaaditaan toimitusta varten"
+      "zipRequired": "Postinumero vaaditaan toimitusta varten",
+      "fieldRequired": "Anna {field}"
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
@@ -382,7 +383,19 @@
     "nextOpening": "Seuraava aukioloaika: {date}",
     "closedAndCatering": "🌙🎉 Olemme kiinni JA ostoskorissasi on pitopalvelutilauksia. Aikaisin saatavilla oleva aika on se myöhäisempi — seuraava aukioloaika tai <strong>{hours}h</strong> tästä hetkestä.",
     "cateringOnly": "🎉 Ostoskorissasi on pitopalvelutilauksia — tilaukset on ajoitettava vähintään <strong>{hours}h</strong> etukäteen. Pikimmiten-toimitus ei ole käytettävissä, kun korissa on pitopalvelutilauksia.",
-    "dragPinHint": "Vedä nasta tarkkaan toimituspaikkaan."
+    "dragPinHint": "Vedä nasta tarkkaan toimituspaikkaan.",
+    "addressFields": {
+      "street": "Katuosoite",
+      "city": "Kunta / kaupunki",
+      "postcode": "Postinumero",
+      "neighbourhood": "Kaupunginosa",
+      "building": "Kortteli / rakennus",
+      "intercom": "Ovipuhelin",
+      "floor": "Kerros",
+      "apartment": "Huoneisto",
+      "parking": "Mihin pysäköidä"
+    },
+    "zoneMinimum": "Vähimmäistilaus {min}."
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -520,7 +533,8 @@
     "refundExceeds": "Summa ylittää hyvitettävän saldon.",
     "refundFailed": "Hyvitys epäonnistui. Yritä uudelleen.",
     "refundSuccess": "Hyvitys tehty.",
-    "autoCallMessage": "Uusi tilaus {number} ravintolassa {restaurant} odottaa eikä sitä ole vielä hyväksytty. Avaa keittiönäyttö hyväksyäksesi tai hylätäksesi sen."
+    "autoCallMessage": "Uusi tilaus {number} ravintolassa {restaurant} odottaa eikä sitä ole vielä hyväksytty. Avaa keittiönäyttö hyväksyäksesi tai hylätäksesi sen.",
+    "outsideZoneNote": "Tämä tilaus saattaa olla tavallisen toimitusalueesi ulkopuolella"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Hyväksy tilaukset alueidesi ulkopuolelta",
       "outsideZoneDesc": "Anna asiakkaiden tehdä toimitustilauksia osoitteisiin, jotka ovat kaikkien piirtämiesi alueiden ulkopuolella. Kun asetus on pois päältä, tällaiset tilaukset estetään kassalla.",
       "outsideZoneEnabled": "Alueen ulkopuoliset tilaukset ovat nyt sallittuja",
-      "outsideZoneDisabled": "Alueen ulkopuoliset tilaukset on nyt estetty"
+      "outsideZoneDisabled": "Alueen ulkopuoliset tilaukset on nyt estetty",
+      "addressForm": {
+        "title": "Toimitusosoitelomake",
+        "desc": "Valitse, mitkä osoitekentät asiakkaat täyttävät kassalla ja mitkä ovat pakollisia.",
+        "modeDefault": "Oletus",
+        "modeCustom": "Mukautettu",
+        "modeHint": "Oletus näyttää kentät Katuosoite, Kunta/kaupunki ja Postinumero (pakollisia) sekä Huoneisto (valinnainen).",
+        "colField": "Kenttä",
+        "colShow": "Näytä",
+        "colRequired": "Pakollinen",
+        "saved": "Toimitusosoitelomake päivitetty"
+      }
     },
     "reservations": {
       "title": "Varaukset",

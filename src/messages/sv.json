@@ -212,7 +212,8 @@
       "paymentFailed": "Betalningen misslyckades. Försök igen.",
       "selectVariant": "Välj ett alternativ",
       "cityRequired": "Stad krävs för leverans",
-      "zipRequired": "Postnummer krävs för leverans"
+      "zipRequired": "Postnummer krävs för leverans",
+      "fieldRequired": "Ange {field}"
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",
@@ -382,7 +383,19 @@
     "nextOpening": "Nästa öppning: {date}",
     "closedAndCatering": "🌙🎉 Vi har stängt OCH din kundvagn innehåller cateringartiklar. Tidigast tillgängliga tid är det senare av nästa öppning och <strong>{hours}h</strong> från och med nu.",
     "cateringOnly": "🎉 Din kundvagn innehåller cateringartiklar — beställningar måste läggas minst <strong>{hours}h</strong> i förväg. Snarast möjligt är inte tillgängligt när kundvagnen innehåller cateringartiklar.",
-    "dragPinHint": "Dra nålen till den exakta platsen för leverans."
+    "dragPinHint": "Dra nålen till den exakta platsen för leverans.",
+    "addressFields": {
+      "street": "Gatuadress",
+      "city": "Ort / Stad",
+      "postcode": "Postnummer",
+      "neighbourhood": "Område",
+      "building": "Kvarter / Byggnad",
+      "intercom": "Porttelefon",
+      "floor": "Våning",
+      "apartment": "Lägenhet",
+      "parking": "Var man kan parkera"
+    },
+    "zoneMinimum": "Minsta order {min}."
   },
   "reservation": {
     "title": "Boka ett bord",
@@ -520,7 +533,8 @@
     "refundExceeds": "Beloppet överstiger det återbetalningsbara saldot.",
     "refundFailed": "Återbetalningen misslyckades. Försök igen.",
     "refundSuccess": "Återbetalning genomförd.",
-    "autoCallMessage": "Ny beställning {number} hos {restaurant} väntar och har ännu inte accepterats. Öppna din köksskärm för att acceptera eller avvisa den."
+    "autoCallMessage": "Ny beställning {number} hos {restaurant} väntar och har ännu inte accepterats. Öppna din köksskärm för att acceptera eller avvisa den.",
+    "outsideZoneNote": "Den här beställningen kan ligga utanför ditt vanliga leveransområde"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Acceptera beställningar utanför dina zoner",
       "outsideZoneDesc": "Låt kunder lägga leveransbeställningar till adresser utanför alla zoner du har ritat. När det är avstängt blockeras dessa beställningar i kassan.",
       "outsideZoneEnabled": "Beställningar utanför zonen är nu tillåtna",
-      "outsideZoneDisabled": "Beställningar utanför zonen är nu blockerade"
+      "outsideZoneDisabled": "Beställningar utanför zonen är nu blockerade",
+      "addressForm": {
+        "title": "Formulär för leveransadress",
+        "desc": "Välj vilka adressfält kunderna fyller i vid kassan och vilka som är obligatoriska.",
+        "modeDefault": "Standard",
+        "modeCustom": "Anpassad",
+        "modeHint": "Standard visar Gatuadress, Ort/Stad och Postnummer (obligatoriska) samt Lägenhet (valfritt).",
+        "colField": "Fält",
+        "colShow": "Visa",
+        "colRequired": "Obligatoriskt",
+        "saved": "Formuläret för leveransadress har uppdaterats"
+      }
     },
     "reservations": {
       "title": "Reservationer",

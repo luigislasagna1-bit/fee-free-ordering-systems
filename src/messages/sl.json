@@ -212,7 +212,8 @@
       "paymentFailed": "Plačilo ni uspelo. Poskusite znova.",
       "selectVariant": "Prosimo, izberite možnost",
       "cityRequired": "Mesto je obvezno za dostavo",
-      "zipRequired": "Poštna številka je obvezna za dostavo"
+      "zipRequired": "Poštna številka je obvezna za dostavo",
+      "fieldRequired": "Vnesite {field}"
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",
@@ -382,7 +383,19 @@
     "nextOpening": "Naslednje odprtje: {date}",
     "closedAndCatering": "🌙🎉 Zaprti smo IN vaša košarica vsebuje naročila za catering. Najzgodnejši razpoložljivi čas je kasnejši od naslednjega odprtja ali <strong>{hours}h</strong> od zdaj.",
     "cateringOnly": "🎉 Vaša košarica vsebuje naročila za catering — naročila je treba načrtovati vsaj <strong>{hours}h</strong> vnaprej. Možnost »čim prej« ni na voljo, ko so v košarici artikli za catering.",
-    "dragPinHint": "Povlecite zatič na točno mesto za dostavo."
+    "dragPinHint": "Povlecite zatič na točno mesto za dostavo.",
+    "addressFields": {
+      "street": "Naslov (ulica in hišna številka)",
+      "city": "Kraj / mesto",
+      "postcode": "Poštna številka",
+      "neighbourhood": "Soseska",
+      "building": "Blok / stavba",
+      "intercom": "Domofon",
+      "floor": "Nadstropje",
+      "apartment": "Stanovanje",
+      "parking": "Kje parkirati"
+    },
+    "zoneMinimum": "Najmanjše naročilo {min}."
   },
   "reservation": {
     "title": "Rezerviraj mizo",
@@ -520,7 +533,8 @@
     "refundExceeds": "Znesek presega razpoložljivo stanje za povračilo.",
     "refundFailed": "Povračilo ni uspelo. Poskusite znova.",
     "refundSuccess": "Povračilo je bilo izvedeno.",
-    "autoCallMessage": "Novo naročilo {number} pri {restaurant} čaka in še ni bilo sprejeto. Prosimo, odprite kuhinjski zaslon, da ga sprejmete ali zavrnete."
+    "autoCallMessage": "Novo naročilo {number} pri {restaurant} čaka in še ni bilo sprejeto. Prosimo, odprite kuhinjski zaslon, da ga sprejmete ali zavrnete.",
+    "outsideZoneNote": "To naročilo je morda zunaj vašega običajnega dostavnega območja"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Sprejemanje naročil zunaj vaših con",
       "outsideZoneDesc": "Strankam omogočite oddajo naročil za dostavo na naslove zunaj vseh con, ki ste jih narisali. Ko je možnost izklopljena, so taka naročila ob zaključku nakupa blokirana.",
       "outsideZoneEnabled": "Naročila zunaj cone so zdaj dovoljena",
-      "outsideZoneDisabled": "Naročila zunaj cone so zdaj blokirana"
+      "outsideZoneDisabled": "Naročila zunaj cone so zdaj blokirana",
+      "addressForm": {
+        "title": "Obrazec za naslov dostave",
+        "desc": "Izberite, katera polja naslova stranke izpolnijo ob zaključku naročila in katera so obvezna.",
+        "modeDefault": "Privzeto",
+        "modeCustom": "Po meri",
+        "modeHint": "Privzeto prikaže ulico, kraj/mesto in poštno številko (obvezno) ter stanovanje (neobvezno).",
+        "colField": "Polje",
+        "colShow": "Prikaži",
+        "colRequired": "Obvezno",
+        "saved": "Obrazec za naslov dostave je posodobljen"
+      }
     },
     "reservations": {
       "title": "Rezervacije",

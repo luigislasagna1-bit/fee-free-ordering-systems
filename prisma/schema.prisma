@@ -97,6 +97,11 @@ model Restaurant {
   /// OUTSIDE every configured delivery zone. Default false = block out-of-zone
   /// orders at checkout (the restaurant must opt in to accept them).
   acceptOutsideZoneOrders Boolean @default(false)
+  /// Customizable delivery-address form (GloriaFood-style). JSON map of
+  /// { fieldKey: { show, required } } over the 9 canonical fields. NULL = use
+  /// the default preset (Street/City/Postcode required, Apartment optional).
+  /// Single source of truth: src/lib/delivery-address-fields.ts. Luigi 2026-06-04.
+  deliveryAddressConfig Json?
   estimatedPickup      Int     @default(20)
   estimatedDelivery    Int     @default(45)
   taxRate              Float   @default(0)
@@ -748,6 +753,16 @@ model Order {
   deliveryAddress       String?
   deliveryCity          String?
   deliveryZip           String?
+  /// Structured per-field delivery address (customizable form). JSON blob of
+  /// { fieldKey: value } so we don't add sparse columns to this hot table. The
+  /// flat deliveryAddress/City/Zip above are still composed from this for
+  /// receipts/kitchen/dispatch. src/lib/delivery-address-fields.ts. 2026-06-04.
+  deliveryAddressData   Json?
+  /// True when this delivery order's address geocoded OUTSIDE every active
+  /// delivery zone but was accepted anyway (restaurant opted in via
+  /// acceptOutsideZoneOrders). Drives a "may be outside your regular zone"
+  /// note to kitchen staff. Non-null boolean = cheap on this hot table. 2026-06-04.
+  outsideDeliveryZone   Boolean @default(false)
   notes                 String?
   couponId              String?
   couponDiscount        Float     @default(0)

@@ -212,7 +212,8 @@
       "paymentFailed": "Plaćanje nije uspjelo. Pokušajte ponovo.",
       "selectVariant": "Molimo odaberite opciju",
       "cityRequired": "Grad je obavezan za dostavu",
-      "zipRequired": "Poštanski broj je obavezan za dostavu"
+      "zipRequired": "Poštanski broj je obavezan za dostavu",
+      "fieldRequired": "Unesite {field}"
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",
@@ -382,7 +383,19 @@
     "nextOpening": "Sljedeće otvaranje: {date}",
     "closedAndCatering": "🌙🎉 Zatvoreni smo I vaša košarica sadrži catering stavke. Najranije dostupno vrijeme je ono koje je kasnije — sljedeće otvaranje ili <strong>{hours}h</strong> od sada.",
     "cateringOnly": "🎉 Vaša košarica sadrži catering stavke — narudžbe moraju biti zakazane najmanje <strong>{hours}h</strong> unaprijed. Opcija „što prije“ nije dostupna uz catering stavke u košarici.",
-    "dragPinHint": "Povucite oznaku na točno mjesto za dostavu."
+    "dragPinHint": "Povucite oznaku na točno mjesto za dostavu.",
+    "addressFields": {
+      "street": "Adresa (ulica i broj)",
+      "city": "Mjesto / Grad",
+      "postcode": "Poštanski broj",
+      "neighbourhood": "Naselje",
+      "building": "Blok / Zgrada",
+      "intercom": "Interfon",
+      "floor": "Kat",
+      "apartment": "Stan",
+      "parking": "Gdje parkirati"
+    },
+    "zoneMinimum": "Minimalna narudžba {min}."
   },
   "reservation": {
     "title": "Rezervirajte stol",
@@ -520,7 +533,8 @@
     "refundExceeds": "Iznos premašuje raspoloživi iznos za povrat.",
     "refundFailed": "Povrat nije uspio. Pokušajte ponovno.",
     "refundSuccess": "Povrat je izvršen.",
-    "autoCallMessage": "Nova narudžba {number} u restoranu {restaurant} čeka i još nije prihvaćena. Otvorite kuhinjski zaslon kako biste je prihvatili ili odbili."
+    "autoCallMessage": "Nova narudžba {number} u restoranu {restaurant} čeka i još nije prihvaćena. Otvorite kuhinjski zaslon kako biste je prihvatili ili odbili.",
+    "outsideZoneNote": "Ova narudžba možda je izvan vaše uobičajene zone dostave"
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Prihvati narudžbe izvan vaših zona",
       "outsideZoneDesc": "Dopustite kupcima da naručuju dostavu na adrese izvan svih zona koje ste ucrtali. Kad je isključeno, takve se narudžbe blokiraju pri naplati.",
       "outsideZoneEnabled": "Narudžbe izvan zone sada su dopuštene",
-      "outsideZoneDisabled": "Narudžbe izvan zone sada su blokirane"
+      "outsideZoneDisabled": "Narudžbe izvan zone sada su blokirane",
+      "addressForm": {
+        "title": "Obrazac adrese za dostavu",
+        "desc": "Odaberite koja polja adrese kupci ispunjavaju pri naplati i koja su obavezna.",
+        "modeDefault": "Zadano",
+        "modeCustom": "Prilagođeno",
+        "modeHint": "Zadano prikazuje Ulicu, Mjesto/Grad i Poštanski broj (obavezno) te Stan (neobavezno).",
+        "colField": "Polje",
+        "colShow": "Prikaži",
+        "colRequired": "Obavezno",
+        "saved": "Obrazac adrese za dostavu ažuriran"
+      }
     },
     "reservations": {
       "title": "Rezervacije",

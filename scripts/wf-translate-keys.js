@@ -6,14 +6,11 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "admin.delivery";
-const CONTEXT = "delivery-zone settings in a restaurant admin panel. A toggle that lets the restaurant accept delivery orders to addresses OUTSIDE the delivery zones they drew on a map. Concise SaaS dashboard tone";
+const NS = "@root";
+const CONTEXT = "a restaurant delivery ordering app. checkout.zoneMinimum tells the customer the minimum order value for their delivery zone ({min} is a formatted currency amount, e.g. $20.00). kitchen.outsideZoneNote is a heads-up shown to kitchen staff when a delivery address falls outside the restaurant's normal delivery zones. Concise, natural";
 const EN = {
-  advancedSettings: "Advanced settings",
-  outsideZoneTitle: "Accept orders outside your zones",
-  outsideZoneDesc: "Let customers place delivery orders to addresses outside every zone you've drawn. When off, those orders are blocked at checkout.",
-  outsideZoneEnabled: "Out-of-zone orders are now allowed",
-  outsideZoneDisabled: "Out-of-zone orders are now blocked",
+  "checkout.zoneMinimum": "Minimum order {min}.",
+  "kitchen.outsideZoneNote": "This order may be outside your regular delivery zone",
 };
 const KEYS = Object.keys(EN);
 

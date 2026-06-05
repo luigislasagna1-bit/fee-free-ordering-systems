@@ -212,7 +212,8 @@
       "paymentFailed": "A fizetés nem sikerült. Kérjük, próbálja újra.",
       "selectVariant": "Kérjük, válasszon lehetőséget",
       "cityRequired": "A városnév megadása kötelező a szállításhoz",
-      "zipRequired": "Az irányítószám megadása kötelező a szállításhoz"
+      "zipRequired": "Az irányítószám megadása kötelező a szállításhoz",
+      "fieldRequired": "Add meg: {field}"
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
@@ -382,7 +383,19 @@
     "nextOpening": "Következő nyitás: {date}",
     "closedAndCatering": "🌙🎉 Zárva vagyunk, ÉS a kosaradban rendezvényi tételek is szerepelnek. A legkorábbi elérhető időpont a következő nyitás és a mostantól számított <strong>{hours}h</strong> közül a későbbi.",
     "cateringOnly": "🎉 A kosaradban rendezvényi tételek szerepelnek — a rendeléseket legalább <strong>{hours}h</strong> előre kell ütemezni. Az \"Amilyen hamar csak lehet\" lehetőség nem érhető el, ha rendezvényi tételek vannak a kosárban.",
-    "dragPinHint": "Húzza a jelölőt pontosan a kiszállítás helyére."
+    "dragPinHint": "Húzza a jelölőt pontosan a kiszállítás helyére.",
+    "addressFields": {
+      "street": "Utca és házszám",
+      "city": "Település / Város",
+      "postcode": "Irányítószám",
+      "neighbourhood": "Városrész",
+      "building": "Tömb / Épület",
+      "intercom": "Kaputelefon",
+      "floor": "Emelet",
+      "apartment": "Lakás",
+      "parking": "Hol lehet parkolni"
+    },
+    "zoneMinimum": "Minimális rendelési összeg: {min}."
   },
   "reservation": {
     "title": "Asztal foglalása",
@@ -520,7 +533,8 @@
     "refundExceeds": "Az összeg meghaladja a visszatéríthető egyenleget.",
     "refundFailed": "A visszatérítés sikertelen. Kérjük, próbálja újra.",
     "refundSuccess": "Visszatérítés kiadva.",
-    "autoCallMessage": "A(z) {number} számú új rendelés a(z) {restaurant} étteremben várakozik, és még nincs elfogadva. Kérjük, nyissa meg a konyhai kijelzőt az elfogadáshoz vagy elutasításhoz."
+    "autoCallMessage": "A(z) {number} számú új rendelés a(z) {restaurant} étteremben várakozik, és még nincs elfogadva. Kérjük, nyissa meg a konyhai kijelzőt az elfogadáshoz vagy elutasításhoz.",
+    "outsideZoneNote": "Ez a rendelés a megszokott kiszállítási zónán kívül eshet"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Rendelések elfogadása a zónákon kívül",
       "outsideZoneDesc": "Engedélyezd, hogy a vásárlók olyan címekre adjanak le kiszállítási rendelést, amelyek minden megrajzolt zónán kívül esnek. Kikapcsolt állapotban ezeket a rendeléseket a rendszer letiltja a fizetésnél.",
       "outsideZoneEnabled": "A zónán kívüli rendelések mostantól engedélyezettek",
-      "outsideZoneDisabled": "A zónán kívüli rendelések mostantól le vannak tiltva"
+      "outsideZoneDisabled": "A zónán kívüli rendelések mostantól le vannak tiltva",
+      "addressForm": {
+        "title": "Szállítási cím űrlap",
+        "desc": "Válaszd ki, mely címmezőket töltik ki a vásárlók a fizetésnél, és melyek kötelezők.",
+        "modeDefault": "Alapértelmezett",
+        "modeCustom": "Egyéni",
+        "modeHint": "Az alapértelmezett az Utca és házszám, Település/Város és Irányítószám (kötelező) mezőket jeleníti meg, valamint a Lakás (opcionális) mezőt.",
+        "colField": "Mező",
+        "colShow": "Megjelenítés",
+        "colRequired": "Kötelező",
+        "saved": "Szállítási cím űrlap frissítve"
+      }
     },
     "reservations": {
       "title": "Foglalások",

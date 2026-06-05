@@ -212,7 +212,8 @@
       "paymentFailed": "お支払いに失敗しました。もう一度お試しください。",
       "selectVariant": "オプションを選択してください",
       "cityRequired": "配達には市区町村の入力が必要です",
-      "zipRequired": "配達には郵便番号の入力が必要です"
+      "zipRequired": "配達には郵便番号の入力が必要です",
+      "fieldRequired": "{field}を入力してください"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
@@ -382,7 +383,19 @@
     "nextOpening": "次の営業開始: {date}",
     "closedAndCatering": "🌙🎉 現在営業時間外のうえ、カートにケータリング商品が含まれています。ご利用可能な最短時間は、次の営業開始時刻とご注文から<strong>{hours}h</strong>後のどちらか遅い方となります。",
     "cateringOnly": "🎉 カートにケータリング商品が含まれています — ケータリングのご注文は少なくとも<strong>{hours}h</strong>前までにご予約ください。カートにケータリング商品がある場合、今すぐ受け取りはご利用いただけません。",
-    "dragPinHint": "ピンを配達の正確な場所までドラッグしてください。"
+    "dragPinHint": "ピンを配達の正確な場所までドラッグしてください。",
+    "addressFields": {
+      "street": "番地・住所",
+      "city": "市区町村",
+      "postcode": "郵便番号",
+      "neighbourhood": "地区・町名",
+      "building": "建物・棟",
+      "intercom": "インターホン",
+      "floor": "階数",
+      "apartment": "部屋番号",
+      "parking": "駐車場所"
+    },
+    "zoneMinimum": "最低注文金額 {min}。"
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -520,7 +533,8 @@
     "refundExceeds": "金額が返金可能残高を超えています。",
     "refundFailed": "返金に失敗しました。もう一度お試しください。",
     "refundSuccess": "返金を処理しました。",
-    "autoCallMessage": "{restaurant}の新しい注文 {number} が承認待ちです。キッチンディスプレイを開いて、承認または拒否してください。"
+    "autoCallMessage": "{restaurant}の新しい注文 {number} が承認待ちです。キッチンディスプレイを開いて、承認または拒否してください。",
+    "outsideZoneNote": "この注文は通常の配達エリア外の可能性があります"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "配達ゾーン外の注文を受け付ける",
       "outsideZoneDesc": "設定したすべての配達ゾーンの外にある住所への配達注文を、お客様が行えるようにします。オフの場合、これらの注文はチェックアウト時にブロックされます。",
       "outsideZoneEnabled": "ゾーン外の注文が許可されました",
-      "outsideZoneDisabled": "ゾーン外の注文がブロックされました"
+      "outsideZoneDisabled": "ゾーン外の注文がブロックされました",
+      "addressForm": {
+        "title": "配達先住所フォーム",
+        "desc": "お客様がチェックアウト時に入力する住所項目と、必須にする項目を選択します。",
+        "modeDefault": "デフォルト",
+        "modeCustom": "カスタム",
+        "modeHint": "デフォルトでは、番地・住所、市区町村、郵便番号（必須）に加えて、部屋番号（任意）が表示されます。",
+        "colField": "項目",
+        "colShow": "表示",
+        "colRequired": "必須",
+        "saved": "配達先住所フォームを更新しました"
+      }
     },
     "reservations": {
       "title": "予約",

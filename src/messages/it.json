@@ -211,7 +211,8 @@
       "paymentFailed": "Pagamento fallito. Riprova.",
       "selectVariant": "Seleziona un'opzione",
       "cityRequired": "Città obbligatoria per la consegna",
-      "zipRequired": "CAP obbligatorio per la consegna"
+      "zipRequired": "CAP obbligatorio per la consegna",
+      "fieldRequired": "Inserisci {field}"
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",
@@ -382,7 +383,19 @@
     "nextOpening": "Prossima apertura: {date}",
     "closedAndCatering": "🌙🎉 Siamo chiusi E il tuo carrello contiene articoli per catering. Il primo orario disponibile è il più tardi tra la prossima apertura e <strong>{hours}h</strong> da adesso.",
     "cateringOnly": "🎉 Il tuo carrello contiene articoli per catering — gli ordini devono essere programmati con almeno <strong>{hours}h</strong> di anticipo. L'opzione Prima possibile non è disponibile con articoli per catering nel carrello.",
-    "dragPinHint": "Trascina il segnaposto sul punto esatto per la consegna."
+    "dragPinHint": "Trascina il segnaposto sul punto esatto per la consegna.",
+    "addressFields": {
+      "street": "Indirizzo",
+      "city": "Comune / Città",
+      "postcode": "CAP",
+      "neighbourhood": "Quartiere",
+      "building": "Palazzo / Edificio",
+      "intercom": "Citofono",
+      "floor": "Piano",
+      "apartment": "Appartamento",
+      "parking": "Dove parcheggiare"
+    },
+    "zoneMinimum": "Ordine minimo {min}."
   },
   "reservation": {
     "title": "Prenota un tavolo",
@@ -520,7 +533,8 @@
     "refundExceeds": "L'importo supera il saldo rimborsabile.",
     "refundFailed": "Rimborso non riuscito. Riprova.",
     "refundSuccess": "Rimborso emesso.",
-    "autoCallMessage": "Il nuovo ordine {number} presso {restaurant} è in attesa e non è ancora stato accettato. Apri il display della cucina per accettarlo o rifiutarlo."
+    "autoCallMessage": "Il nuovo ordine {number} presso {restaurant} è in attesa e non è ancora stato accettato. Apri il display della cucina per accettarlo o rifiutarlo.",
+    "outsideZoneNote": "Questo ordine potrebbe trovarsi fuori dalla tua zona di consegna abituale"
   },
   "admin": {
     "welcomeBack": "Bentornato",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Accetta ordini fuori dalle tue zone",
       "outsideZoneDesc": "Consenti ai clienti di effettuare ordini con consegna a indirizzi esterni a tutte le zone che hai tracciato. Se disattivata, questi ordini vengono bloccati al checkout.",
       "outsideZoneEnabled": "Gli ordini fuori zona sono ora consentiti",
-      "outsideZoneDisabled": "Gli ordini fuori zona sono ora bloccati"
+      "outsideZoneDisabled": "Gli ordini fuori zona sono ora bloccati",
+      "addressForm": {
+        "title": "Modulo indirizzo di consegna",
+        "desc": "Scegli quali campi dell'indirizzo i clienti compilano al checkout e quali sono obbligatori.",
+        "modeDefault": "Predefinito",
+        "modeCustom": "Personalizzato",
+        "modeHint": "Il modello predefinito mostra Indirizzo, Comune/Città e CAP (obbligatori) più Appartamento (facoltativo).",
+        "colField": "Campo",
+        "colShow": "Mostra",
+        "colRequired": "Obbligatorio",
+        "saved": "Modulo indirizzo di consegna aggiornato"
+      }
     },
     "reservations": {
       "title": "Prenotazioni",

@@ -5,6 +5,13 @@ import { generateOrderNumber, formatCurrency } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
 import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, holidayNameForToday, localDowAndHHMM } from "@/lib/restaurant-hours";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
+import {
+  resolveDeliveryAddressConfig,
+  firstMissingRequiredField,
+  composeFlatDeliveryAddress,
+  DELIVERY_FIELD_KEYS,
+  type DeliveryAddressData,
+} from "@/lib/delivery-address-fields";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
@@ -61,7 +68,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const {
       restaurantSlug, type, customerName, customerEmail, customerPhone,
-      deliveryAddress, deliveryCity, deliveryZip, notes, paymentMethod,
+      deliveryAddress, deliveryCity, deliveryZip, deliveryAddressData: bodyDeliveryData, notes, paymentMethod,
       scheduledFor, couponId, marketingConsent,
       // Typed coupon code from the cart's Apply field — fed into the
       // engine's couponPromos branch so autoApply=false promos with a
@@ -103,21 +110,10 @@ export async function POST(req: NextRequest) {
     if (sanitize(customerName).length < 2) {
       return NextResponse.json({ error: "Invalid customer name" }, { status: 400 });
     }
-    // Delivery requires a complete address: street, city, AND postal code —
-    // so the kitchen/driver can actually find + geocode it (Luigi 2026-06-04).
-    // Defense-in-depth: the client validates these first with localized toasts;
-    // this guards against direct API calls that bypass the form.
-    if (type === "delivery") {
-      if (!deliveryAddress) {
-        return NextResponse.json({ error: "Delivery address required" }, { status: 400 });
-      }
-      if (!deliveryCity || !String(deliveryCity).trim()) {
-        return NextResponse.json({ error: "Delivery city required" }, { status: 400 });
-      }
-      if (!deliveryZip || !String(deliveryZip).trim()) {
-        return NextResponse.json({ error: "Delivery postal code required" }, { status: 400 });
-      }
-    }
+    // Delivery required-field validation is CONFIG-DRIVEN (customizable form):
+    // a restaurant chooses which fields show + are required. We validate after
+    // the restaurant (and its deliveryAddressConfig) is loaded — see the
+    // "delivery address normalization" block below.
 
     // ── Load restaurant ─────────────────────────────────────────────────────
     // Includes openingHours because the closed-when-placed check
@@ -140,6 +136,50 @@ export async function POST(req: NextRequest) {
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+
+    // ── Delivery address normalization + config-driven validation ─────────────
+    // The restaurant may have customized which address fields show / are
+    // required (deliveryAddressConfig). Build a sanitized structured blob from
+    // the body (preferred) or fall back to the legacy flat fields, validate the
+    // required fields against the resolved config, then compose the flat
+    // deliveryAddress/City/Zip columns from the structured data so receipts,
+    // the kitchen display, and dispatch keep working unchanged. Luigi 2026-06-04.
+    let deliveryData: DeliveryAddressData | null = null;
+    let flatAddress: string | null = deliveryAddress ? String(deliveryAddress) : null;
+    let flatCity: string | null = deliveryCity ? String(deliveryCity) : null;
+    let flatZip: string | null = deliveryZip ? String(deliveryZip) : null;
+    if (type === "delivery") {
+      const cfg = resolveDeliveryAddressConfig((restaurant as any).deliveryAddressConfig);
+      const rawData =
+        bodyDeliveryData && typeof bodyDeliveryData === "object"
+          ? (bodyDeliveryData as Record<string, unknown>)
+          : {};
+      const data: DeliveryAddressData = {};
+      for (const key of DELIVERY_FIELD_KEYS) {
+        const v = rawData[key];
+        if (typeof v === "string" && v.trim()) data[key] = sanitize(v, 200);
+      }
+      // Legacy fallback: an older client (or a direct API call) that only sends
+      // the flat fields still maps onto street/city/postcode.
+      if (Object.keys(data).length === 0) {
+        if (flatAddress) data.street = sanitize(flatAddress, 300);
+        if (flatCity) data.city = sanitize(flatCity, 100);
+        if (flatZip) data.postcode = sanitize(flatZip, 20);
+      }
+      const missing = firstMissingRequiredField(cfg, data);
+      if (missing) {
+        return NextResponse.json(
+          { error: "Delivery address incomplete", code: "delivery_field_required", field: missing },
+          { status: 400 },
+        );
+      }
+      deliveryData = Object.keys(data).length ? data : null;
+      // Recompose the flat columns from the structured data (single source).
+      flatCity = data.city?.trim() || null;
+      flatZip = data.postcode?.trim() || null;
+      const composed = composeFlatDeliveryAddress(data);
+      flatAddress = composed || flatAddress || null;
+    }
 
     // ── Card / PayPal availability guard (defense-in-depth, Luigi 2026-06-04) ──
     // After the Connect→key-only migration a restaurant can still list
@@ -585,6 +625,9 @@ export async function POST(req: NextRequest) {
     let resolvedZoneMinutes: number | null = null;
     let zoneDeliveryFee = restaurant.deliveryFee;
     let zoneMinimumOrder = restaurant.minimumOrder ?? 0;
+    // True when the address geocoded but matched NO active zone (accepted only
+    // because the restaurant opted into out-of-zone orders) → flag for kitchen.
+    let outsideDeliveryZone = false;
     // Captured here so it survives past the zone-resolution block and
     // can be stamped onto the Order for the Delivery Heatmap report.
     // We already pay the geocode cost once for zone resolution — reusing
@@ -607,8 +650,8 @@ export async function POST(req: NextRequest) {
       const zones = await prisma.deliveryZone.findMany({
         where: { restaurantId: restaurant.id, isActive: true },
       });
-      if (zones.length > 0 && restaurant.lat != null && restaurant.lng != null && deliveryAddress) {
-        const addrParts = [deliveryAddress, deliveryCity, deliveryZip].filter(Boolean).join(", ");
+      if (zones.length > 0 && restaurant.lat != null && restaurant.lng != null && flatAddress) {
+        const addrParts = [flatAddress, flatCity, flatZip].filter(Boolean).join(", ");
         // Reuse the pin coords if we have them; only geocode when we don't.
         const coords = deliveryCoords ?? (await geocodeAddress(addrParts));
         deliveryCoords = coords;
@@ -625,6 +668,11 @@ export async function POST(req: NextRequest) {
             resolvedZoneMinutes = resolved.zone.estimatedMinutes;
             zoneDeliveryFee = resolved.zone.deliveryFee;
             zoneMinimumOrder = resolved.zone.minimumOrder;
+          } else {
+            // Geocoded successfully but fell outside every active zone — the
+            // order only got here because the restaurant accepts out-of-zone
+            // orders. Flag it so the kitchen sees a heads-up note.
+            outsideDeliveryZone = true;
           }
         }
       }
@@ -1091,9 +1139,13 @@ export async function POST(req: NextRequest) {
         customerName: sanitize(customerName, 100),
         customerEmail: cleanEmail,
         customerPhone: cleanPhone,
-        deliveryAddress: deliveryAddress ? sanitize(deliveryAddress, 300) : null,
-        deliveryCity: deliveryCity ? sanitize(deliveryCity, 100) : null,
-        deliveryZip: deliveryZip ? sanitize(deliveryZip, 20) : null,
+        deliveryAddress: flatAddress ? sanitize(flatAddress, 300) : null,
+        deliveryCity: flatCity ? sanitize(flatCity, 100) : null,
+        deliveryZip: flatZip ? sanitize(flatZip, 20) : null,
+        // Structured per-field address (customizable form). Null for non-delivery
+        // or legacy orders with no structured data.
+        deliveryAddressData: deliveryData ?? undefined,
+        outsideDeliveryZone,
         notes: notes ? sanitize(notes, 500) : null,
         couponId: resolvedCouponId,
         couponDiscount: serverCouponDiscount,

@@ -212,7 +212,8 @@
       "paymentFailed": "Betaling mislukt. Probeer het opnieuw.",
       "selectVariant": "Selecteer een optie",
       "cityRequired": "Stad is verplicht voor bezorging",
-      "zipRequired": "Postcode is verplicht voor bezorging"
+      "zipRequired": "Postcode is verplicht voor bezorging",
+      "fieldRequired": "Voer {field} in"
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
@@ -382,7 +383,19 @@
     "nextOpening": "Volgende opening: {date}",
     "closedAndCatering": "🌙🎉 We zijn gesloten én je winkelwagen bevat cateringartikelen. De vroegst beschikbare tijd is de laatste van de volgende opening en <strong>{hours}h</strong> vanaf nu.",
     "cateringOnly": "🎉 Je winkelwagen bevat cateringartikelen — bestellingen moeten minimaal <strong>{hours}h</strong> van tevoren worden ingepland. Zo snel mogelijk is niet beschikbaar met cateringartikelen in je winkelwagen.",
-    "dragPinHint": "Sleep de speld naar de exacte plek voor de bezorging."
+    "dragPinHint": "Sleep de speld naar de exacte plek voor de bezorging.",
+    "addressFields": {
+      "street": "Straat en huisnummer",
+      "city": "Plaats / Stad",
+      "postcode": "Postcode",
+      "neighbourhood": "Buurt",
+      "building": "Blok / Gebouw",
+      "intercom": "Intercom",
+      "floor": "Verdieping",
+      "apartment": "Appartement",
+      "parking": "Waar te parkeren"
+    },
+    "zoneMinimum": "Minimale bestelling {min}."
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -520,7 +533,8 @@
     "refundExceeds": "Bedrag overschrijdt het terugbetaalbare saldo.",
     "refundFailed": "Terugbetaling mislukt. Probeer het opnieuw.",
     "refundSuccess": "Terugbetaling uitgevoerd.",
-    "autoCallMessage": "Nieuwe bestelling {number} bij {restaurant} staat te wachten en is nog niet geaccepteerd. Open je keukenscherm om de bestelling te accepteren of te weigeren."
+    "autoCallMessage": "Nieuwe bestelling {number} bij {restaurant} staat te wachten en is nog niet geaccepteerd. Open je keukenscherm om de bestelling te accepteren of te weigeren.",
+    "outsideZoneNote": "Deze bestelling valt mogelijk buiten je gebruikelijke bezorggebied"
   },
   "admin": {
     "welcomeBack": "Welkom terug",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Bestellingen buiten je zones accepteren",
       "outsideZoneDesc": "Laat klanten bezorgbestellingen plaatsen op adressen buiten elke zone die je hebt getekend. Wanneer dit uitstaat, worden die bestellingen geblokkeerd bij het afrekenen.",
       "outsideZoneEnabled": "Bestellingen buiten de zone zijn nu toegestaan",
-      "outsideZoneDisabled": "Bestellingen buiten de zone zijn nu geblokkeerd"
+      "outsideZoneDisabled": "Bestellingen buiten de zone zijn nu geblokkeerd",
+      "addressForm": {
+        "title": "Formulier voor bezorgadres",
+        "desc": "Kies welke adresvelden klanten invullen bij het afrekenen en welke verplicht zijn.",
+        "modeDefault": "Standaard",
+        "modeCustom": "Aangepast",
+        "modeHint": "Standaard toont Straat, Plaats/Stad en Postcode (verplicht) plus Appartement (optioneel).",
+        "colField": "Veld",
+        "colShow": "Tonen",
+        "colRequired": "Verplicht",
+        "saved": "Formulier voor bezorgadres bijgewerkt"
+      }
     },
     "reservations": {
       "title": "Reserveringen",

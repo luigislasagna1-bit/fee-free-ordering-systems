@@ -212,7 +212,8 @@
       "paymentFailed": "Makse ebaõnnestus. Palun proovi uuesti.",
       "selectVariant": "Palun vali variant",
       "cityRequired": "Linn on kohaletoimetamiseks kohustuslik",
-      "zipRequired": "Sihtnumber on kohaletoimetamiseks kohustuslik"
+      "zipRequired": "Sihtnumber on kohaletoimetamiseks kohustuslik",
+      "fieldRequired": "Palun sisesta {field}"
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",
@@ -382,7 +383,19 @@
     "nextOpening": "Järgmine avamine: {date}",
     "closedAndCatering": "🌙🎉 Oleme suletud JA sinu ostukorvis on cateringu tooted. Varaseim võimalik aeg on hilisem järgmisest avamisajast ja <strong>{hours}h</strong> praegusest hetkest.",
     "cateringOnly": "🎉 Sinu ostukorvis on cateringu tooted — tellimused tuleb ajastada vähemalt <strong>{hours}h</strong> ette. Esimesel võimalusel ei ole cateringu toodetega saadaval.",
-    "dragPinHint": "Lohistage nõel täpsesse kohta, kuhu tarne tuua."
+    "dragPinHint": "Lohistage nõel täpsesse kohta, kuhu tarne tuua.",
+    "addressFields": {
+      "street": "Tänava aadress",
+      "city": "Linn / asula",
+      "postcode": "Postiindeks",
+      "neighbourhood": "Linnaosa",
+      "building": "Hoone / korpus",
+      "intercom": "Fonolukk",
+      "floor": "Korrus",
+      "apartment": "Korter",
+      "parking": "Kus parkida"
+    },
+    "zoneMinimum": "Miinimumtellimus {min}."
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -520,7 +533,8 @@
     "refundExceeds": "Summa ületab tagasimakstava jäägi.",
     "refundFailed": "Tagasimakse ebaõnnestus. Palun proovi uuesti.",
     "refundSuccess": "Tagasimakse tehtud.",
-    "autoCallMessage": "Uus tellimus {number} restoranis {restaurant} ootab ja seda pole veel vastu võetud. Palun avage köögiekraan, et see vastu võtta või tagasi lükata."
+    "autoCallMessage": "Uus tellimus {number} restoranis {restaurant} ootab ja seda pole veel vastu võetud. Palun avage köögiekraan, et see vastu võtta või tagasi lükata.",
+    "outsideZoneNote": "See tellimus võib jääda väljapoole teie tavapärast tarnepiirkonda"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Võta vastu tellimusi väljaspool tsoone",
       "outsideZoneDesc": "Luba klientidel esitada tarnetellimusi aadressidele, mis jäävad väljapoole kõiki sinu joonistatud tsoone. Kui see on välja lülitatud, blokeeritakse sellised tellimused vormistamisel.",
       "outsideZoneEnabled": "Tsooniväliste tellimuste vastuvõtmine on nüüd lubatud",
-      "outsideZoneDisabled": "Tsooniväliste tellimuste vastuvõtmine on nüüd blokeeritud"
+      "outsideZoneDisabled": "Tsooniväliste tellimuste vastuvõtmine on nüüd blokeeritud",
+      "addressForm": {
+        "title": "Tarneaadressi vorm",
+        "desc": "Vali, milliseid aadressivälju kliendid kassas täidavad ja millised on kohustuslikud.",
+        "modeDefault": "Vaikimisi",
+        "modeCustom": "Kohandatud",
+        "modeHint": "Vaikimisi kuvatakse tänav, linn/asula ja postiindeks (kohustuslikud) ning korter (valikuline).",
+        "colField": "Väli",
+        "colShow": "Kuva",
+        "colRequired": "Kohustuslik",
+        "saved": "Tarneaadressi vorm on uuendatud"
+      }
     },
     "reservations": {
       "title": "Broneeringud",

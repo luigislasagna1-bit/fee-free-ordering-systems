@@ -212,7 +212,8 @@
       "paymentFailed": "Ödeme başarısız. Lütfen tekrar deneyin.",
       "selectVariant": "Lütfen bir seçenek seçin",
       "cityRequired": "Teslimat için şehir gereklidir",
-      "zipRequired": "Teslimat için posta kodu gereklidir"
+      "zipRequired": "Teslimat için posta kodu gereklidir",
+      "fieldRequired": "Lütfen {field} girin"
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
@@ -382,7 +383,19 @@
     "nextOpening": "Sonraki açılış: {date}",
     "closedAndCatering": "🌙🎉 Kapalıyız VE sepetinizde catering ürünleri bulunuyor. En erken uygun saat, sonraki açılış ile şu andan itibaren <strong>{hours}h</strong> sürenin geç olanıdır.",
     "cateringOnly": "🎉 Sepetinizde catering ürünleri var — siparişlerin en az <strong>{hours}h</strong> önceden planlanması gerekmektedir. Sepette catering ürünü varken \"En Kısa Sürede\" seçeneği kullanılamaz.",
-    "dragPinHint": "İğneyi teslimat için tam noktaya sürükleyin."
+    "dragPinHint": "İğneyi teslimat için tam noktaya sürükleyin.",
+    "addressFields": {
+      "street": "Sokak adresi",
+      "city": "İlçe / Şehir",
+      "postcode": "Posta kodu",
+      "neighbourhood": "Mahalle",
+      "building": "Blok / Bina",
+      "intercom": "Diafon",
+      "floor": "Kat",
+      "apartment": "Daire",
+      "parking": "Park yeri"
+    },
+    "zoneMinimum": "Minimum sipariş {min}."
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -520,7 +533,8 @@
     "refundExceeds": "Tutar, iade edilebilir bakiyeyi aşıyor.",
     "refundFailed": "İade başarısız oldu. Lütfen tekrar deneyin.",
     "refundSuccess": "İade yapıldı.",
-    "autoCallMessage": "{restaurant} işletmesindeki {number} numaralı yeni sipariş beklemede ve henüz kabul edilmedi. Lütfen siparişi kabul etmek veya reddetmek için mutfak ekranınızı açın."
+    "autoCallMessage": "{restaurant} işletmesindeki {number} numaralı yeni sipariş beklemede ve henüz kabul edilmedi. Lütfen siparişi kabul etmek veya reddetmek için mutfak ekranınızı açın.",
+    "outsideZoneNote": "Bu sipariş normal teslimat bölgenizin dışında olabilir"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Bölgeleriniz dışındaki siparişleri kabul edin",
       "outsideZoneDesc": "Müşterilerinizin, çizdiğiniz tüm bölgelerin dışındaki adreslere teslimat siparişi vermesine izin verin. Kapalıyken bu siparişler ödeme adımında engellenir.",
       "outsideZoneEnabled": "Bölge dışı siparişlere artık izin veriliyor",
-      "outsideZoneDisabled": "Bölge dışı siparişler artık engelleniyor"
+      "outsideZoneDisabled": "Bölge dışı siparişler artık engelleniyor",
+      "addressForm": {
+        "title": "Teslimat adresi formu",
+        "desc": "Müşterilerin ödeme sırasında hangi adres alanlarını dolduracağını ve hangilerinin zorunlu olduğunu seçin.",
+        "modeDefault": "Varsayılan",
+        "modeCustom": "Özel",
+        "modeHint": "Varsayılan; Sokak, İlçe/Şehir ve Posta kodunu (zorunlu) ve Daire (isteğe bağlı) alanını gösterir.",
+        "colField": "Alan",
+        "colShow": "Göster",
+        "colRequired": "Zorunlu",
+        "saved": "Teslimat adresi formu güncellendi"
+      }
     },
     "reservations": {
       "title": "Rezervasyonlar",

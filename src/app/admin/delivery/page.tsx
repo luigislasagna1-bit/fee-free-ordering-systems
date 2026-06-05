@@ -13,7 +13,7 @@ export default async function DeliveryPage() {
     }),
     prisma.restaurant.findUnique({
       where: { id: restaurantId ?? "" },
-      select: { lat: true, lng: true, address: true, city: true, state: true, zip: true, name: true, mapProvider: true, googleMapsApiKey: true, acceptOutsideZoneOrders: true },
+      select: { lat: true, lng: true, address: true, city: true, state: true, zip: true, name: true, mapProvider: true, googleMapsApiKey: true, acceptOutsideZoneOrders: true, deliveryAddressConfig: true },
     }),
   ]);
 

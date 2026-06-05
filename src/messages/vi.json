@@ -212,7 +212,8 @@
       "paymentFailed": "Thanh toán thất bại. Vui lòng thử lại.",
       "selectVariant": "Vui lòng chọn một tùy chọn",
       "cityRequired": "Vui lòng nhập thành phố để giao hàng",
-      "zipRequired": "Vui lòng nhập mã bưu chính để giao hàng"
+      "zipRequired": "Vui lòng nhập mã bưu chính để giao hàng",
+      "fieldRequired": "Vui lòng nhập {field}"
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",
@@ -382,7 +383,19 @@
     "nextOpening": "Lần mở cửa tiếp theo: {date}",
     "closedAndCatering": "🌙🎉 Chúng tôi đang đóng cửa VÀ giỏ hàng của bạn có các món đặt tiệc. Thời gian sớm nhất có thể là thời điểm muộn hơn giữa lần mở cửa tiếp theo và <strong>{hours}h</strong> kể từ bây giờ.",
     "cateringOnly": "🎉 Giỏ hàng của bạn có các món đặt tiệc — đơn hàng phải được đặt lịch trước ít nhất <strong>{hours}h</strong>. Tùy chọn \"ngay bây giờ\" không khả dụng khi giỏ hàng có món đặt tiệc.",
-    "dragPinHint": "Kéo ghim đến đúng vị trí giao hàng."
+    "dragPinHint": "Kéo ghim đến đúng vị trí giao hàng.",
+    "addressFields": {
+      "street": "Địa chỉ đường phố",
+      "city": "Thị trấn / Thành phố",
+      "postcode": "Mã bưu chính",
+      "neighbourhood": "Khu phố",
+      "building": "Khối / Tòa nhà",
+      "intercom": "Chuông cửa",
+      "floor": "Tầng",
+      "apartment": "Căn hộ",
+      "parking": "Chỗ đỗ xe"
+    },
+    "zoneMinimum": "Đơn hàng tối thiểu {min}."
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -520,7 +533,8 @@
     "refundExceeds": "Số tiền vượt quá số dư có thể hoàn.",
     "refundFailed": "Hoàn tiền thất bại. Vui lòng thử lại.",
     "refundSuccess": "Đã thực hiện hoàn tiền.",
-    "autoCallMessage": "Đơn hàng mới {number} tại {restaurant} đang chờ và chưa được chấp nhận. Vui lòng mở màn hình bếp để chấp nhận hoặc từ chối đơn hàng."
+    "autoCallMessage": "Đơn hàng mới {number} tại {restaurant} đang chờ và chưa được chấp nhận. Vui lòng mở màn hình bếp để chấp nhận hoặc từ chối đơn hàng.",
+    "outsideZoneNote": "Đơn hàng này có thể nằm ngoài khu vực giao hàng thông thường của bạn"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Chấp nhận đơn hàng ngoài khu vực của bạn",
       "outsideZoneDesc": "Cho phép khách hàng đặt đơn giao hàng đến các địa chỉ nằm ngoài mọi khu vực bạn đã vẽ. Khi tắt, những đơn hàng đó sẽ bị chặn khi thanh toán.",
       "outsideZoneEnabled": "Đơn hàng ngoài khu vực hiện được cho phép",
-      "outsideZoneDisabled": "Đơn hàng ngoài khu vực hiện bị chặn"
+      "outsideZoneDisabled": "Đơn hàng ngoài khu vực hiện bị chặn",
+      "addressForm": {
+        "title": "Biểu mẫu địa chỉ giao hàng",
+        "desc": "Chọn những trường địa chỉ mà khách hàng điền khi thanh toán và những trường bắt buộc.",
+        "modeDefault": "Mặc định",
+        "modeCustom": "Tùy chỉnh",
+        "modeHint": "Chế độ mặc định hiển thị Đường phố, Thị trấn/Thành phố và Mã bưu chính (bắt buộc) cùng với Căn hộ (tùy chọn).",
+        "colField": "Trường",
+        "colShow": "Hiển thị",
+        "colRequired": "Bắt buộc",
+        "saved": "Đã cập nhật biểu mẫu địa chỉ giao hàng"
+      }
     },
     "reservations": {
       "title": "Đặt bàn",

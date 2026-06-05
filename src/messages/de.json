@@ -212,7 +212,8 @@
       "paymentFailed": "Zahlung fehlgeschlagen. Bitte versuchen Sie es erneut.",
       "selectVariant": "Bitte wählen Sie eine Option",
       "cityRequired": "Stadt für Lieferung erforderlich",
-      "zipRequired": "Postleitzahl für Lieferung erforderlich"
+      "zipRequired": "Postleitzahl für Lieferung erforderlich",
+      "fieldRequired": "Bitte {field} eingeben"
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",
@@ -382,7 +383,19 @@
     "nextOpening": "Nächste Öffnung: {date}",
     "closedAndCatering": "🌙🎉 Wir haben geschlossen UND dein Warenkorb enthält Catering-Artikel. Der frühestmögliche Termin ist der spätere von: nächste Öffnung oder <strong>{hours}h</strong> ab jetzt.",
     "cateringOnly": "🎉 Dein Warenkorb enthält Catering-Artikel — Bestellungen müssen mindestens <strong>{hours}h</strong> im Voraus geplant werden. „Schnellstmöglich“ ist bei Catering-Artikeln im Warenkorb nicht verfügbar.",
-    "dragPinHint": "Ziehen Sie den Stecknadel-Marker genau an die Stelle für die Lieferung."
+    "dragPinHint": "Ziehen Sie den Stecknadel-Marker genau an die Stelle für die Lieferung.",
+    "addressFields": {
+      "street": "Straße und Hausnummer",
+      "city": "Ort / Stadt",
+      "postcode": "Postleitzahl",
+      "neighbourhood": "Stadtteil",
+      "building": "Block / Gebäude",
+      "intercom": "Gegensprechanlage",
+      "floor": "Etage",
+      "apartment": "Wohnung",
+      "parking": "Wo parken?"
+    },
+    "zoneMinimum": "Mindestbestellwert {min}."
   },
   "reservation": {
     "title": "Tisch reservieren",
@@ -520,7 +533,8 @@
     "refundExceeds": "Der Betrag übersteigt das erstattbare Guthaben.",
     "refundFailed": "Erstattung fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "refundSuccess": "Erstattung ausgelöst.",
-    "autoCallMessage": "Eine neue Bestellung {number} bei {restaurant} wartet und wurde noch nicht angenommen. Bitte öffnen Sie Ihre Küchenanzeige, um sie anzunehmen oder abzulehnen."
+    "autoCallMessage": "Eine neue Bestellung {number} bei {restaurant} wartet und wurde noch nicht angenommen. Bitte öffnen Sie Ihre Küchenanzeige, um sie anzunehmen oder abzulehnen.",
+    "outsideZoneNote": "Diese Bestellung liegt möglicherweise außerhalb Ihres regulären Liefergebiets"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Bestellungen außerhalb Ihrer Zonen annehmen",
       "outsideZoneDesc": "Ermöglichen Sie es Kunden, Lieferbestellungen an Adressen außerhalb aller von Ihnen eingezeichneten Zonen aufzugeben. Wenn deaktiviert, werden diese Bestellungen beim Checkout blockiert.",
       "outsideZoneEnabled": "Bestellungen außerhalb der Zone sind jetzt erlaubt",
-      "outsideZoneDisabled": "Bestellungen außerhalb der Zone sind jetzt blockiert"
+      "outsideZoneDisabled": "Bestellungen außerhalb der Zone sind jetzt blockiert",
+      "addressForm": {
+        "title": "Formular für Lieferadresse",
+        "desc": "Lege fest, welche Adressfelder Kunden beim Checkout ausfüllen und welche Pflichtfelder sind.",
+        "modeDefault": "Standard",
+        "modeCustom": "Benutzerdefiniert",
+        "modeHint": "Standard zeigt Straße, Ort/Stadt und Postleitzahl (Pflicht) sowie Wohnung (optional).",
+        "colField": "Feld",
+        "colShow": "Anzeigen",
+        "colRequired": "Pflichtfeld",
+        "saved": "Formular für Lieferadresse aktualisiert"
+      }
     },
     "reservations": {
       "title": "Reservierungen",

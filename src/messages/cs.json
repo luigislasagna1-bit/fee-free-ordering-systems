@@ -212,7 +212,8 @@
       "paymentFailed": "Platba selhala. Zkuste to znovu.",
       "selectVariant": "Vyberte prosím možnost",
       "cityRequired": "Pro doručení je nutné vyplnit město",
-      "zipRequired": "Pro doručení je nutné vyplnit PSČ"
+      "zipRequired": "Pro doručení je nutné vyplnit PSČ",
+      "fieldRequired": "Zadejte prosím: {field}"
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",
@@ -382,7 +383,19 @@
     "nextOpening": "Nejbližší otevření: {date}",
     "closedAndCatering": "🌙🎉 Máme zavřeno A váš košík obsahuje cateringové položky. Nejbližší dostupný čas je pozdější z těchto možností: příští otevření nebo <strong>{hours}h</strong> od teď.",
     "cateringOnly": "🎉 Váš košík obsahuje cateringové položky — objednávky musí být naplánovány alespoň <strong>{hours}h</strong> předem. Možnost „Co nejdříve“ není při cateringu dostupná.",
-    "dragPinHint": "Přetáhněte špendlík na přesné místo doručení."
+    "dragPinHint": "Přetáhněte špendlík na přesné místo doručení.",
+    "addressFields": {
+      "street": "Ulice a číslo",
+      "city": "Obec / město",
+      "postcode": "PSČ",
+      "neighbourhood": "Čtvrť",
+      "building": "Blok / budova",
+      "intercom": "Zvonek / domácí telefon",
+      "floor": "Patro",
+      "apartment": "Byt",
+      "parking": "Kde zaparkovat"
+    },
+    "zoneMinimum": "Minimální objednávka {min}."
   },
   "reservation": {
     "title": "Rezervovat stůl",
@@ -520,7 +533,8 @@
     "refundExceeds": "Částka přesahuje zůstatek, který lze vrátit.",
     "refundFailed": "Vrácení platby se nezdařilo. Zkuste to prosím znovu.",
     "refundSuccess": "Platba byla vrácena.",
-    "autoCallMessage": "Nová objednávka {number} v podniku {restaurant} čeká a zatím nebyla přijata. Otevřete prosím kuchyňský displej a objednávku přijměte nebo odmítněte."
+    "autoCallMessage": "Nová objednávka {number} v podniku {restaurant} čeká a zatím nebyla přijata. Otevřete prosím kuchyňský displej a objednávku přijměte nebo odmítněte.",
+    "outsideZoneNote": "Tato objednávka může být mimo vaši běžnou doručovací zónu"
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Přijímat objednávky mimo vaše zóny",
       "outsideZoneDesc": "Umožněte zákazníkům zadávat objednávky s doručením na adresy mimo všechny zóny, které jste si zakreslili. Když je tato možnost vypnutá, takové objednávky jsou při pokladně zablokovány.",
       "outsideZoneEnabled": "Objednávky mimo zónu jsou nyní povoleny",
-      "outsideZoneDisabled": "Objednávky mimo zónu jsou nyní zablokovány"
+      "outsideZoneDisabled": "Objednávky mimo zónu jsou nyní zablokovány",
+      "addressForm": {
+        "title": "Formulář doručovací adresy",
+        "desc": "Zvolte, která pole adresy zákazníci vyplňují při placení a která jsou povinná.",
+        "modeDefault": "Výchozí",
+        "modeCustom": "Vlastní",
+        "modeHint": "Výchozí zobrazí Ulici a číslo, Obec/město a PSČ (povinné) a Byt (nepovinné).",
+        "colField": "Pole",
+        "colShow": "Zobrazit",
+        "colRequired": "Povinné",
+        "saved": "Formulář doručovací adresy byl aktualizován"
+      }
     },
     "reservations": {
       "title": "Rezervace",

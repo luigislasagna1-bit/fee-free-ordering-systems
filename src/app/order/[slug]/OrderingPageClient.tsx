@@ -29,6 +29,12 @@ import {
   PizzaCustomization, PizzaAddResult, PizzaConfig,
 } from "./PizzaBuilder";
 import { geocodeAddress, findZoneForPoint, type ZoneLike } from "@/lib/geocode";
+import {
+  resolveDeliveryAddressConfig,
+  DELIVERY_FIELD_KEYS,
+  type DeliveryFieldKey,
+  type DeliveryAddressData,
+} from "@/lib/delivery-address-fields";
 import { CheckoutModal } from "./CheckoutModal";
 import { ReservationModal } from "./ReservationModal";
 import { PROMO_STOCK_IMAGES } from "./promo-stock-data";
@@ -626,11 +632,15 @@ export function OrderingPageClient({
 }) {
   const t = useTranslations("ordering");
   const tT = useTranslations("ordering.toasts");
+  const tAddr = useTranslations("checkout.addressFields");
   const theme = parseTheme(themeSettings);
   // Owner's chosen clock display format ("12h" → AM/PM, "24h" → 14:30).
   // Applied wherever times are shown to customers: header hours, info
   // page, promo usable hours, schedule-for-later picker.
   const hoursFmt: HoursFormat = restaurant.hoursFormat === "12h" ? "12h" : "24h";
+  // Resolved customizable delivery-address form config (null on the restaurant
+  // → default preset). Drives which fields render + are required at checkout.
+  const deliveryFormConfig = resolveDeliveryAddressConfig((restaurant as any).deliveryAddressConfig);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -712,6 +722,11 @@ export function OrderingPageClient({
     // instructions. Concatenated into deliveryAddress + notes at
     // submit time in buildOrderPayload(). Optional.
     unit: "", buzzer: "", deliveryNotes: "",
+    // Extra structured address fields for the customizable delivery form
+    // (GloriaFood-style). Shown only when the restaurant's config enables
+    // them. neighbourhood/building/floor/parking are new; street→address,
+    // city→city, postcode→zip, apartment→unit, intercom→buzzer.
+    neighbourhood: "", building: "", floor: "", parking: "",
     notes: "", paymentMethod: defaultPaymentMethod, scheduledFor: "",
     // Marketing-consent opt-in checkbox on the contact section
     // (GloriaFood-parity, Luigi 2026-06-02). Default = TRUE per
@@ -1700,6 +1715,31 @@ export function OrderingPageClient({
           .filter(Boolean)
           .join(", ")
       : customerInfo.address;
+    // Structured per-field address for the customizable delivery form. Only
+    // fields the restaurant's config SHOWS are included; the server recomposes
+    // the flat columns from this. Maps each canonical field to its customerInfo
+    // slot (street→address, postcode→zip, apartment→unit, intercom→buzzer).
+    const fieldToValue: Record<DeliveryFieldKey, string> = {
+      street: customerInfo.address,
+      city: customerInfo.city,
+      postcode: customerInfo.zip,
+      neighbourhood: customerInfo.neighbourhood,
+      building: customerInfo.building,
+      intercom: customerInfo.buzzer,
+      floor: customerInfo.floor,
+      apartment: customerInfo.unit,
+      parking: customerInfo.parking,
+    };
+    let deliveryAddressData: DeliveryAddressData | null = null;
+    if (orderType === "delivery") {
+      const d: DeliveryAddressData = {};
+      for (const key of DELIVERY_FIELD_KEYS) {
+        if (!deliveryFormConfig[key].show) continue;
+        const v = (fieldToValue[key] || "").trim();
+        if (v) d[key] = v;
+      }
+      deliveryAddressData = Object.keys(d).length ? d : null;
+    }
     // Combine delivery instructions with order notes — both flow into
     // `notes`. Delivery notes go FIRST so drivers see them at the top.
     const deliveryNotesPart = customerInfo.deliveryNotes?.trim();
@@ -1712,6 +1752,7 @@ export function OrderingPageClient({
     customerName: customerInfo.name, customerEmail: customerInfo.email,
     customerPhone: customerInfo.phone, deliveryAddress: fullDeliveryAddress,
     deliveryCity: customerInfo.city, deliveryZip: customerInfo.zip,
+    deliveryAddressData,
     // Precise map-pin coords (delivery only) — driver gets an exact spot.
     deliveryLat: orderType === "delivery" ? customerInfo.lat : null,
     deliveryLng: orderType === "delivery" ? customerInfo.lng : null,
@@ -1802,25 +1843,43 @@ export function OrderingPageClient({
       toast.error(tT("emailRequired"));
       return;
     }
-    if (orderType === "delivery" && !customerInfo.address) {
-      setEditingSection("ordering");
-      focusField("checkout-delivery-address");
-      toast.error(tT("addressRequired"));
-      return;
-    }
-    // City + postal code are required for delivery so the kitchen/driver has a
-    // complete, geocodable address (Luigi 2026-06-04). Mirrored server-side.
-    if (orderType === "delivery" && !customerInfo.city.trim()) {
-      setEditingSection("ordering");
-      focusField("checkout-delivery-city");
-      toast.error(tT("cityRequired"));
-      return;
-    }
-    if (orderType === "delivery" && !customerInfo.zip.trim()) {
-      setEditingSection("ordering");
-      focusField("checkout-delivery-zip");
-      toast.error(tT("zipRequired"));
-      return;
+    // Delivery required-field validation is CONFIG-DRIVEN (customizable form).
+    // We walk the canonical fields in order; the first shown+required field
+    // that's empty fails validation, focuses its input, and shows a localized
+    // toast. Mirrored server-side (firstMissingRequiredField). Luigi 2026-06-04.
+    if (orderType === "delivery") {
+      const fieldToValue: Record<DeliveryFieldKey, string> = {
+        street: customerInfo.address,
+        city: customerInfo.city,
+        postcode: customerInfo.zip,
+        neighbourhood: customerInfo.neighbourhood,
+        building: customerInfo.building,
+        intercom: customerInfo.buzzer,
+        floor: customerInfo.floor,
+        apartment: customerInfo.unit,
+        parking: customerInfo.parking,
+      };
+      // Inputs that have a focusable id (the others share the generic section).
+      const fieldToFocusId: Partial<Record<DeliveryFieldKey, string>> = {
+        street: "checkout-delivery-address",
+        city: "checkout-delivery-city",
+        postcode: "checkout-delivery-zip",
+      };
+      let missingField: DeliveryFieldKey | null = null;
+      for (const key of DELIVERY_FIELD_KEYS) {
+        const setting = deliveryFormConfig[key];
+        if (setting.show && setting.required && !(fieldToValue[key] || "").trim()) {
+          missingField = key;
+          break;
+        }
+      }
+      if (missingField) {
+        setEditingSection("ordering");
+        const focusId = fieldToFocusId[missingField];
+        if (focusId) focusField(focusId);
+        toast.error(tT("fieldRequired", { field: tAddr(missingField) }));
+        return;
+      }
     }
     // Block delivery orders to a geocoded address that falls OUTSIDE every
     // delivery zone — UNLESS the restaurant has opted to accept out-of-zone
@@ -3316,6 +3375,7 @@ export function OrderingPageClient({
           requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}
           requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}
           hoursFormat={hoursFmt}
+          deliveryFormConfig={deliveryFormConfig}
           onClose={() => setCheckoutOpen(false)}
         />
       )}

@@ -212,7 +212,8 @@
       "paymentFailed": "支付失败，请重试。",
       "selectVariant": "请选择一个选项",
       "cityRequired": "外卖订单需填写城市",
-      "zipRequired": "外卖订单需填写邮政编码"
+      "zipRequired": "外卖订单需填写邮政编码",
+      "fieldRequired": "请填写{field}"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",
@@ -382,7 +383,19 @@
     "nextOpening": "下次营业时间：{date}",
     "closedAndCatering": "🌙🎉 我们目前已打烊，且您的购物车中包含外卖餐饮项目。最早可用时间为下次营业时间与距现在 <strong>{hours}h</strong> 中较晚的那个。",
     "cateringOnly": "🎉 您的购物车中包含外卖餐饮项目 — 此类订单至少需提前 <strong>{hours}h</strong> 预约。购物车中含外卖餐饮项目时，不支持即时下单。",
-    "dragPinHint": "拖动图钉，标出准确的配送位置。"
+    "dragPinHint": "拖动图钉，标出准确的配送位置。",
+    "addressFields": {
+      "street": "街道地址",
+      "city": "城镇 / 城市",
+      "postcode": "邮政编码",
+      "neighbourhood": "街区",
+      "building": "楼栋 / 楼宇",
+      "intercom": "门禁对讲",
+      "floor": "楼层",
+      "apartment": "房间号",
+      "parking": "停车位置"
+    },
+    "zoneMinimum": "最低订单金额 {min}。"
   },
   "reservation": {
     "title": "预订餐桌",
@@ -520,7 +533,8 @@
     "refundExceeds": "金额超出可退款余额。",
     "refundFailed": "退款失败。请重试。",
     "refundSuccess": "退款已发起。",
-    "autoCallMessage": "{restaurant} 的新订单 {number} 正在等待，尚未被接受。请打开您的厨房显示屏，接受或拒绝该订单。"
+    "autoCallMessage": "{restaurant} 的新订单 {number} 正在等待，尚未被接受。请打开您的厨房显示屏，接受或拒绝该订单。",
+    "outsideZoneNote": "此订单可能超出您的常规配送范围"
   },
   "admin": {
     "welcomeBack": "欢迎回来",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "接受配送区域外的订单",
       "outsideZoneDesc": "允许顾客向您已绘制的所有区域之外的地址下达配送订单。关闭后，这些订单将在结账时被拦截。",
       "outsideZoneEnabled": "现已允许区域外订单",
-      "outsideZoneDisabled": "现已拦截区域外订单"
+      "outsideZoneDisabled": "现已拦截区域外订单",
+      "addressForm": {
+        "title": "配送地址表单",
+        "desc": "选择顾客在结账时填写哪些地址字段，以及哪些为必填项。",
+        "modeDefault": "默认",
+        "modeCustom": "自定义",
+        "modeHint": "默认显示街道、城镇/城市和邮政编码（必填），以及房间号（选填）。",
+        "colField": "字段",
+        "colShow": "显示",
+        "colRequired": "必填",
+        "saved": "配送地址表单已更新"
+      }
     },
     "reservations": {
       "title": "预订",

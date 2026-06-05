@@ -211,7 +211,8 @@
       "paymentFailed": "Échec du paiement. Veuillez réessayer.",
       "selectVariant": "Veuillez sélectionner une option",
       "cityRequired": "Ville requise pour la livraison",
-      "zipRequired": "Code postal requis pour la livraison"
+      "zipRequired": "Code postal requis pour la livraison",
+      "fieldRequired": "Veuillez saisir {field}"
     },
     "followUs": "Suivez-nous",
     "searchMenu": "Rechercher dans le menu…",
@@ -382,7 +383,19 @@
     "nextOpening": "Prochaine ouverture : {date}",
     "closedAndCatering": "🌙🎉 Nous sommes fermés ET votre panier contient des articles de traiteur. Le créneau le plus tôt disponible est le plus tardif entre la prochaine ouverture et <strong>{hours}h</strong> à partir de maintenant.",
     "cateringOnly": "🎉 Votre panier contient des articles de traiteur — les commandes doivent être planifiées au moins <strong>{hours}h</strong> à l'avance. La livraison dès que possible n'est pas disponible avec des articles de traiteur dans le panier.",
-    "dragPinHint": "Faites glisser le repère jusqu'à l'emplacement exact pour la livraison."
+    "dragPinHint": "Faites glisser le repère jusqu'à l'emplacement exact pour la livraison.",
+    "addressFields": {
+      "street": "Adresse",
+      "city": "Ville",
+      "postcode": "Code postal",
+      "neighbourhood": "Quartier",
+      "building": "Bloc / Bâtiment",
+      "intercom": "Interphone",
+      "floor": "Étage",
+      "apartment": "Appartement",
+      "parking": "Où se garer"
+    },
+    "zoneMinimum": "Commande minimum {min}."
   },
   "reservation": {
     "title": "Réserver une table",
@@ -520,7 +533,8 @@
     "refundExceeds": "Le montant dépasse le solde remboursable.",
     "refundFailed": "Échec du remboursement. Veuillez réessayer.",
     "refundSuccess": "Remboursement émis.",
-    "autoCallMessage": "La nouvelle commande {number} chez {restaurant} est en attente et n'a pas encore été acceptée. Veuillez ouvrir votre écran de cuisine pour l'accepter ou la refuser."
+    "autoCallMessage": "La nouvelle commande {number} chez {restaurant} est en attente et n'a pas encore été acceptée. Veuillez ouvrir votre écran de cuisine pour l'accepter ou la refuser.",
+    "outsideZoneNote": "Cette commande se situe peut-être en dehors de votre zone de livraison habituelle"
   },
   "admin": {
     "welcomeBack": "Bon retour",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Accepter les commandes hors de vos zones",
       "outsideZoneDesc": "Permettez aux clients de passer des commandes en livraison vers des adresses situées en dehors de toutes les zones que vous avez tracées. Lorsque l'option est désactivée, ces commandes sont bloquées au moment du paiement.",
       "outsideZoneEnabled": "Les commandes hors zone sont désormais autorisées",
-      "outsideZoneDisabled": "Les commandes hors zone sont désormais bloquées"
+      "outsideZoneDisabled": "Les commandes hors zone sont désormais bloquées",
+      "addressForm": {
+        "title": "Formulaire d'adresse de livraison",
+        "desc": "Choisissez quels champs d'adresse les clients remplissent au paiement, et lesquels sont obligatoires.",
+        "modeDefault": "Par défaut",
+        "modeCustom": "Personnalisé",
+        "modeHint": "Le mode par défaut affiche Adresse, Ville et Code postal (obligatoires) ainsi qu'Appartement (facultatif).",
+        "colField": "Champ",
+        "colShow": "Afficher",
+        "colRequired": "Obligatoire",
+        "saved": "Formulaire d'adresse de livraison mis à jour"
+      }
     },
     "reservations": {
       "title": "Réservations",

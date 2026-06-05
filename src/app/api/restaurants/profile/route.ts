@@ -4,6 +4,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { isValidTimezone } from "@/lib/regions";
 import { SUPPORTED_LOCALES } from "@/lib/locales";
+import { resolveDeliveryAddressConfig } from "@/lib/delivery-address-fields";
 
 /**
  * GET — small endpoint used by surfaces that need a single Restaurant
@@ -57,6 +58,7 @@ export async function PUT(req: NextRequest) {
     requireCustomerPhone,
     showCustomerMenuSearch,
     acceptOutsideZoneOrders,
+    deliveryAddressConfig,
   } = data;
 
   const ALLOWED_LOCALES: readonly string[] = SUPPORTED_LOCALES;
@@ -193,6 +195,15 @@ export async function PUT(req: NextRequest) {
   // delivery zone. Default false = block at checkout (restaurant opts in).
   // Reflected on the customer page (OrderingPageClient out-of-zone guard).
   if (acceptOutsideZoneOrders !== undefined) updateData.acceptOutsideZoneOrders = !!acceptOutsideZoneOrders;
+  // Customizable delivery-address form. null = revert to the default preset;
+  // an object = store the normalized 9-field config (resolve() guarantees a
+  // complete, valid shape — hidden fields can't be required).
+  if (deliveryAddressConfig !== undefined) {
+    updateData.deliveryAddressConfig =
+      deliveryAddressConfig === null
+        ? null
+        : resolveDeliveryAddressConfig(deliveryAddressConfig);
+  }
   // Scheduled-order slot interval (Luigi 2026-05-31). Whitelist values
   // so we don't accidentally accept 1-minute (kitchen chaos) or 1440
   // (no slots in a day). 10/15/20/30/60 covers every real workflow.

@@ -212,7 +212,8 @@
       "paymentFailed": "Error en el pagament. Torneu-ho a intentar.",
       "selectVariant": "Seleccioneu una opció",
       "cityRequired": "Cal indicar la ciutat per al lliurament",
-      "zipRequired": "Cal indicar el codi postal per al lliurament"
+      "zipRequired": "Cal indicar el codi postal per al lliurament",
+      "fieldRequired": "Introduïu {field}"
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
@@ -382,7 +383,19 @@
     "nextOpening": "Pròxima obertura: {date}",
     "closedAndCatering": "🌙🎉 Estem tancats I la teva comanda inclou articles de càtering. El primer horari disponible és el més tardà entre la pròxima obertura i <strong>{hours}h</strong> a partir d'ara.",
     "cateringOnly": "🎉 La teva comanda inclou articles de càtering — les comandes s'han de programar amb almenys <strong>{hours}h</strong> d'antelació. L'opció «El més aviat possible» no està disponible quan hi ha articles de càtering a la comanda.",
-    "dragPinHint": "Arrossegueu el marcador fins al punt exacte de lliurament."
+    "dragPinHint": "Arrossegueu el marcador fins al punt exacte de lliurament.",
+    "addressFields": {
+      "street": "Adreça (carrer)",
+      "city": "Població / Ciutat",
+      "postcode": "Codi postal",
+      "neighbourhood": "Barri",
+      "building": "Bloc / Edifici",
+      "intercom": "Intèrfon",
+      "floor": "Pis",
+      "apartment": "Apartament",
+      "parking": "On aparcar"
+    },
+    "zoneMinimum": "Comanda mínima {min}."
   },
   "reservation": {
     "title": "Reservar taula",
@@ -520,7 +533,8 @@
     "refundExceeds": "L'import supera el saldo reemborsable.",
     "refundFailed": "El reemborsament ha fallat. Torneu-ho a provar.",
     "refundSuccess": "Reemborsament emès.",
-    "autoCallMessage": "La comanda nova {number} a {restaurant} està esperant i encara no s'ha acceptat. Si us plau, obriu la pantalla de cuina per acceptar-la o rebutjar-la."
+    "autoCallMessage": "La comanda nova {number} a {restaurant} està esperant i encara no s'ha acceptat. Si us plau, obriu la pantalla de cuina per acceptar-la o rebutjar-la.",
+    "outsideZoneNote": "Aquesta comanda pot estar fora de la teva zona de repartiment habitual"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Accepta comandes fora de les teves zones",
       "outsideZoneDesc": "Permet que els clients facin comandes a domicili a adreces fora de qualsevol zona que hagis dibuixat. Quan està desactivat, aquestes comandes es bloquegen en finalitzar la compra.",
       "outsideZoneEnabled": "Ara es permeten les comandes fora de zona",
-      "outsideZoneDisabled": "Ara es bloquegen les comandes fora de zona"
+      "outsideZoneDisabled": "Ara es bloquegen les comandes fora de zona",
+      "addressForm": {
+        "title": "Formulari d'adreça de lliurament",
+        "desc": "Trieu quins camps d'adreça omplen els clients en pagar i quins són obligatoris.",
+        "modeDefault": "Per defecte",
+        "modeCustom": "Personalitzat",
+        "modeHint": "Per defecte es mostren Carrer, Població/Ciutat i Codi postal (obligatoris) i Apartament (opcional).",
+        "colField": "Camp",
+        "colShow": "Mostra",
+        "colRequired": "Obligatori",
+        "saved": "Formulari d'adreça de lliurament actualitzat"
+      }
     },
     "reservations": {
       "title": "Reserves",

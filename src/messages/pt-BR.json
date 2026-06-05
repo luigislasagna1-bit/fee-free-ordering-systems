@@ -212,7 +212,8 @@
       "paymentFailed": "Falha no pagamento. Tente novamente.",
       "selectVariant": "Por favor, selecione uma opção",
       "cityRequired": "Cidade obrigatória para entrega",
-      "zipRequired": "CEP obrigatório para entrega"
+      "zipRequired": "CEP obrigatório para entrega",
+      "fieldRequired": "Informe {field}"
     },
     "searchMenu": "Buscar no cardápio…",
     "signIn": "Entrar",
@@ -382,7 +383,19 @@
     "nextOpening": "Próxima abertura: {date}",
     "closedAndCatering": "🌙🎉 Estamos fechados E seu carrinho inclui itens de catering. O horário disponível mais cedo é o maior entre a próxima abertura e <strong>{hours}h</strong> a partir de agora.",
     "cateringOnly": "🎉 Seu carrinho inclui itens de catering — os pedidos devem ser agendados com pelo menos <strong>{hours}h</strong> de antecedência. A opção \"o mais rápido possível\" não está disponível com itens de catering no carrinho.",
-    "dragPinHint": "Arraste o marcador até o ponto exato para a entrega."
+    "dragPinHint": "Arraste o marcador até o ponto exato para a entrega.",
+    "addressFields": {
+      "street": "Endereço",
+      "city": "Cidade",
+      "postcode": "CEP",
+      "neighbourhood": "Bairro",
+      "building": "Bloco / Edifício",
+      "intercom": "Interfone",
+      "floor": "Andar",
+      "apartment": "Apartamento",
+      "parking": "Onde estacionar"
+    },
+    "zoneMinimum": "Pedido mínimo {min}."
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -520,7 +533,8 @@
     "refundExceeds": "O valor excede o saldo reembolsável.",
     "refundFailed": "Falha no reembolso. Tente novamente.",
     "refundSuccess": "Reembolso emitido.",
-    "autoCallMessage": "O novo pedido {number} em {restaurant} está aguardando e ainda não foi aceito. Por favor, abra o seu painel da cozinha para aceitá-lo ou recusá-lo."
+    "autoCallMessage": "O novo pedido {number} em {restaurant} está aguardando e ainda não foi aceito. Por favor, abra o seu painel da cozinha para aceitá-lo ou recusá-lo.",
+    "outsideZoneNote": "Este pedido pode estar fora da sua zona de entrega habitual"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Aceitar pedidos fora das suas zonas",
       "outsideZoneDesc": "Permita que os clientes façam pedidos de entrega para endereços fora de todas as zonas que você desenhou. Quando desativado, esses pedidos são bloqueados na finalização da compra.",
       "outsideZoneEnabled": "Os pedidos fora da zona agora são permitidos",
-      "outsideZoneDisabled": "Os pedidos fora da zona agora estão bloqueados"
+      "outsideZoneDisabled": "Os pedidos fora da zona agora estão bloqueados",
+      "addressForm": {
+        "title": "Formulário de endereço de entrega",
+        "desc": "Escolha quais campos de endereço os clientes preenchem na finalização da compra e quais são obrigatórios.",
+        "modeDefault": "Padrão",
+        "modeCustom": "Personalizado",
+        "modeHint": "O padrão exibe Endereço, Cidade e CEP (obrigatórios) e Apartamento (opcional).",
+        "colField": "Campo",
+        "colShow": "Exibir",
+        "colRequired": "Obrigatório",
+        "saved": "Formulário de endereço de entrega atualizado"
+      }
     },
     "reservations": {
       "title": "Reservas",

@@ -212,7 +212,8 @@
       "paymentFailed": "Płatność nie powiodła się. Spróbuj ponownie.",
       "selectVariant": "Proszę wybrać opcję",
       "cityRequired": "Miasto jest wymagane do dostawy",
-      "zipRequired": "Kod pocztowy jest wymagany do dostawy"
+      "zipRequired": "Kod pocztowy jest wymagany do dostawy",
+      "fieldRequired": "Podaj: {field}"
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
@@ -382,7 +383,19 @@
     "nextOpening": "Najbliższe otwarcie: {date}",
     "closedAndCatering": "🌙🎉 Jesteśmy zamknięci, a Twój koszyk zawiera pozycje cateringowe. Najwcześniejszy dostępny termin to późniejsza z dat — najbliższe otwarcie lub <strong>{hours}h</strong> od teraz.",
     "cateringOnly": "🎉 Twój koszyk zawiera pozycje cateringowe — zamówienia muszą być zaplanowane z wyprzedzeniem co najmniej <strong>{hours}h</strong>. Opcja „jak najszybciej” nie jest dostępna, gdy w koszyku znajdują się pozycje cateringowe.",
-    "dragPinHint": "Przeciągnij pinezkę na dokładne miejsce dostawy."
+    "dragPinHint": "Przeciągnij pinezkę na dokładne miejsce dostawy.",
+    "addressFields": {
+      "street": "Adres (ulica)",
+      "city": "Miejscowość",
+      "postcode": "Kod pocztowy",
+      "neighbourhood": "Dzielnica",
+      "building": "Blok / budynek",
+      "intercom": "Domofon",
+      "floor": "Piętro",
+      "apartment": "Mieszkanie",
+      "parking": "Gdzie zaparkować"
+    },
+    "zoneMinimum": "Minimalna wartość zamówienia {min}."
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
@@ -520,7 +533,8 @@
     "refundExceeds": "Kwota przekracza saldo dostępne do zwrotu.",
     "refundFailed": "Zwrot nie powiódł się. Spróbuj ponownie.",
     "refundSuccess": "Zwrot został wykonany.",
-    "autoCallMessage": "Nowe zamówienie {number} w {restaurant} czeka i nie zostało jeszcze zaakceptowane. Otwórz ekran kuchni, aby je przyjąć lub odrzucić."
+    "autoCallMessage": "Nowe zamówienie {number} w {restaurant} czeka i nie zostało jeszcze zaakceptowane. Otwórz ekran kuchni, aby je przyjąć lub odrzucić.",
+    "outsideZoneNote": "To zamówienie może znajdować się poza Twoją standardową strefą dostawy"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Przyjmuj zamówienia spoza Twoich stref",
       "outsideZoneDesc": "Pozwól klientom składać zamówienia z dostawą na adresy spoza wszystkich narysowanych przez Ciebie stref. Gdy opcja jest wyłączona, takie zamówienia są blokowane podczas finalizacji.",
       "outsideZoneEnabled": "Zamówienia spoza strefy są teraz dozwolone",
-      "outsideZoneDisabled": "Zamówienia spoza strefy są teraz blokowane"
+      "outsideZoneDisabled": "Zamówienia spoza strefy są teraz blokowane",
+      "addressForm": {
+        "title": "Formularz adresu dostawy",
+        "desc": "Wybierz, które pola adresu klienci wypełniają przy zamówieniu i które są wymagane.",
+        "modeDefault": "Domyślny",
+        "modeCustom": "Niestandardowy",
+        "modeHint": "Tryb domyślny pokazuje ulicę, miejscowość i kod pocztowy (wymagane) oraz mieszkanie (opcjonalnie).",
+        "colField": "Pole",
+        "colShow": "Pokaż",
+        "colRequired": "Wymagane",
+        "saved": "Zaktualizowano formularz adresu dostawy"
+      }
     },
     "reservations": {
       "title": "Rezerwacje",

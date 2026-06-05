@@ -212,7 +212,8 @@
       "paymentFailed": "Betaling mislykkedes. Prøv igen.",
       "selectVariant": "Vælg venligst en mulighed",
       "cityRequired": "By er påkrævet ved levering",
-      "zipRequired": "Postnummer er påkrævet ved levering"
+      "zipRequired": "Postnummer er påkrævet ved levering",
+      "fieldRequired": "Angiv venligst {field}"
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",
@@ -382,7 +383,19 @@
     "nextOpening": "Næste åbningstidspunkt: {date}",
     "closedAndCatering": "🌙🎉 Vi har lukket OG din kurv indeholder cateringvarer. Det tidligst ledige tidspunkt er det seneste af næste åbningstidspunkt og <strong>{hours}h</strong> fra nu.",
     "cateringOnly": "🎉 Din kurv indeholder cateringvarer — ordrer skal planlægges mindst <strong>{hours}h</strong> i forvejen. Hurtigst muligt er ikke tilgængeligt, når der er cateringvarer i kurven.",
-    "dragPinHint": "Træk nålen til det præcise sted for levering."
+    "dragPinHint": "Træk nålen til det præcise sted for levering.",
+    "addressFields": {
+      "street": "Gadenavn og husnummer",
+      "city": "By",
+      "postcode": "Postnummer",
+      "neighbourhood": "Kvarter",
+      "building": "Blok / bygning",
+      "intercom": "Dørtelefon",
+      "floor": "Etage",
+      "apartment": "Lejlighed",
+      "parking": "Hvor skal der parkeres"
+    },
+    "zoneMinimum": "Minimumsordre {min}."
   },
   "reservation": {
     "title": "Book et bord",
@@ -520,7 +533,8 @@
     "refundExceeds": "Beløbet overstiger den refunderbare saldo.",
     "refundFailed": "Refusion mislykkedes. Prøv igen.",
     "refundSuccess": "Refusion udstedt.",
-    "autoCallMessage": "Ny ordre {number} hos {restaurant} venter og er endnu ikke blevet accepteret. Åbn venligst dit køkkendisplay for at acceptere eller afvise den."
+    "autoCallMessage": "Ny ordre {number} hos {restaurant} venter og er endnu ikke blevet accepteret. Åbn venligst dit køkkendisplay for at acceptere eller afvise den.",
+    "outsideZoneNote": "Denne ordre er muligvis uden for dit normale leveringsområde"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",
@@ -728,7 +742,18 @@
       "outsideZoneTitle": "Modtag ordrer uden for dine zoner",
       "outsideZoneDesc": "Lad kunder afgive leveringsordrer til adresser uden for alle de zoner, du har tegnet. Når funktionen er slået fra, blokeres disse ordrer ved kassen.",
       "outsideZoneEnabled": "Ordrer uden for zonen er nu tilladt",
-      "outsideZoneDisabled": "Ordrer uden for zonen er nu blokeret"
+      "outsideZoneDisabled": "Ordrer uden for zonen er nu blokeret",
+      "addressForm": {
+        "title": "Formular til leveringsadresse",
+        "desc": "Vælg hvilke adressefelter kunderne udfylder ved kassen, og hvilke der er påkrævede.",
+        "modeDefault": "Standard",
+        "modeCustom": "Tilpasset",
+        "modeHint": "Standard viser Gade, By og Postnummer (påkrævet) samt Lejlighed (valgfri).",
+        "colField": "Felt",
+        "colShow": "Vis",
+        "colRequired": "Påkrævet",
+        "saved": "Formular til leveringsadresse opdateret"
+      }
     },
     "reservations": {
       "title": "Reservationer",

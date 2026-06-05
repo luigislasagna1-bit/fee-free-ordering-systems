@@ -347,6 +347,13 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
             {order.customerName.replace("[TEST] ", "")}
             {order.deliveryAddress && ` · ${order.deliveryAddress}`}
           </div>
+          {(order as any).outsideDeliveryZone && (
+            // Heads-up for staff: this delivery address fell outside every
+            // configured zone but was accepted (out-of-zone orders enabled).
+            <div className="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-300">
+              ⚠ {tk("outsideZoneNote")}
+            </div>
+          )}
           <div className={`text-xs ${t.subtle} mt-0.5`}>
             {order.items.length} {tk("items")}
           </div>

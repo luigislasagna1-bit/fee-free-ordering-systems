@@ -212,7 +212,8 @@
       "paymentFailed": "Payment failed. Please try again.",
       "selectVariant": "Please select an option",
       "cityRequired": "City required for delivery",
-      "zipRequired": "Postal code required for delivery"
+      "zipRequired": "Postal code required for delivery",
+      "fieldRequired": "Please enter {field}"
     },
     "searchMenu": "Search the menu…",
     "signIn": "Sign in",
@@ -350,6 +351,17 @@
     "lastNamePlaceholder": "Last name",
     "phonePlaceholder": "Phone",
     "emailPlaceholder": "Email",
+    "addressFields": {
+      "street": "Street address",
+      "city": "Town / City",
+      "postcode": "Postcode",
+      "neighbourhood": "Neighbourhood",
+      "building": "Block / Building",
+      "intercom": "Intercom",
+      "floor": "Floor",
+      "apartment": "Apartment",
+      "parking": "Where to park"
+    },
     "startTypingAddress": "Start typing your address…",
     "streetAddressPlaceholder": "Street address *",
     "cityPlaceholder": "City",
@@ -371,6 +383,7 @@
     "noNotes": "No notes",
     "locatingAddress": "Locating your address…",
     "youreIn": "You're in {zone} — Fee {fee}, ~{minutes} min.",
+    "zoneMinimum": "Minimum order {min}.",
     "outsideStandard": "Outside our standard delivery areas.",
     "freeDelivery": "Free delivery",
     "aptUnitPlaceholder": "Apt / Unit / Suite (optional)",
@@ -490,6 +503,7 @@
     "orderNumber": "Order #",
     "customer": "Customer",
     "items": "Items",
+    "outsideZoneNote": "This order may be outside your regular delivery zone",
     "addedAt": "Added at",
     "orderType": "Order type",
     "viewDetails": "View details",
@@ -751,7 +765,18 @@
       "outsideZoneTitle": "Accept orders outside your zones",
       "outsideZoneDesc": "Let customers place delivery orders to addresses outside every zone you've drawn. When off, those orders are blocked at checkout.",
       "outsideZoneEnabled": "Out-of-zone orders are now allowed",
-      "outsideZoneDisabled": "Out-of-zone orders are now blocked"
+      "outsideZoneDisabled": "Out-of-zone orders are now blocked",
+      "addressForm": {
+        "title": "Delivery address form",
+        "desc": "Choose which address fields customers fill in at checkout, and which are required.",
+        "modeDefault": "Default",
+        "modeCustom": "Custom",
+        "modeHint": "Default shows Street, Town/City and Postcode (required) plus Apartment (optional).",
+        "colField": "Field",
+        "colShow": "Show",
+        "colRequired": "Required",
+        "saved": "Delivery address form updated"
+      }
     },
     "reservations": {
       "title": "Reservations",

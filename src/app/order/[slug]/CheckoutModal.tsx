@@ -11,6 +11,10 @@ import { parseTheme } from "@/lib/theme";
 import { formatTime } from "@/lib/format-time";
 import { useGoogleMaps } from "@/lib/use-google-maps";
 import { useTranslations } from "next-intl";
+import {
+  type DeliveryFieldKey,
+  type DeliveryAddressConfig,
+} from "@/lib/delivery-address-fields";
 
 type Theme = ReturnType<typeof parseTheme>;
 type SectionKey = null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes";
@@ -34,6 +38,10 @@ type CustomerInfo = {
    *  CASL / GDPR compliance. */
   marketingConsent: boolean;
   notes: string; paymentMethod: string; scheduledFor: string;
+  /** Extra structured fields for the customizable delivery form. Shown only
+   *  when the restaurant's deliveryFormConfig enables them. (street→address,
+   *  city→city, postcode→zip, apartment→unit, intercom→buzzer.) */
+  neighbourhood: string; building: string; floor: string; parking: string;
   /** Precise delivery pin coords (Google-maps restaurants). */
   lat: number | null;
   lng: number | null;
@@ -153,7 +161,7 @@ interface Props {
   hasZones: boolean;
   geocoding: boolean;
   geocodeError: string | null;
-  resolvedZone: { zone: { name: string; color: string; deliveryFee: number; estimatedMinutes: number }; inside: boolean } | null;
+  resolvedZone: { zone: { name: string; color: string; deliveryFee: number; estimatedMinutes: number; minimumOrder: number }; inside: boolean } | null;
   mapProvider: "leaflet" | "google";
   googleMapsApiKey: string | null;
   onClose: () => void;
@@ -200,6 +208,9 @@ interface Props {
   /** Restaurant's chosen 12h/24h display format — scheduled-time slot labels
    *  + the scheduled summary follow it (Luigi 2026-06-04). */
   hoursFormat?: "12h" | "24h";
+  /** Resolved customizable delivery-address form config (which of the 9
+   *  fields show + are required). Always a complete config. */
+  deliveryFormConfig: DeliveryAddressConfig;
 }
 
 export function CheckoutModal({
@@ -229,9 +240,22 @@ export function CheckoutModal({
   estimatedDeliveryMinutes, estimatedPickupMinutes,
   hasZones, geocoding, geocodeError, resolvedZone,
   mapProvider, googleMapsApiKey,
+  deliveryFormConfig,
   onClose,
 }: Props) {
   const tc = useTranslations("checkout");
+  const tAddr = useTranslations("checkout.addressFields");
+  // Maps each canonical delivery field key onto its CustomerInfo property so we
+  // can render the customizable form generically (street→address, postcode→zip,
+  // apartment→unit, intercom→buzzer; the rest share the same name).
+  const FIELD_TO_CI: Record<DeliveryFieldKey, keyof CustomerInfo> = {
+    street: "address", city: "city", postcode: "zip",
+    neighbourhood: "neighbourhood", building: "building", intercom: "buzzer",
+    floor: "floor", apartment: "unit", parking: "parking",
+  };
+  // The "extra" fields rendered as a plain grid below the street/city/postcode
+  // block (street/city/postcode have bespoke inputs + the map pin).
+  const EXTRA_FIELD_KEYS: DeliveryFieldKey[] = ["neighbourhood", "building", "intercom", "floor", "apartment", "parking"];
   const tOrd = useTranslations("ordering");
   const tCommon = useTranslations("common");
   // Wire every $/€/£ label in this checkout through the restaurant's
@@ -585,54 +609,65 @@ export function CheckoutModal({
                 )}
                 {orderType === "delivery" && (
                   <div className="pt-3 space-y-2">
-                    {googleEnabled && gmapsLoaded ? (
-                      <Autocomplete
-                        onLoad={(ac) => { autocompleteRef.current = ac; }}
-                        onPlaceChanged={handlePlaceChanged}
-                        options={{ fields: ["address_components", "formatted_address", "geometry"], types: ["address"] }}
-                      >
+                    {/* Street address — primary field; drives autocomplete +
+                        map pin + zone resolution. Rendered only when the
+                        restaurant's form config shows it. */}
+                    {deliveryFormConfig.street.show && (
+                      googleEnabled && gmapsLoaded ? (
+                        <Autocomplete
+                          onLoad={(ac) => { autocompleteRef.current = ac; }}
+                          onPlaceChanged={handlePlaceChanged}
+                          options={{ fields: ["address_components", "formatted_address", "geometry"], types: ["address"] }}
+                        >
+                          <input
+                            id="checkout-delivery-address"
+                            type="text" placeholder={`${tc("startTypingAddress")}${deliveryFormConfig.street.required ? " *" : ""}`}
+                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                            style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                            value={customerInfo.address}
+                            onChange={e => setCustomerInfo({ ...customerInfo, address: e.target.value })}
+                          />
+                        </Autocomplete>
+                      ) : (
                         <input
                           id="checkout-delivery-address"
-                          type="text" placeholder={tc("startTypingAddress")}
+                          type="text" placeholder={`${tc("streetAddressPlaceholder")}${deliveryFormConfig.street.required ? " *" : ""}`}
                           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                           style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                           value={customerInfo.address}
                           onChange={e => setCustomerInfo({ ...customerInfo, address: e.target.value })}
                         />
-                      </Autocomplete>
-                    ) : (
-                      <input
-                        id="checkout-delivery-address"
-                        type="text" placeholder={tc("streetAddressPlaceholder")}
-                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
-                        style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                        value={customerInfo.address}
-                        onChange={e => setCustomerInfo({ ...customerInfo, address: e.target.value })}
-                      />
+                      )
                     )}
-                    <div className="grid grid-cols-2 gap-2">
-                      <input
-                        id="checkout-delivery-city"
-                        type="text" placeholder={`${tc("cityPlaceholder")} *`}
-                        className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
-                        style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                        value={customerInfo.city}
-                        onChange={e => setCustomerInfo({ ...customerInfo, city: e.target.value })}
-                      />
-                      <input
-                        id="checkout-delivery-zip"
-                        type="text" placeholder={`${tc("zipPlaceholder")} *`}
-                        className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
-                        style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                        value={customerInfo.zip}
-                        onChange={e => setCustomerInfo({ ...customerInfo, zip: e.target.value })}
-                      />
-                    </div>
+                    {(deliveryFormConfig.city.show || deliveryFormConfig.postcode.show) && (
+                      <div className="grid grid-cols-2 gap-2">
+                        {deliveryFormConfig.city.show && (
+                          <input
+                            id="checkout-delivery-city"
+                            type="text" placeholder={`${tAddr("city")}${deliveryFormConfig.city.required ? " *" : ""}`}
+                            className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                            style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                            value={customerInfo.city}
+                            onChange={e => setCustomerInfo({ ...customerInfo, city: e.target.value })}
+                          />
+                        )}
+                        {deliveryFormConfig.postcode.show && (
+                          <input
+                            id="checkout-delivery-zip"
+                            type="text" placeholder={`${tAddr("postcode")}${deliveryFormConfig.postcode.required ? " *" : ""}`}
+                            className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                            style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                            value={customerInfo.zip}
+                            onChange={e => setCustomerInfo({ ...customerInfo, zip: e.target.value })}
+                          />
+                        )}
+                      </div>
+                    )}
                     {/* Draggable delivery pin (Google-maps restaurants). Shows
                         once an address is picked; the customer can drag the
                         marker to the exact door so the driver gets the right
                         spot. The dragged coords are sent with the order. */}
-                    {googleEnabled && gmapsLoaded && mapCenter && (
+                    {deliveryFormConfig.street.show && googleEnabled && gmapsLoaded && mapCenter && (
                       <div className="rounded-lg overflow-hidden border border-gray-200">
                         <GoogleMap
                           mapContainerStyle={{ width: "100%", height: "180px" }}
@@ -656,25 +691,30 @@ export function CheckoutModal({
                         <p className="text-[11px] text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
                       </div>
                     )}
-                    {/* Apt/Unit + Buzzer (optional) — concatenated into
-                        deliveryAddress on submit so kitchen receipt sees
-                        the full string. */}
-                    <div className="grid grid-cols-2 gap-2 pt-1">
-                      <input
-                        type="text" placeholder={tc("aptUnitPlaceholder")}
-                        className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
-                        style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                        value={customerInfo.unit || ""}
-                        onChange={e => setCustomerInfo({ ...customerInfo, unit: e.target.value })}
-                      />
-                      <input
-                        type="text" placeholder={tc("buzzerPlaceholder")}
-                        className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
-                        style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                        value={customerInfo.buzzer || ""}
-                        onChange={e => setCustomerInfo({ ...customerInfo, buzzer: e.target.value })}
-                      />
-                    </div>
+                    {/* Customizable extra address fields (Neighbourhood, Block/
+                        Building, Intercom, Floor, Apartment, Where to park).
+                        Each renders only when the restaurant's form config
+                        shows it; a "*" suffix marks the required ones. All flow
+                        into the structured deliveryAddressData on submit. */}
+                    {EXTRA_FIELD_KEYS.some((k) => deliveryFormConfig[k].show) && (
+                      <div className="grid grid-cols-2 gap-2 pt-1">
+                        {EXTRA_FIELD_KEYS.filter((k) => deliveryFormConfig[k].show).map((key) => {
+                          const prop = FIELD_TO_CI[key];
+                          const req = deliveryFormConfig[key].required;
+                          return (
+                            <input
+                              key={key}
+                              type="text"
+                              placeholder={`${tAddr(key)}${req ? " *" : ""}`}
+                              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                              style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                              value={(customerInfo[prop] as string) || ""}
+                              onChange={e => setCustomerInfo({ ...customerInfo, [prop]: e.target.value })}
+                            />
+                          );
+                        })}
+                      </div>
+                    )}
                     {/* Delivery instructions — separate from order notes
                         (which is kitchen-facing). These reach the driver
                         at dispatch time. */}
@@ -697,11 +737,17 @@ export function CheckoutModal({
                     {hasZones && resolvedZone && resolvedZone.inside && (
                       <p className="text-xs text-gray-600">
                         {tc("youreIn", { zone: resolvedZone.zone.name, fee: formatCurrency(resolvedZone.zone.deliveryFee), minutes: resolvedZone.zone.estimatedMinutes })}
+                        {resolvedZone.zone.minimumOrder > 0 && (
+                          <> {tc("zoneMinimum", { min: formatCurrency(resolvedZone.zone.minimumOrder) })}</>
+                        )}
                       </p>
                     )}
                     {hasZones && resolvedZone && !resolvedZone.inside && (
                       <p className="text-xs text-amber-700">
                         <strong>{tc("outsideStandard")}</strong> {tc("outsideAreaWarning", { fee: formatCurrency(resolvedZone.zone.deliveryFee), minutes: resolvedZone.zone.estimatedMinutes })}
+                        {resolvedZone.zone.minimumOrder > 0 && (
+                          <> {tc("zoneMinimum", { min: formatCurrency(resolvedZone.zone.minimumOrder) })}</>
+                        )}
                       </p>
                     )}
                   </div>
