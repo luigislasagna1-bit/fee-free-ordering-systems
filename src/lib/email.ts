@@ -626,6 +626,10 @@ export async function sendReservationConfirmation(params: {
     to: params.to,
     subject: t(`email.reservationConfirmed.subject${subjectSuffix}`),
     html,
+    // Show the restaurant's name as the sender (display name), like order
+    // emails — the address stays the platform's verified sender. Fabrizio
+    // report cmpxeljn6.
+    fromName: params.restaurantName,
   });
 }
 
