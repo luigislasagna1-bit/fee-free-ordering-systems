@@ -4418,7 +4418,10 @@
       "sizeLabel": "साइज़",
       "upToCount": "{count} तक",
       "addChoice": "जोड़ें{price}",
-      "completeRequired": "आवश्यक विकल्प पूरे करें"
+      "completeRequired": "आवश्यक विकल्प पूरे करें",
+      "halfHalfToggle": "½ आधा-आधा",
+      "leftHalf": "बायाँ हिस्सा",
+      "rightHalf": "दायाँ हिस्सा"
     }
   }
 }

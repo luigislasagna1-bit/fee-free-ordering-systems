@@ -4418,7 +4418,10 @@
       "sizeLabel": "ขนาด",
       "upToCount": "สูงสุด {count}",
       "addChoice": "เพิ่ม{price}",
-      "completeRequired": "เลือกตัวเลือกที่จำเป็นให้ครบ"
+      "completeRequired": "เลือกตัวเลือกที่จำเป็นให้ครบ",
+      "halfHalfToggle": "½ ครึ่งต่อครึ่ง",
+      "leftHalf": "ครึ่งซ้าย",
+      "rightHalf": "ครึ่งขวา"
     }
   }
 }

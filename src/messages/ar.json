@@ -4418,7 +4418,10 @@
       "sizeLabel": "الحجم",
       "upToCount": "حتى {count}",
       "addChoice": "إضافة{price}",
-      "completeRequired": "أكمل الخيارات المطلوبة"
+      "completeRequired": "أكمل الخيارات المطلوبة",
+      "halfHalfToggle": "½ نصف ونصف",
+      "leftHalf": "النصف الأيسر",
+      "rightHalf": "النصف الأيمن"
     }
   }
 }

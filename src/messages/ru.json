@@ -4418,7 +4418,10 @@
       "sizeLabel": "Размер",
       "upToCount": "до {count}",
       "addChoice": "Добавить{price}",
-      "completeRequired": "Выберите обязательные опции"
+      "completeRequired": "Выберите обязательные опции",
+      "halfHalfToggle": "½ Половина на половину",
+      "leftHalf": "Левая половина",
+      "rightHalf": "Правая половина"
     }
   }
 }

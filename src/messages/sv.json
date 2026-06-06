@@ -4418,7 +4418,10 @@
       "sizeLabel": "Storlek",
       "upToCount": "upp till {count}",
       "addChoice": "Lägg till{price}",
-      "completeRequired": "Slutför obligatoriska val"
+      "completeRequired": "Slutför obligatoriska val",
+      "halfHalfToggle": "½ Halv & halv",
+      "leftHalf": "Vänster halva",
+      "rightHalf": "Höger halva"
     }
   }
 }

@@ -4418,7 +4418,10 @@
       "sizeLabel": "Koko",
       "upToCount": "enintään {count}",
       "addChoice": "Lisää{price}",
-      "completeRequired": "Täytä pakolliset valinnat"
+      "completeRequired": "Täytä pakolliset valinnat",
+      "halfHalfToggle": "½ Puoliksi & puoliksi",
+      "leftHalf": "Vasen puolisko",
+      "rightHalf": "Oikea puolisko"
     }
   }
 }

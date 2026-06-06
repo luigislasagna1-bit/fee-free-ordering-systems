@@ -4418,7 +4418,10 @@
       "sizeLabel": "Μέγεθος",
       "upToCount": "έως {count}",
       "addChoice": "Προσθήκη{price}",
-      "completeRequired": "Συμπληρώστε τις υποχρεωτικές επιλογές"
+      "completeRequired": "Συμπληρώστε τις υποχρεωτικές επιλογές",
+      "halfHalfToggle": "½ Μισό & Μισό",
+      "leftHalf": "Αριστερό μισό",
+      "rightHalf": "Δεξί μισό"
     }
   }
 }

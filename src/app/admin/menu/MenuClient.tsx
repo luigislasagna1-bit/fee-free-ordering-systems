@@ -2796,13 +2796,19 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
             // here (not via useMemo above the JSX) so the search field
             // stays accurate even mid-drag without re-arranging hooks.
             const q = menuSearchQuery.trim().toLowerCase();
-            const filteredCategories = !q ? categories : categories.filter((c: any) => {
-              if (c.name.toLowerCase().includes(q)) return true;
-              return (c.menuItems ?? []).some((i: any) => {
-                const hay = `${i.name ?? ""} ${i.description ?? ""}`.toLowerCase();
-                return hay.includes(q);
-              });
-            });
+            // When searching, ALSO narrow each category to just its matching
+            // items (unless the category name itself matches → keep all) so the
+            // result actually surfaces the item, not the whole category buried
+            // among others. Categories with no match drop out entirely.
+            const filteredCategories = !q ? categories : categories
+              .map((c: any) => {
+                if (c.name.toLowerCase().includes(q)) return c; // whole category matches
+                const items = (c.menuItems ?? []).filter((i: any) =>
+                  `${i.name ?? ""} ${i.description ?? ""}`.toLowerCase().includes(q),
+                );
+                return items.length ? { ...c, menuItems: items } : null;
+              })
+              .filter(Boolean);
             if (filteredCategories.length === 0) {
               return (
                 <div className="py-12 text-center text-gray-400">
@@ -2821,7 +2827,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
               <SortableContext items={filteredCategories.map((c: any) => c.id)} strategy={verticalListSortingStrategy}>
                 {filteredCategories.map((cat: any) => (
                   <SortableCategoryBlock key={cat.id} cat={cat}
-                    expanded={expandedCats[cat.id] ?? true}
+                    expanded={q ? true : (expandedCats[cat.id] ?? true)}
                     onToggleExpand={() => setExpandedCats(e => ({ ...e, [cat.id]: !e[cat.id] }))}
                     onAddItem={() => setItemModal({ catId: cat.id })}
                     onEditItem={item => setItemModal({ catId: cat.id, item })}

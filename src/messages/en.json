@@ -4102,7 +4102,10 @@
       "sizeLabel": "Size",
       "upToCount": "up to {count}",
       "addChoice": "Add{price}",
-      "completeRequired": "Complete required options"
+      "completeRequired": "Complete required options",
+      "halfHalfToggle": "½ Half & Half",
+      "leftHalf": "Left half",
+      "rightHalf": "Right half"
     },
     "confirmation": {
       "orderPlaced": "Order Placed!",

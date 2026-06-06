@@ -4418,7 +4418,10 @@
       "sizeLabel": "Dydis",
       "upToCount": "iki {count}",
       "addChoice": "Pridėti{price}",
-      "completeRequired": "Užpildykite privalomas parinktis"
+      "completeRequired": "Užpildykite privalomas parinktis",
+      "halfHalfToggle": "½ Pusė ir pusė",
+      "leftHalf": "Kairioji pusė",
+      "rightHalf": "Dešinioji pusė"
     }
   }
 }

@@ -4418,7 +4418,10 @@
       "sizeLabel": "Maat",
       "upToCount": "max. {count}",
       "addChoice": "Toevoegen{price}",
-      "completeRequired": "Vul de verplichte opties in"
+      "completeRequired": "Vul de verplichte opties in",
+      "halfHalfToggle": "½ Half om half",
+      "leftHalf": "Linkerhelft",
+      "rightHalf": "Rechterhelft"
     }
   }
 }

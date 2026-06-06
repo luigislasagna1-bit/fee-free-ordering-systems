@@ -4418,7 +4418,10 @@
       "sizeLabel": "Boyut",
       "upToCount": "en fazla {count}",
       "addChoice": "Ekle{price}",
-      "completeRequired": "Zorunlu seçenekleri tamamlayın"
+      "completeRequired": "Zorunlu seçenekleri tamamlayın",
+      "halfHalfToggle": "½ Yarım Yarım",
+      "leftHalf": "Sol yarım",
+      "rightHalf": "Sağ yarım"
     }
   }
 }

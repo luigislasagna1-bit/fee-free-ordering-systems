@@ -50,6 +50,10 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
           name: true,
           quantity: true,
           price: true,
+          variantName: true,
+          notes: true,
+          bundleItems: true,
+          modifiers: { select: { name: true, priceAdjustment: true } },
         },
       },
     },
@@ -73,6 +77,33 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
     } catch { /* malformed JSON — leave undefined */ }
   }
 
+  // Map order items for the email — include each item's own modifiers AND, for
+  // combo/bundle lines, the child picks + their options, so the email lists
+  // everything (items, sizes, toppings, sauces). The OrderItem.name already
+  // carries the variant for regular items; combos carry their parts in
+  // bundleItems. (i.name already includes variant text where applicable.)
+  const emailItems = order.items.map((i: any) => {
+    const bundle = Array.isArray(i.bundleItems) ? (i.bundleItems as any[]) : null;
+    return {
+      name: i.name,
+      quantity: i.quantity,
+      price: i.price,
+      modifiers: Array.isArray(i.modifiers) && i.modifiers.length > 0
+        ? i.modifiers.map((m: any) => ({ label: "", value: m.name, priceAdjustment: m.priceAdjustment || 0 }))
+        : undefined,
+      notes: i.notes ?? undefined,
+      bundleItems: bundle
+        ? bundle.map((c: any) => ({
+            name: String(c?.name ?? ""),
+            variantName: c?.variantName ?? null,
+            modifiers: Array.isArray(c?.modifiers)
+              ? c.modifiers.map((m: any) => ({ name: String(m?.name ?? "") }))
+              : undefined,
+          }))
+        : undefined,
+    };
+  });
+
   // Customer confirmation email — fire-and-forget so a Resend hiccup
   // doesn't fail the webhook (Stripe would retry the whole event).
   notifyCustomer({
@@ -85,7 +116,7 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       event: "orderConfirmed",
       customerName: order.customerName,
       orderNumber: order.orderNumber,
-      items: order.items.map((i) => ({ name: i.name, quantity: i.quantity, price: i.price })),
+      items: emailItems,
       total: order.total,
       orderType: order.type,
       estimatedTime: order.type === "pickup"

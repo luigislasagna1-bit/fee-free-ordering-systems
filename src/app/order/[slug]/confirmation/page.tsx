@@ -96,6 +96,7 @@ export default async function ConfirmationPage({
                     name: string;
                     variantName?: string | null;
                     specialityFee?: number;
+                    modifiers?: Array<{ name: string; priceAdjustment?: number }>;
                   }>)
                 : null;
               return (
@@ -108,11 +109,20 @@ export default async function ConfirmationPage({
                     <div className="mt-1 pl-3 border-l-2 border-gray-100 space-y-0.5 text-xs text-gray-500">
                       {bundle.map((child, i) => (
                         <div key={i}>
-                          • {child.name}
-                          {child.variantName ? ` (${child.variantName})` : ""}
-                          {child.specialityFee && child.specialityFee > 0
-                            ? ` (+${formatCurrency(child.specialityFee)})`
-                            : ""}
+                          <div>
+                            • {child.name}
+                            {child.variantName ? ` (${child.variantName})` : ""}
+                            {child.specialityFee && child.specialityFee > 0
+                              ? ` (+${formatCurrency(child.specialityFee)})`
+                              : ""}
+                          </div>
+                          {Array.isArray(child.modifiers) && child.modifiers.length > 0 && (
+                            <div className="pl-3 text-gray-400">
+                              {child.modifiers.map((m, mi) => (
+                                <div key={mi}>+ {m.name}</div>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>

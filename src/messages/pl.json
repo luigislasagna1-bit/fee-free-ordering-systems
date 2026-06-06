@@ -4418,7 +4418,10 @@
       "sizeLabel": "Rozmiar",
       "upToCount": "maks. {count}",
       "addChoice": "Dodaj{price}",
-      "completeRequired": "Uzupełnij wymagane opcje"
+      "completeRequired": "Uzupełnij wymagane opcje",
+      "halfHalfToggle": "½ Pół na pół",
+      "leftHalf": "Lewa połowa",
+      "rightHalf": "Prawa połowa"
     }
   }
 }

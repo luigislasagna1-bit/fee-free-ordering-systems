@@ -4418,7 +4418,10 @@
       "sizeLabel": "사이즈",
       "upToCount": "최대 {count}개",
       "addChoice": "추가{price}",
-      "completeRequired": "필수 옵션을 선택해 주세요"
+      "completeRequired": "필수 옵션을 선택해 주세요",
+      "halfHalfToggle": "½ 반반",
+      "leftHalf": "왼쪽 절반",
+      "rightHalf": "오른쪽 절반"
     }
   }
 }

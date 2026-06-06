@@ -4418,7 +4418,10 @@
       "sizeLabel": "Izmērs",
       "upToCount": "līdz {count}",
       "addChoice": "Pievienot{price}",
-      "completeRequired": "Aizpildiet obligātās opcijas"
+      "completeRequired": "Aizpildiet obligātās opcijas",
+      "halfHalfToggle": "½ Puse uz pusi",
+      "leftHalf": "Kreisā puse",
+      "rightHalf": "Labā puse"
     }
   }
 }

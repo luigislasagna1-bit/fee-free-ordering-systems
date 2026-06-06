@@ -4418,7 +4418,10 @@
       "sizeLabel": "Suurus",
       "upToCount": "kuni {count}",
       "addChoice": "Lisa{price}",
-      "completeRequired": "Täida kohustuslikud valikud"
+      "completeRequired": "Täida kohustuslikud valikud",
+      "halfHalfToggle": "½ Pool ja pool",
+      "leftHalf": "Vasak pool",
+      "rightHalf": "Parem pool"
     }
   }
 }

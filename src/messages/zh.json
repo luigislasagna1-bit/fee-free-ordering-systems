@@ -4418,7 +4418,10 @@
       "sizeLabel": "规格",
       "upToCount": "最多选 {count} 项",
       "addChoice": "添加{price}",
-      "completeRequired": "请完成必选项"
+      "completeRequired": "请完成必选项",
+      "halfHalfToggle": "½ 各点一半",
+      "leftHalf": "左半边",
+      "rightHalf": "右半边"
     }
   }
 }

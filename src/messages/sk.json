@@ -4418,7 +4418,10 @@
       "sizeLabel": "Veľkosť",
       "upToCount": "max {count}",
       "addChoice": "Pridať{price}",
-      "completeRequired": "Vyplňte povinné možnosti"
+      "completeRequired": "Vyplňte povinné možnosti",
+      "halfHalfToggle": "½ Polovica & polovica",
+      "leftHalf": "Ľavá polovica",
+      "rightHalf": "Pravá polovica"
     }
   }
 }

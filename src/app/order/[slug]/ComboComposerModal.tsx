@@ -36,29 +36,6 @@ interface Props {
   onClose: () => void;
 }
 
-/** Sum of selected modifier-option price adjustments — mirrors the regular
- *  item modal's getModPrice so combo add-ons price identically à la carte. */
-function modPrice(item: AnyItem, selected: Record<string, string[]>): number {
-  const groups: AnyItem[] = Array.isArray(item.modifierGroups) ? item.modifierGroups : [];
-  return groups.reduce((sum, g) => {
-    const picks = selected[g.id] || [];
-    return sum + picks.reduce((s2: number, optId: string) => {
-      const opt = g.options.find((o: AnyItem) => o.id === optId);
-      return s2 + (opt?.priceAdjustment ?? 0);
-    }, 0);
-  }, 0);
-}
-
-function flattenMods(item: AnyItem, selected: Record<string, string[]>) {
-  const groups: AnyItem[] = Array.isArray(item.modifierGroups) ? item.modifierGroups : [];
-  return groups.flatMap((g) =>
-    (selected[g.id] || []).map((optId) => {
-      const opt = g.options.find((o: AnyItem) => o.id === optId);
-      return { modifierOptionId: opt?.id, name: opt?.name ?? "", priceAdjustment: opt?.priceAdjustment ?? 0 };
-    }),
-  );
-}
-
 /** True when a non-pizza item needs the customizer (a size choice to make OR
  *  any visible modifier group to walk through). */
 function needsCustomizer(item: AnyItem, allowedVariants: AnyItem[]): boolean {
@@ -319,6 +296,12 @@ function ChildCustomizer({
     return def;
   });
 
+  // Half/half state per eligible group: pick a different option for each half
+  // (e.g. half BBQ wings, half Hot). Only single-select groups flagged
+  // "Can be Half/Half" qualify.
+  const isHalfGroup = (g: AnyItem) => g.supportsHalfHalf === true && g.maxSelect === 1;
+  const [half, setHalf] = useState<Record<string, { on: boolean; left?: string; right?: string }>>({});
+
   const toggleMod = (g: AnyItem, optId: string) => {
     setMods((prev) => {
       const cur = prev[g.id] || [];
@@ -329,13 +312,44 @@ function ChildCustomizer({
       return { ...prev, [g.id]: [...cur, optId] };
     });
   };
+  const setHalfSide = (gId: string, side: "left" | "right", optId: string) =>
+    setHalf((prev) => ({ ...prev, [gId]: { ...(prev[gId] ?? { on: true }), on: true, [side]: optId } }));
+  const toggleHalf = (gId: string) =>
+    setHalf((prev) => ({ ...prev, [gId]: { ...(prev[gId] ?? {}), on: !prev[gId]?.on } }));
 
-  const extrasFee = extrasCharge ? Math.round(modPrice(item, mods) * 100) / 100 : 0;
+  // Build the flat modifier list, honoring half/half groups (two labelled
+  // entries — one per half — instead of a single whole selection).
+  const buildMods = (): Array<{ modifierOptionId?: string; name: string; priceAdjustment?: number }> => {
+    const out: Array<{ modifierOptionId?: string; name: string; priceAdjustment?: number }> = [];
+    for (const g of groups) {
+      if (isHalfGroup(g) && half[g.id]?.on) {
+        for (const [side, label] of [["left", t("leftHalf")], ["right", t("rightHalf")]] as const) {
+          const optId = half[g.id]?.[side as "left" | "right"];
+          const o = optId ? g.options.find((x: AnyItem) => x.id === optId) : null;
+          if (o) out.push({ modifierOptionId: o.id, name: `(${label}) ${o.name}`, priceAdjustment: o.priceAdjustment ?? 0 });
+        }
+      } else {
+        for (const optId of mods[g.id] || []) {
+          const o = g.options.find((x: AnyItem) => x.id === optId);
+          if (o) out.push({ modifierOptionId: o.id, name: o.name, priceAdjustment: o.priceAdjustment ?? 0 });
+        }
+      }
+    }
+    return out;
+  };
+  const builtMods = buildMods();
+
+  const extrasFee = extrasCharge
+    ? Math.round(builtMods.reduce((s, m) => s + (m.priceAdjustment || 0), 0) * 100) / 100
+    : 0;
   const upcharge = upchargeFor(variant?.id);
   const addExtra = upcharge + extrasFee;
 
   // Required groups must be satisfied (mirrors the regular item modal).
   const unmet = groups.filter((g) => {
+    if (isHalfGroup(g) && half[g.id]?.on) {
+      return g.required ? !(half[g.id]?.left && half[g.id]?.right) : false;
+    }
     const need = g.required ? Math.max(1, g.minSelect || 0) : (g.minSelect || 0);
     return (mods[g.id]?.length ?? 0) < need;
   });
@@ -345,7 +359,7 @@ function ChildCustomizer({
     if (!canAdd) return;
     onConfirm({
       variantId: variant?.id, variantName: variant?.name,
-      modifiers: flattenMods(item, mods),
+      modifiers: builtMods,
       upcharge, extrasFee,
     });
   };
@@ -382,35 +396,59 @@ function ChildCustomizer({
             </div>
           )}
 
-          {/* Modifier groups — radio (maxSelect 1) or checkbox (maxSelect >1) */}
+          {/* Modifier groups — radio (maxSelect 1) or checkbox (maxSelect >1),
+              plus an optional Half & Half mode for eligible groups. */}
           {groups.map((g: AnyItem) => {
             const sel = mods[g.id] || [];
             const single = g.maxSelect === 1;
             const atMax = !single && sel.length >= (g.maxSelect || 99);
+            const canHalf = isHalfGroup(g);
+            const halfOn = canHalf && !!half[g.id]?.on;
+            const opts = g.options.filter((o: AnyItem) => o.isAvailable !== false);
+            const optRow = (o: AnyItem, checked: boolean, onChange: () => void, type: "radio" | "checkbox", disabled = false) => (
+              <label key={o.id + (type === "radio" ? "r" : "c")} className={`flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border cursor-pointer ${disabled ? "opacity-40 cursor-not-allowed" : ""}`}
+                style={checked ? { borderColor: primaryColor, backgroundColor: `${primaryColor}11` } : { borderColor: "#e5e7eb" }}>
+                <span className="flex items-center gap-2 min-w-0">
+                  <input type={type} checked={checked} disabled={disabled} onChange={onChange} className="w-4 h-4 flex-shrink-0" style={{ accentColor: primaryColor }} />
+                  <span className="text-sm text-gray-800 truncate">{o.name}</span>
+                </span>
+                {extrasCharge && o.priceAdjustment > 0 && <span className="text-xs text-gray-500 flex-shrink-0">+{fmt(o.priceAdjustment)}</span>}
+              </label>
+            );
             return (
               <div key={g.id}>
                 <div className="flex items-center gap-2 mb-1.5">
                   <span className="text-sm font-semibold text-gray-800">{g.name}</span>
                   {g.required && <span className="text-[10px] font-bold uppercase text-red-500">{tc("required")}</span>}
                   {!single && (g.maxSelect || 0) > 0 && <span className="text-[11px] text-gray-400">{t("upToCount", { count: g.maxSelect })}</span>}
+                  {canHalf && (
+                    <button type="button" onClick={() => toggleHalf(g.id)}
+                      className="ml-auto text-[11px] font-semibold px-2 py-0.5 rounded-full border"
+                      style={halfOn ? { borderColor: primaryColor, color: primaryColor, backgroundColor: `${primaryColor}11` } : { borderColor: "#e5e7eb", color: "#6b7280" }}>
+                      {t("halfHalfToggle")}
+                    </button>
+                  )}
                 </div>
-                <div className="space-y-1.5">
-                  {g.options.filter((o: AnyItem) => o.isAvailable !== false).map((o: AnyItem) => {
-                    const on = sel.includes(o.id);
-                    const disabled = !on && atMax;
-                    return (
-                      <label key={o.id} className={`flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border cursor-pointer ${disabled ? "opacity-40 cursor-not-allowed" : ""}`}
-                        style={on ? { borderColor: primaryColor, backgroundColor: `${primaryColor}11` } : { borderColor: "#e5e7eb" }}>
-                        <span className="flex items-center gap-2 min-w-0">
-                          <input type={single ? "radio" : "checkbox"} checked={on} disabled={disabled}
-                            onChange={() => toggleMod(g, o.id)} className="w-4 h-4 flex-shrink-0" style={{ accentColor: primaryColor }} />
-                          <span className="text-sm text-gray-800 truncate">{o.name}</span>
-                        </span>
-                        {extrasCharge && o.priceAdjustment > 0 && <span className="text-xs text-gray-500 flex-shrink-0">+{fmt(o.priceAdjustment)}</span>}
-                      </label>
-                    );
-                  })}
-                </div>
+                {halfOn ? (
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <div className="text-[11px] font-medium text-gray-500 mb-1">{t("leftHalf")}</div>
+                      <div className="space-y-1.5">
+                        {opts.map((o: AnyItem) => optRow(o, half[g.id]?.left === o.id, () => setHalfSide(g.id, "left", o.id), "radio"))}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-[11px] font-medium text-gray-500 mb-1">{t("rightHalf")}</div>
+                      <div className="space-y-1.5">
+                        {opts.map((o: AnyItem) => optRow(o, half[g.id]?.right === o.id, () => setHalfSide(g.id, "right", o.id), "radio"))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-1.5">
+                    {opts.map((o: AnyItem) => optRow(o, sel.includes(o.id), () => toggleMod(g, o.id), single ? "radio" : "checkbox", !sel.includes(o.id) && atMax))}
+                  </div>
+                )}
               </div>
             );
           })}

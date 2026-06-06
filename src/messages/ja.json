@@ -4418,7 +4418,10 @@
       "sizeLabel": "サイズ",
       "upToCount": "最大{count}個",
       "addChoice": "追加{price}",
-      "completeRequired": "必須オプションを選択してください"
+      "completeRequired": "必須オプションを選択してください",
+      "halfHalfToggle": "½ ハーフ＆ハーフ",
+      "leftHalf": "左半分",
+      "rightHalf": "右半分"
     }
   }
 }

@@ -4418,7 +4418,10 @@
       "sizeLabel": "Mida",
       "upToCount": "fins a {count}",
       "addChoice": "Afegeix{price}",
-      "completeRequired": "Completa les opcions obligatòries"
+      "completeRequired": "Completa les opcions obligatòries",
+      "halfHalfToggle": "½ Meitat i meitat",
+      "leftHalf": "Meitat esquerra",
+      "rightHalf": "Meitat dreta"
     }
   }
 }

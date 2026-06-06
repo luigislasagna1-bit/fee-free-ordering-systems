@@ -209,6 +209,13 @@ export type EmailOrderItem = {
   modifiers?: { label: string; value: string; priceAdjustment?: number }[];
   /** Free-text customer note shown italic under modifiers. */
   notes?: string | null;
+  /** Combo / bundle child picks — rendered indented under the parent line so
+   *  the email lists every item + its options (toppings, sauces, etc.). */
+  bundleItems?: {
+    name: string;
+    variantName?: string | null;
+    modifiers?: { name: string }[];
+  }[];
 };
 
 export function OrderItemsTable({
@@ -290,8 +297,26 @@ export function OrderItemsTable({
                 <div style={{ fontSize: 13, color: COLORS.muted, marginTop: 2 }}>
                   {item.modifiers.map((m, i) => (
                     <div key={i}>
-                      {m.label}: <strong style={{ color: COLORS.text }}>{m.value}</strong>
+                      {m.label ? `${m.label}: ` : ""}<strong style={{ color: COLORS.text }}>{m.value}</strong>
                       {m.priceAdjustment ? ` (+${formatCurrency(m.priceAdjustment, currency)})` : ""}
+                    </div>
+                  ))}
+                </div>
+              )}
+              {item.bundleItems && item.bundleItems.length > 0 && (
+                <div style={{ fontSize: 13, color: COLORS.muted, marginTop: 4, paddingLeft: 10, borderLeft: `2px solid ${COLORS.border}` }}>
+                  {item.bundleItems.map((child, i) => (
+                    <div key={i} style={{ marginBottom: 2 }}>
+                      <div style={{ color: COLORS.text }}>
+                        • {child.name}{child.variantName ? ` (${child.variantName})` : ""}
+                      </div>
+                      {child.modifiers && child.modifiers.length > 0 && (
+                        <div style={{ paddingLeft: 10 }}>
+                          {child.modifiers.map((m, mi) => (
+                            <div key={mi}>+ {m.name}</div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

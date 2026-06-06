@@ -4418,7 +4418,10 @@
       "sizeLabel": "גודל",
       "upToCount": "עד {count}",
       "addChoice": "הוספה{price}",
-      "completeRequired": "השלימו את האפשרויות הנדרשות"
+      "completeRequired": "השלימו את האפשרויות הנדרשות",
+      "halfHalfToggle": "½ חצי וחצי",
+      "leftHalf": "חצי שמאלי",
+      "rightHalf": "חצי ימני"
     }
   }
 }

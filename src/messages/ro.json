@@ -4418,7 +4418,10 @@
       "sizeLabel": "Mărime",
       "upToCount": "până la {count}",
       "addChoice": "Adaugă{price}",
-      "completeRequired": "Completează opțiunile obligatorii"
+      "completeRequired": "Completează opțiunile obligatorii",
+      "halfHalfToggle": "½ Jumătate și jumătate",
+      "leftHalf": "Jumătatea stângă",
+      "rightHalf": "Jumătatea dreaptă"
     }
   }
 }

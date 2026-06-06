@@ -4418,7 +4418,10 @@
       "sizeLabel": "Størrelse",
       "upToCount": "op til {count}",
       "addChoice": "Tilføj{price}",
-      "completeRequired": "Udfyld de påkrævede valg"
+      "completeRequired": "Udfyld de påkrævede valg",
+      "halfHalfToggle": "½ Halv & halv",
+      "leftHalf": "Venstre halvdel",
+      "rightHalf": "Højre halvdel"
     }
   }
 }

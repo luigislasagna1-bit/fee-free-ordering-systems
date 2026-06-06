@@ -4418,7 +4418,10 @@
       "sizeLabel": "Размер",
       "upToCount": "до {count}",
       "addChoice": "Добави{price}",
-      "completeRequired": "Изберете задължителните опции"
+      "completeRequired": "Изберете задължителните опции",
+      "halfHalfToggle": "½ Половин и половин",
+      "leftHalf": "Лява половина",
+      "rightHalf": "Дясна половина"
     }
   }
 }

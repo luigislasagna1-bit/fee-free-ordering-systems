@@ -4418,7 +4418,10 @@
       "sizeLabel": "Kích cỡ",
       "upToCount": "tối đa {count}",
       "addChoice": "Thêm{price}",
-      "completeRequired": "Hoàn tất các tùy chọn bắt buộc"
+      "completeRequired": "Hoàn tất các tùy chọn bắt buộc",
+      "halfHalfToggle": "½ Nửa & Nửa",
+      "leftHalf": "Nửa bên trái",
+      "rightHalf": "Nửa bên phải"
     }
   }
 }

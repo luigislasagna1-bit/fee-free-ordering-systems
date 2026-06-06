@@ -4418,7 +4418,10 @@
       "sizeLabel": "Taille",
       "upToCount": "jusqu'à {count}",
       "addChoice": "Ajouter{price}",
-      "completeRequired": "Complétez les options obligatoires"
+      "completeRequired": "Complétez les options obligatoires",
+      "halfHalfToggle": "½ Moitié-moitié",
+      "leftHalf": "Moitié gauche",
+      "rightHalf": "Moitié droite"
     }
   }
 }

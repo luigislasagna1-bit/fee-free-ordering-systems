@@ -4418,7 +4418,10 @@
       "sizeLabel": "Ukuran",
       "upToCount": "maksimal {count}",
       "addChoice": "Tambah{price}",
-      "completeRequired": "Lengkapi pilihan yang wajib"
+      "completeRequired": "Lengkapi pilihan yang wajib",
+      "halfHalfToggle": "½ Setengah & Setengah",
+      "leftHalf": "Bagian kiri",
+      "rightHalf": "Bagian kanan"
     }
   }
 }
