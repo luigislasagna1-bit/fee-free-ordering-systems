@@ -96,6 +96,14 @@ export async function POST(req: NextRequest) {
     if (!restaurantSlug || !type || !customerName || !customerPhone) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
+    // Phone must be an actual phone number — digits + intl formatting only, no
+    // letters, and at least a handful of digits. (Defense-in-depth: the
+    // checkout field also strips letters as you type.)
+    if (typeof customerPhone === "string" && customerPhone.trim()) {
+      if (/[a-z]/i.test(customerPhone) || (customerPhone.match(/\d/g)?.length ?? 0) < 6) {
+        return NextResponse.json({ error: "Please enter a valid phone number.", code: "invalid_phone" }, { status: 400 });
+      }
+    }
     if (!ALLOWED_ORDER_TYPES.includes(type)) {
       return NextResponse.json({ error: "Invalid order type" }, { status: 400 });
     }

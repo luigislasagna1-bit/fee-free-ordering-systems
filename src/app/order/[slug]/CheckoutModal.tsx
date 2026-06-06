@@ -516,12 +516,15 @@ export function CheckoutModal({
                   <input
                     id="checkout-contact-phone"
                     type="tel"
+                    inputMode="tel"
                     required={requireCustomerPhone}
                     className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                     placeholder={`${tc("phonePlaceholder")}${requireCustomerPhone ? " *" : ""}`}
                     value={customerInfo.phone}
-                    onChange={e => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
+                    // Phone numbers only — strip letters and stray symbols as the
+                    // customer types (allow digits, spaces, + - ( ) for intl formats).
+                    onChange={e => setCustomerInfo({ ...customerInfo, phone: e.target.value.replace(/[^\d+()\-.\s]/g, "") })}
                   />
                   <input
                     id="checkout-contact-email"

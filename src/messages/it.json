@@ -447,7 +447,7 @@
   "kitchen": {
     "title": "Display cucina",
     "newOrders": "Nuovi ordini",
-    "inProgress": "In preparazione",
+    "inProgress": "In Corso",
     "ready": "Pronto",
     "completed": "Completato",
     "allOrders": "Tutti gli ordini",
