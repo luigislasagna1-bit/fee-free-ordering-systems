@@ -2212,7 +2212,20 @@
       "limitedDaysBadge": "Pasirinktos dienos",
       "duplicateCategory": "Dubliuoti kategoriją",
       "categoryDuplicated": "Kategorija dubliuota — kopija paslėpta, kol jos nepaskelbsite.",
-      "failedToDuplicateCategory": "Nepavyko dubliuoti kategorijos. Bandykite dar kartą."
+      "failedToDuplicateCategory": "Nepavyko dubliuoti kategorijos. Bandykite dar kartą.",
+      "tabComboActive": "🧩 Rinkinys",
+      "tabComboSetup": "Rinkinys",
+      "comboToggleTitle": "Padaryti tai rinkiniu",
+      "comboToggleHint": "Sudarykite vieną patiekalą iš kelių pasirinkimų (pvz., 2 picos arba pica + sparneliai). Picos pasirinkimai atveria pilną picų kūrimo priemonę.",
+      "comboPriceNote": "Klientai už visą rinkinį moka šio patiekalo kainą ({price}) plius bet kokius atskirų patiekalų priemokas, kurias nustatysite žemiau.",
+      "comboSlotLabelPlaceholder": "{n} pozicijos žymė (pvz., „Pasirinkite 1-ąją picą“)",
+      "comboMin": "Min.",
+      "comboMax": "Maks.",
+      "comboEligibleItems": "Patiekalai, iš kurių klientas gali rinktis:",
+      "comboNoItems": "Pirmiausia pridėkite kelis įprastus meniu patiekalus — tada įtraukite juos į rinkinį čia.",
+      "comboUpcharge": "Premium priemoka už šį patiekalą",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Pridėti poziciją"
     },
     "promotionsList": {
       "stackingMaster": "Master",

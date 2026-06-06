@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Dies seleccionats",
       "duplicateCategory": "Duplica la categoria",
       "categoryDuplicated": "Categoria duplicada — la còpia queda amagada fins que la publiquis.",
-      "failedToDuplicateCategory": "No s'ha pogut duplicar la categoria. Torna-ho a provar."
+      "failedToDuplicateCategory": "No s'ha pogut duplicar la categoria. Torna-ho a provar.",
+      "tabComboActive": "🧩 Combo",
+      "tabComboSetup": "Combo",
+      "comboToggleTitle": "Converteix-ho en un combo",
+      "comboToggleHint": "Crea un sol article a partir de diverses tries (p. ex. 2 pizzes, o una pizza + ales). Les tries de pizza obren el constructor de pizzes complet.",
+      "comboPriceNote": "Els clients paguen el preu d'aquest article ({price}) per tot el combo, més els recàrrecs per article que configuris a continuació.",
+      "comboSlotLabelPlaceholder": "Etiqueta de la posició {n} (p. ex. 'Tria la teva 1a pizza')",
+      "comboMin": "Mín",
+      "comboMax": "Màx",
+      "comboEligibleItems": "Articles que el client pot triar:",
+      "comboNoItems": "Afegeix primer alguns articles de menú normals i després inclou-los en un combo aquí.",
+      "comboUpcharge": "Recàrrec premium per aquest article",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Afegeix una posició"
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

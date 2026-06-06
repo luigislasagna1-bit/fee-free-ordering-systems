@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Επιλεγμένες ημέρες",
       "duplicateCategory": "Αντιγραφή κατηγορίας",
       "categoryDuplicated": "Η κατηγορία αντιγράφηκε — το αντίγραφο παραμένει κρυφό μέχρι να το δημοσιεύσετε.",
-      "failedToDuplicateCategory": "Δεν ήταν δυνατή η αντιγραφή της κατηγορίας. Δοκιμάστε ξανά."
+      "failedToDuplicateCategory": "Δεν ήταν δυνατή η αντιγραφή της κατηγορίας. Δοκιμάστε ξανά.",
+      "tabComboActive": "🧩 Combo",
+      "tabComboSetup": "Combo",
+      "comboToggleTitle": "Μετατροπή σε combo",
+      "comboToggleHint": "Δημιουργήστε ένα προϊόν από πολλές επιλογές (π.χ. 2 πίτσες ή πίτσα + φτερούγες). Οι επιλογές πίτσας ανοίγουν τον πλήρη δημιουργό πίτσας.",
+      "comboPriceNote": "Οι πελάτες πληρώνουν την τιμή αυτού του προϊόντος ({price}) για ολόκληρο το combo, συν τυχόν προσαυξήσεις ανά προϊόν που ορίζετε παρακάτω.",
+      "comboSlotLabelPlaceholder": "Ετικέτα θέσης {n} (π.χ. 'Επιλέξτε την 1η σας πίτσα')",
+      "comboMin": "Ελάχ.",
+      "comboMax": "Μέγ.",
+      "comboEligibleItems": "Προϊόντα από τα οποία μπορεί να επιλέξει ο πελάτης:",
+      "comboNoItems": "Προσθέστε πρώτα μερικά κανονικά προϊόντα μενού — και μετά συμπεριλάβετέ τα σε ένα combo εδώ.",
+      "comboUpcharge": "Προσαύξηση premium για αυτό το προϊόν",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Προσθήκη θέσης"
     },
     "promotionsList": {
       "stackingMaster": "Master",

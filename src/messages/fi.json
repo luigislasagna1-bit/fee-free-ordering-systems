@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Valitut päivät",
       "duplicateCategory": "Monista kategoria",
       "categoryDuplicated": "Kategoria monistettu — kopio on piilotettu, kunnes julkaiset sen.",
-      "failedToDuplicateCategory": "Kategorian monistaminen epäonnistui. Yritä uudelleen."
+      "failedToDuplicateCategory": "Kategorian monistaminen epäonnistui. Yritä uudelleen.",
+      "tabComboActive": "🧩 Yhdistelmä",
+      "tabComboSetup": "Yhdistelmä",
+      "comboToggleTitle": "Tee tästä yhdistelmä",
+      "comboToggleHint": "Kokoa yksi tuote useista valinnoista (esim. 2 pizzaa tai pizza + siivet). Pizzavalinnat avaavat täyden pizzarakentimen.",
+      "comboPriceNote": "Asiakkaat maksavat tämän tuotteen hinnan ({price}) koko yhdistelmästä, sekä mahdolliset alla asettamasi tuotekohtaiset lisämaksut.",
+      "comboSlotLabelPlaceholder": "Paikan {n} otsikko (esim. 'Valitse 1. pizzasi')",
+      "comboMin": "Väh.",
+      "comboMax": "Enint.",
+      "comboEligibleItems": "Tuotteet, joista asiakas voi valita:",
+      "comboNoItems": "Lisää ensin tavallisia ruokalistan tuotteita — sisällytä ne sitten tähän yhdistelmään.",
+      "comboUpcharge": "Premium-lisämaksu tästä tuotteesta",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Lisää paikka"
     },
     "promotionsList": {
       "stackingMaster": "Master",

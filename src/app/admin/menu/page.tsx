@@ -7,6 +7,7 @@ import { InheritedMenuView } from "./InheritedMenuView";
 import { MasterMenuBanner } from "./MasterMenuBanner";
 import { isInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveActiveMenuId } from "@/lib/menu";
+import { hasFeature } from "@/lib/entitlements";
 
 export default async function MenuPage({
   searchParams,
@@ -93,6 +94,8 @@ export default async function MenuPage({
       _count: { select: { categories: true } },
     },
   });
+  // Combos are gated behind the Advanced Promotions add-on.
+  const canUseCombos = await hasFeature(restaurantId, "advanced_promo_types");
   const menus = menusRaw.map((m) => ({
     id: m.id, name: m.name, isActive: m.isActive, isArchived: m.isArchived,
     scheduledActivateAt: m.scheduledActivateAt?.toISOString() ?? null,
@@ -167,6 +170,7 @@ export default async function MenuPage({
         restaurantId={restaurantId || ""}
         hoursFormat={menuHoursFormat}
         menuId={selectedMenuId ?? undefined}
+        canUseCombos={canUseCombos}
       />
     </>
   );

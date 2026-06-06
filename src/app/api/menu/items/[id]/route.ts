@@ -3,6 +3,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { syncPizzaConfigAttachments } from "@/lib/pizza-config";
 import { blockIfInheritingMenu } from "@/lib/brand";
+import { hasFeature } from "@/lib/entitlements";
 
 async function getRestaurantId() {
   const user = await getSessionUser();
@@ -33,7 +34,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const body = await req.json();
   const { name, description, price, categoryId, imageUrl, isAvailable, isFeatured, isHidden,
           isSoldOut, forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
-          hasVariants, sortOrder, variants, pizzaConfig } = body;
+          hasVariants, sortOrder, variants, pizzaConfig, comboConfig } = body;
 
   const updateData: any = {};
   if (name !== undefined) updateData.name = name;
@@ -55,6 +56,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (sortOrder !== undefined) updateData.sortOrder = sortOrder;
   // pizzaConfig: null clears the pizza builder; a JSON string enables it
   if (pizzaConfig !== undefined) updateData.pizzaConfig = pizzaConfig;
+  // comboConfig: null clears the combo; a JSON string makes this a combo item.
+  // Combos are an Advanced Promotions feature — only honour a non-null value
+  // when the restaurant is entitled (defense-in-depth vs the UI gate).
+  if (comboConfig !== undefined) {
+    updateData.comboConfig = comboConfig
+      ? ((await hasFeature(restaurantId, "advanced_promo_types")) ? comboConfig : null)
+      : null;
+  }
 
   // Snapshot the previous pizzaConfig BEFORE the update so the
   // attachment sync below can diff old-vs-new and detach groups the

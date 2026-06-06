@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "지정된 요일",
       "duplicateCategory": "카테고리 복제",
       "categoryDuplicated": "카테고리가 복제되었습니다 — 게시하기 전까지 복사본은 숨겨집니다.",
-      "failedToDuplicateCategory": "카테고리를 복제하지 못했습니다. 다시 시도해 주세요."
+      "failedToDuplicateCategory": "카테고리를 복제하지 못했습니다. 다시 시도해 주세요.",
+      "tabComboActive": "🧩 콤보",
+      "tabComboSetup": "콤보",
+      "comboToggleTitle": "콤보로 만들기",
+      "comboToggleHint": "여러 선택 항목으로 하나의 메뉴를 구성하세요(예: 피자 2판, 또는 피자 + 윙). 피자 선택 시 전체 피자 빌더가 열립니다.",
+      "comboPriceNote": "고객은 전체 콤보에 대해 이 메뉴의 가격({price})을 지불하며, 아래에서 설정한 항목별 추가 요금이 더해집니다.",
+      "comboSlotLabelPlaceholder": "슬롯 {n} 라벨(예: '첫 번째 피자를 선택하세요')",
+      "comboMin": "최소",
+      "comboMax": "최대",
+      "comboEligibleItems": "고객이 선택할 수 있는 항목:",
+      "comboNoItems": "먼저 일반 메뉴 항목을 추가한 다음, 여기에서 콤보에 포함하세요.",
+      "comboUpcharge": "이 항목의 프리미엄 추가 요금",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "슬롯 추가"
     },
     "promotionsList": {
       "stackingMaster": "마스터",

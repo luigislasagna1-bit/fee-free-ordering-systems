@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Zile selectate",
       "duplicateCategory": "Duplică categoria",
       "categoryDuplicated": "Categorie duplicată — copia este ascunsă până când o publici.",
-      "failedToDuplicateCategory": "Nu am putut duplica categoria. Te rugăm să încerci din nou."
+      "failedToDuplicateCategory": "Nu am putut duplica categoria. Te rugăm să încerci din nou.",
+      "tabComboActive": "🧩 Combo",
+      "tabComboSetup": "Combo",
+      "comboToggleTitle": "Transformă în combo",
+      "comboToggleHint": "Creează un singur produs din mai multe alegeri (de ex. 2 pizza sau o pizza + aripioare). Alegerile de tip pizza deschid builderul complet de pizza.",
+      "comboPriceNote": "Clienții plătesc prețul acestui produs ({price}) pentru întregul combo, plus eventualele suprataxe per produs setate mai jos.",
+      "comboSlotLabelPlaceholder": "Etichetă slot {n} (de ex. „Alege prima pizza\")",
+      "comboMin": "Min",
+      "comboMax": "Max",
+      "comboEligibleItems": "Produsele din care poate alege clientul:",
+      "comboNoItems": "Adaugă mai întâi câteva produse obișnuite din meniu — apoi include-le într-un combo aici.",
+      "comboUpcharge": "Suprataxă premium pentru acest produs",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Adaugă slot"
     },
     "promotionsList": {
       "stackingMaster": "Master",

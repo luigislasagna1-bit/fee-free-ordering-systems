@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Izbrani dnevi",
       "duplicateCategory": "Podvoji kategorijo",
       "categoryDuplicated": "Kategorija je bila podvojena — kopija je skrita, dokler je ne objavite.",
-      "failedToDuplicateCategory": "Kategorije ni bilo mogoče podvojiti. Poskusite znova."
+      "failedToDuplicateCategory": "Kategorije ni bilo mogoče podvojiti. Poskusite znova.",
+      "tabComboActive": "🧩 Kombinacija",
+      "tabComboSetup": "Kombinacija",
+      "comboToggleTitle": "Naredi to kombinacijo",
+      "comboToggleHint": "Sestavi en izdelek iz več izbir (npr. 2 pici ali pica + perutničke). Izbira pice odpre celoten urejevalnik pic.",
+      "comboPriceNote": "Stranke za celotno kombinacijo plačajo ceno tega izdelka ({price}), poleg morebitnih doplačil za posamezni izdelek, ki jih nastaviš spodaj.",
+      "comboSlotLabelPlaceholder": "Oznaka mesta {n} (npr. 'Izberi svojo 1. pico')",
+      "comboMin": "Najmanj",
+      "comboMax": "Največ",
+      "comboEligibleItems": "Izdelki, med katerimi lahko stranka izbira:",
+      "comboNoItems": "Najprej dodaj nekaj običajnih izdelkov menija — nato jih tukaj vključi v kombinacijo.",
+      "comboUpcharge": "Doplačilo za vrhunsko izbiro tega izdelka",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Dodaj mesto"
     },
     "promotionsList": {
       "stackingMaster": "Master",

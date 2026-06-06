@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Geselecteerde dagen",
       "duplicateCategory": "Categorie dupliceren",
       "categoryDuplicated": "Categorie gedupliceerd — de kopie is verborgen totdat je deze publiceert.",
-      "failedToDuplicateCategory": "Categorie kon niet worden gedupliceerd. Probeer het opnieuw."
+      "failedToDuplicateCategory": "Categorie kon niet worden gedupliceerd. Probeer het opnieuw.",
+      "tabComboActive": "🧩 Combo",
+      "tabComboSetup": "Combo",
+      "comboToggleTitle": "Maak hier een combo van",
+      "comboToggleHint": "Stel één item samen uit meerdere keuzes (bijv. 2 pizza's, of een pizza + wings). Pizzakeuzes openen de volledige pizzabouwer.",
+      "comboPriceNote": "Klanten betalen de prijs van dit item ({price}) voor de hele combo, plus eventuele toeslagen per item die je hieronder instelt.",
+      "comboSlotLabelPlaceholder": "Label voor slot {n} (bijv. 'Kies je 1e pizza')",
+      "comboMin": "Min",
+      "comboMax": "Max",
+      "comboEligibleItems": "Items waaruit de klant kan kiezen:",
+      "comboNoItems": "Voeg eerst wat gewone menu-items toe — neem ze daarna hier op in een combo.",
+      "comboUpcharge": "Premiumtoeslag voor dit item",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Slot toevoegen"
     },
     "promotionsList": {
       "stackingMaster": "Master",

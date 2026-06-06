@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "أيام محددة",
       "duplicateCategory": "تكرار الفئة",
       "categoryDuplicated": "تم تكرار الفئة — النسخة مخفية إلى أن تقوم بنشرها.",
-      "failedToDuplicateCategory": "تعذّر تكرار الفئة. يُرجى المحاولة مرة أخرى."
+      "failedToDuplicateCategory": "تعذّر تكرار الفئة. يُرجى المحاولة مرة أخرى.",
+      "tabComboActive": "🧩 كومبو",
+      "tabComboSetup": "كومبو",
+      "comboToggleTitle": "اجعل هذا الصنف كومبو",
+      "comboToggleHint": "أنشئ صنفًا واحدًا من عدة اختيارات (مثل بيتزتين، أو بيتزا + أجنحة). اختيارات البيتزا تفتح أداة إنشاء البيتزا الكاملة.",
+      "comboPriceNote": "يدفع العملاء سعر هذا الصنف ({price}) مقابل الكومبو بالكامل، إضافةً إلى أي رسوم إضافية لكل صنف تحددها أدناه.",
+      "comboSlotLabelPlaceholder": "تسمية الخانة {n} (مثل 'اختر بيتزتك الأولى')",
+      "comboMin": "الحد الأدنى",
+      "comboMax": "الحد الأقصى",
+      "comboEligibleItems": "الأصناف التي يمكن للعميل الاختيار منها:",
+      "comboNoItems": "أضِف بعض أصناف القائمة العادية أولًا — ثم ضمّنها في الكومبو هنا.",
+      "comboUpcharge": "رسوم إضافية مميّزة لهذا الصنف",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "إضافة خانة"
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

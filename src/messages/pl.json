@@ -1512,7 +1512,20 @@
       "limitedDaysBadge": "Wybrane dni",
       "duplicateCategory": "Duplikuj kategorię",
       "categoryDuplicated": "Kategoria została zduplikowana — kopia jest ukryta do momentu jej opublikowania.",
-      "failedToDuplicateCategory": "Nie udało się zduplikować kategorii. Spróbuj ponownie."
+      "failedToDuplicateCategory": "Nie udało się zduplikować kategorii. Spróbuj ponownie.",
+      "tabComboActive": "🧩 Zestaw",
+      "tabComboSetup": "Zestaw",
+      "comboToggleTitle": "Ustaw jako zestaw",
+      "comboToggleHint": "Zbuduj jedną pozycję z kilku wyborów (np. 2 pizze lub pizza + skrzydełka). Wybór pizzy otwiera pełny kreator pizzy.",
+      "comboPriceNote": "Klienci płacą cenę tej pozycji ({price}) za cały zestaw, plus wszelkie dopłaty za pozycję ustawione poniżej.",
+      "comboSlotLabelPlaceholder": "Etykieta slotu {n} (np. „Wybierz 1. pizzę\")",
+      "comboMin": "Min",
+      "comboMax": "Maks",
+      "comboEligibleItems": "Pozycje, z których klient może wybierać:",
+      "comboNoItems": "Najpierw dodaj zwykłe pozycje menu — następnie uwzględnij je tutaj w zestawie.",
+      "comboUpcharge": "Dopłata premium za tę pozycję",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Dodaj slot"
     },
     "promotionsList": {
       "stackingMaster": "Master",

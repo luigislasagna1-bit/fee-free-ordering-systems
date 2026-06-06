@@ -1512,7 +1512,20 @@
       "limitedDaysBadge": "Kijelölt napok",
       "duplicateCategory": "Kategória duplikálása",
       "categoryDuplicated": "A kategória megkettőzve — a másolat rejtve marad, amíg közzé nem teszi.",
-      "failedToDuplicateCategory": "A kategória duplikálása nem sikerült. Kérjük, próbálja újra."
+      "failedToDuplicateCategory": "A kategória duplikálása nem sikerült. Kérjük, próbálja újra.",
+      "tabComboActive": "🧩 Combó",
+      "tabComboSetup": "Combó",
+      "comboToggleTitle": "Legyen ez combó",
+      "comboToggleHint": "Egy tételt állíthatsz össze több választásból (pl. 2 pizza vagy egy pizza + szárnyak). A pizzaválasztások a teljes pizzaépítőt nyitják meg.",
+      "comboPriceNote": "A vendégek ennek a tételnek az árát ({price}) fizetik az egész combóért, plusz az alább beállított tételenkénti felárakat.",
+      "comboSlotLabelPlaceholder": "{n}. hely címkéje (pl. „Válaszd ki az 1. pizzádat”)",
+      "comboMin": "Min.",
+      "comboMax": "Max.",
+      "comboEligibleItems": "Tételek, amelyek közül a vendég választhat:",
+      "comboNoItems": "Adj hozzá először néhány normál menütételt — utána itt beillesztheted őket egy combóba.",
+      "comboUpcharge": "Prémium felár ehhez a tételhez",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Hely hozzáadása"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1512,7 +1512,20 @@
       "limitedDaysBadge": "Belirli günler",
       "duplicateCategory": "Kategoriyi çoğalt",
       "categoryDuplicated": "Kategori çoğaltıldı — kopya, yayımlayana kadar gizli kalır.",
-      "failedToDuplicateCategory": "Kategori çoğaltılamadı. Lütfen tekrar deneyin."
+      "failedToDuplicateCategory": "Kategori çoğaltılamadı. Lütfen tekrar deneyin.",
+      "tabComboActive": "🧩 Menü",
+      "tabComboSetup": "Menü",
+      "comboToggleTitle": "Bunu bir menü yap",
+      "comboToggleHint": "Birkaç seçimden tek bir ürün oluşturun (ör. 2 pizza veya pizza + tavuk kanat). Pizza seçimleri tam pizza oluşturucuyu açar.",
+      "comboPriceNote": "Müşteriler tüm menü için bu ürünün fiyatını ({price}) öder; ayrıca aşağıda belirlediğiniz ürün başına ek ücretler eklenir.",
+      "comboSlotLabelPlaceholder": "Bölme {n} etiketi (ör. '1. pizzanızı seçin')",
+      "comboMin": "En az",
+      "comboMax": "En fazla",
+      "comboEligibleItems": "Müşterinin seçebileceği ürünler:",
+      "comboNoItems": "Önce birkaç normal menü ürünü ekleyin — ardından bunları burada bir menüye dahil edin.",
+      "comboUpcharge": "Bu ürün için premium ek ücret",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Bölme ekle"
     },
     "promotionsList": {
       "stackingMaster": "Ana",

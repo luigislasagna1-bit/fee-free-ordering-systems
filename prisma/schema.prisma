@@ -698,6 +698,14 @@ model MenuItem {
   calories      Int?
   allergens     String?
   pizzaConfig   String? // JSON: PizzaConfig — marks item as a pizza builder item
+  /// JSON: ComboConfig — marks this item as a COMBO (e.g. "2-Pizza Combo",
+  /// "Pizza + Wings"). Defines ordered slots, each with an eligible item/
+  /// category pool, min/max picks, and optional per-item upcharges. When set,
+  /// tapping the item opens the combo composer instead of adding directly;
+  /// pizza-builder items inside a slot open the full pizza builder. The combo
+  /// is a single menu line at this item's price + any premium upcharges.
+  /// Multi-pizza combos as a first-class menu item. Luigi 2026-06-05.
+  comboConfig   String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 

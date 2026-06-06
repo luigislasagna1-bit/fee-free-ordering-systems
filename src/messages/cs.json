@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Vybrané dny",
       "duplicateCategory": "Duplikovat kategorii",
       "categoryDuplicated": "Kategorie byla duplikována — kopie zůstane skrytá, dokud ji nezveřejníte.",
-      "failedToDuplicateCategory": "Kategorii se nepodařilo duplikovat. Zkuste to prosím znovu."
+      "failedToDuplicateCategory": "Kategorii se nepodařilo duplikovat. Zkuste to prosím znovu.",
+      "tabComboActive": "🧩 Kombo",
+      "tabComboSetup": "Kombo",
+      "comboToggleTitle": "Vytvořit kombo",
+      "comboToggleHint": "Sestavte jednu položku z několika výběrů (např. 2 pizzy nebo pizza + kuřecí křidýlka). Výběr pizzy otevře kompletní editor pizzy.",
+      "comboPriceNote": "Zákazníci platí za celé kombo cenu této položky ({price}) plus případné příplatky za jednotlivé položky, které nastavíte níže.",
+      "comboSlotLabelPlaceholder": "Popisek slotu {n} (např. „Vyberte si 1. pizzu“)",
+      "comboMin": "Min.",
+      "comboMax": "Max.",
+      "comboEligibleItems": "Položky, ze kterých si zákazník může vybrat:",
+      "comboNoItems": "Nejprve přidejte běžné položky menu — poté je zde zařaďte do komba.",
+      "comboUpcharge": "Příplatek za prémiovou variantu této položky",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Přidat slot"
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

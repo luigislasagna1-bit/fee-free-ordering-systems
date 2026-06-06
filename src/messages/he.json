@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "ימים נבחרים",
       "duplicateCategory": "שכפול קטגוריה",
       "categoryDuplicated": "הקטגוריה שוכפלה — העותק מוסתר עד שתפרסמו אותו.",
-      "failedToDuplicateCategory": "לא ניתן היה לשכפל את הקטגוריה. נסו שוב."
+      "failedToDuplicateCategory": "לא ניתן היה לשכפל את הקטגוריה. נסו שוב.",
+      "tabComboActive": "🧩 קומבו",
+      "tabComboSetup": "קומבו",
+      "comboToggleTitle": "הפוך לקומבו",
+      "comboToggleHint": "בנה פריט אחד ממספר בחירות (למשל 2 פיצות, או פיצה + כנפיים). בחירת פיצה פותחת את בונה הפיצה המלא.",
+      "comboPriceNote": "הלקוחות משלמים את מחיר הפריט הזה ({price}) עבור כל הקומבו, בתוספת כל תוספת מחיר לפי פריט שתגדיר למטה.",
+      "comboSlotLabelPlaceholder": "תווית משבצת {n} (למשל 'בחר את הפיצה הראשונה שלך')",
+      "comboMin": "מינימום",
+      "comboMax": "מקסימום",
+      "comboEligibleItems": "פריטים שמהם הלקוח יכול לבחור:",
+      "comboNoItems": "הוסף תחילה כמה פריטי תפריט רגילים — ואז כלול אותם בקומבו כאן.",
+      "comboUpcharge": "תוספת מחיר פרימיום לפריט זה",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "הוסף משבצת"
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Odabrani dani",
       "duplicateCategory": "Dupliciraj kategoriju",
       "categoryDuplicated": "Kategorija je duplicirana — kopija je skrivena dok je ne objavite.",
-      "failedToDuplicateCategory": "Nije moguće duplicirati kategoriju. Pokušajte ponovno."
+      "failedToDuplicateCategory": "Nije moguće duplicirati kategoriju. Pokušajte ponovno.",
+      "tabComboActive": "🧩 Combo",
+      "tabComboSetup": "Combo",
+      "comboToggleTitle": "Pretvori u combo",
+      "comboToggleHint": "Sastavite jednu stavku od nekoliko odabira (npr. 2 pizze ili pizza + krilca). Odabir pizze otvara puni alat za sastavljanje pizze.",
+      "comboPriceNote": "Kupci za cijeli combo plaćaju cijenu ove stavke ({price}), uz sve dodatne naplate po stavci koje postavite u nastavku.",
+      "comboSlotLabelPlaceholder": "Oznaka mjesta {n} (npr. 'Odaberite svoju 1. pizzu')",
+      "comboMin": "Min",
+      "comboMax": "Maks",
+      "comboEligibleItems": "Stavke koje kupac može odabrati:",
+      "comboNoItems": "Najprije dodajte neke obične stavke izbornika — zatim ih ovdje uključite u combo.",
+      "comboUpcharge": "Dodatna naplata za premium za ovu stavku",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Dodaj mjesto"
     },
     "promotionsList": {
       "stackingMaster": "Master",

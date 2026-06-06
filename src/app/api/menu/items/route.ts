@@ -3,6 +3,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { syncPizzaConfigAttachments } from "@/lib/pizza-config";
 import { blockIfInheritingMenu } from "@/lib/brand";
+import { hasFeature } from "@/lib/entitlements";
 
 export async function POST(req: NextRequest) {
   const user = await getSessionUser();
@@ -16,11 +17,16 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { name, description, price, categoryId, imageUrl, isHidden, isSoldOut,
           forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
-          hasVariants, variants, pizzaConfig } = body;
+          hasVariants, variants, pizzaConfig, comboConfig } = body;
   if (!name || price === undefined || !categoryId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
   const cat = await prisma.menuCategory.findFirst({ where: { id: categoryId, restaurantId } });
   if (!cat) return NextResponse.json({ error: "Category not found" }, { status: 404 });
+
+  // Combos are an Advanced Promotions feature — strip comboConfig for
+  // restaurants without the entitlement (defense-in-depth vs the UI gate).
+  const comboAllowed = comboConfig ? await hasFeature(restaurantId, "advanced_promo_types") : false;
+  const safeComboConfig = comboAllowed ? comboConfig : null;
 
   try {
     const existing = await prisma.menuItem.count({ where: { categoryId } });
@@ -36,6 +42,7 @@ export async function POST(req: NextRequest) {
         availableFrom: availableFrom || null, availableTo: availableTo || null,
         sortOrder: existing,
         pizzaConfig: pizzaConfig ?? null,
+        comboConfig: safeComboConfig,
       },
     });
 

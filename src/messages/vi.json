@@ -1512,7 +1512,20 @@
       "limitedDaysBadge": "Ngày đã chọn",
       "duplicateCategory": "Nhân bản danh mục",
       "categoryDuplicated": "Đã nhân bản danh mục — bản sao bị ẩn cho đến khi bạn xuất bản nó.",
-      "failedToDuplicateCategory": "Không thể nhân bản danh mục. Vui lòng thử lại."
+      "failedToDuplicateCategory": "Không thể nhân bản danh mục. Vui lòng thử lại.",
+      "tabComboActive": "🧩 Combo",
+      "tabComboSetup": "Combo",
+      "comboToggleTitle": "Đặt làm combo",
+      "comboToggleHint": "Tạo một món từ nhiều lựa chọn (ví dụ: 2 pizza, hoặc pizza + cánh gà). Lựa chọn pizza sẽ mở trình tạo pizza đầy đủ.",
+      "comboPriceNote": "Khách hàng trả mức giá của món này ({price}) cho cả combo, cộng thêm bất kỳ khoản phụ thu theo từng món nào bạn đặt bên dưới.",
+      "comboSlotLabelPlaceholder": "Nhãn vị trí {n} (ví dụ: 'Chọn pizza thứ 1 của bạn')",
+      "comboMin": "Tối thiểu",
+      "comboMax": "Tối đa",
+      "comboEligibleItems": "Các món khách hàng có thể chọn:",
+      "comboNoItems": "Hãy thêm một số món thường vào thực đơn trước — sau đó đưa chúng vào combo tại đây.",
+      "comboUpcharge": "Phụ thu cao cấp cho món này",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Thêm vị trí"
     },
     "promotionsList": {
       "stackingMaster": "Master",

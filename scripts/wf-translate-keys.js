@@ -6,38 +6,22 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "admin.menus";
-const CONTEXT = "a restaurant admin 'multi-menu manager' — the owner has several named menu versions (e.g. Summer, Winter), edits a draft while the current one stays live, can duplicate a menu, set one live, and SCHEDULE one to go live at a future date/time. {n} is a number, {name} a menu name, {time} an already-formatted date/time — keep {n}/{name}/{time} placeholders EXACTLY as-is. Concise admin-dashboard tone.";
+const NS = "admin.menuEditor";
+const CONTEXT = "the menu-item editor in a restaurant admin. These strings build a COMBO item — one menu item made of several 'slots', each offering a pool of items the customer picks from (e.g. '2-Pizza Combo', 'Pizza + Wings'); pizza picks open the pizza builder. {price} is a formatted currency amount, {n} a slot number — keep {price}/{n} placeholders EXACTLY as-is. Keep emoji (🧩) and the literal 'PIZZA' tag. Concise admin tone.";
 const EN = {
-  "live": "Live",
-  "categories": "{n} categories",
-  "scheduled": "scheduled",
-  "setLive": "Set live",
-  "newMenu": "New menu",
-  "duplicate": "Duplicate this menu",
-  "rename": "Rename",
-  "delete": "Delete menu",
-  "failed": "Something went wrong",
-  "created": "Menu created",
-  "duplicated": "Menu duplicated",
-  "renamed": "Menu renamed",
-  "activated": "Menu is now live",
-  "deleted": "Menu deleted",
-  "newMenuPrompt": "Name your new menu:",
-  "newMenuDefault": "New menu",
-  "duplicatePrompt": "Name for the duplicated menu:",
-  "renamePrompt": "Rename this menu:",
-  "activateConfirm": "Make \"{name}\" the live menu customers see right now?",
-  "deleteConfirm": "Delete \"{name}\" and all its categories/items? This can't be undone.",
-  "schedule": "Schedule go-live",
-  "scheduleGoLive": "Go live on:",
-  "scheduleSave": "Schedule",
-  "scheduledForLabel": "Goes live {time}",
-  "change": "Change",
-  "clearSchedule": "Clear",
-  "scheduleSaved": "Go-live scheduled",
-  "scheduleCleared": "Schedule cleared",
-  "cancel": "Cancel",
+  "tabComboActive": "🧩 Combo",
+  "tabComboSetup": "Combo",
+  "comboToggleTitle": "Make this a combo",
+  "comboToggleHint": "Build one item from several picks (e.g. 2 pizzas, or a pizza + wings). Pizza picks open the full pizza builder.",
+  "comboPriceNote": "Customers pay this item's price ({price}) for the whole combo, plus any per-item upcharges you set below.",
+  "comboSlotLabelPlaceholder": "Slot {n} label (e.g. 'Choose your 1st pizza')",
+  "comboMin": "Min",
+  "comboMax": "Max",
+  "comboEligibleItems": "Items the customer can choose from:",
+  "comboNoItems": "Add some regular menu items first — then include them in a combo here.",
+  "comboUpcharge": "Premium upcharge for this item",
+  "comboPizzaTag": "PIZZA",
+  "comboAddSlot": "Add slot",
 };
 const KEYS = Object.keys(EN);
 

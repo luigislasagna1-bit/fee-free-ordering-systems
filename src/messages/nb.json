@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Utvalgte dager",
       "duplicateCategory": "Dupliser kategori",
       "categoryDuplicated": "Kategorien er duplisert — kopien er skjult til du publiserer den.",
-      "failedToDuplicateCategory": "Kunne ikke duplisere kategorien. Prøv igjen."
+      "failedToDuplicateCategory": "Kunne ikke duplisere kategorien. Prøv igjen.",
+      "tabComboActive": "🧩 Kombo",
+      "tabComboSetup": "Kombo",
+      "comboToggleTitle": "Gjør dette til en kombo",
+      "comboToggleHint": "Bygg én vare av flere valg (f.eks. 2 pizzaer, eller en pizza + wings). Pizzavalg åpner den fulle pizzabyggeren.",
+      "comboPriceNote": "Kundene betaler denne varens pris ({price}) for hele komboen, pluss eventuelle tillegg per vare du angir nedenfor.",
+      "comboSlotLabelPlaceholder": "Etikett for plass {n} (f.eks. «Velg din 1. pizza»)",
+      "comboMin": "Min",
+      "comboMax": "Maks",
+      "comboEligibleItems": "Varer kunden kan velge mellom:",
+      "comboNoItems": "Legg til noen vanlige menyvarer først – ta dem så med i en kombo her.",
+      "comboUpcharge": "Premiumtillegg for denne varen",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Legg til plass"
     },
     "promotionsList": {
       "stackingMaster": "Master",

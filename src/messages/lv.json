@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Noteiktas dienas",
       "duplicateCategory": "Dublēt kategoriju",
       "categoryDuplicated": "Kategorija dublēta — kopija ir paslēpta, līdz to publicēsiet.",
-      "failedToDuplicateCategory": "Neizdevās dublēt kategoriju. Lūdzu, mēģiniet vēlreiz."
+      "failedToDuplicateCategory": "Neizdevās dublēt kategoriju. Lūdzu, mēģiniet vēlreiz.",
+      "tabComboActive": "🧩 Komplekts",
+      "tabComboSetup": "Komplekts",
+      "comboToggleTitle": "Padarīt par komplektu",
+      "comboToggleHint": "Izveidojiet vienu vienību no vairākām izvēlēm (piem., 2 picas vai pica + spārniņi). Picas izvēles atver pilno picas veidotāju.",
+      "comboPriceNote": "Klienti par visu komplektu maksā šīs vienības cenu ({price}), plus jebkādas piemaksas par vienībām, ko iestatāt zemāk.",
+      "comboSlotLabelPlaceholder": "{n}. slota apzīmējums (piem., “Izvēlieties savu 1. picu”)",
+      "comboMin": "Min.",
+      "comboMax": "Maks.",
+      "comboEligibleItems": "Vienības, no kurām klients var izvēlēties:",
+      "comboNoItems": "Vispirms pievienojiet dažas parastās ēdienkartes vienības — tad iekļaujiet tās komplektā šeit.",
+      "comboUpcharge": "Premium piemaksa par šo vienību",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Pievienot slotu"
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

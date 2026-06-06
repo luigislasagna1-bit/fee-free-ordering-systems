@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Días seleccionados",
       "duplicateCategory": "Duplicar categoría",
       "categoryDuplicated": "Categoría duplicada: la copia permanece oculta hasta que la publiques.",
-      "failedToDuplicateCategory": "No se pudo duplicar la categoría. Inténtalo de nuevo."
+      "failedToDuplicateCategory": "No se pudo duplicar la categoría. Inténtalo de nuevo.",
+      "tabComboActive": "🧩 Combo",
+      "tabComboSetup": "Combo",
+      "comboToggleTitle": "Convertir en combo",
+      "comboToggleHint": "Crea un solo artículo a partir de varias selecciones (p. ej. 2 pizzas, o una pizza + alitas). Las selecciones de pizza abren el creador de pizzas completo.",
+      "comboPriceNote": "Los clientes pagan el precio de este artículo ({price}) por todo el combo, más cualquier recargo por artículo que configures abajo.",
+      "comboSlotLabelPlaceholder": "Etiqueta de la posición {n} (p. ej. 'Elige tu 1.ª pizza')",
+      "comboMin": "Mín.",
+      "comboMax": "Máx.",
+      "comboEligibleItems": "Artículos que el cliente puede elegir:",
+      "comboNoItems": "Añade primero algunos artículos normales del menú; luego inclúyelos en un combo aquí.",
+      "comboUpcharge": "Recargo premium para este artículo",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Añadir posición"
     },
     "promotionsList": {
       "stackingMaster": "Maestro",

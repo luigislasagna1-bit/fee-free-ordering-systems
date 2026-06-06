@@ -14,6 +14,7 @@ import { SortableContext, useSortable, verticalListSortingStrategy, rectSortingS
 import { CSS } from "@dnd-kit/utilities";
 import { formatCurrency } from "@/lib/utils";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { parseComboConfig } from "@/lib/combo";
 import toast from "react-hot-toast";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -40,6 +41,7 @@ type MenuItem = {
   sortOrder: number; variants: ItemVariant[];
   modifierGroups: ModifierGroup[];
   pizzaConfig?: string;
+  comboConfig?: string;
 };
 type Category = {
   id: string; name: string; description?: string; imageUrl?: string;
@@ -447,10 +449,11 @@ function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
 }
 
 function ItemModal({
-  item, categoryId, categories, libraryGroups, onClose, onSaved,
+  item, categoryId, categories, libraryGroups, onClose, onSaved, canUseCombos = false,
 }: {
   item?: MenuItem; categoryId: string; categories: Category[];
   libraryGroups: ModifierGroup[];
+  canUseCombos?: boolean;
   onClose: () => void; onSaved: () => void;
 }) {
   const t = useTranslations("admin.menuEditor");
@@ -480,7 +483,35 @@ function ItemModal({
   );
   const [pizza, setPizza] = useState<PizzaFormState>(() => parsePizzaForm(item?.pizzaConfig));
   const [saving, setSaving] = useState(false);
-  const [tab, setTab] = useState<"basic" | "availability" | "variants" | "pizza">("basic");
+  const [tab, setTab] = useState<"basic" | "availability" | "variants" | "pizza" | "combo">("basic");
+
+  // ── Combo builder state ──────────────────────────────────────────────────
+  // A combo item is composed of "slots", each offering a pool of eligible items
+  // (the customer picks 1 per slot by default; pizza items open the builder).
+  type ComboSlotForm = { id: string; label: string; min: number; max: number; itemIds: string[]; upcharges: Record<string, string> };
+  const [isCombo, setIsCombo] = useState<boolean>(() => !!parseComboConfig((item as any)?.comboConfig));
+  const [comboSlots, setComboSlots] = useState<ComboSlotForm[]>(() => {
+    const c = parseComboConfig((item as any)?.comboConfig);
+    return c ? c.slots.map((s) => ({
+      id: s.id, label: s.label, min: s.min, max: s.max, itemIds: s.itemIds,
+      upcharges: Object.fromEntries(Object.entries(s.upcharges ?? {}).map(([k, v]) => [k, String(v)])),
+    })) : [];
+  });
+  // Pool of items the owner can put in a slot — every menu item EXCEPT this one
+  // and other combos (no self-reference, no nested combos).
+  const comboItemPool = categories.flatMap((c) =>
+    c.menuItems
+      .filter((i) => i.id !== item?.id && !parseComboConfig((i as any)?.comboConfig))
+      .map((i) => ({ id: i.id, name: i.name, catName: c.name, isPizza: !!(i as any)?.pizzaConfig }))
+  );
+  const addComboSlot = () => setComboSlots((s) => [...s, { id: `slot-${Date.now()}`, label: "", min: 1, max: 1, itemIds: [], upcharges: {} }]);
+  const updateComboSlot = (i: number, patch: Partial<ComboSlotForm>) => setComboSlots((s) => s.map((sl, idx) => idx === i ? { ...sl, ...patch } : sl));
+  const removeComboSlot = (i: number) => setComboSlots((s) => s.filter((_, idx) => idx !== i));
+  const toggleSlotItem = (i: number, itemId: string) => setComboSlots((s) => s.map((sl, idx) => {
+    if (idx !== i) return sl;
+    const has = sl.itemIds.includes(itemId);
+    return { ...sl, itemIds: has ? sl.itemIds.filter((x) => x !== itemId) : [...sl.itemIds, itemId] };
+  }));
 
   const toggle = (field: keyof typeof form) => setForm(f => ({ ...f, [field]: !f[field as keyof typeof form] }));
   const toggleDay = (d: number) => {
@@ -533,11 +564,33 @@ function ItemModal({
           })(),
         })
       : null;
+    // Build comboConfig from the slot editor. Only slots with at least one
+    // eligible item are kept; upcharges are coerced to positive numbers.
+    const comboConfig = canUseCombos && isCombo
+      ? (() => {
+          const slots = comboSlots
+            .filter((s) => s.itemIds.length > 0)
+            .map((s, i) => ({
+              id: s.id,
+              label: s.label.trim() || `Slot ${i + 1}`,
+              min: Math.max(0, Math.floor(s.min) || 0),
+              max: Math.max(1, Math.floor(s.max) || 1),
+              itemIds: s.itemIds,
+              upcharges: Object.fromEntries(
+                Object.entries(s.upcharges)
+                  .map(([k, v]) => [k, parseFloat(v) || 0])
+                  .filter(([, v]) => (v as number) > 0)
+              ),
+            }));
+          return slots.length > 0 ? JSON.stringify({ slots }) : null;
+        })()
+      : null;
     const payload = {
       ...form,
       price: parseFloat(form.price) || 0,
       variants: form.hasVariants ? variants.filter(v => v.name) : undefined,
       pizzaConfig,
+      comboConfig,
     };
     try {
       const url = isNew ? "/api/menu/items" : `/api/menu/items/${item!.id}`;
@@ -570,8 +623,12 @@ function ItemModal({
             ["availability", t("tabAvailability"),                                      "border-sky-500",     "text-sky-700",     "bg-sky-50",     "text-sky-500"    ],
             ["variants",     t("tabSizes"),                                             "border-amber-500",   "text-amber-700",   "bg-amber-50",   "text-amber-500"  ],
             ["pizza",        pizza.isPizza ? t("tabPizzaActive") : t("tabPizzaSetup"),  "border-slate-900",   "text-slate-900",   "bg-slate-100",  "text-slate-600"  ],
+            // Combo tab is gated behind the Advanced Promotions add-on.
+            ...((canUseCombos
+              ? [["combo", isCombo ? t("tabComboActive") : t("tabComboSetup"), "border-fuchsia-600", "text-fuchsia-700", "bg-fuchsia-50", "text-fuchsia-500"]]
+              : []) as [string, string, string, string, string, string][]),
           ] as [string, string, string, string, string, string][]).map(([tabKey, label, activeBorder, activeText, activeBg]) => (
-            <button key={tabKey} onClick={() => setTab(tabKey as "basic" | "availability" | "variants" | "pizza")}
+            <button key={tabKey} onClick={() => setTab(tabKey as "basic" | "availability" | "variants" | "pizza" | "combo")}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition whitespace-nowrap flex-shrink-0 ${
                 tab === tabKey
                   ? `${activeBorder} ${activeText} ${activeBg}`
@@ -896,6 +953,69 @@ function ItemModal({
                       />
                     </div>
                   </div>
+                </>
+              )}
+            </div>
+          )}
+
+          {tab === "combo" && canUseCombos && (
+            <div className="space-y-4">
+              <div className="flex items-start justify-between gap-3 p-3 bg-fuchsia-50 border border-fuchsia-100 rounded-lg">
+                <div>
+                  <div className="text-sm font-semibold text-gray-800">{t("comboToggleTitle")}</div>
+                  <div className="text-xs text-gray-500 mt-0.5">{t("comboToggleHint")}</div>
+                </div>
+                <Toggle on={isCombo} onToggle={() => setIsCombo((v) => !v)} />
+              </div>
+
+              {isCombo && (
+                <>
+                  <p className="text-xs text-gray-500">{t("comboPriceNote", { price: form.price || "0" })}</p>
+                  {comboSlots.map((slot, i) => (
+                    <div key={slot.id} className="border border-gray-200 rounded-xl p-3 space-y-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <input
+                          className="flex-1 min-w-[160px] border border-gray-200 rounded-lg px-3 py-2 text-sm"
+                          placeholder={t("comboSlotLabelPlaceholder", { n: i + 1 })}
+                          value={slot.label}
+                          onChange={(e) => updateComboSlot(i, { label: e.target.value })}
+                        />
+                        <label className="text-xs text-gray-500">{t("comboMin")}</label>
+                        <input type="number" min={0} className="w-14 border border-gray-200 rounded-lg px-2 py-2 text-sm" value={slot.min} onChange={(e) => updateComboSlot(i, { min: parseInt(e.target.value) || 0 })} />
+                        <label className="text-xs text-gray-500">{t("comboMax")}</label>
+                        <input type="number" min={1} className="w-14 border border-gray-200 rounded-lg px-2 py-2 text-sm" value={slot.max} onChange={(e) => updateComboSlot(i, { max: parseInt(e.target.value) || 1 })} />
+                        <button onClick={() => removeComboSlot(i)} className="p-1.5 text-gray-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+                      </div>
+                      <div className="text-xs font-medium text-gray-600">{t("comboEligibleItems")}</div>
+                      <div className="max-h-44 overflow-y-auto border border-gray-100 rounded-lg divide-y divide-gray-50">
+                        {comboItemPool.length === 0 ? (
+                          <div className="p-3 text-xs text-gray-400">{t("comboNoItems")}</div>
+                        ) : comboItemPool.map((p) => {
+                          const checked = slot.itemIds.includes(p.id);
+                          return (
+                            <div key={p.id} className="flex items-center gap-2 px-3 py-1.5 text-sm hover:bg-gray-50">
+                              <label className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer">
+                                <input type="checkbox" className="w-4 h-4 accent-fuchsia-500" checked={checked} onChange={() => toggleSlotItem(i, p.id)} />
+                                <span className="flex-1 truncate">{p.name}{p.isPizza && <span className="ml-1 text-[10px] font-bold text-fuchsia-600">{t("comboPizzaTag")}</span>}</span>
+                              </label>
+                              <span className="text-[11px] text-gray-400 flex-shrink-0">{p.catName}</span>
+                              {checked && (
+                                <input
+                                  type="number" min={0} step="0.5" title={t("comboUpcharge")} placeholder="+$"
+                                  className="w-16 border border-gray-200 rounded px-2 py-1 text-xs flex-shrink-0"
+                                  value={slot.upcharges[p.id] ?? ""}
+                                  onChange={(e) => updateComboSlot(i, { upcharges: { ...slot.upcharges, [p.id]: e.target.value } })}
+                                />
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                  <button onClick={addComboSlot} className="w-full py-2 border-2 border-dashed border-fuchsia-200 rounded-lg text-sm font-semibold text-fuchsia-600 hover:bg-fuchsia-50">
+                    + {t("comboAddSlot")}
+                  </button>
                 </>
               )}
             </div>
@@ -2136,9 +2256,9 @@ function PdfImportModal({ categories, onClose, onImported }: {
 
 // ─── Main MenuClient ──────────────────────────────────────────────────────────
 
-interface Props { categories: Category[]; libraryGroups: ModifierGroup[]; restaurantId: string; hoursFormat?: HoursFormat; menuId?: string }
+interface Props { categories: Category[]; libraryGroups: ModifierGroup[]; restaurantId: string; hoursFormat?: HoursFormat; menuId?: string; canUseCombos?: boolean }
 
-export function MenuClient({ categories: initial, libraryGroups: initialGroups, hoursFormat = "24h", menuId }: Props) {
+export function MenuClient({ categories: initial, libraryGroups: initialGroups, hoursFormat = "24h", menuId, canUseCombos = false }: Props) {
   const t = useTranslations("admin.menuEditor");
   const [categories, setCategories] = useState(initial);
   const [libraryGroups, setLibraryGroups] = useState(initialGroups);
@@ -2647,7 +2767,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
         <CategoryModal cat={catModal.cat} onClose={() => setCatModal(null)} onSaved={() => { setCatModal(null); reload(); }} />
       )}
       {itemModal !== null && (
-        <ItemModal item={itemModal.item} categoryId={itemModal.catId} categories={categories}
+        <ItemModal item={itemModal.item} categoryId={itemModal.catId} categories={categories} canUseCombos={canUseCombos}
           libraryGroups={libraryGroups}
           onClose={() => setItemModal(null)} onSaved={() => { setItemModal(null); reload(); }} />
       )}

@@ -2212,7 +2212,20 @@
       "limitedDaysBadge": "Vybrané dni",
       "duplicateCategory": "Duplikovať kategóriu",
       "categoryDuplicated": "Kategória bola duplikovaná — kópia je skrytá, kým ju nezverejníte.",
-      "failedToDuplicateCategory": "Kategóriu sa nepodarilo duplikovať. Skúste to znova."
+      "failedToDuplicateCategory": "Kategóriu sa nepodarilo duplikovať. Skúste to znova.",
+      "tabComboActive": "🧩 Combo",
+      "tabComboSetup": "Combo",
+      "comboToggleTitle": "Nastaviť ako combo",
+      "comboToggleHint": "Vytvorte jednu položku z viacerých výberov (napr. 2 pizze alebo pizza + krídelká). Výber pizze otvorí kompletný nástroj na zostavenie pizze.",
+      "comboPriceNote": "Zákazníci zaplatia za celé combo cenu tejto položky ({price}) plus prípadné príplatky za jednotlivé položky, ktoré nastavíte nižšie.",
+      "comboSlotLabelPlaceholder": "Označenie slotu {n} (napr. „Vyberte si 1. pizzu“)",
+      "comboMin": "Min",
+      "comboMax": "Max",
+      "comboEligibleItems": "Položky, z ktorých si zákazník môže vybrať:",
+      "comboNoItems": "Najprv pridajte nejaké bežné položky menu — potom ich tu zahrňte do comba.",
+      "comboUpcharge": "Príplatok za prémiovú položku",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Pridať slot"
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Hari tertentu",
       "duplicateCategory": "Duplikat kategori",
       "categoryDuplicated": "Kategori berhasil diduplikat — salinannya disembunyikan hingga Anda menerbitkannya.",
-      "failedToDuplicateCategory": "Tidak dapat menduplikat kategori. Silakan coba lagi."
+      "failedToDuplicateCategory": "Tidak dapat menduplikat kategori. Silakan coba lagi.",
+      "tabComboActive": "🧩 Kombo",
+      "tabComboSetup": "Kombo",
+      "comboToggleTitle": "Jadikan ini kombo",
+      "comboToggleHint": "Buat satu item dari beberapa pilihan (mis. 2 pizza, atau pizza + sayap ayam). Pilihan pizza membuka pembuat pizza lengkap.",
+      "comboPriceNote": "Pelanggan membayar harga item ini ({price}) untuk seluruh kombo, ditambah biaya tambahan per item yang Anda atur di bawah.",
+      "comboSlotLabelPlaceholder": "Label slot {n} (mis. 'Pilih pizza pertama Anda')",
+      "comboMin": "Min",
+      "comboMax": "Maks",
+      "comboEligibleItems": "Item yang dapat dipilih pelanggan:",
+      "comboNoItems": "Tambahkan beberapa item menu reguler dulu — lalu sertakan dalam kombo di sini.",
+      "comboUpcharge": "Biaya tambahan premium untuk item ini",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Tambah slot"
     },
     "promotionsList": {
       "stackingMaster": "Master",

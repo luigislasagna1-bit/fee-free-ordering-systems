@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Valitud päevad",
       "duplicateCategory": "Dubleeri kategooria",
       "categoryDuplicated": "Kategooria dubleeritud — koopia on peidetud, kuni selle avaldate.",
-      "failedToDuplicateCategory": "Kategooria dubleerimine ebaõnnestus. Palun proovige uuesti."
+      "failedToDuplicateCategory": "Kategooria dubleerimine ebaõnnestus. Palun proovige uuesti.",
+      "tabComboActive": "🧩 Komboroog",
+      "tabComboSetup": "Komboroog",
+      "comboToggleTitle": "Tee sellest komboroog",
+      "comboToggleHint": "Koosta üks roog mitmest valikust (nt 2 pitsat või pitsa + kanatiivad). Pitsavalikud avavad täieliku pitsakoostaja.",
+      "comboPriceNote": "Klient maksab kogu komboroa eest selle toote hinna ({price}), millele lisanduvad allpool määratud tootepõhised lisatasud.",
+      "comboSlotLabelPlaceholder": "Pesa {n} silt (nt „Vali oma 1. pitsa“)",
+      "comboMin": "Min",
+      "comboMax": "Maks",
+      "comboEligibleItems": "Tooted, mille hulgast klient saab valida:",
+      "comboNoItems": "Lisa kõigepealt mõned tavalised menüütooted — seejärel kaasa need siin komboroale.",
+      "comboUpcharge": "Premium-lisatasu selle toote eest",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Lisa pesa"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

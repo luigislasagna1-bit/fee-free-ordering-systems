@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Utvalda dagar",
       "duplicateCategory": "Duplicera kategori",
       "categoryDuplicated": "Kategorin har duplicerats – kopian är dold tills du publicerar den.",
-      "failedToDuplicateCategory": "Det gick inte att duplicera kategorin. Försök igen."
+      "failedToDuplicateCategory": "Det gick inte att duplicera kategorin. Försök igen.",
+      "tabComboActive": "🧩 Kombo",
+      "tabComboSetup": "Kombo",
+      "comboToggleTitle": "Gör detta till en kombo",
+      "comboToggleHint": "Bygg en vara av flera val (t.ex. 2 pizzor, eller en pizza + wings). Pizzaval öppnar den fullständiga pizzabyggaren.",
+      "comboPriceNote": "Kunder betalar denna varas pris ({price}) för hela kombon, plus eventuella tillägg per vara som du anger nedan.",
+      "comboSlotLabelPlaceholder": "Etikett för plats {n} (t.ex. 'Välj din 1:a pizza')",
+      "comboMin": "Min",
+      "comboMax": "Max",
+      "comboEligibleItems": "Varor som kunden kan välja mellan:",
+      "comboNoItems": "Lägg till några vanliga menyvaror först – inkludera dem sedan i en kombo här.",
+      "comboUpcharge": "Premiumtillägg för denna vara",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Lägg till plats"
     },
     "promotionsList": {
       "stackingMaster": "Master",

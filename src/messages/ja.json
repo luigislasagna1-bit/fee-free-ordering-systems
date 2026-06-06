@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "指定された曜日",
       "duplicateCategory": "カテゴリを複製",
       "categoryDuplicated": "カテゴリを複製しました。公開するまでコピーは非表示になります。",
-      "failedToDuplicateCategory": "カテゴリを複製できませんでした。もう一度お試しください。"
+      "failedToDuplicateCategory": "カテゴリを複製できませんでした。もう一度お試しください。",
+      "tabComboActive": "🧩 コンボ",
+      "tabComboSetup": "コンボ",
+      "comboToggleTitle": "コンボにする",
+      "comboToggleHint": "複数の選択を組み合わせて1つの商品を作成します（例: ピザ2枚、またはピザ + ウィング）。ピザを選ぶとピザビルダーが開きます。",
+      "comboPriceNote": "お客様はコンボ全体に対してこの商品の価格（{price}）をお支払いいただき、下記で設定した商品ごとの追加料金が加算されます。",
+      "comboSlotLabelPlaceholder": "スロット {n} のラベル（例: 「1枚目のピザを選択」）",
+      "comboMin": "最小",
+      "comboMax": "最大",
+      "comboEligibleItems": "お客様が選択できる商品:",
+      "comboNoItems": "先に通常のメニュー商品を追加してから、ここでコンボに含めてください。",
+      "comboUpcharge": "この商品のプレミアム追加料金",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "スロットを追加"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

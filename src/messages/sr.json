@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Izabrani dani",
       "duplicateCategory": "Dupliraj kategoriju",
       "categoryDuplicated": "Kategorija je duplirana — kopija je skrivena dok je ne objavite.",
-      "failedToDuplicateCategory": "Dupliranje kategorije nije uspelo. Pokušajte ponovo."
+      "failedToDuplicateCategory": "Dupliranje kategorije nije uspelo. Pokušajte ponovo.",
+      "tabComboActive": "🧩 Kombinacija",
+      "tabComboSetup": "Kombinacija",
+      "comboToggleTitle": "Pretvori ovo u kombinaciju",
+      "comboToggleHint": "Napravi jednu stavku od više izbora (npr. 2 pice ili pica + krilca). Izbor pice otvara kompletan alat za pravljenje pica.",
+      "comboPriceNote": "Kupci plaćaju cenu ove stavke ({price}) za celu kombinaciju, uz sve doplate po stavci koje podesite ispod.",
+      "comboSlotLabelPlaceholder": "Naziv mesta {n} (npr. „Izaberite svoju 1. picu”)",
+      "comboMin": "Min",
+      "comboMax": "Maks",
+      "comboEligibleItems": "Stavke koje kupac može da izabere:",
+      "comboNoItems": "Prvo dodajte neke obične stavke menija — zatim ih ovde uključite u kombinaciju.",
+      "comboUpcharge": "Doplata za premium za ovu stavku",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Dodaj mesto"
     },
     "promotionsList": {
       "stackingMaster": "Master",

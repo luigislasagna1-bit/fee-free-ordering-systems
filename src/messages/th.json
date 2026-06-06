@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "วันที่กำหนด",
       "duplicateCategory": "ทำสำเนาหมวดหมู่",
       "categoryDuplicated": "ทำสำเนาหมวดหมู่แล้ว — สำเนาจะถูกซ่อนไว้จนกว่าคุณจะเผยแพร่",
-      "failedToDuplicateCategory": "ไม่สามารถทำสำเนาหมวดหมู่ได้ กรุณาลองใหม่อีกครั้ง"
+      "failedToDuplicateCategory": "ไม่สามารถทำสำเนาหมวดหมู่ได้ กรุณาลองใหม่อีกครั้ง",
+      "tabComboActive": "🧩 คอมโบ",
+      "tabComboSetup": "คอมโบ",
+      "comboToggleTitle": "ตั้งให้รายการนี้เป็นคอมโบ",
+      "comboToggleHint": "สร้างรายการเดียวจากหลายตัวเลือก (เช่น พิซซ่า 2 ถาด หรือ พิซซ่า + วิงส์) การเลือกพิซซ่าจะเปิดตัวสร้างพิซซ่าแบบเต็ม",
+      "comboPriceNote": "ลูกค้าจ่ายตามราคาของรายการนี้ ({price}) สำหรับทั้งคอมโบ บวกกับค่าเพิ่มต่อรายการที่คุณตั้งไว้ด้านล่าง",
+      "comboSlotLabelPlaceholder": "ป้ายช่องที่ {n} (เช่น 'เลือกพิซซ่าถาดแรกของคุณ')",
+      "comboMin": "ต่ำสุด",
+      "comboMax": "สูงสุด",
+      "comboEligibleItems": "รายการที่ลูกค้าเลือกได้:",
+      "comboNoItems": "เพิ่มรายการเมนูปกติก่อน แล้วจึงนำมารวมไว้ในคอมโบที่นี่",
+      "comboUpcharge": "ค่าเพิ่มพรีเมียมสำหรับรายการนี้",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "เพิ่มช่อง"
     },
     "promotionsList": {
       "stackingMaster": "Master",

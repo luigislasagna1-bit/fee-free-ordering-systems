@@ -1549,7 +1549,20 @@
       "limitedDaysBadge": "Ausgewählte Tage",
       "duplicateCategory": "Kategorie duplizieren",
       "categoryDuplicated": "Kategorie dupliziert — die Kopie bleibt ausgeblendet, bis Sie sie veröffentlichen.",
-      "failedToDuplicateCategory": "Die Kategorie konnte nicht dupliziert werden. Bitte versuchen Sie es erneut."
+      "failedToDuplicateCategory": "Die Kategorie konnte nicht dupliziert werden. Bitte versuchen Sie es erneut.",
+      "tabComboActive": "🧩 Combo",
+      "tabComboSetup": "Combo",
+      "comboToggleTitle": "Als Combo anlegen",
+      "comboToggleHint": "Erstellen Sie einen Artikel aus mehreren Auswahlen (z. B. 2 Pizzen oder Pizza + Wings). Pizza-Auswahlen öffnen den vollständigen Pizza-Builder.",
+      "comboPriceNote": "Kunden zahlen den Preis dieses Artikels ({price}) für die gesamte Combo, zuzüglich etwaiger Aufpreise pro Artikel, die Sie unten festlegen.",
+      "comboSlotLabelPlaceholder": "Bezeichnung für Slot {n} (z. B. „Wählen Sie Ihre 1. Pizza\")",
+      "comboMin": "Min.",
+      "comboMax": "Max.",
+      "comboEligibleItems": "Artikel, aus denen der Kunde wählen kann:",
+      "comboNoItems": "Fügen Sie zuerst einige reguläre Menüartikel hinzu – binden Sie sie dann hier in eine Combo ein.",
+      "comboUpcharge": "Premium-Aufpreis für diesen Artikel",
+      "comboPizzaTag": "PIZZA",
+      "comboAddSlot": "Slot hinzufügen"
     },
     "promotionsList": {
       "stackingMaster": "Master",
