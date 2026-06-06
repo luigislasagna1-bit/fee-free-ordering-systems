@@ -2551,12 +2551,18 @@ export function OrderingPageClient({
             one is attached) and / or opens a details modal. Hour-of-day
             usability is enforced at order calculation, not visibility —
             a lunch promo still shows at 9 AM so customers can pre-order. */}
+        {/* Promo "almost there" nudge — pinned to the BOTTOM (above the cart
+            button) so it stays visible while the customer scrolls the menu,
+            instead of scrolling away at the top. Per reseller feedback
+            (GloriaFood parity). */}
         {promoNudge && (
-          <div className="mb-4 rounded-xl border-2 border-dashed border-emerald-300 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-800">
-            🎯 {t("promoUnlockNudge", {
-              amount: formatCurrency(promoNudge.remaining, restaurant.currency ?? "usd"),
-              name: promoNudge.name,
-            })}
+          <div className={`fixed inset-x-0 z-30 px-4 pointer-events-none ${cartCount > 0 ? "bottom-24" : "bottom-6"}`}>
+            <div className="mx-auto max-w-md rounded-xl border-2 border-dashed border-emerald-300 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-800 shadow-lg pointer-events-auto">
+              🎯 {t("promoUnlockNudge", {
+                amount: formatCurrency(promoNudge.remaining, restaurant.currency ?? "usd"),
+                name: promoNudge.name,
+              })}
+            </div>
           </div>
         )}
         {promoBanners.length > 0 && (
