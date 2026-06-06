@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Már van fiókod?",
       "signIn": "Bejelentkezés",
       "scopeNote": "Ez a fiók kizárólag <strong>{name}</strong> oldalához tartozik – különálló a feefreefood.com marketplace-fiókodtól."
+    },
+    "combo": {
+      "slotFallback": "{n}. választás",
+      "pickRange": "Válassz {min}–{max} db-ot",
+      "customizable": "TESTRESZABHATÓ",
+      "addToCart": "Kosárba · {price}",
+      "completeSlots": "Fejezd be a választásaidat",
+      "badge": "Kombó"
     }
   }
 }

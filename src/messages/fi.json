@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Onko sinulla jo tili?",
       "signIn": "Kirjaudu sisään",
       "scopeNote": "Tämä tili on tarkoitettu vain <strong>{name}</strong>-ravintolalle — erillinen mahdollisesta feefreefood.com-markkinapaikkatilista."
+    },
+    "combo": {
+      "slotFallback": "Valinta {n}",
+      "pickRange": "Valitse {min}–{max}",
+      "customizable": "MUOKATTAVISSA",
+      "addToCart": "Lisää koriin · {price}",
+      "completeSlots": "Viimeistele valintasi",
+      "badge": "Combo"
     }
   }
 }

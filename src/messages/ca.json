@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Ja tens un compte?",
       "signIn": "Iniciar sessió",
       "scopeNote": "Aquest compte és exclusiu per a <strong>{name}</strong> — independent de qualsevol compte del marketplace que puguis tenir a feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Opció {n}",
+      "pickRange": "Tria'n {min}–{max}",
+      "customizable": "PERSONALITZABLE",
+      "addToCart": "Afegeix a la cistella · {price}",
+      "completeSlots": "Completa les teves opcions",
+      "badge": "Combo"
     }
   }
 }

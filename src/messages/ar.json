@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "لديك حساب بالفعل؟",
       "signIn": "تسجيل الدخول",
       "scopeNote": "هذا الحساب خاص بـ <strong>{name}</strong> فقط — منفصل عن أي حساب Marketplace قد يكون لديك على feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "الاختيار {n}",
+      "pickRange": "اختر {min}–{max}",
+      "customizable": "قابل للتخصيص",
+      "addToCart": "أضف إلى السلة · {price}",
+      "completeSlots": "أكمل اختياراتك",
+      "badge": "كومبو"
     }
   }
 }

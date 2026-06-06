@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Zaten hesabınız var mı?",
       "signIn": "Giriş yap",
       "scopeNote": "Bu hesap yalnızca <strong>{name}</strong> için geçerlidir — feefreefood.com'daki marketplace hesabınızdan ayrıdır."
+    },
+    "combo": {
+      "slotFallback": "{n}. seçim",
+      "pickRange": "{min}–{max} adet seçin",
+      "customizable": "ÖZELLEŞTİRİLEBİLİR",
+      "addToCart": "Sepete ekle · {price}",
+      "completeSlots": "Seçimlerinizi tamamlayın",
+      "badge": "Combo"
     }
   }
 }

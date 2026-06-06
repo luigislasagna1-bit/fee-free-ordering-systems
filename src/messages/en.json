@@ -4083,6 +4083,14 @@
       "totalBreakdown": "({base} + {speciality} speciality)",
       "addBundleToCart": "Add bundle to cart"
     },
+    "combo": {
+      "slotFallback": "Choice {n}",
+      "pickRange": "Pick {min}–{max}",
+      "customizable": "CUSTOMIZABLE",
+      "addToCart": "Add to cart · {price}",
+      "completeSlots": "Complete your choices",
+      "badge": "Combo"
+    },
     "confirmation": {
       "orderPlaced": "Order Placed!",
       "orderReceivedWaiting": "Your order has been received and is waiting for confirmation from {restaurantName}.",

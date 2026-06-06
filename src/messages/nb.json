@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Har du allerede en konto?",
       "signIn": "Logg inn",
       "scopeNote": "Denne kontoen er kun for <strong>{name}</strong> — adskilt fra en eventuell Marketplace-konto du måtte ha på feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Valg {n}",
+      "pickRange": "Velg {min}–{max}",
+      "customizable": "TILPASSBAR",
+      "addToCart": "Legg i handlekurv · {price}",
+      "completeSlots": "Fullfør valgene dine",
+      "badge": "Kombo"
     }
   }
 }

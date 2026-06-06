@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Al een account?",
       "signIn": "Aanmelden",
       "scopeNote": "Dit account is uitsluitend voor <strong>{name}</strong> — los van een eventueel marketplace-account bij feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Keuze {n}",
+      "pickRange": "Kies {min}–{max}",
+      "customizable": "AANPASBAAR",
+      "addToCart": "Toevoegen aan winkelwagen · {price}",
+      "completeSlots": "Maak je keuzes compleet",
+      "badge": "Combo"
     }
   }
 }

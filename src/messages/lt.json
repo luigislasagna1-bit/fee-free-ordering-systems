@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Jau turite paskyrą?",
       "signIn": "Prisijungti",
       "scopeNote": "Ši paskyra skirta tik <strong>{name}</strong> — atskira nuo bet kokios prekyvietės paskyros, kurią galite turėti feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "{n} pasirinkimas",
+      "pickRange": "Pasirinkite {min}–{max}",
+      "customizable": "PRITAIKOMA",
+      "addToCart": "Į krepšelį · {price}",
+      "completeSlots": "Užbaikite savo pasirinkimus",
+      "badge": "Combo"
     }
   }
 }

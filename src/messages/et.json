@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "On juba konto?",
       "signIn": "Logi sisse",
       "scopeNote": "See konto on ainult <strong>{name}</strong> jaoks — eraldi feefreefood.com marketplace'i kontost, mis sul võib olla."
+    },
+    "combo": {
+      "slotFallback": "Valik {n}",
+      "pickRange": "Vali {min}–{max}",
+      "customizable": "KOHANDATAV",
+      "addToCart": "Lisa korvi · {price}",
+      "completeSlots": "Tee oma valikud",
+      "badge": "Kombo"
     }
   }
 }

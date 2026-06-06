@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Već imate nalog?",
       "signIn": "Prijavite se",
       "scopeNote": "Ovaj nalog je isključivo za <strong>{name}</strong> — odvojen od bilo kog marketplace naloga koji možda imate na feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Izbor {n}",
+      "pickRange": "Izaberite {min}–{max}",
+      "customizable": "PRILAGODLJIVO",
+      "addToCart": "Dodaj u korpu · {price}",
+      "completeSlots": "Dovršite svoje izbore",
+      "badge": "Kombinacija"
     }
   }
 }

@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "पहले से खाता है?",
       "signIn": "साइन इन करें",
       "scopeNote": "यह खाता केवल <strong>{name}</strong> के लिए है — feefreefood.com पर आपके किसी भी Marketplace खाते से अलग।"
+    },
+    "combo": {
+      "slotFallback": "विकल्प {n}",
+      "pickRange": "{min}–{max} चुनें",
+      "customizable": "अनुकूलन योग्य",
+      "addToCart": "कार्ट में जोड़ें · {price}",
+      "completeSlots": "अपने विकल्प पूरे करें",
+      "badge": "कॉम्बो"
     }
   }
 }

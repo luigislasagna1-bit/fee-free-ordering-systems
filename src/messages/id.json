@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Sudah punya akun?",
       "signIn": "Masuk",
       "scopeNote": "Akun ini hanya untuk <strong>{name}</strong> — terpisah dari akun marketplace yang mungkin Anda miliki di feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Pilihan {n}",
+      "pickRange": "Pilih {min}–{max}",
+      "customizable": "DAPAT DISESUAIKAN",
+      "addToCart": "Tambah ke keranjang · {price}",
+      "completeSlots": "Lengkapi pilihan Anda",
+      "badge": "Kombo"
     }
   }
 }

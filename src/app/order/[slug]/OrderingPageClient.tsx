@@ -40,6 +40,8 @@ import { ReservationModal } from "./ReservationModal";
 import { PROMO_STOCK_IMAGES } from "./promo-stock-data";
 import { PromoDetailModal } from "./PromoDetailModal";
 import type { BundleCartItem } from "./BundleComposerModal";
+import { ComboComposerModal, type ComboCartResult } from "./ComboComposerModal";
+import { parseComboConfig } from "@/lib/combo";
 import { evaluateApplicableFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -80,7 +82,13 @@ interface CartItem {
     modifiers?: Array<{ name: string; priceAdjustment?: number }>;
     notes?: string;
     specialityFee?: number;
+    /** Combo component that's a customized pizza — carries the builder
+     *  selections (half/half, toppings) so the kitchen ticket shows them. */
+    pizzaCustomization?: PizzaCustomization;
   }>;
+  /** True when this line is a COMBO menu item (vs a promo bundle). Renders the
+   *  same consolidated parent + children, but priced as a menu item. */
+  isCombo?: boolean;
   /** Source promo id + name — preserved so the receipt + kitchen ticket
    *  can label the parent row with the bundle's promo name. */
   bundlePromoId?: string;
@@ -681,6 +689,7 @@ export function OrderingPageClient({
 }) {
   const t = useTranslations("ordering");
   const tT = useTranslations("ordering.toasts");
+  const tCombo = useTranslations("customer.combo");
   const tAddr = useTranslations("checkout.addressFields");
   const theme = parseTheme(themeSettings);
   // Owner's chosen clock display format ("12h" → AM/PM, "24h" → 14:30).
@@ -735,6 +744,8 @@ export function OrderingPageClient({
   // Pizza builder state
   const [pizzaItem, setPizzaItem] = useState<MenuItem | null>(null);
   const [activePizzaConfig, setActivePizzaConfig] = useState<PizzaConfig | null>(null);
+  // Combo item currently being composed (opens ComboComposerModal).
+  const [comboItem, setComboItem] = useState<MenuItem | null>(null);
   // When set, the next "Add to Cart" replaces this index instead of appending.
   const [editingCartIndex, setEditingCartIndex] = useState<number | null>(null);
   // Drives the "Adjust this item?" confirmation dialog.
@@ -1580,6 +1591,11 @@ export function OrderingPageClient({
     }, 0);
 
   const openItem = (item: MenuItem) => {
+    // Combo items open the slot composer (takes precedence over pizza/normal).
+    if (parseComboConfig((item as any).comboConfig)) {
+      setComboItem(item);
+      return;
+    }
     // Detect pizza items and route to the pizza builder instead
     const pc = parsePizzaConfig(item.pizzaConfig);
     if (pc) {
@@ -1630,6 +1646,49 @@ export function OrderingPageClient({
       toast.success(tT("itemAddedNamed", { name: pizzaItem.name }) + " 🍕");
     }
   }, [pizzaItem, editingCartIndex, tT]);
+
+  // Combo composed → drop a single combo line into the cart (reuses the bundle
+  // parent+children rendering; isCombo distinguishes it from a promo bundle).
+  const addComboToCart = (result: ComboCartResult) => {
+    // Pizza children carry a PizzaCustomization; flatten it into display
+    // modifiers (toppings, half/half, crust) using the child's FULL menu item
+    // so the kitchen ticket + receipt show the build. The same conversion
+    // top-level pizzas use in buildOrderPayload — reused for consistency.
+    const fullById = new Map(
+      visibleCategories.flatMap((c) => c.menuItems).map((mi) => [mi.id, mi]),
+    );
+    const newEntry: CartItem = {
+      menuItem: result.comboItem,
+      variant: undefined,
+      quantity: 1,
+      selectedMods: {},
+      notes: "",
+      lineTotal: result.lineTotal,
+      unitPrice: result.lineTotal,
+      isBundle: true,
+      isCombo: true,
+      bundlePromoName: result.comboItem.name,
+      bundleItems: result.children.map((c) => {
+        const full = fullById.get(c.menuItemId);
+        const modifiers =
+          c.pizzaCustomization && full
+            ? pizzaCustomizationToModifiers(c.pizzaCustomization, full.modifierGroups as any)
+            : undefined;
+        return {
+          menuItemId: c.menuItemId,
+          name: c.name,
+          variantId: c.variantId,
+          variantName: c.variantName,
+          modifiers,
+          pizzaCustomization: c.pizzaCustomization,
+          specialityFee: c.upcharge,
+        };
+      }),
+    };
+    setCart((prev) => [...prev, newEntry]);
+    setComboItem(null);
+    toast.success(tT("itemAddedNamed", { name: result.comboItem.name }) + " 🧩");
+  };
 
   // Open the appropriate editor pre-seeded with the cart entry's current selections.
   const beginEdit = (idx: number) => {
@@ -1881,6 +1940,7 @@ export function OrderingPageClient({
       // (Json column). Null for normal items — server treats null as a
       // standard line and re-validates price from the menu.
       isBundle: ci.isBundle ? true : undefined,
+      isCombo: ci.isCombo ? true : undefined,
       bundlePromoId: ci.bundlePromoId ?? undefined,
       bundlePromoName: ci.bundlePromoName ?? undefined,
       bundleItems: ci.bundleItems ?? null,
@@ -3134,7 +3194,7 @@ export function OrderingPageClient({
                                 className="inline-block text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded mr-1.5 align-middle"
                                 style={{ backgroundColor: `${theme.primaryColor}22`, color: theme.primaryColor }}
                               >
-                                Bundle
+                                {ci.isCombo ? tCombo("badge") : "Bundle"}
                               </span>
                             )}
                             {ci.bundlePromoName ?? ci.menuItem.name}
@@ -3414,6 +3474,18 @@ export function OrderingPageClient({
                 }
               : undefined
           }
+        />
+      )}
+
+      {/* ── Combo composer ────────────────────────────────────────────── */}
+      {comboItem && (
+        <ComboComposerModal
+          comboItem={comboItem as any}
+          allItems={flatMenuItems as any}
+          primaryColor={theme.primaryColor}
+          fmt={fmt}
+          onAddCombo={addComboToCart}
+          onClose={() => setComboItem(null)}
         />
       )}
 

@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Έχετε ήδη λογαριασμό;",
       "signIn": "Σύνδεση",
       "scopeNote": "Αυτός ο λογαριασμός ισχύει μόνο για το <strong>{name}</strong> — ξεχωριστός από τυχόν λογαριασμό Marketplace που μπορεί να έχετε στο feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Επιλογή {n}",
+      "pickRange": "Διάλεξε {min}–{max}",
+      "customizable": "ΠΡΟΣΑΡΜΟΣΙΜΟ",
+      "addToCart": "Προσθήκη στο καλάθι · {price}",
+      "completeSlots": "Ολοκλήρωσε τις επιλογές σου",
+      "badge": "Κόμπο"
     }
   }
 }

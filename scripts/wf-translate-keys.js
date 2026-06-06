@@ -6,22 +6,10 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "admin.menuEditor";
-const CONTEXT = "the menu-item editor in a restaurant admin. These strings build a COMBO item — one menu item made of several 'slots', each offering a pool of items the customer picks from (e.g. '2-Pizza Combo', 'Pizza + Wings'); pizza picks open the pizza builder. {price} is a formatted currency amount, {n} a slot number — keep {price}/{n} placeholders EXACTLY as-is. Keep emoji (🧩) and the literal 'PIZZA' tag. Concise admin tone.";
+const NS = "customer.combo";
+const CONTEXT = "the customer-facing ordering page. These strings are shown when a customer composes a COMBO menu item — one item made of several 'choices/slots', each offering a pool of items to pick from (e.g. pick 2 pizzas, or a pizza + wings). {n} is a choice number, {min}/{max} are counts, {price} is a formatted currency amount — keep {n}/{min}/{max}/{price} placeholders EXACTLY as-is. 'CUSTOMIZABLE' is a small badge on items that open a pizza builder. Concise, friendly customer tone.";
 const EN = {
-  "tabComboActive": "🧩 Combo",
-  "tabComboSetup": "Combo",
-  "comboToggleTitle": "Make this a combo",
-  "comboToggleHint": "Build one item from several picks (e.g. 2 pizzas, or a pizza + wings). Pizza picks open the full pizza builder.",
-  "comboPriceNote": "Customers pay this item's price ({price}) for the whole combo, plus any per-item upcharges you set below.",
-  "comboSlotLabelPlaceholder": "Slot {n} label (e.g. 'Choose your 1st pizza')",
-  "comboMin": "Min",
-  "comboMax": "Max",
-  "comboEligibleItems": "Items the customer can choose from:",
-  "comboNoItems": "Add some regular menu items first — then include them in a combo here.",
-  "comboUpcharge": "Premium upcharge for this item",
-  "comboPizzaTag": "PIZZA",
-  "comboAddSlot": "Add slot",
+  "badge": "Combo",
 };
 const KEYS = Object.keys(EN);
 

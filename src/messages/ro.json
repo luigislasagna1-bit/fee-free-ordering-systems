@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Ai deja un cont?",
       "signIn": "Autentificare",
       "scopeNote": "Acest cont este exclusiv pentru <strong>{name}</strong> — separat de orice cont de marketplace pe care îl poți avea la feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Opțiunea {n}",
+      "pickRange": "Alege {min}–{max}",
+      "customizable": "PERSONALIZABIL",
+      "addToCart": "Adaugă în coș · {price}",
+      "completeSlots": "Finalizează-ți alegerile",
+      "badge": "Combo"
     }
   }
 }

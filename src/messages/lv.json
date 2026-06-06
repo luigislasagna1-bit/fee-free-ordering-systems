@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Jau ir konts?",
       "signIn": "Pieteikties",
       "scopeNote": "Šis konts ir paredzēts tikai <strong>{name}</strong> — atsevišķi no jebkāda marketplace konta, kas jums var būt vietnē feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "{n}. izvēle",
+      "pickRange": "Izvēlieties {min}–{max}",
+      "customizable": "PIELĀGOJAMS",
+      "addToCart": "Pievienot grozam · {price}",
+      "completeSlots": "Pabeidziet izvēli",
+      "badge": "Komplekts"
     }
   }
 }

@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "כבר יש לך חשבון?",
       "signIn": "התחבר",
       "scopeNote": "חשבון זה הוא עבור <strong>{name}</strong> בלבד — נפרד מכל חשבון Marketplace שיש לך ב-feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "בחירה {n}",
+      "pickRange": "בחרו {min}–{max}",
+      "customizable": "ניתן להתאמה",
+      "addToCart": "הוספה לעגלה · {price}",
+      "completeSlots": "השלימו את הבחירות שלכם",
+      "badge": "קומבו"
     }
   }
 }

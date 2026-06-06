@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Вече имаш акаунт?",
       "signIn": "Влез",
       "scopeNote": "Този акаунт е само за <strong>{name}</strong> — отделен от евентуален акаунт в marketplace на feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Избор {n}",
+      "pickRange": "Изберете {min}–{max}",
+      "customizable": "ПЕРСОНАЛИЗИРАНЕ",
+      "addToCart": "Добави в количката · {price}",
+      "completeSlots": "Завършете избора си",
+      "badge": "Комбо"
     }
   }
 }

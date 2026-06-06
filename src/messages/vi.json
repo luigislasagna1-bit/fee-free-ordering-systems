@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Đã có tài khoản?",
       "signIn": "Đăng nhập",
       "scopeNote": "Tài khoản này chỉ dùng cho <strong>{name}</strong> — tách biệt với tài khoản marketplace bạn có thể đã có tại feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Lựa chọn {n}",
+      "pickRange": "Chọn {min}–{max}",
+      "customizable": "TÙY CHỈNH",
+      "addToCart": "Thêm vào giỏ · {price}",
+      "completeSlots": "Hoàn tất lựa chọn của bạn",
+      "badge": "Combo"
     }
   }
 }

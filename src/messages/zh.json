@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "已有账号？",
       "signIn": "登录",
       "scopeNote": "此账户仅适用于 <strong>{name}</strong>，与您在 feefreefood.com 的 Marketplace 账户相互独立。"
+    },
+    "combo": {
+      "slotFallback": "选择 {n}",
+      "pickRange": "选择 {min}–{max} 项",
+      "customizable": "可定制",
+      "addToCart": "加入购物车 · {price}",
+      "completeSlots": "完成您的选择",
+      "badge": "套餐"
     }
   }
 }

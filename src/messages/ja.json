@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "すでにアカウントをお持ちですか？",
       "signIn": "サインイン",
       "scopeNote": "このアカウントは<strong>{name}</strong>専用です。feefreefood.comのマーケットプレイスアカウントとは別のものです。"
+    },
+    "combo": {
+      "slotFallback": "選択 {n}",
+      "pickRange": "{min}～{max}個お選びください",
+      "customizable": "カスタマイズ可能",
+      "addToCart": "カートに追加 · {price}",
+      "completeSlots": "選択を完了してください",
+      "badge": "コンボ"
     }
   }
 }

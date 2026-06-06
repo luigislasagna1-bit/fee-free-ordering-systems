@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Уже есть аккаунт?",
       "signIn": "Войти",
       "scopeNote": "Этот аккаунт только для <strong>{name}</strong> — отдельно от любого аккаунта на маркетплейсе feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Выбор {n}",
+      "pickRange": "Выберите {min}–{max}",
+      "customizable": "НАСТРАИВАЕМОЕ",
+      "addToCart": "В корзину · {price}",
+      "completeSlots": "Завершите выбор",
+      "badge": "Комбо"
     }
   }
 }

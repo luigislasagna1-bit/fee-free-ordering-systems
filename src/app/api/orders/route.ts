@@ -16,6 +16,7 @@ import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/li
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 import { hasFeature } from "@/lib/entitlements";
+import { parseComboConfig } from "@/lib/combo";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
 import {
   computeUberEatsEquivalentCents,
@@ -305,6 +306,115 @@ export async function POST(req: NextRequest) {
     }> = [];
 
     for (const raw of items) {
+      // ── Combo line item branch ─────────────────────────────────────
+      // A combo is a REAL MenuItem (with comboConfig) whose price the
+      // customer pays for the whole bundle, PLUS owner-defined per-item
+      // upcharges. Unlike promo bundles we DON'T trust the client price:
+      // we recompute it server-side from the saved comboConfig so a
+      // tampered client can't underpay. We validate every child against
+      // the combo's slot pools (eligibility + min/max), assign each pick
+      // to a slot greedily, and sum the configured upcharges. The combo
+      // is fixed-price, so a customized-pizza child's modifier price
+      // adjustments are display-only (never added to the total).
+      const isComboLine =
+        raw.isCombo === true &&
+        typeof raw.menuItemId === "string" &&
+        Array.isArray(raw.bundleItems) &&
+        raw.bundleItems.length > 0;
+      if (isComboLine) {
+        const comboParent = menuItemMap.get(String(raw.menuItemId));
+        if (!comboParent) {
+          return NextResponse.json({ error: `Combo item not found: ${raw.menuItemId}` }, { status: 400 });
+        }
+        const comboConfig = parseComboConfig((comboParent as any).comboConfig);
+        if (!comboConfig) {
+          return NextResponse.json({ error: "Item is not a combo" }, { status: 400 });
+        }
+        // Same day/time availability guard as normal items (restaurant tz).
+        if (!isMenuItemAvailableNow(comboParent, (restaurant as any).timezone)) {
+          return NextResponse.json(
+            { error: `"${comboParent.name}" isn't available at this time.`, code: "item_unavailable_now" },
+            { status: 400 },
+          );
+        }
+        const slotFill = comboConfig.slots.map(() => 0);
+        let comboUpcharge = 0;
+        const comboChildren: Array<{
+          menuItemId: string; variantId?: string | null;
+          name: string; variantName?: string | null;
+          modifiers?: Array<{ name: string; priceAdjustment?: number }>;
+          notes?: string | null; specialityFee?: number;
+          pizzaCustomization?: unknown;
+        }> = [];
+        for (const child of raw.bundleItems) {
+          if (!child || typeof child !== "object") {
+            return NextResponse.json({ error: "Invalid combo child" }, { status: 400 });
+          }
+          const cid = String(child.menuItemId ?? "");
+          const cm = menuItemMap.get(cid);
+          if (!cm) {
+            return NextResponse.json({ error: `Combo references unknown menu item: ${cid}` }, { status: 400 });
+          }
+          // Greedily assign to the first slot that accepts this item and
+          // still has room. Eligibility = explicit itemId OR category match.
+          let assigned = -1;
+          for (let si = 0; si < comboConfig.slots.length; si++) {
+            const s = comboConfig.slots[si];
+            const eligible =
+              s.itemIds.includes(cid) ||
+              (!!(cm as any).categoryId && s.categoryIds.includes((cm as any).categoryId));
+            if (eligible && slotFill[si] < s.max) { assigned = si; break; }
+          }
+          if (assigned < 0) {
+            return NextResponse.json({ error: `"${cm.name}" isn't a valid choice for this combo.` }, { status: 400 });
+          }
+          slotFill[assigned] += 1;
+          const up = comboConfig.slots[assigned].upcharges?.[cid] ?? 0;
+          comboUpcharge += up;
+          comboChildren.push({
+            menuItemId: cid,
+            variantId: child.variantId ? String(child.variantId) : null,
+            name: sanitize(child.name ?? cm.name, 200),
+            variantName: child.variantName ? sanitize(child.variantName, 100) : null,
+            modifiers: Array.isArray(child.modifiers)
+              ? child.modifiers.slice(0, 40).map((m: any) => ({
+                  name: sanitize(m?.name ?? "", 200),
+                  priceAdjustment: typeof m?.priceAdjustment === "number" ? m.priceAdjustment : 0,
+                }))
+              : undefined,
+            notes: child.notes ? sanitize(child.notes, 200) : null,
+            specialityFee: up > 0 ? Math.round(up * 100) / 100 : undefined,
+            pizzaCustomization:
+              child.pizzaCustomization && typeof child.pizzaCustomization === "object"
+                ? child.pizzaCustomization
+                : undefined,
+          });
+        }
+        // Every slot's minimum must be satisfied.
+        for (let si = 0; si < comboConfig.slots.length; si++) {
+          if (slotFill[si] < comboConfig.slots[si].min) {
+            return NextResponse.json({ error: "Please complete all combo choices." }, { status: 400 });
+          }
+        }
+        const comboQty = Math.max(1, Math.min(99, parseInt(raw.quantity, 10) || 1));
+        const comboUnit = Math.max(0, Math.round((comboParent.price + comboUpcharge) * 100) / 100);
+        const comboLineTotal = Math.round(comboUnit * comboQty * 100) / 100;
+        serverSubtotal += comboLineTotal;
+        validatedItems.push({
+          menuItemId: comboParent.id, // combos ARE real menu items
+          variantId: null,
+          variantName: null,
+          name: comboParent.name,
+          price: comboUnit,
+          quantity: comboQty,
+          notes: raw.notes ? sanitize(raw.notes, 200) : null,
+          subtotal: comboLineTotal,
+          modifiers: [],
+          bundleItems: comboChildren,
+        });
+        continue;
+      }
+
       // ── Bundle line item branch ────────────────────────────────────
       // Promo Type 8 / 13 bundles arrive with a synthetic menuItemId
       // ("bundle:<promoId>") + a non-empty bundleItems array. We do NOT

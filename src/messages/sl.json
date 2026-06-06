@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Že imate račun?",
       "signIn": "Prijava",
       "scopeNote": "Ta račun je samo za <strong>{name}</strong> — ločen od katerega koli računa na tržnici, ki ga morda imate na feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Izbira {n}",
+      "pickRange": "Izberite {min}–{max}",
+      "customizable": "PRILAGODLJIVO",
+      "addToCart": "Dodaj v košarico · {price}",
+      "completeSlots": "Dokončajte svoje izbire",
+      "badge": "Kombo"
     }
   }
 }

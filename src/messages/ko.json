@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "이미 계정이 있으신가요?",
       "signIn": "로그인",
       "scopeNote": "이 계정은 <strong>{name}</strong> 전용입니다 — feefreefood.com의 마켓플레이스 계정과는 별개입니다."
+    },
+    "combo": {
+      "slotFallback": "선택 {n}",
+      "pickRange": "{min}~{max}개 선택",
+      "customizable": "커스터마이즈 가능",
+      "addToCart": "장바구니에 담기 · {price}",
+      "completeSlots": "선택을 완료하세요",
+      "badge": "콤보"
     }
   }
 }

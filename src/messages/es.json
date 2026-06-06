@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "¿Ya tienes una cuenta?",
       "signIn": "Inicia sesión",
       "scopeNote": "Esta cuenta es exclusiva para <strong>{name}</strong> — independiente de cualquier cuenta de marketplace que puedas tener en feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Opción {n}",
+      "pickRange": "Elige {min}–{max}",
+      "customizable": "PERSONALIZABLE",
+      "addToCart": "Añadir al carrito · {price}",
+      "completeSlots": "Completa tus opciones",
+      "badge": "Combo"
     }
   }
 }

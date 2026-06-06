@@ -4398,6 +4398,14 @@
       "alreadyHaveAccount": "Už máte účet?",
       "signIn": "Prihlásiť sa",
       "scopeNote": "Tento účet je určený výlučne pre <strong>{name}</strong> — je oddelený od akéhokoľvek účtu na marketplace, ktorý môžete mať na feefreefood.com."
+    },
+    "combo": {
+      "slotFallback": "Voľba {n}",
+      "pickRange": "Vyberte {min}–{max}",
+      "customizable": "PRISPÔSOBITEĽNÉ",
+      "addToCart": "Pridať do košíka · {price}",
+      "completeSlots": "Dokončite svoj výber",
+      "badge": "Kombo"
     }
   }
 }
