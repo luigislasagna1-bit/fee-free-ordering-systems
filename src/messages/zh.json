@@ -213,7 +213,8 @@
       "selectVariant": "请选择一个选项",
       "cityRequired": "外卖订单需填写城市",
       "zipRequired": "外卖订单需填写邮政编码",
-      "fieldRequired": "请填写{field}"
+      "fieldRequired": "请填写{field}",
+      "phoneInvalid": "请输入有效的电话号码（仅限数字）。"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",

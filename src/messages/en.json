@@ -213,7 +213,8 @@
       "selectVariant": "Please select an option",
       "cityRequired": "City required for delivery",
       "zipRequired": "Postal code required for delivery",
-      "fieldRequired": "Please enter {field}"
+      "fieldRequired": "Please enter {field}",
+      "phoneInvalid": "Please enter a valid phone number (digits only)."
     },
     "searchMenu": "Search the menu…",
     "expandAll": "Expand all",

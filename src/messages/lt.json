@@ -213,7 +213,8 @@
       "selectVariant": "Pasirinkite variantą",
       "cityRequired": "Miestas būtinas pristatymui",
       "zipRequired": "Pašto kodas būtinas pristatymui",
-      "fieldRequired": "Įveskite {field}"
+      "fieldRequired": "Įveskite {field}",
+      "phoneInvalid": "Įveskite teisingą telefono numerį (tik skaitmenys)."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",

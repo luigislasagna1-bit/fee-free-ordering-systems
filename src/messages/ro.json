@@ -213,7 +213,8 @@
       "selectVariant": "Te rugăm să selectezi o opțiune",
       "cityRequired": "Orașul este obligatoriu pentru livrare",
       "zipRequired": "Codul poștal este obligatoriu pentru livrare",
-      "fieldRequired": "Introdu {field}"
+      "fieldRequired": "Introdu {field}",
+      "phoneInvalid": "Introduceți un număr de telefon valid (doar cifre)."
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",

@@ -213,7 +213,8 @@
       "selectVariant": "Prosimo, izberite možnost",
       "cityRequired": "Mesto je obvezno za dostavo",
       "zipRequired": "Poštna številka je obvezna za dostavo",
-      "fieldRequired": "Vnesite {field}"
+      "fieldRequired": "Vnesite {field}",
+      "phoneInvalid": "Vnesite veljavno telefonsko številko (samo številke)."
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",

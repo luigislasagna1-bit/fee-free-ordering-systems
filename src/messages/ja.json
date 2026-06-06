@@ -213,7 +213,8 @@
       "selectVariant": "オプションを選択してください",
       "cityRequired": "配達には市区町村の入力が必要です",
       "zipRequired": "配達には郵便番号の入力が必要です",
-      "fieldRequired": "{field}を入力してください"
+      "fieldRequired": "{field}を入力してください",
+      "phoneInvalid": "有効な電話番号を入力してください（数字のみ）。"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",

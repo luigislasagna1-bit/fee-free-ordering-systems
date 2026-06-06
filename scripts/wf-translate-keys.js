@@ -6,17 +6,10 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "admin.services";
-const CONTEXT = "the restaurant admin Services settings — pre-order ('order for later') limits for pickup/delivery. 'Minimum time in advance' = how soon before pickup/delivery a customer may order; 'Maximum days in advance' = how far ahead they may pre-order. unitMinutes/unitHours/unitDays are unit labels in a dropdown. {days} is a number — keep it EXACTLY. Concise admin tone.";
+const NS = "ordering.toasts";
+const CONTEXT = "a customer ordering-page error toast shown at checkout when the phone number field contains letters or too few digits. Concise, friendly customer tone. No placeholders.";
 const EN = {
-  "minAdvanceLabel": "Minimum time in advance",
-  "minAdvanceHint": "How soon before pickup/delivery a customer can order. 0 = as soon as possible (only limited by your prep time).",
-  "maxAdvanceLabel": "Maximum days in advance",
-  "maxAdvanceHint": "Customers can pre-order up to {days} days ahead.",
-  "maxAdvanceHintUnlimited": "No limit on how far ahead customers can pre-order.",
-  "unitMinutes": "minutes",
-  "unitHours": "hours",
-  "unitDays": "days",
+  "phoneInvalid": "Please enter a valid phone number (digits only).",
 };
 const KEYS = Object.keys(EN);
 

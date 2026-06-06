@@ -213,7 +213,8 @@
       "selectVariant": "Valitse vaihtoehto",
       "cityRequired": "Kaupunki vaaditaan toimitusta varten",
       "zipRequired": "Postinumero vaaditaan toimitusta varten",
-      "fieldRequired": "Anna {field}"
+      "fieldRequired": "Anna {field}",
+      "phoneInvalid": "Anna kelvollinen puhelinnumero (vain numerot)."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",

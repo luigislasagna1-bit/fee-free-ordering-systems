@@ -213,7 +213,8 @@
       "selectVariant": "Kérjük, válasszon lehetőséget",
       "cityRequired": "A városnév megadása kötelező a szállításhoz",
       "zipRequired": "Az irányítószám megadása kötelező a szállításhoz",
-      "fieldRequired": "Add meg: {field}"
+      "fieldRequired": "Add meg: {field}",
+      "phoneInvalid": "Kérjük, adjon meg egy érvényes telefonszámot (csak számjegyek)."
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",

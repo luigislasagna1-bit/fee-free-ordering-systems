@@ -213,7 +213,8 @@
       "selectVariant": "कृपया एक विकल्प चुनें",
       "cityRequired": "डिलीवरी के लिए शहर आवश्यक है",
       "zipRequired": "डिलीवरी के लिए पिन कोड आवश्यक है",
-      "fieldRequired": "कृपया {field} दर्ज करें"
+      "fieldRequired": "कृपया {field} दर्ज करें",
+      "phoneInvalid": "कृपया एक मान्य फ़ोन नंबर दर्ज करें (केवल अंक)।"
     },
     "searchMenu": "मेनू खोजें…",
     "signIn": "साइन इन करें",

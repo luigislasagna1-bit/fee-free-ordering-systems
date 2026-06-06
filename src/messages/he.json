@@ -213,7 +213,8 @@
       "selectVariant": "אנא בחר אפשרות",
       "cityRequired": "נדרשת עיר למשלוח",
       "zipRequired": "נדרש מיקוד למשלוח",
-      "fieldRequired": "יש להזין {field}"
+      "fieldRequired": "יש להזין {field}",
+      "phoneInvalid": "נא להזין מספר טלפון תקין (ספרות בלבד)."
     },
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",

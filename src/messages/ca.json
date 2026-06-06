@@ -213,7 +213,8 @@
       "selectVariant": "Seleccioneu una opció",
       "cityRequired": "Cal indicar la ciutat per al lliurament",
       "zipRequired": "Cal indicar el codi postal per al lliurament",
-      "fieldRequired": "Introduïu {field}"
+      "fieldRequired": "Introduïu {field}",
+      "phoneInvalid": "Introduïu un número de telèfon vàlid (només xifres)."
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",

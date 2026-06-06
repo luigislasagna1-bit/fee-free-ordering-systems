@@ -213,7 +213,8 @@
       "selectVariant": "Lūdzu, izvēlieties opciju",
       "cityRequired": "Pilsēta ir obligāta piegādei",
       "zipRequired": "Pasta indekss ir obligāts piegādei",
-      "fieldRequired": "Lūdzu, ievadiet: {field}"
+      "fieldRequired": "Lūdzu, ievadiet: {field}",
+      "phoneInvalid": "Lūdzu, ievadiet derīgu tālruņa numuru (tikai ciparus)."
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",

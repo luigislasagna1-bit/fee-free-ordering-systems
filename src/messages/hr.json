@@ -213,7 +213,8 @@
       "selectVariant": "Molimo odaberite opciju",
       "cityRequired": "Grad je obavezan za dostavu",
       "zipRequired": "Poštanski broj je obavezan za dostavu",
-      "fieldRequired": "Unesite {field}"
+      "fieldRequired": "Unesite {field}",
+      "phoneInvalid": "Unesite ispravan telefonski broj (samo brojke)."
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",

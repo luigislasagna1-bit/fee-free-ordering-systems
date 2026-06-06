@@ -2001,6 +2001,18 @@ export function OrderingPageClient({
       toast.error(tT("nameAndPhone"));
       return;
     }
+    // Phone must be a real number — no letters, at least 6 digits. Catches
+    // autofill / saved-profile values that bypass the field's keystroke filter
+    // (mirrors the server guard). Fabrizio report cmq0vafk5.
+    {
+      const digits = (customerInfo.phone.match(/\d/g) || []).length;
+      if (/[a-z]/i.test(customerInfo.phone) || digits < 6) {
+        setEditingSection("contact");
+        focusField("checkout-contact-phone");
+        toast.error(tT("phoneInvalid"));
+        return;
+      }
+    }
     // Email is required — customers need it for order confirmation, receipts,
     // refund handling, and disputes. We also use it as the unique key in our
     // customer DB so we can detect returning vs new customers.

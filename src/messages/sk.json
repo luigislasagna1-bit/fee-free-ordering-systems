@@ -213,7 +213,8 @@
       "selectVariant": "Prosím, vyberte možnosť",
       "cityRequired": "Mesto je povinné pre doručenie",
       "zipRequired": "PSČ je povinné pre doručenie",
-      "fieldRequired": "Zadajte {field}"
+      "fieldRequired": "Zadajte {field}",
+      "phoneInvalid": "Zadajte platné telefónne číslo (iba číslice)."
     },
     "searchMenu": "Hľadať v menu…",
     "signIn": "Prihlásiť sa",

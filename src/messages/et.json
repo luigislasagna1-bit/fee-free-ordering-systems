@@ -213,7 +213,8 @@
       "selectVariant": "Palun vali variant",
       "cityRequired": "Linn on kohaletoimetamiseks kohustuslik",
       "zipRequired": "Sihtnumber on kohaletoimetamiseks kohustuslik",
-      "fieldRequired": "Palun sisesta {field}"
+      "fieldRequired": "Palun sisesta {field}",
+      "phoneInvalid": "Palun sisesta kehtiv telefoninumber (ainult numbrid)."
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",

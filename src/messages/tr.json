@@ -213,7 +213,8 @@
       "selectVariant": "Lütfen bir seçenek seçin",
       "cityRequired": "Teslimat için şehir gereklidir",
       "zipRequired": "Teslimat için posta kodu gereklidir",
-      "fieldRequired": "Lütfen {field} girin"
+      "fieldRequired": "Lütfen {field} girin",
+      "phoneInvalid": "Lütfen geçerli bir telefon numarası girin (yalnızca rakam)."
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",

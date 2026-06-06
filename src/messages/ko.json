@@ -213,7 +213,8 @@
       "selectVariant": "옵션을 선택해 주세요",
       "cityRequired": "배달을 위해 도시를 입력해 주세요",
       "zipRequired": "배달을 위해 우편번호를 입력해 주세요",
-      "fieldRequired": "{field}을(를) 입력해 주세요"
+      "fieldRequired": "{field}을(를) 입력해 주세요",
+      "phoneInvalid": "유효한 전화번호를 입력해 주세요 (숫자만 입력)."
     },
     "searchMenu": "메뉴 검색…",
     "signIn": "로그인",

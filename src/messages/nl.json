@@ -213,7 +213,8 @@
       "selectVariant": "Selecteer een optie",
       "cityRequired": "Stad is verplicht voor bezorging",
       "zipRequired": "Postcode is verplicht voor bezorging",
-      "fieldRequired": "Voer {field} in"
+      "fieldRequired": "Voer {field} in",
+      "phoneInvalid": "Voer een geldig telefoonnummer in (alleen cijfers)."
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",

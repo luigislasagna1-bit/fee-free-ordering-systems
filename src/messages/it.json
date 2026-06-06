@@ -212,7 +212,8 @@
       "selectVariant": "Seleziona un'opzione",
       "cityRequired": "Città obbligatoria per la consegna",
       "zipRequired": "CAP obbligatorio per la consegna",
-      "fieldRequired": "Inserisci {field}"
+      "fieldRequired": "Inserisci {field}",
+      "phoneInvalid": "Inserisci un numero di telefono valido (solo cifre)."
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",

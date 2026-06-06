@@ -213,7 +213,8 @@
       "selectVariant": "Proszę wybrać opcję",
       "cityRequired": "Miasto jest wymagane do dostawy",
       "zipRequired": "Kod pocztowy jest wymagany do dostawy",
-      "fieldRequired": "Podaj: {field}"
+      "fieldRequired": "Podaj: {field}",
+      "phoneInvalid": "Wpisz prawidłowy numer telefonu (tylko cyfry)."
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",

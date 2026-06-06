@@ -213,7 +213,8 @@
       "selectVariant": "Vui lòng chọn một tùy chọn",
       "cityRequired": "Vui lòng nhập thành phố để giao hàng",
       "zipRequired": "Vui lòng nhập mã bưu chính để giao hàng",
-      "fieldRequired": "Vui lòng nhập {field}"
+      "fieldRequired": "Vui lòng nhập {field}",
+      "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ (chỉ gồm chữ số)."
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",

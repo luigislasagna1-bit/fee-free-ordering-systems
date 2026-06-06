@@ -213,7 +213,8 @@
       "selectVariant": "Vennligst velg et alternativ",
       "cityRequired": "By er påkrevd for levering",
       "zipRequired": "Postnummer er påkrevd for levering",
-      "fieldRequired": "Vennligst fyll inn {field}"
+      "fieldRequired": "Vennligst fyll inn {field}",
+      "phoneInvalid": "Skriv inn et gyldig telefonnummer (kun sifre)."
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",

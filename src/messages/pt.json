@@ -212,7 +212,8 @@
       "selectVariant": "Selecione uma opção",
       "cityRequired": "Cidade obrigatória para entrega",
       "zipRequired": "Código postal obrigatório para entrega",
-      "fieldRequired": "Indique {field}"
+      "fieldRequired": "Indique {field}",
+      "phoneInvalid": "Introduza um número de telefone válido (apenas dígitos)."
     },
     "followUs": "Siga-nos",
     "searchMenu": "Pesquisar no menu…",

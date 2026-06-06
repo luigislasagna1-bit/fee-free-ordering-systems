@@ -213,7 +213,8 @@
       "selectVariant": "Por favor, selecione uma opção",
       "cityRequired": "Cidade obrigatória para entrega",
       "zipRequired": "CEP obrigatório para entrega",
-      "fieldRequired": "Informe {field}"
+      "fieldRequired": "Informe {field}",
+      "phoneInvalid": "Insira um número de telefone válido (apenas dígitos)."
     },
     "searchMenu": "Buscar no cardápio…",
     "signIn": "Entrar",

@@ -213,7 +213,8 @@
       "selectVariant": "Vyberte prosím možnost",
       "cityRequired": "Pro doručení je nutné vyplnit město",
       "zipRequired": "Pro doručení je nutné vyplnit PSČ",
-      "fieldRequired": "Zadejte prosím: {field}"
+      "fieldRequired": "Zadejte prosím: {field}",
+      "phoneInvalid": "Zadejte prosím platné telefonní číslo (pouze číslice)."
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",

@@ -213,7 +213,8 @@
       "selectVariant": "Bitte wählen Sie eine Option",
       "cityRequired": "Stadt für Lieferung erforderlich",
       "zipRequired": "Postleitzahl für Lieferung erforderlich",
-      "fieldRequired": "Bitte {field} eingeben"
+      "fieldRequired": "Bitte {field} eingeben",
+      "phoneInvalid": "Bitte geben Sie eine gültige Telefonnummer ein (nur Ziffern)."
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",

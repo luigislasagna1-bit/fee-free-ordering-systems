@@ -213,7 +213,8 @@
       "selectVariant": "يرجى اختيار خيار",
       "cityRequired": "المدينة مطلوبة للتوصيل",
       "zipRequired": "الرمز البريدي مطلوب للتوصيل",
-      "fieldRequired": "يرجى إدخال {field}"
+      "fieldRequired": "يرجى إدخال {field}",
+      "phoneInvalid": "يرجى إدخال رقم هاتف صالح (أرقام فقط)."
     },
     "searchMenu": "ابحث في القائمة…",
     "signIn": "تسجيل الدخول",

@@ -213,7 +213,8 @@
       "selectVariant": "Silakan pilih opsi",
       "cityRequired": "Kota wajib diisi untuk pengiriman",
       "zipRequired": "Kode pos wajib diisi untuk pengiriman",
-      "fieldRequired": "Mohon masukkan {field}"
+      "fieldRequired": "Mohon masukkan {field}",
+      "phoneInvalid": "Masukkan nomor telepon yang valid (hanya angka)."
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",

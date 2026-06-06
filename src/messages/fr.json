@@ -212,7 +212,8 @@
       "selectVariant": "Veuillez sélectionner une option",
       "cityRequired": "Ville requise pour la livraison",
       "zipRequired": "Code postal requis pour la livraison",
-      "fieldRequired": "Veuillez saisir {field}"
+      "fieldRequired": "Veuillez saisir {field}",
+      "phoneInvalid": "Veuillez saisir un numéro de téléphone valide (chiffres uniquement)."
     },
     "followUs": "Suivez-nous",
     "searchMenu": "Rechercher dans le menu…",
