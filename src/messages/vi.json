@@ -1525,7 +1525,9 @@
       "comboNoItems": "Hãy thêm một số món thường vào thực đơn trước — sau đó đưa chúng vào combo tại đây.",
       "comboUpcharge": "Phụ thu cao cấp cho món này",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Thêm vị trí"
+      "comboAddSlot": "Thêm vị trí",
+      "comboChooseSizes": "Kích cỡ có trong combo này:",
+      "comboNoSizeSelected": "Chọn ít nhất một kích cỡ, nếu không khách hàng sẽ không thể chọn món này."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "TÙY CHỈNH",
       "addToCart": "Thêm vào giỏ · {price}",
       "completeSlots": "Hoàn tất lựa chọn của bạn",
-      "badge": "Combo"
+      "badge": "Combo",
+      "chooseSize": "chọn kích cỡ",
+      "fromUpcharge": "từ +{price}",
+      "chooseSizeFor": "Chọn kích cỡ cho {name}"
     }
   }
 }

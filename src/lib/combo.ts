@@ -23,9 +23,41 @@ export type ComboSlot = {
   categoryIds: string[];
   /** Optional per-item premium upcharge (itemId → extra fee added to the combo). */
   upcharges?: Record<string, number>;
+  /** Per-item allowed variant (size) ids: itemId → variantIds[]. When present
+   *  and non-empty, ONLY these sizes of that item are offered in the combo —
+   *  e.g. a "Wings" item restricted to just the "20 pc" size. Absent ⇒ every
+   *  variant is offered (customer picks the size). Single allowed variant ⇒
+   *  auto-applied with no customer prompt. */
+  itemVariants?: Record<string, string[]>;
+  /** Per-variant premium upcharge, key `${itemId}::${variantId}` → extra fee.
+   *  Lets "20 wings" carry a higher upcharge than "10 wings" in the same combo.
+   *  Falls back to the item-level `upcharges[itemId]` when no entry exists. */
+  variantUpcharges?: Record<string, number>;
 };
 
 export type ComboConfig = { slots: ComboSlot[] };
+
+/** Stable key for a per-(item,variant) entry in `variantUpcharges`. */
+export function comboVariantKey(itemId: string, variantId: string): string {
+  return `${itemId}::${variantId}`;
+}
+
+/** The variant ids a slot allows for an item, or null when unrestricted (all
+ *  the item's variants are offered). Shared by composer + server so the rule
+ *  is identical on both sides. */
+export function comboAllowedVariantIds(slot: ComboSlot, itemId: string): string[] | null {
+  const v = slot.itemVariants?.[itemId];
+  return Array.isArray(v) && v.length > 0 ? v : null;
+}
+
+/** Resolve the upcharge for a pick: per-variant first, then per-item, else 0. */
+export function comboUpchargeFor(slot: ComboSlot, itemId: string, variantId?: string | null): number {
+  if (variantId && slot.variantUpcharges) {
+    const k = comboVariantKey(itemId, variantId);
+    if (Number.isFinite(slot.variantUpcharges[k])) return slot.variantUpcharges[k];
+  }
+  return slot.upcharges?.[itemId] ?? 0;
+}
 
 /** Parse + normalize a raw comboConfig value (string or object). Returns null
  *  when it isn't a usable combo (no slots) so callers can treat the item as a
@@ -53,6 +85,24 @@ export function parseComboConfig(raw: unknown): ComboConfig | null {
         if (typeof k === "string" && Number.isFinite(n) && n > 0) upcharges[k] = n;
       }
     }
+    // Per-item allowed variant ids — only keep entries for items in this slot's
+    // explicit pool (a category-only item can't have a variant restriction we
+    // can resolve here, and we don't want stale keys bloating the JSON).
+    const itemVariants: Record<string, string[]> = {};
+    if (s.itemVariants && typeof s.itemVariants === "object") {
+      for (const [k, v] of Object.entries(s.itemVariants)) {
+        if (typeof k !== "string" || !Array.isArray(v)) continue;
+        const ids = v.filter((x) => typeof x === "string") as string[];
+        if (ids.length) itemVariants[k] = ids;
+      }
+    }
+    const variantUpcharges: Record<string, number> = {};
+    if (s.variantUpcharges && typeof s.variantUpcharges === "object") {
+      for (const [k, v] of Object.entries(s.variantUpcharges)) {
+        const n = Number(v);
+        if (typeof k === "string" && Number.isFinite(n) && n > 0) variantUpcharges[k] = n;
+      }
+    }
     slots.push({
       id: typeof s.id === "string" && s.id ? s.id : `slot-${slots.length + 1}`,
       label: typeof s.label === "string" ? s.label : "",
@@ -61,6 +111,8 @@ export function parseComboConfig(raw: unknown): ComboConfig | null {
       itemIds,
       categoryIds,
       upcharges: Object.keys(upcharges).length ? upcharges : undefined,
+      itemVariants: Object.keys(itemVariants).length ? itemVariants : undefined,
+      variantUpcharges: Object.keys(variantUpcharges).length ? variantUpcharges : undefined,
     });
   }
   if (slots.length === 0) return null;

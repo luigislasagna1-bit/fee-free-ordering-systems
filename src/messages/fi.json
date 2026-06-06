@@ -1562,7 +1562,9 @@
       "comboNoItems": "Lisää ensin tavallisia ruokalistan tuotteita — sisällytä ne sitten tähän yhdistelmään.",
       "comboUpcharge": "Premium-lisämaksu tästä tuotteesta",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Lisää paikka"
+      "comboAddSlot": "Lisää paikka",
+      "comboChooseSizes": "Tähän ateriaan sisältyvät koot:",
+      "comboNoSizeSelected": "Valitse vähintään yksi koko, tai asiakas ei voi valita tätä tuotetta."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "MUOKATTAVISSA",
       "addToCart": "Lisää koriin · {price}",
       "completeSlots": "Viimeistele valintasi",
-      "badge": "Combo"
+      "badge": "Combo",
+      "chooseSize": "valitse koko",
+      "fromUpcharge": "alkaen +{price}",
+      "chooseSizeFor": "Valitse koko tuotteelle {name}"
     }
   }
 }

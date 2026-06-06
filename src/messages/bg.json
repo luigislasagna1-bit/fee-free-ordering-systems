@@ -1562,7 +1562,9 @@
       "comboNoItems": "Първо добавете обикновени артикули от менюто — след това ги включете в комбо тук.",
       "comboUpcharge": "Премиум надценка за този артикул",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Добавяне на слот"
+      "comboAddSlot": "Добавяне на слот",
+      "comboChooseSizes": "Размери, включени в това комбо:",
+      "comboNoSizeSelected": "Изберете поне един размер, иначе клиентът няма да може да избере този артикул."
     },
     "promotionsList": {
       "stackingMaster": "Главна",
@@ -4405,7 +4407,10 @@
       "customizable": "ПЕРСОНАЛИЗИРАНЕ",
       "addToCart": "Добави в количката · {price}",
       "completeSlots": "Завършете избора си",
-      "badge": "Комбо"
+      "badge": "Комбо",
+      "chooseSize": "избери размер",
+      "fromUpcharge": "от +{price}",
+      "chooseSizeFor": "Изберете размер за {name}"
     }
   }
 }

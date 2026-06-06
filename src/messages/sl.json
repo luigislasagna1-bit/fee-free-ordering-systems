@@ -1562,7 +1562,9 @@
       "comboNoItems": "Najprej dodaj nekaj običajnih izdelkov menija — nato jih tukaj vključi v kombinacijo.",
       "comboUpcharge": "Doplačilo za vrhunsko izbiro tega izdelka",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Dodaj mesto"
+      "comboAddSlot": "Dodaj mesto",
+      "comboChooseSizes": "Velikosti, vključene v ta kombo:",
+      "comboNoSizeSelected": "Izberite vsaj eno velikost, sicer stranka tega izdelka ne more izbrati."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "PRILAGODLJIVO",
       "addToCart": "Dodaj v košarico · {price}",
       "completeSlots": "Dokončajte svoje izbire",
-      "badge": "Kombo"
+      "badge": "Kombo",
+      "chooseSize": "izberite velikost",
+      "fromUpcharge": "od +{price}",
+      "chooseSizeFor": "Izberite velikost za {name}"
     }
   }
 }

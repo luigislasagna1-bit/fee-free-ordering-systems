@@ -1562,7 +1562,9 @@
       "comboNoItems": "Προσθέστε πρώτα μερικά κανονικά προϊόντα μενού — και μετά συμπεριλάβετέ τα σε ένα combo εδώ.",
       "comboUpcharge": "Προσαύξηση premium για αυτό το προϊόν",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Προσθήκη θέσης"
+      "comboAddSlot": "Προσθήκη θέσης",
+      "comboChooseSizes": "Μεγέθη που περιλαμβάνονται σε αυτό το combo:",
+      "comboNoSizeSelected": "Επιλέξτε τουλάχιστον ένα μέγεθος, διαφορετικά ο πελάτης δεν θα μπορεί να επιλέξει αυτό το προϊόν."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "ΠΡΟΣΑΡΜΟΣΙΜΟ",
       "addToCart": "Προσθήκη στο καλάθι · {price}",
       "completeSlots": "Ολοκλήρωσε τις επιλογές σου",
-      "badge": "Κόμπο"
+      "badge": "Κόμπο",
+      "chooseSize": "επιλογή μεγέθους",
+      "fromUpcharge": "από +{price}",
+      "chooseSizeFor": "Επιλέξτε μέγεθος για {name}"
     }
   }
 }

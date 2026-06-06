@@ -1562,7 +1562,9 @@
       "comboNoItems": "Afegeix primer alguns articles de menú normals i després inclou-los en un combo aquí.",
       "comboUpcharge": "Recàrrec premium per aquest article",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Afegeix una posició"
+      "comboAddSlot": "Afegeix una posició",
+      "comboChooseSizes": "Mides incloses en aquest combo:",
+      "comboNoSizeSelected": "Tria almenys una mida o el client no podrà triar aquest article."
     },
     "promotionsList": {
       "stackingMaster": "Mestre",
@@ -4405,7 +4407,10 @@
       "customizable": "PERSONALITZABLE",
       "addToCart": "Afegeix a la cistella · {price}",
       "completeSlots": "Completa les teves opcions",
-      "badge": "Combo"
+      "badge": "Combo",
+      "chooseSize": "tria la mida",
+      "fromUpcharge": "des de +{price}",
+      "chooseSizeFor": "Tria una mida per a {name}"
     }
   }
 }

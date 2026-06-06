@@ -1562,7 +1562,9 @@
       "comboNoItems": "Спочатку додайте кілька звичайних позицій меню — потім увімкніть їх у комбо тут.",
       "comboUpcharge": "Доплата за преміум для цієї позиції",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Додати слот"
+      "comboAddSlot": "Додати слот",
+      "comboChooseSizes": "Розміри, які входять до цього комбо:",
+      "comboNoSizeSelected": "Виберіть принаймні один розмір, інакше клієнт не зможе обрати цю позицію."
     },
     "promotionsList": {
       "stackingMaster": "Майстер",
@@ -4405,7 +4407,10 @@
       "customizable": "НАЛАШТОВУЄТЬСЯ",
       "addToCart": "Додати в кошик · {price}",
       "completeSlots": "Завершіть свій вибір",
-      "badge": "Комбо"
+      "badge": "Комбо",
+      "chooseSize": "оберіть розмір",
+      "fromUpcharge": "від +{price}",
+      "chooseSizeFor": "Оберіть розмір для {name}"
     }
   }
 }

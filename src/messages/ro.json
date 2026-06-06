@@ -1562,7 +1562,9 @@
       "comboNoItems": "Adaugă mai întâi câteva produse obișnuite din meniu — apoi include-le într-un combo aici.",
       "comboUpcharge": "Suprataxă premium pentru acest produs",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Adaugă slot"
+      "comboAddSlot": "Adaugă slot",
+      "comboChooseSizes": "Mărimi incluse în acest combo:",
+      "comboNoSizeSelected": "Alege cel puțin o mărime, altfel clientul nu poate selecta acest produs."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "PERSONALIZABIL",
       "addToCart": "Adaugă în coș · {price}",
       "completeSlots": "Finalizează-ți alegerile",
-      "badge": "Combo"
+      "badge": "Combo",
+      "chooseSize": "alege mărimea",
+      "fromUpcharge": "de la +{price}",
+      "chooseSizeFor": "Alege o mărime pentru {name}"
     }
   }
 }

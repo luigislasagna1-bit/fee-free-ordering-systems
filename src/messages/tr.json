@@ -1525,7 +1525,9 @@
       "comboNoItems": "Önce birkaç normal menü ürünü ekleyin — ardından bunları burada bir menüye dahil edin.",
       "comboUpcharge": "Bu ürün için premium ek ücret",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Bölme ekle"
+      "comboAddSlot": "Bölme ekle",
+      "comboChooseSizes": "Bu menüye dahil olan boyutlar:",
+      "comboNoSizeSelected": "En az bir boyut seçin, aksi takdirde müşteri bu ürünü seçemez."
     },
     "promotionsList": {
       "stackingMaster": "Ana",
@@ -4405,7 +4407,10 @@
       "customizable": "ÖZELLEŞTİRİLEBİLİR",
       "addToCart": "Sepete ekle · {price}",
       "completeSlots": "Seçimlerinizi tamamlayın",
-      "badge": "Combo"
+      "badge": "Combo",
+      "chooseSize": "boyut seçin",
+      "fromUpcharge": "+{price} başlangıçla",
+      "chooseSizeFor": "{name} için bir boyut seçin"
     }
   }
 }

@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { X, Check, Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PizzaBuilder, parsePizzaConfig, type PizzaCustomization } from "./PizzaBuilder";
-import { parseComboConfig } from "@/lib/combo";
+import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 
 // The two surfaces (this file + OrderingPageClient + PizzaBuilder) each have
 // their own MenuItem shape; combos pass items between them, so we stay loose.
@@ -53,11 +53,22 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     Object.fromEntries((config?.slots ?? []).map((s) => [s.id, []])),
   );
   const [pizzaFor, setPizzaFor] = useState<{ slotId: string; item: AnyItem; upcharge: number } | null>(null);
+  // When a sized item allows MORE than one size in this combo, the customer
+  // picks which size here before it's added.
+  const [variantFor, setVariantFor] = useState<{ slotId: string; item: AnyItem; variants: AnyItem[] } | null>(null);
 
   if (!config) return null;
 
-  const upchargeFor = (slotId: string, itemId: string) =>
-    config.slots.find((s) => s.id === slotId)?.upcharges?.[itemId] ?? 0;
+  const slotById = (slotId: string) => config.slots.find((s) => s.id === slotId)!;
+
+  // The sizes (variants) a slot offers for an item: the owner-restricted subset
+  // when set, otherwise all of the item's variants. Non-sized items ⇒ [].
+  const allowedVariantsFor = (slotId: string, item: AnyItem): AnyItem[] => {
+    const variants: AnyItem[] = Array.isArray(item.variants) ? item.variants : [];
+    if (variants.length === 0 || parsePizzaConfig(item.pizzaConfig)) return [];
+    const allowedIds = comboAllowedVariantIds(slotById(slotId), item.id);
+    return allowedIds ? variants.filter((v) => allowedIds.includes(v.id)) : variants;
+  };
 
   const addPick = (slotId: string, pick: Pick) =>
     setPicks((p) => {
@@ -70,16 +81,35 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     setPicks((p) => ({ ...p, [slotId]: (p[slotId] ?? []).filter((x) => x.key !== key) }));
 
   const choose = (slotId: string, item: AnyItem) => {
-    const upcharge = upchargeFor(slotId, item.id);
+    const slot = slotById(slotId);
     if (parsePizzaConfig(item.pizzaConfig)) {
-      setPizzaFor({ slotId, item, upcharge }); // pizza → open the builder
+      setPizzaFor({ slotId, item, upcharge: comboUpchargeFor(slot, item.id) }); // pizza → builder
       return;
     }
-    const dv = item.variants?.find((v: AnyItem) => v.isDefault) ?? item.variants?.[0] ?? null;
+    const allowed = allowedVariantsFor(slotId, item);
+    if (allowed.length > 1) {
+      setVariantFor({ slotId, item, variants: allowed }); // sized → pick a size first
+      return;
+    }
+    // No sizes, or exactly one allowed size → add directly.
+    const v = allowed.length === 1 ? allowed[0] : null;
     addPick(slotId, {
-      key: `${item.id}-${picks[slotId]?.length ?? 0}-${item.name}`,
-      menuItemId: item.id, name: item.name, variantId: dv?.id, variantName: dv?.name, upcharge,
+      key: `${item.id}-${picks[slotId]?.length ?? 0}-${v?.id ?? item.name}`,
+      menuItemId: item.id, name: item.name, variantId: v?.id, variantName: v?.name,
+      upcharge: comboUpchargeFor(slot, item.id, v?.id),
     });
+  };
+
+  const pickVariant = (v: AnyItem) => {
+    if (!variantFor) return;
+    const slot = slotById(variantFor.slotId);
+    addPick(variantFor.slotId, {
+      key: `${variantFor.item.id}-${picks[variantFor.slotId]?.length ?? 0}-${v.id}`,
+      menuItemId: variantFor.item.id, name: variantFor.item.name,
+      variantId: v.id, variantName: v.name,
+      upcharge: comboUpchargeFor(slot, variantFor.item.id, v.id),
+    });
+    setVariantFor(null);
   };
 
   const base = comboItem.price || 0;
@@ -122,7 +152,7 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
                   <div className="flex flex-wrap gap-1.5 mb-2">
                     {cur.map((p) => (
                       <span key={p.key} className="inline-flex items-center gap-1.5 bg-gray-100 rounded-full pl-3 pr-1.5 py-1 text-sm">
-                        {p.name}{p.pizzaCustomization ? " ⭐" : ""}{(p.upcharge ?? 0) > 0 ? ` (+${fmt(p.upcharge!)})` : ""}
+                        {p.name}{p.variantName ? ` (${p.variantName})` : ""}{p.pizzaCustomization ? " ⭐" : ""}{(p.upcharge ?? 0) > 0 ? ` (+${fmt(p.upcharge!)})` : ""}
                         <button onClick={() => removePick(slot.id, p.key)} className="p-0.5 text-gray-400 hover:text-red-500"><Trash2 className="w-3.5 h-3.5" /></button>
                       </span>
                     ))}
@@ -130,17 +160,24 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
                 )}
                 <div className="grid grid-cols-1 gap-1.5">
                   {slotPools[si].map((it: AnyItem) => {
-                    const up = upchargeFor(slot.id, it.id);
                     const isPizza = !!parsePizzaConfig(it.pizzaConfig);
+                    const sizes = allowedVariantsFor(slot.id, it);
+                    // For sized items the upcharge depends on the chosen size —
+                    // show the lowest (a "from" price); single-size items show exact.
+                    const up = sizes.length > 0
+                      ? Math.min(...sizes.map((v) => comboUpchargeFor(slot, it.id, v.id)))
+                      : comboUpchargeFor(slot, it.id);
+                    const fromPrice = sizes.length > 1;
                     return (
                       <button key={it.id} disabled={atMax} onClick={() => choose(slot.id, it)}
                         className="flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border border-gray-200 text-sm text-left hover:border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed">
                         <span className="min-w-0 truncate">
                           <span className="font-medium text-gray-800">{it.name}</span>
                           {isPizza && <span className="ml-1.5 text-[10px] font-bold" style={{ color: primaryColor }}>{t("customizable")}</span>}
+                          {fromPrice && <span className="ml-1.5 text-[10px] text-gray-400">{t("chooseSize")}</span>}
                         </span>
                         <span className="flex items-center gap-2 flex-shrink-0">
-                          {up > 0 && <span className="text-xs text-gray-500">+{fmt(up)}</span>}
+                          {up > 0 && <span className="text-xs text-gray-500">{fromPrice ? t("fromUpcharge", { price: fmt(up) }) : `+${fmt(up)}`}</span>}
                           <Plus className="w-4 h-4 text-gray-400" />
                         </span>
                       </button>
@@ -182,6 +219,33 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
           />
         );
       })()}
+
+      {/* Size picker — shown when the chosen item allows more than one size. */}
+      {variantFor && (
+        <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 sm:p-4" onClick={() => setVariantFor(null)}>
+          <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl w-full max-w-sm" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between p-4 border-b">
+              <h3 className="font-bold text-gray-900">{t("chooseSizeFor", { name: variantFor.item.name })}</h3>
+              <button onClick={() => setVariantFor(null)} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
+            </div>
+            <div className="p-3 space-y-1.5">
+              {variantFor.variants.map((v: AnyItem) => {
+                const up = comboUpchargeFor(slotById(variantFor.slotId), variantFor.item.id, v.id);
+                return (
+                  <button key={v.id} onClick={() => pickVariant(v)}
+                    className="w-full flex items-center justify-between gap-2 px-3 py-3 rounded-lg border border-gray-200 text-sm text-left hover:border-gray-300">
+                    <span className="font-medium text-gray-800">{v.name}</span>
+                    <span className="flex items-center gap-2 flex-shrink-0">
+                      {up > 0 && <span className="text-xs text-gray-500">+{fmt(up)}</span>}
+                      <Plus className="w-4 h-4 text-gray-400" />
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

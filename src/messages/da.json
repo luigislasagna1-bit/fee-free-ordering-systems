@@ -1562,7 +1562,9 @@
       "comboNoItems": "Tilføj først nogle almindelige menupunkter — inkludér dem så i en combo her.",
       "comboUpcharge": "Premiumtillæg for denne vare",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Tilføj plads"
+      "comboAddSlot": "Tilføj plads",
+      "comboChooseSizes": "Størrelser inkluderet i denne combo:",
+      "comboNoSizeSelected": "Vælg mindst én størrelse, ellers kan kunden ikke vælge denne vare."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "TILPAS SELV",
       "addToCart": "Læg i kurv · {price}",
       "completeSlots": "Færdiggør dine valg",
-      "badge": "Combo"
+      "badge": "Combo",
+      "chooseSize": "vælg størrelse",
+      "fromUpcharge": "fra +{price}",
+      "chooseSizeFor": "Vælg en størrelse til {name}"
     }
   }
 }

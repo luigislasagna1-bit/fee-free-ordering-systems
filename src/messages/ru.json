@@ -1562,7 +1562,9 @@
       "comboNoItems": "Сначала добавьте обычные позиции меню — затем включите их в комбо здесь.",
       "comboUpcharge": "Доплата за премиум для этой позиции",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Добавить слот"
+      "comboAddSlot": "Добавить слот",
+      "comboChooseSizes": "Размеры, включённые в этот комбо-набор:",
+      "comboNoSizeSelected": "Выберите хотя бы один размер, иначе клиент не сможет выбрать этот товар."
     },
     "promotionsList": {
       "stackingMaster": "Мастер",
@@ -4405,7 +4407,10 @@
       "customizable": "НАСТРАИВАЕМОЕ",
       "addToCart": "В корзину · {price}",
       "completeSlots": "Завершите выбор",
-      "badge": "Комбо"
+      "badge": "Комбо",
+      "chooseSize": "выберите размер",
+      "fromUpcharge": "от +{price}",
+      "chooseSizeFor": "Выберите размер для {name}"
     }
   }
 }

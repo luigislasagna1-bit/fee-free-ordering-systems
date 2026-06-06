@@ -1562,7 +1562,9 @@
       "comboNoItems": "הוסף תחילה כמה פריטי תפריט רגילים — ואז כלול אותם בקומבו כאן.",
       "comboUpcharge": "תוספת מחיר פרימיום לפריט זה",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "הוסף משבצת"
+      "comboAddSlot": "הוסף משבצת",
+      "comboChooseSizes": "גדלים הכלולים בקומבו זה:",
+      "comboNoSizeSelected": "בחר לפחות גודל אחד, אחרת הלקוח לא יוכל לבחור פריט זה."
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",
@@ -4405,7 +4407,10 @@
       "customizable": "ניתן להתאמה",
       "addToCart": "הוספה לעגלה · {price}",
       "completeSlots": "השלימו את הבחירות שלכם",
-      "badge": "קומבו"
+      "badge": "קומבו",
+      "chooseSize": "בחירת גודל",
+      "fromUpcharge": "החל מ-+{price}",
+      "chooseSizeFor": "בחרו גודל עבור {name}"
     }
   }
 }

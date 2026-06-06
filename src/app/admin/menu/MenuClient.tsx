@@ -488,30 +488,74 @@ function ItemModal({
   // ── Combo builder state ──────────────────────────────────────────────────
   // A combo item is composed of "slots", each offering a pool of eligible items
   // (the customer picks 1 per slot by default; pizza items open the builder).
-  type ComboSlotForm = { id: string; label: string; min: number; max: number; itemIds: string[]; upcharges: Record<string, string> };
+  type ComboSlotForm = {
+    id: string; label: string; min: number; max: number; itemIds: string[];
+    upcharges: Record<string, string>;
+    // itemId → allowed variant ids (sizes) included in this combo.
+    itemVariants: Record<string, string[]>;
+    // `${itemId}::${variantId}` → per-size upcharge (string for the input).
+    variantUpcharges: Record<string, string>;
+  };
   const [isCombo, setIsCombo] = useState<boolean>(() => !!parseComboConfig((item as any)?.comboConfig));
   const [comboSlots, setComboSlots] = useState<ComboSlotForm[]>(() => {
     const c = parseComboConfig((item as any)?.comboConfig);
     return c ? c.slots.map((s) => ({
       id: s.id, label: s.label, min: s.min, max: s.max, itemIds: s.itemIds,
       upcharges: Object.fromEntries(Object.entries(s.upcharges ?? {}).map(([k, v]) => [k, String(v)])),
+      itemVariants: Object.fromEntries(Object.entries(s.itemVariants ?? {}).map(([k, v]) => [k, [...v]])),
+      variantUpcharges: Object.fromEntries(Object.entries(s.variantUpcharges ?? {}).map(([k, v]) => [k, String(v)])),
     })) : [];
   });
   // Pool of items the owner can put in a slot — every menu item EXCEPT this one
-  // and other combos (no self-reference, no nested combos).
+  // and other combos (no self-reference, no nested combos). Carries variants so
+  // the builder can offer per-size (variant) selection for items like Wings.
   const comboItemPool = categories.flatMap((c) =>
     c.menuItems
       .filter((i) => i.id !== item?.id && !parseComboConfig((i as any)?.comboConfig))
-      .map((i) => ({ id: i.id, name: i.name, catName: c.name, isPizza: !!(i as any)?.pizzaConfig }))
+      .map((i) => ({
+        id: i.id, name: i.name, catName: c.name, isPizza: !!(i as any)?.pizzaConfig,
+        // Pizza sizes are chosen in the pizza builder, so only expose variant
+        // selection for NON-pizza items here.
+        variants: (i.hasVariants && !(i as any)?.pizzaConfig && Array.isArray(i.variants))
+          ? i.variants.filter((v) => v.id).map((v) => ({ id: v.id as string, name: v.name }))
+          : [],
+      }))
   );
-  const addComboSlot = () => setComboSlots((s) => [...s, { id: `slot-${Date.now()}`, label: "", min: 1, max: 1, itemIds: [], upcharges: {} }]);
+  const addComboSlot = () => setComboSlots((s) => [...s, { id: `slot-${Date.now()}`, label: "", min: 1, max: 1, itemIds: [], upcharges: {}, itemVariants: {}, variantUpcharges: {} }]);
   const updateComboSlot = (i: number, patch: Partial<ComboSlotForm>) => setComboSlots((s) => s.map((sl, idx) => idx === i ? { ...sl, ...patch } : sl));
   const removeComboSlot = (i: number) => setComboSlots((s) => s.filter((_, idx) => idx !== i));
   const toggleSlotItem = (i: number, itemId: string) => setComboSlots((s) => s.map((sl, idx) => {
     if (idx !== i) return sl;
     const has = sl.itemIds.includes(itemId);
-    return { ...sl, itemIds: has ? sl.itemIds.filter((x) => x !== itemId) : [...sl.itemIds, itemId] };
+    if (has) {
+      // Unchecking — drop the item + any per-size selections/upcharges for it.
+      const itemVariants = { ...sl.itemVariants }; delete itemVariants[itemId];
+      const variantUpcharges = Object.fromEntries(
+        Object.entries(sl.variantUpcharges).filter(([k]) => !k.startsWith(`${itemId}::`)),
+      );
+      return { ...sl, itemIds: sl.itemIds.filter((x) => x !== itemId), itemVariants, variantUpcharges };
+    }
+    // Checking — when the item has sizes, default to ALL sizes included so the
+    // owner starts from "all offered" and can prune.
+    const pool = comboItemPool.find((p) => p.id === itemId);
+    const itemVariants = { ...sl.itemVariants };
+    if (pool && pool.variants.length > 0) itemVariants[itemId] = pool.variants.map((v) => v.id);
+    return { ...sl, itemIds: [...sl.itemIds, itemId], itemVariants };
   }));
+  // Toggle a single size (variant) on/off for an item within a slot.
+  const toggleSlotVariant = (i: number, itemId: string, variantId: string) => setComboSlots((s) => s.map((sl, idx) => {
+    if (idx !== i) return sl;
+    const cur = sl.itemVariants[itemId] ?? [];
+    const has = cur.includes(variantId);
+    const next = has ? cur.filter((x) => x !== variantId) : [...cur, variantId];
+    const variantUpcharges = has
+      ? Object.fromEntries(Object.entries(sl.variantUpcharges).filter(([k]) => k !== `${itemId}::${variantId}`))
+      : sl.variantUpcharges;
+    return { ...sl, itemVariants: { ...sl.itemVariants, [itemId]: next }, variantUpcharges };
+  }));
+  const updateVariantUpcharge = (i: number, itemId: string, variantId: string, value: string) => setComboSlots((s) => s.map((sl, idx) =>
+    idx === i ? { ...sl, variantUpcharges: { ...sl.variantUpcharges, [`${itemId}::${variantId}`]: value } } : sl,
+  ));
 
   const toggle = (field: keyof typeof form) => setForm(f => ({ ...f, [field]: !f[field as keyof typeof form] }));
   const toggleDay = (d: number) => {
@@ -580,6 +624,20 @@ function ItemModal({
                 Object.entries(s.upcharges)
                   .map(([k, v]) => [k, parseFloat(v) || 0])
                   .filter(([, v]) => (v as number) > 0)
+              ),
+              // Per-size selection: keep only entries for items still chosen.
+              itemVariants: Object.fromEntries(
+                Object.entries(s.itemVariants)
+                  .filter(([k, v]) => s.itemIds.includes(k) && Array.isArray(v) && v.length > 0)
+              ),
+              variantUpcharges: Object.fromEntries(
+                Object.entries(s.variantUpcharges)
+                  .map(([k, v]) => [k, parseFloat(v) || 0])
+                  .filter(([k, v]) => {
+                    const [itemId, variantId] = (k as string).split("::");
+                    return (v as number) > 0 && s.itemIds.includes(itemId)
+                      && (s.itemVariants[itemId] ?? []).includes(variantId);
+                  })
               ),
             }));
           return slots.length > 0 ? JSON.stringify({ slots }) : null;
@@ -992,20 +1050,56 @@ function ItemModal({
                           <div className="p-3 text-xs text-gray-400">{t("comboNoItems")}</div>
                         ) : comboItemPool.map((p) => {
                           const checked = slot.itemIds.includes(p.id);
+                          const hasSizes = p.variants.length > 0;
+                          const includedSizes = slot.itemVariants[p.id] ?? [];
                           return (
-                            <div key={p.id} className="flex items-center gap-2 px-3 py-1.5 text-sm hover:bg-gray-50">
-                              <label className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer">
-                                <input type="checkbox" className="w-4 h-4 accent-fuchsia-500" checked={checked} onChange={() => toggleSlotItem(i, p.id)} />
-                                <span className="flex-1 truncate">{p.name}{p.isPizza && <span className="ml-1 text-[10px] font-bold text-fuchsia-600">{t("comboPizzaTag")}</span>}</span>
-                              </label>
-                              <span className="text-[11px] text-gray-400 flex-shrink-0">{p.catName}</span>
-                              {checked && (
-                                <input
-                                  type="number" min={0} step="0.5" title={t("comboUpcharge")} placeholder="+$"
-                                  className="w-16 border border-gray-200 rounded px-2 py-1 text-xs flex-shrink-0"
-                                  value={slot.upcharges[p.id] ?? ""}
-                                  onChange={(e) => updateComboSlot(i, { upcharges: { ...slot.upcharges, [p.id]: e.target.value } })}
-                                />
+                            <div key={p.id}>
+                              <div className="flex items-center gap-2 px-3 py-1.5 text-sm hover:bg-gray-50">
+                                <label className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer">
+                                  <input type="checkbox" className="w-4 h-4 accent-fuchsia-500" checked={checked} onChange={() => toggleSlotItem(i, p.id)} />
+                                  <span className="flex-1 truncate">{p.name}{p.isPizza && <span className="ml-1 text-[10px] font-bold text-fuchsia-600">{t("comboPizzaTag")}</span>}</span>
+                                </label>
+                                <span className="text-[11px] text-gray-400 flex-shrink-0">{p.catName}</span>
+                                {/* Item-level upcharge only for items WITHOUT sizes;
+                                    sized items carry a per-size upcharge below. */}
+                                {checked && !hasSizes && (
+                                  <input
+                                    type="number" min={0} step="0.5" title={t("comboUpcharge")} placeholder="+$"
+                                    className="w-16 border border-gray-200 rounded px-2 py-1 text-xs flex-shrink-0"
+                                    value={slot.upcharges[p.id] ?? ""}
+                                    onChange={(e) => updateComboSlot(i, { upcharges: { ...slot.upcharges, [p.id]: e.target.value } })}
+                                  />
+                                )}
+                              </div>
+                              {/* Expandable size picker — choose which sizes of this
+                                  item are part of the combo + a per-size upcharge.
+                                  The customer is only offered the ticked sizes. */}
+                              {checked && hasSizes && (
+                                <div className="pl-9 pr-3 pb-2 space-y-1">
+                                  <div className="text-[11px] font-medium text-fuchsia-600">{t("comboChooseSizes")}</div>
+                                  {p.variants.map((v) => {
+                                    const on = includedSizes.includes(v.id);
+                                    return (
+                                      <div key={v.id} className="flex items-center gap-2">
+                                        <label className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer">
+                                          <input type="checkbox" className="w-3.5 h-3.5 accent-fuchsia-500" checked={on} onChange={() => toggleSlotVariant(i, p.id, v.id)} />
+                                          <span className="flex-1 truncate text-xs text-gray-700">{v.name}</span>
+                                        </label>
+                                        {on && (
+                                          <input
+                                            type="number" min={0} step="0.5" title={t("comboUpcharge")} placeholder="+$"
+                                            className="w-16 border border-gray-200 rounded px-2 py-1 text-xs flex-shrink-0"
+                                            value={slot.variantUpcharges[`${p.id}::${v.id}`] ?? ""}
+                                            onChange={(e) => updateVariantUpcharge(i, p.id, v.id, e.target.value)}
+                                          />
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                  {includedSizes.length === 0 && (
+                                    <div className="text-[11px] text-amber-600">{t("comboNoSizeSelected")}</div>
+                                  )}
+                                </div>
                               )}
                             </div>
                           );

@@ -1562,7 +1562,9 @@
       "comboNoItems": "Lägg till några vanliga menyvaror först – inkludera dem sedan i en kombo här.",
       "comboUpcharge": "Premiumtillägg för denna vara",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Lägg till plats"
+      "comboAddSlot": "Lägg till plats",
+      "comboChooseSizes": "Storlekar som ingår i denna combo:",
+      "comboNoSizeSelected": "Välj minst en storlek, annars kan kunden inte beställa den här rätten."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "ANPASSNINGSBAR",
       "addToCart": "Lägg i varukorgen · {price}",
       "completeSlots": "Slutför dina val",
-      "badge": "Kombo"
+      "badge": "Kombo",
+      "chooseSize": "välj storlek",
+      "fromUpcharge": "från +{price}",
+      "chooseSizeFor": "Välj en storlek för {name}"
     }
   }
 }

@@ -1562,7 +1562,9 @@
       "comboNoItems": "먼저 일반 메뉴 항목을 추가한 다음, 여기에서 콤보에 포함하세요.",
       "comboUpcharge": "이 항목의 프리미엄 추가 요금",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "슬롯 추가"
+      "comboAddSlot": "슬롯 추가",
+      "comboChooseSizes": "이 콤보에 포함되는 사이즈:",
+      "comboNoSizeSelected": "사이즈를 하나 이상 선택하세요. 그렇지 않으면 고객이 이 항목을 선택할 수 없습니다."
     },
     "promotionsList": {
       "stackingMaster": "마스터",
@@ -4405,7 +4407,10 @@
       "customizable": "커스터마이즈 가능",
       "addToCart": "장바구니에 담기 · {price}",
       "completeSlots": "선택을 완료하세요",
-      "badge": "콤보"
+      "badge": "콤보",
+      "chooseSize": "사이즈 선택",
+      "fromUpcharge": "+{price}부터",
+      "chooseSizeFor": "{name}의 사이즈를 선택하세요"
     }
   }
 }

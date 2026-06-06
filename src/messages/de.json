@@ -1562,7 +1562,9 @@
       "comboNoItems": "Fügen Sie zuerst einige reguläre Menüartikel hinzu – binden Sie sie dann hier in eine Combo ein.",
       "comboUpcharge": "Premium-Aufpreis für diesen Artikel",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Slot hinzufügen"
+      "comboAddSlot": "Slot hinzufügen",
+      "comboChooseSizes": "In diesem Combo enthaltene Größen:",
+      "comboNoSizeSelected": "Wählen Sie mindestens eine Größe, sonst kann der Kunde diesen Artikel nicht auswählen."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "ANPASSBAR",
       "addToCart": "In den Warenkorb · {price}",
       "completeSlots": "Triff deine Auswahl",
-      "badge": "Kombi"
+      "badge": "Kombi",
+      "chooseSize": "Größe wählen",
+      "fromUpcharge": "ab +{price}",
+      "chooseSizeFor": "Größe für {name} wählen"
     }
   }
 }

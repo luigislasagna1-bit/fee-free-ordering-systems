@@ -1737,6 +1737,8 @@
       "comboUpcharge": "Premium upcharge for this item",
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Add slot",
+      "comboChooseSizes": "Sizes included in this combo:",
+      "comboNoSizeSelected": "Pick at least one size, or the customer can't choose this item.",
       "itemNameLabel": "Item Name *",
       "itemNamePlaceholder": "e.g. Margherita Pizza",
       "descriptionLabel": "Description",
@@ -4089,7 +4091,10 @@
       "customizable": "CUSTOMIZABLE",
       "addToCart": "Add to cart · {price}",
       "completeSlots": "Complete your choices",
-      "badge": "Combo"
+      "badge": "Combo",
+      "chooseSize": "choose size",
+      "fromUpcharge": "from +{price}",
+      "chooseSizeFor": "Choose a size for {name}"
     },
     "confirmation": {
       "orderPlaced": "Order Placed!",

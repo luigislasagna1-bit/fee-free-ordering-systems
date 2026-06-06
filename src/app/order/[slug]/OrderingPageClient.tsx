@@ -3481,7 +3481,9 @@ export function OrderingPageClient({
       {comboItem && (
         <ComboComposerModal
           comboItem={comboItem as any}
-          allItems={flatMenuItems as any}
+          /* Full items (variants, pizzaConfig, modifierGroups) — the composer
+             opens the pizza builder per pizza slot and offers per-size picks. */
+          allItems={visibleCategories.flatMap((c) => c.menuItems) as any}
           primaryColor={theme.primaryColor}
           fmt={fmt}
           onAddCombo={addComboToCart}

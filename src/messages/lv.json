@@ -1562,7 +1562,9 @@
       "comboNoItems": "Vispirms pievienojiet dažas parastās ēdienkartes vienības — tad iekļaujiet tās komplektā šeit.",
       "comboUpcharge": "Premium piemaksa par šo vienību",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Pievienot slotu"
+      "comboAddSlot": "Pievienot slotu",
+      "comboChooseSizes": "Šajā komboizvēlnē iekļautie izmēri:",
+      "comboNoSizeSelected": "Izvēlieties vismaz vienu izmēru, citādi klients nevarēs izvēlēties šo pozīciju."
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",
@@ -4405,7 +4407,10 @@
       "customizable": "PIELĀGOJAMS",
       "addToCart": "Pievienot grozam · {price}",
       "completeSlots": "Pabeidziet izvēli",
-      "badge": "Komplekts"
+      "badge": "Komplekts",
+      "chooseSize": "izvēlieties izmēru",
+      "fromUpcharge": "no +{price}",
+      "chooseSizeFor": "Izvēlieties izmēru produktam {name}"
     }
   }
 }

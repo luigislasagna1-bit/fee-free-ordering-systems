@@ -1562,7 +1562,9 @@
       "comboNoItems": "先に通常のメニュー商品を追加してから、ここでコンボに含めてください。",
       "comboUpcharge": "この商品のプレミアム追加料金",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "スロットを追加"
+      "comboAddSlot": "スロットを追加",
+      "comboChooseSizes": "このコンボに含まれるサイズ:",
+      "comboNoSizeSelected": "サイズを1つ以上選択してください。選択しないとお客様がこの商品を選べません。"
     },
     "promotionsList": {
       "stackingMaster": "マスター",
@@ -4405,7 +4407,10 @@
       "customizable": "カスタマイズ可能",
       "addToCart": "カートに追加 · {price}",
       "completeSlots": "選択を完了してください",
-      "badge": "コンボ"
+      "badge": "コンボ",
+      "chooseSize": "サイズを選択",
+      "fromUpcharge": "+{price}から",
+      "chooseSizeFor": "{name}のサイズを選択してください"
     }
   }
 }

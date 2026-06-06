@@ -1562,7 +1562,9 @@
       "comboNoItems": "Lisa kõigepealt mõned tavalised menüütooted — seejärel kaasa need siin komboroale.",
       "comboUpcharge": "Premium-lisatasu selle toote eest",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Lisa pesa"
+      "comboAddSlot": "Lisa pesa",
+      "comboChooseSizes": "Sellesse komplekti kuuluvad suurused:",
+      "comboNoSizeSelected": "Vali vähemalt üks suurus, muidu klient ei saa seda toodet valida."
     },
     "promotionsList": {
       "stackingMaster": "Peamine",
@@ -4405,7 +4407,10 @@
       "customizable": "KOHANDATAV",
       "addToCart": "Lisa korvi · {price}",
       "completeSlots": "Tee oma valikud",
-      "badge": "Kombo"
+      "badge": "Kombo",
+      "chooseSize": "vali suurus",
+      "fromUpcharge": "alates +{price}",
+      "chooseSizeFor": "Vali suurus tootele {name}"
     }
   }
 }

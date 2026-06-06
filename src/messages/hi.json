@@ -1885,7 +1885,9 @@
       "comboNoItems": "पहले कुछ सामान्य मेन्यू आइटम जोड़ें — फिर उन्हें यहाँ कॉम्बो में शामिल करें.",
       "comboUpcharge": "इस आइटम के लिए प्रीमियम अतिरिक्त शुल्क",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "स्लॉट जोड़ें"
+      "comboAddSlot": "स्लॉट जोड़ें",
+      "comboChooseSizes": "इस कॉम्बो में शामिल आकार:",
+      "comboNoSizeSelected": "कम से कम एक आकार चुनें, वरना ग्राहक इस आइटम को नहीं चुन पाएगा।"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",
@@ -4405,7 +4407,10 @@
       "customizable": "अनुकूलन योग्य",
       "addToCart": "कार्ट में जोड़ें · {price}",
       "completeSlots": "अपने विकल्प पूरे करें",
-      "badge": "कॉम्बो"
+      "badge": "कॉम्बो",
+      "chooseSize": "साइज़ चुनें",
+      "fromUpcharge": "+{price} से",
+      "chooseSizeFor": "{name} के लिए साइज़ चुनें"
     }
   }
 }

@@ -1562,7 +1562,9 @@
       "comboNoItems": "Voeg eerst wat gewone menu-items toe — neem ze daarna hier op in een combo.",
       "comboUpcharge": "Premiumtoeslag voor dit item",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Slot toevoegen"
+      "comboAddSlot": "Slot toevoegen",
+      "comboChooseSizes": "Maten in deze combo:",
+      "comboNoSizeSelected": "Kies minstens één maat, anders kan de klant dit item niet kiezen."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "AANPASBAAR",
       "addToCart": "Toevoegen aan winkelwagen · {price}",
       "completeSlots": "Maak je keuzes compleet",
-      "badge": "Combo"
+      "badge": "Combo",
+      "chooseSize": "kies maat",
+      "fromUpcharge": "vanaf +{price}",
+      "chooseSizeFor": "Kies een maat voor {name}"
     }
   }
 }

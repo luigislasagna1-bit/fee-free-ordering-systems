@@ -1562,7 +1562,9 @@
       "comboNoItems": "请先添加一些常规菜单商品，然后在此处将它们加入套餐。",
       "comboUpcharge": "该商品的高级加价",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "添加项"
+      "comboAddSlot": "添加项",
+      "comboChooseSizes": "本套餐包含的规格：",
+      "comboNoSizeSelected": "请至少选择一种规格，否则顾客无法选择此商品。"
     },
     "promotionsList": {
       "stackingMaster": "主控",
@@ -4405,7 +4407,10 @@
       "customizable": "可定制",
       "addToCart": "加入购物车 · {price}",
       "completeSlots": "完成您的选择",
-      "badge": "套餐"
+      "badge": "套餐",
+      "chooseSize": "选择规格",
+      "fromUpcharge": "起加 {price}",
+      "chooseSizeFor": "为 {name} 选择规格"
     }
   }
 }

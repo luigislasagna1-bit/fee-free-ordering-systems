@@ -1525,7 +1525,9 @@
       "comboNoItems": "Adj hozzá először néhány normál menütételt — utána itt beillesztheted őket egy combóba.",
       "comboUpcharge": "Prémium felár ehhez a tételhez",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Hely hozzáadása"
+      "comboAddSlot": "Hely hozzáadása",
+      "comboChooseSizes": "A combóban szereplő méretek:",
+      "comboNoSizeSelected": "Válassz legalább egy méretet, különben a vendég nem tudja kiválasztani ezt a tételt."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "TESTRESZABHATÓ",
       "addToCart": "Kosárba · {price}",
       "completeSlots": "Fejezd be a választásaidat",
-      "badge": "Kombó"
+      "badge": "Kombó",
+      "chooseSize": "méret választása",
+      "fromUpcharge": "+{price}-tól",
+      "chooseSizeFor": "Válassz méretet ehhez: {name}"
     }
   }
 }

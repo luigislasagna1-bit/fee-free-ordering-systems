@@ -1562,7 +1562,9 @@
       "comboNoItems": "Tambahkan beberapa item menu reguler dulu — lalu sertakan dalam kombo di sini.",
       "comboUpcharge": "Biaya tambahan premium untuk item ini",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Tambah slot"
+      "comboAddSlot": "Tambah slot",
+      "comboChooseSizes": "Ukuran yang termasuk dalam kombo ini:",
+      "comboNoSizeSelected": "Pilih setidaknya satu ukuran, atau pelanggan tidak dapat memilih item ini."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "DAPAT DISESUAIKAN",
       "addToCart": "Tambah ke keranjang · {price}",
       "completeSlots": "Lengkapi pilihan Anda",
-      "badge": "Kombo"
+      "badge": "Kombo",
+      "chooseSize": "pilih ukuran",
+      "fromUpcharge": "mulai +{price}",
+      "chooseSizeFor": "Pilih ukuran untuk {name}"
     }
   }
 }

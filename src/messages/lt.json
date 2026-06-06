@@ -2225,7 +2225,9 @@
       "comboNoItems": "Pirmiausia pridėkite kelis įprastus meniu patiekalus — tada įtraukite juos į rinkinį čia.",
       "comboUpcharge": "Premium priemoka už šį patiekalą",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "Pridėti poziciją"
+      "comboAddSlot": "Pridėti poziciją",
+      "comboChooseSizes": "Į šį rinkinį įtraukti dydžiai:",
+      "comboNoSizeSelected": "Pasirinkite bent vieną dydį, kitaip klientas negalės pasirinkti šio patiekalo."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "PRITAIKOMA",
       "addToCart": "Į krepšelį · {price}",
       "completeSlots": "Užbaikite savo pasirinkimus",
-      "badge": "Combo"
+      "badge": "Combo",
+      "chooseSize": "pasirinkite dydį",
+      "fromUpcharge": "nuo +{price}",
+      "chooseSizeFor": "Pasirinkite „{name}“ dydį"
     }
   }
 }

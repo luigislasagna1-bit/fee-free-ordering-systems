@@ -1562,7 +1562,9 @@
       "comboNoItems": "أضِف بعض أصناف القائمة العادية أولًا — ثم ضمّنها في الكومبو هنا.",
       "comboUpcharge": "رسوم إضافية مميّزة لهذا الصنف",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "إضافة خانة"
+      "comboAddSlot": "إضافة خانة",
+      "comboChooseSizes": "الأحجام المضمَّنة في هذه الوجبة المجمَّعة:",
+      "comboNoSizeSelected": "اختر حجمًا واحدًا على الأقل، وإلا فلن يتمكّن العميل من اختيار هذا الصنف."
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",
@@ -4405,7 +4407,10 @@
       "customizable": "قابل للتخصيص",
       "addToCart": "أضف إلى السلة · {price}",
       "completeSlots": "أكمل اختياراتك",
-      "badge": "كومبو"
+      "badge": "كومبو",
+      "chooseSize": "اختر الحجم",
+      "fromUpcharge": "ابتداءً من +{price}",
+      "chooseSizeFor": "اختر حجمًا لـ {name}"
     }
   }
 }

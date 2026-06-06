@@ -16,7 +16,7 @@ import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/li
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 import { hasFeature } from "@/lib/entitlements";
-import { parseComboConfig } from "@/lib/combo";
+import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
 import {
   computeUberEatsEquivalentCents,
@@ -369,13 +369,55 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: `"${cm.name}" isn't a valid choice for this combo.` }, { status: 400 });
           }
           slotFill[assigned] += 1;
-          const up = comboConfig.slots[assigned].upcharges?.[cid] ?? 0;
+          const slot = comboConfig.slots[assigned];
+
+          // Resolve + validate the chosen SIZE (variant). We never trust the
+          // client's variant blindly: it must be a real variant of the item,
+          // and for non-pizza sized items it must be one the owner allowed in
+          // this combo slot. Pizza sizes come from the builder and aren't
+          // size-restricted here.
+          const cmVariants: Array<{ id: string; name: string }> =
+            Array.isArray((cm as any).variants) ? (cm as any).variants : [];
+          // Server-safe pizza detection (the full parser is a client module).
+          // A pizza item carries a non-empty pizzaConfig JSON with isPizza.
+          const isPizzaChild = (() => {
+            const raw = (cm as any).pizzaConfig;
+            if (typeof raw !== "string" || !raw.trim()) return false;
+            try { const o = JSON.parse(raw); return !!o && typeof o === "object" && o.isPizza === true; } catch { return false; }
+          })();
+          const reqVar = child.variantId ? String(child.variantId) : null;
+          let variantId: string | null = null;
+          let variantName: string | null = null;
+          if (cmVariants.length > 0) {
+            if (isPizzaChild) {
+              const chosen = reqVar ? cmVariants.find((v) => v.id === reqVar) : null;
+              if (chosen) { variantId = chosen.id; variantName = chosen.name; }
+            } else {
+              const allowedIds = comboAllowedVariantIds(slot, cid); // null ⇒ all
+              let chosen = reqVar ? cmVariants.find((v) => v.id === reqVar) : null;
+              if (!chosen) {
+                const pool = allowedIds ? cmVariants.filter((v) => allowedIds.includes(v.id)) : cmVariants;
+                if (pool.length === 1) chosen = pool[0]; // single fixed size — auto-apply
+              }
+              if (!chosen) {
+                return NextResponse.json({ error: `Please choose a size for "${cm.name}".` }, { status: 400 });
+              }
+              if (allowedIds && !allowedIds.includes(chosen.id)) {
+                return NextResponse.json({ error: `"${chosen.name}" isn't an available size for this combo.` }, { status: 400 });
+              }
+              variantId = chosen.id; variantName = chosen.name;
+            }
+          }
+
+          const up = comboUpchargeFor(slot, cid, variantId);
           comboUpcharge += up;
           comboChildren.push({
             menuItemId: cid,
-            variantId: child.variantId ? String(child.variantId) : null,
-            name: sanitize(child.name ?? cm.name, 200),
-            variantName: child.variantName ? sanitize(child.variantName, 100) : null,
+            variantId,
+            // Name/variantName from the server's record (not client) — display
+            // truth; keeps a tampered label out of the kitchen ticket.
+            name: sanitize(cm.name, 200),
+            variantName: variantName ? sanitize(variantName, 100) : null,
             modifiers: Array.isArray(child.modifiers)
               ? child.modifiers.slice(0, 40).map((m: any) => ({
                   name: sanitize(m?.name ?? "", 200),

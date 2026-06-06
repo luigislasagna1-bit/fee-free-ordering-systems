@@ -1562,7 +1562,9 @@
       "comboNoItems": "เพิ่มรายการเมนูปกติก่อน แล้วจึงนำมารวมไว้ในคอมโบที่นี่",
       "comboUpcharge": "ค่าเพิ่มพรีเมียมสำหรับรายการนี้",
       "comboPizzaTag": "PIZZA",
-      "comboAddSlot": "เพิ่มช่อง"
+      "comboAddSlot": "เพิ่มช่อง",
+      "comboChooseSizes": "ขนาดที่รวมอยู่ในคอมโบนี้:",
+      "comboNoSizeSelected": "เลือกอย่างน้อยหนึ่งขนาด ไม่เช่นนั้นลูกค้าจะไม่สามารถเลือกรายการนี้ได้"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4405,7 +4407,10 @@
       "customizable": "ปรับแต่งได้",
       "addToCart": "เพิ่มลงตะกร้า · {price}",
       "completeSlots": "เลือกให้ครบทุกตัวเลือก",
-      "badge": "คอมโบ"
+      "badge": "คอมโบ",
+      "chooseSize": "เลือกขนาด",
+      "fromUpcharge": "เริ่มต้น +{price}",
+      "chooseSizeFor": "เลือกขนาดสำหรับ {name}"
     }
   }
 }
