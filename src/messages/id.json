@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Kenakan biaya untuk add-on & ekstra",
       "comboExtrasChargeOnHint": "Add-on (topping tambahan, modifier berbayar) menambahkan harga normalnya di atas harga combo — sama seperti memesan item tersebut secara terpisah.",
       "comboExtrasChargeOffHint": "Add-on gratis: pelanggan memilih semua opsi yang sama, tetapi combo tetap berharga tetap ditambah biaya tambahan per item Anda.",
-      "comboSlotNameLabel": "Nama langkah (ditampilkan ke pelanggan, mis. \"Pilih pizza Anda\")"
+      "comboSlotNameLabel": "Nama langkah (ditampilkan ke pelanggan, mis. \"Pilih pizza Anda\")",
+      "toppingsOptionalTitle": "Topping opsional",
+      "toppingsOptionalOnHint": "Pelanggan dapat tidak menambahkan topping (mis. keju polos) dan tetap melanjutkan checkout.",
+      "toppingsOptionalOffHint": "Setidaknya satu topping wajib dipilih untuk melanjutkan."
     },
     "promotionsList": {
       "stackingMaster": "Master",

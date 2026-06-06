@@ -1531,7 +1531,10 @@
       "comboExtrasChargeTitle": "Naliczaj opłatę za dodatki",
       "comboExtrasChargeOnHint": "Dodatki (dodatkowe składniki, płatne modyfikatory) doliczają swoją zwykłą cenę do zestawu — tak samo jak przy zamawianiu pozycji osobno.",
       "comboExtrasChargeOffHint": "Dodatki są bezpłatne: klienci wybierają wszystkie te same opcje, ale zestaw zachowuje stałą cenę powiększoną o Twoje dopłaty za poszczególne pozycje.",
-      "comboSlotNameLabel": "Nazwa kroku (widoczna dla klientów, np. „Wybierz pizzę”)"
+      "comboSlotNameLabel": "Nazwa kroku (widoczna dla klientów, np. „Wybierz pizzę”)",
+      "toppingsOptionalTitle": "Dodatki opcjonalne",
+      "toppingsOptionalOnHint": "Klienci mogą nie wybierać żadnych dodatków (np. sama pizza z serem) i mimo to złożyć zamówienie.",
+      "toppingsOptionalOffHint": "Aby kontynuować, wymagany jest co najmniej jeden dodatek."
     },
     "promotionsList": {
       "stackingMaster": "Master",

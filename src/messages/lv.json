@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Iekasēt maksu par piedevām un papildinājumiem",
       "comboExtrasChargeOnHint": "Piedevas (papildu pildvielas, maksas modifikatori) komplektam pievieno savu parasto cenu — tāpat kā pasūtot preci atsevišķi.",
       "comboExtrasChargeOffHint": "Piedevas ir bez maksas: klienti izvēlas tieši tās pašas iespējas, bet komplektam paliek fiksēta cena plus jūsu uzcenojumi par katru preci.",
-      "comboSlotNameLabel": "Soļa nosaukums (redzams klientiem, piem., \"Izvēlieties picu\")"
+      "comboSlotNameLabel": "Soļa nosaukums (redzams klientiem, piem., \"Izvēlieties picu\")",
+      "toppingsOptionalTitle": "Piedevas pēc izvēles",
+      "toppingsOptionalOnHint": "Klienti var nepievienot piedevas (piemēram, tikai siers) un tomēr noformēt pasūtījumu.",
+      "toppingsOptionalOffHint": "Lai turpinātu, jāizvēlas vismaz viena piedeva."
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

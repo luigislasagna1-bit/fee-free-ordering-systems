@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Ta betalt for tillegg og ekstra",
       "comboExtrasChargeOnHint": "Tillegg (ekstra fyll, betalte tilvalg) legger til sin vanlige pris oppå komboen — akkurat som å bestille varen alene.",
       "comboExtrasChargeOffHint": "Tillegg er gratis: kundene velger akkurat de samme alternativene, men komboen beholder en fast pris pluss dine tillegg per vare.",
-      "comboSlotNameLabel": "Trinnnavn (vises for kundene, f.eks. \"Velg pizzaen din\")"
+      "comboSlotNameLabel": "Trinnnavn (vises for kundene, f.eks. \"Velg pizzaen din\")",
+      "toppingsOptionalTitle": "Fyll valgfritt",
+      "toppingsOptionalOnHint": "Kunder kan velge ingen fyll (f.eks. ren ost) og likevel fullføre bestillingen.",
+      "toppingsOptionalOffHint": "Minst ett fyll kreves for å fortsette."
     },
     "promotionsList": {
       "stackingMaster": "Master",

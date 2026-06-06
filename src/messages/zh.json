@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "附加项和额外选项收费",
       "comboExtrasChargeOnHint": "附加项（额外配料、付费定制选项）将在套餐价格之上按其正常价格加收——就像单独点该商品一样。",
       "comboExtrasChargeOffHint": "附加项免费：顾客可选择所有相同选项，但套餐仍为固定价格，再加上你设置的单项加价。",
-      "comboSlotNameLabel": "步骤名称（向顾客显示，例如\"选择您的披萨\"）"
+      "comboSlotNameLabel": "步骤名称（向顾客显示，例如\"选择您的披萨\"）",
+      "toppingsOptionalTitle": "配料可选",
+      "toppingsOptionalOnHint": "顾客可以不添加任何配料（例如纯芝士）即可结账。",
+      "toppingsOptionalOffHint": "至少需要选择一种配料才能继续。"
     },
     "promotionsList": {
       "stackingMaster": "主控",

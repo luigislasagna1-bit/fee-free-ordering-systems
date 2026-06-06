@@ -1531,7 +1531,10 @@
       "comboExtrasChargeTitle": "Ek malzemeler ve ekstralar için ücret al",
       "comboExtrasChargeOnHint": "Ek malzemeler (ekstra üst malzemeler, ücretli seçenekler), tıpkı ürünü tek başına sipariş eder gibi, normal fiyatlarını kombonun üzerine ekler.",
       "comboExtrasChargeOffHint": "Ek malzemeler ücretsizdir: müşteriler aynı seçeneklerin tümünü seçer, ancak kombo sabit fiyatta kalır ve yalnızca ürün başına ek ücretleriniz eklenir.",
-      "comboSlotNameLabel": "Adım adı (müşterilere gösterilir, örn. \"Pizzanızı seçin\")"
+      "comboSlotNameLabel": "Adım adı (müşterilere gösterilir, örn. \"Pizzanızı seçin\")",
+      "toppingsOptionalTitle": "Malzemeler isteğe bağlı",
+      "toppingsOptionalOnHint": "Müşteriler hiç malzeme eklemeden (ör. sade peynirli) sipariş verebilir.",
+      "toppingsOptionalOffHint": "Devam etmek için en az bir malzeme seçilmelidir."
     },
     "promotionsList": {
       "stackingMaster": "Ana",

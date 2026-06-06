@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Addebita componenti aggiuntivi ed extra",
       "comboExtrasChargeOnHint": "I componenti aggiuntivi (condimenti extra, modificatori a pagamento) aggiungono il loro prezzo normale al combo, esattamente come quando si ordina il prodotto singolarmente.",
       "comboExtrasChargeOffHint": "I componenti aggiuntivi sono gratuiti: i clienti scelgono tutte le stesse opzioni, ma il combo mantiene un prezzo fisso più i tuoi supplementi per singolo prodotto.",
-      "comboSlotNameLabel": "Nome del passaggio (mostrato ai clienti, es. \"Scegli la tua pizza\")"
+      "comboSlotNameLabel": "Nome del passaggio (mostrato ai clienti, es. \"Scegli la tua pizza\")",
+      "toppingsOptionalTitle": "Aggiunte facoltative",
+      "toppingsOptionalOnHint": "I clienti possono non aggiungere alcun ingrediente (ad es. solo formaggio) e procedere comunque all'ordine.",
+      "toppingsOptionalOffHint": "È necessario almeno un ingrediente per continuare."
     },
     "promotionsList": {
       "stackingMaster": "Master",

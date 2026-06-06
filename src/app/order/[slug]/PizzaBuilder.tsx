@@ -41,6 +41,9 @@ export interface PizzaConfig {
   toppingGroupIds: string[];
   /** How many toppings are included in the base price (0 = all toppings charged individually via option.priceAdjustment) */
   includedToppings: number;
+  /** When true, topping selection is OPTIONAL (customer may pick 0 — e.g. plain
+   *  cheese). Overrides any topping group's "required" flag in the builder. */
+  toppingsOptional?: boolean;
   /** Price per topping when includedToppings > 0; ignored when 0 (uses option prices) */
   extraToppingPrice: number;
   /** Per-variant topping prices keyed by variant name (overrides extraToppingPrice when a size is selected) */
@@ -142,6 +145,7 @@ export function parsePizzaConfig(json: string | null | undefined): PizzaConfig |
       cheeseGroupId:          c.cheeseGroupId           ?? undefined,
       toppingGroupIds:        Array.isArray(c.toppingGroupIds) ? c.toppingGroupIds : [],
       includedToppings:       Number(c.includedToppings)      || 0,
+      toppingsOptional:       c.toppingsOptional === true,
       extraToppingPrice:      Number(c.extraToppingPrice)     || 0,
       variantToppingPrices:   c.variantToppingPrices && typeof c.variantToppingPrices === "object"
                                 ? Object.fromEntries(
@@ -1055,7 +1059,8 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
   // Topping groups: each required (or minSelect > 0) group must have enough picks.
   // Count placements per group across the whole pizza (left + right + whole).
   const toppingGroupsSatisfied = toppingGroups.every(g => {
-    const min = g.required && g.minSelect < 1 ? 1 : g.minSelect;
+    // Owner flagged toppings optional → never require a topping (allow 0).
+    const min = config.toppingsOptional ? 0 : (g.required && g.minSelect < 1 ? 1 : g.minSelect);
     if (min === 0) return true;
     const count = customization.toppings.filter(t => t.groupId === g.id).length;
     return count >= min;
@@ -1086,7 +1091,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
     return (customization.otherSelections[g.id] ?? []).length < min;
   });
   const firstMissingToppingGroup = toppingGroups.find(g => {
-    const min = g.required && g.minSelect < 1 ? 1 : g.minSelect;
+    const min = config.toppingsOptional ? 0 : (g.required && g.minSelect < 1 ? 1 : g.minSelect);
     if (min === 0) return false;
     const count = customization.toppings.filter(t => t.groupId === g.id).length;
     return count < min;

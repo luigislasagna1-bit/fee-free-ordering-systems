@@ -79,6 +79,9 @@ type PizzaFormState = {
   cheeseGroupId: string;
   toppingGroupIds: string[];
   includedToppings: number;
+  /** When true, the customer may add ZERO toppings (e.g. plain cheese). When
+   *  false (default), a topping selection is required if its group requires it. */
+  toppingsOptional: boolean;
   extraToppingPrice: string;
   variantToppingPrices: Record<string, string>;
   halfToppingMultiplier: string;
@@ -104,6 +107,7 @@ function parsePizzaForm(json?: string): PizzaFormState {
     cheeseGroupId: p?.cheeseGroupId ?? "",
     toppingGroupIds: Array.isArray(p?.toppingGroupIds) ? p.toppingGroupIds : [],
     includedToppings: p?.includedToppings ?? 0,
+    toppingsOptional: !!p?.toppingsOptional,
     extraToppingPrice: String(p?.extraToppingPrice ?? "0"),
     variantToppingPrices: p?.variantToppingPrices && typeof p.variantToppingPrices === "object"
       ? Object.fromEntries(Object.entries(p.variantToppingPrices).map(([k, v]) => [k, String(v)]))
@@ -590,6 +594,7 @@ function ItemModal({
           cheeseGroupId: pizza.cheeseGroupId || undefined,
           toppingGroupIds: pizza.toppingGroupIds,
           includedToppings: Math.max(0, parseInt(String(pizza.includedToppings)) || 0),
+          toppingsOptional: pizza.toppingsOptional,
           extraToppingPrice: parseFloat(pizza.extraToppingPrice) || 0,
           variantToppingPrices: form.hasVariants && variants.filter(v => v.name.trim()).length > 0
             ? Object.fromEntries(
@@ -962,6 +967,15 @@ function ItemModal({
                           value={pizza.includedToppings}
                           onChange={e => setPizza(p => ({ ...p, includedToppings: parseInt(e.target.value) || 0 }))} />
                         <p className="text-xs text-gray-400 mt-0.5">{t("includedToppingsHint")}</p>
+                        <div className="flex items-start justify-between gap-3 mt-3 p-2.5 bg-gray-50 border border-gray-100 rounded-lg col-span-2">
+                          <div>
+                            <div className="text-sm font-medium text-gray-700">{t("toppingsOptionalTitle")}</div>
+                            <div className="text-xs text-gray-400 mt-0.5">
+                              {pizza.toppingsOptional ? t("toppingsOptionalOnHint") : t("toppingsOptionalOffHint")}
+                            </div>
+                          </div>
+                          <Toggle on={pizza.toppingsOptional} onToggle={() => setPizza(p => ({ ...p, toppingsOptional: !p.toppingsOptional }))} />
+                        </div>
                       </div>
                       {form.hasVariants ? (
                         <div className="col-span-2">

@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Kosten voor add-ons en extra's",
       "comboExtrasChargeOnHint": "Add-ons (extra toppings, betaalde opties) tellen hun normale prijs op bij de combo — net als wanneer je het item los bestelt.",
       "comboExtrasChargeOffHint": "Add-ons zijn gratis: klanten kiezen dezelfde opties, maar de combo houdt een vaste prijs plus jouw toeslagen per item.",
-      "comboSlotNameLabel": "Stapnaam (zichtbaar voor klanten, bijv. \"Kies je pizza\")"
+      "comboSlotNameLabel": "Stapnaam (zichtbaar voor klanten, bijv. \"Kies je pizza\")",
+      "toppingsOptionalTitle": "Toppings optioneel",
+      "toppingsOptionalOnHint": "Klanten kunnen geen toppings toevoegen (bijv. alleen kaas) en toch afrekenen.",
+      "toppingsOptionalOffHint": "Minstens één topping is vereist om verder te gaan."
     },
     "promotionsList": {
       "stackingMaster": "Master",

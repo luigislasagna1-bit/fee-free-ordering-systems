@@ -7,9 +7,11 @@ export const meta = {
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
 const NS = "admin.menuEditor";
-const CONTEXT = "the restaurant admin menu editor, COMBO builder. This is the field label for naming a combo step/slot — the heading the CUSTOMER sees above each group of choices (e.g. 'Choose your pizza'). Keep the example in quotes. Concise admin tone. No placeholders.";
+const CONTEXT = "the restaurant admin menu editor, PIZZA setup. This setting controls whether the customer must pick at least one topping or can leave the pizza with no toppings (plain cheese). Concise admin tone. No placeholders.";
 const EN = {
-  "comboSlotNameLabel": "Step name (shown to customers, e.g. \"Choose your pizza\")",
+  "toppingsOptionalTitle": "Toppings optional",
+  "toppingsOptionalOnHint": "Customers can add no toppings (e.g. plain cheese) and still check out.",
+  "toppingsOptionalOffHint": "At least one topping is required to continue.",
 };
 const KEYS = Object.keys(EN);
 

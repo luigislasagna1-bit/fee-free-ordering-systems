@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Cobrar pels complements i extres",
       "comboExtrasChargeOnHint": "Els complements (ingredients extra, modificadors de pagament) sumen el seu preu habitual al preu del combo, igual que si demanessis l'article per separat.",
       "comboExtrasChargeOffHint": "Els complements són gratuïts: els clients trien les mateixes opcions, però el combo manté un preu fix més els recàrrecs per article que estableixis.",
-      "comboSlotNameLabel": "Nom del pas (visible per als clients, p. ex. \"Tria la teva pizza\")"
+      "comboSlotNameLabel": "Nom del pas (visible per als clients, p. ex. \"Tria la teva pizza\")",
+      "toppingsOptionalTitle": "Ingredients opcionals",
+      "toppingsOptionalOnHint": "Els clients poden no afegir cap ingredient (per exemple, només formatge) i tot i així finalitzar la comanda.",
+      "toppingsOptionalOffHint": "Cal com a mínim un ingredient per continuar."
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

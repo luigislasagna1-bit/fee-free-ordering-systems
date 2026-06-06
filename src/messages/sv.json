@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Debitera för tillval och extra",
       "comboExtrasChargeOnHint": "Tillval (extra pålägg, betalda alternativ) lägger sitt vanliga pris ovanpå kombon — precis som att beställa rätten separat.",
       "comboExtrasChargeOffHint": "Tillval är gratis: kunderna väljer alla samma alternativ, men kombon förblir ett fast pris plus dina tillägg per rätt.",
-      "comboSlotNameLabel": "Stegnamn (visas för kunder, t.ex. \"Välj din pizza\")"
+      "comboSlotNameLabel": "Stegnamn (visas för kunder, t.ex. \"Välj din pizza\")",
+      "toppingsOptionalTitle": "Pålägg valfria",
+      "toppingsOptionalOnHint": "Kunder kan välja inga pålägg (t.ex. enbart ost) och ändå slutföra köpet.",
+      "toppingsOptionalOffHint": "Minst ett pålägg krävs för att fortsätta."
     },
     "promotionsList": {
       "stackingMaster": "Master",

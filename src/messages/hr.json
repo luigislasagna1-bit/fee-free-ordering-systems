@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Naplata dodataka i ekstra",
       "comboExtrasChargeOnHint": "Dodaci (dodatni prilozi, plaćene izmjene) pribrajaju svoju uobičajenu cijenu na combo — baš kao da artikl naručujete zasebno.",
       "comboExtrasChargeOffHint": "Dodaci su besplatni: kupci biraju sve iste opcije, ali combo ostaje fiksne cijene uz vaše doplate po artiklu.",
-      "comboSlotNameLabel": "Naziv koraka (prikazuje se kupcima, npr. \"Odaberite pizzu\")"
+      "comboSlotNameLabel": "Naziv koraka (prikazuje se kupcima, npr. \"Odaberite pizzu\")",
+      "toppingsOptionalTitle": "Dodaci nisu obavezni",
+      "toppingsOptionalOnHint": "Kupci mogu ne odabrati nijedan dodatak (npr. samo sir) i svejedno dovršiti narudžbu.",
+      "toppingsOptionalOffHint": "Za nastavak je potreban barem jedan dodatak."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "トッピング・追加オプションを有料にする",
       "comboExtrasChargeOnHint": "トッピング（追加トッピング、有料オプション）は通常価格がコンボに上乗せされます。単品で注文した場合と同じ扱いです。",
       "comboExtrasChargeOffHint": "トッピングは無料です。お客様は同じオプションをすべて選べますが、コンボは固定価格のまま（商品ごとの追加料金は加算されます）。",
-      "comboSlotNameLabel": "ステップ名（お客様に表示されます。例：「ピザを選ぶ」）"
+      "comboSlotNameLabel": "ステップ名（お客様に表示されます。例：「ピザを選ぶ」）",
+      "toppingsOptionalTitle": "トッピングは任意",
+      "toppingsOptionalOnHint": "お客様はトッピングを追加せずに（例：プレーンチーズ）注文を完了できます。",
+      "toppingsOptionalOffHint": "続行するには少なくとも1つのトッピングが必要です。"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

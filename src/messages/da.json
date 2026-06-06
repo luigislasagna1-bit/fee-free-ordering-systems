@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Tag betaling for tilbehør og ekstra",
       "comboExtrasChargeOnHint": "Tilbehør (ekstra fyld, betalte tilvalg) lægger deres normale pris oven i menuen — præcis som hvis varen blev bestilt alene.",
       "comboExtrasChargeOffHint": "Tilbehør er gratis: Kunderne vælger alle de samme muligheder, men menuen forbliver til en fast pris plus dine tillæg pr. vare.",
-      "comboSlotNameLabel": "Trinnavn (vises til kunder, f.eks. \"Vælg din pizza\")"
+      "comboSlotNameLabel": "Trinnavn (vises til kunder, f.eks. \"Vælg din pizza\")",
+      "toppingsOptionalTitle": "Fyld valgfrit",
+      "toppingsOptionalOnHint": "Kunder kan undlade at tilføje fyld (f.eks. ren ost) og stadig gennemføre bestillingen.",
+      "toppingsOptionalOffHint": "Mindst ét fyld er påkrævet for at fortsætte."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Zaračunaj dodatke in priloge",
       "comboExtrasChargeOnHint": "Dodatki (dodatni prelivi, plačljive prilagoditve) prištejejo svojo običajno ceno k ceni kombinacije – tako kot pri naročilu izdelka samostojno.",
       "comboExtrasChargeOffHint": "Dodatki so brezplačni: stranke izberejo vse iste možnosti, vendar kombinacija ostane po fiksni ceni, povečani za vaše doplačila za posamezne izdelke.",
-      "comboSlotNameLabel": "Ime koraka (vidno strankam, npr. »Izberite svojo pico«)"
+      "comboSlotNameLabel": "Ime koraka (vidno strankam, npr. »Izberite svojo pico«)",
+      "toppingsOptionalTitle": "Dodatki neobvezni",
+      "toppingsOptionalOnHint": "Stranke lahko ne dodajo nobenega dodatka (npr. samo sir) in vseeno zaključijo naročilo.",
+      "toppingsOptionalOffHint": "Za nadaljevanje je potreben vsaj en dodatek."
     },
     "promotionsList": {
       "stackingMaster": "Master",

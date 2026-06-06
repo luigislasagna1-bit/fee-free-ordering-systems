@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Veloita lisukkeista ja extroista",
       "comboExtrasChargeOnHint": "Lisukkeet (lisätäytteet, maksulliset muokkaukset) lisäävät normaalihintansa combon päälle — aivan kuten tilattaessa tuote erikseen.",
       "comboExtrasChargeOffHint": "Lisukkeet ovat ilmaisia: asiakkaat valitsevat kaikki samat vaihtoehdot, mutta combon hinta pysyy kiinteänä tuotekohtaisten lisämaksujesi lisäksi.",
-      "comboSlotNameLabel": "Vaiheen nimi (näkyy asiakkaille, esim. \"Valitse pizzasi\")"
+      "comboSlotNameLabel": "Vaiheen nimi (näkyy asiakkaille, esim. \"Valitse pizzasi\")",
+      "toppingsOptionalTitle": "Täytteet valinnaisia",
+      "toppingsOptionalOnHint": "Asiakkaat voivat jättää täytteet pois (esim. pelkkä juusto) ja silti viedä tilauksen kassalle.",
+      "toppingsOptionalOffHint": "Jatkaminen edellyttää vähintään yhtä täytettä."
     },
     "promotionsList": {
       "stackingMaster": "Master",

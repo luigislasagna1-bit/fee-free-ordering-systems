@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Lisandite ja ekstrade eest tasu võtmine",
       "comboExtrasChargeOnHint": "Lisandid (lisakatted, tasulised muudatused) lisavad oma tavahinna kombo hinnale — täpselt nagu toodet eraldi tellides.",
       "comboExtrasChargeOffHint": "Lisandid on tasuta: kliendid valivad kõik samad valikud, kuid kombo jääb fikseeritud hinda pluss sinu tootepõhised lisatasud.",
-      "comboSlotNameLabel": "Sammu nimi (kuvatakse klientidele, nt \"Vali oma pitsa\")"
+      "comboSlotNameLabel": "Sammu nimi (kuvatakse klientidele, nt \"Vali oma pitsa\")",
+      "toppingsOptionalTitle": "Lisandid pole kohustuslikud",
+      "toppingsOptionalOnHint": "Kliendid saavad tellimuse vormistada ka ilma lisanditeta (nt tavaline juustupitsa).",
+      "toppingsOptionalOffHint": "Jätkamiseks on vaja vähemalt üht lisandit."
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

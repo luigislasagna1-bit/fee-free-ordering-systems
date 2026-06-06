@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Účtovat doplňky a extra položky",
       "comboExtrasChargeOnHint": "Doplňky (extra přísady, placené úpravy) přičítají svou běžnou cenu k ceně comba — stejně jako při samostatné objednávce položky.",
       "comboExtrasChargeOffHint": "Doplňky jsou zdarma: zákazníci si vyberou všechny stejné možnosti, ale combo zůstává za pevnou cenu plus vaše příplatky za jednotlivé položky.",
-      "comboSlotNameLabel": "Název kroku (zobrazí se zákazníkům, např. „Vyberte si pizzu\")"
+      "comboSlotNameLabel": "Název kroku (zobrazí se zákazníkům, např. „Vyberte si pizzu\")",
+      "toppingsOptionalTitle": "Přílohy volitelné",
+      "toppingsOptionalOnHint": "Zákazníci nemusí přidat žádné přílohy (např. jen sýr) a přesto mohou dokončit objednávku.",
+      "toppingsOptionalOffHint": "Pro pokračování je nutná alespoň jedna příloha."
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

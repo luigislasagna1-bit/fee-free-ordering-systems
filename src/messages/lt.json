@@ -2231,7 +2231,10 @@
       "comboExtrasChargeTitle": "Imti mokestį už priedus ir papildymus",
       "comboExtrasChargeOnHint": "Priedai (papildomi pagardai, mokami modifikatoriai) prie kombinuoto patiekalo kainos prideda savo įprastą kainą — lygiai taip pat, kaip užsakant patiekalą atskirai.",
       "comboExtrasChargeOffHint": "Priedai nemokami: klientai renkasi visus tuos pačius pasirinkimus, bet kombinuoto patiekalo kaina lieka fiksuota, prie jos pridedant tik jūsų nustatytus priemokas už atskirus patiekalus.",
-      "comboSlotNameLabel": "Žingsnio pavadinimas (rodomas klientams, pvz. „Pasirinkite picą“)"
+      "comboSlotNameLabel": "Žingsnio pavadinimas (rodomas klientams, pvz. „Pasirinkite picą“)",
+      "toppingsOptionalTitle": "Priedai neprivalomi",
+      "toppingsOptionalOnHint": "Klientai gali nepasirinkti jokių priedų (pvz., picą tik su sūriu) ir vis tiek užbaigti užsakymą.",
+      "toppingsOptionalOffHint": "Norint tęsti, būtina pasirinkti bent vieną priedą."
     },
     "promotionsList": {
       "stackingMaster": "Master",

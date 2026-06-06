@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Cobrar por complementos e extras",
       "comboExtrasChargeOnHint": "Os complementos (ingredientes extra, modificadores pagos) acrescentam o seu preço normal ao do combo — tal como se pedisse o artigo individualmente.",
       "comboExtrasChargeOffHint": "Os complementos são gratuitos: os clientes escolhem as mesmas opções, mas o combo mantém um preço fixo mais os acréscimos por artigo que definir.",
-      "comboSlotNameLabel": "Nome do passo (apresentado aos clientes, p. ex. \"Escolha a sua pizza\")"
+      "comboSlotNameLabel": "Nome do passo (apresentado aos clientes, p. ex. \"Escolha a sua pizza\")",
+      "toppingsOptionalTitle": "Coberturas opcionais",
+      "toppingsOptionalOnHint": "Os clientes podem não adicionar coberturas (por exemplo, apenas queijo) e mesmo assim finalizar a compra.",
+      "toppingsOptionalOffHint": "É necessária pelo menos uma cobertura para continuar."
     },
     "promotionsList": {
       "stackingMaster": "Master",

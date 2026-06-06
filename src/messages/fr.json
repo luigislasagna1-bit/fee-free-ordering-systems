@@ -1568,7 +1568,10 @@
       "comboExtrasChargeTitle": "Facturer les options et suppléments",
       "comboExtrasChargeOnHint": "Les options (garnitures supplémentaires, modificateurs payants) ajoutent leur prix habituel au menu combiné — comme si l'article était commandé seul.",
       "comboExtrasChargeOffHint": "Les options sont gratuites : les clients choisissent toutes les mêmes options, mais le menu combiné conserve un prix fixe, plus vos suppléments par article.",
-      "comboSlotNameLabel": "Nom de l'étape (visible par les clients, ex. « Choisissez votre pizza »)"
+      "comboSlotNameLabel": "Nom de l'étape (visible par les clients, ex. « Choisissez votre pizza »)",
+      "toppingsOptionalTitle": "Garnitures facultatives",
+      "toppingsOptionalOnHint": "Les clients peuvent ne sélectionner aucune garniture (par ex. fromage nature) et valider leur commande.",
+      "toppingsOptionalOffHint": "Au moins une garniture est requise pour continuer."
     },
     "promotionsList": {
       "stackingMaster": "Maître",
