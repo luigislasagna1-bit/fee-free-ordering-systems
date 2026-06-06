@@ -956,8 +956,21 @@ export async function POST(req: NextRequest) {
     const normalizedCouponCode = typeof bodyCouponCode === "string"
       ? bodyCouponCode.trim().toUpperCase().slice(0, 50) || undefined
       : undefined;
+    // Happy-Hour / day-of-week windows must be evaluated against WHEN THE ORDER
+    // WILL BE FULFILLED, not when it's being placed. For a scheduled order
+    // ("order for later"), that's the chosen slot — so a 20:15 pickup qualifies
+    // for an 18:00–21:00 promo even if it's placed at 17:04. ASAP → undefined
+    // (the engine uses current time). Fabrizio report cmpxejjev.
+    const promoEvalNow: Date | undefined = (() => {
+      if (!scheduledFor) return undefined;
+      const tz = (restaurant as any).timezone ?? undefined;
+      const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
+      const d = m ? parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), tz) : new Date(scheduledFor);
+      return Number.isFinite(d.getTime()) ? d : undefined;
+    })();
     const promoResults = applyPromotions(activePromos as any, {
       orderType: type,
+      now: promoEvalNow,
       isNewCustomer: isNewCustomerForPromo,
       isMember: isMemberForPromo,
       hasUsedLifetime: hasUsedLifetimeForPromo,

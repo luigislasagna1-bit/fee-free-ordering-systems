@@ -1385,6 +1385,10 @@ export function OrderingPageClient({
         // for autoApply=false promos to fire. Empty string is fine
         // (engine ignores). Auto-apply promos don't need this.
         couponCode: couponCode.trim() || undefined,
+        // Scheduled fulfillment time → Happy-Hour windows are evaluated against
+        // WHEN the order is for, so the banner + discount match what actually
+        // applies at order time. ASAP carts send nothing. Fabrizio cmpxejjev.
+        scheduledFor: customerInfo.scheduledFor || undefined,
       }),
     })
       .then(r => r.json())
@@ -1395,7 +1399,7 @@ export function OrderingPageClient({
       })
       .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode]);
+  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
   // "Add €X more to unlock!" nudge — the highlightThreshold feature was set in

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { applyPromotions, totalPromoDiscount, type ApplyContext } from "@/lib/promo-engine";
+import { parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -12,6 +13,11 @@ export async function POST(req: NextRequest) {
     // customer session — forwarding both lets the engine evaluate the
     // Delivery Area + Client Type ("member") restrictions correctly.
     deliveryZoneId, isMember,
+    // Chosen fulfillment time for a scheduled ("order for later") cart, so the
+    // Happy-Hour window is evaluated against WHEN the order is for — matching
+    // what the order-placement route does. ASAP carts omit it. Fabrizio
+    // cmpxejjev: a 20:15 pickup must qualify for an 18:00–21:00 promo.
+    scheduledFor,
   } = body;
 
   if (!restaurantSlug || subtotal === undefined) {
@@ -25,8 +31,17 @@ export async function POST(req: NextRequest) {
     where: { restaurantId: restaurant.id, isActive: true },
   });
 
+  const promoEvalNow: Date | undefined = (() => {
+    if (!scheduledFor) return undefined;
+    const tz = restaurant.timezone ?? undefined;
+    const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
+    const d = m ? parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), tz) : new Date(scheduledFor);
+    return Number.isFinite(d.getTime()) ? d : undefined;
+  })();
+
   const ctx: ApplyContext = {
     orderType: orderType ?? "pickup",
+    now: promoEvalNow,
     isNewCustomer: isNewCustomer ?? false,
     isMember: isMember ?? false,
     subtotal: parseFloat(subtotal),
