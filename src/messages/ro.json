@@ -1564,7 +1564,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Adaugă slot",
       "comboChooseSizes": "Mărimi incluse în acest combo:",
-      "comboNoSizeSelected": "Alege cel puțin o mărime, altfel clientul nu poate selecta acest produs."
+      "comboNoSizeSelected": "Alege cel puțin o mărime, altfel clientul nu poate selecta acest produs.",
+      "comboExtrasChargeTitle": "Taxează suplimentele și extrele",
+      "comboExtrasChargeOnHint": "Suplimentele (toppinguri extra, modificatori cu plată) își adaugă prețul normal peste cel al combo-ului — exact ca atunci când comanzi produsul separat.",
+      "comboExtrasChargeOffHint": "Suplimentele sunt gratuite: clienții aleg aceleași opțiuni, dar combo-ul rămâne la un preț fix, plus taxele tale pe produs."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4410,7 +4413,11 @@
       "badge": "Combo",
       "chooseSize": "alege mărimea",
       "fromUpcharge": "de la +{price}",
-      "chooseSizeFor": "Alege o mărime pentru {name}"
+      "chooseSizeFor": "Alege o mărime pentru {name}",
+      "sizeLabel": "Mărime",
+      "upToCount": "până la {count}",
+      "addChoice": "Adaugă{price}",
+      "completeRequired": "Completează opțiunile obligatorii"
     }
   }
 }

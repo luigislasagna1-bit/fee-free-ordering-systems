@@ -35,7 +35,15 @@ export type ComboSlot = {
   variantUpcharges?: Record<string, number>;
 };
 
-export type ComboConfig = { slots: ComboSlot[] };
+export type ComboConfig = {
+  slots: ComboSlot[];
+  /** When true, a child item's modifier/add-on selections (and pizza extra
+   *  toppings) add their normal price ON TOP of the combo price — i.e. the
+   *  child behaves exactly like ordering it à la carte. When false (default),
+   *  the combo is a predictable fixed price + the owner's per-item/size
+   *  upcharges, and modifier picks are free customization. Owner's choice. */
+  extrasCharge: boolean;
+};
 
 /** Stable key for a per-(item,variant) entry in `variantUpcharges`. */
 export function comboVariantKey(itemId: string, variantId: string): string {
@@ -116,7 +124,7 @@ export function parseComboConfig(raw: unknown): ComboConfig | null {
     });
   }
   if (slots.length === 0) return null;
-  return { slots };
+  return { slots, extrasCharge: obj.extrasCharge === true };
 }
 
 /** True when an item is a combo (has a usable comboConfig). */

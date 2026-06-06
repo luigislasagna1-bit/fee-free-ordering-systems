@@ -1564,7 +1564,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "إضافة خانة",
       "comboChooseSizes": "الأحجام المضمَّنة في هذه الوجبة المجمَّعة:",
-      "comboNoSizeSelected": "اختر حجمًا واحدًا على الأقل، وإلا فلن يتمكّن العميل من اختيار هذا الصنف."
+      "comboNoSizeSelected": "اختر حجمًا واحدًا على الأقل، وإلا فلن يتمكّن العميل من اختيار هذا الصنف.",
+      "comboExtrasChargeTitle": "احتساب سعر الإضافات والخيارات الإضافية",
+      "comboExtrasChargeOnHint": "تُضاف الإضافات (الإضافات فوق البيتزا، التعديلات المدفوعة) بسعرها العادي فوق سعر الكومبو — تمامًا كما لو طلب العميل الصنف بمفرده.",
+      "comboExtrasChargeOffHint": "الإضافات مجانية: يختار العملاء جميع الخيارات نفسها، لكن يبقى سعر الكومبو ثابتًا مع إضافة الرسوم الإضافية لكل صنف."
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",
@@ -4410,7 +4413,11 @@
       "badge": "كومبو",
       "chooseSize": "اختر الحجم",
       "fromUpcharge": "ابتداءً من +{price}",
-      "chooseSizeFor": "اختر حجمًا لـ {name}"
+      "chooseSizeFor": "اختر حجمًا لـ {name}",
+      "sizeLabel": "الحجم",
+      "upToCount": "حتى {count}",
+      "addChoice": "إضافة{price}",
+      "completeRequired": "أكمل الخيارات المطلوبة"
     }
   }
 }

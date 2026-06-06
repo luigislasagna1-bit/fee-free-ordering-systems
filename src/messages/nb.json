@@ -1564,7 +1564,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Legg til plass",
       "comboChooseSizes": "Størrelser som inngår i denne kombinasjonen:",
-      "comboNoSizeSelected": "Velg minst én størrelse, ellers kan ikke kunden velge denne varen."
+      "comboNoSizeSelected": "Velg minst én størrelse, ellers kan ikke kunden velge denne varen.",
+      "comboExtrasChargeTitle": "Ta betalt for tillegg og ekstra",
+      "comboExtrasChargeOnHint": "Tillegg (ekstra fyll, betalte tilvalg) legger til sin vanlige pris oppå komboen — akkurat som å bestille varen alene.",
+      "comboExtrasChargeOffHint": "Tillegg er gratis: kundene velger akkurat de samme alternativene, men komboen beholder en fast pris pluss dine tillegg per vare."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4410,7 +4413,11 @@
       "badge": "Kombo",
       "chooseSize": "velg størrelse",
       "fromUpcharge": "fra +{price}",
-      "chooseSizeFor": "Velg en størrelse for {name}"
+      "chooseSizeFor": "Velg en størrelse for {name}",
+      "sizeLabel": "Størrelse",
+      "upToCount": "opptil {count}",
+      "addChoice": "Legg til{price}",
+      "completeRequired": "Fullfør de påkrevde valgene"
     }
   }
 }

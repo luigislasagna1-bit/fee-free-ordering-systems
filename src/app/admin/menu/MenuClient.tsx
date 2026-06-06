@@ -497,6 +497,11 @@ function ItemModal({
     variantUpcharges: Record<string, string>;
   };
   const [isCombo, setIsCombo] = useState<boolean>(() => !!parseComboConfig((item as any)?.comboConfig));
+  // When true, a child item's add-ons/modifiers (and pizza extra toppings) add
+  // their normal price on top of the combo; when false, extras are free.
+  const [comboExtrasCharge, setComboExtrasCharge] = useState<boolean>(
+    () => parseComboConfig((item as any)?.comboConfig)?.extrasCharge ?? false,
+  );
   const [comboSlots, setComboSlots] = useState<ComboSlotForm[]>(() => {
     const c = parseComboConfig((item as any)?.comboConfig);
     return c ? c.slots.map((s) => ({
@@ -640,7 +645,7 @@ function ItemModal({
                   })
               ),
             }));
-          return slots.length > 0 ? JSON.stringify({ slots }) : null;
+          return slots.length > 0 ? JSON.stringify({ slots, extrasCharge: comboExtrasCharge }) : null;
         })()
       : null;
     const payload = {
@@ -1029,6 +1034,15 @@ function ItemModal({
               {isCombo && (
                 <>
                   <p className="text-xs text-gray-500">{t("comboPriceNote", { price: form.price || "0" })}</p>
+                  <div className="flex items-start justify-between gap-3 p-3 bg-gray-50 border border-gray-100 rounded-lg">
+                    <div>
+                      <div className="text-sm font-semibold text-gray-800">{t("comboExtrasChargeTitle")}</div>
+                      <div className="text-xs text-gray-500 mt-0.5">
+                        {comboExtrasCharge ? t("comboExtrasChargeOnHint") : t("comboExtrasChargeOffHint")}
+                      </div>
+                    </div>
+                    <Toggle on={comboExtrasCharge} onToggle={() => setComboExtrasCharge((v) => !v)} />
+                  </div>
                   {comboSlots.map((slot, i) => (
                     <div key={slot.id} className="border border-gray-200 rounded-xl p-3 space-y-2">
                       <div className="flex items-center gap-2 flex-wrap">

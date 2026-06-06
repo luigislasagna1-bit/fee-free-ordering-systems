@@ -1527,7 +1527,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Dodaj slot",
       "comboChooseSizes": "Rozmiary wliczone do tego zestawu:",
-      "comboNoSizeSelected": "Wybierz co najmniej jeden rozmiar, w przeciwnym razie klient nie będzie mógł wybrać tej pozycji."
+      "comboNoSizeSelected": "Wybierz co najmniej jeden rozmiar, w przeciwnym razie klient nie będzie mógł wybrać tej pozycji.",
+      "comboExtrasChargeTitle": "Naliczaj opłatę za dodatki",
+      "comboExtrasChargeOnHint": "Dodatki (dodatkowe składniki, płatne modyfikatory) doliczają swoją zwykłą cenę do zestawu — tak samo jak przy zamawianiu pozycji osobno.",
+      "comboExtrasChargeOffHint": "Dodatki są bezpłatne: klienci wybierają wszystkie te same opcje, ale zestaw zachowuje stałą cenę powiększoną o Twoje dopłaty za poszczególne pozycje."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4410,7 +4413,11 @@
       "badge": "Combo",
       "chooseSize": "wybierz rozmiar",
       "fromUpcharge": "od +{price}",
-      "chooseSizeFor": "Wybierz rozmiar dla {name}"
+      "chooseSizeFor": "Wybierz rozmiar dla {name}",
+      "sizeLabel": "Rozmiar",
+      "upToCount": "maks. {count}",
+      "addChoice": "Dodaj{price}",
+      "completeRequired": "Uzupełnij wymagane opcje"
     }
   }
 }

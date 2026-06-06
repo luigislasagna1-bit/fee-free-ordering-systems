@@ -7,10 +7,11 @@ export const meta = {
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
 const NS = "admin.menuEditor";
-const CONTEXT = "the restaurant admin menu editor, in the COMBO builder. A combo is one menu item made of several 'slots'; for an item that has multiple sizes (variants, e.g. Wings 10pc/20pc) the owner picks which sizes are included in the combo. Concise admin tone. No placeholders in these strings.";
+const CONTEXT = "the restaurant admin menu editor, COMBO builder. A combo is one menu item made of several picks. This setting controls whether a child item's add-ons/extras (extra pizza toppings, paid modifiers) add their normal price on top of the combo, or are included for free. Concise admin tone. No placeholders.";
 const EN = {
-  "comboChooseSizes": "Sizes included in this combo:",
-  "comboNoSizeSelected": "Pick at least one size, or the customer can't choose this item.",
+  "comboExtrasChargeTitle": "Charge for add-ons & extras",
+  "comboExtrasChargeOnHint": "Add-ons (extra toppings, paid modifiers) add their normal price on top of the combo — just like ordering the item on its own.",
+  "comboExtrasChargeOffHint": "Add-ons are free: customers pick all the same options, but the combo stays a fixed price plus your per-item upcharges.",
 };
 const KEYS = Object.keys(EN);
 

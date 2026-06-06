@@ -2227,7 +2227,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Pridať slot",
       "comboChooseSizes": "Veľkosti zahrnuté v tomto kombe:",
-      "comboNoSizeSelected": "Vyberte aspoň jednu veľkosť, inak si zákazník túto položku nemôže vybrať."
+      "comboNoSizeSelected": "Vyberte aspoň jednu veľkosť, inak si zákazník túto položku nemôže vybrať.",
+      "comboExtrasChargeTitle": "Účtovať doplnky a extra prísady",
+      "comboExtrasChargeOnHint": "Doplnky (extra prísady, platené úpravy) pripočítajú svoju bežnú cenu k cene comba — rovnako ako pri samostatnej objednávke položky.",
+      "comboExtrasChargeOffHint": "Doplnky sú zadarmo: zákazníci si vyberú všetky rovnaké možnosti, ale combo zostáva za pevnú cenu plus vaše príplatky za jednotlivé položky."
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",
@@ -4410,7 +4413,11 @@
       "badge": "Kombo",
       "chooseSize": "vyberte veľkosť",
       "fromUpcharge": "od +{price}",
-      "chooseSizeFor": "Vyberte veľkosť pre {name}"
+      "chooseSizeFor": "Vyberte veľkosť pre {name}",
+      "sizeLabel": "Veľkosť",
+      "upToCount": "max {count}",
+      "addChoice": "Pridať{price}",
+      "completeRequired": "Vyplňte povinné možnosti"
     }
   }
 }

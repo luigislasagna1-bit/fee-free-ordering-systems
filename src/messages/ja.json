@@ -1564,7 +1564,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "スロットを追加",
       "comboChooseSizes": "このコンボに含まれるサイズ:",
-      "comboNoSizeSelected": "サイズを1つ以上選択してください。選択しないとお客様がこの商品を選べません。"
+      "comboNoSizeSelected": "サイズを1つ以上選択してください。選択しないとお客様がこの商品を選べません。",
+      "comboExtrasChargeTitle": "トッピング・追加オプションを有料にする",
+      "comboExtrasChargeOnHint": "トッピング（追加トッピング、有料オプション）は通常価格がコンボに上乗せされます。単品で注文した場合と同じ扱いです。",
+      "comboExtrasChargeOffHint": "トッピングは無料です。お客様は同じオプションをすべて選べますが、コンボは固定価格のまま（商品ごとの追加料金は加算されます）。"
     },
     "promotionsList": {
       "stackingMaster": "マスター",
@@ -4410,7 +4413,11 @@
       "badge": "コンボ",
       "chooseSize": "サイズを選択",
       "fromUpcharge": "+{price}から",
-      "chooseSizeFor": "{name}のサイズを選択してください"
+      "chooseSizeFor": "{name}のサイズを選択してください",
+      "sizeLabel": "サイズ",
+      "upToCount": "最大{count}個",
+      "addChoice": "追加{price}",
+      "completeRequired": "必須オプションを選択してください"
     }
   }
 }

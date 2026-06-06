@@ -1527,7 +1527,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Bölme ekle",
       "comboChooseSizes": "Bu menüye dahil olan boyutlar:",
-      "comboNoSizeSelected": "En az bir boyut seçin, aksi takdirde müşteri bu ürünü seçemez."
+      "comboNoSizeSelected": "En az bir boyut seçin, aksi takdirde müşteri bu ürünü seçemez.",
+      "comboExtrasChargeTitle": "Ek malzemeler ve ekstralar için ücret al",
+      "comboExtrasChargeOnHint": "Ek malzemeler (ekstra üst malzemeler, ücretli seçenekler), tıpkı ürünü tek başına sipariş eder gibi, normal fiyatlarını kombonun üzerine ekler.",
+      "comboExtrasChargeOffHint": "Ek malzemeler ücretsizdir: müşteriler aynı seçeneklerin tümünü seçer, ancak kombo sabit fiyatta kalır ve yalnızca ürün başına ek ücretleriniz eklenir."
     },
     "promotionsList": {
       "stackingMaster": "Ana",
@@ -4410,7 +4413,11 @@
       "badge": "Combo",
       "chooseSize": "boyut seçin",
       "fromUpcharge": "+{price} başlangıçla",
-      "chooseSizeFor": "{name} için bir boyut seçin"
+      "chooseSizeFor": "{name} için bir boyut seçin",
+      "sizeLabel": "Boyut",
+      "upToCount": "en fazla {count}",
+      "addChoice": "Ekle{price}",
+      "completeRequired": "Zorunlu seçenekleri tamamlayın"
     }
   }
 }

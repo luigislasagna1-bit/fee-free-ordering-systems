@@ -1564,7 +1564,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "添加项",
       "comboChooseSizes": "本套餐包含的规格：",
-      "comboNoSizeSelected": "请至少选择一种规格，否则顾客无法选择此商品。"
+      "comboNoSizeSelected": "请至少选择一种规格，否则顾客无法选择此商品。",
+      "comboExtrasChargeTitle": "附加项和额外选项收费",
+      "comboExtrasChargeOnHint": "附加项（额外配料、付费定制选项）将在套餐价格之上按其正常价格加收——就像单独点该商品一样。",
+      "comboExtrasChargeOffHint": "附加项免费：顾客可选择所有相同选项，但套餐仍为固定价格，再加上你设置的单项加价。"
     },
     "promotionsList": {
       "stackingMaster": "主控",
@@ -4410,7 +4413,11 @@
       "badge": "套餐",
       "chooseSize": "选择规格",
       "fromUpcharge": "起加 {price}",
-      "chooseSizeFor": "为 {name} 选择规格"
+      "chooseSizeFor": "为 {name} 选择规格",
+      "sizeLabel": "规格",
+      "upToCount": "最多选 {count} 项",
+      "addChoice": "添加{price}",
+      "completeRequired": "请完成必选项"
     }
   }
 }

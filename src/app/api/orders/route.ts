@@ -343,7 +343,7 @@ export async function POST(req: NextRequest) {
           menuItemId: string; variantId?: string | null;
           name: string; variantName?: string | null;
           modifiers?: Array<{ name: string; priceAdjustment?: number }>;
-          notes?: string | null; specialityFee?: number;
+          notes?: string | null; specialityFee?: number; extrasFee?: number;
           pizzaCustomization?: unknown;
         }> = [];
         for (const child of raw.bundleItems) {
@@ -410,7 +410,48 @@ export async function POST(req: NextRequest) {
           }
 
           const up = comboUpchargeFor(slot, cid, variantId);
-          comboUpcharge += up;
+
+          // Modifiers + add-on surcharge. The combo's extrasCharge flag decides
+          // whether add-ons cost extra. Non-pizza modifiers are re-priced from
+          // the DB (authoritative); a pizza's extra-topping surcharge is trusted
+          // from the client, the same model standalone pizzas already use.
+          const rawChildMods: any[] = Array.isArray(child.modifiers) ? child.modifiers : [];
+          let childMods: Array<{ name: string; priceAdjustment?: number }> | undefined;
+          let extras = 0;
+          if (isPizzaChild) {
+            childMods = rawChildMods.slice(0, 60).map((m: any) => ({
+              name: sanitize(m?.name ?? "", 200),
+              priceAdjustment: typeof m?.priceAdjustment === "number" ? m.priceAdjustment : 0,
+            }));
+            if (childMods.length === 0) childMods = undefined;
+            if (comboConfig.extrasCharge) {
+              extras = Math.max(0, Math.round((Number(child.extrasFee) || 0) * 100) / 100);
+            }
+          } else {
+            // Re-validate each modifier against the item's own + category groups,
+            // pricing from the DB. Unknown options are dropped (never trusted).
+            const candidateGroups = [
+              ...((cm as any).modifierGroups ?? []),
+              ...(((cm as any).category as any)?.modifierGroups ?? []),
+            ];
+            const validated: Array<{ name: string; priceAdjustment?: number }> = [];
+            let modSum = 0;
+            for (const rm of rawChildMods.slice(0, 60)) {
+              let found: any = null;
+              for (const g of candidateGroups) {
+                const o = g.options.find((x: any) => x.id === rm?.modifierOptionId);
+                if (o) { found = o; break; }
+              }
+              if (found) {
+                modSum += found.priceAdjustment;
+                validated.push({ name: sanitize(rm?.name ?? found.name, 200), priceAdjustment: found.priceAdjustment });
+              }
+            }
+            childMods = validated.length ? validated : undefined;
+            if (comboConfig.extrasCharge) extras = Math.max(0, Math.round(modSum * 100) / 100);
+          }
+
+          comboUpcharge += up + extras;
           comboChildren.push({
             menuItemId: cid,
             variantId,
@@ -418,14 +459,10 @@ export async function POST(req: NextRequest) {
             // truth; keeps a tampered label out of the kitchen ticket.
             name: sanitize(cm.name, 200),
             variantName: variantName ? sanitize(variantName, 100) : null,
-            modifiers: Array.isArray(child.modifiers)
-              ? child.modifiers.slice(0, 40).map((m: any) => ({
-                  name: sanitize(m?.name ?? "", 200),
-                  priceAdjustment: typeof m?.priceAdjustment === "number" ? m.priceAdjustment : 0,
-                }))
-              : undefined,
+            modifiers: childMods,
             notes: child.notes ? sanitize(child.notes, 200) : null,
             specialityFee: up > 0 ? Math.round(up * 100) / 100 : undefined,
+            extrasFee: extras > 0 ? extras : undefined,
             pizzaCustomization:
               child.pizzaCustomization && typeof child.pizzaCustomization === "object"
                 ? child.pizzaCustomization

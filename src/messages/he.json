@@ -1564,7 +1564,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "הוסף משבצת",
       "comboChooseSizes": "גדלים הכלולים בקומבו זה:",
-      "comboNoSizeSelected": "בחר לפחות גודל אחד, אחרת הלקוח לא יוכל לבחור פריט זה."
+      "comboNoSizeSelected": "בחר לפחות גודל אחד, אחרת הלקוח לא יוכל לבחור פריט זה.",
+      "comboExtrasChargeTitle": "חיוב על תוספות ותוספים",
+      "comboExtrasChargeOnHint": "תוספות (תוספי מנה נוספים, מודיפיקטורים בתשלום) מוסיפות את מחירן הרגיל מעל מחיר הקומבו — בדיוק כמו הזמנת הפריט בנפרד.",
+      "comboExtrasChargeOffHint": "התוספות ללא תשלום: הלקוחות בוחרים את כל אותן אפשרויות, אך הקומבו נשאר במחיר קבוע בתוספת תוספות המחיר שלך לכל פריט."
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",
@@ -4410,7 +4413,11 @@
       "badge": "קומבו",
       "chooseSize": "בחירת גודל",
       "fromUpcharge": "החל מ-+{price}",
-      "chooseSizeFor": "בחרו גודל עבור {name}"
+      "chooseSizeFor": "בחרו גודל עבור {name}",
+      "sizeLabel": "גודל",
+      "upToCount": "עד {count}",
+      "addChoice": "הוספה{price}",
+      "completeRequired": "השלימו את האפשרויות הנדרשות"
     }
   }
 }

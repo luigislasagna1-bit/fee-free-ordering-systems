@@ -1887,7 +1887,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "स्लॉट जोड़ें",
       "comboChooseSizes": "इस कॉम्बो में शामिल आकार:",
-      "comboNoSizeSelected": "कम से कम एक आकार चुनें, वरना ग्राहक इस आइटम को नहीं चुन पाएगा।"
+      "comboNoSizeSelected": "कम से कम एक आकार चुनें, वरना ग्राहक इस आइटम को नहीं चुन पाएगा।",
+      "comboExtrasChargeTitle": "ऐड-ऑन और एक्स्ट्रा के लिए शुल्क लें",
+      "comboExtrasChargeOnHint": "ऐड-ऑन (अतिरिक्त टॉपिंग, सशुल्क मॉडिफायर) अपनी सामान्य कीमत कॉम्बो के ऊपर जोड़ते हैं — ठीक वैसे ही जैसे आइटम को अकेले ऑर्डर करने पर।",
+      "comboExtrasChargeOffHint": "ऐड-ऑन मुफ़्त हैं: ग्राहक वही सभी विकल्प चुनते हैं, लेकिन कॉम्बो की कीमत निश्चित रहती है, साथ में आपके प्रति-आइटम अपचार्ज जुड़ते हैं।"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",
@@ -4410,7 +4413,11 @@
       "badge": "कॉम्बो",
       "chooseSize": "साइज़ चुनें",
       "fromUpcharge": "+{price} से",
-      "chooseSizeFor": "{name} के लिए साइज़ चुनें"
+      "chooseSizeFor": "{name} के लिए साइज़ चुनें",
+      "sizeLabel": "साइज़",
+      "upToCount": "{count} तक",
+      "addChoice": "जोड़ें{price}",
+      "completeRequired": "आवश्यक विकल्प पूरे करें"
     }
   }
 }

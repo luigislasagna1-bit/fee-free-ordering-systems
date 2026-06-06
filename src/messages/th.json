@@ -1564,7 +1564,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "เพิ่มช่อง",
       "comboChooseSizes": "ขนาดที่รวมอยู่ในคอมโบนี้:",
-      "comboNoSizeSelected": "เลือกอย่างน้อยหนึ่งขนาด ไม่เช่นนั้นลูกค้าจะไม่สามารถเลือกรายการนี้ได้"
+      "comboNoSizeSelected": "เลือกอย่างน้อยหนึ่งขนาด ไม่เช่นนั้นลูกค้าจะไม่สามารถเลือกรายการนี้ได้",
+      "comboExtrasChargeTitle": "คิดเงินค่าของเพิ่มและท็อปปิ้งพิเศษ",
+      "comboExtrasChargeOnHint": "ของเพิ่ม (ท็อปปิ้งพิเศษ ตัวเลือกแบบเสียเงิน) จะบวกราคาปกติเข้าไปบนราคาคอมโบ เหมือนกับการสั่งเมนูนั้นแยกต่างหาก",
+      "comboExtrasChargeOffHint": "ของเพิ่มฟรี ลูกค้าเลือกตัวเลือกได้ครบเหมือนเดิม แต่คอมโบยังคงเป็นราคาคงที่บวกกับค่าเพิ่มต่อรายการที่คุณตั้งไว้"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4410,7 +4413,11 @@
       "badge": "คอมโบ",
       "chooseSize": "เลือกขนาด",
       "fromUpcharge": "เริ่มต้น +{price}",
-      "chooseSizeFor": "เลือกขนาดสำหรับ {name}"
+      "chooseSizeFor": "เลือกขนาดสำหรับ {name}",
+      "sizeLabel": "ขนาด",
+      "upToCount": "สูงสุด {count}",
+      "addChoice": "เพิ่ม{price}",
+      "completeRequired": "เลือกตัวเลือกที่จำเป็นให้ครบ"
     }
   }
 }

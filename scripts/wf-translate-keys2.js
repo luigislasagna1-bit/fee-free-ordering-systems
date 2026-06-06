@@ -7,11 +7,12 @@ export const meta = {
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
 const NS = "customer.combo";
-const CONTEXT = "the customer-facing ordering page, composing a COMBO menu item. Some items come in multiple sizes; 'choose size' is a tiny hint on a pickable item, 'from +{price}' shows the lowest size upcharge, and 'Choose a size for {name}' titles a size picker. {price} is a formatted currency amount and {name} is an item name — keep {price}/{name} EXACTLY as-is. Concise, friendly customer tone.";
+const CONTEXT = "the customer-facing ordering page, customizing an item inside a COMBO. 'Size' labels a size selector. 'up to {count}' shows how many options may be picked in a modifier group ({count} is a number). 'Add{price}' is a button: {price} is either empty or already starts with ' · +$4.00' (a separator + amount) — keep the {price} placeholder EXACTLY and do NOT add your own separator/space before it. 'Complete required options' shows when required choices are missing. Keep {count}/{price} placeholders verbatim. Concise, friendly customer tone.";
 const EN = {
-  "chooseSize": "choose size",
-  "fromUpcharge": "from +{price}",
-  "chooseSizeFor": "Choose a size for {name}",
+  "sizeLabel": "Size",
+  "upToCount": "up to {count}",
+  "addChoice": "Add{price}",
+  "completeRequired": "Complete required options",
 };
 const KEYS = Object.keys(EN);
 

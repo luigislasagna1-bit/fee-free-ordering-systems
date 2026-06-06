@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react";
 import { X, Check, Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { PizzaBuilder, parsePizzaConfig, type PizzaCustomization } from "./PizzaBuilder";
+import { PizzaBuilder, parsePizzaConfig, pizzaCustomizationToModifiers, type PizzaCustomization } from "./PizzaBuilder";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 
 // The two surfaces (this file + OrderingPageClient + PizzaBuilder) each have
@@ -14,8 +14,14 @@ export type ComboCartChild = {
   name: string;
   variantId?: string;
   variantName?: string;
+  /** Flattened modifier selections (also used for the kitchen ticket). */
+  modifiers?: Array<{ modifierOptionId?: string; name: string; priceAdjustment?: number }>;
   pizzaCustomization?: PizzaCustomization;
+  /** Owner's per-item/size premium (always added). */
   upcharge?: number;
+  /** Add-on/extra surcharge — already gated by the combo's extrasCharge flag
+   *  (0 when the combo includes extras for free). */
+  extrasFee?: number;
 };
 export type ComboCartResult = { comboItem: AnyItem; lineTotal: number; children: ComboCartChild[] };
 
@@ -30,12 +36,44 @@ interface Props {
   onClose: () => void;
 }
 
+/** Sum of selected modifier-option price adjustments — mirrors the regular
+ *  item modal's getModPrice so combo add-ons price identically à la carte. */
+function modPrice(item: AnyItem, selected: Record<string, string[]>): number {
+  const groups: AnyItem[] = Array.isArray(item.modifierGroups) ? item.modifierGroups : [];
+  return groups.reduce((sum, g) => {
+    const picks = selected[g.id] || [];
+    return sum + picks.reduce((s2: number, optId: string) => {
+      const opt = g.options.find((o: AnyItem) => o.id === optId);
+      return s2 + (opt?.priceAdjustment ?? 0);
+    }, 0);
+  }, 0);
+}
+
+function flattenMods(item: AnyItem, selected: Record<string, string[]>) {
+  const groups: AnyItem[] = Array.isArray(item.modifierGroups) ? item.modifierGroups : [];
+  return groups.flatMap((g) =>
+    (selected[g.id] || []).map((optId) => {
+      const opt = g.options.find((o: AnyItem) => o.id === optId);
+      return { modifierOptionId: opt?.id, name: opt?.name ?? "", priceAdjustment: opt?.priceAdjustment ?? 0 };
+    }),
+  );
+}
+
+/** True when a non-pizza item needs the customizer (a size choice to make OR
+ *  any visible modifier group to walk through). */
+function needsCustomizer(item: AnyItem, allowedVariants: AnyItem[]): boolean {
+  const groups: AnyItem[] = Array.isArray(item.modifierGroups) ? item.modifierGroups : [];
+  const hasVisibleGroups = groups.some((g) => !g.isHidden);
+  return allowedVariants.length > 1 || hasVisibleGroups;
+}
+
 /**
  * Customer-facing combo composer. Walks a combo item's slots; the customer
- * picks from each slot's eligible pool. Pizza-builder items open the FULL pizza
- * builder so each pizza is customizable. Adds to the cart as ONE line at the
- * combo's price + owner-defined per-item upcharges. Multi-pizza combos as a
- * first-class menu item. Luigi 2026-06-05.
+ * picks from each slot's eligible pool. Each pick is treated EXACTLY like
+ * ordering that item à la carte: pizzas open the pizza builder, items with
+ * sizes/modifiers open a full customizer. The combo is a fixed price + the
+ * owner's per-item/size upcharges; add-ons are free or charged per the combo's
+ * extrasCharge setting. Luigi 2026-06-06.
  */
 export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onAddCombo, onClose }: Props) {
   const t = useTranslations("customer.combo");
@@ -53,12 +91,12 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     Object.fromEntries((config?.slots ?? []).map((s) => [s.id, []])),
   );
   const [pizzaFor, setPizzaFor] = useState<{ slotId: string; item: AnyItem; upcharge: number } | null>(null);
-  // When a sized item allows MORE than one size in this combo, the customer
-  // picks which size here before it's added.
-  const [variantFor, setVariantFor] = useState<{ slotId: string; item: AnyItem; variants: AnyItem[] } | null>(null);
+  // Full customizer (size + modifiers) for a non-pizza item.
+  const [customizeFor, setCustomizeFor] = useState<{ slotId: string; item: AnyItem; allowedVariants: AnyItem[] } | null>(null);
 
   if (!config) return null;
 
+  const extrasCharge = config.extrasCharge;
   const slotById = (slotId: string) => config.slots.find((s) => s.id === slotId)!;
 
   // The sizes (variants) a slot offers for an item: the owner-restricted subset
@@ -87,11 +125,11 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
       return;
     }
     const allowed = allowedVariantsFor(slotId, item);
-    if (allowed.length > 1) {
-      setVariantFor({ slotId, item, variants: allowed }); // sized → pick a size first
+    if (needsCustomizer(item, allowed)) {
+      setCustomizeFor({ slotId, item, allowedVariants: allowed }); // size and/or modifiers
       return;
     }
-    // No sizes, or exactly one allowed size → add directly.
+    // Nothing to choose — add straight away (single/no size, no modifiers).
     const v = allowed.length === 1 ? allowed[0] : null;
     addPick(slotId, {
       key: `${item.id}-${picks[slotId]?.length ?? 0}-${v?.id ?? item.name}`,
@@ -100,21 +138,9 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     });
   };
 
-  const pickVariant = (v: AnyItem) => {
-    if (!variantFor) return;
-    const slot = slotById(variantFor.slotId);
-    addPick(variantFor.slotId, {
-      key: `${variantFor.item.id}-${picks[variantFor.slotId]?.length ?? 0}-${v.id}`,
-      menuItemId: variantFor.item.id, name: variantFor.item.name,
-      variantId: v.id, variantName: v.name,
-      upcharge: comboUpchargeFor(slot, variantFor.item.id, v.id),
-    });
-    setVariantFor(null);
-  };
-
   const base = comboItem.price || 0;
-  const upchargeTotal = Object.values(picks).flat().reduce((s, p) => s + (p.upcharge || 0), 0);
-  const lineTotal = Math.round((base + upchargeTotal) * 100) / 100;
+  const addonTotal = Object.values(picks).flat().reduce((s, p) => s + (p.upcharge || 0) + (p.extrasFee || 0), 0);
+  const lineTotal = Math.round((base + addonTotal) * 100) / 100;
   const slotsSatisfied = config.slots.every((s) => (picks[s.id]?.length ?? 0) >= s.min);
 
   const submit = () => {
@@ -122,7 +148,8 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     const children: ComboCartChild[] = config.slots.flatMap((s) =>
       (picks[s.id] ?? []).map((p) => ({
         menuItemId: p.menuItemId, name: p.name, variantId: p.variantId, variantName: p.variantName,
-        pizzaCustomization: p.pizzaCustomization, upcharge: p.upcharge,
+        modifiers: p.modifiers, pizzaCustomization: p.pizzaCustomization,
+        upcharge: p.upcharge, extrasFee: p.extrasFee,
       })),
     );
     onAddCombo({ comboItem, lineTotal, children });
@@ -150,30 +177,32 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
                 </div>
                 {cur.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mb-2">
-                    {cur.map((p) => (
-                      <span key={p.key} className="inline-flex items-center gap-1.5 bg-gray-100 rounded-full pl-3 pr-1.5 py-1 text-sm">
-                        {p.name}{p.variantName ? ` (${p.variantName})` : ""}{p.pizzaCustomization ? " ⭐" : ""}{(p.upcharge ?? 0) > 0 ? ` (+${fmt(p.upcharge!)})` : ""}
-                        <button onClick={() => removePick(slot.id, p.key)} className="p-0.5 text-gray-400 hover:text-red-500"><Trash2 className="w-3.5 h-3.5" /></button>
-                      </span>
-                    ))}
+                    {cur.map((p) => {
+                      const extra = (p.upcharge ?? 0) + (p.extrasFee ?? 0);
+                      return (
+                        <span key={p.key} className="inline-flex items-center gap-1.5 bg-gray-100 rounded-full pl-3 pr-1.5 py-1 text-sm">
+                          {p.name}{p.variantName ? ` (${p.variantName})` : ""}{p.pizzaCustomization || (p.modifiers && p.modifiers.length) ? " ⭐" : ""}{extra > 0 ? ` (+${fmt(extra)})` : ""}
+                          <button onClick={() => removePick(slot.id, p.key)} className="p-0.5 text-gray-400 hover:text-red-500"><Trash2 className="w-3.5 h-3.5" /></button>
+                        </span>
+                      );
+                    })}
                   </div>
                 )}
                 <div className="grid grid-cols-1 gap-1.5">
                   {slotPools[si].map((it: AnyItem) => {
                     const isPizza = !!parsePizzaConfig(it.pizzaConfig);
                     const sizes = allowedVariantsFor(slot.id, it);
-                    // For sized items the upcharge depends on the chosen size —
-                    // show the lowest (a "from" price); single-size items show exact.
                     const up = sizes.length > 0
                       ? Math.min(...sizes.map((v) => comboUpchargeFor(slot, it.id, v.id)))
                       : comboUpchargeFor(slot, it.id);
                     const fromPrice = sizes.length > 1;
+                    const customizable = isPizza || needsCustomizer(it, sizes);
                     return (
                       <button key={it.id} disabled={atMax} onClick={() => choose(slot.id, it)}
                         className="flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border border-gray-200 text-sm text-left hover:border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed">
                         <span className="min-w-0 truncate">
                           <span className="font-medium text-gray-800">{it.name}</span>
-                          {isPizza && <span className="ml-1.5 text-[10px] font-bold" style={{ color: primaryColor }}>{t("customizable")}</span>}
+                          {customizable && <span className="ml-1.5 text-[10px] font-bold" style={{ color: primaryColor }}>{t("customizable")}</span>}
                           {fromPrice && <span className="ml-1.5 text-[10px] text-gray-400">{t("chooseSize")}</span>}
                         </span>
                         <span className="flex items-center gap-2 flex-shrink-0">
@@ -208,11 +237,20 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
             primaryColor={primaryColor}
             onClose={() => setPizzaFor(null)}
             onAdd={(result) => {
+              // Pizza extra toppings are an "extra": charged only when the combo
+              // is set to charge for extras. Base (variant) price never applies —
+              // the combo's own price covers the pizza.
+              const basePrice = result.variant?.price ?? pizzaFor.item.price ?? 0;
+              const qty = result.quantity || 1;
+              const extrasUnit = Math.max(0, Math.round(((result.lineTotal / qty) - basePrice) * 100) / 100);
               addPick(pizzaFor.slotId, {
-                key: `${pizzaFor.item.id}-${Date.now()}`,
+                key: `${pizzaFor.item.id}-${result.variant?.id ?? ""}-${(picks[pizzaFor.slotId]?.length ?? 0)}`,
                 menuItemId: pizzaFor.item.id, name: pizzaFor.item.name,
                 variantId: result.variant?.id, variantName: result.variant?.name,
-                pizzaCustomization: result.customization, upcharge: pizzaFor.upcharge,
+                modifiers: pizzaCustomizationToModifiers(result.customization, pizzaFor.item.modifierGroups ?? []),
+                pizzaCustomization: result.customization,
+                upcharge: pizzaFor.upcharge,
+                extrasFee: extrasCharge ? extrasUnit : 0,
               });
               setPizzaFor(null);
             }}
@@ -220,32 +258,166 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
         );
       })()}
 
-      {/* Size picker — shown when the chosen item allows more than one size. */}
-      {variantFor && (
-        <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 sm:p-4" onClick={() => setVariantFor(null)}>
-          <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl w-full max-w-sm" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between p-4 border-b">
-              <h3 className="font-bold text-gray-900">{t("chooseSizeFor", { name: variantFor.item.name })}</h3>
-              <button onClick={() => setVariantFor(null)} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
-            </div>
-            <div className="p-3 space-y-1.5">
-              {variantFor.variants.map((v: AnyItem) => {
-                const up = comboUpchargeFor(slotById(variantFor.slotId), variantFor.item.id, v.id);
-                return (
-                  <button key={v.id} onClick={() => pickVariant(v)}
-                    className="w-full flex items-center justify-between gap-2 px-3 py-3 rounded-lg border border-gray-200 text-sm text-left hover:border-gray-300">
-                    <span className="font-medium text-gray-800">{v.name}</span>
-                    <span className="flex items-center gap-2 flex-shrink-0">
-                      {up > 0 && <span className="text-xs text-gray-500">+{fmt(up)}</span>}
-                      <Plus className="w-4 h-4 text-gray-400" />
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+      {customizeFor && (
+        <ChildCustomizer
+          item={customizeFor.item}
+          allowedVariants={customizeFor.allowedVariants}
+          primaryColor={primaryColor}
+          fmt={fmt}
+          extrasCharge={extrasCharge}
+          upchargeFor={(variantId) => comboUpchargeFor(slotById(customizeFor.slotId), customizeFor.item.id, variantId)}
+          onClose={() => setCustomizeFor(null)}
+          onConfirm={(pick) => {
+            addPick(customizeFor.slotId, {
+              key: `${customizeFor.item.id}-${pick.variantId ?? ""}-${(picks[customizeFor.slotId]?.length ?? 0)}`,
+              menuItemId: customizeFor.item.id, name: customizeFor.item.name,
+              ...pick,
+              upcharge: pick.upcharge ?? 0,
+            });
+            setCustomizeFor(null);
+          }}
+        />
       )}
+    </div>
+  );
+}
+
+/** Size + modifier customizer for a non-pizza combo child — the same walk-through
+ *  a regular item gets, scoped to the combo's pricing rules. */
+function ChildCustomizer({
+  item, allowedVariants, primaryColor, fmt, extrasCharge, upchargeFor, onConfirm, onClose,
+}: {
+  item: AnyItem;
+  allowedVariants: AnyItem[];
+  primaryColor: string;
+  fmt: (n: number) => string;
+  extrasCharge: boolean;
+  upchargeFor: (variantId?: string | null) => number;
+  onConfirm: (pick: Partial<ComboCartChild>) => void;
+  onClose: () => void;
+}) {
+  const t = useTranslations("customer.combo");
+  const tc = useTranslations("ordering");
+  const groups: AnyItem[] = (Array.isArray(item.modifierGroups) ? item.modifierGroups : []).filter((g: AnyItem) => !g.isHidden);
+  const hasSizeChoice = allowedVariants.length > 1;
+
+  const [variant, setVariant] = useState<AnyItem | null>(
+    allowedVariants.length >= 1 ? allowedVariants[0] : null,
+  );
+  const [mods, setMods] = useState<Record<string, string[]>>(() => {
+    const def: Record<string, string[]> = {};
+    for (const g of groups) {
+      const defs = g.options.filter((o: AnyItem) => o.isDefault && o.isAvailable).map((o: AnyItem) => o.id);
+      if (defs.length) def[g.id] = defs;
+    }
+    return def;
+  });
+
+  const toggleMod = (g: AnyItem, optId: string) => {
+    setMods((prev) => {
+      const cur = prev[g.id] || [];
+      const has = cur.includes(optId);
+      if (g.maxSelect === 1) return { ...prev, [g.id]: has ? [] : [optId] };
+      if (has) return { ...prev, [g.id]: cur.filter((x) => x !== optId) };
+      if (cur.length >= (g.maxSelect || 99)) return prev; // at max
+      return { ...prev, [g.id]: [...cur, optId] };
+    });
+  };
+
+  const extrasFee = extrasCharge ? Math.round(modPrice(item, mods) * 100) / 100 : 0;
+  const upcharge = upchargeFor(variant?.id);
+  const addExtra = upcharge + extrasFee;
+
+  // Required groups must be satisfied (mirrors the regular item modal).
+  const unmet = groups.filter((g) => {
+    const need = g.required ? Math.max(1, g.minSelect || 0) : (g.minSelect || 0);
+    return (mods[g.id]?.length ?? 0) < need;
+  });
+  const canAdd = unmet.length === 0;
+
+  const confirm = () => {
+    if (!canAdd) return;
+    onConfirm({
+      variantId: variant?.id, variantName: variant?.name,
+      modifiers: flattenMods(item, mods),
+      upcharge, extrasFee,
+    });
+  };
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 sm:p-4">
+      <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl w-full max-w-md max-h-[88vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between p-4 border-b">
+          <h3 className="font-bold text-gray-900">{item.name}</h3>
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {/* Size selector */}
+          {hasSizeChoice && (
+            <div>
+              <div className="text-sm font-semibold text-gray-800 mb-1.5">{t("sizeLabel")}</div>
+              <div className="space-y-1.5">
+                {allowedVariants.map((v: AnyItem) => {
+                  const vUp = upchargeFor(v.id);
+                  const on = variant?.id === v.id;
+                  return (
+                    <label key={v.id} className="flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border cursor-pointer"
+                      style={on ? { borderColor: primaryColor, backgroundColor: `${primaryColor}11` } : { borderColor: "#e5e7eb" }}>
+                      <span className="flex items-center gap-2">
+                        <input type="radio" checked={on} onChange={() => setVariant(v)} className="w-4 h-4" style={{ accentColor: primaryColor }} />
+                        <span className="text-sm font-medium text-gray-800">{v.name}</span>
+                      </span>
+                      {vUp > 0 && <span className="text-xs text-gray-500">+{fmt(vUp)}</span>}
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Modifier groups — radio (maxSelect 1) or checkbox (maxSelect >1) */}
+          {groups.map((g: AnyItem) => {
+            const sel = mods[g.id] || [];
+            const single = g.maxSelect === 1;
+            const atMax = !single && sel.length >= (g.maxSelect || 99);
+            return (
+              <div key={g.id}>
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-sm font-semibold text-gray-800">{g.name}</span>
+                  {g.required && <span className="text-[10px] font-bold uppercase text-red-500">{tc("required")}</span>}
+                  {!single && (g.maxSelect || 0) > 0 && <span className="text-[11px] text-gray-400">{t("upToCount", { count: g.maxSelect })}</span>}
+                </div>
+                <div className="space-y-1.5">
+                  {g.options.filter((o: AnyItem) => o.isAvailable !== false).map((o: AnyItem) => {
+                    const on = sel.includes(o.id);
+                    const disabled = !on && atMax;
+                    return (
+                      <label key={o.id} className={`flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border cursor-pointer ${disabled ? "opacity-40 cursor-not-allowed" : ""}`}
+                        style={on ? { borderColor: primaryColor, backgroundColor: `${primaryColor}11` } : { borderColor: "#e5e7eb" }}>
+                        <span className="flex items-center gap-2 min-w-0">
+                          <input type={single ? "radio" : "checkbox"} checked={on} disabled={disabled}
+                            onChange={() => toggleMod(g, o.id)} className="w-4 h-4 flex-shrink-0" style={{ accentColor: primaryColor }} />
+                          <span className="text-sm text-gray-800 truncate">{o.name}</span>
+                        </span>
+                        {extrasCharge && o.priceAdjustment > 0 && <span className="text-xs text-gray-500 flex-shrink-0">+{fmt(o.priceAdjustment)}</span>}
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="p-4 border-t bg-gray-50 rounded-b-2xl">
+          <button onClick={confirm} disabled={!canAdd}
+            className="w-full py-3 rounded-xl text-white font-semibold disabled:opacity-50"
+            style={{ backgroundColor: primaryColor }}>
+            {canAdd ? t("addChoice", { price: addExtra > 0 ? ` · +${fmt(addExtra)}` : "" }) : t("completeRequired")}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

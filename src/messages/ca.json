@@ -1564,7 +1564,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Afegeix una posició",
       "comboChooseSizes": "Mides incloses en aquest combo:",
-      "comboNoSizeSelected": "Tria almenys una mida o el client no podrà triar aquest article."
+      "comboNoSizeSelected": "Tria almenys una mida o el client no podrà triar aquest article.",
+      "comboExtrasChargeTitle": "Cobrar pels complements i extres",
+      "comboExtrasChargeOnHint": "Els complements (ingredients extra, modificadors de pagament) sumen el seu preu habitual al preu del combo, igual que si demanessis l'article per separat.",
+      "comboExtrasChargeOffHint": "Els complements són gratuïts: els clients trien les mateixes opcions, però el combo manté un preu fix més els recàrrecs per article que estableixis."
     },
     "promotionsList": {
       "stackingMaster": "Mestre",
@@ -4410,7 +4413,11 @@
       "badge": "Combo",
       "chooseSize": "tria la mida",
       "fromUpcharge": "des de +{price}",
-      "chooseSizeFor": "Tria una mida per a {name}"
+      "chooseSizeFor": "Tria una mida per a {name}",
+      "sizeLabel": "Mida",
+      "upToCount": "fins a {count}",
+      "addChoice": "Afegeix{price}",
+      "completeRequired": "Completa les opcions obligatòries"
     }
   }
 }

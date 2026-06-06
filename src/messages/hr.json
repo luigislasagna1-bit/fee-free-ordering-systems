@@ -1564,7 +1564,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Dodaj mjesto",
       "comboChooseSizes": "Veličine uključene u ovaj combo:",
-      "comboNoSizeSelected": "Odaberite barem jednu veličinu, inače kupac ne može odabrati ovu stavku."
+      "comboNoSizeSelected": "Odaberite barem jednu veličinu, inače kupac ne može odabrati ovu stavku.",
+      "comboExtrasChargeTitle": "Naplata dodataka i ekstra",
+      "comboExtrasChargeOnHint": "Dodaci (dodatni prilozi, plaćene izmjene) pribrajaju svoju uobičajenu cijenu na combo — baš kao da artikl naručujete zasebno.",
+      "comboExtrasChargeOffHint": "Dodaci su besplatni: kupci biraju sve iste opcije, ali combo ostaje fiksne cijene uz vaše doplate po artiklu."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4410,7 +4413,11 @@
       "badge": "Combo",
       "chooseSize": "odaberi veličinu",
       "fromUpcharge": "od +{price}",
-      "chooseSizeFor": "Odaberite veličinu za {name}"
+      "chooseSizeFor": "Odaberite veličinu za {name}",
+      "sizeLabel": "Veličina",
+      "upToCount": "do {count}",
+      "addChoice": "Dodaj{price}",
+      "completeRequired": "Dovršite obavezne opcije"
     }
   }
 }

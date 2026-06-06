@@ -1527,7 +1527,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Hely hozzáadása",
       "comboChooseSizes": "A combóban szereplő méretek:",
-      "comboNoSizeSelected": "Válassz legalább egy méretet, különben a vendég nem tudja kiválasztani ezt a tételt."
+      "comboNoSizeSelected": "Válassz legalább egy méretet, különben a vendég nem tudja kiválasztani ezt a tételt.",
+      "comboExtrasChargeTitle": "Felárak és extrák felszámítása",
+      "comboExtrasChargeOnHint": "Az extrák (további feltétek, fizetős módosítók) a megszokott árukon adódnak hozzá a kombóhoz – ugyanúgy, mintha a tételt önállóan rendelnék meg.",
+      "comboExtrasChargeOffHint": "Az extrák ingyenesek: a vendégek ugyanazokat a beállításokat választhatják, de a kombó fix árú marad, plusz a tételenkénti felárak."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4410,7 +4413,11 @@
       "badge": "Kombó",
       "chooseSize": "méret választása",
       "fromUpcharge": "+{price}-tól",
-      "chooseSizeFor": "Válassz méretet ehhez: {name}"
+      "chooseSizeFor": "Válassz méretet ehhez: {name}",
+      "sizeLabel": "Méret",
+      "upToCount": "legfeljebb {count}",
+      "addChoice": "Hozzáadás{price}",
+      "completeRequired": "Töltsd ki a kötelező mezőket"
     }
   }
 }

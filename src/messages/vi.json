@@ -1527,7 +1527,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Thêm vị trí",
       "comboChooseSizes": "Kích cỡ có trong combo này:",
-      "comboNoSizeSelected": "Chọn ít nhất một kích cỡ, nếu không khách hàng sẽ không thể chọn món này."
+      "comboNoSizeSelected": "Chọn ít nhất một kích cỡ, nếu không khách hàng sẽ không thể chọn món này.",
+      "comboExtrasChargeTitle": "Tính phí cho tùy chọn bổ sung và món thêm",
+      "comboExtrasChargeOnHint": "Các tùy chọn bổ sung (topping thêm, món sửa đổi có phí) sẽ cộng giá thông thường lên trên giá combo — giống như khi đặt riêng món đó.",
+      "comboExtrasChargeOffHint": "Các tùy chọn bổ sung được miễn phí: khách vẫn chọn đầy đủ các tùy chọn như nhau, nhưng combo giữ mức giá cố định cộng với phụ phí cho từng món của bạn."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4410,7 +4413,11 @@
       "badge": "Combo",
       "chooseSize": "chọn kích cỡ",
       "fromUpcharge": "từ +{price}",
-      "chooseSizeFor": "Chọn kích cỡ cho {name}"
+      "chooseSizeFor": "Chọn kích cỡ cho {name}",
+      "sizeLabel": "Kích cỡ",
+      "upToCount": "tối đa {count}",
+      "addChoice": "Thêm{price}",
+      "completeRequired": "Hoàn tất các tùy chọn bắt buộc"
     }
   }
 }

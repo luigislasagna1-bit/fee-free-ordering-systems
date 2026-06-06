@@ -82,6 +82,9 @@ interface CartItem {
     modifiers?: Array<{ name: string; priceAdjustment?: number }>;
     notes?: string;
     specialityFee?: number;
+    /** Add-on/extra surcharge for a combo child (0 unless the combo charges
+     *  for extras). Separate from specialityFee (the owner's item upcharge). */
+    extrasFee?: number;
     /** Combo component that's a customized pizza — carries the builder
      *  selections (half/half, toppings) so the kitchen ticket shows them. */
     pizzaCustomization?: PizzaCustomization;
@@ -1650,13 +1653,9 @@ export function OrderingPageClient({
   // Combo composed → drop a single combo line into the cart (reuses the bundle
   // parent+children rendering; isCombo distinguishes it from a promo bundle).
   const addComboToCart = (result: ComboCartResult) => {
-    // Pizza children carry a PizzaCustomization; flatten it into display
-    // modifiers (toppings, half/half, crust) using the child's FULL menu item
-    // so the kitchen ticket + receipt show the build. The same conversion
-    // top-level pizzas use in buildOrderPayload — reused for consistency.
-    const fullById = new Map(
-      visibleCategories.flatMap((c) => c.menuItems).map((mi) => [mi.id, mi]),
-    );
+    // The composer already produced each child's display modifiers (flattened
+    // selections / pizza toppings), per-item upcharge, and add-on surcharge —
+    // pass them straight through to the cart line.
     const newEntry: CartItem = {
       menuItem: result.comboItem,
       variant: undefined,
@@ -1668,22 +1667,16 @@ export function OrderingPageClient({
       isBundle: true,
       isCombo: true,
       bundlePromoName: result.comboItem.name,
-      bundleItems: result.children.map((c) => {
-        const full = fullById.get(c.menuItemId);
-        const modifiers =
-          c.pizzaCustomization && full
-            ? pizzaCustomizationToModifiers(c.pizzaCustomization, full.modifierGroups as any)
-            : undefined;
-        return {
-          menuItemId: c.menuItemId,
-          name: c.name,
-          variantId: c.variantId,
-          variantName: c.variantName,
-          modifiers,
-          pizzaCustomization: c.pizzaCustomization,
-          specialityFee: c.upcharge,
-        };
-      }),
+      bundleItems: result.children.map((c) => ({
+        menuItemId: c.menuItemId,
+        name: c.name,
+        variantId: c.variantId,
+        variantName: c.variantName,
+        modifiers: c.modifiers,
+        pizzaCustomization: c.pizzaCustomization,
+        specialityFee: c.upcharge,
+        extrasFee: c.extrasFee,
+      })),
     };
     setCart((prev) => [...prev, newEntry]);
     setComboItem(null);

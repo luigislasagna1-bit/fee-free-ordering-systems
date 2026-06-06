@@ -2227,7 +2227,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Pridėti poziciją",
       "comboChooseSizes": "Į šį rinkinį įtraukti dydžiai:",
-      "comboNoSizeSelected": "Pasirinkite bent vieną dydį, kitaip klientas negalės pasirinkti šio patiekalo."
+      "comboNoSizeSelected": "Pasirinkite bent vieną dydį, kitaip klientas negalės pasirinkti šio patiekalo.",
+      "comboExtrasChargeTitle": "Imti mokestį už priedus ir papildymus",
+      "comboExtrasChargeOnHint": "Priedai (papildomi pagardai, mokami modifikatoriai) prie kombinuoto patiekalo kainos prideda savo įprastą kainą — lygiai taip pat, kaip užsakant patiekalą atskirai.",
+      "comboExtrasChargeOffHint": "Priedai nemokami: klientai renkasi visus tuos pačius pasirinkimus, bet kombinuoto patiekalo kaina lieka fiksuota, prie jos pridedant tik jūsų nustatytus priemokas už atskirus patiekalus."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4410,7 +4413,11 @@
       "badge": "Combo",
       "chooseSize": "pasirinkite dydį",
       "fromUpcharge": "nuo +{price}",
-      "chooseSizeFor": "Pasirinkite „{name}“ dydį"
+      "chooseSizeFor": "Pasirinkite „{name}“ dydį",
+      "sizeLabel": "Dydis",
+      "upToCount": "iki {count}",
+      "addChoice": "Pridėti{price}",
+      "completeRequired": "Užpildykite privalomas parinktis"
     }
   }
 }

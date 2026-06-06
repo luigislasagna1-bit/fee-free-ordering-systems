@@ -1564,7 +1564,10 @@
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Lisää paikka",
       "comboChooseSizes": "Tähän ateriaan sisältyvät koot:",
-      "comboNoSizeSelected": "Valitse vähintään yksi koko, tai asiakas ei voi valita tätä tuotetta."
+      "comboNoSizeSelected": "Valitse vähintään yksi koko, tai asiakas ei voi valita tätä tuotetta.",
+      "comboExtrasChargeTitle": "Veloita lisukkeista ja extroista",
+      "comboExtrasChargeOnHint": "Lisukkeet (lisätäytteet, maksulliset muokkaukset) lisäävät normaalihintansa combon päälle — aivan kuten tilattaessa tuote erikseen.",
+      "comboExtrasChargeOffHint": "Lisukkeet ovat ilmaisia: asiakkaat valitsevat kaikki samat vaihtoehdot, mutta combon hinta pysyy kiinteänä tuotekohtaisten lisämaksujesi lisäksi."
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -4410,7 +4413,11 @@
       "badge": "Combo",
       "chooseSize": "valitse koko",
       "fromUpcharge": "alkaen +{price}",
-      "chooseSizeFor": "Valitse koko tuotteelle {name}"
+      "chooseSizeFor": "Valitse koko tuotteelle {name}",
+      "sizeLabel": "Koko",
+      "upToCount": "enintään {count}",
+      "addChoice": "Lisää{price}",
+      "completeRequired": "Täytä pakolliset valinnat"
     }
   }
 }

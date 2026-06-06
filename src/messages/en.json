@@ -1739,6 +1739,9 @@
       "comboAddSlot": "Add slot",
       "comboChooseSizes": "Sizes included in this combo:",
       "comboNoSizeSelected": "Pick at least one size, or the customer can't choose this item.",
+      "comboExtrasChargeTitle": "Charge for add-ons & extras",
+      "comboExtrasChargeOnHint": "Add-ons (extra toppings, paid modifiers) add their normal price on top of the combo — just like ordering the item on its own.",
+      "comboExtrasChargeOffHint": "Add-ons are free: customers pick all the same options, but the combo stays a fixed price plus your per-item upcharges.",
       "itemNameLabel": "Item Name *",
       "itemNamePlaceholder": "e.g. Margherita Pizza",
       "descriptionLabel": "Description",
@@ -4094,7 +4097,11 @@
       "badge": "Combo",
       "chooseSize": "choose size",
       "fromUpcharge": "from +{price}",
-      "chooseSizeFor": "Choose a size for {name}"
+      "chooseSizeFor": "Choose a size for {name}",
+      "sizeLabel": "Size",
+      "upToCount": "up to {count}",
+      "addChoice": "Add{price}",
+      "completeRequired": "Complete required options"
     },
     "confirmation": {
       "orderPlaced": "Order Placed!",
