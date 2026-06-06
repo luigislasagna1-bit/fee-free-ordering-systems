@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
+import { deleteModifierGroupsCascade } from "@/lib/modifier-delete";
 
 // POST: attach a library modifier group to an item or category (creates a linked copy)
 export async function POST(req: NextRequest) {
@@ -147,7 +148,9 @@ export async function DELETE(req: NextRequest) {
 
     if (!authorized) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-    await prisma.modifierGroup.delete({ where: { id: groupId } });
+    // Cascade-safe delete (nulls OrderItemModifier refs first) so detaching a
+    // group that's been used on a real order doesn't fail on an FK constraint.
+    await deleteModifierGroupsCascade([groupId]);
     return NextResponse.json({ ok: true });
   } catch (e: any) {
     console.error("[modifiers/attach DELETE]", e);

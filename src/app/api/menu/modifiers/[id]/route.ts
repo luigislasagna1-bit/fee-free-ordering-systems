@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
+import { deleteModifierGroupsCascade } from "@/lib/modifier-delete";
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const user = await getSessionUser();
@@ -98,6 +99,26 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
   if (blocked) return blocked;
   const { id } = await params;
 
-  await prisma.modifierGroup.delete({ where: { id } });
-  return NextResponse.json({ ok: true });
+  // Ownership: only delete a group that belongs to this restaurant — either a
+  // restaurant-level library group, or one scoped to an item/category we own.
+  const group = await prisma.modifierGroup.findUnique({ where: { id } });
+  if (!group) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  let authorized = group.restaurantId === restaurantId;
+  if (!authorized && group.menuItemId) {
+    authorized = !!(await prisma.menuItem.findFirst({ where: { id: group.menuItemId, restaurantId }, select: { id: true } }));
+  }
+  if (!authorized && group.categoryId) {
+    authorized = !!(await prisma.menuCategory.findFirst({ where: { id: group.categoryId, restaurantId }, select: { id: true } }));
+  }
+  if (!authorized) return NextResponse.json({ error: "Not found" }, { status: 404 });
+
+  try {
+    // Cascade-safe: nulls OrderItemModifier refs + removes attached copies so a
+    // group that's been used on a real order can still be deleted.
+    await deleteModifierGroupsCascade([id]);
+    return NextResponse.json({ ok: true });
+  } catch (e: any) {
+    console.error("[modifiers/:id DELETE]", e);
+    return NextResponse.json({ error: e.message ?? "Delete failed" }, { status: 500 });
+  }
 }
