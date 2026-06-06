@@ -397,7 +397,8 @@
       "apartment": "Lakás",
       "parking": "Hol lehet parkolni"
     },
-    "zoneMinimum": "Minimális rendelési összeg: {min}."
+    "zoneMinimum": "Minimális rendelési összeg: {min}.",
+    "leadTimePrompt": "⏰ Ez az étterem előrendeléseket fogad — kérjük, válasszon időpontot. A legkorábbi elérhető időpontot lent találja."
   },
   "reservation": {
     "title": "Asztal foglalása",
@@ -725,7 +726,15 @@
       "reservations": "Asztalfoglalás",
       "slotInterval": "Ütemezési időköz",
       "slotIntervalDefault": "Alapértelmezett (globális beállítás)",
-      "slotIntervalMin": "{min} perc"
+      "slotIntervalMin": "{min} perc",
+      "minAdvanceLabel": "Minimális előzetes idő",
+      "minAdvanceHint": "Milyen korán adhat le rendelést a vásárló az átvétel/kiszállítás előtt. 0 = a lehető leghamarabb (csak az előkészítési idő korlátozza).",
+      "maxAdvanceLabel": "Maximális előzetes napok száma",
+      "maxAdvanceHint": "A vásárlók legfeljebb {days} nappal előre rendelhetnek.",
+      "maxAdvanceHintUnlimited": "Nincs korlátozás arra, hogy a vásárlók milyen messzire előre rendelhetnek.",
+      "unitMinutes": "perc",
+      "unitHours": "óra",
+      "unitDays": "nap"
     },
     "delivery": {
       "title": "Szállítási zónák",

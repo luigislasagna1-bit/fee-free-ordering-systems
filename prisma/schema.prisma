@@ -139,6 +139,16 @@ model Restaurant {
   /// which doesn't fit any kitchen workflow. Italian beta tester
   /// reported 2026-05-31. Default 15 to match GloriaFood's default.
   scheduledOrderInterval Int @default(15)
+  /// Pre-order ("order for later") advance-time limits per service, mirroring
+  /// the reservation min-notice / max-advance controls. Min lead = how soon
+  /// the earliest schedulable slot can be (in MINUTES; 0 = only bounded by the
+  /// prep estimate). Max advance = how many DAYS ahead a customer can schedule
+  /// (0 = no limit). Applied client-side (date/time picker bounds) AND
+  /// server-side (order validation). Fabrizio report cmq14gy64.
+  pickupMinLeadMinutes   Int @default(0)
+  pickupMaxAdvanceDays   Int @default(0)
+  deliveryMinLeadMinutes Int @default(0)
+  deliveryMaxAdvanceDays Int @default(0)
   /// Whether the customer's email is mandatory on the checkout form.
   /// Default true so receipts can be sent; an owner who only wants
   /// SMS notification can flip this off and require phone instead.

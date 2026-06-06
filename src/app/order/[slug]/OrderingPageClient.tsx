@@ -1502,22 +1502,52 @@ export function OrderingPageClient({
     }
   })();
 
-  // Combined "schedule required" reasoning. If EITHER condition pushes
-  // the customer into schedule mode, we honor the stricter of the two
-  // min slots so both rules are satisfied.
-  const scheduleRequired = cartHasCatering || restaurantIsClosedNow;
+  // Pre-order advance limits for the ACTIVE service (Fabrizio cmq14gy64).
+  // Delivery uses the delivery fields; everything else uses pickup's.
+  const orderMinLeadMinutes = orderType === "delivery"
+    ? ((restaurant as any).deliveryMinLeadMinutes ?? 0)
+    : ((restaurant as any).pickupMinLeadMinutes ?? 0);
+  const orderMaxAdvanceDays = orderType === "delivery"
+    ? ((restaurant as any).deliveryMaxAdvanceDays ?? 0)
+    : ((restaurant as any).pickupMaxAdvanceDays ?? 0);
+  // Earliest schedulable slot when a min lead is set: now + lead, rounded up
+  // to the next 15-min boundary (same shape as the catering min).
+  const leadMinScheduledLocal = (() => {
+    if (!(orderMinLeadMinutes > 0)) return "";
+    const d = new Date(Date.now() + orderMinLeadMinutes * 60 * 1000);
+    const m = d.getMinutes();
+    const add = (15 - (m % 15)) % 15;
+    if (add > 0) d.setMinutes(m + add, 0, 0); else d.setSeconds(0, 0);
+    const pad = (n: number) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  })();
+  // Latest schedulable DATE (date-only) when a max advance is set.
+  const maxScheduledDate = (() => {
+    if (!(orderMaxAdvanceDays > 0)) return "";
+    const d = new Date(Date.now() + orderMaxAdvanceDays * 86400 * 1000);
+    const pad = (n: number) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  })();
+
+  // Combined "schedule required" reasoning. If ANY condition pushes the
+  // customer into schedule mode, we honor the stricter (latest) min slot.
+  // A min-lead > 0 means ASAP isn't offered — the order must be placed at
+  // least that far ahead.
+  const scheduleRequired = cartHasCatering || restaurantIsClosedNow || orderMinLeadMinutes > 0;
   const effectiveMinScheduledLocal = (() => {
     const candidates: string[] = [];
     if (cartHasCatering && cateringMinScheduledLocal) candidates.push(cateringMinScheduledLocal);
     if (restaurantIsClosedNow && closedMinScheduledLocal) candidates.push(closedMinScheduledLocal);
+    if (orderMinLeadMinutes > 0 && leadMinScheduledLocal) candidates.push(leadMinScheduledLocal);
     if (candidates.length === 0) return "";
     // Pick the LATEST (string comparison works because both are zero-padded ISO-shaped).
     return candidates.sort()[candidates.length - 1];
   })();
-  const scheduleReason: "catering" | "closed" | "both" | null =
+  const scheduleReason: "catering" | "closed" | "both" | "lead" | null =
     cartHasCatering && restaurantIsClosedNow ? "both"
     : cartHasCatering ? "catering"
     : restaurantIsClosedNow ? "closed"
+    : orderMinLeadMinutes > 0 ? "lead"
     : null;
 
   // ── Catering: auto-fill schedule when activated ─────────────────────
@@ -3550,6 +3580,7 @@ export function OrderingPageClient({
           cateringMode={scheduleRequired}
           cateringMinScheduledLocal={effectiveMinScheduledLocal}
           cateringNoticeHours={cateringNoticeHours}
+          maxScheduledDate={maxScheduledDate}
           scheduleReason={scheduleReason}
           closedNextOpenLocal={closedMinScheduledLocal}
           schedulingInterval={perServiceSlotInterval}

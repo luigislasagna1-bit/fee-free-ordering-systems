@@ -397,7 +397,8 @@
       "apartment": "Apartemen",
       "parking": "Lokasi parkir"
     },
-    "zoneMinimum": "Pesanan minimum {min}."
+    "zoneMinimum": "Pesanan minimum {min}.",
+    "leadTimePrompt": "⏰ Restoran ini menerima pesanan di muka — silakan pilih waktu. Slot paling awal yang tersedia ditampilkan di bawah."
   },
   "reservation": {
     "title": "Pesan meja",
@@ -725,7 +726,15 @@
       "reservations": "Reservasi Meja",
       "slotInterval": "Interval slot penjadwalan",
       "slotIntervalDefault": "Default (gunakan global)",
-      "slotIntervalMin": "{min} menit"
+      "slotIntervalMin": "{min} menit",
+      "minAdvanceLabel": "Waktu minimum di muka",
+      "minAdvanceHint": "Seberapa cepat sebelum pengambilan/pengiriman pelanggan dapat memesan. 0 = secepat mungkin (hanya dibatasi oleh waktu persiapan Anda).",
+      "maxAdvanceLabel": "Jumlah hari maksimum di muka",
+      "maxAdvanceHint": "Pelanggan dapat memesan di muka hingga {days} hari sebelumnya.",
+      "maxAdvanceHintUnlimited": "Tidak ada batasan seberapa jauh pelanggan dapat memesan di muka.",
+      "unitMinutes": "menit",
+      "unitHours": "jam",
+      "unitDays": "hari"
     },
     "delivery": {
       "title": "Zona Pengiriman",

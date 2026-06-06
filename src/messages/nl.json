@@ -397,7 +397,8 @@
       "apartment": "Appartement",
       "parking": "Waar te parkeren"
     },
-    "zoneMinimum": "Minimale bestelling {min}."
+    "zoneMinimum": "Minimale bestelling {min}.",
+    "leadTimePrompt": "⏰ Dit restaurant neemt bestellingen vooraf aan — kies een tijd. Het vroegst beschikbare tijdslot zie je hieronder."
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -725,7 +726,15 @@
       "reservations": "Tafelreserveringen",
       "slotInterval": "Planningsinterval",
       "slotIntervalDefault": "Standaard (gebruik globaal)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Minimale tijd vooraf",
+      "minAdvanceHint": "Hoe kort voor het afhalen/bezorgen een klant kan bestellen. 0 = zo snel mogelijk (alleen beperkt door je voorbereidingstijd).",
+      "maxAdvanceLabel": "Maximaal aantal dagen vooraf",
+      "maxAdvanceHint": "Klanten kunnen tot {days} dagen vooruit bestellen.",
+      "maxAdvanceHintUnlimited": "Geen limiet op hoe ver vooruit klanten kunnen bestellen.",
+      "unitMinutes": "minuten",
+      "unitHours": "uren",
+      "unitDays": "dagen"
     },
     "delivery": {
       "title": "Bezorgzones",

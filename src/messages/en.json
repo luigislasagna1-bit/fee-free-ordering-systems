@@ -397,7 +397,8 @@
     "nextOpening": "Next opening: {date}",
     "closedAndCatering": "🌙🎉 We’re closed AND your cart includes catering items. Earliest available time is the later of next opening and <strong>{hours}h</strong> from now.",
     "cateringOnly": "🎉 Your cart includes catering items — orders must be scheduled at least <strong>{hours}h</strong> in advance. ASAP isn’t available with catering items in the cart.",
-    "dragPinHint": "Drag the pin to the exact spot for delivery."
+    "dragPinHint": "Drag the pin to the exact spot for delivery.",
+    "leadTimePrompt": "⏰ This restaurant takes orders in advance — please pick a time. The earliest available slot is shown below."
   },
   "reservation": {
     "title": "Book a table",
@@ -779,7 +780,15 @@
       "reservations": "Table Reservations",
       "slotInterval": "Scheduling slot interval",
       "slotIntervalDefault": "Default (use global)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Minimum time in advance",
+      "minAdvanceHint": "How soon before pickup/delivery a customer can order. 0 = as soon as possible (only limited by your prep time).",
+      "maxAdvanceLabel": "Maximum days in advance",
+      "maxAdvanceHint": "Customers can pre-order up to {days} days ahead.",
+      "maxAdvanceHintUnlimited": "No limit on how far ahead customers can pre-order.",
+      "unitMinutes": "minutes",
+      "unitHours": "hours",
+      "unitDays": "days"
     },
     "delivery": {
       "title": "Delivery Zones",

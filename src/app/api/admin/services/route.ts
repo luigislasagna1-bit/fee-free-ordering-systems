@@ -31,6 +31,10 @@ export async function GET() {
         serviceSettings: true,
         autoAcceptOrders: true,
         cateringNoticeHours: true,
+        pickupMinLeadMinutes: true,
+        pickupMaxAdvanceDays: true,
+        deliveryMinLeadMinutes: true,
+        deliveryMaxAdvanceDays: true,
       },
     });
 
@@ -50,6 +54,12 @@ export async function GET() {
       settings: { ...DEFAULT_SETTINGS, ...settings },
       autoAcceptOrders: restaurant?.autoAcceptOrders ?? false,
       cateringNoticeHours: restaurant?.cateringNoticeHours ?? 24,
+      preorder: {
+        pickupMinLeadMinutes:   restaurant?.pickupMinLeadMinutes   ?? 0,
+        pickupMaxAdvanceDays:   restaurant?.pickupMaxAdvanceDays   ?? 0,
+        deliveryMinLeadMinutes: restaurant?.deliveryMinLeadMinutes ?? 0,
+        deliveryMaxAdvanceDays: restaurant?.deliveryMaxAdvanceDays ?? 0,
+      },
     });
   } catch (e: any) {
     return NextResponse.json({ error: e.message }, { status: 500 });
@@ -63,7 +73,20 @@ export async function PUT(req: NextRequest) {
     if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await req.json();
-    const { enabled, settings, autoAcceptOrders, cateringNoticeHours } = body;
+    const { enabled, settings, autoAcceptOrders, cateringNoticeHours, preorder } = body;
+
+    // Pre-order advance-time limits per service. Min lead clamped to
+    // [0..43200] minutes (30 days), max advance to [0..365] days (0 = no
+    // limit). Undefined when not sent / invalid so Prisma skips the write.
+    const clampInt = (v: unknown, lo: number, hi: number): number | undefined => {
+      if (typeof v !== "number" || !Number.isFinite(v)) return undefined;
+      const n = Math.floor(v);
+      return n >= lo && n <= hi ? n : (n < lo ? lo : hi);
+    };
+    const pickupMinLeadMinutes   = clampInt(preorder?.pickupMinLeadMinutes,   0, 43200);
+    const pickupMaxAdvanceDays   = clampInt(preorder?.pickupMaxAdvanceDays,   0, 365);
+    const deliveryMinLeadMinutes = clampInt(preorder?.deliveryMinLeadMinutes, 0, 43200);
+    const deliveryMaxAdvanceDays = clampInt(preorder?.deliveryMaxAdvanceDays, 0, 365);
 
     // Clamp catering notice to [1..720] hours (30 days max — sanity cap,
     // protects the schedule picker against absurd inputs). Anything else
@@ -135,6 +158,10 @@ export async function PUT(req: NextRequest) {
         serviceSettings:     JSON.stringify({ ...DEFAULT_SETTINGS, ...settings }),
         autoAcceptOrders:    typeof autoAcceptOrders === "boolean" ? autoAcceptOrders : undefined,
         cateringNoticeHours: cateringNoticeHoursClean,
+        pickupMinLeadMinutes,
+        pickupMaxAdvanceDays,
+        deliveryMinLeadMinutes,
+        deliveryMaxAdvanceDays,
       },
     });
 

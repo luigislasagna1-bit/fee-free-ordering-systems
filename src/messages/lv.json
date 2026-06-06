@@ -397,7 +397,8 @@
       "apartment": "Dzīvoklis",
       "parking": "Kur novietot transportu"
     },
-    "zoneMinimum": "Minimālais pasūtījums {min}."
+    "zoneMinimum": "Minimālais pasūtījums {min}.",
+    "leadTimePrompt": "⏰ Šis restorāns pieņem pasūtījumus iepriekš — lūdzu, izvēlieties laiku. Tuvākais pieejamais laiks ir norādīts zemāk."
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -725,7 +726,15 @@
       "reservations": "Galda rezervācijas",
       "slotInterval": "Pasūtījumu plānošanas intervāls",
       "slotIntervalDefault": "Noklusējums (izmantot globālo)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Minimālais laiks iepriekš",
+      "minAdvanceHint": "Cik ilgi pirms saņemšanas/piegādes klients var pasūtīt. 0 = pēc iespējas ātrāk (ierobežo tikai jūsu sagatavošanas laiks).",
+      "maxAdvanceLabel": "Maksimālais dienu skaits iepriekš",
+      "maxAdvanceHint": "Klienti var veikt iepriekšēju pasūtījumu līdz {days} dienām uz priekšu.",
+      "maxAdvanceHintUnlimited": "Nav ierobežojuma tam, cik tālu uz priekšu klienti var veikt iepriekšēju pasūtījumu.",
+      "unitMinutes": "minūtes",
+      "unitHours": "stundas",
+      "unitDays": "dienas"
     },
     "delivery": {
       "title": "Piegādes zonas",

@@ -397,7 +397,8 @@
       "apartment": "דירה",
       "parking": "היכן לחנות"
     },
-    "zoneMinimum": "הזמנה מינימלית {min}."
+    "zoneMinimum": "הזמנה מינימלית {min}.",
+    "leadTimePrompt": "⏰ מסעדה זו מקבלת הזמנות מראש — נא לבחור שעה. השעה הזמינה הקרובה ביותר מוצגת למטה."
   },
   "reservation": {
     "title": "הזמן שולחן",
@@ -725,7 +726,15 @@
       "reservations": "הזמנות שולחנות",
       "slotInterval": "מרווח זמן לתזמון",
       "slotIntervalDefault": "ברירת מחדל (השתמש בגלובלי)",
-      "slotIntervalMin": "{min} דקות"
+      "slotIntervalMin": "{min} דקות",
+      "minAdvanceLabel": "זמן מינימלי מראש",
+      "minAdvanceHint": "כמה זמן לפני האיסוף/המשלוח לקוח יכול להזמין. 0 = בהקדם האפשרי (מוגבל רק לפי זמן ההכנה שלך).",
+      "maxAdvanceLabel": "מספר ימים מקסימלי מראש",
+      "maxAdvanceHint": "לקוחות יכולים להזמין מראש עד {days} ימים קדימה.",
+      "maxAdvanceHintUnlimited": "אין הגבלה על כמה זמן מראש לקוחות יכולים להזמין.",
+      "unitMinutes": "דקות",
+      "unitHours": "שעות",
+      "unitDays": "ימים"
     },
     "delivery": {
       "title": "אזורי משלוח",

@@ -397,7 +397,8 @@
       "apartment": "Apartament",
       "parking": "Unde se poate parca"
     },
-    "zoneMinimum": "Comandă minimă {min}."
+    "zoneMinimum": "Comandă minimă {min}.",
+    "leadTimePrompt": "⏰ Acest restaurant preia comenzile în avans — te rugăm să alegi o oră. Cel mai apropiat interval disponibil este afișat mai jos."
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -725,7 +726,15 @@
       "reservations": "Rezervări masă",
       "slotInterval": "Intervalul de programare",
       "slotIntervalDefault": "Implicit (folosește global)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Timp minim în avans",
+      "minAdvanceHint": "Cu cât timp înainte de ridicare/livrare poate comanda un client. 0 = cât mai curând posibil (limitat doar de timpul tău de preparare).",
+      "maxAdvanceLabel": "Număr maxim de zile în avans",
+      "maxAdvanceHint": "Clienții pot precomanda cu până la {days} zile înainte.",
+      "maxAdvanceHintUnlimited": "Fără limită privind cât de mult în avans pot precomanda clienții.",
+      "unitMinutes": "minute",
+      "unitHours": "ore",
+      "unitDays": "zile"
     },
     "delivery": {
       "title": "Zone de livrare",

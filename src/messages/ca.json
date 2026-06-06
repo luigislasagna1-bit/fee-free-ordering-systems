@@ -397,7 +397,8 @@
       "apartment": "Apartament",
       "parking": "On aparcar"
     },
-    "zoneMinimum": "Comanda mínima {min}."
+    "zoneMinimum": "Comanda mínima {min}.",
+    "leadTimePrompt": "⏰ Aquest restaurant accepta comandes per avançat: tria una hora, si us plau. A continuació es mostra la primera franja disponible."
   },
   "reservation": {
     "title": "Reservar taula",
@@ -725,7 +726,15 @@
       "reservations": "Reserves de taula",
       "slotInterval": "Interval de franges horàries",
       "slotIntervalDefault": "Per defecte (usa el global)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Temps mínim d'antelació",
+      "minAdvanceHint": "Amb quanta antelació pot demanar un client abans de la recollida/lliurament. 0 = al més aviat possible (només limitat pel teu temps de preparació).",
+      "maxAdvanceLabel": "Dies màxims d'antelació",
+      "maxAdvanceHint": "Els clients poden fer comandes anticipades fins a {days} dies abans.",
+      "maxAdvanceHintUnlimited": "Sense límit en l'antelació amb què els clients poden fer comandes anticipades.",
+      "unitMinutes": "minuts",
+      "unitHours": "hores",
+      "unitDays": "dies"
     },
     "delivery": {
       "title": "Zones de lliurament",

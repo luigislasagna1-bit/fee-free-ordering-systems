@@ -397,7 +397,8 @@
       "apartment": "Wohnung",
       "parking": "Wo parken?"
     },
-    "zoneMinimum": "Mindestbestellwert {min}."
+    "zoneMinimum": "Mindestbestellwert {min}.",
+    "leadTimePrompt": "⏰ Dieses Restaurant nimmt Bestellungen im Voraus entgegen — bitte wähle eine Uhrzeit. Der früheste verfügbare Termin wird unten angezeigt."
   },
   "reservation": {
     "title": "Tisch reservieren",
@@ -725,7 +726,15 @@
       "reservations": "Tischreservierungen",
       "slotInterval": "Zeitfenster-Intervall",
       "slotIntervalDefault": "Standard (global verwenden)",
-      "slotIntervalMin": "{min} Min."
+      "slotIntervalMin": "{min} Min.",
+      "minAdvanceLabel": "Mindestvorlaufzeit",
+      "minAdvanceHint": "Wie kurz vor Abholung/Lieferung ein Kunde bestellen kann. 0 = so bald wie möglich (nur durch Ihre Zubereitungszeit begrenzt).",
+      "maxAdvanceLabel": "Maximale Vorbestelltage",
+      "maxAdvanceHint": "Kunden können bis zu {days} Tage im Voraus vorbestellen.",
+      "maxAdvanceHintUnlimited": "Keine Begrenzung, wie weit im Voraus Kunden vorbestellen können.",
+      "unitMinutes": "Minuten",
+      "unitHours": "Stunden",
+      "unitDays": "Tage"
     },
     "delivery": {
       "title": "Lieferzonen",

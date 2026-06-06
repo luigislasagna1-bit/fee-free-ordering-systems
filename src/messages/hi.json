@@ -397,7 +397,8 @@
       "apartment": "फ़्लैट",
       "parking": "कहाँ पार्क करें"
     },
-    "zoneMinimum": "न्यूनतम ऑर्डर {min}।"
+    "zoneMinimum": "न्यूनतम ऑर्डर {min}।",
+    "leadTimePrompt": "⏰ यह रेस्तरां पहले से ऑर्डर लेता है — कृपया एक समय चुनें। सबसे जल्दी उपलब्ध स्लॉट नीचे दिखाया गया है।"
   },
   "reservation": {
     "title": "टेबल बुक करें",
@@ -748,7 +749,15 @@
       "reservations": "Table Reservations",
       "slotInterval": "शेड्यूलिंग स्लॉट अंतराल",
       "slotIntervalDefault": "डिफ़ॉल्ट (वैश्विक उपयोग करें)",
-      "slotIntervalMin": "{min} मिनट"
+      "slotIntervalMin": "{min} मिनट",
+      "minAdvanceLabel": "न्यूनतम अग्रिम समय",
+      "minAdvanceHint": "पिकअप/डिलीवरी से कितना पहले ग्राहक ऑर्डर कर सकता है। 0 = जितनी जल्दी संभव हो (केवल आपके तैयारी समय तक सीमित)।",
+      "maxAdvanceLabel": "अधिकतम अग्रिम दिन",
+      "maxAdvanceHint": "ग्राहक {days} दिन पहले तक प्री-ऑर्डर कर सकते हैं।",
+      "maxAdvanceHintUnlimited": "ग्राहक कितना पहले तक प्री-ऑर्डर कर सकते हैं, इसकी कोई सीमा नहीं।",
+      "unitMinutes": "मिनट",
+      "unitHours": "घंटे",
+      "unitDays": "दिन"
     },
     "delivery": {
       "title": "डिलीवरी क्षेत्र",

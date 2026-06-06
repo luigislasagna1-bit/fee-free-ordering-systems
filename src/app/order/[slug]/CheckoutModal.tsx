@@ -178,11 +178,15 @@ interface Props {
   /** Restaurant's configured advance notice (hours) — surfaced in the
    *  banner copy so the customer sees the actual requirement. */
   cateringNoticeHours?: number;
+  /** Latest selectable DATE ("YYYY-MM-DD") when the restaurant caps how far
+   *  ahead a customer can pre-order (per-service max advance days). Empty =
+   *  no cap. Applied as the `max` on the schedule date picker. */
+  maxScheduledDate?: string;
   /** Why schedule-for-later is being forced. Drives the banner copy
    *  inside the time-choice section so the customer understands
    *  whether it's a catering rule, a "we're closed right now" rule,
-   *  or both at once. */
-  scheduleReason?: "catering" | "closed" | "both" | null;
+   *  a min-advance rule, or several at once. */
+  scheduleReason?: "catering" | "closed" | "both" | "lead" | null;
   /** The restaurant's next opening moment in datetime-local format
    *  (used by the "we're closed" branch of the banner copy). */
   closedNextOpenLocal?: string;
@@ -227,6 +231,7 @@ export function CheckoutModal({
   acceptedMethods,
   cateringMode = false,
   cateringMinScheduledLocal,
+  maxScheduledDate,
   schedulingInterval = 15,
   openingHours = [],
   requireCustomerEmail = true,
@@ -788,6 +793,8 @@ export function CheckoutModal({
                           hours: cateringNoticeHours ?? 24,
                           strong: (c) => <strong>{c}</strong>,
                         })
+                      ) : scheduleReason === "lead" ? (
+                        tc("leadTimePrompt")
                       ) : (
                         tc.rich("cateringOnly", {
                           hours: cateringNoticeHours ?? 24,
@@ -895,6 +902,7 @@ export function CheckoutModal({
                           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                           style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                           min={minDate}
+                          max={maxScheduledDate || undefined}
                           value={datePart}
                           onChange={(e) => setDate(e.target.value)}
                         />

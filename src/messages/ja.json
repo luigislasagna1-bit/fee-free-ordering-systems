@@ -397,7 +397,8 @@
       "apartment": "部屋番号",
       "parking": "駐車場所"
     },
-    "zoneMinimum": "最低注文金額 {min}。"
+    "zoneMinimum": "最低注文金額 {min}。",
+    "leadTimePrompt": "⏰ こちらのレストランは事前注文制です。ご希望の時間をお選びください。以下に最短でご利用いただける時間枠を表示しています。"
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -725,7 +726,15 @@
       "reservations": "テーブル予約",
       "slotInterval": "スケジュールのスロット間隔",
       "slotIntervalDefault": "デフォルト（グローバル設定を使用）",
-      "slotIntervalMin": "{min}分"
+      "slotIntervalMin": "{min}分",
+      "minAdvanceLabel": "最短受付時間（事前）",
+      "minAdvanceHint": "受け取り・配達のどれくらい前から注文できるか。0 = できるだけ早く（準備時間のみによる制限）。",
+      "maxAdvanceLabel": "事前注文できる最大日数",
+      "maxAdvanceHint": "お客様は最大 {days} 日先まで事前注文できます。",
+      "maxAdvanceHintUnlimited": "お客様が事前注文できる先の期間に制限はありません。",
+      "unitMinutes": "分",
+      "unitHours": "時間",
+      "unitDays": "日"
     },
     "delivery": {
       "title": "デリバリーエリア",

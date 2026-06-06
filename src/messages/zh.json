@@ -397,7 +397,8 @@
       "apartment": "房间号",
       "parking": "停车位置"
     },
-    "zoneMinimum": "最低订单金额 {min}。"
+    "zoneMinimum": "最低订单金额 {min}。",
+    "leadTimePrompt": "⏰ 本餐厅仅接受预约下单，请选择一个时间。下方显示的是最早可用的时段。"
   },
   "reservation": {
     "title": "预订餐桌",
@@ -725,7 +726,15 @@
       "reservations": "餐桌预订",
       "slotInterval": "预约时间间隔",
       "slotIntervalDefault": "默认（使用全局设置）",
-      "slotIntervalMin": "{min} 分钟"
+      "slotIntervalMin": "{min} 分钟",
+      "minAdvanceLabel": "最短提前时间",
+      "minAdvanceHint": "顾客最早可在取餐/送达前多久下单。0 = 尽快（仅受您的备餐时间限制）。",
+      "maxAdvanceLabel": "最多可提前天数",
+      "maxAdvanceHint": "顾客最多可提前 {days} 天预订。",
+      "maxAdvanceHintUnlimited": "顾客可提前预订的时间不受限制。",
+      "unitMinutes": "分钟",
+      "unitHours": "小时",
+      "unitDays": "天"
     },
     "delivery": {
       "title": "配送区域",

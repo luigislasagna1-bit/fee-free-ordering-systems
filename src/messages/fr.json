@@ -397,7 +397,8 @@
       "apartment": "Appartement",
       "parking": "Où se garer"
     },
-    "zoneMinimum": "Commande minimum {min}."
+    "zoneMinimum": "Commande minimum {min}.",
+    "leadTimePrompt": "⏰ Ce restaurant prend les commandes à l'avance — merci de choisir un horaire. Le premier créneau disponible est indiqué ci-dessous."
   },
   "reservation": {
     "title": "Réserver une table",
@@ -725,7 +726,15 @@
       "reservations": "Réservation de table",
       "slotInterval": "Intervalle de créneau de planification",
       "slotIntervalDefault": "Par défaut (utiliser le global)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Délai minimum à l'avance",
+      "minAdvanceHint": "À quel point un client peut commander avant le retrait/la livraison. 0 = dès que possible (limité uniquement par votre temps de préparation).",
+      "maxAdvanceLabel": "Nombre de jours maximum à l'avance",
+      "maxAdvanceHint": "Les clients peuvent précommander jusqu'à {days} jours à l'avance.",
+      "maxAdvanceHintUnlimited": "Aucune limite sur le délai à l'avance pour les précommandes des clients.",
+      "unitMinutes": "minutes",
+      "unitHours": "heures",
+      "unitDays": "jours"
     },
     "delivery": {
       "title": "Zones de livraison",

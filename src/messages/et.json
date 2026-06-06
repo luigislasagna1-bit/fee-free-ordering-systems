@@ -397,7 +397,8 @@
       "apartment": "Korter",
       "parking": "Kus parkida"
     },
-    "zoneMinimum": "Miinimumtellimus {min}."
+    "zoneMinimum": "Miinimumtellimus {min}.",
+    "leadTimePrompt": "⏰ See restoran võtab tellimusi vastu ette — palun vali aeg. Esimene saadaolev aeg on näidatud allpool."
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -725,7 +726,15 @@
       "reservations": "Laua broneeringud",
       "slotInterval": "Tellimuse ajastamise intervall",
       "slotIntervalDefault": "Vaikimisi (kasuta globaalset)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Minimaalne etteteatamisaeg",
+      "minAdvanceHint": "Kui vara enne kättesaamist/kohaletoimetamist saab klient tellida. 0 = nii ruttu kui võimalik (piiraks vaid sinu valmistusaeg).",
+      "maxAdvanceLabel": "Maksimaalne päevade arv ette",
+      "maxAdvanceHint": "Kliendid saavad ette tellida kuni {days} päeva varem.",
+      "maxAdvanceHintUnlimited": "Piirang puudub, kui kaugele ette saavad kliendid tellida.",
+      "unitMinutes": "minutit",
+      "unitHours": "tundi",
+      "unitDays": "päeva"
     },
     "delivery": {
       "title": "Tarnepiirkonnad",

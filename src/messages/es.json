@@ -397,7 +397,8 @@
       "apartment": "Apartamento",
       "parking": "Dónde aparcar"
     },
-    "zoneMinimum": "Pedido mínimo {min}."
+    "zoneMinimum": "Pedido mínimo {min}.",
+    "leadTimePrompt": "⏰ Este restaurante acepta pedidos por adelantado: elige una hora. A continuación se muestra el horario disponible más próximo."
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -725,7 +726,15 @@
       "reservations": "Reserva de mesa",
       "slotInterval": "Intervalo de franjas horarias",
       "slotIntervalDefault": "Predeterminado (usar global)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Tiempo mínimo de antelación",
+      "minAdvanceHint": "Con cuánta antelación puede pedir un cliente antes de la recogida/entrega. 0 = lo antes posible (solo limitado por tu tiempo de preparación).",
+      "maxAdvanceLabel": "Días máximos de antelación",
+      "maxAdvanceHint": "Los clientes pueden hacer pedidos anticipados con hasta {days} días de antelación.",
+      "maxAdvanceHintUnlimited": "Sin límite de antelación para los pedidos anticipados de los clientes.",
+      "unitMinutes": "minutos",
+      "unitHours": "horas",
+      "unitDays": "días"
     },
     "delivery": {
       "title": "Zonas de entrega",

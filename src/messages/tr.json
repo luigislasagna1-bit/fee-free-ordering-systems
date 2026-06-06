@@ -397,7 +397,8 @@
       "apartment": "Daire",
       "parking": "Park yeri"
     },
-    "zoneMinimum": "Minimum sipariş {min}."
+    "zoneMinimum": "Minimum sipariş {min}.",
+    "leadTimePrompt": "⏰ Bu restoran siparişleri önceden alıyor — lütfen bir saat seçin. En erken uygun zaman dilimi aşağıda gösterilmektedir."
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -725,7 +726,15 @@
       "reservations": "Masa Rezervasyonları",
       "slotInterval": "Zamanlama aralığı",
       "slotIntervalDefault": "Varsayılan (genel ayarı kullan)",
-      "slotIntervalMin": "{min} dk"
+      "slotIntervalMin": "{min} dk",
+      "minAdvanceLabel": "Minimum ön süre",
+      "minAdvanceHint": "Müşterinin teslim alma/teslimattan ne kadar önce sipariş verebileceği. 0 = mümkün olan en kısa sürede (yalnızca hazırlık sürenizle sınırlı).",
+      "maxAdvanceLabel": "Maksimum kaç gün önceden",
+      "maxAdvanceHint": "Müşteriler {days} güne kadar önceden sipariş verebilir.",
+      "maxAdvanceHintUnlimited": "Müşterilerin ne kadar önceden sipariş verebileceğine dair sınır yok.",
+      "unitMinutes": "dakika",
+      "unitHours": "saat",
+      "unitDays": "gün"
     },
     "delivery": {
       "title": "Teslimat Bölgeleri",

@@ -800,6 +800,50 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // ── Pre-order advance limits (pickup/delivery) ──────────────────────────
+    // Server-side guard for the per-service "minimum time in advance" + "maximum
+    // days in advance" controls (Fabrizio cmq14gy64). Pickup/delivery only —
+    // dine-in/catering have their own rules. Defense-in-depth vs the picker.
+    if (type === "pickup" || type === "delivery") {
+      const tz = (restaurant as any).timezone ?? undefined;
+      const minLead = type === "delivery"
+        ? ((restaurant as any).deliveryMinLeadMinutes ?? 0)
+        : ((restaurant as any).pickupMinLeadMinutes ?? 0);
+      const maxAdv = type === "delivery"
+        ? ((restaurant as any).deliveryMaxAdvanceDays ?? 0)
+        : ((restaurant as any).pickupMaxAdvanceDays ?? 0);
+      if (minLead > 0 || maxAdv > 0) {
+        const sched: Date | null = (() => {
+          if (!scheduledFor) return null;
+          const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
+          const d = m ? parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), tz) : new Date(scheduledFor);
+          return Number.isFinite(d.getTime()) ? d : null;
+        })();
+        const nowMs = Date.now();
+        const TOL = 60_000; // 1-min tolerance for rounding/clock skew
+        if (minLead > 0) {
+          if (!sched) {
+            return NextResponse.json(
+              { error: "This restaurant requires orders to be scheduled in advance. Please pick a time.", code: "preorder_schedule_required" },
+              { status: 400 },
+            );
+          }
+          if (sched.getTime() < nowMs + minLead * 60_000 - TOL) {
+            return NextResponse.json(
+              { error: "That time is too soon — please choose a later slot.", code: "preorder_too_soon" },
+              { status: 400 },
+            );
+          }
+        }
+        if (maxAdv > 0 && sched && sched.getTime() > nowMs + maxAdv * 86_400_000 + TOL) {
+          return NextResponse.json(
+            { error: `You can only pre-order up to ${maxAdv} day${maxAdv === 1 ? "" : "s"} ahead.`, code: "preorder_too_far" },
+            { status: 400 },
+          );
+        }
+      }
+    }
+
     // ── Promo engine (server-side) ──────────────────────────────────────────
     // Same brand-scope merging as coupons above: this location's own promos
     // AND any "brand"-scoped promos owned by the parent.

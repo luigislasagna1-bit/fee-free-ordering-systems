@@ -397,7 +397,8 @@
       "apartment": "Appartamento",
       "parking": "Dove parcheggiare"
     },
-    "zoneMinimum": "Ordine minimo {min}."
+    "zoneMinimum": "Ordine minimo {min}.",
+    "leadTimePrompt": "⏰ Questo ristorante accetta ordini in anticipo — scegli un orario. Lo slot disponibile più vicino è indicato qui sotto."
   },
   "reservation": {
     "title": "Prenota un tavolo",
@@ -725,7 +726,15 @@
       "reservations": "Prenotazione tavolo",
       "slotInterval": "Intervallo di pianificazione",
       "slotIntervalDefault": "Predefinito (usa globale)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Tempo minimo di anticipo",
+      "minAdvanceHint": "Con quanto anticipo un cliente può ordinare prima del ritiro/della consegna. 0 = il prima possibile (limitato solo dal tempo di preparazione).",
+      "maxAdvanceLabel": "Giorni massimi di anticipo",
+      "maxAdvanceHint": "I clienti possono preordinare fino a {days} giorni in anticipo.",
+      "maxAdvanceHintUnlimited": "Nessun limite su quanto in anticipo i clienti possono preordinare.",
+      "unitMinutes": "minuti",
+      "unitHours": "ore",
+      "unitDays": "giorni"
     },
     "delivery": {
       "title": "Zone di consegna",

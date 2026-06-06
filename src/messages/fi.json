@@ -397,7 +397,8 @@
       "apartment": "Huoneisto",
       "parking": "Mihin pysäköidä"
     },
-    "zoneMinimum": "Vähimmäistilaus {min}."
+    "zoneMinimum": "Vähimmäistilaus {min}.",
+    "leadTimePrompt": "⏰ Tämä ravintola ottaa tilauksia vastaan ennakkoon — valitse aika. Ensimmäinen vapaa aika näkyy alla."
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -725,7 +726,15 @@
       "reservations": "Pöytävaraukset",
       "slotInterval": "Aikataulutusväli",
       "slotIntervalDefault": "Oletus (käytä globaalia)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Vähimmäisaika etukäteen",
+      "minAdvanceHint": "Kuinka pian ennen noutoa/toimitusta asiakas voi tilata. 0 = mahdollisimman pian (vain valmistusaikasi rajoittaa).",
+      "maxAdvanceLabel": "Enimmäismäärä päiviä etukäteen",
+      "maxAdvanceHint": "Asiakkaat voivat ennakkotilata enintään {days} päivää etukäteen.",
+      "maxAdvanceHintUnlimited": "Ei rajaa sille, kuinka pitkälle etukäteen asiakkaat voivat ennakkotilata.",
+      "unitMinutes": "minuuttia",
+      "unitHours": "tuntia",
+      "unitDays": "päivää"
     },
     "delivery": {
       "title": "Toimitusalueet",

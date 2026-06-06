@@ -6,12 +6,17 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "admin.menuEditor";
-const CONTEXT = "the restaurant admin menu editor, PIZZA setup. This setting controls whether the customer must pick at least one topping or can leave the pizza with no toppings (plain cheese). Concise admin tone. No placeholders.";
+const NS = "admin.services";
+const CONTEXT = "the restaurant admin Services settings — pre-order ('order for later') limits for pickup/delivery. 'Minimum time in advance' = how soon before pickup/delivery a customer may order; 'Maximum days in advance' = how far ahead they may pre-order. unitMinutes/unitHours/unitDays are unit labels in a dropdown. {days} is a number — keep it EXACTLY. Concise admin tone.";
 const EN = {
-  "toppingsOptionalTitle": "Toppings optional",
-  "toppingsOptionalOnHint": "Customers can add no toppings (e.g. plain cheese) and still check out.",
-  "toppingsOptionalOffHint": "At least one topping is required to continue.",
+  "minAdvanceLabel": "Minimum time in advance",
+  "minAdvanceHint": "How soon before pickup/delivery a customer can order. 0 = as soon as possible (only limited by your prep time).",
+  "maxAdvanceLabel": "Maximum days in advance",
+  "maxAdvanceHint": "Customers can pre-order up to {days} days ahead.",
+  "maxAdvanceHintUnlimited": "No limit on how far ahead customers can pre-order.",
+  "unitMinutes": "minutes",
+  "unitHours": "hours",
+  "unitDays": "days",
 };
 const KEYS = Object.keys(EN);
 

@@ -6,12 +6,10 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "customer.combo";
-const CONTEXT = "the customer-facing ordering page, customizing an item inside a COMBO. These are for a 'half & half' choice: a customer can pick a different option for each half of an item (e.g. half BBQ wings, half Hot). 'halfHalfToggle' is a small button to switch on half/half (keep the ½ symbol). 'leftHalf'/'rightHalf' label the two halves. Concise, friendly customer tone. No placeholders.";
+const NS = "checkout";
+const CONTEXT = "the customer checkout, scheduling section. Shown when a restaurant only takes orders in advance (a minimum lead time), so ASAP isn't offered and the customer must pick a future slot. Keep the ⏰ emoji. Concise, friendly customer tone. No placeholders.";
 const EN = {
-  "halfHalfToggle": "½ Half & Half",
-  "leftHalf": "Left half",
-  "rightHalf": "Right half",
+  "leadTimePrompt": "⏰ This restaurant takes orders in advance — please pick a time. The earliest available slot is shown below.",
 };
 const KEYS = Object.keys(EN);
 

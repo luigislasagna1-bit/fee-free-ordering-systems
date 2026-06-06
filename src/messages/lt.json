@@ -397,7 +397,8 @@
       "apartment": "Butas",
       "parking": "Kur parkuoti"
     },
-    "zoneMinimum": "Minimali užsakymo suma {min}."
+    "zoneMinimum": "Minimali užsakymo suma {min}.",
+    "leadTimePrompt": "⏰ Šis restoranas priima užsakymus iš anksto — pasirinkite laiką. Anksčiausias galimas laikas nurodytas žemiau."
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -725,7 +726,15 @@
       "reservations": "Stalo rezervacijos",
       "slotInterval": "Užsakymų planavimo intervalas",
       "slotIntervalDefault": "Numatytasis (naudoti globalinį)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Minimalus laikas iš anksto",
+      "minAdvanceHint": "Kiek anksčiau iki atsiėmimo / pristatymo klientas gali užsisakyti. 0 = kuo greičiau (ribojama tik jūsų ruošimo laiko).",
+      "maxAdvanceLabel": "Maksimalus dienų skaičius iš anksto",
+      "maxAdvanceHint": "Klientai gali užsisakyti iš anksto iki {days} d. į priekį.",
+      "maxAdvanceHintUnlimited": "Nėra ribos, kiek iš anksto klientai gali užsisakyti.",
+      "unitMinutes": "minutės",
+      "unitHours": "valandos",
+      "unitDays": "dienos"
     },
     "delivery": {
       "title": "Pristatymo zonos",

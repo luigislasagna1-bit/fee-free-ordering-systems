@@ -397,7 +397,8 @@
       "apartment": "Stan",
       "parking": "Gde da parkiramo"
     },
-    "zoneMinimum": "Minimalna porudžbina {min}."
+    "zoneMinimum": "Minimalna porudžbina {min}.",
+    "leadTimePrompt": "⏰ Ovaj restoran prima porudžbine unapred — izaberite vreme. Najraniji dostupan termin prikazan je ispod."
   },
   "reservation": {
     "title": "Rezerviši sto",
@@ -725,7 +726,15 @@
       "reservations": "Rezervacije stolova",
       "slotInterval": "Interval zakazivanja termina",
       "slotIntervalDefault": "Podrazumevano (koristi globalno)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Minimalno vreme unapred",
+      "minAdvanceHint": "Koliko pre preuzimanja/dostave kupac može da naruči. 0 = što je pre moguće (ograničeno samo vašim vremenom pripreme).",
+      "maxAdvanceLabel": "Maksimalan broj dana unapred",
+      "maxAdvanceHint": "Kupci mogu da naruče unapred do {days} dana ranije.",
+      "maxAdvanceHintUnlimited": "Nema ograničenja koliko unapred kupci mogu da naruče.",
+      "unitMinutes": "minuta",
+      "unitHours": "sati",
+      "unitDays": "dana"
     },
     "delivery": {
       "title": "Zone dostave",

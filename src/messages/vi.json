@@ -397,7 +397,8 @@
       "apartment": "Căn hộ",
       "parking": "Chỗ đỗ xe"
     },
-    "zoneMinimum": "Đơn hàng tối thiểu {min}."
+    "zoneMinimum": "Đơn hàng tối thiểu {min}.",
+    "leadTimePrompt": "⏰ Nhà hàng này nhận đơn đặt trước — vui lòng chọn giờ. Khung giờ sớm nhất hiện có được hiển thị bên dưới."
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -725,7 +726,15 @@
       "reservations": "Đặt bàn",
       "slotInterval": "Khoảng thời gian đặt lịch",
       "slotIntervalDefault": "Mặc định (dùng cài đặt chung)",
-      "slotIntervalMin": "{min} phút"
+      "slotIntervalMin": "{min} phút",
+      "minAdvanceLabel": "Thời gian đặt trước tối thiểu",
+      "minAdvanceHint": "Khách có thể đặt trước bao lâu so với thời điểm lấy hàng/giao hàng. 0 = sớm nhất có thể (chỉ giới hạn bởi thời gian chuẩn bị của bạn).",
+      "maxAdvanceLabel": "Số ngày đặt trước tối đa",
+      "maxAdvanceHint": "Khách có thể đặt trước tối đa {days} ngày.",
+      "maxAdvanceHintUnlimited": "Không giới hạn thời gian khách có thể đặt trước.",
+      "unitMinutes": "phút",
+      "unitHours": "giờ",
+      "unitDays": "ngày"
     },
     "delivery": {
       "title": "Khu vực giao hàng",

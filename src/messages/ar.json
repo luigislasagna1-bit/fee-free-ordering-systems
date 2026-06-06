@@ -397,7 +397,8 @@
       "apartment": "الشقة",
       "parking": "مكان ركن السيارة"
     },
-    "zoneMinimum": "الحد الأدنى للطلب {min}."
+    "zoneMinimum": "الحد الأدنى للطلب {min}.",
+    "leadTimePrompt": "⏰ يستقبل هذا المطعم الطلبات مسبقًا — يُرجى اختيار وقت. أقرب موعد متاح معروض أدناه."
   },
   "reservation": {
     "title": "احجز طاولة",
@@ -725,7 +726,15 @@
       "reservations": "حجوزات الطاولات",
       "slotInterval": "فترة جدولة المواعيد",
       "slotIntervalDefault": "افتراضي (استخدام الإعداد العام)",
-      "slotIntervalMin": "{min} دقيقة"
+      "slotIntervalMin": "{min} دقيقة",
+      "minAdvanceLabel": "الحد الأدنى للوقت المسبق",
+      "minAdvanceHint": "قبل كم من الوقت من الاستلام/التوصيل يمكن للعميل أن يطلب. 0 = في أقرب وقت ممكن (محدود فقط بوقت التحضير لديك).",
+      "maxAdvanceLabel": "الحد الأقصى للأيام المسبقة",
+      "maxAdvanceHint": "يمكن للعملاء الطلب مسبقًا حتى {days} يومًا مقدمًا.",
+      "maxAdvanceHintUnlimited": "لا يوجد حد لمدى تقدّم العملاء في الطلب المسبق.",
+      "unitMinutes": "دقائق",
+      "unitHours": "ساعات",
+      "unitDays": "أيام"
     },
     "delivery": {
       "title": "مناطق التوصيل",

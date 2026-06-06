@@ -397,7 +397,8 @@
       "apartment": "Byt",
       "parking": "Kde zaparkovat"
     },
-    "zoneMinimum": "Minimální objednávka {min}."
+    "zoneMinimum": "Minimální objednávka {min}.",
+    "leadTimePrompt": "⏰ Tato restaurace přijímá objednávky s předstihem — vyberte si prosím čas. Nejbližší dostupný termín je uveden níže."
   },
   "reservation": {
     "title": "Rezervovat stůl",
@@ -725,7 +726,15 @@
       "reservations": "Stolní rezervace",
       "slotInterval": "Interval plánování objednávek",
       "slotIntervalDefault": "Výchozí (použít globální)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Minimální doba předem",
+      "minAdvanceHint": "Jak dlouho před vyzvednutím/doručením může zákazník objednat. 0 = co nejdříve (omezeno pouze dobou přípravy).",
+      "maxAdvanceLabel": "Maximální počet dní předem",
+      "maxAdvanceHint": "Zákazníci mohou objednat až {days} dní dopředu.",
+      "maxAdvanceHintUnlimited": "Bez omezení, jak dlouho dopředu mohou zákazníci objednat.",
+      "unitMinutes": "minut",
+      "unitHours": "hodin",
+      "unitDays": "dní"
     },
     "delivery": {
       "title": "Oblasti doručení",

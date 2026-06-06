@@ -397,7 +397,8 @@
       "apartment": "Stanovanje",
       "parking": "Kje parkirati"
     },
-    "zoneMinimum": "Najmanjše naročilo {min}."
+    "zoneMinimum": "Najmanjše naročilo {min}.",
+    "leadTimePrompt": "⏰ Ta restavracija sprejema naročila vnaprej — prosimo, izberite čas. Najzgodnejši razpoložljivi termin je prikazan spodaj."
   },
   "reservation": {
     "title": "Rezerviraj mizo",
@@ -725,7 +726,15 @@
       "reservations": "Rezervacije miz",
       "slotInterval": "Interval razporejanja terminov",
       "slotIntervalDefault": "Privzeto (uporabi globalno)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Najkrajši čas vnaprej",
+      "minAdvanceHint": "Kako kmalu pred prevzemom/dostavo lahko stranka naroči. 0 = takoj, ko je mogoče (omejeno le z vašim časom priprave).",
+      "maxAdvanceLabel": "Največ dni vnaprej",
+      "maxAdvanceHint": "Stranke lahko prednaročijo do {days} dni vnaprej.",
+      "maxAdvanceHintUnlimited": "Brez omejitve, kako daleč vnaprej lahko stranke prednaročijo.",
+      "unitMinutes": "minut",
+      "unitHours": "ur",
+      "unitDays": "dni"
     },
     "delivery": {
       "title": "Območja dostave",

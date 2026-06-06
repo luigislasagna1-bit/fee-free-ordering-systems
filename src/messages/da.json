@@ -397,7 +397,8 @@
       "apartment": "Lejlighed",
       "parking": "Hvor skal der parkeres"
     },
-    "zoneMinimum": "Minimumsordre {min}."
+    "zoneMinimum": "Minimumsordre {min}.",
+    "leadTimePrompt": "⏰ Denne restaurant tager imod bestillinger i forvejen — vælg venligst et tidspunkt. Det tidligste ledige tidspunkt vises nedenfor."
   },
   "reservation": {
     "title": "Book et bord",
@@ -725,7 +726,15 @@
       "reservations": "Bordbooking",
       "slotInterval": "Planlægningsinterval",
       "slotIntervalDefault": "Standard (brug global)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Minimumstid i forvejen",
+      "minAdvanceHint": "Hvor kort tid før afhentning/levering en kunde kan bestille. 0 = hurtigst muligt (kun begrænset af din tilberedningstid).",
+      "maxAdvanceLabel": "Maksimalt antal dage i forvejen",
+      "maxAdvanceHint": "Kunder kan forudbestille op til {days} dage i forvejen.",
+      "maxAdvanceHintUnlimited": "Ingen grænse for, hvor langt i forvejen kunder kan forudbestille.",
+      "unitMinutes": "minutter",
+      "unitHours": "timer",
+      "unitDays": "dage"
     },
     "delivery": {
       "title": "Leveringszoner",

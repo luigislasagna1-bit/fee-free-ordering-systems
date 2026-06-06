@@ -397,7 +397,8 @@
       "apartment": "Leilighet",
       "parking": "Hvor du kan parkere"
     },
-    "zoneMinimum": "Minimumsordre {min}."
+    "zoneMinimum": "Minimumsordre {min}.",
+    "leadTimePrompt": "⏰ Denne restauranten tar imot forhåndsbestillinger – velg et tidspunkt. Det tidligste ledige tidspunktet vises nedenfor."
   },
   "reservation": {
     "title": "Bestill bord",
@@ -725,7 +726,15 @@
       "reservations": "Bordreservasjoner",
       "slotInterval": "Tidsintervall for planlegging",
       "slotIntervalDefault": "Standard (bruk global)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Minste tid på forhånd",
+      "minAdvanceHint": "Hvor kort tid før henting/levering en kunde kan bestille. 0 = så snart som mulig (kun begrenset av tilberedningstiden din).",
+      "maxAdvanceLabel": "Maksimalt antall dager på forhånd",
+      "maxAdvanceHint": "Kunder kan forhåndsbestille inntil {days} dager i forveien.",
+      "maxAdvanceHintUnlimited": "Ingen grense for hvor lang tid i forveien kunder kan forhåndsbestille.",
+      "unitMinutes": "minutter",
+      "unitHours": "timer",
+      "unitDays": "dager"
     },
     "delivery": {
       "title": "Leveringssoner",

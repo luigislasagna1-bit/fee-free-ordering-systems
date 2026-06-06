@@ -397,7 +397,8 @@
       "apartment": "Mieszkanie",
       "parking": "Gdzie zaparkować"
     },
-    "zoneMinimum": "Minimalna wartość zamówienia {min}."
+    "zoneMinimum": "Minimalna wartość zamówienia {min}.",
+    "leadTimePrompt": "⏰ Ta restauracja przyjmuje zamówienia z wyprzedzeniem — wybierz godzinę. Najwcześniejszy dostępny termin jest pokazany poniżej."
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
@@ -725,7 +726,15 @@
       "reservations": "Rezerwacje stolików",
       "slotInterval": "Interwał harmonogramu",
       "slotIntervalDefault": "Domyślny (użyj globalnego)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Minimalny czas z wyprzedzeniem",
+      "minAdvanceHint": "Jak wcześnie przed odbiorem/dostawą klient może złożyć zamówienie. 0 = jak najszybciej (ograniczone tylko czasem przygotowania).",
+      "maxAdvanceLabel": "Maksymalna liczba dni z wyprzedzeniem",
+      "maxAdvanceHint": "Klienci mogą składać zamówienia z wyprzedzeniem do {days} dni.",
+      "maxAdvanceHintUnlimited": "Brak limitu, jak daleko w przód klienci mogą składać zamówienia.",
+      "unitMinutes": "minuty",
+      "unitHours": "godziny",
+      "unitDays": "dni"
     },
     "delivery": {
       "title": "Strefy dostawy",

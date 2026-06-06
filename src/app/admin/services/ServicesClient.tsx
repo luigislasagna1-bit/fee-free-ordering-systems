@@ -18,6 +18,18 @@ const SERVICE_DEFS = [
 
 type ServiceKey = "pickup" | "delivery" | "dineIn" | "catering" | "takeOut" | "reservations";
 
+// Pre-order min-lead helpers: store minutes, edit as value + unit.
+function splitLead(mins: number): { v: number; u: "min" | "hour" | "day" } {
+  if (mins <= 0) return { v: 0, u: "min" };
+  if (mins % 1440 === 0) return { v: mins / 1440, u: "day" };
+  if (mins % 60 === 0) return { v: mins / 60, u: "hour" };
+  return { v: mins, u: "min" };
+}
+function joinLead(v: number, u: "min" | "hour" | "day"): number {
+  const mult = u === "day" ? 1440 : u === "hour" ? 60 : 1;
+  return Math.max(0, Math.floor(v || 0)) * mult;
+}
+
 interface ServiceConfig {
   displayName: string;
   description: string;
@@ -44,6 +56,12 @@ export function ServicesClient() {
   // for restaurants that want something else (e.g. a 12h shop or a 5d
   // banquet hall).
   const [cateringNoticeHours, setCateringNoticeHours] = useState<number>(24);
+  // Pre-order ("order for later") advance limits per service. Min lead stored
+  // in minutes; max advance in days (0 = no limit). Fabrizio cmq14gy64.
+  const [preorder, setPreorder] = useState({
+    pickupMinLeadMinutes: 0, pickupMaxAdvanceDays: 0,
+    deliveryMinLeadMinutes: 0, deliveryMaxAdvanceDays: 0,
+  });
   const [settings, setSettings] = useState<Record<ServiceKey, ServiceConfig>>({
     pickup:       { displayName: "Pickup",             description: "", estimatedTime: 20 },
     delivery:     { displayName: "Delivery",           description: "", estimatedTime: 45 },
@@ -61,6 +79,7 @@ export function ServicesClient() {
       if (typeof d.cateringNoticeHours === "number" && d.cateringNoticeHours > 0) {
         setCateringNoticeHours(d.cateringNoticeHours);
       }
+      if (d.preorder) setPreorder(p => ({ ...p, ...d.preorder }));
     }).finally(() => setLoading(false));
   }, []);
 
@@ -70,7 +89,7 @@ export function ServicesClient() {
       const res = await fetch("/api/admin/services", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ enabled, settings, autoAcceptOrders, cateringNoticeHours }),
+        body: JSON.stringify({ enabled, settings, autoAcceptOrders, cateringNoticeHours, preorder }),
       });
       if (!res.ok) throw new Error("Save failed");
       toast.success(tToasts("saved"));
@@ -233,6 +252,50 @@ export function ServicesClient() {
                       Items / categories are tagged "catering" individually
                       in /admin/menu (catering toggle on the item drawer +
                       the category modal). */}
+                  {(key === "pickup" || key === "delivery") && (() => {
+                    const minKey = key === "pickup" ? "pickupMinLeadMinutes" : "deliveryMinLeadMinutes";
+                    const maxKey = key === "pickup" ? "pickupMaxAdvanceDays" : "deliveryMaxAdvanceDays";
+                    const lead = splitLead(preorder[minKey]);
+                    const maxDays = preorder[maxKey];
+                    return (
+                      <div className="sm:col-span-3 pt-2 border-t border-gray-100 space-y-3">
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 mb-1">{t("minAdvanceLabel")}</label>
+                          <div className="flex items-center gap-1.5">
+                            <input
+                              type="number" min={0} step={1}
+                              className="w-20 border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                              value={lead.v}
+                              onChange={(e) => setPreorder(p => ({ ...p, [minKey]: joinLead(parseInt(e.target.value, 10) || 0, lead.u) }))}
+                            />
+                            <select
+                              className="border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                              value={lead.u}
+                              onChange={(e) => setPreorder(p => ({ ...p, [minKey]: joinLead(lead.v, e.target.value as "min" | "hour" | "day") }))}
+                            >
+                              <option value="min">{t("unitMinutes")}</option>
+                              <option value="hour">{t("unitHours")}</option>
+                              <option value="day">{t("unitDays")}</option>
+                            </select>
+                          </div>
+                          <p className="text-[11px] text-gray-500 mt-1">{t("minAdvanceHint")}</p>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 mb-1">{t("maxAdvanceLabel")}</label>
+                          <div className="flex items-center gap-1.5">
+                            <input
+                              type="number" min={0} max={365} step={1}
+                              className="w-20 border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                              value={maxDays}
+                              onChange={(e) => { const v = parseInt(e.target.value, 10); setPreorder(p => ({ ...p, [maxKey]: Number.isNaN(v) ? 0 : Math.max(0, Math.min(365, v)) })); }}
+                            />
+                            <span className="text-xs text-gray-500">{t("unitDays")}</span>
+                          </div>
+                          <p className="text-[11px] text-gray-500 mt-1">{maxDays > 0 ? t("maxAdvanceHint", { days: maxDays }) : t("maxAdvanceHintUnlimited")}</p>
+                        </div>
+                      </div>
+                    );
+                  })()}
                   {key === "catering" && (
                     <div className="sm:col-span-3 pt-2 border-t border-gray-100">
                       <label className="block text-xs font-medium text-gray-600 mb-1">

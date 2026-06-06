@@ -397,7 +397,8 @@
       "apartment": "호수",
       "parking": "주차 위치"
     },
-    "zoneMinimum": "최소 주문 금액 {min}."
+    "zoneMinimum": "최소 주문 금액 {min}.",
+    "leadTimePrompt": "⏰ 이 매장은 예약 주문만 받습니다 — 원하시는 시간을 선택해 주세요. 가장 빠른 예약 가능 시간은 아래에 표시되어 있습니다."
   },
   "reservation": {
     "title": "테이블 예약",
@@ -725,7 +726,15 @@
       "reservations": "테이블 예약",
       "slotInterval": "스케줄링 슬롯 간격",
       "slotIntervalDefault": "기본값 (전체 설정 사용)",
-      "slotIntervalMin": "{min}분"
+      "slotIntervalMin": "{min}분",
+      "minAdvanceLabel": "최소 사전 주문 시간",
+      "minAdvanceHint": "고객이 픽업/배달 얼마 전부터 주문할 수 있는지를 설정합니다. 0 = 가능한 한 빨리(준비 시간에 의해서만 제한됨).",
+      "maxAdvanceLabel": "최대 사전 주문 가능 일수",
+      "maxAdvanceHint": "고객은 최대 {days}일 전까지 미리 주문할 수 있습니다.",
+      "maxAdvanceHintUnlimited": "고객이 며칠 전까지 미리 주문할 수 있는지에 제한이 없습니다.",
+      "unitMinutes": "분",
+      "unitHours": "시간",
+      "unitDays": "일"
     },
     "delivery": {
       "title": "배달 구역",

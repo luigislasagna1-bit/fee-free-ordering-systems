@@ -397,7 +397,8 @@
       "apartment": "Lägenhet",
       "parking": "Var man kan parkera"
     },
-    "zoneMinimum": "Minsta order {min}."
+    "zoneMinimum": "Minsta order {min}.",
+    "leadTimePrompt": "⏰ Den här restaurangen tar emot beställningar i förväg – välj en tid. Den tidigaste lediga tiden visas nedan."
   },
   "reservation": {
     "title": "Boka ett bord",
@@ -725,7 +726,15 @@
       "reservations": "Bordsreservationer",
       "slotInterval": "Schemaläggningsintervall",
       "slotIntervalDefault": "Standard (använd global)",
-      "slotIntervalMin": "{min} min"
+      "slotIntervalMin": "{min} min",
+      "minAdvanceLabel": "Minsta tid i förväg",
+      "minAdvanceHint": "Hur kort tid före hämtning/leverans en kund kan beställa. 0 = så snart som möjligt (begränsas endast av din tillagningstid).",
+      "maxAdvanceLabel": "Högsta antal dagar i förväg",
+      "maxAdvanceHint": "Kunder kan förhandsbeställa upp till {days} dagar i förväg.",
+      "maxAdvanceHintUnlimited": "Ingen gräns för hur långt i förväg kunder kan förhandsbeställa.",
+      "unitMinutes": "minuter",
+      "unitHours": "timmar",
+      "unitDays": "dagar"
     },
     "delivery": {
       "title": "Leveranszoner",
