@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Alege cel puțin o mărime, altfel clientul nu poate selecta acest produs.",
       "comboExtrasChargeTitle": "Taxează suplimentele și extrele",
       "comboExtrasChargeOnHint": "Suplimentele (toppinguri extra, modificatori cu plată) își adaugă prețul normal peste cel al combo-ului — exact ca atunci când comanzi produsul separat.",
-      "comboExtrasChargeOffHint": "Suplimentele sunt gratuite: clienții aleg aceleași opțiuni, dar combo-ul rămâne la un preț fix, plus taxele tale pe produs."
+      "comboExtrasChargeOffHint": "Suplimentele sunt gratuite: clienții aleg aceleași opțiuni, dar combo-ul rămâne la un preț fix, plus taxele tale pe produs.",
+      "comboSlotNameLabel": "Nume pas (afișat clienților, ex.: „Alege pizza\")"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1530,7 +1530,8 @@
       "comboNoSizeSelected": "En az bir boyut seçin, aksi takdirde müşteri bu ürünü seçemez.",
       "comboExtrasChargeTitle": "Ek malzemeler ve ekstralar için ücret al",
       "comboExtrasChargeOnHint": "Ek malzemeler (ekstra üst malzemeler, ücretli seçenekler), tıpkı ürünü tek başına sipariş eder gibi, normal fiyatlarını kombonun üzerine ekler.",
-      "comboExtrasChargeOffHint": "Ek malzemeler ücretsizdir: müşteriler aynı seçeneklerin tümünü seçer, ancak kombo sabit fiyatta kalır ve yalnızca ürün başına ek ücretleriniz eklenir."
+      "comboExtrasChargeOffHint": "Ek malzemeler ücretsizdir: müşteriler aynı seçeneklerin tümünü seçer, ancak kombo sabit fiyatta kalır ve yalnızca ürün başına ek ücretleriniz eklenir.",
+      "comboSlotNameLabel": "Adım adı (müşterilere gösterilir, örn. \"Pizzanızı seçin\")"
     },
     "promotionsList": {
       "stackingMaster": "Ana",

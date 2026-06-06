@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Choisissez au moins une taille, sinon le client ne pourra pas sélectionner cet article.",
       "comboExtrasChargeTitle": "Facturer les options et suppléments",
       "comboExtrasChargeOnHint": "Les options (garnitures supplémentaires, modificateurs payants) ajoutent leur prix habituel au menu combiné — comme si l'article était commandé seul.",
-      "comboExtrasChargeOffHint": "Les options sont gratuites : les clients choisissent toutes les mêmes options, mais le menu combiné conserve un prix fixe, plus vos suppléments par article."
+      "comboExtrasChargeOffHint": "Les options sont gratuites : les clients choisissent toutes les mêmes options, mais le menu combiné conserve un prix fixe, plus vos suppléments par article.",
+      "comboSlotNameLabel": "Nom de l'étape (visible par les clients, ex. « Choisissez votre pizza »)"
     },
     "promotionsList": {
       "stackingMaster": "Maître",

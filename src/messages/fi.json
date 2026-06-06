@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Valitse vähintään yksi koko, tai asiakas ei voi valita tätä tuotetta.",
       "comboExtrasChargeTitle": "Veloita lisukkeista ja extroista",
       "comboExtrasChargeOnHint": "Lisukkeet (lisätäytteet, maksulliset muokkaukset) lisäävät normaalihintansa combon päälle — aivan kuten tilattaessa tuote erikseen.",
-      "comboExtrasChargeOffHint": "Lisukkeet ovat ilmaisia: asiakkaat valitsevat kaikki samat vaihtoehdot, mutta combon hinta pysyy kiinteänä tuotekohtaisten lisämaksujesi lisäksi."
+      "comboExtrasChargeOffHint": "Lisukkeet ovat ilmaisia: asiakkaat valitsevat kaikki samat vaihtoehdot, mutta combon hinta pysyy kiinteänä tuotekohtaisten lisämaksujesi lisäksi.",
+      "comboSlotNameLabel": "Vaiheen nimi (näkyy asiakkaille, esim. \"Valitse pizzasi\")"
     },
     "promotionsList": {
       "stackingMaster": "Master",

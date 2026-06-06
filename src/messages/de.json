@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Wählen Sie mindestens eine Größe, sonst kann der Kunde diesen Artikel nicht auswählen.",
       "comboExtrasChargeTitle": "Aufpreis für Zusätze & Extras berechnen",
       "comboExtrasChargeOnHint": "Zusätze (Extra-Beläge, kostenpflichtige Optionen) werden zum normalen Preis auf das Combo aufgeschlagen — genau wie beim einzelnen Bestellen des Artikels.",
-      "comboExtrasChargeOffHint": "Zusätze sind kostenlos: Kunden wählen dieselben Optionen, aber das Combo bleibt zum Festpreis plus deine Artikel-Aufpreise."
+      "comboExtrasChargeOffHint": "Zusätze sind kostenlos: Kunden wählen dieselben Optionen, aber das Combo bleibt zum Festpreis plus deine Artikel-Aufpreise.",
+      "comboSlotNameLabel": "Schrittname (für Kunden sichtbar, z. B. „Wähle deine Pizza\")"
     },
     "promotionsList": {
       "stackingMaster": "Master",

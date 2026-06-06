@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "サイズを1つ以上選択してください。選択しないとお客様がこの商品を選べません。",
       "comboExtrasChargeTitle": "トッピング・追加オプションを有料にする",
       "comboExtrasChargeOnHint": "トッピング（追加トッピング、有料オプション）は通常価格がコンボに上乗せされます。単品で注文した場合と同じ扱いです。",
-      "comboExtrasChargeOffHint": "トッピングは無料です。お客様は同じオプションをすべて選べますが、コンボは固定価格のまま（商品ごとの追加料金は加算されます）。"
+      "comboExtrasChargeOffHint": "トッピングは無料です。お客様は同じオプションをすべて選べますが、コンボは固定価格のまま（商品ごとの追加料金は加算されます）。",
+      "comboSlotNameLabel": "ステップ名（お客様に表示されます。例：「ピザを選ぶ」）"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

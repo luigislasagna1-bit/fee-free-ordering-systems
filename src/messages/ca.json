@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Tria almenys una mida o el client no podrà triar aquest article.",
       "comboExtrasChargeTitle": "Cobrar pels complements i extres",
       "comboExtrasChargeOnHint": "Els complements (ingredients extra, modificadors de pagament) sumen el seu preu habitual al preu del combo, igual que si demanessis l'article per separat.",
-      "comboExtrasChargeOffHint": "Els complements són gratuïts: els clients trien les mateixes opcions, però el combo manté un preu fix més els recàrrecs per article que estableixis."
+      "comboExtrasChargeOffHint": "Els complements són gratuïts: els clients trien les mateixes opcions, però el combo manté un preu fix més els recàrrecs per article que estableixis.",
+      "comboSlotNameLabel": "Nom del pas (visible per als clients, p. ex. \"Tria la teva pizza\")"
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

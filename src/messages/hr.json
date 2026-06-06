@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Odaberite barem jednu veličinu, inače kupac ne može odabrati ovu stavku.",
       "comboExtrasChargeTitle": "Naplata dodataka i ekstra",
       "comboExtrasChargeOnHint": "Dodaci (dodatni prilozi, plaćene izmjene) pribrajaju svoju uobičajenu cijenu na combo — baš kao da artikl naručujete zasebno.",
-      "comboExtrasChargeOffHint": "Dodaci su besplatni: kupci biraju sve iste opcije, ali combo ostaje fiksne cijene uz vaše doplate po artiklu."
+      "comboExtrasChargeOffHint": "Dodaci su besplatni: kupci biraju sve iste opcije, ali combo ostaje fiksne cijene uz vaše doplate po artiklu.",
+      "comboSlotNameLabel": "Naziv koraka (prikazuje se kupcima, npr. \"Odaberite pizzu\")"
     },
     "promotionsList": {
       "stackingMaster": "Master",

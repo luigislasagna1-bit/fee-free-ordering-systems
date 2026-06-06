@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Velg minst én størrelse, ellers kan ikke kunden velge denne varen.",
       "comboExtrasChargeTitle": "Ta betalt for tillegg og ekstra",
       "comboExtrasChargeOnHint": "Tillegg (ekstra fyll, betalte tilvalg) legger til sin vanlige pris oppå komboen — akkurat som å bestille varen alene.",
-      "comboExtrasChargeOffHint": "Tillegg er gratis: kundene velger akkurat de samme alternativene, men komboen beholder en fast pris pluss dine tillegg per vare."
+      "comboExtrasChargeOffHint": "Tillegg er gratis: kundene velger akkurat de samme alternativene, men komboen beholder en fast pris pluss dine tillegg per vare.",
+      "comboSlotNameLabel": "Trinnnavn (vises for kundene, f.eks. \"Velg pizzaen din\")"
     },
     "promotionsList": {
       "stackingMaster": "Master",

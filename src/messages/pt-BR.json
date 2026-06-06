@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Escolha pelo menos um tamanho, ou o cliente não poderá selecionar este item.",
       "comboExtrasChargeTitle": "Cobrar por adicionais e extras",
       "comboExtrasChargeOnHint": "Os adicionais (coberturas extras, modificadores pagos) somam seu preço normal ao valor do combo — exatamente como ao pedir o item separadamente.",
-      "comboExtrasChargeOffHint": "Os adicionais são gratuitos: os clientes escolhem todas as mesmas opções, mas o combo mantém um preço fixo, somado aos seus acréscimos por item."
+      "comboExtrasChargeOffHint": "Os adicionais são gratuitos: os clientes escolhem todas as mesmas opções, mas o combo mantém um preço fixo, somado aos seus acréscimos por item.",
+      "comboSlotNameLabel": "Nome da etapa (exibido aos clientes, ex.: \"Escolha sua pizza\")"
     },
     "promotionsList": {
       "stackingMaster": "Master",

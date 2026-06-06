@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Elige al menos un tamaño o el cliente no podrá seleccionar este artículo.",
       "comboExtrasChargeTitle": "Cobrar por complementos y extras",
       "comboExtrasChargeOnHint": "Los complementos (ingredientes adicionales, modificadores de pago) suman su precio normal al del combo, igual que si pidieras el artículo por separado.",
-      "comboExtrasChargeOffHint": "Los complementos son gratis: los clientes eligen las mismas opciones, pero el combo mantiene un precio fijo más tus recargos por artículo."
+      "comboExtrasChargeOffHint": "Los complementos son gratis: los clientes eligen las mismas opciones, pero el combo mantiene un precio fijo más tus recargos por artículo.",
+      "comboSlotNameLabel": "Nombre del paso (visible para los clientes, p. ej. \"Elige tu pizza\")"
     },
     "promotionsList": {
       "stackingMaster": "Maestro",

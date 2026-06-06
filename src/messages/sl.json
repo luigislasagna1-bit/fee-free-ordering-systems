@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Izberite vsaj eno velikost, sicer stranka tega izdelka ne more izbrati.",
       "comboExtrasChargeTitle": "Zaračunaj dodatke in priloge",
       "comboExtrasChargeOnHint": "Dodatki (dodatni prelivi, plačljive prilagoditve) prištejejo svojo običajno ceno k ceni kombinacije – tako kot pri naročilu izdelka samostojno.",
-      "comboExtrasChargeOffHint": "Dodatki so brezplačni: stranke izberejo vse iste možnosti, vendar kombinacija ostane po fiksni ceni, povečani za vaše doplačila za posamezne izdelke."
+      "comboExtrasChargeOffHint": "Dodatki so brezplačni: stranke izberejo vse iste možnosti, vendar kombinacija ostane po fiksni ceni, povečani za vaše doplačila za posamezne izdelke.",
+      "comboSlotNameLabel": "Ime koraka (vidno strankam, npr. »Izberite svojo pico«)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

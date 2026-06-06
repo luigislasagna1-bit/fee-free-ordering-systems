@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "사이즈를 하나 이상 선택하세요. 그렇지 않으면 고객이 이 항목을 선택할 수 없습니다.",
       "comboExtrasChargeTitle": "추가 옵션 및 엑스트라 요금 부과",
       "comboExtrasChargeOnHint": "추가 옵션(추가 토핑, 유료 변경 옵션)이 콤보 가격에 정상 가격을 더해 부과됩니다 — 해당 메뉴를 단품으로 주문할 때와 동일합니다.",
-      "comboExtrasChargeOffHint": "추가 옵션이 무료입니다: 고객은 동일한 옵션을 모두 선택할 수 있지만, 콤보는 고정 가격에 항목별 추가 요금만 더해진 가격을 유지합니다."
+      "comboExtrasChargeOffHint": "추가 옵션이 무료입니다: 고객은 동일한 옵션을 모두 선택할 수 있지만, 콤보는 고정 가격에 항목별 추가 요금만 더해진 가격을 유지합니다.",
+      "comboSlotNameLabel": "단계 이름 (고객에게 표시, 예: \"피자를 선택하세요\")"
     },
     "promotionsList": {
       "stackingMaster": "마스터",

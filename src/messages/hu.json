@@ -1530,7 +1530,8 @@
       "comboNoSizeSelected": "Válassz legalább egy méretet, különben a vendég nem tudja kiválasztani ezt a tételt.",
       "comboExtrasChargeTitle": "Felárak és extrák felszámítása",
       "comboExtrasChargeOnHint": "Az extrák (további feltétek, fizetős módosítók) a megszokott árukon adódnak hozzá a kombóhoz – ugyanúgy, mintha a tételt önállóan rendelnék meg.",
-      "comboExtrasChargeOffHint": "Az extrák ingyenesek: a vendégek ugyanazokat a beállításokat választhatják, de a kombó fix árú marad, plusz a tételenkénti felárak."
+      "comboExtrasChargeOffHint": "Az extrák ingyenesek: a vendégek ugyanazokat a beállításokat választhatják, de a kombó fix árú marad, plusz a tételenkénti felárak.",
+      "comboSlotNameLabel": "Lépés neve (a vendégeknek látszik, pl. „Válassz pizzát”)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

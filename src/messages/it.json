@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Seleziona almeno un formato, altrimenti il cliente non potrà scegliere questo articolo.",
       "comboExtrasChargeTitle": "Addebita componenti aggiuntivi ed extra",
       "comboExtrasChargeOnHint": "I componenti aggiuntivi (condimenti extra, modificatori a pagamento) aggiungono il loro prezzo normale al combo, esattamente come quando si ordina il prodotto singolarmente.",
-      "comboExtrasChargeOffHint": "I componenti aggiuntivi sono gratuiti: i clienti scelgono tutte le stesse opzioni, ma il combo mantiene un prezzo fisso più i tuoi supplementi per singolo prodotto."
+      "comboExtrasChargeOffHint": "I componenti aggiuntivi sono gratuiti: i clienti scelgono tutte le stesse opzioni, ma il combo mantiene un prezzo fisso più i tuoi supplementi per singolo prodotto.",
+      "comboSlotNameLabel": "Nome del passaggio (mostrato ai clienti, es. \"Scegli la tua pizza\")"
     },
     "promotionsList": {
       "stackingMaster": "Master",

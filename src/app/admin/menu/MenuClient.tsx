@@ -619,9 +619,11 @@ function ItemModal({
       ? (() => {
           const slots = comboSlots
             .filter((s) => s.itemIds.length > 0)
-            .map((s, i) => ({
+            .map((s) => ({
               id: s.id,
-              label: s.label.trim() || `Slot ${i + 1}`,
+              // Blank stays blank — the customer page shows a friendly fallback
+              // ("Choose an item") rather than a literal "Slot 1".
+              label: s.label.trim(),
               min: Math.max(0, Math.floor(s.min) || 0),
               max: Math.max(1, Math.floor(s.max) || 1),
               itemIds: s.itemIds,
@@ -1045,6 +1047,7 @@ function ItemModal({
                   </div>
                   {comboSlots.map((slot, i) => (
                     <div key={slot.id} className="border border-gray-200 rounded-xl p-3 space-y-2">
+                      <label className="block text-xs font-semibold text-gray-700">{t("comboSlotNameLabel")}</label>
                       <div className="flex items-center gap-2 flex-wrap">
                         <input
                           className="flex-1 min-w-[160px] border border-gray-200 rounded-lg px-3 py-2 text-sm"

@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Kies minstens één maat, anders kan de klant dit item niet kiezen.",
       "comboExtrasChargeTitle": "Kosten voor add-ons en extra's",
       "comboExtrasChargeOnHint": "Add-ons (extra toppings, betaalde opties) tellen hun normale prijs op bij de combo — net als wanneer je het item los bestelt.",
-      "comboExtrasChargeOffHint": "Add-ons zijn gratis: klanten kiezen dezelfde opties, maar de combo houdt een vaste prijs plus jouw toeslagen per item."
+      "comboExtrasChargeOffHint": "Add-ons zijn gratis: klanten kiezen dezelfde opties, maar de combo houdt een vaste prijs plus jouw toeslagen per item.",
+      "comboSlotNameLabel": "Stapnaam (zichtbaar voor klanten, bijv. \"Kies je pizza\")"
     },
     "promotionsList": {
       "stackingMaster": "Master",

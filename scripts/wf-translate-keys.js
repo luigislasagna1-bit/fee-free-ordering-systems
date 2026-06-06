@@ -7,11 +7,9 @@ export const meta = {
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
 const NS = "admin.menuEditor";
-const CONTEXT = "the restaurant admin menu editor, COMBO builder. A combo is one menu item made of several picks. This setting controls whether a child item's add-ons/extras (extra pizza toppings, paid modifiers) add their normal price on top of the combo, or are included for free. Concise admin tone. No placeholders.";
+const CONTEXT = "the restaurant admin menu editor, COMBO builder. This is the field label for naming a combo step/slot — the heading the CUSTOMER sees above each group of choices (e.g. 'Choose your pizza'). Keep the example in quotes. Concise admin tone. No placeholders.";
 const EN = {
-  "comboExtrasChargeTitle": "Charge for add-ons & extras",
-  "comboExtrasChargeOnHint": "Add-ons (extra toppings, paid modifiers) add their normal price on top of the combo — just like ordering the item on its own.",
-  "comboExtrasChargeOffHint": "Add-ons are free: customers pick all the same options, but the combo stays a fixed price plus your per-item upcharges.",
+  "comboSlotNameLabel": "Step name (shown to customers, e.g. \"Choose your pizza\")",
 };
 const KEYS = Object.keys(EN);
 

@@ -1737,6 +1737,7 @@
       "comboUpcharge": "Premium upcharge for this item",
       "comboPizzaTag": "PIZZA",
       "comboAddSlot": "Add slot",
+      "comboSlotNameLabel": "Step name (shown to customers, e.g. \"Choose your pizza\")",
       "comboChooseSizes": "Sizes included in this combo:",
       "comboNoSizeSelected": "Pick at least one size, or the customer can't choose this item.",
       "comboExtrasChargeTitle": "Charge for add-ons & extras",

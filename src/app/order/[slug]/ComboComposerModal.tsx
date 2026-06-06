@@ -172,7 +172,13 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
               <div key={slot.id}>
                 <div className="flex items-center gap-2 mb-2">
                   {done && <Check className="w-4 h-4" style={{ color: primaryColor }} />}
-                  <h3 className="font-semibold text-gray-800">{slot.label || t("slotFallback", { n: si + 1 })}</h3>
+                  <h3 className="font-semibold text-gray-800">{
+                    // Treat a blank OR a legacy auto-default ("Slot 1") as unnamed
+                    // so older combos fall back to a friendly label too.
+                    (slot.label && !/^slot\s*\d+$/i.test(slot.label.trim()))
+                      ? slot.label
+                      : t("slotFallback", { n: si + 1 })
+                  }</h3>
                   <span className="text-xs text-gray-400">{t("pickRange", { min: slot.min, max: slot.max })}</span>
                 </div>
                 {cur.length > 0 && (

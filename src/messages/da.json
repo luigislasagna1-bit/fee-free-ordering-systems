@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Vælg mindst én størrelse, ellers kan kunden ikke vælge denne vare.",
       "comboExtrasChargeTitle": "Tag betaling for tilbehør og ekstra",
       "comboExtrasChargeOnHint": "Tilbehør (ekstra fyld, betalte tilvalg) lægger deres normale pris oven i menuen — præcis som hvis varen blev bestilt alene.",
-      "comboExtrasChargeOffHint": "Tilbehør er gratis: Kunderne vælger alle de samme muligheder, men menuen forbliver til en fast pris plus dine tillæg pr. vare."
+      "comboExtrasChargeOffHint": "Tilbehør er gratis: Kunderne vælger alle de samme muligheder, men menuen forbliver til en fast pris plus dine tillæg pr. vare.",
+      "comboSlotNameLabel": "Trinnavn (vises til kunder, f.eks. \"Vælg din pizza\")"
     },
     "promotionsList": {
       "stackingMaster": "Master",

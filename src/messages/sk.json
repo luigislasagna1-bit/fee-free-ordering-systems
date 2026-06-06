@@ -2230,7 +2230,8 @@
       "comboNoSizeSelected": "Vyberte aspoň jednu veľkosť, inak si zákazník túto položku nemôže vybrať.",
       "comboExtrasChargeTitle": "Účtovať doplnky a extra prísady",
       "comboExtrasChargeOnHint": "Doplnky (extra prísady, platené úpravy) pripočítajú svoju bežnú cenu k cene comba — rovnako ako pri samostatnej objednávke položky.",
-      "comboExtrasChargeOffHint": "Doplnky sú zadarmo: zákazníci si vyberú všetky rovnaké možnosti, ale combo zostáva za pevnú cenu plus vaše príplatky za jednotlivé položky."
+      "comboExtrasChargeOffHint": "Doplnky sú zadarmo: zákazníci si vyberú všetky rovnaké možnosti, ale combo zostáva za pevnú cenu plus vaše príplatky za jednotlivé položky.",
+      "comboSlotNameLabel": "Názov kroku (zobrazí sa zákazníkom, napr. „Vyberte si pizzu\")"
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

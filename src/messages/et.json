@@ -1567,7 +1567,8 @@
       "comboNoSizeSelected": "Vali vähemalt üks suurus, muidu klient ei saa seda toodet valida.",
       "comboExtrasChargeTitle": "Lisandite ja ekstrade eest tasu võtmine",
       "comboExtrasChargeOnHint": "Lisandid (lisakatted, tasulised muudatused) lisavad oma tavahinna kombo hinnale — täpselt nagu toodet eraldi tellides.",
-      "comboExtrasChargeOffHint": "Lisandid on tasuta: kliendid valivad kõik samad valikud, kuid kombo jääb fikseeritud hinda pluss sinu tootepõhised lisatasud."
+      "comboExtrasChargeOffHint": "Lisandid on tasuta: kliendid valivad kõik samad valikud, kuid kombo jääb fikseeritud hinda pluss sinu tootepõhised lisatasud.",
+      "comboSlotNameLabel": "Sammu nimi (kuvatakse klientidele, nt \"Vali oma pitsa\")"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",
