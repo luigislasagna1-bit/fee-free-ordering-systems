@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   X, User, Truck, ShoppingBag, Clock, CreditCard, Heart, Edit2, Tag,
   AlertCircle, Loader2, ChevronDown,
@@ -164,6 +164,9 @@ interface Props {
   resolvedZone: { zone: { name: string; color: string; deliveryFee: number; estimatedMinutes: number; minimumOrder: number }; inside: boolean } | null;
   mapProvider: "leaflet" | "google";
   googleMapsApiKey: string | null;
+  /** Restaurant's 2-letter country code — biases the free (Leaflet) address
+   *  autocomplete so results favour the restaurant's country. */
+  geocodeCountry?: string | null;
   onClose: () => void;
   /** True when the current cart contains any catering-tagged item — at
    *  the item level or via its parent category. Forces schedule-for-
@@ -249,7 +252,7 @@ export function CheckoutModal({
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
   hasZones, geocoding, geocodeError, resolvedZone,
-  mapProvider, googleMapsApiKey,
+  mapProvider, googleMapsApiKey, geocodeCountry,
   deliveryFormConfig,
   onClose,
 }: Props) {
@@ -284,6 +287,51 @@ export function CheckoutModal({
       ? { lat: customerInfo.lat, lng: customerInfo.lng }
       : null,
   );
+
+  // ── Free address autocomplete (Leaflet / non-Google restaurants) ────────
+  // Google restaurants use Places Autocomplete; everyone else now gets
+  // OpenStreetMap suggestions via our proxy route, so the delivery address
+  // field is just as helpful (Fabrizio report cmpxdxhxi — Leaflet had none).
+  type OsmSuggestion = { label: string; lat: number; lng: number; line1: string; city: string; postcode: string };
+  const [addrSuggestions, setAddrSuggestions] = useState<OsmSuggestion[]>([]);
+  const [addrSuggestOpen, setAddrSuggestOpen] = useState(false);
+  const addrJustPickedRef = useRef(false);
+
+  useEffect(() => {
+    if (googleEnabled || orderType !== "delivery") { setAddrSuggestions([]); return; }
+    // Don't re-query the value we just filled in from a chosen suggestion.
+    if (addrJustPickedRef.current) { addrJustPickedRef.current = false; return; }
+    const q = (customerInfo.address || "").trim();
+    if (q.length < 3) { setAddrSuggestions([]); setAddrSuggestOpen(false); return; }
+    const ctrl = new AbortController();
+    const id = setTimeout(async () => {
+      try {
+        const params = new URLSearchParams({ q });
+        if (geocodeCountry) params.set("country", geocodeCountry);
+        const res = await fetch(`/api/public/geocode/search?${params.toString()}`, { signal: ctrl.signal });
+        const data = await res.json().catch(() => ({}));
+        setAddrSuggestions(Array.isArray(data.suggestions) ? data.suggestions : []);
+        setAddrSuggestOpen(true);
+      } catch { /* aborted / network — leave list as-is */ }
+    }, 400);
+    return () => { clearTimeout(id); ctrl.abort(); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customerInfo.address, googleEnabled, orderType, geocodeCountry]);
+
+  const pickAddrSuggestion = (sug: OsmSuggestion) => {
+    addrJustPickedRef.current = true;
+    setAddrSuggestOpen(false);
+    setAddrSuggestions([]);
+    setMapCenter({ lat: sug.lat, lng: sug.lng });
+    setCustomerInfo({
+      ...customerInfo,
+      address: sug.line1 || customerInfo.address,
+      city: sug.city || customerInfo.city,
+      zip: sug.postcode || customerInfo.zip,
+      lat: sug.lat,
+      lng: sug.lng,
+    });
+  };
 
   const handlePlaceChanged = () => {
     const place = autocompleteRef.current?.getPlace();
@@ -642,14 +690,35 @@ export function CheckoutModal({
                           />
                         </Autocomplete>
                       ) : (
-                        <input
-                          id="checkout-delivery-address"
-                          type="text" placeholder={`${tc("streetAddressPlaceholder")}${deliveryFormConfig.street.required ? " *" : ""}`}
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
-                          style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                          value={customerInfo.address}
-                          onChange={e => setCustomerInfo({ ...customerInfo, address: e.target.value })}
-                        />
+                        <div className="relative">
+                          <input
+                            id="checkout-delivery-address"
+                            type="text" autoComplete="off"
+                            placeholder={`${tc("startTypingAddress")}${deliveryFormConfig.street.required ? " *" : ""}`}
+                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                            style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                            value={customerInfo.address}
+                            onChange={e => setCustomerInfo({ ...customerInfo, address: e.target.value })}
+                            onFocus={() => { if (addrSuggestions.length) setAddrSuggestOpen(true); }}
+                            onBlur={() => setTimeout(() => setAddrSuggestOpen(false), 150)}
+                          />
+                          {addrSuggestOpen && addrSuggestions.length > 0 && (
+                            <ul className="absolute z-30 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-56 overflow-y-auto">
+                              {addrSuggestions.map((sug, i) => (
+                                <li key={`${sug.lat}-${sug.lng}-${i}`}>
+                                  <button
+                                    type="button"
+                                    onMouseDown={(e) => { e.preventDefault(); pickAddrSuggestion(sug); }}
+                                    className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 border-b border-gray-50 last:border-0"
+                                  >
+                                    <span className="font-medium text-gray-800">{sug.line1 || sug.label}</span>
+                                    {sug.city && <span className="text-gray-500"> · {sug.city}{sug.postcode ? ` ${sug.postcode}` : ""}</span>}
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
                       )
                     )}
                     {(deliveryFormConfig.city.show || deliveryFormConfig.postcode.show) && (

@@ -3601,6 +3601,7 @@ export function OrderingPageClient({
           resolvedZone={resolvedZone}
           mapProvider={restaurant.mapProvider ?? "leaflet"}
           googleMapsApiKey={restaurant.googleMapsApiKey ?? null}
+          geocodeCountry={(restaurant as any).country ?? null}
           cateringMode={scheduleRequired}
           cateringMinScheduledLocal={effectiveMinScheduledLocal}
           cateringNoticeHours={cateringNoticeHours}
