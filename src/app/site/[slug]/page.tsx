@@ -449,7 +449,7 @@ export default async function HostedSitePage({
        *    Logo-style banners (text-in-image logos) need this so the
        *    overlay doesn't fight the embedded logo text.
        */}
-      {s.header.fullScreenHero && s.sections.banner && r.bannerUrl ? (
+      {s.header.fullScreenHero ? (
         <section
           // Hero shortened from 88vh → ~62vh (Luigi 2026-05-30) so the
           // "See MENU & Order" CTA card directly below sits in the
@@ -464,13 +464,20 @@ export default async function HostedSitePage({
           // the safe-area below the nav so the title doesn't collide
           // with it.
           className="relative text-white min-h-[62vh] md:min-h-[68vh] flex items-center justify-center text-center -mt-16"
-          style={{
-            // Configurable overlay opacity. Lower = food photo shows
-            // through more clearly. Default 0.4 vs GloriaFood's ~0.35.
-            backgroundImage: `linear-gradient(rgba(0,0,0,${s.header.heroOverlayOpacity}), rgba(0,0,0,${s.header.heroOverlayOpacity})), url(${r.bannerUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          style={
+            // WITH a banner photo → darkened photo hero. WITHOUT one → a clean
+            // theme-color gradient (no broken/bare look, and crucially the CTAs
+            // stay ONLY in the service card below — no duplicate buttons).
+            s.sections.banner && r.bannerUrl
+              ? {
+                  // Configurable overlay opacity. Lower = food photo shows
+                  // through more clearly. Default 0.4 vs GloriaFood's ~0.35.
+                  backgroundImage: `linear-gradient(rgba(0,0,0,${s.header.heroOverlayOpacity}), rgba(0,0,0,${s.header.heroOverlayOpacity})), url(${r.bannerUrl})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : { background: `linear-gradient(135deg, ${themeColor}, ${darkenHex(themeColor, 0.25)})` }
+          }
         >
           <div className="max-w-4xl mx-auto px-6 pt-28 pb-12 md:pt-32 md:pb-16 w-full">
             {s.header.showLogo && r.logoUrl && (
