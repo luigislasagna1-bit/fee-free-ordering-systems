@@ -1434,12 +1434,34 @@ export function OrderingPageClient({
   // highlightThreshold), and nudge the customer to spend the difference.
   const promoNudge = (() => {
     if (subtotal <= 0) return null;
+    // Canonical order-type matching — handles "both", single values, JSON-array
+    // multi-channel promos, and dine_in/take_out spelling. The old naive
+    // `p.orderType !== orderType` silently skipped every multi-channel promo.
+    const canon = (t: string) => {
+      const k = String(t).toLowerCase().replace(/[\s-]+/g, "_");
+      return k === "takeout" ? "take_out" : k === "dinein" ? "dine_in" : k;
+    };
+    const allowsOrderType = (raw: string | undefined, ot: string) => {
+      if (!raw || raw === "both") return true;
+      let set: string[] = [];
+      if (String(raw).trim().startsWith("[")) {
+        try { const a = JSON.parse(raw); set = Array.isArray(a) ? a.map(String) : []; } catch { set = []; }
+      } else set = [String(raw)];
+      return set.length === 0 || set.map(canon).includes(canon(ot));
+    };
     let best: { name: string; remaining: number } | null = null;
     for (const p of promoBanners) {
       const ht = p.highlightThreshold ?? 0;
-      if (!p.autoApply || ht <= 0 || !(p.minimumOrder > 0)) continue;
-      if (p.orderType && p.orderType !== "both" && p.orderType !== orderType) continue;
-      const remaining = p.minimumOrder - subtotal;
+      if (!p.autoApply || ht <= 0) continue;
+      if (!allowsOrderType(p.orderType, orderType)) continue;
+      // Effective threshold to unlock: the cart minimum, or a free-item spend
+      // trigger (so "spend $100, get a free item" promos nudge too).
+      let rc: any = p.ruleConfig;
+      if (!rc || typeof rc !== "object") { try { rc = JSON.parse((p as any).rules || "{}"); } catch { rc = {}; } }
+      const trigger = typeof rc?.triggerAmount === "number" ? rc.triggerAmount : 0;
+      const threshold = Math.max(p.minimumOrder ?? 0, trigger);
+      if (threshold <= 0) continue;
+      const remaining = threshold - subtotal;
       if (remaining > 0 && remaining <= ht && (!best || remaining < best.remaining)) {
         best = { name: p.name, remaining };
       }
