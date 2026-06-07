@@ -64,7 +64,7 @@ export function SignupForm() {
         label="Phone"
         type="tel"
         value={form.phone}
-        onChange={(v) => setForm({ ...form, phone: v })}
+        onChange={(v) => setForm({ ...form, phone: v.replace(/[^\d+()\-.\s]/g, "") })}
         helper="Optional — restaurants use this if there's an issue with your order."
       />
 

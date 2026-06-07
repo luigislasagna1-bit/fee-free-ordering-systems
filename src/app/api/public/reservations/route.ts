@@ -73,6 +73,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
+    // Phone must be an actual number — no letters, at least 6 digits. Mirrors
+    // the order route's guard (cmq0vafk5); defense-in-depth against autofill /
+    // clients that bypass the keystroke filter on the reservation form.
+    if (/[a-z]/i.test(String(customerPhone)) || (String(customerPhone).match(/\d/g)?.length ?? 0) < 6) {
+      return NextResponse.json({ error: "Please enter a valid phone number.", code: "invalid_phone" }, { status: 400 });
+    }
+
     const restaurant = await prisma.restaurant.findUnique({
       where: { slug: restaurantSlug, isActive: true },
       select: {

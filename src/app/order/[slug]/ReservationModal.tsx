@@ -429,6 +429,13 @@ export function ReservationModal({
     if (!validation.ok) { toast.error(validation.reason); return; }
     if (!name.trim()) { toast.error(tr("nameAndPhone")); return; }
     if (requireCustomerPhone && !phone.trim()) { toast.error(tr("nameAndPhone")); return; }
+    // Phone must be a real number — no letters, at least 6 digits. Mirrors the
+    // order checkout guard (cmq0vafk5) + catches autofill that bypasses the
+    // keystroke filter. Only when a phone is actually present.
+    if (phone.trim()) {
+      const digits = (phone.match(/\d/g) || []).length;
+      if (/[a-z]/i.test(phone) || digits < 6) { toast.error(tOrd("toasts.phoneInvalid")); return; }
+    }
     if (requireCustomerEmail && !email.trim()) { toast.error("Email is required"); return; }
 
     setSubmitting(true);
@@ -589,9 +596,11 @@ export function ReservationModal({
                 />
                 <input
                   type="tel"
+                  inputMode="tel"
                   required={requireCustomerPhone}
                   placeholder={`${tr("phoneRequired")}${requireCustomerPhone ? " *" : " (optional)"}`}
-                  value={phone} onChange={e => setPhone(e.target.value)}
+                  value={phone}
+                  onChange={e => setPhone(e.target.value.replace(/[^\d+()\-.\s]/g, ""))}
                   className="col-span-2 border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 />

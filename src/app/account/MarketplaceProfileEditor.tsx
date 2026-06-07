@@ -91,9 +91,10 @@ export function MarketplaceProfileEditor({
         <label className="block text-xs font-medium text-gray-600 mb-1">Phone</label>
         <input
           type="tel"
+          inputMode="tel"
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={(e) => setPhone(e.target.value.replace(/[^\d+()\-.\s]/g, ""))}
           maxLength={30}
           placeholder="(555) 555-5555"
         />

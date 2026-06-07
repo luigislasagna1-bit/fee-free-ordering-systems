@@ -63,8 +63,9 @@ export function SignupForm({ slug, restaurantName }: { slug: string; restaurantN
         <label className="block text-xs font-semibold text-gray-700 mb-1">{t("labelPhone")}</label>
         <input
           type="tel"
+          inputMode="tel"
           value={form.phone}
-          onChange={(e) => setForm({ ...form, phone: e.target.value })}
+          onChange={(e) => setForm({ ...form, phone: e.target.value.replace(/[^\d+()\-.\s]/g, "") })}
           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
           placeholder={t("placeholderPhone")}
         />
