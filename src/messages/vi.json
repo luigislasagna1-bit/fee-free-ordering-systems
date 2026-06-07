@@ -2329,7 +2329,9 @@
       "previewLivePage": "Xem trang trực tiếp →",
       "menuList": "Danh sách (ảnh bên trái)",
       "collapsibleCategories": "Danh mục có thể thu gọn trên di động",
-      "collapsibleCategoriesHint": "Trên điện thoại, khách hàng chạm vào một danh mục để mở rộng các món trong đó (kiểu GloriaFood), kèm nút Mở rộng tất cả / Thu gọn tất cả. Máy tính để bàn không bị ảnh hưởng."
+      "collapsibleCategoriesHint": "Trên điện thoại, khách hàng chạm vào một danh mục để mở rộng các món trong đó (kiểu GloriaFood), kèm nút Mở rộng tất cả / Thu gọn tất cả. Máy tính để bàn không bị ảnh hưởng.",
+      "reservationFullBg": "Nền đặt bàn toàn màn hình",
+      "reservationFullBgHint": "Trên trang Book a Table, dùng ảnh banner của bạn làm nền toàn màn hình phía sau biểu mẫu đặt bàn. Cần có ảnh banner. Tắt = banner hiển thị ở trên cùng với biểu mẫu bên dưới."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Tôi thêm các bản ghi này ở đâu?",

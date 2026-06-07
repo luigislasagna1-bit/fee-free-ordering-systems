@@ -2657,6 +2657,8 @@
       "showCategoryImagesHint": "Display category thumbnails in the nav pills",
       "collapsibleCategories": "Collapsible categories on mobile",
       "collapsibleCategoriesHint": "On phones, customers tap a category to expand its items (GloriaFood-style), with Expand all / Collapse all controls. Desktop is unaffected.",
+      "reservationFullBg": "Full-screen reservation background",
+      "reservationFullBgHint": "On the Book a Table page, use your banner photo as a full-screen background behind the booking form. Needs a banner image. Off = a banner hero at the top with the form below.",
       "sectionPreview": "Preview",
       "previewRestaurantName": "Your Restaurant",
       "previewSlogan": "Slogan here",

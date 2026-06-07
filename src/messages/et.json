@@ -2329,7 +2329,9 @@
       "previewLivePage": "Vaata otselehte →",
       "menuList": "Loend (fotod vasakul)",
       "collapsibleCategories": "Ahendatavad kategooriad mobiilis",
-      "collapsibleCategoriesHint": "Telefonis puudutavad kliendid kategooriat, et selle tooteid laiendada (GloriaFood-stiilis), koos nuppudega Laienda kõik / Ahenda kõik. Lauaarvutit see ei mõjuta."
+      "collapsibleCategoriesHint": "Telefonis puudutavad kliendid kategooriat, et selle tooteid laiendada (GloriaFood-stiilis), koos nuppudega Laienda kõik / Ahenda kõik. Lauaarvutit see ei mõjuta.",
+      "reservationFullBg": "Täisekraani broneeringutaust",
+      "reservationFullBgHint": "Kasuta lehel \"Book a Table\" oma bännerifotot broneerimisvormi taga täisekraani taustana. Vajab bänneripilti. Väljas = bänneri kangelaspilt ülal ja vorm selle all."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kust lisan need kirjed?",

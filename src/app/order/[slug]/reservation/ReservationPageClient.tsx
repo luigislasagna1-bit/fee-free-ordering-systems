@@ -9,12 +9,17 @@ import { parseTheme } from "@/lib/theme";
 /**
  * Standalone reservation page wrapper around the existing ReservationModal.
  *
- * GloriaFood-style layout (Fabrizio cmpxeacks): a branded HERO at the top —
- * the restaurant's banner photo (or a theme-colour gradient when no banner,
- * so there's never a flat grey void) with the logo, restaurant name, and a
- * "Table Reservation" sub-label — and the reservation form card pulled up
- * just below it. The modal renders in `embedded` mode (no dark overlay, no
- * duplicate header) so it reads as a real page, not a popup floating in grey.
+ * Two layouts (Fabrizio cmpxeacks), chosen per restaurant via the theme
+ * setting `reservationFullBg`:
+ *   - default: a branded HERO band at the top (banner photo, or a brand-colour
+ *     gradient when there's no banner) with logo + name + "Table Reservation",
+ *     and the booking card pulled up just below it.
+ *   - full background (owner opt-in, needs a banner): the banner photo fills
+ *     the ENTIRE page behind a dark overlay, with the branding + booking card
+ *     centred over it.
+ *
+ * The modal renders in `embedded` mode (no dark overlay, no duplicate header)
+ * in both layouts.
  */
 export function ReservationPageClient({ restaurant }: { restaurant: any }) {
   const router = useRouter();
@@ -22,10 +27,71 @@ export function ReservationPageClient({ restaurant }: { restaurant: any }) {
   const theme = parseTheme(restaurant.themeSettings);
   const hasBanner = !!restaurant.bannerUrl;
   const primary = theme.primaryColor || "#10b981";
+  const fullBg = !!theme.reservationFullBg && hasBanner;
+  const back = () => router.push(`/order/${restaurant.slug}`);
 
-  // Hero background: banner photo under a top-to-bottom dark gradient (keeps
-  // the white text legible over any image), or a primary-colour gradient when
-  // the restaurant hasn't uploaded a banner.
+  const backButton = (
+    <button
+      onClick={back}
+      className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 text-sm font-medium text-white/90 hover:text-white bg-black/30 hover:bg-black/45 rounded-full pl-2.5 pr-3.5 py-1.5 transition"
+    >
+      <ArrowLeft className="w-4 h-4" /> {tOrd("menu")}
+    </button>
+  );
+
+  const brand = (
+    <div className="text-center text-white px-4">
+      {restaurant.logoUrl && (
+        <img
+          src={restaurant.logoUrl}
+          alt=""
+          className="w-16 h-16 rounded-2xl object-cover shadow-lg mb-3 border-2 border-white/70 mx-auto"
+        />
+      )}
+      <h1 className="text-2xl sm:text-3xl font-bold drop-shadow-md">{restaurant.name}</h1>
+      <p className="mt-1 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white/90 drop-shadow">
+        {tOrd("tableReservation")}
+      </p>
+    </div>
+  );
+
+  const modal = (
+    <ReservationModal
+      embedded
+      restaurantSlug={restaurant.slug}
+      restaurantName={restaurant.name}
+      settings={restaurant.reservationSettings}
+      fallbackOpeningHours={restaurant.openingHours ?? []}
+      requireCustomerEmail={restaurant.requireCustomerEmail !== false}
+      requireCustomerPhone={restaurant.requireCustomerPhone !== false}
+      hoursFormat={restaurant.hoursFormat === "12h" ? "12h" : "24h"}
+      timezone={restaurant.timezone ?? undefined}
+      theme={theme}
+      onClose={back}
+    />
+  );
+
+  // ── Full-screen banner background ──────────────────────────────────────────
+  if (fullBg) {
+    const overlay = Math.min(0.85, (theme.bannerOpacity ?? 60) / 100);
+    return (
+      <div
+        className="min-h-screen bg-cover bg-center bg-fixed"
+        style={{ backgroundColor: theme.backgroundColor, backgroundImage: `url(${restaurant.bannerUrl})` }}
+      >
+        <div
+          className="relative min-h-screen flex flex-col items-center justify-center gap-5 px-3 sm:px-4 py-16"
+          style={{ backgroundColor: `rgba(0,0,0,${overlay})` }}
+        >
+          {backButton}
+          {brand}
+          <div className="w-full flex justify-center">{modal}</div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Default: branded hero band on top, card below ──────────────────────────
   const heroStyle = hasBanner
     ? {
         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.65)), url(${restaurant.bannerUrl})`,
@@ -34,50 +100,13 @@ export function ReservationPageClient({ restaurant }: { restaurant: any }) {
       }
     : { background: `linear-gradient(135deg, ${primary}, ${darkenHex(primary, 0.28)})` };
 
-  const back = () => router.push(`/order/${restaurant.slug}`);
-
   return (
     <div className="min-h-screen" style={{ backgroundColor: theme.backgroundColor, color: theme.textColor }}>
-      {/* Branded hero */}
-      <div
-        className="relative h-56 sm:h-64 flex flex-col items-center justify-center text-center px-4 text-white"
-        style={heroStyle}
-      >
-        <button
-          onClick={back}
-          className="absolute top-4 left-4 inline-flex items-center gap-1.5 text-sm font-medium text-white/90 hover:text-white bg-black/30 hover:bg-black/45 rounded-full pl-2.5 pr-3.5 py-1.5 transition"
-        >
-          <ArrowLeft className="w-4 h-4" /> {tOrd("menu")}
-        </button>
-        {restaurant.logoUrl && (
-          <img
-            src={restaurant.logoUrl}
-            alt=""
-            className="w-16 h-16 rounded-2xl object-cover shadow-lg mb-3 border-2 border-white/70"
-          />
-        )}
-        <h1 className="text-2xl sm:text-3xl font-bold drop-shadow-md">{restaurant.name}</h1>
-        <p className="mt-1 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white/90 drop-shadow">
-          {tOrd("tableReservation")}
-        </p>
+      <div className="relative h-56 sm:h-64 flex flex-col items-center justify-center" style={heroStyle}>
+        {backButton}
+        {brand}
       </div>
-
-      {/* Reservation form card, pulled up over the hero */}
-      <div className="px-3 sm:px-4 pb-12 -mt-8 relative z-10 flex justify-center">
-        <ReservationModal
-          embedded
-          restaurantSlug={restaurant.slug}
-          restaurantName={restaurant.name}
-          settings={restaurant.reservationSettings}
-          fallbackOpeningHours={restaurant.openingHours ?? []}
-          requireCustomerEmail={restaurant.requireCustomerEmail !== false}
-          requireCustomerPhone={restaurant.requireCustomerPhone !== false}
-          hoursFormat={restaurant.hoursFormat === "12h" ? "12h" : "24h"}
-          timezone={restaurant.timezone ?? undefined}
-          theme={theme}
-          onClose={back}
-        />
-      </div>
+      <div className="px-3 sm:px-4 pb-12 -mt-8 relative z-10 flex justify-center">{modal}</div>
     </div>
   );
 }

@@ -15,6 +15,11 @@ export type ThemeSettings = {
    *  expands the ones they want, with Expand all / Collapse all controls.
    *  Desktop is unaffected. Default false (categories always expanded). */
   mobileCollapsibleCategories: boolean;
+  /** When true, the standalone reservation page uses the banner photo as a
+   *  full-screen background behind the booking card (form floats over a dark
+   *  overlay) instead of the default branded hero band at the top. Only takes
+   *  effect when a banner is set. Fabrizio cmpxeacks. */
+  reservationFullBg: boolean;
 };
 
 export const DEFAULT_THEME: ThemeSettings = {
@@ -30,6 +35,7 @@ export const DEFAULT_THEME: ThemeSettings = {
   showCategoryImages: true,
   menuLayout: "carousel",
   mobileCollapsibleCategories: false,
+  reservationFullBg: false,
 };
 
 export function parseTheme(raw: string | null | undefined): ThemeSettings {

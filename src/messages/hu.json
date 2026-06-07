@@ -2329,7 +2329,9 @@
       "previewLivePage": "Élő oldal megtekintése →",
       "menuList": "Lista (fotók balra)",
       "collapsibleCategories": "Összecsukható kategóriák mobilon",
-      "collapsibleCategoriesHint": "Telefonon a vendégek egy kategóriára koppintva bontják ki annak elemeit (GloriaFood stílusban), az Összes kibontása / Összes összecsukása vezérlőkkel. Asztali nézetet nem érinti."
+      "collapsibleCategoriesHint": "Telefonon a vendégek egy kategóriára koppintva bontják ki annak elemeit (GloriaFood stílusban), az Összes kibontása / Összes összecsukása vezérlőkkel. Asztali nézetet nem érinti.",
+      "reservationFullBg": "Teljes képernyős foglalási háttér",
+      "reservationFullBgHint": "A Book a Table oldalon a bannerfotó teljes képernyős háttérként jelenik meg a foglalási űrlap mögött. Bannerkép szükséges hozzá. Kikapcsolva = banner hős a tetején, alatta az űrlappal."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hol adhatom hozzá ezeket a rekordokat?",

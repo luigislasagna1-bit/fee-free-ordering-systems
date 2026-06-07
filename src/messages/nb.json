@@ -2329,7 +2329,9 @@
       "previewLivePage": "Vis live side →",
       "menuList": "Liste (bilder til venstre)",
       "collapsibleCategories": "Sammenleggbare kategorier på mobil",
-      "collapsibleCategoriesHint": "På mobil trykker kundene på en kategori for å utvide elementene (GloriaFood-stil), med kontroller for Utvid alle / Skjul alle. Skrivebord påvirkes ikke."
+      "collapsibleCategoriesHint": "På mobil trykker kundene på en kategori for å utvide elementene (GloriaFood-stil), med kontroller for Utvid alle / Skjul alle. Skrivebord påvirkes ikke.",
+      "reservationFullBg": "Fullskjerms reservasjonsbakgrunn",
+      "reservationFullBgHint": "På Book a Table-siden brukes bannerbildet ditt som fullskjermsbakgrunn bak bestillingsskjemaet. Krever et bannerbilde. Av = en bannerhero øverst med skjemaet under."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hvor legger jeg til disse oppføringene?",

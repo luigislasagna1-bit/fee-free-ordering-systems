@@ -2329,7 +2329,9 @@
       "previewLivePage": "Vezi pagina live →",
       "menuList": "Listă (foto în stânga)",
       "collapsibleCategories": "Categorii pliabile pe mobil",
-      "collapsibleCategoriesHint": "Pe telefoane, clienții ating o categorie pentru a-i extinde produsele (în stil GloriaFood), cu butoane Extinde tot / Restrânge tot. Versiunea pentru desktop nu este afectată."
+      "collapsibleCategoriesHint": "Pe telefoane, clienții ating o categorie pentru a-i extinde produsele (în stil GloriaFood), cu butoane Extinde tot / Restrânge tot. Versiunea pentru desktop nu este afectată.",
+      "reservationFullBg": "Fundal rezervare pe tot ecranul",
+      "reservationFullBgHint": "Pe pagina Book a Table, folosește fotografia banner ca fundal pe tot ecranul în spatele formularului de rezervare. Necesită o imagine banner. Dezactivat = un banner hero în partea de sus, cu formularul dedesubt."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Unde adaug aceste înregistrări?",

@@ -2329,7 +2329,9 @@
       "previewLivePage": "Canlı sayfayı gör →",
       "menuList": "Liste (fotoğraflar solda)",
       "collapsibleCategories": "Mobilde daraltılabilir kategoriler",
-      "collapsibleCategoriesHint": "Telefonlarda müşteriler bir kategoriye dokunarak ürünlerini genişletir (GloriaFood tarzı); Tümünü genişlet / Tümünü daralt denetimleriyle birlikte. Masaüstü bundan etkilenmez."
+      "collapsibleCategoriesHint": "Telefonlarda müşteriler bir kategoriye dokunarak ürünlerini genişletir (GloriaFood tarzı); Tümünü genişlet / Tümünü daralt denetimleriyle birlikte. Masaüstü bundan etkilenmez.",
+      "reservationFullBg": "Tam ekran rezervasyon arka planı",
+      "reservationFullBgHint": "Book a Table sayfasında, afiş fotoğrafınızı rezervasyon formunun arkasında tam ekran arka plan olarak kullanın. Bir afiş görseli gerekir. Kapalı = üstte afiş hero alanı, altında form."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Bu kayıtları nereye ekliyorum?",

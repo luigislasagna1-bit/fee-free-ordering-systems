@@ -2329,7 +2329,9 @@
       "previewLivePage": "Live-Seite anzeigen →",
       "menuList": "Liste (Fotos links)",
       "collapsibleCategories": "Einklappbare Kategorien auf dem Smartphone",
-      "collapsibleCategoriesHint": "Auf dem Smartphone tippen Kunden auf eine Kategorie, um deren Artikel anzuzeigen (im GloriaFood-Stil), mit Schaltflächen zum Alle ausklappen / Alle einklappen. Der Desktop ist davon nicht betroffen."
+      "collapsibleCategoriesHint": "Auf dem Smartphone tippen Kunden auf eine Kategorie, um deren Artikel anzuzeigen (im GloriaFood-Stil), mit Schaltflächen zum Alle ausklappen / Alle einklappen. Der Desktop ist davon nicht betroffen.",
+      "reservationFullBg": "Reservierungs-Hintergrund im Vollbild",
+      "reservationFullBgHint": "Auf der Seite „Book a Table\" wird Ihr Bannerfoto als Vollbild-Hintergrund hinter dem Buchungsformular verwendet. Erfordert ein Bannerbild. Aus = ein Banner-Hero oben mit dem Formular darunter."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Wo füge ich diese Einträge hinzu?",

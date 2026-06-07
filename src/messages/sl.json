@@ -2329,7 +2329,9 @@
       "previewLivePage": "Ogled žive strani →",
       "menuList": "Seznam (fotografije levo)",
       "collapsibleCategories": "Zložljive kategorije na mobilnih napravah",
-      "collapsibleCategoriesHint": "Na telefonih stranke tapnejo kategorijo, da razširijo njene izdelke (slog GloriaFood), z gumboma Razširi vse / Strni vse. Na namizju ni sprememb."
+      "collapsibleCategoriesHint": "Na telefonih stranke tapnejo kategorijo, da razširijo njene izdelke (slog GloriaFood), z gumboma Razširi vse / Strni vse. Na namizju ni sprememb.",
+      "reservationFullBg": "Celozaslonsko ozadje rezervacije",
+      "reservationFullBgHint": "Na strani Book a Table uporabite fotografijo pasice kot celozaslonsko ozadje za obrazcem za rezervacijo. Potrebuje sliko pasice. Izklopljeno = pasica na vrhu z obrazcem pod njo."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kje dodajem te zapise?",

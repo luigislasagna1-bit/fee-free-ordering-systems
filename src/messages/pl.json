@@ -2329,7 +2329,9 @@
       "previewLivePage": "Zobacz stronę na żywo →",
       "menuList": "Lista (zdjęcia po lewej)",
       "collapsibleCategories": "Zwijane kategorie na urządzeniach mobilnych",
-      "collapsibleCategoriesHint": "Na telefonach klienci dotykają kategorii, aby rozwinąć jej pozycje (w stylu GloriaFood), z przyciskami Rozwiń wszystko / Zwiń wszystko. Nie wpływa to na widok na komputerze."
+      "collapsibleCategoriesHint": "Na telefonach klienci dotykają kategorii, aby rozwinąć jej pozycje (w stylu GloriaFood), z przyciskami Rozwiń wszystko / Zwiń wszystko. Nie wpływa to na widok na komputerze.",
+      "reservationFullBg": "Pełnoekranowe tło strony rezerwacji",
+      "reservationFullBgHint": "Na stronie Book a Table użyj zdjęcia banera jako pełnoekranowego tła za formularzem rezerwacji. Wymaga obrazu banera. Wyłączone = baner hero u góry, a formularz pod nim."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gdzie dodać te rekordy?",

@@ -2329,7 +2329,9 @@
       "previewLivePage": "ライブページを見る →",
       "menuList": "リスト（写真が左）",
       "collapsibleCategories": "モバイルで折りたたみ可能なカテゴリ",
-      "collapsibleCategoriesHint": "スマートフォンでは、お客様がカテゴリをタップして商品を展開します（GloriaFood風）。「すべて展開」「すべて折りたたむ」の操作も利用できます。デスクトップには影響しません。"
+      "collapsibleCategoriesHint": "スマートフォンでは、お客様がカテゴリをタップして商品を展開します（GloriaFood風）。「すべて展開」「すべて折りたたむ」の操作も利用できます。デスクトップには影響しません。",
+      "reservationFullBg": "予約ページの全画面背景",
+      "reservationFullBgHint": "「Book a Table」ページで、バナー写真を予約フォームの背後に全画面背景として表示します。バナー画像が必要です。オフの場合は、上部にバナーのヒーロー、その下にフォームが表示されます。"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "レコードはどこに追加しますか？",

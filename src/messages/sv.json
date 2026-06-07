@@ -2329,7 +2329,9 @@
       "previewLivePage": "Visa live-sidan →",
       "menuList": "Lista (foton till vänster)",
       "collapsibleCategories": "Hopfällbara kategorier på mobil",
-      "collapsibleCategoriesHint": "På telefoner trycker kunderna på en kategori för att expandera dess artiklar (GloriaFood-stil), med kontrollerna Expandera alla / Fäll ihop alla. Datorvyn påverkas inte."
+      "collapsibleCategoriesHint": "På telefoner trycker kunderna på en kategori för att expandera dess artiklar (GloriaFood-stil), med kontrollerna Expandera alla / Fäll ihop alla. Datorvyn påverkas inte.",
+      "reservationFullBg": "Helskärmsbakgrund för bokning",
+      "reservationFullBgHint": "På sidan Boka ett bord använder du ditt bannerfoto som en helskärmsbakgrund bakom bokningsformuläret. Kräver en bannerbild. Av = en bannerhjälte högst upp med formuläret nedanför."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Var lägger jag till dessa poster?",

@@ -2329,7 +2329,9 @@
       "previewLivePage": "Zobrazit živou stránku →",
       "menuList": "Seznam (fotky vlevo)",
       "collapsibleCategories": "Sbalitelné kategorie na mobilu",
-      "collapsibleCategoriesHint": "Na telefonech zákazníci klepnutím na kategorii rozbalí její položky (ve stylu GloriaFood), s ovládacími prvky Rozbalit vše / Sbalit vše. Počítače to neovlivní."
+      "collapsibleCategoriesHint": "Na telefonech zákazníci klepnutím na kategorii rozbalí její položky (ve stylu GloriaFood), s ovládacími prvky Rozbalit vše / Sbalit vše. Počítače to neovlivní.",
+      "reservationFullBg": "Pozadí rezervace na celou obrazovku",
+      "reservationFullBgHint": "Na stránce Book a Table použít fotku banneru jako pozadí na celou obrazovku za rezervačním formulářem. Vyžaduje obrázek banneru. Vypnuto = banner hero nahoře a formulář pod ním."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kde přidám tyto záznamy?",

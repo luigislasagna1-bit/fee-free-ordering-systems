@@ -2329,7 +2329,9 @@
       "previewLivePage": "查看线上页面 →",
       "menuList": "列表（图片在左）",
       "collapsibleCategories": "移动端可折叠分类",
-      "collapsibleCategoriesHint": "在手机上，顾客点击分类即可展开其中的菜品（GloriaFood 风格），并提供\"全部展开/全部收起\"控件。桌面端不受影响。"
+      "collapsibleCategoriesHint": "在手机上，顾客点击分类即可展开其中的菜品（GloriaFood 风格），并提供\"全部展开/全部收起\"控件。桌面端不受影响。",
+      "reservationFullBg": "全屏预订背景",
+      "reservationFullBgHint": "在 Book a Table 页面，将横幅图片用作预订表单后方的全屏背景。需要横幅图片。关闭 = 顶部显示横幅主图，表单显示在下方。"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "在哪里添加这些记录？",

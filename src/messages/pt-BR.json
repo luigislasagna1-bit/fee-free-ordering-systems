@@ -2329,7 +2329,9 @@
       "previewLivePage": "Ver página ao vivo →",
       "menuList": "Lista (fotos à esquerda)",
       "collapsibleCategories": "Categorias recolhíveis no celular",
-      "collapsibleCategoriesHint": "No celular, os clientes tocam em uma categoria para expandir seus itens (estilo GloriaFood), com os controles Expandir tudo / Recolher tudo. O desktop não é afetado."
+      "collapsibleCategoriesHint": "No celular, os clientes tocam em uma categoria para expandir seus itens (estilo GloriaFood), com os controles Expandir tudo / Recolher tudo. O desktop não é afetado.",
+      "reservationFullBg": "Fundo de tela cheia na página de reservas",
+      "reservationFullBgHint": "Na página Book a Table, use a foto do seu banner como fundo de tela cheia atrás do formulário de reserva. Requer uma imagem de banner. Desativado = um banner em destaque no topo com o formulário abaixo."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Onde adiciono esses registros?",
