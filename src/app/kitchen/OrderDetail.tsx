@@ -577,6 +577,29 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               <CheckCircle className="w-4 h-4" /> {tk("markComplete")}
             </button>
           )}
+          {/* Simple mode: OPTIONAL "move to Ready" so staff CAN progress an
+              order + notify the customer when they want to, without the full
+              tracking lifecycle. Does NOT change Simple mode's end-of-day
+              pinning — the order keeps showing in In Progress with a Ready
+              badge. Fabrizio cmpxemqle. */}
+          {isSimpleMode && (order.status === "accepted" || order.status === "preparing") && (
+            <button
+              onClick={() => act(() => onUpdate(order.id, "ready"))}
+              disabled={busy}
+              className="col-span-2 flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
+            >
+              <Package className="w-4 h-4" /> {tk("markReady")}
+            </button>
+          )}
+          {isSimpleMode && order.status === "ready" && (
+            <button
+              onClick={() => act(() => onUpdate(order.id, "completed"))}
+              disabled={busy}
+              className="col-span-2 flex items-center justify-center gap-1.5 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
+            >
+              <CheckCircle className="w-4 h-4" /> {tk("markComplete")}
+            </button>
+          )}
         </div>
 
         {/* Print buttons */}
