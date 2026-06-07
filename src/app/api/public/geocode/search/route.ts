@@ -62,10 +62,22 @@ export async function GET(req: NextRequest) {
       };
     }).filter((s) => Number.isFinite(s.lat) && Number.isFinite(s.lng) && (s.line1 || s.city));
 
-    if (CACHE.size > CACHE_MAX) CACHE.clear();
-    CACHE.set(key, { at: Date.now(), data: suggestions });
+    // Collapse rows the customer can't tell apart. Nominatim returns one hit per
+    // OSM segment, so a single street like "Via Ro" can come back 4-6 times with
+    // identical line1+city+postcode — that reads as a bug. Keep the first of each
+    // visually-distinct entry; the kept one still carries a valid lat/lng.
+    const seen = new Set<string>();
+    const deduped = suggestions.filter((s) => {
+      const k = `${s.line1}|${s.city}|${s.postcode}`.toLowerCase();
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    });
 
-    return NextResponse.json({ suggestions }, { headers: { "Cache-Control": "public, max-age=600" } });
+    if (CACHE.size > CACHE_MAX) CACHE.clear();
+    CACHE.set(key, { at: Date.now(), data: deduped });
+
+    return NextResponse.json({ suggestions: deduped }, { headers: { "Cache-Control": "public, max-age=600" } });
   } catch {
     return NextResponse.json({ suggestions: [] });
   }
