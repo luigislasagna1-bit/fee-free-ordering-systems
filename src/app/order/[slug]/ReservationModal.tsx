@@ -53,6 +53,10 @@ interface Props {
   timezone?: string;
   theme: Theme;
   onClose: () => void;
+  /** When true, render as an inline card (no fixed dark overlay, no internal
+   *  header) for the standalone reservation page, which supplies its own
+   *  branded hero above. Default false = the classic modal overlay. */
+  embedded?: boolean;
 }
 
 function todayISO(): string {
@@ -211,6 +215,7 @@ export function ReservationModal({
   hoursFormat = "24h",
   timezone,
   theme, onClose,
+  embedded = false,
 }: Props) {
   const tr = useTranslations("reservation");
   const tOrd = useTranslations("ordering");
@@ -450,23 +455,28 @@ export function ReservationModal({
 
   return (
     <div
-      className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
-      onClick={onClose}
+      className={embedded ? "contents" : "fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"}
+      onClick={embedded ? undefined : onClose}
     >
       <div
-        className="bg-white sm:rounded-2xl w-full max-w-lg max-h-[96vh] overflow-hidden flex flex-col"
+        className={embedded
+          ? "bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col"
+          : "bg-white sm:rounded-2xl w-full max-w-lg max-h-[96vh] overflow-hidden flex flex-col"}
         onClick={e => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-          <div>
-            <h2 className="text-lg font-bold text-gray-900">{tOrd("tableReservation")}</h2>
-            <p className="text-xs text-gray-500">{restaurantName}</p>
+        {/* Header — hidden in embedded mode; the standalone reservation page
+            supplies its own branded hero with the name + "Table Reservation". */}
+        {!embedded && (
+          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">{tOrd("tableReservation")}</h2>
+              <p className="text-xs text-gray-500">{restaurantName}</p>
+            </div>
+            <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-700">
+              <X className="w-5 h-5" />
+            </button>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-700">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+        )}
 
         {/* Body */}
         <div className="flex-1 overflow-y-auto p-5">
