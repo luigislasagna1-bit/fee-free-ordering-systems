@@ -292,7 +292,7 @@ export function ServicesClient() {
                         onChange={e => updateSetting(key, "slotInterval", parseInt(e.target.value) || 0)}
                       >
                         <option value={0}>{t("slotIntervalDefault")}</option>
-                        {[10, 15, 20, 30, 60].map(m => (
+                        {[10, 15, 20, 30, 45, 60].map(m => (
                           <option key={m} value={m}>{t("slotIntervalMin", { min: m })}</option>
                         ))}
                       </select>
