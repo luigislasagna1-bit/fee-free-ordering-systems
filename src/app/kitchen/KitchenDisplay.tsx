@@ -25,6 +25,7 @@ import {
 import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 import { useTranslations } from "next-intl";
+import { StaffLanguageSwitcher } from "@/components/StaffLanguageSwitcher";
 
 // ── Countdown hook ────────────────────────────────────────────────────────────
 // Returns 0 until the client mounts so SSR and the first client render match
@@ -2258,6 +2259,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               : <FlaskConical className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
             <span>{tk("testOrder")}</span>
           </button>
+
+          {/* Per-staff language for THIS console (kitchen tablets often never
+              touch the admin dashboard). Writes the ff-staff-locale cookie +
+              reloads — same mechanism as the dashboard switcher. Luigi 2026-06-07. */}
+          <StaffLanguageSwitcher />
 
           <button
             onClick={() => signOut({ callbackUrl: "/kitchen/login" })}
