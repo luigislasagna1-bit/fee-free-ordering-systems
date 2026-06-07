@@ -2,12 +2,14 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Plus, Tag, Trash2, ToggleLeft, ToggleRight } from "lucide-react";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import { useTranslations } from "next-intl";
 
 const emptyForm = { code: "", description: "", discountType: "percentage", discountValue: "", minimumOrder: "0", maxUses: "", expiresAt: "" };
 
 export function CouponsClient({ coupons: initial }: { coupons: any[] }) {
+  const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.couponsAdmin");
   const [coupons, setCoupons] = useState(initial);
   const [showForm, setShowForm] = useState(false);

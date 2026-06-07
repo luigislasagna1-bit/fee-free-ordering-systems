@@ -19,7 +19,8 @@ import { ChevronLeft, Mail, Phone, KeyRound, ShoppingBag, Tag, Calendar, DollarS
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { formatDate, formatCurrency as fmtCurrency } from "@/lib/utils";
+import { getRestaurantCurrency } from "@/lib/restaurant-currency";
 import { AssignCouponForm } from "./AssignCouponForm";
 import { CustomerActionsCard } from "./CustomerActionsCard";
 
@@ -34,6 +35,8 @@ export default async function CustomerDetailPage({
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) notFound();
+  const __currency = await getRestaurantCurrency(restaurantId);
+  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
 
   const { id } = await params;
 

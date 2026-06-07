@@ -3,7 +3,8 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import { Users, Mail, Phone, KeyRound, ChevronRight, Search, Download } from "lucide-react";
 
 /**
@@ -42,6 +43,7 @@ type CustomerRow = {
 type FilterKey = "all" | "signed_up" | "guests";
 
 export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
+  const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.customersList");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [query, setQuery] = useState("");

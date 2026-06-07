@@ -1,5 +1,5 @@
 "use client";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import Link from "next/link";
 import { ShoppingBag, Users, DollarSign, Clock, AlertTriangle, Zap } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -48,6 +48,7 @@ export function AdminDashboardClient({
   totalOrders, totalRevenue, customerCount, pendingOrders, recentOrders,
   orderCapUsage,
 }: Props) {
+  const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.dashboard");
   const tSidebar = useTranslations("admin.sidebar");
   const tStatuses = useTranslations("admin.orders");

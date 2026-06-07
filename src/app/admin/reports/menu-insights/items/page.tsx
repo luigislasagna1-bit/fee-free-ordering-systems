@@ -1,7 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency as fmtCurrency } from "@/lib/utils";
+import { getRestaurantCurrency } from "@/lib/restaurant-currency";
 import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
@@ -33,6 +34,8 @@ export default async function MenuInsightsItemsPage({
   const range = parseDateRange(sp);
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
+  const __currency = await getRestaurantCurrency(restaurantId);
+  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
 
   // groupBy the easy way — Prisma does the heavy lifting server-side.
   const rows = await prisma.orderItem.groupBy({

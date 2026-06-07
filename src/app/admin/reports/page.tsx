@@ -1,7 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency as fmtCurrency } from "@/lib/utils";
+import { getRestaurantCurrency } from "@/lib/restaurant-currency";
 import { isBrandParent } from "@/lib/brand";
 import { loadBrandReports } from "@/lib/brand-reports";
 import { BrandReports } from "./BrandReports";
@@ -72,6 +73,8 @@ export default async function ReportsDashboardPage({
       </div>
     );
   }
+  const __currency = await getRestaurantCurrency(restaurantId);
+  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
 
   const prev = previousPeriod(range);
 

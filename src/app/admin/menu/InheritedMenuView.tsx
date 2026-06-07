@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Layers, Eye, AlertCircle, Loader2 } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -39,6 +39,7 @@ export function InheritedMenuView({
   brandName: string;
   categories: InheritedCategory[];
 }) {
+  const formatCurrency = useCurrencyFormat();
   const router = useRouter();
   const t = useTranslations("admin.inheritedMenu");
   const [customizing, setCustomizing] = useState(false);

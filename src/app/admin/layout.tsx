@@ -15,6 +15,7 @@ import { authOptions } from "@/lib/auth";
 import { loadSetupProgress } from "@/lib/setup-checklist-loader";
 import type { SetupProgress } from "@/lib/setup-checklist";
 import { hasFeature } from "@/lib/entitlements";
+import { CurrencyProvider } from "@/lib/currency-context";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -39,6 +40,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const restaurantId = user?.restaurantId;
   let pendingOrders = 0;
   let restaurantName = "";
+  // Restaurant's chosen currency (ISO 4217), provided to the admin tree so
+  // every owner-facing money value renders in their currency, not USD.
+  let restaurantCurrency = "usd";
   let setupProgress: SetupProgress | null = null;
   let hasHostedSite = false;
   /** True iff Restaurant.publishedAt is set — hides the "Ready to publish"
@@ -58,6 +62,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           trialEndsAt: true,
           parentRestaurantId: true,
           id: true,
+          currency: true,
           // publishedAt: drives the sidebar "Ready to publish" chip —
           // when this is set, the chip hides because the restaurant
           // is already live, no nudge needed.
@@ -67,6 +72,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     ]);
     pendingOrders = count;
     restaurantName = restaurant?.name || "";
+    restaurantCurrency = restaurant?.currency || "usd";
     isPublished = !!restaurant?.publishedAt;
 
     // Email-verification state — only relevant for restaurant_admin users
@@ -156,6 +162,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
+      <CurrencyProvider currency={restaurantCurrency}>
       <div className="flex h-screen bg-gray-50 overflow-hidden flex-col">
         <EmailVerificationBanner email={ownerEmail} verified={ownerEmailVerified} />
         {user?.isImpersonating && (
@@ -199,6 +206,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           {setupProgress && <GuidedSetupPill progress={setupProgress} />}
         </SetupProgressProvider>
       </div>
+      </CurrencyProvider>
     </NextIntlClientProvider>
   );
 }

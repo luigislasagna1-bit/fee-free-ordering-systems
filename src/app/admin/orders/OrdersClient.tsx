@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import { ShoppingBag, Search, RefreshCw } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
@@ -19,6 +20,7 @@ const statusColors: Record<string, string> = {
 };
 
 export function OrdersClient({ orders }: { orders: any[] }) {
+  const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.orders");
   const tCommon = useTranslations("common");
   const tCheckout = useTranslations("checkout");

@@ -12,7 +12,7 @@ import {
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { parseComboConfig } from "@/lib/combo";
 import toast from "react-hot-toast";
@@ -1427,6 +1427,7 @@ function SortableItemRow({
   onDetach: (groupId: string) => void;
   onReorderGroups: (itemId: string, orderedIds: string[]) => void;
 }) {
+  const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.menuEditor");
   const itemHoursFormat = useContext(MenuHoursFormatCtx);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
@@ -1719,6 +1720,7 @@ function ModifierLibraryPanel({
   onSetSelectedIds: (s: Set<string>) => void;
   onBulkDelete: (ids: string[]) => void;
 }) {
+  const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.menuEditor");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const toggle = (id: string) => setExpanded(e => ({ ...e, [id]: !e[id] }));

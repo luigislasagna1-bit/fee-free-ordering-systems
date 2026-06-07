@@ -1,6 +1,7 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency as fmtCurrency } from "@/lib/utils";
+import { getRestaurantCurrency } from "@/lib/restaurant-currency";
 import { parseDateRange, previousPeriod, eachDay, formatChartDate, formatRangeLabel } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ChartTableToggle } from "@/components/admin/reports/ChartTableToggle";
@@ -38,6 +39,8 @@ export default async function SalesTrendPage({
   const t = await getTranslations("admin.reportSalesTrend");
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
+  const __currency = await getRestaurantCurrency(restaurantId);
+  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
 
   // Fetch the current-period daily orders. Same column-explicit select
   // pattern as Dashboard (avoids pulling new schema columns pre-push).
@@ -101,9 +104,9 @@ export default async function SalesTrendPage({
 
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 relative">
         {view === "chart" ? (
-          <ChartView rows={rows} max={maxVal} metric={metric} compare={compare} t={t} />
+          <ChartView rows={rows} max={maxVal} metric={metric} compare={compare} t={t} currency={__currency} />
         ) : (
-          <TableView rows={rows} metric={metric} compare={compare} t={t} />
+          <TableView rows={rows} metric={metric} compare={compare} t={t} currency={__currency} />
         )}
 
         {/* Export menu lives in the bottom-right of the card so it's
@@ -139,9 +142,9 @@ function valueOf(b: DayBucket, m: Metric): number {
   return m === "revenue" ? b.revenue : m === "orders" ? b.count : b.avg;
 }
 
-function formatVal(v: number, m: Metric): string {
+function formatVal(v: number, m: Metric, currency: string): string {
   if (m === "orders") return v.toLocaleString();
-  return formatCurrency(v);
+  return fmtCurrency(v, currency);
 }
 
 function bucketByDay(orders: { total: number; createdAt: Date }[], days: Date[]): DayBucket[] {
@@ -162,13 +165,14 @@ function bucketByDay(orders: { total: number; createdAt: Date }[], days: Date[])
 }
 
 function ChartView({
-  rows, max, metric, compare, t,
+  rows, max, metric, compare, t, currency,
 }: {
   rows: { cur: DayBucket; prev?: DayBucket }[];
   max: number;
   metric: Metric;
   compare: boolean;
   t: (k: string) => string;
+  currency: string;
 }) {
   // Hand-drawn SVG line chart — no Recharts dependency. At our data
   // scale (≤90 points for Last 90, typically 7-28) this is plenty
@@ -210,8 +214,8 @@ function ChartView({
           <g key={i}>
             <circle cx={xFor(i)} cy={yFor(valueOf(r.cur, metric))} r="3.5" fill="#a855f7" />
             <title>
-              {formatChartDate(r.cur.date)}: {formatVal(valueOf(r.cur, metric), metric)}
-              {r.prev !== undefined && ` · ${t("tooltipPrev")}: ${formatVal(valueOf(r.prev, metric), metric)}`}
+              {formatChartDate(r.cur.date)}: {formatVal(valueOf(r.cur, metric), metric, currency)}
+              {r.prev !== undefined && ` · ${t("tooltipPrev")}: ${formatVal(valueOf(r.prev, metric), metric, currency)}`}
             </title>
           </g>
         ))}
@@ -239,12 +243,13 @@ function ChartView({
 }
 
 function TableView({
-  rows, metric, compare, t,
+  rows, metric, compare, t, currency,
 }: {
   rows: { cur: DayBucket; prev?: DayBucket }[];
   metric: Metric;
   compare: boolean;
   t: (k: string) => string;
+  currency: string;
 }) {
   return (
     <div className="overflow-x-auto">
@@ -265,8 +270,8 @@ function TableView({
             return (
               <tr key={i} className="border-b border-gray-50 hover:bg-gray-50/50">
                 <td className="py-2 px-3 text-gray-700">{formatChartDate(r.cur.date)}</td>
-                <td className="py-2 px-3 text-right font-semibold text-gray-900">{formatVal(cur, metric)}</td>
-                {compare && <td className="py-2 px-3 text-right text-gray-500">{r.prev ? formatVal(prv, metric) : "—"}</td>}
+                <td className="py-2 px-3 text-right font-semibold text-gray-900">{formatVal(cur, metric, currency)}</td>
+                {compare && <td className="py-2 px-3 text-right text-gray-500">{r.prev ? formatVal(prv, metric, currency) : "—"}</td>}
                 {compare && (
                   <td className={`py-2 px-3 text-right font-medium ${delta === null ? "text-gray-400" : delta >= 0 ? "text-emerald-600" : "text-red-500"}`}>
                     {delta === null ? "—" : `${delta >= 0 ? "+" : ""}${delta.toFixed(1)}%`}

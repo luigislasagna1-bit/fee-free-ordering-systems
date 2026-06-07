@@ -16,7 +16,8 @@
 import { getSessionUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { buildTodaySnapshot } from "@/lib/digests";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency as fmtCurrency } from "@/lib/utils";
+import { getRestaurantCurrency } from "@/lib/restaurant-currency";
 import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
@@ -56,6 +57,8 @@ export default async function EndOfDayReportPage() {
   const user = await getSessionUser();
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
+  const __currency = await getRestaurantCurrency(user.restaurantId);
+  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
 
   const snapshot = await buildTodaySnapshot(user.restaurantId);
   if (!snapshot) redirect("/admin");

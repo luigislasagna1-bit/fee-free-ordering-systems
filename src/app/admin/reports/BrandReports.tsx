@@ -4,7 +4,7 @@ import {
   BarChart3, TrendingUp, ShoppingBag, DollarSign,
   Building2, ArrowUpRight, Rocket,
 } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import type { BrandReportPayload } from "@/lib/brand-reports";
 import { useTranslations } from "next-intl";
 
@@ -20,6 +20,7 @@ import { useTranslations } from "next-intl";
  * later as a query-string param.
  */
 export function BrandReports({ payload }: { payload: BrandReportPayload }) {
+  const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.brandReports");
   const maxRevenue = Math.max(...payload.daily.map((d) => d.revenue), 1);
   const maxLocationRev = Math.max(...payload.perLocation.map((l) => l.revenue), 1);

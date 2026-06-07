@@ -5,7 +5,7 @@ import {
   ChevronRight, Shield, Building2, ArrowUpRight, ExternalLink, Sparkles,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 
 /**
  * Shape of an active or trialing add-on subscription as it arrives
@@ -33,6 +33,7 @@ export function SettingsClient({
   restaurant: any;
   activeAddOns?: ActiveAddOn[];
 }) {
+  const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.settings");
   const tSidebar = useTranslations("admin.sidebar");
 
