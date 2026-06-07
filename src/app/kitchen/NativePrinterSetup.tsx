@@ -23,6 +23,7 @@
  */
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   X, Printer, CheckCircle2, XCircle, Loader2, Wifi, AlertCircle, Sparkles, Search,
 } from "lucide-react";
@@ -81,6 +82,7 @@ export function getDirectPrinterConfig(): {
 }
 
 export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
+  const tk = useTranslations("kitchen");
   const [enabled, setEnabled] = useState(false);
   const [ip, setIp] = useState("");
   const [port, setPort] = useState("9100");
@@ -179,7 +181,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
     setTestState({ kind: "testing" });
     try {
       await nativePing({ ip: testIp, port: testPort, timeoutMs: 4000 });
-      setTestState({ kind: "success", message: `Reachable ✓ — printer responding at ${testIp}:${testPort}` });
+      setTestState({ kind: "success", message: tk("printerReachable", { addr: `${testIp}:${testPort}` }) });
     } catch (err: any) {
       const reason = (err?.code || err?.message || "") as NativePrinterReason | string;
       setTestState({ kind: "error", message: nativePrinterErrorCopy(reason) });
@@ -249,9 +251,10 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
       // Surface WHICH method actually printed (Star SDK vs raw TCP)
       // so we know which path is working. Huge debugging signal.
       const method = (result as any)?.method || "unknown";
+      const methodLabel = method === "star" ? "Star SDK ✓" : method === "raw" ? "raw TCP" : String(method);
       setTestState({
         kind: "success",
-        message: `Test print sent via ${method === "star" ? "Star SDK ✓" : method === "raw" ? "raw TCP" : method}. Check your printer for paper.`,
+        message: tk("printerTestSent", { method: methodLabel }),
       });
     } catch (err: any) {
       const reason = (err?.code || err?.message || "") as NativePrinterReason | string;
@@ -269,16 +272,16 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
         <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 min-w-0">
             <Printer className="w-5 h-5 text-emerald-600 flex-shrink-0" />
-            <h2 className="text-lg font-bold text-gray-900 truncate">Direct Printer (LAN)</h2>
+            <h2 className="text-lg font-bold text-gray-900 truncate">{tk("printerTitle")}</h2>
             <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 rounded-full px-2 py-0.5 flex-shrink-0">
-              <Sparkles className="w-3 h-3" /> RECOMMENDED
+              <Sparkles className="w-3 h-3" /> {tk("printerRecommended")}
             </span>
           </div>
           <button
             type="button"
             onClick={() => { save(); onClose(); }}
             className="text-gray-400 hover:text-gray-700 p-1 flex-shrink-0"
-            aria-label="Close"
+            aria-label={tk("printerClose")}
           >
             <X className="w-5 h-5" />
           </button>
@@ -289,10 +292,9 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
             <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 flex items-start gap-3 text-sm text-amber-900">
               <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold">Native app only</p>
+                <p className="font-semibold">{tk("printerNativeOnlyTitle")}</p>
                 <p className="mt-1 leading-relaxed">
-                  Direct LAN printing requires the Fee Free Kitchen native app for Android or iOS.
-                  In a regular web browser, use the PrintNode setup instead.
+                  {tk("printerNativeOnlyDesc")}
                 </p>
               </div>
             </div>
@@ -307,10 +309,9 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
               className="rounded text-emerald-500 focus:ring-emerald-500 w-5 h-5"
             />
             <div>
-              <div className="font-semibold text-gray-900">Use direct LAN printer</div>
+              <div className="font-semibold text-gray-900">{tk("printerUseDirect")}</div>
               <div className="text-xs text-gray-500">
-                Print straight from this tablet to your receipt printer over Wi-Fi.
-                No PrintNode account, no monthly fee.
+                {tk("printerUseDirectDesc")}
               </div>
             </div>
           </label>
@@ -318,7 +319,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
           {/* Auto-discovery — primary path (GloriaFood-style). */}
           <div className={enabled ? "" : "opacity-40 pointer-events-none"}>
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-              Find your printer
+              {tk("printerFindLabel")}
             </label>
             <button
               type="button"
@@ -329,24 +330,24 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
               {discovering ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Searching for printers on your Wi-Fi…
+                  {tk("printerSearching")}
                 </>
               ) : (
                 <>
                   <Search className="w-4 h-4" />
-                  {discoveredAtLeastOnce ? "Search again" : "Find printers on my Wi-Fi"}
+                  {discoveredAtLeastOnce ? tk("printerSearchAgain") : tk("printerFind")}
                 </>
               )}
             </button>
             <p className="text-[11px] text-gray-500 mt-1.5 leading-relaxed">
-              Make sure the printer is powered on and connected to the same Wi-Fi network as this tablet.
+              {tk("printerFindHint")}
             </p>
 
             {/* Discovered printers list */}
             {discovered.length > 0 && (
               <div className="mt-3 space-y-2">
                 <p className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">
-                  Found {discovered.length} printer{discovered.length === 1 ? "" : "s"}
+                  {tk("printerFound", { count: discovered.length })}
                 </p>
                 {discovered.map((p) => (
                   <button
@@ -366,7 +367,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
                         <Printer className="w-4 h-4" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-bold text-gray-900 truncate">{p.name || "Receipt printer"}</div>
+                        <div className="text-sm font-bold text-gray-900 truncate">{p.name || tk("printerDefaultName")}</div>
                         <div className="text-xs text-gray-500 font-mono">{p.ip}:{p.port}</div>
                       </div>
                       {ip === p.ip && <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />}
@@ -378,10 +379,8 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
 
             {discoveredAtLeastOnce && discovered.length === 0 && (
               <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900 leading-relaxed">
-                <p className="font-bold mb-1">No printers found on Wi-Fi</p>
-                <p>
-                  Make sure the printer is powered on and on the same Wi-Fi as the tablet. Some routers (especially business Wi-Fi) block printer broadcasts — in that case, enter the IP manually below.
-                </p>
+                <p className="font-bold mb-1">{tk("printerNoneTitle")}</p>
+                <p>{tk("printerNoneDesc")}</p>
               </div>
             )}
 
@@ -392,7 +391,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
               onClick={() => setShowManualEntry(!showManualEntry)}
               className="mt-3 text-xs text-gray-500 hover:text-gray-700 underline"
             >
-              {showManualEntry ? "Hide manual IP entry" : "Or enter IP manually"}
+              {showManualEntry ? tk("printerHideManual") : tk("printerEnterManual")}
             </button>
           </div>
 
@@ -402,7 +401,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
               <div className="grid grid-cols-[1fr_120px] gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                    Printer IP address
+                    {tk("printerIpLabel")}
                   </label>
                   <input
                     type="text"
@@ -422,7 +421,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                    Port
+                    {tk("printerPort")}
                   </label>
                   <input
                     type="text"
@@ -434,7 +433,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
                 </div>
               </div>
               <p className="text-[11px] text-gray-500 mt-1.5 leading-relaxed">
-                Power-cycle the printer while holding the <strong>FEED</strong> button — it prints a self-test page with the IP near the bottom. Default port for Star/Epson is <code>9100</code>.
+                {tk("printerIpHint")}
               </p>
             </div>
           )}
@@ -442,7 +441,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
           {/* Paper width */}
           <div className={enabled ? "" : "opacity-40 pointer-events-none"}>
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-              Paper width
+              {tk("printerPaperWidth")}
             </label>
             <div className="inline-flex rounded-lg border border-gray-200 overflow-hidden text-sm font-semibold">
               <button
@@ -454,7 +453,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
                     : "px-4 py-2 text-gray-700 hover:bg-gray-50"
                 }
               >
-                80 mm (standard)
+                {tk("printerPaper80")}
               </button>
               <button
                 type="button"
@@ -465,7 +464,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
                     : "px-4 py-2 text-gray-700 hover:bg-gray-50"
                 }
               >
-                58 mm (compact)
+                {tk("printerPaper58")}
               </button>
             </div>
           </div>
@@ -479,10 +478,9 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
               className="rounded text-emerald-500 focus:ring-emerald-500 w-5 h-5"
             />
             <div>
-              <div className="font-medium text-gray-900">Auto-print on accept</div>
+              <div className="font-medium text-gray-900">{tk("printerAutoprint")}</div>
               <div className="text-xs text-gray-500">
-                When you accept an order, the kitchen ticket prints automatically.
-                Turn off if you'd rather manually trigger every print.
+                {tk("printerAutoprintDesc")}
               </div>
             </div>
           </label>
@@ -495,7 +493,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
               disabled={!enabled || !ip || testState.kind === "testing" || !native}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-sm font-semibold text-gray-700 disabled:opacity-50 transition"
             >
-              <Wifi className="w-4 h-4" /> Test Connection
+              <Wifi className="w-4 h-4" /> {tk("printerTestConn")}
             </button>
             <button
               type="button"
@@ -503,14 +501,14 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
               disabled={!enabled || !ip || testState.kind === "testing" || !native}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-sm font-bold text-white disabled:opacity-50 transition"
             >
-              <Printer className="w-4 h-4" /> Test Print
+              <Printer className="w-4 h-4" /> {tk("printerTestPrint")}
             </button>
           </div>
 
           {/* Test result */}
           {testState.kind === "testing" && (
             <div className="flex items-center gap-2 text-sm text-gray-600">
-              <Loader2 className="w-4 h-4 animate-spin" /> Testing…
+              <Loader2 className="w-4 h-4 animate-spin" /> {tk("printerTesting")}
             </div>
           )}
           {testState.kind === "success" && (
@@ -533,8 +531,13 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
           <details className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
             <summary className="cursor-pointer font-bold flex items-center gap-1.5">
               <AlertCircle className="w-3.5 h-3.5" />
-              Test Print said success but no paper came out?
+              {tk("printerHelpSummary")}
             </summary>
+            {/* Technical steps below are intentionally kept in English: they
+                reference the EXACT English menu labels in Star's own PC utility
+                ("Star Line Mode", "ESC/POS Mode", "Emulation") and link to
+                English vendor docs — translating them would send users hunting
+                for labels that don't exist in their printer tool. */}
             <div className="mt-2 space-y-2 leading-relaxed">
               <p>
                 <strong>If you have a Star TSP143III, TSP100, or mPOP printer:</strong> these models ship in &quot;Star Line Mode&quot; by default and ignore the standard print commands our app sends. The TCP connection works (Test Connection passes) but the printer silently discards the print job. You&apos;ll need to switch the printer to &quot;ESC/POS Mode&quot; one time — takes ~5 minutes.
@@ -563,7 +566,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
             onClick={() => { save(); onClose(); }}
             className="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-sm font-bold text-white transition"
           >
-            Save &amp; Close
+            {tk("printerSaveClose")}
           </button>
         </div>
       </div>
