@@ -404,7 +404,14 @@ export default async function HostedSitePage({
           <style
             dangerouslySetInnerHTML={{
               __html: `
-                #ff-hosted-nav.ff-nav-transparent { background-color: transparent; }
+                /* Top-of-page state: a subtle dark gradient scrim (fading to
+                   nothing) instead of full transparency. Guarantees the white
+                   logo / links / CTA stay readable over ANY hero — a light
+                   theme gradient, a pale photo, or a busy image — without
+                   looking like a hard nav bar. The hero still shows through
+                   below the scrim. */
+                #ff-hosted-nav.ff-nav-transparent { background-image: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0)); }
+                #ff-hosted-nav.ff-nav-transparent a, #ff-hosted-nav.ff-nav-transparent span { text-shadow: 0 1px 4px rgba(0,0,0,0.55); }
                 #ff-hosted-nav.ff-nav-scrolled    { background-color: rgba(0,0,0,0.85); border-bottom-color: rgba(255,255,255,0.10); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
               `,
             }}
