@@ -30,7 +30,7 @@ export type WizardProps = {
   mode: WizardMode;
   hasAdvanced: boolean;
   categories: { id: string; name: string }[];
-  menuItems: { id: string; name: string; categoryId: string; price: number }[];
+  menuItems: { id: string; name: string; categoryId: string; price: number; variants?: { id: string; name: string; price: number }[] }[];
   paymentMethods: string[];
   deliveryZones: { id: string; name: string }[];
   /** When mode === "edit", the existing promo (already scoped to restaurantId). */
@@ -201,7 +201,7 @@ export function PromoWizard(props: WizardProps) {
         name: cat.name,
         items: menuItems
           .filter((i) => i.categoryId === cat.id)
-          .map((i) => ({ id: i.id, name: i.name, price: i.price })),
+          .map((i) => ({ id: i.id, name: i.name, price: i.price, variants: i.variants ?? [] })),
       })),
     [categories, menuItems],
   );

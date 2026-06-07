@@ -29,6 +29,11 @@ export type IG = {
   label: string;
   categoryIds: string[];
   itemIds: string[];
+  /** Specific size-variant IDs the promo targets. Empty/absent = no
+   *  variant-level restriction. When a variant is listed (but its parent
+   *  item is NOT in itemIds), only that size qualifies. Optional so legacy
+   *  groups + inline constructions stay valid. Luigi 2026-06-07. */
+  variantIds?: string[];
   role?: "paid" | "free" | "trigger" | "required";
   minCount?: number;
   maxCount?: number;
@@ -50,7 +55,12 @@ export type PromoRules = {
 export type CatEntry = {
   id: string;
   name: string;
-  items: { id: string; name: string; price: number }[];
+  items: {
+    id: string;
+    name: string;
+    price: number;
+    variants?: { id: string; name: string; price: number }[];
+  }[];
 };
 
 // ─── Group factory + init per type ──────────────────────────────────────────
@@ -62,6 +72,7 @@ export function newGroup(role?: IG["role"]): IG {
     label: "",
     categoryIds: [],
     itemIds: [],
+    variantIds: [],
     role,
   };
 }
@@ -100,7 +111,8 @@ export function initRulesForType(type: string): PromoRules {
 export function groupSummary(g: IG, cats: CatEntry[]): string {
   const cc = g.categoryIds.length;
   const ic = g.itemIds.length;
-  if (!cc && !ic) return "No items selected — click to edit";
+  const vc = (g.variantIds ?? []).length;
+  if (!cc && !ic && !vc) return "No items selected — click to edit";
   const parts: string[] = [];
   if (cc) {
     const names = g.categoryIds
@@ -110,6 +122,7 @@ export function groupSummary(g: IG, cats: CatEntry[]): string {
     parts.push(`${names}${cc > 2 ? ` +${cc - 2} more` : ""}`);
   }
   if (ic) parts.push(`${ic} specific item${ic > 1 ? "s" : ""}`);
+  if (vc) parts.push(`${vc} size${vc > 1 ? "s" : ""}`);
   return parts.join(" + ");
 }
 
@@ -130,8 +143,17 @@ export function ItemGroupPicker({
     ...group,
     categoryIds: [...group.categoryIds],
     itemIds: [...group.itemIds],
+    variantIds: [...(group.variantIds ?? [])],
   }));
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
+
+  const toggleVariant = (variantId: string) =>
+    setDraft((d) => ({
+      ...d,
+      variantIds: (d.variantIds ?? []).includes(variantId)
+        ? (d.variantIds ?? []).filter((v) => v !== variantId)
+        : [...(d.variantIds ?? []), variantId],
+    }));
 
   const toggleCat = (catId: string) => {
     setDraft((d) => {
@@ -243,26 +265,61 @@ export function ItemGroupPicker({
                 {isExpanded && (
                   <div className="pl-8 pr-3 pb-1 space-y-0.5">
                     {cat.items.map((item) => {
-                      const checked = catChecked || draft.itemIds.includes(item.id);
+                      const itemChecked = catChecked || draft.itemIds.includes(item.id);
+                      const variants = item.variants ?? [];
+                      const hasVariants = variants.length > 0;
                       return (
-                        <label
-                          key={item.id}
-                          className={`flex items-center gap-2 py-1 text-sm cursor-pointer ${
-                            catChecked ? "opacity-50" : ""
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={checked}
-                            disabled={catChecked}
-                            onChange={() => !catChecked && toggleItem(item.id)}
-                            className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500"
-                          />
-                          <span className="flex-1 text-gray-700">{item.name}</span>
-                          <span className="text-xs text-gray-400">
-                            ${item.price.toFixed(2)}
-                          </span>
-                        </label>
+                        <div key={item.id}>
+                          <label
+                            className={`flex items-center gap-2 py-1 text-sm cursor-pointer ${
+                              catChecked ? "opacity-50" : ""
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={itemChecked}
+                              disabled={catChecked}
+                              onChange={() => !catChecked && toggleItem(item.id)}
+                              className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500"
+                            />
+                            <span className="flex-1 text-gray-700">
+                              {item.name}
+                              {hasVariants && <span className="text-gray-400"> · all sizes</span>}
+                            </span>
+                            <span className="text-xs text-gray-400">
+                              ${item.price.toFixed(2)}
+                            </span>
+                          </label>
+                          {/* Per-size variant checkboxes — target a specific size
+                              instead of the whole item. Disabled (implied) when the
+                              whole item or its category is selected. */}
+                          {hasVariants && (
+                            <div className="pl-7 pb-0.5 space-y-0.5">
+                              {variants.map((v) => {
+                                const vChecked = itemChecked || (draft.variantIds ?? []).includes(v.id);
+                                const vDisabled = itemChecked;
+                                return (
+                                  <label
+                                    key={v.id}
+                                    className={`flex items-center gap-2 py-0.5 text-xs cursor-pointer ${
+                                      vDisabled ? "opacity-50" : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={vChecked}
+                                      disabled={vDisabled}
+                                      onChange={() => !vDisabled && toggleVariant(v.id)}
+                                      className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500"
+                                    />
+                                    <span className="flex-1 text-gray-500">{v.name}</span>
+                                    <span className="text-gray-400">${v.price.toFixed(2)}</span>
+                                  </label>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
                       );
                     })}
                   </div>

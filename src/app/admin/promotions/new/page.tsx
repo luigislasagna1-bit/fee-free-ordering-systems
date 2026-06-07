@@ -25,7 +25,13 @@ export default async function NewPromotionPage() {
       prisma.menuItem.findMany({
         where: { restaurantId },
         orderBy: { name: "asc" },
-        select: { id: true, name: true, categoryId: true, price: true },
+        select: {
+          id: true, name: true, categoryId: true, price: true,
+          variants: {
+            orderBy: { sortOrder: "asc" },
+            select: { id: true, name: true, price: true },
+          },
+        },
       }),
       prisma.deliveryZone.findMany({
         where: { restaurantId, isActive: true },

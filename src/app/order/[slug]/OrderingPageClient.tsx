@@ -1377,6 +1377,7 @@ export function OrderingPageClient({
         items: cart.filter(ci => !ci.isBundle).map(ci => ({
           menuItemId: ci.menuItem.id,
           categoryId: ci.menuItem.categoryId,
+          variantId: ci.variant?.id ?? null,
           price: ci.menuItem.price,
           quantity: ci.quantity,
           subtotal: ci.lineTotal,

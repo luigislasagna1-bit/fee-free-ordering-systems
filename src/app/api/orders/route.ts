@@ -1038,6 +1038,7 @@ export async function POST(req: NextRequest) {
         .map((i) => ({
           menuItemId: i.menuItemId as string,
           categoryId: menuItemMap.get(i.menuItemId as string)?.categoryId ?? undefined,
+          variantId: i.variantId ?? null,
           price: i.price,
           quantity: i.quantity,
           subtotal: i.subtotal,

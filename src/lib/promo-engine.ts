@@ -30,6 +30,11 @@ export type ItemGroup = {
   label: string;
   categoryIds: string[];
   itemIds: string[];
+  /** Specific size-variant IDs the group targets. When set (and the parent
+   *  item is NOT also in itemIds), only those variants qualify. Empty/absent
+   *  = no variant-level restriction. Additive — never narrows existing
+   *  item/category matches. Luigi 2026-06-07. */
+  variantIds?: string[];
   role?: "paid" | "free" | "trigger" | "required";
   minCount?: number;
   maxCount?: number;
@@ -68,6 +73,9 @@ export type PromoResult = {
 export type CartItem = {
   menuItemId: string;
   categoryId?: string;
+  /** The chosen size variant's ID, when the line is a specific variant.
+   *  Lets promos target a specific size. Null/absent on no-variant items. */
+  variantId?: string | null;
   price: number;
   quantity: number;
   subtotal: number;
@@ -395,11 +403,12 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
 // ── Item group matching ────────────────────────────────────────────────────────
 
 function itemsMatchingGroup(group: ItemGroup, items: CartItem[]): CartItem[] {
-  const { itemIds = [], categoryIds = [] } = group;
-  if (!itemIds.length && !categoryIds.length) return items;
+  const { itemIds = [], categoryIds = [], variantIds = [] } = group;
+  if (!itemIds.length && !categoryIds.length && !variantIds.length) return items;
   return items.filter(i =>
     itemIds.includes(i.menuItemId) ||
-    (i.categoryId != null && categoryIds.includes(i.categoryId))
+    (i.categoryId != null && categoryIds.includes(i.categoryId)) ||
+    (i.variantId != null && variantIds.includes(i.variantId))
   );
 }
 
