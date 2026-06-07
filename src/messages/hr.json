@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Minimalna narudžba {min}.",
     "leadTimePrompt": "⏰ Ovaj restoran prima narudžbe unaprijed — odaberite vrijeme. Najraniji dostupni termin prikazan je u nastavku.",
-    "asapOnly": "Ova narudžba bit će pripremljena što je prije moguće."
+    "asapOnly": "Ova narudžba bit će pripremljena što je prije moguće.",
+    "scheduleModeSlots": "Termini",
+    "scheduleModeExact": "Točno vrijeme"
   },
   "reservation": {
     "title": "Rezervirajte stol",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Kupci moraju odabrati buduće vrijeme — nema opcije naručivanja odmah.",
       "timeSelectionLabel": "Odabir vremena",
       "timeSelectionBands": "Termini",
-      "timeSelectionExact": "Točno vrijeme"
+      "timeSelectionExact": "Točno vrijeme",
+      "timeSelectionBoth": "Oboje (kupac bira)"
     },
     "delivery": {
       "title": "Zone dostave",

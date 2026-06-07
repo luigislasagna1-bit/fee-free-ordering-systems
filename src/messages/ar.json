@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "الحد الأدنى للطلب {min}.",
     "leadTimePrompt": "⏰ يستقبل هذا المطعم الطلبات مسبقًا — يُرجى اختيار وقت. أقرب موعد متاح معروض أدناه.",
-    "asapOnly": "سيتم تحضير هذا الطلب في أقرب وقت ممكن."
+    "asapOnly": "سيتم تحضير هذا الطلب في أقرب وقت ممكن.",
+    "scheduleModeSlots": "فترات زمنية",
+    "scheduleModeExact": "وقت محدد"
   },
   "reservation": {
     "title": "احجز طاولة",
@@ -797,7 +799,8 @@
       "hideAsapHint": "يجب على العملاء اختيار وقت مستقبلي — لا يوجد خيار الطلب الفوري.",
       "timeSelectionLabel": "تحديد الوقت",
       "timeSelectionBands": "فترات زمنية",
-      "timeSelectionExact": "وقت محدد"
+      "timeSelectionExact": "وقت محدد",
+      "timeSelectionBoth": "كلاهما (يختار العميل)"
     },
     "delivery": {
       "title": "مناطق التوصيل",

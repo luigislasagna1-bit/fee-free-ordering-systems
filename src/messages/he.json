@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "הזמנה מינימלית {min}.",
     "leadTimePrompt": "⏰ מסעדה זו מקבלת הזמנות מראש — נא לבחור שעה. השעה הזמינה הקרובה ביותר מוצגת למטה.",
-    "asapOnly": "הזמנה זו תוכן בהקדם האפשרי."
+    "asapOnly": "הזמנה זו תוכן בהקדם האפשרי.",
+    "scheduleModeSlots": "חלונות זמן",
+    "scheduleModeExact": "זמן מדויק"
   },
   "reservation": {
     "title": "הזמן שולחן",
@@ -797,7 +799,8 @@
       "hideAsapHint": "הלקוחות חייבים לבחור שעה עתידית — ללא אפשרות הזמנה מיידית.",
       "timeSelectionLabel": "בחירת זמן",
       "timeSelectionBands": "משבצות זמן",
-      "timeSelectionExact": "זמן מדויק"
+      "timeSelectionExact": "זמן מדויק",
+      "timeSelectionBoth": "שניהם (הלקוח בוחר)"
     },
     "delivery": {
       "title": "אזורי משלוח",

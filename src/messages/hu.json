@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Minimális rendelési összeg: {min}.",
     "leadTimePrompt": "⏰ Ez az étterem előrendeléseket fogad — kérjük, válasszon időpontot. A legkorábbi elérhető időpontot lent találja.",
-    "asapOnly": "Ezt a rendelést a lehető leghamarabb elkészítjük."
+    "asapOnly": "Ezt a rendelést a lehető leghamarabb elkészítjük.",
+    "scheduleModeSlots": "Időpontsávok",
+    "scheduleModeExact": "Pontos időpont"
   },
   "reservation": {
     "title": "Asztal foglalása",
@@ -797,7 +799,8 @@
       "hideAsapHint": "A vásárlóknak jövőbeli időpontot kell választaniuk – nincs azonnali rendelési lehetőség.",
       "timeSelectionLabel": "Időpont kiválasztása",
       "timeSelectionBands": "Idősávok",
-      "timeSelectionExact": "Pontos időpont"
+      "timeSelectionExact": "Pontos időpont",
+      "timeSelectionBoth": "Mindkettő (vásárló választ)"
     },
     "delivery": {
       "title": "Szállítási zónák",

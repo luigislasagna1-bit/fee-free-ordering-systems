@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Mindestbestellwert {min}.",
     "leadTimePrompt": "⏰ Dieses Restaurant nimmt Bestellungen im Voraus entgegen — bitte wähle eine Uhrzeit. Der früheste verfügbare Termin wird unten angezeigt.",
-    "asapOnly": "Diese Bestellung wird so schnell wie möglich zubereitet."
+    "asapOnly": "Diese Bestellung wird so schnell wie möglich zubereitet.",
+    "scheduleModeSlots": "Zeitfenster",
+    "scheduleModeExact": "Genaue Zeit"
   },
   "reservation": {
     "title": "Tisch reservieren",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Kunden müssen eine spätere Zeit wählen – keine Sofort-Option.",
       "timeSelectionLabel": "Zeitauswahl",
       "timeSelectionBands": "Zeitfenster",
-      "timeSelectionExact": "Genaue Uhrzeit"
+      "timeSelectionExact": "Genaue Uhrzeit",
+      "timeSelectionBoth": "Beide (Kunde wählt)"
     },
     "delivery": {
       "title": "Lieferzonen",

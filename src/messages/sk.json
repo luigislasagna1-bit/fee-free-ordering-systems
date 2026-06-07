@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Minimálna objednávka {min}.",
     "leadTimePrompt": "⏰ Táto reštaurácia prijíma objednávky vopred — vyberte si prosím čas. Najbližší dostupný termín je uvedený nižšie.",
-    "asapOnly": "Táto objednávka bude pripravená čo najskôr."
+    "asapOnly": "Táto objednávka bude pripravená čo najskôr.",
+    "scheduleModeSlots": "Časové sloty",
+    "scheduleModeExact": "Presný čas"
   },
   "reservation": {
     "title": "Rezervovať stôl",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Zákazníci musia zvoliť budúci čas — žiadna možnosť „čo najskôr\".",
       "timeSelectionLabel": "Výber času",
       "timeSelectionBands": "Časové bloky",
-      "timeSelectionExact": "Presný čas"
+      "timeSelectionExact": "Presný čas",
+      "timeSelectionBoth": "Oboje (zvolí zákazník)"
     },
     "delivery": {
       "title": "Zóny doručenia",

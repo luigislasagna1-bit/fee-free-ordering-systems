@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Minimumsordre {min}.",
     "leadTimePrompt": "⏰ Denne restauranten tar imot forhåndsbestillinger – velg et tidspunkt. Det tidligste ledige tidspunktet vises nedenfor.",
-    "asapOnly": "Denne bestillingen vil bli tilberedt så snart som mulig."
+    "asapOnly": "Denne bestillingen vil bli tilberedt så snart som mulig.",
+    "scheduleModeSlots": "Tidsluker",
+    "scheduleModeExact": "Nøyaktig tid"
   },
   "reservation": {
     "title": "Bestill bord",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Kundene må velge et fremtidig tidspunkt – ingen snarest mulig-valg.",
       "timeSelectionLabel": "Tidsvalg",
       "timeSelectionBands": "Tidsluker",
-      "timeSelectionExact": "Nøyaktig tidspunkt"
+      "timeSelectionExact": "Nøyaktig tidspunkt",
+      "timeSelectionBoth": "Begge (kunden velger)"
     },
     "delivery": {
       "title": "Leveringssoner",

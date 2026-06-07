@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Minimale bestelling {min}.",
     "leadTimePrompt": "⏰ Dit restaurant neemt bestellingen vooraf aan — kies een tijd. Het vroegst beschikbare tijdslot zie je hieronder.",
-    "asapOnly": "Deze bestelling wordt zo snel mogelijk klaargemaakt."
+    "asapOnly": "Deze bestelling wordt zo snel mogelijk klaargemaakt.",
+    "scheduleModeSlots": "Tijdvakken",
+    "scheduleModeExact": "Exacte tijd"
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Klanten moeten een toekomstig tijdstip kiezen — geen optie voor zo snel mogelijk.",
       "timeSelectionLabel": "Tijdselectie",
       "timeSelectionBands": "Tijdsloten",
-      "timeSelectionExact": "Exacte tijd"
+      "timeSelectionExact": "Exacte tijd",
+      "timeSelectionBoth": "Beide (klant kiest)"
     },
     "delivery": {
       "title": "Bezorgzones",

@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Najmanjše naročilo {min}.",
     "leadTimePrompt": "⏰ Ta restavracija sprejema naročila vnaprej — prosimo, izberite čas. Najzgodnejši razpoložljivi termin je prikazan spodaj.",
-    "asapOnly": "To naročilo bo pripravljeno čim prej."
+    "asapOnly": "To naročilo bo pripravljeno čim prej.",
+    "scheduleModeSlots": "Časovni termini",
+    "scheduleModeExact": "Točen čas"
   },
   "reservation": {
     "title": "Rezerviraj mizo",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Stranke morajo izbrati prihodnji čas — brez možnosti takojšnjega naročila.",
       "timeSelectionLabel": "Izbira časa",
       "timeSelectionBands": "Časovni termini",
-      "timeSelectionExact": "Točen čas"
+      "timeSelectionExact": "Točen čas",
+      "timeSelectionBoth": "Oboje (izbere stranka)"
     },
     "delivery": {
       "title": "Območja dostave",

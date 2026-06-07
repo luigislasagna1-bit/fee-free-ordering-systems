@@ -1632,11 +1632,12 @@ export function OrderingPageClient({
   // within opening hours; "bands" (default) gives a dropdown of fixed slots at
   // perServiceSlotInterval. Reactive to orderType like the interval above.
   // Fabrizio cmpxdtl9m.
-  const perServiceSlotMode: "bands" | "exact" = (() => {
+  const perServiceSlotMode: "bands" | "exact" | "both" = (() => {
     try {
       const raw = (restaurant as any).serviceSettings;
       const ss = raw ? JSON.parse(raw) : null;
-      if (ss?.[feeOrderType]?.slotMode === "exact") return "exact";
+      const m = ss?.[feeOrderType]?.slotMode;
+      if (m === "exact" || m === "both") return m;
     } catch { /* malformed serviceSettings — fall back to bands */ }
     return "bands";
   })();

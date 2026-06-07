@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Minimali užsakymo suma {min}.",
     "leadTimePrompt": "⏰ Šis restoranas priima užsakymus iš anksto — pasirinkite laiką. Anksčiausias galimas laikas nurodytas žemiau.",
-    "asapOnly": "Šis užsakymas bus paruoštas kuo greičiau."
+    "asapOnly": "Šis užsakymas bus paruoštas kuo greičiau.",
+    "scheduleModeSlots": "Laiko intervalai",
+    "scheduleModeExact": "Tikslus laikas"
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Klientai turi pasirinkti būsimą laiką – jokio „kuo greičiau“ varianto.",
       "timeSelectionLabel": "Laiko pasirinkimas",
       "timeSelectionBands": "Laiko intervalai",
-      "timeSelectionExact": "Tikslus laikas"
+      "timeSelectionExact": "Tikslus laikas",
+      "timeSelectionBoth": "Abu (renkasi klientas)"
     },
     "delivery": {
       "title": "Pristatymo zonos",

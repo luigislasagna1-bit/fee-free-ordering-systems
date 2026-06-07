@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "न्यूनतम ऑर्डर {min}।",
     "leadTimePrompt": "⏰ यह रेस्तरां पहले से ऑर्डर लेता है — कृपया एक समय चुनें। सबसे जल्दी उपलब्ध स्लॉट नीचे दिखाया गया है।",
-    "asapOnly": "यह ऑर्डर जल्द से जल्द तैयार किया जाएगा।"
+    "asapOnly": "यह ऑर्डर जल्द से जल्द तैयार किया जाएगा।",
+    "scheduleModeSlots": "समय स्लॉट",
+    "scheduleModeExact": "सटीक समय"
   },
   "reservation": {
     "title": "टेबल बुक करें",
@@ -820,7 +822,8 @@
       "hideAsapHint": "ग्राहकों को भविष्य का कोई समय चुनना होगा — कोई ASAP विकल्प नहीं।",
       "timeSelectionLabel": "समय चयन",
       "timeSelectionBands": "समय स्लॉट",
-      "timeSelectionExact": "सटीक समय"
+      "timeSelectionExact": "सटीक समय",
+      "timeSelectionBoth": "दोनों (ग्राहक चुनता है)"
     },
     "delivery": {
       "title": "डिलीवरी क्षेत्र",

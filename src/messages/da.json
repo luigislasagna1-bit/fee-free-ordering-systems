@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Minimumsordre {min}.",
     "leadTimePrompt": "⏰ Denne restaurant tager imod bestillinger i forvejen — vælg venligst et tidspunkt. Det tidligste ledige tidspunkt vises nedenfor.",
-    "asapOnly": "Denne bestilling vil blive tilberedt hurtigst muligt."
+    "asapOnly": "Denne bestilling vil blive tilberedt hurtigst muligt.",
+    "scheduleModeSlots": "Tidsintervaller",
+    "scheduleModeExact": "Præcist tidspunkt"
   },
   "reservation": {
     "title": "Book et bord",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Kunder skal vælge et fremtidigt tidspunkt — ingen hurtigst muligt-mulighed.",
       "timeSelectionLabel": "Tidsvalg",
       "timeSelectionBands": "Tidsintervaller",
-      "timeSelectionExact": "Præcist tidspunkt"
+      "timeSelectionExact": "Præcist tidspunkt",
+      "timeSelectionBoth": "Begge (kunden vælger)"
     },
     "delivery": {
       "title": "Leveringszoner",

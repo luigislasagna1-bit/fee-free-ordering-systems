@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Comandă minimă {min}.",
     "leadTimePrompt": "⏰ Acest restaurant preia comenzile în avans — te rugăm să alegi o oră. Cel mai apropiat interval disponibil este afișat mai jos.",
-    "asapOnly": "Această comandă va fi pregătită cât mai curând posibil."
+    "asapOnly": "Această comandă va fi pregătită cât mai curând posibil.",
+    "scheduleModeSlots": "Intervale orare",
+    "scheduleModeExact": "Oră exactă"
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Clienții trebuie să aleagă o oră viitoare — fără opțiunea ASAP.",
       "timeSelectionLabel": "Selectare oră",
       "timeSelectionBands": "Intervale orare",
-      "timeSelectionExact": "Oră exactă"
+      "timeSelectionExact": "Oră exactă",
+      "timeSelectionBoth": "Ambele (alege clientul)"
     },
     "delivery": {
       "title": "Zone de livrare",

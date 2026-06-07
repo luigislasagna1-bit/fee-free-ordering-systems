@@ -41,8 +41,10 @@ interface ServiceConfig {
   /** How the customer picks a scheduled time for this service:
    *   - "bands"  (default): a dropdown of fixed slots at slotInterval.
    *   - "exact": a free time field so the customer can pick any minute
-   *     within opening hours. Fabrizio cmpxdtl9m (2026-06-07). */
-  slotMode?: "bands" | "exact";
+   *     within opening hours.
+   *   - "both": the customer toggles between a slot dropdown and an exact
+   *     time field. Fabrizio cmpxdtl9m (2026-06-07). */
+  slotMode?: "bands" | "exact" | "both";
 }
 
 export function ServicesClient() {
@@ -273,6 +275,7 @@ export function ServicesClient() {
                       >
                         <option value="bands">{t("timeSelectionBands")}</option>
                         <option value="exact">{t("timeSelectionExact")}</option>
+                        <option value="both">{t("timeSelectionBoth")}</option>
                       </select>
                     </div>
                   )}

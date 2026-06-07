@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "최소 주문 금액 {min}.",
     "leadTimePrompt": "⏰ 이 매장은 예약 주문만 받습니다 — 원하시는 시간을 선택해 주세요. 가장 빠른 예약 가능 시간은 아래에 표시되어 있습니다.",
-    "asapOnly": "이 주문은 최대한 빨리 준비됩니다."
+    "asapOnly": "이 주문은 최대한 빨리 준비됩니다.",
+    "scheduleModeSlots": "시간대",
+    "scheduleModeExact": "정확한 시간"
   },
   "reservation": {
     "title": "테이블 예약",
@@ -797,7 +799,8 @@
       "hideAsapHint": "고객은 미래 시간을 선택해야 합니다 — ASAP 옵션 없음.",
       "timeSelectionLabel": "시간 선택",
       "timeSelectionBands": "시간대",
-      "timeSelectionExact": "정확한 시간"
+      "timeSelectionExact": "정확한 시간",
+      "timeSelectionBoth": "둘 다 (고객 선택)"
     },
     "delivery": {
       "title": "배달 구역",

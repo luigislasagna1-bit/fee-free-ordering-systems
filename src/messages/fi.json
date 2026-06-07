@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Vähimmäistilaus {min}.",
     "leadTimePrompt": "⏰ Tämä ravintola ottaa tilauksia vastaan ennakkoon — valitse aika. Ensimmäinen vapaa aika näkyy alla.",
-    "asapOnly": "Tämä tilaus valmistetaan mahdollisimman pian."
+    "asapOnly": "Tämä tilaus valmistetaan mahdollisimman pian.",
+    "scheduleModeSlots": "Aikavälit",
+    "scheduleModeExact": "Tarkka aika"
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Asiakkaiden on valittava tuleva ajankohta — ei mahdollisimman pian -vaihtoehtoa.",
       "timeSelectionLabel": "Ajan valinta",
       "timeSelectionBands": "Aikavälit",
-      "timeSelectionExact": "Tarkka aika"
+      "timeSelectionExact": "Tarkka aika",
+      "timeSelectionBoth": "Molemmat (asiakas valitsee)"
     },
     "delivery": {
       "title": "Toimitusalueet",

@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "最低订单金额 {min}。",
     "leadTimePrompt": "⏰ 本餐厅仅接受预约下单，请选择一个时间。下方显示的是最早可用的时段。",
-    "asapOnly": "本订单将尽快为您准备。"
+    "asapOnly": "本订单将尽快为您准备。",
+    "scheduleModeSlots": "时间段",
+    "scheduleModeExact": "具体时间"
   },
   "reservation": {
     "title": "预订餐桌",
@@ -797,7 +799,8 @@
       "hideAsapHint": "顾客必须选择一个未来的时间，没有“尽快”选项。",
       "timeSelectionLabel": "时间选择",
       "timeSelectionBands": "时间段",
-      "timeSelectionExact": "具体时间"
+      "timeSelectionExact": "具体时间",
+      "timeSelectionBoth": "两者（顾客选择）"
     },
     "delivery": {
       "title": "配送区域",

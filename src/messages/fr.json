@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Commande minimum {min}.",
     "leadTimePrompt": "⏰ Ce restaurant prend les commandes à l'avance — merci de choisir un horaire. Le premier créneau disponible est indiqué ci-dessous.",
-    "asapOnly": "Cette commande sera préparée dès que possible."
+    "asapOnly": "Cette commande sera préparée dès que possible.",
+    "scheduleModeSlots": "Créneaux horaires",
+    "scheduleModeExact": "Heure exacte"
   },
   "reservation": {
     "title": "Réserver une table",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Les clients doivent choisir une heure ultérieure — aucune option immédiate.",
       "timeSelectionLabel": "Sélection de l'heure",
       "timeSelectionBands": "Créneaux horaires",
-      "timeSelectionExact": "Heure exacte"
+      "timeSelectionExact": "Heure exacte",
+      "timeSelectionBoth": "Les deux (au choix du client)"
     },
     "delivery": {
       "title": "Zones de livraison",

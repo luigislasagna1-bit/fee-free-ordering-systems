@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Miinimumtellimus {min}.",
     "leadTimePrompt": "⏰ See restoran võtab tellimusi vastu ette — palun vali aeg. Esimene saadaolev aeg on näidatud allpool.",
-    "asapOnly": "See tellimus valmistatakse ette esimesel võimalusel."
+    "asapOnly": "See tellimus valmistatakse ette esimesel võimalusel.",
+    "scheduleModeSlots": "Ajavahemikud",
+    "scheduleModeExact": "Täpne aeg"
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Kliendid peavad valima tulevikuaja – „võimalikult kiiresti\" valikut pole.",
       "timeSelectionLabel": "Aja valik",
       "timeSelectionBands": "Ajavahemikud",
-      "timeSelectionExact": "Täpne aeg"
+      "timeSelectionExact": "Täpne aeg",
+      "timeSelectionBoth": "Mõlemad (klient valib)"
     },
     "delivery": {
       "title": "Tarnepiirkonnad",

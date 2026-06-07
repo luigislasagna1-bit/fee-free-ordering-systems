@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Đơn hàng tối thiểu {min}.",
     "leadTimePrompt": "⏰ Nhà hàng này nhận đơn đặt trước — vui lòng chọn giờ. Khung giờ sớm nhất hiện có được hiển thị bên dưới.",
-    "asapOnly": "Đơn hàng này sẽ được chuẩn bị trong thời gian sớm nhất."
+    "asapOnly": "Đơn hàng này sẽ được chuẩn bị trong thời gian sớm nhất.",
+    "scheduleModeSlots": "Khung giờ",
+    "scheduleModeExact": "Giờ cụ thể"
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Khách hàng phải chọn một thời điểm trong tương lai — không có tùy chọn nhận sớm nhất có thể.",
       "timeSelectionLabel": "Chọn thời gian",
       "timeSelectionBands": "Khung giờ",
-      "timeSelectionExact": "Giờ cụ thể"
+      "timeSelectionExact": "Giờ cụ thể",
+      "timeSelectionBoth": "Cả hai (khách chọn)"
     },
     "delivery": {
       "title": "Khu vực giao hàng",

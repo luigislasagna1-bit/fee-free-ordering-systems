@@ -209,8 +209,9 @@ interface Props {
   schedulingInterval?: number;
   /** "bands" (default) shows a dropdown of fixed slots at schedulingInterval;
    *  "exact" shows a free time field so the customer can pick any minute
-   *  within opening hours. Per-service, from serviceSettings. Fabrizio cmpxdtl9m. */
-  schedulingMode?: "bands" | "exact";
+   *  within opening hours; "both" lets the customer toggle between the two.
+   *  Per-service, from serviceSettings. Fabrizio cmpxdtl9m. */
+  schedulingMode?: "bands" | "exact" | "both";
   /** Restaurant opening hours by day-of-week, used to constrain the
    *  selectable slots to actual open periods. Each row: dayOfWeek
    *  0=Sunday … 6=Saturday with HH:MM open/close strings. May include
@@ -287,6 +288,9 @@ export function CheckoutModal({
   // didn't all need rewriting.
   const formatCurrency = useCurrencyFormat();
   const [showCouponField, setShowCouponField] = useState(false);
+  // When the service's time mode is "both", the customer toggles between a
+  // slot dropdown (false) and a free exact-time field (true). Fabrizio cmpxdtl9m.
+  const [scheduleExactPref, setScheduleExactPref] = useState(false);
   const googleEnabled = mapProvider === "google" && !!googleMapsApiKey;
   const { isLoaded: gmapsLoaded } = useGoogleMaps(googleEnabled ? googleMapsApiKey! : "");
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
@@ -1005,10 +1009,28 @@ export function CheckoutModal({
                     // and the today/lead cutoff; latest = closing time (capped
                     // at 23:59 when the window wraps past midnight). HH:MM strings
                     // compare lexically because they're zero-padded.
-                    const exactMode = schedulingMode === "exact";
+                    const exactMode = schedulingMode === "exact"
+                      || (schedulingMode === "both" && scheduleExactPref);
                     const exactMin = winOpen > minTimeForDate ? winOpen : minTimeForDate;
                     const exactMax = winClose <= winOpen ? "23:59" : winClose;
                     return (
+                      <>
+                      {schedulingMode === "both" && (
+                        <div className="flex gap-1 mb-2 p-0.5 bg-gray-100 rounded-lg text-xs font-medium">
+                          {([["slots", false], ["exact", true]] as const).map(([k, pref]) => (
+                            <button
+                              key={k}
+                              type="button"
+                              onClick={() => setScheduleExactPref(pref)}
+                              className={`flex-1 py-1.5 rounded-md transition ${
+                                scheduleExactPref === pref ? "bg-white shadow-sm text-gray-900" : "text-gray-500"
+                              }`}
+                            >
+                              {k === "slots" ? tc("scheduleModeSlots") : tc("scheduleModeExact")}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                       <div className="grid grid-cols-2 gap-2">
                         <input
                           type="date"
@@ -1051,6 +1073,7 @@ export function CheckoutModal({
                           </select>
                         )}
                       </div>
+                      </>
                     );
                   })()}
                   {/* "Switch to ASAP" is hidden in catering mode — ASAP

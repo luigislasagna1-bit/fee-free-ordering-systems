@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "最低注文金額 {min}。",
     "leadTimePrompt": "⏰ こちらのレストランは事前注文制です。ご希望の時間をお選びください。以下に最短でご利用いただける時間枠を表示しています。",
-    "asapOnly": "こちらのご注文は、できるだけ早くご用意いたします。"
+    "asapOnly": "こちらのご注文は、できるだけ早くご用意いたします。",
+    "scheduleModeSlots": "時間枠",
+    "scheduleModeExact": "時刻指定"
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -797,7 +799,8 @@
       "hideAsapHint": "お客様は将来の時間を選択する必要があります。ASAP（できるだけ早く）の選択肢はありません。",
       "timeSelectionLabel": "時間の選択",
       "timeSelectionBands": "時間枠",
-      "timeSelectionExact": "正確な時間"
+      "timeSelectionExact": "正確な時間",
+      "timeSelectionBoth": "両方（お客様が選択）"
     },
     "delivery": {
       "title": "デリバリーエリア",

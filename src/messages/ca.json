@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Comanda mínima {min}.",
     "leadTimePrompt": "⏰ Aquest restaurant accepta comandes per avançat: tria una hora, si us plau. A continuació es mostra la primera franja disponible.",
-    "asapOnly": "Aquesta comanda es prepararà tan aviat com sigui possible."
+    "asapOnly": "Aquesta comanda es prepararà tan aviat com sigui possible.",
+    "scheduleModeSlots": "Franges horàries",
+    "scheduleModeExact": "Hora exacta"
   },
   "reservation": {
     "title": "Reservar taula",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Els clients han de triar una hora futura: cap opció immediata.",
       "timeSelectionLabel": "Selecció d'hora",
       "timeSelectionBands": "Franges horàries",
-      "timeSelectionExact": "Hora exacta"
+      "timeSelectionExact": "Hora exacta",
+      "timeSelectionBoth": "Ambdós (tria el client)"
     },
     "delivery": {
       "title": "Zones de lliurament",

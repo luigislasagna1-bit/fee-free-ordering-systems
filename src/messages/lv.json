@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Minimālais pasūtījums {min}.",
     "leadTimePrompt": "⏰ Šis restorāns pieņem pasūtījumus iepriekš — lūdzu, izvēlieties laiku. Tuvākais pieejamais laiks ir norādīts zemāk.",
-    "asapOnly": "Šis pasūtījums tiks sagatavots, cik drīz vien iespējams."
+    "asapOnly": "Šis pasūtījums tiks sagatavots, cik drīz vien iespējams.",
+    "scheduleModeSlots": "Laika logi",
+    "scheduleModeExact": "Precīzs laiks"
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Klientiem jāizvēlas laiks nākotnē — nav opcijas pasūtīt nekavējoties.",
       "timeSelectionLabel": "Laika izvēle",
       "timeSelectionBands": "Laika intervāli",
-      "timeSelectionExact": "Precīzs laiks"
+      "timeSelectionExact": "Precīzs laiks",
+      "timeSelectionBoth": "Abi (izvēlas klients)"
     },
     "delivery": {
       "title": "Piegādes zonas",

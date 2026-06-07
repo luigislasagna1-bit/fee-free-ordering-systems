@@ -400,7 +400,9 @@
     },
     "zoneMinimum": "Minimum sipariş {min}.",
     "leadTimePrompt": "⏰ Bu restoran siparişleri önceden alıyor — lütfen bir saat seçin. En erken uygun zaman dilimi aşağıda gösterilmektedir.",
-    "asapOnly": "Bu sipariş mümkün olan en kısa sürede hazırlanacaktır."
+    "asapOnly": "Bu sipariş mümkün olan en kısa sürede hazırlanacaktır.",
+    "scheduleModeSlots": "Zaman aralıkları",
+    "scheduleModeExact": "Tam saat"
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -797,7 +799,8 @@
       "hideAsapHint": "Müşteriler ileri bir saat seçmek zorundadır — ASAP seçeneği yok.",
       "timeSelectionLabel": "Saat seçimi",
       "timeSelectionBands": "Saat aralıkları",
-      "timeSelectionExact": "Tam saat"
+      "timeSelectionExact": "Tam saat",
+      "timeSelectionBoth": "Her ikisi de (müşteri seçer)"
     },
     "delivery": {
       "title": "Teslimat Bölgeleri",
