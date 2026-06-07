@@ -2612,6 +2612,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               onPrint={doPrint}
               printerReady={printerReady}
               workflowMode={workflowMode}
+              fromInProgress={activeTab === "inprogress"}
               hoursFormat={hoursFmt}
             />
           </div>

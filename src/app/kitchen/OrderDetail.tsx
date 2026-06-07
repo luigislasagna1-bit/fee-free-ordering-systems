@@ -26,6 +26,10 @@ interface Props {
    *  further transitions are surfaced. In "tracking" mode the full
    *  state machine is visible. */
   workflowMode?: "simple" | "tracking";
+  /** True when this order was opened from the In Progress tab. In Simple mode
+   *  the "Mark Complete" button only shows here — never when the same order is
+   *  opened from the All tab. */
+  fromInProgress?: boolean;
   /** Restaurant 12h/24h preference for the order timestamps shown here. */
   hoursFormat?: "12h" | "24h";
 }
@@ -57,7 +61,7 @@ function fmtDateTime(d: string | Date | null | undefined, hoursFormat: "12h" | "
   return new Date(d).toLocaleString(undefined, { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
 }
 
-export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple", hoursFormat = "12h" }: Props) {
+export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple", fromInProgress = false, hoursFormat = "12h" }: Props) {
   const isSimpleMode = workflowMode === "simple";
   const tk = useTranslations("kitchen");
   const tc = useTranslations("checkout");
@@ -577,21 +581,14 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               <CheckCircle className="w-4 h-4" /> {tk("markComplete")}
             </button>
           )}
-          {/* Simple mode: OPTIONAL "move to Ready" so staff CAN progress an
-              order + notify the customer when they want to, without the full
-              tracking lifecycle. Does NOT change Simple mode's end-of-day
-              pinning — the order keeps showing in In Progress with a Ready
-              badge. Fabrizio cmpxemqle. */}
-          {isSimpleMode && (order.status === "accepted" || order.status === "preparing") && (
-            <button
-              onClick={() => act(() => onUpdate(order.id, "ready"))}
-              disabled={busy}
-              className="col-span-2 flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
-            >
-              <Package className="w-4 h-4" /> {tk("markReady")}
-            </button>
-          )}
-          {isSimpleMode && order.status === "ready" && (
+          {/* Simple mode: a single "Mark Complete" that moves the order out of
+              In Progress and into Complete immediately (GloriaFood-style). Only
+              shown for an actively in-progress order opened FROM the In Progress
+              tab — never from the All tab, and not once it's already been
+              cleared. cmpxemqle / Luigi 2026-06-07. */}
+          {isSimpleMode && fromInProgress
+            && (order.status === "accepted" || order.status === "preparing" || order.status === "ready")
+            && !(order as any).manuallyClearedAt && (
             <button
               onClick={() => act(() => onUpdate(order.id, "completed"))}
               disabled={busy}
