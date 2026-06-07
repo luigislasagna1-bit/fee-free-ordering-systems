@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import prisma from "@/lib/db";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { formatCurrency as fmtCurrency, formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { CheckCircle, Clock, MapPin, ArrowRight } from "lucide-react";
 import { OrderPlacedTracker } from "@/components/order/OrderPlacedTracker";
@@ -39,6 +39,10 @@ export default async function ConfirmationPage({
   });
 
   if (!order || order.restaurant.slug !== slug) notFound();
+
+  // Render every money value in the restaurant's chosen currency (ISO 4217),
+  // not the USD default — a EUR restaurant must show € on its confirmation.
+  const formatCurrency = (amount: number) => fmtCurrency(amount, order.restaurant.currency);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">

@@ -20,7 +20,7 @@
  */
 import { useMemo, useState } from "react";
 import { X, Check } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import { useTranslations } from "next-intl";
 
 type MenuItemLite = {
@@ -96,6 +96,7 @@ export function BundleComposerModal({
    * slot's selection is a multi-select bounded by [minCount, maxCount].
    */
   const t = useTranslations("customer.bundle");
+  const formatCurrency = useCurrencyFormat();
   const [picks, setPicks] = useState<string[][]>(() => groups.map(() => []));
 
   /** Items pool per slot — memoised because we do this off the menu

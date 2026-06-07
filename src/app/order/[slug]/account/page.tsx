@@ -16,7 +16,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ChevronLeft, Tag, ShoppingBag, LogOut, Repeat, MapPin } from "lucide-react";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { LogoutButton } from "./LogoutButton";
 import { ProfileEditor } from "./ProfileEditor";
 import { OrderAgainButton } from "./OrderAgainButton";
@@ -34,9 +34,12 @@ export default async function RestaurantAccountDashboard({
   const { slug } = await params;
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
-    select: { id: true, name: true, slug: true, isActive: true },
+    select: { id: true, name: true, slug: true, isActive: true, currency: true },
   });
   if (!restaurant || !restaurant.isActive) notFound();
+
+  // Money on this dashboard renders in the restaurant's chosen currency.
+  const formatCurrency = (amount: number) => fmtCurrency(amount, restaurant.currency);
 
   const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
   if (!me) redirect(`/order/${slug}/account/login`);

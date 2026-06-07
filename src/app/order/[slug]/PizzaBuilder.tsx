@@ -20,7 +20,7 @@ import {
   X, Plus, Minus, ChevronLeft, ChevronRight,
   Scissors, Check, Flame, Leaf, AlertCircle,
 } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import { useTranslations } from "next-intl";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -572,6 +572,7 @@ function ToppingPill({
   onSetQuantity: (qty: ToppingQuantity) => void;
   primaryColor: string;
 }) {
+  const formatCurrency = useCurrencyFormat();
   const selected = !!topping;
   const qty = topping?.quantity ?? "normal";
 
@@ -726,6 +727,7 @@ function defaultCustomization(item: MenuItem, config: PizzaConfig, groups: ModGr
 export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initial }: PizzaBuilderProps) {
   const tp = useTranslations("pizza");
   const tOrd = useTranslations("ordering");
+  const formatCurrency = useCurrencyFormat();
   const groups = item.modifierGroups;
 
   // ── State ────────────────────────────────────────────────────────────────
@@ -1610,6 +1612,7 @@ function OptionRow({
   options: ModOption[]; selectedId: string | null;
   onSelect: (id: string) => void; primaryColor: string;
 }) {
+  const formatCurrency = useCurrencyFormat();
   return (
     <div className="flex flex-wrap gap-2">
       {options.map(opt => (

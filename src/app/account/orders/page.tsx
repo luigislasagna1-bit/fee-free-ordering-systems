@@ -39,7 +39,7 @@ export default async function CustomerOrdersPage() {
         type: true,
         total: true,
         createdAt: true,
-        restaurant: { select: { name: true, slug: true } },
+        restaurant: { select: { name: true, slug: true, currency: true } },
       },
     }),
     // "Order again" rail data — marketplace parity with the per-
@@ -56,7 +56,7 @@ export default async function CustomerOrdersPage() {
         id: true,
         total: true,
         createdAt: true,
-        restaurant: { select: { name: true, slug: true } },
+        restaurant: { select: { name: true, slug: true, currency: true } },
         items: { select: { name: true, quantity: true }, take: 4 },
       },
     }),
@@ -95,7 +95,7 @@ export default async function CustomerOrdersPage() {
                 restaurantSlug={o.restaurant.slug}
                 orderId={o.id}
                 itemSummary={o.items.map((i) => `${i.quantity}× ${i.name}`).join(" · ")}
-                formattedTotal={formatCurrency(Number(o.total))}
+                formattedTotal={formatCurrency(Number(o.total), o.restaurant.currency)}
               />
             ))}
           </div>
@@ -135,7 +135,7 @@ export default async function CustomerOrdersPage() {
                       {o.restaurant.name}
                     </h3>
                     <span className="text-sm font-bold text-gray-900 flex-shrink-0">
-                      {formatCurrency(Number(o.total))}
+                      {formatCurrency(Number(o.total), o.restaurant.currency)}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 mt-1 text-xs text-gray-500 flex-wrap">

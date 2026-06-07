@@ -18,7 +18,7 @@
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import { getPromoTypeMeta } from "@/lib/promo-types";
 import { FreebiePromptModal } from "./FreebiePromptModal";
 import { BundleComposerModal, type BundleCartItem } from "./BundleComposerModal";
@@ -178,6 +178,7 @@ function ItemRow({
   badge?: string | null;
   onClick: () => void;
 }) {
+  const formatCurrency = useCurrencyFormat();
   return (
     <button
       type="button"
@@ -239,7 +240,7 @@ function minToHHMM(min: number): string {
 
 type TFunction = ReturnType<typeof useTranslations<"customer.promoDetail">>;
 
-function buildWhatYouGet(promo: Promo, rules: RuleConfig, t: TFunction): string[] {
+function buildWhatYouGet(promo: Promo, rules: RuleConfig, t: TFunction, formatCurrency: (n: number) => string): string[] {
   const out: string[] = [];
   const pct = rules.discountPercent;
   const amt = rules.discountAmount;
@@ -285,7 +286,7 @@ function buildWhatYouGet(promo: Promo, rules: RuleConfig, t: TFunction): string[
   return out;
 }
 
-function buildConditions(promo: Promo, zones: DeliveryZoneLite[], t: TFunction): string[] {
+function buildConditions(promo: Promo, zones: DeliveryZoneLite[], t: TFunction, formatCurrency: (n: number) => string): string[] {
   const out: string[] = [];
 
   // Frequency
@@ -382,8 +383,9 @@ function SummaryPanel({ promo, rules, deliveryZones }: {
   deliveryZones: DeliveryZoneLite[];
 }) {
   const t = useTranslations("customer.promoDetail");
-  const benefits = buildWhatYouGet(promo, rules, t);
-  const conditions = buildConditions(promo, deliveryZones, t);
+  const formatCurrency = useCurrencyFormat();
+  const benefits = buildWhatYouGet(promo, rules, t, formatCurrency);
+  const conditions = buildConditions(promo, deliveryZones, t, formatCurrency);
   const autoApply = promo.autoApply !== false;
   return (
     <div className="space-y-4 mb-5 pb-5 border-b border-gray-100">
@@ -579,6 +581,7 @@ function PromoBody({
   onScrollToItem: (itemId: string) => void;
 }) {
   const t = useTranslations("customer.promoDetail");
+  const formatCurrency = useCurrencyFormat();
   const groups = (rules.groups ?? rules.itemGroups ?? []) as RuleConfigGroup[];
 
   const InfoCard = ({ children }: { children: React.ReactNode }) => (

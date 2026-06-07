@@ -16,7 +16,7 @@
  */
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 
 type MenuItemLite = {
   id: string;
@@ -45,6 +45,7 @@ export function FreebiePromptModal({
   onClose,
 }: Props) {
   const t = useTranslations("customer.freebie");
+  const formatCurrency = useCurrencyFormat();
   const unlocked = cartSubtotal >= triggerAmount;
   const missing = Math.max(0, triggerAmount - cartSubtotal);
 

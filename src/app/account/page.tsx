@@ -70,7 +70,7 @@ export default async function CustomerAccountPage({
       select: {
         id: true, orderNumber: true, total: true, status: true,
         type: true, createdAt: true,
-        restaurant: { select: { name: true, slug: true } },
+        restaurant: { select: { name: true, slug: true, currency: true } },
       },
     }),
     // 3 most recent successful baskets across every restaurant for the
@@ -85,7 +85,7 @@ export default async function CustomerAccountPage({
       take: 3,
       select: {
         id: true, total: true, createdAt: true,
-        restaurant: { select: { name: true, slug: true } },
+        restaurant: { select: { name: true, slug: true, currency: true } },
         items: { select: { name: true, quantity: true }, take: 4 },
       },
     }),
@@ -105,7 +105,7 @@ export default async function CustomerAccountPage({
         id: true, code: true, description: true, discountType: true,
         discountValue: true, minimumOrder: true, maxUses: true,
         usedCount: true, expiresAt: true,
-        restaurant: { select: { name: true, slug: true } },
+        restaurant: { select: { name: true, slug: true, currency: true } },
       },
     }),
     // Favourite restaurants — top 3 the customer has ordered from
@@ -274,7 +274,7 @@ export default async function CustomerAccountPage({
                 restaurantSlug={o.restaurant.slug}
                 orderId={o.id}
                 itemSummary={o.items.map((i) => `${i.quantity}× ${i.name}`).join(" · ")}
-                formattedTotal={formatCurrency(Number(o.total))}
+                formattedTotal={formatCurrency(Number(o.total), o.restaurant.currency)}
               />
             ))}
           </div>
@@ -298,7 +298,7 @@ export default async function CustomerAccountPage({
                 : `${Math.max(0, c.maxUses - c.usedCount)} use${(c.maxUses - c.usedCount) === 1 ? "" : "s"} left`;
               const discount = c.discountType === "percentage"
                 ? `${c.discountValue}% off`
-                : `${formatCurrency(c.discountValue)} off`;
+                : `${formatCurrency(c.discountValue, c.restaurant?.currency)} off`;
               return (
                 <li
                   key={c.id}
@@ -322,7 +322,7 @@ export default async function CustomerAccountPage({
                     </div>
                     <div className="text-[11px] text-gray-400 mt-1">
                       {remaining}
-                      {c.minimumOrder > 0 && <> · Min. order {formatCurrency(c.minimumOrder)}</>}
+                      {c.minimumOrder > 0 && <> · Min. order {formatCurrency(c.minimumOrder, c.restaurant?.currency)}</>}
                       {c.expiresAt && <> · Expires {new Date(c.expiresAt).toLocaleDateString()}</>}
                     </div>
                   </div>
@@ -408,7 +408,7 @@ export default async function CustomerAccountPage({
                   </div>
                   <div className="text-right flex-shrink-0">
                     <div className="text-sm font-bold text-gray-900">
-                      {formatCurrency(Number(o.total))}
+                      {formatCurrency(Number(o.total), o.restaurant.currency)}
                     </div>
                     <div className="text-[10px] uppercase tracking-wider font-bold text-gray-500 mt-0.5">
                       {o.status}
