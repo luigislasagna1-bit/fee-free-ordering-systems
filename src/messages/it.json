@@ -337,7 +337,7 @@
     "zip": "CAP",
     "notes": "Note ordine",
     "notesPlaceholder": "Istruzioni speciali?",
-    "outsideAreaWarning": "Fuori dalla nostra zona standard. Costo {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Costo {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Carta rifiutata. Prova un'altra carta.",
     "errorOrderFailed": "Impossibile inviare l'ordine. Riprova.",
     "back": "Indietro",

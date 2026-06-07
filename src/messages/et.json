@@ -337,7 +337,7 @@
     "zip": "Sihtnumber",
     "notes": "Tellimuse märkused",
     "notesPlaceholder": "Erijuhised?",
-    "outsideAreaWarning": "Väljaspool meie standardseid tarnepiirkondi. Tasu {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Tasu {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Kaart lükati tagasi. Palun proovi teist kaarti.",
     "errorOrderFailed": "Tellimuse esitamine ebaõnnestus. Proovi uuesti.",
     "back": "Tagasi",

@@ -337,7 +337,7 @@
     "zip": "Mã bưu chính",
     "notes": "Ghi chú đơn hàng",
     "notesPlaceholder": "Yêu cầu đặc biệt?",
-    "outsideAreaWarning": "Ngoài khu vực giao hàng tiêu chuẩn. Phí {fee}, dự kiến ~{minutes} phút.",
+    "outsideAreaWarning": "Phí {fee}, dự kiến ~{minutes} phút.",
     "errorCardDeclined": "Thẻ bị từ chối. Vui lòng thử thẻ khác.",
     "errorOrderFailed": "Không thể đặt hàng. Vui lòng thử lại.",
     "back": "Quay lại",

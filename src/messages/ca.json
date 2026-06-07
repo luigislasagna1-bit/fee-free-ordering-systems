@@ -337,7 +337,7 @@
     "zip": "Codi postal",
     "notes": "Notes de la comanda",
     "notesPlaceholder": "Alguna instrucció especial?",
-    "outsideAreaWarning": "Fora de les nostres zones de lliurament estàndard. Tarifa {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Tarifa {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Targeta denegada. Proveu amb una altra targeta.",
     "errorOrderFailed": "No s'ha pogut fer la comanda. Torneu-ho a intentar.",
     "back": "Enrere",

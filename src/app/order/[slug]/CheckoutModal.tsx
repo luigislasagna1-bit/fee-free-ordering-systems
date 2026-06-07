@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import {
   X, User, Truck, ShoppingBag, Clock, CreditCard, Heart, Edit2, Tag,
   AlertCircle, Loader2, ChevronDown,
@@ -15,6 +16,10 @@ import {
   type DeliveryFieldKey,
   type DeliveryAddressConfig,
 } from "@/lib/delivery-address-fields";
+
+// Leaflet pin is dynamically imported (ssr:false) — Leaflet touches `window`,
+// so it must never be in the server bundle. Google's pin loads statically above.
+const CheckoutLeafletPin = dynamic(() => import("./CheckoutLeafletPin"), { ssr: false });
 
 type Theme = ReturnType<typeof parseTheme>;
 type SectionKey = null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes";
@@ -770,6 +775,21 @@ export function CheckoutModal({
                             }}
                           />
                         </GoogleMap>
+                        <p className="text-[11px] text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
+                      </div>
+                    )}
+                    {/* Draggable delivery pin (Leaflet / free-map restaurants).
+                        Same behaviour as the Google pin above — appears once an
+                        address suggestion is picked, drag/click to set the exact
+                        door, coords ride along with the order. */}
+                    {deliveryFormConfig.street.show && !googleEnabled && mapCenter && (
+                      <div className="rounded-lg overflow-hidden border border-gray-200">
+                        <CheckoutLeafletPin
+                          center={mapCenter}
+                          lat={customerInfo.lat ?? null}
+                          lng={customerInfo.lng ?? null}
+                          onMove={(la, ln) => setCustomerInfo({ ...customerInfo, lat: la, lng: ln })}
+                        />
                         <p className="text-[11px] text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
                       </div>
                     )}

@@ -337,7 +337,7 @@
     "zip": "Posta Kodu",
     "notes": "Sipariş Notları",
     "notesPlaceholder": "Özel talimatlarınız var mı?",
-    "outsideAreaWarning": "Standart teslimat bölgelerimiz dışında. Ücret {fee}, Tahmini süre ~{minutes} dk.",
+    "outsideAreaWarning": "Ücret {fee}, Tahmini süre ~{minutes} dk.",
     "errorCardDeclined": "Kart reddedildi. Lütfen farklı bir kart deneyin.",
     "errorOrderFailed": "Sipariş verilemedi. Tekrar deneyin.",
     "back": "Geri",

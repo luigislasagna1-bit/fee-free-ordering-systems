@@ -337,7 +337,7 @@
     "zip": "Поштовий індекс",
     "notes": "Примітки до замовлення",
     "notesPlaceholder": "Будь-які особливі побажання?",
-    "outsideAreaWarning": "За межами стандартних зон доставки. Вартість {fee}, ETA ~{minutes} хв.",
+    "outsideAreaWarning": "Вартість {fee}, ETA ~{minutes} хв.",
     "errorCardDeclined": "Картку відхилено. Спробуйте іншу картку.",
     "errorOrderFailed": "Не вдалося розмістити замовлення. Спробуйте знову.",
     "back": "Назад",

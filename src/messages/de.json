@@ -337,7 +337,7 @@
     "zip": "PLZ",
     "notes": "Bestellhinweise",
     "notesPlaceholder": "Besondere Wünsche?",
-    "outsideAreaWarning": "Außerhalb unserer Standard-Lieferzonen. Gebühr {fee}, ETA ~{minutes} Min.",
+    "outsideAreaWarning": "Gebühr {fee}, ETA ~{minutes} Min.",
     "errorCardDeclined": "Karte abgelehnt. Bitte versuchen Sie eine andere Karte.",
     "errorOrderFailed": "Bestellung konnte nicht aufgegeben werden. Bitte erneut versuchen.",
     "back": "Zurück",

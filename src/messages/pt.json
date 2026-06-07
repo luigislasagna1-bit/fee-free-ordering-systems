@@ -337,7 +337,7 @@
     "zip": "CEP",
     "notes": "Notas do pedido",
     "notesPlaceholder": "Alguma instrução especial?",
-    "outsideAreaWarning": "Fora da nossa área padrão. Taxa {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Taxa {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Cartão recusado. Tente outro.",
     "errorOrderFailed": "Não foi possível enviar o pedido. Tente novamente.",
     "back": "Voltar",

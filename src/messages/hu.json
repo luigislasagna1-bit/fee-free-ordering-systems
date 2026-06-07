@@ -337,7 +337,7 @@
     "zip": "Irányítószám",
     "notes": "Rendelési megjegyzések",
     "notesPlaceholder": "Különleges kérések?",
-    "outsideAreaWarning": "A standard szállítási területen kívül. Díj: {fee}, Várható idő: ~{minutes} perc.",
+    "outsideAreaWarning": "Díj: {fee}, Várható idő: ~{minutes} perc.",
     "errorCardDeclined": "A kártya visszautasítva. Kérjük, próbáljon másik kártyát.",
     "errorOrderFailed": "Nem sikerült leadni a rendelést. Próbálja újra.",
     "back": "Vissza",

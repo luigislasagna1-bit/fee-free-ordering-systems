@@ -337,7 +337,7 @@
     "zip": "Poštna številka",
     "notes": "Opombe k naročilu",
     "notesPlaceholder": "Posebna navodila?",
-    "outsideAreaWarning": "Zunaj naših standardnih območij dostave. Strošek {fee}, predvideni čas ~{minutes} min.",
+    "outsideAreaWarning": "Strošek {fee}, predvideni čas ~{minutes} min.",
     "errorCardDeclined": "Kartica zavrnjena. Prosimo, poskusite z drugo kartico.",
     "errorOrderFailed": "Naročila ni bilo mogoče oddati. Poskusite znova.",
     "back": "Nazaj",

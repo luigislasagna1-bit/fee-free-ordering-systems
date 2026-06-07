@@ -337,7 +337,7 @@
     "zip": "Postnummer",
     "notes": "Ordrenoter",
     "notesPlaceholder": "Særlige ønsker?",
-    "outsideAreaWarning": "Uden for vores standard leveringsområder. Gebyr {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Gebyr {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Kort afvist. Prøv venligst et andet kort.",
     "errorOrderFailed": "Kunne ikke afgive ordre. Prøv igen.",
     "back": "Tilbage",

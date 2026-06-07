@@ -337,7 +337,7 @@
     "zip": "Kode Pos",
     "notes": "Catatan pesanan",
     "notesPlaceholder": "Ada instruksi khusus?",
-    "outsideAreaWarning": "Di luar area pengiriman standar kami. Biaya {fee}, Estimasi ~{minutes} mnt.",
+    "outsideAreaWarning": "Biaya {fee}, Estimasi ~{minutes} mnt.",
     "errorCardDeclined": "Kartu ditolak. Silakan coba kartu lain.",
     "errorOrderFailed": "Gagal menempatkan pesanan. Coba lagi.",
     "back": "Kembali",

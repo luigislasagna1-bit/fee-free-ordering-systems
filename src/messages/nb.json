@@ -337,7 +337,7 @@
     "zip": "Postnummer",
     "notes": "Bestillingsnotater",
     "notesPlaceholder": "Spesielle instruksjoner?",
-    "outsideAreaWarning": "Utenfor våre vanlige leveringsområder. Gebyr {fee}, estimert tid ~{minutes} min.",
+    "outsideAreaWarning": "Gebyr {fee}, estimert tid ~{minutes} min.",
     "errorCardDeclined": "Kortet ble avvist. Prøv et annet kort.",
     "errorOrderFailed": "Kunne ikke legge inn bestilling. Prøv igjen.",
     "back": "Tilbake",

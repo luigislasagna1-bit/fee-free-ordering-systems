@@ -337,7 +337,7 @@
     "zip": "Kod pocztowy",
     "notes": "Uwagi do zamówienia",
     "notesPlaceholder": "Specjalne instrukcje?",
-    "outsideAreaWarning": "Poza naszymi standardowymi strefami dostawy. Opłata {fee}, szacowany czas ~{minutes} min.",
+    "outsideAreaWarning": "Opłata {fee}, szacowany czas ~{minutes} min.",
     "errorCardDeclined": "Karta odrzucona. Proszę użyć innej karty.",
     "errorOrderFailed": "Nie udało się złożyć zamówienia. Spróbuj ponownie.",
     "back": "Wstecz",

@@ -337,7 +337,7 @@
     "zip": "Пощенски код",
     "notes": "Бележки към поръчката",
     "notesPlaceholder": "Специални инструкции?",
-    "outsideAreaWarning": "Извън стандартните ни зони за доставка. Такса {fee}, ETA ~{minutes} мин.",
+    "outsideAreaWarning": "Такса {fee}, ETA ~{minutes} мин.",
     "errorCardDeclined": "Картата е отказана. Моля, опитай с друга карта.",
     "errorOrderFailed": "Поръчката не може да бъде направена. Опитай отново.",
     "back": "Назад",

@@ -337,7 +337,7 @@
     "zip": "Cod poștal",
     "notes": "Observații comandă",
     "notesPlaceholder": "Instrucțiuni speciale?",
-    "outsideAreaWarning": "În afara zonelor noastre standard de livrare. Taxă {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Taxă {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Card refuzat. Te rugăm să încerci alt card.",
     "errorOrderFailed": "Comanda nu a putut fi plasată. Încearcă din nou.",
     "back": "Înapoi",

@@ -337,7 +337,7 @@
     "zip": "Postnummer",
     "notes": "Orderanteckningar",
     "notesPlaceholder": "Särskilda instruktioner?",
-    "outsideAreaWarning": "Utanför våra vanliga leveransområden. Avgift {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Avgift {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Kortet nekades. Försök med ett annat kort.",
     "errorOrderFailed": "Det gick inte att lägga beställningen. Försök igen.",
     "back": "Tillbaka",

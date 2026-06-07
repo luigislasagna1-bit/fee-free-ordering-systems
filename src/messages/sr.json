@@ -337,7 +337,7 @@
     "zip": "Poštanski broj",
     "notes": "Napomene uz porudžbinu",
     "notesPlaceholder": "Posebne napomene?",
-    "outsideAreaWarning": "Van naše standardne zone dostave. Naknada {fee}, Procenjeno vreme ~{minutes} min.",
+    "outsideAreaWarning": "Naknada {fee}, Procenjeno vreme ~{minutes} min.",
     "errorCardDeclined": "Kartica je odbijena. Pokušajte sa drugom karticom.",
     "errorOrderFailed": "Nije moguće postaviti porudžbinu. Pokušajte ponovo.",
     "back": "Nazad",

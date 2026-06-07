@@ -337,7 +337,7 @@
     "zip": "우편번호",
     "notes": "주문 메모",
     "notesPlaceholder": "특별 요청사항이 있으신가요?",
-    "outsideAreaWarning": "표준 배달 구역 외 지역입니다. 배달료 {fee}, 예상 시간 약 {minutes}분.",
+    "outsideAreaWarning": "배달료 {fee}, 예상 시간 약 {minutes}분.",
     "errorCardDeclined": "카드가 거절되었습니다. 다른 카드를 사용해 주세요.",
     "errorOrderFailed": "주문에 실패했습니다. 다시 시도해 주세요.",
     "back": "뒤로",

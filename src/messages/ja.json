@@ -337,7 +337,7 @@
     "zip": "郵便番号",
     "notes": "注文備考",
     "notesPlaceholder": "特別なご要望はありますか？",
-    "outsideAreaWarning": "通常のデリバリーエリア外です。料金 {fee}、目安 約{minutes}分。",
+    "outsideAreaWarning": "料金 {fee}、目安 約{minutes}分。",
     "errorCardDeclined": "カードが拒否されました。別のカードをお試しください。",
     "errorOrderFailed": "注文を受け付けられませんでした。もう一度お試しください。",
     "back": "戻る",

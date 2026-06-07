@@ -337,7 +337,7 @@
     "zip": "Código postal",
     "notes": "Notas del pedido",
     "notesPlaceholder": "¿Alguna instrucción especial?",
-    "outsideAreaWarning": "Fuera de nuestras zonas estándar. Coste {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Coste {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Tarjeta rechazada. Prueba con otra.",
     "errorOrderFailed": "No se pudo enviar el pedido. Inténtalo de nuevo.",
     "back": "Atrás",

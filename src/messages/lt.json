@@ -337,7 +337,7 @@
     "zip": "Pašto kodas",
     "notes": "Užsakymo pastabos",
     "notesPlaceholder": "Specialios instrukcijos?",
-    "outsideAreaWarning": "Už standartinių pristatymo zonų. Mokestis {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Mokestis {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Kortelė atmesta. Bandykite kitą kortelę.",
     "errorOrderFailed": "Nepavyko pateikti užsakymo. Bandykite dar kartą.",
     "back": "Atgal",

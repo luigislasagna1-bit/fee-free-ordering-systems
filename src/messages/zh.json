@@ -337,7 +337,7 @@
     "zip": "邮编",
     "notes": "订单备注",
     "notesPlaceholder": "有什么特殊要求吗？",
-    "outsideAreaWarning": "超出标准配送范围。费用 {fee}，预计 ~{minutes} 分钟。",
+    "outsideAreaWarning": "费用 {fee}，预计 ~{minutes} 分钟。",
     "errorCardDeclined": "银行卡被拒，请尝试其他卡片。",
     "errorOrderFailed": "下单失败，请重试。",
     "back": "返回",

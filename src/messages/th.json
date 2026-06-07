@@ -337,7 +337,7 @@
     "zip": "รหัสไปรษณีย์",
     "notes": "หมายเหตุออเดอร์",
     "notesPlaceholder": "มีคำแนะนำพิเศษไหม?",
-    "outsideAreaWarning": "นอกเขตจัดส่งมาตรฐาน ค่าจัดส่ง {fee}, เวลาโดยประมาณ ~{minutes} นาที",
+    "outsideAreaWarning": "ค่าจัดส่ง {fee}, เวลาโดยประมาณ ~{minutes} นาที",
     "errorCardDeclined": "บัตรถูกปฏิเสธ กรุณาใช้บัตรอื่น",
     "errorOrderFailed": "ไม่สามารถสั่งออเดอร์ได้ กรุณาลองอีกครั้ง",
     "back": "ย้อนกลับ",

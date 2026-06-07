@@ -337,7 +337,7 @@
     "zip": "पोस्टल / ज़िप",
     "notes": "ऑर्डर नोट्स",
     "notesPlaceholder": "कोई विशेष निर्देश?",
-    "outsideAreaWarning": "हमारे मानक डिलीवरी क्षेत्र से बाहर। शुल्क {fee}, अनुमानित समय ~{minutes} मिनट।",
+    "outsideAreaWarning": "शुल्क {fee}, अनुमानित समय ~{minutes} मिनट।",
     "errorCardDeclined": "कार्ड अस्वीकृत हो गया। कृपया कोई अन्य कार्ड आज़माएं।",
     "errorOrderFailed": "ऑर्डर नहीं दिया जा सका। दोबारा कोशिश करें।",
     "back": "वापस",

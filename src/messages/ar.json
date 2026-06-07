@@ -337,7 +337,7 @@
     "zip": "الرمز البريدي",
     "notes": "ملاحظات الطلب",
     "notesPlaceholder": "أي تعليمات خاصة؟",
-    "outsideAreaWarning": "خارج مناطق التوصيل المعتادة. الرسوم {fee}، الوقت المتوقع ~{minutes} د.",
+    "outsideAreaWarning": "الرسوم {fee}، الوقت المتوقع ~{minutes} د.",
     "errorCardDeclined": "تم رفض البطاقة. يرجى تجربة بطاقة أخرى.",
     "errorOrderFailed": "تعذّر تقديم الطلب. حاول مجدداً.",
     "back": "رجوع",

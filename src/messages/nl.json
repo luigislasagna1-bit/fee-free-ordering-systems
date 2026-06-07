@@ -337,7 +337,7 @@
     "zip": "Postcode",
     "notes": "Bestelnota's",
     "notesPlaceholder": "Speciale instructies?",
-    "outsideAreaWarning": "Buiten onze standaard bezorggebieden. Kosten {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Kosten {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Kaart geweigerd. Probeer een andere kaart.",
     "errorOrderFailed": "Bestelling kon niet worden geplaatst. Probeer opnieuw.",
     "back": "Terug",

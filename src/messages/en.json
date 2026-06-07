@@ -337,7 +337,7 @@
     "zip": "Postal / Zip",
     "notes": "Order notes",
     "notesPlaceholder": "Any special instructions?",
-    "outsideAreaWarning": "Outside our standard delivery areas. Fee {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Fee {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Card declined. Please try a different card.",
     "errorOrderFailed": "Couldn't place order. Try again.",
     "back": "Back",

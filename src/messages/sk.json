@@ -337,7 +337,7 @@
     "zip": "PSČ",
     "notes": "Poznámky k objednávke",
     "notesPlaceholder": "Špeciálne pokyny?",
-    "outsideAreaWarning": "Mimo štandardných oblastí doručenia. Poplatok {fee}, Odhadovaný čas ~{minutes} min.",
+    "outsideAreaWarning": "Poplatok {fee}, Odhadovaný čas ~{minutes} min.",
     "errorCardDeclined": "Karta odmietnutá. Prosím, skúste inú kartu.",
     "errorOrderFailed": "Objednávku sa nepodarilo zadať. Skúste to znova.",
     "back": "Späť",

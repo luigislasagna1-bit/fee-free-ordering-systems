@@ -337,7 +337,7 @@
     "zip": "Code postal",
     "notes": "Notes de commande",
     "notesPlaceholder": "Des instructions particulières ?",
-    "outsideAreaWarning": "Hors de notre zone de livraison standard. Frais {fee}, délai ~{minutes} min.",
+    "outsideAreaWarning": "Frais {fee}, délai ~{minutes} min.",
     "errorCardDeclined": "Carte refusée. Veuillez essayer une autre carte.",
     "errorOrderFailed": "Impossible de passer la commande. Réessayez.",
     "back": "Retour",

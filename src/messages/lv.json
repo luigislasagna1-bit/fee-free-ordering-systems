@@ -337,7 +337,7 @@
     "zip": "Pasta indekss",
     "notes": "Pasūtījuma piezīmes",
     "notesPlaceholder": "Īpaši norādījumi?",
-    "outsideAreaWarning": "Ārpus mūsu standarta piegādes zonām. Maksa {fee}, ETA ~{minutes} min.",
+    "outsideAreaWarning": "Maksa {fee}, ETA ~{minutes} min.",
     "errorCardDeclined": "Karte noraidīta. Lūdzu, izmantojiet citu karti.",
     "errorOrderFailed": "Nevarēja veikt pasūtījumu. Mēģiniet vēlreiz.",
     "back": "Atpakaļ",

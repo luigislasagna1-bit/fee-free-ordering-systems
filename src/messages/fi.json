@@ -337,7 +337,7 @@
     "zip": "Postinumero",
     "notes": "Tilausohjeet",
     "notesPlaceholder": "Erityisohjeet?",
-    "outsideAreaWarning": "Vakiotoimitusvyöhykkeidemme ulkopuolella. Maksu {fee}, arvioitu aika ~{minutes} min.",
+    "outsideAreaWarning": "Maksu {fee}, arvioitu aika ~{minutes} min.",
     "errorCardDeclined": "Kortti hylätty. Kokeile eri korttia.",
     "errorOrderFailed": "Tilausta ei voitu tehdä. Yritä uudelleen.",
     "back": "Takaisin",

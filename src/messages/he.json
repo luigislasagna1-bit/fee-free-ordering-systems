@@ -337,7 +337,7 @@
     "zip": "מיקוד",
     "notes": "הערות להזמנה",
     "notesPlaceholder": "הוראות מיוחדות?",
-    "outsideAreaWarning": "מחוץ לאזורי המשלוח הרגילים שלנו. עלות {fee}, זמן משוער ~{minutes} דק'.",
+    "outsideAreaWarning": "עלות {fee}, זמן משוער ~{minutes} דק'.",
     "errorCardDeclined": "הכרטיס נדחה. אנא נסה כרטיס אחר.",
     "errorOrderFailed": "לא ניתן לבצע את ההזמנה. נסה שוב.",
     "back": "חזרה",
