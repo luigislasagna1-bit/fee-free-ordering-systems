@@ -399,7 +399,8 @@
       "parking": "On aparcar"
     },
     "zoneMinimum": "Comanda mínima {min}.",
-    "leadTimePrompt": "⏰ Aquest restaurant accepta comandes per avançat: tria una hora, si us plau. A continuació es mostra la primera franja disponible."
+    "leadTimePrompt": "⏰ Aquest restaurant accepta comandes per avançat: tria una hora, si us plau. A continuació es mostra la primera franja disponible.",
+    "asapOnly": "Aquesta comanda es prepararà tan aviat com sigui possible."
   },
   "reservation": {
     "title": "Reservar taula",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Sense límit en l'antelació amb què els clients poden fer comandes anticipades.",
       "unitMinutes": "minuts",
       "unitHours": "hores",
-      "unitDays": "dies"
+      "unitDays": "dies",
+      "scheduledOrdersTitle": "Comandes programades",
+      "allowSchedulingHint": "Permet als clients triar una hora concreta de recollida o lliurament en lloc de demanar al més aviat possible.",
+      "hideAsapTitle": "Amaga \"al més aviat possible\"",
+      "hideAsapHint": "Els clients han de triar una hora futura: cap opció immediata."
     },
     "delivery": {
       "title": "Zones de lliurament",

@@ -399,7 +399,8 @@
       "parking": "Kur parkuoti"
     },
     "zoneMinimum": "Minimali užsakymo suma {min}.",
-    "leadTimePrompt": "⏰ Šis restoranas priima užsakymus iš anksto — pasirinkite laiką. Anksčiausias galimas laikas nurodytas žemiau."
+    "leadTimePrompt": "⏰ Šis restoranas priima užsakymus iš anksto — pasirinkite laiką. Anksčiausias galimas laikas nurodytas žemiau.",
+    "asapOnly": "Šis užsakymas bus paruoštas kuo greičiau."
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Nėra ribos, kiek iš anksto klientai gali užsisakyti.",
       "unitMinutes": "minutės",
       "unitHours": "valandos",
-      "unitDays": "dienos"
+      "unitDays": "dienos",
+      "scheduledOrdersTitle": "Suplanuoti užsakymai",
+      "allowSchedulingHint": "Leiskite klientams pasirinkti konkretų atsiėmimo / pristatymo laiką, o ne užsakyti kuo greičiau.",
+      "hideAsapTitle": "Slėpti „kuo greičiau“",
+      "hideAsapHint": "Klientai turi pasirinkti būsimą laiką – jokio „kuo greičiau“ varianto."
     },
     "delivery": {
       "title": "Pristatymo zonos",

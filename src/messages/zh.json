@@ -399,7 +399,8 @@
       "parking": "停车位置"
     },
     "zoneMinimum": "最低订单金额 {min}。",
-    "leadTimePrompt": "⏰ 本餐厅仅接受预约下单，请选择一个时间。下方显示的是最早可用的时段。"
+    "leadTimePrompt": "⏰ 本餐厅仅接受预约下单，请选择一个时间。下方显示的是最早可用的时段。",
+    "asapOnly": "本订单将尽快为您准备。"
   },
   "reservation": {
     "title": "预订餐桌",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "顾客可提前预订的时间不受限制。",
       "unitMinutes": "分钟",
       "unitHours": "小时",
-      "unitDays": "天"
+      "unitDays": "天",
+      "scheduledOrdersTitle": "预约订单",
+      "allowSchedulingHint": "允许顾客选择具体的取餐/送餐时间，而不是下单后尽快处理。",
+      "hideAsapTitle": "隐藏“尽快”选项",
+      "hideAsapHint": "顾客必须选择一个未来的时间，没有“尽快”选项。"
     },
     "delivery": {
       "title": "配送区域",

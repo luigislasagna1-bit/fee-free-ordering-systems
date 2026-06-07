@@ -399,7 +399,8 @@
       "parking": "Unde se poate parca"
     },
     "zoneMinimum": "Comandă minimă {min}.",
-    "leadTimePrompt": "⏰ Acest restaurant preia comenzile în avans — te rugăm să alegi o oră. Cel mai apropiat interval disponibil este afișat mai jos."
+    "leadTimePrompt": "⏰ Acest restaurant preia comenzile în avans — te rugăm să alegi o oră. Cel mai apropiat interval disponibil este afișat mai jos.",
+    "asapOnly": "Această comandă va fi pregătită cât mai curând posibil."
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Fără limită privind cât de mult în avans pot precomanda clienții.",
       "unitMinutes": "minute",
       "unitHours": "ore",
-      "unitDays": "zile"
+      "unitDays": "zile",
+      "scheduledOrdersTitle": "Comenzi programate",
+      "allowSchedulingHint": "Permite clienților să aleagă o oră specifică de ridicare/livrare în loc să comande pentru cât mai curând posibil.",
+      "hideAsapTitle": "Ascunde „cât mai curând posibil”",
+      "hideAsapHint": "Clienții trebuie să aleagă o oră viitoare — fără opțiunea ASAP."
     },
     "delivery": {
       "title": "Zone de livrare",

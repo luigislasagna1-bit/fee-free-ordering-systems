@@ -399,7 +399,8 @@
       "parking": "Hvor skal der parkeres"
     },
     "zoneMinimum": "Minimumsordre {min}.",
-    "leadTimePrompt": "⏰ Denne restaurant tager imod bestillinger i forvejen — vælg venligst et tidspunkt. Det tidligste ledige tidspunkt vises nedenfor."
+    "leadTimePrompt": "⏰ Denne restaurant tager imod bestillinger i forvejen — vælg venligst et tidspunkt. Det tidligste ledige tidspunkt vises nedenfor.",
+    "asapOnly": "Denne bestilling vil blive tilberedt hurtigst muligt."
   },
   "reservation": {
     "title": "Book et bord",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Ingen grænse for, hvor langt i forvejen kunder kan forudbestille.",
       "unitMinutes": "minutter",
       "unitHours": "timer",
-      "unitDays": "dage"
+      "unitDays": "dage",
+      "scheduledOrdersTitle": "Planlagte ordrer",
+      "allowSchedulingHint": "Lad kunder vælge et bestemt afhentnings-/leveringstidspunkt i stedet for at bestille til hurtigst muligt.",
+      "hideAsapTitle": "Skjul \"hurtigst muligt\"",
+      "hideAsapHint": "Kunder skal vælge et fremtidigt tidspunkt — ingen hurtigst muligt-mulighed."
     },
     "delivery": {
       "title": "Leveringszoner",

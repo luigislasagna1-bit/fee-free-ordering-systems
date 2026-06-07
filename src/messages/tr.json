@@ -399,7 +399,8 @@
       "parking": "Park yeri"
     },
     "zoneMinimum": "Minimum sipariş {min}.",
-    "leadTimePrompt": "⏰ Bu restoran siparişleri önceden alıyor — lütfen bir saat seçin. En erken uygun zaman dilimi aşağıda gösterilmektedir."
+    "leadTimePrompt": "⏰ Bu restoran siparişleri önceden alıyor — lütfen bir saat seçin. En erken uygun zaman dilimi aşağıda gösterilmektedir.",
+    "asapOnly": "Bu sipariş mümkün olan en kısa sürede hazırlanacaktır."
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Müşterilerin ne kadar önceden sipariş verebileceğine dair sınır yok.",
       "unitMinutes": "dakika",
       "unitHours": "saat",
-      "unitDays": "gün"
+      "unitDays": "gün",
+      "scheduledOrdersTitle": "Zamanlanmış siparişler",
+      "allowSchedulingHint": "Müşterilerin en kısa sürede sipariş vermek yerine belirli bir teslim alma/teslimat saati seçmesine izin verin.",
+      "hideAsapTitle": "\"en kısa sürede\" seçeneğini gizle",
+      "hideAsapHint": "Müşteriler ileri bir saat seçmek zorundadır — ASAP seçeneği yok."
     },
     "delivery": {
       "title": "Teslimat Bölgeleri",

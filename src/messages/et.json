@@ -399,7 +399,8 @@
       "parking": "Kus parkida"
     },
     "zoneMinimum": "Miinimumtellimus {min}.",
-    "leadTimePrompt": "⏰ See restoran võtab tellimusi vastu ette — palun vali aeg. Esimene saadaolev aeg on näidatud allpool."
+    "leadTimePrompt": "⏰ See restoran võtab tellimusi vastu ette — palun vali aeg. Esimene saadaolev aeg on näidatud allpool.",
+    "asapOnly": "See tellimus valmistatakse ette esimesel võimalusel."
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Piirang puudub, kui kaugele ette saavad kliendid tellida.",
       "unitMinutes": "minutit",
       "unitHours": "tundi",
-      "unitDays": "päeva"
+      "unitDays": "päeva",
+      "scheduledOrdersTitle": "Ajastatud tellimused",
+      "allowSchedulingHint": "Lubage klientidel valida kindel järeletuleku-/kättetoimetamisaeg, selle asemel et tellida võimalikult kiiresti.",
+      "hideAsapTitle": "Peida „võimalikult kiiresti\"",
+      "hideAsapHint": "Kliendid peavad valima tulevikuaja – „võimalikult kiiresti\" valikut pole."
     },
     "delivery": {
       "title": "Tarnepiirkonnad",

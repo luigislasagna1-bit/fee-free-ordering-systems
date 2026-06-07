@@ -399,7 +399,8 @@
       "parking": "Gdzie zaparkować"
     },
     "zoneMinimum": "Minimalna wartość zamówienia {min}.",
-    "leadTimePrompt": "⏰ Ta restauracja przyjmuje zamówienia z wyprzedzeniem — wybierz godzinę. Najwcześniejszy dostępny termin jest pokazany poniżej."
+    "leadTimePrompt": "⏰ Ta restauracja przyjmuje zamówienia z wyprzedzeniem — wybierz godzinę. Najwcześniejszy dostępny termin jest pokazany poniżej.",
+    "asapOnly": "To zamówienie zostanie przygotowane najszybciej, jak to możliwe."
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Brak limitu, jak daleko w przód klienci mogą składać zamówienia.",
       "unitMinutes": "minuty",
       "unitHours": "godziny",
-      "unitDays": "dni"
+      "unitDays": "dni",
+      "scheduledOrdersTitle": "Zamówienia zaplanowane",
+      "allowSchedulingHint": "Pozwól klientom wybrać konkretną godzinę odbioru/dostawy zamiast zamawiania na „tak szybko, jak to możliwe”.",
+      "hideAsapTitle": "Ukryj opcję „tak szybko, jak to możliwe”",
+      "hideAsapHint": "Klienci muszą wybrać przyszłą godzinę — brak opcji ASAP."
     },
     "delivery": {
       "title": "Strefy dostawy",

@@ -399,7 +399,8 @@
       "parking": "Lokasi parkir"
     },
     "zoneMinimum": "Pesanan minimum {min}.",
-    "leadTimePrompt": "⏰ Restoran ini menerima pesanan di muka — silakan pilih waktu. Slot paling awal yang tersedia ditampilkan di bawah."
+    "leadTimePrompt": "⏰ Restoran ini menerima pesanan di muka — silakan pilih waktu. Slot paling awal yang tersedia ditampilkan di bawah.",
+    "asapOnly": "Pesanan ini akan disiapkan secepatnya."
   },
   "reservation": {
     "title": "Pesan meja",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Tidak ada batasan seberapa jauh pelanggan dapat memesan di muka.",
       "unitMinutes": "menit",
       "unitHours": "jam",
-      "unitDays": "hari"
+      "unitDays": "hari",
+      "scheduledOrdersTitle": "Pesanan terjadwal",
+      "allowSchedulingHint": "Biarkan pelanggan memilih waktu pengambilan/pengiriman tertentu daripada memesan untuk secepat mungkin.",
+      "hideAsapTitle": "Sembunyikan \"secepat mungkin\"",
+      "hideAsapHint": "Pelanggan harus memilih waktu di masa mendatang — tanpa opsi secepat mungkin."
     },
     "delivery": {
       "title": "Zona Pengiriman",

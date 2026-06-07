@@ -1502,14 +1502,19 @@ export function OrderingPageClient({
     }
   })();
 
-  // Pre-order advance limits for the ACTIVE service (Fabrizio cmq14gy64).
+  // Scheduled-orders master controls (GloriaFood parity, Fabrizio cmq14gy64).
+  // allowScheduledOrders=false → no time picker (ASAP only) unless catering /
+  // closed-now forces it. requireScheduledOrders=true → ASAP hidden.
+  const schedulingAllowed = (restaurant as any).allowScheduledOrders !== false;
+  const hideAsap = schedulingAllowed && (restaurant as any).requireScheduledOrders === true;
+  // Pre-order advance limits for the ACTIVE service — only when scheduling is on.
   // Delivery uses the delivery fields; everything else uses pickup's.
-  const orderMinLeadMinutes = orderType === "delivery"
+  const orderMinLeadMinutes = !schedulingAllowed ? 0 : (orderType === "delivery"
     ? ((restaurant as any).deliveryMinLeadMinutes ?? 0)
-    : ((restaurant as any).pickupMinLeadMinutes ?? 0);
-  const orderMaxAdvanceDays = orderType === "delivery"
+    : ((restaurant as any).pickupMinLeadMinutes ?? 0));
+  const orderMaxAdvanceDays = !schedulingAllowed ? 0 : (orderType === "delivery"
     ? ((restaurant as any).deliveryMaxAdvanceDays ?? 0)
-    : ((restaurant as any).pickupMaxAdvanceDays ?? 0);
+    : ((restaurant as any).pickupMaxAdvanceDays ?? 0));
   // Earliest schedulable slot when a min lead is set: now + lead, rounded up
   // to the next 15-min boundary (same shape as the catering min).
   const leadMinScheduledLocal = (() => {
@@ -1533,7 +1538,10 @@ export function OrderingPageClient({
   // customer into schedule mode, we honor the stricter (latest) min slot.
   // A min-lead > 0 means ASAP isn't offered — the order must be placed at
   // least that far ahead.
-  const scheduleRequired = cartHasCatering || restaurantIsClosedNow || orderMinLeadMinutes > 0;
+  const scheduleRequired = cartHasCatering || restaurantIsClosedNow || orderMinLeadMinutes > 0 || hideAsap;
+  // Whether the schedule picker is shown at all. Off only when the owner
+  // disabled scheduling AND nothing forces it (catering / closed now).
+  const schedulingEnabled = schedulingAllowed || cartHasCatering || restaurantIsClosedNow;
   const effectiveMinScheduledLocal = (() => {
     const candidates: string[] = [];
     if (cartHasCatering && cateringMinScheduledLocal) candidates.push(cateringMinScheduledLocal);
@@ -1547,7 +1555,7 @@ export function OrderingPageClient({
     cartHasCatering && restaurantIsClosedNow ? "both"
     : cartHasCatering ? "catering"
     : restaurantIsClosedNow ? "closed"
-    : orderMinLeadMinutes > 0 ? "lead"
+    : (orderMinLeadMinutes > 0 || hideAsap) ? "lead"
     : null;
 
   // ── Catering: auto-fill schedule when activated ─────────────────────
@@ -1572,10 +1580,14 @@ export function OrderingPageClient({
           }
         } catch { /* malformed — ignore */ }
       }
+    } else if (!schedulingEnabled && customerInfo.scheduledFor) {
+      // Scheduling turned off (and nothing forces it) — drop any stale slot so
+      // the order goes through as ASAP.
+      setCustomerInfo({ ...customerInfo, scheduledFor: "" });
     }
     prevCateringRef.current = cartHasCatering;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scheduleRequired, effectiveMinScheduledLocal]);
+  }, [scheduleRequired, effectiveMinScheduledLocal, schedulingEnabled]);
   const zoneFee = resolvedZone?.zone.deliveryFee;
   const zoneMin = resolvedZone?.zone.minimumOrder;
   const zoneMinutes = resolvedZone?.zone.estimatedMinutes;
@@ -3593,6 +3605,7 @@ export function OrderingPageClient({
           cateringMinScheduledLocal={effectiveMinScheduledLocal}
           cateringNoticeHours={cateringNoticeHours}
           maxScheduledDate={maxScheduledDate}
+          schedulingEnabled={schedulingEnabled}
           scheduleReason={scheduleReason}
           closedNextOpenLocal={closedMinScheduledLocal}
           schedulingInterval={perServiceSlotInterval}

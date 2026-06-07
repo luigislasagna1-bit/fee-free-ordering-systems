@@ -35,6 +35,10 @@ export async function GET() {
         pickupMaxAdvanceDays: true,
         deliveryMinLeadMinutes: true,
         deliveryMaxAdvanceDays: true,
+        dineInMinLeadMinutes: true,
+        dineInMaxAdvanceDays: true,
+        allowScheduledOrders: true,
+        requireScheduledOrders: true,
       },
     });
 
@@ -59,6 +63,10 @@ export async function GET() {
         pickupMaxAdvanceDays:   restaurant?.pickupMaxAdvanceDays   ?? 0,
         deliveryMinLeadMinutes: restaurant?.deliveryMinLeadMinutes ?? 0,
         deliveryMaxAdvanceDays: restaurant?.deliveryMaxAdvanceDays ?? 0,
+        dineInMinLeadMinutes:   restaurant?.dineInMinLeadMinutes   ?? 0,
+        dineInMaxAdvanceDays:   restaurant?.dineInMaxAdvanceDays   ?? 0,
+        allowScheduledOrders:   restaurant?.allowScheduledOrders   ?? true,
+        requireScheduledOrders: restaurant?.requireScheduledOrders ?? false,
       },
     });
   } catch (e: any) {
@@ -87,6 +95,10 @@ export async function PUT(req: NextRequest) {
     const pickupMaxAdvanceDays   = clampInt(preorder?.pickupMaxAdvanceDays,   0, 365);
     const deliveryMinLeadMinutes = clampInt(preorder?.deliveryMinLeadMinutes, 0, 43200);
     const deliveryMaxAdvanceDays = clampInt(preorder?.deliveryMaxAdvanceDays, 0, 365);
+    const dineInMinLeadMinutes   = clampInt(preorder?.dineInMinLeadMinutes,   0, 43200);
+    const dineInMaxAdvanceDays   = clampInt(preorder?.dineInMaxAdvanceDays,   0, 365);
+    const allowScheduledOrders   = typeof preorder?.allowScheduledOrders === "boolean" ? preorder.allowScheduledOrders : undefined;
+    const requireScheduledOrders = typeof preorder?.requireScheduledOrders === "boolean" ? preorder.requireScheduledOrders : undefined;
 
     // Clamp catering notice to [1..720] hours (30 days max — sanity cap,
     // protects the schedule picker against absurd inputs). Anything else
@@ -162,6 +174,10 @@ export async function PUT(req: NextRequest) {
         pickupMaxAdvanceDays,
         deliveryMinLeadMinutes,
         deliveryMaxAdvanceDays,
+        dineInMinLeadMinutes,
+        dineInMaxAdvanceDays,
+        allowScheduledOrders,
+        requireScheduledOrders,
       },
     });
 

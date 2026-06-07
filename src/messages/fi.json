@@ -399,7 +399,8 @@
       "parking": "Mihin pysäköidä"
     },
     "zoneMinimum": "Vähimmäistilaus {min}.",
-    "leadTimePrompt": "⏰ Tämä ravintola ottaa tilauksia vastaan ennakkoon — valitse aika. Ensimmäinen vapaa aika näkyy alla."
+    "leadTimePrompt": "⏰ Tämä ravintola ottaa tilauksia vastaan ennakkoon — valitse aika. Ensimmäinen vapaa aika näkyy alla.",
+    "asapOnly": "Tämä tilaus valmistetaan mahdollisimman pian."
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Ei rajaa sille, kuinka pitkälle etukäteen asiakkaat voivat ennakkotilata.",
       "unitMinutes": "minuuttia",
       "unitHours": "tuntia",
-      "unitDays": "päivää"
+      "unitDays": "päivää",
+      "scheduledOrdersTitle": "Ajastetut tilaukset",
+      "allowSchedulingHint": "Anna asiakkaiden valita tietty nouto-/toimitusaika sen sijaan, että tilaus tehdään mahdollisimman pian toimitettavaksi.",
+      "hideAsapTitle": "Piilota \"mahdollisimman pian\"",
+      "hideAsapHint": "Asiakkaiden on valittava tuleva ajankohta — ei mahdollisimman pian -vaihtoehtoa."
     },
     "delivery": {
       "title": "Toimitusalueet",

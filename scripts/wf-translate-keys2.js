@@ -7,9 +7,9 @@ export const meta = {
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
 const NS = "checkout";
-const CONTEXT = "the customer checkout, scheduling section. Shown when a restaurant only takes orders in advance (a minimum lead time), so ASAP isn't offered and the customer must pick a future slot. Keep the ⏰ emoji. Concise, friendly customer tone. No placeholders.";
+const CONTEXT = "the customer checkout, scheduling section. Shown when the restaurant has disabled 'order for later', so the order is simply prepared as soon as possible. Concise, friendly customer tone. No placeholders.";
 const EN = {
-  "leadTimePrompt": "⏰ This restaurant takes orders in advance — please pick a time. The earliest available slot is shown below.",
+  "asapOnly": "This order will be prepared as soon as possible.",
 };
 const KEYS = Object.keys(EN);
 

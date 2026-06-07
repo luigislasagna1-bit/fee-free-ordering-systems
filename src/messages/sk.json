@@ -399,7 +399,8 @@
       "parking": "Kde zaparkovať"
     },
     "zoneMinimum": "Minimálna objednávka {min}.",
-    "leadTimePrompt": "⏰ Táto reštaurácia prijíma objednávky vopred — vyberte si prosím čas. Najbližší dostupný termín je uvedený nižšie."
+    "leadTimePrompt": "⏰ Táto reštaurácia prijíma objednávky vopred — vyberte si prosím čas. Najbližší dostupný termín je uvedený nižšie.",
+    "asapOnly": "Táto objednávka bude pripravená čo najskôr."
   },
   "reservation": {
     "title": "Rezervovať stôl",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Bez obmedzenia, ako dlho vopred si zákazníci môžu objednať.",
       "unitMinutes": "minút",
       "unitHours": "hodín",
-      "unitDays": "dní"
+      "unitDays": "dní",
+      "scheduledOrdersTitle": "Naplánované objednávky",
+      "allowSchedulingHint": "Umožnite zákazníkom vybrať si konkrétny čas vyzdvihnutia/doručenia namiesto objednávky čo najskôr.",
+      "hideAsapTitle": "Skryť „čo najskôr\"",
+      "hideAsapHint": "Zákazníci musia zvoliť budúci čas — žiadna možnosť „čo najskôr\"."
     },
     "delivery": {
       "title": "Zóny doručenia",

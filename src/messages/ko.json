@@ -399,7 +399,8 @@
       "parking": "주차 위치"
     },
     "zoneMinimum": "최소 주문 금액 {min}.",
-    "leadTimePrompt": "⏰ 이 매장은 예약 주문만 받습니다 — 원하시는 시간을 선택해 주세요. 가장 빠른 예약 가능 시간은 아래에 표시되어 있습니다."
+    "leadTimePrompt": "⏰ 이 매장은 예약 주문만 받습니다 — 원하시는 시간을 선택해 주세요. 가장 빠른 예약 가능 시간은 아래에 표시되어 있습니다.",
+    "asapOnly": "이 주문은 최대한 빨리 준비됩니다."
   },
   "reservation": {
     "title": "테이블 예약",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "고객이 며칠 전까지 미리 주문할 수 있는지에 제한이 없습니다.",
       "unitMinutes": "분",
       "unitHours": "시간",
-      "unitDays": "일"
+      "unitDays": "일",
+      "scheduledOrdersTitle": "예약 주문",
+      "allowSchedulingHint": "고객이 가능한 한 빨리 주문하는 대신 원하는 픽업/배달 시간을 직접 선택할 수 있도록 합니다.",
+      "hideAsapTitle": "\"가능한 한 빨리\" 숨기기",
+      "hideAsapHint": "고객은 미래 시간을 선택해야 합니다 — ASAP 옵션 없음."
     },
     "delivery": {
       "title": "배달 구역",

@@ -6,10 +6,13 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "ordering.toasts";
-const CONTEXT = "a customer ordering-page error toast shown at checkout when the phone number field contains letters or too few digits. Concise, friendly customer tone. No placeholders.";
+const NS = "admin.services";
+const CONTEXT = "restaurant admin Services settings — the 'Scheduled orders' controls. 'Scheduled orders' is a section title. 'allowSchedulingHint' describes a master toggle letting customers pick a specific pickup/delivery time. 'Hide as soon as possible' is a toggle that forces every order to be scheduled (no ASAP). Concise admin tone. No placeholders. Keep the quotes around \"as soon as possible\".";
 const EN = {
-  "phoneInvalid": "Please enter a valid phone number (digits only).",
+  "scheduledOrdersTitle": "Scheduled orders",
+  "allowSchedulingHint": "Let customers choose a specific pickup/delivery time instead of ordering for as soon as possible.",
+  "hideAsapTitle": "Hide \"as soon as possible\"",
+  "hideAsapHint": "Customers must pick a future time — no ASAP option.",
 };
 const KEYS = Object.keys(EN);
 

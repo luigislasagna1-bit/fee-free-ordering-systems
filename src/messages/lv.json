@@ -399,7 +399,8 @@
       "parking": "Kur novietot transportu"
     },
     "zoneMinimum": "Minimālais pasūtījums {min}.",
-    "leadTimePrompt": "⏰ Šis restorāns pieņem pasūtījumus iepriekš — lūdzu, izvēlieties laiku. Tuvākais pieejamais laiks ir norādīts zemāk."
+    "leadTimePrompt": "⏰ Šis restorāns pieņem pasūtījumus iepriekš — lūdzu, izvēlieties laiku. Tuvākais pieejamais laiks ir norādīts zemāk.",
+    "asapOnly": "Šis pasūtījums tiks sagatavots, cik drīz vien iespējams."
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Nav ierobežojuma tam, cik tālu uz priekšu klienti var veikt iepriekšēju pasūtījumu.",
       "unitMinutes": "minūtes",
       "unitHours": "stundas",
-      "unitDays": "dienas"
+      "unitDays": "dienas",
+      "scheduledOrdersTitle": "Plānotie pasūtījumi",
+      "allowSchedulingHint": "Ļaujiet klientiem izvēlēties konkrētu izņemšanas/piegādes laiku, nevis pasūtīt uz pēc iespējas ātrāku laiku.",
+      "hideAsapTitle": "Paslēpt \"pēc iespējas ātrāk\"",
+      "hideAsapHint": "Klientiem jāizvēlas laiks nākotnē — nav opcijas pasūtīt nekavējoties."
     },
     "delivery": {
       "title": "Piegādes zonas",

@@ -399,7 +399,8 @@
       "parking": "Gdje parkirati"
     },
     "zoneMinimum": "Minimalna narudžba {min}.",
-    "leadTimePrompt": "⏰ Ovaj restoran prima narudžbe unaprijed — odaberite vrijeme. Najraniji dostupni termin prikazan je u nastavku."
+    "leadTimePrompt": "⏰ Ovaj restoran prima narudžbe unaprijed — odaberite vrijeme. Najraniji dostupni termin prikazan je u nastavku.",
+    "asapOnly": "Ova narudžba bit će pripremljena što je prije moguće."
   },
   "reservation": {
     "title": "Rezervirajte stol",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Nema ograničenja koliko unaprijed kupci mogu naručiti.",
       "unitMinutes": "minuta",
       "unitHours": "sati",
-      "unitDays": "dana"
+      "unitDays": "dana",
+      "scheduledOrdersTitle": "Zakazane narudžbe",
+      "allowSchedulingHint": "Dopustite kupcima da odaberu točno vrijeme preuzimanja/dostave umjesto naručivanja za što je prije moguće.",
+      "hideAsapTitle": "Sakrij \"što je prije moguće\"",
+      "hideAsapHint": "Kupci moraju odabrati buduće vrijeme — nema opcije naručivanja odmah."
     },
     "delivery": {
       "title": "Zone dostave",

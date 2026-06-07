@@ -804,15 +804,18 @@ export async function POST(req: NextRequest) {
     // Server-side guard for the per-service "minimum time in advance" + "maximum
     // days in advance" controls (Fabrizio cmq14gy64). Pickup/delivery only —
     // dine-in/catering have their own rules. Defense-in-depth vs the picker.
-    if (type === "pickup" || type === "delivery") {
+    if ((type === "pickup" || type === "delivery" || type === "dine_in")
+        && (restaurant as any).allowScheduledOrders !== false) {
       const tz = (restaurant as any).timezone ?? undefined;
-      const minLead = type === "delivery"
-        ? ((restaurant as any).deliveryMinLeadMinutes ?? 0)
+      const minLead = type === "delivery" ? ((restaurant as any).deliveryMinLeadMinutes ?? 0)
+        : type === "dine_in" ? ((restaurant as any).dineInMinLeadMinutes ?? 0)
         : ((restaurant as any).pickupMinLeadMinutes ?? 0);
-      const maxAdv = type === "delivery"
-        ? ((restaurant as any).deliveryMaxAdvanceDays ?? 0)
+      const maxAdv = type === "delivery" ? ((restaurant as any).deliveryMaxAdvanceDays ?? 0)
+        : type === "dine_in" ? ((restaurant as any).dineInMaxAdvanceDays ?? 0)
         : ((restaurant as any).pickupMaxAdvanceDays ?? 0);
-      if (minLead > 0 || maxAdv > 0) {
+      // "Hide ASAP" forces every order to be scheduled even with no min lead.
+      const mustSchedule = minLead > 0 || (restaurant as any).requireScheduledOrders === true;
+      if (mustSchedule || maxAdv > 0) {
         const sched: Date | null = (() => {
           if (!scheduledFor) return null;
           const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
@@ -821,19 +824,17 @@ export async function POST(req: NextRequest) {
         })();
         const nowMs = Date.now();
         const TOL = 60_000; // 1-min tolerance for rounding/clock skew
-        if (minLead > 0) {
-          if (!sched) {
-            return NextResponse.json(
-              { error: "This restaurant requires orders to be scheduled in advance. Please pick a time.", code: "preorder_schedule_required" },
-              { status: 400 },
-            );
-          }
-          if (sched.getTime() < nowMs + minLead * 60_000 - TOL) {
-            return NextResponse.json(
-              { error: "That time is too soon — please choose a later slot.", code: "preorder_too_soon" },
-              { status: 400 },
-            );
-          }
+        if (mustSchedule && !sched) {
+          return NextResponse.json(
+            { error: "This restaurant requires orders to be scheduled in advance. Please pick a time.", code: "preorder_schedule_required" },
+            { status: 400 },
+          );
+        }
+        if (minLead > 0 && sched && sched.getTime() < nowMs + minLead * 60_000 - TOL) {
+          return NextResponse.json(
+            { error: "That time is too soon — please choose a later slot.", code: "preorder_too_soon" },
+            { status: 400 },
+          );
         }
         if (maxAdv > 0 && sched && sched.getTime() > nowMs + maxAdv * 86_400_000 + TOL) {
           return NextResponse.json(

@@ -399,7 +399,8 @@
       "parking": "駐車場所"
     },
     "zoneMinimum": "最低注文金額 {min}。",
-    "leadTimePrompt": "⏰ こちらのレストランは事前注文制です。ご希望の時間をお選びください。以下に最短でご利用いただける時間枠を表示しています。"
+    "leadTimePrompt": "⏰ こちらのレストランは事前注文制です。ご希望の時間をお選びください。以下に最短でご利用いただける時間枠を表示しています。",
+    "asapOnly": "こちらのご注文は、できるだけ早くご用意いたします。"
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "お客様が事前注文できる先の期間に制限はありません。",
       "unitMinutes": "分",
       "unitHours": "時間",
-      "unitDays": "日"
+      "unitDays": "日",
+      "scheduledOrdersTitle": "予約注文",
+      "allowSchedulingHint": "「できるだけ早く」で注文する代わりに、お客様が特定の受け取り/配達時間を選べるようにします。",
+      "hideAsapTitle": "「できるだけ早く」を非表示にする",
+      "hideAsapHint": "お客様は将来の時間を選択する必要があります。ASAP（できるだけ早く）の選択肢はありません。"
     },
     "delivery": {
       "title": "デリバリーエリア",

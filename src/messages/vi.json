@@ -399,7 +399,8 @@
       "parking": "Chỗ đỗ xe"
     },
     "zoneMinimum": "Đơn hàng tối thiểu {min}.",
-    "leadTimePrompt": "⏰ Nhà hàng này nhận đơn đặt trước — vui lòng chọn giờ. Khung giờ sớm nhất hiện có được hiển thị bên dưới."
+    "leadTimePrompt": "⏰ Nhà hàng này nhận đơn đặt trước — vui lòng chọn giờ. Khung giờ sớm nhất hiện có được hiển thị bên dưới.",
+    "asapOnly": "Đơn hàng này sẽ được chuẩn bị trong thời gian sớm nhất."
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Không giới hạn thời gian khách có thể đặt trước.",
       "unitMinutes": "phút",
       "unitHours": "giờ",
-      "unitDays": "ngày"
+      "unitDays": "ngày",
+      "scheduledOrdersTitle": "Đơn hàng đặt theo lịch",
+      "allowSchedulingHint": "Cho phép khách hàng chọn thời gian nhận/giao hàng cụ thể thay vì đặt để nhận sớm nhất có thể.",
+      "hideAsapTitle": "Ẩn tùy chọn \"sớm nhất có thể\"",
+      "hideAsapHint": "Khách hàng phải chọn một thời điểm trong tương lai — không có tùy chọn nhận sớm nhất có thể."
     },
     "delivery": {
       "title": "Khu vực giao hàng",

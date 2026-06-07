@@ -182,6 +182,10 @@ interface Props {
    *  ahead a customer can pre-order (per-service max advance days). Empty =
    *  no cap. Applied as the `max` on the schedule date picker. */
   maxScheduledDate?: string;
+  /** Whether the "schedule for later" picker is offered at all. False = the
+   *  restaurant disabled scheduling, so only ASAP is available (the picker is
+   *  hidden) — unless cateringMode forces scheduling. */
+  schedulingEnabled?: boolean;
   /** Why schedule-for-later is being forced. Drives the banner copy
    *  inside the time-choice section so the customer understands
    *  whether it's a catering rule, a "we're closed right now" rule,
@@ -232,6 +236,7 @@ export function CheckoutModal({
   cateringMode = false,
   cateringMinScheduledLocal,
   maxScheduledDate,
+  schedulingEnabled = true,
   schedulingInterval = 15,
   openingHours = [],
   requireCustomerEmail = true,
@@ -803,6 +808,9 @@ export function CheckoutModal({
                       )}
                     </div>
                   )}
+                  {!schedulingEnabled ? (
+                    <div className="pt-1 text-xs text-gray-500">{tc("asapOnly")}</div>
+                  ) : (<>
                   <label className="block text-xs text-gray-500">{tc("scheduleForLaterOptional")}</label>
                   {/* Date + time-slot picker. Replaces the free-form
                       datetime-local input so customers can no longer
@@ -938,6 +946,7 @@ export function CheckoutModal({
                       {tc("switchToASAP")}
                     </button>
                   )}
+                  </>)}
                 </div>
               </SectionCard>
 

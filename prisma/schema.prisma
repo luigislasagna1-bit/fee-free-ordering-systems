@@ -149,6 +149,17 @@ model Restaurant {
   pickupMaxAdvanceDays   Int @default(0)
   deliveryMinLeadMinutes Int @default(0)
   deliveryMaxAdvanceDays Int @default(0)
+  dineInMinLeadMinutes   Int @default(0)
+  dineInMaxAdvanceDays   Int @default(0)
+  /// Master switch: may customers request a specific fulfillment time at all?
+  /// false → the schedule picker is hidden (ASAP only), unless a catering /
+  /// closed-now rule forces scheduling. GloriaFood "Allow clients to request
+  /// a specific fulfillment time".
+  allowScheduledOrders   Boolean @default(true)
+  /// Hide the "as soon as possible" option — every order must be scheduled
+  /// for a future slot. Only effective when allowScheduledOrders is true.
+  /// GloriaFood "Hide 'as soon as possible' (allow only scheduled orders)".
+  requireScheduledOrders Boolean @default(false)
   /// Whether the customer's email is mandatory on the checkout form.
   /// Default true so receipts can be sent; an owner who only wants
   /// SMS notification can flip this off and require phone instead.

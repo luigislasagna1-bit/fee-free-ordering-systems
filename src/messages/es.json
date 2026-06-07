@@ -399,7 +399,8 @@
       "parking": "Dónde aparcar"
     },
     "zoneMinimum": "Pedido mínimo {min}.",
-    "leadTimePrompt": "⏰ Este restaurante acepta pedidos por adelantado: elige una hora. A continuación se muestra el horario disponible más próximo."
+    "leadTimePrompt": "⏰ Este restaurante acepta pedidos por adelantado: elige una hora. A continuación se muestra el horario disponible más próximo.",
+    "asapOnly": "Este pedido se preparará lo antes posible."
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Sin límite de antelación para los pedidos anticipados de los clientes.",
       "unitMinutes": "minutos",
       "unitHours": "horas",
-      "unitDays": "días"
+      "unitDays": "días",
+      "scheduledOrdersTitle": "Pedidos programados",
+      "allowSchedulingHint": "Permite que los clientes elijan una hora concreta de recogida/entrega en lugar de pedir para lo antes posible.",
+      "hideAsapTitle": "Ocultar \"lo antes posible\"",
+      "hideAsapHint": "Los clientes deben elegir una hora futura; sin opción de lo antes posible."
     },
     "delivery": {
       "title": "Zonas de entrega",

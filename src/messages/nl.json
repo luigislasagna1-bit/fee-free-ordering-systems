@@ -399,7 +399,8 @@
       "parking": "Waar te parkeren"
     },
     "zoneMinimum": "Minimale bestelling {min}.",
-    "leadTimePrompt": "⏰ Dit restaurant neemt bestellingen vooraf aan — kies een tijd. Het vroegst beschikbare tijdslot zie je hieronder."
+    "leadTimePrompt": "⏰ Dit restaurant neemt bestellingen vooraf aan — kies een tijd. Het vroegst beschikbare tijdslot zie je hieronder.",
+    "asapOnly": "Deze bestelling wordt zo snel mogelijk klaargemaakt."
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Geen limiet op hoe ver vooruit klanten kunnen bestellen.",
       "unitMinutes": "minuten",
       "unitHours": "uren",
-      "unitDays": "dagen"
+      "unitDays": "dagen",
+      "scheduledOrdersTitle": "Geplande bestellingen",
+      "allowSchedulingHint": "Laat klanten een specifiek afhaal-/bezorgtijdstip kiezen in plaats van te bestellen voor zo snel mogelijk.",
+      "hideAsapTitle": "\"Zo snel mogelijk\" verbergen",
+      "hideAsapHint": "Klanten moeten een toekomstig tijdstip kiezen — geen optie voor zo snel mogelijk."
     },
     "delivery": {
       "title": "Bezorgzones",

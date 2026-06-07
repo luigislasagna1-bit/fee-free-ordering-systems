@@ -61,6 +61,8 @@ export function ServicesClient() {
   const [preorder, setPreorder] = useState({
     pickupMinLeadMinutes: 0, pickupMaxAdvanceDays: 0,
     deliveryMinLeadMinutes: 0, deliveryMaxAdvanceDays: 0,
+    dineInMinLeadMinutes: 0, dineInMaxAdvanceDays: 0,
+    allowScheduledOrders: true, requireScheduledOrders: false,
   });
   const [settings, setSettings] = useState<Record<ServiceKey, ServiceConfig>>({
     pickup:       { displayName: "Pickup",             description: "", estimatedTime: 20 },
@@ -153,6 +155,38 @@ export function ServicesClient() {
             }
           </button>
         </div>
+      </div>
+
+      {/* Scheduled-orders master controls (GloriaFood parity). */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h3 className="font-semibold text-gray-900">{t("scheduledOrdersTitle")}</h3>
+            <p className="text-xs text-gray-500 mt-0.5">{t("allowSchedulingHint")}</p>
+          </div>
+          <button
+            onClick={() => setPreorder(p => ({ ...p, allowScheduledOrders: !p.allowScheduledOrders }))}
+            className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
+            title={preorder.allowScheduledOrders ? "Disable" : "Enable"}
+          >
+            {preorder.allowScheduledOrders ? <ToggleRight className="w-8 h-8 text-emerald-500" /> : <ToggleLeft className="w-8 h-8" />}
+          </button>
+        </div>
+        {preorder.allowScheduledOrders && (
+          <div className="flex items-start justify-between gap-4 pt-3 border-t border-gray-100">
+            <div>
+              <div className="text-sm font-medium text-gray-700">{t("hideAsapTitle")}</div>
+              <p className="text-xs text-gray-500 mt-0.5">{t("hideAsapHint")}</p>
+            </div>
+            <button
+              onClick={() => setPreorder(p => ({ ...p, requireScheduledOrders: !p.requireScheduledOrders }))}
+              className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
+              title={preorder.requireScheduledOrders ? "Disable" : "Enable"}
+            >
+              {preorder.requireScheduledOrders ? <ToggleRight className="w-8 h-8 text-emerald-500" /> : <ToggleLeft className="w-8 h-8" />}
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="space-y-4">
@@ -252,9 +286,9 @@ export function ServicesClient() {
                       Items / categories are tagged "catering" individually
                       in /admin/menu (catering toggle on the item drawer +
                       the category modal). */}
-                  {(key === "pickup" || key === "delivery") && (() => {
-                    const minKey = key === "pickup" ? "pickupMinLeadMinutes" : "deliveryMinLeadMinutes";
-                    const maxKey = key === "pickup" ? "pickupMaxAdvanceDays" : "deliveryMaxAdvanceDays";
+                  {(key === "pickup" || key === "delivery" || key === "dineIn") && preorder.allowScheduledOrders && (() => {
+                    const minKey = key === "pickup" ? "pickupMinLeadMinutes" : key === "delivery" ? "deliveryMinLeadMinutes" : "dineInMinLeadMinutes";
+                    const maxKey = key === "pickup" ? "pickupMaxAdvanceDays" : key === "delivery" ? "deliveryMaxAdvanceDays" : "dineInMaxAdvanceDays";
                     const lead = splitLead(preorder[minKey]);
                     const maxDays = preorder[maxKey];
                     return (

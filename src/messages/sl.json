@@ -399,7 +399,8 @@
       "parking": "Kje parkirati"
     },
     "zoneMinimum": "Najmanjše naročilo {min}.",
-    "leadTimePrompt": "⏰ Ta restavracija sprejema naročila vnaprej — prosimo, izberite čas. Najzgodnejši razpoložljivi termin je prikazan spodaj."
+    "leadTimePrompt": "⏰ Ta restavracija sprejema naročila vnaprej — prosimo, izberite čas. Najzgodnejši razpoložljivi termin je prikazan spodaj.",
+    "asapOnly": "To naročilo bo pripravljeno čim prej."
   },
   "reservation": {
     "title": "Rezerviraj mizo",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Brez omejitve, kako daleč vnaprej lahko stranke prednaročijo.",
       "unitMinutes": "minut",
       "unitHours": "ur",
-      "unitDays": "dni"
+      "unitDays": "dni",
+      "scheduledOrdersTitle": "Naročila po urniku",
+      "allowSchedulingHint": "Strankam omogočite, da izberejo določen čas prevzema/dostave namesto naročila za čimprej.",
+      "hideAsapTitle": "Skrij možnost \"čimprej\"",
+      "hideAsapHint": "Stranke morajo izbrati prihodnji čas — brez možnosti takojšnjega naročila."
     },
     "delivery": {
       "title": "Območja dostave",

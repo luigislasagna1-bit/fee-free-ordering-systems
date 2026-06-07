@@ -399,7 +399,8 @@
       "parking": "Hol lehet parkolni"
     },
     "zoneMinimum": "Minimális rendelési összeg: {min}.",
-    "leadTimePrompt": "⏰ Ez az étterem előrendeléseket fogad — kérjük, válasszon időpontot. A legkorábbi elérhető időpontot lent találja."
+    "leadTimePrompt": "⏰ Ez az étterem előrendeléseket fogad — kérjük, válasszon időpontot. A legkorábbi elérhető időpontot lent találja.",
+    "asapOnly": "Ezt a rendelést a lehető leghamarabb elkészítjük."
   },
   "reservation": {
     "title": "Asztal foglalása",
@@ -735,7 +736,11 @@
       "maxAdvanceHintUnlimited": "Nincs korlátozás arra, hogy a vásárlók milyen messzire előre rendelhetnek.",
       "unitMinutes": "perc",
       "unitHours": "óra",
-      "unitDays": "nap"
+      "unitDays": "nap",
+      "scheduledOrdersTitle": "Ütemezett rendelések",
+      "allowSchedulingHint": "Engedje meg a vásárlóknak, hogy a lehető leghamarabbi rendelés helyett konkrét átvételi/kiszállítási időpontot válasszanak.",
+      "hideAsapTitle": "A „lehető leghamarabb\" elrejtése",
+      "hideAsapHint": "A vásárlóknak jövőbeli időpontot kell választaniuk – nincs azonnali rendelési lehetőség."
     },
     "delivery": {
       "title": "Szállítási zónák",
