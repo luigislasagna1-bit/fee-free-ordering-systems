@@ -359,7 +359,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               "overdue" label is dropped — when the digits hit 00:00
               the "ready in" caption also disappears so the row is
               quiet, not loud. */}
-          {readyCountdown && order.status !== "pending" && !(hideZeroCountdown && countdownIsPast) && (
+          {readyCountdown && !["pending", "rejected", "cancelled", "completed", "refunded", "no_show"].includes(order.status) && !(hideZeroCountdown && countdownIsPast) && (
             <div className="mt-2 text-right">
               <div
                 className={`text-xl font-bold tabular-nums leading-none whitespace-nowrap ${

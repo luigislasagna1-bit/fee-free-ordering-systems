@@ -48,7 +48,10 @@ export function formatDueCountdown(diffMs: number): { text: string; unit: "hours
   const mm = Math.floor((totalSec % 3600) / 60);
   const ss = totalSec % 60;
   if (hh > 0) return { text: `${hh}h ${String(mm).padStart(2, "0")}m`, unit: "hours" };
-  return { text: `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`, unit: "minutes" };
+  // Under an hour: always carry an explicit unit so the value can never be
+  // misread as hours (Fabrizio cmq07rc9l — "no H or M, minutes/hours confused").
+  if (mm > 0) return { text: `${mm}m ${String(ss).padStart(2, "0")}s`, unit: "minutes" };
+  return { text: `${ss}s`, unit: "minutes" };
 }
 
 /**
