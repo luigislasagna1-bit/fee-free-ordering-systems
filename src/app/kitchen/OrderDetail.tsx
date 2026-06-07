@@ -5,7 +5,7 @@ import {
   Package, CreditCard, Printer, UtensilsCrossed, RefreshCw, Loader2,
   ReceiptText, User, Plus, Timer,
 } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { formatDueLabel } from "@/lib/format-time";
 import toast from "react-hot-toast";
 import type { T, Order } from "./kitchen-types";
@@ -32,6 +32,8 @@ interface Props {
   fromInProgress?: boolean;
   /** Restaurant 12h/24h preference for the order timestamps shown here. */
   hoursFormat?: "12h" | "24h";
+  /** ISO 4217 currency code for the money shown here (order/item totals). */
+  currency?: string;
 }
 
 const STATUS_LABEL: Record<string, string> = {
@@ -61,7 +63,8 @@ function fmtDateTime(d: string | Date | null | undefined, hoursFormat: "12h" | "
   return new Date(d).toLocaleString(undefined, { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
 }
 
-export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple", fromInProgress = false, hoursFormat = "12h" }: Props) {
+export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple", fromInProgress = false, hoursFormat = "12h", currency = "usd" }: Props) {
+  const formatCurrency = (n: number) => fmtCurrency(n, currency);
   const isSimpleMode = workflowMode === "simple";
   const tk = useTranslations("kitchen");
   const tc = useTranslations("checkout");

@@ -211,8 +211,8 @@ function Countdown({
 
 
 // ── Order row ─────────────────────────────────────────────────────────────────
-function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown }: {
-  order: Order; selected: boolean; onClick: () => void; t: T; now: number;
+function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown, currency }: {
+  order: Order; selected: boolean; onClick: () => void; t: T; now: number; currency: string;
   /** Optional day-of-week pill (MON/TUE/…) rendered alongside the
    *  order number. Used by the In Progress LATER section so the
    *  kitchen can spot which day each scheduled order is for. */
@@ -350,7 +350,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
           </div>
         </div>
         <div className="flex flex-col items-end flex-shrink-0">
-          <div className={`font-bold text-sm ${t.text}`}>{formatCurrency(order.total)}</div>
+          <div className={`font-bold text-sm ${t.text}`}>{formatCurrency(order.total, currency)}</div>
           {/* Live countdown to the promised ready time (Luigi 2026-06-02
               kitchen-card revamp). Larger + lower than the static "20 m"
               prep number it replaced; ticks every second; locks at 00:00
@@ -519,6 +519,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   );
   // 12h/24h display preference for reservation + order times in the kitchen.
   const hoursFmt: "12h" | "24h" = restaurant?.hoursFormat === "12h" ? "12h" : "24h";
+  // Restaurant's currency for all on-screen money (order totals, item prices).
+  const moneyCurrency: string = (restaurant as any)?.currency ?? "usd";
   // PrintNode opt-in flag. When false (default), the PrintNode setup
   // UI is hidden from the kitchen header — Direct LAN printer is the
   // main path. Admin enables PrintNode from /admin/orders as an
@@ -2585,6 +2587,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                     now={now}
                     dayChip={dayChip}
                     hideZeroCountdown={hideZeroCountdown}
+                    currency={moneyCurrency}
                   />
                 );
               }
@@ -2618,6 +2621,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               onPrint={doPrint}
               printerReady={printerReady}
               workflowMode={workflowMode}
+              currency={moneyCurrency}
               fromInProgress={activeTab === "inprogress"}
               hoursFormat={hoursFmt}
             />
