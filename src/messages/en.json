@@ -3566,7 +3566,8 @@
       "delivery": "DELIVERY",
       "dine_in": "DINE-IN",
       "catering": "CATERING",
-      "takeout": "TAKEOUT"
+      "takeout": "TAKEOUT",
+      "take_out": "TAKEOUT"
     },
     "orderTypesLower": {
       "pickup": "pickup",

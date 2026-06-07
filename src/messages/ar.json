@@ -3562,7 +3562,8 @@
       "delivery": "توصيل",
       "dine_in": "تناول في المطعم",
       "catering": "ضيافة",
-      "takeout": "طلب خارجي"
+      "takeout": "طلب خارجي",
+      "take_out": "طلب خارجي"
     },
     "orderTypesLower": {
       "pickup": "استلام",

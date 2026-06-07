@@ -3562,7 +3562,8 @@
       "delivery": "DORUČENIE",
       "dine_in": "JEDENIE NA MIESTE",
       "catering": "CATERING",
-      "takeout": "SO SEBOU"
+      "takeout": "SO SEBOU",
+      "take_out": "SO SEBOU"
     },
     "orderTypesLower": {
       "pickup": "vyzdvihnutie",

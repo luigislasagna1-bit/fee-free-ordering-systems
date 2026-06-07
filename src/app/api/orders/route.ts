@@ -24,7 +24,7 @@ import {
   isOnMarketplace,
 } from "@/lib/marketplace";
 import { getCurrentCustomer } from "@/lib/customer-session";
-const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "catering"] as const;
+const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "take_out", "catering"] as const;
 // "cash"           = pay on pickup/delivery in cash
 // "card"           = pay online by card via Stripe (gated by cardPaymentEnabled)
 // "card_in_person" = customer pays by card in person (restaurant's own POS).
@@ -240,8 +240,9 @@ export async function POST(req: NextRequest) {
         case "pickup":   return (restaurant as any).pickupPausedUntil;
         case "delivery": return (restaurant as any).deliveryPausedUntil;
         case "dine_in":  return (restaurant as any).dineInPausedUntil;
+        case "take_out": return (restaurant as any).takeOutPausedUntil;
         case "catering": return (restaurant as any).cateringPausedUntil;
-        default:         return null; // take_out reuses pickup-style; covered above for the known set
+        default:         return null;
       }
     })();
     if (pauseField && new Date(pauseField).getTime() > Date.now()) {
@@ -804,7 +805,7 @@ export async function POST(req: NextRequest) {
     // Server-side guard for the per-service "minimum time in advance" + "maximum
     // days in advance" controls (Fabrizio cmq14gy64). Pickup/delivery only —
     // dine-in/catering have their own rules. Defense-in-depth vs the picker.
-    if ((type === "pickup" || type === "delivery" || type === "dine_in")
+    if ((type === "pickup" || type === "delivery" || type === "dine_in" || type === "take_out")
         && (restaurant as any).allowScheduledOrders !== false) {
       const tz = (restaurant as any).timezone ?? undefined;
       const minLead = type === "delivery" ? ((restaurant as any).deliveryMinLeadMinutes ?? 0)

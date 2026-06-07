@@ -3562,7 +3562,8 @@
       "delivery": "PENGIRIMAN",
       "dine_in": "MAKAN DI TEMPAT",
       "catering": "KATERING",
-      "takeout": "BAWA PULANG"
+      "takeout": "BAWA PULANG",
+      "take_out": "BAWA PULANG"
     },
     "orderTypesLower": {
       "pickup": "pengambilan",

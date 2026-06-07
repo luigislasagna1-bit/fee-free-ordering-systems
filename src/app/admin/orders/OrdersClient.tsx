@@ -163,7 +163,7 @@ export function OrdersClient({ orders }: { orders: any[] }) {
                       )}
                     </div>
                     <div className="text-xs sm:text-sm text-gray-500 truncate mt-0.5">
-                      <span className="font-mono">{order.orderNumber}</span> · {order.type} · {itemCount} {itemCount === 1 ? "item" : "items"} ·{" "}
+                      <span className="font-mono">{order.orderNumber}</span> · {String(order.type ?? "").replace(/_/g, " ")} · {itemCount} {itemCount === 1 ? "item" : "items"} ·{" "}
                       <span className="hidden sm:inline">{formatDate(order.createdAt)}</span>
                       <span className="sm:hidden">{new Date(order.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}</span>
                     </div>

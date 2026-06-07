@@ -3562,7 +3562,8 @@
       "delivery": "配送",
       "dine_in": "堂食",
       "catering": "外卖承办",
-      "takeout": "打包带走"
+      "takeout": "打包带走",
+      "take_out": "打包带走"
     },
     "orderTypesLower": {
       "pickup": "自取",

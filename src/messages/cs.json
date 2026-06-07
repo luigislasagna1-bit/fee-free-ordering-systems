@@ -3562,7 +3562,8 @@
       "delivery": "DORUČENÍ",
       "dine_in": "NA MÍSTĚ",
       "catering": "CATERING",
-      "takeout": "S SEBOU"
+      "takeout": "S SEBOU",
+      "take_out": "S SEBOU"
     },
     "orderTypesLower": {
       "pickup": "vyzvednutí",

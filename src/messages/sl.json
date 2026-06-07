@@ -3562,7 +3562,8 @@
       "delivery": "DOSTAVA",
       "dine_in": "V RESTAVRACIJI",
       "catering": "CATERING",
-      "takeout": "ZA S SEBOJ"
+      "takeout": "ZA S SEBOJ",
+      "take_out": "ZA S SEBOJ"
     },
     "orderTypesLower": {
       "pickup": "prevzem",

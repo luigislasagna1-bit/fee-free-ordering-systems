@@ -3562,7 +3562,8 @@
       "delivery": "डिलीवरी",
       "dine_in": "डाइन-इन",
       "catering": "कैटरिंग",
-      "takeout": "टेकआउट"
+      "takeout": "टेकआउट",
+      "take_out": "टेकआउट"
     },
     "orderTypesLower": {
       "pickup": "पिकअप",

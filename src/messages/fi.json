@@ -3562,7 +3562,8 @@
       "delivery": "TOIMITUS",
       "dine_in": "RAVINTOLASSA",
       "catering": "CATERING",
-      "takeout": "MUKAAN"
+      "takeout": "MUKAAN",
+      "take_out": "MUKAAN"
     },
     "orderTypesLower": {
       "pickup": "nouto",

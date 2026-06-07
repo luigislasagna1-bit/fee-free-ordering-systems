@@ -3562,7 +3562,8 @@
       "delivery": "KOJUVEDU",
       "dine_in": "KOHAPEAL",
       "catering": "TOITLUSTUS",
-      "takeout": "KAASAVÕTT"
+      "takeout": "KAASAVÕTT",
+      "take_out": "KAASAVÕTT"
     },
     "orderTypesLower": {
       "pickup": "järeltulek",

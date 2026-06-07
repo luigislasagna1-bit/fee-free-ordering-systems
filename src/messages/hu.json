@@ -3562,7 +3562,8 @@
       "delivery": "SZÁLLÍTÁS",
       "dine_in": "HELYBEN FOGYASZTÁS",
       "catering": "CATERING",
-      "takeout": "ELVITEL"
+      "takeout": "ELVITEL",
+      "take_out": "ELVITEL"
     },
     "orderTypesLower": {
       "pickup": "elvitel",

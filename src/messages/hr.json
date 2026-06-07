@@ -3562,7 +3562,8 @@
       "delivery": "DOSTAVA",
       "dine_in": "KONZUMACIJA U LOKALU",
       "catering": "CATERING",
-      "takeout": "PONIJETI"
+      "takeout": "PONIJETI",
+      "take_out": "PONIJETI"
     },
     "orderTypesLower": {
       "pickup": "preuzimanje",

@@ -3562,7 +3562,8 @@
       "delivery": "DOSTAWA",
       "dine_in": "NA MIEJSCU",
       "catering": "CATERING",
-      "takeout": "NA WYNOS"
+      "takeout": "NA WYNOS",
+      "take_out": "NA WYNOS"
     },
     "orderTypesLower": {
       "pickup": "odbiór",

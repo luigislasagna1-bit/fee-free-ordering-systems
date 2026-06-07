@@ -3562,7 +3562,8 @@
       "delivery": "LIVRARE",
       "dine_in": "LA RESTAURANT",
       "catering": "CATERING",
-      "takeout": "DE LUA"
+      "takeout": "DE LUA",
+      "take_out": "DE LUA"
     },
     "orderTypesLower": {
       "pickup": "ridicare",

@@ -3562,7 +3562,8 @@
       "delivery": "GIAO HÀNG",
       "dine_in": "ĂN TẠI QUÁN",
       "catering": "ĐẶT TIỆC",
-      "takeout": "MANG VỀ"
+      "takeout": "MANG VỀ",
+      "take_out": "MANG VỀ"
     },
     "orderTypesLower": {
       "pickup": "lấy hàng",

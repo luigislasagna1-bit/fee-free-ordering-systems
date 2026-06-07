@@ -3562,7 +3562,8 @@
       "delivery": "LEVERANS",
       "dine_in": "ÄTAS PÅ PLATS",
       "catering": "CATERING",
-      "takeout": "TA MED"
+      "takeout": "TA MED",
+      "take_out": "TA MED"
     },
     "orderTypesLower": {
       "pickup": "avhämtning",

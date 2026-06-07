@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import {
   X, User, Truck, ShoppingBag, Clock, CreditCard, Heart, Edit2, Tag,
-  AlertCircle, Loader2, ChevronDown,
+  AlertCircle, Loader2, ChevronDown, Utensils, Package,
 } from "lucide-react";
 import { Autocomplete, GoogleMap, Marker } from "@react-google-maps/api";
 import { useCurrencyFormat } from "@/lib/currency-context";
@@ -71,14 +71,15 @@ type CartLine = {
 
 interface Props {
   theme: Theme;
-  orderType: "pickup" | "delivery";
-  /** Switcher between Pickup and Delivery inside the checkout modal.
-   *  Lets the customer change their order type without closing the
-   *  modal and scrolling back to the page-level toggle. Null when the
-   *  restaurant only accepts one of the two (no switching needed). */
-  onChangeOrderType?: (next: "pickup" | "delivery") => void;
+  orderType: "pickup" | "delivery" | "dine_in" | "take_out";
+  /** Switcher between order types inside the checkout modal. Lets the customer
+   *  change their order type without closing the modal and scrolling back to
+   *  the page-level toggle. Null when the restaurant only accepts one type. */
+  onChangeOrderType?: (next: "pickup" | "delivery" | "dine_in" | "take_out") => void;
   acceptsPickup: boolean;
   acceptsDelivery: boolean;
+  acceptsDineIn?: boolean;
+  acceptsTakeOut?: boolean;
   /** Restaurant slug — for building the sign-in / signup link in the
    *  contact section. */
   restaurantSlug: string;
@@ -236,6 +237,7 @@ interface Props {
 
 export function CheckoutModal({
   theme, orderType, onChangeOrderType, acceptsPickup, acceptsDelivery,
+  acceptsDineIn = false, acceptsTakeOut = false,
   restaurantSlug, isSignedIn, fromMarketplace,
   cart, subtotal, totalDiscount,
   appliedPromos = [], hasFreeDelivery = false, baseDeliveryFee = 0,
@@ -387,7 +389,9 @@ export function CheckoutModal({
     ? (customerInfo.address
         ? `Delivery to ${customerInfo.address}${customerInfo.city ? ", " + customerInfo.city : ""}`
         : "Delivery — add address")
-    : `Pickup`;
+    : orderType === "dine_in" ? tOrd("dineIn")
+    : orderType === "take_out" ? tOrd("takeOut")
+    : tOrd("pickup");
 
   const timeSummary = customerInfo.scheduledFor
     ? (() => {
@@ -413,8 +417,8 @@ export function CheckoutModal({
       : customerInfo.paymentMethod === "paypal"
         ? "PayPal"
         : customerInfo.paymentMethod === "card_in_person"
-          ? (orderType === "pickup" ? tc("cardOnPickup") : tc("cardOnDelivery"))
-          : (orderType === "pickup" ? tc("cashOnPickup") : tc("cashOnDelivery"));
+          ? (orderType === "delivery" ? tc("cardOnDelivery") : tc("cardOnPickup"))
+          : (orderType === "delivery" ? tc("cashOnDelivery") : tc("cashOnPickup"));
 
   const tipsSummary = tipAmount > 0
     ? `${tipPercent}% (${formatCurrency(tipAmount)})`
@@ -656,16 +660,19 @@ export function CheckoutModal({
                 expanded={editingSection === "ordering"}
                 primary={theme.primaryColor}
               >
-                {/* Pickup vs Delivery selector — only render when the
-                    restaurant actually accepts BOTH. A pickup-only or
-                    delivery-only restaurant gets no choice; we just
-                    show the address fields below (for delivery). */}
-                {acceptsPickup && acceptsDelivery && onChangeOrderType && (
+                {/* Order-type selector — lists every channel the restaurant
+                    accepts (pickup / delivery / dine-in / take-out). Only
+                    renders when there's an actual choice (2+ enabled). */}
+                {(() => {
+                  const opts = [
+                    acceptsPickup && { value: "pickup" as const, icon: <ShoppingBag className="w-4 h-4" />, label: tOrd("pickup") },
+                    acceptsDelivery && { value: "delivery" as const, icon: <Truck className="w-4 h-4" />, label: tOrd("delivery") },
+                    acceptsDineIn && { value: "dine_in" as const, icon: <Utensils className="w-4 h-4" />, label: tOrd("dineIn") },
+                    acceptsTakeOut && { value: "take_out" as const, icon: <Package className="w-4 h-4" />, label: tOrd("takeOut") },
+                  ].filter(Boolean) as Array<{ value: "pickup" | "delivery" | "dine_in" | "take_out"; icon: React.ReactNode; label: string }>;
+                  return opts.length > 1 && onChangeOrderType ? (
                   <div className="pt-3 grid grid-cols-2 gap-2">
-                    {([
-                      { value: "pickup" as const, icon: <ShoppingBag className="w-4 h-4" />, label: tOrd("pickup") },
-                      { value: "delivery" as const, icon: <Truck className="w-4 h-4" />, label: tOrd("delivery") },
-                    ]).map((opt) => (
+                    {opts.map((opt) => (
                       <button
                         key={opt.value}
                         type="button"
@@ -681,7 +688,8 @@ export function CheckoutModal({
                       </button>
                     ))}
                   </div>
-                )}
+                  ) : null;
+                })()}
                 {orderType === "delivery" && (
                   <div className="pt-3 space-y-2">
                     {/* Street address — primary field; drives autocomplete +
@@ -1110,12 +1118,12 @@ export function CheckoutModal({
                     {
                       slug: "cash",
                       value: "cash",
-                      label: orderType === "pickup" ? tc("cashOnPickup") : tc("cashOnDelivery"),
+                      label: orderType === "delivery" ? tc("cashOnDelivery") : tc("cashOnPickup"),
                     },
                     {
                       slug: "card_in_person",
                       value: "card_in_person",
-                      label: orderType === "pickup" ? tc("cardOnPickup") : tc("cardOnDelivery"),
+                      label: orderType === "delivery" ? tc("cardOnDelivery") : tc("cardOnPickup"),
                     },
                     {
                       slug: "online_card",
@@ -1161,7 +1169,7 @@ export function CheckoutModal({
                 {customerInfo.paymentMethod === "card" && !cardPaymentEnabled && (
                   <div className="mt-2 p-2.5 bg-blue-50 rounded-lg text-xs text-blue-700 flex items-start gap-2">
                     <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
-                    {tc("cardComingSoon", { type: orderType === "pickup" ? tOrd("pickup").toLowerCase() : tOrd("delivery").toLowerCase() })}
+                    {tc("cardComingSoon", { type: orderType === "delivery" ? tOrd("delivery").toLowerCase() : tOrd("pickup").toLowerCase() })}
                   </div>
                 )}
                 {customerInfo.paymentMethod === "paypal" && !paypalEnabled && (

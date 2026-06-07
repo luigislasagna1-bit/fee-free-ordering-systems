@@ -3562,7 +3562,8 @@
       "delivery": "배달",
       "dine_in": "매장 식사",
       "catering": "케이터링",
-      "takeout": "포장"
+      "takeout": "포장",
+      "take_out": "포장"
     },
     "orderTypesLower": {
       "pickup": "픽업",

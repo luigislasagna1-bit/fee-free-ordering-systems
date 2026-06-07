@@ -3562,7 +3562,8 @@
       "delivery": "PRISTATYMAS",
       "dine_in": "VALGYMAS VIETOJE",
       "catering": "CATERING",
-      "takeout": "PASIIMTI"
+      "takeout": "PASIIMTI",
+      "take_out": "PASIIMTI"
     },
     "orderTypesLower": {
       "pickup": "atsiėmimas",

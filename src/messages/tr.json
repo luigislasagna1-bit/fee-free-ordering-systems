@@ -3562,7 +3562,8 @@
       "delivery": "TESLİMAT",
       "dine_in": "YERİNDE YE",
       "catering": "CATERING",
-      "takeout": "PAKET"
+      "takeout": "PAKET",
+      "take_out": "PAKET"
     },
     "orderTypesLower": {
       "pickup": "gel al",

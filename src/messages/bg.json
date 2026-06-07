@@ -3562,7 +3562,8 @@
       "delivery": "ДОСТАВКА",
       "dine_in": "НА МЯСТО",
       "catering": "КЕТЪРИНГ",
-      "takeout": "ЗА ВКЪЩИ"
+      "takeout": "ЗА ВКЪЩИ",
+      "take_out": "ЗА ВКЪЩИ"
     },
     "orderTypesLower": {
       "pickup": "вземане",

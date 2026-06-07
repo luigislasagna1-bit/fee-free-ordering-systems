@@ -5,7 +5,7 @@ import {
   ShoppingCart, MapPin, Phone, Clock, Plus, Minus, X,
   AlertCircle, Tag, Loader2, ChevronDown, Star, Info, Calendar,
   Truck, ShoppingBag, ChevronLeft, ChevronRight,
-  UserCircle, LogIn, Search,
+  UserCircle, LogIn, Search, Utensils, Package,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
@@ -728,7 +728,13 @@ export function OrderingPageClient({
    *  in the cart drawer. Resets to 1 when a new item opens; preserved
    *  when editing an existing cart line. */
   const [itemQuantity, setItemQuantity] = useState(1);
-  const [orderType, setOrderType] = useState<"pickup" | "delivery">(restaurant.acceptsPickup ? "pickup" : "delivery");
+  const [orderType, setOrderType] = useState<"pickup" | "delivery" | "dine_in" | "take_out">(
+    restaurant.acceptsPickup ? "pickup"
+      : restaurant.acceptsDelivery ? "delivery"
+      : (restaurant as any).acceptsDineIn ? "dine_in"
+      : (restaurant as any).acceptsTakeOut ? "take_out"
+      : "pickup",
+  );
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [reservationOpen, setReservationOpen] = useState(false);
   const [couponCode, setCouponCode] = useState("");
@@ -1243,7 +1249,9 @@ export function OrderingPageClient({
         menuItems: c.menuItems
           .filter(i =>
             !i.isHidden &&
-            (orderType === "pickup" ? i.forPickup : i.forDelivery) &&
+            // Delivery uses forDelivery; pickup / dine-in / take-out all use
+            // the pickup availability flag (they're pickup-style channels).
+            (orderType === "delivery" ? i.forDelivery : i.forPickup) &&
             isItemAvailableNow(i, restaurantTz)
           )
           .map(item => {
@@ -1514,13 +1522,11 @@ export function OrderingPageClient({
   const schedulingAllowed = (restaurant as any).allowScheduledOrders !== false;
   const hideAsap = schedulingAllowed && (restaurant as any).requireScheduledOrders === true;
   // Pre-order advance limits for the ACTIVE service — only when scheduling is on.
-  // Delivery uses the delivery fields; everything else uses pickup's.
-  const orderMinLeadMinutes = !schedulingAllowed ? 0 : (orderType === "delivery"
-    ? ((restaurant as any).deliveryMinLeadMinutes ?? 0)
-    : ((restaurant as any).pickupMinLeadMinutes ?? 0));
-  const orderMaxAdvanceDays = !schedulingAllowed ? 0 : (orderType === "delivery"
-    ? ((restaurant as any).deliveryMaxAdvanceDays ?? 0)
-    : ((restaurant as any).pickupMaxAdvanceDays ?? 0));
+  // Per-service advance limits: delivery → delivery fields, dine-in → dine-in
+  // fields, pickup / take-out → pickup fields (take-out is pickup-style).
+  const leadFieldPrefix = orderType === "delivery" ? "delivery" : orderType === "dine_in" ? "dineIn" : "pickup";
+  const orderMinLeadMinutes = !schedulingAllowed ? 0 : ((restaurant as any)[`${leadFieldPrefix}MinLeadMinutes`] ?? 0);
+  const orderMaxAdvanceDays = !schedulingAllowed ? 0 : ((restaurant as any)[`${leadFieldPrefix}MaxAdvanceDays`] ?? 0);
   // Earliest schedulable slot when a min lead is set: now + lead, rounded up
   // to the next 15-min boundary (same shape as the catering min).
   const leadMinScheduledLocal = (() => {
@@ -1614,16 +1620,23 @@ export function OrderingPageClient({
   const tipAmount = tipsEnabled ? Math.round((subtotal * (tipPercent / 100)) * 100) / 100 : 0;
   const totalDiscount = couponDiscount + promoDiscount;
   const feeOrderType: "pickup" | "delivery" = orderType === "delivery" ? "delivery" : "pickup";
+  // serviceSettings JSON key for the ACTIVE order type. Fees use feeOrderType
+  // (dine-in/take-out are pickup-priced), but scheduling settings are per
+  // actual service: dine-in and take-out have their own slot interval/mode.
+  const serviceSettingsKey =
+    orderType === "delivery" ? "delivery" :
+    orderType === "dine_in" ? "dineIn" :
+    orderType === "take_out" ? "takeOut" : "pickup";
   // Per-service scheduling slot interval: each service can override the
   // restaurant-wide default (Restaurant.scheduledOrderInterval) via its
   // serviceSettings entry — e.g. 30-min delivery slots, 15-min pickup. Falls
   // back to the global value, then 15. Reactive to orderType so the schedule
-  // picker re-buckets when the customer flips pickup ⇄ delivery.
+  // picker re-buckets when the customer flips services.
   const perServiceSlotInterval = (() => {
     try {
       const raw = (restaurant as any).serviceSettings;
       const ss = raw ? JSON.parse(raw) : null;
-      const v = ss?.[feeOrderType]?.slotInterval;
+      const v = ss?.[serviceSettingsKey]?.slotInterval;
       if (typeof v === "number" && v > 0) return v;
     } catch { /* malformed serviceSettings — fall back to the global default */ }
     return (restaurant as any).scheduledOrderInterval ?? 15;
@@ -1636,7 +1649,7 @@ export function OrderingPageClient({
     try {
       const raw = (restaurant as any).serviceSettings;
       const ss = raw ? JSON.parse(raw) : null;
-      const m = ss?.[feeOrderType]?.slotMode;
+      const m = ss?.[serviceSettingsKey]?.slotMode;
       if (m === "exact" || m === "both") return m;
     } catch { /* malformed serviceSettings — fall back to bands */ }
     return "bands";
@@ -2576,7 +2589,7 @@ export function OrderingPageClient({
         })()}
 
         {/* ── Order type ───────────────────────────────────────────────── */}
-        <div className="flex gap-3 mb-5">
+        <div className="flex flex-wrap gap-3 mb-5 [&>button]:min-w-[140px]">
           {restaurant.acceptsPickup && (() => {
             const until = (restaurant as any).pickupPausedUntil;
             const paused = !!until && new Date(until).getTime() > Date.now();
@@ -2610,6 +2623,48 @@ export function OrderingPageClient({
               >
                 <Truck className="w-4 h-4" /> {t("delivery")} · {estimatedDeliveryMinutes} {t("minutes")}
                 {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{fmt(baseDeliveryFee)})</span>}
+                {paused && <span className="text-xs">(paused)</span>}
+              </button>
+            );
+          })()}
+          {/* Dine-In + Take-Out — pickup-style channels (no address, no delivery
+              fee). Each shows its own estimated time from serviceSettings. */}
+          {(restaurant as any).acceptsDineIn && (() => {
+            const until = (restaurant as any).dineInPausedUntil;
+            const paused = !!until && new Date(until).getTime() > Date.now();
+            let est = restaurant.estimatedPickup;
+            try { const v = JSON.parse((restaurant as any).serviceSettings || "null")?.dineIn?.estimatedTime; if (typeof v === "number" && v > 0) est = v; } catch {}
+            return (
+              <button
+                onClick={() => !paused && setOrderType("dine_in")}
+                disabled={paused}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                style={orderType === "dine_in"
+                  ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
+                  : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
+                }
+              >
+                <Utensils className="w-4 h-4" /> {t("dineIn")} · {est} {t("minutes")}
+                {paused && <span className="text-xs">(paused)</span>}
+              </button>
+            );
+          })()}
+          {(restaurant as any).acceptsTakeOut && (() => {
+            const until = (restaurant as any).takeOutPausedUntil;
+            const paused = !!until && new Date(until).getTime() > Date.now();
+            let est = restaurant.estimatedPickup;
+            try { const v = JSON.parse((restaurant as any).serviceSettings || "null")?.takeOut?.estimatedTime; if (typeof v === "number" && v > 0) est = v; } catch {}
+            return (
+              <button
+                onClick={() => !paused && setOrderType("take_out")}
+                disabled={paused}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                style={orderType === "take_out"
+                  ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
+                  : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
+                }
+              >
+                <Package className="w-4 h-4" /> {t("takeOut")} · {est} {t("minutes")}
                 {paused && <span className="text-xs">(paused)</span>}
               </button>
             );
@@ -3575,6 +3630,8 @@ export function OrderingPageClient({
           onChangeOrderType={(next) => setOrderType(next)}
           acceptsPickup={!!restaurant.acceptsPickup}
           acceptsDelivery={!!restaurant.acceptsDelivery}
+          acceptsDineIn={!!(restaurant as any).acceptsDineIn}
+          acceptsTakeOut={!!(restaurant as any).acceptsTakeOut}
           restaurantSlug={restaurant.slug}
           isSignedIn={!!currentCustomer}
           fromMarketplace={fromMarketplace}

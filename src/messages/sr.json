@@ -3562,7 +3562,8 @@
       "delivery": "DOSTAVA",
       "dine_in": "KONZUMACIJA U RESTORANU",
       "catering": "KETERING",
-      "takeout": "PONETI"
+      "takeout": "PONETI",
+      "take_out": "PONETI"
     },
     "orderTypesLower": {
       "pickup": "preuzimanje",

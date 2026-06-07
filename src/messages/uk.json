@@ -3562,7 +3562,8 @@
       "delivery": "ДОСТАВКА",
       "dine_in": "В ЗАЛІ",
       "catering": "КЕЙТЕРИНГ",
-      "takeout": "НА ВИНОС"
+      "takeout": "НА ВИНОС",
+      "take_out": "НА ВИНОС"
     },
     "orderTypesLower": {
       "pickup": "самовивіз",

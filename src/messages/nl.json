@@ -3562,7 +3562,8 @@
       "delivery": "BEZORGING",
       "dine_in": "TER PLAATSE",
       "catering": "CATERING",
-      "takeout": "MEENEMEN"
+      "takeout": "MEENEMEN",
+      "take_out": "MEENEMEN"
     },
     "orderTypesLower": {
       "pickup": "afhalen",

@@ -3562,7 +3562,8 @@
       "delivery": "ΠΑΡΑΔΟΣΗ",
       "dine_in": "ΦΑΓΗΤΟ ΕΝΤΟΣ",
       "catering": "CATERING",
-      "takeout": "TAKE AWAY"
+      "takeout": "TAKE AWAY",
+      "take_out": "TAKE AWAY"
     },
     "orderTypesLower": {
       "pickup": "παραλαβή",

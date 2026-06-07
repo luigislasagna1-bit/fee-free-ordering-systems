@@ -3562,7 +3562,8 @@
       "delivery": "จัดส่ง",
       "dine_in": "ทานที่ร้าน",
       "catering": "จัดเลี้ยง",
-      "takeout": "ซื้อกลับบ้าน"
+      "takeout": "ซื้อกลับบ้าน",
+      "take_out": "ซื้อกลับบ้าน"
     },
     "orderTypesLower": {
       "pickup": "รับที่ร้าน",

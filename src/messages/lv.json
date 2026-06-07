@@ -3562,7 +3562,8 @@
       "delivery": "PIEGĀDE",
       "dine_in": "ĒŠANA UZ VIETAS",
       "catering": "ĒDINĀŠANA",
-      "takeout": "LĪDZŅEMŠANA"
+      "takeout": "LĪDZŅEMŠANA",
+      "take_out": "LĪDZŅEMŠANA"
     },
     "orderTypesLower": {
       "pickup": "paņemšana",

@@ -3562,7 +3562,8 @@
       "delivery": "משלוח",
       "dine_in": "אכילה במקום",
       "catering": "קייטרינג",
-      "takeout": "לקחת"
+      "takeout": "לקחת",
+      "take_out": "לקחת"
     },
     "orderTypesLower": {
       "pickup": "איסוף עצמי",

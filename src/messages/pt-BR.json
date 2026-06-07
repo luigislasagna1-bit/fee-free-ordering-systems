@@ -3562,7 +3562,8 @@
       "delivery": "ENTREGA",
       "dine_in": "NO LOCAL",
       "catering": "CATERING",
-      "takeout": "PARA VIAGEM"
+      "takeout": "PARA VIAGEM",
+      "take_out": "PARA VIAGEM"
     },
     "orderTypesLower": {
       "pickup": "retirada",

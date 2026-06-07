@@ -3562,7 +3562,8 @@
       "delivery": "LIEFERUNG",
       "dine_in": "VOR ORT",
       "catering": "CATERING",
-      "takeout": "MITNEHMEN"
+      "takeout": "MITNEHMEN",
+      "take_out": "MITNEHMEN"
     },
     "orderTypesLower": {
       "pickup": "Abholung",

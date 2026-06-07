@@ -3562,7 +3562,8 @@
       "delivery": "CONSEGNA",
       "dine_in": "SUL POSTO",
       "catering": "CATERING",
-      "takeout": "ASPORTO"
+      "takeout": "ASPORTO",
+      "take_out": "ASPORTO"
     },
     "orderTypesLower": {
       "pickup": "ritiro",

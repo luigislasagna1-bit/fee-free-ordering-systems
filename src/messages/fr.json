@@ -3562,7 +3562,8 @@
       "delivery": "LIVRAISON",
       "dine_in": "SUR PLACE",
       "catering": "TRAITEUR",
-      "takeout": "EMPORTER"
+      "takeout": "EMPORTER",
+      "take_out": "EMPORTER"
     },
     "orderTypesLower": {
       "pickup": "retrait",

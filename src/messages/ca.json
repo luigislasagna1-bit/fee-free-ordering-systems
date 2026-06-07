@@ -3562,7 +3562,8 @@
       "delivery": "LLIURAMENT",
       "dine_in": "A LA TAULA",
       "catering": "CÀTERING",
-      "takeout": "PER EMPORTAR"
+      "takeout": "PER EMPORTAR",
+      "take_out": "PER EMPORTAR"
     },
     "orderTypesLower": {
       "pickup": "recollida",

@@ -3562,7 +3562,8 @@
       "delivery": "デリバリー",
       "dine_in": "店内飲食",
       "catering": "ケータリング",
-      "takeout": "持ち帰り"
+      "takeout": "持ち帰り",
+      "take_out": "持ち帰り"
     },
     "orderTypesLower": {
       "pickup": "テイクアウト",

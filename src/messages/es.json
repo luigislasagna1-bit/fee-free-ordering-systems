@@ -3562,7 +3562,8 @@
       "delivery": "ENTREGA",
       "dine_in": "EN LOCAL",
       "catering": "CATERING",
-      "takeout": "PARA LLEVAR"
+      "takeout": "PARA LLEVAR",
+      "take_out": "PARA LLEVAR"
     },
     "orderTypesLower": {
       "pickup": "recogida",
