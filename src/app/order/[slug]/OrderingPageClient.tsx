@@ -723,6 +723,9 @@ export function OrderingPageClient({
   // "claim your free item" modal pops once (not on every cart change). Cleared
   // implicitly when the page reloads. Fabrizio/Luigi 2026-06-07.
   const [autoPromptedFreebies, setAutoPromptedFreebies] = useState<Set<string>>(new Set());
+  // True once the promo engine has evaluated the cart at least once — guards the
+  // stale-freebie cleanup from firing during the initial (un-evaluated) render.
+  const promosEvaluatedRef = useRef(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [mods, setMods] = useState<Record<string, string[]>>({});
   const [selectedVariant, setSelectedVariant] = useState<ItemVariant | null>(null);
@@ -1367,7 +1370,7 @@ export function OrderingPageClient({
   // we know which zone the address is in, which happens after the
   // geocode lookup above).
   useEffect(() => {
-    if (cart.length === 0) { setPromoDiscount(0); setPromoResults([]); setHasFreeDelivery(false); return; }
+    if (cart.length === 0) { setPromoDiscount(0); setPromoResults([]); setHasFreeDelivery(false); promosEvaluatedRef.current = true; return; }
     const sub = cart.reduce((s, i) => s + i.lineTotal, 0);
     fetch("/api/public/apply-promos", {
       method: "POST",
@@ -1417,6 +1420,7 @@ export function OrderingPageClient({
         setPromoResults(data.applied ?? []);
         setPromoDiscount(data.totalDiscount ?? 0);
         setHasFreeDelivery(data.hasFreeDelivery ?? false);
+        promosEvaluatedRef.current = true;
       })
       .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1480,6 +1484,25 @@ export function OrderingPageClient({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subtotal, orderType, cart, promoBanners, activePromoModal, autoPromptedFreebies]);
+
+  // Remove "Free with promo" lines whose promo no longer applies (e.g. the cart
+  // dropped below the threshold). Otherwise the customer is charged for an item
+  // they only added because it was free — and a variant-required freebie blocks
+  // checkout. Only runs after the engine has evaluated the cart at least once.
+  // Luigi 2026-06-07.
+  useEffect(() => {
+    if (!promosEvaluatedRef.current) return;
+    const PREFIX = "Free with promo: ";
+    const appliedNames = new Set(promoResults.map((r: { name: string }) => r.name));
+    const stale = (ci: { notes?: string }) =>
+      typeof ci.notes === "string" && ci.notes.startsWith(PREFIX) && !appliedNames.has(ci.notes.slice(PREFIX.length));
+    const removed = cart.find(stale);
+    if (removed) {
+      setCart((prev) => prev.filter((ci) => !stale(ci)));
+      toast(`${removed.menuItem.name} removed — your order no longer qualifies for the free item`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [promoResults]);
 
   // ── Catering detection ─────────────────────────────────────────────
   // An item is treated as catering when EITHER its own isCatering flag
@@ -2034,11 +2057,20 @@ export function OrderingPageClient({
     // recompute. Empty → engine ignores.
     couponCode: couponCode.trim() || undefined,
     subtotal, taxAmount, deliveryFee, tip: tipAmount, total,
-    items: cart.map(ci => ({
+    items: cart.map(ci => {
+      // Defensive: a variant-required item must carry a valid variant or the
+      // server rejects it ("Invalid variant"). Normal items always have one
+      // (the menu forces the choice); this covers freebies / legacy cart lines
+      // for items with hasVariants. Falls back to the default/first variant.
+      const effVariant = ci.variant
+        ?? (((ci.menuItem as any).hasVariants && (ci.menuItem.variants?.length ?? 0) > 0)
+          ? (ci.menuItem.variants!.find((v) => (v as any).isDefault) ?? ci.menuItem.variants![0])
+          : undefined);
+      return {
       menuItemId: ci.menuItem.id,
-      variantId: ci.variant?.id ?? null,
-      variantName: ci.variant?.name ?? null,
-      name: ci.menuItem.name + (ci.variant ? ` (${ci.variant.name})` : ""),
+      variantId: effVariant?.id ?? null,
+      variantName: effVariant?.name ?? null,
+      name: ci.menuItem.name + (effVariant ? ` (${effVariant.name})` : ""),
       price: ci.unitPrice != null
         ? ci.unitPrice
         : (ci.variant ? ci.variant.price : ci.menuItem.price) + getModPrice(ci.menuItem, ci.selectedMods),
@@ -2060,7 +2092,8 @@ export function OrderingPageClient({
       bundlePromoId: ci.bundlePromoId ?? undefined,
       bundlePromoName: ci.bundlePromoName ?? undefined,
       bundleItems: ci.bundleItems ?? null,
-    })),
+      };
+    }),
     };
   };
 
@@ -2302,9 +2335,16 @@ export function OrderingPageClient({
       return;
     }
     // The customer may have picked a specific size variant for the freebie.
-    const chosenVariant = variantId
+    let chosenVariant = variantId
       ? (fullItem.variants ?? []).find((v) => v.id === variantId)
       : undefined;
+    // If the item REQUIRES a variant (hasVariants) but none was picked, fall
+    // back to its default (or first) variant — otherwise the order fails server
+    // validation ("Invalid variant"). The picker forces a choice for items with
+    // listed variants; this covers default-only items. Luigi 2026-06-07.
+    if (!chosenVariant && (fullItem as any).hasVariants && (fullItem.variants?.length ?? 0) > 0) {
+      chosenVariant = fullItem.variants!.find((v) => (v as any).isDefault) ?? fullItem.variants![0];
+    }
     // Add the freebie at its NORMAL price — the promo engine then applies a
     // matching discount so exactly ONE nets to $0 (and the line reverts to
     // full price if the cart later drops below the trigger). Adding it at $0
