@@ -598,7 +598,8 @@
     "printerReachable": "पहुंच योग्य ✓ — प्रिंटर {addr} पर प्रतिक्रिया दे रहा है",
     "printerTestSent": "{method} के ज़रिए परीक्षण प्रिंट भेजा गया। कागज़ के लिए अपना प्रिंटर जांचें।",
     "printerHelpSummary": "परीक्षण प्रिंट ने सफलता बताई पर कोई कागज़ नहीं निकला?",
-    "printerSaveClose": "सहेजें और बंद करें"
+    "printerSaveClose": "सहेजें और बंद करें",
+    "enableSoundPrompt": "🔔 नए ऑर्डर की आवाज़ चालू करने के लिए यहाँ टैप करें"
   },
   "admin": {
     "comingSoonPlaceholder": {

@@ -598,7 +598,8 @@
     "printerReachable": "Sasniedzams ✓ — printeris atbild uz {addr}",
     "printerTestSent": "Pārbaudes druka nosūtīta caur {method}. Pārbaudiet, vai printerī ir papīrs.",
     "printerHelpSummary": "Pārbaudes druka ziņoja par veiksmi, bet papīrs netika izdrukāts?",
-    "printerSaveClose": "Saglabāt un aizvērt"
+    "printerSaveClose": "Saglabāt un aizvērt",
+    "enableSoundPrompt": "🔔 Pieskarieties šeit, lai ieslēgtu jaunu pasūtījumu skaņu"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

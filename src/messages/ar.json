@@ -598,7 +598,8 @@
     "printerReachable": "يمكن الوصول إليها ✓ — الطابعة تستجيب على {addr}",
     "printerTestSent": "تم إرسال الطباعة الاختبارية عبر {method}. تحقق من وجود الورق في طابعتك.",
     "printerHelpSummary": "أظهرت الطباعة الاختبارية النجاح لكن لم يخرج أي ورق؟",
-    "printerSaveClose": "حفظ وإغلاق"
+    "printerSaveClose": "حفظ وإغلاق",
+    "enableSoundPrompt": "🔔 اضغط هنا لتفعيل صوت الطلبات الجديدة"
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",

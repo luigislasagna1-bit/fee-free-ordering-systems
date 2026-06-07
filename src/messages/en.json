@@ -558,6 +558,7 @@
     "soundPreviewHint": "Use the test button below to preview your selection.",
     "soundVolume": "Volume",
     "soundMuted": "Muted",
+    "enableSoundPrompt": "🔔 Tap here to enable new-order sound",
     "soundMax": "Max",
     "soundLowWarn": "Volume is below 50%. We recommend keeping it at maximum so your team never misses an order during a busy rush.",
     "soundOffWarn": "Alert sound is OFF. New orders will appear visually only — you may not notice them in a noisy kitchen.",

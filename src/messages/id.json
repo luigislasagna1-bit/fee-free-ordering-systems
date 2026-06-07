@@ -598,7 +598,8 @@
     "printerReachable": "Terjangkau ✓ — printer merespons di {addr}",
     "printerTestSent": "Uji cetak dikirim melalui {method}. Periksa kertas di printer Anda.",
     "printerHelpSummary": "Uji Cetak menyatakan berhasil tetapi tidak ada kertas yang keluar?",
-    "printerSaveClose": "Simpan & Tutup"
+    "printerSaveClose": "Simpan & Tutup",
+    "enableSoundPrompt": "🔔 Ketuk di sini untuk mengaktifkan suara pesanan baru"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

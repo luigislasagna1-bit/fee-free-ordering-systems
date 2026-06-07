@@ -598,7 +598,8 @@
     "printerReachable": "接続可能 ✓ — {addr} でプリンターが応答しています",
     "printerTestSent": "{method} 経由でテスト印刷を送信しました。プリンターから用紙が出ているか確認してください。",
     "printerHelpSummary": "テスト印刷は成功と表示されたのに用紙が出てきませんか？",
-    "printerSaveClose": "保存して閉じる"
+    "printerSaveClose": "保存して閉じる",
+    "enableSoundPrompt": "🔔 ここをタップして新規注文の通知音をオンにする"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

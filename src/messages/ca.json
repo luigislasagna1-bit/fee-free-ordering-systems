@@ -598,7 +598,8 @@
     "printerReachable": "Accessible ✓ — la impressora respon a {addr}",
     "printerTestSent": "Prova d'impressió enviada mitjançant {method}. Comprova si surt paper de la impressora.",
     "printerHelpSummary": "La prova d'impressió ha indicat èxit però no ha sortit paper?",
-    "printerSaveClose": "Desa i tanca"
+    "printerSaveClose": "Desa i tanca",
+    "enableSoundPrompt": "🔔 Toca aquí per activar el so de comandes noves"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

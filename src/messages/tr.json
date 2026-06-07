@@ -598,7 +598,8 @@
     "printerReachable": "Erişilebilir ✓ — yazıcı {addr} adresinde yanıt veriyor",
     "printerTestSent": "Test yazdırması {method} ile gönderildi. Yazıcınızda kağıt olup olmadığını kontrol edin.",
     "printerHelpSummary": "Test Yazdırması başarılı dedi ama kağıt çıkmadı mı?",
-    "printerSaveClose": "Kaydet ve Kapat"
+    "printerSaveClose": "Kaydet ve Kapat",
+    "enableSoundPrompt": "🔔 Yeni sipariş sesini açmak için buraya dokunun"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

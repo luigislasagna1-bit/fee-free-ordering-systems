@@ -598,7 +598,8 @@
     "printerReachable": "Raggiungibile ✓ — la stampante risponde a {addr}",
     "printerTestSent": "Stampa di prova inviata tramite {method}. Controlla che la stampante abbia carta.",
     "printerHelpSummary": "La stampa di prova ha dato esito positivo ma non è uscita carta?",
-    "printerSaveClose": "Salva e chiudi"
+    "printerSaveClose": "Salva e chiudi",
+    "enableSoundPrompt": "🔔 Tocca qui per attivare il suono dei nuovi ordini"
   },
   "admin": {
     "welcomeBack": "Bentornato",

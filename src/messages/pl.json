@@ -598,7 +598,8 @@
     "printerReachable": "Osiągalna ✓ — drukarka odpowiada pod adresem {addr}",
     "printerTestSent": "Wysłano wydruk testowy przez {method}. Sprawdź papier w drukarce.",
     "printerHelpSummary": "Wydruk testowy zgłosił sukces, ale papier nie wyszedł?",
-    "printerSaveClose": "Zapisz i zamknij"
+    "printerSaveClose": "Zapisz i zamknij",
+    "enableSoundPrompt": "🔔 Dotknij tutaj, aby włączyć dźwięk nowych zamówień"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

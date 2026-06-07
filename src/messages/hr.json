@@ -598,7 +598,8 @@
     "printerReachable": "Dostupan ✓ — pisač odgovara na {addr}",
     "printerTestSent": "Probni ispis poslan putem {method}. Provjerite ima li papira u pisaču.",
     "printerHelpSummary": "Probni ispis javlja uspjeh, ali papir nije izašao?",
-    "printerSaveClose": "Spremi i zatvori"
+    "printerSaveClose": "Spremi i zatvori",
+    "enableSoundPrompt": "🔔 Dodirnite ovdje za zvuk novih narudžbi"
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",

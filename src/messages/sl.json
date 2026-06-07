@@ -598,7 +598,8 @@
     "printerReachable": "Dosegljiv ✓ — tiskalnik se odziva na {addr}",
     "printerTestSent": "Preizkusni natis poslan prek {method}. Preverite, ali ima tiskalnik papir.",
     "printerHelpSummary": "Preizkusni natis je sporočil uspeh, a papir ni prišel ven?",
-    "printerSaveClose": "Shrani in zapri"
+    "printerSaveClose": "Shrani in zapri",
+    "enableSoundPrompt": "🔔 Tapnite za vklop zvoka za nova naročila"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",

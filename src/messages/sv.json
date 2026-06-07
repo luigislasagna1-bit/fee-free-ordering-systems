@@ -598,7 +598,8 @@
     "printerReachable": "Nåbar ✓ – skrivaren svarar på {addr}",
     "printerTestSent": "Testutskrift skickad via {method}. Kontrollera om papper kom ut ur skrivaren.",
     "printerHelpSummary": "Testutskriften lyckades men inget papper kom ut?",
-    "printerSaveClose": "Spara och stäng"
+    "printerSaveClose": "Spara och stäng",
+    "enableSoundPrompt": "🔔 Tryck här för att aktivera ljud för nya beställningar"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",
