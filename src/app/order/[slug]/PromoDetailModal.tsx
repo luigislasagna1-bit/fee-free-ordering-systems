@@ -33,6 +33,7 @@ type RuleConfigGroup = {
   categoryIds?: string[];
   itemIds?: string[];
   menuItemIds?: string[]; // legacy alias
+  variantIds?: string[];
   minCount?: number;
   maxCount?: number;
   extraFee?: number;
@@ -91,6 +92,7 @@ type MenuItemLite = {
   price: number;
   imageUrl?: string;
   categoryId?: string;
+  variants?: { id: string; name: string; price: number }[];
 };
 
 type DeliveryZoneLite = {
@@ -111,7 +113,7 @@ interface Props {
   primaryColor: string;
   /** Add a freebie item to the cart at $0 (or discounted) — see
    *  FreebiePromptModal for the contract. */
-  onAddFreebie: (item: MenuItemLite, promoName: string) => void;
+  onAddFreebie: (item: MenuItemLite, promoName: string, variantId?: string | null) => void;
   /** Add a fully-built bundle to the cart as ONE consolidated line — see
    *  BundleComposerModal for the contract. */
   onAddBundle: (bundle: BundleCartItem) => void;
@@ -151,6 +153,31 @@ function collectGroupItems(group: RuleConfigGroup | undefined, allMenuItems: Men
   ]);
   const catSet = new Set<string>(group.categoryIds ?? []);
   return allMenuItems.filter((mi) => idSet.has(mi.id) || (mi.categoryId && catSet.has(mi.categoryId)));
+}
+
+/**
+ * Freebie options for a group, variant-aware. For each eligible item, the
+ * `variants` are narrowed to only the targeted sizes when the group selected
+ * specific variant IDs; whole-item / category selection keeps all sizes. Lets
+ * the claim modal offer the customer a "which size?" choice. Luigi 2026-06-07.
+ */
+function collectFreebieOptions(group: RuleConfigGroup | undefined, allMenuItems: MenuItemLite[]): MenuItemLite[] {
+  if (!group) return [];
+  const idSet = new Set<string>([...(group.itemIds ?? []), ...(group.menuItemIds ?? [])]);
+  const catSet = new Set<string>(group.categoryIds ?? []);
+  const variantIdSet = new Set<string>(group.variantIds ?? []);
+  const out: MenuItemLite[] = [];
+  for (const mi of allMenuItems) {
+    const wholeItem = idSet.has(mi.id) || (!!mi.categoryId && catSet.has(mi.categoryId));
+    if (wholeItem) {
+      out.push(mi);
+      continue;
+    }
+    // Item not whole-selected — include it only for its specifically targeted sizes.
+    const targeted = (mi.variants ?? []).filter((v) => variantIdSet.has(v.id));
+    if (targeted.length) out.push({ ...mi, variants: targeted });
+  }
+  return out;
 }
 
 function scrollToMenuItem(itemId: string, onClose: () => void) {
@@ -462,9 +489,9 @@ export function PromoDetailModal({
   // Free-item type short-circuits to the freebie picker.
   if (promo.promotionType === "free_item") {
     const eligible =
-      collectGroupItems(rules.eligibleGroup, allMenuItems)
+      collectFreebieOptions(rules.eligibleGroup, allMenuItems)
         .concat(
-          (rules.groups ?? rules.itemGroups ?? []).flatMap((g) => collectGroupItems(g, allMenuItems)),
+          (rules.groups ?? rules.itemGroups ?? []).flatMap((g) => collectFreebieOptions(g, allMenuItems)),
         );
     // Dedupe by id (a single item might appear via both itemIds and a
     // categoryIds inclusion).
@@ -477,8 +504,8 @@ export function PromoDetailModal({
         cartSubtotal={cartSubtotal}
         eligibleItems={Array.from(dedupedMap.values())}
         primaryColor={primaryColor}
-        onAddFreebie={(item) => {
-          onAddFreebie(item, promo.name);
+        onAddFreebie={(item, variantId) => {
+          onAddFreebie(item, promo.name, variantId);
           onClose();
         }}
         onClose={onClose}

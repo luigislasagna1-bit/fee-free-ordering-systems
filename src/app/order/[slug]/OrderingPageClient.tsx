@@ -1382,7 +1382,9 @@ export function OrderingPageClient({
           menuItemId: ci.menuItem.id,
           categoryId: ci.menuItem.categoryId,
           variantId: ci.variant?.id ?? null,
-          price: ci.menuItem.price,
+          // Effective per-unit price (variant-adjusted) so a size-specific
+          // freebie / % off nets against the price actually paid, not the base.
+          price: ci.unitPrice ?? ci.variant?.price ?? ci.menuItem.price,
           quantity: ci.quantity,
           subtotal: ci.lineTotal,
         })),
@@ -2279,6 +2281,7 @@ export function OrderingPageClient({
       price: mi.price,
       imageUrl: mi.imageUrl,
       categoryId: mi.categoryId,
+      variants: (mi.variants ?? []).map((v) => ({ id: v.id, name: v.name, price: v.price })),
     })),
   );
 
@@ -2289,6 +2292,7 @@ export function OrderingPageClient({
   const addFreebieToCart = (
     item: { id: string; name: string; price: number; imageUrl?: string; categoryId?: string },
     promoName: string,
+    variantId?: string | null,
   ) => {
     const fullItem = visibleCategories
       .flatMap((c) => c.menuItems)
@@ -2297,16 +2301,24 @@ export function OrderingPageClient({
       toast.error(tT("itemUnavailable") ?? "Item unavailable");
       return;
     }
+    // The customer may have picked a specific size variant for the freebie.
+    const chosenVariant = variantId
+      ? (fullItem.variants ?? []).find((v) => v.id === variantId)
+      : undefined;
     // Add the freebie at its NORMAL price — the promo engine then applies a
     // matching discount so exactly ONE nets to $0 (and the line reverts to
     // full price if the cart later drops below the trigger). Adding it at $0
     // double-discounted (free line + separate promo discount) AND let the
     // customer stack unlimited free units. Luigi 2026-06-07.
-    const unit = fullItem.price;
+    const unit = chosenVariant?.price ?? fullItem.price;
     setCart((prev) => {
-      // If this freebie is already in the cart, bump its quantity instead of
-      // adding a second line — only ONE unit is free, the rest are charged.
-      const existingIdx = prev.findIndex((ci) => ci.notes === `Free with promo: ${promoName}` && ci.menuItem.id === fullItem.id);
+      // If this exact freebie (same item + variant) is already in the cart,
+      // bump its quantity instead of adding a second line — only ONE unit is
+      // free, the rest are charged.
+      const existingIdx = prev.findIndex((ci) =>
+        ci.notes === `Free with promo: ${promoName}` &&
+        ci.menuItem.id === fullItem.id &&
+        (ci.variant?.id ?? null) === (chosenVariant?.id ?? null));
       if (existingIdx >= 0) {
         const next = [...prev];
         const ex = next[existingIdx];
@@ -2318,7 +2330,7 @@ export function OrderingPageClient({
         ...prev,
         {
           menuItem: fullItem,
-          variant: undefined,
+          variant: chosenVariant,
           quantity: 1,
           selectedMods: {},
           notes: `Free with promo: ${promoName}`,
@@ -2327,7 +2339,7 @@ export function OrderingPageClient({
         },
       ];
     });
-    toast.success(`Added ${fullItem.name}`);
+    toast.success(`Added ${fullItem.name}${chosenVariant ? ` (${chosenVariant.name})` : ""}`);
   };
 
   /** Add a fully-built bundle (Promo Type 8 / 13) to the cart as ONE

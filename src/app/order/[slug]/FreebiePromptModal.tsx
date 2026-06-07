@@ -23,6 +23,7 @@ type MenuItemLite = {
   name: string;
   price: number;
   imageUrl?: string;
+  variants?: { id: string; name: string; price: number }[];
 };
 
 interface Props {
@@ -31,7 +32,7 @@ interface Props {
   cartSubtotal: number;
   eligibleItems: MenuItemLite[];
   primaryColor: string;
-  onAddFreebie: (item: MenuItemLite) => void;
+  onAddFreebie: (item: MenuItemLite, variantId?: string | null) => void;
   onClose: () => void;
 }
 
@@ -100,44 +101,74 @@ export function FreebiePromptModal({
             <p className="text-sm text-gray-500 text-center py-8">{t("noEligibleItems")}</p>
           ) : (
             <div className="grid sm:grid-cols-2 gap-3">
-              {eligibleItems.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  disabled={!unlocked}
-                  onClick={() => unlocked && onAddFreebie(item)}
-                  className={`flex flex-col text-left rounded-xl border-2 overflow-hidden transition ${
-                    unlocked
-                      ? "border-gray-100 hover:border-gray-300 cursor-pointer"
-                      : "border-gray-100 opacity-40 cursor-not-allowed"
-                  }`}
-                >
-                  {item.imageUrl ? (
-                    <div className="aspect-[16/9] overflow-hidden bg-gray-50">
-                      <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
-                    </div>
-                  ) : (
-                    <div
-                      className="aspect-[16/9]"
-                      style={{ background: `linear-gradient(135deg, ${primaryColor}22, #f3f4f6)` }}
-                    />
-                  )}
-                  <div className="p-3">
-                    <div className="text-sm font-semibold text-gray-900">{item.name}</div>
-                    <div className="text-xs text-gray-400 line-through mt-0.5">
-                      {formatCurrency(item.price)}
-                    </div>
-                    {unlocked && (
-                      <span
-                        className="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full"
-                        style={{ backgroundColor: `${primaryColor}22`, color: primaryColor }}
-                      >
-                        {t("freeBadge")}
-                      </span>
-                    )}
+              {eligibleItems.map((item) => {
+                const variants = item.variants ?? [];
+                const image = item.imageUrl ? (
+                  <div className="aspect-[16/9] overflow-hidden bg-gray-50">
+                    <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
                   </div>
-                </button>
-              ))}
+                ) : (
+                  <div
+                    className="aspect-[16/9]"
+                    style={{ background: `linear-gradient(135deg, ${primaryColor}22, #f3f4f6)` }}
+                  />
+                );
+                // Item with size variants → let the customer pick which size.
+                if (variants.length > 0) {
+                  return (
+                    <div key={item.id} className={`flex flex-col rounded-xl border-2 border-gray-100 overflow-hidden ${unlocked ? "" : "opacity-40"}`}>
+                      {image}
+                      <div className="p-3">
+                        <div className="text-sm font-semibold text-gray-900">{item.name}</div>
+                        <div className="flex flex-wrap gap-1.5 mt-2">
+                          {variants.map((v) => (
+                            <button
+                              key={v.id}
+                              type="button"
+                              disabled={!unlocked}
+                              onClick={() => unlocked && onAddFreebie(item, v.id)}
+                              className={`text-xs font-semibold px-2.5 py-1 rounded-full border-2 transition ${unlocked ? "hover:opacity-80 cursor-pointer" : "cursor-not-allowed"}`}
+                              style={{ borderColor: primaryColor, color: primaryColor }}
+                            >
+                              {v.name} · {formatCurrency(v.price)}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                // Single-price item → claim directly.
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    disabled={!unlocked}
+                    onClick={() => unlocked && onAddFreebie(item)}
+                    className={`flex flex-col text-left rounded-xl border-2 overflow-hidden transition ${
+                      unlocked
+                        ? "border-gray-100 hover:border-gray-300 cursor-pointer"
+                        : "border-gray-100 opacity-40 cursor-not-allowed"
+                    }`}
+                  >
+                    {image}
+                    <div className="p-3">
+                      <div className="text-sm font-semibold text-gray-900">{item.name}</div>
+                      <div className="text-xs text-gray-400 line-through mt-0.5">
+                        {formatCurrency(item.price)}
+                      </div>
+                      {unlocked && (
+                        <span
+                          className="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full"
+                          style={{ backgroundColor: `${primaryColor}22`, color: primaryColor }}
+                        >
+                          {t("freeBadge")}
+                        </span>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
