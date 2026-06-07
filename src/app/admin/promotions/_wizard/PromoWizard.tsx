@@ -116,13 +116,22 @@ function parseShowtimes(raw: unknown): ShowtimeSchedule[] {
 
 function normalizeOrderTypeFromDb(s: string | undefined): string[] {
   if (!s) return [];
-  // Existing rows store "both" | "pickup" | "delivery" or CSV. Treat
-  // "both" as pickup+delivery; CSV / single tokens parsed as-is.
+  // Rows store "both" | a single value | a JSON array (multi-select) | CSV.
+  // Treat "both" as pickup+delivery; parse JSON arrays; split CSV otherwise.
   if (s === "both") return ["pickup", "delivery"];
-  return s
-    .split(",")
-    .map((x) => x.trim())
-    .filter(Boolean);
+  let arr: string[];
+  if (s.trim().startsWith("[")) {
+    try {
+      const parsed = JSON.parse(s);
+      arr = Array.isArray(parsed) ? parsed.map(String) : [s];
+    } catch {
+      arr = s.split(",").map((x) => x.trim()).filter(Boolean);
+    }
+  } else {
+    arr = s.split(",").map((x) => x.trim()).filter(Boolean);
+  }
+  // Canonicalise legacy spellings so the matching checkbox pre-checks.
+  return arr.map((x) => (x === "takeout" ? "take_out" : x === "dinein" ? "dine_in" : x));
 }
 
 function initialFormFromPromo(p: PromoRow | null | undefined): Step3Form {

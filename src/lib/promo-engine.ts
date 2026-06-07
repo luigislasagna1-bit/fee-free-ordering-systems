@@ -137,8 +137,9 @@ export type PromoInput = {
 };
 
 export type ApplyContext = {
-  /** Order channel. Multi-select promos match any of their listed types. */
-  orderType: "pickup" | "delivery" | "dine_in" | "catering" | "takeout";
+  /** Order channel. Multi-select promos match any of their listed types.
+   *  "take_out" is the live customer value; "takeout" kept for legacy data. */
+  orderType: "pickup" | "delivery" | "dine_in" | "catering" | "take_out" | "takeout";
   /** True when this is the customer's first order ever at the restaurant. */
   isNewCustomer: boolean;
   /** True when the customer has a registered account (CustomerAccount).
@@ -249,6 +250,17 @@ function jsonStringList(s: string | null | undefined): Set<string> | null {
   }
 }
 
+/** Canonicalise an order-type value so promo restrictions match orders
+ *  regardless of legacy spelling. Customer orders use "take_out" / "dine_in";
+ *  older promos (and the promo engine's own type) used "takeout" / "dinein".
+ *  Map them all to one canonical form. */
+function canonicalOrderType(t: string): string {
+  const k = String(t).toLowerCase().replace(/[\s-]+/g, "_");
+  if (k === "takeout" || k === "take_out") return "take_out";
+  if (k === "dinein" || k === "dine_in") return "dine_in";
+  return k;
+}
+
 /** orderType can be a single value ("pickup", "delivery", "both") or a
  *  JSON-stringified array (multi-select). Returns a Set of allowed
  *  channels, or null when the promo accepts any channel ("both"). */
@@ -326,8 +338,13 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
   if (promo.minimumOrder > 0 && ctx.subtotal < promo.minimumOrder) return false;
 
   // ── Order channel (multi-select) ───────────────────────────────────
+  // Canonicalise both sides so a "take_out" order matches a promo restricted
+  // to "takeout" (and dine_in/dinein variants) regardless of spelling.
   const allowedOrderTypes = parseOrderTypes(promo.orderType);
-  if (allowedOrderTypes && !allowedOrderTypes.has(ctx.orderType)) return false;
+  if (allowedOrderTypes) {
+    const allowedCanon = new Set([...allowedOrderTypes].map(canonicalOrderType));
+    if (!allowedCanon.has(canonicalOrderType(ctx.orderType))) return false;
+  }
 
   // ── Client Type restriction ────────────────────────────────────────
   // "any"       → no client-type restriction

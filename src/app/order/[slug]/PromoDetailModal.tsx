@@ -361,8 +361,10 @@ function formatChannel(slug: string, t: TFunction): string {
     pickup: t("channelPickup"),
     delivery: t("channelDelivery"),
     dine_in: t("channelDineIn"),
+    dinein: t("channelDineIn"),
     catering: t("channelCatering"),
     takeout: t("channelTakeout"),
+    take_out: t("channelTakeout"),
   };
   return map[slug] ?? slug;
 }

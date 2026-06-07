@@ -48,8 +48,9 @@ const VALID_ORDER_TYPES = new Set([
   "pickup",
   "delivery",
   "dine_in",
+  "take_out",
   "catering",
-  "takeout",
+  "takeout", // legacy spelling — kept so old promos still validate
 ]);
 
 /** Coerce a JSON-stringified order-type array OR a single-value scalar

@@ -95,8 +95,10 @@ export function StepRestrictions({
     { value: "pickup", label: t("channelPickup") },
     { value: "delivery", label: t("channelDelivery") },
     { value: "dine_in", label: t("channelDineIn") },
+    // Value is "take_out" to match the customer order type (Order.type). Legacy
+    // promos stored "takeout"; the engine normalizes both. Luigi 2026-06-07.
+    { value: "take_out", label: t("channelTakeout") },
     { value: "catering", label: t("channelCatering") },
-    { value: "takeout", label: t("channelTakeout") },
   ];
 
   const STACKING_RULES = [
