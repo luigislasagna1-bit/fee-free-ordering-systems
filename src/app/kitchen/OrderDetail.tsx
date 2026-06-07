@@ -588,7 +588,11 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               cleared. cmpxemqle / Luigi 2026-06-07. */}
           {isSimpleMode && fromInProgress
             && (order.status === "accepted" || order.status === "preparing" || order.status === "ready")
-            && !(order as any).manuallyClearedAt && (
+            && !(order as any).manuallyClearedAt
+            // Only after the order has passed its due time — the scheduled slot,
+            // or accept-time + prep estimate (estimatedReady). Before that, the
+            // order isn't ready to complete, so no button. Luigi 2026-06-07.
+            && (dueMs == null || nowTick >= dueMs) && (
             <button
               onClick={() => act(() => onUpdate(order.id, "completed"))}
               disabled={busy}
