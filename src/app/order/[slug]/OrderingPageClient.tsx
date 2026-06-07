@@ -2297,19 +2297,37 @@ export function OrderingPageClient({
       toast.error(tT("itemUnavailable") ?? "Item unavailable");
       return;
     }
-    setCart((prev) => [
-      ...prev,
-      {
-        menuItem: fullItem,
-        variant: undefined,
-        quantity: 1,
-        selectedMods: {},
-        notes: `Free with promo: ${promoName}`,
-        lineTotal: 0,
-        unitPrice: 0,
-      },
-    ]);
-    toast.success(`Added ${fullItem.name} (free)`);
+    // Add the freebie at its NORMAL price — the promo engine then applies a
+    // matching discount so exactly ONE nets to $0 (and the line reverts to
+    // full price if the cart later drops below the trigger). Adding it at $0
+    // double-discounted (free line + separate promo discount) AND let the
+    // customer stack unlimited free units. Luigi 2026-06-07.
+    const unit = fullItem.price;
+    setCart((prev) => {
+      // If this freebie is already in the cart, bump its quantity instead of
+      // adding a second line — only ONE unit is free, the rest are charged.
+      const existingIdx = prev.findIndex((ci) => ci.notes === `Free with promo: ${promoName}` && ci.menuItem.id === fullItem.id);
+      if (existingIdx >= 0) {
+        const next = [...prev];
+        const ex = next[existingIdx];
+        const qty = ex.quantity + 1;
+        next[existingIdx] = { ...ex, quantity: qty, unitPrice: unit, lineTotal: unit * qty };
+        return next;
+      }
+      return [
+        ...prev,
+        {
+          menuItem: fullItem,
+          variant: undefined,
+          quantity: 1,
+          selectedMods: {},
+          notes: `Free with promo: ${promoName}`,
+          lineTotal: unit,
+          unitPrice: unit,
+        },
+      ];
+    });
+    toast.success(`Added ${fullItem.name}`);
   };
 
   /** Add a fully-built bundle (Promo Type 8 / 13) to the cart as ONE
