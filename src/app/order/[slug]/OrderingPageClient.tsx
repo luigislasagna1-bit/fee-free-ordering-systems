@@ -719,6 +719,10 @@ export function OrderingPageClient({
    *  detail modal is showing. The promo object is the same shape we
    *  receive on the `promoBanners` prop (passed through verbatim). */
   const [activePromoModal, setActivePromoModal] = useState<typeof promoBanners[number] | null>(null);
+  // Free-item promos that have already auto-prompted this session, so the
+  // "claim your free item" modal pops once (not on every cart change). Cleared
+  // implicitly when the page reloads. Fabrizio/Luigi 2026-06-07.
+  const [autoPromptedFreebies, setAutoPromptedFreebies] = useState<Set<string>>(new Set());
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [mods, setMods] = useState<Record<string, string[]>>({});
   const [selectedVariant, setSelectedVariant] = useState<ItemVariant | null>(null);
@@ -1436,6 +1440,44 @@ export function OrderingPageClient({
     }
     return best;
   })();
+
+  // Auto-prompt for unlocked "Get a free item" promos (Luigi 2026-06-07). A
+  // free_item promo can't auto-apply its discount until the free item is in the
+  // cart — so when the cart crosses the promo's threshold AND the order type
+  // matches, pop the promo's claim modal ONCE so the customer doesn't miss it.
+  useEffect(() => {
+    if (activePromoModal) return; // a modal is already open
+    const canon = (t: string) => {
+      const k = String(t).toLowerCase().replace(/[\s-]+/g, "_");
+      return k === "takeout" ? "take_out" : k === "dinein" ? "dine_in" : k;
+    };
+    const allowsOrderType = (raw: string | undefined, ot: string) => {
+      if (!raw || raw === "both") return true;
+      let set: string[] = [];
+      if (String(raw).trim().startsWith("[")) {
+        try { const a = JSON.parse(raw); set = Array.isArray(a) ? a.map(String) : []; } catch { set = []; }
+      } else set = [String(raw)];
+      return set.length === 0 || set.map(canon).includes(canon(ot));
+    };
+    const target = promoBanners.find((p) => {
+      if (p.promotionType !== "free_item" || !p.autoApply) return false;
+      if (autoPromptedFreebies.has(p.id)) return false;
+      if (!allowsOrderType(p.orderType, orderType)) return false;
+      let rc: any = p.ruleConfig;
+      if (!rc || typeof rc !== "object") { try { rc = JSON.parse((p as any).rules || "{}"); } catch { rc = {}; } }
+      const trigger = typeof rc?.triggerAmount === "number" ? rc.triggerAmount : 0;
+      const threshold = Math.max(p.minimumOrder ?? 0, trigger);
+      if (threshold <= 0 || subtotal < threshold) return false;
+      // Already claimed? addFreebieToCart tags the free line with the promo name.
+      if (cart.some((ci) => ci.notes === `Free with promo: ${p.name}`)) return false;
+      return true;
+    });
+    if (target) {
+      setActivePromoModal(target);
+      setAutoPromptedFreebies((prev) => new Set(prev).add(target.id));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subtotal, orderType, cart, promoBanners, activePromoModal, autoPromptedFreebies]);
 
   // ── Catering detection ─────────────────────────────────────────────
   // An item is treated as catering when EITHER its own isCatering flag
