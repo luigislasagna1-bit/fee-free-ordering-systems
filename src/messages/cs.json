@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Naplánované objednávky",
       "allowSchedulingHint": "Umožněte zákazníkům zvolit konkrétní čas vyzvednutí nebo doručení namísto objednávky na co nejdřív.",
       "hideAsapTitle": "Skrýt „co nejdřív“",
-      "hideAsapHint": "Zákazníci musí zvolit budoucí čas – žádná možnost „co nejdřív“."
+      "hideAsapHint": "Zákazníci musí zvolit budoucí čas – žádná možnost „co nejdřív“.",
+      "timeSelectionLabel": "Výběr času",
+      "timeSelectionBands": "Časové úseky",
+      "timeSelectionExact": "Přesný čas"
     },
     "delivery": {
       "title": "Oblasti doručení",

@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Encomendas agendadas",
       "allowSchedulingHint": "Permita que os clientes escolham uma hora específica de levantamento/entrega em vez de encomendarem para o mais breve possível.",
       "hideAsapTitle": "Ocultar \"o mais breve possível\"",
-      "hideAsapHint": "Os clientes têm de escolher uma hora futura — sem opção imediata."
+      "hideAsapHint": "Os clientes têm de escolher uma hora futura — sem opção imediata.",
+      "timeSelectionLabel": "Seleção de hora",
+      "timeSelectionBands": "Intervalos de hora",
+      "timeSelectionExact": "Hora exata"
     },
     "delivery": {
       "title": "Áreas de entrega",

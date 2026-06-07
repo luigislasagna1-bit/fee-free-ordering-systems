@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Ütemezett rendelések",
       "allowSchedulingHint": "Engedje meg a vásárlóknak, hogy a lehető leghamarabbi rendelés helyett konkrét átvételi/kiszállítási időpontot válasszanak.",
       "hideAsapTitle": "A „lehető leghamarabb\" elrejtése",
-      "hideAsapHint": "A vásárlóknak jövőbeli időpontot kell választaniuk – nincs azonnali rendelési lehetőség."
+      "hideAsapHint": "A vásárlóknak jövőbeli időpontot kell választaniuk – nincs azonnali rendelési lehetőség.",
+      "timeSelectionLabel": "Időpont kiválasztása",
+      "timeSelectionBands": "Idősávok",
+      "timeSelectionExact": "Pontos időpont"
     },
     "delivery": {
       "title": "Szállítási zónák",

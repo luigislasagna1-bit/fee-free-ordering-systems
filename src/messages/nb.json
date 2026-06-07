@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Planlagte bestillinger",
       "allowSchedulingHint": "La kundene velge et bestemt tidspunkt for henting/levering i stedet for å bestille til snarest mulig.",
       "hideAsapTitle": "Skjul \"snarest mulig\"",
-      "hideAsapHint": "Kundene må velge et fremtidig tidspunkt – ingen snarest mulig-valg."
+      "hideAsapHint": "Kundene må velge et fremtidig tidspunkt – ingen snarest mulig-valg.",
+      "timeSelectionLabel": "Tidsvalg",
+      "timeSelectionBands": "Tidsluker",
+      "timeSelectionExact": "Nøyaktig tidspunkt"
     },
     "delivery": {
       "title": "Leveringssoner",

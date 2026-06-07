@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Commandes programmées",
       "allowSchedulingHint": "Permettez aux clients de choisir une heure de retrait/livraison précise au lieu de commander pour le plus tôt possible.",
       "hideAsapTitle": "Masquer « dès que possible »",
-      "hideAsapHint": "Les clients doivent choisir une heure ultérieure — aucune option immédiate."
+      "hideAsapHint": "Les clients doivent choisir une heure ultérieure — aucune option immédiate.",
+      "timeSelectionLabel": "Sélection de l'heure",
+      "timeSelectionBands": "Créneaux horaires",
+      "timeSelectionExact": "Heure exacte"
     },
     "delivery": {
       "title": "Zones de livraison",

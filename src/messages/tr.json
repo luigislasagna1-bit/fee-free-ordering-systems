@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Zamanlanmış siparişler",
       "allowSchedulingHint": "Müşterilerin en kısa sürede sipariş vermek yerine belirli bir teslim alma/teslimat saati seçmesine izin verin.",
       "hideAsapTitle": "\"en kısa sürede\" seçeneğini gizle",
-      "hideAsapHint": "Müşteriler ileri bir saat seçmek zorundadır — ASAP seçeneği yok."
+      "hideAsapHint": "Müşteriler ileri bir saat seçmek zorundadır — ASAP seçeneği yok.",
+      "timeSelectionLabel": "Saat seçimi",
+      "timeSelectionBands": "Saat aralıkları",
+      "timeSelectionExact": "Tam saat"
     },
     "delivery": {
       "title": "Teslimat Bölgeleri",

@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "الطلبات المجدولة",
       "allowSchedulingHint": "اسمح للعملاء باختيار وقت محدد للاستلام/التوصيل بدلاً من الطلب في أقرب وقت ممكن.",
       "hideAsapTitle": "إخفاء \"في أقرب وقت ممكن\"",
-      "hideAsapHint": "يجب على العملاء اختيار وقت مستقبلي — لا يوجد خيار الطلب الفوري."
+      "hideAsapHint": "يجب على العملاء اختيار وقت مستقبلي — لا يوجد خيار الطلب الفوري.",
+      "timeSelectionLabel": "تحديد الوقت",
+      "timeSelectionBands": "فترات زمنية",
+      "timeSelectionExact": "وقت محدد"
     },
     "delivery": {
       "title": "مناطق التوصيل",

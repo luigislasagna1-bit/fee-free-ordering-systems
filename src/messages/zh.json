@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "预约订单",
       "allowSchedulingHint": "允许顾客选择具体的取餐/送餐时间，而不是下单后尽快处理。",
       "hideAsapTitle": "隐藏“尽快”选项",
-      "hideAsapHint": "顾客必须选择一个未来的时间，没有“尽快”选项。"
+      "hideAsapHint": "顾客必须选择一个未来的时间，没有“尽快”选项。",
+      "timeSelectionLabel": "时间选择",
+      "timeSelectionBands": "时间段",
+      "timeSelectionExact": "具体时间"
     },
     "delivery": {
       "title": "配送区域",

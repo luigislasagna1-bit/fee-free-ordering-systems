@@ -207,6 +207,10 @@ interface Props {
    *  is a free-form datetime-local input and customers can schedule
    *  irrational times like 3:02 PM. */
   schedulingInterval?: number;
+  /** "bands" (default) shows a dropdown of fixed slots at schedulingInterval;
+   *  "exact" shows a free time field so the customer can pick any minute
+   *  within opening hours. Per-service, from serviceSettings. Fabrizio cmpxdtl9m. */
+  schedulingMode?: "bands" | "exact";
   /** Restaurant opening hours by day-of-week, used to constrain the
    *  selectable slots to actual open periods. Each row: dayOfWeek
    *  0=Sunday … 6=Saturday with HH:MM open/close strings. May include
@@ -246,6 +250,7 @@ export function CheckoutModal({
   maxScheduledDate,
   schedulingEnabled = true,
   schedulingInterval = 15,
+  schedulingMode = "bands",
   openingHours = [],
   requireCustomerEmail = true,
   requireCustomerPhone = true,
@@ -948,15 +953,19 @@ export function CheckoutModal({
                     // pickup vs delivery hours will surface only the
                     // window relevant to the active orderType.
                     let slots: string[] = [];
+                    // Opening window for this date — hoisted so the "Exact time"
+                    // mode can bound its free time field to the same hours.
+                    let winOpen = "10:00";
+                    let winClose = "22:00";
                     if (datePart) {
                       const dow = new Date(`${datePart}T12:00:00`).getDay();
                       const serviceKind = orderType === "delivery" ? "delivery" : "pickup";
                       const row = pickHoursForService(openingHours as any, dow, serviceKind);
                       const effective = row && row.isOpen ? row : null;
-                      const open = effective?.openTime || "10:00";
-                      const close = effective?.closeTime || "22:00";
-                      const [oh, om] = open.split(":").map(Number);
-                      const [ch, cm] = close.split(":").map(Number);
+                      winOpen = effective?.openTime || "10:00";
+                      winClose = effective?.closeTime || "22:00";
+                      const [oh, om] = winOpen.split(":").map(Number);
+                      const [ch, cm] = winClose.split(":").map(Number);
                       const start = (oh ?? 10) * 60 + (om ?? 0);
                       let end = (ch ?? 22) * 60 + (cm ?? 0);
                       // Midnight-wrap fix (Luigi 2026-06-01): when the
@@ -992,6 +1001,13 @@ export function CheckoutModal({
                       const d = datePart || new Date().toISOString().slice(0, 10);
                       setCustomerInfo({ ...customerInfo, scheduledFor: `${d}T${tt}` });
                     };
+                    // Exact-time mode bounds: earliest = later of opening time
+                    // and the today/lead cutoff; latest = closing time (capped
+                    // at 23:59 when the window wraps past midnight). HH:MM strings
+                    // compare lexically because they're zero-padded.
+                    const exactMode = schedulingMode === "exact";
+                    const exactMin = winOpen > minTimeForDate ? winOpen : minTimeForDate;
+                    const exactMax = winClose <= winOpen ? "23:59" : winClose;
                     return (
                       <div className="grid grid-cols-2 gap-2">
                         <input
@@ -1003,24 +1019,37 @@ export function CheckoutModal({
                           value={datePart}
                           onChange={(e) => setDate(e.target.value)}
                         />
-                        <select
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
-                          style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                          value={timePart}
-                          onChange={(e) => setTime(e.target.value)}
-                          disabled={!datePart || slots.length === 0}
-                        >
-                          {slots.length === 0 ? (
-                            <option value="">{datePart ? "Closed this day" : "Pick a date first"}</option>
-                          ) : (
-                            <>
-                              <option value="">{tc("pickATimePlaceholder")}</option>
-                              {slots.map((s) => (
-                                <option key={s} value={s}>{formatTime(s, hoursFormat)}</option>
-                              ))}
-                            </>
-                          )}
-                        </select>
+                        {exactMode ? (
+                          <input
+                            type="time"
+                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                            style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                            value={timePart}
+                            min={exactMin}
+                            max={exactMax}
+                            disabled={!datePart}
+                            onChange={(e) => setTime(e.target.value)}
+                          />
+                        ) : (
+                          <select
+                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                            style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                            value={timePart}
+                            onChange={(e) => setTime(e.target.value)}
+                            disabled={!datePart || slots.length === 0}
+                          >
+                            {slots.length === 0 ? (
+                              <option value="">{datePart ? "Closed this day" : "Pick a date first"}</option>
+                            ) : (
+                              <>
+                                <option value="">{tc("pickATimePlaceholder")}</option>
+                                {slots.map((s) => (
+                                  <option key={s} value={s}>{formatTime(s, hoursFormat)}</option>
+                                ))}
+                              </>
+                            )}
+                          </select>
+                        )}
                       </div>
                     );
                   })()}

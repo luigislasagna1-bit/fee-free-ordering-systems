@@ -38,6 +38,11 @@ interface ServiceConfig {
    *  to the restaurant-wide default (Restaurant.scheduledOrderInterval). Lets
    *  e.g. delivery use 30-min slots while pickup uses 15. Luigi 2026-06-04. */
   slotInterval?: number;
+  /** How the customer picks a scheduled time for this service:
+   *   - "bands"  (default): a dropdown of fixed slots at slotInterval.
+   *   - "exact": a free time field so the customer can pick any minute
+   *     within opening hours. Fabrizio cmpxdtl9m (2026-06-07). */
+  slotMode?: "bands" | "exact";
 }
 
 export function ServicesClient() {
@@ -254,10 +259,28 @@ export function ServicesClient() {
                       />
                     </div>
                   )}
+                  {/* Per-service time-selection mode. "Time slots" gives the
+                      customer a dropdown of fixed slots at the chosen cadence;
+                      "Exact time" lets them pick any minute within opening
+                      hours. Fabrizio cmpxdtl9m. */}
+                  {key !== "reservations" && (
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">{t("timeSelectionLabel")}</label>
+                      <select
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"
+                        value={settings[key].slotMode ?? "bands"}
+                        onChange={e => updateSetting(key, "slotMode", e.target.value)}
+                      >
+                        <option value="bands">{t("timeSelectionBands")}</option>
+                        <option value="exact">{t("timeSelectionExact")}</option>
+                      </select>
+                    </div>
+                  )}
                   {/* Per-service scheduling cadence. "Default" leaves it on the
                       restaurant-wide slot interval; a specific value overrides
-                      it for THIS service only (e.g. slower kitchens on delivery). */}
-                  {key !== "reservations" && (
+                      it for THIS service only (e.g. slower kitchens on delivery).
+                      Hidden in "Exact time" mode, where the interval is moot. */}
+                  {key !== "reservations" && (settings[key].slotMode ?? "bands") !== "exact" && (
                     <div>
                       <label className="block text-xs font-medium text-gray-600 mb-1">{t("slotInterval")}</label>
                       <select

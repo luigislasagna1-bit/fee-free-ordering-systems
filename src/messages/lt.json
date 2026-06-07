@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Suplanuoti užsakymai",
       "allowSchedulingHint": "Leiskite klientams pasirinkti konkretų atsiėmimo / pristatymo laiką, o ne užsakyti kuo greičiau.",
       "hideAsapTitle": "Slėpti „kuo greičiau“",
-      "hideAsapHint": "Klientai turi pasirinkti būsimą laiką – jokio „kuo greičiau“ varianto."
+      "hideAsapHint": "Klientai turi pasirinkti būsimą laiką – jokio „kuo greičiau“ varianto.",
+      "timeSelectionLabel": "Laiko pasirinkimas",
+      "timeSelectionBands": "Laiko intervalai",
+      "timeSelectionExact": "Tikslus laikas"
     },
     "delivery": {
       "title": "Pristatymo zonos",

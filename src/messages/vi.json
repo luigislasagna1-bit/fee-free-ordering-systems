@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Đơn hàng đặt theo lịch",
       "allowSchedulingHint": "Cho phép khách hàng chọn thời gian nhận/giao hàng cụ thể thay vì đặt để nhận sớm nhất có thể.",
       "hideAsapTitle": "Ẩn tùy chọn \"sớm nhất có thể\"",
-      "hideAsapHint": "Khách hàng phải chọn một thời điểm trong tương lai — không có tùy chọn nhận sớm nhất có thể."
+      "hideAsapHint": "Khách hàng phải chọn một thời điểm trong tương lai — không có tùy chọn nhận sớm nhất có thể.",
+      "timeSelectionLabel": "Chọn thời gian",
+      "timeSelectionBands": "Khung giờ",
+      "timeSelectionExact": "Giờ cụ thể"
     },
     "delivery": {
       "title": "Khu vực giao hàng",

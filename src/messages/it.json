@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Ordini programmati",
       "allowSchedulingHint": "Consenti ai clienti di scegliere un orario specifico di ritiro/consegna anziché ordinare per il prima possibile.",
       "hideAsapTitle": "Nascondi \"il prima possibile\"",
-      "hideAsapHint": "I clienti devono scegliere un orario futuro, senza opzione immediata."
+      "hideAsapHint": "I clienti devono scegliere un orario futuro, senza opzione immediata.",
+      "timeSelectionLabel": "Selezione orario",
+      "timeSelectionBands": "Fasce orarie",
+      "timeSelectionExact": "Orario esatto"
     },
     "delivery": {
       "title": "Zone di consegna",

@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Plānotie pasūtījumi",
       "allowSchedulingHint": "Ļaujiet klientiem izvēlēties konkrētu izņemšanas/piegādes laiku, nevis pasūtīt uz pēc iespējas ātrāku laiku.",
       "hideAsapTitle": "Paslēpt \"pēc iespējas ātrāk\"",
-      "hideAsapHint": "Klientiem jāizvēlas laiks nākotnē — nav opcijas pasūtīt nekavējoties."
+      "hideAsapHint": "Klientiem jāizvēlas laiks nākotnē — nav opcijas pasūtīt nekavējoties.",
+      "timeSelectionLabel": "Laika izvēle",
+      "timeSelectionBands": "Laika intervāli",
+      "timeSelectionExact": "Precīzs laiks"
     },
     "delivery": {
       "title": "Piegādes zonas",

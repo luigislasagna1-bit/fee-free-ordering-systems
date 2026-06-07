@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Ajastetut tilaukset",
       "allowSchedulingHint": "Anna asiakkaiden valita tietty nouto-/toimitusaika sen sijaan, että tilaus tehdään mahdollisimman pian toimitettavaksi.",
       "hideAsapTitle": "Piilota \"mahdollisimman pian\"",
-      "hideAsapHint": "Asiakkaiden on valittava tuleva ajankohta — ei mahdollisimman pian -vaihtoehtoa."
+      "hideAsapHint": "Asiakkaiden on valittava tuleva ajankohta — ei mahdollisimman pian -vaihtoehtoa.",
+      "timeSelectionLabel": "Ajan valinta",
+      "timeSelectionBands": "Aikavälit",
+      "timeSelectionExact": "Tarkka aika"
     },
     "delivery": {
       "title": "Toimitusalueet",

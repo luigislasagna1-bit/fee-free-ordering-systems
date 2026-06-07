@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Comenzi programate",
       "allowSchedulingHint": "Permite clienților să aleagă o oră specifică de ridicare/livrare în loc să comande pentru cât mai curând posibil.",
       "hideAsapTitle": "Ascunde „cât mai curând posibil”",
-      "hideAsapHint": "Clienții trebuie să aleagă o oră viitoare — fără opțiunea ASAP."
+      "hideAsapHint": "Clienții trebuie să aleagă o oră viitoare — fără opțiunea ASAP.",
+      "timeSelectionLabel": "Selectare oră",
+      "timeSelectionBands": "Intervale orare",
+      "timeSelectionExact": "Oră exactă"
     },
     "delivery": {
       "title": "Zone de livrare",

@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Zamówienia zaplanowane",
       "allowSchedulingHint": "Pozwól klientom wybrać konkretną godzinę odbioru/dostawy zamiast zamawiania na „tak szybko, jak to możliwe”.",
       "hideAsapTitle": "Ukryj opcję „tak szybko, jak to możliwe”",
-      "hideAsapHint": "Klienci muszą wybrać przyszłą godzinę — brak opcji ASAP."
+      "hideAsapHint": "Klienci muszą wybrać przyszłą godzinę — brak opcji ASAP.",
+      "timeSelectionLabel": "Wybór czasu",
+      "timeSelectionBands": "Przedziały czasowe",
+      "timeSelectionExact": "Dokładny czas"
     },
     "delivery": {
       "title": "Strefy dostawy",

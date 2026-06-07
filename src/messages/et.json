@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Ajastatud tellimused",
       "allowSchedulingHint": "Lubage klientidel valida kindel järeletuleku-/kättetoimetamisaeg, selle asemel et tellida võimalikult kiiresti.",
       "hideAsapTitle": "Peida „võimalikult kiiresti\"",
-      "hideAsapHint": "Kliendid peavad valima tulevikuaja – „võimalikult kiiresti\" valikut pole."
+      "hideAsapHint": "Kliendid peavad valima tulevikuaja – „võimalikult kiiresti\" valikut pole.",
+      "timeSelectionLabel": "Aja valik",
+      "timeSelectionBands": "Ajavahemikud",
+      "timeSelectionExact": "Täpne aeg"
     },
     "delivery": {
       "title": "Tarnepiirkonnad",

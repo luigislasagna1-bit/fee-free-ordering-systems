@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Pesanan terjadwal",
       "allowSchedulingHint": "Biarkan pelanggan memilih waktu pengambilan/pengiriman tertentu daripada memesan untuk secepat mungkin.",
       "hideAsapTitle": "Sembunyikan \"secepat mungkin\"",
-      "hideAsapHint": "Pelanggan harus memilih waktu di masa mendatang — tanpa opsi secepat mungkin."
+      "hideAsapHint": "Pelanggan harus memilih waktu di masa mendatang — tanpa opsi secepat mungkin.",
+      "timeSelectionLabel": "Pilihan waktu",
+      "timeSelectionBands": "Slot waktu",
+      "timeSelectionExact": "Waktu tepat"
     },
     "delivery": {
       "title": "Zona Pengiriman",

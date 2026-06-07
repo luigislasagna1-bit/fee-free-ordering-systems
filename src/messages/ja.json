@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "予約注文",
       "allowSchedulingHint": "「できるだけ早く」で注文する代わりに、お客様が特定の受け取り/配達時間を選べるようにします。",
       "hideAsapTitle": "「できるだけ早く」を非表示にする",
-      "hideAsapHint": "お客様は将来の時間を選択する必要があります。ASAP（できるだけ早く）の選択肢はありません。"
+      "hideAsapHint": "お客様は将来の時間を選択する必要があります。ASAP（できるだけ早く）の選択肢はありません。",
+      "timeSelectionLabel": "時間の選択",
+      "timeSelectionBands": "時間枠",
+      "timeSelectionExact": "正確な時間"
     },
     "delivery": {
       "title": "デリバリーエリア",

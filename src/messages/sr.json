@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Zakazane porudžbine",
       "allowSchedulingHint": "Dozvolite kupcima da izaberu tačno vreme preuzimanja/dostave umesto da poručuju za što pre.",
       "hideAsapTitle": "Sakrij „što pre“",
-      "hideAsapHint": "Kupci moraju da izaberu vreme u budućnosti — bez opcije „što pre“."
+      "hideAsapHint": "Kupci moraju da izaberu vreme u budućnosti — bez opcije „što pre“.",
+      "timeSelectionLabel": "Izbor vremena",
+      "timeSelectionBands": "Termini",
+      "timeSelectionExact": "Tačno vreme"
     },
     "delivery": {
       "title": "Zone dostave",

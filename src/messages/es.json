@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Pedidos programados",
       "allowSchedulingHint": "Permite que los clientes elijan una hora concreta de recogida/entrega en lugar de pedir para lo antes posible.",
       "hideAsapTitle": "Ocultar \"lo antes posible\"",
-      "hideAsapHint": "Los clientes deben elegir una hora futura; sin opción de lo antes posible."
+      "hideAsapHint": "Los clientes deben elegir una hora futura; sin opción de lo antes posible.",
+      "timeSelectionLabel": "Selección de hora",
+      "timeSelectionBands": "Franjas horarias",
+      "timeSelectionExact": "Hora exacta"
     },
     "delivery": {
       "title": "Zonas de entrega",

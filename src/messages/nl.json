@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Geplande bestellingen",
       "allowSchedulingHint": "Laat klanten een specifiek afhaal-/bezorgtijdstip kiezen in plaats van te bestellen voor zo snel mogelijk.",
       "hideAsapTitle": "\"Zo snel mogelijk\" verbergen",
-      "hideAsapHint": "Klanten moeten een toekomstig tijdstip kiezen — geen optie voor zo snel mogelijk."
+      "hideAsapHint": "Klanten moeten een toekomstig tijdstip kiezen — geen optie voor zo snel mogelijk.",
+      "timeSelectionLabel": "Tijdselectie",
+      "timeSelectionBands": "Tijdsloten",
+      "timeSelectionExact": "Exacte tijd"
     },
     "delivery": {
       "title": "Bezorgzones",

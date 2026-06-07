@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Comandes programades",
       "allowSchedulingHint": "Permet als clients triar una hora concreta de recollida o lliurament en lloc de demanar al més aviat possible.",
       "hideAsapTitle": "Amaga \"al més aviat possible\"",
-      "hideAsapHint": "Els clients han de triar una hora futura: cap opció immediata."
+      "hideAsapHint": "Els clients han de triar una hora futura: cap opció immediata.",
+      "timeSelectionLabel": "Selecció d'hora",
+      "timeSelectionBands": "Franges horàries",
+      "timeSelectionExact": "Hora exacta"
     },
     "delivery": {
       "title": "Zones de lliurament",

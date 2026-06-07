@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Schemalagda beställningar",
       "allowSchedulingHint": "Låt kunderna välja en specifik tid för upphämtning/leverans i stället för att beställa så snart som möjligt.",
       "hideAsapTitle": "Dölj \"så snart som möjligt\"",
-      "hideAsapHint": "Kunderna måste välja en framtida tid – inget alternativ för omedelbar beställning."
+      "hideAsapHint": "Kunderna måste välja en framtida tid – inget alternativ för omedelbar beställning.",
+      "timeSelectionLabel": "Tidsval",
+      "timeSelectionBands": "Tidsluckor",
+      "timeSelectionExact": "Exakt tid"
     },
     "delivery": {
       "title": "Leveranszoner",

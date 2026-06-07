@@ -1628,6 +1628,18 @@ export function OrderingPageClient({
     } catch { /* malformed serviceSettings — fall back to the global default */ }
     return (restaurant as any).scheduledOrderInterval ?? 15;
   })();
+  // Per-service time-selection mode: "exact" lets the customer pick any minute
+  // within opening hours; "bands" (default) gives a dropdown of fixed slots at
+  // perServiceSlotInterval. Reactive to orderType like the interval above.
+  // Fabrizio cmpxdtl9m.
+  const perServiceSlotMode: "bands" | "exact" = (() => {
+    try {
+      const raw = (restaurant as any).serviceSettings;
+      const ss = raw ? JSON.parse(raw) : null;
+      if (ss?.[feeOrderType]?.slotMode === "exact") return "exact";
+    } catch { /* malformed serviceSettings — fall back to bands */ }
+    return "bands";
+  })();
   const appliedServiceFees = evaluateApplicableFees(
     (restaurant.serviceFees ?? []) as ServiceFeeRow[],
     { subtotal, type: feeOrderType, at: new Date() },
@@ -3616,6 +3628,7 @@ export function OrderingPageClient({
           scheduleReason={scheduleReason}
           closedNextOpenLocal={closedMinScheduledLocal}
           schedulingInterval={perServiceSlotInterval}
+          schedulingMode={perServiceSlotMode}
           openingHours={(restaurant as any).openingHours ?? []}
           restaurantTimezone={(restaurant as any).timezone}
           requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}

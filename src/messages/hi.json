@@ -817,7 +817,10 @@
       "scheduledOrdersTitle": "निर्धारित ऑर्डर",
       "allowSchedulingHint": "ग्राहकों को जल्द से जल्द ऑर्डर करने के बजाय पिकअप/डिलीवरी का एक विशिष्ट समय चुनने दें।",
       "hideAsapTitle": "\"जल्द से जल्द\" छिपाएँ",
-      "hideAsapHint": "ग्राहकों को भविष्य का कोई समय चुनना होगा — कोई ASAP विकल्प नहीं।"
+      "hideAsapHint": "ग्राहकों को भविष्य का कोई समय चुनना होगा — कोई ASAP विकल्प नहीं।",
+      "timeSelectionLabel": "समय चयन",
+      "timeSelectionBands": "समय स्लॉट",
+      "timeSelectionExact": "सटीक समय"
     },
     "delivery": {
       "title": "डिलीवरी क्षेत्र",

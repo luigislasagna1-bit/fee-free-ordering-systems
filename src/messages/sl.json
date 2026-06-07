@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Naročila po urniku",
       "allowSchedulingHint": "Strankam omogočite, da izberejo določen čas prevzema/dostave namesto naročila za čimprej.",
       "hideAsapTitle": "Skrij možnost \"čimprej\"",
-      "hideAsapHint": "Stranke morajo izbrati prihodnji čas — brez možnosti takojšnjega naročila."
+      "hideAsapHint": "Stranke morajo izbrati prihodnji čas — brez možnosti takojšnjega naročila.",
+      "timeSelectionLabel": "Izbira časa",
+      "timeSelectionBands": "Časovni termini",
+      "timeSelectionExact": "Točen čas"
     },
     "delivery": {
       "title": "Območja dostave",

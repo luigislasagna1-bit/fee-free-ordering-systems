@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "הזמנות מתוזמנות",
       "allowSchedulingHint": "אפשרו ללקוחות לבחור שעת איסוף/משלוח מסוימת במקום להזמין למועד המוקדם ביותר האפשרי.",
       "hideAsapTitle": "הסתרת \"המועד המוקדם ביותר האפשרי\"",
-      "hideAsapHint": "הלקוחות חייבים לבחור שעה עתידית — ללא אפשרות הזמנה מיידית."
+      "hideAsapHint": "הלקוחות חייבים לבחור שעה עתידית — ללא אפשרות הזמנה מיידית.",
+      "timeSelectionLabel": "בחירת זמן",
+      "timeSelectionBands": "משבצות זמן",
+      "timeSelectionExact": "זמן מדויק"
     },
     "delivery": {
       "title": "אזורי משלוח",

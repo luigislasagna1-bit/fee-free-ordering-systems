@@ -794,7 +794,10 @@
       "scheduledOrdersTitle": "Geplante Bestellungen",
       "allowSchedulingHint": "Kunden können eine bestimmte Abhol-/Lieferzeit wählen, anstatt schnellstmöglich zu bestellen.",
       "hideAsapTitle": "\"Schnellstmöglich\" ausblenden",
-      "hideAsapHint": "Kunden müssen eine spätere Zeit wählen – keine Sofort-Option."
+      "hideAsapHint": "Kunden müssen eine spätere Zeit wählen – keine Sofort-Option.",
+      "timeSelectionLabel": "Zeitauswahl",
+      "timeSelectionBands": "Zeitfenster",
+      "timeSelectionExact": "Genaue Uhrzeit"
     },
     "delivery": {
       "title": "Lieferzonen",
