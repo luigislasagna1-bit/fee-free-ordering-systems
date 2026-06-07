@@ -348,7 +348,13 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
   // any mismatch then.
   const allowedPaymentMethods = jsonStringList(promo.paymentMethodSlugs);
   if (allowedPaymentMethods && ctx.paymentMethod) {
-    if (!allowedPaymentMethods.has(ctx.paymentMethod)) return false;
+    // The customer picker stores online-card as the legacy value "card"
+    // (CheckoutModal), but the promo stores the canonical "online_card"
+    // slug. Treat them as the same method so an online-card payment both
+    // (a) doesn't lose a legit online-only promo and (b) a cash payment
+    // doesn't wrongly keep one.
+    const pmSlug = ctx.paymentMethod === "card" ? "online_card" : ctx.paymentMethod;
+    if (!allowedPaymentMethods.has(pmSlug)) return false;
   }
 
   // ── Delivery Area restriction ──────────────────────────────────────
@@ -546,7 +552,9 @@ function calcFixedCart(promo: PromoInput, ctx: ApplyContext): number {
 function calcPaymentReward(promo: PromoInput, ctx: ApplyContext): number {
   const rules = getRules(promo);
   const pm = rules.paymentMethod;
-  if (pm && pm !== "any" && ctx.paymentMethod && ctx.paymentMethod !== pm) return 0;
+  // Normalize the legacy "card" value to the canonical "online_card" slug.
+  const ctxPm = ctx.paymentMethod === "card" ? "online_card" : ctx.paymentMethod;
+  if (pm && pm !== "any" && ctxPm && ctxPm !== pm) return 0;
   return parseFloat(((( rules.discountPercent ?? 0) / 100) * ctx.subtotal).toFixed(2));
 }
 

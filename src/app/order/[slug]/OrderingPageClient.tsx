@@ -1389,6 +1389,12 @@ export function OrderingPageClient({
         // WHEN the order is for, so the banner + discount match what actually
         // applies at order time. ASAP carts send nothing. Fabrizio cmpxejjev.
         scheduledFor: customerInfo.scheduledFor || undefined,
+        // Selected payment method → payment-restricted promos ("5% when you
+        // pay online") only apply once the customer actually picks an
+        // eligible method. Without this the discount applied even with Cash
+        // selected. The engine normalizes the legacy "card" value. Fabrizio
+        // 2026-06-07.
+        paymentMethod: customerInfo.paymentMethod || undefined,
       }),
     })
       .then(r => r.json())
@@ -1399,7 +1405,7 @@ export function OrderingPageClient({
       })
       .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor]);
+  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
   // "Add €X more to unlock!" nudge — the highlightThreshold feature was set in
