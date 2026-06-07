@@ -6,13 +6,30 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "admin.services";
-const CONTEXT = "restaurant admin Services settings — the 'Scheduled orders' controls. 'Scheduled orders' is a section title. 'allowSchedulingHint' describes a master toggle letting customers pick a specific pickup/delivery time. 'Hide as soon as possible' is a toggle that forces every order to be scheduled (no ASAP). Concise admin tone. No placeholders. Keep the quotes around \"as soon as possible\".";
+const NS = "kitchen";
+const CONTEXT = "the restaurant Kitchen Display 'Alert Sound' settings modal (staff-facing). It controls the new-order alert bell: choosing a sound, volume, mute, and a test button. Keep the brand name 'GloriaFood' untranslated. '/admin/profile' is a path — keep it literal. Concise, clear staff tone for a busy kitchen.";
 const EN = {
-  "scheduledOrdersTitle": "Scheduled orders",
-  "allowSchedulingHint": "Let customers choose a specific pickup/delivery time instead of ordering for as soon as possible.",
-  "hideAsapTitle": "Hide \"as soon as possible\"",
-  "hideAsapHint": "Customers must pick a future time — no ASAP option.",
+  "soundTitle": "Alert Sound",
+  "soundDesc": "The bell rings whenever a new order is waiting. Spaced out at first, then escalates to rapid in the final 30 seconds before the order is auto-rejected. Keep it loud so you never miss one.",
+  "soundPickerLabel": "Alert sound",
+  "soundGloriaSub": "Default",
+  "soundClassic": "Classic Bell",
+  "soundClassicSub": "Synthesized",
+  "soundCustom": "Custom Sound",
+  "soundCustomSub": "Owner-uploaded",
+  "soundCustomReplaceHint": "Upload or replace your custom ring from /admin/profile.",
+  "soundCustomUploadHint": "Want a custom sound? Upload one from /admin/profile.",
+  "soundPreviewHint": "Use the test button below to preview your selection.",
+  "soundVolume": "Volume",
+  "soundMuted": "Muted",
+  "soundMax": "Max",
+  "soundLowWarn": "Volume is below 50%. We recommend keeping it at maximum so your team never misses an order during a busy rush.",
+  "soundOffWarn": "Alert sound is OFF. New orders will appear visually only — you may not notice them in a noisy kitchen.",
+  "soundSilence": "Silence current alarm",
+  "soundMutedTap": "Sound muted — tap to unmute",
+  "soundOnTap": "Sound on — tap to mute permanently",
+  "soundTest": "Play test sound (1 ring)",
+  "soundDone": "Done",
 };
 const KEYS = Object.keys(EN);
 

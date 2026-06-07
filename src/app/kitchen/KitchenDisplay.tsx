@@ -2805,12 +2805,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           <div className={`${t.modal} rounded-2xl w-full max-w-sm p-6 shadow-2xl`}>
             <div className="flex items-center gap-2 mb-1">
               <Bell className="w-5 h-5 text-emerald-500" />
-              <h3 className={`text-lg font-bold ${t.text}`}>Alert Sound</h3>
+              <h3 className={`text-lg font-bold ${t.text}`}>{tk("soundTitle")}</h3>
             </div>
             <p className={`text-sm ${t.muted} mb-5`}>
-              The bell rings whenever a new order is waiting. Spaced out at
-              first, then escalates to rapid in the final 30 seconds before
-              the order is auto-rejected. Keep it loud so you never miss one.
+              {tk("soundDesc")}
             </p>
 
             {/* Sound picker. The 3rd "Custom Sound" option is only
@@ -2820,24 +2818,24 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 others never play, even on load failure. */}
             <div className="mb-5">
               <label className={`text-sm font-semibold ${t.text} block mb-2`}>
-                Alert sound
+                {tk("soundPickerLabel")}
               </label>
               <div className={`grid gap-2 ${customSoundUrl ? "grid-cols-3" : "grid-cols-2"}`}>
                 {([
                   {
                     id: "gloriafood",
                     label: "GloriaFood Ding",
-                    sub: "Default",
+                    sub: tk("soundGloriaSub"),
                   },
                   {
                     id: "synth",
-                    label: "Classic Bell",
-                    sub: "Synthesized",
+                    label: tk("soundClassic"),
+                    sub: tk("soundClassicSub"),
                   },
                   ...(customSoundUrl ? [{
                     id: "custom" as const,
-                    label: "Custom Sound",
-                    sub: "Owner-uploaded",
+                    label: tk("soundCustom"),
+                    sub: tk("soundCustomSub"),
                   }] : []),
                 ] as Array<{ id: AlertSoundChoice; label: string; sub: string }>).map((opt) => (
                   <button
@@ -2856,18 +2854,18 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               </div>
               <p className={`text-[11px] ${t.muted} mt-2`}>
                 {customSoundUrl
-                  ? "Upload or replace your custom ring from /admin/profile."
-                  : "Want a custom sound? Upload one from /admin/profile."}
-                {" "}Use the test button below to preview your selection.
+                  ? tk("soundCustomReplaceHint")
+                  : tk("soundCustomUploadHint")}
+                {" "}{tk("soundPreviewHint")}
               </p>
             </div>
 
             {/* Volume slider */}
             <div className="mb-5">
               <div className="flex items-center justify-between mb-2">
-                <label className={`text-sm font-semibold ${t.text}`}>Volume</label>
+                <label className={`text-sm font-semibold ${t.text}`}>{tk("soundVolume")}</label>
                 <span className={`text-sm font-mono ${t.muted}`}>
-                  {alertMuted ? "Muted" : `${Math.round(alertVolume * 100)}%`}
+                  {alertMuted ? tk("soundMuted") : `${Math.round(alertVolume * 100)}%`}
                 </span>
               </div>
               <div className="flex items-center gap-3">
@@ -2894,7 +2892,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                   { label: "25%", v: 0.25 },
                   { label: "50%", v: 0.5 },
                   { label: "75%", v: 0.75 },
-                  { label: "Max", v: 1.0 },
+                  { label: tk("soundMax"), v: 1.0 },
                 ].map((p) => (
                   <button
                     key={p.label}
@@ -2915,19 +2913,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             {!alertMuted && alertVolume > 0 && alertVolume < 0.5 && (
               <div className="mb-4 flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/40 text-amber-700 dark:text-amber-300 text-xs">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                <span>
-                  Volume is below 50%. We recommend keeping it at maximum
-                  so your team never misses an order during a busy rush.
-                </span>
+                <span>{tk("soundLowWarn")}</span>
               </div>
             )}
             {(alertMuted || alertVolume === 0) && (
               <div className="mb-4 flex items-start gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/40 text-red-600 text-xs">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                <span>
-                  Alert sound is OFF. New orders will appear visually only —
-                  you may not notice them in a noisy kitchen.
-                </span>
+                <span>{tk("soundOffWarn")}</span>
               </div>
             )}
 
@@ -2943,7 +2935,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 }}
                 className="w-full mb-3 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm bg-red-500 hover:bg-red-600 text-white transition"
               >
-                <VolumeX className="w-4 h-4" /> Silence current alarm
+                <VolumeX className="w-4 h-4" /> {tk("soundSilence")}
               </button>
             )}
 
@@ -2959,9 +2951,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               }`}
             >
               {alertMuted ? (
-                <><VolumeX className="w-4 h-4" /> Sound muted — tap to unmute</>
+                <><VolumeX className="w-4 h-4" /> {tk("soundMutedTap")}</>
               ) : (
-                <><Volume2 className="w-4 h-4" /> Sound on — tap to mute permanently</>
+                <><Volume2 className="w-4 h-4" /> {tk("soundOnTap")}</>
               )}
             </button>
 
@@ -2975,14 +2967,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               disabled={alertMuted || alertVolume === 0}
               className="w-full mb-3 flex items-center justify-center gap-2 py-2.5 rounded-xl font-semibold text-sm bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white transition"
             >
-              <Bell className="w-4 h-4" /> Play test sound (1 ring)
+              <Bell className="w-4 h-4" /> {tk("soundTest")}
             </button>
 
             <button
               onClick={() => setShowSoundSettings(false)}
               className={`w-full ${t.btn} py-2.5 rounded-xl font-semibold text-sm transition`}
             >
-              Done
+              {tk("soundDone")}
             </button>
           </div>
         </div>
