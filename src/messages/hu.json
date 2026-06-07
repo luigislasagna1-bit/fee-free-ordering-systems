@@ -598,8 +598,7 @@
     "printerReachable": "Elérhető ✓ — a nyomtató válaszol itt: {addr}",
     "printerTestSent": "Tesztnyomtatás elküldve a következőn keresztül: {method}. Ellenőrizze, hogy van-e papír a nyomtatóban.",
     "printerHelpSummary": "A Tesztnyomtatás sikert jelzett, de nem jött ki papír?",
-    "printerSaveClose": "Mentés és bezárás",
-    "enableSoundPrompt": "🔔 Koppintson ide az új rendelés hangjelzéséhez"
+    "printerSaveClose": "Mentés és bezárás"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

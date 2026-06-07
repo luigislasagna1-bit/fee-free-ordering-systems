@@ -598,8 +598,7 @@
     "printerReachable": "Accesibilă ✓ — imprimanta răspunde la {addr}",
     "printerTestSent": "Imprimare de test trimisă prin {method}. Verifică imprimanta să aibă hârtie.",
     "printerHelpSummary": "Testarea imprimării a indicat succes, dar nu a ieșit nicio hârtie?",
-    "printerSaveClose": "Salvează și închide",
-    "enableSoundPrompt": "🔔 Apăsați aici pentru a activa sunetul la comenzi noi"
+    "printerSaveClose": "Salvează și închide"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

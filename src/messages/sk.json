@@ -598,8 +598,7 @@
     "printerReachable": "Dostupná ✓ — tlačiareň odpovedá na {addr}",
     "printerTestSent": "Testovacia tlač odoslaná cez {method}. Skontrolujte, či má tlačiareň papier.",
     "printerHelpSummary": "Testovacia tlač hlási úspech, ale nevyšiel žiadny papier?",
-    "printerSaveClose": "Uložiť a zavrieť",
-    "enableSoundPrompt": "🔔 Klepnutím sem zapnete zvuk pri novej objednávke"
+    "printerSaveClose": "Uložiť a zavrieť"
   },
   "admin": {
     "welcomeBack": "Vitajte späť",

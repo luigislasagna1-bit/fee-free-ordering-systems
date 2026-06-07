@@ -598,8 +598,7 @@
     "printerReachable": "Kết nối được ✓ — máy in đang phản hồi tại {addr}",
     "printerTestSent": "Đã gửi lệnh in thử qua {method}. Hãy kiểm tra giấy ở máy in của bạn.",
     "printerHelpSummary": "In thử báo thành công nhưng không có giấy in ra?",
-    "printerSaveClose": "Lưu & Đóng",
-    "enableSoundPrompt": "🔔 Chạm vào đây để bật âm báo đơn hàng mới"
+    "printerSaveClose": "Lưu & Đóng"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

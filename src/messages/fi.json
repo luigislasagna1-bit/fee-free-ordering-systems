@@ -598,8 +598,7 @@
     "printerReachable": "Tavoitettavissa ✓ — tulostin vastaa osoitteessa {addr}",
     "printerTestSent": "Testitulostus lähetetty menetelmällä {method}. Tarkista, onko tulostimessa paperia.",
     "printerHelpSummary": "Testitulostus ilmoitti onnistumisesta, mutta paperia ei tullut ulos?",
-    "printerSaveClose": "Tallenna ja sulje",
-    "enableSoundPrompt": "🔔 Ota uuden tilauksen äänimerkki käyttöön napauttamalla tästä"
+    "printerSaveClose": "Tallenna ja sulje"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

@@ -598,8 +598,7 @@
     "printerReachable": "Erreichbar ✓ — Drucker antwortet unter {addr}",
     "printerTestSent": "Testdruck über {method} gesendet. Prüfen Sie Ihren Drucker auf Papier.",
     "printerHelpSummary": "Testdruck meldete Erfolg, aber es kam kein Papier heraus?",
-    "printerSaveClose": "Speichern & Schließen",
-    "enableSoundPrompt": "🔔 Hier tippen, um Ton für neue Bestellungen zu aktivieren"
+    "printerSaveClose": "Speichern & Schließen"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

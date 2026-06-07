@@ -598,8 +598,7 @@
     "printerReachable": "可访问 ✓ — 打印机在 {addr} 响应",
     "printerTestSent": "已通过 {method} 发送测试打印。请检查您的打印机是否出纸。",
     "printerHelpSummary": "测试打印提示成功，但没有出纸？",
-    "printerSaveClose": "保存并关闭",
-    "enableSoundPrompt": "🔔 点击此处开启新订单提示音"
+    "printerSaveClose": "保存并关闭"
   },
   "admin": {
     "welcomeBack": "欢迎回来",

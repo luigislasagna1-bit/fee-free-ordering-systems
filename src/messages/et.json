@@ -598,8 +598,7 @@
     "printerReachable": "Kättesaadav ✓ — printer vastab aadressil {addr}",
     "printerTestSent": "Testprint saadetud meetodil {method}. Kontrolli, kas printerist tuli paber.",
     "printerHelpSummary": "Testprint näitas õnnestumist, aga paberit ei tulnud?",
-    "printerSaveClose": "Salvesta ja sulge",
-    "enableSoundPrompt": "🔔 Puuduta siia, et lubada uue tellimuse heli"
+    "printerSaveClose": "Salvesta ja sulge"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

@@ -796,13 +796,6 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const [alertSound, setAlertSound] = useState<AlertSoundChoice>("gloriafood");
   const audioCtxRef = useRef<AudioContext | null>(null);
   const audioUnlockedRef = useRef(false);
-  // Mirror of audioUnlockedRef as state so the UI can show a "tap to enable
-  // sound" prompt until the browser audio gate is cleared. Without a gesture ON
-  // THIS tab, the alarm is silently blocked — the #1 cause of "it didn't ring"
-  // (staff place test orders from another tab and never click the KDS). Luigi
-  // 2026-06-07.
-  const [audioUnlocked, setAudioUnlocked] = useState(false);
-  const unlockAudioRef = useRef<(() => void) | null>(null);
 
   // Full-length "GloriaFood" new-order alert (Luigi 2026-06-04): a ~4-minute
   // MP3 that plays ONCE per alerting period — until the kitchen accepts or the
@@ -1089,7 +1082,6 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         audioCtxRef.current = ctx;
         if (ctx.state === "suspended") ctx.resume().catch(() => {});
         audioUnlockedRef.current = true;
-        setAudioUnlocked(true);
       } catch {}
       // Also unlock the long-alert <audio> element on the same gesture so the
       // 4-min new-order alert can autoplay later (browsers gate HTMLAudio
@@ -1102,15 +1094,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         }
       } catch {}
     };
-    // Expose for the explicit "Enable sound" prompt button.
-    unlockAudioRef.current = unlock;
     window.addEventListener("pointerdown", unlock, { once: true });
     window.addEventListener("keydown", unlock, { once: true });
     return () => {
       window.removeEventListener("pointerdown", unlock);
       window.removeEventListener("keydown", unlock);
     };
-  }, [getLongAlert]);
+  }, []);
 
   /**
    * Synthesized fallback — four sine partials at classic struck-bell
@@ -2286,24 +2276,6 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           </button>
         </div>
       </header>
-
-      {/* ── Audio-unlock prompt ──
-           Browsers block all sound until the user interacts with THIS tab.
-           Staff often open the KDS and place test orders from another tab, so
-           the display never gets a gesture and silently never rings. Big,
-           pulsing, unmissable tap target that unlocks audio + plays a test
-           ding so they hear it working. Disappears once unlocked. Luigi
-           2026-06-07. */}
-      {!audioUnlocked && (
-        <button
-          type="button"
-          onClick={() => { unlockAudioRef.current?.(); testAlertSound(); }}
-          className="flex-shrink-0 w-full flex items-center justify-center gap-2 px-3 py-3 bg-amber-500 text-white text-sm font-bold cursor-pointer hover:bg-amber-600 transition animate-pulse"
-        >
-          <Bell className="w-5 h-5 flex-shrink-0" />
-          <span>{tk("enableSoundPrompt")}</span>
-        </button>
-      )}
 
       {/* ── Low-volume / muted warning ──
            Shown only when there's a pending order AND the bell is silenced

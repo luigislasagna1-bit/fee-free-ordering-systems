@@ -598,8 +598,7 @@
     "printerReachable": "Pasiekiama ✓ — spausdintuvas atsako adresu {addr}",
     "printerTestSent": "Bandomasis spausdinimas išsiųstas per {method}. Patikrinkite, ar spausdintuve yra popieriaus.",
     "printerHelpSummary": "Bandomasis spausdinimas pavyko, bet popierius neišlindo?",
-    "printerSaveClose": "Išsaugoti ir uždaryti",
-    "enableSoundPrompt": "🔔 Bakstelėkite čia, kad įjungtumėte naujo užsakymo garsą"
+    "printerSaveClose": "Išsaugoti ir uždaryti"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

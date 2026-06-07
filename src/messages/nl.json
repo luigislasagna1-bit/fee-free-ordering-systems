@@ -598,8 +598,7 @@
     "printerReachable": "Bereikbaar ✓ — printer reageert op {addr}",
     "printerTestSent": "Testafdruk verzonden via {method}. Controleer of er papier uit je printer komt.",
     "printerHelpSummary": "Testafdruk meldde geslaagd, maar er kwam geen papier uit?",
-    "printerSaveClose": "Opslaan en sluiten",
-    "enableSoundPrompt": "🔔 Tik hier om geluid bij nieuwe bestellingen aan te zetten"
+    "printerSaveClose": "Opslaan en sluiten"
   },
   "admin": {
     "welcomeBack": "Welkom terug",

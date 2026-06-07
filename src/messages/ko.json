@@ -598,8 +598,7 @@
     "printerReachable": "연결됨 ✓ — {addr}에서 프린터가 응답 중",
     "printerTestSent": "{method}을(를) 통해 테스트 인쇄를 전송했습니다. 프린터에 용지가 나왔는지 확인하세요.",
     "printerHelpSummary": "테스트 인쇄가 성공이라고 표시됐는데 용지가 나오지 않나요?",
-    "printerSaveClose": "저장 후 닫기",
-    "enableSoundPrompt": "🔔 새 주문 알림음을 켜려면 여기를 누르세요"
+    "printerSaveClose": "저장 후 닫기"
   },
   "admin": {
     "welcomeBack": "환영합니다",

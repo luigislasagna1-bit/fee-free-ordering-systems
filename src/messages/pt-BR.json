@@ -598,8 +598,7 @@
     "printerReachable": "Acessível ✓ — impressora respondendo em {addr}",
     "printerTestSent": "Impressão de teste enviada via {method}. Verifique o papel na sua impressora.",
     "printerHelpSummary": "A impressão de teste indicou sucesso, mas nenhum papel saiu?",
-    "printerSaveClose": "Salvar e fechar",
-    "enableSoundPrompt": "🔔 Toque aqui para ativar o som de novos pedidos"
+    "printerSaveClose": "Salvar e fechar"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",

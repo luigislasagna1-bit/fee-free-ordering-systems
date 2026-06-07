@@ -598,8 +598,7 @@
     "printerReachable": "Accessible ✓ — l'imprimante répond à {addr}",
     "printerTestSent": "Impression de test envoyée via {method}. Vérifiez le papier de votre imprimante.",
     "printerHelpSummary": "L'impression de test a réussi mais aucun papier n'est sorti ?",
-    "printerSaveClose": "Enregistrer et fermer",
-    "enableSoundPrompt": "🔔 Touchez ici pour activer le son des nouvelles commandes"
+    "printerSaveClose": "Enregistrer et fermer"
   },
   "admin": {
     "welcomeBack": "Bon retour",
