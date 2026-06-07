@@ -359,7 +359,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               "overdue" label is dropped — when the digits hit 00:00
               the "ready in" caption also disappears so the row is
               quiet, not loud. */}
-          {readyCountdown && !["pending", "rejected", "cancelled", "completed", "refunded", "no_show"].includes(order.status) && !(hideZeroCountdown && countdownIsPast) && (
+          {readyCountdown && !["pending", "rejected", "cancelled", "completed", "refunded", "no_show"].includes(order.status) && !(order as any).manuallyClearedAt && !(hideZeroCountdown && countdownIsPast) && (
             <div className="mt-2 text-right">
               <div
                 className={`text-xl font-bold tabular-nums leading-none whitespace-nowrap ${
@@ -2073,7 +2073,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const inProgressItems = (() => {
     const base = orders.filter(o =>
       workflowMode === "simple"
-        ? SHOWS_IN_PROGRESS_SIMPLE.includes(o.status)
+        // Manually moved to Ready/Complete → it has left In Progress (it now
+        // lives in the Complete tab). Tracking mode ignores this flag.
+        ? SHOWS_IN_PROGRESS_SIMPLE.includes(o.status) && !(o as any).manuallyClearedAt
         : IN_PROGRESS_STATUSES.includes(o.status),
     );
     if (workflowMode !== "simple") return base;
@@ -2131,15 +2133,17 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
   })();
   const completeItems = orders.filter(o => {
-    if (!COMPLETE_STATUSES.includes(o.status)) return false;
+    const manual = !!(o as any).manuallyClearedAt;
+    // Show terminal statuses (completed / rejected / cancelled) OR anything the
+    // kitchen MANUALLY moved to Ready/Complete (Simple mode) — the latter may
+    // still be "ready" status but has left In Progress.
+    if (!COMPLETE_STATUSES.includes(o.status) && !manual) return false;
     // Hide only what was cleared from the Complete tab itself.
     if ((o as any).clearedFromCompleteAt) return false;
-    // Simple mode only — tracking-mode kitchens explicitly click
-    // "Complete" and expect the order in the Complete tab immediately.
-    // Their In Progress tab also doesn't pin "completed" orders, so
-    // applying the today-defer here would make the order vanish from
-    // both tabs.
-    if (workflowMode === "simple" && o.status === "completed") {
+    // Simple-mode AUTO-completed orders from today stay pinned in In Progress
+    // until midnight, so keep them OUT of Complete until then. Manually-moved
+    // orders skip this — they appear in Complete immediately.
+    if (workflowMode === "simple" && o.status === "completed" && !manual) {
       const ts = (o as any).completedAt ? new Date((o as any).completedAt).getTime()
         : o.createdAt ? new Date(o.createdAt).getTime() : NaN;
       if (!Number.isNaN(ts) && ts >= completeTodayStart) return false;

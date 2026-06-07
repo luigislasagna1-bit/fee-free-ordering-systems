@@ -984,6 +984,12 @@ model Order {
   /// for orders cleared before this change.
   clearedFromAllAt      DateTime?
   clearedFromCompleteAt DateTime?
+  /// Set when kitchen staff MANUALLY move an order to Ready/Complete in Simple
+  /// mode. Such orders leave "In Progress" and appear in "Complete" immediately
+  /// (GloriaFood-style), instead of waiting for the end-of-day auto-complete.
+  /// Null = not manually moved → keeps the existing auto end-of-day behavior.
+  /// Luigi 2026-06-07.
+  manuallyClearedAt     DateTime?
 
   restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
   customer     Customer?     @relation(fields: [customerId], references: [id])

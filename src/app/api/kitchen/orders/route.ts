@@ -50,7 +50,10 @@ export async function GET() {
       await prisma.order.updateMany({
         where: {
           restaurantId,
-          status: "accepted",
+          // Also sweep manually-readied orders (Simple mode "Mark Ready" sets
+          // status=ready) so they land in reports by end of day. Simple mode
+          // only ever reaches "ready" via that manual action.
+          status: { in: ["accepted", "ready"] },
           estimatedReady: { not: null, lt: cutoff },
         },
         data: { status: "completed", completedAt: now },

@@ -70,7 +70,10 @@ async function autoComplete() {
   const candidates = await prisma.order.findMany({
     where: {
       restaurantId: { in: restaurantIds },
-      status: "accepted",
+      // "ready" included so Simple-mode orders staff manually marked Ready also
+      // auto-complete (and count in reports) once past their due time. Simple
+      // mode only reaches "ready" via the manual action.
+      status: { in: ["accepted", "ready"] },
     },
     select: { id: true, scheduledFor: true, estimatedReady: true, createdAt: true },
   });

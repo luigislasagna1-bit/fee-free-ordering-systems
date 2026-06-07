@@ -62,6 +62,9 @@ export type Order = {
   /** Per-tab kitchen clear flags — each tab filters by its own. */
   clearedFromAllAt?: string | null;
   clearedFromCompleteAt?: string | null;
+  /** Set when staff manually moved this to Ready/Complete in Simple mode → it
+   *  leaves In Progress and shows in Complete immediately. */
+  manuallyClearedAt?: string | null;
   subtotal: number;
   taxAmount: number;
   deliveryFee: number;

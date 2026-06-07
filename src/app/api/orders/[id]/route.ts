@@ -335,6 +335,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (newStatus === "completed") {
     updates.completedAt = new Date();
   }
+  // Manual progression to Ready/Complete from the kitchen → mark it as
+  // manually cleared so Simple mode moves it out of In Progress and into
+  // Complete immediately (GloriaFood-style). This route is only ever hit by
+  // staff actions; the auto-complete sweeps use updateMany and bypass it, so
+  // they never set this flag. Tracking mode ignores it. Luigi 2026-06-07.
+  if (newStatus === "ready" || newStatus === "completed") {
+    updates.manuallyClearedAt = new Date();
+  }
   if (newStatus === "cancelled") {
     updates.rejectedAt = new Date();
     updates.rejectionReason = String(data.rejectionReason ?? "Cancelled by restaurant").slice(0, 500);
