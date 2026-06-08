@@ -4522,7 +4522,11 @@
       "hintBogo": "Afegeix el teu article i tria el que t'enduràs gratis.",
       "hintBuyNGetFree": "Tria'n un de cada grup per desbloquejar el teu article gratis.",
       "hintFreeDishMeal": "Munta el teu menú: l'últim article el paguem nosaltres.",
-      "hintCombo": "Tria'n un de cada grup: el descompte del combo s'aplica automàticament."
+      "hintCombo": "Tria'n un de cada grup: el descompte del combo s'aplica automàticament.",
+      "hintBogoCheaperFree": "Tria un article de cada grup: l'article més barat és GRATIS.",
+      "hintBogoCheaperPct": "Tria un article de cada grup: l'article més barat té un {pct}% de descompte.",
+      "hintBogoPricierFree": "Tria un article de cada grup: l'article més car és GRATIS.",
+      "hintBogoPricierPct": "Tria un article de cada grup: l'article més car té un {pct}% de descompte."
     }
   }
 }

@@ -4522,7 +4522,11 @@
       "hintBogo": "Dodajte svoju stavku i odaberite besplatnu.",
       "hintBuyNGetFree": "Odaberite po jednu iz svake grupe kako biste otključali besplatnu stavku.",
       "hintFreeDishMeal": "Složite svoj obrok — zadnja stavka ide na naš račun.",
-      "hintCombo": "Odaberite po jednu iz svake grupe — kombinirani popust primjenjuje se automatski."
+      "hintCombo": "Odaberite po jednu iz svake grupe — kombinirani popust primjenjuje se automatski.",
+      "hintBogoCheaperFree": "Odaberite jedan artikl iz svake skupine — jeftiniji artikl je BESPLATAN.",
+      "hintBogoCheaperPct": "Odaberite jedan artikl iz svake skupine — jeftiniji artikl ima {pct}% popusta.",
+      "hintBogoPricierFree": "Odaberite jedan artikl iz svake skupine — skuplji artikl je BESPLATAN.",
+      "hintBogoPricierPct": "Odaberite jedan artikl iz svake skupine — skuplji artikl ima {pct}% popusta."
     }
   }
 }

@@ -125,8 +125,33 @@ function test4_bogo() {
     }),
   });
   const ctx = makeContext({ subtotal: CART_TOTAL, items: CART });
-  // Cheapest item among drinks+sides = soda $3 (100% off)
+  // Cheapest qualifying item across BOTH groups (pizza $20 + soda $3 + salad $8)
+  // = soda $3 (100% off). The pricey main never wins "cheapest", so reward-style
+  // BOGO is unaffected while a true cheaper-of-the-pair BOGO now works.
   assertEqual("BOGO cheapest free", calcDiscount(promo, ctx), 3.00);
+}
+
+function test4b_bogoCheaperOfPairFree() {
+  // Luigi 2026-06-07 regression: distinct BOGO groups where the customer put
+  // the PRICIER item ($20 pizza) in the "free" group and the cheaper item
+  // ($12 wings) in the "paid" group. With a "cheapest" strategy the CHEAPER
+  // item ($12) must be the one made free — NOT the pricey free-group pick.
+  // Before the fix the engine discounted the free-group item ($20), over-
+  // discounting. Cart here is just the two qualifying items.
+  console.log("\n[3b] bogo — cheaper of the two picks is free (cross-group)");
+  const promo = makePromo({
+    promotionType: "bogo",
+    rules: JSON.stringify({
+      discountStrategy: "cheapest",
+      cheapestDiscount: 100,
+      groups: [
+        { id: "paid", label: "Wings", role: "paid", categoryIds: ["wings"], itemIds: [] },
+        { id: "free", label: "Pizza", role: "free", categoryIds: ["mains"], itemIds: [] },
+      ],
+    }),
+  });
+  const ctx = makeContext({ subtotal: 32, items: [WINGS, PIZZA] });
+  assertEqual("BOGO discounts cheaper $12 wings (not $20 free-group pizza)", calcDiscount(promo, ctx), 12.00);
 }
 
 function test5_buyNGetFree() {
@@ -388,6 +413,7 @@ test1_percentageOff();
 test2_percentageOffTargeted();
 test3_freeDelivery();
 test4_bogo();
+test4b_bogoCheaperOfPairFree();
 test5_buyNGetFree();
 test6_fixedCart();
 test7_paymentReward();

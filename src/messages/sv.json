@@ -4522,7 +4522,11 @@
       "hintBogo": "Lägg till din artikel och välj din gratisartikel.",
       "hintBuyNGetFree": "Välj en från varje grupp för att låsa upp din gratisartikel.",
       "hintFreeDishMeal": "Bygg din måltid — den sista artikeln bjuder vi på.",
-      "hintCombo": "Välj en från varje grupp — komborabatten tillämpas automatiskt."
+      "hintCombo": "Välj en från varje grupp — komborabatten tillämpas automatiskt.",
+      "hintBogoCheaperFree": "Välj en vara från varje grupp – den billigare varan är GRATIS.",
+      "hintBogoCheaperPct": "Välj en vara från varje grupp – den billigare varan får {pct} % rabatt.",
+      "hintBogoPricierFree": "Välj en vara från varje grupp – den dyrare varan är GRATIS.",
+      "hintBogoPricierPct": "Välj en vara från varje grupp – den dyrare varan får {pct} % rabatt."
     }
   }
 }

@@ -4522,7 +4522,11 @@
       "hintBogo": "Thêm món của bạn và chọn món miễn phí.",
       "hintBuyNGetFree": "Chọn một món từ mỗi nhóm để mở khóa món miễn phí.",
       "hintFreeDishMeal": "Tạo bữa ăn của bạn — món cuối cùng chúng tôi mời bạn.",
-      "hintCombo": "Chọn một món từ mỗi nhóm — ưu đãi combo được áp dụng tự động."
+      "hintCombo": "Chọn một món từ mỗi nhóm — ưu đãi combo được áp dụng tự động.",
+      "hintBogoCheaperFree": "Chọn một món từ mỗi nhóm — món rẻ hơn sẽ được MIỄN PHÍ.",
+      "hintBogoCheaperPct": "Chọn một món từ mỗi nhóm — món rẻ hơn được giảm {pct}%.",
+      "hintBogoPricierFree": "Chọn một món từ mỗi nhóm — món đắt hơn sẽ được MIỄN PHÍ.",
+      "hintBogoPricierPct": "Chọn một món từ mỗi nhóm — món đắt hơn được giảm {pct}%."
     }
   }
 }

@@ -4522,7 +4522,11 @@
       "hintBogo": "Ajoutez votre article et choisissez celui qui est offert.",
       "hintBuyNGetFree": "Choisissez un article dans chaque groupe pour débloquer votre article gratuit.",
       "hintFreeDishMeal": "Composez votre repas — le dernier article est offert.",
-      "hintCombo": "Choisissez un article dans chaque groupe — la remise combo s'applique automatiquement."
+      "hintCombo": "Choisissez un article dans chaque groupe — la remise combo s'applique automatiquement.",
+      "hintBogoCheaperFree": "Choisissez un article dans chaque groupe — l'article le moins cher est GRATUIT.",
+      "hintBogoCheaperPct": "Choisissez un article dans chaque groupe — l'article le moins cher est à -{pct} %.",
+      "hintBogoPricierFree": "Choisissez un article dans chaque groupe — l'article le plus cher est GRATUIT.",
+      "hintBogoPricierPct": "Choisissez un article dans chaque groupe — l'article le plus cher est à -{pct} %."
     }
   }
 }

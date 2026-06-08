@@ -4522,7 +4522,11 @@
       "hintBogo": "Lisää tuotteesi ja valitse ilmainen tuote.",
       "hintBuyNGetFree": "Valitse yksi tuote kustakin ryhmästä avataksesi ilmaisen tuotteesi.",
       "hintFreeDishMeal": "Kokoa ateriasi — viimeinen tuote on talon piikkiin.",
-      "hintCombo": "Valitse yksi tuote kustakin ryhmästä — combo-alennus lisätään automaattisesti."
+      "hintCombo": "Valitse yksi tuote kustakin ryhmästä — combo-alennus lisätään automaattisesti.",
+      "hintBogoCheaperFree": "Valitse yksi tuote kustakin ryhmästä — halvempi tuote on ILMAINEN.",
+      "hintBogoCheaperPct": "Valitse yksi tuote kustakin ryhmästä — halvemmasta tuotteesta saat {pct} % alennuksen.",
+      "hintBogoPricierFree": "Valitse yksi tuote kustakin ryhmästä — kalliimpi tuote on ILMAINEN.",
+      "hintBogoPricierPct": "Valitse yksi tuote kustakin ryhmästä — kalliimmasta tuotteesta saat {pct} % alennuksen."
     }
   }
 }

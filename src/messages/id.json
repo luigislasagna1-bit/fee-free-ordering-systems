@@ -4522,7 +4522,11 @@
       "hintBogo": "Tambahkan item Anda dan pilih item gratisnya.",
       "hintBuyNGetFree": "Pilih satu dari setiap grup untuk membuka item gratis Anda.",
       "hintFreeDishMeal": "Susun santapan Anda — item terakhir kami yang traktir.",
-      "hintCombo": "Pilih satu dari setiap grup — diskon combo berlaku otomatis."
+      "hintCombo": "Pilih satu dari setiap grup — diskon combo berlaku otomatis.",
+      "hintBogoCheaperFree": "Pilih satu item dari tiap grup — item yang lebih murah GRATIS.",
+      "hintBogoCheaperPct": "Pilih satu item dari tiap grup — item yang lebih murah diskon {pct}%.",
+      "hintBogoPricierFree": "Pilih satu item dari tiap grup — item yang lebih mahal GRATIS.",
+      "hintBogoPricierPct": "Pilih satu item dari tiap grup — item yang lebih mahal diskon {pct}%."
     }
   }
 }

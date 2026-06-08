@@ -4522,7 +4522,11 @@
       "hintBogo": "Pridėkite savo prekę ir pasirinkite nemokamą.",
       "hintBuyNGetFree": "Pasirinkite po vieną iš kiekvienos grupės, kad atrakintumėte nemokamą prekę.",
       "hintFreeDishMeal": "Sukurkite savo patiekalą – paskutinę prekę vaišiname mes.",
-      "hintCombo": "Pasirinkite po vieną iš kiekvienos grupės – rinkinio nuolaida taikoma automatiškai."
+      "hintCombo": "Pasirinkite po vieną iš kiekvienos grupės – rinkinio nuolaida taikoma automatiškai.",
+      "hintBogoCheaperFree": "Iš kiekvienos grupės pasirinkite po vieną prekę — pigesnė prekė atiteks NEMOKAMAI.",
+      "hintBogoCheaperPct": "Iš kiekvienos grupės pasirinkite po vieną prekę — pigesnei prekei taikoma {pct}% nuolaida.",
+      "hintBogoPricierFree": "Iš kiekvienos grupės pasirinkite po vieną prekę — brangesnė prekė atiteks NEMOKAMAI.",
+      "hintBogoPricierPct": "Iš kiekvienos grupės pasirinkite po vieną prekę — brangesnei prekei taikoma {pct}% nuolaida."
     }
   }
 }

@@ -4522,7 +4522,11 @@
       "hintBogo": "Pridajte si položku a vyberte si tú zdarma.",
       "hintBuyNGetFree": "Vyberte si po jednej z každej skupiny a odomknite si položku zdarma.",
       "hintFreeDishMeal": "Poskladajte si jedlo — poslednú položku máte od nás.",
-      "hintCombo": "Vyberte si po jednej z každej skupiny — zľava na kombo sa uplatní automaticky."
+      "hintCombo": "Vyberte si po jednej z každej skupiny — zľava na kombo sa uplatní automaticky.",
+      "hintBogoCheaperFree": "Vyberte si jednu položku z každej skupiny — lacnejšia položka je ZADARMO.",
+      "hintBogoCheaperPct": "Vyberte si jednu položku z každej skupiny — na lacnejšiu položku získate zľavu {pct} %.",
+      "hintBogoPricierFree": "Vyberte si jednu položku z každej skupiny — drahšia položka je ZADARMO.",
+      "hintBogoPricierPct": "Vyberte si jednu položku z každej skupiny — na drahšiu položku získate zľavu {pct} %."
     }
   }
 }

@@ -4522,7 +4522,11 @@
       "hintBogo": "Dodaj swoją pozycję i wybierz tę gratis.",
       "hintBuyNGetFree": "Wybierz po jednej z każdej grupy, aby odblokować darmową pozycję.",
       "hintFreeDishMeal": "Skomponuj swój posiłek — ostatnia pozycja jest na nasz koszt.",
-      "hintCombo": "Wybierz po jednej z każdej grupy — rabat combo zostanie zastosowany automatycznie."
+      "hintCombo": "Wybierz po jednej z każdej grupy — rabat combo zostanie zastosowany automatycznie.",
+      "hintBogoCheaperFree": "Wybierz po jednej pozycji z każdej grupy — tańsza pozycja jest GRATIS.",
+      "hintBogoCheaperPct": "Wybierz po jednej pozycji z każdej grupy — tańsza pozycja ma {pct}% rabatu.",
+      "hintBogoPricierFree": "Wybierz po jednej pozycji z każdej grupy — droższa pozycja jest GRATIS.",
+      "hintBogoPricierPct": "Wybierz po jednej pozycji z każdej grupy — droższa pozycja ma {pct}% rabatu."
     }
   }
 }

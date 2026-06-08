@@ -4522,7 +4522,11 @@
       "hintBogo": "添加你的商品，再挑一件免费的。",
       "hintBuyNGetFree": "每组各选一件，即可解锁你的免费商品。",
       "hintFreeDishMeal": "搭配你的套餐 — 最后一件我们请客。",
-      "hintCombo": "每组各选一件 — 套餐折扣将自动应用。"
+      "hintCombo": "每组各选一件 — 套餐折扣将自动应用。",
+      "hintBogoCheaperFree": "从每组中各选一件商品 —— 较便宜的那件免费。",
+      "hintBogoCheaperPct": "从每组中各选一件商品 —— 较便宜的那件可享 {pct}% 折扣。",
+      "hintBogoPricierFree": "从每组中各选一件商品 —— 较贵的那件免费。",
+      "hintBogoPricierPct": "从每组中各选一件商品 —— 较贵的那件可享 {pct}% 折扣。"
     }
   }
 }

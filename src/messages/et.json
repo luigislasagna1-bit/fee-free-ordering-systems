@@ -4522,7 +4522,11 @@
       "hintBogo": "Lisa oma toode ja vali tasuta toode.",
       "hintBuyNGetFree": "Vali igast rühmast üks, et avada oma tasuta toode.",
       "hintFreeDishMeal": "Pane oma eine kokku — viimase toote pakume meie.",
-      "hintCombo": "Vali igast rühmast üks — kombo-soodustus rakendub automaatselt."
+      "hintCombo": "Vali igast rühmast üks — kombo-soodustus rakendub automaatselt.",
+      "hintBogoCheaperFree": "Vali kummastki rühmast üks toode — odavam toode on TASUTA.",
+      "hintBogoCheaperPct": "Vali kummastki rühmast üks toode — odavam toode on {pct}% soodsam.",
+      "hintBogoPricierFree": "Vali kummastki rühmast üks toode — kallim toode on TASUTA.",
+      "hintBogoPricierPct": "Vali kummastki rühmast üks toode — kallim toode on {pct}% soodsam."
     }
   }
 }

@@ -4522,7 +4522,11 @@
       "hintBogo": "Tilføj din vare, og vælg din gratis.",
       "hintBuyNGetFree": "Vælg én fra hver gruppe for at låse din gratis vare op.",
       "hintFreeDishMeal": "Sæt dit måltid sammen — den sidste vare giver vi.",
-      "hintCombo": "Vælg én fra hver gruppe — komborabatten gælder automatisk."
+      "hintCombo": "Vælg én fra hver gruppe — komborabatten gælder automatisk.",
+      "hintBogoCheaperFree": "Vælg én vare fra hver gruppe — den billigste vare er GRATIS.",
+      "hintBogoCheaperPct": "Vælg én vare fra hver gruppe — den billigste vare får {pct}% rabat.",
+      "hintBogoPricierFree": "Vælg én vare fra hver gruppe — den dyreste vare er GRATIS.",
+      "hintBogoPricierPct": "Vælg én vare fra hver gruppe — den dyreste vare får {pct}% rabat."
     }
   }
 }

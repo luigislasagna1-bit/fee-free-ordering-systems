@@ -4522,7 +4522,11 @@
       "hintBogo": "Adja hozzá a tételét, és válassza ki az ingyeneset.",
       "hintBuyNGetFree": "Válasszon egyet minden csoportból az ingyenes tétel feloldásához.",
       "hintFreeDishMeal": "Állítsa össze étkezését — az utolsó tétel a mi vendégségünk.",
-      "hintCombo": "Válasszon egyet minden csoportból — a kombó kedvezmény automatikusan érvényes."
+      "hintCombo": "Válasszon egyet minden csoportból — a kombó kedvezmény automatikusan érvényes.",
+      "hintBogoCheaperFree": "Válasszon egy-egy terméket mindkét csoportból — az olcsóbbik INGYEN van.",
+      "hintBogoCheaperPct": "Válasszon egy-egy terméket mindkét csoportból — az olcsóbbik {pct}% kedvezménnyel jár.",
+      "hintBogoPricierFree": "Válasszon egy-egy terméket mindkét csoportból — a drágábbik INGYEN van.",
+      "hintBogoPricierPct": "Válasszon egy-egy terméket mindkét csoportból — a drágábbik {pct}% kedvezménnyel jár."
     }
   }
 }

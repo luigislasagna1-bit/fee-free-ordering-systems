@@ -543,8 +543,8 @@ export function PromoDetailModal({
       // BOGO's free slot can be a partial discount; surface it as a badge.
       // Other guided types are fully free (or combo-discounted as a whole).
       let discountPct: number | undefined;
+      const strategy = rules.discountStrategy ?? "cheapest";
       if (promo.promotionType === "bogo") {
-        const strategy = rules.discountStrategy ?? "cheapest";
         discountPct =
           strategy === "most_expensive"
             ? Number(rules.mostExpensiveDiscount ?? 100)
@@ -559,6 +559,7 @@ export function PromoDetailModal({
           allMenuItems={allMenuItems}
           primaryColor={primaryColor}
           discountPct={discountPct}
+          discountStrategy={strategy}
           onComplete={(picks, promoName) => {
             onCompleteGuidedPromo(picks, promoName);
             onClose();

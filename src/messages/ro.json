@@ -4522,7 +4522,11 @@
       "hintBogo": "Adaugă produsul tău și alege-l pe cel gratuit.",
       "hintBuyNGetFree": "Alege câte unul din fiecare grup pentru a debloca produsul gratuit.",
       "hintFreeDishMeal": "Construiește-ți masa — ultimul produs este din partea casei.",
-      "hintCombo": "Alege câte unul din fiecare grup — reducerea combo se aplică automat."
+      "hintCombo": "Alege câte unul din fiecare grup — reducerea combo se aplică automat.",
+      "hintBogoCheaperFree": "Alege câte un produs din fiecare grup — produsul mai ieftin este GRATUIT.",
+      "hintBogoCheaperPct": "Alege câte un produs din fiecare grup — produsul mai ieftin are {pct}% reducere.",
+      "hintBogoPricierFree": "Alege câte un produs din fiecare grup — produsul mai scump este GRATUIT.",
+      "hintBogoPricierPct": "Alege câte un produs din fiecare grup — produsul mai scump are {pct}% reducere."
     }
   }
 }

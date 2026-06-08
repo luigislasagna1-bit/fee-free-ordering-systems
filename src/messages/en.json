@@ -4259,6 +4259,10 @@
       "readyHint": "Your deal is ready — add it to your cart!",
       "remainingHint": "Pick {count, plural, one {# more item} other {# more items}} to complete this deal",
       "hintBogo": "Add your item and pick your free one.",
+      "hintBogoCheaperFree": "Pick one item from each group — the cheaper item is FREE.",
+      "hintBogoCheaperPct": "Pick one item from each group — the cheaper item is {pct}% off.",
+      "hintBogoPricierFree": "Pick one item from each group — the pricier item is FREE.",
+      "hintBogoPricierPct": "Pick one item from each group — the pricier item is {pct}% off.",
       "hintBuyNGetFree": "Pick one from each group to unlock your free item.",
       "hintFreeDishMeal": "Build your meal — the last item is on us.",
       "hintCombo": "Pick one from each group — the combo discount applies automatically."

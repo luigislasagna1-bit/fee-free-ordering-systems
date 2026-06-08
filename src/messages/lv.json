@@ -4522,7 +4522,11 @@
       "hintBogo": "Pievieno savu produktu un izvēlies bezmaksas.",
       "hintBuyNGetFree": "Izvēlies pa vienam no katras grupas, lai atbloķētu bezmaksas produktu.",
       "hintFreeDishMeal": "Izveido savu maltīti — pēdējais produkts ir uz mūsu rēķina.",
-      "hintCombo": "Izvēlies pa vienam no katras grupas — kombo atlaide tiek piemērota automātiski."
+      "hintCombo": "Izvēlies pa vienam no katras grupas — kombo atlaide tiek piemērota automātiski.",
+      "hintBogoCheaperFree": "Izvēlieties pa vienam ēdienam no katras grupas — lētākais ēdiens ir BEZMAKSAS.",
+      "hintBogoCheaperPct": "Izvēlieties pa vienam ēdienam no katras grupas — lētākajam ēdienam ir {pct}% atlaide.",
+      "hintBogoPricierFree": "Izvēlieties pa vienam ēdienam no katras grupas — dārgākais ēdiens ir BEZMAKSAS.",
+      "hintBogoPricierPct": "Izvēlieties pa vienam ēdienam no katras grupas — dārgākajam ēdienam ir {pct}% atlaide."
     }
   }
 }

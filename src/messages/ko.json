@@ -4522,7 +4522,11 @@
       "hintBogo": "원하는 메뉴를 담고 무료 메뉴를 골라보세요.",
       "hintBuyNGetFree": "각 그룹에서 하나씩 골라 무료 메뉴를 받으세요.",
       "hintFreeDishMeal": "나만의 식사를 구성하세요 — 마지막 메뉴는 무료로 드려요.",
-      "hintCombo": "각 그룹에서 하나씩 고르면 콤보 할인이 자동으로 적용됩니다."
+      "hintCombo": "각 그룹에서 하나씩 고르면 콤보 할인이 자동으로 적용됩니다.",
+      "hintBogoCheaperFree": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 저렴한 메뉴가 무료입니다.",
+      "hintBogoCheaperPct": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 저렴한 메뉴가 {pct}% 할인됩니다.",
+      "hintBogoPricierFree": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 비싼 메뉴가 무료입니다.",
+      "hintBogoPricierPct": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 비싼 메뉴가 {pct}% 할인됩니다."
     }
   }
 }

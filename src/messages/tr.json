@@ -4522,7 +4522,11 @@
       "hintBogo": "Ürününü ekle ve ücretsiz ürününü seç.",
       "hintBuyNGetFree": "Ücretsiz ürününüzü açmak için her gruptan birer tane seçin.",
       "hintFreeDishMeal": "Öğününü oluştur — son ürün bizden.",
-      "hintCombo": "Her gruptan birer tane seçin — kombo indirimi otomatik uygulanır."
+      "hintCombo": "Her gruptan birer tane seçin — kombo indirimi otomatik uygulanır.",
+      "hintBogoCheaperFree": "Her gruptan bir ürün seçin — ucuz olan ürün ÜCRETSİZ.",
+      "hintBogoCheaperPct": "Her gruptan bir ürün seçin — ucuz olan üründe %{pct} indirim var.",
+      "hintBogoPricierFree": "Her gruptan bir ürün seçin — pahalı olan ürün ÜCRETSİZ.",
+      "hintBogoPricierPct": "Her gruptan bir ürün seçin — pahalı olan üründe %{pct} indirim var."
     }
   }
 }

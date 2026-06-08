@@ -64,10 +64,15 @@ interface Props {
   groups: RuleConfigGroup[];
   allMenuItems: MenuItemLite[];
   primaryColor: string;
-  /** Discount on the free slot, as a percentage. 100 (or omitted) → the item
-   *  is fully free ("FREE" badge); <100 → a partial-discount badge ("50% off").
-   *  Only meaningful for types that HAVE a free group (bogo). */
+  /** Discount percentage applied to the winning item. 100 (or omitted) →
+   *  fully free; <100 → a partial discount (e.g. "50% off"). For bogo it
+   *  describes the cheaper/pricier item; for buy_n_get_free it badges the
+   *  free-group items. */
   discountPct?: number;
+  /** BOGO discount strategy: "cheapest" (the cheaper pick is discounted) or
+   *  "most_expensive" (the pricier one). Drives the explanatory hint so the
+   *  customer knows which of their two picks wins. */
+  discountStrategy?: string;
   onComplete: (picks: GuidedPromoPick[], promoName: string) => void;
   onClose: () => void;
 }
@@ -93,18 +98,26 @@ function collectGroupItems(group: RuleConfigGroup, allMenuItems: MenuItemLite[])
   return out;
 }
 
-/** Decide which slots are the "free" ones. Role wins when the owner set it;
- *  otherwise fall back to the per-type convention the engine assumes:
- *   - bogo → slot index 1 is free
- *   - buy_n_get_free / free_dish_meal → the LAST slot is free
- *   - combos → nothing is free (the whole combo is discounted) */
+/** Decide which slots are the "free" ones — i.e. which slot's pick is tagged
+ *  as the giveaway in the cart and badged FREE in the UI.
+ *   - buy_n_get_free / free_dish_meal → the designated free group (role, else
+ *     the LAST slot): the reward genuinely comes from one group.
+ *   - bogo → NONE. BOGO discounts the cheaper (or pricier) of the qualifying
+ *     items by PRICE, not by group, so badging one group "free" is misleading
+ *     (and contradicts which item the engine actually discounts). We instead
+ *     show a strategy hint ("the cheaper item is free") and let the engine
+ *     pick. Luigi 2026-06-07.
+ *   - combos → nothing is free (the whole combo is discounted). */
 function freeSlotFlags(promotionType: string, groups: RuleConfigGroup[]): boolean[] {
-  if (promotionType === "fixed_combo" || promotionType === "percentage_combo") {
+  if (
+    promotionType === "fixed_combo" ||
+    promotionType === "percentage_combo" ||
+    promotionType === "bogo"
+  ) {
     return groups.map(() => false);
   }
   const hasRoleFree = groups.some((g) => g.role === "free");
   if (hasRoleFree) return groups.map((g) => g.role === "free");
-  if (promotionType === "bogo") return groups.map((_, i) => i === 1);
   // buy_n_get_free, free_dish_meal
   return groups.map((_, i) => i === groups.length - 1);
 }
@@ -117,6 +130,7 @@ export function GuidedPromoModal({
   allMenuItems,
   primaryColor,
   discountPct,
+  discountStrategy,
   onComplete,
   onClose,
 }: Props) {
@@ -178,8 +192,14 @@ export function GuidedPromoModal({
     onComplete(flat, promoName);
   }
 
+  const bogoHint = (() => {
+    const pct = typeof discountPct === "number" ? discountPct : 100;
+    const pricier = discountStrategy === "most_expensive";
+    if (pct >= 100) return pricier ? t("hintBogoPricierFree") : t("hintBogoCheaperFree");
+    return pricier ? t("hintBogoPricierPct", { pct }) : t("hintBogoCheaperPct", { pct });
+  })();
   const benefitHint =
-    promotionType === "bogo" ? t("hintBogo")
+    promotionType === "bogo" ? bogoHint
     : promotionType === "buy_n_get_free" ? t("hintBuyNGetFree")
     : promotionType === "free_dish_meal" ? t("hintFreeDishMeal")
     : t("hintCombo");

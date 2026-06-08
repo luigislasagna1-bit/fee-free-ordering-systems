@@ -4522,7 +4522,11 @@
       "hintBogo": "Voeg je item toe en kies je gratis item.",
       "hintBuyNGetFree": "Kies één item uit elke groep om je gratis item te ontgrendelen.",
       "hintFreeDishMeal": "Stel je maaltijd samen — het laatste item krijg je van ons.",
-      "hintCombo": "Kies één item uit elke groep — de combikorting wordt automatisch toegepast."
+      "hintCombo": "Kies één item uit elke groep — de combikorting wordt automatisch toegepast.",
+      "hintBogoCheaperFree": "Kies één item uit elke groep — het goedkoopste item is GRATIS.",
+      "hintBogoCheaperPct": "Kies één item uit elke groep — op het goedkoopste item krijg je {pct}% korting.",
+      "hintBogoPricierFree": "Kies één item uit elke groep — het duurste item is GRATIS.",
+      "hintBogoPricierPct": "Kies één item uit elke groep — op het duurste item krijg je {pct}% korting."
     }
   }
 }

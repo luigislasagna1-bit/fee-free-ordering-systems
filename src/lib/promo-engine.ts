@@ -527,8 +527,25 @@ function calcBogo(promo: PromoInput, ctx: ApplyContext): number {
     if (pairs < 1) return 0;
   }
 
+  // Which item(s) get discounted? BOGO means "the cheaper (or, for the
+  // most_expensive strategy, the pricier) of the QUALIFYING items is free."
+  // The discount pool is therefore the union of BOTH groups' matched items —
+  // not the free group alone. itemsMatchingGroup returns the same CartItem
+  // references out of ctx.items, so a Set dedupes overlap (and items that
+  // satisfy both groups) by identity.
+  //
+  // Previously the pool was `freeItems` only, so the FREE-group pick was
+  // discounted regardless of price: a customer who put the pricier item in the
+  // free group got the EXPENSIVE item free under a "cheapest" promo, over-
+  // discounting the restaurant. Luigi 2026-06-07 ("it gave the more expensive
+  // item free; it's set to give the cheaper item free"). Reward-style "buy a
+  // main, get the cheapest side free" is unaffected when the main is the
+  // priciest item (it never wins "cheapest"); a true designated-freebie reward
+  // belongs to buy_n_get_free.
+  const pool = [...new Set<CartItem>([...paidItems, ...freeItems])];
+
   return discountNUnits(
-    freeItems,
+    pool,
     pairs,
     rules.discountStrategy ?? "cheapest",
     rules.cheapestDiscount ?? 100,
