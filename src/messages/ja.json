@@ -629,7 +629,8 @@
     "refundCardOnly": "返金はカード決済のみ可能です",
     "refundAlreadyFull": "この注文はすでに全額返金されています",
     "refundNotCaptured": "返金可能な確定済みカード決済がありません",
-    "preOrder": "事前注文"
+    "preOrder": "事前注文",
+    "tableReservation": "テーブル予約"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

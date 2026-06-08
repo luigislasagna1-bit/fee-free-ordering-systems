@@ -629,7 +629,8 @@
     "refundCardOnly": "Les remboursements ne sont possibles que pour les paiements par carte",
     "refundAlreadyFull": "Cette commande a déjà été intégralement remboursée",
     "refundNotCaptured": "Aucun paiement par carte capturé à rembourser",
-    "preOrder": "Précommande"
+    "preOrder": "Précommande",
+    "tableReservation": "Réservation de table"
   },
   "admin": {
     "welcomeBack": "Bon retour",

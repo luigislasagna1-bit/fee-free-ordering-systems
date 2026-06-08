@@ -629,7 +629,8 @@
     "refundCardOnly": "Refusjoner kan bare utstedes på kortbetalinger",
     "refundAlreadyFull": "Denne bestillingen er allerede fullt refundert",
     "refundNotCaptured": "Ingen belastet kortbetaling å refundere",
-    "preOrder": "Forhåndsbestilling"
+    "preOrder": "Forhåndsbestilling",
+    "tableReservation": "Bordreservasjon"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",

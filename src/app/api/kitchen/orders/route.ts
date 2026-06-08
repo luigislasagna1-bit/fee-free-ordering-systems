@@ -106,9 +106,32 @@ export async function GET() {
       },
     });
 
+    // ── Reserve-then-order: attach the linked table booking ─────────────────
+    // A pre-order order carries a Reservation (Reservation.orderId). Attach its
+    // party size + date/time + code so the kitchen can flag the order tile +
+    // ticket as "TABLE RESERVATION + PRE-ORDER" and treat it as one unit. One
+    // query for the whole page; null for every normal order. Luigi 2026-06-08.
+    const orderIds = orders.map((o) => o.id);
+    const bookings = orderIds.length > 0
+      ? await prisma.reservation.findMany({
+          where: { orderId: { in: orderIds } },
+          select: { orderId: true, partySize: true, date: true, time: true, confirmationCode: true, status: true },
+        })
+      : [];
+    const bookingByOrderId = new Map(bookings.map((b) => [b.orderId as string, b]));
+    const ordersWithReservation = orders.map((o) => {
+      const b = bookingByOrderId.get(o.id);
+      return {
+        ...o,
+        reservation: b
+          ? { partySize: b.partySize, date: b.date, time: b.time, confirmationCode: b.confirmationCode, status: b.status }
+          : null,
+      };
+    });
+
     // (restaurant + mode already fetched above for the sweep.)
     return NextResponse.json({
-      orders,
+      orders: ordersWithReservation,
       kitchenWorkflowMode: resolvedMode,
       // Surface whether PrintNode backup is enabled so the kitchen UI
       // can hide the PrintNode setup option entirely when the admin

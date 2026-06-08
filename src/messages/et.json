@@ -629,7 +629,8 @@
     "refundCardOnly": "Tagasimakseid saab teha ainult kaardimaksete puhul",
     "refundAlreadyFull": "See tellimus on juba täielikult tagastatud",
     "refundNotCaptured": "Pole kinnitatud kaardimakset, mida tagastada",
-    "preOrder": "Ettetellimine"
+    "preOrder": "Ettetellimine",
+    "tableReservation": "Laua reserveerimine"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

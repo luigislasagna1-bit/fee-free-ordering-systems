@@ -629,7 +629,8 @@
     "refundCardOnly": "Zwroty można wykonać tylko dla płatności kartą",
     "refundAlreadyFull": "To zamówienie zostało już w pełni zwrócone",
     "refundNotCaptured": "Brak pobranej płatności kartą do zwrotu",
-    "preOrder": "Zamówienie z wyprzedzeniem"
+    "preOrder": "Zamówienie z wyprzedzeniem",
+    "tableReservation": "Rezerwacja stolika"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

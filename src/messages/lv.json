@@ -629,7 +629,8 @@
     "refundCardOnly": "Atmaksu var veikt tikai par maksājumiem ar karti",
     "refundAlreadyFull": "Šis pasūtījums jau ir pilnībā atmaksāts",
     "refundNotCaptured": "Nav apstiprināta kartes maksājuma, ko atmaksāt",
-    "preOrder": "Iepriekšpasūtījums"
+    "preOrder": "Iepriekšpasūtījums",
+    "tableReservation": "Galda rezervācija"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

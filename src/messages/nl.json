@@ -629,7 +629,8 @@
     "refundCardOnly": "Terugbetalingen zijn alleen mogelijk bij kaartbetalingen",
     "refundAlreadyFull": "Deze bestelling is al volledig terugbetaald",
     "refundNotCaptured": "Geen vastgelegde kaartbetaling om terug te betalen",
-    "preOrder": "Voorbestelling"
+    "preOrder": "Voorbestelling",
+    "tableReservation": "Tafelreservering"
   },
   "admin": {
     "welcomeBack": "Welkom terug",

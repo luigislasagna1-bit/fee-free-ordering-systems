@@ -59,6 +59,17 @@ export type Order = {
   /** Cumulative amount refunded so far (major currency units). Drives the
    *  Refund modal's "remaining" calc + the partial-refund badge. */
   refundedAmount: number | null;
+  /** Reserve-then-order: the linked table booking, when this order was placed
+   *  WITH a table reservation. Drives the "TABLE RESERVATION + PRE-ORDER" flag
+   *  on the order tile / detail / ticket. Null for every normal order.
+   *  Luigi 2026-06-08. */
+  reservation?: {
+    partySize: number;
+    date: string;
+    time: string;
+    confirmationCode: string;
+    status: string;
+  } | null;
   /** Per-tab kitchen clear flags — each tab filters by its own. */
   clearedFromAllAt?: string | null;
   clearedFromCompleteAt?: string | null;

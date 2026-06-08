@@ -46,11 +46,17 @@ export async function GET() {
     include: { table: true },
   });
 
-  // Reserve-then-order: a booking attached to an order (orderId set) must stay
-  // hidden from the kitchen until that order is actually released — i.e. paid,
-  // for online-card/PayPal. We mirror the order feed, which only shows orders
-  // with notifiedAt set. Bookings with no orderId (normal walk-up reservations)
-  // are always visible. Luigi 2026-06-08.
+  // Reserve-then-order: a booking attached to an order (orderId set) is part of
+  // ONE unit with that order. The kitchen accepts the ORDER once — that confirms
+  // the table — so a pre-order booking must NOT show here as its own
+  // needs-acceptance row:
+  //   • while it's still "pending" (the order hasn't been accepted) it is
+  //     represented by the order tile in the order feed, not here;
+  //   • once "confirmed"/"seated" (order accepted) it appears here for seating /
+  //     no-show, but only after the order is actually released (paid), mirroring
+  //     the order feed (notifiedAt set).
+  // Bookings with no orderId (normal walk-up reservations) are always visible.
+  // Luigi 2026-06-08.
   const linkedOrderIds = reservations
     .map((r) => r.orderId)
     .filter((x): x is string => !!x);
@@ -62,7 +68,11 @@ export async function GET() {
     });
     releasedOrderIds = new Set(released.map((o) => o.id));
   }
-  const visible = reservations.filter((r) => !r.orderId || releasedOrderIds.has(r.orderId));
+  const visible = reservations.filter((r) => {
+    if (!r.orderId) return true; // normal walk-up booking
+    if (r.status === "pending") return false; // shown as the order, not here
+    return releasedOrderIds.has(r.orderId); // confirmed/seated: show once paid
+  });
 
   return NextResponse.json(visible);
 }

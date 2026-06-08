@@ -629,7 +629,8 @@
     "refundCardOnly": "Os reembolsos só podem ser efetuados em pagamentos com cartão",
     "refundAlreadyFull": "Este pedido já foi totalmente reembolsado",
     "refundNotCaptured": "Não há pagamento com cartão capturado para reembolsar",
-    "preOrder": "Pré-encomenda"
+    "preOrder": "Pré-encomenda",
+    "tableReservation": "Reserva de mesa"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",

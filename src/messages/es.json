@@ -629,7 +629,8 @@
     "refundCardOnly": "Solo se pueden emitir reembolsos en pagos con tarjeta",
     "refundAlreadyFull": "Este pedido ya se ha reembolsado por completo",
     "refundNotCaptured": "No hay ningún pago con tarjeta capturado que reembolsar",
-    "preOrder": "Pedido anticipado"
+    "preOrder": "Pedido anticipado",
+    "tableReservation": "Reserva de mesa"
   },
   "admin": {
     "welcomeBack": "Bienvenido de nuevo",

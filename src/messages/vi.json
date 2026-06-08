@@ -629,7 +629,8 @@
     "refundCardOnly": "Chỉ có thể hoàn tiền cho các khoản thanh toán bằng thẻ",
     "refundAlreadyFull": "Đơn hàng này đã được hoàn tiền đầy đủ",
     "refundNotCaptured": "Không có khoản thanh toán bằng thẻ đã thu để hoàn tiền",
-    "preOrder": "Đặt trước"
+    "preOrder": "Đặt trước",
+    "tableReservation": "Đặt bàn"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

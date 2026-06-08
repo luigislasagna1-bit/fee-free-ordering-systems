@@ -354,6 +354,23 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     include: { restaurant: { select: { id: true, name: true, slug: true, defaultLanguage: true } } },
   });
 
+  // ── Reserve-then-order: keep the linked table booking in lockstep ─────────
+  // A pre-order order carries a linked Reservation (Reservation.orderId). The
+  // kitchen accepts the ORDER once — that single action confirms the table too;
+  // rejecting / cancelling the order releases the booking. updateMany is a no-op
+  // for every normal order (no linked reservation). Luigi 2026-06-08.
+  if (newStatus === "accepted" || newStatus === "rejected" || newStatus === "cancelled") {
+    const resStatus = newStatus === "accepted" ? "confirmed" : newStatus; // rejected | cancelled
+    try {
+      await prisma.reservation.updateMany({
+        where: { orderId: id },
+        data: { status: resStatus },
+      });
+    } catch (e) {
+      console.error("[orders PATCH] reservation sync:", e);
+    }
+  }
+
   // ── Kill flow: void vs refund ────────────────────────────────────────────
   // When the restaurant rejects/cancels an order, what happens depends on
   // whether the card was already captured:

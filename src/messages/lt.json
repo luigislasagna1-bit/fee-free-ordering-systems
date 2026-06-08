@@ -629,7 +629,8 @@
     "refundCardOnly": "Grąžinimus galima atlikti tik mokant kortele",
     "refundAlreadyFull": "Už šį užsakymą jau grąžinta visa suma",
     "refundNotCaptured": "Nėra užfiksuoto mokėjimo kortele, kurį būtų galima grąžinti",
-    "preOrder": "Išankstinis užsakymas"
+    "preOrder": "Išankstinis užsakymas",
+    "tableReservation": "Stalo rezervacija"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

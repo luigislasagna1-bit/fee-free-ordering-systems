@@ -629,7 +629,8 @@
     "refundCardOnly": "Hyvityksiä voi tehdä vain korttimaksuista",
     "refundAlreadyFull": "Tämä tilaus on jo hyvitetty kokonaan",
     "refundNotCaptured": "Ei veloitettua korttimaksua hyvitettäväksi",
-    "preOrder": "Ennakkotilaus"
+    "preOrder": "Ennakkotilaus",
+    "tableReservation": "Pöytävaraus"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

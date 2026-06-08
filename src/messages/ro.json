@@ -629,7 +629,8 @@
     "refundCardOnly": "Rambursările pot fi efectuate doar pentru plățile cu cardul",
     "refundAlreadyFull": "Această comandă a fost deja rambursată integral",
     "refundNotCaptured": "Nicio plată cu cardul capturată pentru rambursare",
-    "preOrder": "Precomandă"
+    "preOrder": "Precomandă",
+    "tableReservation": "Rezervare masă"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

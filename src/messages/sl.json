@@ -629,7 +629,8 @@
     "refundCardOnly": "Povračila so možna samo pri plačilih s kartico",
     "refundAlreadyFull": "To naročilo je že bilo v celoti povrnjeno",
     "refundNotCaptured": "Ni zajetega plačila s kartico za povračilo",
-    "preOrder": "Prednaročilo"
+    "preOrder": "Prednaročilo",
+    "tableReservation": "Rezervacija mize"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",

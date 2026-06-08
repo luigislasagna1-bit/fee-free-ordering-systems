@@ -629,7 +629,8 @@
     "refundCardOnly": "I rimborsi possono essere emessi solo sui pagamenti con carta",
     "refundAlreadyFull": "Questo ordine è già stato rimborsato per intero",
     "refundNotCaptured": "Nessun pagamento con carta acquisito da rimborsare",
-    "preOrder": "Preordine"
+    "preOrder": "Preordine",
+    "tableReservation": "Prenotazione tavolo"
   },
   "admin": {
     "welcomeBack": "Bentornato",

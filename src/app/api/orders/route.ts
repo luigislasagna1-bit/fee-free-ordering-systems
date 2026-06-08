@@ -169,7 +169,7 @@ export async function POST(req: NextRequest) {
     // Luigi 2026-06-08. Only runs when a `reservation` payload is present, so
     // it's a no-op for every normal order.
     let reservationData:
-      | { date: string; time: string; partySize: number; notes: string | null; tableId: string | null; status: string }
+      | { date: string; time: string; partySize: number; notes: string | null; tableId: string | null }
       | null = null;
     if (bodyReservation && typeof bodyReservation === "object") {
       const rs = await prisma.reservationSettings.findUnique({
@@ -218,7 +218,6 @@ export async function POST(req: NextRequest) {
         partySize: rPartySize,
         notes: (bodyReservation as any).notes ? sanitize((bodyReservation as any).notes, 500) : null,
         tableId: rTableId,
-        status: rs.autoConfirm ? "confirmed" : "pending",
       };
     }
 
@@ -1571,7 +1570,13 @@ export async function POST(req: NextRequest) {
     // order confirmation IS the single combined notification, and the kitchen
     // Reservations feed hides this booking until the order is released
     // (notifiedAt set by fireOrderNotifications), so an unpaid online-card
-    // booking stays hidden until payment clears. Luigi 2026-06-08.
+    // booking stays hidden until payment clears.
+    //
+    // ONE acceptance: the booking mirrors the ORDER's acceptance state. An
+    // auto-accepted order confirms the table immediately; a manual-accept order
+    // leaves it "pending" (hidden from the kitchen reservation feed) until the
+    // kitchen accepts the ORDER, which flips it to "confirmed" via the
+    // /api/orders/[id] PATCH sync. Luigi 2026-06-08.
     if (reservationData) {
       try {
         await prisma.reservation.create({
@@ -1579,7 +1584,7 @@ export async function POST(req: NextRequest) {
             restaurantId: restaurant.id,
             orderId: order.id,
             confirmationCode: generateConfirmationCode(),
-            status: reservationData.status,
+            status: order.status === "accepted" ? "confirmed" : "pending",
             customerName: sanitize(customerName, 100),
             customerEmail: cleanEmail,
             customerPhone: cleanPhone,

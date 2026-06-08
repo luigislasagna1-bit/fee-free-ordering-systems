@@ -446,6 +446,14 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               </span>
             )}
             {isTest && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-500">TEST</span>}
+            {/* Reserve-then-order: this order came with a table booking — flag it
+                so the kitchen treats it as one unit (the due-chip already shows
+                the reservation time). Luigi 2026-06-08. */}
+            {order.reservation && (
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300">
+                🪑 {tk("tableReservation").toUpperCase()} · {tk("partyOf", { n: order.reservation.partySize })}
+              </span>
+            )}
           </div>
           <div className={`text-sm ${t.textMuted} truncate`}>
             {order.customerName.replace("[TEST] ", "")}

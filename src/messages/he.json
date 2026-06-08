@@ -629,7 +629,8 @@
     "refundCardOnly": "ניתן לבצע החזרים רק על תשלומים בכרטיס",
     "refundAlreadyFull": "הזמנה זו כבר זוכתה במלואה",
     "refundNotCaptured": "אין תשלום כרטיס שנגבה להחזר",
-    "preOrder": "הזמנה מראש"
+    "preOrder": "הזמנה מראש",
+    "tableReservation": "הזמנת שולחן"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

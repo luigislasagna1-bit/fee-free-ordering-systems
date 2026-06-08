@@ -629,7 +629,8 @@
     "printerTestSent": "Test print sent via {method}. Check your printer for paper.",
     "printerHelpSummary": "Test Print said success but no paper came out?",
     "printerSaveClose": "Save & Close",
-    "preOrder": "Pre-order"
+    "preOrder": "Pre-order",
+    "tableReservation": "Table Reservation"
   },
   "admin": {
     "comingSoonPlaceholder": {

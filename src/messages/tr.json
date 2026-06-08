@@ -629,7 +629,8 @@
     "refundCardOnly": "İadeler yalnızca kart ödemelerinde yapılabilir",
     "refundAlreadyFull": "Bu siparişin tamamı zaten iade edilmiş",
     "refundNotCaptured": "İade edilecek tahsil edilmiş kart ödemesi yok",
-    "preOrder": "Ön sipariş"
+    "preOrder": "Ön sipariş",
+    "tableReservation": "Masa Rezervasyonu"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

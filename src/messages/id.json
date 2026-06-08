@@ -629,7 +629,8 @@
     "refundCardOnly": "Pengembalian dana hanya bisa diproses untuk pembayaran kartu",
     "refundAlreadyFull": "Pesanan ini sudah dikembalikan sepenuhnya",
     "refundNotCaptured": "Tidak ada pembayaran kartu yang ditagih untuk dikembalikan",
-    "preOrder": "Pra-pesan"
+    "preOrder": "Pra-pesan",
+    "tableReservation": "Reservasi Meja"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

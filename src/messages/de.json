@@ -629,7 +629,8 @@
     "refundCardOnly": "Erstattungen sind nur bei Kartenzahlungen möglich",
     "refundAlreadyFull": "Diese Bestellung wurde bereits vollständig erstattet",
     "refundNotCaptured": "Keine eingezogene Kartenzahlung zum Erstatten vorhanden",
-    "preOrder": "Vorbestellung"
+    "preOrder": "Vorbestellung",
+    "tableReservation": "Tischreservierung"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

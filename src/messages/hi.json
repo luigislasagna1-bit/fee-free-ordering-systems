@@ -629,7 +629,8 @@
     "refundCardOnly": "रिफंड केवल कार्ड भुगतान पर ही जारी किए जा सकते हैं",
     "refundAlreadyFull": "इस ऑर्डर का पूरा रिफंड पहले ही किया जा चुका है",
     "refundNotCaptured": "रिफंड के लिए कोई कैप्चर किया गया कार्ड भुगतान नहीं है",
-    "preOrder": "प्री-ऑर्डर"
+    "preOrder": "प्री-ऑर्डर",
+    "tableReservation": "टेबल आरक्षण"
   },
   "admin": {
     "comingSoonPlaceholder": {

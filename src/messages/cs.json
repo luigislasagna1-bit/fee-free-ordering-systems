@@ -629,7 +629,8 @@
     "refundCardOnly": "Vrácení platby lze provést pouze u plateb kartou",
     "refundAlreadyFull": "Tato objednávka už byla plně refundována",
     "refundNotCaptured": "Není zde žádná zachycená platba kartou k vrácení",
-    "preOrder": "Předobjednávka"
+    "preOrder": "Předobjednávka",
+    "tableReservation": "Rezervace stolu"
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",

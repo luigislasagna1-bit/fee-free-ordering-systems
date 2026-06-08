@@ -629,7 +629,8 @@
     "refundCardOnly": "لا يمكن إصدار المبالغ المستردة إلا على مدفوعات البطاقة",
     "refundAlreadyFull": "تم بالفعل استرداد كامل مبلغ هذا الطلب",
     "refundNotCaptured": "لا يوجد دفع بطاقة محصّل لاستردادها",
-    "preOrder": "طلب مسبق"
+    "preOrder": "طلب مسبق",
+    "tableReservation": "حجز طاولة"
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",

@@ -257,6 +257,23 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
       <div className="flex-1 overflow-y-auto">
         <div className="p-5 space-y-5">
 
+          {/* Reserve-then-order: this order arrived WITH a table booking. Flag
+              it up top so the kitchen treats the food + the table as one unit.
+              Luigi 2026-06-08. */}
+          {order.reservation && (
+            <div className="rounded-xl px-4 py-3 text-white" style={{ backgroundColor: "#7c3aed" }}>
+              <div className="font-bold flex items-center gap-2 text-sm">
+                🪑 {tk("tableReservation")} · {tk("preOrder")}
+              </div>
+              <div className="text-sm opacity-95 mt-0.5">
+                {tk("partyOf", { n: order.reservation.partySize })}
+                {" · "}
+                {order.reservation.date} {fmtTimeOnly(`${order.reservation.date}T${order.reservation.time}`, hoursFormat)}
+                {" · #"}{order.reservation.confirmationCode}
+              </div>
+            </div>
+          )}
+
           {/* Customer Info */}
           <Section title={tk("customer")} t={t}>
             <div className="space-y-2">
