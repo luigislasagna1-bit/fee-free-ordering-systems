@@ -1756,7 +1756,9 @@
       "addTriggerGroupLabel": "Dodaj grupę wyzwalającą",
       "freeDishPoolLabel": "Pula darmowych dań",
       "freeDishDiscountLabel": "Rabat na darmowe danie (100 = całkowicie bezpłatne)",
-      "pickTypePrompt": "Wybierz typ promocji w Kroku 1, aby skonfigurować szczegóły tutaj."
+      "pickTypePrompt": "Wybierz typ promocji w Kroku 1, aby skonfigurować szczegóły tutaj.",
+      "oncePerOrderLabel": "Dozwolone tylko raz na zamówienie",
+      "oncePerOrderHint": "Po zaznaczeniu ta oferta jest stosowana jednorazowo, niezależnie od liczby kwalifikujących się produktów w koszyku. Pozostaw niezaznaczone, aby powtarzała się dla każdej kwalifikującej się pary."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ograniczenia i wyświetlanie",

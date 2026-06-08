@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Adaugă grup declanșator",
       "freeDishPoolLabel": "Grup de feluri de mâncare gratuite",
       "freeDishDiscountLabel": "Reducere la felul de mâncare gratuit (100 = complet gratuit)",
-      "pickTypePrompt": "Alege un tip de promoție la Pasul 1 pentru a configura detaliile aici."
+      "pickTypePrompt": "Alege un tip de promoție la Pasul 1 pentru a configura detaliile aici.",
+      "oncePerOrderLabel": "Permis o singură dată per comandă",
+      "oncePerOrderHint": "Când este bifat, această ofertă se aplică o singură dată, indiferent câte produse care se califică sunt în coș. Lasă nebifat pentru a se repeta la fiecare pereche care se califică."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restricții & afișare",

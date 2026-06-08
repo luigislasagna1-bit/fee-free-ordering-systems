@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Aggiungi gruppo trigger",
       "freeDishPoolLabel": "Pool piatti gratuiti",
       "freeDishDiscountLabel": "Sconto sul piatto gratuito (100 = completamente gratis)",
-      "pickTypePrompt": "Scegli un tipo di promozione nel Passaggio 1 per configurare i dettagli qui."
+      "pickTypePrompt": "Scegli un tipo di promozione nel Passaggio 1 per configurare i dettagli qui.",
+      "oncePerOrderLabel": "Consentita solo una volta per ordine",
+      "oncePerOrderHint": "Se selezionata, questa offerta si applica una sola volta indipendentemente da quanti articoli idonei sono nel carrello. Lascia deselezionata per farla ripetere a ogni coppia di articoli idonei."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrizioni e visualizzazione",

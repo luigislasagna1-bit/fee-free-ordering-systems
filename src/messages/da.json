@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Tilføj udløsergruppe",
       "freeDishPoolLabel": "Gratis retpulje",
       "freeDishDiscountLabel": "Rabat på gratis ret (100 = fuldt gratis)",
-      "pickTypePrompt": "Vælg en kampagnetype i trin 1 for at konfigurere detaljerne her."
+      "pickTypePrompt": "Vælg en kampagnetype i trin 1 for at konfigurere detaljerne her.",
+      "oncePerOrderLabel": "Kun tilladt én gang pr. ordre",
+      "oncePerOrderHint": "Når dette er markeret, gælder tilbuddet kun én enkelt gang, uanset hvor mange kvalificerende varer der er i kurven. Lad det stå umarkeret, hvis det skal gentages for hvert kvalificerende par."
     },
     "promoStepRestrictions": {
       "pageTitle": "Begrænsninger og visning",

@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Legg til utløsergruppe",
       "freeDishPoolLabel": "Gratis rett-beholdning",
       "freeDishDiscountLabel": "Rabatt på gratis rett (100 = fullt gratis)",
-      "pickTypePrompt": "Velg en tilbudstype i trinn 1 for å konfigurere detaljene her."
+      "pickTypePrompt": "Velg en tilbudstype i trinn 1 for å konfigurere detaljene her.",
+      "oncePerOrderLabel": "Tillates kun én gang per ordre",
+      "oncePerOrderHint": "Når dette er avkrysset, gjelder tilbudet kun én gang uansett hvor mange kvalifiserende varer som er i handlekurven. La det stå uten avkrysning for at det skal gjentas for hvert kvalifiserende par."
     },
     "promoStepRestrictions": {
       "pageTitle": "Begrensninger og visning",

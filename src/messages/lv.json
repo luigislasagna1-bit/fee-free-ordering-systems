@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Pievienot aktivizētājgrupu",
       "freeDishPoolLabel": "Bezmaksas ēdiena kopa",
       "freeDishDiscountLabel": "Atlaide bezmaksas ēdienam (100 = pilnīgi bezmaksas)",
-      "pickTypePrompt": "Izvēlieties akcijas veidu 1. solī, lai šeit konfigurētu detaļas."
+      "pickTypePrompt": "Izvēlieties akcijas veidu 1. solī, lai šeit konfigurētu detaļas.",
+      "oncePerOrderLabel": "Atļauts tikai vienreiz vienā pasūtījumā",
+      "oncePerOrderHint": "Ja atzīmēts, šī akcija tiek piemērota tikai vienu reizi neatkarīgi no tā, cik atbilstošo preču ir grozā. Atstājiet neatzīmētu, lai tā atkārtotos par katru atbilstošo preču pāri."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ierobežojumi un displejs",

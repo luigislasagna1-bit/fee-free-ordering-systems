@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Tambah grup pemicu",
       "freeDishPoolLabel": "Kumpulan menu gratis",
       "freeDishDiscountLabel": "Diskon pada menu gratis (100 = sepenuhnya gratis)",
-      "pickTypePrompt": "Pilih jenis promosi di Langkah 1 untuk mengonfigurasi detail di sini."
+      "pickTypePrompt": "Pilih jenis promosi di Langkah 1 untuk mengonfigurasi detail di sini.",
+      "oncePerOrderLabel": "Hanya boleh sekali per pesanan",
+      "oncePerOrderHint": "Jika dicentang, promo ini hanya berlaku satu kali berapa pun jumlah item yang memenuhi syarat di keranjang. Biarkan tidak dicentang agar promo berulang untuk setiap pasangan item yang memenuhi syarat."
     },
     "promoStepRestrictions": {
       "pageTitle": "Batasan & tampilan",

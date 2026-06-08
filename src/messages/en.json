@@ -2100,6 +2100,8 @@
       "subscribe": "Subscribe"
     },
     "promoStepConfig": {
+      "oncePerOrderLabel": "Only allowed once per order",
+      "oncePerOrderHint": "When checked, this deal applies a single time no matter how many qualifying items are in the cart. Leave unchecked to let it repeat for every qualifying pair.",
       "configureHeading": "Configure your promotion",
       "configureSubheading": "Set the discount details and items this deal applies to.",
       "promotionNameLabel": "Promotion name",

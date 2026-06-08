@@ -61,6 +61,10 @@ export type PromoRules = {
   discountStrategy?: "cheapest" | "most_expensive" | "fixed_percent";
   cheapestDiscount?: number;   // % off cheapest item (default 100 = fully free)
   mostExpensiveDiscount?: number; // % off most expensive
+  // bogo / buy_n_get_free: cap the deal to a single application per order when
+  // the owner checks "Only allowed once per order". Unchecked (default/absent)
+  // → the deal repeats per qualifying pair. Luigi 2026-06-07.
+  oncePerOrder?: boolean;
   // item groups (all multi-group types)
   groups?: ItemGroup[];
 };
@@ -73,6 +77,11 @@ export type PromoResult = {
   couponCode?: string;
   stackingRule: string;
   description?: string;
+  /** Per-item breakdown for deals that apply more than once (bogo /
+   *  buy_n_get_free) — one entry per discounted unit, so the cart can list
+   *  each freed item instead of one lump sum. Empty/absent for single-shot
+   *  deals. Item names are resolved downstream (the engine only knows ids). */
+  breakdown?: DiscountLine[];
 };
 
 export type CartItem = {
@@ -380,17 +389,52 @@ function calcFreeDelivery(_promo: PromoInput, _ctx: ApplyContext): number {
  *  with quantity 3 becomes 3 entries at the same per-unit price. Used
  *  by BOGO / Buy-N-Get-Free so we can discount the correct NUMBER of
  *  units when the customer has multiple qualifying pairs. */
-function expandToUnits(items: CartItem[]): number[] {
-  const units: number[] = [];
+type DiscountUnit = { menuItemId: string; price: number };
+
+function expandToUnits(items: CartItem[]): DiscountUnit[] {
+  const units: DiscountUnit[] = [];
   for (const it of items) {
-    for (let i = 0; i < it.quantity; i++) units.push(it.price);
+    for (let i = 0; i < it.quantity; i++) units.push({ menuItemId: it.menuItemId, price: it.price });
   }
   return units;
 }
 
-/** Pick the N units to discount from a pool, given a strategy. The
- *  pool is expanded by quantity so a single line item with qty=3
- *  contributes 3 discountable units. Returns the total discount $. */
+/** One discounted unit — which cart item, how much came off. Lets the cart
+ *  itemise a promo that applies more than once (Luigi 2026-06-07). */
+export type DiscountLine = { menuItemId: string; amount: number };
+
+/** Pick the N units to discount from a pool, given a strategy. The pool is
+ *  expanded by quantity so a line item with qty=3 contributes 3 discountable
+ *  units. Returns the total discount $ AND the per-unit breakdown. */
+function discountNUnitsDetailed(
+  pool: CartItem[],
+  count: number,
+  strategy: string,
+  cheapestPct: number,
+  mostExpensivePct: number,
+): { total: number; lines: DiscountLine[] } {
+  if (count <= 0 || !pool.length) return { total: 0, lines: [] };
+  const units = expandToUnits(pool);
+  if (!units.length) return { total: 0, lines: [] };
+  const isMostExpensive = strategy === "most_expensive";
+  units.sort((a, b) => (isMostExpensive ? b.price - a.price : a.price - b.price));
+  const pct = isMostExpensive ? mostExpensivePct : cheapestPct;
+  const take = Math.min(count, units.length);
+  // Total is summed RAW then rounded once (unchanged from the original) so
+  // existing discount amounts are byte-for-byte stable; each line is rounded
+  // individually for display.
+  let rawSum = 0;
+  const lines: DiscountLine[] = [];
+  for (let i = 0; i < take; i++) {
+    const raw = units[i].price * (pct / 100);
+    rawSum += raw;
+    lines.push({ menuItemId: units[i].menuItemId, amount: parseFloat(raw.toFixed(2)) });
+  }
+  return { total: parseFloat(rawSum.toFixed(2)), lines };
+}
+
+/** Total-only convenience wrapper — used by callers that don't need the
+ *  itemised breakdown. */
 function discountNUnits(
   pool: CartItem[],
   count: number,
@@ -398,16 +442,7 @@ function discountNUnits(
   cheapestPct: number,
   mostExpensivePct: number,
 ): number {
-  if (count <= 0 || !pool.length) return 0;
-  const units = expandToUnits(pool);
-  if (!units.length) return 0;
-  const isMostExpensive = strategy === "most_expensive";
-  units.sort((a, b) => (isMostExpensive ? b - a : a - b));
-  const pct = isMostExpensive ? mostExpensivePct : cheapestPct;
-  const take = Math.min(count, units.length);
-  let sum = 0;
-  for (let i = 0; i < take; i++) sum += units[i] * (pct / 100);
-  return parseFloat(sum.toFixed(2));
+  return discountNUnitsDetailed(pool, count, strategy, cheapestPct, mostExpensivePct).total;
 }
 
 /** @deprecated single-unit helper. Retained for backwards compatibility
@@ -421,16 +456,17 @@ function applyGroupDiscount(
   return discountNUnits(freePool, 1, strategy, cheapestPct, mostExpensivePct);
 }
 
-function calcBogo(promo: PromoInput, ctx: ApplyContext): number {
+function bogoResult(promo: PromoInput, ctx: ApplyContext): { total: number; lines: DiscountLine[] } {
+  const EMPTY = { total: 0, lines: [] as DiscountLine[] };
   const rules = getRules(promo);
   const groups = rules.groups ?? [];
   const paidGroup = groups.find(g => g.role === "paid") ?? groups[0];
   const freeGroup = groups.find(g => g.role === "free") ?? groups[groups.length - 1];
-  if (!paidGroup || !freeGroup) return 0;
+  if (!paidGroup || !freeGroup) return EMPTY;
   const paidItems = itemsMatchingGroup(paidGroup, ctx.items);
-  if (!paidItems.length) return 0;
+  if (!paidItems.length) return EMPTY;
   const freeItems = itemsMatchingGroup(freeGroup, ctx.items);
-  if (!freeItems.length) return 0;
+  if (!freeItems.length) return EMPTY;
 
   // BOGO requires at least 2 qualifying items in the cart — 1 paid
   // + 1 free. When the paid and free groups overlap (same items in
@@ -457,14 +493,19 @@ function calcBogo(promo: PromoInput, ctx: ApplyContext): number {
     const totalQualifyingQty = ctx.items
       .filter((i) => qualifyingIds.has(i.menuItemId))
       .reduce((s, i) => s + i.quantity, 0);
-    if (totalQualifyingQty < 2) return 0;
+    if (totalQualifyingQty < 2) return EMPTY;
     pairs = Math.floor(totalQualifyingQty / 2);
   } else {
     const paidQty = paidItems.reduce((s, i) => s + i.quantity, 0);
     const freeQty = freeItems.reduce((s, i) => s + i.quantity, 0);
     pairs = Math.min(paidQty, freeQty);
-    if (pairs < 1) return 0;
+    if (pairs < 1) return EMPTY;
   }
+
+  // "Only allowed once per order" (Luigi 2026-06-07): when the owner checks
+  // this box, the deal applies a SINGLE time no matter how many qualifying
+  // pairs are in the cart. Unchecked (default) → it repeats per pair.
+  if (rules.oncePerOrder) pairs = Math.min(pairs, 1);
 
   // Which item(s) get discounted? BOGO means "the cheaper (or, for the
   // most_expensive strategy, the pricier) of the QUALIFYING items is free."
@@ -483,7 +524,7 @@ function calcBogo(promo: PromoInput, ctx: ApplyContext): number {
   // belongs to buy_n_get_free.
   const pool = [...new Set<CartItem>([...paidItems, ...freeItems])];
 
-  return discountNUnits(
+  return discountNUnitsDetailed(
     pool,
     pairs,
     rules.discountStrategy ?? "cheapest",
@@ -492,12 +533,17 @@ function calcBogo(promo: PromoInput, ctx: ApplyContext): number {
   );
 }
 
-function calcBuyNGetFree(promo: PromoInput, ctx: ApplyContext): number {
+function calcBogo(promo: PromoInput, ctx: ApplyContext): number {
+  return bogoResult(promo, ctx).total;
+}
+
+function buyNGetFreeResult(promo: PromoInput, ctx: ApplyContext): { total: number; lines: DiscountLine[] } {
+  const EMPTY = { total: 0, lines: [] as DiscountLine[] };
   const rules = getRules(promo);
   const groups = rules.groups ?? [];
   const paidGroups = groups.filter(g => g.role === "paid" || g.role === "required");
   const freeGroup = groups.find(g => g.role === "free");
-  if (!freeGroup) return 0;
+  if (!freeGroup) return EMPTY;
   // Each paid group has a minCount (defaults to 1). The promo unlocks
   // floor(actualQty / minCount) "sets" per paid group; the customer
   // gets ONE free item per FULL set across all paid groups (i.e. the
@@ -507,22 +553,38 @@ function calcBuyNGetFree(promo: PromoInput, ctx: ApplyContext): number {
     const need = pg.minCount ?? 1;
     if (need < 1) continue;
     const have = groupTotalQty(pg, ctx.items);
-    if (have < need) return 0;
+    if (have < need) return EMPTY;
     multiplier = Math.min(multiplier, Math.floor(have / need));
   }
   if (!Number.isFinite(multiplier) || multiplier < 1) {
     // No paid-group gating at all — fall back to single application.
     multiplier = 1;
   }
+  // "Only allowed once per order" caps the freebie to a single application.
+  if (rules.oncePerOrder) multiplier = Math.min(multiplier, 1);
   const freeItems = itemsMatchingGroup(freeGroup, ctx.items);
-  if (!freeItems.length) return 0;
-  return discountNUnits(
+  if (!freeItems.length) return EMPTY;
+  return discountNUnitsDetailed(
     freeItems,
     multiplier,
     rules.discountStrategy ?? "cheapest",
     rules.cheapestDiscount ?? 100,
     rules.mostExpensiveDiscount ?? 0,
   );
+}
+
+function calcBuyNGetFree(promo: PromoInput, ctx: ApplyContext): number {
+  return buyNGetFreeResult(promo, ctx).total;
+}
+
+/** Per-unit discount breakdown for deals that can apply more than once (so the
+ *  cart can itemise each freed item). Empty for single-shot promo types. */
+function promoBreakdown(promo: PromoInput, ctx: ApplyContext): DiscountLine[] {
+  switch (promo.promotionType) {
+    case "bogo":           return bogoResult(promo, ctx).lines;
+    case "buy_n_get_free": return buyNGetFreeResult(promo, ctx).lines;
+    default:               return [];
+  }
 }
 
 function calcFixedCart(promo: PromoInput, ctx: ApplyContext): number {
@@ -700,6 +762,7 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
     seen.add(p.id);
     const discount = calcDiscount(p, ctx);
     if (discount > 0 || p.promotionType === "free_delivery") {
+      const breakdown = promoBreakdown(p, ctx);
       results.push({
         promoId: p.id,
         name: p.name,
@@ -708,6 +771,9 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
         couponCode: p.couponCode ?? undefined,
         stackingRule: p.stackingRule,
         description: p.description ?? undefined,
+        // Only itemise when the deal applied more than once — single-shot
+        // promos render as one line as before.
+        breakdown: breakdown.length > 1 ? breakdown : undefined,
       });
     }
   }

@@ -1756,7 +1756,9 @@
       "addTriggerGroupLabel": "Tetikleyici grup ekle",
       "freeDishPoolLabel": "Ücretsiz tabak havuzu",
       "freeDishDiscountLabel": "Ücretsiz tabak indirimi (100 = tamamen ücretsiz)",
-      "pickTypePrompt": "Ayrıntıları burada yapılandırmak için 1. Adım'dan bir promosyon türü seçin."
+      "pickTypePrompt": "Ayrıntıları burada yapılandırmak için 1. Adım'dan bir promosyon türü seçin.",
+      "oncePerOrderLabel": "Sipariş başına yalnızca bir kez geçerli",
+      "oncePerOrderHint": "İşaretlendiğinde, sepette kaç uygun ürün olursa olsun bu teklif yalnızca bir kez uygulanır. Her uygun çift için tekrarlanmasını istiyorsanız işaretlemeyin."
     },
     "promoStepRestrictions": {
       "pageTitle": "Kısıtlamalar & görüntüleme",

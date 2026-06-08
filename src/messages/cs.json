@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Přidat aktivační skupinu",
       "freeDishPoolLabel": "Fond bezplatných jídel",
       "freeDishDiscountLabel": "Sleva na bezplatné jídlo (100 = zcela zdarma)",
-      "pickTypePrompt": "V kroku 1 vyberte typ akce pro konfiguraci podrobností zde."
+      "pickTypePrompt": "V kroku 1 vyberte typ akce pro konfiguraci podrobností zde.",
+      "oncePerOrderLabel": "Povoleno pouze jednou na objednávku",
+      "oncePerOrderHint": "Při zaškrtnutí se tato akce uplatní pouze jednou bez ohledu na to, kolik vyhovujících položek je v košíku. Ponechte nezaškrtnuté, aby se opakovala pro každou vyhovující dvojici."
     },
     "promoStepRestrictions": {
       "pageTitle": "Omezení a zobrazení",

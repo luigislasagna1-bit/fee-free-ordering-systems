@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Activeringsgroep toevoegen",
       "freeDishPoolLabel": "Gratis gerechtenpool",
       "freeDishDiscountLabel": "Korting op gratis gerecht (100 = volledig gratis)",
-      "pickTypePrompt": "Kies een promotietype in stap 1 om de details hier te configureren."
+      "pickTypePrompt": "Kies een promotietype in stap 1 om de details hier te configureren.",
+      "oncePerOrderLabel": "Slechts één keer per bestelling toegestaan",
+      "oncePerOrderHint": "Indien aangevinkt, wordt deze deal eenmalig toegepast, ongeacht hoeveel in aanmerking komende artikelen in de winkelwagen zitten. Laat het vinkje weg om de deal voor elk in aanmerking komend paar te herhalen."
     },
     "promoStepRestrictions": {
       "pageTitle": "Beperkingen en weergave",

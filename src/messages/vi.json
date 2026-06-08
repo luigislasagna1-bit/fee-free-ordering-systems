@@ -1756,7 +1756,9 @@
       "addTriggerGroupLabel": "Thêm nhóm kích hoạt",
       "freeDishPoolLabel": "Danh sách món miễn phí",
       "freeDishDiscountLabel": "Giảm giá món miễn phí (100 = miễn phí hoàn toàn)",
-      "pickTypePrompt": "Chọn loại khuyến mãi ở Bước 1 để cấu hình chi tiết tại đây."
+      "pickTypePrompt": "Chọn loại khuyến mãi ở Bước 1 để cấu hình chi tiết tại đây.",
+      "oncePerOrderLabel": "Chỉ được áp dụng một lần mỗi đơn",
+      "oncePerOrderHint": "Khi được chọn, ưu đãi này chỉ áp dụng một lần duy nhất bất kể giỏ hàng có bao nhiêu món đủ điều kiện. Bỏ chọn để ưu đãi lặp lại cho mỗi cặp món đủ điều kiện."
     },
     "promoStepRestrictions": {
       "pageTitle": "Giới hạn & hiển thị",

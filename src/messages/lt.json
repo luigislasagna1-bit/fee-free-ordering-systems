@@ -2458,7 +2458,9 @@
       "addTriggerGroupLabel": "Pridėti aktyvinimo grupę",
       "freeDishPoolLabel": "Nemokamų patiekalų rinkinys",
       "freeDishDiscountLabel": "Nuolaida nemokamam patiekalui (100 = visiškai nemokamai)",
-      "pickTypePrompt": "Pasirinkite akcijos tipą 1 žingsnyje, kad čia sukonfigūruotumėte detales."
+      "pickTypePrompt": "Pasirinkite akcijos tipą 1 žingsnyje, kad čia sukonfigūruotumėte detales.",
+      "oncePerOrderLabel": "Leidžiama tik kartą viename užsakyme",
+      "oncePerOrderHint": "Kai pažymėta, šis pasiūlymas taikomas vieną kartą, nesvarbu, kiek atitinkančių prekių yra krepšelyje. Palikite nepažymėtą, kad jis būtų taikomas kiekvienai atitinkančiai porai."
     },
     "promoStepRestrictions": {
       "pageTitle": "Apribojimai ir rodymas",

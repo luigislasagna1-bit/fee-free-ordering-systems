@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Dodaj grupu okidača",
       "freeDishPoolLabel": "Skup besplatnih jela",
       "freeDishDiscountLabel": "Popust na besplatno jelo (100 = potpuno besplatno)",
-      "pickTypePrompt": "Odaberite vrstu promocije u koraku 1 za konfiguraciju detalja ovdje."
+      "pickTypePrompt": "Odaberite vrstu promocije u koraku 1 za konfiguraciju detalja ovdje.",
+      "oncePerOrderLabel": "Dopušteno samo jednom po narudžbi",
+      "oncePerOrderHint": "Kada je označeno, ova se ponuda primjenjuje samo jednom, bez obzira na to koliko se kvalificiranih stavki nalazi u košarici. Ostavite neoznačeno kako bi se ponavljala za svaki kvalificirani par."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ograničenja i prikaz",

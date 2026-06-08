@@ -131,6 +131,29 @@ function test4_bogo() {
   assertEqual("BOGO cheapest free", calcDiscount(promo, ctx), 3.00);
 }
 
+function test4d_bogoOncePerOrder() {
+  // Luigi 2026-06-07: "Only allowed once per order" checkbox caps a repeating
+  // BOGO to a single application. 4 same-category pizzas:
+  //   unchecked (default) → 2 pairs → 2 cheapest free ($10 + $12 = $22)
+  //   checked            → 1 application → 1 cheapest free ($10)
+  console.log("\n[3d] bogo — once-per-order cap vs repeating");
+  const items = [
+    { menuItemId: "p1", categoryId: "mains", price: 10, quantity: 1, subtotal: 10 },
+    { menuItemId: "p2", categoryId: "mains", price: 12, quantity: 1, subtotal: 12 },
+    { menuItemId: "p3", categoryId: "mains", price: 14, quantity: 1, subtotal: 14 },
+    { menuItemId: "p4", categoryId: "mains", price: 16, quantity: 1, subtotal: 16 },
+  ];
+  const ctx = makeContext({ subtotal: 52, items });
+  const groups = [
+    { id: "paid", role: "paid", categoryIds: ["mains"], itemIds: [] },
+    { id: "free", role: "free", categoryIds: ["mains"], itemIds: [] },
+  ];
+  const repeating = makePromo({ promotionType: "bogo", rules: JSON.stringify({ discountStrategy: "cheapest", cheapestDiscount: 100, groups }) });
+  assertEqual("BOGO repeating (4 items → 2 free)", calcDiscount(repeating, ctx), 22.00);
+  const once = makePromo({ promotionType: "bogo", rules: JSON.stringify({ discountStrategy: "cheapest", cheapestDiscount: 100, oncePerOrder: true, groups }) });
+  assertEqual("BOGO once-per-order (4 items → 1 free)", calcDiscount(once, ctx), 10.00);
+}
+
 function test4b_bogoCheaperOfPairFree() {
   // Luigi 2026-06-07 regression: distinct BOGO groups where the customer put
   // the PRICIER item ($20 pizza) in the "free" group and the cheaper item
@@ -414,6 +437,7 @@ test2_percentageOffTargeted();
 test3_freeDelivery();
 test4_bogo();
 test4b_bogoCheaperOfPairFree();
+test4d_bogoOncePerOrder();
 test5_buyNGetFree();
 test6_fixedCart();
 test7_paymentReward();

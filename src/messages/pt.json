@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Adicionar grupo de gatilho",
       "freeDishPoolLabel": "Conjunto de pratos gratuitos",
       "freeDishDiscountLabel": "Desconto no prato gratuito (100 = totalmente grátis)",
-      "pickTypePrompt": "Escolha um tipo de promoção na Etapa 1 para configurar os detalhes aqui."
+      "pickTypePrompt": "Escolha um tipo de promoção na Etapa 1 para configurar os detalhes aqui.",
+      "oncePerOrderLabel": "Permitido apenas uma vez por encomenda",
+      "oncePerOrderHint": "Quando ativado, esta promoção aplica-se uma única vez, independentemente do número de artigos elegíveis no carrinho. Deixe desativado para que se repita em cada par de artigos elegíveis."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrições e exibição",

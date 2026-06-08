@@ -2458,7 +2458,9 @@
       "addTriggerGroupLabel": "Pridať spúšťaciu skupinu",
       "freeDishPoolLabel": "Skupina jedál zdarma",
       "freeDishDiscountLabel": "Zľava na jedlo zdarma (100 = úplne zdarma)",
-      "pickTypePrompt": "Vyberte typ promo akcie v kroku 1, aby ste tu mohli nakonfigurovať detaily."
+      "pickTypePrompt": "Vyberte typ promo akcie v kroku 1, aby ste tu mohli nakonfigurovať detaily.",
+      "oncePerOrderLabel": "Povolené iba raz na objednávku",
+      "oncePerOrderHint": "Keď je zaškrtnuté, táto ponuka sa uplatní jeden jediný raz bez ohľadu na to, koľko vyhovujúcich položiek je v košíku. Nechajte nezaškrtnuté, aby sa opakovala pri každej vyhovujúcej dvojici."
     },
     "promoStepRestrictions": {
       "pageTitle": "Obmedzenia a zobrazenie",

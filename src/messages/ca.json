@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Afegeix grup activador",
       "freeDishPoolLabel": "Grup de plats gratuïts",
       "freeDishDiscountLabel": "Descompte en el plat gratuït (100 = completament gratuït)",
-      "pickTypePrompt": "Trieu un tipus de promoció al Pas 1 per configurar els detalls aquí."
+      "pickTypePrompt": "Trieu un tipus de promoció al Pas 1 per configurar els detalls aquí.",
+      "oncePerOrderLabel": "Només permès un cop per comanda",
+      "oncePerOrderHint": "Quan està marcat, aquesta oferta s'aplica una sola vegada, independentment de quants articles vàlids hi hagi a la cistella. Deixeu-ho sense marcar perquè es repeteixi per a cada parella vàlida."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restriccions i visualització",

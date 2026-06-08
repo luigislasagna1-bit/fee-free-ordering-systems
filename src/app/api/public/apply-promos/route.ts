@@ -40,12 +40,14 @@ export async function POST(req: NextRequest) {
   const rawItems: any[] = Array.isArray(items) ? items : [];
   const lineItemIds = [...new Set(rawItems.map((i) => i?.menuItemId).filter((x): x is string => typeof x === "string" && !!x))];
   let categoryByItemId = new Map<string, string | null>();
+  let nameByItemId = new Map<string, string>();
   if (lineItemIds.length) {
     const rows = await prisma.menuItem.findMany({
       where: { id: { in: lineItemIds }, restaurantId: restaurant.id },
-      select: { id: true, categoryId: true },
+      select: { id: true, categoryId: true, name: true },
     });
     categoryByItemId = new Map(rows.map((r) => [r.id, r.categoryId]));
+    nameByItemId = new Map(rows.map((r) => [r.id, r.name]));
   }
   const ctxItems = rawItems.map((i) => ({
     ...i,
@@ -82,8 +84,17 @@ export async function POST(req: NextRequest) {
   const totalDiscount = totalPromoDiscount(results, ctx.subtotal);
   const hasFreeDelivery = results.some(r => r.type === "free_delivery");
 
+  // Enrich each result's per-item breakdown with the item NAME (the engine only
+  // knows ids) so the cart can list "BOGO · Margherita −$12.24" for a deal that
+  // applied more than once. Luigi 2026-06-07.
+  const applied = results.map((r) =>
+    r.breakdown && r.breakdown.length
+      ? { ...r, breakdown: r.breakdown.map((b) => ({ ...b, name: nameByItemId.get(b.menuItemId) ?? "" })) }
+      : r,
+  );
+
   // Surface exclusives that qualified but lost to a bigger exclusive, so the
   // customer can be told why a deal they expected didn't apply (only one
   // exclusive per order). Luigi 2026-06-07.
-  return NextResponse.json({ applied: results, totalDiscount, hasFreeDelivery, bumpedExclusives });
+  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, bumpedExclusives });
 }

@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "トリガーグループを追加",
       "freeDishPoolLabel": "無料料理プール",
       "freeDishDiscountLabel": "無料料理の割引（100 = 完全無料）",
-      "pickTypePrompt": "ここで詳細を設定するには、ステップ1でプロモーションタイプを選択してください。"
+      "pickTypePrompt": "ここで詳細を設定するには、ステップ1でプロモーションタイプを選択してください。",
+      "oncePerOrderLabel": "1注文につき1回のみ適用",
+      "oncePerOrderHint": "チェックすると、カート内に対象商品がいくつあっても、この特典は1注文につき1回だけ適用されます。チェックを外すと、対象となるペアごとに繰り返し適用されます。"
     },
     "promoStepRestrictions": {
       "pageTitle": "制限＆表示",

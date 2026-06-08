@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Añadir grupo activador",
       "freeDishPoolLabel": "Grupo de platos gratis",
       "freeDishDiscountLabel": "Descuento en el plato gratis (100 = completamente gratis)",
-      "pickTypePrompt": "Elige un tipo de promoción en el Paso 1 para configurar los detalles aquí."
+      "pickTypePrompt": "Elige un tipo de promoción en el Paso 1 para configurar los detalles aquí.",
+      "oncePerOrderLabel": "Solo se permite una vez por pedido",
+      "oncePerOrderHint": "Cuando está marcada, esta oferta se aplica una sola vez sin importar cuántos artículos válidos haya en el carrito. Déjala sin marcar para que se repita por cada par válido."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restricciones y visualización",

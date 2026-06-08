@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Lisa käivitusgrupp",
       "freeDishPoolLabel": "Tasuta roa kogum",
       "freeDishDiscountLabel": "Soodustus tasuta roale (100 = täiesti tasuta)",
-      "pickTypePrompt": "Vali 1. sammus kampaania tüüp, et seadistada üksikasjad siin."
+      "pickTypePrompt": "Vali 1. sammus kampaania tüüp, et seadistada üksikasjad siin.",
+      "oncePerOrderLabel": "Lubatud ainult üks kord tellimuse kohta",
+      "oncePerOrderHint": "Märgituna kehtib see pakkumine ainult ühe korra, olenemata sellest, kui palju sobivaid tooteid on ostukorvis. Jäta märkimata, et see korduks iga sobiva paari puhul."
     },
     "promoStepRestrictions": {
       "pageTitle": "Piirangud ja kuvamine",

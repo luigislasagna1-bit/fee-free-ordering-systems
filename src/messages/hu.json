@@ -1756,7 +1756,9 @@
       "addTriggerGroupLabel": "Kiváltó csoport hozzáadása",
       "freeDishPoolLabel": "Ingyenes étel készlete",
       "freeDishDiscountLabel": "Kedvezmény az ingyenes ételen (100 = teljesen ingyenes)",
-      "pickTypePrompt": "Válasszon promóciótípust az 1. lépésen a részletek konfigurálásához."
+      "pickTypePrompt": "Válasszon promóciótípust az 1. lépésen a részletek konfigurálásához.",
+      "oncePerOrderLabel": "Rendelésenként csak egyszer érvényes",
+      "oncePerOrderHint": "Ha be van jelölve, ez az ajánlat rendelésenként csak egyszer érvényesül, függetlenül attól, hány feltételnek megfelelő tétel van a kosárban. Hagyja jelöletlenül, ha minden feltételnek megfelelő párra ismétlődjön."
     },
     "promoStepRestrictions": {
       "pageTitle": "Korlátozások & megjelenítés",

@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Auslösergruppe hinzufügen",
       "freeDishPoolLabel": "Pool kostenloser Gerichte",
       "freeDishDiscountLabel": "Rabatt auf kostenloses Gericht (100 = vollständig kostenlos)",
-      "pickTypePrompt": "Wählen Sie in Schritt 1 einen Aktionstyp, um die Details hier zu konfigurieren."
+      "pickTypePrompt": "Wählen Sie in Schritt 1 einen Aktionstyp, um die Details hier zu konfigurieren.",
+      "oncePerOrderLabel": "Nur einmal pro Bestellung zulässig",
+      "oncePerOrderHint": "Wenn aktiviert, gilt diese Aktion nur ein einziges Mal, unabhängig davon, wie viele passende Artikel sich im Warenkorb befinden. Deaktiviert lassen, damit sie sich für jedes passende Paar wiederholt."
     },
     "promoStepRestrictions": {
       "pageTitle": "Einschränkungen & Anzeige",

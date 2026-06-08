@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Ajouter un groupe déclencheur",
       "freeDishPoolLabel": "Sélection de plats offerts",
       "freeDishDiscountLabel": "Remise sur le plat offert (100 = entièrement gratuit)",
-      "pickTypePrompt": "Sélectionnez un type de promotion à l'étape 1 pour configurer les détails ici."
+      "pickTypePrompt": "Sélectionnez un type de promotion à l'étape 1 pour configurer les détails ici.",
+      "oncePerOrderLabel": "Autorisé une seule fois par commande",
+      "oncePerOrderHint": "Si cette case est cochée, cette offre s'applique une seule fois, quel que soit le nombre d'articles éligibles dans le panier. Laissez-la décochée pour qu'elle se répète pour chaque paire d'articles éligibles."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrictions & affichage",

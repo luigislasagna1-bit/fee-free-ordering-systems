@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Dodaj sprožilno skupino",
       "freeDishPoolLabel": "Nabor brezplačnih jedi",
       "freeDishDiscountLabel": "Popust na brezplačno jed (100 = popolnoma brezplačno)",
-      "pickTypePrompt": "Za konfiguracijo podrobnosti izberite vrsto promocije v koraku 1."
+      "pickTypePrompt": "Za konfiguracijo podrobnosti izberite vrsto promocije v koraku 1.",
+      "oncePerOrderLabel": "Dovoljeno samo enkrat na naročilo",
+      "oncePerOrderHint": "Ko je označeno, ta ponudba velja enkrat, ne glede na to, koliko ustreznih artiklov je v košarici. Pustite neoznačeno, da se ponovi za vsak ustrezen par."
     },
     "promoStepRestrictions": {
       "pageTitle": "Omejitve in prikaz",

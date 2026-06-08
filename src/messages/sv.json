@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Lägg till utlösargrupp",
       "freeDishPoolLabel": "Gratisrättspool",
       "freeDishDiscountLabel": "Rabatt på gratisrätt (100 = helt gratis)",
-      "pickTypePrompt": "Välj en kampanjtyp i steg 1 för att konfigurera detaljerna här."
+      "pickTypePrompt": "Välj en kampanjtyp i steg 1 för att konfigurera detaljerna här.",
+      "oncePerOrderLabel": "Tillåts endast en gång per beställning",
+      "oncePerOrderHint": "När detta är markerat gäller erbjudandet en enda gång oavsett hur många kvalificerande artiklar som finns i kundvagnen. Lämna omarkerat för att låta det upprepas för varje kvalificerande par."
     },
     "promoStepRestrictions": {
       "pageTitle": "Begränsningar och visning",

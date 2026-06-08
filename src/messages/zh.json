@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "添加触发组",
       "freeDishPoolLabel": "免费菜品池",
       "freeDishDiscountLabel": "免费菜品折扣（100 = 完全免费）",
-      "pickTypePrompt": "请在第1步选择促销类型以在此处配置详情。"
+      "pickTypePrompt": "请在第1步选择促销类型以在此处配置详情。",
+      "oncePerOrderLabel": "每笔订单仅限享用一次",
+      "oncePerOrderHint": "勾选后，无论购物车中有多少件符合条件的商品，此优惠仅生效一次。取消勾选则可对每一组符合条件的商品重复享用。"
     },
     "promoStepRestrictions": {
       "pageTitle": "限制条件与展示",

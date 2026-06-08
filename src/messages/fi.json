@@ -1793,7 +1793,9 @@
       "addTriggerGroupLabel": "Lisää laukaiseva ryhmä",
       "freeDishPoolLabel": "Ilmaisen annoksen joukko",
       "freeDishDiscountLabel": "Alennus ilmaiselle annokselle (100 = täysin ilmainen)",
-      "pickTypePrompt": "Valitse tarjoustyyppi vaiheessa 1 konfiguroidaksesi tiedot tässä."
+      "pickTypePrompt": "Valitse tarjoustyyppi vaiheessa 1 konfiguroidaksesi tiedot tässä.",
+      "oncePerOrderLabel": "Sallittu vain kerran tilausta kohden",
+      "oncePerOrderHint": "Kun tämä on valittuna, tarjous kohdistuu vain kerran riippumatta siitä, montako ehdot täyttävää tuotetta ostoskorissa on. Jätä valitsematta, jos haluat sen toistuvan jokaiselle ehdot täyttävälle parille."
     },
     "promoStepRestrictions": {
       "pageTitle": "Rajoitukset & näyttö",

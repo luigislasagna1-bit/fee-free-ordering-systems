@@ -107,6 +107,10 @@ interface Props {
     type: string;
     discount: number;
     couponCode?: string;
+    /** Per-item breakdown when the deal applied more than once (e.g. a BOGO
+     *  that freed 3 pizzas). Each entry = one freed item + its discount, so the
+     *  banner lists them individually instead of one lump sum. Luigi 2026-06-07. */
+    breakdown?: Array<{ menuItemId: string; name: string; amount: number }>;
   }>;
   /** Exclusive promos that qualified but lost to a bigger exclusive (only one
    *  exclusive applies per order). Shown as a small note so the customer knows
@@ -469,22 +473,47 @@ export function CheckoutModal({
                   // the separate "Free Delivery" line below instead so the
                   // savings amount is accurate (it's the delivery fee).
                   .filter((p) => p.type !== "free_delivery" && p.discount > 0)
-                  .map((p) => (
-                    <div key={p.promoId} className="flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-1.5 text-emerald-700 font-medium truncate">
-                        <span aria-hidden>✓</span>
-                        <span className="truncate">{p.name}</span>
-                        {p.couponCode && (
-                          <span className="font-mono bg-white border border-emerald-200 text-emerald-700 rounded px-1.5 py-0.5 ml-1">
-                            {p.couponCode}
-                          </span>
-                        )}
+                  .map((p) =>
+                    // Deal applied more than once → list each freed item with its
+                    // own discount, so the customer sees exactly what's free
+                    // instead of one mystery lump sum. Luigi 2026-06-07.
+                    p.breakdown && p.breakdown.length > 1 ? (
+                      <div key={p.promoId} className="space-y-1">
+                        <div className="flex items-center gap-1.5 text-emerald-700 font-semibold text-xs">
+                          <span aria-hidden>✓</span>
+                          <span className="truncate">{p.name}</span>
+                          {p.couponCode && (
+                            <span className="font-mono bg-white border border-emerald-200 text-emerald-700 rounded px-1.5 py-0.5 ml-1">
+                              {p.couponCode}
+                            </span>
+                          )}
+                        </div>
+                        {p.breakdown.map((b, i) => (
+                          <div key={`${p.promoId}-${i}`} className="flex items-center justify-between text-xs pl-5">
+                            <span className="text-emerald-700 truncate">{b.name}</span>
+                            <span className="font-semibold text-emerald-800 whitespace-nowrap ml-2">
+                              − {formatCurrency(b.amount)}
+                            </span>
+                          </div>
+                        ))}
                       </div>
-                      <div className="font-semibold text-emerald-800 whitespace-nowrap ml-2">
-                        − {formatCurrency(p.discount)}
+                    ) : (
+                      <div key={p.promoId} className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-1.5 text-emerald-700 font-medium truncate">
+                          <span aria-hidden>✓</span>
+                          <span className="truncate">{p.name}</span>
+                          {p.couponCode && (
+                            <span className="font-mono bg-white border border-emerald-200 text-emerald-700 rounded px-1.5 py-0.5 ml-1">
+                              {p.couponCode}
+                            </span>
+                          )}
+                        </div>
+                        <div className="font-semibold text-emerald-800 whitespace-nowrap ml-2">
+                          − {formatCurrency(p.discount)}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ),
+                  )}
                 {hasFreeDelivery && baseDeliveryFee > 0 && (
                   <div className="flex items-center justify-between text-xs">
                     <div className="flex items-center gap-1.5 text-emerald-700 font-medium">
