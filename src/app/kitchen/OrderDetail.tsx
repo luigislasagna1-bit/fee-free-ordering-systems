@@ -279,6 +279,14 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                   {order.deliveryAddress}{order.deliveryCity ? `, ${order.deliveryCity}` : ""}
                 </Row>
               )}
+              {/* Out-of-zone heads-up — shown here next to the address (only
+                  visible once an order is opened), not on the list tile.
+                  Luigi 2026-06-08. */}
+              {(order as any).outsideDeliveryZone && (
+                <div className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-600 dark:text-amber-300">
+                  ⚠ {tk("outsideZoneNote")}
+                </div>
+              )}
             </div>
           </Section>
 

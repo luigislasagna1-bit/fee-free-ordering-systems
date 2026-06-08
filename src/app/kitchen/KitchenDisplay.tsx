@@ -338,13 +338,8 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
             {order.customerName.replace("[TEST] ", "")}
             {order.deliveryAddress && ` · ${order.deliveryAddress}`}
           </div>
-          {(order as any).outsideDeliveryZone && (
-            // Heads-up for staff: this delivery address fell outside every
-            // configured zone but was accepted (out-of-zone orders enabled).
-            <div className="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-300">
-              ⚠ {tk("outsideZoneNote")}
-            </div>
-          )}
+          {/* The out-of-zone heads-up moved into the order detail (next to the
+              address) so it only shows once an order is opened. Luigi 2026-06-08. */}
           <div className={`text-xs ${t.subtle} mt-0.5`}>
             {order.items.length} {tk("items")}
           </div>
@@ -2615,8 +2610,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                     order={it.order}
                     selected={selectedId === it.order.id}
                     onClick={() => {
+                      // Clicking any order — including a new/ringing pending one
+                      // — opens it in the right detail panel. The Accept / Reject
+                      // buttons live IN that panel; the prep-time modal only
+                      // appears after the staff taps Accept (and the reject-reason
+                      // modal after Reject). Luigi 2026-06-08: no more pop-up the
+                      // instant you click a new order.
                       setSelectedId(it.order.id);
-                      if (it.order.status === "pending") setPrepModal(it.order.id);
                     }}
                     t={t}
                     now={now}
