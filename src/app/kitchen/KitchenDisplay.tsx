@@ -1415,6 +1415,41 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     }
   }, [alerting, alertSound, alertMuted, alertVolume, getLongAlert]);
 
+  // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
+  // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause
+  // media when the kitchen app loses focus. The alarm effects above only fire
+  // on a STATE change — so an order that arrives while the app is backgrounded
+  // (e.g. staff placed it from another device) has its play() blocked once and
+  // is never re-attempted on return, leaving the display silent until someone
+  // taps (which is why Mute→Unmute "fixed" it — the tap resumed audio).
+  //
+  // This listener fires on every visibility/focus regain: it resumes the
+  // AudioContext (allowed without a fresh gesture once the page has been
+  // unlocked) and re-kicks the alarm if an order is still waiting — so a
+  // pending order rings the instant the kitchen comes back into view, with no
+  // tap and no button.
+  useEffect(() => {
+    const rearm = () => {
+      if (typeof document !== "undefined" && document.visibilityState !== "visible") return;
+      try { audioCtxRef.current?.resume?.().catch?.(() => {}); } catch {}
+      if (!alerting || alertMuted || alertVolume <= 0) return;
+      if (alertSound === "gloriafood") {
+        const a = longAlertRef.current;
+        if (a && a.paused) { a.play().catch(() => {}); }
+      } else {
+        ringBellOnce();
+      }
+    };
+    document.addEventListener("visibilitychange", rearm);
+    window.addEventListener("focus", rearm);
+    window.addEventListener("pageshow", rearm);
+    return () => {
+      document.removeEventListener("visibilitychange", rearm);
+      window.removeEventListener("focus", rearm);
+      window.removeEventListener("pageshow", rearm);
+    };
+  }, [alerting, alertMuted, alertVolume, alertSound, ringBellOnce]);
+
   const testAlertSound = useCallback(() => {
     // ONE strike only — restaurants confused "I keep hearing it" with
     // "the test sound is on a loop". One clean strike (~1.3s) decays
