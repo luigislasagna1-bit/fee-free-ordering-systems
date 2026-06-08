@@ -610,7 +610,12 @@
     "printerReachable": "Dosegljiv ✓ — tiskalnik se odziva na {addr}",
     "printerTestSent": "Preizkusni natis poslan prek {method}. Preverite, ali ima tiskalnik papir.",
     "printerHelpSummary": "Preizkusni natis je sporočil uspeh, a papir ni prišel ven?",
-    "printerSaveClose": "Shrani in zapri"
+    "printerSaveClose": "Shrani in zapri",
+    "manageOrder": "Upravljaj naročilo",
+    "refunded": "povrnjeno",
+    "refundCardOnly": "Povračila so možna samo pri plačilih s kartico",
+    "refundAlreadyFull": "To naročilo je že bilo v celoti povrnjeno",
+    "refundNotCaptured": "Ni zajetega plačila s kartico za povračilo"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",

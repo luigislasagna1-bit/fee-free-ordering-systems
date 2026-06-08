@@ -610,7 +610,12 @@
     "printerReachable": "Dostupan ✓ — pisač odgovara na {addr}",
     "printerTestSent": "Probni ispis poslan putem {method}. Provjerite ima li papira u pisaču.",
     "printerHelpSummary": "Probni ispis javlja uspjeh, ali papir nije izašao?",
-    "printerSaveClose": "Spremi i zatvori"
+    "printerSaveClose": "Spremi i zatvori",
+    "manageOrder": "Upravljaj narudžbom",
+    "refunded": "vraćeno",
+    "refundCardOnly": "Povrat sredstava moguć je samo za plaćanja karticom",
+    "refundAlreadyFull": "Za ovu narudžbu već je izvršen puni povrat sredstava",
+    "refundNotCaptured": "Nema naplaćenog plaćanja karticom za povrat"
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",

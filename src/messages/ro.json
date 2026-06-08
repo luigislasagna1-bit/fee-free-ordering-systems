@@ -610,7 +610,12 @@
     "printerReachable": "Accesibilă ✓ — imprimanta răspunde la {addr}",
     "printerTestSent": "Imprimare de test trimisă prin {method}. Verifică imprimanta să aibă hârtie.",
     "printerHelpSummary": "Testarea imprimării a indicat succes, dar nu a ieșit nicio hârtie?",
-    "printerSaveClose": "Salvează și închide"
+    "printerSaveClose": "Salvează și închide",
+    "manageOrder": "Gestionează comanda",
+    "refunded": "rambursat",
+    "refundCardOnly": "Rambursările pot fi efectuate doar pentru plățile cu cardul",
+    "refundAlreadyFull": "Această comandă a fost deja rambursată integral",
+    "refundNotCaptured": "Nicio plată cu cardul capturată pentru rambursare"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

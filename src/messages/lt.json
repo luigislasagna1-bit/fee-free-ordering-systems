@@ -610,7 +610,12 @@
     "printerReachable": "Pasiekiama ✓ — spausdintuvas atsako adresu {addr}",
     "printerTestSent": "Bandomasis spausdinimas išsiųstas per {method}. Patikrinkite, ar spausdintuve yra popieriaus.",
     "printerHelpSummary": "Bandomasis spausdinimas pavyko, bet popierius neišlindo?",
-    "printerSaveClose": "Išsaugoti ir uždaryti"
+    "printerSaveClose": "Išsaugoti ir uždaryti",
+    "manageOrder": "Tvarkyti užsakymą",
+    "refunded": "grąžinta",
+    "refundCardOnly": "Grąžinimus galima atlikti tik mokant kortele",
+    "refundAlreadyFull": "Už šį užsakymą jau grąžinta visa suma",
+    "refundNotCaptured": "Nėra užfiksuoto mokėjimo kortele, kurį būtų galima grąžinti"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

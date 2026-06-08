@@ -610,7 +610,12 @@
     "printerReachable": "Acessível ✓ — impressora respondendo em {addr}",
     "printerTestSent": "Impressão de teste enviada via {method}. Verifique o papel na sua impressora.",
     "printerHelpSummary": "A impressão de teste indicou sucesso, mas nenhum papel saiu?",
-    "printerSaveClose": "Salvar e fechar"
+    "printerSaveClose": "Salvar e fechar",
+    "manageOrder": "Gerenciar pedido",
+    "refunded": "reembolsado",
+    "refundCardOnly": "Reembolsos só podem ser emitidos em pagamentos com cartão",
+    "refundAlreadyFull": "Este pedido já foi totalmente reembolsado",
+    "refundNotCaptured": "Nenhum pagamento com cartão capturado para reembolsar"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",

@@ -610,7 +610,12 @@
     "printerReachable": "Accessible ✓ — la impressora respon a {addr}",
     "printerTestSent": "Prova d'impressió enviada mitjançant {method}. Comprova si surt paper de la impressora.",
     "printerHelpSummary": "La prova d'impressió ha indicat èxit però no ha sortit paper?",
-    "printerSaveClose": "Desa i tanca"
+    "printerSaveClose": "Desa i tanca",
+    "manageOrder": "Gestiona la comanda",
+    "refunded": "reemborsat",
+    "refundCardOnly": "Els reemborsaments només es poden fer en pagaments amb targeta",
+    "refundAlreadyFull": "Aquesta comanda ja s'ha reemborsat completament",
+    "refundNotCaptured": "No hi ha cap pagament amb targeta capturat per reemborsar"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

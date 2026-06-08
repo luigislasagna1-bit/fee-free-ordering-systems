@@ -610,7 +610,12 @@
     "printerReachable": "נגישה ✓ — המדפסת מגיבה בכתובת {addr}",
     "printerTestSent": "הדפסת בדיקה נשלחה דרך {method}. בדקו שיש נייר במדפסת.",
     "printerHelpSummary": "הדפסת הבדיקה דיווחה על הצלחה אך לא יצא נייר?",
-    "printerSaveClose": "שמירה וסגירה"
+    "printerSaveClose": "שמירה וסגירה",
+    "manageOrder": "ניהול הזמנה",
+    "refunded": "הוחזר",
+    "refundCardOnly": "ניתן לבצע החזרים רק על תשלומים בכרטיס",
+    "refundAlreadyFull": "הזמנה זו כבר זוכתה במלואה",
+    "refundNotCaptured": "אין תשלום כרטיס שנגבה להחזר"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

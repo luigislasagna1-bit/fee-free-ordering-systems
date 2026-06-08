@@ -610,7 +610,12 @@
     "printerReachable": "Tavoitettavissa ✓ — tulostin vastaa osoitteessa {addr}",
     "printerTestSent": "Testitulostus lähetetty menetelmällä {method}. Tarkista, onko tulostimessa paperia.",
     "printerHelpSummary": "Testitulostus ilmoitti onnistumisesta, mutta paperia ei tullut ulos?",
-    "printerSaveClose": "Tallenna ja sulje"
+    "printerSaveClose": "Tallenna ja sulje",
+    "manageOrder": "Hallinnoi tilausta",
+    "refunded": "hyvitetty",
+    "refundCardOnly": "Hyvityksiä voi tehdä vain korttimaksuista",
+    "refundAlreadyFull": "Tämä tilaus on jo hyvitetty kokonaan",
+    "refundNotCaptured": "Ei veloitettua korttimaksua hyvitettäväksi"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   X, Phone, Mail, MapPin, Clock, CheckCircle, XCircle, ChefHat,
   Package, CreditCard, Printer, UtensilsCrossed, RefreshCw, Loader2,
-  ReceiptText, User, Plus, Timer,
+  ReceiptText, User, Plus, Timer, MoreHorizontal, ChevronDown, ChevronUp,
 } from "lucide-react";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { formatDueLabel } from "@/lib/format-time";
@@ -73,6 +73,11 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
   const [showReject, setShowReject] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
+  // "Manage order" actions (Cancel / Refund) — always reachable on every order
+  // behind one toggle, no matter the order status or payment method. Luigi
+  // 2026-06-08: Cancel was disappearing on finished orders and Refund only
+  // showed on card orders, so staff couldn't find them.
+  const [showActions, setShowActions] = useState(false);
   const [busy, setBusy] = useState(false);
   const [printing, setPrinting] = useState<string | null>(null);
   // ── Delay / Extend Prep Time modal state ──────────────────────────
@@ -102,6 +107,12 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
     order.paymentMethod === "card" &&
     (order.paymentStatus === "paid" || order.paymentStatus === "partially_refunded") &&
     refundRemaining > 0.005;
+  // When refund isn't possible, say WHY (so staff aren't left wondering why the
+  // button is greyed out). Stripe can only refund a captured card payment.
+  const refundDisabledReason =
+    order.paymentMethod !== "card" ? tk("refundCardOnly")
+    : refundRemaining <= 0.005 ? tk("refundAlreadyFull")
+    : tk("refundNotCaptured");
 
   // ── Live countdown to estimatedReady ──────────────────────────────
   // Re-render once per second while the order is `accepted` so the
@@ -613,25 +624,47 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           <PrintBtn label={tCommon("all")} icon={<RefreshCw className="w-3.5 h-3.5" />} onClick={() => print("both")} loading={printing === "both"} t={t} />
         </div>
 
-        {/* Refund (card orders that have captured money) */}
-        {canRefund && (
+        {/* Manage order — Cancel + Refund, ALWAYS reachable on every order
+            (any status, any payment method) behind one toggle. Refund stays
+            disabled with a reason when it can't run (cash/PayPal, not captured,
+            already refunded); Cancel is always available. Luigi 2026-06-08. */}
+        <div className={`border-t ${t.border} pt-3`}>
           <button
-            onClick={() => { setRefundMode("full"); setRefundAmount(""); setShowRefund(true); }}
-            className={`w-full flex items-center justify-center gap-1.5 border ${t.border} ${t.btn} hover:text-blue-600 font-semibold py-2 rounded-xl text-sm transition`}
+            onClick={() => setShowActions((v) => !v)}
+            className={`w-full flex items-center justify-center gap-1.5 ${t.btn} font-semibold py-2 rounded-xl text-sm transition`}
           >
-            <RefreshCw className="w-4 h-4" /> {tk("refund")}
+            <MoreHorizontal className="w-4 h-4" /> {tk("manageOrder")}
+            {showActions ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
-        )}
-
-        {/* Cancel */}
-        {!["completed", "rejected", "cancelled"].includes(order.status) && (
-          <button
-            onClick={() => setShowCancel(true)}
-            className={`w-full text-xs ${t.muted} hover:text-red-500 transition py-1`}
-          >
-            {tCommon("cancel")}
-          </button>
-        )}
+          {showActions && (
+            <div className="mt-2 space-y-2">
+              {/* Refund (full/partial) */}
+              <button
+                onClick={() => { if (canRefund) { setRefundMode("full"); setRefundAmount(""); setShowRefund(true); } }}
+                disabled={!canRefund}
+                title={!canRefund ? refundDisabledReason : undefined}
+                className={`w-full flex items-center justify-center gap-1.5 border ${t.border} ${t.btn} hover:text-blue-600 font-semibold py-2 rounded-xl text-sm transition disabled:opacity-40 disabled:cursor-not-allowed`}
+              >
+                <RefreshCw className="w-4 h-4" /> {tk("refund")}
+                {alreadyRefunded > 0.005 && (
+                  <span className="text-[11px] font-normal opacity-70">
+                    ({formatCurrency(alreadyRefunded)} {tk("refunded")})
+                  </span>
+                )}
+              </button>
+              {!canRefund && (
+                <p className={`text-[11px] text-center ${t.muted}`}>{refundDisabledReason}</p>
+              )}
+              {/* Cancel — always available, even on finished orders */}
+              <button
+                onClick={() => setShowCancel(true)}
+                className="w-full flex items-center justify-center gap-1.5 border border-red-500/40 text-red-500 hover:bg-red-500/10 font-semibold py-2 rounded-xl text-sm transition"
+              >
+                <XCircle className="w-4 h-4" /> {tCommon("cancel")}
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Reject modal — shared component used from both here and the

@@ -610,7 +610,12 @@
     "printerReachable": "Kan nås ✓ — printeren svarer på {addr}",
     "printerTestSent": "Testprint sendt via {method}. Tjek din printer for papir.",
     "printerHelpSummary": "Sagde Testprint succes, men der kom intet papir ud?",
-    "printerSaveClose": "Gem og luk"
+    "printerSaveClose": "Gem og luk",
+    "manageOrder": "Administrer ordre",
+    "refunded": "refunderet",
+    "refundCardOnly": "Refunderinger kan kun udstedes på kortbetalinger",
+    "refundAlreadyFull": "Denne ordre er allerede fuldt refunderet",
+    "refundNotCaptured": "Ingen gennemført kortbetaling at refundere"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",

@@ -610,7 +610,12 @@
     "printerReachable": "Elérhető ✓ — a nyomtató válaszol itt: {addr}",
     "printerTestSent": "Tesztnyomtatás elküldve a következőn keresztül: {method}. Ellenőrizze, hogy van-e papír a nyomtatóban.",
     "printerHelpSummary": "A Tesztnyomtatás sikert jelzett, de nem jött ki papír?",
-    "printerSaveClose": "Mentés és bezárás"
+    "printerSaveClose": "Mentés és bezárás",
+    "manageOrder": "Rendelés kezelése",
+    "refunded": "visszatérítve",
+    "refundCardOnly": "Visszatérítés csak kártyás fizetéseknél lehetséges",
+    "refundAlreadyFull": "Ezt a rendelést már teljesen visszatérítették",
+    "refundNotCaptured": "Nincs levonott kártyás fizetés a visszatérítéshez"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

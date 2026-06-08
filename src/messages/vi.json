@@ -610,7 +610,12 @@
     "printerReachable": "Kết nối được ✓ — máy in đang phản hồi tại {addr}",
     "printerTestSent": "Đã gửi lệnh in thử qua {method}. Hãy kiểm tra giấy ở máy in của bạn.",
     "printerHelpSummary": "In thử báo thành công nhưng không có giấy in ra?",
-    "printerSaveClose": "Lưu & Đóng"
+    "printerSaveClose": "Lưu & Đóng",
+    "manageOrder": "Quản lý đơn hàng",
+    "refunded": "đã hoàn tiền",
+    "refundCardOnly": "Chỉ có thể hoàn tiền cho các khoản thanh toán bằng thẻ",
+    "refundAlreadyFull": "Đơn hàng này đã được hoàn tiền đầy đủ",
+    "refundNotCaptured": "Không có khoản thanh toán bằng thẻ đã thu để hoàn tiền"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

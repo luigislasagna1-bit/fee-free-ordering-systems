@@ -610,7 +610,12 @@
     "printerReachable": "Erreichbar ✓ — Drucker antwortet unter {addr}",
     "printerTestSent": "Testdruck über {method} gesendet. Prüfen Sie Ihren Drucker auf Papier.",
     "printerHelpSummary": "Testdruck meldete Erfolg, aber es kam kein Papier heraus?",
-    "printerSaveClose": "Speichern & Schließen"
+    "printerSaveClose": "Speichern & Schließen",
+    "manageOrder": "Bestellung verwalten",
+    "refunded": "erstattet",
+    "refundCardOnly": "Erstattungen sind nur bei Kartenzahlungen möglich",
+    "refundAlreadyFull": "Diese Bestellung wurde bereits vollständig erstattet",
+    "refundNotCaptured": "Keine eingezogene Kartenzahlung zum Erstatten vorhanden"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

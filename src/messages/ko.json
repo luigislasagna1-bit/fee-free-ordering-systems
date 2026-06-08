@@ -610,7 +610,12 @@
     "printerReachable": "연결됨 ✓ — {addr}에서 프린터가 응답 중",
     "printerTestSent": "{method}을(를) 통해 테스트 인쇄를 전송했습니다. 프린터에 용지가 나왔는지 확인하세요.",
     "printerHelpSummary": "테스트 인쇄가 성공이라고 표시됐는데 용지가 나오지 않나요?",
-    "printerSaveClose": "저장 후 닫기"
+    "printerSaveClose": "저장 후 닫기",
+    "manageOrder": "주문 관리",
+    "refunded": "환불됨",
+    "refundCardOnly": "환불은 카드 결제에만 적용할 수 있습니다",
+    "refundAlreadyFull": "이 주문은 이미 전액 환불되었습니다",
+    "refundNotCaptured": "환불할 승인된 카드 결제가 없습니다"
   },
   "admin": {
     "welcomeBack": "환영합니다",

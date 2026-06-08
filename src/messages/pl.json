@@ -610,7 +610,12 @@
     "printerReachable": "Osiągalna ✓ — drukarka odpowiada pod adresem {addr}",
     "printerTestSent": "Wysłano wydruk testowy przez {method}. Sprawdź papier w drukarce.",
     "printerHelpSummary": "Wydruk testowy zgłosił sukces, ale papier nie wyszedł?",
-    "printerSaveClose": "Zapisz i zamknij"
+    "printerSaveClose": "Zapisz i zamknij",
+    "manageOrder": "Zarządzaj zamówieniem",
+    "refunded": "zwrócono",
+    "refundCardOnly": "Zwroty można wykonać tylko dla płatności kartą",
+    "refundAlreadyFull": "To zamówienie zostało już w pełni zwrócone",
+    "refundNotCaptured": "Brak pobranej płatności kartą do zwrotu"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

@@ -610,7 +610,12 @@
     "printerReachable": "Dostupan ✓ — štampač odgovara na {addr}",
     "printerTestSent": "Probno štampanje poslato putem {method}. Proverite da li u štampaču ima papira.",
     "printerHelpSummary": "Probno štampanje je uspelo, ali papir nije izašao?",
-    "printerSaveClose": "Sačuvaj i zatvori"
+    "printerSaveClose": "Sačuvaj i zatvori",
+    "manageOrder": "Upravljaj porudžbinom",
+    "refunded": "vraćeno",
+    "refundCardOnly": "Povraćaj je moguć samo za plaćanja karticom",
+    "refundAlreadyFull": "Za ovu porudžbinu je već izvršen pun povraćaj",
+    "refundNotCaptured": "Nema naplaćenog plaćanja karticom za povraćaj"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazad",

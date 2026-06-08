@@ -610,7 +610,12 @@
     "printerReachable": "Erişilebilir ✓ — yazıcı {addr} adresinde yanıt veriyor",
     "printerTestSent": "Test yazdırması {method} ile gönderildi. Yazıcınızda kağıt olup olmadığını kontrol edin.",
     "printerHelpSummary": "Test Yazdırması başarılı dedi ama kağıt çıkmadı mı?",
-    "printerSaveClose": "Kaydet ve Kapat"
+    "printerSaveClose": "Kaydet ve Kapat",
+    "manageOrder": "Siparişi yönet",
+    "refunded": "iade edildi",
+    "refundCardOnly": "İadeler yalnızca kart ödemelerinde yapılabilir",
+    "refundAlreadyFull": "Bu siparişin tamamı zaten iade edilmiş",
+    "refundNotCaptured": "İade edilecek tahsil edilmiş kart ödemesi yok"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

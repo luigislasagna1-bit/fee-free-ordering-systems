@@ -610,7 +610,12 @@
     "printerReachable": "Dostupná ✓ — tiskárna odpovídá na {addr}",
     "printerTestSent": "Zkušební tisk odeslán přes {method}. Zkontrolujte papír v tiskárně.",
     "printerHelpSummary": "Zkušební tisk hlásí úspěch, ale nevyjel žádný papír?",
-    "printerSaveClose": "Uložit a zavřít"
+    "printerSaveClose": "Uložit a zavřít",
+    "manageOrder": "Spravovat objednávku",
+    "refunded": "vráceno",
+    "refundCardOnly": "Vrácení platby lze provést pouze u plateb kartou",
+    "refundAlreadyFull": "Tato objednávka už byla plně refundována",
+    "refundNotCaptured": "Není zde žádná zachycená platba kartou k vrácení"
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",

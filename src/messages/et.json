@@ -610,7 +610,12 @@
     "printerReachable": "Kättesaadav ✓ — printer vastab aadressil {addr}",
     "printerTestSent": "Testprint saadetud meetodil {method}. Kontrolli, kas printerist tuli paber.",
     "printerHelpSummary": "Testprint näitas õnnestumist, aga paberit ei tulnud?",
-    "printerSaveClose": "Salvesta ja sulge"
+    "printerSaveClose": "Salvesta ja sulge",
+    "manageOrder": "Halda tellimust",
+    "refunded": "tagastatud",
+    "refundCardOnly": "Tagasimakseid saab teha ainult kaardimaksete puhul",
+    "refundAlreadyFull": "See tellimus on juba täielikult tagastatud",
+    "refundNotCaptured": "Pole kinnitatud kaardimakset, mida tagastada"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",
