@@ -63,9 +63,9 @@ function ReservationCard({
 }: {
   r: KitchenReservation;
   t: T;
-  /** Tapping the tile opens the reservation detail panel (where the
-   *  Accept / Reject / Seated / No-show buttons live). */
-  onOpen: (id: string) => void;
+  /** Tapping the tile opens the detail — the linked ORDER's detail for a
+   *  pre-order booking, else the reservation detail. */
+  onOpen: (r: KitchenReservation) => void;
   /** Highlights the tile while its detail panel is open. */
   selected?: boolean;
   compact?: boolean;
@@ -85,7 +85,7 @@ function ReservationCard({
   return (
     <button
       type="button"
-      onClick={() => onOpen(r.id)}
+      onClick={() => onOpen(r)}
       className={`w-full text-left ${t.row} rounded-xl p-${compact ? "3" : "4"} border transition ${
         selected ? "border-blue-500 ring-1 ring-blue-500" : `${t.border} hover:border-blue-400`
       }`}
@@ -589,6 +589,11 @@ type KitchenReservation = {
   preOrderTotal: number;
   depositPaid: boolean;
   depositAmount: number;
+  /** Reserve-then-order: set when this booking was placed WITH a food order.
+   *  Tapping such a booking opens the linked ORDER's full detail (food +
+   *  reservation banner), and the booking is NOT shown as its own tile in the
+   *  All / In-Progress tabs — the order tile represents it. Luigi 2026-06-08. */
+  orderId: string | null;
   table: { name: string; number: number | null } | null;
   /** Set when cleared from the Reservations tab — hides it there only. */
   clearedFromReservationsAt?: string | null;
@@ -2258,8 +2263,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // grouped by TODAY / LATER. Pending reservations (not yet accepted)
   // stay in the All tab + Reservations tab so they aren't "in progress"
   // until the kitchen acts on them.
+  // PRE-ORDER bookings (orderId set) are EXCLUDED here — they're represented by
+  // their (flagged) order tile, so they don't double up as a second tile. They
+  // still live in the dedicated Reservations tab. Luigi 2026-06-08.
   const inProgressReservations = reservations.filter(
-    r => r.status === "confirmed" || r.status === "seated",
+    r => !r.orderId && (r.status === "confirmed" || r.status === "seated"),
   );
   // Reservations tab list — hides only what was cleared FROM the Reservations
   // tab (In Progress + All keep showing those bookings). Luigi 2026-06-04.
@@ -2325,7 +2333,21 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const selectedReservation = reservations.find(r => r.id === selectedReservationId) ?? null;
   // Opening a reservation clears any open order detail (and vice-versa) so the
   // shared right-hand panel only ever shows one thing. Luigi 2026-06-08.
-  const openReservation = (id: string) => { setSelectedReservationId(id); setSelectedId(null); };
+  // Tapping a booking: if it was placed WITH a food order (pre-order), open the
+  // linked ORDER's full detail — food + a reservation banner, identical to the
+  // All-orders tab — instead of the bare booking view. Walk-up bookings (no
+  // order) open the reservation detail. Falls back to the reservation detail if
+  // the linked order isn't in the current feed. Luigi 2026-06-08.
+  const openReservation = (r: KitchenReservation) => {
+    const linkedOrder = r.orderId ? orders.find((o) => o.id === r.orderId) : null;
+    if (linkedOrder) {
+      setSelectedId(linkedOrder.id);
+      setSelectedReservationId(null);
+    } else {
+      setSelectedReservationId(r.id);
+      setSelectedId(null);
+    }
+  };
   // Direct LAN printer takes precedence — when configured, it's the
   // primary print path and the header should reflect ITS status, not
   // a leftover PrintNode setting from before the switch. Falls back
@@ -2621,6 +2643,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 items.push({ kind: "order", sortTs: arrived, order: o });
               }
               for (const r of reservations) {
+                // PRE-ORDER bookings are represented by their order tile (above)
+                // — skip them here so a booking-with-food shows as ONE tile, not
+                // two. They still appear in the dedicated Reservations tab.
+                // Luigi 2026-06-08.
+                if (r.orderId) continue;
                 // Sort by createdAt — when the reservation arrived
                 // into the kitchen — NOT by the booking date+time.
                 // Otherwise a reservation booked for next week would
