@@ -238,7 +238,9 @@
     "promoPickupOnlyTitle": "This deal only applies to pickup orders",
     "promoDeliveryOnlyTitle": "This deal only applies to delivery orders",
     "outOfAreaBlockedTitle": "Outside our delivery area.",
-    "outOfAreaBlockedBody": "We don’t deliver to this address. Switch to pickup, or enter a different delivery address."
+    "outOfAreaBlockedBody": "We do not accept orders outside our standard delivery zones. Switch to pickup, or enter a different delivery address.",
+    "outOfAreaSoftTitle": "Outside our standard delivery area.",
+    "outOfAreaSoftBody": "This address is outside our standard delivery zones and we may not deliver here. You can still place the order — the store will contact you if needed."
   },
   "pizza": {
     "chooseSize": "Choose Size",
@@ -399,6 +401,9 @@
     "youreIn": "You're in {zone} — Fee {fee}, ~{minutes} min.",
     "zoneMinimum": "Minimum order {min}.",
     "outsideStandard": "Outside our standard delivery areas.",
+    "outsideMayContact": "You can still place the order — the store will contact you if needed.",
+    "outsideNotAcceptedTitle": "Outside our delivery area.",
+    "outsideNotAcceptedBody": "We do not accept orders outside our standard delivery zones. Switch to pickup or use a different address.",
     "freeDelivery": "Free delivery",
     "exclusiveBumpedNote": "Only one exclusive deal can apply per order, so we kept {winner} — it saves you more. Not applied: {names}.",
     "aptUnitPlaceholder": "Apt / Unit / Suite (optional)",

@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Ta ponudba velja samo za naročila s prevzemom",
     "promoDeliveryOnlyTitle": "Ta ponudba velja samo za naročila z dostavo",
     "outOfAreaBlockedTitle": "Izven našega območja dostave.",
-    "outOfAreaBlockedBody": "Na ta naslov ne dostavljamo. Izberite prevzem ali vnesite drug naslov za dostavo.",
+    "outOfAreaBlockedBody": "Naročil zunaj naših standardnih dostavnih območij ne sprejemamo. Preklopite na prevzem ali vnesite drug naslov za dostavo.",
     "expandAll": "Razširi vse",
     "collapseAll": "Strni vse",
     "removePromoAria": "Odstrani ponudbo",
     "dealsNotApplied": "Razpoložljive ponudbe (tapni za zamenjavo)",
     "cantCombineWith": "Ni mogoče združiti s {winner}",
-    "useThisInstead": "Uporabi to namesto tega"
+    "useThisInstead": "Uporabi to namesto tega",
+    "outOfAreaSoftTitle": "Zunaj našega standardnega dostavnega območja.",
+    "outOfAreaSoftBody": "Ta naslov je zunaj naših standardnih dostavnih območij in morda sem ne dostavljamo. Naročilo lahko vseeno oddate – po potrebi vas bo trgovina kontaktirala."
   },
   "pizza": {
     "chooseSize": "Izberite velikost",
@@ -414,7 +416,10 @@
     "asapOnly": "To naročilo bo pripravljeno čim prej.",
     "scheduleModeSlots": "Časovni termini",
     "scheduleModeExact": "Točen čas",
-    "exclusiveBumpedNote": "Na posamezno naročilo lahko velja le ena ekskluzivna ponudba, zato smo obdržali {winner} — z njo prihranite več. Ni uveljavljeno: {names}."
+    "exclusiveBumpedNote": "Na posamezno naročilo lahko velja le ena ekskluzivna ponudba, zato smo obdržali {winner} — z njo prihranite več. Ni uveljavljeno: {names}.",
+    "outsideMayContact": "Naročilo lahko vseeno oddate – po potrebi vas bo trgovina kontaktirala.",
+    "outsideNotAcceptedTitle": "Zunaj našega dostavnega območja.",
+    "outsideNotAcceptedBody": "Naročil zunaj naših standardnih dostavnih območij ne sprejemamo. Preklopite na prevzem ali uporabite drug naslov."
   },
   "reservation": {
     "title": "Rezerviraj mizo",

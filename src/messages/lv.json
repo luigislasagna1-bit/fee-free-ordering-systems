@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Šis piedāvājums attiecas tikai uz paņemšanas pasūtījumiem",
     "promoDeliveryOnlyTitle": "Šis piedāvājums attiecas tikai uz piegādes pasūtījumiem",
     "outOfAreaBlockedTitle": "Ārpus mūsu piegādes zonas.",
-    "outOfAreaBlockedBody": "Mēs nepiegādājam uz šo adresi. Izvēlieties saņemšanu uz vietas vai ievadiet citu piegādes adresi.",
+    "outOfAreaBlockedBody": "Mēs nepieņemam pasūtījumus ārpus mūsu standarta piegādes zonām. Izvēlieties saņemšanu uz vietas vai ievadiet citu piegādes adresi.",
     "expandAll": "Izvērst visu",
     "collapseAll": "Sakļaut visu",
     "removePromoAria": "Noņemt piedāvājumu",
     "dealsNotApplied": "Pieejamie piedāvājumi (pieskarieties, lai mainītu)",
     "cantCombineWith": "Nevar apvienot ar {winner}",
-    "useThisInstead": "Izmantot šo"
+    "useThisInstead": "Izmantot šo",
+    "outOfAreaSoftTitle": "Ārpus mūsu standarta piegādes zonas.",
+    "outOfAreaSoftBody": "Šī adrese atrodas ārpus mūsu standarta piegādes zonām, un mēs, iespējams, šeit nepiegādājam. Pasūtījumu joprojām varat veikt — ja nepieciešams, veikals ar jums sazināsies."
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -414,7 +416,10 @@
     "asapOnly": "Šis pasūtījums tiks sagatavots, cik drīz vien iespējams.",
     "scheduleModeSlots": "Laika logi",
     "scheduleModeExact": "Precīzs laiks",
-    "exclusiveBumpedNote": "Vienam pasūtījumam var piemērot tikai vienu ekskluzīvu piedāvājumu, tāpēc saglabājām {winner} — ar to ietaupāt vairāk. Nav piemērots: {names}."
+    "exclusiveBumpedNote": "Vienam pasūtījumam var piemērot tikai vienu ekskluzīvu piedāvājumu, tāpēc saglabājām {winner} — ar to ietaupāt vairāk. Nav piemērots: {names}.",
+    "outsideMayContact": "Pasūtījumu joprojām varat veikt — ja nepieciešams, veikals ar jums sazināsies.",
+    "outsideNotAcceptedTitle": "Ārpus mūsu piegādes zonas.",
+    "outsideNotAcceptedBody": "Mēs nepieņemam pasūtījumus ārpus mūsu standarta piegādes zonām. Izvēlieties saņemšanu uz vietas vai izmantojiet citu adresi."
   },
   "reservation": {
     "title": "Rezervēt galdu",

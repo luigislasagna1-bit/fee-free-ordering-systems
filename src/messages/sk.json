@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Táto akcia platí iba pre objednávky na vyzdvihnutie",
     "promoDeliveryOnlyTitle": "Táto akcia platí iba pre objednávky s rozvonom",
     "outOfAreaBlockedTitle": "Mimo nášho doručovacieho pásma.",
-    "outOfAreaBlockedBody": "Na túto adresu nedoručujeme. Prepnite na vyzdvihnutie alebo zadajte inú adresu doručenia.",
+    "outOfAreaBlockedBody": "Neprijímame objednávky mimo našich štandardných zón doručenia. Prepnite na osobný odber alebo zadajte inú adresu doručenia.",
     "expandAll": "Rozbaliť všetko",
     "collapseAll": "Zbaliť všetko",
     "removePromoAria": "Odstrániť ponuku",
     "dealsNotApplied": "Dostupné ponuky (klepnutím prepnete)",
     "cantCombineWith": "Nedá sa kombinovať s {winner}",
-    "useThisInstead": "Použiť túto namiesto toho"
+    "useThisInstead": "Použiť túto namiesto toho",
+    "outOfAreaSoftTitle": "Mimo našej štandardnej oblasti doručenia.",
+    "outOfAreaSoftBody": "Táto adresa je mimo našich štandardných zón doručenia a možno sem nedoručujeme. Objednávku môžete aj tak zadať — v prípade potreby vás prevádzka bude kontaktovať."
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",
@@ -414,7 +416,10 @@
     "asapOnly": "Táto objednávka bude pripravená čo najskôr.",
     "scheduleModeSlots": "Časové sloty",
     "scheduleModeExact": "Presný čas",
-    "exclusiveBumpedNote": "Na jednu objednávku je možné uplatniť len jednu exkluzívnu ponuku, preto sme ponechali {winner} — ušetríte ňou viac. Neuplatnené: {names}."
+    "exclusiveBumpedNote": "Na jednu objednávku je možné uplatniť len jednu exkluzívnu ponuku, preto sme ponechali {winner} — ušetríte ňou viac. Neuplatnené: {names}.",
+    "outsideMayContact": "Objednávku môžete aj tak zadať — v prípade potreby vás prevádzka bude kontaktovať.",
+    "outsideNotAcceptedTitle": "Mimo našej oblasti doručenia.",
+    "outsideNotAcceptedBody": "Neprijímame objednávky mimo našich štandardných zón doručenia. Prepnite na osobný odber alebo použite inú adresu."
   },
   "reservation": {
     "title": "Rezervovať stôl",

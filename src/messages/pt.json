@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Esta promoção aplica-se apenas a encomendas para take-away",
     "promoDeliveryOnlyTitle": "Esta promoção aplica-se apenas a encomendas para entrega",
     "outOfAreaBlockedTitle": "Fora da nossa área de entrega.",
-    "outOfAreaBlockedBody": "Não fazemos entregas nesta morada. Mude para recolha ou introduza uma morada de entrega diferente.",
+    "outOfAreaBlockedBody": "Não aceitamos encomendas fora das nossas zonas de entrega habituais. Mude para recolha no local ou introduza uma morada de entrega diferente.",
     "expandAll": "Expandir tudo",
     "collapseAll": "Recolher tudo",
     "removePromoAria": "Remover promoção",
     "dealsNotApplied": "Promoções disponíveis (toque para trocar)",
     "cantCombineWith": "Não pode ser combinada com {winner}",
-    "useThisInstead": "Usar esta em vez disso"
+    "useThisInstead": "Usar esta em vez disso",
+    "outOfAreaSoftTitle": "Fora da nossa área de entrega habitual.",
+    "outOfAreaSoftBody": "Esta morada está fora das nossas zonas de entrega habituais e poderemos não entregar aqui. Mesmo assim, pode efetuar a encomenda — a loja entrará em contacto consigo se for necessário."
   },
   "pizza": {
     "chooseSize": "Escolher tamanho",
@@ -414,7 +416,10 @@
     "asapOnly": "Este pedido será preparado o mais rapidamente possível.",
     "scheduleModeSlots": "Horários disponíveis",
     "scheduleModeExact": "Hora exata",
-    "exclusiveBumpedNote": "Só pode aplicar-se uma promoção exclusiva por pedido, por isso mantivemos {winner} — poupa-lhe mais. Não aplicada: {names}."
+    "exclusiveBumpedNote": "Só pode aplicar-se uma promoção exclusiva por pedido, por isso mantivemos {winner} — poupa-lhe mais. Não aplicada: {names}.",
+    "outsideMayContact": "Mesmo assim, pode efetuar a encomenda — a loja entrará em contacto consigo se for necessário.",
+    "outsideNotAcceptedTitle": "Fora da nossa área de entrega.",
+    "outsideNotAcceptedBody": "Não aceitamos encomendas fora das nossas zonas de entrega habituais. Mude para recolha no local ou utilize uma morada diferente."
   },
   "reservation": {
     "title": "Reservar mesa",

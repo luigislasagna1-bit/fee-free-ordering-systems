@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Ưu đãi này chỉ áp dụng cho đơn mang về",
     "promoDeliveryOnlyTitle": "Ưu đãi này chỉ áp dụng cho đơn giao hàng",
     "outOfAreaBlockedTitle": "Ngoài khu vực giao hàng của chúng tôi.",
-    "outOfAreaBlockedBody": "Chúng tôi không giao hàng đến địa chỉ này. Vui lòng chuyển sang hình thức tự đến lấy, hoặc nhập địa chỉ giao hàng khác.",
+    "outOfAreaBlockedBody": "Chúng tôi không nhận đơn hàng nằm ngoài khu vực giao hàng tiêu chuẩn của mình. Hãy chuyển sang lấy tại cửa hàng, hoặc nhập một địa chỉ giao hàng khác.",
     "expandAll": "Mở rộng tất cả",
     "collapseAll": "Thu gọn tất cả",
     "removePromoAria": "Xóa ưu đãi",
     "dealsNotApplied": "Ưu đãi khả dụng (chạm để chuyển)",
     "cantCombineWith": "Không thể kết hợp với {winner}",
-    "useThisInstead": "Dùng ưu đãi này thay thế"
+    "useThisInstead": "Dùng ưu đãi này thay thế",
+    "outOfAreaSoftTitle": "Nằm ngoài khu vực giao hàng tiêu chuẩn của chúng tôi.",
+    "outOfAreaSoftBody": "Địa chỉ này nằm ngoài khu vực giao hàng tiêu chuẩn của chúng tôi và chúng tôi có thể không giao đến đây. Bạn vẫn có thể đặt hàng — cửa hàng sẽ liên hệ với bạn nếu cần."
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -414,7 +416,10 @@
     "asapOnly": "Đơn hàng này sẽ được chuẩn bị trong thời gian sớm nhất.",
     "scheduleModeSlots": "Khung giờ",
     "scheduleModeExact": "Giờ cụ thể",
-    "exclusiveBumpedNote": "Mỗi đơn hàng chỉ áp dụng được một ưu đãi độc quyền, nên chúng tôi đã giữ lại {winner} — ưu đãi này tiết kiệm hơn cho bạn. Chưa áp dụng: {names}."
+    "exclusiveBumpedNote": "Mỗi đơn hàng chỉ áp dụng được một ưu đãi độc quyền, nên chúng tôi đã giữ lại {winner} — ưu đãi này tiết kiệm hơn cho bạn. Chưa áp dụng: {names}.",
+    "outsideMayContact": "Bạn vẫn có thể đặt hàng — cửa hàng sẽ liên hệ với bạn nếu cần.",
+    "outsideNotAcceptedTitle": "Nằm ngoài khu vực giao hàng của chúng tôi.",
+    "outsideNotAcceptedBody": "Chúng tôi không nhận đơn hàng nằm ngoài khu vực giao hàng tiêu chuẩn của mình. Hãy chuyển sang lấy tại cửa hàng hoặc dùng một địa chỉ khác."
   },
   "reservation": {
     "title": "Đặt bàn",

@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "このセールは店頭受取注文にのみ適用されます",
     "promoDeliveryOnlyTitle": "このセールは配達注文にのみ適用されます",
     "outOfAreaBlockedTitle": "デリバリーエリア外です。",
-    "outOfAreaBlockedBody": "このご住所へのデリバリーは対応しておりません。お持ち帰りに変更するか、別のデリバリー先住所をご入力ください。",
+    "outOfAreaBlockedBody": "標準の配達エリア外のご注文はお受けしておりません。お受け取り（ピックアップ）に切り替えるか、別の配達先住所をご入力ください。",
     "expandAll": "すべて展開",
     "collapseAll": "すべて折りたたむ",
     "removePromoAria": "特典を削除",
     "dealsNotApplied": "利用できる特典（タップで切り替え）",
     "cantCombineWith": "{winner}とは併用できません",
-    "useThisInstead": "こちらに切り替える"
+    "useThisInstead": "こちらに切り替える",
+    "outOfAreaSoftTitle": "標準の配達エリア外です。",
+    "outOfAreaSoftBody": "この住所は標準の配達エリア外のため、配達できない場合がございます。このままご注文いただくことも可能です。必要に応じて店舗からご連絡いたします。"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -414,7 +416,10 @@
     "asapOnly": "こちらのご注文は、できるだけ早くご用意いたします。",
     "scheduleModeSlots": "時間枠",
     "scheduleModeExact": "時刻指定",
-    "exclusiveBumpedNote": "1回の注文につき適用できる限定特典は1つだけのため、よりお得な{winner}を適用しました。適用されなかった特典: {names}。"
+    "exclusiveBumpedNote": "1回の注文につき適用できる限定特典は1つだけのため、よりお得な{winner}を適用しました。適用されなかった特典: {names}。",
+    "outsideMayContact": "このままご注文いただくことも可能です。必要に応じて店舗からご連絡いたします。",
+    "outsideNotAcceptedTitle": "配達エリア外です。",
+    "outsideNotAcceptedBody": "標準の配達エリア外のご注文はお受けしておりません。お受け取り（ピックアップ）に切り替えるか、別の住所をご利用ください。"
   },
   "reservation": {
     "title": "テーブルを予約",

@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Promo ini hanya berlaku untuk pesanan ambil di tempat",
     "promoDeliveryOnlyTitle": "Promo ini hanya berlaku untuk pesanan pengiriman",
     "outOfAreaBlockedTitle": "Di luar area pengiriman kami.",
-    "outOfAreaBlockedBody": "Kami tidak melayani pengiriman ke alamat ini. Pilih ambil sendiri, atau masukkan alamat pengiriman yang berbeda.",
+    "outOfAreaBlockedBody": "Kami tidak menerima pesanan di luar zona pengiriman standar kami. Beralihlah ke ambil sendiri, atau masukkan alamat pengiriman yang berbeda.",
     "expandAll": "Buka semua",
     "collapseAll": "Tutup semua",
     "removePromoAria": "Hapus promo",
     "dealsNotApplied": "Promo tersedia (ketuk untuk beralih)",
     "cantCombineWith": "Tidak bisa digabung dengan {winner}",
-    "useThisInstead": "Gunakan ini saja"
+    "useThisInstead": "Gunakan ini saja",
+    "outOfAreaSoftTitle": "Di luar area pengiriman standar kami.",
+    "outOfAreaSoftBody": "Alamat ini berada di luar zona pengiriman standar kami dan kami mungkin tidak mengirim ke sini. Anda tetap dapat melakukan pemesanan — toko akan menghubungi Anda jika diperlukan."
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -414,7 +416,10 @@
     "asapOnly": "Pesanan ini akan disiapkan secepatnya.",
     "scheduleModeSlots": "Slot waktu",
     "scheduleModeExact": "Waktu pasti",
-    "exclusiveBumpedNote": "Hanya satu penawaran eksklusif yang bisa berlaku per pesanan, jadi kami mempertahankan {winner} — penawaran itu lebih hemat untuk Anda. Tidak diterapkan: {names}."
+    "exclusiveBumpedNote": "Hanya satu penawaran eksklusif yang bisa berlaku per pesanan, jadi kami mempertahankan {winner} — penawaran itu lebih hemat untuk Anda. Tidak diterapkan: {names}.",
+    "outsideMayContact": "Anda tetap dapat melakukan pemesanan — toko akan menghubungi Anda jika diperlukan.",
+    "outsideNotAcceptedTitle": "Di luar area pengiriman kami.",
+    "outsideNotAcceptedBody": "Kami tidak menerima pesanan di luar zona pengiriman standar kami. Beralihlah ke ambil sendiri atau gunakan alamat yang berbeda."
   },
   "reservation": {
     "title": "Pesan meja",

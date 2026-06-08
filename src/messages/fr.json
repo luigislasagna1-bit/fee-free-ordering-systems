@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Cette offre s'applique uniquement aux commandes à emporter",
     "promoDeliveryOnlyTitle": "Cette offre s'applique uniquement aux commandes en livraison",
     "outOfAreaBlockedTitle": "En dehors de notre zone de livraison.",
-    "outOfAreaBlockedBody": "Nous ne livrons pas à cette adresse. Passez à la collecte, ou saisissez une adresse de livraison différente.",
+    "outOfAreaBlockedBody": "Nous n'acceptons pas les commandes en dehors de nos zones de livraison habituelles. Optez pour le retrait, ou saisissez une autre adresse de livraison.",
     "expandAll": "Tout développer",
     "collapseAll": "Tout réduire",
     "removePromoAria": "Retirer l'offre",
     "dealsNotApplied": "Offres disponibles (appuyez pour changer)",
     "cantCombineWith": "Non cumulable avec {winner}",
-    "useThisInstead": "Utiliser celle-ci à la place"
+    "useThisInstead": "Utiliser celle-ci à la place",
+    "outOfAreaSoftTitle": "En dehors de notre zone de livraison habituelle.",
+    "outOfAreaSoftBody": "Cette adresse se trouve en dehors de nos zones de livraison habituelles et il se peut que nous ne livrions pas ici. Vous pouvez tout de même passer la commande — le magasin vous contactera si nécessaire."
   },
   "pizza": {
     "chooseSize": "Choisir la taille",
@@ -414,7 +416,10 @@
     "asapOnly": "Cette commande sera préparée dès que possible.",
     "scheduleModeSlots": "Créneaux horaires",
     "scheduleModeExact": "Heure exacte",
-    "exclusiveBumpedNote": "Une seule offre exclusive peut s'appliquer par commande ; nous avons donc conservé {winner} — elle vous fait économiser davantage. Non appliquée(s) : {names}."
+    "exclusiveBumpedNote": "Une seule offre exclusive peut s'appliquer par commande ; nous avons donc conservé {winner} — elle vous fait économiser davantage. Non appliquée(s) : {names}.",
+    "outsideMayContact": "Vous pouvez tout de même passer la commande — le magasin vous contactera si nécessaire.",
+    "outsideNotAcceptedTitle": "En dehors de notre zone de livraison.",
+    "outsideNotAcceptedBody": "Nous n'acceptons pas les commandes en dehors de nos zones de livraison habituelles. Optez pour le retrait ou utilisez une autre adresse."
   },
   "reservation": {
     "title": "Réserver une table",

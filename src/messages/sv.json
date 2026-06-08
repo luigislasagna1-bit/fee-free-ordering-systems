@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Detta erbjudande gäller endast avhämtningsbeställningar",
     "promoDeliveryOnlyTitle": "Detta erbjudande gäller endast leveransbeställningar",
     "outOfAreaBlockedTitle": "Utanför vårt leveransområde.",
-    "outOfAreaBlockedBody": "Vi levererar tyvärr inte till den här adressen. Välj hämtning i stället, eller ange en annan leveransadress.",
+    "outOfAreaBlockedBody": "Vi tar inte emot beställningar utanför våra vanliga leveranszoner. Byt till avhämtning eller ange en annan leveransadress.",
     "expandAll": "Expandera alla",
     "collapseAll": "Fäll ihop alla",
     "removePromoAria": "Ta bort erbjudande",
     "dealsNotApplied": "Tillgängliga erbjudanden (tryck för att byta)",
     "cantCombineWith": "Kan inte kombineras med {winner}",
-    "useThisInstead": "Använd det här istället"
+    "useThisInstead": "Använd det här istället",
+    "outOfAreaSoftTitle": "Utanför vårt vanliga leveransområde.",
+    "outOfAreaSoftBody": "Den här adressen ligger utanför våra vanliga leveranszoner och vi kanske inte levererar hit. Du kan ändå lägga beställningen — butiken kontaktar dig vid behov."
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -414,7 +416,10 @@
     "asapOnly": "Den här beställningen tillagas så snart som möjligt.",
     "scheduleModeSlots": "Tidsluckor",
     "scheduleModeExact": "Exakt tid",
-    "exclusiveBumpedNote": "Endast ett exklusivt erbjudande kan gälla per beställning, så vi behöll {winner} – det sparar mer åt dig. Tillämpas inte: {names}."
+    "exclusiveBumpedNote": "Endast ett exklusivt erbjudande kan gälla per beställning, så vi behöll {winner} – det sparar mer åt dig. Tillämpas inte: {names}.",
+    "outsideMayContact": "Du kan ändå lägga beställningen — butiken kontaktar dig vid behov.",
+    "outsideNotAcceptedTitle": "Utanför vårt leveransområde.",
+    "outsideNotAcceptedBody": "Vi tar inte emot beställningar utanför våra vanliga leveranszoner. Byt till avhämtning eller använd en annan adress."
   },
   "reservation": {
     "title": "Boka ett bord",

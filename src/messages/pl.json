@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Ta oferta dotyczy wyłącznie zamówień na odbiór",
     "promoDeliveryOnlyTitle": "Ta oferta dotyczy wyłącznie zamówień z dostawą",
     "outOfAreaBlockedTitle": "Poza naszym obszarem dostawy.",
-    "outOfAreaBlockedBody": "Nie realizujemy dostaw pod ten adres. Wybierz odbiór osobisty lub podaj inny adres dostawy.",
+    "outOfAreaBlockedBody": "Nie przyjmujemy zamówień poza naszymi standardowymi strefami dostawy. Przełącz się na odbiór osobisty lub podaj inny adres dostawy.",
     "expandAll": "Rozwiń wszystko",
     "collapseAll": "Zwiń wszystko",
     "removePromoAria": "Usuń promocję",
     "dealsNotApplied": "Dostępne promocje (dotknij, aby zmienić)",
     "cantCombineWith": "Nie można łączyć z {winner}",
-    "useThisInstead": "Użyj tej zamiast"
+    "useThisInstead": "Użyj tej zamiast",
+    "outOfAreaSoftTitle": "Poza naszym standardowym obszarem dostawy.",
+    "outOfAreaSoftBody": "Ten adres znajduje się poza naszymi standardowymi strefami dostawy i możemy tu nie dowozić. Mimo to możesz złożyć zamówienie — w razie potrzeby restauracja skontaktuje się z Tobą."
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",
@@ -414,7 +416,10 @@
     "asapOnly": "To zamówienie zostanie przygotowane najszybciej, jak to możliwe.",
     "scheduleModeSlots": "Przedziały czasowe",
     "scheduleModeExact": "Dokładny czas",
-    "exclusiveBumpedNote": "Na zamówienie może obowiązywać tylko jedna oferta ekskluzywna, więc zachowaliśmy {winner} — daje większą oszczędność. Nie zastosowano: {names}."
+    "exclusiveBumpedNote": "Na zamówienie może obowiązywać tylko jedna oferta ekskluzywna, więc zachowaliśmy {winner} — daje większą oszczędność. Nie zastosowano: {names}.",
+    "outsideMayContact": "Mimo to możesz złożyć zamówienie — w razie potrzeby restauracja skontaktuje się z Tobą.",
+    "outsideNotAcceptedTitle": "Poza naszym obszarem dostawy.",
+    "outsideNotAcceptedBody": "Nie przyjmujemy zamówień poza naszymi standardowymi strefami dostawy. Przełącz się na odbiór osobisty lub użyj innego adresu."
   },
   "reservation": {
     "title": "Zarezerwuj stolik",

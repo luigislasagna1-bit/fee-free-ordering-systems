@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Aquesta oferta només s'aplica a les comandes de recollida",
     "promoDeliveryOnlyTitle": "Aquesta oferta només s'aplica a les comandes a domicili",
     "outOfAreaBlockedTitle": "Fora de la nostra àrea de lliurament.",
-    "outOfAreaBlockedBody": "No fem entregues a aquesta adreça. Canvieu a recollida al local o introduïu una adreça de lliurament diferent.",
+    "outOfAreaBlockedBody": "No acceptem comandes fora de les nostres zones de lliurament habituals. Canvieu a recollida o introduïu una altra adreça de lliurament.",
     "expandAll": "Desplega-ho tot",
     "collapseAll": "Replega-ho tot",
     "removePromoAria": "Treure l'oferta",
     "dealsNotApplied": "Ofertes disponibles (toca per canviar)",
     "cantCombineWith": "No es pot combinar amb {winner}",
-    "useThisInstead": "Fes servir aquesta"
+    "useThisInstead": "Fes servir aquesta",
+    "outOfAreaSoftTitle": "Fora de la nostra àrea de lliurament habitual.",
+    "outOfAreaSoftBody": "Aquesta adreça és fora de les nostres zones de lliurament habituals i és possible que no hi puguem lliurar. Tot i així, podeu fer la comanda; l'establiment es posarà en contacte amb vós si cal."
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -414,7 +416,10 @@
     "asapOnly": "Aquesta comanda es prepararà tan aviat com sigui possible.",
     "scheduleModeSlots": "Franges horàries",
     "scheduleModeExact": "Hora exacta",
-    "exclusiveBumpedNote": "Només es pot aplicar una oferta exclusiva per comanda, així que hem mantingut {winner}: és la que t'estalvia més. No aplicades: {names}."
+    "exclusiveBumpedNote": "Només es pot aplicar una oferta exclusiva per comanda, així que hem mantingut {winner}: és la que t'estalvia més. No aplicades: {names}.",
+    "outsideMayContact": "Tot i així, podeu fer la comanda; l'establiment es posarà en contacte amb vós si cal.",
+    "outsideNotAcceptedTitle": "Fora de la nostra àrea de lliurament.",
+    "outsideNotAcceptedBody": "No acceptem comandes fora de les nostres zones de lliurament habituals. Canvieu a recollida o utilitzeu una altra adreça."
   },
   "reservation": {
     "title": "Reservar taula",

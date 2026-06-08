@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Questa offerta è valida solo per gli ordini con ritiro",
     "promoDeliveryOnlyTitle": "Questa offerta è valida solo per gli ordini con consegna",
     "outOfAreaBlockedTitle": "Fuori dalla nostra area di consegna.",
-    "outOfAreaBlockedBody": "Non effettuiamo consegne a questo indirizzo. Passa al ritiro in sede oppure inserisci un indirizzo di consegna diverso.",
+    "outOfAreaBlockedBody": "Non accettiamo ordini al di fuori delle nostre zone di consegna standard. Passa al ritiro oppure inserisci un indirizzo di consegna diverso.",
     "expandAll": "Espandi tutto",
     "collapseAll": "Comprimi tutto",
     "removePromoAria": "Rimuovi offerta",
     "dealsNotApplied": "Offerte disponibili (tocca per cambiare)",
     "cantCombineWith": "Non combinabile con {winner}",
-    "useThisInstead": "Usa questa invece"
+    "useThisInstead": "Usa questa invece",
+    "outOfAreaSoftTitle": "Fuori dalla nostra area di consegna standard.",
+    "outOfAreaSoftBody": "Questo indirizzo è al di fuori delle nostre zone di consegna standard e potremmo non consegnare qui. Puoi comunque effettuare l'ordine — il locale ti contatterà se necessario."
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
@@ -414,7 +416,10 @@
     "asapOnly": "Questo ordine sarà preparato il prima possibile.",
     "scheduleModeSlots": "Fasce orarie",
     "scheduleModeExact": "Orario esatto",
-    "exclusiveBumpedNote": "Per ogni ordine può essere applicata una sola offerta esclusiva, quindi abbiamo mantenuto {winner}: ti fa risparmiare di più. Non applicate: {names}."
+    "exclusiveBumpedNote": "Per ogni ordine può essere applicata una sola offerta esclusiva, quindi abbiamo mantenuto {winner}: ti fa risparmiare di più. Non applicate: {names}.",
+    "outsideMayContact": "Puoi comunque effettuare l'ordine — il locale ti contatterà se necessario.",
+    "outsideNotAcceptedTitle": "Fuori dalla nostra area di consegna.",
+    "outsideNotAcceptedBody": "Non accettiamo ordini al di fuori delle nostre zone di consegna standard. Passa al ritiro oppure usa un indirizzo diverso."
   },
   "reservation": {
     "title": "Prenota un tavolo",

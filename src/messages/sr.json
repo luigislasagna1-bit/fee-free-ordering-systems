@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Ova ponuda važi samo za narudžbe sa preuzimanjem",
     "promoDeliveryOnlyTitle": "Ova ponuda važi samo za narudžbe sa dostavom",
     "outOfAreaBlockedTitle": "Van naše zone dostave.",
-    "outOfAreaBlockedBody": "Ne dostavljamo na ovu adresu. Prebacite se na preuzimanje ili unesite drugu adresu za dostavu.",
+    "outOfAreaBlockedBody": "Ne prihvatamo porudžbine van naših standardnih zona dostave. Prebacite se na preuzimanje ili unesite drugu adresu za dostavu.",
     "expandAll": "Razvij sve",
     "collapseAll": "Skupi sve",
     "removePromoAria": "Ukloni ponudu",
     "dealsNotApplied": "Dostupne ponude (dodirnite da promenite)",
     "cantCombineWith": "Ne može da se kombinuje sa {winner}",
-    "useThisInstead": "Koristi ovu umesto toga"
+    "useThisInstead": "Koristi ovu umesto toga",
+    "outOfAreaSoftTitle": "Van naše standardne zone dostave.",
+    "outOfAreaSoftBody": "Ova adresa je van naših standardnih zona dostave i možda nećemo moći da dostavimo ovde. I dalje možete da pošaljete porudžbinu — lokal će vas kontaktirati ako bude potrebno."
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",
@@ -414,7 +416,10 @@
     "asapOnly": "Ova porudžbina biće pripremljena što je pre moguće.",
     "scheduleModeSlots": "Termini",
     "scheduleModeExact": "Tačno vreme",
-    "exclusiveBumpedNote": "Po narudžbini se može primeniti samo jedna ekskluzivna ponuda, pa smo zadržali {winner} — donosi vam veću uštedu. Nije primenjeno: {names}."
+    "exclusiveBumpedNote": "Po narudžbini se može primeniti samo jedna ekskluzivna ponuda, pa smo zadržali {winner} — donosi vam veću uštedu. Nije primenjeno: {names}.",
+    "outsideMayContact": "I dalje možete da pošaljete porudžbinu — lokal će vas kontaktirati ako bude potrebno.",
+    "outsideNotAcceptedTitle": "Van naše zone dostave.",
+    "outsideNotAcceptedBody": "Ne prihvatamo porudžbine van naših standardnih zona dostave. Prebacite se na preuzimanje ili unesite drugu adresu."
   },
   "reservation": {
     "title": "Rezerviši sto",

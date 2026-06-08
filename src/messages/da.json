@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Dette tilbud gælder kun ved afhentning",
     "promoDeliveryOnlyTitle": "Dette tilbud gælder kun ved levering",
     "outOfAreaBlockedTitle": "Uden for vores leveringsområde.",
-    "outOfAreaBlockedBody": "Vi leverer ikke til denne adresse. Skift til afhentning, eller indtast en anden leveringsadresse.",
+    "outOfAreaBlockedBody": "Vi modtager ikke ordrer uden for vores standard leveringsområder. Skift til afhentning, eller indtast en anden leveringsadresse.",
     "expandAll": "Udvid alle",
     "collapseAll": "Skjul alle",
     "removePromoAria": "Fjern tilbud",
     "dealsNotApplied": "Tilgængelige tilbud (tryk for at skifte)",
     "cantCombineWith": "Kan ikke kombineres med {winner}",
-    "useThisInstead": "Brug dette i stedet"
+    "useThisInstead": "Brug dette i stedet",
+    "outOfAreaSoftTitle": "Uden for vores standard leveringsområde.",
+    "outOfAreaSoftBody": "Denne adresse er uden for vores standard leveringsområder, og vi leverer muligvis ikke hertil. Du kan stadig afgive ordren — butikken kontakter dig om nødvendigt."
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
@@ -414,7 +416,10 @@
     "asapOnly": "Denne bestilling vil blive tilberedt hurtigst muligt.",
     "scheduleModeSlots": "Tidsintervaller",
     "scheduleModeExact": "Præcist tidspunkt",
-    "exclusiveBumpedNote": "Kun ét eksklusivt tilbud kan gælde pr. bestilling, så vi beholdt {winner} — det sparer dig mest. Ikke anvendt: {names}."
+    "exclusiveBumpedNote": "Kun ét eksklusivt tilbud kan gælde pr. bestilling, så vi beholdt {winner} — det sparer dig mest. Ikke anvendt: {names}.",
+    "outsideMayContact": "Du kan stadig afgive ordren — butikken kontakter dig om nødvendigt.",
+    "outsideNotAcceptedTitle": "Uden for vores leveringsområde.",
+    "outsideNotAcceptedBody": "Vi modtager ikke ordrer uden for vores standard leveringsområder. Skift til afhentning, eller brug en anden adresse."
   },
   "reservation": {
     "title": "Book et bord",

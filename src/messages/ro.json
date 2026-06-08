@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Această ofertă se aplică doar comenzilor cu ridicare",
     "promoDeliveryOnlyTitle": "Această ofertă se aplică doar comenzilor cu livrare",
     "outOfAreaBlockedTitle": "În afara zonei noastre de livrare.",
-    "outOfAreaBlockedBody": "Nu livrăm la această adresă. Alegeți ridicarea personală sau introduceți o altă adresă de livrare.",
+    "outOfAreaBlockedBody": "Nu acceptăm comenzi în afara zonelor noastre standard de livrare. Treci la ridicare personală sau introdu o altă adresă de livrare.",
     "expandAll": "Extinde tot",
     "collapseAll": "Restrânge tot",
     "removePromoAria": "Elimină oferta",
     "dealsNotApplied": "Oferte disponibile (atinge pentru a comuta)",
     "cantCombineWith": "Nu poate fi combinată cu {winner}",
-    "useThisInstead": "Folosește-o pe aceasta"
+    "useThisInstead": "Folosește-o pe aceasta",
+    "outOfAreaSoftTitle": "În afara zonei noastre standard de livrare.",
+    "outOfAreaSoftBody": "Această adresă se află în afara zonelor noastre standard de livrare și este posibil să nu livrăm aici. Poți totuși să plasezi comanda — magazinul te va contacta dacă este necesar."
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -414,7 +416,10 @@
     "asapOnly": "Această comandă va fi pregătită cât mai curând posibil.",
     "scheduleModeSlots": "Intervale orare",
     "scheduleModeExact": "Oră exactă",
-    "exclusiveBumpedNote": "Per comandă se poate aplica un singur deal exclusiv, așa că l-am păstrat pe {winner} — te economisește mai mult. Neaplicate: {names}."
+    "exclusiveBumpedNote": "Per comandă se poate aplica un singur deal exclusiv, așa că l-am păstrat pe {winner} — te economisește mai mult. Neaplicate: {names}.",
+    "outsideMayContact": "Poți totuși să plasezi comanda — magazinul te va contacta dacă este necesar.",
+    "outsideNotAcceptedTitle": "În afara zonei noastre de livrare.",
+    "outsideNotAcceptedBody": "Nu acceptăm comenzi în afara zonelor noastre standard de livrare. Treci la ridicare personală sau folosește o altă adresă."
   },
   "reservation": {
     "title": "Rezervă o masă",

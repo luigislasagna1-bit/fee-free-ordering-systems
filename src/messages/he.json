@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "המבצע הזה חל על הזמנות איסוף בלבד",
     "promoDeliveryOnlyTitle": "המבצע הזה חל על הזמנות משלוח בלבד",
     "outOfAreaBlockedTitle": "מחוץ לאזור המשלוח שלנו.",
-    "outOfAreaBlockedBody": "אנחנו לא מבצעים משלוח לכתובת זו. עברו לאיסוף עצמי, או הזינו כתובת משלוח אחרת.",
+    "outOfAreaBlockedBody": "איננו מקבלים הזמנות מחוץ לאזורי המשלוח הרגילים שלנו. עברו לאיסוף עצמי, או הזינו כתובת משלוח אחרת.",
     "expandAll": "הרחב הכול",
     "collapseAll": "כווץ הכול",
     "removePromoAria": "הסרת המבצע",
     "dealsNotApplied": "מבצעים זמינים (הקישו כדי להחליף)",
     "cantCombineWith": "לא ניתן לשלב עם {winner}",
-    "useThisInstead": "השתמשו בזה במקום"
+    "useThisInstead": "השתמשו בזה במקום",
+    "outOfAreaSoftTitle": "מחוץ לאזור המשלוח הרגיל שלנו.",
+    "outOfAreaSoftBody": "כתובת זו נמצאת מחוץ לאזורי המשלוח הרגילים שלנו וייתכן שלא נספק אליה. עדיין ניתן לבצע את ההזמנה — החנות תיצור איתכם קשר במידת הצורך."
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -414,7 +416,10 @@
     "asapOnly": "הזמנה זו תוכן בהקדם האפשרי.",
     "scheduleModeSlots": "חלונות זמן",
     "scheduleModeExact": "זמן מדויק",
-    "exclusiveBumpedNote": "ניתן להחיל רק מבצע בלעדי אחד לכל הזמנה, ולכן השארנו את {winner} — הוא חוסך לכם יותר. לא הוחל: {names}."
+    "exclusiveBumpedNote": "ניתן להחיל רק מבצע בלעדי אחד לכל הזמנה, ולכן השארנו את {winner} — הוא חוסך לכם יותר. לא הוחל: {names}.",
+    "outsideMayContact": "עדיין ניתן לבצע את ההזמנה — החנות תיצור איתכם קשר במידת הצורך.",
+    "outsideNotAcceptedTitle": "מחוץ לאזור המשלוח שלנו.",
+    "outsideNotAcceptedBody": "איננו מקבלים הזמנות מחוץ לאזורי המשלוח הרגילים שלנו. עברו לאיסוף עצמי או השתמשו בכתובת אחרת."
   },
   "reservation": {
     "title": "הזמן שולחן",

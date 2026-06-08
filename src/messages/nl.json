@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Deze aanbieding geldt alleen voor afhaalbestellingen",
     "promoDeliveryOnlyTitle": "Deze aanbieding geldt alleen voor bezorgbestellingen",
     "outOfAreaBlockedTitle": "Buiten ons bezorggebied.",
-    "outOfAreaBlockedBody": "We bezorgen niet op dit adres. Kies voor afhalen of voer een ander bezorgadres in.",
+    "outOfAreaBlockedBody": "We accepteren geen bestellingen buiten onze standaard bezorggebieden. Schakel over naar afhalen of voer een ander bezorgadres in.",
     "expandAll": "Alles uitvouwen",
     "collapseAll": "Alles invouwen",
     "removePromoAria": "Aanbieding verwijderen",
     "dealsNotApplied": "Beschikbare aanbiedingen (tik om te wisselen)",
     "cantCombineWith": "Niet te combineren met {winner}",
-    "useThisInstead": "Kies deze in plaats daarvan"
+    "useThisInstead": "Kies deze in plaats daarvan",
+    "outOfAreaSoftTitle": "Buiten ons standaard bezorggebied.",
+    "outOfAreaSoftBody": "Dit adres ligt buiten onze standaard bezorggebieden en we bezorgen hier mogelijk niet. Je kunt de bestelling toch plaatsen — de winkel neemt indien nodig contact met je op."
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -414,7 +416,10 @@
     "asapOnly": "Deze bestelling wordt zo snel mogelijk klaargemaakt.",
     "scheduleModeSlots": "Tijdvakken",
     "scheduleModeExact": "Exacte tijd",
-    "exclusiveBumpedNote": "Er kan maar één exclusieve aanbieding per bestelling worden toegepast, dus we hebben {winner} behouden — die levert je meer op. Niet toegepast: {names}."
+    "exclusiveBumpedNote": "Er kan maar één exclusieve aanbieding per bestelling worden toegepast, dus we hebben {winner} behouden — die levert je meer op. Niet toegepast: {names}.",
+    "outsideMayContact": "Je kunt de bestelling toch plaatsen — de winkel neemt indien nodig contact met je op.",
+    "outsideNotAcceptedTitle": "Buiten ons bezorggebied.",
+    "outsideNotAcceptedBody": "We accepteren geen bestellingen buiten onze standaard bezorggebieden. Schakel over naar afhalen of gebruik een ander adres."
   },
   "reservation": {
     "title": "Tafel reserveren",

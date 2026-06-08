@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Esta oferta solo aplica a pedidos de recogida",
     "promoDeliveryOnlyTitle": "Esta oferta solo aplica a pedidos de entrega",
     "outOfAreaBlockedTitle": "Fuera de nuestra zona de entrega.",
-    "outOfAreaBlockedBody": "No realizamos entregas en esta dirección. Cambie a recogida en local o ingrese una dirección de entrega diferente.",
+    "outOfAreaBlockedBody": "No aceptamos pedidos fuera de nuestras zonas de entrega estándar. Cambie a recogida en local o ingrese una dirección de entrega diferente.",
     "expandAll": "Expandir todo",
     "collapseAll": "Contraer todo",
     "removePromoAria": "Quitar oferta",
     "dealsNotApplied": "Ofertas disponibles (toca para cambiar)",
     "cantCombineWith": "No se puede combinar con {winner}",
-    "useThisInstead": "Usar esta en su lugar"
+    "useThisInstead": "Usar esta en su lugar",
+    "outOfAreaSoftTitle": "Fuera de nuestra zona de entrega estándar.",
+    "outOfAreaSoftBody": "Esta dirección está fuera de nuestras zonas de entrega estándar y es posible que no entreguemos aquí. Aun así puede realizar el pedido: el local se pondrá en contacto con usted si es necesario."
   },
   "pizza": {
     "chooseSize": "Elegir tamaño",
@@ -414,7 +416,10 @@
     "asapOnly": "Este pedido se preparará lo antes posible.",
     "scheduleModeSlots": "Franjas horarias",
     "scheduleModeExact": "Hora exacta",
-    "exclusiveBumpedNote": "Solo se puede aplicar una oferta exclusiva por pedido, así que conservamos {winner}: te ahorra más. No aplicadas: {names}."
+    "exclusiveBumpedNote": "Solo se puede aplicar una oferta exclusiva por pedido, así que conservamos {winner}: te ahorra más. No aplicadas: {names}.",
+    "outsideMayContact": "Aun así puede realizar el pedido: el local se pondrá en contacto con usted si es necesario.",
+    "outsideNotAcceptedTitle": "Fuera de nuestra zona de entrega.",
+    "outsideNotAcceptedBody": "No aceptamos pedidos fuera de nuestras zonas de entrega estándar. Cambie a recogida en local o use una dirección diferente."
   },
   "reservation": {
     "title": "Reservar mesa",

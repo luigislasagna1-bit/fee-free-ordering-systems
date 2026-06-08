@@ -3841,9 +3841,18 @@ export function OrderingPageClient({
                     zone, so we don't take the order (reseller report: the
                     restaurant shouldn't have to reject it manually). */}
                 {orderType === "delivery" && resolvedZone && !resolvedZone.inside && (
-                  <div className="mx-4 mt-3 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800">
-                    <strong>{t("outOfAreaBlockedTitle")}</strong> {t("outOfAreaBlockedBody")}
-                  </div>
+                  (restaurant as any).acceptOutsideZoneOrders ? (
+                    // Restaurant accepts out-of-zone orders → soft heads-up; the
+                    // order is allowed (placement isn't blocked). Luigi 2026-06-08.
+                    <div className="mx-4 mt-3 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+                      <strong>{t("outOfAreaSoftTitle")}</strong> {t("outOfAreaSoftBody")}
+                    </div>
+                  ) : (
+                    // Out-of-zone orders are NOT accepted → hard block message.
+                    <div className="mx-4 mt-3 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800">
+                      <strong>{t("outOfAreaBlockedTitle")}</strong> {t("outOfAreaBlockedBody")}
+                    </div>
+                  )
                 )}
 
                 {/* Minimum order warning + escape hatches.
@@ -4025,6 +4034,7 @@ export function OrderingPageClient({
           geocoding={geocoding}
           geocodeError={geocodeError}
           resolvedZone={resolvedZone}
+          acceptOutsideZoneOrders={!!(restaurant as any).acceptOutsideZoneOrders}
           mapProvider={restaurant.mapProvider ?? "leaflet"}
           googleMapsApiKey={restaurant.googleMapsApiKey ?? null}
           geocodeCountry={(restaurant as any).country ?? null}

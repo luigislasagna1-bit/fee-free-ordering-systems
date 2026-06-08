@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Bu fırsat yalnızca gel-al siparişleri için geçerlidir",
     "promoDeliveryOnlyTitle": "Bu fırsat yalnızca teslimat siparişleri için geçerlidir",
     "outOfAreaBlockedTitle": "Teslimat bölgemiz dışında.",
-    "outOfAreaBlockedBody": "Bu adrese teslimat yapamıyoruz. Gel al seçeneğine geçin ya da farklı bir teslimat adresi girin.",
+    "outOfAreaBlockedBody": "Standart teslimat bölgelerimiz dışındaki siparişleri kabul etmiyoruz. Gel al seçeneğine geçin ya da farklı bir teslimat adresi girin.",
     "expandAll": "Tümünü genişlet",
     "collapseAll": "Tümünü daralt",
     "removePromoAria": "Kampanyayı kaldır",
     "dealsNotApplied": "Kullanılabilir kampanyalar (geçmek için dokunun)",
     "cantCombineWith": "{winner} ile birleştirilemez",
-    "useThisInstead": "Bunun yerine bunu kullan"
+    "useThisInstead": "Bunun yerine bunu kullan",
+    "outOfAreaSoftTitle": "Standart teslimat alanımızın dışında.",
+    "outOfAreaSoftBody": "Bu adres standart teslimat bölgelerimizin dışında ve buraya teslimat yapamayabiliriz. Yine de siparişi verebilirsiniz — gerekirse mağaza sizinle iletişime geçer."
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -414,7 +416,10 @@
     "asapOnly": "Bu sipariş mümkün olan en kısa sürede hazırlanacaktır.",
     "scheduleModeSlots": "Zaman aralıkları",
     "scheduleModeExact": "Tam saat",
-    "exclusiveBumpedNote": "Her siparişe yalnızca bir özel fırsat uygulanabilir; bu yüzden {winner} fırsatını koruduk — size daha fazla tasarruf sağlıyor. Uygulanmayan: {names}."
+    "exclusiveBumpedNote": "Her siparişe yalnızca bir özel fırsat uygulanabilir; bu yüzden {winner} fırsatını koruduk — size daha fazla tasarruf sağlıyor. Uygulanmayan: {names}.",
+    "outsideMayContact": "Yine de siparişi verebilirsiniz — gerekirse mağaza sizinle iletişime geçer.",
+    "outsideNotAcceptedTitle": "Teslimat alanımızın dışında.",
+    "outsideNotAcceptedBody": "Standart teslimat bölgelerimiz dışındaki siparişleri kabul etmiyoruz. Gel al seçeneğine geçin ya da farklı bir adres kullanın."
   },
   "reservation": {
     "title": "Masa Rezervasyonu",

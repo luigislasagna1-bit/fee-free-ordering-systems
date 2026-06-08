@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Dieses Angebot gilt nur für Abholbestellungen",
     "promoDeliveryOnlyTitle": "Dieses Angebot gilt nur für Lieferbestellungen",
     "outOfAreaBlockedTitle": "Außerhalb unseres Liefergebiets.",
-    "outOfAreaBlockedBody": "Wir liefern leider nicht an diese Adresse. Bitte wählen Sie Abholung oder geben Sie eine andere Lieferadresse ein.",
+    "outOfAreaBlockedBody": "Wir nehmen keine Bestellungen außerhalb unserer üblichen Liefergebiete an. Wechseln Sie zur Abholung oder geben Sie eine andere Lieferadresse ein.",
     "expandAll": "Alle ausklappen",
     "collapseAll": "Alle einklappen",
     "removePromoAria": "Angebot entfernen",
     "dealsNotApplied": "Verfügbare Angebote (zum Wechseln tippen)",
     "cantCombineWith": "Nicht kombinierbar mit {winner}",
-    "useThisInstead": "Stattdessen dieses nutzen"
+    "useThisInstead": "Stattdessen dieses nutzen",
+    "outOfAreaSoftTitle": "Außerhalb unseres üblichen Liefergebiets.",
+    "outOfAreaSoftBody": "Diese Adresse liegt außerhalb unserer üblichen Liefergebiete, und wir liefern hierhin möglicherweise nicht. Sie können die Bestellung trotzdem aufgeben – das Geschäft meldet sich bei Ihnen, falls nötig."
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -414,7 +416,10 @@
     "asapOnly": "Diese Bestellung wird so schnell wie möglich zubereitet.",
     "scheduleModeSlots": "Zeitfenster",
     "scheduleModeExact": "Genaue Zeit",
-    "exclusiveBumpedNote": "Pro Bestellung kann nur ein exklusives Angebot gelten, daher haben wir {winner} behalten – damit sparen Sie mehr. Nicht angewendet: {names}."
+    "exclusiveBumpedNote": "Pro Bestellung kann nur ein exklusives Angebot gelten, daher haben wir {winner} behalten – damit sparen Sie mehr. Nicht angewendet: {names}.",
+    "outsideMayContact": "Sie können die Bestellung trotzdem aufgeben – das Geschäft meldet sich bei Ihnen, falls nötig.",
+    "outsideNotAcceptedTitle": "Außerhalb unseres Liefergebiets.",
+    "outsideNotAcceptedBody": "Wir nehmen keine Bestellungen außerhalb unserer üblichen Liefergebiete an. Wechseln Sie zur Abholung oder verwenden Sie eine andere Adresse."
   },
   "reservation": {
     "title": "Tisch reservieren",

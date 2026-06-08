@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Tämä tarjous koskee vain noutotilauksia",
     "promoDeliveryOnlyTitle": "Tämä tarjous koskee vain toimitustilauksia",
     "outOfAreaBlockedTitle": "Toimitusosoite on toimitusalueemme ulkopuolella.",
-    "outOfAreaBlockedBody": "Emme valitettavasti toimita tähän osoitteeseen. Valitse nouto tai syötä toinen toimitusosoite.",
+    "outOfAreaBlockedBody": "Emme ota vastaan tilauksia vakiotoimitusvyöhykkeidemme ulkopuolelle. Valitse nouto tai syötä toinen toimitusosoite.",
     "expandAll": "Laajenna kaikki",
     "collapseAll": "Tiivistä kaikki",
     "removePromoAria": "Poista tarjous",
     "dealsNotApplied": "Saatavilla olevat tarjoukset (vaihda napauttamalla)",
     "cantCombineWith": "Ei voi yhdistää tarjouksen {winner} kanssa",
-    "useThisInstead": "Käytä tätä tarjousta"
+    "useThisInstead": "Käytä tätä tarjousta",
+    "outOfAreaSoftTitle": "Vakiotoimitusalueemme ulkopuolella.",
+    "outOfAreaSoftBody": "Tämä osoite on vakiotoimitusvyöhykkeidemme ulkopuolella, emmekä välttämättä toimita tänne. Voit silti tehdä tilauksen — kauppa ottaa sinuun yhteyttä tarvittaessa."
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -414,7 +416,10 @@
     "asapOnly": "Tämä tilaus valmistetaan mahdollisimman pian.",
     "scheduleModeSlots": "Aikavälit",
     "scheduleModeExact": "Tarkka aika",
-    "exclusiveBumpedNote": "Vain yksi yksinoikeustarjous voi olla voimassa tilausta kohden, joten pidimme tarjouksen {winner} — se säästää sinulle enemmän. Ei käytetty: {names}."
+    "exclusiveBumpedNote": "Vain yksi yksinoikeustarjous voi olla voimassa tilausta kohden, joten pidimme tarjouksen {winner} — se säästää sinulle enemmän. Ei käytetty: {names}.",
+    "outsideMayContact": "Voit silti tehdä tilauksen — kauppa ottaa sinuun yhteyttä tarvittaessa.",
+    "outsideNotAcceptedTitle": "Toimitusalueemme ulkopuolella.",
+    "outsideNotAcceptedBody": "Emme ota vastaan tilauksia vakiotoimitusvyöhykkeidemme ulkopuolelle. Valitse nouto tai käytä toista osoitetta."
   },
   "reservation": {
     "title": "Varaa pöytä",

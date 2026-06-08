@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "此优惠仅适用于自取订单",
     "promoDeliveryOnlyTitle": "此优惠仅适用于外送订单",
     "outOfAreaBlockedTitle": "超出我们的配送范围。",
-    "outOfAreaBlockedBody": "我们不配送到此地址。请切换至自取，或输入其他配送地址。",
+    "outOfAreaBlockedBody": "我们不接受标准配送区域以外的订单。请改为自取，或填写其他配送地址。",
     "expandAll": "全部展开",
     "collapseAll": "全部收起",
     "removePromoAria": "移除优惠",
     "dealsNotApplied": "可用优惠（点击切换）",
     "cantCombineWith": "无法与 {winner} 同时使用",
-    "useThisInstead": "改用此优惠"
+    "useThisInstead": "改用此优惠",
+    "outOfAreaSoftTitle": "超出我们的标准配送范围。",
+    "outOfAreaSoftBody": "此地址在我们的标准配送区域之外，我们可能无法送达这里。您仍然可以下单——如有需要，门店会与您联系。"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -414,7 +416,10 @@
     "asapOnly": "本订单将尽快为您准备。",
     "scheduleModeSlots": "时间段",
     "scheduleModeExact": "具体时间",
-    "exclusiveBumpedNote": "每笔订单只能使用一项专享优惠，因此我们为您保留了 {winner}——它能为您节省更多。未应用：{names}。"
+    "exclusiveBumpedNote": "每笔订单只能使用一项专享优惠，因此我们为您保留了 {winner}——它能为您节省更多。未应用：{names}。",
+    "outsideMayContact": "您仍然可以下单——如有需要，门店会与您联系。",
+    "outsideNotAcceptedTitle": "超出我们的配送范围。",
+    "outsideNotAcceptedBody": "我们不接受标准配送区域以外的订单。请改为自取，或使用其他地址。"
   },
   "reservation": {
     "title": "预订餐桌",

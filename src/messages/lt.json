@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "Šis pasiūlymas taikomas tik atsiėmimo užsakymams",
     "promoDeliveryOnlyTitle": "Šis pasiūlymas taikomas tik pristatymo užsakymams",
     "outOfAreaBlockedTitle": "Už mūsų pristatymo zonos ribų.",
-    "outOfAreaBlockedBody": "Į šį adresą mes nepristatome. Pasirinkite atsiėmimą arba įveskite kitą pristatymo adresą.",
+    "outOfAreaBlockedBody": "Užsakymų už standartinių pristatymo zonų ribų nepriimame. Pasirinkite atsiėmimą arba įveskite kitą pristatymo adresą.",
     "expandAll": "Išskleisti visas",
     "collapseAll": "Suskleisti visas",
     "removePromoAria": "Pašalinti pasiūlymą",
     "dealsNotApplied": "Galimi pasiūlymai (bakstelėkite, kad pakeistumėte)",
     "cantCombineWith": "Negalima derinti su {winner}",
-    "useThisInstead": "Naudoti šį vietoj to"
+    "useThisInstead": "Naudoti šį vietoj to",
+    "outOfAreaSoftTitle": "Už standartinės pristatymo zonos ribų.",
+    "outOfAreaSoftBody": "Šis adresas yra už mūsų standartinių pristatymo zonų ribų ir galbūt čia nepristatome. Vis tiek galite pateikti užsakymą — prireikus parduotuvė su jumis susisieks."
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -414,7 +416,10 @@
     "asapOnly": "Šis užsakymas bus paruoštas kuo greičiau.",
     "scheduleModeSlots": "Laiko intervalai",
     "scheduleModeExact": "Tikslus laikas",
-    "exclusiveBumpedNote": "Vienam užsakymui gali būti taikomas tik vienas išskirtinis pasiūlymas, todėl palikome {winner} — su juo sutaupysite daugiau. Nepritaikyta: {names}."
+    "exclusiveBumpedNote": "Vienam užsakymui gali būti taikomas tik vienas išskirtinis pasiūlymas, todėl palikome {winner} — su juo sutaupysite daugiau. Nepritaikyta: {names}.",
+    "outsideMayContact": "Vis tiek galite pateikti užsakymą — prireikus parduotuvė su jumis susisieks.",
+    "outsideNotAcceptedTitle": "Už mūsų pristatymo zonos ribų.",
+    "outsideNotAcceptedBody": "Užsakymų už standartinių pristatymo zonų ribų nepriimame. Pasirinkite atsiėmimą arba naudokite kitą adresą."
   },
   "reservation": {
     "title": "Rezervuoti stalą",

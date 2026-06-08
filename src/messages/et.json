@@ -232,13 +232,15 @@
     "promoPickupOnlyTitle": "See pakkumine kehtib ainult kaasavõtmistellimustele",
     "promoDeliveryOnlyTitle": "See pakkumine kehtib ainult kojuveotellimustele",
     "outOfAreaBlockedTitle": "Väljaspool meie tarnepiirkonda.",
-    "outOfAreaBlockedBody": "Me ei tarni sellele aadressile. Valige järeletulek või sisestage muu tarneaadress.",
+    "outOfAreaBlockedBody": "Me ei võta vastu tellimusi väljaspool meie tavapäraseid tarnealasid. Vali järeletulemine või sisesta teine tarneaadress.",
     "expandAll": "Laienda kõik",
     "collapseAll": "Ahenda kõik",
     "removePromoAria": "Eemalda pakkumine",
     "dealsNotApplied": "Saadaolevad pakkumised (puuduta vahetamiseks)",
     "cantCombineWith": "Ei saa kombineerida pakkumisega {winner}",
-    "useThisInstead": "Kasuta hoopis seda"
+    "useThisInstead": "Kasuta hoopis seda",
+    "outOfAreaSoftTitle": "Väljaspool meie tavapärast tarneala.",
+    "outOfAreaSoftBody": "See aadress jääb väljapoole meie tavapäraseid tarnealasid ja me ei pruugi siia tarnida. Saad tellimuse siiski esitada – vajadusel võtab kauplus sinuga ühendust."
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -414,7 +416,10 @@
     "asapOnly": "See tellimus valmistatakse ette esimesel võimalusel.",
     "scheduleModeSlots": "Ajavahemikud",
     "scheduleModeExact": "Täpne aeg",
-    "exclusiveBumpedNote": "Ühe tellimuse kohta saab kehtida vaid üks eksklusiivne pakkumine, seega jätsime alles {winner} — see säästab sul rohkem. Ei rakendatud: {names}."
+    "exclusiveBumpedNote": "Ühe tellimuse kohta saab kehtida vaid üks eksklusiivne pakkumine, seega jätsime alles {winner} — see säästab sul rohkem. Ei rakendatud: {names}.",
+    "outsideMayContact": "Saad tellimuse siiski esitada – vajadusel võtab kauplus sinuga ühendust.",
+    "outsideNotAcceptedTitle": "Väljaspool meie tarneala.",
+    "outsideNotAcceptedBody": "Me ei võta vastu tellimusi väljaspool meie tavapäraseid tarnealasid. Vali järeletulemine või kasuta teist aadressi."
   },
   "reservation": {
     "title": "Broneeri laud",

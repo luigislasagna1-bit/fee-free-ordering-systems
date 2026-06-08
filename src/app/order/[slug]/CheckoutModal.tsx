@@ -176,6 +176,10 @@ interface Props {
   geocoding: boolean;
   geocodeError: string | null;
   resolvedZone: { zone: { name: string; color: string; deliveryFee: number; estimatedMinutes: number; minimumOrder: number }; inside: boolean } | null;
+  /** Whether the restaurant accepts orders outside its delivery zones. Drives a
+   *  soft "we may not deliver, we'll contact you" note (when on) vs a hard "not
+   *  accepted" message (when off) for out-of-zone addresses. Luigi 2026-06-08. */
+  acceptOutsideZoneOrders?: boolean;
   mapProvider: "leaflet" | "google";
   googleMapsApiKey: string | null;
   /** Restaurant's 2-letter country code — biases the free (Leaflet) address
@@ -272,7 +276,7 @@ export function CheckoutModal({
   paypalEnabled,
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
-  hasZones, geocoding, geocodeError, resolvedZone,
+  hasZones, geocoding, geocodeError, resolvedZone, acceptOutsideZoneOrders = false,
   mapProvider, googleMapsApiKey, geocodeCountry,
   deliveryFormConfig,
   onClose,
@@ -909,12 +913,22 @@ export function CheckoutModal({
                       </p>
                     )}
                     {hasZones && resolvedZone && !resolvedZone.inside && (
-                      <p className="text-xs text-amber-700">
-                        <strong>{tc("outsideStandard")}</strong> {tc("outsideAreaWarning", { fee: formatCurrency(resolvedZone.zone.deliveryFee), minutes: resolvedZone.zone.estimatedMinutes })}
-                        {resolvedZone.zone.minimumOrder > 0 && (
-                          <> {tc("zoneMinimum", { min: formatCurrency(resolvedZone.zone.minimumOrder) })}</>
-                        )}
-                      </p>
+                      acceptOutsideZoneOrders ? (
+                        // Out-of-zone orders accepted → soft note; the order can
+                        // still be placed and the store follows up. Luigi 2026-06-08.
+                        <p className="text-xs text-amber-700">
+                          <strong>{tc("outsideStandard")}</strong> {tc("outsideAreaWarning", { fee: formatCurrency(resolvedZone.zone.deliveryFee), minutes: resolvedZone.zone.estimatedMinutes })}
+                          {resolvedZone.zone.minimumOrder > 0 && (
+                            <> {tc("zoneMinimum", { min: formatCurrency(resolvedZone.zone.minimumOrder) })}</>
+                          )}
+                          {" "}{tc("outsideMayContact")}
+                        </p>
+                      ) : (
+                        // Out-of-zone orders NOT accepted → hard message.
+                        <p className="text-xs text-red-600">
+                          <strong>{tc("outsideNotAcceptedTitle")}</strong> {tc("outsideNotAcceptedBody")}
+                        </p>
+                      )
                     )}
                   </div>
                 )}
