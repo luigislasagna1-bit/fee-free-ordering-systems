@@ -73,11 +73,13 @@ export function StepRestrictions({
   setForm,
   paymentMethods,
   deliveryZones,
+  currencySymbol = "$",
 }: {
   form: Step3Form;
   setForm: (patch: Partial<Step3Form>) => void;
   paymentMethods: string[]; // restaurant's enabled payment slugs
   deliveryZones: { id: string; name: string }[];
+  currencySymbol?: string;
 }) {
   const t = useTranslations("admin.promoStepRestrictions");
 
@@ -220,7 +222,7 @@ export function StepRestrictions({
       {/* CART VALUE */}
       <Section title={t("cartValueTitle")} subtitle={t("cartValueSubtitle")}>
         <div className="relative w-48">
-          <span className="absolute left-3 top-2 text-gray-400 text-sm">$</span>
+          <span className="absolute left-3 top-2 text-gray-400 text-sm">{currencySymbol}</span>
           <input
             type="number"
             min="0"
@@ -532,7 +534,7 @@ export function StepRestrictions({
               {t("highlightThresholdLabel")}
             </label>
             <div className="relative w-40">
-              <span className="absolute left-3 top-2 text-gray-400 text-sm">$</span>
+              <span className="absolute left-3 top-2 text-gray-400 text-sm">{currencySymbol}</span>
               <input
                 type="number"
                 min="0"

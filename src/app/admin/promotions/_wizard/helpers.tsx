@@ -133,11 +133,13 @@ export function ItemGroupPicker({
   cats,
   onApply,
   onCancel,
+  currencySymbol = "$",
 }: {
   group: IG;
   cats: CatEntry[];
   onApply: (g: IG) => void;
   onCancel: () => void;
+  currencySymbol?: string;
 }) {
   const [draft, setDraft] = useState<IG>(() => ({
     ...group,
@@ -287,7 +289,7 @@ export function ItemGroupPicker({
                               {hasVariants && <span className="text-gray-400"> · all sizes</span>}
                             </span>
                             <span className="text-xs text-gray-400">
-                              ${item.price.toFixed(2)}
+                              {currencySymbol}{item.price.toFixed(2)}
                             </span>
                           </label>
                           {/* Per-size variant checkboxes — target a specific size
@@ -313,7 +315,7 @@ export function ItemGroupPicker({
                                       className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500"
                                     />
                                     <span className="flex-1 text-gray-500">{v.name}</span>
-                                    <span className="text-gray-400">${v.price.toFixed(2)}</span>
+                                    <span className="text-gray-400">{currencySymbol}{v.price.toFixed(2)}</span>
                                   </label>
                                 );
                               })}
@@ -359,6 +361,7 @@ function ItemGroupRow({
   canRemove = true,
   showSlotConfig = false,
   showSpecialityFee = false,
+  currencySymbol = "$",
 }: {
   group: IG;
   index: number;
@@ -366,6 +369,7 @@ function ItemGroupRow({
   onChange: (g: IG) => void;
   onRemove: () => void;
   canRemove?: boolean;
+  currencySymbol?: string;
   /** Show inline min/max-per-slot inputs. Used by meal-bundle types
    *  (catalog #8, #13) so the owner can configure "1 pizza + 2 sides
    *  + 1 drink" instead of the v1 hardcoded 1-per-group. */
@@ -433,6 +437,7 @@ function ItemGroupRow({
             <ItemGroupPicker
               group={group}
               cats={cats}
+              currencySymbol={currencySymbol}
               onApply={(g) => {
                 onChange(g);
                 setOpen(false);
@@ -487,7 +492,7 @@ function ItemGroupRow({
           )}
           {showSpecialityFee && (
             <label className="flex items-center gap-1.5 text-xs text-gray-500">
-              <span>Speciality fee per item +$</span>
+              <span>Speciality fee per item +{currencySymbol}</span>
               <input
                 type="number"
                 min={0}
@@ -519,6 +524,7 @@ export function GroupsEditor({
   minGroups = 0,
   showSlotConfig = false,
   showSpecialityFee = false,
+  currencySymbol = "$",
 }: {
   groups: IG[];
   onChange: (groups: IG[]) => void;
@@ -529,6 +535,7 @@ export function GroupsEditor({
   /** Forwarded to ItemGroupRow — see ItemGroupRow's docstring. */
   showSlotConfig?: boolean;
   showSpecialityFee?: boolean;
+  currencySymbol?: string;
 }) {
   return (
     <div>
@@ -545,6 +552,7 @@ export function GroupsEditor({
           canRemove={groups.length > minGroups}
           showSlotConfig={showSlotConfig}
           showSpecialityFee={showSpecialityFee}
+          currencySymbol={currencySymbol}
         />
       ))}
       <button
@@ -672,16 +680,18 @@ export function AmtInput({
   label,
   value,
   onChange,
+  currencySymbol = "$",
 }: {
   label: string;
   value: number;
   onChange: (v: number) => void;
+  currencySymbol?: string;
 }) {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
       <div className="relative w-48">
-        <span className="absolute left-3 top-2 text-gray-400 text-sm">$</span>
+        <span className="absolute left-3 top-2 text-gray-400 text-sm">{currencySymbol}</span>
         <input
           type="number"
           min="0"

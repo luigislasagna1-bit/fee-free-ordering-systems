@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import { currencySymbol } from "@/lib/utils";
 import { PromoWizard } from "../_wizard/PromoWizard";
 
 export default async function NewPromotionPage() {
@@ -15,7 +16,7 @@ export default async function NewPromotionPage() {
     await Promise.all([
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
-        select: { paymentMethods: true },
+        select: { paymentMethods: true, currency: true },
       }),
       prisma.menuCategory.findMany({
         where: { restaurantId },
@@ -59,6 +60,7 @@ export default async function NewPromotionPage() {
       menuItems={menuItems}
       paymentMethods={paymentMethods}
       deliveryZones={deliveryZones}
+      currencySymbol={currencySymbol(restaurant?.currency)}
     />
   );
 }

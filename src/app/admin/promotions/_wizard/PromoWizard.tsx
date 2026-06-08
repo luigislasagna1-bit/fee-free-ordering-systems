@@ -33,6 +33,9 @@ export type WizardProps = {
   menuItems: { id: string; name: string; categoryId: string; price: number; variants?: { id: string; name: string; price: number }[] }[];
   paymentMethods: string[];
   deliveryZones: { id: string; name: string }[];
+  /** Restaurant's currency symbol (e.g. "€"/"$") for money input prefixes.
+   *  Defaults to "$" when not provided. Luigi 2026-06-07. */
+  currencySymbol?: string;
   /** When mode === "edit", the existing promo (already scoped to restaurantId). */
   initialPromo?: PromoRow | null;
 };
@@ -175,7 +178,7 @@ function initialFormFromPromo(p: PromoRow | null | undefined): Step3Form {
 // ─── Component ──────────────────────────────────────────────────────────────
 
 export function PromoWizard(props: WizardProps) {
-  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo } =
+  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo, currencySymbol = "$" } =
     props;
   const router = useRouter();
   const t = useTranslations("admin.promoWizard");
@@ -367,6 +370,7 @@ export function PromoWizard(props: WizardProps) {
               rules={rules}
               onRules={setRulesPartial}
               cats={cats}
+              currencySymbol={currencySymbol}
             />
           )}
           {step === 3 && (
@@ -375,6 +379,7 @@ export function PromoWizard(props: WizardProps) {
               setForm={setForm}
               paymentMethods={paymentMethods}
               deliveryZones={deliveryZones}
+              currencySymbol={currencySymbol}
             />
           )}
         </div>

@@ -30,6 +30,7 @@ export function StepConfig({
   onRules,
   cats,
   paymentMethods,
+  currencySymbol = "$",
 }: {
   promotionType: string;
   name: string;
@@ -44,6 +45,9 @@ export function StepConfig({
    *  methods the restaurant actually accepts. Empty array → fall back
    *  to the full list. */
   paymentMethods?: string[];
+  /** Restaurant currency symbol (€, £, $, …) — threaded into every money
+   *  input/price label so the wizard reflects Settings, not a hardcoded $. */
+  currencySymbol?: string;
 }) {
   const t = useTranslations("admin.promoStepConfig");
   const gUp = (groups: IG[]) => onRules({ groups });
@@ -90,6 +94,7 @@ export function StepConfig({
           gUp={gUp}
           cats={cats}
           paymentMethods={paymentMethods}
+          currencySymbol={currencySymbol}
         />
       </div>
     </div>
@@ -103,6 +108,7 @@ function TypeSpecific({
   gUp,
   cats,
   paymentMethods,
+  currencySymbol = "$",
 }: {
   type: string;
   rules: PromoRules;
@@ -110,6 +116,7 @@ function TypeSpecific({
   gUp: (groups: IG[]) => void;
   cats: CatEntry[];
   paymentMethods?: string[];
+  currencySymbol?: string;
 }) {
   const t = useTranslations("admin.promoStepConfig");
   switch (type) {
@@ -163,6 +170,7 @@ function TypeSpecific({
             {!wholeCart && (
               <div className="mt-3">
                 <GroupsEditor
+                  currencySymbol={currencySymbol}
                   groups={rules.groups ?? []}
                   onChange={gUp}
                   cats={cats}
@@ -203,6 +211,7 @@ function TypeSpecific({
         <div className="space-y-3">
           <SL label={t("bogoPaidGroupLabel")} sub={t("bogoPaidGroupSub")} />
           <ItemGroupRow
+            currencySymbol={currencySymbol}
             group={{ ...pG, role: "paid" }}
             index={0}
             cats={cats}
@@ -217,6 +226,7 @@ function TypeSpecific({
           />
           <SL label={t("bogoFreeGroupLabel")} sub={t("bogoFreeGroupSub")} />
           <ItemGroupRow
+            currencySymbol={currencySymbol}
             group={{ ...fG, role: "free" }}
             index={1}
             cats={cats}
@@ -257,6 +267,7 @@ function TypeSpecific({
             sub={t("bnfPaidGroupsSub")}
           />
           <GroupsEditor
+            currencySymbol={currencySymbol}
             groups={
               paidGs.length
                 ? paidGs
@@ -278,6 +289,7 @@ function TypeSpecific({
           />
           <SL label={t("bogoFreeGroupLabel")} sub={t("bogoFreeGroupSub")} />
           <ItemGroupRow
+            currencySymbol={currencySymbol}
             group={{ ...fG, role: "free" }}
             index={0}
             cats={cats}
@@ -298,6 +310,7 @@ function TypeSpecific({
     case "fixed_cart":
       return (
         <AmtInput
+          currencySymbol={currencySymbol}
           label={t("discountAmountLabel")}
           value={rules.discountAmount ?? 0}
           onChange={(v) => onRules({ discountAmount: v })}
@@ -361,6 +374,7 @@ function TypeSpecific({
       return (
         <div className="space-y-4">
           <AmtInput
+            currencySymbol={currencySymbol}
             label={t("minSpendLabel")}
             value={rules.triggerAmount ?? 0}
             onChange={(v) => onRules({ triggerAmount: v })}
@@ -371,6 +385,7 @@ function TypeSpecific({
               sub={t("freeItemPoolSub")}
             />
             <ItemGroupRow
+              currencySymbol={currencySymbol}
               group={{ ...fG, role: "free" }}
               index={0}
               cats={cats}
@@ -387,6 +402,7 @@ function TypeSpecific({
       return (
         <div className="space-y-4">
           <AmtInput
+            currencySymbol={currencySymbol}
             label={t("bundlePriceLabel")}
             value={rules.bundlePrice ?? 0}
             onChange={(v) => onRules({ bundlePrice: v })}
@@ -397,6 +413,7 @@ function TypeSpecific({
               sub={t("bundleGroupsSub")}
             />
             <GroupsEditor
+              currencySymbol={currencySymbol}
               groups={rules.groups ?? []}
               onChange={gUp}
               cats={cats}
@@ -411,6 +428,7 @@ function TypeSpecific({
       return (
         <div className="space-y-4">
           <AmtInput
+            currencySymbol={currencySymbol}
             label={t("bundleBasePriceLabel")}
             value={rules.bundlePrice ?? 0}
             onChange={(v) => onRules({ bundlePrice: v })}
@@ -421,6 +439,7 @@ function TypeSpecific({
               sub={t("bundleSpecialityGroupsSub")}
             />
             <GroupsEditor
+              currencySymbol={currencySymbol}
               groups={rules.groups ?? []}
               onChange={gUp}
               cats={cats}
@@ -436,6 +455,7 @@ function TypeSpecific({
       return (
         <div className="space-y-4">
           <AmtInput
+            currencySymbol={currencySymbol}
             label={t("discountAmountLabel")}
             value={rules.discountAmount ?? 0}
             onChange={(v) => onRules({ discountAmount: v })}
@@ -446,6 +466,7 @@ function TypeSpecific({
               sub={t("comboGroupsSub")}
             />
             <GroupsEditor
+              currencySymbol={currencySymbol}
               groups={rules.groups ?? []}
               onChange={gUp}
               cats={cats}
@@ -470,6 +491,7 @@ function TypeSpecific({
               sub={t("comboGroupsSub")}
             />
             <GroupsEditor
+              currencySymbol={currencySymbol}
               groups={rules.groups ?? []}
               onChange={gUp}
               cats={cats}
@@ -503,6 +525,7 @@ function TypeSpecific({
             sub={t("triggerGroupsSub")}
           />
           <GroupsEditor
+            currencySymbol={currencySymbol}
             groups={
               triggerGs.length
                 ? triggerGs
@@ -524,6 +547,7 @@ function TypeSpecific({
           />
           <SL label={t("freeDishPoolLabel")} />
           <ItemGroupRow
+            currencySymbol={currencySymbol}
             group={{ ...fG, role: "free" }}
             index={0}
             cats={cats}

@@ -63,6 +63,23 @@ export const SUPPORTED_CURRENCIES: Array<{ code: string; label: string; symbol: 
 ];
 
 /**
+ * The bare currency symbol for an ISO-4217 code (e.g. "EUR" → "€", "USD" → "$").
+ * Used for admin input prefixes where we want just the glyph, not a formatted
+ * amount. Derives via Intl (handles any code) and falls back to the curated
+ * list, then "$". Luigi 2026-06-07 — admin promo wizard hardcoded "$".
+ */
+export function currencySymbol(code: string | null | undefined): string {
+  const cur = String(code ?? "USD").toUpperCase();
+  try {
+    const sym = new Intl.NumberFormat("en", { style: "currency", currency: cur })
+      .formatToParts(0)
+      .find((p) => p.type === "currency")?.value;
+    if (sym) return sym;
+  } catch { /* invalid code → fall through */ }
+  return SUPPORTED_CURRENCIES.find((c) => c.code === cur)?.symbol ?? "$";
+}
+
+/**
  * Render a date/time for display.
  *
  * Backward-compatible: called with just a date it renders in en-US (legacy
