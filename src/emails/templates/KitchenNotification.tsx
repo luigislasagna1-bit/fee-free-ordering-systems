@@ -29,6 +29,10 @@ export type KitchenNotificationProps = {
   orderType?: string;
   estimatedMinutes?: number;
   paidOnline?: boolean;
+  /** Reserve-then-order: the table booking attached to this order. When set,
+   *  the store email flags "Table reserved for N — <date> <time>". */
+  reservationPartySize?: number | null;
+  reservationLabel?: string | null;
   /** Full itemized order. Optional — older call sites that don't have items
    *  pass `total` only; the template degrades to a "View order in admin"
    *  prompt instead of rendering an empty table. */
@@ -58,7 +62,7 @@ const ORDER_TYPE_LABEL: Record<string, string> = {
 export default function KitchenNotification(props: KitchenNotificationProps) {
   const {
     restaurantName, orderNumber, customerName, customerPhone, customerEmail,
-    orderType, estimatedMinutes, paidOnline, items, subtotal, taxAmount,
+    orderType, estimatedMinutes, paidOnline, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
     taxLabel, deliveryFee, tip, discount, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency,
   } = props;
@@ -82,6 +86,16 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
             </Badge>
           )}
         </div>
+
+        {/* Reserve-then-order: flag the table booking right at the top so the
+            store sees "table reservation + pre-order". */}
+        {reservationLabel && reservationPartySize != null && (
+          <div style={{ margin: "0 0 16px", padding: "10px 14px", borderRadius: 8, background: "#f3e8ff", border: "1px solid #e9d5ff" }}>
+            <strong style={{ color: "#6b21a8" }}>
+              🪑 Table reservation + pre-order — {reservationPartySize} {reservationPartySize === 1 ? "guest" : "guests"}, {reservationLabel}
+            </strong>
+          </div>
+        )}
 
         {/* Customer contact block */}
         <div style={{ margin: "0 0 6px" }}>

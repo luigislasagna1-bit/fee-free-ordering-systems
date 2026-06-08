@@ -152,6 +152,11 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       customerName: order.customerName,
       total: order.total,
       dashboardUrl: `${baseUrl}/admin/orders`,
+      // Reserve-then-order: the STORE copy also flags the table booking, so the
+      // kitchen email reads "table reservation + pre-order". Luigi 2026-06-08.
+      reservation: linkedReservation
+        ? { partySize: linkedReservation.partySize, date: linkedReservation.date, time: linkedReservation.time }
+        : undefined,
     },
   }).catch((e) => console.error("[fireOrderNotifications] notifyStaff:", e));
 

@@ -954,7 +954,10 @@ export function CheckoutModal({
                 )}
               </SectionCard>
 
-              {/* AVAILABLE TIME CHOICE */}
+              {/* AVAILABLE TIME CHOICE — hidden for a reserve-then-order: the
+                  slot is LOCKED to the booking time (shown in the banner above),
+                  so we never offer a conflicting time picker. Luigi 2026-06-08. */}
+              {!reservationContext && (
               <SectionCard
                 icon={<Clock className="w-4 h-4" />}
                 label={tc("availableTimeChoice")}
@@ -1179,6 +1182,7 @@ export function CheckoutModal({
                   </>)}
                 </div>
               </SectionCard>
+              )}
 
               {/* PAYMENT METHOD */}
               <SectionCard

@@ -365,9 +365,22 @@ export async function sendNewOrderNotificationEmail(params: {
   discount?: number;
   deliveryAddress?: string | null;
   customerNotes?: string | null;
+  /** Reserve-then-order: the table booking attached to this order, so the
+   *  STORE copy also flags "table reservation + pre-order". Luigi 2026-06-08. */
+  reservation?: { partySize: number; date: string; time: string } | null;
 }) {
   const t = await getDict(params.locale);
   const subject = t("email.newOrder.subject", { orderNumber: params.orderNumber, restaurant: params.restaurantName });
+  const resv = params.reservation ?? null;
+  const reservationLabel = resv
+    ? (() => {
+        const d = new Date(`${resv.date}T${resv.time}:00`);
+        const datePart = Number.isFinite(d.getTime())
+          ? d.toLocaleDateString(params.locale || undefined, { weekday: "long", month: "short", day: "numeric" })
+          : resv.date;
+        return `${datePart} ${resv.time}`;
+      })()
+    : null;
   const html = await renderEmail(
     KitchenNotification({
       restaurantName: params.restaurantName,
@@ -377,6 +390,8 @@ export async function sendNewOrderNotificationEmail(params: {
       customerEmail: params.customerEmail,
       orderType: params.orderType,
       paidOnline: params.paidOnline,
+      reservationPartySize: resv?.partySize ?? null,
+      reservationLabel,
       items: params.items,
       subtotal: params.subtotal,
       taxAmount: params.taxAmount,

@@ -212,7 +212,8 @@ type NotificationRecipientToggles = {
 
 export type StaffEventPayload =
   | { event: "orderPlaced" | "orderAcceptedDelivery" | "orderAcceptedPickup" | "orderAcceptedDineIn" | "orderAcceptedScheduled";
-      orderNumber: string; customerName: string; total: number; dashboardUrl: string }
+      orderNumber: string; customerName: string; total: number; dashboardUrl: string;
+      reservation?: { partySize: number; date: string; time: string } | null }
   | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string }
   | { event: "orderCanceled" | "orderMissed"; orderNumber: string; customerName: string; dashboardUrl: string }
   | { event: "reservationConfirmed"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending"; dashboardUrl: string }
@@ -302,6 +303,7 @@ async function dispatchStaffEvent(
         customerName: payload.customerName,
         total: payload.total,
         dashboardUrl: payload.dashboardUrl,
+        reservation: payload.reservation ?? null,
         locale,
         currency,
       });

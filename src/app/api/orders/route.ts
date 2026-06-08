@@ -221,6 +221,14 @@ export async function POST(req: NextRequest) {
       };
     }
 
+    // Reserve-then-order: the BOOKING time is authoritative — the food is FOR
+    // the table time. Use it as the order's scheduled slot so the order's
+    // requested time ALWAYS matches the reservation, no matter what the client
+    // sent (the checkout slot picker must never drift them apart). Luigi 2026-06-08.
+    const effectiveScheduledFor = reservationData
+      ? `${reservationData.date}T${reservationData.time}`
+      : scheduledFor;
+
     // ── Delivery address normalization + config-driven validation ─────────────
     // The restaurant may have customized which address fields show / are
     // required (deliveryAddressConfig). Build a sanitized structured blob from
@@ -880,7 +888,11 @@ export async function POST(req: NextRequest) {
     // Server-side guard for the per-service "minimum time in advance" + "maximum
     // days in advance" controls (Fabrizio cmq14gy64). Pickup/delivery only —
     // dine-in/catering have their own rules. Defense-in-depth vs the picker.
-    if ((type === "pickup" || type === "delivery" || type === "dine_in" || type === "take_out")
+    // SKIPPED for reserve-then-order: the booking time is governed by the
+    // reservation rules (notice window etc.) already validated above, not the
+    // order's scheduling controls. Luigi 2026-06-08.
+    if (!reservationData
+        && (type === "pickup" || type === "delivery" || type === "dine_in" || type === "take_out")
         && (restaurant as any).allowScheduledOrders !== false) {
       const tz = (restaurant as any).timezone ?? undefined;
       const minLead = type === "delivery" ? ((restaurant as any).deliveryMinLeadMinutes ?? 0)
@@ -1100,10 +1112,10 @@ export async function POST(req: NextRequest) {
     // for an 18:00–21:00 promo even if it's placed at 17:04. ASAP → undefined
     // (the engine uses current time). Fabrizio report cmpxejjev.
     const promoEvalNow: Date | undefined = (() => {
-      if (!scheduledFor) return undefined;
+      if (!effectiveScheduledFor) return undefined;
       const tz = (restaurant as any).timezone ?? undefined;
-      const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
-      const d = m ? parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), tz) : new Date(scheduledFor);
+      const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(effectiveScheduledFor));
+      const d = m ? parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), tz) : new Date(effectiveScheduledFor);
       return Number.isFinite(d.getTime()) ? d : undefined;
     })();
     const promoResults = applyPromotions(activePromos as any, {
@@ -1357,14 +1369,14 @@ export async function POST(req: NextRequest) {
     // were getting estimatedReady = now + 20min, ignoring the scheduled
     // time entirely; kitchen tablet then showed "Ready in 14:31" for a
     // tomorrow-10:30-PM order).
-    const scheduledForDate: Date | null = scheduledFor
+    const scheduledForDate: Date | null = effectiveScheduledFor
       ? (() => {
-          const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
+          const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(effectiveScheduledFor));
           if (m) {
             const tz = (restaurant as any).timezone ?? undefined;
             return parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), tz);
           }
-          return new Date(scheduledFor);
+          return new Date(effectiveScheduledFor);
         })()
       : null;
     const hasFutureSchedule =
