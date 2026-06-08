@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "BESPLATNO",
       "trackOrderButton": "Pratite vašu porudžbinu",
       "contactRestaurantNote": "Ukoliko imate bilo kakvih pitanja o vašoj porudžbini, molimo vas da direktno kontaktirate restoran putem podataka navedenih ispod.",
-      "scheduledFor": "Ovo je porudžbina za kasnije — zakazana za {time}."
+      "scheduledFor": "Ovo je porudžbina za kasnije — zakazana za {time}.",
+      "tableReservation": "Sto rezervisan za {n} — {time}"
     },
     "newOrder": {
       "subject": "Nova porudžbina #{orderNumber} — {restaurant}",

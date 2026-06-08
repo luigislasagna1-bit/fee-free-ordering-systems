@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "ZADARMO",
       "trackOrderButton": "Sledovať objednávku",
       "contactRestaurantNote": "Ak máte akékoľvek otázky ohľadom vašej objednávky, obráťte sa priamo na reštauráciu pomocou nižšie uvedených kontaktných údajov.",
-      "scheduledFor": "Toto je objednávka na neskôr — naplánovaná na {time}."
+      "scheduledFor": "Toto je objednávka na neskôr — naplánovaná na {time}.",
+      "tableReservation": "Stôl rezervovaný pre {n} — {time}"
     },
     "newOrder": {
       "subject": "Nová objednávka č. {orderNumber} — {restaurant}",

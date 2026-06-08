@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "GRATIS",
       "trackOrderButton": "Lacak pesanan Anda",
       "contactRestaurantNote": "Jika Anda memiliki pertanyaan tentang pesanan Anda, silakan hubungi restoran langsung menggunakan informasi di bawah ini.",
-      "scheduledFor": "Ini adalah pesanan untuk nanti — dijadwalkan pada {time}."
+      "scheduledFor": "Ini adalah pesanan untuk nanti — dijadwalkan pada {time}.",
+      "tableReservation": "Meja dipesan untuk {n} orang — {time}"
     },
     "newOrder": {
       "subject": "Pesanan baru #{orderNumber} — {restaurant}",

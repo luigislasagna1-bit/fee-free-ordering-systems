@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "BREZPLAČNO",
       "trackOrderButton": "Sledite svojemu naročilu",
       "contactRestaurantNote": "Če imate kakršna koli vprašanja o svojem naročilu, se obrnite neposredno na restavracijo z uporabo spodnjih podatkov.",
-      "scheduledFor": "To je naročilo za pozneje — predvideno za {time}."
+      "scheduledFor": "To je naročilo za pozneje — predvideno za {time}.",
+      "tableReservation": "Miza rezervirana za {n} — {time}"
     },
     "newOrder": {
       "subject": "Novo naročilo #{orderNumber} — {restaurant}",

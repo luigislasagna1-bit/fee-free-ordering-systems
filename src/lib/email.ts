@@ -234,6 +234,10 @@ interface OrderEmailParams {
   /** Scheduled ("order for later") slot. When set, the confirmation email shows
    *  a prominent "Order for later: <date/time>" line instead of the ASAP ETA. */
   scheduledFor?: Date | string | null;
+  /** Reserve-then-order: the table booking attached to this order. When set,
+   *  the confirmation email also states "Table reserved for N on <date> at
+   *  <time>" so one email covers both. Luigi 2026-06-08. */
+  reservation?: { partySize: number; date: string; time: string } | null;
   /** Restaurant IANA timezone — formats scheduledFor in the customer's local time. */
   timezone?: string;
   trackingUrl: string;
@@ -279,6 +283,20 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
         weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
       })
     : null;
+  // Reserve-then-order: a friendly "Tuesday, Jun 8 at 19:00" label for the
+  // attached table booking. The stored date/time are the restaurant's local
+  // wall-clock, so we format the date WITHOUT a timeZone (no shifting) and
+  // append the HH:MM as-is. Luigi 2026-06-08.
+  const resv = params.reservation ?? null;
+  const reservationLabel = resv
+    ? (() => {
+        const d = new Date(`${resv.date}T${resv.time}:00`);
+        const datePart = Number.isFinite(d.getTime())
+          ? d.toLocaleDateString(params.locale || undefined, { weekday: "long", month: "short", day: "numeric" })
+          : resv.date;
+        return `${datePart} ${resv.time}`;
+      })()
+    : null;
   const html = await renderEmail(
     OrderConfirmation({
       t,
@@ -289,6 +307,8 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       paidOnline: params.paidOnline ?? false,
       estimatedMinutes: params.estimatedTime,
       scheduledLabel,
+      reservationPartySize: resv?.partySize ?? null,
+      reservationLabel,
       items: params.items as EmailOrderItem[],
       subtotal: params.subtotal ?? params.total,
       taxAmount: params.taxAmount,

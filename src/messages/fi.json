@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "ILMAINEN",
       "trackOrderButton": "Seuraa tilaustasi",
       "contactRestaurantNote": "Jos sinulla on kysyttävää tilauksestasi, ota yhteyttä suoraan ravintolaan alla olevien tietojen avulla.",
-      "scheduledFor": "Tämä on tilaus myöhemmäksi — ajoitettu ajankohtaan {time}."
+      "scheduledFor": "Tämä on tilaus myöhemmäksi — ajoitettu ajankohtaan {time}.",
+      "tableReservation": "Pöytä varattu {n} hengelle — {time}"
     },
     "newOrder": {
       "subject": "Uusi tilaus #{orderNumber} — {restaurant}",

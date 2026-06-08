@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "GRATIS",
       "trackOrderButton": "Følg din ordre",
       "contactRestaurantNote": "Har du spørgsmål til din ordre, bedes du kontakte restauranten direkte via oplysningerne nedenfor.",
-      "scheduledFor": "Dette er en bestilling til senere — planlagt til {time}."
+      "scheduledFor": "Dette er en bestilling til senere — planlagt til {time}.",
+      "tableReservation": "Bord reserveret til {n} — {time}"
     },
     "newOrder": {
       "subject": "Ny ordre #{orderNumber} — {restaurant}",

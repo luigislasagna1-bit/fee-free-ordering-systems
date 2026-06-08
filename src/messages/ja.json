@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "無料",
       "trackOrderButton": "注文状況を確認する",
       "contactRestaurantNote": "ご注文に関するご質問は、以下の連絡先よりレストランに直接お問い合わせください。",
-      "scheduledFor": "これは予約注文です — {time} に予定されています。"
+      "scheduledFor": "これは予約注文です — {time} に予定されています。",
+      "tableReservation": "{n} 名様でテーブルを予約しました — {time}"
     },
     "newOrder": {
       "subject": "新規注文 #{orderNumber} — {restaurant}",

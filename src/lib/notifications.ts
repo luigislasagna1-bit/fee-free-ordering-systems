@@ -384,7 +384,7 @@ export function staffAcceptEventForOrderType(
 // ─── notifyCustomer ────────────────────────────────────────────────────────
 
 export type CustomerEventPayload =
-  | { event: "orderConfirmed"; customerName: string; orderNumber: string; items: { name: string; quantity: number; price: number }[]; total: number; orderType: string; estimatedTime: number; scheduledFor?: Date | string | null; trackingUrl: string; appliedPromos?: Array<{ name: string; type: string; discount: number; couponCode?: string }> }
+  | { event: "orderConfirmed"; customerName: string; orderNumber: string; items: { name: string; quantity: number; price: number }[]; total: number; orderType: string; estimatedTime: number; scheduledFor?: Date | string | null; reservation?: { partySize: number; date: string; time: string } | null; trackingUrl: string; appliedPromos?: Array<{ name: string; type: string; discount: number; couponCode?: string }> }
   | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string; trackingUrl?: string; paidOnline?: boolean; paymentMethod?: string }
   /** Kitchen pushed back the ready time. Fired from POST /api/orders/[id]/delay
    *  whenever staff hits "+5 / +10 / Custom" on the order detail. Customer
@@ -503,6 +503,7 @@ export async function notifyCustomer(args: {
           orderType: payload.orderType,
           estimatedTime: payload.estimatedTime,
           scheduledFor: payload.scheduledFor ?? null,
+          reservation: payload.reservation ?? null,
           timezone: (restaurant as any).timezone || undefined,
           trackingUrl: payload.trackingUrl,
           locale,

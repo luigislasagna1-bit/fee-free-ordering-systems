@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "GRATUIT",
       "trackOrderButton": "Urmărește comanda",
       "contactRestaurantNote": "Dacă aveți întrebări despre comanda dvs., vă rugăm să contactați direct restaurantul folosind datele de mai jos.",
-      "scheduledFor": "Aceasta este o comandă pentru mai târziu — programată pentru {time}."
+      "scheduledFor": "Aceasta este o comandă pentru mai târziu — programată pentru {time}.",
+      "tableReservation": "Masă rezervată pentru {n} — {time}"
     },
     "newOrder": {
       "subject": "Comandă nouă #{orderNumber} — {restaurant}",

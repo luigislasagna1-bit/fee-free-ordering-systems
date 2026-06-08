@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "ฟรี",
       "trackOrderButton": "ติดตามออร์เดอร์ของคุณ",
       "contactRestaurantNote": "หากมีข้อสงสัยเกี่ยวกับออร์เดอร์ กรุณาติดต่อร้านอาหารโดยตรงโดยใช้ข้อมูลด้านล่าง",
-      "scheduledFor": "นี่คือคำสั่งซื้อแบบสั่งล่วงหน้า — กำหนดเวลาไว้ {time}"
+      "scheduledFor": "นี่คือคำสั่งซื้อแบบสั่งล่วงหน้า — กำหนดเวลาไว้ {time}",
+      "tableReservation": "จองโต๊ะสำหรับ {n} ท่าน — {time}"
     },
     "newOrder": {
       "subject": "ออเดอร์ใหม่ #{orderNumber} — {restaurant}",

@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "INGYENES",
       "trackOrderButton": "Rendelés nyomon követése",
       "contactRestaurantNote": "Ha kérdése van a rendelésével kapcsolatban, forduljon közvetlenül az étteremhez az alábbi elérhetőségeken.",
-      "scheduledFor": "Ez egy későbbre szóló rendelés — időpontja: {time}."
+      "scheduledFor": "Ez egy későbbre szóló rendelés — időpontja: {time}.",
+      "tableReservation": "Asztal lefoglalva {n} főre — {time}"
     },
     "newOrder": {
       "subject": "Új #{orderNumber}. rendelés — {restaurant}",

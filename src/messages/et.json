@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "TASUTA",
       "trackOrderButton": "Jälgi oma tellimust",
       "contactRestaurantNote": "Kui teil on tellimuse kohta küsimusi, võtke palun otse ühendust restoraniga allpool toodud kontaktandmete kaudu.",
-      "scheduledFor": "See on tellimus hilisemaks — planeeritud ajaks {time}."
+      "scheduledFor": "See on tellimus hilisemaks — planeeritud ajaks {time}.",
+      "tableReservation": "Laud broneeritud {n} inimesele — {time}"
     },
     "newOrder": {
       "subject": "Uus tellimus #{orderNumber} — {restaurant}",

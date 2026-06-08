@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "免费",
       "trackOrderButton": "追踪您的订单",
       "contactRestaurantNote": "如您对订单有任何疑问，请通过以下联系方式直接联系餐厅。",
-      "scheduledFor": "这是一笔预约订单，预定时间为 {time}。"
+      "scheduledFor": "这是一笔预约订单，预定时间为 {time}。",
+      "tableReservation": "已为 {n} 位预订餐桌 — {time}"
     },
     "newOrder": {
       "subject": "新订单 #{orderNumber} — {restaurant}",

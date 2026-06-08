@@ -3692,7 +3692,8 @@
       "promosAppliedHeading": "🎉 Promos applied",
       "promoFreeLabel": "FREE",
       "trackOrderButton": "Track your order",
-      "contactRestaurantNote": "If you have any questions about your order, please contact the restaurant directly using the details below."
+      "contactRestaurantNote": "If you have any questions about your order, please contact the restaurant directly using the details below.",
+      "tableReservation": "Table reserved for {n} — {time}"
     },
     "newOrder": {
       "subject": "New order #{orderNumber} — {restaurant}",

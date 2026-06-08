@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "GRATIS",
       "trackOrderButton": "Seguir tu pedido",
       "contactRestaurantNote": "Si tienes alguna pregunta sobre tu pedido, comunícate directamente con el restaurante utilizando los datos que aparecen a continuación.",
-      "scheduledFor": "Este es un pedido para más tarde — programado para el {time}."
+      "scheduledFor": "Este es un pedido para más tarde — programado para el {time}.",
+      "tableReservation": "Mesa reservada para {n} — {time}"
     },
     "newOrder": {
       "subject": "Nuevo pedido #{orderNumber} — {restaurant}",

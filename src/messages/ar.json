@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "مجاناً",
       "trackOrderButton": "تتبع طلبك",
       "contactRestaurantNote": "إذا كان لديك أي استفسار حول طلبك، يرجى التواصل مع المطعم مباشرةً عبر التفاصيل الواردة أدناه.",
-      "scheduledFor": "هذا طلب لوقت لاحق — مُجدول في {time}."
+      "scheduledFor": "هذا طلب لوقت لاحق — مُجدول في {time}.",
+      "tableReservation": "تم حجز طاولة لـ {n} — {time}"
     },
     "newOrder": {
       "subject": "طلب جديد #{orderNumber} — {restaurant}",

@@ -63,6 +63,15 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
     return { fired: false };
   }
 
+  // Reserve-then-order: pull the linked table booking (if any) so the SINGLE
+  // order confirmation email also confirms the reservation — "we've received
+  // your table reservation AND pre-order". Null for every normal order.
+  // Luigi 2026-06-08.
+  const linkedReservation = await prisma.reservation.findFirst({
+    where: { orderId: order.id },
+    select: { partySize: true, date: true, time: true },
+  });
+
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
 
   // Parse Order.appliedPromos snapshot so the email + receipt can show
@@ -125,6 +134,11 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       // Scheduled ("order for later") slot — drives the prominent scheduled
       // line on the confirmation email. Null = ASAP. Luigi 2026-06-05.
       scheduledFor: (order as any).scheduledFor ?? null,
+      // Reserve-then-order: the table booking attached to this order, so the
+      // confirmation email states the reservation too. Luigi 2026-06-08.
+      reservation: linkedReservation
+        ? { partySize: linkedReservation.partySize, date: linkedReservation.date, time: linkedReservation.time }
+        : undefined,
       trackingUrl: `${baseUrl}/order/${order.restaurant.slug}/status/${order.id}`,
       appliedPromos: appliedPromosForEmail,
     },

@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "BEZMAKSAS",
       "trackOrderButton": "Izsekot pasūtījumam",
       "contactRestaurantNote": "Ja jums ir jautājumi par jūsu pasūtījumu, lūdzu, sazinieties ar restorānu tieši, izmantojot tālāk norādīto kontaktinformāciju.",
-      "scheduledFor": "Šis ir pasūtījums vēlākam laikam — ieplānots uz {time}."
+      "scheduledFor": "Šis ir pasūtījums vēlākam laikam — ieplānots uz {time}.",
+      "tableReservation": "Galdiņš rezervēts {n} personām — {time}"
     },
     "newOrder": {
       "subject": "Jauns pasūtījums #{orderNumber} — {restaurant}",

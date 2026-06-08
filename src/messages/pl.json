@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "GRATIS",
       "trackOrderButton": "Śledź swoje zamówienie",
       "contactRestaurantNote": "W razie pytań dotyczących zamówienia prosimy o bezpośredni kontakt z restauracją, korzystając z danych podanych poniżej.",
-      "scheduledFor": "To zamówienie na później — zaplanowane na {time}."
+      "scheduledFor": "To zamówienie na później — zaplanowane na {time}.",
+      "tableReservation": "Stolik zarezerwowany dla {n} — {time}"
     },
     "newOrder": {
       "subject": "Nowe zamówienie #{orderNumber} — {restaurant}",

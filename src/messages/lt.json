@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "NEMOKAMAI",
       "trackOrderButton": "Sekti užsakymą",
       "contactRestaurantNote": "Jei turite klausimų dėl savo užsakymo, susisiekite tiesiogiai su restoranu, naudodami toliau pateiktus kontaktus.",
-      "scheduledFor": "Tai užsakymas vėlesniam laikui — suplanuotas {time}."
+      "scheduledFor": "Tai užsakymas vėlesniam laikui — suplanuotas {time}.",
+      "tableReservation": "Staliukas rezervuotas {n} asmenims — {time}"
     },
     "newOrder": {
       "subject": "Naujas užsakymas #{orderNumber} — {restaurant}",

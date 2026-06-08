@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "मुफ़्त",
       "trackOrderButton": "अपना ऑर्डर ट्रैक करें",
       "contactRestaurantNote": "यदि आपके ऑर्डर के बारे में कोई प्रश्न हो, तो कृपया नीचे दिए गए विवरण का उपयोग करके सीधे रेस्तराँ से संपर्क करें।",
-      "scheduledFor": "यह बाद के लिए एक ऑर्डर है — {time} के लिए निर्धारित।"
+      "scheduledFor": "यह बाद के लिए एक ऑर्डर है — {time} के लिए निर्धारित।",
+      "tableReservation": "{n} लोगों के लिए टेबल आरक्षित — {time}"
     },
     "newOrder": {
       "subject": "नया ऑर्डर #{orderNumber} — {restaurant}",

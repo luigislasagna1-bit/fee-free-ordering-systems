@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "חינם",
       "trackOrderButton": "עקוב אחר ההזמנה",
       "contactRestaurantNote": "אם יש לך שאלות לגבי הזמנתך, אנא פנה ישירות למסעדה באמצעות הפרטים שבהמשך.",
-      "scheduledFor": "זוהי הזמנה לאחר כך — מתוזמנת ל-{time}."
+      "scheduledFor": "זוהי הזמנה לאחר כך — מתוזמנת ל-{time}.",
+      "tableReservation": "שולחן הוזמן עבור {n} — {time}"
     },
     "newOrder": {
       "subject": "הזמנה חדשה #{orderNumber} — {restaurant}",

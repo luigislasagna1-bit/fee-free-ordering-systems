@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "ÜCRETSİZ",
       "trackOrderButton": "Siparişinizi takip edin",
       "contactRestaurantNote": "Siparişinizle ilgili sorularınız için lütfen aşağıdaki iletişim bilgilerini kullanarak restoranla doğrudan iletişime geçin.",
-      "scheduledFor": "Bu, ileri tarihli bir siparıştir — {time} için planlandı."
+      "scheduledFor": "Bu, ileri tarihli bir siparıştir — {time} için planlandı.",
+      "tableReservation": "{n} kişilik masa ayrıldı — {time}"
     },
     "newOrder": {
       "subject": "Yeni #{orderNumber} numaralı sipariş — {restaurant}",

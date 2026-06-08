@@ -3692,7 +3692,8 @@
       "promoFreeLabel": "MIỄN PHÍ",
       "trackOrderButton": "Theo dõi đơn hàng của bạn",
       "contactRestaurantNote": "Nếu bạn có thắc mắc về đơn hàng, vui lòng liên hệ trực tiếp với nhà hàng theo thông tin bên dưới.",
-      "scheduledFor": "Đây là đơn đặt sau — được lên lịch vào {time}."
+      "scheduledFor": "Đây là đơn đặt sau — được lên lịch vào {time}.",
+      "tableReservation": "Đã đặt bàn cho {n} người — {time}"
     },
     "newOrder": {
       "subject": "Đơn mới #{orderNumber} — {restaurant}",

@@ -36,6 +36,10 @@ export type OrderConfirmationProps = {
   /** Pre-formatted scheduled slot (restaurant tz + customer locale). When set,
    *  the email shows an "order for later" line instead of the ASAP ETA. */
   scheduledLabel?: string | null;
+  /** Reserve-then-order: when this order came with a table booking, these show
+   *  a "Table reserved for N — <date> <time>" line so one email covers both. */
+  reservationPartySize?: number | null;
+  reservationLabel?: string | null;
   items: EmailOrderItem[];
   subtotal: number;
   taxAmount?: number;
@@ -69,7 +73,7 @@ export type OrderConfirmationProps = {
 export default function OrderConfirmation(props: OrderConfirmationProps) {
   const {
     customerName, orderNumber, restaurantName, orderType, paidOnline,
-    estimatedMinutes, scheduledLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
+    estimatedMinutes, scheduledLabel, reservationPartySize, reservationLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
     discount, total, deliveryAddress, trackingUrl, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, currency,
     appliedPromos, t,
@@ -116,6 +120,15 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           <div style={{ margin: "0 0 16px", padding: "10px 14px", borderRadius: 8, background: "#e0f2fe", border: "1px solid #bae6fd" }}>
             <strong style={{ color: "#075985" }}>
               {t("email.orderConfirmed.scheduledFor", { time: scheduledLabel })}
+            </strong>
+          </div>
+        )}
+
+        {/* Reserve-then-order: confirm the table booking in the SAME email. */}
+        {reservationLabel && reservationPartySize != null && (
+          <div style={{ margin: "0 0 16px", padding: "10px 14px", borderRadius: 8, background: "#f3e8ff", border: "1px solid #e9d5ff" }}>
+            <strong style={{ color: "#6b21a8" }}>
+              🪑 {t("email.orderConfirmed.tableReservation", { n: reservationPartySize, time: reservationLabel })}
             </strong>
           </div>
         )}
