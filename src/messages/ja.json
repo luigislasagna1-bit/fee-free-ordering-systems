@@ -214,7 +214,8 @@
       "cityRequired": "配達には市区町村の入力が必要です",
       "zipRequired": "配達には郵便番号の入力が必要です",
       "fieldRequired": "{field}を入力してください",
-      "phoneInvalid": "有効な電話番号を入力してください（数字のみ）。"
+      "phoneInvalid": "有効な電話番号を入力してください（数字のみ）。",
+      "promoItemsAdded": "商品を追加しました — 割引はお会計時に適用されます"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ ハーフ＆ハーフ",
       "leftHalf": "左半分",
       "rightHalf": "右半分"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "お得なセットを作ろう",
+      "closeAriaLabel": "閉じる",
+      "noGroupsConfigured": "このセットはまだ設定が完了していません。",
+      "slotLabelFallback": "商品 {n} を選ぶ",
+      "freeSlotLabel": "無料の商品",
+      "freeBadge": "無料",
+      "percentOffBadge": "{pct}% オフ",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "このグループには対象商品がありません。",
+      "free": "無料",
+      "addToCart": "カートに追加",
+      "readyHint": "セットの準備ができました — カートに追加しましょう！",
+      "remainingHint": "このセットを完成させるには、あと {count, plural, one {# 点} other {# 点}}の商品を選んでください",
+      "hintBogo": "商品を追加して、無料の商品を選んでください。",
+      "hintBuyNGetFree": "各グループから1つずつ選んで、無料の商品を手に入れましょう。",
+      "hintFreeDishMeal": "お好きな組み合わせでどうぞ — 最後の1品は当店からのサービスです。",
+      "hintCombo": "各グループから1つずつ選んでください — コンボ割引は自動で適用されます。"
     }
   }
 }

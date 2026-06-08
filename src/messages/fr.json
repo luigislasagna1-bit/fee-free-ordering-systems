@@ -213,7 +213,8 @@
       "cityRequired": "Ville requise pour la livraison",
       "zipRequired": "Code postal requis pour la livraison",
       "fieldRequired": "Veuillez saisir {field}",
-      "phoneInvalid": "Veuillez saisir un numéro de téléphone valide (chiffres uniquement)."
+      "phoneInvalid": "Veuillez saisir un numéro de téléphone valide (chiffres uniquement).",
+      "promoItemsAdded": "Articles ajoutés — votre remise s'applique au paiement"
     },
     "followUs": "Suivez-nous",
     "searchMenu": "Rechercher dans le menu…",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Moitié-moitié",
       "leftHalf": "Moitié gauche",
       "rightHalf": "Moitié droite"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Composez votre offre",
+      "closeAriaLabel": "Fermer",
+      "noGroupsConfigured": "Cette offre n'est pas encore entièrement configurée.",
+      "slotLabelFallback": "Choisissez l'article {n}",
+      "freeSlotLabel": "Votre article gratuit",
+      "freeBadge": "GRATUIT",
+      "percentOffBadge": "-{pct} %",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Aucun article éligible dans ce groupe.",
+      "free": "Gratuit",
+      "addToCart": "Ajouter au panier",
+      "readyHint": "Votre offre est prête — ajoutez-la à votre panier !",
+      "remainingHint": "Choisissez {count, plural, one {# article de plus} other {# articles de plus}} pour finaliser cette offre",
+      "hintBogo": "Ajoutez votre article et choisissez celui qui est offert.",
+      "hintBuyNGetFree": "Choisissez un article dans chaque groupe pour débloquer votre article gratuit.",
+      "hintFreeDishMeal": "Composez votre repas — le dernier article est offert.",
+      "hintCombo": "Choisissez un article dans chaque groupe — la remise combo s'applique automatiquement."
     }
   }
 }

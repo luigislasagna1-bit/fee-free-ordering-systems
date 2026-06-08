@@ -214,7 +214,8 @@
       "cityRequired": "Mesto je povinné pre doručenie",
       "zipRequired": "PSČ je povinné pre doručenie",
       "fieldRequired": "Zadajte {field}",
-      "phoneInvalid": "Zadajte platné telefónne číslo (iba číslice)."
+      "phoneInvalid": "Zadajte platné telefónne číslo (iba číslice).",
+      "promoItemsAdded": "Položky pridané — vaša zľava sa uplatní pri pokladni"
     },
     "searchMenu": "Hľadať v menu…",
     "signIn": "Prihlásiť sa",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Polovica & polovica",
       "leftHalf": "Ľavá polovica",
       "rightHalf": "Pravá polovica"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Poskladajte si ponuku",
+      "closeAriaLabel": "Zavrieť",
+      "noGroupsConfigured": "Táto ponuka ešte nie je úplne nastavená.",
+      "slotLabelFallback": "Vyberte položku {n}",
+      "freeSlotLabel": "Vaša položka zdarma",
+      "freeBadge": "ZDARMA",
+      "percentOffBadge": "{pct} % zľava",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "V tejto skupine nie sú žiadne vhodné položky.",
+      "free": "Zdarma",
+      "addToCart": "Pridať do košíka",
+      "readyHint": "Vaša ponuka je pripravená — pridajte ju do košíka!",
+      "remainingHint": "Na dokončenie tejto ponuky vyberte ešte {count, plural, one {# položku} few {# položky} other {# položiek}}",
+      "hintBogo": "Pridajte si položku a vyberte si tú zdarma.",
+      "hintBuyNGetFree": "Vyberte si po jednej z každej skupiny a odomknite si položku zdarma.",
+      "hintFreeDishMeal": "Poskladajte si jedlo — poslednú položku máte od nás.",
+      "hintCombo": "Vyberte si po jednej z každej skupiny — zľava na kombo sa uplatní automaticky."
     }
   }
 }

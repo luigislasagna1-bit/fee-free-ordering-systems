@@ -214,7 +214,8 @@
       "cityRequired": "外卖订单需填写城市",
       "zipRequired": "外卖订单需填写邮政编码",
       "fieldRequired": "请填写{field}",
-      "phoneInvalid": "请输入有效的电话号码（仅限数字）。"
+      "phoneInvalid": "请输入有效的电话号码（仅限数字）。",
+      "promoItemsAdded": "商品已添加 — 折扣将在结账时生效"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ 各点一半",
       "leftHalf": "左半边",
       "rightHalf": "右半边"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "定制你的优惠",
+      "closeAriaLabel": "关闭",
+      "noGroupsConfigured": "此优惠尚未完全设置好。",
+      "slotLabelFallback": "选择第 {n} 件商品",
+      "freeSlotLabel": "你的免费商品",
+      "freeBadge": "免费",
+      "percentOffBadge": "{pct}% 折扣",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "此分组中没有符合条件的商品。",
+      "free": "免费",
+      "addToCart": "加入购物车",
+      "readyHint": "优惠已准备就绪 — 快加入购物车吧！",
+      "remainingHint": "再选 {count, plural, one {# 件商品} other {# 件商品}} 即可完成此优惠",
+      "hintBogo": "添加你的商品，再挑一件免费的。",
+      "hintBuyNGetFree": "每组各选一件，即可解锁你的免费商品。",
+      "hintFreeDishMeal": "搭配你的套餐 — 最后一件我们请客。",
+      "hintCombo": "每组各选一件 — 套餐折扣将自动应用。"
     }
   }
 }

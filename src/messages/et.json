@@ -214,7 +214,8 @@
       "cityRequired": "Linn on kohaletoimetamiseks kohustuslik",
       "zipRequired": "Sihtnumber on kohaletoimetamiseks kohustuslik",
       "fieldRequired": "Palun sisesta {field}",
-      "phoneInvalid": "Palun sisesta kehtiv telefoninumber (ainult numbrid)."
+      "phoneInvalid": "Palun sisesta kehtiv telefoninumber (ainult numbrid).",
+      "promoItemsAdded": "Tooted lisatud — soodustus rakendub kassas"
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Pool ja pool",
       "leftHalf": "Vasak pool",
       "rightHalf": "Parem pool"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Pane oma pakkumine kokku",
+      "closeAriaLabel": "Sulge",
+      "noGroupsConfigured": "See pakkumine pole veel täielikult seadistatud.",
+      "slotLabelFallback": "Vali toode {n}",
+      "freeSlotLabel": "Sinu tasuta toode",
+      "freeBadge": "TASUTA",
+      "percentOffBadge": "{pct}% soodsamalt",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Selles rühmas pole sobivaid tooteid.",
+      "free": "Tasuta",
+      "addToCart": "Lisa ostukorvi",
+      "readyHint": "Sinu pakkumine on valmis — lisa see ostukorvi!",
+      "remainingHint": "Pakkumise lõpetamiseks vali {count, plural, one {veel # toode} other {veel # toodet}}",
+      "hintBogo": "Lisa oma toode ja vali tasuta toode.",
+      "hintBuyNGetFree": "Vali igast rühmast üks, et avada oma tasuta toode.",
+      "hintFreeDishMeal": "Pane oma eine kokku — viimase toote pakume meie.",
+      "hintCombo": "Vali igast rühmast üks — kombo-soodustus rakendub automaatselt."
     }
   }
 }

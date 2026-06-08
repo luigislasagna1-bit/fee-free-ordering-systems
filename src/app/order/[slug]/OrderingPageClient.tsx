@@ -2453,6 +2453,70 @@ export function OrderingPageClient({
     toast.success(`Added bundle: ${bundle.promoName}`);
   };
 
+  /** Complete a guided multi-group promo (bogo / buy_n_get_free /
+   *  free_dish_meal / fixed_combo / percentage_combo). Drops every chosen item
+   *  into the cart in ONE batch: paid-group picks at their normal price, and
+   *  free-group picks tagged "Free with promo: <name>" so the engine nets
+   *  exactly one to $0 (and the existing cleanup reverts them if the qualifying
+   *  items are later removed). The discount is always engine-driven — this only
+   *  assembles the qualifying cart so the customer never has to back out to the
+   *  full menu. Luigi 2026-06-07. */
+  const addGuidedPromoToCart = (
+    picks: Array<{ menuItemId: string; variantId: string | null; isFree: boolean }>,
+    promoName: string,
+  ) => {
+    const fullItems = visibleCategories.flatMap((c) => c.menuItems);
+    const additions: CartItem[] = [];
+    for (const p of picks) {
+      const fullItem = fullItems.find((mi) => mi.id === p.menuItemId);
+      if (!fullItem) continue;
+      // Resolve the chosen size; fall back to the default/first variant when the
+      // item requires one but the picker didn't capture it (mirrors freebie).
+      let chosenVariant = p.variantId
+        ? (fullItem.variants ?? []).find((v) => v.id === p.variantId)
+        : undefined;
+      if (!chosenVariant && (fullItem as any).hasVariants && (fullItem.variants?.length ?? 0) > 0) {
+        chosenVariant = fullItem.variants!.find((v) => (v as any).isDefault) ?? fullItem.variants![0];
+      }
+      const unit = chosenVariant?.price ?? fullItem.price;
+      additions.push({
+        menuItem: fullItem,
+        variant: chosenVariant,
+        quantity: 1,
+        selectedMods: {},
+        notes: p.isFree ? `Free with promo: ${promoName}` : "",
+        lineTotal: unit,
+        unitPrice: unit,
+      });
+    }
+    if (additions.length === 0) {
+      toast.error(tT("itemUnavailable") ?? "Item unavailable");
+      return;
+    }
+    setCart((prev) => {
+      const next = [...prev];
+      for (const add of additions) {
+        // Free lines merge with an identical existing freebie (one free, rest
+        // charged) — same rule as addFreebieToCart. Paid lines always append.
+        if (typeof add.notes === "string" && add.notes.startsWith("Free with promo:")) {
+          const idx = next.findIndex((ci) =>
+            ci.notes === add.notes &&
+            ci.menuItem.id === add.menuItem.id &&
+            (ci.variant?.id ?? null) === (add.variant?.id ?? null));
+          if (idx >= 0) {
+            const ex = next[idx];
+            const qty = ex.quantity + 1;
+            next[idx] = { ...ex, quantity: qty, lineTotal: (ex.unitPrice ?? 0) * qty };
+            continue;
+          }
+        }
+        next.push(add);
+      }
+      return next;
+    });
+    toast.success(tT("promoItemsAdded") ?? "Items added — your discount applies at checkout");
+  };
+
   const bannerH = bannerHeightPx(theme.bannerHeight);
 
   return (
@@ -3848,6 +3912,7 @@ export function OrderingPageClient({
           primaryColor={theme.primaryColor}
           onAddFreebie={addFreebieToCart}
           onAddBundle={addBundleToCart}
+          onCompleteGuidedPromo={addGuidedPromoToCart}
           onSwitchOrderType={(next) => setOrderType(next)}
           // Click an eligible item in the promo modal → close the promo
           // modal + open the item-config sheet so the customer can pick

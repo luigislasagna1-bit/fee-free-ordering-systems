@@ -214,7 +214,8 @@
       "cityRequired": "डिलीवरी के लिए शहर आवश्यक है",
       "zipRequired": "डिलीवरी के लिए पिन कोड आवश्यक है",
       "fieldRequired": "कृपया {field} दर्ज करें",
-      "phoneInvalid": "कृपया एक मान्य फ़ोन नंबर दर्ज करें (केवल अंक)।"
+      "phoneInvalid": "कृपया एक मान्य फ़ोन नंबर दर्ज करें (केवल अंक)।",
+      "promoItemsAdded": "आइटम जोड़े गए — आपकी छूट चेकआउट पर लागू होगी"
     },
     "searchMenu": "मेनू खोजें…",
     "signIn": "साइन इन करें",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ आधा-आधा",
       "leftHalf": "बायाँ हिस्सा",
       "rightHalf": "दायाँ हिस्सा"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "अपनी डील बनाएं",
+      "closeAriaLabel": "बंद करें",
+      "noGroupsConfigured": "यह डील अभी पूरी तरह सेट नहीं हुई है।",
+      "slotLabelFallback": "आइटम {n} चुनें",
+      "freeSlotLabel": "आपका मुफ़्त आइटम",
+      "freeBadge": "मुफ़्त",
+      "percentOffBadge": "{pct}% छूट",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "इस समूह में कोई योग्य आइटम नहीं है।",
+      "free": "मुफ़्त",
+      "addToCart": "कार्ट में जोड़ें",
+      "readyHint": "आपकी डील तैयार है — इसे अपने कार्ट में जोड़ें!",
+      "remainingHint": "इस डील को पूरा करने के लिए {count, plural, one {# और आइटम} other {# और आइटम}} चुनें",
+      "hintBogo": "अपना आइटम जोड़ें और अपना मुफ़्त आइटम चुनें।",
+      "hintBuyNGetFree": "अपना मुफ़्त आइटम अनलॉक करने के लिए हर समूह से एक चुनें।",
+      "hintFreeDishMeal": "अपना भोजन बनाएं — आखिरी आइटम हमारी ओर से।",
+      "hintCombo": "हर समूह से एक चुनें — कॉम्बो छूट अपने आप लागू हो जाती है।"
     }
   }
 }

@@ -187,6 +187,7 @@
     "toasts": {
       "itemAdded": "Added to cart",
       "itemAddedNamed": "{name} added!",
+      "promoItemsAdded": "Items added — your discount applies at checkout",
       "itemUpdated": "Item updated",
       "itemRemoved": "Removed from cart",
       "cartCleared": "Cart cleared",
@@ -4242,6 +4243,25 @@
       "freeBadge": "FREE",
       "maybeLater": "Maybe later",
       "close": "Close"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Build your deal",
+      "closeAriaLabel": "Close",
+      "noGroupsConfigured": "This deal isn't fully set up yet.",
+      "slotLabelFallback": "Choose item {n}",
+      "freeSlotLabel": "Your free item",
+      "freeBadge": "FREE",
+      "percentOffBadge": "{pct}% off",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "No eligible items in this group.",
+      "free": "Free",
+      "addToCart": "Add to cart",
+      "readyHint": "Your deal is ready — add it to your cart!",
+      "remainingHint": "Pick {count, plural, one {# more item} other {# more items}} to complete this deal",
+      "hintBogo": "Add your item and pick your free one.",
+      "hintBuyNGetFree": "Pick one from each group to unlock your free item.",
+      "hintFreeDishMeal": "Build your meal — the last item is on us.",
+      "hintCombo": "Pick one from each group — the combo discount applies automatically."
     },
     "loginForm": {
       "emailLabel": "Email",

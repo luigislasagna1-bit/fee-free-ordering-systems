@@ -214,7 +214,8 @@
       "cityRequired": "Miestas būtinas pristatymui",
       "zipRequired": "Pašto kodas būtinas pristatymui",
       "fieldRequired": "Įveskite {field}",
-      "phoneInvalid": "Įveskite teisingą telefono numerį (tik skaitmenys)."
+      "phoneInvalid": "Įveskite teisingą telefono numerį (tik skaitmenys).",
+      "promoItemsAdded": "Prekės pridėtos – nuolaida bus pritaikyta atsiskaitant"
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Pusė ir pusė",
       "leftHalf": "Kairioji pusė",
       "rightHalf": "Dešinioji pusė"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Sukurkite savo pasiūlymą",
+      "closeAriaLabel": "Uždaryti",
+      "noGroupsConfigured": "Šis pasiūlymas dar nėra iki galo sukonfigūruotas.",
+      "slotLabelFallback": "Pasirinkite prekę {n}",
+      "freeSlotLabel": "Jūsų nemokama prekė",
+      "freeBadge": "NEMOKAMA",
+      "percentOffBadge": "{pct} % nuolaida",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Šioje grupėje nėra tinkamų prekių.",
+      "free": "Nemokama",
+      "addToCart": "Įdėti į krepšelį",
+      "readyHint": "Jūsų pasiūlymas paruoštas – įdėkite jį į krepšelį!",
+      "remainingHint": "Pasirinkite dar {count, plural, one {# prekę} few {# prekes} many {# prekės} other {# prekių}}, kad užbaigtumėte šį pasiūlymą",
+      "hintBogo": "Pridėkite savo prekę ir pasirinkite nemokamą.",
+      "hintBuyNGetFree": "Pasirinkite po vieną iš kiekvienos grupės, kad atrakintumėte nemokamą prekę.",
+      "hintFreeDishMeal": "Sukurkite savo patiekalą – paskutinę prekę vaišiname mes.",
+      "hintCombo": "Pasirinkite po vieną iš kiekvienos grupės – rinkinio nuolaida taikoma automatiškai."
     }
   }
 }

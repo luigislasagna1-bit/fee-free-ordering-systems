@@ -214,7 +214,8 @@
       "cityRequired": "Stad krävs för leverans",
       "zipRequired": "Postnummer krävs för leverans",
       "fieldRequired": "Ange {field}",
-      "phoneInvalid": "Ange ett giltigt telefonnummer (endast siffror)."
+      "phoneInvalid": "Ange ett giltigt telefonnummer (endast siffror).",
+      "promoItemsAdded": "Artiklar tillagda — din rabatt tillämpas i kassan"
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Halv & halv",
       "leftHalf": "Vänster halva",
       "rightHalf": "Höger halva"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Bygg ditt erbjudande",
+      "closeAriaLabel": "Stäng",
+      "noGroupsConfigured": "Det här erbjudandet är inte helt färdigställt än.",
+      "slotLabelFallback": "Välj artikel {n}",
+      "freeSlotLabel": "Din gratisartikel",
+      "freeBadge": "GRATIS",
+      "percentOffBadge": "{pct}% rabatt",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Inga kvalificerade artiklar i den här gruppen.",
+      "free": "Gratis",
+      "addToCart": "Lägg i varukorgen",
+      "readyHint": "Ditt erbjudande är klart — lägg det i varukorgen!",
+      "remainingHint": "Välj {count, plural, one {# artikel till} other {# artiklar till}} för att slutföra erbjudandet",
+      "hintBogo": "Lägg till din artikel och välj din gratisartikel.",
+      "hintBuyNGetFree": "Välj en från varje grupp för att låsa upp din gratisartikel.",
+      "hintFreeDishMeal": "Bygg din måltid — den sista artikeln bjuder vi på.",
+      "hintCombo": "Välj en från varje grupp — komborabatten tillämpas automatiskt."
     }
   }
 }

@@ -214,7 +214,8 @@
       "cityRequired": "A városnév megadása kötelező a szállításhoz",
       "zipRequired": "Az irányítószám megadása kötelező a szállításhoz",
       "fieldRequired": "Add meg: {field}",
-      "phoneInvalid": "Kérjük, adjon meg egy érvényes telefonszámot (csak számjegyek)."
+      "phoneInvalid": "Kérjük, adjon meg egy érvényes telefonszámot (csak számjegyek).",
+      "promoItemsAdded": "Tételek hozzáadva — a kedvezmény a fizetésnél érvényesül"
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Fele-fele",
       "leftHalf": "Bal fél",
       "rightHalf": "Jobb fél"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Állítsa össze ajánlatát",
+      "closeAriaLabel": "Bezárás",
+      "noGroupsConfigured": "Ez az ajánlat még nincs teljesen beállítva.",
+      "slotLabelFallback": "Válasszon tételt: {n}",
+      "freeSlotLabel": "Az Ön ingyenes tétele",
+      "freeBadge": "INGYENES",
+      "percentOffBadge": "{pct}% kedvezmény",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Ebben a csoportban nincs jogosult tétel.",
+      "free": "Ingyenes",
+      "addToCart": "Kosárba",
+      "readyHint": "Ajánlata készen áll — tegye a kosarába!",
+      "remainingHint": "Válasszon még {count, plural, one {# tételt} other {# tételt}} az ajánlat összeállításához",
+      "hintBogo": "Adja hozzá a tételét, és válassza ki az ingyeneset.",
+      "hintBuyNGetFree": "Válasszon egyet minden csoportból az ingyenes tétel feloldásához.",
+      "hintFreeDishMeal": "Állítsa össze étkezését — az utolsó tétel a mi vendégségünk.",
+      "hintCombo": "Válasszon egyet minden csoportból — a kombó kedvezmény automatikusan érvényes."
     }
   }
 }

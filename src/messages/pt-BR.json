@@ -214,7 +214,8 @@
       "cityRequired": "Cidade obrigatória para entrega",
       "zipRequired": "CEP obrigatório para entrega",
       "fieldRequired": "Informe {field}",
-      "phoneInvalid": "Insira um número de telefone válido (apenas dígitos)."
+      "phoneInvalid": "Insira um número de telefone válido (apenas dígitos).",
+      "promoItemsAdded": "Itens adicionados — seu desconto será aplicado na finalização"
     },
     "searchMenu": "Buscar no cardápio…",
     "signIn": "Entrar",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Meio a meio",
       "leftHalf": "Metade esquerda",
       "rightHalf": "Metade direita"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Monte sua oferta",
+      "closeAriaLabel": "Fechar",
+      "noGroupsConfigured": "Esta oferta ainda não está totalmente configurada.",
+      "slotLabelFallback": "Escolha o item {n}",
+      "freeSlotLabel": "Seu item grátis",
+      "freeBadge": "GRÁTIS",
+      "percentOffBadge": "{pct}% de desconto",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Nenhum item elegível neste grupo.",
+      "free": "Grátis",
+      "addToCart": "Adicionar ao carrinho",
+      "readyHint": "Sua oferta está pronta — adicione ao carrinho!",
+      "remainingHint": "Escolha {count, plural, one {mais # item} other {mais # itens}} para completar esta oferta",
+      "hintBogo": "Adicione seu item e escolha o grátis.",
+      "hintBuyNGetFree": "Escolha um de cada grupo para liberar seu item grátis.",
+      "hintFreeDishMeal": "Monte sua refeição — o último item é por nossa conta.",
+      "hintCombo": "Escolha um de cada grupo — o desconto do combo é aplicado automaticamente."
     }
   }
 }

@@ -214,7 +214,8 @@
       "cityRequired": "Vui lòng nhập thành phố để giao hàng",
       "zipRequired": "Vui lòng nhập mã bưu chính để giao hàng",
       "fieldRequired": "Vui lòng nhập {field}",
-      "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ (chỉ gồm chữ số)."
+      "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ (chỉ gồm chữ số).",
+      "promoItemsAdded": "Đã thêm món — ưu đãi giảm giá được áp dụng khi thanh toán"
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Nửa & Nửa",
       "leftHalf": "Nửa bên trái",
       "rightHalf": "Nửa bên phải"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Tạo ưu đãi của bạn",
+      "closeAriaLabel": "Đóng",
+      "noGroupsConfigured": "Ưu đãi này chưa được thiết lập đầy đủ.",
+      "slotLabelFallback": "Chọn món {n}",
+      "freeSlotLabel": "Món miễn phí của bạn",
+      "freeBadge": "MIỄN PHÍ",
+      "percentOffBadge": "Giảm {pct}%",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Không có món phù hợp trong nhóm này.",
+      "free": "Miễn phí",
+      "addToCart": "Thêm vào giỏ",
+      "readyHint": "Ưu đãi của bạn đã sẵn sàng — thêm vào giỏ ngay!",
+      "remainingHint": "Chọn thêm {count, plural, one {# món} other {# món}} để hoàn tất ưu đãi này",
+      "hintBogo": "Thêm món của bạn và chọn món miễn phí.",
+      "hintBuyNGetFree": "Chọn một món từ mỗi nhóm để mở khóa món miễn phí.",
+      "hintFreeDishMeal": "Tạo bữa ăn của bạn — món cuối cùng chúng tôi mời bạn.",
+      "hintCombo": "Chọn một món từ mỗi nhóm — ưu đãi combo được áp dụng tự động."
     }
   }
 }

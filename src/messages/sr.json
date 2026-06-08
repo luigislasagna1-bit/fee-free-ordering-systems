@@ -214,7 +214,8 @@
       "cityRequired": "Grad je obavezan za dostavu",
       "zipRequired": "Poštanski broj je obavezan za dostavu",
       "fieldRequired": "Unesite {field}",
-      "phoneInvalid": "Unesite ispravan broj telefona (samo cifre)."
+      "phoneInvalid": "Unesite ispravan broj telefona (samo cifre).",
+      "promoItemsAdded": "Stavke su dodate — vaš popust se primenjuje na naplati"
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Pola-pola",
       "leftHalf": "Leva polovina",
       "rightHalf": "Desna polovina"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Sastavite svoju ponudu",
+      "closeAriaLabel": "Zatvori",
+      "noGroupsConfigured": "Ova ponuda još nije u potpunosti podešena.",
+      "slotLabelFallback": "Izaberite stavku {n}",
+      "freeSlotLabel": "Vaša besplatna stavka",
+      "freeBadge": "BESPLATNO",
+      "percentOffBadge": "{pct}% popusta",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Nema dostupnih stavki u ovoj grupi.",
+      "free": "Besplatno",
+      "addToCart": "Dodaj u korpu",
+      "readyHint": "Vaša ponuda je spremna — dodajte je u korpu!",
+      "remainingHint": "Izaberite još {count, plural, one {# stavku} few {# stavke} other {# stavki}} da biste upotpunili ovu ponudu",
+      "hintBogo": "Dodajte svoju stavku i izaberite besplatnu.",
+      "hintBuyNGetFree": "Izaberite po jednu iz svake grupe da otključate besplatnu stavku.",
+      "hintFreeDishMeal": "Sastavite svoj obrok — poslednja stavka je na naš račun.",
+      "hintCombo": "Izaberite po jednu iz svake grupe — kombo popust se primenjuje automatski."
     }
   }
 }

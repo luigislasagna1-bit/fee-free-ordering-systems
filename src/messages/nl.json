@@ -214,7 +214,8 @@
       "cityRequired": "Stad is verplicht voor bezorging",
       "zipRequired": "Postcode is verplicht voor bezorging",
       "fieldRequired": "Voer {field} in",
-      "phoneInvalid": "Voer een geldig telefoonnummer in (alleen cijfers)."
+      "phoneInvalid": "Voer een geldig telefoonnummer in (alleen cijfers).",
+      "promoItemsAdded": "Items toegevoegd — je korting wordt toegepast bij het afrekenen"
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Half om half",
       "leftHalf": "Linkerhelft",
       "rightHalf": "Rechterhelft"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Stel je deal samen",
+      "closeAriaLabel": "Sluiten",
+      "noGroupsConfigured": "Deze deal is nog niet volledig ingesteld.",
+      "slotLabelFallback": "Kies item {n}",
+      "freeSlotLabel": "Je gratis item",
+      "freeBadge": "GRATIS",
+      "percentOffBadge": "{pct}% korting",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Geen geschikte items in deze groep.",
+      "free": "Gratis",
+      "addToCart": "In winkelwagen",
+      "readyHint": "Je deal is klaar — voeg hem toe aan je winkelwagen!",
+      "remainingHint": "Kies {count, plural, one {nog # item} other {nog # items}} om deze deal compleet te maken",
+      "hintBogo": "Voeg je item toe en kies je gratis item.",
+      "hintBuyNGetFree": "Kies één item uit elke groep om je gratis item te ontgrendelen.",
+      "hintFreeDishMeal": "Stel je maaltijd samen — het laatste item krijg je van ons.",
+      "hintCombo": "Kies één item uit elke groep — de combikorting wordt automatisch toegepast."
     }
   }
 }

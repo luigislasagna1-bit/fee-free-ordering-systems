@@ -214,7 +214,8 @@
       "cityRequired": "배달을 위해 도시를 입력해 주세요",
       "zipRequired": "배달을 위해 우편번호를 입력해 주세요",
       "fieldRequired": "{field}을(를) 입력해 주세요",
-      "phoneInvalid": "유효한 전화번호를 입력해 주세요 (숫자만 입력)."
+      "phoneInvalid": "유효한 전화번호를 입력해 주세요 (숫자만 입력).",
+      "promoItemsAdded": "메뉴가 추가되었습니다 — 결제 시 할인이 적용됩니다"
     },
     "searchMenu": "메뉴 검색…",
     "signIn": "로그인",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ 반반",
       "leftHalf": "왼쪽 절반",
       "rightHalf": "오른쪽 절반"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "나만의 딜 만들기",
+      "closeAriaLabel": "닫기",
+      "noGroupsConfigured": "이 딜은 아직 설정이 완료되지 않았습니다.",
+      "slotLabelFallback": "{n}번째 메뉴 선택",
+      "freeSlotLabel": "무료 메뉴",
+      "freeBadge": "무료",
+      "percentOffBadge": "{pct}% 할인",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "이 그룹에 해당하는 메뉴가 없습니다.",
+      "free": "무료",
+      "addToCart": "장바구니에 추가",
+      "readyHint": "딜이 준비되었어요 — 장바구니에 담아보세요!",
+      "remainingHint": "이 딜을 완성하려면 {count, plural, one {# 개} other {# 개}}를 더 선택하세요",
+      "hintBogo": "원하는 메뉴를 담고 무료 메뉴를 골라보세요.",
+      "hintBuyNGetFree": "각 그룹에서 하나씩 골라 무료 메뉴를 받으세요.",
+      "hintFreeDishMeal": "나만의 식사를 구성하세요 — 마지막 메뉴는 무료로 드려요.",
+      "hintCombo": "각 그룹에서 하나씩 고르면 콤보 할인이 자동으로 적용됩니다."
     }
   }
 }

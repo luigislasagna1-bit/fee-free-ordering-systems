@@ -214,7 +214,8 @@
       "cityRequired": "Teslimat için şehir gereklidir",
       "zipRequired": "Teslimat için posta kodu gereklidir",
       "fieldRequired": "Lütfen {field} girin",
-      "phoneInvalid": "Lütfen geçerli bir telefon numarası girin (yalnızca rakam)."
+      "phoneInvalid": "Lütfen geçerli bir telefon numarası girin (yalnızca rakam).",
+      "promoItemsAdded": "Ürünler eklendi — indiriminiz ödeme sırasında uygulanır"
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Yarım Yarım",
       "leftHalf": "Sol yarım",
       "rightHalf": "Sağ yarım"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Fırsatını oluştur",
+      "closeAriaLabel": "Kapat",
+      "noGroupsConfigured": "Bu fırsat henüz tam olarak ayarlanmadı.",
+      "slotLabelFallback": "{n}. ürünü seç",
+      "freeSlotLabel": "Ücretsiz ürününüz",
+      "freeBadge": "ÜCRETSİZ",
+      "percentOffBadge": "%{pct} indirim",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Bu grupta uygun ürün yok.",
+      "free": "Ücretsiz",
+      "addToCart": "Sepete ekle",
+      "readyHint": "Fırsatınız hazır — sepetinize ekleyin!",
+      "remainingHint": "Bu fırsatı tamamlamak için {count, plural, one {# ürün daha} other {# ürün daha}} seçin",
+      "hintBogo": "Ürününü ekle ve ücretsiz ürününü seç.",
+      "hintBuyNGetFree": "Ücretsiz ürününüzü açmak için her gruptan birer tane seçin.",
+      "hintFreeDishMeal": "Öğününü oluştur — son ürün bizden.",
+      "hintCombo": "Her gruptan birer tane seçin — kombo indirimi otomatik uygulanır."
     }
   }
 }

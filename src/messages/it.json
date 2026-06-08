@@ -213,7 +213,8 @@
       "cityRequired": "Città obbligatoria per la consegna",
       "zipRequired": "CAP obbligatorio per la consegna",
       "fieldRequired": "Inserisci {field}",
-      "phoneInvalid": "Inserisci un numero di telefono valido (solo cifre)."
+      "phoneInvalid": "Inserisci un numero di telefono valido (solo cifre).",
+      "promoItemsAdded": "Articoli aggiunti — il tuo sconto si applica al checkout"
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Metà e metà",
       "leftHalf": "Metà sinistra",
       "rightHalf": "Metà destra"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Crea la tua offerta",
+      "closeAriaLabel": "Chiudi",
+      "noGroupsConfigured": "Questa offerta non è ancora del tutto configurata.",
+      "slotLabelFallback": "Scegli l'articolo {n}",
+      "freeSlotLabel": "Il tuo articolo gratis",
+      "freeBadge": "GRATIS",
+      "percentOffBadge": "{pct}% di sconto",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Nessun articolo idoneo in questo gruppo.",
+      "free": "Gratis",
+      "addToCart": "Aggiungi al carrello",
+      "readyHint": "La tua offerta è pronta — aggiungila al carrello!",
+      "remainingHint": "Scegli {count, plural, one {# altro articolo} other {# altri articoli}} per completare questa offerta",
+      "hintBogo": "Aggiungi il tuo articolo e scegli quello gratis.",
+      "hintBuyNGetFree": "Scegli un articolo da ogni gruppo per sbloccare il tuo articolo gratis.",
+      "hintFreeDishMeal": "Crea il tuo pasto — l'ultimo articolo lo offriamo noi.",
+      "hintCombo": "Scegli un articolo da ogni gruppo — lo sconto combo si applica automaticamente."
     }
   }
 }

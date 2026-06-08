@@ -22,6 +22,7 @@ import { useCurrencyFormat } from "@/lib/currency-context";
 import { getPromoTypeMeta } from "@/lib/promo-types";
 import { FreebiePromptModal } from "./FreebiePromptModal";
 import { BundleComposerModal, type BundleCartItem } from "./BundleComposerModal";
+import { GuidedPromoModal, type GuidedPromoPick } from "./GuidedPromoModal";
 
 // ─── Types — kept loose; the modal accepts the same shape used by the
 //     parent OrderingPageClient promoBanners prop, plus any extra fields
@@ -117,6 +118,11 @@ interface Props {
   /** Add a fully-built bundle to the cart as ONE consolidated line — see
    *  BundleComposerModal for the contract. */
   onAddBundle: (bundle: BundleCartItem) => void;
+  /** Complete a guided multi-group promo (bogo / buy_n_get_free /
+   *  free_dish_meal / combo): drop the chosen items into the cart (free-group
+   *  picks tagged so the engine nets them) and let the engine auto-apply.
+   *  See GuidedPromoModal for the contract. */
+  onCompleteGuidedPromo: (picks: GuidedPromoPick[], promoName: string) => void;
   /** Switch the page-level order type — used by the free_delivery panel's
    *  "Switch to delivery" footer button. */
   onSwitchOrderType?: (next: "pickup" | "delivery") => void;
@@ -128,6 +134,18 @@ interface Props {
   onOpenItem?: (menuItemId: string) => void;
   onClose: () => void;
 }
+
+// Promo types whose claim flow is a guided, slot-by-slot picker (one item
+// per group + the free item) rather than the informational read-only body.
+// Bundles (meal_bundle*) and free_item have their own dedicated composers and
+// are handled before this set is consulted.
+const GUIDED_PROMO_TYPES = new Set<string>([
+  "bogo",
+  "buy_n_get_free",
+  "free_dish_meal",
+  "fixed_combo",
+  "percentage_combo",
+]);
 
 // ─── Helpers ───────────────────────────────────────────────────────────
 
@@ -458,6 +476,7 @@ export function PromoDetailModal({
   primaryColor,
   onAddFreebie,
   onAddBundle,
+  onCompleteGuidedPromo,
   onSwitchOrderType,
   onOpenItem,
   onClose,
@@ -511,6 +530,43 @@ export function PromoDetailModal({
         onClose={onClose}
       />
     );
+  }
+
+  // Set-completion types get the guided slot picker — walk the customer
+  // through one item per group + the free item, complete in ONE place (no
+  // backing out to the full menu). Only when groups are configured; otherwise
+  // fall through to the informational body below. The engine still auto-applies
+  // the discount once the qualifying items land in the cart.
+  if (GUIDED_PROMO_TYPES.has(promo.promotionType)) {
+    const groups = (rules.groups ?? rules.itemGroups ?? []) as RuleConfigGroup[];
+    if (groups.length > 0) {
+      // BOGO's free slot can be a partial discount; surface it as a badge.
+      // Other guided types are fully free (or combo-discounted as a whole).
+      let discountPct: number | undefined;
+      if (promo.promotionType === "bogo") {
+        const strategy = rules.discountStrategy ?? "cheapest";
+        discountPct =
+          strategy === "most_expensive"
+            ? Number(rules.mostExpensiveDiscount ?? 100)
+            : Number(rules.cheapestDiscount ?? 100);
+      }
+      return (
+        <GuidedPromoModal
+          promoId={promo.id}
+          promoName={promo.name}
+          promotionType={promo.promotionType}
+          groups={groups}
+          allMenuItems={allMenuItems}
+          primaryColor={primaryColor}
+          discountPct={discountPct}
+          onComplete={(picks, promoName) => {
+            onCompleteGuidedPromo(picks, promoName);
+            onClose();
+          }}
+          onClose={onClose}
+        />
+      );
+    }
   }
 
   // Common shell.

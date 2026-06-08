@@ -214,7 +214,8 @@
       "cityRequired": "Kaupunki vaaditaan toimitusta varten",
       "zipRequired": "Postinumero vaaditaan toimitusta varten",
       "fieldRequired": "Anna {field}",
-      "phoneInvalid": "Anna kelvollinen puhelinnumero (vain numerot)."
+      "phoneInvalid": "Anna kelvollinen puhelinnumero (vain numerot).",
+      "promoItemsAdded": "Tuotteet lisätty — alennus huomioidaan kassalla"
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Puoliksi & puoliksi",
       "leftHalf": "Vasen puolisko",
       "rightHalf": "Oikea puolisko"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Kokoa tarjouksesi",
+      "closeAriaLabel": "Sulje",
+      "noGroupsConfigured": "Tätä tarjousta ei ole vielä määritetty kokonaan.",
+      "slotLabelFallback": "Valitse tuote {n}",
+      "freeSlotLabel": "Ilmainen tuotteesi",
+      "freeBadge": "ILMAINEN",
+      "percentOffBadge": "-{pct} %",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Tässä ryhmässä ei ole sopivia tuotteita.",
+      "free": "Ilmainen",
+      "addToCart": "Lisää koriin",
+      "readyHint": "Tarjouksesi on valmis — lisää se koriin!",
+      "remainingHint": "Valitse {count, plural, one {vielä # tuote} other {vielä # tuotetta}} viimeistelläksesi tämän tarjouksen",
+      "hintBogo": "Lisää tuotteesi ja valitse ilmainen tuote.",
+      "hintBuyNGetFree": "Valitse yksi tuote kustakin ryhmästä avataksesi ilmaisen tuotteesi.",
+      "hintFreeDishMeal": "Kokoa ateriasi — viimeinen tuote on talon piikkiin.",
+      "hintCombo": "Valitse yksi tuote kustakin ryhmästä — combo-alennus lisätään automaattisesti."
     }
   }
 }

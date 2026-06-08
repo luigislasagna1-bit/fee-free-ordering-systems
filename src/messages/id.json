@@ -214,7 +214,8 @@
       "cityRequired": "Kota wajib diisi untuk pengiriman",
       "zipRequired": "Kode pos wajib diisi untuk pengiriman",
       "fieldRequired": "Mohon masukkan {field}",
-      "phoneInvalid": "Masukkan nomor telepon yang valid (hanya angka)."
+      "phoneInvalid": "Masukkan nomor telepon yang valid (hanya angka).",
+      "promoItemsAdded": "Item ditambahkan — diskon Anda berlaku saat checkout"
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Setengah & Setengah",
       "leftHalf": "Bagian kiri",
       "rightHalf": "Bagian kanan"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Susun penawaran Anda",
+      "closeAriaLabel": "Tutup",
+      "noGroupsConfigured": "Penawaran ini belum sepenuhnya disiapkan.",
+      "slotLabelFallback": "Pilih item {n}",
+      "freeSlotLabel": "Item gratis Anda",
+      "freeBadge": "GRATIS",
+      "percentOffBadge": "Diskon {pct}%",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Tidak ada item yang memenuhi syarat di grup ini.",
+      "free": "Gratis",
+      "addToCart": "Tambah ke keranjang",
+      "readyHint": "Penawaran Anda sudah siap — tambahkan ke keranjang!",
+      "remainingHint": "Pilih {count, plural, one {# item lagi} other {# item lagi}} untuk menyelesaikan penawaran ini",
+      "hintBogo": "Tambahkan item Anda dan pilih item gratisnya.",
+      "hintBuyNGetFree": "Pilih satu dari setiap grup untuk membuka item gratis Anda.",
+      "hintFreeDishMeal": "Susun santapan Anda — item terakhir kami yang traktir.",
+      "hintCombo": "Pilih satu dari setiap grup — diskon combo berlaku otomatis."
     }
   }
 }

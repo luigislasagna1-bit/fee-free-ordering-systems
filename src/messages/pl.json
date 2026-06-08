@@ -214,7 +214,8 @@
       "cityRequired": "Miasto jest wymagane do dostawy",
       "zipRequired": "Kod pocztowy jest wymagany do dostawy",
       "fieldRequired": "Podaj: {field}",
-      "phoneInvalid": "Wpisz prawidłowy numer telefonu (tylko cyfry)."
+      "phoneInvalid": "Wpisz prawidłowy numer telefonu (tylko cyfry).",
+      "promoItemsAdded": "Pozycje dodane — rabat zostanie naliczony przy kasie"
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Pół na pół",
       "leftHalf": "Lewa połowa",
       "rightHalf": "Prawa połowa"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Skomponuj swoją ofertę",
+      "closeAriaLabel": "Zamknij",
+      "noGroupsConfigured": "Ta oferta nie jest jeszcze w pełni skonfigurowana.",
+      "slotLabelFallback": "Wybierz pozycję {n}",
+      "freeSlotLabel": "Twoja darmowa pozycja",
+      "freeBadge": "GRATIS",
+      "percentOffBadge": "{pct}% taniej",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Brak kwalifikujących się pozycji w tej grupie.",
+      "free": "Bezpłatne",
+      "addToCart": "Dodaj do koszyka",
+      "readyHint": "Twoja oferta jest gotowa — dodaj ją do koszyka!",
+      "remainingHint": "Wybierz {count, plural, one {jeszcze # pozycję} few {jeszcze # pozycje} many {jeszcze # pozycji} other {jeszcze # pozycji}}, aby skompletować tę ofertę",
+      "hintBogo": "Dodaj swoją pozycję i wybierz tę gratis.",
+      "hintBuyNGetFree": "Wybierz po jednej z każdej grupy, aby odblokować darmową pozycję.",
+      "hintFreeDishMeal": "Skomponuj swój posiłek — ostatnia pozycja jest na nasz koszt.",
+      "hintCombo": "Wybierz po jednej z każdej grupy — rabat combo zostanie zastosowany automatycznie."
     }
   }
 }

@@ -214,7 +214,8 @@
       "cityRequired": "Cal indicar la ciutat per al lliurament",
       "zipRequired": "Cal indicar el codi postal per al lliurament",
       "fieldRequired": "Introduïu {field}",
-      "phoneInvalid": "Introduïu un número de telèfon vàlid (només xifres)."
+      "phoneInvalid": "Introduïu un número de telèfon vàlid (només xifres).",
+      "promoItemsAdded": "Articles afegits: el teu descompte s'aplica en finalitzar la comanda"
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Meitat i meitat",
       "leftHalf": "Meitat esquerra",
       "rightHalf": "Meitat dreta"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Munta la teva oferta",
+      "closeAriaLabel": "Tanca",
+      "noGroupsConfigured": "Aquesta oferta encara no està del tot configurada.",
+      "slotLabelFallback": "Tria l'article {n}",
+      "freeSlotLabel": "El teu article gratis",
+      "freeBadge": "GRATIS",
+      "percentOffBadge": "{pct}% de descompte",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "No hi ha articles disponibles en aquest grup.",
+      "free": "Gratis",
+      "addToCart": "Afegir a la cistella",
+      "readyHint": "La teva oferta està a punt: afegeix-la a la cistella!",
+      "remainingHint": "Tria {count, plural, one {# article més} other {# articles més}} per completar aquesta oferta",
+      "hintBogo": "Afegeix el teu article i tria el que t'enduràs gratis.",
+      "hintBuyNGetFree": "Tria'n un de cada grup per desbloquejar el teu article gratis.",
+      "hintFreeDishMeal": "Munta el teu menú: l'últim article el paguem nosaltres.",
+      "hintCombo": "Tria'n un de cada grup: el descompte del combo s'aplica automàticament."
     }
   }
 }

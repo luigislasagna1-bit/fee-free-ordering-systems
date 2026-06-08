@@ -214,7 +214,8 @@
       "cityRequired": "By er påkrevd for levering",
       "zipRequired": "Postnummer er påkrevd for levering",
       "fieldRequired": "Vennligst fyll inn {field}",
-      "phoneInvalid": "Skriv inn et gyldig telefonnummer (kun sifre)."
+      "phoneInvalid": "Skriv inn et gyldig telefonnummer (kun sifre).",
+      "promoItemsAdded": "Varer lagt til – rabatten trekkes fra i kassen"
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Halv & halv",
       "leftHalf": "Venstre halvdel",
       "rightHalf": "Høyre halvdel"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Sett sammen tilbudet ditt",
+      "closeAriaLabel": "Lukk",
+      "noGroupsConfigured": "Dette tilbudet er ikke ferdig satt opp ennå.",
+      "slotLabelFallback": "Velg vare {n}",
+      "freeSlotLabel": "Din gratisvare",
+      "freeBadge": "GRATIS",
+      "percentOffBadge": "{pct} % rabatt",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Ingen kvalifiserte varer i denne gruppen.",
+      "free": "Gratis",
+      "addToCart": "Legg i handlekurv",
+      "readyHint": "Tilbudet ditt er klart – legg det i handlekurven!",
+      "remainingHint": "Velg {count, plural, one {# vare til} other {# varer til}} for å fullføre dette tilbudet",
+      "hintBogo": "Legg til varen din og velg den gratis.",
+      "hintBuyNGetFree": "Velg én fra hver gruppe for å låse opp gratisvaren din.",
+      "hintFreeDishMeal": "Sett sammen måltidet ditt – den siste varen spanderer vi.",
+      "hintCombo": "Velg én fra hver gruppe – komborabatten trekkes fra automatisk."
     }
   }
 }

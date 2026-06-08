@@ -214,7 +214,8 @@
       "cityRequired": "Pilsēta ir obligāta piegādei",
       "zipRequired": "Pasta indekss ir obligāts piegādei",
       "fieldRequired": "Lūdzu, ievadiet: {field}",
-      "phoneInvalid": "Lūdzu, ievadiet derīgu tālruņa numuru (tikai ciparus)."
+      "phoneInvalid": "Lūdzu, ievadiet derīgu tālruņa numuru (tikai ciparus).",
+      "promoItemsAdded": "Produkti pievienoti — atlaide tiks piemērota apmaksas brīdī"
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Puse uz pusi",
       "leftHalf": "Kreisā puse",
       "rightHalf": "Labā puse"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Izveido savu piedāvājumu",
+      "closeAriaLabel": "Aizvērt",
+      "noGroupsConfigured": "Šis piedāvājums vēl nav pilnībā iestatīts.",
+      "slotLabelFallback": "Izvēlies produktu {n}",
+      "freeSlotLabel": "Tavs bezmaksas produkts",
+      "freeBadge": "BEZMAKSAS",
+      "percentOffBadge": "-{pct}%",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Šajā grupā nav piemērotu produktu.",
+      "free": "Bezmaksas",
+      "addToCart": "Pievienot grozam",
+      "readyHint": "Tavs piedāvājums ir gatavs — pievieno to grozam!",
+      "remainingHint": "Izvēlies vēl {count, plural, one {# produktu} other {# produktus}}, lai pabeigtu šo piedāvājumu",
+      "hintBogo": "Pievieno savu produktu un izvēlies bezmaksas.",
+      "hintBuyNGetFree": "Izvēlies pa vienam no katras grupas, lai atbloķētu bezmaksas produktu.",
+      "hintFreeDishMeal": "Izveido savu maltīti — pēdējais produkts ir uz mūsu rēķina.",
+      "hintCombo": "Izvēlies pa vienam no katras grupas — kombo atlaide tiek piemērota automātiski."
     }
   }
 }

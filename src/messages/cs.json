@@ -214,7 +214,8 @@
       "cityRequired": "Pro doručení je nutné vyplnit město",
       "zipRequired": "Pro doručení je nutné vyplnit PSČ",
       "fieldRequired": "Zadejte prosím: {field}",
-      "phoneInvalid": "Zadejte prosím platné telefonní číslo (pouze číslice)."
+      "phoneInvalid": "Zadejte prosím platné telefonní číslo (pouze číslice).",
+      "promoItemsAdded": "Položky přidány — vaše sleva se uplatní při pokladně"
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Půl na půl",
       "leftHalf": "Levá polovina",
       "rightHalf": "Pravá polovina"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Sestavte si nabídku",
+      "closeAriaLabel": "Zavřít",
+      "noGroupsConfigured": "Tato nabídka zatím není plně nastavena.",
+      "slotLabelFallback": "Vyberte položku {n}",
+      "freeSlotLabel": "Vaše položka zdarma",
+      "freeBadge": "ZDARMA",
+      "percentOffBadge": "sleva {pct} %",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "V této skupině nejsou žádné způsobilé položky.",
+      "free": "Zdarma",
+      "addToCart": "Přidat do košíku",
+      "readyHint": "Vaše nabídka je hotová — přidejte ji do košíku!",
+      "remainingHint": "Pro dokončení nabídky vyberte ještě {count, plural, one {# položku} few {# položky} other {# položek}}",
+      "hintBogo": "Přidejte svou položku a vyberte tu, kterou dostanete zdarma.",
+      "hintBuyNGetFree": "Vyberte po jedné z každé skupiny a odemkněte si položku zdarma.",
+      "hintFreeDishMeal": "Sestavte si jídlo — poslední položka je od nás.",
+      "hintCombo": "Vyberte po jedné z každé skupiny — sleva na kombo se uplatní automaticky."
     }
   }
 }

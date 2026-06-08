@@ -214,7 +214,8 @@
       "cityRequired": "נדרשת עיר למשלוח",
       "zipRequired": "נדרש מיקוד למשלוח",
       "fieldRequired": "יש להזין {field}",
-      "phoneInvalid": "נא להזין מספר טלפון תקין (ספרות בלבד)."
+      "phoneInvalid": "נא להזין מספר טלפון תקין (ספרות בלבד).",
+      "promoItemsAdded": "הפריטים נוספו — ההנחה תחול בקופה"
     },
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ חצי וחצי",
       "leftHalf": "חצי שמאלי",
       "rightHalf": "חצי ימני"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "בנו את המבצע שלכם",
+      "closeAriaLabel": "סגירה",
+      "noGroupsConfigured": "המבצע הזה עדיין לא הוגדר במלואו.",
+      "slotLabelFallback": "בחרו פריט {n}",
+      "freeSlotLabel": "הפריט החינמי שלכם",
+      "freeBadge": "חינם",
+      "percentOffBadge": "{pct}% הנחה",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "אין פריטים זמינים בקבוצה הזו.",
+      "free": "חינם",
+      "addToCart": "הוספה לעגלה",
+      "readyHint": "המבצע שלכם מוכן — הוסיפו אותו לעגלה!",
+      "remainingHint": "בחרו {count, plural, one {עוד פריט אחד} other {עוד # פריטים}} כדי להשלים את המבצע",
+      "hintBogo": "הוסיפו את הפריט שלכם ובחרו את הפריט החינמי.",
+      "hintBuyNGetFree": "בחרו פריט אחד מכל קבוצה כדי לפתוח את הפריט החינמי שלכם.",
+      "hintFreeDishMeal": "הרכיבו את הארוחה שלכם — הפריט האחרון עלינו.",
+      "hintCombo": "בחרו פריט אחד מכל קבוצה — הנחת הקומבו חלה אוטומטית."
     }
   }
 }

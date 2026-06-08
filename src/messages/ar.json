@@ -214,7 +214,8 @@
       "cityRequired": "المدينة مطلوبة للتوصيل",
       "zipRequired": "الرمز البريدي مطلوب للتوصيل",
       "fieldRequired": "يرجى إدخال {field}",
-      "phoneInvalid": "يرجى إدخال رقم هاتف صالح (أرقام فقط)."
+      "phoneInvalid": "يرجى إدخال رقم هاتف صالح (أرقام فقط).",
+      "promoItemsAdded": "تمت إضافة الأصناف — يُطبَّق خصمك عند الدفع"
     },
     "searchMenu": "ابحث في القائمة…",
     "signIn": "تسجيل الدخول",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ نصف ونصف",
       "leftHalf": "النصف الأيسر",
       "rightHalf": "النصف الأيمن"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "صمّم عرضك",
+      "closeAriaLabel": "إغلاق",
+      "noGroupsConfigured": "لم يتم إعداد هذا العرض بالكامل بعد.",
+      "slotLabelFallback": "اختر الصنف {n}",
+      "freeSlotLabel": "صنفك المجاني",
+      "freeBadge": "مجاناً",
+      "percentOffBadge": "خصم {pct}%",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "لا توجد أصناف مؤهلة في هذه المجموعة.",
+      "free": "مجاني",
+      "addToCart": "أضِف إلى السلة",
+      "readyHint": "عرضك جاهز — أضِفه إلى سلتك!",
+      "remainingHint": "اختر {count, plural, one {صنفاً واحداً إضافياً} other {# أصناف إضافية}} لإكمال هذا العرض",
+      "hintBogo": "أضِف صنفك واختر صنفك المجاني.",
+      "hintBuyNGetFree": "اختر صنفاً من كل مجموعة لتفتح صنفك المجاني.",
+      "hintFreeDishMeal": "صمّم وجبتك — الصنف الأخير على حسابنا.",
+      "hintCombo": "اختر صنفاً من كل مجموعة — يُطبَّق خصم الكومبو تلقائياً."
     }
   }
 }

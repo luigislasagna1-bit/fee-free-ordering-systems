@@ -214,7 +214,8 @@
       "cityRequired": "Orașul este obligatoriu pentru livrare",
       "zipRequired": "Codul poștal este obligatoriu pentru livrare",
       "fieldRequired": "Introdu {field}",
-      "phoneInvalid": "Introduceți un număr de telefon valid (doar cifre)."
+      "phoneInvalid": "Introduceți un număr de telefon valid (doar cifre).",
+      "promoItemsAdded": "Produse adăugate — reducerea se aplică la finalizarea comenzii"
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
@@ -4503,6 +4504,25 @@
       "halfHalfToggle": "½ Jumătate și jumătate",
       "leftHalf": "Jumătatea stângă",
       "rightHalf": "Jumătatea dreaptă"
+    },
+    "guidedPromo": {
+      "buildYourDeal": "Construiește-ți oferta",
+      "closeAriaLabel": "Închide",
+      "noGroupsConfigured": "Această ofertă nu este încă pe deplin configurată.",
+      "slotLabelFallback": "Alege produsul {n}",
+      "freeSlotLabel": "Produsul tău gratuit",
+      "freeBadge": "GRATUIT",
+      "percentOffBadge": "{pct}% reducere",
+      "selectedCount": "{picked} / {range}",
+      "noEligibleItems": "Niciun produs eligibil în acest grup.",
+      "free": "Gratuit",
+      "addToCart": "Adaugă în coș",
+      "readyHint": "Oferta ta este gata — adaug-o în coș!",
+      "remainingHint": "Mai alege {count, plural, one {# produs} few {# produse} other {# de produse}} pentru a completa această ofertă",
+      "hintBogo": "Adaugă produsul tău și alege-l pe cel gratuit.",
+      "hintBuyNGetFree": "Alege câte unul din fiecare grup pentru a debloca produsul gratuit.",
+      "hintFreeDishMeal": "Construiește-ți masa — ultimul produs este din partea casei.",
+      "hintCombo": "Alege câte unul din fiecare grup — reducerea combo se aplică automat."
     }
   }
 }
