@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "请先订阅在线支付附加功能。",
       "toastPickAtLeastOne": "请至少选择一种支付方式。",
       "toastSaveSuccess": "支付方式已更新",
-      "toastSaveFailed": "保存失败"
+      "toastSaveFailed": "保存失败",
+      "orderTypePickup": "自取",
+      "orderTypeDelivery": "外卖配送",
+      "orderTypeDineIn": "堂食",
+      "orderTypeTakeOut": "外带",
+      "perTypeHint": "选择顾客在每种订单类型下可使用的支付方式。",
+      "toastPickAtLeastOneType": "请为{type}至少选择一种支付方式。"
     },
     "brandDashboard": {
       "brandDashboardBadge": "品牌仪表盘",

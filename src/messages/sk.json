@@ -2848,7 +2848,13 @@
       "toastSubscribeFirst": "Najprv si predplaťte doplnok Online platby.",
       "toastPickAtLeastOne": "Vyberte aspoň jednu platobnú metódu.",
       "toastSaveSuccess": "Platobné metódy aktualizované",
-      "toastSaveFailed": "Uloženie zlyhalo"
+      "toastSaveFailed": "Uloženie zlyhalo",
+      "orderTypePickup": "Vyzdvihnutie",
+      "orderTypeDelivery": "Doručenie",
+      "orderTypeDineIn": "Jedenie na mieste",
+      "orderTypeTakeOut": "So sebou",
+      "perTypeHint": "Vyberte, ktoré platobné metódy môžu zákazníci použiť pre každý typ objednávky.",
+      "toastPickAtLeastOneType": "Vyberte aspoň jednu platobnú metódu pre {type}."
     },
     "revertBrandMenu": {
       "bannerHeading": "Používate <strong>vlastné menu</strong> pre túto pobočku",

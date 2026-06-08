@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Спочатку підпишіться на додаток «Онлайн-платежі».",
       "toastPickAtLeastOne": "Виберіть хоча б один спосіб оплати.",
       "toastSaveSuccess": "Способи оплати оновлено",
-      "toastSaveFailed": "Не вдалося зберегти"
+      "toastSaveFailed": "Не вдалося зберегти",
+      "orderTypePickup": "Самовивіз",
+      "orderTypeDelivery": "Доставка",
+      "orderTypeDineIn": "В залі",
+      "orderTypeTakeOut": "З собою",
+      "perTypeHint": "Виберіть, які способи оплати клієнти можуть використовувати для кожного типу замовлення.",
+      "toastPickAtLeastOneType": "Виберіть щонайменше один спосіб оплати для «{type}»."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Панель бренду",

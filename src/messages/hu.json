@@ -2146,7 +2146,13 @@
       "toastSubscribeFirst": "Először iratkozzon fel az Online fizetések bővítményre.",
       "toastPickAtLeastOne": "Válasszon legalább egy fizetési módot.",
       "toastSaveSuccess": "Fizetési módok frissítve",
-      "toastSaveFailed": "Mentés sikertelen"
+      "toastSaveFailed": "Mentés sikertelen",
+      "orderTypePickup": "Elvitel",
+      "orderTypeDelivery": "Szállítás",
+      "orderTypeDineIn": "Helyben fogyasztás",
+      "orderTypeTakeOut": "Elvitel",
+      "perTypeHint": "Válassza ki, mely fizetési módokat használhatják a vendégek az egyes rendeléstípusokhoz.",
+      "toastPickAtLeastOneType": "Válasszon legalább egy fizetési módot ehhez: {type}."
     },
     "locations": {
       "pageTitle": "Helyszínek",

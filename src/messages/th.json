@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "สมัครส่วนเสริม Online Payments ก่อน",
       "toastPickAtLeastOne": "เลือกอย่างน้อยหนึ่งวิธีการชำระเงิน",
       "toastSaveSuccess": "อัปเดตวิธีการชำระเงินแล้ว",
-      "toastSaveFailed": "บันทึกล้มเหลว"
+      "toastSaveFailed": "บันทึกล้มเหลว",
+      "orderTypePickup": "รับที่ร้าน",
+      "orderTypeDelivery": "จัดส่ง",
+      "orderTypeDineIn": "ทานที่ร้าน",
+      "orderTypeTakeOut": "ซื้อกลับบ้าน",
+      "perTypeHint": "เลือกวิธีการชำระเงินที่ลูกค้าสามารถใช้ได้สำหรับการสั่งซื้อแต่ละประเภท",
+      "toastPickAtLeastOneType": "เลือกวิธีการชำระเงินอย่างน้อยหนึ่งวิธีสำหรับ {type}"
     },
     "brandDashboard": {
       "brandDashboardBadge": "แดชบอร์ดแบรนด์",

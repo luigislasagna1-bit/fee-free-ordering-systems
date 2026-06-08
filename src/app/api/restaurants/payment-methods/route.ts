@@ -29,29 +29,46 @@ export async function PUT(req: NextRequest) {
   }
 
   const body = await req.json().catch(() => null);
-  if (!body || !Array.isArray(body.methods)) {
-    return NextResponse.json({ error: "methods must be an array" }, { status: 400 });
-  }
+  const ORDER_TYPES = ["pickup", "delivery", "dine_in", "take_out"];
+  const cleanList = (arr: unknown): string[] =>
+    Array.isArray(arr)
+      ? Array.from(new Set<string>(arr.filter((m: unknown): m is string => typeof m === "string" && ALLOWED.has(m))))
+      : [];
 
-  // Filter to allowed slugs + dedupe. Reject empty so owners can't
-  // silently clear themselves into an unpublishable state.
-  const clean = Array.from(
-    new Set<string>(
-      body.methods.filter((m: unknown): m is string => typeof m === "string" && ALLOWED.has(m))
-    )
-  );
-  if (clean.length === 0) {
-    return NextResponse.json(
-      { error: "Pick at least one payment method." },
-      { status: 400 }
-    );
+  // Two accepted shapes:
+  //   • { methodsByType: { pickup:[...], delivery:[...], ... } }  (per-order-type, new)
+  //   • { methods: [...] }                                         (flat, legacy)
+  // Luigi 2026-06-08.
+  let toStore: string;
+  let allChosen: string[];
+  if (body && body.methodsByType && typeof body.methodsByType === "object") {
+    const perType: Record<string, string[]> = {};
+    for (const ot of ORDER_TYPES) {
+      const list = cleanList(body.methodsByType[ot]);
+      if (list.length > 0) perType[ot] = list;
+    }
+    const keys = Object.keys(perType);
+    if (keys.length === 0) {
+      return NextResponse.json({ error: "Pick at least one payment method." }, { status: 400 });
+    }
+    toStore = JSON.stringify(perType);
+    allChosen = Array.from(new Set(Object.values(perType).flat()));
+  } else if (body && Array.isArray(body.methods)) {
+    const clean = cleanList(body.methods);
+    if (clean.length === 0) {
+      return NextResponse.json({ error: "Pick at least one payment method." }, { status: 400 });
+    }
+    toStore = JSON.stringify(clean);
+    allChosen = clean;
+  } else {
+    return NextResponse.json({ error: "methods or methodsByType is required" }, { status: 400 });
   }
 
   // Gate: online_card / paypal both require the online_payments add-on.
   // Tampered clients can't bypass the UI lock by POSTing direct —
   // re-check entitlement server-side. If they don't have it, return 412
   // (Precondition Failed) so the client UI can show the right path.
-  const wantsEntitled = clean.some((m) => ENTITLED_METHODS.has(m));
+  const wantsEntitled = allChosen.some((m) => ENTITLED_METHODS.has(m));
   if (wantsEntitled) {
     const entitled = await hasFeature(restaurantId, "card_payments");
     if (!entitled) {
@@ -68,8 +85,8 @@ export async function PUT(req: NextRequest) {
 
   await prisma.restaurant.update({
     where: { id: restaurantId },
-    data: { paymentMethods: JSON.stringify(clean) },
+    data: { paymentMethods: toStore },
   });
 
-  return NextResponse.json({ ok: true, methods: clean });
+  return NextResponse.json({ ok: true });
 }

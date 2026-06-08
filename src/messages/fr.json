@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Abonnez-vous d'abord au module Paiements en ligne.",
       "toastPickAtLeastOne": "Sélectionnez au moins un mode de paiement.",
       "toastSaveSuccess": "Modes de paiement mis à jour",
-      "toastSaveFailed": "Échec de l'enregistrement"
+      "toastSaveFailed": "Échec de l'enregistrement",
+      "orderTypePickup": "À emporter",
+      "orderTypeDelivery": "Livraison",
+      "orderTypeDineIn": "Sur place",
+      "orderTypeTakeOut": "À emporter",
+      "perTypeHint": "Choisissez les moyens de paiement que les clients peuvent utiliser pour chaque type de commande.",
+      "toastPickAtLeastOneType": "Sélectionnez au moins un moyen de paiement pour {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Tableau de bord de marque",

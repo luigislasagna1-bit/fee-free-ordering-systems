@@ -2848,7 +2848,13 @@
       "toastSubscribeFirst": "Pirma prenumeruokite Online Payments priedą.",
       "toastPickAtLeastOne": "Pasirinkite bent vieną mokėjimo būdą.",
       "toastSaveSuccess": "Mokėjimo būdai atnaujinti",
-      "toastSaveFailed": "Nepavyko išsaugoti"
+      "toastSaveFailed": "Nepavyko išsaugoti",
+      "orderTypePickup": "Atsiėmimas",
+      "orderTypeDelivery": "Pristatymas",
+      "orderTypeDineIn": "Valgymas vietoje",
+      "orderTypeTakeOut": "Išsinešti",
+      "perTypeHint": "Pasirinkite, kuriuos mokėjimo būdus klientai gali naudoti kiekvienam užsakymo tipui.",
+      "toastPickAtLeastOneType": "Pasirinkite bent vieną mokėjimo būdą tipui {type}."
     },
     "revertBrandMenu": {
       "bannerHeading": "Ši vieta naudoja <strong>pritaikytą meniu</strong>",

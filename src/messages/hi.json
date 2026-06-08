@@ -2506,7 +2506,13 @@
       "toastSubscribeFirst": "पहले Online Payments ऐड-ऑन सब्सक्राइब करें।",
       "toastPickAtLeastOne": "कम से कम एक भुगतान विधि चुनें।",
       "toastSaveSuccess": "भुगतान विधियाँ अपडेट हो गईं",
-      "toastSaveFailed": "सहेजने में विफल"
+      "toastSaveFailed": "सहेजने में विफल",
+      "orderTypePickup": "पिकअप",
+      "orderTypeDelivery": "डिलीवरी",
+      "orderTypeDineIn": "यहाँ खाएं",
+      "orderTypeTakeOut": "टेकअवे",
+      "perTypeHint": "चुनें कि ग्राहक प्रत्येक ऑर्डर प्रकार के लिए कौन-से भुगतान तरीके इस्तेमाल कर सकते हैं।",
+      "toastPickAtLeastOneType": "{type} के लिए कम से कम एक भुगतान तरीका चुनें।"
     },
     "driverPool": {
       "heading": "Driver Pool",

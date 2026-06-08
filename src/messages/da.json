@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Abonner på tilvalget Online betalinger først.",
       "toastPickAtLeastOne": "Vælg mindst én betalingsmetode.",
       "toastSaveSuccess": "Betalingsmetoder opdateret",
-      "toastSaveFailed": "Kunne ikke gemme"
+      "toastSaveFailed": "Kunne ikke gemme",
+      "orderTypePickup": "Afhentning",
+      "orderTypeDelivery": "Levering",
+      "orderTypeDineIn": "Spis her",
+      "orderTypeTakeOut": "Takeaway",
+      "perTypeHint": "Vælg hvilke betalingsmetoder kunderne kan bruge til hver ordretype.",
+      "toastPickAtLeastOneType": "Vælg mindst én betalingsmetode til {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Brand-dashboard",

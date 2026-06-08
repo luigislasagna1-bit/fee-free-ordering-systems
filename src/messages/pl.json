@@ -2146,7 +2146,13 @@
       "toastSubscribeFirst": "Najpierw subskrybuj dodatek Płatności Online.",
       "toastPickAtLeastOne": "Wybierz co najmniej jedną metodę płatności.",
       "toastSaveSuccess": "Metody płatności zaktualizowane",
-      "toastSaveFailed": "Zapis nie powiódł się"
+      "toastSaveFailed": "Zapis nie powiódł się",
+      "orderTypePickup": "Odbiór osobisty",
+      "orderTypeDelivery": "Dostawa",
+      "orderTypeDineIn": "Na miejscu",
+      "orderTypeTakeOut": "Na wynos",
+      "perTypeHint": "Wybierz, których metod płatności klienci mogą używać dla każdego typu zamówienia.",
+      "toastPickAtLeastOneType": "Wybierz co najmniej jedną metodę płatności dla {type}."
     },
     "locations": {
       "pageTitle": "Lokalizacje",

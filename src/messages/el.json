@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Εγγραφείτε πρώτα στο πρόσθετο Online Πληρωμές.",
       "toastPickAtLeastOne": "Επιλέξτε τουλάχιστον μία μέθοδο πληρωμής.",
       "toastSaveSuccess": "Μέθοδοι πληρωμής ενημερώθηκαν",
-      "toastSaveFailed": "Αποτυχία αποθήκευσης"
+      "toastSaveFailed": "Αποτυχία αποθήκευσης",
+      "orderTypePickup": "Παραλαβή",
+      "orderTypeDelivery": "Παράδοση",
+      "orderTypeDineIn": "Φαγητό εντός",
+      "orderTypeTakeOut": "Για το σπίτι",
+      "perTypeHint": "Επιλέξτε ποιες μεθόδους πληρωμής μπορούν να χρησιμοποιούν οι πελάτες για κάθε τύπο παραγγελίας.",
+      "toastPickAtLeastOneType": "Επιλέξτε τουλάχιστον μία μέθοδο πληρωμής για {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Πίνακας επωνυμίας",

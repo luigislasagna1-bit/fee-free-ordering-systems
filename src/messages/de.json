@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Bitte zuerst das Online-Zahlungs-Add-on abonnieren.",
       "toastPickAtLeastOne": "Mindestens eine Zahlungsmethode auswählen.",
       "toastSaveSuccess": "Zahlungsmethoden aktualisiert",
-      "toastSaveFailed": "Speichern fehlgeschlagen"
+      "toastSaveFailed": "Speichern fehlgeschlagen",
+      "orderTypePickup": "Abholung",
+      "orderTypeDelivery": "Lieferung",
+      "orderTypeDineIn": "Vor Ort",
+      "orderTypeTakeOut": "Zum Mitnehmen",
+      "perTypeHint": "Wählen Sie, welche Zahlungsmethoden Kunden für jede Bestellart verwenden können.",
+      "toastPickAtLeastOneType": "Wählen Sie mindestens eine Zahlungsmethode für {type} aus."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Marken-Dashboard",

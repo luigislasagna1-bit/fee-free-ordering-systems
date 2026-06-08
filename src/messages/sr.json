@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Najpre se pretplatite na dodatak Online plaćanja.",
       "toastPickAtLeastOne": "Odaberite barem jedan način plaćanja.",
       "toastSaveSuccess": "Načini plaćanja ažurirani",
-      "toastSaveFailed": "Čuvanje nije uspelo"
+      "toastSaveFailed": "Čuvanje nije uspelo",
+      "orderTypePickup": "Preuzimanje",
+      "orderTypeDelivery": "Dostava",
+      "orderTypeDineIn": "Konzumacija u restoranu",
+      "orderTypeTakeOut": "Za poneti",
+      "perTypeHint": "Изаберите које начине плаћања купци могу да користе за сваку врсту поруџбине.",
+      "toastPickAtLeastOneType": "Изаберите бар један начин плаћања за {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Kontrolna tabla brenda",

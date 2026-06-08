@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "הירשם תחילה לתוסף תשלומים מקוונים.",
       "toastPickAtLeastOne": "בחר לפחות שיטת תשלום אחת.",
       "toastSaveSuccess": "שיטות תשלום עודכנו",
-      "toastSaveFailed": "השמירה נכשלה"
+      "toastSaveFailed": "השמירה נכשלה",
+      "orderTypePickup": "איסוף עצמי",
+      "orderTypeDelivery": "משלוח",
+      "orderTypeDineIn": "אכילה במקום",
+      "orderTypeTakeOut": "לקחת",
+      "perTypeHint": "בחרו אילו אמצעי תשלום הלקוחות יכולים להשתמש בהם לכל סוג הזמנה.",
+      "toastPickAtLeastOneType": "בחרו לפחות אמצעי תשלום אחד עבור {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "לוח בקרת מותג",

@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Vispirms abonējiet papildinājumu Tiešsaistes maksājumi.",
       "toastPickAtLeastOne": "Izvēlieties vismaz vienu maksājuma veidu.",
       "toastSaveSuccess": "Maksājuma veidi atjaunināti",
-      "toastSaveFailed": "Neizdevās saglabāt"
+      "toastSaveFailed": "Neizdevās saglabāt",
+      "orderTypePickup": "Paņemšana",
+      "orderTypeDelivery": "Piegāde",
+      "orderTypeDineIn": "Ēšana uz vietas",
+      "orderTypeTakeOut": "Līdzņemšanai",
+      "perTypeHint": "Izvēlieties, kuras maksājumu metodes klienti var izmantot katram pasūtījuma veidam.",
+      "toastPickAtLeastOneType": "Izvēlieties vismaz vienu maksājumu metodi veidam {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Zīmola panelis",

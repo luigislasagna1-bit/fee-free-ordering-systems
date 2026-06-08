@@ -2848,7 +2848,13 @@
       "toastSubscribeFirst": "Tilaa Verkkomaksut-lisäosa ensin.",
       "toastPickAtLeastOne": "Valitse vähintään yksi maksutapa.",
       "toastSaveSuccess": "Maksutavat päivitetty",
-      "toastSaveFailed": "Tallennus epäonnistui"
+      "toastSaveFailed": "Tallennus epäonnistui",
+      "orderTypePickup": "Nouto",
+      "orderTypeDelivery": "Toimitus",
+      "orderTypeDineIn": "Ravintolassa",
+      "orderTypeTakeOut": "Nouto",
+      "perTypeHint": "Valitse, mitä maksutapoja asiakkaat voivat käyttää kullekin tilaustyypille.",
+      "toastPickAtLeastOneType": "Valitse vähintään yksi maksutapa tyypille {type}."
     },
     "revertBrandMenu": {
       "bannerHeading": "Käytät tässä toimipisteessä <strong>mukautettua valikkoa</strong>",

@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Prenumerera på tillägget Onlinebetalningar först.",
       "toastPickAtLeastOne": "Välj minst en betalningsmetod.",
       "toastSaveSuccess": "Betalningsmetoder uppdaterade",
-      "toastSaveFailed": "Det gick inte att spara"
+      "toastSaveFailed": "Det gick inte att spara",
+      "orderTypePickup": "Avhämtning",
+      "orderTypeDelivery": "Leverans",
+      "orderTypeDineIn": "Äta på plats",
+      "orderTypeTakeOut": "Hämtmat",
+      "perTypeHint": "Välj vilka betalningsmetoder kunderna kan använda för varje ordertyp.",
+      "toastPickAtLeastOneType": "Välj minst en betalningsmetod för {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Varumärkesdashboard",

@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "اشترك في إضافة المدفوعات الإلكترونية أولاً.",
       "toastPickAtLeastOne": "اختر طريقة دفع واحدة على الأقل.",
       "toastSaveSuccess": "تم تحديث طرق الدفع",
-      "toastSaveFailed": "فشل الحفظ"
+      "toastSaveFailed": "فشل الحفظ",
+      "orderTypePickup": "استلام",
+      "orderTypeDelivery": "توصيل",
+      "orderTypeDineIn": "تناول في المطعم",
+      "orderTypeTakeOut": "طلب خارجي",
+      "perTypeHint": "اختر طرق الدفع التي يمكن للعملاء استخدامها لكل نوع من أنواع الطلبات.",
+      "toastPickAtLeastOneType": "اختر طريقة دفع واحدة على الأقل لـ {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "لوحة تحكم العلامة التجارية",

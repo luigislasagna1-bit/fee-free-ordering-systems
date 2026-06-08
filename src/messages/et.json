@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Telli esmalt Veebimaksete lisandmoodul.",
       "toastPickAtLeastOne": "Vali vähemalt üks makseviis.",
       "toastSaveSuccess": "Makseviisid uuendatud",
-      "toastSaveFailed": "Salvestamine ebaõnnestus"
+      "toastSaveFailed": "Salvestamine ebaõnnestus",
+      "orderTypePickup": "Järeletulek",
+      "orderTypeDelivery": "Kojuvedu",
+      "orderTypeDineIn": "Kohapeal söömine",
+      "orderTypeTakeOut": "Kaasa",
+      "perTypeHint": "Valige, milliseid makseviise saavad kliendid iga tellimuse liigi puhul kasutada.",
+      "toastPickAtLeastOneType": "Valige vähemalt üks makseviis tellimuse liigile {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Brändi juhtpaneel",

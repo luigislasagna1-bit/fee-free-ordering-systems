@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Berlangganan add-on Pembayaran Online terlebih dahulu.",
       "toastPickAtLeastOne": "Pilih minimal satu metode pembayaran.",
       "toastSaveSuccess": "Metode pembayaran diperbarui",
-      "toastSaveFailed": "Gagal menyimpan"
+      "toastSaveFailed": "Gagal menyimpan",
+      "orderTypePickup": "Ambil di tempat",
+      "orderTypeDelivery": "Pengiriman",
+      "orderTypeDineIn": "Makan di tempat",
+      "orderTypeTakeOut": "Bawa Pulang",
+      "perTypeHint": "Pilih metode pembayaran yang dapat digunakan pelanggan untuk setiap jenis pesanan.",
+      "toastPickAtLeastOneType": "Pilih setidaknya satu metode pembayaran untuk {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Dasbor merek",

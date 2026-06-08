@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Nejprve se přihlaste k doplňku Online platby.",
       "toastPickAtLeastOne": "Vyberte alespoň jeden způsob platby.",
       "toastSaveSuccess": "Způsoby platby aktualizovány",
-      "toastSaveFailed": "Uložení selhalo"
+      "toastSaveFailed": "Uložení selhalo",
+      "orderTypePickup": "Vyzvednutí",
+      "orderTypeDelivery": "Doručení",
+      "orderTypeDineIn": "Na místě",
+      "orderTypeTakeOut": "S sebou",
+      "perTypeHint": "Vyberte, které platební metody mohou zákazníci použít pro každý typ objednávky.",
+      "toastPickAtLeastOneType": "Vyberte alespoň jednu platební metodu pro {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Přehled značky",

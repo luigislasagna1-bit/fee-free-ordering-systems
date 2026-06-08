@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Abonează-te mai întâi la suplimentul Plăți online.",
       "toastPickAtLeastOne": "Alege cel puțin o metodă de plată.",
       "toastSaveSuccess": "Metode de plată actualizate",
-      "toastSaveFailed": "Salvarea a eșuat"
+      "toastSaveFailed": "Salvarea a eșuat",
+      "orderTypePickup": "Ridicare",
+      "orderTypeDelivery": "Livrare",
+      "orderTypeDineIn": "La restaurant",
+      "orderTypeTakeOut": "La pachet",
+      "perTypeHint": "Alege ce metode de plată pot folosi clienții pentru fiecare tip de comandă.",
+      "toastPickAtLeastOneType": "Alege cel puțin o metodă de plată pentru {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Panou de brand",

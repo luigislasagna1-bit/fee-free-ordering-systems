@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Najprej se naročite na dodatek Spletna plačila.",
       "toastPickAtLeastOne": "Izberite vsaj eno plačilno metodo.",
       "toastSaveSuccess": "Plačilne metode posodobljene",
-      "toastSaveFailed": "Shranjevanje ni uspelo"
+      "toastSaveFailed": "Shranjevanje ni uspelo",
+      "orderTypePickup": "Prevzem",
+      "orderTypeDelivery": "Dostava",
+      "orderTypeDineIn": "V restavraciji",
+      "orderTypeTakeOut": "Za s seboj",
+      "perTypeHint": "Izberite, katere načine plačila lahko stranke uporabljajo za posamezno vrsto naročila.",
+      "toastPickAtLeastOneType": "Izberite vsaj en način plačila za {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Nadzorna plošča blagovne znamke",

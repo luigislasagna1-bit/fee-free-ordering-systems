@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Сначала подпишитесь на дополнение «Онлайн-платежи».",
       "toastPickAtLeastOne": "Выберите хотя бы один способ оплаты.",
       "toastSaveSuccess": "Способы оплаты обновлены",
-      "toastSaveFailed": "Не удалось сохранить"
+      "toastSaveFailed": "Не удалось сохранить",
+      "orderTypePickup": "Самовывоз",
+      "orderTypeDelivery": "Доставка",
+      "orderTypeDineIn": "В зале",
+      "orderTypeTakeOut": "С собой",
+      "perTypeHint": "Выберите, какие способы оплаты клиенты могут использовать для каждого типа заказа.",
+      "toastPickAtLeastOneType": "Выберите хотя бы один способ оплаты для «{type}»."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Панель бренда",

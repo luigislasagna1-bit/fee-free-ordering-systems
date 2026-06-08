@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Suscríbete primero al complemento de Pagos en línea.",
       "toastPickAtLeastOne": "Elige al menos un método de pago.",
       "toastSaveSuccess": "Métodos de pago actualizados",
-      "toastSaveFailed": "Error al guardar"
+      "toastSaveFailed": "Error al guardar",
+      "orderTypePickup": "Recoger",
+      "orderTypeDelivery": "Entrega",
+      "orderTypeDineIn": "En el local",
+      "orderTypeTakeOut": "Para llevar",
+      "perTypeHint": "Elige qué métodos de pago pueden usar los clientes para cada tipo de pedido.",
+      "toastPickAtLeastOneType": "Selecciona al menos un método de pago para {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Panel de marca",

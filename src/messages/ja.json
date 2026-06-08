@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "先にオンライン決済アドオンにサブスクライブしてください。",
       "toastPickAtLeastOne": "少なくとも1つの支払い方法を選択してください。",
       "toastSaveSuccess": "支払い方法を更新しました",
-      "toastSaveFailed": "保存に失敗しました"
+      "toastSaveFailed": "保存に失敗しました",
+      "orderTypePickup": "テイクアウト",
+      "orderTypeDelivery": "デリバリー",
+      "orderTypeDineIn": "店内飲食",
+      "orderTypeTakeOut": "テイクアウト",
+      "perTypeHint": "各注文タイプで顧客が利用できる支払い方法を選択してください。",
+      "toastPickAtLeastOneType": "{type}の支払い方法を少なくとも1つ選択してください。"
     },
     "brandDashboard": {
       "brandDashboardBadge": "ブランドダッシュボード",

@@ -2146,7 +2146,13 @@
       "toastSubscribeFirst": "Önce Online Ödemeler eklentisine abone olun.",
       "toastPickAtLeastOne": "En az bir ödeme yöntemi seçin.",
       "toastSaveSuccess": "Ödeme yöntemleri güncellendi",
-      "toastSaveFailed": "Kaydedilemedi"
+      "toastSaveFailed": "Kaydedilemedi",
+      "orderTypePickup": "Gel Al",
+      "orderTypeDelivery": "Teslimat",
+      "orderTypeDineIn": "Yerinde Ye",
+      "orderTypeTakeOut": "Paket Servis",
+      "perTypeHint": "Müşterilerin her sipariş türü için hangi ödeme yöntemlerini kullanabileceğini seçin.",
+      "toastPickAtLeastOneType": "{type} için en az bir ödeme yöntemi seçin."
     },
     "locations": {
       "pageTitle": "Konumlar",

@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Abonneer u eerst op de Online Betalingen add-on.",
       "toastPickAtLeastOne": "Kies minimaal één betaalmethode.",
       "toastSaveSuccess": "Betaalmethoden bijgewerkt",
-      "toastSaveFailed": "Opslaan mislukt"
+      "toastSaveFailed": "Opslaan mislukt",
+      "orderTypePickup": "Afhalen",
+      "orderTypeDelivery": "Bezorgen",
+      "orderTypeDineIn": "Ter plaatse",
+      "orderTypeTakeOut": "Afhalen",
+      "perTypeHint": "Kies welke betaalmethoden klanten voor elk besteltype kunnen gebruiken.",
+      "toastPickAtLeastOneType": "Kies minstens één betaalmethode voor {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Merkdashboard",

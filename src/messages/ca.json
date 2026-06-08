@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Subscriviu-vos primer al complement de Pagaments en línia.",
       "toastPickAtLeastOne": "Trieu almenys un mètode de pagament.",
       "toastSaveSuccess": "Mètodes de pagament actualitzats",
-      "toastSaveFailed": "No s'ha pogut desar"
+      "toastSaveFailed": "No s'ha pogut desar",
+      "orderTypePickup": "Recollida",
+      "orderTypeDelivery": "Lliurament",
+      "orderTypeDineIn": "A la taula",
+      "orderTypeTakeOut": "Per emportar",
+      "perTypeHint": "Trieu quins mètodes de pagament poden utilitzar els clients per a cada tipus de comanda.",
+      "toastPickAtLeastOneType": "Trieu almenys un mètode de pagament per a {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Tauler de marca",

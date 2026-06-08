@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "먼저 온라인 결제 추가 기능을 구독하세요.",
       "toastPickAtLeastOne": "결제 수단을 하나 이상 선택하세요.",
       "toastSaveSuccess": "결제 수단이 업데이트되었습니다",
-      "toastSaveFailed": "저장에 실패했습니다"
+      "toastSaveFailed": "저장에 실패했습니다",
+      "orderTypePickup": "픽업",
+      "orderTypeDelivery": "배달",
+      "orderTypeDineIn": "매장 식사",
+      "orderTypeTakeOut": "포장",
+      "perTypeHint": "각 주문 유형에 대해 고객이 사용할 수 있는 결제 수단을 선택하세요.",
+      "toastPickAtLeastOneType": "{type}에 대해 결제 수단을 하나 이상 선택하세요."
     },
     "brandDashboard": {
       "brandDashboardBadge": "브랜드 대시보드",

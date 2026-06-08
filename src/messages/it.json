@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Abbonati prima al componente aggiuntivo Pagamenti online.",
       "toastPickAtLeastOne": "Seleziona almeno un metodo di pagamento.",
       "toastSaveSuccess": "Metodi di pagamento aggiornati",
-      "toastSaveFailed": "Salvataggio non riuscito"
+      "toastSaveFailed": "Salvataggio non riuscito",
+      "orderTypePickup": "Ritiro",
+      "orderTypeDelivery": "Consegna",
+      "orderTypeDineIn": "Sul posto",
+      "orderTypeTakeOut": "Da asporto",
+      "perTypeHint": "Scegli quali metodi di pagamento i clienti possono usare per ogni tipo di ordine.",
+      "toastPickAtLeastOneType": "Seleziona almeno un metodo di pagamento per {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Dashboard brand",

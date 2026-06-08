@@ -2146,7 +2146,13 @@
       "toastSubscribeFirst": "Đăng ký tiện ích Thanh Toán Online trước.",
       "toastPickAtLeastOne": "Chọn ít nhất một phương thức thanh toán.",
       "toastSaveSuccess": "Đã cập nhật phương thức thanh toán",
-      "toastSaveFailed": "Lưu thất bại"
+      "toastSaveFailed": "Lưu thất bại",
+      "orderTypePickup": "Tự lấy",
+      "orderTypeDelivery": "Giao hàng",
+      "orderTypeDineIn": "Ăn tại quán",
+      "orderTypeTakeOut": "Mang đi",
+      "perTypeHint": "Chọn các phương thức thanh toán mà khách hàng có thể dùng cho từng loại đơn hàng.",
+      "toastPickAtLeastOneType": "Chọn ít nhất một phương thức thanh toán cho {type}."
     },
     "locations": {
       "pageTitle": "Chi nhánh",

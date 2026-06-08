@@ -2183,7 +2183,13 @@
       "toastSubscribeFirst": "Първо се абонирай за добавката Онлайн плащания.",
       "toastPickAtLeastOne": "Избери поне един начин на плащане.",
       "toastSaveSuccess": "Начините на плащане са обновени",
-      "toastSaveFailed": "Неуспешно запазване"
+      "toastSaveFailed": "Неуспешно запазване",
+      "orderTypePickup": "Вземане",
+      "orderTypeDelivery": "Доставка",
+      "orderTypeDineIn": "На място",
+      "orderTypeTakeOut": "За вкъщи",
+      "perTypeHint": "Изберете кои методи на плащане могат да използват клиентите за всеки тип поръчка.",
+      "toastPickAtLeastOneType": "Изберете поне един метод на плащане за {type}."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Табло на бранда",

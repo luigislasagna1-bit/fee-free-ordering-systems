@@ -2537,7 +2537,13 @@
       "toastSubscribeFirst": "Subscribe to the Online Payments add-on first.",
       "toastPickAtLeastOne": "Pick at least one payment method.",
       "toastSaveSuccess": "Payment methods updated",
-      "toastSaveFailed": "Failed to save"
+      "toastSaveFailed": "Failed to save",
+      "orderTypePickup": "Pickup",
+      "orderTypeDelivery": "Delivery",
+      "orderTypeDineIn": "Dine-In",
+      "orderTypeTakeOut": "Takeout",
+      "perTypeHint": "Choose which payment methods customers can use for each order type.",
+      "toastPickAtLeastOneType": "Pick at least one payment method for {type}."
     },
     "driverPool": {
       "heading": "Driver pool",

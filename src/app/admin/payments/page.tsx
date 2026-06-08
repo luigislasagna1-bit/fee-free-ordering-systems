@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import { parsePaymentMethods } from "@/lib/payment-methods";
 import { PaymentMethodsClient } from "./PaymentMethodsClient";
 
 /**
@@ -31,16 +32,30 @@ export default async function PaymentMethodsPage() {
       paymentMethods: true,
       stripeAccountStatus: true,
       stripeChargesEnabled: true,
+      acceptsPickup: true,
+      acceptsDelivery: true,
+      acceptsDineIn: true,
+      acceptsTakeOut: true,
     },
   });
   if (!restaurant) redirect("/admin");
 
-  // Defensive parse — bad JSON falls back to empty.
-  let methods: string[] = [];
-  try {
-    const parsed = JSON.parse(restaurant.paymentMethods);
-    if (Array.isArray(parsed)) methods = parsed.filter((s) => typeof s === "string");
-  } catch { /* ignore */ }
+  // Per-order-type accepted methods (Luigi 2026-06-08). Show a section per
+  // order type the restaurant offers. A legacy flat config pre-fills every
+  // type with that list (so existing selections carry over); a per-type config
+  // uses each type's own list.
+  const cfg = parsePaymentMethods(restaurant.paymentMethods);
+  const orderTypes: string[] = [];
+  if (restaurant.acceptsPickup) orderTypes.push("pickup");
+  if (restaurant.acceptsDelivery) orderTypes.push("delivery");
+  if (restaurant.acceptsDineIn) orderTypes.push("dine_in");
+  if (restaurant.acceptsTakeOut) orderTypes.push("take_out");
+  if (orderTypes.length === 0) orderTypes.push("pickup");
+  const initialByType: Record<string, string[]> = {};
+  for (const ot of orderTypes) {
+    initialByType[ot] =
+      cfg.mode === "all" ? cfg.methods : ((cfg.perType as Record<string, string[]>)[ot] ?? []);
+  }
 
   // "Stripe is ready to accept charges" is determined by Stripe's actual
   // chargesEnabled capability flag (synced from `account.charges_enabled`
@@ -58,7 +73,8 @@ export default async function PaymentMethodsPage() {
 
   return (
     <PaymentMethodsClient
-      initialMethods={methods}
+      initialByType={initialByType}
+      orderTypes={orderTypes}
       stripeReady={stripeReady}
       stripeStatus={restaurant.stripeAccountStatus ?? "not_connected"}
       onlinePaymentsUnlocked={onlinePaymentsUnlocked}
