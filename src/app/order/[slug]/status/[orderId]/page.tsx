@@ -495,7 +495,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 } else {
                   line = t("etaReadyNMin", { min: minLeft });
                 }
-                const targetLabel = new Date(target).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+                const targetLabel = new Date(target).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hour12: order.restaurant?.hoursFormat !== "24h" });
                 return (
                   <div className={`mt-6 rounded-xl p-4 text-center border ${
                     isPending

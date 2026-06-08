@@ -3021,7 +3021,7 @@ export function OrderingPageClient({
                 The kitchen is briefly stopped from taking new {pausedNames.join(" / ").toLowerCase()} orders.
                 {earliestResume && (
                   <> Estimated to resume around{" "}
-                    {new Date(earliestResume.ms).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })}
+                    {new Date(earliestResume.ms).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hour12: hoursFmt !== "24h" })}
                     .
                   </>
                 )}

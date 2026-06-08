@@ -75,7 +75,7 @@ export async function GET(
         select: {
           name: true, phone: true, email: true,
           address: true, city: true, state: true, zip: true, currency: true,
-          timezone: true,
+          timezone: true, hoursFormat: true,
         },
       },
     },
@@ -112,6 +112,7 @@ export async function GET(
     email: order.restaurant.email,
     currency: order.restaurant.currency,
     timezone: order.restaurant.timezone,
+    hoursFormat: (order.restaurant as any).hoursFormat,
   };
 
   const receiptOrder: ReceiptOrder = {

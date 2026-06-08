@@ -241,6 +241,8 @@ interface OrderEmailParams {
   reservation?: { partySize: number; date: string; time: string } | null;
   /** Restaurant IANA timezone — formats scheduledFor in the customer's local time. */
   timezone?: string;
+  /** Restaurant 12h/24h preference — drives clock-time formatting. Luigi 2026-06-08. */
+  hoursFormat?: "12h" | "24h";
   trackingUrl: string;
   /** Restaurant defaultLanguage. Defaults to "en". */
   locale?: string;
@@ -282,6 +284,8 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
     ? schedDate.toLocaleString(params.locale || undefined, {
         timeZone: params.timezone || "UTC",
         weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+        // Follow the restaurant's 12h/24h setting, not the locale default.
+        hour12: params.hoursFormat !== "24h",
       })
     : null;
   // Reserve-then-order: a friendly "Tuesday, Jun 8 at 19:00" label for the
@@ -295,7 +299,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
         const datePart = Number.isFinite(d.getTime())
           ? d.toLocaleDateString(params.locale || undefined, { weekday: "long", month: "short", day: "numeric" })
           : resv.date;
-        return `${datePart} ${resv.time}`;
+        return `${datePart} ${formatTime(resv.time, params.hoursFormat ?? "24h")}`;
       })()
     : null;
   const html = await renderEmail(
@@ -369,6 +373,8 @@ export async function sendNewOrderNotificationEmail(params: {
   /** Reserve-then-order: the table booking attached to this order, so the
    *  STORE copy also flags "table reservation + pre-order". Luigi 2026-06-08. */
   reservation?: { partySize: number; date: string; time: string } | null;
+  /** Restaurant 12h/24h preference — clock-time formatting. */
+  hoursFormat?: "12h" | "24h";
 }) {
   const t = await getDict(params.locale);
   const subject = t("email.newOrder.subject", { orderNumber: params.orderNumber, restaurant: params.restaurantName });
@@ -379,7 +385,7 @@ export async function sendNewOrderNotificationEmail(params: {
         const datePart = Number.isFinite(d.getTime())
           ? d.toLocaleDateString(params.locale || undefined, { weekday: "long", month: "short", day: "numeric" })
           : resv.date;
-        return `${datePart} ${resv.time}`;
+        return `${datePart} ${formatTime(resv.time, params.hoursFormat ?? "24h")}`;
       })()
     : null;
   const html = await renderEmail(
@@ -437,6 +443,8 @@ export async function sendOrderStatusUpdateEmail(params: {
   /** Restaurant IANA timezone — formats "Estimated ready" in the customer's
    *  local time instead of the server's UTC. Falls back to UTC when unset. */
   timezone?: string;
+  /** Restaurant 12h/24h preference — clock-time formatting. Luigi 2026-06-08. */
+  hoursFormat?: "12h" | "24h";
 }) {
   const t = await getDict(params.locale);
   const subject = t("email.orderStatus.subject", { orderNumber: params.orderNumber });
@@ -451,6 +459,7 @@ export async function sendOrderStatusUpdateEmail(params: {
         day: "numeric",
         hour: "numeric",
         minute: "2-digit",
+        hour12: params.hoursFormat !== "24h",
       })
     : null;
   const html = await renderEmail(

@@ -11,6 +11,7 @@
 
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "./receipt-schema";
 import { formatCurrency } from "./utils";
+import { formatTime } from "./format-time";
 import { getDict, type Translator } from "./i18n-dict";
 
 export type PrinterLanguage = "escpos" | "starprnt" | "star_line" | "plaintext";
@@ -552,6 +553,9 @@ export interface ReceiptRestaurant {
    *  reads in the restaurant's local clock, not the server's UTC. Optional —
    *  falls back to the runtime default when absent (legacy behaviour). */
   timezone?: string | null;
+  /** 12h/24h preference — drives clock-time formatting on the receipt.
+   *  Defaults to 12h when absent (legacy behaviour). Luigi 2026-06-08. */
+  hoursFormat?: string | null;
 }
 
 // ── Format helpers ────────────────────────────────────────────────────────────
@@ -578,10 +582,16 @@ function fmt(n: number) { return formatCurrency(n, activeReceiptCurrency); }
 // (legacy behaviour) when a caller hasn't threaded a timezone through.
 let activeReceiptTimezone: string | undefined = undefined;
 
+// Module-scoped 12h/24h preference for the receipt being built — set from the
+// restaurant's hoursFormat at the top of each builder. Defaults to 12h (the
+// long-standing receipt behaviour) for legacy callers. Luigi 2026-06-08:
+// receipts were hardcoded to 12h; now a 24h restaurant prints 24h.
+let activeReceiptHoursFormat: "12h" | "24h" = "12h";
+
 function fmtTime(d: string | Date | null | undefined) {
   if (!d) return "";
   return new Date(d).toLocaleTimeString("en-US", {
-    hour: "numeric", minute: "2-digit", hour12: true,
+    hour: "numeric", minute: "2-digit", hour12: activeReceiptHoursFormat !== "24h",
     ...(activeReceiptTimezone ? { timeZone: activeReceiptTimezone } : {}),
   });
 }
@@ -994,6 +1004,7 @@ export async function buildKitchenReceiptFromConfig(
   console.log(`[receipt] Kitchen print — lang=${lang} paper=${paperWidth} locale=${locale} sections=${config.sections.filter(s => s.enabled).length}`);
   activeReceiptCurrency = restaurant.currency ?? "usd";
   activeReceiptTimezone = restaurant.timezone ?? undefined;
+  activeReceiptHoursFormat = restaurant.hoursFormat === "24h" ? "24h" : "12h";
   const r = new EscPos(paperWidth, lang);
   const t = await getDict(locale);
   r.init();
@@ -1013,6 +1024,7 @@ export async function buildCustomerReceiptFromConfig(
   console.log(`[receipt] Customer print — lang=${lang} paper=${paperWidth} locale=${locale} sections=${config.sections.filter(s => s.enabled).length}`);
   activeReceiptCurrency = restaurant.currency ?? "usd";
   activeReceiptTimezone = restaurant.timezone ?? undefined;
+  activeReceiptHoursFormat = restaurant.hoursFormat === "24h" ? "24h" : "12h";
   const r = new EscPos(paperWidth, lang);
   const t = await getDict(locale);
   r.init();
@@ -1044,6 +1056,8 @@ export interface ReservationReceiptData {
   /** IANA timezone for the printed "printed at" time. Optional — falls back to
    *  the runtime default when absent. */
   timezone?: string | null;
+  /** 12h/24h preference for printed times. Defaults to 12h. Luigi 2026-06-08. */
+  hoursFormat?: string | null;
 }
 
 export async function buildReservationReceipt(
@@ -1054,6 +1068,7 @@ export async function buildReservationReceipt(
 ): Promise<Buffer> {
   activeReceiptCurrency = data.currency ?? "usd";
   activeReceiptTimezone = data.timezone ?? undefined;
+  activeReceiptHoursFormat = data.hoursFormat === "24h" ? "24h" : "12h";
   const r = new EscPos(paperWidth, lang);
   const t = await getDict(locale);
   r.init();
@@ -1076,7 +1091,7 @@ export async function buildReservationReceipt(
 
   r.bold(true).line(t("receipt.reservation.booking")).bold(false);
   r.sizeMode(24).line(`${data.date}`).sizeMode(12);
-  r.sizeMode(24).line(`${data.time}`).sizeMode(12);
+  r.sizeMode(24).line(formatTime(data.time, activeReceiptHoursFormat)).sizeMode(12);
   r.line(t("receipt.reservation.partyOf", { n: data.partySize }));
   if (data.tableName) r.line(`${t("receipt.reservation.table")}: ${data.tableName}`);
   r.divider("-");

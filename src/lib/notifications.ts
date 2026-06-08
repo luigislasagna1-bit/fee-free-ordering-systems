@@ -22,6 +22,7 @@
  */
 
 import prisma from "@/lib/db";
+import { formatTime } from "@/lib/format-time";
 import {
   sendNewOrderNotificationEmail,
   sendNewReservationNotification,
@@ -48,16 +49,18 @@ import { hasFeature } from "@/lib/entitlements";
 function buildCustomerSms(
   restaurantName: string,
   payload: CustomerEventPayload,
+  hoursFormat: "12h" | "24h" = "24h",
 ): string | null {
+  // Format a Date's clock time per the restaurant's 12h/24h setting.
+  const clock = (d: Date) =>
+    d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
   switch (payload.event) {
     case "orderConfirmed":
       return `${restaurantName}: Order #${payload.orderNumber} received. We'll text you when it's accepted. ${payload.trackingUrl ?? ""}`.trim();
     case "orderStatusUpdate": {
       const s = (payload.status ?? "").toLowerCase();
       if (s === "accepted") {
-        const eta = payload.estimatedReady
-          ? new Date(payload.estimatedReady).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
-          : null;
+        const eta = payload.estimatedReady ? clock(new Date(payload.estimatedReady)) : null;
         return `${restaurantName}: Order #${payload.orderNumber} accepted${eta ? ` — ready ~${eta}` : ""}.`;
       }
       if (s === "ready") return `${restaurantName}: Order #${payload.orderNumber} is ready for pickup!`;
@@ -68,13 +71,11 @@ function buildCustomerSms(
       return null;
     }
     case "orderDelayed": {
-      const eta = payload.newEstimatedReady
-        ? new Date(payload.newEstimatedReady).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
-        : null;
+      const eta = payload.newEstimatedReady ? clock(new Date(payload.newEstimatedReady)) : null;
       return `${restaurantName}: Heads up — order #${payload.orderNumber} is delayed about ${payload.delayMinutes} minutes${eta ? `, new ETA ~${eta}` : ""}.${payload.reason ? ` ${payload.reason}` : ""}`;
     }
     case "reservationConfirmation":
-      return `${restaurantName}: Reservation for ${payload.partySize} on ${payload.date} at ${payload.time} confirmed. Code ${payload.confirmationCode}.`;
+      return `${restaurantName}: Reservation for ${payload.partySize} on ${payload.date} at ${formatTime(payload.time, hoursFormat)} confirmed. Code ${payload.confirmationCode}.`;
     default:
       return null;
   }
@@ -247,6 +248,7 @@ export async function notifyStaff(args: {
       id: true,
       name: true,
       currency: true,
+      hoursFormat: true,
       notificationRecipients: {
         where: { isActive: true },
       },
@@ -269,7 +271,7 @@ export async function notifyStaff(args: {
     await Promise.all(
       eligible.map(async (r) => {
         try {
-          await dispatchStaffEvent(r.email, r.emailLanguage, restaurant.name, payload, restaurant.currency);
+          await dispatchStaffEvent(r.email, r.emailLanguage, restaurant.name, payload, restaurant.currency, restaurant.hoursFormat === "12h" ? "12h" : "24h");
           sent++;
         } catch (err) {
           console.error(`[notifyStaff] send to ${r.email} failed:`, err instanceof Error ? err.message : err);
@@ -289,6 +291,7 @@ async function dispatchStaffEvent(
   restaurantName: string,
   payload: StaffEventPayload,
   currency?: string,
+  hoursFormat?: "12h" | "24h",
 ): Promise<void> {
   switch (payload.event) {
     case "orderPlaced":
@@ -304,6 +307,7 @@ async function dispatchStaffEvent(
         total: payload.total,
         dashboardUrl: payload.dashboardUrl,
         reservation: payload.reservation ?? null,
+        hoursFormat,
         locale,
         currency,
       });
@@ -480,7 +484,7 @@ export async function notifyCustomer(args: {
     if (!customerPhone) return;
     const entitled = await hasFeature(restaurantId, "customer_sms");
     if (!entitled) return;
-    const body = buildCustomerSms(restaurant.name, payload);
+    const body = buildCustomerSms(restaurant.name, payload, restaurant.hoursFormat === "12h" ? "12h" : "24h");
     if (!body) return;
     try {
       const r = await sendSms({ to: customerPhone, body });
@@ -509,6 +513,7 @@ export async function notifyCustomer(args: {
           scheduledFor: payload.scheduledFor ?? null,
           reservation: payload.reservation ?? null,
           timezone: (restaurant as any).timezone || undefined,
+          hoursFormat: restaurant.hoursFormat === "12h" ? "12h" : "24h",
           trackingUrl: payload.trackingUrl,
           locale,
           appliedPromos: payload.appliedPromos,
@@ -569,6 +574,7 @@ export async function notifyCustomer(args: {
           restaurantUrl: `${baseUrlForStatus}/order/${restaurant.slug}`,
           locale,
           timezone: (restaurant as any).timezone || undefined,
+          hoursFormat: restaurant.hoursFormat === "12h" ? "12h" : "24h",
         });
       });
       await fireSms();
