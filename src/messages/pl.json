@@ -216,7 +216,9 @@
       "fieldRequired": "Podaj: {field}",
       "phoneInvalid": "Wpisz prawidłowy numer telefonu (tylko cyfry).",
       "promoItemsAdded": "Pozycje dodane — rabat zostanie naliczony przy kasie",
-      "promoScheduledForLater": "Zamówienie ustawione na {time} — możesz teraz dodać tę ofertę"
+      "promoScheduledForLater": "Zamówienie ustawione na {time} — możesz teraz dodać tę ofertę",
+      "freebieRemovedThreshold": "{name} usunięto — Twoje zamówienie nie kwalifikuje się już do darmowego produktu",
+      "freebieRemovedExclusive": "{name} usunięto — Twoja oferta „{winner}” daje większą oszczędność i nie można jej łączyć z tą promocją"
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
@@ -1758,7 +1760,7 @@
       "freeDishDiscountLabel": "Rabat na darmowe danie (100 = całkowicie bezpłatne)",
       "pickTypePrompt": "Wybierz typ promocji w Kroku 1, aby skonfigurować szczegóły tutaj.",
       "oncePerOrderLabel": "Dozwolone tylko raz na zamówienie",
-      "oncePerOrderHint": "Po zaznaczeniu ta oferta jest stosowana jednorazowo, niezależnie od liczby kwalifikujących się produktów w koszyku. Pozostaw niezaznaczone, aby powtarzała się dla każdej kwalifikującej się pary."
+      "oncePerOrderHint": "Po zaznaczeniu ta oferta jest stosowana tylko raz na zamówienie, nawet jeśli koszyk kwalifikuje się do niej więcej niż raz (np. promocja Kup jeden, drugi gratis, która w przeciwnym razie powtórzyłaby się)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ograniczenia i wyświetlanie",

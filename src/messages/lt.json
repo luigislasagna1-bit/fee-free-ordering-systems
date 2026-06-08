@@ -216,7 +216,9 @@
       "fieldRequired": "Įveskite {field}",
       "phoneInvalid": "Įveskite teisingą telefono numerį (tik skaitmenys).",
       "promoItemsAdded": "Prekės pridėtos – nuolaida bus pritaikyta atsiskaitant",
-      "promoScheduledForLater": "Užsakymas suplanuotas {time} — dabar galite pridėti šį pasiūlymą"
+      "promoScheduledForLater": "Užsakymas suplanuotas {time} — dabar galite pridėti šį pasiūlymą",
+      "freebieRemovedThreshold": "{name} pašalinta — jūsų užsakymas nebeatitinka nemokamo produkto sąlygų",
+      "freebieRemovedExclusive": "{name} pašalinta — jūsų pasiūlymas „{winner}“ leidžia sutaupyti daugiau ir negali būti derinamas su šiuo pasiūlymu"
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
@@ -2460,7 +2462,7 @@
       "freeDishDiscountLabel": "Nuolaida nemokamam patiekalui (100 = visiškai nemokamai)",
       "pickTypePrompt": "Pasirinkite akcijos tipą 1 žingsnyje, kad čia sukonfigūruotumėte detales.",
       "oncePerOrderLabel": "Leidžiama tik kartą viename užsakyme",
-      "oncePerOrderHint": "Kai pažymėta, šis pasiūlymas taikomas vieną kartą, nesvarbu, kiek atitinkančių prekių yra krepšelyje. Palikite nepažymėtą, kad jis būtų taikomas kiekvienai atitinkančiai porai."
+      "oncePerOrderHint": "Pažymėjus, šis pasiūlymas taikomas tik kartą užsakymui, net jei krepšelis atitinka jo sąlygas daugiau nei vieną kartą (pvz., „Perki vieną – gauni vieną“ akcija, kuri kitu atveju kartotųsi)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Apribojimai ir rodymas",

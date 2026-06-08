@@ -216,7 +216,9 @@
       "fieldRequired": "Unesite {field}",
       "phoneInvalid": "Unesite ispravan broj telefona (samo cifre).",
       "promoItemsAdded": "Stavke su dodate — vaš popust se primenjuje na naplati",
-      "promoScheduledForLater": "Narudžbina zakazana za {time} — sada možete dodati ovu ponudu"
+      "promoScheduledForLater": "Narudžbina zakazana za {time} — sada možete dodati ovu ponudu",
+      "freebieRemovedThreshold": "{name} je uklonjeno — vaša porudžbina više ne ispunjava uslove za besplatnu stavku",
+      "freebieRemovedExclusive": "{name} je uklonjeno — vaša ponuda „{winner}“ donosi veću uštedu i ne može se kombinovati sa ovom ponudom"
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "Popust na besplatno jelo (100 = potpuno besplatno)",
       "pickTypePrompt": "Odaberite vrstu promocije u koraku 1 za konfiguraciju detalja ovde.",
       "oncePerOrderLabel": "Dozvoljeno samo jednom po porudžbini",
-      "oncePerOrderHint": "Kada je označeno, ova ponuda se primenjuje samo jednom bez obzira na to koliko ispunjavajućih stavki ima u korpi. Ostavite neoznačeno da se ponavlja za svaki ispunjavajući par."
+      "oncePerOrderHint": "Kada je označeno, ova ponuda se primenjuje samo jednom po porudžbini, čak i ako korpa ispunjava uslove više puta (npr. „Kupi jedno, dobij jedno” koja bi se inače ponovila)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ograničenja i prikaz",

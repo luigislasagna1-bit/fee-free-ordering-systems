@@ -215,7 +215,9 @@
       "fieldRequired": "Veuillez saisir {field}",
       "phoneInvalid": "Veuillez saisir un numéro de téléphone valide (chiffres uniquement).",
       "promoItemsAdded": "Articles ajoutés — votre remise s'applique au paiement",
-      "promoScheduledForLater": "Commande programmée pour {time} — vous pouvez maintenant ajouter cette offre"
+      "promoScheduledForLater": "Commande programmée pour {time} — vous pouvez maintenant ajouter cette offre",
+      "freebieRemovedThreshold": "{name} retiré — votre commande ne remplit plus les conditions pour l'article gratuit",
+      "freebieRemovedExclusive": "{name} retiré — votre offre \"{winner}\" vous fait économiser davantage et ne peut pas être combinée avec cette promotion"
     },
     "followUs": "Suivez-nous",
     "searchMenu": "Rechercher dans le menu…",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "Remise sur le plat offert (100 = entièrement gratuit)",
       "pickTypePrompt": "Sélectionnez un type de promotion à l'étape 1 pour configurer les détails ici.",
       "oncePerOrderLabel": "Autorisé une seule fois par commande",
-      "oncePerOrderHint": "Si cette case est cochée, cette offre s'applique une seule fois, quel que soit le nombre d'articles éligibles dans le panier. Laissez-la décochée pour qu'elle se répète pour chaque paire d'articles éligibles."
+      "oncePerOrderHint": "Lorsque cette option est cochée, cette offre ne s'applique qu'une seule fois par commande, même si le panier y est éligible plusieurs fois (par exemple un « Un acheté, un offert » qui se répéterait sinon)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrictions & affichage",

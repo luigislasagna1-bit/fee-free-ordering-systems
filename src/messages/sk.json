@@ -216,7 +216,9 @@
       "fieldRequired": "Zadajte {field}",
       "phoneInvalid": "Zadajte platné telefónne číslo (iba číslice).",
       "promoItemsAdded": "Položky pridané — vaša zľava sa uplatní pri pokladni",
-      "promoScheduledForLater": "Objednávka nastavená na {time} — túto ponuku teraz môžete pridať"
+      "promoScheduledForLater": "Objednávka nastavená na {time} — túto ponuku teraz môžete pridať",
+      "freebieRemovedThreshold": "{name} bola odstránená — vaša objednávka už nespĺňa podmienky pre položku zadarmo",
+      "freebieRemovedExclusive": "{name} bola odstránená — vaša ponuka „{winner}“ vám ušetrí viac a nedá sa kombinovať s touto akciou"
     },
     "searchMenu": "Hľadať v menu…",
     "signIn": "Prihlásiť sa",
@@ -2460,7 +2462,7 @@
       "freeDishDiscountLabel": "Zľava na jedlo zdarma (100 = úplne zdarma)",
       "pickTypePrompt": "Vyberte typ promo akcie v kroku 1, aby ste tu mohli nakonfigurovať detaily.",
       "oncePerOrderLabel": "Povolené iba raz na objednávku",
-      "oncePerOrderHint": "Keď je zaškrtnuté, táto ponuka sa uplatní jeden jediný raz bez ohľadu na to, koľko vyhovujúcich položiek je v košíku. Nechajte nezaškrtnuté, aby sa opakovala pri každej vyhovujúcej dvojici."
+      "oncePerOrderHint": "Po zaškrtnutí sa táto ponuka uplatní iba raz na objednávku, aj keď košík spĺňa podmienky viackrát (napr. ponuka „kúp jeden, druhý zdarma“, ktorá by sa inak opakovala)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Obmedzenia a zobrazenie",

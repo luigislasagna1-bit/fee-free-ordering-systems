@@ -216,7 +216,9 @@
       "fieldRequired": "Palun sisesta {field}",
       "phoneInvalid": "Palun sisesta kehtiv telefoninumber (ainult numbrid).",
       "promoItemsAdded": "Tooted lisatud — soodustus rakendub kassas",
-      "promoScheduledForLater": "Tellimus määratud ajaks {time} — nüüd saad selle pakkumise lisada"
+      "promoScheduledForLater": "Tellimus määratud ajaks {time} — nüüd saad selle pakkumise lisada",
+      "freebieRemovedThreshold": "{name} eemaldati — teie tellimus ei vasta enam tasuta toote tingimustele",
+      "freebieRemovedExclusive": "{name} eemaldati — teie \"{winner}\" pakkumine annab suurema säästu ega ole selle pakkumisega kombineeritav"
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "Soodustus tasuta roale (100 = täiesti tasuta)",
       "pickTypePrompt": "Vali 1. sammus kampaania tüüp, et seadistada üksikasjad siin.",
       "oncePerOrderLabel": "Lubatud ainult üks kord tellimuse kohta",
-      "oncePerOrderHint": "Märgituna kehtib see pakkumine ainult ühe korra, olenemata sellest, kui palju sobivaid tooteid on ostukorvis. Jäta märkimata, et see korduks iga sobiva paari puhul."
+      "oncePerOrderHint": "Märgituna kehtib see pakkumine ainult üks kord tellimuse kohta, isegi kui ostukorv vastab sellele mitu korda (nt \"Osta üks, saad teise\" pakkumine, mis muidu korduks)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Piirangud ja kuvamine",

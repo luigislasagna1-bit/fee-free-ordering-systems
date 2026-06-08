@@ -189,6 +189,8 @@
       "itemAddedNamed": "{name} added!",
       "promoItemsAdded": "Items added — your discount applies at checkout",
       "promoScheduledForLater": "Order set for {time} — you can now add this deal",
+      "freebieRemovedThreshold": "{name} removed — your order no longer qualifies for the free item",
+      "freebieRemovedExclusive": "{name} removed — your \"{winner}\" deal saves more and can't be combined with this offer",
       "itemUpdated": "Item updated",
       "itemRemoved": "Removed from cart",
       "cartCleared": "Cart cleared",
@@ -2101,7 +2103,7 @@
     },
     "promoStepConfig": {
       "oncePerOrderLabel": "Only allowed once per order",
-      "oncePerOrderHint": "When checked, this deal applies a single time no matter how many qualifying items are in the cart. Leave unchecked to let it repeat for every qualifying pair.",
+      "oncePerOrderHint": "When checked, this deal applies only once per order, even if the cart qualifies for it more than once (e.g. a Buy-One-Get-One that would otherwise repeat).",
       "configureHeading": "Configure your promotion",
       "configureSubheading": "Set the discount details and items this deal applies to.",
       "promotionNameLabel": "Promotion name",

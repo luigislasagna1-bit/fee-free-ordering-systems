@@ -216,7 +216,9 @@
       "fieldRequired": "Lütfen {field} girin",
       "phoneInvalid": "Lütfen geçerli bir telefon numarası girin (yalnızca rakam).",
       "promoItemsAdded": "Ürünler eklendi — indiriminiz ödeme sırasında uygulanır",
-      "promoScheduledForLater": "Sipariş {time} için ayarlandı — artık bu fırsatı ekleyebilirsiniz"
+      "promoScheduledForLater": "Sipariş {time} için ayarlandı — artık bu fırsatı ekleyebilirsiniz",
+      "freebieRemovedThreshold": "{name} kaldırıldı — siparişiniz artık ücretsiz ürün için uygun değil",
+      "freebieRemovedExclusive": "{name} kaldırıldı — \"{winner}\" fırsatınız daha fazla kazandırıyor ve bu teklifle birleştirilemiyor"
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
@@ -1758,7 +1760,7 @@
       "freeDishDiscountLabel": "Ücretsiz tabak indirimi (100 = tamamen ücretsiz)",
       "pickTypePrompt": "Ayrıntıları burada yapılandırmak için 1. Adım'dan bir promosyon türü seçin.",
       "oncePerOrderLabel": "Sipariş başına yalnızca bir kez geçerli",
-      "oncePerOrderHint": "İşaretlendiğinde, sepette kaç uygun ürün olursa olsun bu teklif yalnızca bir kez uygulanır. Her uygun çift için tekrarlanmasını istiyorsanız işaretlemeyin."
+      "oncePerOrderHint": "İşaretlendiğinde, sepet birden fazla kez uygun olsa bile bu kampanya sipariş başına yalnızca bir kez uygulanır (örneğin, aksi takdirde tekrarlanacak bir Bir Alana Bir Bedava kampanyası)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Kısıtlamalar & görüntüleme",

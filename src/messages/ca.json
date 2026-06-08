@@ -216,7 +216,9 @@
       "fieldRequired": "Introduïu {field}",
       "phoneInvalid": "Introduïu un número de telèfon vàlid (només xifres).",
       "promoItemsAdded": "Articles afegits: el teu descompte s'aplica en finalitzar la comanda",
-      "promoScheduledForLater": "Comanda programada per a les {time}: ja pots afegir aquesta oferta"
+      "promoScheduledForLater": "Comanda programada per a les {time}: ja pots afegir aquesta oferta",
+      "freebieRemovedThreshold": "{name} eliminat — la teva comanda ja no compleix els requisits per a l'article gratuït",
+      "freebieRemovedExclusive": "{name} eliminat — l'oferta \"{winner}\" t'estalvia més i no es pot combinar amb aquesta promoció"
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "Descompte en el plat gratuït (100 = completament gratuït)",
       "pickTypePrompt": "Trieu un tipus de promoció al Pas 1 per configurar els detalls aquí.",
       "oncePerOrderLabel": "Només permès un cop per comanda",
-      "oncePerOrderHint": "Quan està marcat, aquesta oferta s'aplica una sola vegada, independentment de quants articles vàlids hi hagi a la cistella. Deixeu-ho sense marcar perquè es repeteixi per a cada parella vàlida."
+      "oncePerOrderHint": "Quan està marcat, aquesta oferta s'aplica només un cop per comanda, fins i tot si el carret hi té dret més d'una vegada (p. ex. una promoció Compra'n un i emporta't l'altre que, altrament, es repetiria)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restriccions i visualització",

@@ -216,7 +216,9 @@
       "fieldRequired": "Lūdzu, ievadiet: {field}",
       "phoneInvalid": "Lūdzu, ievadiet derīgu tālruņa numuru (tikai ciparus).",
       "promoItemsAdded": "Produkti pievienoti — atlaide tiks piemērota apmaksas brīdī",
-      "promoScheduledForLater": "Pasūtījums ieplānots uz {time} — tagad varat pievienot šo piedāvājumu"
+      "promoScheduledForLater": "Pasūtījums ieplānots uz {time} — tagad varat pievienot šo piedāvājumu",
+      "freebieRemovedThreshold": "{name} noņemts — jūsu pasūtījums vairs nav tiesīgs saņemt bezmaksas preci",
+      "freebieRemovedExclusive": "{name} noņemts — jūsu piedāvājums \"{winner}\" ietaupa vairāk un nav apvienojams ar šo piedāvājumu"
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "Atlaide bezmaksas ēdienam (100 = pilnīgi bezmaksas)",
       "pickTypePrompt": "Izvēlieties akcijas veidu 1. solī, lai šeit konfigurētu detaļas.",
       "oncePerOrderLabel": "Atļauts tikai vienreiz vienā pasūtījumā",
-      "oncePerOrderHint": "Ja atzīmēts, šī akcija tiek piemērota tikai vienu reizi neatkarīgi no tā, cik atbilstošo preču ir grozā. Atstājiet neatzīmētu, lai tā atkārtotos par katru atbilstošo preču pāri."
+      "oncePerOrderHint": "Ja atzīmēts, šī akcija tiek piemērota tikai vienu reizi vienā pasūtījumā, pat ja grozs tai atbilst vairāk nekā vienu reizi (piemēram, \"Pērc vienu, saņem vienu\", kas citādi atkārtotos)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ierobežojumi un displejs",

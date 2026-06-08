@@ -216,7 +216,9 @@
       "fieldRequired": "Vennligst fyll inn {field}",
       "phoneInvalid": "Skriv inn et gyldig telefonnummer (kun sifre).",
       "promoItemsAdded": "Varer lagt til – rabatten trekkes fra i kassen",
-      "promoScheduledForLater": "Bestilling satt til {time} – du kan nå legge til dette tilbudet"
+      "promoScheduledForLater": "Bestilling satt til {time} – du kan nå legge til dette tilbudet",
+      "freebieRemovedThreshold": "{name} fjernet – bestillingen din kvalifiserer ikke lenger til gratisvaren",
+      "freebieRemovedExclusive": "{name} fjernet – \"{winner}\"-tilbudet ditt sparer mer og kan ikke kombineres med dette tilbudet"
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "Rabatt på gratis rett (100 = fullt gratis)",
       "pickTypePrompt": "Velg en tilbudstype i trinn 1 for å konfigurere detaljene her.",
       "oncePerOrderLabel": "Tillates kun én gang per ordre",
-      "oncePerOrderHint": "Når dette er avkrysset, gjelder tilbudet kun én gang uansett hvor mange kvalifiserende varer som er i handlekurven. La det stå uten avkrysning for at det skal gjentas for hvert kvalifiserende par."
+      "oncePerOrderHint": "Når dette er avkrysset, gjelder tilbudet bare én gang per bestilling, selv om handlekurven kvalifiserer for det flere ganger (f.eks. en kjøp-én-få-én som ellers ville blitt gjentatt)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Begrensninger og visning",

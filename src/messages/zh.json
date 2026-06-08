@@ -216,7 +216,9 @@
       "fieldRequired": "请填写{field}",
       "phoneInvalid": "请输入有效的电话号码（仅限数字）。",
       "promoItemsAdded": "商品已添加 — 折扣将在结账时生效",
-      "promoScheduledForLater": "订单已预约至 {time}，现在即可添加此优惠"
+      "promoScheduledForLater": "订单已预约至 {time}，现在即可添加此优惠",
+      "freebieRemovedThreshold": "已移除{name}——您的订单不再符合获得免费商品的条件",
+      "freebieRemovedExclusive": "已移除{name}——您的\"{winner}\"优惠更划算，且无法与本优惠叠加使用"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "免费菜品折扣（100 = 完全免费）",
       "pickTypePrompt": "请在第1步选择促销类型以在此处配置详情。",
       "oncePerOrderLabel": "每笔订单仅限享用一次",
-      "oncePerOrderHint": "勾选后，无论购物车中有多少件符合条件的商品，此优惠仅生效一次。取消勾选则可对每一组符合条件的商品重复享用。"
+      "oncePerOrderHint": "勾选后，此优惠每笔订单仅适用一次，即使购物车满足多次适用条件也是如此（例如本可重复触发的\"买一送一\"优惠）。"
     },
     "promoStepRestrictions": {
       "pageTitle": "限制条件与展示",

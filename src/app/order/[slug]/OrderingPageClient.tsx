@@ -1542,12 +1542,23 @@ export function OrderingPageClient({
     if (!promosEvaluatedRef.current) return;
     const PREFIX = "Free with promo: ";
     const appliedNames = new Set(promoResults.map((r: { name: string }) => r.name));
+    // A freebie can fall off for two different reasons; the message should say
+    // which. If its promo is in bumpedExclusives, it DID qualify but lost to a
+    // bigger non-stackable deal — don't tell the customer they "no longer
+    // qualify" (they do). Luigi 2026-06-07.
+    const bumpedWinner = new Map(bumpedExclusives.map((b) => [b.name, b.winnerName]));
     const stale = (ci: { notes?: string }) =>
       typeof ci.notes === "string" && ci.notes.startsWith(PREFIX) && !appliedNames.has(ci.notes.slice(PREFIX.length));
     const removed = cart.find(stale);
     if (removed) {
       setCart((prev) => prev.filter((ci) => !stale(ci)));
-      toast(`${removed.menuItem.name} removed — your order no longer qualifies for the free item`);
+      const promoName = (removed.notes ?? "").slice(PREFIX.length);
+      const winner = bumpedWinner.get(promoName);
+      toast(
+        winner
+          ? tT("freebieRemovedExclusive", { name: removed.menuItem.name, winner })
+          : tT("freebieRemovedThreshold", { name: removed.menuItem.name }),
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [promoResults]);

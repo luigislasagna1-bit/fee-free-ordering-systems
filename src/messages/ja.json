@@ -216,7 +216,9 @@
       "fieldRequired": "{field}を入力してください",
       "phoneInvalid": "有効な電話番号を入力してください（数字のみ）。",
       "promoItemsAdded": "商品を追加しました — 割引はお会計時に適用されます",
-      "promoScheduledForLater": "注文を{time}に設定しました。この特典を追加できるようになりました"
+      "promoScheduledForLater": "注文を{time}に設定しました。この特典を追加できるようになりました",
+      "freebieRemovedThreshold": "{name} を削除しました — ご注文が無料アイテムの対象条件を満たさなくなりました",
+      "freebieRemovedExclusive": "{name} を削除しました — 「{winner}」の特典の方がお得で、こちらの特典とは併用できません"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "無料料理の割引（100 = 完全無料）",
       "pickTypePrompt": "ここで詳細を設定するには、ステップ1でプロモーションタイプを選択してください。",
       "oncePerOrderLabel": "1注文につき1回のみ適用",
-      "oncePerOrderHint": "チェックすると、カート内に対象商品がいくつあっても、この特典は1注文につき1回だけ適用されます。チェックを外すと、対象となるペアごとに繰り返し適用されます。"
+      "oncePerOrderHint": "チェックすると、カート内で複数回条件を満たす場合でも（繰り返し適用されうる「1つ買うともう1つ無料」など）、この特典は1注文につき1回のみ適用されます。"
     },
     "promoStepRestrictions": {
       "pageTitle": "制限＆表示",

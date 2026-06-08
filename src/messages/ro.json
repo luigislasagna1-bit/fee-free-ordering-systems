@@ -216,7 +216,9 @@
       "fieldRequired": "Introdu {field}",
       "phoneInvalid": "Introduceți un număr de telefon valid (doar cifre).",
       "promoItemsAdded": "Produse adăugate — reducerea se aplică la finalizarea comenzii",
-      "promoScheduledForLater": "Comandă programată pentru {time} — acum poți adăuga acest deal"
+      "promoScheduledForLater": "Comandă programată pentru {time} — acum poți adăuga acest deal",
+      "freebieRemovedThreshold": "{name} eliminat — comanda ta nu mai îndeplinește condițiile pentru produsul gratuit",
+      "freebieRemovedExclusive": "{name} eliminat — dealul tău \"{winner}\" te economisește mai mult și nu poate fi combinat cu această ofertă"
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "Reducere la felul de mâncare gratuit (100 = complet gratuit)",
       "pickTypePrompt": "Alege un tip de promoție la Pasul 1 pentru a configura detaliile aici.",
       "oncePerOrderLabel": "Permis o singură dată per comandă",
-      "oncePerOrderHint": "Când este bifat, această ofertă se aplică o singură dată, indiferent câte produse care se califică sunt în coș. Lasă nebifat pentru a se repeta la fiecare pereche care se califică."
+      "oncePerOrderHint": "Când este bifat, această ofertă se aplică o singură dată per comandă, chiar dacă coșul se califică pentru ea de mai multe ori (de ex. un Cumperi-Unul-Primești-Unul care altfel s-ar repeta)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restricții & afișare",

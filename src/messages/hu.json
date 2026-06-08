@@ -216,7 +216,9 @@
       "fieldRequired": "Add meg: {field}",
       "phoneInvalid": "Kérjük, adjon meg egy érvényes telefonszámot (csak számjegyek).",
       "promoItemsAdded": "Tételek hozzáadva — a kedvezmény a fizetésnél érvényesül",
-      "promoScheduledForLater": "A rendelés időpontja: {time} – most már hozzáadhatod ezt az ajánlatot"
+      "promoScheduledForLater": "A rendelés időpontja: {time} – most már hozzáadhatod ezt az ajánlatot",
+      "freebieRemovedThreshold": "A(z) {name} eltávolítva – a rendelésed már nem jogosult az ingyenes termékre",
+      "freebieRemovedExclusive": "A(z) {name} eltávolítva – a(z) \"{winner}\" ajánlatoddal többet spórolsz, és az nem vonható össze ezzel az ajánlattal"
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
@@ -1758,7 +1760,7 @@
       "freeDishDiscountLabel": "Kedvezmény az ingyenes ételen (100 = teljesen ingyenes)",
       "pickTypePrompt": "Válasszon promóciótípust az 1. lépésen a részletek konfigurálásához.",
       "oncePerOrderLabel": "Rendelésenként csak egyszer érvényes",
-      "oncePerOrderHint": "Ha be van jelölve, ez az ajánlat rendelésenként csak egyszer érvényesül, függetlenül attól, hány feltételnek megfelelő tétel van a kosárban. Hagyja jelöletlenül, ha minden feltételnek megfelelő párra ismétlődjön."
+      "oncePerOrderHint": "Ha be van jelölve, ez az ajánlat rendelésenként csak egyszer érvényesül, még akkor is, ha a kosár többször is jogosult rá (pl. egy egyet-fizet-kettőt-kap ajánlat, amely egyébként ismétlődne)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Korlátozások & megjelenítés",

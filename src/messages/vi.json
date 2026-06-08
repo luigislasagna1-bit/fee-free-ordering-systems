@@ -216,7 +216,9 @@
       "fieldRequired": "Vui lòng nhập {field}",
       "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ (chỉ gồm chữ số).",
       "promoItemsAdded": "Đã thêm món — ưu đãi giảm giá được áp dụng khi thanh toán",
-      "promoScheduledForLater": "Đã đặt đơn cho lúc {time} — giờ bạn có thể thêm ưu đãi này"
+      "promoScheduledForLater": "Đã đặt đơn cho lúc {time} — giờ bạn có thể thêm ưu đãi này",
+      "freebieRemovedThreshold": "{name} đã được gỡ bỏ — đơn hàng của bạn không còn đủ điều kiện nhận món miễn phí",
+      "freebieRemovedExclusive": "{name} đã được gỡ bỏ — ưu đãi \"{winner}\" của bạn tiết kiệm hơn và không thể kết hợp với khuyến mãi này"
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",
@@ -1758,7 +1760,7 @@
       "freeDishDiscountLabel": "Giảm giá món miễn phí (100 = miễn phí hoàn toàn)",
       "pickTypePrompt": "Chọn loại khuyến mãi ở Bước 1 để cấu hình chi tiết tại đây.",
       "oncePerOrderLabel": "Chỉ được áp dụng một lần mỗi đơn",
-      "oncePerOrderHint": "Khi được chọn, ưu đãi này chỉ áp dụng một lần duy nhất bất kể giỏ hàng có bao nhiêu món đủ điều kiện. Bỏ chọn để ưu đãi lặp lại cho mỗi cặp món đủ điều kiện."
+      "oncePerOrderHint": "Khi được chọn, ưu đãi này chỉ áp dụng một lần cho mỗi đơn hàng, ngay cả khi giỏ hàng đủ điều kiện nhiều lần (ví dụ: chương trình Mua một tặng một mà nếu không sẽ lặp lại)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Giới hạn & hiển thị",

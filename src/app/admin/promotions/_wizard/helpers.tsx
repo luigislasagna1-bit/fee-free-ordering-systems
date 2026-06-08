@@ -6,7 +6,6 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
 import { ChevronDown, ChevronRight, Edit2, Plus, X } from "lucide-react";
 
 // ─── HH:MM ↔ minutes-since-midnight ──────────────────────────────────────────
@@ -577,7 +576,6 @@ export function DiscountStrategySection({
   rules: PromoRules;
   onChange: (r: Partial<PromoRules>) => void;
 }) {
-  const t = useTranslations("admin.promoStepConfig");
   const strategy = rules.discountStrategy ?? "cheapest";
   return (
     <div className="space-y-2">
@@ -646,21 +644,6 @@ export function DiscountStrategySection({
           <span className="text-xs text-gray-400">%</span>
         </div>
       )}
-      {/* Only-once-per-order cap. Unchecked (default) → the deal repeats for
-          every qualifying pair; checked → it applies a single time. Luigi
-          2026-06-07. */}
-      <label className="flex items-start gap-2 cursor-pointer pt-2 mt-1 border-t border-gray-100">
-        <input
-          type="checkbox"
-          checked={!!rules.oncePerOrder}
-          onChange={(e) => onChange({ oncePerOrder: e.target.checked })}
-          className="mt-0.5"
-        />
-        <span>
-          <span className="block text-sm font-medium text-gray-700">{t("oncePerOrderLabel")}</span>
-          <span className="block text-xs text-gray-400">{t("oncePerOrderHint")}</span>
-        </span>
-      </label>
     </div>
   );
 }

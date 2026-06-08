@@ -216,7 +216,9 @@
       "fieldRequired": "Vnesite {field}",
       "phoneInvalid": "Vnesite veljavno telefonsko številko (samo številke).",
       "promoItemsAdded": "Artikli dodani — vaš popust se uporabi ob zaključku naročila",
-      "promoScheduledForLater": "Naročilo nastavljeno na {time} — zdaj lahko dodate to ponudbo"
+      "promoScheduledForLater": "Naročilo nastavljeno na {time} — zdaj lahko dodate to ponudbo",
+      "freebieRemovedThreshold": "{name} odstranjeno – vaše naročilo ne izpolnjuje več pogojev za brezplačni izdelek",
+      "freebieRemovedExclusive": "{name} odstranjeno – vaša ugodnost \"{winner}\" vam prihrani več in je ni mogoče kombinirati s to ponudbo"
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "Popust na brezplačno jed (100 = popolnoma brezplačno)",
       "pickTypePrompt": "Za konfiguracijo podrobnosti izberite vrsto promocije v koraku 1.",
       "oncePerOrderLabel": "Dovoljeno samo enkrat na naročilo",
-      "oncePerOrderHint": "Ko je označeno, ta ponudba velja enkrat, ne glede na to, koliko ustreznih artiklov je v košarici. Pustite neoznačeno, da se ponovi za vsak ustrezen par."
+      "oncePerOrderHint": "Če je označeno, ta ponudba velja samo enkrat na naročilo, tudi če košarica izpolnjuje pogoje zanjo večkrat (npr. ponudba Kupi enega, dobi enega, ki bi se sicer ponovila)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Omejitve in prikaz",

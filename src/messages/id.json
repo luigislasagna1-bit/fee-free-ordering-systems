@@ -216,7 +216,9 @@
       "fieldRequired": "Mohon masukkan {field}",
       "phoneInvalid": "Masukkan nomor telepon yang valid (hanya angka).",
       "promoItemsAdded": "Item ditambahkan — diskon Anda berlaku saat checkout",
-      "promoScheduledForLater": "Pesanan diatur untuk {time} — Anda kini bisa menambahkan penawaran ini"
+      "promoScheduledForLater": "Pesanan diatur untuk {time} — Anda kini bisa menambahkan penawaran ini",
+      "freebieRemovedThreshold": "{name} dihapus — pesanan Anda tidak lagi memenuhi syarat untuk item gratis",
+      "freebieRemovedExclusive": "{name} dihapus — penawaran \"{winner}\" Anda lebih hemat dan tidak dapat digabungkan dengan promo ini"
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "Diskon pada menu gratis (100 = sepenuhnya gratis)",
       "pickTypePrompt": "Pilih jenis promosi di Langkah 1 untuk mengonfigurasi detail di sini.",
       "oncePerOrderLabel": "Hanya boleh sekali per pesanan",
-      "oncePerOrderHint": "Jika dicentang, promo ini hanya berlaku satu kali berapa pun jumlah item yang memenuhi syarat di keranjang. Biarkan tidak dicentang agar promo berulang untuk setiap pasangan item yang memenuhi syarat."
+      "oncePerOrderHint": "Jika dicentang, penawaran ini hanya berlaku satu kali per pesanan, meskipun keranjang memenuhi syarat lebih dari sekali (misalnya Beli Satu Gratis Satu yang seharusnya berulang)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Batasan & tampilan",

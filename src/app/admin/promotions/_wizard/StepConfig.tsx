@@ -97,6 +97,25 @@ export function StepConfig({
           currencySymbol={currencySymbol}
         />
       </div>
+
+      {/* "Only allowed once per order" — shown for EVERY promo type except free
+          delivery (Luigi 2026-06-07). For repeating deals (BOGO / buy-N) the
+          engine caps them to a single application; for deals that already apply
+          once it's an explicit guarantee. */}
+      {promotionType !== "free_delivery" && (
+        <label className="flex items-start gap-2.5 cursor-pointer border border-gray-200 rounded-xl p-4">
+          <input
+            type="checkbox"
+            checked={!!rules.oncePerOrder}
+            onChange={(e) => onRules({ oncePerOrder: e.target.checked })}
+            className="mt-0.5"
+          />
+          <span>
+            <span className="block text-sm font-medium text-gray-800">{t("oncePerOrderLabel")}</span>
+            <span className="block text-xs text-gray-500 mt-0.5">{t("oncePerOrderHint")}</span>
+          </span>
+        </label>
+      )}
     </div>
   );
 }

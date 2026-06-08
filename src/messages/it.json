@@ -215,7 +215,9 @@
       "fieldRequired": "Inserisci {field}",
       "phoneInvalid": "Inserisci un numero di telefono valido (solo cifre).",
       "promoItemsAdded": "Articoli aggiunti — il tuo sconto si applica al checkout",
-      "promoScheduledForLater": "Ordine impostato per le {time} — ora puoi aggiungere questa offerta"
+      "promoScheduledForLater": "Ordine impostato per le {time} — ora puoi aggiungere questa offerta",
+      "freebieRemovedThreshold": "{name} rimosso — il tuo ordine non dà più diritto all'articolo gratuito",
+      "freebieRemovedExclusive": "{name} rimosso — la tua offerta \"{winner}\" ti fa risparmiare di più e non è cumulabile con questa promozione"
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "Sconto sul piatto gratuito (100 = completamente gratis)",
       "pickTypePrompt": "Scegli un tipo di promozione nel Passaggio 1 per configurare i dettagli qui.",
       "oncePerOrderLabel": "Consentita solo una volta per ordine",
-      "oncePerOrderHint": "Se selezionata, questa offerta si applica una sola volta indipendentemente da quanti articoli idonei sono nel carrello. Lascia deselezionata per farla ripetere a ogni coppia di articoli idonei."
+      "oncePerOrderHint": "Se selezionata, questa offerta viene applicata una sola volta per ordine, anche se il carrello vi ha diritto più di una volta (ad es. un \"Prendi due paghi uno\" che altrimenti si ripeterebbe)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrizioni e visualizzazione",

@@ -215,7 +215,9 @@
       "fieldRequired": "Indique {field}",
       "phoneInvalid": "Introduza um número de telefone válido (apenas dígitos).",
       "promoItemsAdded": "Itens adicionados — o seu desconto é aplicado no checkout",
-      "promoScheduledForLater": "Pedido agendado para as {time} — já pode adicionar esta promoção"
+      "promoScheduledForLater": "Pedido agendado para as {time} — já pode adicionar esta promoção",
+      "freebieRemovedThreshold": "{name} removido — o seu pedido já não tem direito ao item grátis",
+      "freebieRemovedExclusive": "{name} removido — a sua promoção \"{winner}\" poupa mais e não pode ser combinada com esta oferta"
     },
     "followUs": "Siga-nos",
     "searchMenu": "Pesquisar no menu…",
@@ -1795,7 +1797,7 @@
       "freeDishDiscountLabel": "Desconto no prato gratuito (100 = totalmente grátis)",
       "pickTypePrompt": "Escolha um tipo de promoção na Etapa 1 para configurar os detalhes aqui.",
       "oncePerOrderLabel": "Permitido apenas uma vez por encomenda",
-      "oncePerOrderHint": "Quando ativado, esta promoção aplica-se uma única vez, independentemente do número de artigos elegíveis no carrinho. Deixe desativado para que se repita em cada par de artigos elegíveis."
+      "oncePerOrderHint": "Quando esta opção está ativada, esta promoção aplica-se apenas uma vez por pedido, mesmo que o carrinho seja elegível mais do que uma vez (por exemplo, um \"Compra Um, Leva Outro\" que, de outra forma, se repetiria)."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrições e exibição",
