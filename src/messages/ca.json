@@ -241,7 +241,10 @@
     "cantCombineWith": "No es pot combinar amb {winner}",
     "useThisInstead": "Fes servir aquesta",
     "outOfAreaSoftTitle": "Fora de la nostra àrea de lliurament habitual.",
-    "outOfAreaSoftBody": "Aquesta adreça és fora de les nostres zones de lliurament habituals i és possible que no hi puguem lliurar. Tot i així, podeu fer la comanda; l'establiment es posarà en contacte amb vós si cal."
+    "outOfAreaSoftBody": "Aquesta adreça és fora de les nostres zones de lliurament habituals i és possible que no hi puguem lliurar. Tot i així, podeu fer la comanda; l'establiment es posarà en contacte amb vós si cal.",
+    "reservationOrderingTitle": "Comanda per a la teva reserva de taula",
+    "reservationOrderingDetail": "{date} a les {time} · grup de {n}",
+    "reservationOrderingCancel": "Cancel·la"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Només es pot aplicar una oferta exclusiva per comanda, així que hem mantingut {winner}: és la que t'estalvia més. No aplicades: {names}.",
     "outsideMayContact": "Tot i així, podeu fer la comanda; l'establiment es posarà en contacte amb vós si cal.",
     "outsideNotAcceptedTitle": "Fora de la nostra àrea de lliurament.",
-    "outsideNotAcceptedBody": "No acceptem comandes fora de les nostres zones de lliurament habituals. Canvieu a recollida o utilitzeu una altra adreça."
+    "outsideNotAcceptedBody": "No acceptem comandes fora de les nostres zones de lliurament habituals. Canvieu a recollida o utilitzeu una altra adreça.",
+    "reservationTitle": "Confirmació de la teva reserva de taula",
+    "reservationDetail": "{date} a les {time} · grup de {n} — la teva taula queda reservada en fer aquesta comanda."
   },
   "reservation": {
     "title": "Reservar taula",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} revisarà la vostra sol·licitud i us enviarà una confirmació en breu.",
     "emailSent": "S'ha enviat un correu de confirmació a {email}.",
     "nameAndPhone": "Cal indicar el nom i el telèfon.",
-    "reservationFailed": "Error en la reserva"
+    "reservationFailed": "Error en la reserva",
+    "addFoodToBooking": "Afegeix menjar a la reserva",
+    "justBookTable": "Només reserva la taula"
   },
   "kitchen": {
     "title": "Pantalla de cuina",
@@ -621,7 +628,8 @@
     "refunded": "reemborsat",
     "refundCardOnly": "Els reemborsaments només es poden fer en pagaments amb targeta",
     "refundAlreadyFull": "Aquesta comanda ja s'ha reemborsat completament",
-    "refundNotCaptured": "No hi ha cap pagament amb targeta capturat per reemborsar"
+    "refundNotCaptured": "No hi ha cap pagament amb targeta capturat per reemborsar",
+    "preOrder": "Comanda anticipada"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

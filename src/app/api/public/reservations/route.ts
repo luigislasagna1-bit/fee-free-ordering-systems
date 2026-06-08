@@ -1,62 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
+import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { notifyStaff, notifyCustomer } from "@/lib/notifications";
-
-function generateConfirmationCode(): string {
-  // 6-char uppercase, no ambiguous chars (no O/0/I/1)
-  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let code = "";
-  for (let i = 0; i < 6; i++) code += alphabet[Math.floor(Math.random() * alphabet.length)];
-  return code;
-}
 
 function sanitize(s: unknown, max = 500): string {
   return String(s ?? "").trim().slice(0, max);
-}
-
-// Server-side capacity check: are there enough open slots at this time?
-// Considers existing confirmed/seated reservations plus the holdMinutes buffer.
-async function checkCapacity(
-  restaurantId: string,
-  s: ReservationSettingsLike,
-  date: string,
-  time: string,
-  partySize: number,
-): Promise<{ ok: true } | { ok: false; reason: string }> {
-  const slotStart = new Date(`${date}T${time}:00`);
-  const halfSlot = (s.slotLengthMinutes ?? 30) * 60 * 1000;
-
-  // Fetch reservations on the same date that aren't cancelled / no_show
-  const same = await prisma.reservation.findMany({
-    where: {
-      restaurantId,
-      date,
-      status: { in: ["pending", "confirmed", "seated", "completed"] },
-    },
-    select: { time: true, partySize: true, durationMinutes: true },
-  });
-
-  // Count concurrent reservations whose window overlaps this slot
-  let concurrentBookings = 0;
-  let concurrentGuests = 0;
-  for (const r of same) {
-    const rStart = new Date(`${date}T${r.time}:00`).getTime();
-    const rEnd = rStart + (r.durationMinutes + s.holdMinutes) * 60 * 1000;
-    const wantStart = slotStart.getTime();
-    const wantEnd = wantStart + halfSlot;
-    if (rStart < wantEnd && rEnd > wantStart) {
-      concurrentBookings++;
-      concurrentGuests += r.partySize;
-    }
-  }
-  if (concurrentBookings >= s.maxPerSlot) {
-    return { ok: false, reason: "Sorry — this time slot is fully booked. Please pick another time." };
-  }
-  if (concurrentGuests + partySize > s.maxGuests) {
-    return { ok: false, reason: "We can't fit a party that size at this time. Please pick another time." };
-  }
-  return { ok: true };
 }
 
 export async function POST(req: NextRequest) {
@@ -151,7 +100,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Capacity
-    const cap = await checkCapacity(restaurant.id, settings as ReservationSettingsLike, date, time, parseInt(String(partySize)));
+    const cap = await checkReservationCapacity(restaurant.id, settings as ReservationSettingsLike, date, time, parseInt(String(partySize)));
     if (!cap.ok) return NextResponse.json({ error: cap.reason }, { status: 409 });
 
     // Optional pre-order — for v1 store only the precomputed total. (Full Order

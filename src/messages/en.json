@@ -241,7 +241,10 @@
     "outOfAreaBlockedTitle": "Outside our delivery area.",
     "outOfAreaBlockedBody": "We do not accept orders outside our standard delivery zones. Switch to pickup, or enter a different delivery address.",
     "outOfAreaSoftTitle": "Outside our standard delivery area.",
-    "outOfAreaSoftBody": "This address is outside our standard delivery zones and we may not deliver here. You can still place the order — the store will contact you if needed."
+    "outOfAreaSoftBody": "This address is outside our standard delivery zones and we may not deliver here. You can still place the order — the store will contact you if needed.",
+    "reservationOrderingTitle": "Ordering for your table reservation",
+    "reservationOrderingDetail": "{date} at {time} · party of {n}",
+    "reservationOrderingCancel": "Cancel"
   },
   "pizza": {
     "chooseSize": "Choose Size",
@@ -420,7 +423,9 @@
     "cateringOnly": "🎉 Your cart includes catering items — orders must be scheduled at least <strong>{hours}h</strong> in advance. ASAP isn’t available with catering items in the cart.",
     "dragPinHint": "Drag the pin to the exact spot for delivery.",
     "leadTimePrompt": "⏰ This restaurant takes orders in advance — please pick a time. The earliest available slot is shown below.",
-    "asapOnly": "This order will be prepared as soon as possible."
+    "asapOnly": "This order will be prepared as soon as possible.",
+    "reservationTitle": "Confirming your table reservation",
+    "reservationDetail": "{date} at {time} · party of {n} — your table is booked when you place this order."
   },
   "reservation": {
     "title": "Book a table",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} will review your request and send a confirmation shortly.",
     "emailSent": "A confirmation email has been sent to {email}.",
     "nameAndPhone": "Name and phone are required.",
-    "reservationFailed": "Reservation failed"
+    "reservationFailed": "Reservation failed",
+    "addFoodToBooking": "Add food to your booking",
+    "justBookTable": "Just book the table"
   },
   "kitchen": {
     "title": "Kitchen Display",
@@ -621,7 +628,8 @@
     "printerReachable": "Reachable ✓ — printer responding at {addr}",
     "printerTestSent": "Test print sent via {method}. Check your printer for paper.",
     "printerHelpSummary": "Test Print said success but no paper came out?",
-    "printerSaveClose": "Save & Close"
+    "printerSaveClose": "Save & Close",
+    "preOrder": "Pre-order"
   },
   "admin": {
     "comingSoonPlaceholder": {

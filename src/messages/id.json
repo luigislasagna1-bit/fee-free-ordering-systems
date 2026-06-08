@@ -241,7 +241,10 @@
     "cantCombineWith": "Tidak bisa digabung dengan {winner}",
     "useThisInstead": "Gunakan ini saja",
     "outOfAreaSoftTitle": "Di luar area pengiriman standar kami.",
-    "outOfAreaSoftBody": "Alamat ini berada di luar zona pengiriman standar kami dan kami mungkin tidak mengirim ke sini. Anda tetap dapat melakukan pemesanan — toko akan menghubungi Anda jika diperlukan."
+    "outOfAreaSoftBody": "Alamat ini berada di luar zona pengiriman standar kami dan kami mungkin tidak mengirim ke sini. Anda tetap dapat melakukan pemesanan — toko akan menghubungi Anda jika diperlukan.",
+    "reservationOrderingTitle": "Memesan makanan untuk reservasi meja Anda",
+    "reservationOrderingDetail": "{date} pukul {time} · untuk {n} orang",
+    "reservationOrderingCancel": "Batal"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Hanya satu penawaran eksklusif yang bisa berlaku per pesanan, jadi kami mempertahankan {winner} — penawaran itu lebih hemat untuk Anda. Tidak diterapkan: {names}.",
     "outsideMayContact": "Anda tetap dapat melakukan pemesanan — toko akan menghubungi Anda jika diperlukan.",
     "outsideNotAcceptedTitle": "Di luar area pengiriman kami.",
-    "outsideNotAcceptedBody": "Kami tidak menerima pesanan di luar zona pengiriman standar kami. Beralihlah ke ambil sendiri atau gunakan alamat yang berbeda."
+    "outsideNotAcceptedBody": "Kami tidak menerima pesanan di luar zona pengiriman standar kami. Beralihlah ke ambil sendiri atau gunakan alamat yang berbeda.",
+    "reservationTitle": "Mengonfirmasi reservasi meja Anda",
+    "reservationDetail": "{date} pukul {time} · untuk {n} orang — meja Anda dipesan saat Anda melakukan pesanan ini."
   },
   "reservation": {
     "title": "Pesan meja",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} akan meninjau permintaan Anda dan mengirimkan konfirmasi segera.",
     "emailSent": "Email konfirmasi telah dikirimkan ke {email}.",
     "nameAndPhone": "Nama dan nomor telepon diperlukan.",
-    "reservationFailed": "Reservasi gagal"
+    "reservationFailed": "Reservasi gagal",
+    "addFoodToBooking": "Tambahkan makanan ke pesanan Anda",
+    "justBookTable": "Cukup pesan meja saja"
   },
   "kitchen": {
     "title": "Tampilan Dapur",
@@ -621,7 +628,8 @@
     "refunded": "dikembalikan",
     "refundCardOnly": "Pengembalian dana hanya bisa diproses untuk pembayaran kartu",
     "refundAlreadyFull": "Pesanan ini sudah dikembalikan sepenuhnya",
-    "refundNotCaptured": "Tidak ada pembayaran kartu yang ditagih untuk dikembalikan"
+    "refundNotCaptured": "Tidak ada pembayaran kartu yang ditagih untuk dikembalikan",
+    "preOrder": "Pra-pesan"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

@@ -241,7 +241,10 @@
     "cantCombineWith": "Nevar apvienot ar {winner}",
     "useThisInstead": "Izmantot šo",
     "outOfAreaSoftTitle": "Ārpus mūsu standarta piegādes zonas.",
-    "outOfAreaSoftBody": "Šī adrese atrodas ārpus mūsu standarta piegādes zonām, un mēs, iespējams, šeit nepiegādājam. Pasūtījumu joprojām varat veikt — ja nepieciešams, veikals ar jums sazināsies."
+    "outOfAreaSoftBody": "Šī adrese atrodas ārpus mūsu standarta piegādes zonām, un mēs, iespējams, šeit nepiegādājam. Pasūtījumu joprojām varat veikt — ja nepieciešams, veikals ar jums sazināsies.",
+    "reservationOrderingTitle": "Pasūtīšana jūsu galdiņa rezervācijai",
+    "reservationOrderingDetail": "{date} plkst. {time} · {n} personas",
+    "reservationOrderingCancel": "Atcelt"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Vienam pasūtījumam var piemērot tikai vienu ekskluzīvu piedāvājumu, tāpēc saglabājām {winner} — ar to ietaupāt vairāk. Nav piemērots: {names}.",
     "outsideMayContact": "Pasūtījumu joprojām varat veikt — ja nepieciešams, veikals ar jums sazināsies.",
     "outsideNotAcceptedTitle": "Ārpus mūsu piegādes zonas.",
-    "outsideNotAcceptedBody": "Mēs nepieņemam pasūtījumus ārpus mūsu standarta piegādes zonām. Izvēlieties saņemšanu uz vietas vai izmantojiet citu adresi."
+    "outsideNotAcceptedBody": "Mēs nepieņemam pasūtījumus ārpus mūsu standarta piegādes zonām. Izvēlieties saņemšanu uz vietas vai izmantojiet citu adresi.",
+    "reservationTitle": "Galdiņa rezervācijas apstiprināšana",
+    "reservationDetail": "{date} plkst. {time} · {n} personas — jūsu galdiņš tiek rezervēts, kad veicat šo pasūtījumu."
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} izskatīs jūsu pieprasījumu un drīzumā nosūtīs apstiprinājumu.",
     "emailSent": "Apstiprinājuma e-pasts nosūtīts uz {email}.",
     "nameAndPhone": "Vārds un tālrunis ir obligāti.",
-    "reservationFailed": "Rezervācija neizdevās"
+    "reservationFailed": "Rezervācija neizdevās",
+    "addFoodToBooking": "Pievienot rezervācijai ēdienu",
+    "justBookTable": "Tikai rezervēt galdiņu"
   },
   "kitchen": {
     "title": "Virtuves ekrāns",
@@ -621,7 +628,8 @@
     "refunded": "atmaksāti",
     "refundCardOnly": "Atmaksu var veikt tikai par maksājumiem ar karti",
     "refundAlreadyFull": "Šis pasūtījums jau ir pilnībā atmaksāts",
-    "refundNotCaptured": "Nav apstiprināta kartes maksājuma, ko atmaksāt"
+    "refundNotCaptured": "Nav apstiprināta kartes maksājuma, ko atmaksāt",
+    "preOrder": "Iepriekšpasūtījums"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

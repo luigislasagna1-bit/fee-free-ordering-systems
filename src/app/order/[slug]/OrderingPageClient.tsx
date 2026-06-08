@@ -745,6 +745,13 @@ export function OrderingPageClient({
   );
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [reservationOpen, setReservationOpen] = useState(false);
+  // Reserve-then-order (Luigi 2026-06-08): when set, the customer is building
+  // an order that will be submitted TOGETHER with this table booking (one
+  // combined checkout). Carries the booking the server needs to create the
+  // linked Reservation, plus the date/time/party for the on-screen banner.
+  const [reservationDraft, setReservationDraft] = useState<
+    { date: string; time: string; partySize: number; notes: string } | null
+  >(null);
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [couponId, setCouponId] = useState<string | null>(null);
@@ -883,6 +890,48 @@ export function OrderingPageClient({
     lng: null as number | null,
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
+
+  // Reserve-then-order: enter "ordering for a reservation" mode. Forces dine-in,
+  // schedules the order for the booking time, prefills the contact details from
+  // the booking, and stores the booking so buildOrderPayload() attaches it.
+  // Shared by the on-page reservation modal AND the dedicated reservation page
+  // (which hands the draft over via sessionStorage). Luigi 2026-06-08.
+  const applyReservationDraft = (d: {
+    date: string; time: string; partySize: number;
+    name: string; phone: string; email: string; notes: string;
+  }) => {
+    setReservationDraft({ date: d.date, time: d.time, partySize: d.partySize, notes: d.notes });
+    setOrderType("dine_in");
+    setCustomerInfo((ci) => ({
+      ...ci,
+      name: d.name || ci.name,
+      email: d.email || ci.email,
+      phone: d.phone || ci.phone,
+      // The food is for the table time — schedule the order to match.
+      scheduledFor: `${d.date}T${d.time}`,
+    }));
+  };
+
+  // Pick up a booking handed over from the dedicated reservation page
+  // (/order/[slug]/reservation → "Add food to your booking"). One-shot: consume
+  // + clear the sessionStorage key so a refresh doesn't re-enter reservation
+  // mode. Luigi 2026-06-08.
+  useEffect(() => {
+    let raw: string | null = null;
+    try { raw = sessionStorage.getItem("ff_reservation_draft"); } catch { /* ignore */ }
+    if (!raw) return;
+    try { sessionStorage.removeItem("ff_reservation_draft"); } catch { /* ignore */ }
+    try {
+      const d = JSON.parse(raw);
+      if (d && typeof d.date === "string" && typeof d.time === "string" && Number.isFinite(d.partySize)) {
+        applyReservationDraft({
+          date: d.date, time: d.time, partySize: Number(d.partySize),
+          name: d.name ?? "", phone: d.phone ?? "", email: d.email ?? "", notes: d.notes ?? "",
+        });
+      }
+    } catch { /* malformed — ignore */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // Default starts at the SUGGESTED amount (15%). Customer can drag the
   // slider or click "No tip" to override. Luigi 2026-05-29.
   // When the restaurant has tipsEnabled=false, force 0 regardless of
@@ -2204,6 +2253,18 @@ export function OrderingPageClient({
     // Promos the customer removed from the cart — server excludes them so the
     // charged discount matches what they saw. Luigi 2026-06-07.
     suppressedPromoIds,
+    // Reserve-then-order: when the customer came through "Add food to your
+    // booking", attach the table booking so the server creates the linked
+    // Reservation together with this (paid) order — one combined submission.
+    // Undefined for every normal order. Luigi 2026-06-08.
+    reservation: reservationDraft
+      ? {
+          date: reservationDraft.date,
+          time: reservationDraft.time,
+          partySize: reservationDraft.partySize,
+          notes: reservationDraft.notes || undefined,
+        }
+      : undefined,
     subtotal, taxAmount, deliveryFee, tip: tipAmount, total,
     items: cart.map(ci => {
       // Defensive: a variant-required item must carry a valid variant or the
@@ -2365,6 +2426,10 @@ export function OrderingPageClient({
       try { localStorage.removeItem(CART_STORAGE_KEY); } catch {}
       try { localStorage.removeItem(CART_SESSION_KEY); } catch {}
       sessionTokenRef.current = null;
+      // Reserve-then-order: the booking went in with the order — leave
+      // reservation mode so a fresh visit starts clean.
+      setReservationDraft(null);
+      try { sessionStorage.removeItem("ff_reservation_draft"); } catch {}
 
       if (customerInfo.paymentMethod === "card" && cardPaymentEnabled) {
         // Reports funnel — fire payment_open just before we navigate
@@ -2648,6 +2713,34 @@ export function OrderingPageClient({
   return (
     <CurrencyProvider currency={(restaurant as any)?.currency}>
     <div className="min-h-screen" style={{ backgroundColor: theme.backgroundColor, color: theme.textColor }}>
+      {/* Reserve-then-order: persistent banner while building an order that
+          will be submitted together with a table booking. Cancel drops back to
+          a normal order. Luigi 2026-06-08. */}
+      {reservationDraft && (
+        <div className="sticky top-0 z-40 w-full px-4 py-2.5 flex items-center justify-between gap-3 text-sm text-white shadow" style={{ backgroundColor: theme.primaryColor }}>
+          <div className="flex items-center gap-2 min-w-0">
+            <span aria-hidden>🪑</span>
+            <span className="truncate">
+              <strong>{t("reservationOrderingTitle")}</strong>
+              {" — "}
+              {t("reservationOrderingDetail", {
+                date: reservationDraft.date,
+                time: formatHHMM(reservationDraft.time, hoursFmt),
+                n: reservationDraft.partySize,
+              })}
+            </span>
+          </div>
+          <button
+            onClick={() => {
+              setReservationDraft(null);
+              try { sessionStorage.removeItem("ff_reservation_draft"); } catch {}
+            }}
+            className="flex-shrink-0 underline font-semibold hover:no-underline"
+          >
+            {t("reservationOrderingCancel")}
+          </button>
+        </div>
+      )}
       {/* Reorder feedback banner. Fires after the customer hits "Reorder"
           on the status page; tells them how many items came back, what
           couldn't, and to review modifiers. Auto-dismisses in ~9s. */}
@@ -4065,6 +4158,7 @@ export function OrderingPageClient({
           requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}
           hoursFormat={hoursFmt}
           deliveryFormConfig={deliveryFormConfig}
+          reservationContext={reservationDraft ? { date: reservationDraft.date, time: reservationDraft.time, partySize: reservationDraft.partySize } : null}
           onClose={() => setCheckoutOpen(false)}
         />
       )}
@@ -4140,6 +4234,14 @@ export function OrderingPageClient({
           hoursFormat={(restaurant as any).hoursFormat === "12h" ? "12h" : "24h"}
           timezone={(restaurant as any).timezone ?? undefined}
           theme={theme}
+          // Reserve-then-order: same page, so apply the draft directly (no
+          // sessionStorage hop) and close the modal. Luigi 2026-06-08.
+          allowPreOrder={!!(restaurant.reservationSettings as any)?.allowPreOrder}
+          onContinueToOrder={(draft) => {
+            applyReservationDraft(draft);
+            setReservationOpen(false);
+            if (searchParams.get("reservation")) router.replace(`/order/${restaurant.slug}`);
+          }}
           onClose={() => {
             setReservationOpen(false);
             // Clean the ?reservation=1 from the URL so a refresh doesn't reopen.

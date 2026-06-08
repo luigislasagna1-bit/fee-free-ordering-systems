@@ -241,7 +241,10 @@
     "cantCombineWith": "Ei voi yhdistää tarjouksen {winner} kanssa",
     "useThisInstead": "Käytä tätä tarjousta",
     "outOfAreaSoftTitle": "Vakiotoimitusalueemme ulkopuolella.",
-    "outOfAreaSoftBody": "Tämä osoite on vakiotoimitusvyöhykkeidemme ulkopuolella, emmekä välttämättä toimita tänne. Voit silti tehdä tilauksen — kauppa ottaa sinuun yhteyttä tarvittaessa."
+    "outOfAreaSoftBody": "Tämä osoite on vakiotoimitusvyöhykkeidemme ulkopuolella, emmekä välttämättä toimita tänne. Voit silti tehdä tilauksen — kauppa ottaa sinuun yhteyttä tarvittaessa.",
+    "reservationOrderingTitle": "Tilaus pöytävaraukseesi",
+    "reservationOrderingDetail": "{date} klo {time} · {n} hengen seurue",
+    "reservationOrderingCancel": "Peruuta"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Vain yksi yksinoikeustarjous voi olla voimassa tilausta kohden, joten pidimme tarjouksen {winner} — se säästää sinulle enemmän. Ei käytetty: {names}.",
     "outsideMayContact": "Voit silti tehdä tilauksen — kauppa ottaa sinuun yhteyttä tarvittaessa.",
     "outsideNotAcceptedTitle": "Toimitusalueemme ulkopuolella.",
-    "outsideNotAcceptedBody": "Emme ota vastaan tilauksia vakiotoimitusvyöhykkeidemme ulkopuolelle. Valitse nouto tai käytä toista osoitetta."
+    "outsideNotAcceptedBody": "Emme ota vastaan tilauksia vakiotoimitusvyöhykkeidemme ulkopuolelle. Valitse nouto tai käytä toista osoitetta.",
+    "reservationTitle": "Vahvistetaan pöytävarauksesi",
+    "reservationDetail": "{date} klo {time} · {n} hengen seurue — pöytä varataan, kun teet tämän tilauksen."
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} käy pyyntösi läpi ja lähettää vahvistuksen pian.",
     "emailSent": "Vahvistussähköposti on lähetetty osoitteeseen {email}.",
     "nameAndPhone": "Nimi ja puhelinnumero vaaditaan.",
-    "reservationFailed": "Varaus epäonnistui"
+    "reservationFailed": "Varaus epäonnistui",
+    "addFoodToBooking": "Lisää ruokaa varaukseesi",
+    "justBookTable": "Varaa vain pöytä"
   },
   "kitchen": {
     "title": "Keittiönäyttö",
@@ -621,7 +628,8 @@
     "refunded": "hyvitetty",
     "refundCardOnly": "Hyvityksiä voi tehdä vain korttimaksuista",
     "refundAlreadyFull": "Tämä tilaus on jo hyvitetty kokonaan",
-    "refundNotCaptured": "Ei veloitettua korttimaksua hyvitettäväksi"
+    "refundNotCaptured": "Ei veloitettua korttimaksua hyvitettäväksi",
+    "preOrder": "Ennakkotilaus"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

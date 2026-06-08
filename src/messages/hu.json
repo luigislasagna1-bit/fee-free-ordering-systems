@@ -241,7 +241,10 @@
     "cantCombineWith": "Nem vonható össze ezzel: {winner}",
     "useThisInstead": "Inkább ezt használom",
     "outOfAreaSoftTitle": "A szokásos kiszállítási területünkön kívül esik.",
-    "outOfAreaSoftBody": "Ez a cím a szokásos kiszállítási területünkön kívül esik, és előfordulhat, hogy nem szállítunk ide. A rendelést ettől még leadhatod — szükség esetén az üzlet felveszi veled a kapcsolatot."
+    "outOfAreaSoftBody": "Ez a cím a szokásos kiszállítási területünkön kívül esik, és előfordulhat, hogy nem szállítunk ide. A rendelést ettől még leadhatod — szükség esetén az üzlet felveszi veled a kapcsolatot.",
+    "reservationOrderingTitle": "Rendelés az asztalfoglaláshoz",
+    "reservationOrderingDetail": "{date} {time} · {n} fő",
+    "reservationOrderingCancel": "Mégse"
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Rendelésenként csak egy exkluzív ajánlat alkalmazható, ezért a {winner} ajánlatot tartottuk meg – ezzel többet spórolsz. Nem alkalmazva: {names}.",
     "outsideMayContact": "A rendelést ettől még leadhatod — szükség esetén az üzlet felveszi veled a kapcsolatot.",
     "outsideNotAcceptedTitle": "A kiszállítási területünkön kívül esik.",
-    "outsideNotAcceptedBody": "Nem fogadunk el rendeléseket a szokásos kiszállítási területünkön kívülről. Válts át személyes átvételre, vagy használj másik címet."
+    "outsideNotAcceptedBody": "Nem fogadunk el rendeléseket a szokásos kiszállítási területünkön kívülről. Válts át személyes átvételre, vagy használj másik címet.",
+    "reservationTitle": "Asztalfoglalás megerősítése",
+    "reservationDetail": "{date} {time} · {n} fő — az asztalt a rendelés leadásakor lefoglaljuk."
   },
   "reservation": {
     "title": "Asztal foglalása",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} megvizsgálja a kérelmét, és hamarosan visszaigazolást küld.",
     "emailSent": "Visszaigazoló e-mailt küldtünk a következő címre: {email}.",
     "nameAndPhone": "A név és telefonszám megadása kötelező.",
-    "reservationFailed": "A foglalás nem sikerült"
+    "reservationFailed": "A foglalás nem sikerült",
+    "addFoodToBooking": "Étel hozzáadása a foglaláshoz",
+    "justBookTable": "Csak asztalt foglalok"
   },
   "kitchen": {
     "title": "Konyhai kijelző",
@@ -621,7 +628,8 @@
     "refunded": "visszatérítve",
     "refundCardOnly": "Visszatérítés csak kártyás fizetéseknél lehetséges",
     "refundAlreadyFull": "Ezt a rendelést már teljesen visszatérítették",
-    "refundNotCaptured": "Nincs levonott kártyás fizetés a visszatérítéshez"
+    "refundNotCaptured": "Nincs levonott kártyás fizetés a visszatérítéshez",
+    "preOrder": "Előrendelés"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

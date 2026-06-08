@@ -68,6 +68,17 @@ export function ReservationPageClient({ restaurant }: { restaurant: any }) {
       timezone={restaurant.timezone ?? undefined}
       theme={theme}
       onClose={back}
+      // Reserve-then-order (Luigi 2026-06-08): when the restaurant allows
+      // pre-ordering, "Add food to your booking" stashes the validated booking
+      // in sessionStorage and forwards to the ordering page, which picks it up
+      // and finalises the reservation together with the paid order.
+      allowPreOrder={!!restaurant.reservationSettings?.allowPreOrder}
+      onContinueToOrder={(draft) => {
+        try {
+          sessionStorage.setItem("ff_reservation_draft", JSON.stringify(draft));
+        } catch { /* private mode / quota — fall through to a bare menu */ }
+        router.push(`/order/${restaurant.slug}`);
+      }}
     />
   );
 

@@ -241,7 +241,10 @@
     "cantCombineWith": "{winner}とは併用できません",
     "useThisInstead": "こちらに切り替える",
     "outOfAreaSoftTitle": "標準の配達エリア外です。",
-    "outOfAreaSoftBody": "この住所は標準の配達エリア外のため、配達できない場合がございます。このままご注文いただくことも可能です。必要に応じて店舗からご連絡いたします。"
+    "outOfAreaSoftBody": "この住所は標準の配達エリア外のため、配達できない場合がございます。このままご注文いただくことも可能です。必要に応じて店舗からご連絡いたします。",
+    "reservationOrderingTitle": "テーブル予約のご注文",
+    "reservationOrderingDetail": "{date} {time} · {n}名様",
+    "reservationOrderingCancel": "キャンセル"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "1回の注文につき適用できる限定特典は1つだけのため、よりお得な{winner}を適用しました。適用されなかった特典: {names}。",
     "outsideMayContact": "このままご注文いただくことも可能です。必要に応じて店舗からご連絡いたします。",
     "outsideNotAcceptedTitle": "配達エリア外です。",
-    "outsideNotAcceptedBody": "標準の配達エリア外のご注文はお受けしておりません。お受け取り（ピックアップ）に切り替えるか、別の住所をご利用ください。"
+    "outsideNotAcceptedBody": "標準の配達エリア外のご注文はお受けしておりません。お受け取り（ピックアップ）に切り替えるか、別の住所をご利用ください。",
+    "reservationTitle": "テーブル予約の確認",
+    "reservationDetail": "{date} {time} · {n}名様 — この注文を確定すると席が予約されます。"
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} がリクエストを確認し、確認書を送付いたします。",
     "emailSent": "{email} に確認メールをお送りしました。",
     "nameAndPhone": "お名前と電話番号は必須です。",
-    "reservationFailed": "予約に失敗しました"
+    "reservationFailed": "予約に失敗しました",
+    "addFoodToBooking": "予約に料理を追加する",
+    "justBookTable": "席のみ予約する"
   },
   "kitchen": {
     "title": "キッチンディスプレイ",
@@ -621,7 +628,8 @@
     "refunded": "返金済み",
     "refundCardOnly": "返金はカード決済のみ可能です",
     "refundAlreadyFull": "この注文はすでに全額返金されています",
-    "refundNotCaptured": "返金可能な確定済みカード決済がありません"
+    "refundNotCaptured": "返金可能な確定済みカード決済がありません",
+    "preOrder": "事前注文"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

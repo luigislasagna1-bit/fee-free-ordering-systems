@@ -241,7 +241,10 @@
     "cantCombineWith": "Nicht kombinierbar mit {winner}",
     "useThisInstead": "Stattdessen dieses nutzen",
     "outOfAreaSoftTitle": "Außerhalb unseres üblichen Liefergebiets.",
-    "outOfAreaSoftBody": "Diese Adresse liegt außerhalb unserer üblichen Liefergebiete, und wir liefern hierhin möglicherweise nicht. Sie können die Bestellung trotzdem aufgeben – das Geschäft meldet sich bei Ihnen, falls nötig."
+    "outOfAreaSoftBody": "Diese Adresse liegt außerhalb unserer üblichen Liefergebiete, und wir liefern hierhin möglicherweise nicht. Sie können die Bestellung trotzdem aufgeben – das Geschäft meldet sich bei Ihnen, falls nötig.",
+    "reservationOrderingTitle": "Bestellung für Ihre Tischreservierung",
+    "reservationOrderingDetail": "{date} um {time} · Tisch für {n}",
+    "reservationOrderingCancel": "Abbrechen"
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Pro Bestellung kann nur ein exklusives Angebot gelten, daher haben wir {winner} behalten – damit sparen Sie mehr. Nicht angewendet: {names}.",
     "outsideMayContact": "Sie können die Bestellung trotzdem aufgeben – das Geschäft meldet sich bei Ihnen, falls nötig.",
     "outsideNotAcceptedTitle": "Außerhalb unseres Liefergebiets.",
-    "outsideNotAcceptedBody": "Wir nehmen keine Bestellungen außerhalb unserer üblichen Liefergebiete an. Wechseln Sie zur Abholung oder verwenden Sie eine andere Adresse."
+    "outsideNotAcceptedBody": "Wir nehmen keine Bestellungen außerhalb unserer üblichen Liefergebiete an. Wechseln Sie zur Abholung oder verwenden Sie eine andere Adresse.",
+    "reservationTitle": "Bestätigung Ihrer Tischreservierung",
+    "reservationDetail": "{date} um {time} · Tisch für {n} — Ihr Tisch ist reserviert, sobald Sie diese Bestellung aufgeben."
   },
   "reservation": {
     "title": "Tisch reservieren",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} wird Ihre Anfrage prüfen und in Kürze eine Bestätigung senden.",
     "emailSent": "Eine Bestätigungs-E-Mail wurde an {email} gesendet.",
     "nameAndPhone": "Name und Telefon sind erforderlich.",
-    "reservationFailed": "Reservierung fehlgeschlagen"
+    "reservationFailed": "Reservierung fehlgeschlagen",
+    "addFoodToBooking": "Essen zu Ihrer Reservierung hinzufügen",
+    "justBookTable": "Nur den Tisch reservieren"
   },
   "kitchen": {
     "title": "Küchenanzeige",
@@ -621,7 +628,8 @@
     "refunded": "erstattet",
     "refundCardOnly": "Erstattungen sind nur bei Kartenzahlungen möglich",
     "refundAlreadyFull": "Diese Bestellung wurde bereits vollständig erstattet",
-    "refundNotCaptured": "Keine eingezogene Kartenzahlung zum Erstatten vorhanden"
+    "refundNotCaptured": "Keine eingezogene Kartenzahlung zum Erstatten vorhanden",
+    "preOrder": "Vorbestellung"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

@@ -241,7 +241,10 @@
     "cantCombineWith": "Kan ikke kombineres med {winner}",
     "useThisInstead": "Brug dette i stedet",
     "outOfAreaSoftTitle": "Uden for vores standard leveringsområde.",
-    "outOfAreaSoftBody": "Denne adresse er uden for vores standard leveringsområder, og vi leverer muligvis ikke hertil. Du kan stadig afgive ordren — butikken kontakter dig om nødvendigt."
+    "outOfAreaSoftBody": "Denne adresse er uden for vores standard leveringsområder, og vi leverer muligvis ikke hertil. Du kan stadig afgive ordren — butikken kontakter dig om nødvendigt.",
+    "reservationOrderingTitle": "Bestilling til din bordreservation",
+    "reservationOrderingDetail": "{date} kl. {time} · {n} personer",
+    "reservationOrderingCancel": "Annullér"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Kun ét eksklusivt tilbud kan gælde pr. bestilling, så vi beholdt {winner} — det sparer dig mest. Ikke anvendt: {names}.",
     "outsideMayContact": "Du kan stadig afgive ordren — butikken kontakter dig om nødvendigt.",
     "outsideNotAcceptedTitle": "Uden for vores leveringsområde.",
-    "outsideNotAcceptedBody": "Vi modtager ikke ordrer uden for vores standard leveringsområder. Skift til afhentning, eller brug en anden adresse."
+    "outsideNotAcceptedBody": "Vi modtager ikke ordrer uden for vores standard leveringsområder. Skift til afhentning, eller brug en anden adresse.",
+    "reservationTitle": "Bekræfter din bordreservation",
+    "reservationDetail": "{date} kl. {time} · {n} personer — bordet er reserveret, når du afgiver denne bestilling."
   },
   "reservation": {
     "title": "Book et bord",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} vil gennemgå din forespørgsel og sende en bekræftelse snarest.",
     "emailSent": "En bekræftelses-e-mail er sendt til {email}.",
     "nameAndPhone": "Navn og telefonnummer er påkrævet.",
-    "reservationFailed": "Reservation mislykkedes"
+    "reservationFailed": "Reservation mislykkedes",
+    "addFoodToBooking": "Tilføj mad til din reservation",
+    "justBookTable": "Reservér kun bordet"
   },
   "kitchen": {
     "title": "Køkkenskærm",
@@ -621,7 +628,8 @@
     "refunded": "refunderet",
     "refundCardOnly": "Refunderinger kan kun udstedes på kortbetalinger",
     "refundAlreadyFull": "Denne ordre er allerede fuldt refunderet",
-    "refundNotCaptured": "Ingen gennemført kortbetaling at refundere"
+    "refundNotCaptured": "Ingen gennemført kortbetaling at refundere",
+    "preOrder": "Forudbestilling"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",

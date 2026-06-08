@@ -241,7 +241,10 @@
     "cantCombineWith": "{winner} ile birleştirilemez",
     "useThisInstead": "Bunun yerine bunu kullan",
     "outOfAreaSoftTitle": "Standart teslimat alanımızın dışında.",
-    "outOfAreaSoftBody": "Bu adres standart teslimat bölgelerimizin dışında ve buraya teslimat yapamayabiliriz. Yine de siparişi verebilirsiniz — gerekirse mağaza sizinle iletişime geçer."
+    "outOfAreaSoftBody": "Bu adres standart teslimat bölgelerimizin dışında ve buraya teslimat yapamayabiliriz. Yine de siparişi verebilirsiniz — gerekirse mağaza sizinle iletişime geçer.",
+    "reservationOrderingTitle": "Masa rezervasyonunuz için sipariş",
+    "reservationOrderingDetail": "{date} saat {time} · {n} kişilik",
+    "reservationOrderingCancel": "İptal"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Her siparişe yalnızca bir özel fırsat uygulanabilir; bu yüzden {winner} fırsatını koruduk — size daha fazla tasarruf sağlıyor. Uygulanmayan: {names}.",
     "outsideMayContact": "Yine de siparişi verebilirsiniz — gerekirse mağaza sizinle iletişime geçer.",
     "outsideNotAcceptedTitle": "Teslimat alanımızın dışında.",
-    "outsideNotAcceptedBody": "Standart teslimat bölgelerimiz dışındaki siparişleri kabul etmiyoruz. Gel al seçeneğine geçin ya da farklı bir adres kullanın."
+    "outsideNotAcceptedBody": "Standart teslimat bölgelerimiz dışındaki siparişleri kabul etmiyoruz. Gel al seçeneğine geçin ya da farklı bir adres kullanın.",
+    "reservationTitle": "Masa rezervasyonunuzu onaylama",
+    "reservationDetail": "{date} saat {time} · {n} kişilik — bu siparişi verdiğinizde masanız ayrılır."
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} talebinizi inceleyecek ve kısa süre içinde onay gönderecektir.",
     "emailSent": "{email} adresine onay e-postası gönderildi.",
     "nameAndPhone": "Ad ve telefon zorunludur.",
-    "reservationFailed": "Rezervasyon Başarısız"
+    "reservationFailed": "Rezervasyon Başarısız",
+    "addFoodToBooking": "Rezervasyonunuza yemek ekleyin",
+    "justBookTable": "Sadece masa ayırt"
   },
   "kitchen": {
     "title": "Mutfak Ekranı",
@@ -621,7 +628,8 @@
     "refunded": "iade edildi",
     "refundCardOnly": "İadeler yalnızca kart ödemelerinde yapılabilir",
     "refundAlreadyFull": "Bu siparişin tamamı zaten iade edilmiş",
-    "refundNotCaptured": "İade edilecek tahsil edilmiş kart ödemesi yok"
+    "refundNotCaptured": "İade edilecek tahsil edilmiş kart ödemesi yok",
+    "preOrder": "Ön sipariş"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

@@ -241,7 +241,10 @@
     "cantCombineWith": "Niet te combineren met {winner}",
     "useThisInstead": "Kies deze in plaats daarvan",
     "outOfAreaSoftTitle": "Buiten ons standaard bezorggebied.",
-    "outOfAreaSoftBody": "Dit adres ligt buiten onze standaard bezorggebieden en we bezorgen hier mogelijk niet. Je kunt de bestelling toch plaatsen — de winkel neemt indien nodig contact met je op."
+    "outOfAreaSoftBody": "Dit adres ligt buiten onze standaard bezorggebieden en we bezorgen hier mogelijk niet. Je kunt de bestelling toch plaatsen — de winkel neemt indien nodig contact met je op.",
+    "reservationOrderingTitle": "Bestellen voor je tafelreservering",
+    "reservationOrderingDetail": "{date} om {time} · tafel voor {n}",
+    "reservationOrderingCancel": "Annuleren"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Er kan maar één exclusieve aanbieding per bestelling worden toegepast, dus we hebben {winner} behouden — die levert je meer op. Niet toegepast: {names}.",
     "outsideMayContact": "Je kunt de bestelling toch plaatsen — de winkel neemt indien nodig contact met je op.",
     "outsideNotAcceptedTitle": "Buiten ons bezorggebied.",
-    "outsideNotAcceptedBody": "We accepteren geen bestellingen buiten onze standaard bezorggebieden. Schakel over naar afhalen of gebruik een ander adres."
+    "outsideNotAcceptedBody": "We accepteren geen bestellingen buiten onze standaard bezorggebieden. Schakel over naar afhalen of gebruik een ander adres.",
+    "reservationTitle": "Je tafelreservering bevestigen",
+    "reservationDetail": "{date} om {time} · tafel voor {n} — je tafel is gereserveerd zodra je deze bestelling plaatst."
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} zal uw aanvraag beoordelen en binnenkort een bevestiging sturen.",
     "emailSent": "Er is een bevestigingsmail verzonden naar {email}.",
     "nameAndPhone": "Naam en telefoonnummer zijn verplicht.",
-    "reservationFailed": "Reservering mislukt"
+    "reservationFailed": "Reservering mislukt",
+    "addFoodToBooking": "Eten aan je reservering toevoegen",
+    "justBookTable": "Alleen de tafel reserveren"
   },
   "kitchen": {
     "title": "Keukenweergave",
@@ -621,7 +628,8 @@
     "refunded": "terugbetaald",
     "refundCardOnly": "Terugbetalingen zijn alleen mogelijk bij kaartbetalingen",
     "refundAlreadyFull": "Deze bestelling is al volledig terugbetaald",
-    "refundNotCaptured": "Geen vastgelegde kaartbetaling om terug te betalen"
+    "refundNotCaptured": "Geen vastgelegde kaartbetaling om terug te betalen",
+    "preOrder": "Voorbestelling"
   },
   "admin": {
     "welcomeBack": "Welkom terug",

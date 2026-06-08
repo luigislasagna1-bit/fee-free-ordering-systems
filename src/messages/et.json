@@ -241,7 +241,10 @@
     "cantCombineWith": "Ei saa kombineerida pakkumisega {winner}",
     "useThisInstead": "Kasuta hoopis seda",
     "outOfAreaSoftTitle": "Väljaspool meie tavapärast tarneala.",
-    "outOfAreaSoftBody": "See aadress jääb väljapoole meie tavapäraseid tarnealasid ja me ei pruugi siia tarnida. Saad tellimuse siiski esitada – vajadusel võtab kauplus sinuga ühendust."
+    "outOfAreaSoftBody": "See aadress jääb väljapoole meie tavapäraseid tarnealasid ja me ei pruugi siia tarnida. Saad tellimuse siiski esitada – vajadusel võtab kauplus sinuga ühendust.",
+    "reservationOrderingTitle": "Tellimine teie lauabroneeringule",
+    "reservationOrderingDetail": "{date} kell {time} · {n} inimest",
+    "reservationOrderingCancel": "Tühista"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Ühe tellimuse kohta saab kehtida vaid üks eksklusiivne pakkumine, seega jätsime alles {winner} — see säästab sul rohkem. Ei rakendatud: {names}.",
     "outsideMayContact": "Saad tellimuse siiski esitada – vajadusel võtab kauplus sinuga ühendust.",
     "outsideNotAcceptedTitle": "Väljaspool meie tarneala.",
-    "outsideNotAcceptedBody": "Me ei võta vastu tellimusi väljaspool meie tavapäraseid tarnealasid. Vali järeletulemine või kasuta teist aadressi."
+    "outsideNotAcceptedBody": "Me ei võta vastu tellimusi väljaspool meie tavapäraseid tarnealasid. Vali järeletulemine või kasuta teist aadressi.",
+    "reservationTitle": "Lauabroneeringu kinnitamine",
+    "reservationDetail": "{date} kell {time} · {n} inimest — teie laud broneeritakse selle tellimuse esitamisel."
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} vaatab sinu taotluse üle ja saadab peatselt kinnituse.",
     "emailSent": "Kinnitusmeil on saadetud aadressile {email}.",
     "nameAndPhone": "Nimi ja telefon on nõutavad.",
-    "reservationFailed": "Broneerimine ebaõnnestus"
+    "reservationFailed": "Broneerimine ebaõnnestus",
+    "addFoodToBooking": "Lisa broneeringule toidud",
+    "justBookTable": "Broneeri ainult laud"
   },
   "kitchen": {
     "title": "Köögi ekraan",
@@ -621,7 +628,8 @@
     "refunded": "tagastatud",
     "refundCardOnly": "Tagasimakseid saab teha ainult kaardimaksete puhul",
     "refundAlreadyFull": "See tellimus on juba täielikult tagastatud",
-    "refundNotCaptured": "Pole kinnitatud kaardimakset, mida tagastada"
+    "refundNotCaptured": "Pole kinnitatud kaardimakset, mida tagastada",
+    "preOrder": "Ettetellimine"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

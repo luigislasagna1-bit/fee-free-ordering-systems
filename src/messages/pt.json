@@ -241,7 +241,10 @@
     "cantCombineWith": "Não pode ser combinada com {winner}",
     "useThisInstead": "Usar esta em vez disso",
     "outOfAreaSoftTitle": "Fora da nossa área de entrega habitual.",
-    "outOfAreaSoftBody": "Esta morada está fora das nossas zonas de entrega habituais e poderemos não entregar aqui. Mesmo assim, pode efetuar a encomenda — a loja entrará em contacto consigo se for necessário."
+    "outOfAreaSoftBody": "Esta morada está fora das nossas zonas de entrega habituais e poderemos não entregar aqui. Mesmo assim, pode efetuar a encomenda — a loja entrará em contacto consigo se for necessário.",
+    "reservationOrderingTitle": "A encomendar para a sua reserva de mesa",
+    "reservationOrderingDetail": "{date} às {time} · mesa para {n}",
+    "reservationOrderingCancel": "Cancelar"
   },
   "pizza": {
     "chooseSize": "Escolher tamanho",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Só pode aplicar-se uma promoção exclusiva por pedido, por isso mantivemos {winner} — poupa-lhe mais. Não aplicada: {names}.",
     "outsideMayContact": "Mesmo assim, pode efetuar a encomenda — a loja entrará em contacto consigo se for necessário.",
     "outsideNotAcceptedTitle": "Fora da nossa área de entrega.",
-    "outsideNotAcceptedBody": "Não aceitamos encomendas fora das nossas zonas de entrega habituais. Mude para recolha no local ou utilize uma morada diferente."
+    "outsideNotAcceptedBody": "Não aceitamos encomendas fora das nossas zonas de entrega habituais. Mude para recolha no local ou utilize uma morada diferente.",
+    "reservationTitle": "A confirmar a sua reserva de mesa",
+    "reservationDetail": "{date} às {time} · mesa para {n} — a sua mesa fica reservada quando efetua esta encomenda."
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} analisará sua solicitação e enviará uma confirmação em breve.",
     "emailSent": "Foi enviado um e-mail de confirmação para {email}.",
     "nameAndPhone": "Nome e telefone são obrigatórios.",
-    "reservationFailed": "Falha na reserva"
+    "reservationFailed": "Falha na reserva",
+    "addFoodToBooking": "Adicionar comida à sua reserva",
+    "justBookTable": "Reservar apenas a mesa"
   },
   "kitchen": {
     "title": "Tela da cozinha",
@@ -621,7 +628,8 @@
     "refunded": "reembolsado",
     "refundCardOnly": "Os reembolsos só podem ser efetuados em pagamentos com cartão",
     "refundAlreadyFull": "Este pedido já foi totalmente reembolsado",
-    "refundNotCaptured": "Não há pagamento com cartão capturado para reembolsar"
+    "refundNotCaptured": "Não há pagamento com cartão capturado para reembolsar",
+    "preOrder": "Pré-encomenda"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",

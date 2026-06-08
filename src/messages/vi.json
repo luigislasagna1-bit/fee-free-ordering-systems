@@ -241,7 +241,10 @@
     "cantCombineWith": "Không thể kết hợp với {winner}",
     "useThisInstead": "Dùng ưu đãi này thay thế",
     "outOfAreaSoftTitle": "Nằm ngoài khu vực giao hàng tiêu chuẩn của chúng tôi.",
-    "outOfAreaSoftBody": "Địa chỉ này nằm ngoài khu vực giao hàng tiêu chuẩn của chúng tôi và chúng tôi có thể không giao đến đây. Bạn vẫn có thể đặt hàng — cửa hàng sẽ liên hệ với bạn nếu cần."
+    "outOfAreaSoftBody": "Địa chỉ này nằm ngoài khu vực giao hàng tiêu chuẩn của chúng tôi và chúng tôi có thể không giao đến đây. Bạn vẫn có thể đặt hàng — cửa hàng sẽ liên hệ với bạn nếu cần.",
+    "reservationOrderingTitle": "Đặt món cho lượt đặt bàn của bạn",
+    "reservationOrderingDetail": "{date} lúc {time} · nhóm {n} người",
+    "reservationOrderingCancel": "Hủy"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Mỗi đơn hàng chỉ áp dụng được một ưu đãi độc quyền, nên chúng tôi đã giữ lại {winner} — ưu đãi này tiết kiệm hơn cho bạn. Chưa áp dụng: {names}.",
     "outsideMayContact": "Bạn vẫn có thể đặt hàng — cửa hàng sẽ liên hệ với bạn nếu cần.",
     "outsideNotAcceptedTitle": "Nằm ngoài khu vực giao hàng của chúng tôi.",
-    "outsideNotAcceptedBody": "Chúng tôi không nhận đơn hàng nằm ngoài khu vực giao hàng tiêu chuẩn của mình. Hãy chuyển sang lấy tại cửa hàng hoặc dùng một địa chỉ khác."
+    "outsideNotAcceptedBody": "Chúng tôi không nhận đơn hàng nằm ngoài khu vực giao hàng tiêu chuẩn của mình. Hãy chuyển sang lấy tại cửa hàng hoặc dùng một địa chỉ khác.",
+    "reservationTitle": "Xác nhận đặt bàn của bạn",
+    "reservationDetail": "{date} lúc {time} · nhóm {n} người — bàn của bạn được đặt khi bạn hoàn tất đơn này."
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} sẽ xem xét yêu cầu của bạn và gửi xác nhận sớm.",
     "emailSent": "Email xác nhận đã được gửi đến {email}.",
     "nameAndPhone": "Tên và điện thoại là bắt buộc.",
-    "reservationFailed": "Đặt bàn thất bại"
+    "reservationFailed": "Đặt bàn thất bại",
+    "addFoodToBooking": "Thêm món ăn vào lượt đặt bàn của bạn",
+    "justBookTable": "Chỉ đặt bàn"
   },
   "kitchen": {
     "title": "Màn hình bếp",
@@ -621,7 +628,8 @@
     "refunded": "đã hoàn tiền",
     "refundCardOnly": "Chỉ có thể hoàn tiền cho các khoản thanh toán bằng thẻ",
     "refundAlreadyFull": "Đơn hàng này đã được hoàn tiền đầy đủ",
-    "refundNotCaptured": "Không có khoản thanh toán bằng thẻ đã thu để hoàn tiền"
+    "refundNotCaptured": "Không có khoản thanh toán bằng thẻ đã thu để hoàn tiền",
+    "preOrder": "Đặt trước"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

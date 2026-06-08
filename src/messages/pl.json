@@ -241,7 +241,10 @@
     "cantCombineWith": "Nie można łączyć z {winner}",
     "useThisInstead": "Użyj tej zamiast",
     "outOfAreaSoftTitle": "Poza naszym standardowym obszarem dostawy.",
-    "outOfAreaSoftBody": "Ten adres znajduje się poza naszymi standardowymi strefami dostawy i możemy tu nie dowozić. Mimo to możesz złożyć zamówienie — w razie potrzeby restauracja skontaktuje się z Tobą."
+    "outOfAreaSoftBody": "Ten adres znajduje się poza naszymi standardowymi strefami dostawy i możemy tu nie dowozić. Mimo to możesz złożyć zamówienie — w razie potrzeby restauracja skontaktuje się z Tobą.",
+    "reservationOrderingTitle": "Zamawianie do rezerwacji stolika",
+    "reservationOrderingDetail": "{date} o {time} · grupa {n} osób",
+    "reservationOrderingCancel": "Anuluj"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Na zamówienie może obowiązywać tylko jedna oferta ekskluzywna, więc zachowaliśmy {winner} — daje większą oszczędność. Nie zastosowano: {names}.",
     "outsideMayContact": "Mimo to możesz złożyć zamówienie — w razie potrzeby restauracja skontaktuje się z Tobą.",
     "outsideNotAcceptedTitle": "Poza naszym obszarem dostawy.",
-    "outsideNotAcceptedBody": "Nie przyjmujemy zamówień poza naszymi standardowymi strefami dostawy. Przełącz się na odbiór osobisty lub użyj innego adresu."
+    "outsideNotAcceptedBody": "Nie przyjmujemy zamówień poza naszymi standardowymi strefami dostawy. Przełącz się na odbiór osobisty lub użyj innego adresu.",
+    "reservationTitle": "Potwierdzanie rezerwacji stolika",
+    "reservationDetail": "{date} o {time} · grupa {n} osób — stolik zostaje zarezerwowany po złożeniu tego zamówienia."
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} sprawdzi Twoją prośbę i wkrótce wyśle potwierdzenie.",
     "emailSent": "E-mail z potwierdzeniem został wysłany na adres {email}.",
     "nameAndPhone": "Imię i telefon są wymagane.",
-    "reservationFailed": "Rezerwacja nie powiodła się"
+    "reservationFailed": "Rezerwacja nie powiodła się",
+    "addFoodToBooking": "Dodaj jedzenie do rezerwacji",
+    "justBookTable": "Zarezerwuj tylko stolik"
   },
   "kitchen": {
     "title": "Wyświetlacz kuchenny",
@@ -621,7 +628,8 @@
     "refunded": "zwrócono",
     "refundCardOnly": "Zwroty można wykonać tylko dla płatności kartą",
     "refundAlreadyFull": "To zamówienie zostało już w pełni zwrócone",
-    "refundNotCaptured": "Brak pobranej płatności kartą do zwrotu"
+    "refundNotCaptured": "Brak pobranej płatności kartą do zwrotu",
+    "preOrder": "Zamówienie z wyprzedzeniem"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

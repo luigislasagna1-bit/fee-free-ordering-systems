@@ -241,7 +241,10 @@
     "cantCombineWith": "לא ניתן לשלב עם {winner}",
     "useThisInstead": "השתמשו בזה במקום",
     "outOfAreaSoftTitle": "מחוץ לאזור המשלוח הרגיל שלנו.",
-    "outOfAreaSoftBody": "כתובת זו נמצאת מחוץ לאזורי המשלוח הרגילים שלנו וייתכן שלא נספק אליה. עדיין ניתן לבצע את ההזמנה — החנות תיצור איתכם קשר במידת הצורך."
+    "outOfAreaSoftBody": "כתובת זו נמצאת מחוץ לאזורי המשלוח הרגילים שלנו וייתכן שלא נספק אליה. עדיין ניתן לבצע את ההזמנה — החנות תיצור איתכם קשר במידת הצורך.",
+    "reservationOrderingTitle": "הזמנת אוכל לשמירת השולחן שלכם",
+    "reservationOrderingDetail": "{date} בשעה {time} · סועדים: {n}",
+    "reservationOrderingCancel": "ביטול"
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "ניתן להחיל רק מבצע בלעדי אחד לכל הזמנה, ולכן השארנו את {winner} — הוא חוסך לכם יותר. לא הוחל: {names}.",
     "outsideMayContact": "עדיין ניתן לבצע את ההזמנה — החנות תיצור איתכם קשר במידת הצורך.",
     "outsideNotAcceptedTitle": "מחוץ לאזור המשלוח שלנו.",
-    "outsideNotAcceptedBody": "איננו מקבלים הזמנות מחוץ לאזורי המשלוח הרגילים שלנו. עברו לאיסוף עצמי או השתמשו בכתובת אחרת."
+    "outsideNotAcceptedBody": "איננו מקבלים הזמנות מחוץ לאזורי המשלוח הרגילים שלנו. עברו לאיסוף עצמי או השתמשו בכתובת אחרת.",
+    "reservationTitle": "מאשרים את שמירת השולחן שלכם",
+    "reservationDetail": "{date} בשעה {time} · סועדים: {n} — השולחן שלכם נשמר כאשר תבצעו את ההזמנה הזו."
   },
   "reservation": {
     "title": "הזמן שולחן",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} יבדוק את בקשתך וישלח אישור בקרוב.",
     "emailSent": "אישור נשלח לכתובת {email}.",
     "nameAndPhone": "שם וטלפון הם שדות חובה.",
-    "reservationFailed": "ההזמנה נכשלה"
+    "reservationFailed": "ההזמנה נכשלה",
+    "addFoodToBooking": "הוסיפו אוכל להזמנה שלכם",
+    "justBookTable": "רק להזמין שולחן"
   },
   "kitchen": {
     "title": "תצוגת מטבח",
@@ -621,7 +628,8 @@
     "refunded": "הוחזר",
     "refundCardOnly": "ניתן לבצע החזרים רק על תשלומים בכרטיס",
     "refundAlreadyFull": "הזמנה זו כבר זוכתה במלואה",
-    "refundNotCaptured": "אין תשלום כרטיס שנגבה להחזר"
+    "refundNotCaptured": "אין תשלום כרטיס שנגבה להחזר",
+    "preOrder": "הזמנה מראש"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

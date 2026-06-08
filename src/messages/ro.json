@@ -241,7 +241,10 @@
     "cantCombineWith": "Nu poate fi combinată cu {winner}",
     "useThisInstead": "Folosește-o pe aceasta",
     "outOfAreaSoftTitle": "În afara zonei noastre standard de livrare.",
-    "outOfAreaSoftBody": "Această adresă se află în afara zonelor noastre standard de livrare și este posibil să nu livrăm aici. Poți totuși să plasezi comanda — magazinul te va contacta dacă este necesar."
+    "outOfAreaSoftBody": "Această adresă se află în afara zonelor noastre standard de livrare și este posibil să nu livrăm aici. Poți totuși să plasezi comanda — magazinul te va contacta dacă este necesar.",
+    "reservationOrderingTitle": "Comanzi pentru rezervarea ta",
+    "reservationOrderingDetail": "{date} la {time} · grup de {n}",
+    "reservationOrderingCancel": "Anulează"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Per comandă se poate aplica un singur deal exclusiv, așa că l-am păstrat pe {winner} — te economisește mai mult. Neaplicate: {names}.",
     "outsideMayContact": "Poți totuși să plasezi comanda — magazinul te va contacta dacă este necesar.",
     "outsideNotAcceptedTitle": "În afara zonei noastre de livrare.",
-    "outsideNotAcceptedBody": "Nu acceptăm comenzi în afara zonelor noastre standard de livrare. Treci la ridicare personală sau folosește o altă adresă."
+    "outsideNotAcceptedBody": "Nu acceptăm comenzi în afara zonelor noastre standard de livrare. Treci la ridicare personală sau folosește o altă adresă.",
+    "reservationTitle": "Confirmăm rezervarea mesei",
+    "reservationDetail": "{date} la {time} · grup de {n} — masa este rezervată când plasezi această comandă."
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} va analiza solicitarea ta și va trimite o confirmare în scurt timp.",
     "emailSent": "Un email de confirmare a fost trimis la {email}.",
     "nameAndPhone": "Numele și telefonul sunt obligatorii.",
-    "reservationFailed": "Rezervarea a eșuat"
+    "reservationFailed": "Rezervarea a eșuat",
+    "addFoodToBooking": "Adaugă mâncare la rezervare",
+    "justBookTable": "Doar rezervă masa"
   },
   "kitchen": {
     "title": "Display Bucătărie",
@@ -621,7 +628,8 @@
     "refunded": "rambursat",
     "refundCardOnly": "Rambursările pot fi efectuate doar pentru plățile cu cardul",
     "refundAlreadyFull": "Această comandă a fost deja rambursată integral",
-    "refundNotCaptured": "Nicio plată cu cardul capturată pentru rambursare"
+    "refundNotCaptured": "Nicio plată cu cardul capturată pentru rambursare",
+    "preOrder": "Precomandă"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

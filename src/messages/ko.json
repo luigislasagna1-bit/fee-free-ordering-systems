@@ -241,7 +241,10 @@
     "cantCombineWith": "\"{winner}\"와(과) 함께 사용할 수 없습니다",
     "useThisInstead": "이것으로 바꾸기",
     "outOfAreaSoftTitle": "표준 배달 구역을 벗어났습니다.",
-    "outOfAreaSoftBody": "이 주소는 표준 배달 구역을 벗어나 배달이 어려울 수 있습니다. 그래도 주문은 진행하실 수 있으며, 필요한 경우 매장에서 연락드립니다."
+    "outOfAreaSoftBody": "이 주소는 표준 배달 구역을 벗어나 배달이 어려울 수 있습니다. 그래도 주문은 진행하실 수 있으며, 필요한 경우 매장에서 연락드립니다.",
+    "reservationOrderingTitle": "테이블 예약을 위한 주문",
+    "reservationOrderingDetail": "{date} {time} · {n}명",
+    "reservationOrderingCancel": "취소"
   },
   "pizza": {
     "chooseSize": "크기 선택",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "주문당 단독 혜택은 하나만 적용할 수 있어 더 많이 절약되는 {winner}을(를) 적용했어요. 적용되지 않음: {names}.",
     "outsideMayContact": "그래도 주문은 진행하실 수 있으며, 필요한 경우 매장에서 연락드립니다.",
     "outsideNotAcceptedTitle": "배달 구역을 벗어났습니다.",
-    "outsideNotAcceptedBody": "표준 배달 구역을 벗어난 주문은 받지 않습니다. 픽업으로 변경하시거나 다른 주소를 사용해 주세요."
+    "outsideNotAcceptedBody": "표준 배달 구역을 벗어난 주문은 받지 않습니다. 픽업으로 변경하시거나 다른 주소를 사용해 주세요.",
+    "reservationTitle": "테이블 예약 확인 중",
+    "reservationDetail": "{date} {time} · {n}명 — 이 주문을 완료하면 테이블이 예약됩니다."
   },
   "reservation": {
     "title": "테이블 예약",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant}에서 요청을 검토한 후 곧 확인 연락을 드릴 것입니다.",
     "emailSent": "{email}로 확인 이메일이 발송되었습니다.",
     "nameAndPhone": "이름과 전화번호가 필요합니다.",
-    "reservationFailed": "예약에 실패했습니다"
+    "reservationFailed": "예약에 실패했습니다",
+    "addFoodToBooking": "예약에 음식 추가하기",
+    "justBookTable": "테이블만 예약하기"
   },
   "kitchen": {
     "title": "주방 디스플레이",
@@ -621,7 +628,8 @@
     "refunded": "환불됨",
     "refundCardOnly": "환불은 카드 결제에만 적용할 수 있습니다",
     "refundAlreadyFull": "이 주문은 이미 전액 환불되었습니다",
-    "refundNotCaptured": "환불할 승인된 카드 결제가 없습니다"
+    "refundNotCaptured": "환불할 승인된 카드 결제가 없습니다",
+    "preOrder": "사전 주문"
   },
   "admin": {
     "welcomeBack": "환영합니다",

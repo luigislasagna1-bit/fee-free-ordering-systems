@@ -241,7 +241,10 @@
     "cantCombineWith": "Nedá sa kombinovať s {winner}",
     "useThisInstead": "Použiť túto namiesto toho",
     "outOfAreaSoftTitle": "Mimo našej štandardnej oblasti doručenia.",
-    "outOfAreaSoftBody": "Táto adresa je mimo našich štandardných zón doručenia a možno sem nedoručujeme. Objednávku môžete aj tak zadať — v prípade potreby vás prevádzka bude kontaktovať."
+    "outOfAreaSoftBody": "Táto adresa je mimo našich štandardných zón doručenia a možno sem nedoručujeme. Objednávku môžete aj tak zadať — v prípade potreby vás prevádzka bude kontaktovať.",
+    "reservationOrderingTitle": "Objednávka k rezervácii stola",
+    "reservationOrderingDetail": "{date} o {time} · {n} osôb",
+    "reservationOrderingCancel": "Zrušiť"
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Na jednu objednávku je možné uplatniť len jednu exkluzívnu ponuku, preto sme ponechali {winner} — ušetríte ňou viac. Neuplatnené: {names}.",
     "outsideMayContact": "Objednávku môžete aj tak zadať — v prípade potreby vás prevádzka bude kontaktovať.",
     "outsideNotAcceptedTitle": "Mimo našej oblasti doručenia.",
-    "outsideNotAcceptedBody": "Neprijímame objednávky mimo našich štandardných zón doručenia. Prepnite na osobný odber alebo použite inú adresu."
+    "outsideNotAcceptedBody": "Neprijímame objednávky mimo našich štandardných zón doručenia. Prepnite na osobný odber alebo použite inú adresu.",
+    "reservationTitle": "Potvrdenie rezervácie stola",
+    "reservationDetail": "{date} o {time} · {n} osôb — stôl bude rezervovaný po dokončení objednávky."
   },
   "reservation": {
     "title": "Rezervovať stôl",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} preskúma vašu žiadosť a čoskoro odošle potvrdenie.",
     "emailSent": "Potvrdzovací e-mail bol odoslaný na {email}.",
     "nameAndPhone": "Meno a telefón sú povinné.",
-    "reservationFailed": "Rezervácia zlyhala"
+    "reservationFailed": "Rezervácia zlyhala",
+    "addFoodToBooking": "Pridať jedlo k rezervácii",
+    "justBookTable": "Len rezervovať stôl"
   },
   "kitchen": {
     "title": "Kuchynský displej",
@@ -621,7 +628,8 @@
     "refunded": "vrátené",
     "refundCardOnly": "Vrátenie platby je možné len pri platbách kartou",
     "refundAlreadyFull": "Táto objednávka už bola plne refundovaná",
-    "refundNotCaptured": "Žiadna zúčtovaná platba kartou na vrátenie"
+    "refundNotCaptured": "Žiadna zúčtovaná platba kartou na vrátenie",
+    "preOrder": "Predobjednávka"
   },
   "admin": {
     "welcomeBack": "Vitajte späť",

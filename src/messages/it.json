@@ -241,7 +241,10 @@
     "cantCombineWith": "Non combinabile con {winner}",
     "useThisInstead": "Usa questa invece",
     "outOfAreaSoftTitle": "Fuori dalla nostra area di consegna standard.",
-    "outOfAreaSoftBody": "Questo indirizzo è al di fuori delle nostre zone di consegna standard e potremmo non consegnare qui. Puoi comunque effettuare l'ordine — il locale ti contatterà se necessario."
+    "outOfAreaSoftBody": "Questo indirizzo è al di fuori delle nostre zone di consegna standard e potremmo non consegnare qui. Puoi comunque effettuare l'ordine — il locale ti contatterà se necessario.",
+    "reservationOrderingTitle": "Ordine per la tua prenotazione del tavolo",
+    "reservationOrderingDetail": "{date} alle {time} · tavolo per {n}",
+    "reservationOrderingCancel": "Annulla"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Per ogni ordine può essere applicata una sola offerta esclusiva, quindi abbiamo mantenuto {winner}: ti fa risparmiare di più. Non applicate: {names}.",
     "outsideMayContact": "Puoi comunque effettuare l'ordine — il locale ti contatterà se necessario.",
     "outsideNotAcceptedTitle": "Fuori dalla nostra area di consegna.",
-    "outsideNotAcceptedBody": "Non accettiamo ordini al di fuori delle nostre zone di consegna standard. Passa al ritiro oppure usa un indirizzo diverso."
+    "outsideNotAcceptedBody": "Non accettiamo ordini al di fuori delle nostre zone di consegna standard. Passa al ritiro oppure usa un indirizzo diverso.",
+    "reservationTitle": "Conferma della tua prenotazione del tavolo",
+    "reservationDetail": "{date} alle {time} · tavolo per {n} — il tuo tavolo è prenotato quando effettui questo ordine."
   },
   "reservation": {
     "title": "Prenota un tavolo",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} esaminerà la tua richiesta e ti invierà una conferma a breve.",
     "emailSent": "Un'e-mail di conferma è stata inviata a {email}.",
     "nameAndPhone": "Nome e telefono sono obbligatori.",
-    "reservationFailed": "Prenotazione fallita"
+    "reservationFailed": "Prenotazione fallita",
+    "addFoodToBooking": "Aggiungi piatti alla tua prenotazione",
+    "justBookTable": "Prenota solo il tavolo"
   },
   "kitchen": {
     "title": "Display cucina",
@@ -621,7 +628,8 @@
     "refunded": "rimborsato",
     "refundCardOnly": "I rimborsi possono essere emessi solo sui pagamenti con carta",
     "refundAlreadyFull": "Questo ordine è già stato rimborsato per intero",
-    "refundNotCaptured": "Nessun pagamento con carta acquisito da rimborsare"
+    "refundNotCaptured": "Nessun pagamento con carta acquisito da rimborsare",
+    "preOrder": "Preordine"
   },
   "admin": {
     "welcomeBack": "Bentornato",

@@ -105,6 +105,11 @@ function ReservationCard({
                 {tk("depositPaid").toUpperCase()}
               </span>
             )}
+            {r.preOrderTotal > 0 && (
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">
+                {tk("preOrder").toUpperCase()}
+              </span>
+            )}
           </div>
           <div className={`text-xs ${t.muted} mt-1 flex gap-3 flex-wrap`}>
             <span>{r.date} · {formatTime(r.time, hoursFormat)}</span>
@@ -129,7 +134,7 @@ function ReservationCard({
 // Accept / Reject live in OrderDetail rather than on the order row.
 // Luigi 2026-06-08.
 function ReservationDetail({
-  r, t, onStatusChange, onPrint, onClose, hoursFormat = "24h",
+  r, t, onStatusChange, onPrint, onClose, hoursFormat = "24h", currency,
 }: {
   r: KitchenReservation;
   t: T;
@@ -137,6 +142,8 @@ function ReservationDetail({
   onPrint: (id: string) => void;
   onClose: () => void;
   hoursFormat?: "12h" | "24h";
+  /** Restaurant currency for the pre-order amount. */
+  currency?: string;
 }) {
   const tk = useTranslations("kitchen");
   const [busy, setBusy] = useState(false);
@@ -163,6 +170,11 @@ function ReservationDetail({
               {tk("depositPaid").toUpperCase()}
             </span>
           )}
+          {r.preOrderTotal > 0 && (
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">
+              {tk("preOrder").toUpperCase()}
+            </span>
+          )}
         </div>
         <button onClick={onClose} className={`p-1.5 rounded-lg ${t.btn} flex-shrink-0`} aria-label="Close">
           <X className="w-4 h-4" />
@@ -184,6 +196,14 @@ function ReservationDetail({
         )}
         {r.notes && (
           <div className={`text-xs ${t.muted} italic border-l-2 ${t.border} pl-3`}>&quot;{r.notes}&quot;</div>
+        )}
+        {r.preOrderTotal > 0 && (
+          <div className={`flex items-center justify-between rounded-xl border ${t.border} px-3 py-2`}>
+            <span className={`flex items-center gap-1.5 font-semibold ${t.text}`}>
+              <ShoppingBag className="w-4 h-4" /> {tk("preOrder")}
+            </span>
+            <span className={`font-bold ${t.text}`}>{formatCurrency(r.preOrderTotal, currency)}</span>
+          </div>
         )}
         <div className="text-[10px] font-mono text-gray-400">#{r.confirmationCode}</div>
       </div>
@@ -2527,6 +2547,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 r={selectedReservation}
                 t={t}
                 hoursFormat={hoursFmt}
+                currency={moneyCurrency}
                 onStatusChange={updateReservationStatus}
                 onPrint={printReservation}
                 onClose={() => setSelectedReservationId(null)}
@@ -2792,6 +2813,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               r={selectedReservation}
               t={t}
               hoursFormat={hoursFmt}
+              currency={moneyCurrency}
               onStatusChange={updateReservationStatus}
               onPrint={printReservation}
               onClose={() => setSelectedReservationId(null)}

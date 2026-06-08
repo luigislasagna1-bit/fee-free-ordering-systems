@@ -241,7 +241,10 @@
     "cantCombineWith": "无法与 {winner} 同时使用",
     "useThisInstead": "改用此优惠",
     "outOfAreaSoftTitle": "超出我们的标准配送范围。",
-    "outOfAreaSoftBody": "此地址在我们的标准配送区域之外，我们可能无法送达这里。您仍然可以下单——如有需要，门店会与您联系。"
+    "outOfAreaSoftBody": "此地址在我们的标准配送区域之外，我们可能无法送达这里。您仍然可以下单——如有需要，门店会与您联系。",
+    "reservationOrderingTitle": "为您的餐桌预订点餐",
+    "reservationOrderingDetail": "{date} {time} · {n} 人",
+    "reservationOrderingCancel": "取消"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "每笔订单只能使用一项专享优惠，因此我们为您保留了 {winner}——它能为您节省更多。未应用：{names}。",
     "outsideMayContact": "您仍然可以下单——如有需要，门店会与您联系。",
     "outsideNotAcceptedTitle": "超出我们的配送范围。",
-    "outsideNotAcceptedBody": "我们不接受标准配送区域以外的订单。请改为自取，或使用其他地址。"
+    "outsideNotAcceptedBody": "我们不接受标准配送区域以外的订单。请改为自取，或使用其他地址。",
+    "reservationTitle": "确认您的餐桌预订",
+    "reservationDetail": "{date} {time} · {n} 人 — 提交此订单后即完成餐桌预订。"
   },
   "reservation": {
     "title": "预订餐桌",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} 将审核您的请求并尽快发送确认。",
     "emailSent": "确认邮件已发送至 {email}。",
     "nameAndPhone": "姓名和电话为必填项。",
-    "reservationFailed": "预订失败"
+    "reservationFailed": "预订失败",
+    "addFoodToBooking": "为您的预订添加餐点",
+    "justBookTable": "仅预订餐桌"
   },
   "kitchen": {
     "title": "厨房显示屏",
@@ -621,7 +628,8 @@
     "refunded": "已退款",
     "refundCardOnly": "仅可对刷卡付款进行退款",
     "refundAlreadyFull": "此订单已全额退款",
-    "refundNotCaptured": "无可退款的已扣款刷卡付款"
+    "refundNotCaptured": "无可退款的已扣款刷卡付款",
+    "preOrder": "预点餐"
   },
   "admin": {
     "welcomeBack": "欢迎回来",

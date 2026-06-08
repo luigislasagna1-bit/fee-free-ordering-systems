@@ -46,5 +46,23 @@ export async function GET() {
     include: { table: true },
   });
 
-  return NextResponse.json(reservations);
+  // Reserve-then-order: a booking attached to an order (orderId set) must stay
+  // hidden from the kitchen until that order is actually released — i.e. paid,
+  // for online-card/PayPal. We mirror the order feed, which only shows orders
+  // with notifiedAt set. Bookings with no orderId (normal walk-up reservations)
+  // are always visible. Luigi 2026-06-08.
+  const linkedOrderIds = reservations
+    .map((r) => r.orderId)
+    .filter((x): x is string => !!x);
+  let releasedOrderIds = new Set<string>();
+  if (linkedOrderIds.length > 0) {
+    const released = await prisma.order.findMany({
+      where: { id: { in: linkedOrderIds }, notifiedAt: { not: null } },
+      select: { id: true },
+    });
+    releasedOrderIds = new Set(released.map((o) => o.id));
+  }
+  const visible = reservations.filter((r) => !r.orderId || releasedOrderIds.has(r.orderId));
+
+  return NextResponse.json(visible);
 }

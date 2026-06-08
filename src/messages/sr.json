@@ -241,7 +241,10 @@
     "cantCombineWith": "Ne može da se kombinuje sa {winner}",
     "useThisInstead": "Koristi ovu umesto toga",
     "outOfAreaSoftTitle": "Van naše standardne zone dostave.",
-    "outOfAreaSoftBody": "Ova adresa je van naših standardnih zona dostave i možda nećemo moći da dostavimo ovde. I dalje možete da pošaljete porudžbinu — lokal će vas kontaktirati ako bude potrebno."
+    "outOfAreaSoftBody": "Ova adresa je van naših standardnih zona dostave i možda nećemo moći da dostavimo ovde. I dalje možete da pošaljete porudžbinu — lokal će vas kontaktirati ako bude potrebno.",
+    "reservationOrderingTitle": "Naručivanje za rezervaciju stola",
+    "reservationOrderingDetail": "{date} u {time} · {n} osoba",
+    "reservationOrderingCancel": "Otkaži"
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Po narudžbini se može primeniti samo jedna ekskluzivna ponuda, pa smo zadržali {winner} — donosi vam veću uštedu. Nije primenjeno: {names}.",
     "outsideMayContact": "I dalje možete da pošaljete porudžbinu — lokal će vas kontaktirati ako bude potrebno.",
     "outsideNotAcceptedTitle": "Van naše zone dostave.",
-    "outsideNotAcceptedBody": "Ne prihvatamo porudžbine van naših standardnih zona dostave. Prebacite se na preuzimanje ili unesite drugu adresu."
+    "outsideNotAcceptedBody": "Ne prihvatamo porudžbine van naših standardnih zona dostave. Prebacite se na preuzimanje ili unesite drugu adresu.",
+    "reservationTitle": "Potvrda rezervacije stola",
+    "reservationDetail": "{date} u {time} · {n} osoba — sto je rezervisan kada pošaljete ovu porudžbinu."
   },
   "reservation": {
     "title": "Rezerviši sto",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} će pregledati vaš zahtev i uskoro poslati potvrdu.",
     "emailSent": "Email sa potvrdom je poslat na {email}.",
     "nameAndPhone": "Ime i telefon su obavezni.",
-    "reservationFailed": "Rezervacija nije uspela"
+    "reservationFailed": "Rezervacija nije uspela",
+    "addFoodToBooking": "Dodaj hranu rezervaciji",
+    "justBookTable": "Samo rezerviši sto"
   },
   "kitchen": {
     "title": "Prikaz kuhinje",
@@ -621,7 +628,8 @@
     "refunded": "vraćeno",
     "refundCardOnly": "Povraćaj je moguć samo za plaćanja karticom",
     "refundAlreadyFull": "Za ovu porudžbinu je već izvršen pun povraćaj",
-    "refundNotCaptured": "Nema naplaćenog plaćanja karticom za povraćaj"
+    "refundNotCaptured": "Nema naplaćenog plaćanja karticom za povraćaj",
+    "preOrder": "Pretporudžbina"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazad",

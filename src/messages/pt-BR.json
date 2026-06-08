@@ -241,7 +241,10 @@
     "cantCombineWith": "Não pode ser combinada com {winner}",
     "useThisInstead": "Usar esta no lugar",
     "outOfAreaSoftTitle": "Fora da nossa área de entrega padrão.",
-    "outOfAreaSoftBody": "Este endereço está fora das nossas zonas de entrega padrão e talvez não façamos entrega aqui. Mesmo assim, você pode fazer o pedido — a loja entrará em contato se necessário."
+    "outOfAreaSoftBody": "Este endereço está fora das nossas zonas de entrega padrão e talvez não façamos entrega aqui. Mesmo assim, você pode fazer o pedido — a loja entrará em contato se necessário.",
+    "reservationOrderingTitle": "Pedido para sua reserva de mesa",
+    "reservationOrderingDetail": "{date} às {time} · mesa para {n}",
+    "reservationOrderingCancel": "Cancelar"
   },
   "pizza": {
     "chooseSize": "Escolha o Tamanho",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Apenas uma oferta exclusiva pode ser aplicada por pedido, então mantivemos {winner} — ela economiza mais para você. Não aplicada(s): {names}.",
     "outsideMayContact": "Mesmo assim, você pode fazer o pedido — a loja entrará em contato se necessário.",
     "outsideNotAcceptedTitle": "Fora da nossa área de entrega.",
-    "outsideNotAcceptedBody": "Não aceitamos pedidos fora das nossas zonas de entrega padrão. Mude para retirada ou use um endereço diferente."
+    "outsideNotAcceptedBody": "Não aceitamos pedidos fora das nossas zonas de entrega padrão. Mude para retirada ou use um endereço diferente.",
+    "reservationTitle": "Confirmando sua reserva de mesa",
+    "reservationDetail": "{date} às {time} · mesa para {n} — sua mesa fica reservada quando você faz este pedido."
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} analisará sua solicitação e enviará uma confirmação em breve.",
     "emailSent": "Um e-mail de confirmação foi enviado para {email}.",
     "nameAndPhone": "Nome e telefone são obrigatórios.",
-    "reservationFailed": "Falha na reserva"
+    "reservationFailed": "Falha na reserva",
+    "addFoodToBooking": "Adicionar comida à sua reserva",
+    "justBookTable": "Apenas reservar a mesa"
   },
   "kitchen": {
     "title": "Tela da Cozinha",
@@ -621,7 +628,8 @@
     "refunded": "reembolsado",
     "refundCardOnly": "Reembolsos só podem ser emitidos em pagamentos com cartão",
     "refundAlreadyFull": "Este pedido já foi totalmente reembolsado",
-    "refundNotCaptured": "Nenhum pagamento com cartão capturado para reembolsar"
+    "refundNotCaptured": "Nenhum pagamento com cartão capturado para reembolsar",
+    "preOrder": "Pré-pedido"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",

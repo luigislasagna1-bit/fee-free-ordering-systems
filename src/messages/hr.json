@@ -241,7 +241,10 @@
     "cantCombineWith": "Ne može se kombinirati s {winner}",
     "useThisInstead": "Koristi ovu umjesto toga",
     "outOfAreaSoftTitle": "Izvan našeg standardnog područja dostave.",
-    "outOfAreaSoftBody": "Ova je adresa izvan naših standardnih zona dostave i možda ovamo ne dostavljamo. Narudžbu i dalje možete poslati — trgovina će vas kontaktirati ako bude potrebno."
+    "outOfAreaSoftBody": "Ova je adresa izvan naših standardnih zona dostave i možda ovamo ne dostavljamo. Narudžbu i dalje možete poslati — trgovina će vas kontaktirati ako bude potrebno.",
+    "reservationOrderingTitle": "Naručivanje za rezervaciju stola",
+    "reservationOrderingDetail": "{date} u {time} · {n} osoba",
+    "reservationOrderingCancel": "Odustani"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Po narudžbi se može primijeniti samo jedna ekskluzivna ponuda, pa smo zadržali {winner} — njome više uštedite. Nije primijenjeno: {names}.",
     "outsideMayContact": "Narudžbu i dalje možete poslati — trgovina će vas kontaktirati ako bude potrebno.",
     "outsideNotAcceptedTitle": "Izvan našeg područja dostave.",
-    "outsideNotAcceptedBody": "Ne primamo narudžbe izvan naših standardnih zona dostave. Prijeđite na osobno preuzimanje ili upotrijebite drugu adresu."
+    "outsideNotAcceptedBody": "Ne primamo narudžbe izvan naših standardnih zona dostave. Prijeđite na osobno preuzimanje ili upotrijebite drugu adresu.",
+    "reservationTitle": "Potvrda rezervacije stola",
+    "reservationDetail": "{date} u {time} · {n} osoba — stol je rezerviran kada pošaljete ovu narudžbu."
   },
   "reservation": {
     "title": "Rezervirajte stol",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} će pregledati vaš zahtjev i uskoro poslati potvrdu.",
     "emailSent": "Potvrdni e-mail je poslan na {email}.",
     "nameAndPhone": "Ime i telefon su obavezni.",
-    "reservationFailed": "Rezervacija nije uspjela"
+    "reservationFailed": "Rezervacija nije uspjela",
+    "addFoodToBooking": "Dodaj hranu rezervaciji",
+    "justBookTable": "Samo rezerviraj stol"
   },
   "kitchen": {
     "title": "Kuhinjski zaslon",
@@ -621,7 +628,8 @@
     "refunded": "vraćeno",
     "refundCardOnly": "Povrat sredstava moguć je samo za plaćanja karticom",
     "refundAlreadyFull": "Za ovu narudžbu već je izvršen puni povrat sredstava",
-    "refundNotCaptured": "Nema naplaćenog plaćanja karticom za povrat"
+    "refundNotCaptured": "Nema naplaćenog plaćanja karticom za povrat",
+    "preOrder": "Prednarudžba"
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",

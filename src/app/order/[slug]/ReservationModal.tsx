@@ -57,6 +57,19 @@ interface Props {
    *  header) for the standalone reservation page, which supplies its own
    *  branded hero above. Default false = the classic modal overlay. */
   embedded?: boolean;
+  /** Restaurant has "let customers order food with their reservation" on
+   *  (ReservationSettings.allowPreOrder). When true AND onContinueToOrder is
+   *  provided, the form offers "Add food to your booking", which hands the
+   *  validated booking off to the ordering flow instead of booking a bare
+   *  table — the reservation is then created together with the paid order
+   *  (one combined submission). Luigi 2026-06-08. */
+  allowPreOrder?: boolean;
+  /** Called when the customer chooses to add food. Receives the validated
+   *  booking draft; the caller carries it into the ordering/checkout flow. */
+  onContinueToOrder?: (draft: {
+    date: string; time: string; partySize: number;
+    name: string; phone: string; email: string; notes: string;
+  }) => void;
 }
 
 function todayISO(): string {
@@ -216,6 +229,8 @@ export function ReservationModal({
   timezone,
   theme, onClose,
   embedded = false,
+  allowPreOrder = false,
+  onContinueToOrder,
 }: Props) {
   const tr = useTranslations("reservation");
   const tOrd = useTranslations("ordering");
@@ -418,25 +433,41 @@ export function ReservationModal({
     return out;
   }, [settings.minGuests, settings.maxGuests]);
 
-  const submit = async () => {
+  // Shared validation for both "Just book the table" and "Add food to your
+  // booking" — same rules, so a pre-order can't slip past with bad contact /
+  // booking details. Returns false (and toasts) on the first failure.
+  const validateForm = (): boolean => {
     if (dayLooksClosed) {
       // Belt-and-suspenders to the disabled submit button — refuse
       // to fire the request when the day is explicitly closed in
       // admin hours. GloriaFood-strict: no requests get through.
       toast.error("We're closed on the selected date — please pick another day.");
-      return;
+      return false;
     }
-    if (!validation.ok) { toast.error(validation.reason); return; }
-    if (!name.trim()) { toast.error(tr("nameAndPhone")); return; }
-    if (requireCustomerPhone && !phone.trim()) { toast.error(tr("nameAndPhone")); return; }
+    if (!validation.ok) { toast.error(validation.reason); return false; }
+    if (!name.trim()) { toast.error(tr("nameAndPhone")); return false; }
+    if (requireCustomerPhone && !phone.trim()) { toast.error(tr("nameAndPhone")); return false; }
     // Phone must be a real number — no letters, at least 6 digits. Mirrors the
     // order checkout guard (cmq0vafk5) + catches autofill that bypasses the
     // keystroke filter. Only when a phone is actually present.
     if (phone.trim()) {
       const digits = (phone.match(/\d/g) || []).length;
-      if (/[a-z]/i.test(phone) || digits < 6) { toast.error(tOrd("toasts.phoneInvalid")); return; }
+      if (/[a-z]/i.test(phone) || digits < 6) { toast.error(tOrd("toasts.phoneInvalid")); return false; }
     }
-    if (requireCustomerEmail && !email.trim()) { toast.error("Email is required"); return; }
+    if (requireCustomerEmail && !email.trim()) { toast.error("Email is required"); return false; }
+    return true;
+  };
+
+  // "Add food to your booking" — validate, then hand the booking off to the
+  // ordering flow. The reservation is created together with the paid order
+  // (combined checkout), so we DON'T create a reservation here. Luigi 2026-06-08.
+  const continueToOrder = () => {
+    if (!validateForm()) return;
+    onContinueToOrder?.({ date, time, partySize, name, phone, email, notes });
+  };
+
+  const submit = async () => {
+    if (!validateForm()) return;
 
     setSubmitting(true);
     try {
@@ -682,15 +713,39 @@ export function ReservationModal({
         {/* Footer */}
         <div className="border-t border-gray-100 px-5 py-4">
           {step === "details" && (
-            <button
-              onClick={submit}
-              disabled={submitting || !validation.ok || timeSlots.length === 0}
-              className="w-full text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition disabled:opacity-50"
-              style={{ backgroundColor: theme.primaryColor }}
-            >
-              {submitting && <Loader2 className="w-5 h-5 animate-spin" />}
-              {submitting ? tr("reserving") : tr("reserveTable")}
-            </button>
+            allowPreOrder && onContinueToOrder ? (
+              // Pre-order enabled: leading action adds food (combined checkout);
+              // a secondary action still allows booking a bare table.
+              <div className="space-y-2">
+                <button
+                  onClick={continueToOrder}
+                  disabled={submitting || !validation.ok || timeSlots.length === 0}
+                  className="w-full text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition disabled:opacity-50"
+                  style={{ backgroundColor: theme.primaryColor }}
+                >
+                  {tr("addFoodToBooking")}
+                </button>
+                <button
+                  onClick={submit}
+                  disabled={submitting || !validation.ok || timeSlots.length === 0}
+                  className="w-full font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition disabled:opacity-50 border"
+                  style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
+                >
+                  {submitting && <Loader2 className="w-5 h-5 animate-spin" />}
+                  {submitting ? tr("reserving") : tr("justBookTable")}
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={submit}
+                disabled={submitting || !validation.ok || timeSlots.length === 0}
+                className="w-full text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition disabled:opacity-50"
+                style={{ backgroundColor: theme.primaryColor }}
+              >
+                {submitting && <Loader2 className="w-5 h-5 animate-spin" />}
+                {submitting ? tr("reserving") : tr("reserveTable")}
+              </button>
+            )
           )}
           {step === "done" && (
             <button

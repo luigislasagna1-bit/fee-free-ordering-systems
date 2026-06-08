@@ -241,7 +241,10 @@
     "cantCombineWith": "Kan inte kombineras med {winner}",
     "useThisInstead": "Använd det här istället",
     "outOfAreaSoftTitle": "Utanför vårt vanliga leveransområde.",
-    "outOfAreaSoftBody": "Den här adressen ligger utanför våra vanliga leveranszoner och vi kanske inte levererar hit. Du kan ändå lägga beställningen — butiken kontaktar dig vid behov."
+    "outOfAreaSoftBody": "Den här adressen ligger utanför våra vanliga leveranszoner och vi kanske inte levererar hit. Du kan ändå lägga beställningen — butiken kontaktar dig vid behov.",
+    "reservationOrderingTitle": "Beställning till din bordsbokning",
+    "reservationOrderingDetail": "{date} kl. {time} · {n} personer",
+    "reservationOrderingCancel": "Avbryt"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Endast ett exklusivt erbjudande kan gälla per beställning, så vi behöll {winner} – det sparar mer åt dig. Tillämpas inte: {names}.",
     "outsideMayContact": "Du kan ändå lägga beställningen — butiken kontaktar dig vid behov.",
     "outsideNotAcceptedTitle": "Utanför vårt leveransområde.",
-    "outsideNotAcceptedBody": "Vi tar inte emot beställningar utanför våra vanliga leveranszoner. Byt till avhämtning eller använd en annan adress."
+    "outsideNotAcceptedBody": "Vi tar inte emot beställningar utanför våra vanliga leveranszoner. Byt till avhämtning eller använd en annan adress.",
+    "reservationTitle": "Bekräftar din bordsbokning",
+    "reservationDetail": "{date} kl. {time} · {n} personer — bordet bokas när du lägger den här beställningen."
   },
   "reservation": {
     "title": "Boka ett bord",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} granskar din begäran och skickar en bekräftelse inom kort.",
     "emailSent": "En bekräftelse har skickats till {email}.",
     "nameAndPhone": "Namn och telefon krävs.",
-    "reservationFailed": "Reservationen misslyckades"
+    "reservationFailed": "Reservationen misslyckades",
+    "addFoodToBooking": "Lägg till mat i din bokning",
+    "justBookTable": "Boka bara bordet"
   },
   "kitchen": {
     "title": "Köksdisplay",
@@ -621,7 +628,8 @@
     "refunded": "återbetalat",
     "refundCardOnly": "Återbetalningar kan endast göras för kortbetalningar",
     "refundAlreadyFull": "Den här beställningen har redan återbetalats i sin helhet",
-    "refundNotCaptured": "Ingen genomförd kortbetalning att återbetala"
+    "refundNotCaptured": "Ingen genomförd kortbetalning att återbetala",
+    "preOrder": "Förbeställning"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",

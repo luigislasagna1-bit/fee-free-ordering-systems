@@ -24,6 +24,8 @@ import {
   isOnMarketplace,
 } from "@/lib/marketplace";
 import { getCurrentCustomer } from "@/lib/customer-session";
+import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
+import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "take_out", "catering"] as const;
 // "cash"           = pay on pickup/delivery in cash
 // "card"           = pay online by card via Stripe (gated by cardPaymentEnabled)
@@ -88,6 +90,14 @@ export async function POST(req: NextRequest) {
       // verify the restaurant is currently entitled before stamping, so
       // a tampered client can't fake-stamp a direct order as marketplace.
       from,
+      // Reserve-then-order (Luigi 2026-06-08): optional table-booking attached
+      // to this order. When present (and the restaurant has allowPreOrder on)
+      // we create a linked Reservation after the order so the kitchen gets one
+      // booking-with-order. Shape: { date:"YYYY-MM-DD", time:"HH:MM",
+      // partySize:number, notes?:string, tableId?:string }. Validated against
+      // the SAME booking rules as a standalone reservation. Ignored/false-y for
+      // every normal order, so this is a no-op for existing checkouts.
+      reservation: bodyReservation,
       // Reports attribution: client forwards the same sessionHash the
       // visit-beacon already used so we can join Order.channel to the
       // WebsiteVisit's already-server-validated channel value (no need
@@ -149,6 +159,68 @@ export async function POST(req: NextRequest) {
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+
+    // ── Reserve-then-order: validate the optional table-booking payload ───────
+    // Done EARLY (fail-fast) so we never create an order — or take a payment —
+    // for a booking that violates the restaurant's reservation rules. The
+    // actual Reservation row is created AFTER order.create (it needs order.id +
+    // the server-computed total) and rides the order's payment lifecycle: no
+    // separate email, hidden from the kitchen feed until the order is released.
+    // Luigi 2026-06-08. Only runs when a `reservation` payload is present, so
+    // it's a no-op for every normal order.
+    let reservationData:
+      | { date: string; time: string; partySize: number; notes: string | null; tableId: string | null; status: string }
+      | null = null;
+    if (bodyReservation && typeof bodyReservation === "object") {
+      const rs = await prisma.reservationSettings.findUnique({
+        where: { restaurantId: restaurant.id },
+      });
+      if (!(restaurant as any).acceptsReservations || !rs?.allowPreOrder) {
+        return NextResponse.json(
+          { error: "Pre-ordering with a reservation isn't enabled for this restaurant.", code: "preorder_reservation_disabled" },
+          { status: 400 },
+        );
+      }
+      const rDate = sanitize((bodyReservation as any).date, 10);
+      const rTime = sanitize((bodyReservation as any).time, 5);
+      const rPartySize = parseInt(String((bodyReservation as any).partySize), 10);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(rDate) || !/^\d{2}:\d{2}$/.test(rTime) || !Number.isFinite(rPartySize) || rPartySize < 1) {
+        return NextResponse.json({ error: "Invalid reservation details.", code: "reservation_invalid" }, { status: 400 });
+      }
+      // SAME validation a standalone booking goes through (notice window, max
+      // advance, guest bounds) — evaluated in the restaurant's timezone.
+      const v = validateBooking(
+        rs as unknown as ReservationSettingsLike,
+        { date: rDate, time: rTime, partySize: rPartySize },
+        new Date(),
+        (restaurant as any).timezone,
+      );
+      if (!v.ok) return NextResponse.json({ error: v.reason, code: "reservation_rejected" }, { status: 400 });
+      const cap = await checkReservationCapacity(
+        restaurant.id,
+        rs as unknown as ReservationSettingsLike,
+        rDate, rTime, rPartySize,
+      );
+      if (!cap.ok) return NextResponse.json({ error: cap.reason, code: "reservation_full" }, { status: 409 });
+      // Optional table — must belong to this restaurant + be active.
+      let rTableId: string | null = null;
+      const rawTableId = (bodyReservation as any).tableId ? String((bodyReservation as any).tableId) : null;
+      if (rawTableId) {
+        const tbl = await prisma.reservationTable.findFirst({
+          where: { id: rawTableId, restaurantId: restaurant.id, isActive: true },
+          select: { id: true },
+        });
+        rTableId = tbl?.id ?? null;
+      }
+      reservationData = {
+        date: rDate,
+        time: rTime,
+        partySize: rPartySize,
+        notes: (bodyReservation as any).notes ? sanitize((bodyReservation as any).notes, 500) : null,
+        tableId: rTableId,
+        status: rs.autoConfirm ? "confirmed" : "pending",
+      };
+    }
 
     // ── Delivery address normalization + config-driven validation ─────────────
     // The restaurant may have customized which address fields show / are
@@ -1490,6 +1562,41 @@ export async function POST(req: NextRequest) {
         });
       }
       throw createErr;
+    }
+
+    // ── Reserve-then-order: create the linked table booking ──────────────────
+    // The order is the food + the payment; this is the table. We link via
+    // Reservation.orderId and stamp preOrderTotal so the kitchen + customer see
+    // one booking-with-order. NO separate reservation email fires here — the
+    // order confirmation IS the single combined notification, and the kitchen
+    // Reservations feed hides this booking until the order is released
+    // (notifiedAt set by fireOrderNotifications), so an unpaid online-card
+    // booking stays hidden until payment clears. Luigi 2026-06-08.
+    if (reservationData) {
+      try {
+        await prisma.reservation.create({
+          data: {
+            restaurantId: restaurant.id,
+            orderId: order.id,
+            confirmationCode: generateConfirmationCode(),
+            status: reservationData.status,
+            customerName: sanitize(customerName, 100),
+            customerEmail: cleanEmail,
+            customerPhone: cleanPhone,
+            partySize: reservationData.partySize,
+            date: reservationData.date,
+            time: reservationData.time,
+            notes: reservationData.notes,
+            tableId: reservationData.tableId,
+            preOrderTotal: serverTotal,
+          },
+        });
+      } catch (resErr) {
+        // The order (and any payment) already succeeded — don't fail the whole
+        // request and orphan a paid order. Log loudly so the booking can be
+        // reconciled by hand; the kitchen still gets the order itself.
+        console.error(`[orders POST] order ${order.id} created but reservation link failed:`, resErr);
+      }
     }
 
     // Bump the monthly counter. Fire-and-forget — if this fails we'd

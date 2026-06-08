@@ -241,7 +241,10 @@
     "cantCombineWith": "Negalima derinti su {winner}",
     "useThisInstead": "Naudoti šį vietoj to",
     "outOfAreaSoftTitle": "Už standartinės pristatymo zonos ribų.",
-    "outOfAreaSoftBody": "Šis adresas yra už mūsų standartinių pristatymo zonų ribų ir galbūt čia nepristatome. Vis tiek galite pateikti užsakymą — prireikus parduotuvė su jumis susisieks."
+    "outOfAreaSoftBody": "Šis adresas yra už mūsų standartinių pristatymo zonų ribų ir galbūt čia nepristatome. Vis tiek galite pateikti užsakymą — prireikus parduotuvė su jumis susisieks.",
+    "reservationOrderingTitle": "Užsakymas jūsų staliuko rezervacijai",
+    "reservationOrderingDetail": "{date} {time} · {n} asmenims",
+    "reservationOrderingCancel": "Atšaukti"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Vienam užsakymui gali būti taikomas tik vienas išskirtinis pasiūlymas, todėl palikome {winner} — su juo sutaupysite daugiau. Nepritaikyta: {names}.",
     "outsideMayContact": "Vis tiek galite pateikti užsakymą — prireikus parduotuvė su jumis susisieks.",
     "outsideNotAcceptedTitle": "Už mūsų pristatymo zonos ribų.",
-    "outsideNotAcceptedBody": "Užsakymų už standartinių pristatymo zonų ribų nepriimame. Pasirinkite atsiėmimą arba naudokite kitą adresą."
+    "outsideNotAcceptedBody": "Užsakymų už standartinių pristatymo zonų ribų nepriimame. Pasirinkite atsiėmimą arba naudokite kitą adresą.",
+    "reservationTitle": "Staliuko rezervacijos patvirtinimas",
+    "reservationDetail": "{date} {time} · {n} asmenims — jūsų staliukas rezervuojamas, kai pateikiate šį užsakymą."
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} peržiūrės jūsų prašymą ir netrukus atsiųs patvirtinimą.",
     "emailSent": "Patvirtinimo el. laiškas išsiųstas į {email}.",
     "nameAndPhone": "Vardas ir telefonas yra privalomi.",
-    "reservationFailed": "Rezervacija nepavyko"
+    "reservationFailed": "Rezervacija nepavyko",
+    "addFoodToBooking": "Pridėti maisto prie rezervacijos",
+    "justBookTable": "Tik rezervuoti staliuką"
   },
   "kitchen": {
     "title": "Virtuvės ekranas",
@@ -621,7 +628,8 @@
     "refunded": "grąžinta",
     "refundCardOnly": "Grąžinimus galima atlikti tik mokant kortele",
     "refundAlreadyFull": "Už šį užsakymą jau grąžinta visa suma",
-    "refundNotCaptured": "Nėra užfiksuoto mokėjimo kortele, kurį būtų galima grąžinti"
+    "refundNotCaptured": "Nėra užfiksuoto mokėjimo kortele, kurį būtų galima grąžinti",
+    "preOrder": "Išankstinis užsakymas"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

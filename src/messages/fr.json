@@ -241,7 +241,10 @@
     "cantCombineWith": "Non cumulable avec {winner}",
     "useThisInstead": "Utiliser celle-ci à la place",
     "outOfAreaSoftTitle": "En dehors de notre zone de livraison habituelle.",
-    "outOfAreaSoftBody": "Cette adresse se trouve en dehors de nos zones de livraison habituelles et il se peut que nous ne livrions pas ici. Vous pouvez tout de même passer la commande — le magasin vous contactera si nécessaire."
+    "outOfAreaSoftBody": "Cette adresse se trouve en dehors de nos zones de livraison habituelles et il se peut que nous ne livrions pas ici. Vous pouvez tout de même passer la commande — le magasin vous contactera si nécessaire.",
+    "reservationOrderingTitle": "Commande pour votre réservation de table",
+    "reservationOrderingDetail": "{date} à {time} · table de {n}",
+    "reservationOrderingCancel": "Annuler"
   },
   "pizza": {
     "chooseSize": "Choisir la taille",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Une seule offre exclusive peut s'appliquer par commande ; nous avons donc conservé {winner} — elle vous fait économiser davantage. Non appliquée(s) : {names}.",
     "outsideMayContact": "Vous pouvez tout de même passer la commande — le magasin vous contactera si nécessaire.",
     "outsideNotAcceptedTitle": "En dehors de notre zone de livraison.",
-    "outsideNotAcceptedBody": "Nous n'acceptons pas les commandes en dehors de nos zones de livraison habituelles. Optez pour le retrait ou utilisez une autre adresse."
+    "outsideNotAcceptedBody": "Nous n'acceptons pas les commandes en dehors de nos zones de livraison habituelles. Optez pour le retrait ou utilisez une autre adresse.",
+    "reservationTitle": "Confirmation de votre réservation de table",
+    "reservationDetail": "{date} à {time} · table de {n} — votre table est réservée dès que vous passez cette commande."
   },
   "reservation": {
     "title": "Réserver une table",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} examinera votre demande et vous enverra une confirmation rapidement.",
     "emailSent": "Un e-mail de confirmation a été envoyé à {email}.",
     "nameAndPhone": "Le nom et le téléphone sont obligatoires.",
-    "reservationFailed": "Échec de la réservation"
+    "reservationFailed": "Échec de la réservation",
+    "addFoodToBooking": "Ajouter des plats à votre réservation",
+    "justBookTable": "Réserver simplement la table"
   },
   "kitchen": {
     "title": "Affichage cuisine",
@@ -621,7 +628,8 @@
     "refunded": "remboursé",
     "refundCardOnly": "Les remboursements ne sont possibles que pour les paiements par carte",
     "refundAlreadyFull": "Cette commande a déjà été intégralement remboursée",
-    "refundNotCaptured": "Aucun paiement par carte capturé à rembourser"
+    "refundNotCaptured": "Aucun paiement par carte capturé à rembourser",
+    "preOrder": "Précommande"
   },
   "admin": {
     "welcomeBack": "Bon retour",

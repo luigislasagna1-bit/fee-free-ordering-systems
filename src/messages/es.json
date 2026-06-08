@@ -241,7 +241,10 @@
     "cantCombineWith": "No se puede combinar con {winner}",
     "useThisInstead": "Usar esta en su lugar",
     "outOfAreaSoftTitle": "Fuera de nuestra zona de entrega estándar.",
-    "outOfAreaSoftBody": "Esta dirección está fuera de nuestras zonas de entrega estándar y es posible que no entreguemos aquí. Aun así puede realizar el pedido: el local se pondrá en contacto con usted si es necesario."
+    "outOfAreaSoftBody": "Esta dirección está fuera de nuestras zonas de entrega estándar y es posible que no entreguemos aquí. Aun así puede realizar el pedido: el local se pondrá en contacto con usted si es necesario.",
+    "reservationOrderingTitle": "Pedido para tu reserva de mesa",
+    "reservationOrderingDetail": "{date} a las {time} · mesa para {n}",
+    "reservationOrderingCancel": "Cancelar"
   },
   "pizza": {
     "chooseSize": "Elegir tamaño",
@@ -420,7 +423,9 @@
     "exclusiveBumpedNote": "Solo se puede aplicar una oferta exclusiva por pedido, así que conservamos {winner}: te ahorra más. No aplicadas: {names}.",
     "outsideMayContact": "Aun así puede realizar el pedido: el local se pondrá en contacto con usted si es necesario.",
     "outsideNotAcceptedTitle": "Fuera de nuestra zona de entrega.",
-    "outsideNotAcceptedBody": "No aceptamos pedidos fuera de nuestras zonas de entrega estándar. Cambie a recogida en local o use una dirección diferente."
+    "outsideNotAcceptedBody": "No aceptamos pedidos fuera de nuestras zonas de entrega estándar. Cambie a recogida en local o use una dirección diferente.",
+    "reservationTitle": "Confirmando tu reserva de mesa",
+    "reservationDetail": "{date} a las {time} · mesa para {n} — tu mesa queda reservada al realizar este pedido."
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -465,7 +470,9 @@
     "reviewAndConfirm": "{restaurant} revisará tu solicitud y enviará una confirmación en breve.",
     "emailSent": "Se ha enviado un correo de confirmación a {email}.",
     "nameAndPhone": "Nombre y teléfono son obligatorios.",
-    "reservationFailed": "Falló la reserva"
+    "reservationFailed": "Falló la reserva",
+    "addFoodToBooking": "Añade comida a tu reserva",
+    "justBookTable": "Solo reservar la mesa"
   },
   "kitchen": {
     "title": "Pantalla de cocina",
@@ -621,7 +628,8 @@
     "refunded": "reembolsado",
     "refundCardOnly": "Solo se pueden emitir reembolsos en pagos con tarjeta",
     "refundAlreadyFull": "Este pedido ya se ha reembolsado por completo",
-    "refundNotCaptured": "No hay ningún pago con tarjeta capturado que reembolsar"
+    "refundNotCaptured": "No hay ningún pago con tarjeta capturado que reembolsar",
+    "preOrder": "Pedido anticipado"
   },
   "admin": {
     "welcomeBack": "Bienvenido de nuevo",

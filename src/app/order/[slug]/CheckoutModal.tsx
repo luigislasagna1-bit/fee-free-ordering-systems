@@ -116,6 +116,10 @@ interface Props {
    *  exclusive applies per order). Shown as a small note so the customer knows
    *  why a deal they expected didn't apply. Luigi 2026-06-07. */
   bumpedExclusives?: Array<{ promoId: string; name: string; discount: number; winnerName: string }>;
+  /** Reserve-then-order: when set, this order will be submitted together with
+   *  a table booking. Drives a banner at the top of checkout so the customer
+   *  knows they're confirming a reservation + paying in one go. Luigi 2026-06-08. */
+  reservationContext?: { date: string; time: string; partySize: number } | null;
   /** True when a Free Delivery promo fired. We surface this in the
    *  banner separately because calcFreeDelivery returns 0 (the discount
    *  is realised by zeroing the delivery fee, not by lowering subtotal),
@@ -279,6 +283,7 @@ export function CheckoutModal({
   hasZones, geocoding, geocodeError, resolvedZone, acceptOutsideZoneOrders = false,
   mapProvider, googleMapsApiKey, geocodeCountry,
   deliveryFormConfig,
+  reservationContext = null,
   onClose,
 }: Props) {
   const tc = useTranslations("checkout");
@@ -456,6 +461,21 @@ export function CheckoutModal({
             <X className="w-5 h-5" />
           </button>
         </div>
+
+        {/* Reserve-then-order: this checkout confirms a table booking AND pays
+            for the food in one go. Make that explicit up top. Luigi 2026-06-08. */}
+        {reservationContext && (
+          <div className="rounded-xl px-4 py-3 mb-3 text-sm text-white" style={{ backgroundColor: theme.primaryColor }}>
+            <div className="font-bold">{tc("reservationTitle")}</div>
+            <div className="opacity-95">
+              {tc("reservationDetail", {
+                date: reservationContext.date,
+                time: formatTime(reservationContext.time, hoursFormat),
+                n: reservationContext.partySize,
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Celebration banner — applied promos summary. Only renders when
             at least one promo fired OR free delivery was unlocked. Each
