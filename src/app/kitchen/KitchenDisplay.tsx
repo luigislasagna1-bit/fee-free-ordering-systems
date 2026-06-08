@@ -6,7 +6,7 @@ import {
   Bell, Printer, RefreshCw, LogOut, ChefHat, Sun, Moon,
   Package, Clock, Truck, ShoppingBag, CheckCircle, Trash2,
   FlaskConical, Loader2, Volume2, VolumeX, AlertTriangle, XCircle,
-  CalendarDays,
+  CalendarDays, X, ChevronRight,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
@@ -59,12 +59,15 @@ function ReservationStatusBadge({ status, t }: { status: string; t: T }) {
 }
 
 function ReservationCard({
-  r, t, onStatusChange, onPrint, compact, dayChip, hoursFormat = "24h",
+  r, t, onOpen, selected, compact, dayChip, hoursFormat = "24h",
 }: {
   r: KitchenReservation;
   t: T;
-  onStatusChange: (id: string, status: string) => void;
-  onPrint: (id: string) => void;
+  /** Tapping the tile opens the reservation detail panel (where the
+   *  Accept / Reject / Seated / No-show buttons live). */
+  onOpen: (id: string) => void;
+  /** Highlights the tile while its detail panel is open. */
+  selected?: boolean;
   compact?: boolean;
   /** Restaurant 12h/24h preference for the reservation time. */
   hoursFormat?: "12h" | "24h";
@@ -75,8 +78,18 @@ function ReservationCard({
   dayChip?: string;
 }) {
   const tk = useTranslations("kitchen");
+  // A reservation tile carries NO action buttons — tapping it opens the
+  // reservation detail panel where Accept / Reject (pending) and Seated /
+  // No-show (confirmed) live, exactly like an order tile opens OrderDetail.
+  // Luigi 2026-06-08.
   return (
-    <div className={`${t.row} rounded-xl p-${compact ? "3" : "4"} border ${t.border}`}>
+    <button
+      type="button"
+      onClick={() => onOpen(r.id)}
+      className={`w-full text-left ${t.row} rounded-xl p-${compact ? "3" : "4"} border transition ${
+        selected ? "border-blue-500 ring-1 ring-blue-500" : `${t.border} hover:border-blue-400`
+      }`}
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
@@ -104,40 +117,110 @@ function ReservationCard({
           )}
           <div className="text-[10px] font-mono text-gray-400 mt-1">#{r.confirmationCode}</div>
         </div>
-        <div className="flex flex-col gap-1.5 flex-shrink-0">
-          <button onClick={() => onPrint(r.id)}
-            className={`text-xs font-semibold px-3 py-1.5 rounded-lg border ${t.border} ${t.muted} hover:${t.text} transition flex items-center gap-1`}>
-            <Printer className="w-3 h-3" /> {tk("print")}
-          </button>
-          {/* A new (pending) booking request needs an accept/reject decision —
-              the customer only gets the "confirmed" email once Confirm is
-              tapped, and a "declined" email on Reject. Seated / No-show are for
-              AFTER it's confirmed. Luigi 2026-06-08 (cmpxeljn6). */}
-          {r.status === "pending" && (
-            <>
-              <button onClick={() => onStatusChange(r.id, "confirmed")}
-                className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-500 text-white hover:bg-blue-600">
-                {tk("accept")}
-              </button>
-              <button onClick={() => onStatusChange(r.id, "rejected")}
-                className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-red-500 text-white hover:bg-red-600">
-                {tk("reject")}
-              </button>
-            </>
-          )}
-          {r.status === "confirmed" && (
-            <>
-              <button onClick={() => onStatusChange(r.id, "seated")}
-                className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600">
-                {tk("seated")}
-              </button>
-              <button onClick={() => onStatusChange(r.id, "no_show")}
-                className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-red-500 text-white hover:bg-red-600">
-                {tk("noShow")}
-              </button>
-            </>
+        <ChevronRight className={`w-4 h-4 flex-shrink-0 mt-0.5 ${t.muted}`} />
+      </div>
+    </button>
+  );
+}
+
+// Reservation detail panel — opened from any reservation tile (All / In
+// Progress / Reservations tab). Mirrors OrderDetail: the tile is just a
+// summary and EVERY action button lives here, the same way an order's
+// Accept / Reject live in OrderDetail rather than on the order row.
+// Luigi 2026-06-08.
+function ReservationDetail({
+  r, t, onStatusChange, onPrint, onClose, hoursFormat = "24h",
+}: {
+  r: KitchenReservation;
+  t: T;
+  onStatusChange: (id: string, status: string) => Promise<void> | void;
+  onPrint: (id: string) => void;
+  onClose: () => void;
+  hoursFormat?: "12h" | "24h";
+}) {
+  const tk = useTranslations("kitchen");
+  const [busy, setBusy] = useState(false);
+  const act = async (status: string) => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      await onStatusChange(r.id, status);
+      // Exit actions close the panel; positive transitions (accept / seated)
+      // keep it open so staff see the new state and the next buttons.
+      if (["rejected", "no_show", "cancelled"].includes(status)) onClose();
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className={`flex flex-col h-full ${t.detail}`}>
+      <div className={`flex items-center justify-between gap-2 p-4 border-b ${t.border} flex-shrink-0`}>
+        <div className="flex items-center gap-2 min-w-0">
+          <span className={`font-bold ${t.text} truncate`}>{r.customerName}</span>
+          <ReservationStatusBadge status={r.status} t={t} />
+          {r.depositPaid && (
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
+              {tk("depositPaid").toUpperCase()}
+            </span>
           )}
         </div>
+        <button onClick={onClose} className={`p-1.5 rounded-lg ${t.btn} flex-shrink-0`} aria-label="Close">
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+
+      <div className="flex-1 overflow-y-auto p-4 space-y-3 text-sm">
+        <div className={`flex items-center gap-2 ${t.text}`}>
+          <CalendarDays className="w-4 h-4 flex-shrink-0" />
+          <span className="font-semibold">{r.date} · {formatTime(r.time, hoursFormat)}</span>
+        </div>
+        <div className={`flex items-center gap-2 flex-wrap ${t.muted}`}>
+          <Package className="w-4 h-4 flex-shrink-0" />
+          <span>{tk("partyOf", { n: r.partySize })}</span>
+          {r.table && <span>· {r.table.name}</span>}
+        </div>
+        {r.customerPhone && (
+          <div className={`${t.muted}`}>📞 {r.customerPhone}</div>
+        )}
+        {r.notes && (
+          <div className={`text-xs ${t.muted} italic border-l-2 ${t.border} pl-3`}>&quot;{r.notes}&quot;</div>
+        )}
+        <div className="text-[10px] font-mono text-gray-400">#{r.confirmationCode}</div>
+      </div>
+
+      <div className={`border-t ${t.border} p-4 flex-shrink-0 space-y-2`}>
+        {(r.status === "pending" || r.status === "confirmed") && (
+          <div className="grid grid-cols-2 gap-2">
+            {r.status === "pending" && (
+              <>
+                <button onClick={() => act("confirmed")} disabled={busy}
+                  className="flex items-center justify-center gap-1.5 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50">
+                  <CheckCircle className="w-4 h-4" /> {tk("accept")}
+                </button>
+                <button onClick={() => act("rejected")} disabled={busy}
+                  className="flex items-center justify-center gap-1.5 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50">
+                  <XCircle className="w-4 h-4" /> {tk("reject")}
+                </button>
+              </>
+            )}
+            {r.status === "confirmed" && (
+              <>
+                <button onClick={() => act("seated")} disabled={busy}
+                  className="flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50">
+                  <CheckCircle className="w-4 h-4" /> {tk("seated")}
+                </button>
+                <button onClick={() => act("no_show")} disabled={busy}
+                  className="flex items-center justify-center gap-1.5 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50">
+                  <XCircle className="w-4 h-4" /> {tk("noShow")}
+                </button>
+              </>
+            )}
+          </div>
+        )}
+        <button onClick={() => onPrint(r.id)}
+          className={`w-full flex items-center justify-center gap-1.5 border ${t.border} ${t.btn} font-semibold py-2 rounded-xl text-sm transition`}>
+          <Printer className="w-4 h-4" /> {tk("print")}
+        </button>
       </div>
     </div>
   );
@@ -719,6 +802,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     setReservations(prev => prev.map(r => r.id === id ? { ...r, status } : r));
   };
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // The reservation whose detail panel is open. Mutually exclusive with
+  // selectedId (an order detail) — opening one clears the other. Luigi 2026-06-08.
+  const [selectedReservationId, setSelectedReservationId] = useState<string | null>(null);
   // Two separate printer setup modals — DirectPrinter (LAN, primary)
   // and PrintNode (legacy / Windows-bridge / backup). One settings
   // button in the header opens the right one based on platform; the
@@ -2208,6 +2294,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
   // pendingCount is declared above next to `alerting`.
   const selectedOrder = orders.find(o => o.id === selectedId) ?? null;
+  const selectedReservation = reservations.find(r => r.id === selectedReservationId) ?? null;
+  // Opening a reservation clears any open order detail (and vice-versa) so the
+  // shared right-hand panel only ever shows one thing. Luigi 2026-06-08.
+  const openReservation = (id: string) => { setSelectedReservationId(id); setSelectedId(null); };
   // Direct LAN printer takes precedence — when configured, it's the
   // primary print path and the header should reflect ITS status, not
   // a leftover PrintNode setting from before the switch. Falls back
@@ -2408,24 +2498,48 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       {/* Render a reservation card, reused on both Reservations tab and Orders tab. */}
       {/* (defined as a const so the JSX below can reference it) */}
 
-      {/* ── Reservations panel (replaces the order list when this tab is active) ── */}
+      {/* ── Reservations panel (replaces the order list when this tab is active) ──
+          Split list + detail, same as the order tabs: tap a booking on the left
+          to open its detail (with Accept / Reject / Seated / No-show) on the
+          right. Luigi 2026-06-08. */}
       {activeTab === "reservations" && (
-        <div className="flex-1 overflow-y-auto p-4 space-y-3">
-          {reservationsTabItems.length === 0 ? (
-            <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
-              <Clock className="w-10 h-10 mb-3 opacity-30" />
-              <p className="text-sm">{tk("noReservations")}</p>
+        <div className="flex-1 flex overflow-hidden">
+          <div className={`${selectedReservation ? "hidden md:flex" : "flex"} flex-col w-full md:w-2/5 lg:w-1/3 border-r ${t.border} overflow-y-auto p-4 space-y-3`}>
+            {reservationsTabItems.length === 0 ? (
+              <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
+                <Clock className="w-10 h-10 mb-3 opacity-30" />
+                <p className="text-sm">{tk("noReservations")}</p>
+              </div>
+            ) : reservationsTabItems.map(r => (
+              <ReservationCard
+                key={r.id}
+                r={r}
+                t={t}
+                hoursFormat={hoursFmt}
+                onOpen={openReservation}
+                selected={selectedReservationId === r.id}
+              />
+            ))}
+          </div>
+          {selectedReservation ? (
+            <div className="flex-1 relative overflow-hidden">
+              <ReservationDetail
+                r={selectedReservation}
+                t={t}
+                hoursFormat={hoursFmt}
+                onStatusChange={updateReservationStatus}
+                onPrint={printReservation}
+                onClose={() => setSelectedReservationId(null)}
+              />
             </div>
-          ) : reservationsTabItems.map(r => (
-            <ReservationCard
-              key={r.id}
-              r={r}
-              t={t}
-              hoursFormat={hoursFmt}
-              onStatusChange={updateReservationStatus}
-              onPrint={printReservation}
-            />
-          ))}
+          ) : (
+            <div className={`hidden md:flex flex-1 items-center justify-center ${t.muted}`}>
+              <div className="text-center">
+                <CalendarDays className="w-12 h-12 mx-auto mb-3 opacity-20" />
+                <p className="text-sm">{tk("noReservations")}</p>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -2433,7 +2547,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       {activeTab !== "reservations" && (
       <div className="flex-1 flex overflow-hidden">
         {/* Order list */}
-        <div className={`${selectedOrder ? "hidden md:flex" : "flex"} flex-col w-full md:w-2/5 lg:w-1/3 border-r ${t.border} overflow-y-auto`}>
+        <div className={`${(selectedOrder || selectedReservation) ? "hidden md:flex" : "flex"} flex-col w-full md:w-2/5 lg:w-1/3 border-r ${t.border} overflow-y-auto`}>
           {/* Unified order + reservation list (Luigi 2026-06-01 v3,
               GloriaFood parity).
 
@@ -2627,6 +2741,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                       // modal after Reject). Luigi 2026-06-08: no more pop-up the
                       // instant you click a new order.
                       setSelectedId(it.order.id);
+                      setSelectedReservationId(null);
                     }}
                     t={t}
                     now={now}
@@ -2642,8 +2757,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                   r={it.r}
                   t={t}
                   hoursFormat={hoursFmt}
-                  onStatusChange={updateReservationStatus}
-                  onPrint={printReservation}
+                  onOpen={openReservation}
+                  selected={selectedReservationId === it.r.id}
                   compact
                   dayChip={dayChip}
                 />
@@ -2669,6 +2784,17 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               currency={moneyCurrency}
               fromInProgress={activeTab === "inprogress"}
               hoursFormat={hoursFmt}
+            />
+          </div>
+        ) : selectedReservation ? (
+          <div className="flex-1 relative overflow-hidden">
+            <ReservationDetail
+              r={selectedReservation}
+              t={t}
+              hoursFormat={hoursFmt}
+              onStatusChange={updateReservationStatus}
+              onPrint={printReservation}
+              onClose={() => setSelectedReservationId(null)}
             />
           </div>
         ) : (
