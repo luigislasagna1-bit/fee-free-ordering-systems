@@ -86,9 +86,9 @@ function ReservationCard({
     <button
       type="button"
       onClick={() => onOpen(r)}
-      className={`w-full text-left ${t.row} rounded-xl p-${compact ? "3" : "4"} border transition ${
+      className={`w-full text-left ${r.status === "pending" ? t.rowNew : t.row} rounded-xl p-${compact ? "3" : "4"} border transition ${
         selected ? "border-blue-500 ring-1 ring-blue-500" : `${t.border} hover:border-blue-400`
-      }`}
+      } ${r.status === "pending" ? "kitchen-flash-new" : ""}`}
     >
       <div className="flex items-start gap-3">
         {/* Walk-up table reservation icon — indigo calendar, distinct from the
@@ -1554,12 +1554,18 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     if (!a) return;
     const shouldPlay = alerting && alertSound === "gloriafood" && !alertMuted && alertVolume > 0;
     if (shouldPlay) {
+      // LOOP continuously until the kitchen accepts/rejects (alerting → false)
+      // or the auto-reject cron kills the order. Was playing once then going
+      // silent — Luigi 2026-06-08: the bell must ring until acted on, and
+      // opening the order does NOT stop it (alerting stays true).
+      a.loop = true;
       a.volume = Math.max(0, Math.min(1, alertVolume));
       if (a.paused) {
         try { a.currentTime = 0; } catch {}
         a.play().catch(() => { /* autoplay blocked until a gesture — unlock effect handles it */ });
       }
     } else {
+      a.loop = false;
       if (!a.paused) a.pause();
       try { a.currentTime = 0; } catch {}
     }
