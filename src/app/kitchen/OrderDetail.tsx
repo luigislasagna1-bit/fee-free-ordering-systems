@@ -34,6 +34,68 @@ interface Props {
   hoursFormat?: "12h" | "24h";
   /** ISO 4217 currency code for the money shown here (order/item totals). */
   currency?: string;
+  /** Reserve-then-order: change the linked table booking's status (seat /
+   *  no-show / correct a mistake) from the order detail. Luigi 2026-06-08. */
+  onReservationStatusChange?: (reservationId: string, status: string) => void;
+}
+
+/**
+ * Reservation floor-status switcher — used in the booking detail AND on a
+ * pre-order's order detail. A pending booking shows Accept/Reject; once it's
+ * past that, every floor state (Confirmed / Seated / No-show / Completed) is a
+ * tappable button with the current one highlighted, so staff can move it
+ * forward OR fix a mistake (e.g. tap Confirmed to un-seat). Luigi 2026-06-08.
+ */
+export function ReservationStatusControls({
+  status, onChange, t, busy,
+}: {
+  status: string;
+  onChange: (status: string) => void;
+  t: T;
+  busy?: boolean;
+}) {
+  const tk = useTranslations("kitchen");
+  if (status === "pending") {
+    return (
+      <div className="grid grid-cols-2 gap-2">
+        <button type="button" onClick={() => onChange("confirmed")} disabled={busy}
+          className="flex items-center justify-center gap-1.5 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50">
+          {tk("accept")}
+        </button>
+        <button type="button" onClick={() => onChange("rejected")} disabled={busy}
+          className="flex items-center justify-center gap-1.5 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50">
+          {tk("reject")}
+        </button>
+      </div>
+    );
+  }
+  if (status === "rejected" || status === "cancelled") return null;
+  const STATES: Array<{ key: string; label: string; active: string }> = [
+    { key: "confirmed", label: tk("confirmed"), active: "bg-blue-500 text-white" },
+    { key: "seated", label: tk("seated"), active: "bg-emerald-500 text-white" },
+    { key: "no_show", label: tk("noShow"), active: "bg-red-500 text-white" },
+    { key: "completed", label: tk("completed"), active: "bg-gray-600 text-white" },
+  ];
+  return (
+    <div className="grid grid-cols-2 gap-2">
+      {STATES.map((s) => {
+        const isActive = status === s.key;
+        return (
+          <button
+            key={s.key}
+            type="button"
+            onClick={() => { if (!isActive) onChange(s.key); }}
+            disabled={busy}
+            className={`py-2.5 rounded-xl text-sm font-bold transition disabled:opacity-50 ${
+              isActive ? s.active : `border ${t.border} ${t.btn}`
+            }`}
+          >
+            {s.label}
+          </button>
+        );
+      })}
+    </div>
+  );
 }
 
 const STATUS_LABEL: Record<string, string> = {
@@ -63,7 +125,7 @@ function fmtDateTime(d: string | Date | null | undefined, hoursFormat: "12h" | "
   return new Date(d).toLocaleString(undefined, { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
 }
 
-export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple", fromInProgress = false, hoursFormat = "12h", currency = "usd" }: Props) {
+export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple", fromInProgress = false, hoursFormat = "12h", currency = "usd", onReservationStatusChange }: Props) {
   const formatCurrency = (n: number) => fmtCurrency(n, currency);
   const isSimpleMode = workflowMode === "simple";
   const tk = useTranslations("kitchen");
@@ -268,6 +330,20 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                 {order.reservation.date} {fmtTimeOnly(`${order.reservation.date}T${order.reservation.time}`, hoursFormat)}
                 {" · #"}{order.reservation.confirmationCode}
               </div>
+            </div>
+          )}
+
+          {/* Seat / no-show the table from the pre-order's order detail — the
+              booking has no separate tile, so the floor controls live here.
+              Tap any state to move it forward OR fix a mistake. Luigi 2026-06-08. */}
+          {order.reservation && onReservationStatusChange && (
+            <div className="space-y-2">
+              <div className={`text-xs font-bold uppercase tracking-wider ${t.muted}`}>{tk("tableReservation")}</div>
+              <ReservationStatusControls
+                status={order.reservation.status}
+                onChange={(s) => onReservationStatusChange(order.reservation!.id, s)}
+                t={t}
+              />
             </div>
           )}
 

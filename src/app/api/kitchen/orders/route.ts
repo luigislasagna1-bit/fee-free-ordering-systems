@@ -115,7 +115,7 @@ export async function GET() {
     const bookings = orderIds.length > 0
       ? await prisma.reservation.findMany({
           where: { orderId: { in: orderIds } },
-          select: { orderId: true, partySize: true, date: true, time: true, confirmationCode: true, status: true },
+          select: { id: true, orderId: true, partySize: true, date: true, time: true, confirmationCode: true, status: true },
         })
       : [];
     const bookingByOrderId = new Map(bookings.map((b) => [b.orderId as string, b]));
@@ -124,7 +124,7 @@ export async function GET() {
       return {
         ...o,
         reservation: b
-          ? { partySize: b.partySize, date: b.date, time: b.time, confirmationCode: b.confirmationCode, status: b.status }
+          ? { id: b.id, partySize: b.partySize, date: b.date, time: b.time, confirmationCode: b.confirmationCode, status: b.status }
           : null,
       };
     });

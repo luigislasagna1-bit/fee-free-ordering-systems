@@ -14,7 +14,7 @@ import { PrinterSetupModal } from "./PrinterSetupModal";
 import { RestaurantStatusModal } from "./RestaurantStatusModal";
 import { EndOfDayModal } from "./EndOfDayModal";
 import { DispatchModeToggle } from "./DispatchModeToggle";
-import { OrderDetail } from "./OrderDetail";
+import { OrderDetail, ReservationStatusControls } from "./OrderDetail";
 import { RejectOrderModal } from "./RejectOrderModal";
 import { KitchenFirstRunTour } from "./KitchenFirstRunTour";
 import {
@@ -105,6 +105,12 @@ function ReservationCard({
             )}
             <span className={`font-bold ${t.text} ${compact ? "text-sm" : ""}`}>{r.customerName}</span>
             <ReservationStatusBadge status={r.status} t={t} />
+            {/* Purple TABLE RESERVATION label on every booking tile, matching the
+                order tile's flag. Pre-order bookings also show the amber PRE-ORDER
+                badge below. Luigi 2026-06-08. */}
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300">
+              🪑 {tk("tableReservation").toUpperCase()}
+            </span>
             {r.depositPaid && (
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
                 {tk("depositPaid").toUpperCase()}
@@ -157,9 +163,10 @@ function ReservationDetail({
     setBusy(true);
     try {
       await onStatusChange(r.id, status);
-      // Exit actions close the panel; positive transitions (accept / seated)
-      // keep it open so staff see the new state and the next buttons.
-      if (["rejected", "no_show", "cancelled"].includes(status)) onClose();
+      // Don't auto-close — the detail stays open so staff can immediately
+      // correct a mistake (e.g. un-seat). A rejected/cancelled booking drops
+      // out of the feed on the next poll, which closes the panel on its own.
+      // Luigi 2026-06-08.
     } finally {
       setBusy(false);
     }
@@ -214,34 +221,10 @@ function ReservationDetail({
       </div>
 
       <div className={`border-t ${t.border} p-4 flex-shrink-0 space-y-2`}>
-        {(r.status === "pending" || r.status === "confirmed") && (
-          <div className="grid grid-cols-2 gap-2">
-            {r.status === "pending" && (
-              <>
-                <button onClick={() => act("confirmed")} disabled={busy}
-                  className="flex items-center justify-center gap-1.5 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50">
-                  <CheckCircle className="w-4 h-4" /> {tk("accept")}
-                </button>
-                <button onClick={() => act("rejected")} disabled={busy}
-                  className="flex items-center justify-center gap-1.5 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50">
-                  <XCircle className="w-4 h-4" /> {tk("reject")}
-                </button>
-              </>
-            )}
-            {r.status === "confirmed" && (
-              <>
-                <button onClick={() => act("seated")} disabled={busy}
-                  className="flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50">
-                  <CheckCircle className="w-4 h-4" /> {tk("seated")}
-                </button>
-                <button onClick={() => act("no_show")} disabled={busy}
-                  className="flex items-center justify-center gap-1.5 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50">
-                  <XCircle className="w-4 h-4" /> {tk("noShow")}
-                </button>
-              </>
-            )}
-          </div>
-        )}
+        {/* Pending → Accept/Reject; once accepted, a full floor-status switcher
+            (Confirmed / Seated / No-show / Completed) lets staff move it forward
+            OR fix a mistake. Luigi 2026-06-08. */}
+        <ReservationStatusControls status={r.status} onChange={act} t={t} busy={busy} />
         <button onClick={() => onPrint(r.id)}
           className={`w-full flex items-center justify-center gap-1.5 border ${t.border} ${t.btn} font-semibold py-2 rounded-xl text-sm transition`}>
           <Printer className="w-4 h-4" /> {tk("print")}
@@ -847,16 +830,19 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   };
 
   const updateReservationStatus = async (id: string, status: string) => {
+    // Remember the prior status so we only print on the ACCEPT transition, not
+    // when "Confirmed" is tapped to un-seat / correct a mistake. Luigi 2026-06-08.
+    const prevStatus = reservations.find((r) => r.id === id)?.status;
     await fetch(`/api/admin/reservations/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
     });
     setReservations(prev => prev.map(r => r.id === id ? { ...r, status } : r));
-    // Print a booking confirmation when the kitchen ACCEPTS a (walk-up) table
-    // reservation, mirroring the auto-print on order accept. Pre-order bookings
-    // print via their order's auto-print instead. Luigi 2026-06-08.
-    if (status === "confirmed") {
+    // Print a booking confirmation only when the kitchen ACCEPTS a brand-new
+    // (pending) walk-up reservation, mirroring the auto-print on order accept.
+    // Pre-order bookings print via their order's auto-print instead.
+    if (status === "confirmed" && prevStatus === "pending") {
       printReservation(id).catch((e) => console.error("[reservation accept print]", e));
     }
   };
@@ -2864,6 +2850,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               currency={moneyCurrency}
               fromInProgress={activeTab === "inprogress"}
               hoursFormat={hoursFmt}
+              onReservationStatusChange={updateReservationStatus}
             />
           ) : selectedReservation ? (
             <ReservationDetail

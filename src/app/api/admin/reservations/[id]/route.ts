@@ -37,7 +37,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     // Email the customer on accept/decline transitions. A pending reservation
     // only sent a "request received" note; the confirmation (or decline) fires
     // here when the restaurant actually acts. Fire-and-forget. Luigi 2026-06-04.
-    const becameConfirmed = status === "confirmed" && existing.status !== "confirmed";
+    // Only the ACCEPT transition (pending → confirmed) emails the customer —
+    // NOT a correction like un-seating (seated → confirmed), which would
+    // otherwise re-send a "confirmed" email. Luigi 2026-06-08.
+    const becameConfirmed = status === "confirmed" && existing.status === "pending";
     // "rejected" (staff declined a pending request) and "cancelled" (an existing
     // booking was called off) both send the customer the "declined" email.
     // cmpxeljn6: the kitchen Reject button sets "rejected". Luigi 2026-06-08.

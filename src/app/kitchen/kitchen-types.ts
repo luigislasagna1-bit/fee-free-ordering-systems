@@ -64,6 +64,7 @@ export type Order = {
    *  on the order tile / detail / ticket. Null for every normal order.
    *  Luigi 2026-06-08. */
   reservation?: {
+    id: string;
     partySize: number;
     date: string;
     time: string;
