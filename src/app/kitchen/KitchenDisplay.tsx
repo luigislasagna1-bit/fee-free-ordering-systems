@@ -6,7 +6,7 @@ import {
   Bell, Printer, RefreshCw, LogOut, ChefHat, Sun, Moon,
   Package, Clock, Truck, ShoppingBag, CheckCircle, Trash2,
   FlaskConical, Loader2, Volume2, VolumeX, AlertTriangle, XCircle,
-  CalendarDays, X, ChevronRight,
+  CalendarDays, X, ChevronRight, ArrowLeft,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
@@ -161,8 +161,11 @@ function ReservationDetail({
   };
   return (
     <div className={`flex flex-col h-full ${t.detail}`}>
-      <div className={`flex items-center justify-between gap-2 p-4 border-b ${t.border} flex-shrink-0`}>
-        <div className="flex items-center gap-2 min-w-0">
+      <div className={`flex items-center gap-2 p-4 border-b ${t.border} flex-shrink-0`}>
+        <button onClick={onClose} className={`p-1.5 rounded-lg ${t.btn} flex-shrink-0`} aria-label="Back">
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+        <div className="flex items-center gap-2 min-w-0 flex-wrap">
           <span className={`font-bold ${t.text} truncate`}>{r.customerName}</span>
           <ReservationStatusBadge status={r.status} t={t} />
           {r.depositPaid && (
@@ -176,9 +179,6 @@ function ReservationDetail({
             </span>
           )}
         </div>
-        <button onClick={onClose} className={`p-1.5 rounded-lg ${t.btn} flex-shrink-0`} aria-label="Close">
-          <X className="w-4 h-4" />
-        </button>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-3 text-sm">
@@ -2530,9 +2530,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           Split list + detail, same as the order tabs: tap a booking on the left
           to open its detail (with Accept / Reject / Seated / No-show) on the
           right. Luigi 2026-06-08. */}
+      {/* Reservations tab — full-width list. Tapping a booking opens the
+          full-screen detail overlay (rendered once, below). Luigi 2026-06-08. */}
       {activeTab === "reservations" && (
         <div className="flex-1 flex overflow-hidden">
-          <div className={`${selectedReservation ? "hidden md:flex" : "flex"} flex-col w-full md:w-2/5 lg:w-1/3 border-r ${t.border} overflow-y-auto p-4 space-y-3`}>
+          <div className="flex flex-col w-full overflow-y-auto p-4 space-y-3">
             {reservationsTabItems.length === 0 ? (
               <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
                 <Clock className="w-10 h-10 mb-3 opacity-30" />
@@ -2549,34 +2551,16 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               />
             ))}
           </div>
-          {selectedReservation ? (
-            <div className="flex-1 relative overflow-hidden">
-              <ReservationDetail
-                r={selectedReservation}
-                t={t}
-                hoursFormat={hoursFmt}
-                currency={moneyCurrency}
-                onStatusChange={updateReservationStatus}
-                onPrint={printReservation}
-                onClose={() => setSelectedReservationId(null)}
-              />
-            </div>
-          ) : (
-            <div className={`hidden md:flex flex-1 items-center justify-center ${t.muted}`}>
-              <div className="text-center">
-                <CalendarDays className="w-12 h-12 mx-auto mb-3 opacity-20" />
-                <p className="text-sm">{tk("noReservations")}</p>
-              </div>
-            </div>
-          )}
         </div>
       )}
 
-      {/* ── Main content (orders / in-progress / complete) ── */}
+      {/* ── Main content (orders / in-progress / complete) ──
+          Full-width list. Tapping any order/reservation opens the full-screen
+          detail overlay (rendered once, below) — no split view. Luigi 2026-06-08. */}
       {activeTab !== "reservations" && (
       <div className="flex-1 flex overflow-hidden">
-        {/* Order list */}
-        <div className={`${(selectedOrder || selectedReservation) ? "hidden md:flex" : "flex"} flex-col w-full md:w-2/5 lg:w-1/3 border-r ${t.border} overflow-y-auto`}>
+        {/* Order list — full width */}
+        <div className="flex flex-col w-full overflow-y-auto">
           {/* Unified order + reservation list (Luigi 2026-06-01 v3,
               GloriaFood parity).
 
@@ -2796,9 +2780,17 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           })()}
         </div>
 
-        {/* Order detail */}
-        {selectedOrder ? (
-          <div className="flex-1 relative overflow-hidden">
+      </div>
+      )}
+
+      {/* ── Full-screen order / reservation detail overlay ──
+          Tapping any tile (in any tab) opens its detail FULL-SCREEN over the
+          tabs + list, with a back button in the detail header — instead of a
+          side-by-side split. Shared by every tab. z-40 so the Accept/prep modal
+          (z-50) still layers on top. Luigi 2026-06-08. */}
+      {(selectedOrder || selectedReservation) && (
+        <div className={`fixed inset-0 z-40 ${t.surface}`}>
+          {selectedOrder ? (
             <OrderDetail
               order={selectedOrder}
               t={t}
@@ -2814,9 +2806,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               fromInProgress={activeTab === "inprogress"}
               hoursFormat={hoursFmt}
             />
-          </div>
-        ) : selectedReservation ? (
-          <div className="flex-1 relative overflow-hidden">
+          ) : selectedReservation ? (
             <ReservationDetail
               r={selectedReservation}
               t={t}
@@ -2826,16 +2816,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               onPrint={printReservation}
               onClose={() => setSelectedReservationId(null)}
             />
-          </div>
-        ) : (
-          <div className={`hidden md:flex flex-1 items-center justify-center ${t.muted}`}>
-            <div className="text-center">
-              <ChefHat className="w-12 h-12 mx-auto mb-3 opacity-20" />
-              <p className="text-sm">{tk("openOrder")}</p>
-            </div>
-          </div>
-        )}
-      </div>
+          ) : null}
+        </div>
       )}
 
       {/* ── Accept modal ──

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   X, Phone, Mail, MapPin, Clock, CheckCircle, XCircle, ChefHat,
   Package, CreditCard, Printer, UtensilsCrossed, RefreshCw, Loader2,
-  ReceiptText, User, Plus, Timer, MoreHorizontal, ChevronDown, ChevronUp,
+  ReceiptText, User, Plus, Timer, MoreHorizontal, ChevronDown, ChevronUp, ArrowLeft,
 } from "lucide-react";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { formatDueLabel } from "@/lib/format-time";
@@ -232,25 +232,22 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
   return (
     <div className={`flex flex-col h-full ${t.detail}`}>
       {/* Header */}
-      <div className={`flex items-center justify-between px-5 py-4 border-b ${t.border} flex-shrink-0`}>
-        <div className="flex items-center gap-3">
-          <button onClick={onClose} className={`p-1.5 rounded-lg ${t.btn} md:hidden`}>
-            <X className="w-4 h-4" />
-          </button>
-          <div>
-            <div className={`font-bold text-lg ${t.text}`}>{tk("orderNumber")}{order.orderNumber}</div>
-            <div className={`text-xs ${t.muted}`}>{fmtTime(order.createdAt, hoursFormat)}</div>
-          </div>
-          <StatusBadge />
-          {order.viaMarketplace && (
-            <span className="text-[10px] font-bold px-2 py-1 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-300">
-              MARKETPLACE
-            </span>
-          )}
-        </div>
-        <button onClick={onClose} className={`p-1.5 rounded-lg ${t.btn} hidden md:flex`}>
-          <X className="w-4 h-4" />
+      <div className={`flex items-center gap-3 px-5 py-4 border-b ${t.border} flex-shrink-0`}>
+        {/* Back to the order list (full-screen detail). Always visible now that
+            the detail opens over the whole screen. Luigi 2026-06-08. */}
+        <button onClick={onClose} className={`p-1.5 rounded-lg ${t.btn} flex-shrink-0`} aria-label="Back">
+          <ArrowLeft className="w-5 h-5" />
         </button>
+        <div className="min-w-0">
+          <div className={`font-bold text-lg ${t.text}`}>{tk("orderNumber")}{order.orderNumber}</div>
+          <div className={`text-xs ${t.muted}`}>{fmtTime(order.createdAt, hoursFormat)}</div>
+        </div>
+        <StatusBadge />
+        {order.viaMarketplace && (
+          <span className="text-[10px] font-bold px-2 py-1 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-300">
+            MARKETPLACE
+          </span>
+        )}
       </div>
 
       {/* Scrollable content */}
