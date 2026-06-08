@@ -917,15 +917,26 @@ export async function POST(req: NextRequest) {
             coords.lng,
           );
           if (resolved) {
-            resolvedZoneId = resolved.zone.id;
+            // findZoneForPoint always returns a zone when active zones exist —
+            // the smallest CONTAINING zone, or the OUTERMOST (largest) zone with
+            // inside=false when the address is beyond them all. Either way its
+            // fee + minimum apply (Luigi: out-of-zone uses the largest zone's
+            // fee/minimum, closest to the address).
             resolvedZoneMinutes = resolved.zone.estimatedMinutes;
             zoneDeliveryFee = resolved.zone.deliveryFee;
             zoneMinimumOrder = resolved.zone.minimumOrder;
-          } else {
-            // Geocoded successfully but fell outside every active zone — the
-            // order only got here because the restaurant accepts out-of-zone
-            // orders. Flag it so the kitchen sees a heads-up note.
-            outsideDeliveryZone = true;
+            if (resolved.inside) {
+              resolvedZoneId = resolved.zone.id;
+            } else {
+              // Outside every zone but accepted (restaurant opted in). Flag it
+              // so the kitchen sees a "may be outside your delivery area" note.
+              // Leave resolvedZoneId null so a zone-restricted promo doesn't
+              // treat this address as inside that zone (matches the cart
+              // preview, which sends no zone for out-of-zone). Luigi 2026-06-08:
+              // the old `else` was dead code — findZoneForPoint never returns
+              // null here — so this flag never got set.
+              outsideDeliveryZone = true;
+            }
           }
         }
       }
