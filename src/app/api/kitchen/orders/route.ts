@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { parseLocalDateTimeInTz, dateKeyInTimezone } from "@/lib/restaurant-hours";
 
 export async function GET() {
   try {
@@ -26,9 +27,18 @@ export async function GET() {
     // simple-mode auto-complete sweep below.
     const restaurant = await prisma.restaurant.findUnique({
       where: { id: restaurantId },
-      select: { kitchenWorkflowMode: true, printNodeEnabled: true },
+      select: { kitchenWorkflowMode: true, printNodeEnabled: true, timezone: true },
     });
     const resolvedMode = restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple";
+
+    // Start of TODAY in the restaurant's timezone. Used below so an order that
+    // belongs in the In Progress tab (today's work) is NEVER dropped from the
+    // feed, even if it has been cleared from BOTH the All and Complete tabs.
+    // Without this, a today order that picked up both per-tab clear flags
+    // vanished from In Progress too — Luigi 2026-06-08 (recurring). Only
+    // fully-cleared orders from a PRIOR day are retired from the payload.
+    const tz = restaurant?.timezone ?? undefined;
+    const startOfToday = parseLocalDateTimeInTz(dateKeyInTimezone(new Date(), tz ?? "UTC"), 0, 0, tz);
 
     // ── Simple-mode auto-complete sweep ─────────────────────────────────
     // Simple workflow has no state transitions during prep — orders sit
@@ -74,11 +84,18 @@ export async function GET() {
         clearedFromKitchenAt: null,
         // PER-TAB clear (Luigi 2026-06-04). Each kitchen tab clears
         // independently, so we only DROP an order from the feed entirely
-        // once it's been cleared from BOTH clearable tabs (All + Complete).
-        // Anything cleared from only one tab is still returned so it can
-        // show in the other tab (and In Progress, which never clears).
-        // The client filters each tab by its own flag.
-        NOT: { clearedFromAllAt: { not: null }, clearedFromCompleteAt: { not: null } },
+        // once it's been cleared from BOTH clearable tabs (All + Complete)
+        // AND it's from a PRIOR day. TODAY's orders are always returned even
+        // when cleared from both, because the In Progress tab pins today's work
+        // until midnight and must never lose a row to a clear on another tab
+        // (Luigi 2026-06-08 — this recurred). The client still filters each tab
+        // by its own flag, so a fully-cleared today order is correctly hidden
+        // from All + Complete but stays in In Progress.
+        NOT: {
+          clearedFromAllAt: { not: null },
+          clearedFromCompleteAt: { not: null },
+          createdAt: { lt: startOfToday },
+        },
       },
       orderBy: { createdAt: "desc" },
       take: 500,
