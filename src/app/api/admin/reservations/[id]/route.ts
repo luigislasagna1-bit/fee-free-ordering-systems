@@ -3,7 +3,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { notifyCustomer } from "@/lib/notifications";
 
-const ALLOWED_STATUSES = ["pending", "confirmed", "seated", "completed", "cancelled", "no_show"] as const;
+const ALLOWED_STATUSES = ["pending", "confirmed", "seated", "completed", "cancelled", "rejected", "no_show"] as const;
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -38,7 +38,12 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     // only sent a "request received" note; the confirmation (or decline) fires
     // here when the restaurant actually acts. Fire-and-forget. Luigi 2026-06-04.
     const becameConfirmed = status === "confirmed" && existing.status !== "confirmed";
-    const becameDeclined = status === "cancelled" && existing.status !== "cancelled";
+    // "rejected" (staff declined a pending request) and "cancelled" (an existing
+    // booking was called off) both send the customer the "declined" email.
+    // cmpxeljn6: the kitchen Reject button sets "rejected". Luigi 2026-06-08.
+    const becameDeclined =
+      (status === "rejected" || status === "cancelled") &&
+      existing.status !== "rejected" && existing.status !== "cancelled";
     if ((becameConfirmed || becameDeclined) && existing.customerEmail) {
       const r = await prisma.restaurant.findUnique({
         where: { id: restaurantId },

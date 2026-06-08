@@ -1800,7 +1800,7 @@ model Reservation {
   tableId          String?
   orderId          String?
   confirmationCode String
-  status           String   @default("pending") // pending | confirmed | seated | completed | cancelled | no_show
+  status           String   @default("pending") // pending | confirmed | seated | completed | cancelled | rejected | no_show
   customerName     String
   customerEmail    String?
   customerPhone    String?

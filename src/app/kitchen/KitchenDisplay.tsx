@@ -109,13 +109,23 @@ function ReservationCard({
             className={`text-xs font-semibold px-3 py-1.5 rounded-lg border ${t.border} ${t.muted} hover:${t.text} transition flex items-center gap-1`}>
             <Printer className="w-3 h-3" /> {tk("print")}
           </button>
+          {/* A new (pending) booking request needs an accept/reject decision —
+              the customer only gets the "confirmed" email once Confirm is
+              tapped, and a "declined" email on Reject. Seated / No-show are for
+              AFTER it's confirmed. Luigi 2026-06-08 (cmpxeljn6). */}
           {r.status === "pending" && (
-            <button onClick={() => onStatusChange(r.id, "confirmed")}
-              className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-500 text-white hover:bg-blue-600">
-              {tk("confirmed")}
-            </button>
+            <>
+              <button onClick={() => onStatusChange(r.id, "confirmed")}
+                className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-500 text-white hover:bg-blue-600">
+                {tk("accept")}
+              </button>
+              <button onClick={() => onStatusChange(r.id, "rejected")}
+                className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-red-500 text-white hover:bg-red-600">
+                {tk("reject")}
+              </button>
+            </>
           )}
-          {(r.status === "pending" || r.status === "confirmed") && (
+          {r.status === "confirmed" && (
             <>
               <button onClick={() => onStatusChange(r.id, "seated")}
                 className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600">
