@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { trackEvent } from "@/lib/visit-tracker";
 import {
   ShoppingCart, MapPin, Phone, Clock, Plus, Minus, X,
@@ -10,6 +10,7 @@ import {
 import { formatCurrency } from "@/lib/utils";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
+import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
 import { localDowAndHHMM, liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
 
 /** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
@@ -604,7 +605,7 @@ export function OrderingPageClient({
   themeSettings = null,
   locale = "en",
   isEmbedded = false,
-  acceptedMethods = ["cash"],
+  paymentMethodsRaw = "[]",
   fromHostedSite = false,
   hostedSiteBackUrl,
   promoBanners = [],
@@ -675,12 +676,11 @@ export function OrderingPageClient({
    *  the SEO website (full marketing page) remains the paid upgrade
    *  differentiator. */
   isEmbedded?: boolean;
-  /** Payment method slugs the restaurant has selected in /admin/payments.
-   *  Possible values: "cash", "card_in_person", "online_card", "paypal".
-   *  The checkout picker renders ONLY these options — owners who haven't
-   *  enabled Online Payments won't see a "Pay Online (Card)" button
-   *  on their customer page. */
-  acceptedMethods?: string[];
+  /** Raw `Restaurant.paymentMethods` JSON (legacy flat array OR per-order-type
+   *  object). The client derives the accepted method slugs for the SELECTED
+   *  order type via methodsForOrderType() — so a restaurant can accept, e.g.,
+   *  cash for pickup but online-card-only for delivery. Luigi 2026-06-08. */
+  paymentMethodsRaw?: string;
   /** Customer arrived via ?from=hosted — they clicked an "Order Online"
    *  link on this restaurant's Sales Optimized Website (subdomain
    *  marketing page). Show a "Back to <restaurant>'s site" breadcrumb
@@ -837,6 +837,18 @@ export function OrderingPageClient({
   // picker showed online card but the summary said cash.
   const slugToValue = (slug: string): string =>
     slug === "online_card" ? "card" : slug;
+  // Accepted payment-method SLUGS for the CURRENTLY-selected order type. Per-
+  // order-type config (Luigi 2026-06-08): a restaurant can accept different
+  // methods for pickup vs delivery vs dine-in. Marketplace orders are online-
+  // card-only by platform rule. Reactive to orderType so switching the order
+  // type re-filters the checkout's payment options. See lib/payment-methods.ts.
+  const acceptedMethods = useMemo(
+    () =>
+      searchParams.get("from") === "marketplace"
+        ? ["online_card"]
+        : methodsForOrderType(paymentMethodsRaw, orderType),
+    [searchParams, paymentMethodsRaw, orderType],
+  );
   const defaultPaymentMethod =
     acceptedMethods.includes("cash")
       ? "cash"
@@ -890,6 +902,18 @@ export function OrderingPageClient({
     lng: null as number | null,
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
+
+  // Per-order-type payment methods: if the customer switches order type and
+  // their currently-selected payment method is no longer accepted for the new
+  // type, snap it back to a valid default so checkout can't submit a method the
+  // restaurant doesn't take for that type. Luigi 2026-06-08.
+  useEffect(() => {
+    setCustomerInfo((ci) => {
+      if (acceptedMethods.includes(paymentValueToSlug(ci.paymentMethod))) return ci;
+      return { ...ci, paymentMethod: defaultPaymentMethod };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [acceptedMethods]);
 
   // Reserve-then-order: enter "ordering for a reservation" mode. Forces dine-in,
   // schedules the order for the booking time, prefills the contact details from

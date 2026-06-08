@@ -302,34 +302,15 @@ export default async function OrderingPage({
 
   const messages = (await import(`@/messages/${locale}.json`)).default;
 
-  // Accepted payment methods — owner sets these in /admin/payments.
-  // The customer checkout picker reflects only what the restaurant
-  // actually accepts. Defensive parse: legacy / malformed JSON falls
-  // back to ["cash"] so checkout never breaks.
-  let acceptedMethods: string[] = ["cash"];
-  const raw = (restaurant as any).paymentMethods;
-  if (typeof raw === "string") {
-    try {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        acceptedMethods = parsed.filter((m: unknown): m is string => typeof m === "string");
-      }
-    } catch { /* keep default */ }
-  }
-
-  // Marketplace orders OVERRIDE the restaurant's accepted methods —
-  // they're online-card-only by platform rule. Restaurants who join
-  // the marketplace are required to have card_payments + Stripe Connect
-  // (enforced at marketplace signup via getMarketplaceEligibility), so
-  // this override is always satisfiable. If somehow the restaurant
-  // lost their card_payments entitlement after signing up, the customer
-  // will see "card only" in the picker but `cardPaymentEnabled` will
-  // be false → place-order shows the "coming soon" message instead of
-  // accepting the order. Worst case is graceful failure, never silent
-  // cash acceptance for a marketplace order.
-  if (fromMarketplace) {
-    acceptedMethods = ["online_card"];
-  }
+  // Accepted payment methods — owner sets these in /admin/payments. The config
+  // can be a legacy flat list OR a per-order-type object (Luigi 2026-06-08); we
+  // pass the RAW JSON to the client, which derives the accepted methods for the
+  // currently-selected order type (and forces online-card for marketplace). See
+  // src/lib/payment-methods.ts. Defensive: non-string → "[]".
+  const paymentMethodsRaw =
+    typeof (restaurant as any).paymentMethods === "string"
+      ? (restaurant as any).paymentMethods
+      : "[]";
 
   // Resolve the per-restaurant customer session (if any) so the header
   // can render "Sign in" vs "Hi, <name>" without a client-side fetch
@@ -355,7 +336,7 @@ export default async function OrderingPage({
         themeSettings={(restaurant as any).themeSettings ?? null}
         locale={locale}
         isEmbedded={isEmbedded}
-        acceptedMethods={acceptedMethods}
+        paymentMethodsRaw={paymentMethodsRaw}
         fromHostedSite={fromHostedSite}
         hostedSiteBackUrl={hostedSiteBackUrl}
         promoBanners={promoBanners}

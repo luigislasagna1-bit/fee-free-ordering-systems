@@ -26,6 +26,7 @@ import {
 import { getCurrentCustomer } from "@/lib/customer-session";
 import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
+import { isPaymentMethodAcceptedForType } from "@/lib/payment-methods";
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "take_out", "catering"] as const;
 // "cash"           = pay on pickup/delivery in cash
 // "card"           = pay online by card via Stripe (gated by cardPaymentEnabled)
@@ -1330,6 +1331,20 @@ export async function POST(req: NextRequest) {
           error: "Marketplace orders must be paid online by card. Cash and pay-in-person aren't supported for marketplace orders.",
           code: "marketplace_card_required",
         },
+        { status: 400 },
+      );
+    }
+
+    // ── Per-order-type accepted-method guard (defense-in-depth) ──────────────
+    // The customer checkout only offers methods the restaurant accepts FOR THIS
+    // order type, but a tampered client could POST another. Reject a method that
+    // isn't accepted for `type`. Skipped for marketplace (forced card above) and
+    // when no method was sent (defaults to cash). Legacy flat configs apply to
+    // every type, so existing restaurants are unaffected. Luigi 2026-06-08.
+    if (!viaMarketplace && paymentMethod &&
+        !isPaymentMethodAcceptedForType((restaurant as any).paymentMethods, type, paymentMethod)) {
+      return NextResponse.json(
+        { error: "That payment method isn't accepted for this order type.", code: "payment_method_not_accepted" },
         { status: 400 },
       );
     }
