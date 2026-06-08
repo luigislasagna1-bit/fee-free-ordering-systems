@@ -2375,8 +2375,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           })}
         </div>
 
-        {/* Clear history button — shown only for the relevant tabs. Icon-only on
-            mobile, icon + "Clear orders" label on tablet/desktop. */}
+        {/* Clear history — a small fixed-size trash icon (tooltip on hover) so
+            it never widens with a text label and squeezes the tabs in portrait.
+            Luigi 2026-06-08. */}
         {((activeTab === "orders" && tabCounts.orders > 0) ||
           (activeTab === "complete" && tabCounts.complete > 0) ||
           (activeTab === "reservations" && reservationsTabItems.length > 0)) && (
@@ -2387,10 +2388,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             )}
             aria-label={tk("clearOrders")}
             title={tk("clearOrders")}
-            className={`flex-shrink-0 my-1.5 mx-1.5 sm:mr-3 flex items-center gap-1.5 text-xs font-semibold px-2 sm:px-3 py-1.5 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 active:bg-red-500/20 transition touch-manipulation cursor-pointer`}
+            className={`flex-shrink-0 my-1.5 mr-1.5 sm:mr-2 flex items-center justify-center w-8 h-8 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 active:bg-red-500/20 transition touch-manipulation cursor-pointer`}
           >
-            <Trash2 className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">{tk("clearOrders")}</span>
+            <Trash2 className="w-4 h-4" />
           </button>
         )}
       </div>
