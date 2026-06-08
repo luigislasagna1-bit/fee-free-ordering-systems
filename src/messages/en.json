@@ -471,8 +471,8 @@
     "emailSent": "A confirmation email has been sent to {email}.",
     "nameAndPhone": "Name and phone are required.",
     "reservationFailed": "Reservation failed",
-    "addFoodToBooking": "Add food to your booking",
-    "justBookTable": "Just book the table"
+    "addFoodToBooking": "Add Food To Your Booking",
+    "justBookTable": "Just Book The Table"
   },
   "kitchen": {
     "title": "Kitchen Display",
