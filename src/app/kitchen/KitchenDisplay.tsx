@@ -6,7 +6,7 @@ import {
   Bell, Printer, RefreshCw, LogOut, ChefHat, Sun, Moon,
   Package, Clock, Truck, ShoppingBag, CheckCircle, Trash2,
   FlaskConical, Loader2, Volume2, VolumeX, AlertTriangle, XCircle,
-  CalendarDays, X, ChevronRight, ArrowLeft,
+  CalendarDays, X, ChevronRight, ArrowLeft, CalendarClock, UtensilsCrossed,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
@@ -90,7 +90,12 @@ function ReservationCard({
         selected ? "border-blue-500 ring-1 ring-blue-500" : `${t.border} hover:border-blue-400`
       }`}
     >
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex items-start gap-3">
+        {/* Walk-up table reservation icon — indigo calendar, distinct from the
+            fuchsia pre-order-reservation icon on order tiles. Luigi 2026-06-08. */}
+        <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 bg-indigo-500/20">
+          <CalendarDays className="w-4 h-4 text-indigo-600" />
+        </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             {dayChip && (
@@ -402,16 +407,31 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
             tight under the icon so a kitchen at a glance can read
             "bag, 00:00 = pickup that's due now" without scanning. */}
         <div className="flex-shrink-0 flex flex-col items-center w-9">
-          <div className={`w-9 h-9 rounded-full flex items-center justify-center ${
-            isTest ? "bg-amber-500/20" :
-            order.type === "delivery" ? "bg-blue-500/20" : "bg-emerald-500/20"
-          }`}>
-            {isTest
-              ? <FlaskConical className="w-4 h-4 text-amber-500" />
-              : order.type === "delivery"
-                ? <Truck className="w-4 h-4 text-blue-500" />
-                : <ShoppingBag className="w-4 h-4 text-emerald-500" />}
-          </div>
+          {(() => {
+            // A distinct icon + colour per order type so the kitchen can tell
+            // them apart at a glance. A pre-order-with-reservation gets its own
+            // (fuchsia calendar) icon, separate from a plain dine-in. Luigi
+            // 2026-06-08.
+            const ic = isTest
+              ? { Icon: FlaskConical, bg: "bg-amber-500/20", fg: "text-amber-500" }
+              : order.reservation
+                ? { Icon: CalendarClock, bg: "bg-fuchsia-500/20", fg: "text-fuchsia-600" }
+                : order.type === "delivery"
+                  ? { Icon: Truck, bg: "bg-blue-500/20", fg: "text-blue-500" }
+                  : order.type === "take_out"
+                    ? { Icon: Package, bg: "bg-orange-500/20", fg: "text-orange-500" }
+                    : order.type === "dine_in"
+                      ? { Icon: UtensilsCrossed, bg: "bg-violet-500/20", fg: "text-violet-600" }
+                      : order.type === "catering"
+                        ? { Icon: ChefHat, bg: "bg-rose-500/20", fg: "text-rose-600" }
+                        : { Icon: ShoppingBag, bg: "bg-emerald-500/20", fg: "text-emerald-500" }; // pickup
+            const Icon = ic.Icon;
+            return (
+              <div className={`w-9 h-9 rounded-full flex items-center justify-center ${ic.bg}`}>
+                <Icon className={`w-4 h-4 ${ic.fg}`} />
+              </div>
+            );
+          })()}
           {dayChip && (
             <span
               className={`text-[10px] mt-1 font-bold tracking-wider tabular-nums ${
@@ -451,7 +471,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
                 the reservation time). Luigi 2026-06-08. */}
             {order.reservation && (
               <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300">
-                🪑 {tk("tableReservation").toUpperCase()} · {tk("partyOf", { n: order.reservation.partySize })}
+                🪑 {tk("tableReservation").toUpperCase()} + {tk("preOrder").toUpperCase()} · {tk("partyOf", { n: order.reservation.partySize })}
               </span>
             )}
           </div>
@@ -2888,6 +2908,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                       day: "numeric",
                       hour: "numeric",
                       minute: "2-digit",
+                      // Respect the restaurant's 12h/24h preference instead of the
+                      // OS locale default (which showed 22:00 for a 12h shop).
+                      // Luigi 2026-06-08.
+                      hour12: hoursFmt === "12h",
                     })}
                   </div>
                 </div>
