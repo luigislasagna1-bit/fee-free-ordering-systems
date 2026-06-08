@@ -31,6 +31,27 @@ export async function POST(req: NextRequest) {
     where: { restaurantId: restaurant.id, isActive: true },
   });
 
+  // Re-derive each line's categoryId server-side from its menuItemId, so
+  // CATEGORY-targeted promos (BOGO / % off / combos by category) match in the
+  // cart preview even when the client doesn't send categoryId. Mirrors the
+  // order-placement route — which already does this — so the preview discount
+  // agrees with the final charge. Root cause of "promos don't apply when
+  // conditions are met" (Fabrizio cmpxejjev / cmpx8o23o). Luigi 2026-06-07.
+  const rawItems: any[] = Array.isArray(items) ? items : [];
+  const lineItemIds = [...new Set(rawItems.map((i) => i?.menuItemId).filter((x): x is string => typeof x === "string" && !!x))];
+  let categoryByItemId = new Map<string, string | null>();
+  if (lineItemIds.length) {
+    const rows = await prisma.menuItem.findMany({
+      where: { id: { in: lineItemIds }, restaurantId: restaurant.id },
+      select: { id: true, categoryId: true },
+    });
+    categoryByItemId = new Map(rows.map((r) => [r.id, r.categoryId]));
+  }
+  const ctxItems = rawItems.map((i) => ({
+    ...i,
+    categoryId: i?.categoryId ?? (i?.menuItemId ? categoryByItemId.get(i.menuItemId) ?? undefined : undefined),
+  }));
+
   const promoEvalNow: Date | undefined = (() => {
     if (!scheduledFor) return undefined;
     const tz = restaurant.timezone ?? undefined;
@@ -45,7 +66,7 @@ export async function POST(req: NextRequest) {
     isNewCustomer: isNewCustomer ?? false,
     isMember: isMember ?? false,
     subtotal: parseFloat(subtotal),
-    items: items ?? [],
+    items: ctxItems,
     couponCode,
     paymentMethod,
     deliveryZoneId: typeof deliveryZoneId === "string" && deliveryZoneId ? deliveryZoneId : undefined,
