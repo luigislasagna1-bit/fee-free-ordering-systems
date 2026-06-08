@@ -29,10 +29,12 @@ export async function GET() {
     where: {
       restaurantId,
       OR: [
-        // Active floor view — today + tomorrow.
+        // Today + tomorrow — ALL statuses. Completed / no-show / cancelled /
+        // rejected bookings must NOT vanish when the kitchen marks them; they
+        // move to the Complete tab and stay until the day rolls over (or a
+        // manual clear), mirroring how completed orders behave. Luigi 2026-06-08.
         {
           date: { in: [toISO(today), toISO(tomorrow)] },
-          status: { in: ["pending", "confirmed", "seated"] },
         },
         // Future bookings still awaiting staff acceptance (any date from today
         // onward) — capped so we never pull stale past pendings.

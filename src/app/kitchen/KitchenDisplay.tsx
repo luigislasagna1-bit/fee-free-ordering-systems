@@ -2757,11 +2757,21 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               );
             }
 
-            // ── COMPLETE tab: orders only, newest first ───────────
+            // ── COMPLETE tab: finished orders + finished bookings ─────
             const items: Mixed[] = [];
             for (const o of tabOrders) {
               const arrived = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
               items.push({ kind: "order", sortTs: arrived, order: o });
+            }
+            // Finished WALK-UP bookings (completed / no-show / cancelled /
+            // rejected) live here too, so marking one complete moves it to the
+            // Complete tab instead of making it vanish. Pre-order bookings are
+            // represented by their order tile. Luigi 2026-06-08.
+            for (const r of reservations) {
+              if (r.orderId) continue;
+              if (!["completed", "no_show", "cancelled", "rejected"].includes(r.status)) continue;
+              const arrived = r.createdAt ? new Date(r.createdAt).getTime() : Date.now();
+              items.push({ kind: "reservation", sortTs: arrived, r });
             }
             items.sort((a, b) => b.sortTs - a.sortTs);
             if (items.length === 0) {
