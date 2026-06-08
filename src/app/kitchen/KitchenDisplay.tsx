@@ -853,6 +853,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       body: JSON.stringify({ status }),
     });
     setReservations(prev => prev.map(r => r.id === id ? { ...r, status } : r));
+    // Print a booking confirmation when the kitchen ACCEPTS a (walk-up) table
+    // reservation, mirroring the auto-print on order accept. Pre-order bookings
+    // print via their order's auto-print instead. Luigi 2026-06-08.
+    if (status === "confirmed") {
+      printReservation(id).catch((e) => console.error("[reservation accept print]", e));
+    }
   };
   const [selectedId, setSelectedId] = useState<string | null>(null);
   // The reservation whose detail panel is open. Mutually exclusive with

@@ -695,7 +695,7 @@ export function ReservationModal({
                 <>
                   <h3 className="text-xl font-bold text-gray-900">{tr("reservationConfirmedHeading")}</h3>
                   <p className="text-sm text-gray-600">
-                    {tr("seeYou", { date, time, n: partySize, label: partySize === 1 ? tr("person") : tr("people") })}
+                    {tr("seeYou", { date, time: formatTime(time, hoursFormat), n: partySize, label: partySize === 1 ? tr("person") : tr("people") })}
                   </p>
                 </>
               ) : (

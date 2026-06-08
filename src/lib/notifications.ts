@@ -441,6 +441,8 @@ export async function notifyCustomer(args: {
       currency: true,
       // Formats the "Estimated ready" time in the restaurant's local zone.
       timezone: true,
+      // 12h/24h preference — formats reservation/scheduled times in emails.
+      hoursFormat: true,
       // Per-toggle email switches — let owners mute individual status
       // notifications without affecting the others.
       customerEmailOrderConfirm: true,
@@ -611,6 +613,7 @@ export async function notifyCustomer(args: {
           depositPaid: payload.depositPaid,
           depositAmount: payload.depositAmount,
           preOrderTotal: payload.preOrderTotal,
+          hoursFormat: restaurant.hoursFormat === "12h" ? "12h" : "24h",
           locale,
         });
       });

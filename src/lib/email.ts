@@ -15,6 +15,7 @@ import { Resend } from "resend";
 import prisma from "@/lib/db";
 import { decrypt } from "@/lib/encrypt";
 import { getDict, type Translator } from "@/lib/i18n-dict";
+import { formatTime } from "@/lib/format-time";
 import { renderEmail } from "@/emails/render";
 import OrderConfirmation         from "@/emails/templates/OrderConfirmation";
 import KitchenNotification       from "@/emails/templates/KitchenNotification";
@@ -641,9 +642,13 @@ export async function sendReservationConfirmation(params: {
   depositPaid?: boolean;
   depositAmount?: number;
   preOrderTotal?: number;
+  /** Restaurant 12h/24h preference — formats the reservation time so the email
+   *  matches the restaurant's setting (was always 24h). Luigi 2026-06-08. */
+  hoursFormat?: "12h" | "24h";
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const timeLabel = formatTime(params.time, params.hoursFormat ?? "24h");
   const html = await renderEmail(
     ReservationConfirmation({
       t,
@@ -651,7 +656,7 @@ export async function sendReservationConfirmation(params: {
       customerName: params.customerName,
       reservationNumber: params.confirmationCode,
       restaurantName: params.restaurantName,
-      dateTime: `${params.date} at ${params.time}`,
+      dateTime: `${params.date} at ${timeLabel}`,
       partySize: params.partySize,
       imprint: currentImprint(),
     })
