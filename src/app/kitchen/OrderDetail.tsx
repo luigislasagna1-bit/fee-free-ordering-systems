@@ -632,10 +632,14 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           <PrintBtn label={tCommon("all")} icon={<RefreshCw className="w-3.5 h-3.5" />} onClick={() => print("both")} loading={printing === "both"} t={t} />
         </div>
 
-        {/* Manage order — Cancel + Refund, ALWAYS reachable on every order
-            (any status, any payment method) behind one toggle. Refund stays
-            disabled with a reason when it can't run (cash/PayPal, not captured,
-            already refunded); Cancel is always available. Luigi 2026-06-08. */}
+        {/* Manage order — Cancel + Refund. HIDDEN while the order is still
+            PENDING (not yet accepted): a pending order can only be Rejected,
+            never Cancelled — Reject (above) is the single exit and handles the
+            money. Once it's accepted this appears (Cancel + Refund), and it
+            stays reachable on finished orders too — after a Reject the status
+            becomes "rejected" (no longer pending) so Refund is available again.
+            Luigi 2026-06-08. */}
+        {order.status !== "pending" && (
         <div className={`border-t ${t.border} pt-3`}>
           <button
             onClick={() => setShowActions((v) => !v)}
@@ -673,6 +677,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
             </div>
           )}
         </div>
+        )}
       </div>
 
       {/* Reject modal — shared component used from both here and the
