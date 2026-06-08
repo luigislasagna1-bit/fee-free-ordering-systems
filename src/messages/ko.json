@@ -220,8 +220,9 @@
       "freebieRemovedThreshold": "{name}이(가) 제거되었습니다 — 주문 금액이 무료 상품 조건을 더 이상 충족하지 않습니다",
       "freebieRemovedExclusive": "{name}이(가) 제거되었습니다 — \"{winner}\" 혜택이 더 큰 할인이며 이 혜택과 함께 사용할 수 없습니다",
       "couponPromoApplied": "프로모션 \"{name}\"이(가) 적용되었습니다!",
-      "couponBlocked": "\"{name}\"은(는) \"{winner}\"와(과) 함께 사용할 수 없습니다 (이미 적용되었으며 더 많이 할인됩니다). 이것을 대신 사용하려면 장바구니에서 제거하세요.",
-      "promoReadded": "\"{name}\"이(가) 다시 추가되었습니다"
+      "couponBlocked": "\"{name}\"은(는) 이미 더 많이 할인해 드리는 \"{winner}\"과(와) 함께 사용할 수 없어요. 대신 이 쿠폰을 쓰시려면 장바구니에서 \"{winner}\"을(를) 제거하시면 됩니다.",
+      "promoReadded": "\"{name}\"이(가) 다시 추가되었습니다",
+      "couponSwitchedSavesMore": "\"{name}\"을(를) 적용했어요. 할인이 더 커서 \"{winner}\"은(는) 제거해 드렸습니다. 언제든 \"{winner}\" 배너를 눌러 다시 전환할 수 있어요."
     },
     "searchMenu": "메뉴 검색…",
     "signIn": "로그인",

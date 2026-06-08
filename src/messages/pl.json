@@ -220,8 +220,9 @@
       "freebieRemovedThreshold": "{name} usunięto — Twoje zamówienie nie kwalifikuje się już do darmowego produktu",
       "freebieRemovedExclusive": "{name} usunięto — Twoja oferta „{winner}” daje większą oszczędność i nie można jej łączyć z tą promocją",
       "couponPromoApplied": "Promocja \"{name}\" zastosowana!",
-      "couponBlocked": "\"{name}\" nie można łączyć z \"{winner}\" (już zastosowana, daje większą oszczędność). Usuń ją z koszyka, aby skorzystać z tej zamiast.",
-      "promoReadded": "\"{name}\" dodano z powrotem"
+      "couponBlocked": "\"{name}\" nie łączy się z \"{winner}\", który już daje Ci większą zniżkę. Możesz jednak usunąć \"{winner}\" z koszyka, aby skorzystać z tego zamiast niego.",
+      "promoReadded": "\"{name}\" dodano z powrotem",
+      "couponSwitchedSavesMore": "Zastosowano \"{name}\" — daje Ci większą zniżkę, więc usunęliśmy \"{winner}\". Stuknij jego baner, aby w każdej chwili wrócić."
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",

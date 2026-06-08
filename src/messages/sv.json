@@ -220,8 +220,9 @@
       "freebieRemovedThreshold": "{name} borttagen — din beställning kvalificerar inte längre för gratisvaran",
       "freebieRemovedExclusive": "{name} borttagen — ditt erbjudande \"{winner}\" ger större rabatt och kan inte kombineras med detta erbjudande",
       "couponPromoApplied": "Erbjudandet \"{name}\" har tillämpats!",
-      "couponBlocked": "\"{name}\" kan inte kombineras med \"{winner}\" (redan tillämpat, ger större rabatt). Ta bort det i din kundvagn för att använda det här istället.",
-      "promoReadded": "\"{name}\" har lagts tillbaka"
+      "couponBlocked": "\"{name}\" kan inte kombineras med \"{winner}\", som redan ger dig en större rabatt. Du kan ta bort \"{winner}\" i kundvagnen om du vill använda den här i stället.",
+      "promoReadded": "\"{name}\" har lagts tillbaka",
+      "couponSwitchedSavesMore": "\"{name}\" har lagts till – den ger dig en större rabatt, så vi tog bort \"{winner}\". Tryck på dess banner för att byta tillbaka när som helst."
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",

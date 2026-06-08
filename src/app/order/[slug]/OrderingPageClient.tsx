@@ -1624,7 +1624,19 @@ export function OrderingPageClient({
     }
     const blocked = blockedPromos.find((b) => String(b.couponCode ?? "").toUpperCase() === code);
     if (blocked) {
-      toast(tT("couponBlocked", { name: blocked.name, winner: blocked.winnerName }), { duration: 6000 });
+      // Compare REAL savings before claiming anything. The applied (winning)
+      // deal doesn't always save more — an exclusive blocks a standard by rule,
+      // not by amount. If the coupon the customer just entered saves MORE, do
+      // the right thing: switch to it (removing the blockers). Only when the
+      // applied deal genuinely saves more do we keep it + say so. Either way the
+      // customer can still swap manually in the cart. Luigi 2026-06-08.
+      const winnerDiscount = promoResults.find((r: any) => r.name === blocked.winnerName)?.discount ?? 0;
+      if (blocked.discount > winnerDiscount + 0.005) {
+        useThisPromoInstead(blocked.promoId);
+        toast.success(tT("couponSwitchedSavesMore", { name: blocked.name, winner: blocked.winnerName }));
+      } else {
+        toast(tT("couponBlocked", { name: blocked.name, winner: blocked.winnerName }), { duration: 6000 });
+      }
       setPendingCoupon(null);
     }
     // Neither yet → the engine hasn't evaluated this code in this pass; a later

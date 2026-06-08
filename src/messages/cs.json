@@ -220,8 +220,9 @@
       "freebieRemovedThreshold": "{name} odebráno — vaše objednávka už nesplňuje podmínky pro položku zdarma",
       "freebieRemovedExclusive": "{name} odebráno — vaše nabídka \"{winner}\" ušetří víc a nelze ji kombinovat s touto akcí",
       "couponPromoApplied": "Akce „{name}\" byla uplatněna!",
-      "couponBlocked": "„{name}\" nelze kombinovat s „{winner}\" (již uplatněno, ušetří více). Chcete-li použít místo toho tuto, odeberte ji v košíku.",
-      "promoReadded": "„{name}\" bylo přidáno zpět"
+      "couponBlocked": "\"{name}\" nelze kombinovat s \"{winner}\", která vám ušetří víc. V košíku ale můžete \"{winner}\" odebrat a použít místo ní tuto slevu.",
+      "promoReadded": "„{name}\" bylo přidáno zpět",
+      "couponSwitchedSavesMore": "\"{name}\" je aktivní – ušetří vám víc, takže jsme \"{winner}\" odebrali. Kdykoli se můžete vrátit zpět klepnutím na její banner."
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",

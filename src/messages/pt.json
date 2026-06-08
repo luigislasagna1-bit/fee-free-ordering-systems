@@ -219,8 +219,9 @@
       "freebieRemovedThreshold": "{name} removido — o seu pedido já não tem direito ao item grátis",
       "freebieRemovedExclusive": "{name} removido — a sua promoção \"{winner}\" poupa mais e não pode ser combinada com esta oferta",
       "couponPromoApplied": "Promoção \"{name}\" aplicada!",
-      "couponBlocked": "\"{name}\" não pode ser combinada com \"{winner}\" (já aplicada, poupa mais). Remova-a no seu carrinho para usar esta em vez disso.",
-      "promoReadded": "\"{name}\" adicionada novamente"
+      "couponBlocked": "\"{name}\" não pode ser combinado com \"{winner}\", que já lhe poupa mais. Pode sempre remover \"{winner}\" do seu carrinho para usar este em alternativa.",
+      "promoReadded": "\"{name}\" adicionada novamente",
+      "couponSwitchedSavesMore": "\"{name}\" aplicado — poupa-lhe mais, por isso removemos \"{winner}\". Toque no respetivo banner para voltar a trocar quando quiser."
     },
     "followUs": "Siga-nos",
     "searchMenu": "Pesquisar no menu…",
