@@ -215,7 +215,8 @@
       "zipRequired": "Pašto kodas būtinas pristatymui",
       "fieldRequired": "Įveskite {field}",
       "phoneInvalid": "Įveskite teisingą telefono numerį (tik skaitmenys).",
-      "promoItemsAdded": "Prekės pridėtos – nuolaida bus pritaikyta atsiskaitant"
+      "promoItemsAdded": "Prekės pridėtos – nuolaida bus pritaikyta atsiskaitant",
+      "promoScheduledForLater": "Užsakymas suplanuotas {time} — dabar galite pridėti šį pasiūlymą"
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Šis restoranas priima užsakymus iš anksto — pasirinkite laiką. Anksčiausias galimas laikas nurodytas žemiau.",
     "asapOnly": "Šis užsakymas bus paruoštas kuo greičiau.",
     "scheduleModeSlots": "Laiko intervalai",
-    "scheduleModeExact": "Tikslus laikas"
+    "scheduleModeExact": "Tikslus laikas",
+    "exclusiveBumpedNote": "Vienam užsakymui gali būti taikomas tik vienas išskirtinis pasiūlymas, todėl palikome {winner} — su juo sutaupysite daugiau. Nepritaikyta: {names}."
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -2527,8 +2529,8 @@
       "displayModePopupLabel": "Iškylantis langas",
       "displayModePopupDesc": "Modalinis langas iškyla užsakymo puslapyje.",
       "displayDetailsTitle": "Rodymo detalės",
-      "highlightThresholdLabel": "Paryškinimo riba ($)",
-      "highlightThresholdHint": "Jei nustatyta, rodo „Pridėkite dar $X, kad atrakintumėte!“, kai krepšelis yra $X ribose iki minimumo.",
+      "highlightThresholdLabel": "Pradėti raginti nuo",
+      "highlightThresholdHint": "Jei nustatyta, raginimas „Pridėkite daugiau, kad atrakintumėte!\" rodomas, kai krepšelis pasiekia šią sumą, bet vis dar nesiekia minimalaus užsakymo.",
       "promoCardImageLabel": "Akcijos kortelės paveikslėlis",
       "orUploadOwn": "— arba įkelkite savo —",
       "imageUploadHint": "Spustelėkite dizainą aukščiau, kad jį naudotumėte, arba įkelkite / įklijuokite savo paveikslėlio URL. Jei tai praleisite, kaip numatytasis bus naudojamas pirmasis dizainas.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Produktas {n}",
       "freeDishMealInfo": "Užsakykite atitinkamą komplektą — vienas iš toliau nurodytų produktų įtrauktas nemokamai.",
       "comboInfo": "Pridėkite PO VIENĄ produktą iš kiekvienos žemiau esančios grupės ir sutaupykite {value}.",
-      "defaultPromoInfo": "Peržiūrėkite meniu — tinkami produktai automatiškai suaktyvins šią akciją."
+      "defaultPromoInfo": "Peržiūrėkite meniu — tinkami produktai automatiškai suaktyvins šią akciją.",
+      "notUsableNowTitle": "Šiuo metu negalima",
+      "notUsableNowTitleWindow": "Galioja {window}",
+      "notUsableNowBody": "Šio pasiūlymo dabar negalima pritaikyti užsakymui „kuo greičiau\". Vis tiek galite suplanuoti užsakymą vėlesniam laikui, kol galioja šis pasiūlymas.",
+      "maybeLater": "Galbūt vėliau",
+      "orderForLater": "Užsakyti vėlesniam laikui"
     },
     "resetForm": {
       "passwordTooShort": "Slaptažodis turi būti bent 8 simbolių.",

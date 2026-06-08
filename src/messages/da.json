@@ -215,7 +215,8 @@
       "zipRequired": "Postnummer er påkrævet ved levering",
       "fieldRequired": "Angiv venligst {field}",
       "phoneInvalid": "Indtast venligst et gyldigt telefonnummer (kun tal).",
-      "promoItemsAdded": "Varer tilføjet — din rabat gælder ved betaling"
+      "promoItemsAdded": "Varer tilføjet — din rabat gælder ved betaling",
+      "promoScheduledForLater": "Bestilling sat til {time} — du kan nu tilføje dette tilbud"
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Denne restaurant tager imod bestillinger i forvejen — vælg venligst et tidspunkt. Det tidligste ledige tidspunkt vises nedenfor.",
     "asapOnly": "Denne bestilling vil blive tilberedt hurtigst muligt.",
     "scheduleModeSlots": "Tidsintervaller",
-    "scheduleModeExact": "Præcist tidspunkt"
+    "scheduleModeExact": "Præcist tidspunkt",
+    "exclusiveBumpedNote": "Kun ét eksklusivt tilbud kan gælde pr. bestilling, så vi beholdt {winner} — det sparer dig mest. Ikke anvendt: {names}."
   },
   "reservation": {
     "title": "Book et bord",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Pop-up",
       "displayModePopupDesc": "Modal vises på bestillingssiden.",
       "displayDetailsTitle": "Visningsdetaljer",
-      "highlightThresholdLabel": "Fremhævelsesgrænse ($)",
-      "highlightThresholdHint": "Hvis angivet vises \"Tilføj $X mere for at låse op!\" når kurven er inden for $X af minimumsbeløbet.",
+      "highlightThresholdLabel": "Begynd at opfordre ved",
+      "highlightThresholdHint": "Hvis angivet, vises opfordringen \"Tilføj mere for at låse op!\", når kurven når dette beløb og stadig er under minimumsordren.",
       "promoCardImageLabel": "Kampagnekortbillede",
       "orUploadOwn": "— eller upload dit eget —",
       "imageUploadHint": "Klik på et design ovenfor for at bruge det, eller upload / indsæt en URL til dit eget billede. Springer du dette over, bruges det første design som standard.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Vare {n}",
       "freeDishMealInfo": "Bestil den matchende kombination — én af varerne nedenfor følger gratis med måltidet.",
       "comboInfo": "Tilføj ÉN vare fra hver af grupperne nedenfor og spar {value}.",
-      "defaultPromoInfo": "Tjek menuen — egnede varer aktiverer automatisk dette tilbud."
+      "defaultPromoInfo": "Tjek menuen — egnede varer aktiverer automatisk dette tilbud.",
+      "notUsableNowTitle": "Ikke tilgængelig lige nu",
+      "notUsableNowTitleWindow": "Tilgængelig {window}",
+      "notUsableNowBody": "Dette tilbud kan ikke indløses til en bestilling hurtigst muligt lige nu. Du kan stadig planlægge din bestilling til senere, inden for de tidspunkter hvor tilbuddet er tilgængeligt.",
+      "maybeLater": "Måske senere",
+      "orderForLater": "Bestil til senere"
     },
     "resetForm": {
       "passwordTooShort": "Adgangskoden skal være mindst 8 tegn.",

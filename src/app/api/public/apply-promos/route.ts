@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { applyPromotions, totalPromoDiscount, type ApplyContext } from "@/lib/promo-engine";
+import { resolvePromotions, totalPromoDiscount, type ApplyContext } from "@/lib/promo-engine";
 import { parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
 
 export async function POST(req: NextRequest) {
@@ -78,9 +78,12 @@ export async function POST(req: NextRequest) {
     restaurantTimezone: restaurant.timezone,
   };
 
-  const results = applyPromotions(activePromos as any, ctx);
+  const { results, bumpedExclusives } = resolvePromotions(activePromos as any, ctx);
   const totalDiscount = totalPromoDiscount(results, ctx.subtotal);
   const hasFreeDelivery = results.some(r => r.type === "free_delivery");
 
-  return NextResponse.json({ applied: results, totalDiscount, hasFreeDelivery });
+  // Surface exclusives that qualified but lost to a bigger exclusive, so the
+  // customer can be told why a deal they expected didn't apply (only one
+  // exclusive per order). Luigi 2026-06-07.
+  return NextResponse.json({ applied: results, totalDiscount, hasFreeDelivery, bumpedExclusives });
 }

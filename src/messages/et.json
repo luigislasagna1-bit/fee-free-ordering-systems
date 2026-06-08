@@ -215,7 +215,8 @@
       "zipRequired": "Sihtnumber on kohaletoimetamiseks kohustuslik",
       "fieldRequired": "Palun sisesta {field}",
       "phoneInvalid": "Palun sisesta kehtiv telefoninumber (ainult numbrid).",
-      "promoItemsAdded": "Tooted lisatud — soodustus rakendub kassas"
+      "promoItemsAdded": "Tooted lisatud — soodustus rakendub kassas",
+      "promoScheduledForLater": "Tellimus määratud ajaks {time} — nüüd saad selle pakkumise lisada"
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ See restoran võtab tellimusi vastu ette — palun vali aeg. Esimene saadaolev aeg on näidatud allpool.",
     "asapOnly": "See tellimus valmistatakse ette esimesel võimalusel.",
     "scheduleModeSlots": "Ajavahemikud",
-    "scheduleModeExact": "Täpne aeg"
+    "scheduleModeExact": "Täpne aeg",
+    "exclusiveBumpedNote": "Ühe tellimuse kohta saab kehtida vaid üks eksklusiivne pakkumine, seega jätsime alles {winner} — see säästab sul rohkem. Ei rakendatud: {names}."
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Hüpikaken",
       "displayModePopupDesc": "Tellimislehel avaneb modaalaken.",
       "displayDetailsTitle": "Kuvamise üksikasjad",
-      "highlightThresholdLabel": "Esiletõstmise lävi ($)",
-      "highlightThresholdHint": "Kui määratud, kuvatakse „Lisa veel $X avamiseks!“, kui ostukorv on miinimumist $X võrra väiksem.",
+      "highlightThresholdLabel": "Alusta meeldetuletamist summast",
+      "highlightThresholdHint": "Kui see on määratud, ilmub meeldetuletus „Lisa veel, et avada!“ siis, kui ostukorv jõuab selle summani ja jääb endiselt alla tellimuse miinimumi.",
       "promoCardImageLabel": "Kampaaniakaardi pilt",
       "orUploadOwn": "— või laadi üles oma —",
       "imageUploadHint": "Klõpsa üleval olevat kujundust selle kasutamiseks, või laadi üles/kleebi URL oma pildiga. Kui jätad selle vahele, kasutatakse esimest kujundust vaikimisina.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Toode {n}",
       "freeDishMealInfo": "Telli sobiv kombo — üks allolevatest toodetest on einega tasuta.",
       "comboInfo": "Lisa ÜKS toode igast allolevast grupist, et säästa {value}.",
-      "defaultPromoInfo": "Vaata menüüd — sobivad tooted käivitavad selle soodustuse automaatselt."
+      "defaultPromoInfo": "Vaata menüüd — sobivad tooted käivitavad selle soodustuse automaatselt.",
+      "notUsableNowTitle": "Praegu pole saadaval",
+      "notUsableNowTitleWindow": "Saadaval {window}",
+      "notUsableNowBody": "Seda pakkumist ei saa praegu kohese tellimuse jaoks lunastada. Saad oma tellimuse siiski hilisemaks ajaks ette planeerida, selle pakkumise kehtivusaja piires.",
+      "maybeLater": "Võib-olla hiljem",
+      "orderForLater": "Telli hilisemaks"
     },
     "resetForm": {
       "passwordTooShort": "Parool peab olema vähemalt 8 tähemärki.",

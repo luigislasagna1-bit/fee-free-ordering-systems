@@ -215,7 +215,8 @@
       "zipRequired": "Teslimat için posta kodu gereklidir",
       "fieldRequired": "Lütfen {field} girin",
       "phoneInvalid": "Lütfen geçerli bir telefon numarası girin (yalnızca rakam).",
-      "promoItemsAdded": "Ürünler eklendi — indiriminiz ödeme sırasında uygulanır"
+      "promoItemsAdded": "Ürünler eklendi — indiriminiz ödeme sırasında uygulanır",
+      "promoScheduledForLater": "Sipariş {time} için ayarlandı — artık bu fırsatı ekleyebilirsiniz"
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Bu restoran siparişleri önceden alıyor — lütfen bir saat seçin. En erken uygun zaman dilimi aşağıda gösterilmektedir.",
     "asapOnly": "Bu sipariş mümkün olan en kısa sürede hazırlanacaktır.",
     "scheduleModeSlots": "Zaman aralıkları",
-    "scheduleModeExact": "Tam saat"
+    "scheduleModeExact": "Tam saat",
+    "exclusiveBumpedNote": "Her siparişe yalnızca bir özel fırsat uygulanabilir; bu yüzden {winner} fırsatını koruduk — size daha fazla tasarruf sağlıyor. Uygulanmayan: {names}."
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -1825,8 +1827,8 @@
       "displayModePopupLabel": "Açılır pencere",
       "displayModePopupDesc": "Sipariş sayfasında modal açılır.",
       "displayDetailsTitle": "Görüntüleme ayrıntıları",
-      "highlightThresholdLabel": "Vurgulama eşiği ($)",
-      "highlightThresholdHint": "Belirlenirse, sepet minimumdan $X dahilindeyken \"Kilidi açmak için $X daha ekleyin!\" mesajı gösterir.",
+      "highlightThresholdLabel": "Teşvik mesajını şu tutardan başlat",
+      "highlightThresholdHint": "Ayarlanırsa, sepet bu tutara ulaştığında ve hâlâ minimum sipariş tutarının altındaysa \"Kilidini açmak için biraz daha ekle!\" teşvik mesajı görünür.",
       "promoCardImageLabel": "Promo kart görseli",
       "orUploadOwn": "— veya kendinizinkini yükleyin —",
       "imageUploadHint": "Kullanmak için yukarıdaki bir tasarıma tıklayın veya kendi görseliniz için yükleyin / URL yapıştırın. Bu adımı tamamen atlarsanız birinci tasarım varsayılan olarak kullanılır.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "{n}. ürün",
       "freeDishMealInfo": "Eşleşen komboyu sipariş edin — aşağıdaki ürünlerden biri yemekle birlikte ücretsiz gelir.",
       "comboInfo": "Aşağıdaki grupların her birinden BİR ürün ekleyin ve {value} tasarruf edin.",
-      "defaultPromoInfo": "Menüye göz atın — uygun ürünler bu promosyonu otomatik olarak tetikler."
+      "defaultPromoInfo": "Menüye göz atın — uygun ürünler bu promosyonu otomatik olarak tetikler.",
+      "notUsableNowTitle": "Şu anda kullanılamıyor",
+      "notUsableNowTitleWindow": "{window} saatleri arasında geçerli",
+      "notUsableNowBody": "Bu fırsat şu anda hemen teslim (ASAP) siparişlerinde kullanılamıyor. Yine de siparişinizi, bu fırsatın geçerli olduğu saatler içinde olacak şekilde ileri bir zamana planlayabilirsiniz.",
+      "maybeLater": "Belki daha sonra",
+      "orderForLater": "İleri bir zamana sipariş ver"
     },
     "resetForm": {
       "passwordTooShort": "Şifre en az 8 karakter olmalıdır.",

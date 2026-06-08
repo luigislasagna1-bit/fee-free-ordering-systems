@@ -215,7 +215,8 @@
       "zipRequired": "Postinumero vaaditaan toimitusta varten",
       "fieldRequired": "Anna {field}",
       "phoneInvalid": "Anna kelvollinen puhelinnumero (vain numerot).",
-      "promoItemsAdded": "Tuotteet lisätty — alennus huomioidaan kassalla"
+      "promoItemsAdded": "Tuotteet lisätty — alennus huomioidaan kassalla",
+      "promoScheduledForLater": "Tilaus ajoitettu ajalle {time} — voit nyt lisätä tämän tarjouksen"
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Tämä ravintola ottaa tilauksia vastaan ennakkoon — valitse aika. Ensimmäinen vapaa aika näkyy alla.",
     "asapOnly": "Tämä tilaus valmistetaan mahdollisimman pian.",
     "scheduleModeSlots": "Aikavälit",
-    "scheduleModeExact": "Tarkka aika"
+    "scheduleModeExact": "Tarkka aika",
+    "exclusiveBumpedNote": "Vain yksi yksinoikeustarjous voi olla voimassa tilausta kohden, joten pidimme tarjouksen {winner} — se säästää sinulle enemmän. Ei käytetty: {names}."
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Ponnahdusikkuna",
       "displayModePopupDesc": "Modaali-ikkuna avautuu tilaussivulla.",
       "displayDetailsTitle": "Näyttötiedot",
-      "highlightThresholdLabel": "Korostuskynnys ($)",
-      "highlightThresholdHint": "Jos asetettu, näytetään ”Lisää $X lukituksen avaamiseksi!” kun ostoskori on $X minimistä.",
+      "highlightThresholdLabel": "Aloita kannustaminen kohdasta",
+      "highlightThresholdHint": "Jos asetettu, \"Lisää enemmän avataksesi!\" -kannustus näkyy, kun ostoskori saavuttaa tämän summan ja on edelleen alle minimitilauksen.",
       "promoCardImageLabel": "Tarjouskortin kuva",
       "orUploadOwn": "— tai lataa oma —",
       "imageUploadHint": "Napsauta yllä olevaa mallia käyttääksesi sitä, tai lataa / liitä URL omalle kuvallesi. Jos ohitat tämän kokonaan, käytetään ensimmäistä mallia oletuksena.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Tuote {n}",
       "freeDishMealInfo": "Tilaa sopiva kombo — yksi alla olevista tuotteista tulee ilmaiseksi aterian mukana.",
       "comboInfo": "Lisää YKSI tuote kustakin alla olevista ryhmistä ja säästä {value}.",
-      "defaultPromoInfo": "Katso ruokalista — kelpoiset tuotteet laukaisevat tämän tarjouksen automaattisesti."
+      "defaultPromoInfo": "Katso ruokalista — kelpoiset tuotteet laukaisevat tämän tarjouksen automaattisesti.",
+      "notUsableNowTitle": "Ei saatavilla juuri nyt",
+      "notUsableNowTitleWindow": "Saatavilla {window}",
+      "notUsableNowBody": "Tätä tarjousta ei voi käyttää heti tehtävään tilaukseen juuri nyt. Voit silti ajoittaa tilauksesi myöhemmäksi, niille ajoille, jolloin tarjous on saatavilla.",
+      "maybeLater": "Ehkä myöhemmin",
+      "orderForLater": "Tilaa myöhemmäksi"
     },
     "resetForm": {
       "passwordTooShort": "Salasanan on oltava vähintään 8 merkkiä pitkä.",

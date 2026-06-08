@@ -215,7 +215,8 @@
       "zipRequired": "Poštna številka je obvezna za dostavo",
       "fieldRequired": "Vnesite {field}",
       "phoneInvalid": "Vnesite veljavno telefonsko številko (samo številke).",
-      "promoItemsAdded": "Artikli dodani — vaš popust se uporabi ob zaključku naročila"
+      "promoItemsAdded": "Artikli dodani — vaš popust se uporabi ob zaključku naročila",
+      "promoScheduledForLater": "Naročilo nastavljeno na {time} — zdaj lahko dodate to ponudbo"
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Ta restavracija sprejema naročila vnaprej — prosimo, izberite čas. Najzgodnejši razpoložljivi termin je prikazan spodaj.",
     "asapOnly": "To naročilo bo pripravljeno čim prej.",
     "scheduleModeSlots": "Časovni termini",
-    "scheduleModeExact": "Točen čas"
+    "scheduleModeExact": "Točen čas",
+    "exclusiveBumpedNote": "Na posamezno naročilo lahko velja le ena ekskluzivna ponudba, zato smo obdržali {winner} — z njo prihranite več. Ni uveljavljeno: {names}."
   },
   "reservation": {
     "title": "Rezerviraj mizo",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Pojavno okno",
       "displayModePopupDesc": "Modalno okno se prikaže na strani za naročanje.",
       "displayDetailsTitle": "Podrobnosti prikaza",
-      "highlightThresholdLabel": "Prag poudarjanja ($)",
-      "highlightThresholdHint": "Če je nastavljeno, prikaže »Dodajte še $X za odklep!« ko je košarica znotraj $X od minimuma.",
+      "highlightThresholdLabel": "Začni spodbujati pri",
+      "highlightThresholdHint": "Če je nastavljeno, se spodbuda »Dodajte še za odklep!« prikaže, ko košarica doseže ta znesek in je še vedno pod minimalnim naročilom.",
       "promoCardImageLabel": "Slika promocijske kartice",
       "orUploadOwn": "— ali naložite svojo —",
       "imageUploadHint": "Kliknite zgornji dizajn za uporabo ali naložite / prilepite URL za svojo sliko. Če to v celoti preskočite, se kot privzeta uporabi prva zasnova.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Artikel {n}",
       "freeDishMealInfo": "Naročite ustrezno kombinacijo — eden od spodnjih artiklov je priložen brezplačno z obrokom.",
       "comboInfo": "Dodajte EN artikel iz vsake od spodnjih skupin in prihranite {value}.",
-      "defaultPromoInfo": "Oglejte si meni — ustrezni artikli bodo samodejno sprožili to promocijo."
+      "defaultPromoInfo": "Oglejte si meni — ustrezni artikli bodo samodejno sprožili to promocijo.",
+      "notUsableNowTitle": "Trenutno ni na voljo",
+      "notUsableNowTitleWindow": "Na voljo {window}",
+      "notUsableNowBody": "Te ponudbe trenutno ni mogoče uveljaviti za naročilo z dostavo čim prej. Še vedno pa lahko naročilo načrtujete za pozneje, znotraj časov, ko je ta ponudba na voljo.",
+      "maybeLater": "Morda kasneje",
+      "orderForLater": "Naročilo za pozneje"
     },
     "resetForm": {
       "passwordTooShort": "Geslo mora imeti vsaj 8 znakov.",

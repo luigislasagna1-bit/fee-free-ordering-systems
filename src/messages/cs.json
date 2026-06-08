@@ -215,7 +215,8 @@
       "zipRequired": "Pro doručení je nutné vyplnit PSČ",
       "fieldRequired": "Zadejte prosím: {field}",
       "phoneInvalid": "Zadejte prosím platné telefonní číslo (pouze číslice).",
-      "promoItemsAdded": "Položky přidány — vaše sleva se uplatní při pokladně"
+      "promoItemsAdded": "Položky přidány — vaše sleva se uplatní při pokladně",
+      "promoScheduledForLater": "Objednávka nastavena na {time} — nyní můžete tuto nabídku přidat"
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Tato restaurace přijímá objednávky s předstihem — vyberte si prosím čas. Nejbližší dostupný termín je uveden níže.",
     "asapOnly": "Tato objednávka bude připravena co nejdříve.",
     "scheduleModeSlots": "Časové sloty",
-    "scheduleModeExact": "Přesný čas"
+    "scheduleModeExact": "Přesný čas",
+    "exclusiveBumpedNote": "Na jednu objednávku lze uplatnit pouze jednu výhradní nabídku, proto jsme ponechali {winner} — ušetří vám víc. Neuplatněno: {names}."
   },
   "reservation": {
     "title": "Rezervovat stůl",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Vyskakovací okno",
       "displayModePopupDesc": "Modální okno se zobrazí na stránce objednávek.",
       "displayDetailsTitle": "Podrobnosti zobrazení",
-      "highlightThresholdLabel": "Práh zvýraznění ($)",
-      "highlightThresholdHint": "Pokud je nastaveno, zobrazí \"Přidejte ještě $X pro odemčení!\" když je košík do $X od minima.",
+      "highlightThresholdLabel": "Začít pobízet od",
+      "highlightThresholdHint": "Pokud je nastaveno, pobídka „Přidejte více pro odemčení!“ se zobrazí, jakmile košík dosáhne této částky a stále je pod minimem objednávky.",
       "promoCardImageLabel": "Obrázek promo karty",
       "orUploadOwn": "— nebo nahrajte vlastní —",
       "imageUploadHint": "Klikněte na návrh výše pro jeho použití nebo nahrajte / vložte URL vlastního obrázku. Pokud toto zcela přeskočíte, jako výchozí se použije první návrh.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Položka {n}",
       "freeDishMealInfo": "Objednejte odpovídající kombo — jedna z níže uvedených položek je součástí jídla zdarma.",
       "comboInfo": "Přidejte JEDNU položku z každé skupiny níže a ušetřete {value}.",
-      "defaultPromoInfo": "Prohlédněte menu — způsobilé položky tuto akci spustí automaticky."
+      "defaultPromoInfo": "Prohlédněte menu — způsobilé položky tuto akci spustí automaticky.",
+      "notUsableNowTitle": "Teď není dostupné",
+      "notUsableNowTitleWindow": "Dostupné {window}",
+      "notUsableNowBody": "Tuto nabídku teď nelze uplatnit u objednávky „co nejdříve“. Objednávku si ale můžete naplánovat na pozdější čas, kdy je tato nabídka dostupná.",
+      "maybeLater": "Možná později",
+      "orderForLater": "Objednat na později"
     },
     "resetForm": {
       "passwordTooShort": "Heslo musí mít alespoň 8 znaků.",

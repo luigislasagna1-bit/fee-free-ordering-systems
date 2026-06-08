@@ -215,7 +215,8 @@
       "zipRequired": "Codul poștal este obligatoriu pentru livrare",
       "fieldRequired": "Introdu {field}",
       "phoneInvalid": "Introduceți un număr de telefon valid (doar cifre).",
-      "promoItemsAdded": "Produse adăugate — reducerea se aplică la finalizarea comenzii"
+      "promoItemsAdded": "Produse adăugate — reducerea se aplică la finalizarea comenzii",
+      "promoScheduledForLater": "Comandă programată pentru {time} — acum poți adăuga acest deal"
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Acest restaurant preia comenzile în avans — te rugăm să alegi o oră. Cel mai apropiat interval disponibil este afișat mai jos.",
     "asapOnly": "Această comandă va fi pregătită cât mai curând posibil.",
     "scheduleModeSlots": "Intervale orare",
-    "scheduleModeExact": "Oră exactă"
+    "scheduleModeExact": "Oră exactă",
+    "exclusiveBumpedNote": "Per comandă se poate aplica un singur deal exclusiv, așa că l-am păstrat pe {winner} — te economisește mai mult. Neaplicate: {names}."
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Popup",
       "displayModePopupDesc": "O fereastră modală apare pe pagina de comandă.",
       "displayDetailsTitle": "Detalii afișare",
-      "highlightThresholdLabel": "Prag evidențiere ($)",
-      "highlightThresholdHint": "Dacă este setat, afișează „Adaugă $X mai mult pentru a debloca!” când coșul este în limita $X față de minim.",
+      "highlightThresholdLabel": "Începe sugestiile de la",
+      "highlightThresholdHint": "Dacă este setat, mesajul „Adaugă mai mult pentru a debloca!” apare când coșul atinge această sumă și este încă sub comanda minimă.",
       "promoCardImageLabel": "Imaginea cardului promoțional",
       "orUploadOwn": "— sau încarcă propria imagine —",
       "imageUploadHint": "Apasă un design de mai sus pentru a-l folosi sau încarcă/lipește un URL pentru imaginea ta. Dacă sari complet peste asta, primul design este folosit ca implicit.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Produs {n}",
       "freeDishMealInfo": "Comandă combo-ul potrivit — unul dintre produsele de mai jos vine gratuit cu masa.",
       "comboInfo": "Adaugă UN produs din fiecare grup de mai jos și economisești {value}.",
-      "defaultPromoInfo": "Verifică meniul — produsele eligibile vor declanșa automat această promoție."
+      "defaultPromoInfo": "Verifică meniul — produsele eligibile vor declanșa automat această promoție.",
+      "notUsableNowTitle": "Indisponibil momentan",
+      "notUsableNowTitleWindow": "Disponibil {window}",
+      "notUsableNowBody": "Acest deal nu poate fi folosit acum pentru o comandă ASAP. Poți totuși să programezi comanda pentru mai târziu, în intervalul în care acest deal este disponibil.",
+      "maybeLater": "Poate mai târziu",
+      "orderForLater": "Comandă pentru mai târziu"
     },
     "resetForm": {
       "passwordTooShort": "Parola trebuie să aibă cel puțin 8 caractere.",

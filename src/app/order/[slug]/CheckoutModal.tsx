@@ -108,6 +108,10 @@ interface Props {
     discount: number;
     couponCode?: string;
   }>;
+  /** Exclusive promos that qualified but lost to a bigger exclusive (only one
+   *  exclusive applies per order). Shown as a small note so the customer knows
+   *  why a deal they expected didn't apply. Luigi 2026-06-07. */
+  bumpedExclusives?: Array<{ promoId: string; name: string; discount: number; winnerName: string }>;
   /** True when a Free Delivery promo fired. We surface this in the
    *  banner separately because calcFreeDelivery returns 0 (the discount
    *  is realised by zeroing the delivery fee, not by lowering subtotal),
@@ -240,7 +244,7 @@ export function CheckoutModal({
   acceptsDineIn = false, acceptsTakeOut = false,
   restaurantSlug, isSignedIn, fromMarketplace,
   cart, subtotal, totalDiscount,
-  appliedPromos = [], hasFreeDelivery = false, baseDeliveryFee = 0,
+  appliedPromos = [], bumpedExclusives = [], hasFreeDelivery = false, baseDeliveryFee = 0,
   deliveryFee, appliedServiceFees, taxAmount,
   tipAmount, tipPercent, setTipPercent, tipsEnabled = true, total, taxRate,
   customerInfo, setCustomerInfo, onMarketingToggle,
@@ -493,6 +497,20 @@ export function CheckoutModal({
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Only-one-exclusive-per-order notice. When two exclusive deals both
+            qualified we apply the bigger one and explain the other was set
+            aside, so the customer isn't left wondering. Luigi 2026-06-07. */}
+        {bumpedExclusives.length > 0 && (
+          <div className="px-5 pt-3 flex-shrink-0">
+            <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800">
+              ℹ️ {tc("exclusiveBumpedNote", {
+                winner: bumpedExclusives[0].winnerName,
+                names: bumpedExclusives.map((b) => b.name).join(", "),
+              })}
             </div>
           </div>
         )}

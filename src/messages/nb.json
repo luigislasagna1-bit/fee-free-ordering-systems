@@ -215,7 +215,8 @@
       "zipRequired": "Postnummer er påkrevd for levering",
       "fieldRequired": "Vennligst fyll inn {field}",
       "phoneInvalid": "Skriv inn et gyldig telefonnummer (kun sifre).",
-      "promoItemsAdded": "Varer lagt til – rabatten trekkes fra i kassen"
+      "promoItemsAdded": "Varer lagt til – rabatten trekkes fra i kassen",
+      "promoScheduledForLater": "Bestilling satt til {time} – du kan nå legge til dette tilbudet"
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Denne restauranten tar imot forhåndsbestillinger – velg et tidspunkt. Det tidligste ledige tidspunktet vises nedenfor.",
     "asapOnly": "Denne bestillingen vil bli tilberedt så snart som mulig.",
     "scheduleModeSlots": "Tidsluker",
-    "scheduleModeExact": "Nøyaktig tid"
+    "scheduleModeExact": "Nøyaktig tid",
+    "exclusiveBumpedNote": "Bare ett eksklusivt tilbud kan gjelde per bestilling, så vi beholdt {winner} – det sparer deg mer. Ikke brukt: {names}."
   },
   "reservation": {
     "title": "Bestill bord",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Popup",
       "displayModePopupDesc": "Modal vises på bestillingssiden.",
       "displayDetailsTitle": "Visningsdetaljer",
-      "highlightThresholdLabel": "Uthevingsterskel ($)",
-      "highlightThresholdHint": "Hvis angitt, vises «Legg til $X til for å låse opp!» når handlekurven er innenfor $X av minimumet.",
+      "highlightThresholdLabel": "Begynn å minne fra",
+      "highlightThresholdHint": "Hvis angitt, vises «Legg til mer for å låse opp!»-påminnelsen når handlekurven når dette beløpet og fortsatt er under minimumsbestillingen.",
       "promoCardImageLabel": "Tilbudskortbilde",
       "orUploadOwn": "— eller last opp ditt eget —",
       "imageUploadHint": "Klikk på et design ovenfor for å bruke det, eller last opp / lim inn en URL for ditt eget bilde. Hvis du hopper over dette helt, brukes det første designet som standard.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Vare {n}",
       "freeDishMealInfo": "Bestill den matchende komboen — én av varene nedenfor følger med gratis til måltidet.",
       "comboInfo": "Legg til ÉN vare fra hver av gruppene nedenfor for å spare {value}.",
-      "defaultPromoInfo": "Sjekk menyen — tilgjengelige varer vil aktivere dette tilbudet automatisk."
+      "defaultPromoInfo": "Sjekk menyen — tilgjengelige varer vil aktivere dette tilbudet automatisk.",
+      "notUsableNowTitle": "Ikke tilgjengelig akkurat nå",
+      "notUsableNowTitleWindow": "Tilgjengelig {window}",
+      "notUsableNowBody": "Dette tilbudet kan ikke løses inn for en bestilling så raskt som mulig akkurat nå. Du kan likevel planlegge bestillingen til senere, innenfor tidene dette tilbudet er tilgjengelig.",
+      "maybeLater": "Kanskje senere",
+      "orderForLater": "Bestill til senere"
     },
     "resetForm": {
       "passwordTooShort": "Passordet må være minst 8 tegn.",

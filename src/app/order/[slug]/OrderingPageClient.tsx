@@ -39,6 +39,7 @@ import { CheckoutModal } from "./CheckoutModal";
 import { ReservationModal } from "./ReservationModal";
 import { PROMO_STOCK_IMAGES } from "./promo-stock-data";
 import { PromoDetailModal } from "./PromoDetailModal";
+import { promoUsableNow, nextUsableSlot } from "@/lib/promo-window";
 import type { BundleCartItem } from "./BundleComposerModal";
 import { ComboComposerModal, type ComboCartResult } from "./ComboComposerModal";
 import { parseComboConfig } from "@/lib/combo";
@@ -751,6 +752,10 @@ export function OrderingPageClient({
   const [promoResults, setPromoResults] = useState<any[]>([]);
   const [promoDiscount, setPromoDiscount] = useState(0);
   const [hasFreeDelivery, setHasFreeDelivery] = useState(false);
+  // Exclusive promos that qualified but lost to a bigger exclusive (only one
+  // exclusive applies per order) — shown as a small "why didn't my deal apply"
+  // notice so the customer isn't confused. Luigi 2026-06-07.
+  const [bumpedExclusives, setBumpedExclusives] = useState<Array<{ promoId: string; name: string; discount: number; winnerName: string }>>([]);
   const [orderLoading, setOrderLoading] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>("");
   /** Transient banner shown after a "Reorder" handshake from the order
@@ -1420,6 +1425,7 @@ export function OrderingPageClient({
         setPromoResults(data.applied ?? []);
         setPromoDiscount(data.totalDiscount ?? 0);
         setHasFreeDelivery(data.hasFreeDelivery ?? false);
+        setBumpedExclusives(Array.isArray(data.bumpedExclusives) ? data.bumpedExclusives : []);
         promosEvaluatedRef.current = true;
       })
       .catch(() => {});
@@ -1427,11 +1433,24 @@ export function OrderingPageClient({
   }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
-  // "Add €X more to unlock!" nudge — the highlightThreshold feature was set in
-  // the admin promo wizard but never surfaced to customers (reseller report).
-  // Among auto-apply promos whose order-type matches, find the one the cart is
-  // CLOSEST to unlocking (subtotal still below minimum, but within the promo's
-  // highlightThreshold), and nudge the customer to spend the difference.
+  // ── Promo time-window helpers (shared with the engine via promo-window) ──
+  // Is a promo redeemable for the customer's CURRENT order time — ASAP now, or
+  // their chosen "order for later" time? Drives the nudge, the free-item
+  // auto-prompt, and the claim modal's gating so the customer is never offered
+  // a discount they can't actually get for this order. Luigi 2026-06-07.
+  // (restaurantTz is declared above for the hours logic.)
+  const promoIsUsable = (p: { daysOfWeek?: string | null; usableHourStart?: number | null; usableHourEnd?: number | null }) =>
+    promoUsableNow(p, { scheduledFor: customerInfo.scheduledFor || null, tz: restaurantTz });
+  const promoWindowLabelFor = (p: { usableHourStart?: number | null; usableHourEnd?: number | null }): string | null =>
+    typeof p.usableHourStart === "number" && typeof p.usableHourEnd === "number"
+      ? `${formatMinutes(p.usableHourStart, hoursFmt)}–${formatMinutes(p.usableHourEnd, hoursFmt)}`
+      : null;
+
+  // "Add €X more to unlock!" nudge. highlightThreshold is the cart value at
+  // which to START nudging (Luigi 2026-06-07: NOT "within €X of the minimum" —
+  // a single small item shouldn't trigger it). Among auto-apply promos that are
+  // usable for the current order time and order-type, show the one closest to
+  // unlocking once the cart has reached its highlight value.
   const promoNudge = (() => {
     if (subtotal <= 0) return null;
     // Canonical order-type matching — handles "both", single values, JSON-array
@@ -1454,6 +1473,8 @@ export function OrderingPageClient({
       const ht = p.highlightThreshold ?? 0;
       if (!p.autoApply || ht <= 0) continue;
       if (!allowsOrderType(p.orderType, orderType)) continue;
+      // Don't nudge toward a promo that can't be redeemed for this order time.
+      if (!promoIsUsable(p)) continue;
       // Effective threshold to unlock: the cart minimum, or a free-item spend
       // trigger (so "spend $100, get a free item" promos nudge too).
       let rc: any = p.ruleConfig;
@@ -1462,7 +1483,9 @@ export function OrderingPageClient({
       const threshold = Math.max(p.minimumOrder ?? 0, trigger);
       if (threshold <= 0) continue;
       const remaining = threshold - subtotal;
-      if (remaining > 0 && remaining <= ht && (!best || remaining < best.remaining)) {
+      // Start nudging once the cart REACHES the highlight value (and is still
+      // below the unlock minimum) — count down the remaining from there.
+      if (subtotal >= ht && remaining > 0 && (!best || remaining < best.remaining)) {
         best = { name: p.name, remaining };
       }
     }
@@ -1491,6 +1514,9 @@ export function OrderingPageClient({
       if (p.promotionType !== "free_item" || !p.autoApply) return false;
       if (autoPromptedFreebies.has(p.id)) return false;
       if (!allowsOrderType(p.orderType, orderType)) return false;
+      // Don't auto-prompt a free item the customer can't redeem for this order
+      // time — it would only apply if they scheduled into the promo's window.
+      if (!promoIsUsable(p)) return false;
       let rc: any = p.ruleConfig;
       if (!rc || typeof rc !== "object") { try { rc = JSON.parse((p as any).rules || "{}"); } catch { rc = {}; } }
       const trigger = typeof rc?.triggerAmount === "number" ? rc.triggerAmount : 0;
@@ -1505,7 +1531,7 @@ export function OrderingPageClient({
       setAutoPromptedFreebies((prev) => new Set(prev).add(target.id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subtotal, orderType, cart, promoBanners, activePromoModal, autoPromptedFreebies]);
+  }, [subtotal, orderType, cart, promoBanners, activePromoModal, autoPromptedFreebies, customerInfo.scheduledFor]);
 
   // Remove "Free with promo" lines whose promo no longer applies (e.g. the cart
   // dropped below the threshold). Otherwise the customer is charged for an item
@@ -3841,6 +3867,7 @@ export function OrderingPageClient({
           // top of the checkout. Each entry = one applied promo (name,
           // type, discount amount, optional couponCode).
           appliedPromos={promoResults}
+          bumpedExclusives={bumpedExclusives}
           hasFreeDelivery={hasFreeDelivery}
           baseDeliveryFee={baseDeliveryFee}
           deliveryFee={deliveryFee}
@@ -3910,6 +3937,25 @@ export function OrderingPageClient({
           deliveryZones={(restaurant.deliveryZones ?? []).map((z: any) => ({ id: z.id, name: z.name }))}
           cartSubtotal={subtotal}
           primaryColor={theme.primaryColor}
+          // Time-window gating: redeemable for the current order time? If not,
+          // the modal shows "order for later" instead of the claim builder.
+          usableNow={promoIsUsable(activePromoModal)}
+          windowLabel={promoWindowLabelFor(activePromoModal)}
+          onOrderForLater={
+            schedulingEnabled
+              ? () => {
+                  const slot = nextUsableSlot(activePromoModal, restaurantTz);
+                  if (!slot) return;
+                  setCustomerInfo((ci) => ({ ...ci, scheduledFor: slot }));
+                  // Friendly confirmation; the modal re-renders as usable (the
+                  // scheduledFor now falls inside the window) so the customer
+                  // can build the deal right away.
+                  const m = /T(\d{2}):(\d{2})/.exec(slot);
+                  const when = m ? formatMinutes(parseInt(m[1], 10) * 60 + parseInt(m[2], 10), hoursFmt) : "";
+                  toast.success(tT("promoScheduledForLater", { time: when }) ?? `Order set for ${when}`);
+                }
+              : undefined
+          }
           onAddFreebie={addFreebieToCart}
           onAddBundle={addBundleToCart}
           onCompleteGuidedPromo={addGuidedPromoToCart}

@@ -215,7 +215,8 @@
       "zipRequired": "Kod pocztowy jest wymagany do dostawy",
       "fieldRequired": "Podaj: {field}",
       "phoneInvalid": "Wpisz prawidłowy numer telefonu (tylko cyfry).",
-      "promoItemsAdded": "Pozycje dodane — rabat zostanie naliczony przy kasie"
+      "promoItemsAdded": "Pozycje dodane — rabat zostanie naliczony przy kasie",
+      "promoScheduledForLater": "Zamówienie ustawione na {time} — możesz teraz dodać tę ofertę"
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Ta restauracja przyjmuje zamówienia z wyprzedzeniem — wybierz godzinę. Najwcześniejszy dostępny termin jest pokazany poniżej.",
     "asapOnly": "To zamówienie zostanie przygotowane najszybciej, jak to możliwe.",
     "scheduleModeSlots": "Przedziały czasowe",
-    "scheduleModeExact": "Dokładny czas"
+    "scheduleModeExact": "Dokładny czas",
+    "exclusiveBumpedNote": "Na zamówienie może obowiązywać tylko jedna oferta ekskluzywna, więc zachowaliśmy {winner} — daje większą oszczędność. Nie zastosowano: {names}."
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
@@ -1825,8 +1827,8 @@
       "displayModePopupLabel": "Wyskakujące okno",
       "displayModePopupDesc": "Modal wyskakuje na stronie zamówień.",
       "displayDetailsTitle": "Szczegóły wyświetlania",
-      "highlightThresholdLabel": "Próg podświetlenia ($)",
-      "highlightThresholdHint": "Gdy ustawiony, pokazuje \"Dodaj jeszcze $X, aby odblokować!\", gdy koszyk jest w granicach $X od minimum.",
+      "highlightThresholdLabel": "Zacznij zachęcać od",
+      "highlightThresholdHint": "Jeśli ustawione, zachęta „Dodaj więcej, aby odblokować!” pojawi się, gdy koszyk osiągnie tę kwotę i wciąż będzie poniżej minimalnej wartości zamówienia.",
       "promoCardImageLabel": "Obraz karty promocyjnej",
       "orUploadOwn": "— lub prześlij własny —",
       "imageUploadHint": "Kliknij projekt powyżej, aby go użyć, lub prześlij / wklej URL własnego obrazu. Jeśli pominiesz to całkowicie, pierwszy projekt jest używany jako domyślny.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Pozycja {n}",
       "freeDishMealInfo": "Zamów pasujący zestaw — jedna z poniższych pozycji jest dołączona do posiłku gratis.",
       "comboInfo": "Dodaj PO JEDNEJ pozycji z każdej z poniższych grup, aby zaoszczędzić {value}.",
-      "defaultPromoInfo": "Sprawdź menu — kwalifikujące się pozycje automatycznie aktywują tę promocję."
+      "defaultPromoInfo": "Sprawdź menu — kwalifikujące się pozycje automatycznie aktywują tę promocję.",
+      "notUsableNowTitle": "Niedostępne w tej chwili",
+      "notUsableNowTitleWindow": "Dostępne {window}",
+      "notUsableNowBody": "Tej oferty nie można teraz wykorzystać w zamówieniu „jak najszybciej”. Możesz jednak zaplanować zamówienie na później, w godzinach, w których oferta jest dostępna.",
+      "maybeLater": "Może później",
+      "orderForLater": "Zamów na później"
     },
     "resetForm": {
       "passwordTooShort": "Hasło musi mieć co najmniej 8 znaków.",

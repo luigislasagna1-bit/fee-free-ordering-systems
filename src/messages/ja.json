@@ -215,7 +215,8 @@
       "zipRequired": "配達には郵便番号の入力が必要です",
       "fieldRequired": "{field}を入力してください",
       "phoneInvalid": "有効な電話番号を入力してください（数字のみ）。",
-      "promoItemsAdded": "商品を追加しました — 割引はお会計時に適用されます"
+      "promoItemsAdded": "商品を追加しました — 割引はお会計時に適用されます",
+      "promoScheduledForLater": "注文を{time}に設定しました。この特典を追加できるようになりました"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ こちらのレストランは事前注文制です。ご希望の時間をお選びください。以下に最短でご利用いただける時間枠を表示しています。",
     "asapOnly": "こちらのご注文は、できるだけ早くご用意いたします。",
     "scheduleModeSlots": "時間枠",
-    "scheduleModeExact": "時刻指定"
+    "scheduleModeExact": "時刻指定",
+    "exclusiveBumpedNote": "1回の注文につき適用できる限定特典は1つだけのため、よりお得な{winner}を適用しました。適用されなかった特典: {names}。"
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "ポップアップ",
       "displayModePopupDesc": "注文ページにモーダルが表示されます。",
       "displayDetailsTitle": "表示の詳細",
-      "highlightThresholdLabel": "ハイライト閾値（$）",
-      "highlightThresholdHint": "設定すると、カートが最低金額まであと $X の時に「あと $X で適用！」と表示されます。",
+      "highlightThresholdLabel": "ナッジを開始する金額",
+      "highlightThresholdHint": "設定すると、カートがこの金額に達し、かつ最低注文金額を下回っている場合に「もっと追加してアンロック！」のナッジが表示されます。",
       "promoCardImageLabel": "プロモカード画像",
       "orUploadOwn": "— または独自画像をアップロード —",
       "imageUploadHint": "上のデザインをクリックして使用するか、独自画像のURL をアップロード/貼り付けてください。スキップした場合、最初のデザインがデフォルトとして使用されます。",
@@ -4443,7 +4445,12 @@
       "itemLabel": "アイテム {n}",
       "freeDishMealInfo": "対象のコンボを注文すると、以下のアイテムの中から1品が食事とともに無料になります。",
       "comboInfo": "以下の各グループから1品ずつ追加すると{value}節約できます。",
-      "defaultPromoInfo": "メニューをご確認ください。対象アイテムを選ぶと自動的にこのプロモーションが適用されます。"
+      "defaultPromoInfo": "メニューをご確認ください。対象アイテムを選ぶと自動的にこのプロモーションが適用されます。",
+      "notUsableNowTitle": "現在ご利用いただけません",
+      "notUsableNowTitleWindow": "{window}にご利用いただけます",
+      "notUsableNowBody": "この特典は、今すぐのご注文（ASAP）には現在ご利用いただけません。この特典がご利用いただける時間帯であれば、後でのご注文として予約していただけます。",
+      "maybeLater": "あとで",
+      "orderForLater": "後で受け取る注文にする"
     },
     "resetForm": {
       "passwordTooShort": "パスワードは8文字以上必要です。",

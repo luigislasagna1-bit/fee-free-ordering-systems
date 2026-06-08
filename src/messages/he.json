@@ -215,7 +215,8 @@
       "zipRequired": "נדרש מיקוד למשלוח",
       "fieldRequired": "יש להזין {field}",
       "phoneInvalid": "נא להזין מספר טלפון תקין (ספרות בלבד).",
-      "promoItemsAdded": "הפריטים נוספו — ההנחה תחול בקופה"
+      "promoItemsAdded": "הפריטים נוספו — ההנחה תחול בקופה",
+      "promoScheduledForLater": "ההזמנה נקבעה לשעה {time} — כעת אפשר להוסיף את המבצע הזה"
     },
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ מסעדה זו מקבלת הזמנות מראש — נא לבחור שעה. השעה הזמינה הקרובה ביותר מוצגת למטה.",
     "asapOnly": "הזמנה זו תוכן בהקדם האפשרי.",
     "scheduleModeSlots": "חלונות זמן",
-    "scheduleModeExact": "זמן מדויק"
+    "scheduleModeExact": "זמן מדויק",
+    "exclusiveBumpedNote": "ניתן להחיל רק מבצע בלעדי אחד לכל הזמנה, ולכן השארנו את {winner} — הוא חוסך לכם יותר. לא הוחל: {names}."
   },
   "reservation": {
     "title": "הזמן שולחן",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "חלון קופץ",
       "displayModePopupDesc": "חלון קופץ בדף ההזמנות.",
       "displayDetailsTitle": "פרטי תצוגה",
-      "highlightThresholdLabel": "סף הדגשה ($)",
-      "highlightThresholdHint": "אם מוגדר, מציג \"הוסף $X נוספים לפתיחה!\" כשהסל בטווח $X מהמינימום.",
+      "highlightThresholdLabel": "התחל לעודד בסכום",
+      "highlightThresholdHint": "אם מוגדר, ההודעה \"הוסיפו עוד כדי לפתוח!\" תופיע ברגע שהעגלה מגיעה לסכום זה ועדיין נמוכה מהמינימום להזמנה.",
       "promoCardImageLabel": "תמונת כרטיס מבצע",
       "orUploadOwn": "— או העלה משלך —",
       "imageUploadHint": "לחץ על עיצוב למעלה לשימוש בו, או העלה / הדבק כתובת URL לתמונה משלך. אם תדלג על זה לגמרי, העיצוב הראשון ישמש כברירת מחדל.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "פריט {n}",
       "freeDishMealInfo": "הזמן את הקומבו המתאים — אחד מהפריטים למטה מגיע חינם עם הארוחה.",
       "comboInfo": "הוסף פריט אחד מכל אחת מהקבוצות למטה וחסוך {value}.",
-      "defaultPromoInfo": "בדוק את התפריט — פריטים זכאים יפעילו את המבצע הזה אוטומטית."
+      "defaultPromoInfo": "בדוק את התפריט — פריטים זכאים יפעילו את המבצע הזה אוטומטית.",
+      "notUsableNowTitle": "לא זמין כרגע",
+      "notUsableNowTitleWindow": "זמין {window}",
+      "notUsableNowBody": "לא ניתן לממש את המבצע הזה בהזמנה מיידית כרגע. תמיד אפשר לתזמן את ההזמנה למועד מאוחר יותר, בתוך השעות שבהן המבצע זמין.",
+      "maybeLater": "אולי מאוחר יותר",
+      "orderForLater": "הזמנה למועד מאוחר יותר"
     },
     "resetForm": {
       "passwordTooShort": "הסיסמה חייבת להכיל לפחות 8 תווים.",

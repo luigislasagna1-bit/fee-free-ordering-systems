@@ -215,7 +215,8 @@
       "zipRequired": "배달을 위해 우편번호를 입력해 주세요",
       "fieldRequired": "{field}을(를) 입력해 주세요",
       "phoneInvalid": "유효한 전화번호를 입력해 주세요 (숫자만 입력).",
-      "promoItemsAdded": "메뉴가 추가되었습니다 — 결제 시 할인이 적용됩니다"
+      "promoItemsAdded": "메뉴가 추가되었습니다 — 결제 시 할인이 적용됩니다",
+      "promoScheduledForLater": "{time}에 받도록 주문이 설정되었어요 — 이제 이 혜택을 추가할 수 있어요"
     },
     "searchMenu": "메뉴 검색…",
     "signIn": "로그인",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ 이 매장은 예약 주문만 받습니다 — 원하시는 시간을 선택해 주세요. 가장 빠른 예약 가능 시간은 아래에 표시되어 있습니다.",
     "asapOnly": "이 주문은 최대한 빨리 준비됩니다.",
     "scheduleModeSlots": "시간대",
-    "scheduleModeExact": "정확한 시간"
+    "scheduleModeExact": "정확한 시간",
+    "exclusiveBumpedNote": "주문당 단독 혜택은 하나만 적용할 수 있어 더 많이 절약되는 {winner}을(를) 적용했어요. 적용되지 않음: {names}."
   },
   "reservation": {
     "title": "테이블 예약",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "팝업",
       "displayModePopupDesc": "주문 페이지에서 모달이 팝업됩니다.",
       "displayDetailsTitle": "표시 세부 사항",
-      "highlightThresholdLabel": "강조 임계값 ($)",
-      "highlightThresholdHint": "설정 시 장바구니가 최솟값까지 $X 내에 있으면 \"$X 더 추가하면 잠금 해제!\"가 표시됩니다.",
+      "highlightThresholdLabel": "유도 안내 시작 금액",
+      "highlightThresholdHint": "설정하면 장바구니 금액이 이 금액에 도달했지만 아직 최소 주문 금액보다 낮을 때 \"더 담고 혜택 받기!\" 안내가 표시됩니다.",
       "promoCardImageLabel": "프로모션 카드 이미지",
       "orUploadOwn": "— 또는 직접 업로드 —",
       "imageUploadHint": "위 디자인을 클릭하여 사용하거나, 직접 이미지를 업로드/URL을 붙여넣으세요. 건너뛰면 첫 번째 디자인이 기본값으로 사용됩니다.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "메뉴 {n}",
       "freeDishMealInfo": "해당 콤보를 주문하면 아래 메뉴 중 하나가 무료로 제공됩니다.",
       "comboInfo": "아래 각 그룹에서 하나씩 추가하면 {value} 할인됩니다.",
-      "defaultPromoInfo": "메뉴를 확인하세요 — 해당 메뉴를 담으면 이 프로모션이 자동으로 적용됩니다."
+      "defaultPromoInfo": "메뉴를 확인하세요 — 해당 메뉴를 담으면 이 프로모션이 자동으로 적용됩니다.",
+      "notUsableNowTitle": "지금은 이용할 수 없어요",
+      "notUsableNowTitleWindow": "{window} 이용 가능",
+      "notUsableNowBody": "이 혜택은 지금 바로 받는 주문에는 적용할 수 없어요. 대신 이 혜택을 이용할 수 있는 시간대로 주문을 예약하면 적용받을 수 있어요.",
+      "maybeLater": "다음에 할게요",
+      "orderForLater": "나중에 받도록 주문"
     },
     "resetForm": {
       "passwordTooShort": "비밀번호는 8자 이상이어야 합니다.",

@@ -215,7 +215,8 @@
       "zipRequired": "Cal indicar el codi postal per al lliurament",
       "fieldRequired": "Introduïu {field}",
       "phoneInvalid": "Introduïu un número de telèfon vàlid (només xifres).",
-      "promoItemsAdded": "Articles afegits: el teu descompte s'aplica en finalitzar la comanda"
+      "promoItemsAdded": "Articles afegits: el teu descompte s'aplica en finalitzar la comanda",
+      "promoScheduledForLater": "Comanda programada per a les {time}: ja pots afegir aquesta oferta"
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Aquest restaurant accepta comandes per avançat: tria una hora, si us plau. A continuació es mostra la primera franja disponible.",
     "asapOnly": "Aquesta comanda es prepararà tan aviat com sigui possible.",
     "scheduleModeSlots": "Franges horàries",
-    "scheduleModeExact": "Hora exacta"
+    "scheduleModeExact": "Hora exacta",
+    "exclusiveBumpedNote": "Només es pot aplicar una oferta exclusiva per comanda, així que hem mantingut {winner}: és la que t'estalvia més. No aplicades: {names}."
   },
   "reservation": {
     "title": "Reservar taula",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Popup",
       "displayModePopupDesc": "Es mostra un modal a la pàgina de comandes.",
       "displayDetailsTitle": "Detalls de visualització",
-      "highlightThresholdLabel": "Llindar de destacat ($)",
-      "highlightThresholdHint": "Si s'estableix, mostra \"Afegiu $X més per desbloquejar!\" quan el carret és a $X del mínim.",
+      "highlightThresholdLabel": "Comença a animar a partir de",
+      "highlightThresholdHint": "Si s'estableix, l'avís «Afegiu-ne més per desbloquejar!» apareix quan el carret arriba a aquest import i encara està per sota de la comanda mínima.",
       "promoCardImageLabel": "Imatge de la targeta de promo",
       "orUploadOwn": "— o pengeu la vostra pròpia —",
       "imageUploadHint": "Feu clic en un disseny de dalt per usar-lo, o pengeu/enganxeu una URL de la vostra pròpia imatge. Si ometeu això completament, s'utilitza el primer disseny per defecte.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Article {n}",
       "freeDishMealInfo": "Demana el combo corresponent — un dels articles de sota ve gratuït amb el menú.",
       "comboInfo": "Afegeix UN article de cadascun dels grups de sota per estalviar {value}.",
-      "defaultPromoInfo": "Consulta el menú — els articles elegibles activaran aquesta promo automàticament."
+      "defaultPromoInfo": "Consulta el menú — els articles elegibles activaran aquesta promo automàticament.",
+      "notUsableNowTitle": "No disponible en aquest moment",
+      "notUsableNowTitleWindow": "Disponible {window}",
+      "notUsableNowBody": "Aquesta oferta ara mateix no es pot canjear per a una comanda «El més aviat possible». Tot i així, pots programar la comanda per a més tard, dins de l'horari en què aquesta oferta està disponible.",
+      "maybeLater": "Potser més tard",
+      "orderForLater": "Programar per a més tard"
     },
     "resetForm": {
       "passwordTooShort": "La contrasenya ha de tenir com a mínim 8 caràcters.",

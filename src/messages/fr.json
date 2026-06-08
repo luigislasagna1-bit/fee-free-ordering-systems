@@ -214,7 +214,8 @@
       "zipRequired": "Code postal requis pour la livraison",
       "fieldRequired": "Veuillez saisir {field}",
       "phoneInvalid": "Veuillez saisir un numéro de téléphone valide (chiffres uniquement).",
-      "promoItemsAdded": "Articles ajoutés — votre remise s'applique au paiement"
+      "promoItemsAdded": "Articles ajoutés — votre remise s'applique au paiement",
+      "promoScheduledForLater": "Commande programmée pour {time} — vous pouvez maintenant ajouter cette offre"
     },
     "followUs": "Suivez-nous",
     "searchMenu": "Rechercher dans le menu…",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Ce restaurant prend les commandes à l'avance — merci de choisir un horaire. Le premier créneau disponible est indiqué ci-dessous.",
     "asapOnly": "Cette commande sera préparée dès que possible.",
     "scheduleModeSlots": "Créneaux horaires",
-    "scheduleModeExact": "Heure exacte"
+    "scheduleModeExact": "Heure exacte",
+    "exclusiveBumpedNote": "Une seule offre exclusive peut s'appliquer par commande ; nous avons donc conservé {winner} — elle vous fait économiser davantage. Non appliquée(s) : {names}."
   },
   "reservation": {
     "title": "Réserver une table",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Popup",
       "displayModePopupDesc": "Une fenêtre modale s'affiche sur la page de commande.",
       "displayDetailsTitle": "Détails d'affichage",
-      "highlightThresholdLabel": "Seuil de mise en avant ($)",
-      "highlightThresholdHint": "Si défini, affiche « Ajoutez $X de plus pour débloquer ! » quand le panier est à moins de $X du minimum.",
+      "highlightThresholdLabel": "Commencer à inciter à partir de",
+      "highlightThresholdHint": "Si défini, l'incitation « Ajoutez-en plus pour débloquer ! » apparaît dès que le panier atteint ce montant tout en restant en dessous du minimum de commande.",
       "promoCardImageLabel": "Image de la carte promo",
       "orUploadOwn": "— ou importez la vôtre —",
       "imageUploadHint": "Cliquez sur un design ci-dessus pour l'utiliser, ou importez / collez une URL pour votre propre image. Si vous ne faites rien, le premier design est utilisé par défaut.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Article {n}",
       "freeDishMealInfo": "Commandez le combo correspondant — l'un des articles ci-dessous est offert avec le repas.",
       "comboInfo": "Ajoutez UN article de chacun des groupes ci-dessous pour économiser {value}.",
-      "defaultPromoInfo": "Consultez le menu — les articles éligibles déclencheront automatiquement cette promotion."
+      "defaultPromoInfo": "Consultez le menu — les articles éligibles déclencheront automatiquement cette promotion.",
+      "notUsableNowTitle": "Pas disponible pour le moment",
+      "notUsableNowTitleWindow": "Disponible {window}",
+      "notUsableNowBody": "Cette offre ne peut pas être utilisée pour une commande immédiate en ce moment. Vous pouvez tout de même programmer votre commande pour plus tard, pendant les horaires où cette offre est disponible.",
+      "maybeLater": "Plus tard",
+      "orderForLater": "Commander pour plus tard"
     },
     "resetForm": {
       "passwordTooShort": "Le mot de passe doit comporter au moins 8 caractères.",

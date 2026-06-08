@@ -2,6 +2,11 @@
 // Rules-based promotion calculation engine
 // Each promotionType has its own rules JSON structure and calculation logic.
 //
+// Happy-Hour window math (day-of-week + hour-of-day) lives in the shared,
+// client-safe ./promo-window module so the customer ordering page (banner
+// greying / claim gating / nudge) and this server engine never drift.
+import { localDateParts, isWithinUsableWindow } from "./promo-window";
+//
 // UNIVERSAL AUTO-APPLY PRINCIPLE (Luigi 2026-05-29):
 //   "As long as the customer enters the coupon (if necessary), it shouldn't
 //    matter if they do it first or after — the coupon should be applied. Or
@@ -178,54 +183,8 @@ export type ApplyContext = {
   restaurantTimezone?: string;
 };
 
-/**
- * Convert a Date into the {hour, minute, weekday} fields as seen in the
- * given IANA timezone. Uses Intl.DateTimeFormat which is stable across
- * Node runtimes and doesn't require pulling in date-fns-tz.
- *
- * weekday: 0 = Sunday … 6 = Saturday (matches Date.prototype.getDay()
- * so existing daysOfWeek arrays stored as `[0,1,2…]` keep working).
- *
- * If `tz` is empty/unset or rejected by Intl (invalid IANA name), we
- * fall back to the input Date's UTC fields — same behaviour as before
- * the fix, so a bad timezone string degrades gracefully instead of
- * crashing the whole order placement path.
- */
-function localDateParts(now: Date, tz?: string): { weekday: number; minuteOfDay: number } {
-  if (!tz) {
-    return {
-      weekday: now.getDay(),
-      minuteOfDay: now.getHours() * 60 + now.getMinutes(),
-    };
-  }
-  try {
-    const fmt = new Intl.DateTimeFormat("en-US", {
-      timeZone: tz,
-      hour12: false,
-      weekday: "short",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    const parts = fmt.formatToParts(now);
-    const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
-    // Intl's hour: "2-digit" sometimes returns "24" for midnight — normalise.
-    let hour = parseInt(get("hour"), 10);
-    if (!Number.isFinite(hour)) hour = 0;
-    if (hour === 24) hour = 0;
-    const minute = parseInt(get("minute"), 10) || 0;
-    const wd = get("weekday"); // "Sun" / "Mon" / …
-    const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(wd);
-    return {
-      weekday: weekday >= 0 ? weekday : now.getDay(),
-      minuteOfDay: hour * 60 + minute,
-    };
-  } catch {
-    return {
-      weekday: now.getDay(),
-      minuteOfDay: now.getHours() * 60 + now.getMinutes(),
-    };
-  }
-}
+// localDateParts + isWithinUsableWindow now live in ./promo-window (shared with
+// the client). Imported at the top of this file.
 
 function safeJson<T>(s: string | null | undefined, fallback: T): T {
   if (!s) return fallback;
@@ -299,32 +258,12 @@ function isScheduledNow(promo: PromoInput, now: Date, tz?: string): boolean {
   // Vercel's UTC time and silently fails for any customer whose
   // local hour disagrees with UTC. Fall back to server-local fields
   // when no tz is supplied so legacy callers behave as before.
+  // Day-of-week + hour-of-day window — shared with the customer ordering page
+  // via ./promo-window so the banner/claim gating agrees with the discount.
+  // (Empty daysOfWeek = every day; the hour window wraps past midnight when
+  // start > end, e.g. 23:00–04:00. See isWithinUsableWindow.)
   const { weekday, minuteOfDay } = localDateParts(now, tz);
-  const days = safeJson<number[] | null>(promo.daysOfWeek ?? null, null);
-  // An EMPTY array means "no day-of-week restriction" — NOT "no day ever
-  // matches". Without the length guard, a promo stored with daysOfWeek
-  // "[]" (which happens when the wizard's day chips are all deselected
-  // and the save path stringifies the empty array) silently fails to
-  // apply on every single day. This was the root cause of time-windowed
-  // promos "never applying" — Luigi report 2026-06-02. Treat [] like null.
-  if (days && days.length > 0 && !days.includes(weekday)) return false;
-  // Hour-of-day USABILITY window (Fabrizio 2026-05-28). Promo is only
-  // applied if the current minute-of-day falls inside the window. Both
-  // bounds NULL = always usable. Window can wrap past midnight when
-  // start > end (e.g. 22:00–02:00 = late night).
-  const startMin = typeof promo.usableHourStart === "number" ? promo.usableHourStart : null;
-  const endMin = typeof promo.usableHourEnd === "number" ? promo.usableHourEnd : null;
-  if (startMin != null || endMin != null) {
-    const s = startMin ?? 0;
-    const e = endMin ?? 1440;
-    const inWindow = s <= e
-      ? minuteOfDay >= s && minuteOfDay < e
-      // Wrap: late-night promo (22:00–02:00) is in-window if EITHER
-      // we're past start OR before end.
-      : minuteOfDay >= s || minuteOfDay < e;
-    if (!inWindow) return false;
-  }
-  return true;
+  return isWithinUsableWindow(promo, weekday, minuteOfDay);
 }
 
 function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
@@ -696,7 +635,19 @@ export function calcDiscount(promo: PromoInput, ctx: ApplyContext): number {
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export function applyPromotions(promos: PromoInput[], ctx: ApplyContext): PromoResult[] {
+/** An exclusive promo that qualified but was set aside because a bigger
+ *  exclusive won (only one exclusive applies per order). Surfaced so the
+ *  customer can be told WHY a deal they expected didn't apply. */
+export type BumpedExclusive = { promoId: string; name: string; discount: number; winnerName: string };
+
+export type ResolvedPromotions = {
+  results: PromoResult[];
+  /** Exclusive promos that qualified (discount > 0) but lost to a bigger
+   *  exclusive. Empty unless 2+ exclusives collided. */
+  bumpedExclusives: BumpedExclusive[];
+};
+
+export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): ResolvedPromotions {
   // Split coupon vs auto
   const couponPromos = promos.filter(p => p.couponCode && !p.autoApply);
   const autoPromos   = promos.filter(p => p.autoApply || !p.couponCode);
@@ -714,7 +665,7 @@ export function applyPromotions(promos: PromoInput[], ctx: ApplyContext): PromoR
     if (isEligible(p, ctx)) triggered.push(p);
   }
 
-  if (!triggered.length) return [];
+  if (!triggered.length) return { results: [], bumpedExclusives: [] };
 
   // Stacking resolution
   const masters    = triggered.filter(p => p.stackingRule === "master");
@@ -722,11 +673,22 @@ export function applyPromotions(promos: PromoInput[], ctx: ApplyContext): PromoR
   const standards  = triggered.filter(p => p.stackingRule === "standard");
 
   let active: PromoInput[];
+  const bumpedExclusives: BumpedExclusive[] = [];
   if (exclusives.length > 0) {
     const best = exclusives.reduce((a, b) =>
       calcDiscount(a, ctx) >= calcDiscount(b, ctx) ? a : b
     );
     active = [best, ...masters];
+    // Report every OTHER exclusive that would have produced a real discount —
+    // those are the ones the customer "lost" to the winner. Free-delivery
+    // exclusives (discount 0) count too, since the benefit is real.
+    for (const ex of exclusives) {
+      if (ex.id === best.id) continue;
+      const exDiscount = calcDiscount(ex, ctx);
+      if (exDiscount > 0 || ex.promotionType === "free_delivery") {
+        bumpedExclusives.push({ promoId: ex.id, name: ex.name, discount: exDiscount, winnerName: best.name });
+      }
+    }
   } else {
     active = [...standards, ...masters];
   }
@@ -749,7 +711,13 @@ export function applyPromotions(promos: PromoInput[], ctx: ApplyContext): PromoR
       });
     }
   }
-  return results;
+  return { results, bumpedExclusives };
+}
+
+/** Back-compat wrapper — returns just the applied results. Existing callers
+ *  (order placement, harness) keep working unchanged. */
+export function applyPromotions(promos: PromoInput[], ctx: ApplyContext): PromoResult[] {
+  return resolvePromotions(promos, ctx).results;
 }
 
 export function totalPromoDiscount(results: PromoResult[], subtotal: number): number {

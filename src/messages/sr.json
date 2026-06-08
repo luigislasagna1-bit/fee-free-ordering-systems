@@ -215,7 +215,8 @@
       "zipRequired": "Poštanski broj je obavezan za dostavu",
       "fieldRequired": "Unesite {field}",
       "phoneInvalid": "Unesite ispravan broj telefona (samo cifre).",
-      "promoItemsAdded": "Stavke su dodate — vaš popust se primenjuje na naplati"
+      "promoItemsAdded": "Stavke su dodate — vaš popust se primenjuje na naplati",
+      "promoScheduledForLater": "Narudžbina zakazana za {time} — sada možete dodati ovu ponudu"
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Ovaj restoran prima porudžbine unapred — izaberite vreme. Najraniji dostupan termin prikazan je ispod.",
     "asapOnly": "Ova porudžbina biće pripremljena što je pre moguće.",
     "scheduleModeSlots": "Termini",
-    "scheduleModeExact": "Tačno vreme"
+    "scheduleModeExact": "Tačno vreme",
+    "exclusiveBumpedNote": "Po narudžbini se može primeniti samo jedna ekskluzivna ponuda, pa smo zadržali {winner} — donosi vam veću uštedu. Nije primenjeno: {names}."
   },
   "reservation": {
     "title": "Rezerviši sto",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Iskačući prozor",
       "displayModePopupDesc": "Modalni prozor iskače na stranici za naručivanje.",
       "displayDetailsTitle": "Detalji prikaza",
-      "highlightThresholdLabel": "Prag isticanja ($)",
-      "highlightThresholdHint": "Ako je postavljeno, prikazuje \"Dodajte još $X za otključavanje!\" kada je korpa unutar $X od minimuma.",
+      "highlightThresholdLabel": "Počni da podstičeš na",
+      "highlightThresholdHint": "Ako je podešeno, podsticaj „Dodaj još da otključaš!\" pojavljuje se kada korpa dostigne ovaj iznos, a još je ispod minimalne narudžbine.",
       "promoCardImageLabel": "Slika promo kartice",
       "orUploadOwn": "— ili otpremite sopstvenu —",
       "imageUploadHint": "Kliknite na dizajn iznad da ga koristite, ili otpremite / nalepite URL za sopstvenu sliku. Ako preskočite ovo, prvi dizajn se koristi kao podrazumevani.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Artikal {n}",
       "freeDishMealInfo": "Naručite odgovarajuću kombinaciju — jedan od artikala ispod dolazi besplatno uz obrok.",
       "comboInfo": "Dodajte JEDAN artikal iz svake od grupa ispod i uštedite {value}.",
-      "defaultPromoInfo": "Pogledajte meni — dostupni artikli će automatski aktivirati ovu promociju."
+      "defaultPromoInfo": "Pogledajte meni — dostupni artikli će automatski aktivirati ovu promociju.",
+      "notUsableNowTitle": "Trenutno nije dostupno",
+      "notUsableNowTitleWindow": "Dostupno {window}",
+      "notUsableNowBody": "Ova ponuda se trenutno ne može iskoristiti za narudžbinu „što pre\". Ipak možete zakazati narudžbinu za kasnije, u okviru vremena kada je ova ponuda dostupna.",
+      "maybeLater": "Možda kasnije",
+      "orderForLater": "Naruči za kasnije"
     },
     "resetForm": {
       "passwordTooShort": "Lozinka mora imati najmanje 8 karaktera.",

@@ -123,6 +123,16 @@ interface Props {
    *  picks tagged so the engine nets them) and let the engine auto-apply.
    *  See GuidedPromoModal for the contract. */
   onCompleteGuidedPromo: (picks: GuidedPromoPick[], promoName: string) => void;
+  /** Whether the promo can be redeemed for the customer's CURRENT order time
+   *  (ASAP now, or their chosen scheduled time). When false the modal shows a
+   *  "can't redeem now — order for later" notice instead of the claim builder.
+   *  Defaults to true so callers that don't time-gate behave as before. */
+  usableNow?: boolean;
+  /** Human "11:00 PM–4:00 AM" window label for the not-available-now notice. */
+  windowLabel?: string | null;
+  /** Switch the cart to a scheduled ("order for later") time inside the promo's
+   *  window so a time-restricted promo can be pre-ordered. */
+  onOrderForLater?: () => void;
   /** Switch the page-level order type — used by the free_delivery panel's
    *  "Switch to delivery" footer button. */
   onSwitchOrderType?: (next: "pickup" | "delivery") => void;
@@ -474,6 +484,9 @@ export function PromoDetailModal({
   deliveryZones = [],
   cartSubtotal,
   primaryColor,
+  usableNow = true,
+  windowLabel,
+  onOrderForLater,
   onAddFreebie,
   onAddBundle,
   onCompleteGuidedPromo,
@@ -485,6 +498,62 @@ export function PromoDetailModal({
   const meta = getPromoTypeMeta(promo.promotionType);
   const rules = useMemo(() => parseRuleConfig(promo), [promo]);
   const headline = promo.bannerHeadline?.trim() || promo.name;
+
+  // Time-restricted promo, but the customer's current order time is outside
+  // the window → don't let them build a claim that won't discount. Show a
+  // "redeem later" notice with a one-tap "Order for later" that schedules the
+  // cart inside the window (then this same modal flips to the builder).
+  // Luigi 2026-06-07: keep the banner selectable; gate at redeem time.
+  if (!usableNow) {
+    return (
+      <div
+        className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"
+        onClick={onClose}
+      >
+        <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+          <div className="px-5 py-4 border-b border-gray-100 flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-0.5">
+                {meta?.name ?? t("promo")}
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 truncate">{headline}</h2>
+            </div>
+            <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 flex-shrink-0" aria-label={t("close")}>
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          <div className="p-5">
+            <div
+              className="rounded-xl p-4 text-sm"
+              style={{ backgroundColor: `${primaryColor}10`, color: "#374151" }}
+            >
+              <div className="font-semibold text-gray-900 mb-1">
+                ⏰ {windowLabel ? t("notUsableNowTitleWindow", { window: windowLabel }) : t("notUsableNowTitle")}
+              </div>
+              <p>{t("notUsableNowBody")}</p>
+            </div>
+          </div>
+          <div className="px-5 py-3 border-t border-gray-100 flex justify-end gap-2">
+            <button
+              onClick={onClose}
+              className="font-semibold px-4 py-2.5 rounded-xl text-sm border border-gray-200 text-gray-700 hover:bg-gray-50"
+            >
+              {t("maybeLater")}
+            </button>
+            {onOrderForLater && (
+              <button
+                onClick={onOrderForLater}
+                className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm"
+                style={{ backgroundColor: primaryColor }}
+              >
+                {t("orderForLater")}
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Bundle types short-circuit straight to the composer — no shell.
   if (promo.promotionType === "meal_bundle" || promo.promotionType === "meal_bundle_speciality") {

@@ -215,7 +215,8 @@
       "zipRequired": "Postcode is verplicht voor bezorging",
       "fieldRequired": "Voer {field} in",
       "phoneInvalid": "Voer een geldig telefoonnummer in (alleen cijfers).",
-      "promoItemsAdded": "Items toegevoegd — je korting wordt toegepast bij het afrekenen"
+      "promoItemsAdded": "Items toegevoegd — je korting wordt toegepast bij het afrekenen",
+      "promoScheduledForLater": "Bestelling ingepland voor {time} — je kunt deze aanbieding nu toevoegen"
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Dit restaurant neemt bestellingen vooraf aan — kies een tijd. Het vroegst beschikbare tijdslot zie je hieronder.",
     "asapOnly": "Deze bestelling wordt zo snel mogelijk klaargemaakt.",
     "scheduleModeSlots": "Tijdvakken",
-    "scheduleModeExact": "Exacte tijd"
+    "scheduleModeExact": "Exacte tijd",
+    "exclusiveBumpedNote": "Er kan maar één exclusieve aanbieding per bestelling worden toegepast, dus we hebben {winner} behouden — die levert je meer op. Niet toegepast: {names}."
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Pop-up",
       "displayModePopupDesc": "Modaal venster verschijnt op de bestelpagina.",
       "displayDetailsTitle": "Weergavedetails",
-      "highlightThresholdLabel": "Drempelwaarde markering ($)",
-      "highlightThresholdHint": "Indien ingesteld, wordt \"Voeg nog $X toe om te ontgrendelen!\" getoond wanneer de winkelwagen binnen $X van het minimum zit.",
+      "highlightThresholdLabel": "Beginnen met aansporen bij",
+      "highlightThresholdHint": "Indien ingesteld, verschijnt de melding \"Voeg meer toe om te ontgrendelen!\" zodra de winkelwagen dit bedrag bereikt en nog onder het minimumbestelbedrag blijft.",
       "promoCardImageLabel": "Actiekaartafbeelding",
       "orUploadOwn": "— of upload uw eigen —",
       "imageUploadHint": "Klik op een ontwerp hierboven om het te gebruiken, of upload / plak een URL voor uw eigen afbeelding. Als u dit overslaat, wordt het eerste ontwerp als standaard gebruikt.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Artikel {n}",
       "freeDishMealInfo": "Bestel de bijpassende combo — één van de onderstaande artikelen wordt gratis bij de maaltijd geleverd.",
       "comboInfo": "Voeg ÉÉN artikel uit elk van de onderstaande groepen toe om {value} te besparen.",
-      "defaultPromoInfo": "Bekijk het menu — in aanmerking komende artikelen activeren deze promotie automatisch."
+      "defaultPromoInfo": "Bekijk het menu — in aanmerking komende artikelen activeren deze promotie automatisch.",
+      "notUsableNowTitle": "Nu niet beschikbaar",
+      "notUsableNowTitleWindow": "Beschikbaar {window}",
+      "notUsableNowBody": "Deze aanbieding kan op dit moment niet worden gebruikt voor een bestelling die zo snel mogelijk wordt geleverd. Je kunt je bestelling nog wel voor later inplannen, binnen de tijden waarop deze aanbieding geldig is.",
+      "maybeLater": "Misschien later",
+      "orderForLater": "Bestellen voor later"
     },
     "resetForm": {
       "passwordTooShort": "Het wachtwoord moet minimaal 8 tekens bevatten.",

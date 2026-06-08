@@ -215,7 +215,8 @@
       "zipRequired": "外卖订单需填写邮政编码",
       "fieldRequired": "请填写{field}",
       "phoneInvalid": "请输入有效的电话号码（仅限数字）。",
-      "promoItemsAdded": "商品已添加 — 折扣将在结账时生效"
+      "promoItemsAdded": "商品已添加 — 折扣将在结账时生效",
+      "promoScheduledForLater": "订单已预约至 {time}，现在即可添加此优惠"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ 本餐厅仅接受预约下单，请选择一个时间。下方显示的是最早可用的时段。",
     "asapOnly": "本订单将尽快为您准备。",
     "scheduleModeSlots": "时间段",
-    "scheduleModeExact": "具体时间"
+    "scheduleModeExact": "具体时间",
+    "exclusiveBumpedNote": "每笔订单只能使用一项专享优惠，因此我们为您保留了 {winner}——它能为您节省更多。未应用：{names}。"
   },
   "reservation": {
     "title": "预订餐桌",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "弹窗",
       "displayModePopupDesc": "在点餐页面弹出模态框。",
       "displayDetailsTitle": "展示详情",
-      "highlightThresholdLabel": "提示阈值（$）",
-      "highlightThresholdHint": "若设置，当购物车金额在最低金额 $X 以内时，显示「再加 $X 即可解锁！」。",
+      "highlightThresholdLabel": "开始提示的金额",
+      "highlightThresholdHint": "如果设置，当购物车金额达到此数额但仍低于最低起订金额时，将显示\"再加点即可解锁！\"的提示。",
       "promoCardImageLabel": "促销卡片图片",
       "orUploadOwn": "— 或上传您自己的 —",
       "imageUploadHint": "点击上方设计使用，或上传/粘贴自定义图片 URL。若完全跳过，将使用第一个设计作为默认图。",
@@ -4443,7 +4445,12 @@
       "itemLabel": "第 {n} 件",
       "freeDishMealInfo": "点指定组合菜品——以下菜品中的一件随餐免费赠送。",
       "comboInfo": "从以下各组中各选一件即可节省 {value}。",
-      "defaultPromoInfo": "查看菜单——符合条件的菜品将自动触发此优惠。"
+      "defaultPromoInfo": "查看菜单——符合条件的菜品将自动触发此优惠。",
+      "notUsableNowTitle": "当前不可用",
+      "notUsableNowTitleWindow": "{window} 可用",
+      "notUsableNowBody": "此优惠暂时无法用于\"尽快送达\"的订单。不过您仍可将订单预约到稍后时间，只要落在此优惠的可用时间段内即可。",
+      "maybeLater": "稍后再说",
+      "orderForLater": "预约稍后下单"
     },
     "resetForm": {
       "passwordTooShort": "密码至少需要 8 个字符。",

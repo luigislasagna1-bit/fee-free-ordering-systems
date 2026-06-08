@@ -215,7 +215,8 @@
       "zipRequired": "Pasta indekss ir obligāts piegādei",
       "fieldRequired": "Lūdzu, ievadiet: {field}",
       "phoneInvalid": "Lūdzu, ievadiet derīgu tālruņa numuru (tikai ciparus).",
-      "promoItemsAdded": "Produkti pievienoti — atlaide tiks piemērota apmaksas brīdī"
+      "promoItemsAdded": "Produkti pievienoti — atlaide tiks piemērota apmaksas brīdī",
+      "promoScheduledForLater": "Pasūtījums ieplānots uz {time} — tagad varat pievienot šo piedāvājumu"
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Šis restorāns pieņem pasūtījumus iepriekš — lūdzu, izvēlieties laiku. Tuvākais pieejamais laiks ir norādīts zemāk.",
     "asapOnly": "Šis pasūtījums tiks sagatavots, cik drīz vien iespējams.",
     "scheduleModeSlots": "Laika logi",
-    "scheduleModeExact": "Precīzs laiks"
+    "scheduleModeExact": "Precīzs laiks",
+    "exclusiveBumpedNote": "Vienam pasūtījumam var piemērot tikai vienu ekskluzīvu piedāvājumu, tāpēc saglabājām {winner} — ar to ietaupāt vairāk. Nav piemērots: {names}."
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Uznirstošais logs",
       "displayModePopupDesc": "Modāls uznirst pasūtīšanas lapā.",
       "displayDetailsTitle": "Displeja detaļas",
-      "highlightThresholdLabel": "Izcelšanas slieksnis ($)",
-      "highlightThresholdHint": "Ja iestatīts, rāda \"Pievienojiet vēl $X, lai atbloķētu!\", kad grozs atrodas $X robežās no minimuma.",
+      "highlightThresholdLabel": "Sākt pamudināt no",
+      "highlightThresholdHint": "Ja iestatīts, pamudinājums \"Pievieno vēl, lai atbloķētu!\" parādās, kad grozs sasniedz šo summu, bet vēl nesasniedz minimālo pasūtījuma summu.",
       "promoCardImageLabel": "Akcijas kartes attēls",
       "orUploadOwn": "— vai augšupielādējiet savu —",
       "imageUploadHint": "Noklikšķiniet uz dizaina augstāk, lai to izmantotu, vai augšupielādējiet / ievadiet URL savam attēlam. Ja izlaidīsiet šo, pirmais dizains tiks izmantots kā noklusējums.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Vienums {n}",
       "freeDishMealInfo": "Pasūtiet atbilstošo kombināciju — viens no zemāk norādītajiem vienumiem nāk bezmaksas kopā ar ēdienreizi.",
       "comboInfo": "Pievienojiet VIENU vienumu no katras zemāk norādītās grupas, lai ietaupītu {value}.",
-      "defaultPromoInfo": "Apskatiet ēdienkarti — atbilstošie vienumi automātiski aktivizēs šo akciju."
+      "defaultPromoInfo": "Apskatiet ēdienkarti — atbilstošie vienumi automātiski aktivizēs šo akciju.",
+      "notUsableNowTitle": "Pašlaik nav pieejams",
+      "notUsableNowTitleWindow": "Pieejams {window}",
+      "notUsableNowBody": "Šo piedāvājumu pašlaik nevar izmantot pasūtījumam ar piegādi tūlīt. Tomēr varat ieplānot pasūtījumu vēlākam laikam — laikā, kad šis piedāvājums ir pieejams.",
+      "maybeLater": "Varbūt vēlāk",
+      "orderForLater": "Pasūtīt vēlākam laikam"
     },
     "resetForm": {
       "passwordTooShort": "Parolei jābūt vismaz 8 rakstzīmēm.",

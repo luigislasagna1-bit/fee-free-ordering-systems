@@ -215,7 +215,8 @@
       "zipRequired": "Vui lòng nhập mã bưu chính để giao hàng",
       "fieldRequired": "Vui lòng nhập {field}",
       "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ (chỉ gồm chữ số).",
-      "promoItemsAdded": "Đã thêm món — ưu đãi giảm giá được áp dụng khi thanh toán"
+      "promoItemsAdded": "Đã thêm món — ưu đãi giảm giá được áp dụng khi thanh toán",
+      "promoScheduledForLater": "Đã đặt đơn cho lúc {time} — giờ bạn có thể thêm ưu đãi này"
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Nhà hàng này nhận đơn đặt trước — vui lòng chọn giờ. Khung giờ sớm nhất hiện có được hiển thị bên dưới.",
     "asapOnly": "Đơn hàng này sẽ được chuẩn bị trong thời gian sớm nhất.",
     "scheduleModeSlots": "Khung giờ",
-    "scheduleModeExact": "Giờ cụ thể"
+    "scheduleModeExact": "Giờ cụ thể",
+    "exclusiveBumpedNote": "Mỗi đơn hàng chỉ áp dụng được một ưu đãi độc quyền, nên chúng tôi đã giữ lại {winner} — ưu đãi này tiết kiệm hơn cho bạn. Chưa áp dụng: {names}."
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -1825,8 +1827,8 @@
       "displayModePopupLabel": "Popup",
       "displayModePopupDesc": "Modal hiện lên trên trang đặt hàng.",
       "displayDetailsTitle": "Chi tiết hiển thị",
-      "highlightThresholdLabel": "Ngưỡng nổi bật ($)",
-      "highlightThresholdHint": "Nếu đặt, hiển thị \"Thêm $X để mở khóa!\" khi giỏ hàng còn $X để đạt tối thiểu.",
+      "highlightThresholdLabel": "Bắt đầu nhắc khi đạt",
+      "highlightThresholdHint": "Nếu được đặt, lời nhắc \"Thêm để mở khóa!\" sẽ xuất hiện khi giỏ hàng đạt mức này nhưng vẫn dưới mức đơn hàng tối thiểu.",
       "promoCardImageLabel": "Ảnh thẻ khuyến mãi",
       "orUploadOwn": "— hoặc tải lên ảnh của bạn —",
       "imageUploadHint": "Nhấn thiết kế ở trên để dùng, hoặc tải lên / dán URL ảnh của riêng bạn. Nếu bỏ qua, thiết kế đầu tiên được dùng làm mặc định.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Món {n}",
       "freeDishMealInfo": "Đặt combo phù hợp — một trong các món bên dưới sẽ được tặng kèm bữa ăn.",
       "comboInfo": "Thêm MỘT món từ mỗi nhóm bên dưới để tiết kiệm {value}.",
-      "defaultPromoInfo": "Xem thực đơn — các món đủ điều kiện sẽ tự động kích hoạt khuyến mãi này."
+      "defaultPromoInfo": "Xem thực đơn — các món đủ điều kiện sẽ tự động kích hoạt khuyến mãi này.",
+      "notUsableNowTitle": "Hiện chưa áp dụng được",
+      "notUsableNowTitleWindow": "Áp dụng trong khung giờ {window}",
+      "notUsableNowBody": "Ưu đãi này hiện chưa thể áp dụng cho đơn hàng giao ngay (ASAP). Bạn vẫn có thể đặt đơn cho thời điểm sau, trong khung giờ mà ưu đãi này được áp dụng.",
+      "maybeLater": "Để sau",
+      "orderForLater": "Đặt cho sau"
     },
     "resetForm": {
       "passwordTooShort": "Mật khẩu phải có ít nhất 8 ký tự.",

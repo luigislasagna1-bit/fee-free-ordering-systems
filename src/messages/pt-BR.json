@@ -215,7 +215,8 @@
       "zipRequired": "CEP obrigatório para entrega",
       "fieldRequired": "Informe {field}",
       "phoneInvalid": "Insira um número de telefone válido (apenas dígitos).",
-      "promoItemsAdded": "Itens adicionados — seu desconto será aplicado na finalização"
+      "promoItemsAdded": "Itens adicionados — seu desconto será aplicado na finalização",
+      "promoScheduledForLater": "Pedido agendado para {time} — agora você pode adicionar esta oferta"
     },
     "searchMenu": "Buscar no cardápio…",
     "signIn": "Entrar",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Este restaurante aceita pedidos com antecedência — escolha um horário. O horário mais próximo disponível aparece abaixo.",
     "asapOnly": "Este pedido será preparado o mais rápido possível.",
     "scheduleModeSlots": "Horários",
-    "scheduleModeExact": "Horário exato"
+    "scheduleModeExact": "Horário exato",
+    "exclusiveBumpedNote": "Apenas uma oferta exclusiva pode ser aplicada por pedido, então mantivemos {winner} — ela economiza mais para você. Não aplicada(s): {names}."
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Pop-up",
       "displayModePopupDesc": "Modal aparece na página de pedidos.",
       "displayDetailsTitle": "Detalhes de exibição",
-      "highlightThresholdLabel": "Limiar de destaque ($)",
-      "highlightThresholdHint": "Se definido, exibe \"Adicione mais $X para desbloquear!\" quando o carrinho estiver dentro de $X do mínimo.",
+      "highlightThresholdLabel": "Começar a incentivar em",
+      "highlightThresholdHint": "Se definido, o aviso \"Adicione mais para desbloquear!\" aparece assim que o carrinho atingir este valor e ainda estiver abaixo do pedido mínimo.",
       "promoCardImageLabel": "Imagem do card da promoção",
       "orUploadOwn": "— ou envie a sua própria —",
       "imageUploadHint": "Clique em um design acima para usá-lo, ou envie / cole uma URL para sua própria imagem. Se pular, o primeiro design é usado como padrão.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Item {n}",
       "freeDishMealInfo": "Peça o combo correspondente — um dos itens abaixo vem grátis com a refeição.",
       "comboInfo": "Adicione UM item de cada um dos grupos abaixo para economizar {value}.",
-      "defaultPromoInfo": "Veja o cardápio — os itens elegíveis ativarão esta promoção automaticamente."
+      "defaultPromoInfo": "Veja o cardápio — os itens elegíveis ativarão esta promoção automaticamente.",
+      "notUsableNowTitle": "Indisponível no momento",
+      "notUsableNowTitleWindow": "Disponível {window}",
+      "notUsableNowBody": "Esta oferta não pode ser resgatada em um pedido para o mais rápido possível agora. Você ainda pode agendar seu pedido para depois, dentro do horário em que esta oferta está disponível.",
+      "maybeLater": "Talvez depois",
+      "orderForLater": "Pedido para depois"
     },
     "resetForm": {
       "passwordTooShort": "A senha deve ter pelo menos 8 caracteres.",

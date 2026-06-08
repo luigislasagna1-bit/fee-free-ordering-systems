@@ -215,7 +215,8 @@
       "zipRequired": "Postnummer krävs för leverans",
       "fieldRequired": "Ange {field}",
       "phoneInvalid": "Ange ett giltigt telefonnummer (endast siffror).",
-      "promoItemsAdded": "Artiklar tillagda — din rabatt tillämpas i kassan"
+      "promoItemsAdded": "Artiklar tillagda — din rabatt tillämpas i kassan",
+      "promoScheduledForLater": "Beställning inställd till {time} – du kan nu lägga till det här erbjudandet"
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",
@@ -403,7 +404,8 @@
     "leadTimePrompt": "⏰ Den här restaurangen tar emot beställningar i förväg – välj en tid. Den tidigaste lediga tiden visas nedan.",
     "asapOnly": "Den här beställningen tillagas så snart som möjligt.",
     "scheduleModeSlots": "Tidsluckor",
-    "scheduleModeExact": "Exakt tid"
+    "scheduleModeExact": "Exakt tid",
+    "exclusiveBumpedNote": "Endast ett exklusivt erbjudande kan gälla per beställning, så vi behöll {winner} – det sparar mer åt dig. Tillämpas inte: {names}."
   },
   "reservation": {
     "title": "Boka ett bord",
@@ -1862,8 +1864,8 @@
       "displayModePopupLabel": "Popup",
       "displayModePopupDesc": "Modal visas på beställningssidan.",
       "displayDetailsTitle": "Visningsdetaljer",
-      "highlightThresholdLabel": "Markeringssvärde ($)",
-      "highlightThresholdHint": "Om angett visas \"Lägg till $X mer för att låsa upp!\" när kundvagnen är inom $X av minimibeloppet.",
+      "highlightThresholdLabel": "Börja knuffa vid",
+      "highlightThresholdHint": "Om angett visas knuffen \"Lägg till mer för att låsa upp!\" när kundvagnen når det här beloppet och fortfarande är under minimibeloppet.",
       "promoCardImageLabel": "Kampanjkortsbild",
       "orUploadOwn": "— eller ladda upp din egen —",
       "imageUploadHint": "Klicka på en design ovan för att använda den, eller ladda upp / klistra in en URL för din egen bild. Om du hoppar över detta används den första designen som standard.",
@@ -4443,7 +4445,12 @@
       "itemLabel": "Artikel {n}",
       "freeDishMealInfo": "Beställ den matchande kombinationen — en av artiklarna nedan medföljer gratis med måltiden.",
       "comboInfo": "Lägg till EN artikel från var och en av grupperna nedan och spara {value}.",
-      "defaultPromoInfo": "Kolla menyn — valbara artiklar aktiverar det här erbjudandet automatiskt."
+      "defaultPromoInfo": "Kolla menyn — valbara artiklar aktiverar det här erbjudandet automatiskt.",
+      "notUsableNowTitle": "Inte tillgängligt just nu",
+      "notUsableNowTitleWindow": "Tillgängligt {window}",
+      "notUsableNowBody": "Det här erbjudandet kan inte användas för en beställning så snart som möjligt just nu. Du kan fortfarande schemalägga din beställning för senare, inom de tider då erbjudandet är tillgängligt.",
+      "maybeLater": "Kanske senare",
+      "orderForLater": "Beställ för senare"
     },
     "resetForm": {
       "passwordTooShort": "Lösenordet måste vara minst 8 tecken.",
