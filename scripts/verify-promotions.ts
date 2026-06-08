@@ -309,6 +309,22 @@ function test12_percentageCombo() {
   const ctx = makeContext({ subtotal: CART_TOTAL, items: CART });
   // Eligible = $20 (pizza) + $6 (soda) = $26; 15% = $3.90
   assertEqual("15% off $26 combo", calcDiscount(promo, ctx), 3.90);
+
+  // "Only allowed once per order" → discount ONE combo (priciest item per
+  // group): pizza $20 + one soda $3 = $23; 15% = $3.45 (not all qualifying
+  // items). Luigi 2026-06-07.
+  const once = makePromo({
+    promotionType: "percentage_combo",
+    rules: JSON.stringify({
+      discountPercent: 15,
+      oncePerOrder: true,
+      groups: [
+        { id: "m", label: "Main",  categoryIds: ["mains"],  itemIds: [] },
+        { id: "d", label: "Drink", categoryIds: ["drinks"], itemIds: [] },
+      ],
+    }),
+  });
+  assertEqual("combo once-per-order = one combo ($23 → $3.45)", calcDiscount(once, ctx), 3.45);
 }
 
 function test13_mealBundleSpeciality() {

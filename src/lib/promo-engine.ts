@@ -366,18 +366,41 @@ function groupTotalQty(group: ItemGroup, items: CartItem[]): number {
 
 // ── Per-type discount calculators ─────────────────────────────────────────────
 
+/** Value of ONE combo's worth — the single most-expensive unit from each group.
+ *  Used when a group/combo % discount is capped to once per order, so it covers
+ *  one item per group (the customer's best single combo) instead of every
+ *  qualifying item. Luigi 2026-06-07. */
+function oneComboValue(groups: ItemGroup[], items: CartItem[]): number {
+  let total = 0;
+  for (const group of groups) {
+    const matched = itemsMatchingGroup(group, items);
+    if (!matched.length) continue;
+    total += Math.max(...matched.map((i) => i.price));
+  }
+  return total;
+}
+
+/** Sum of every qualifying item across all groups. */
+function allGroupsValue(groups: ItemGroup[], items: CartItem[]): number {
+  let total = 0;
+  for (const group of groups) {
+    const matched = itemsMatchingGroup(group, items);
+    total += matched.reduce((s, i) => s + i.subtotal, 0);
+  }
+  return total;
+}
+
 function calcPercentageOff(promo: PromoInput, ctx: ApplyContext): number {
   const rules = getRules(promo);
   const pct = rules.discountPercent ?? 0;
   if (!rules.groups?.length) {
     return parseFloat(((pct / 100) * ctx.subtotal).toFixed(2));
   }
-  // Targeted items only
-  let eligible = 0;
-  for (const group of rules.groups) {
-    const matched = itemsMatchingGroup(group, ctx.items);
-    eligible += matched.reduce((s, i) => s + i.subtotal, 0);
-  }
+  // Targeted items. "Once per order" caps the discount to a single item per
+  // group (one combo); otherwise it covers every qualifying item.
+  const eligible = rules.oncePerOrder
+    ? oneComboValue(rules.groups, ctx.items)
+    : allGroupsValue(rules.groups, ctx.items);
   return parseFloat(((pct / 100) * eligible).toFixed(2));
 }
 
@@ -664,11 +687,13 @@ function calcPercentageCombo(promo: PromoInput, ctx: ApplyContext): number {
   for (const group of groups) {
     if (groupTotalQty(group, ctx.items) < 1) return 0;
   }
-  let eligible = 0;
-  for (const group of groups) {
-    const matched = itemsMatchingGroup(group, ctx.items);
-    eligible += matched.reduce((s, i) => s + i.subtotal, 0);
-  }
+  // "Once per order" → discount ONE combo (one item per group, the customer's
+  // best). Unchecked (default) → discount every qualifying item, i.e. all the
+  // combos the cart forms. Luigi 2026-06-07: "buy 4 items — all 4 or just one
+  // 2-item combo? — this is what that option adjusts."
+  const eligible = rules.oncePerOrder
+    ? oneComboValue(groups, ctx.items)
+    : allGroupsValue(groups, ctx.items);
   return parseFloat((((rules.discountPercent ?? 0) / 100) * eligible).toFixed(2));
 }
 
