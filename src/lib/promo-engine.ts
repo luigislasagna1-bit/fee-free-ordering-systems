@@ -700,13 +700,21 @@ export function calcDiscount(promo: PromoInput, ctx: ApplyContext): number {
 /** An exclusive promo that qualified but was set aside because a bigger
  *  exclusive won (only one exclusive applies per order). Surfaced so the
  *  customer can be told WHY a deal they expected didn't apply. */
-export type BumpedExclusive = { promoId: string; name: string; discount: number; winnerName: string };
+/** A promo that QUALIFIED (would have discounted) but was not applied because a
+ *  non-stackable exclusive deal is active. `wasExclusive` distinguishes a
+ *  bumped exclusive (another exclusive won) from a standard deal dropped because
+ *  an exclusive is present. `winnerName` is the deal that's keeping it out. */
+export type BlockedPromo = { promoId: string; name: string; discount: number; winnerName: string; wasExclusive: boolean; couponCode?: string };
+/** @deprecated kept as a name alias — the exclusive-vs-exclusive subset. */
+export type BumpedExclusive = BlockedPromo;
 
 export type ResolvedPromotions = {
   results: PromoResult[];
-  /** Exclusive promos that qualified (discount > 0) but lost to a bigger
-   *  exclusive. Empty unless 2+ exclusives collided. */
-  bumpedExclusives: BumpedExclusive[];
+  /** Every promo that qualified but was blocked by the winning exclusive —
+   *  both bumped exclusives and dropped standards. Drives the cart's
+   *  "can't combine / remove to use this instead" UX. Empty unless an exclusive
+   *  is active alongside other qualifying deals. */
+  blockedPromos: BlockedPromo[];
 };
 
 export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): ResolvedPromotions {
@@ -727,7 +735,7 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
     if (isEligible(p, ctx)) triggered.push(p);
   }
 
-  if (!triggered.length) return { results: [], bumpedExclusives: [] };
+  if (!triggered.length) return { results: [], blockedPromos: [] };
 
   // Stacking resolution
   const masters    = triggered.filter(p => p.stackingRule === "master");
@@ -735,20 +743,21 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
   const standards  = triggered.filter(p => p.stackingRule === "standard");
 
   let active: PromoInput[];
-  const bumpedExclusives: BumpedExclusive[] = [];
+  const blockedPromos: BlockedPromo[] = [];
   if (exclusives.length > 0) {
     const best = exclusives.reduce((a, b) =>
       calcDiscount(a, ctx) >= calcDiscount(b, ctx) ? a : b
     );
     active = [best, ...masters];
-    // Report every OTHER exclusive that would have produced a real discount —
-    // those are the ones the customer "lost" to the winner. Free-delivery
-    // exclusives (discount 0) count too, since the benefit is real.
-    for (const ex of exclusives) {
-      if (ex.id === best.id) continue;
-      const exDiscount = calcDiscount(ex, ctx);
-      if (exDiscount > 0 || ex.promotionType === "free_delivery") {
-        bumpedExclusives.push({ promoId: ex.id, name: ex.name, discount: exDiscount, winnerName: best.name });
+    // Everything else that qualified — the other exclusives AND every standard
+    // deal — is blocked, because the winning exclusive can't be combined with
+    // them. Masters still apply (they stack with everything). We report each so
+    // the cart can explain it and offer "remove this to use that instead".
+    for (const p of triggered) {
+      if (p.id === best.id || p.stackingRule === "master") continue;
+      const d = calcDiscount(p, ctx);
+      if (d > 0 || p.promotionType === "free_delivery") {
+        blockedPromos.push({ promoId: p.id, name: p.name, discount: d, winnerName: best.name, wasExclusive: p.stackingRule === "exclusive", couponCode: p.couponCode ?? undefined });
       }
     }
   } else {
@@ -777,7 +786,7 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
       });
     }
   }
-  return { results, bumpedExclusives };
+  return { results, blockedPromos };
 }
 
 /** Back-compat wrapper — returns just the applied results. Existing callers

@@ -218,7 +218,10 @@
       "promoItemsAdded": "הפריטים נוספו — ההנחה תחול בקופה",
       "promoScheduledForLater": "ההזמנה נקבעה לשעה {time} — כעת אפשר להוסיף את המבצע הזה",
       "freebieRemovedThreshold": "{name} הוסר — ההזמנה שלך כבר לא זכאית לפריט החינמי",
-      "freebieRemovedExclusive": "{name} הוסר — המבצע \"{winner}\" שלך חוסך יותר ולא ניתן לשלב אותו עם הצעה זו"
+      "freebieRemovedExclusive": "{name} הוסר — המבצע \"{winner}\" שלך חוסך יותר ולא ניתן לשלב אותו עם הצעה זו",
+      "couponPromoApplied": "המבצע \"{name}\" הופעל!",
+      "couponBlocked": "לא ניתן לשלב את \"{name}\" עם \"{winner}\" (שכבר הופעל וחוסך יותר). הסירו אותו בעגלה כדי להשתמש בזה במקום.",
+      "promoReadded": "\"{name}\" נוסף בחזרה"
     },
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "מחוץ לאזור המשלוח שלנו.",
     "outOfAreaBlockedBody": "אנחנו לא מבצעים משלוח לכתובת זו. עברו לאיסוף עצמי, או הזינו כתובת משלוח אחרת.",
     "expandAll": "הרחב הכול",
-    "collapseAll": "כווץ הכול"
+    "collapseAll": "כווץ הכול",
+    "removePromoAria": "הסרת המבצע",
+    "dealsNotApplied": "מבצעים זמינים (הקישו כדי להחליף)",
+    "cantCombineWith": "לא ניתן לשלב עם {winner}",
+    "useThisInstead": "השתמשו בזה במקום"
   },
   "pizza": {
     "chooseSize": "בחר גודל",

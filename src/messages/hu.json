@@ -218,7 +218,10 @@
       "promoItemsAdded": "Tételek hozzáadva — a kedvezmény a fizetésnél érvényesül",
       "promoScheduledForLater": "A rendelés időpontja: {time} – most már hozzáadhatod ezt az ajánlatot",
       "freebieRemovedThreshold": "A(z) {name} eltávolítva – a rendelésed már nem jogosult az ingyenes termékre",
-      "freebieRemovedExclusive": "A(z) {name} eltávolítva – a(z) \"{winner}\" ajánlatoddal többet spórolsz, és az nem vonható össze ezzel az ajánlattal"
+      "freebieRemovedExclusive": "A(z) {name} eltávolítva – a(z) \"{winner}\" ajánlatoddal többet spórolsz, és az nem vonható össze ezzel az ajánlattal",
+      "couponPromoApplied": "A(z) \"{name}\" akció alkalmazva!",
+      "couponBlocked": "A(z) \"{name}\" nem vonható össze a(z) \"{winner}\" ajánlattal (már alkalmazva, többet spórolsz vele). Távolítsd el a kosaradból, ha inkább ezt szeretnéd használni.",
+      "promoReadded": "A(z) \"{name}\" visszaadva"
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "A szállítási területen kívül esik.",
     "outOfAreaBlockedBody": "Erre a címre sajnos nem tudunk szállítani. Kérjük, válasszon személyes átvételt, vagy adjon meg másik szállítási címet.",
     "expandAll": "Összes kibontása",
-    "collapseAll": "Összes összecsukása"
+    "collapseAll": "Összes összecsukása",
+    "removePromoAria": "Ajánlat eltávolítása",
+    "dealsNotApplied": "Elérhető ajánlatok (koppints a váltáshoz)",
+    "cantCombineWith": "Nem vonható össze ezzel: {winner}",
+    "useThisInstead": "Inkább ezt használom"
   },
   "pizza": {
     "chooseSize": "Méret választása",

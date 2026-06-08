@@ -218,7 +218,10 @@
       "promoItemsAdded": "Items toegevoegd — je korting wordt toegepast bij het afrekenen",
       "promoScheduledForLater": "Bestelling ingepland voor {time} — je kunt deze aanbieding nu toevoegen",
       "freebieRemovedThreshold": "{name} verwijderd — je bestelling komt niet meer in aanmerking voor het gratis item",
-      "freebieRemovedExclusive": "{name} verwijderd — je \"{winner}\"-deal levert meer op en kan niet met deze aanbieding worden gecombineerd"
+      "freebieRemovedExclusive": "{name} verwijderd — je \"{winner}\"-deal levert meer op en kan niet met deze aanbieding worden gecombineerd",
+      "couponPromoApplied": "Promotie \"{name}\" toegepast!",
+      "couponBlocked": "\"{name}\" is niet te combineren met \"{winner}\" (al toegepast, levert meer op). Verwijder die uit je winkelmandje om in plaats daarvan deze te gebruiken.",
+      "promoReadded": "\"{name}\" opnieuw toegevoegd"
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Buiten ons bezorggebied.",
     "outOfAreaBlockedBody": "We bezorgen niet op dit adres. Kies voor afhalen of voer een ander bezorgadres in.",
     "expandAll": "Alles uitvouwen",
-    "collapseAll": "Alles invouwen"
+    "collapseAll": "Alles invouwen",
+    "removePromoAria": "Aanbieding verwijderen",
+    "dealsNotApplied": "Beschikbare aanbiedingen (tik om te wisselen)",
+    "cantCombineWith": "Niet te combineren met {winner}",
+    "useThisInstead": "Kies deze in plaats daarvan"
   },
   "pizza": {
     "chooseSize": "Kies maat",

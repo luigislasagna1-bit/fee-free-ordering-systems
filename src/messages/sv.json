@@ -218,7 +218,10 @@
       "promoItemsAdded": "Artiklar tillagda — din rabatt tillämpas i kassan",
       "promoScheduledForLater": "Beställning inställd till {time} – du kan nu lägga till det här erbjudandet",
       "freebieRemovedThreshold": "{name} borttagen — din beställning kvalificerar inte längre för gratisvaran",
-      "freebieRemovedExclusive": "{name} borttagen — ditt erbjudande \"{winner}\" ger större rabatt och kan inte kombineras med detta erbjudande"
+      "freebieRemovedExclusive": "{name} borttagen — ditt erbjudande \"{winner}\" ger större rabatt och kan inte kombineras med detta erbjudande",
+      "couponPromoApplied": "Erbjudandet \"{name}\" har tillämpats!",
+      "couponBlocked": "\"{name}\" kan inte kombineras med \"{winner}\" (redan tillämpat, ger större rabatt). Ta bort det i din kundvagn för att använda det här istället.",
+      "promoReadded": "\"{name}\" har lagts tillbaka"
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Utanför vårt leveransområde.",
     "outOfAreaBlockedBody": "Vi levererar tyvärr inte till den här adressen. Välj hämtning i stället, eller ange en annan leveransadress.",
     "expandAll": "Expandera alla",
-    "collapseAll": "Fäll ihop alla"
+    "collapseAll": "Fäll ihop alla",
+    "removePromoAria": "Ta bort erbjudande",
+    "dealsNotApplied": "Tillgängliga erbjudanden (tryck för att byta)",
+    "cantCombineWith": "Kan inte kombineras med {winner}",
+    "useThisInstead": "Använd det här istället"
   },
   "pizza": {
     "chooseSize": "Välj storlek",

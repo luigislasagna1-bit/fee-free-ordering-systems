@@ -218,7 +218,10 @@
       "promoItemsAdded": "Pozycje dodane — rabat zostanie naliczony przy kasie",
       "promoScheduledForLater": "Zamówienie ustawione na {time} — możesz teraz dodać tę ofertę",
       "freebieRemovedThreshold": "{name} usunięto — Twoje zamówienie nie kwalifikuje się już do darmowego produktu",
-      "freebieRemovedExclusive": "{name} usunięto — Twoja oferta „{winner}” daje większą oszczędność i nie można jej łączyć z tą promocją"
+      "freebieRemovedExclusive": "{name} usunięto — Twoja oferta „{winner}” daje większą oszczędność i nie można jej łączyć z tą promocją",
+      "couponPromoApplied": "Promocja \"{name}\" zastosowana!",
+      "couponBlocked": "\"{name}\" nie można łączyć z \"{winner}\" (już zastosowana, daje większą oszczędność). Usuń ją z koszyka, aby skorzystać z tej zamiast.",
+      "promoReadded": "\"{name}\" dodano z powrotem"
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Poza naszym obszarem dostawy.",
     "outOfAreaBlockedBody": "Nie realizujemy dostaw pod ten adres. Wybierz odbiór osobisty lub podaj inny adres dostawy.",
     "expandAll": "Rozwiń wszystko",
-    "collapseAll": "Zwiń wszystko"
+    "collapseAll": "Zwiń wszystko",
+    "removePromoAria": "Usuń promocję",
+    "dealsNotApplied": "Dostępne promocje (dotknij, aby zmienić)",
+    "cantCombineWith": "Nie można łączyć z {winner}",
+    "useThisInstead": "Użyj tej zamiast"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",

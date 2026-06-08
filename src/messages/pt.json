@@ -217,7 +217,10 @@
       "promoItemsAdded": "Itens adicionados — o seu desconto é aplicado no checkout",
       "promoScheduledForLater": "Pedido agendado para as {time} — já pode adicionar esta promoção",
       "freebieRemovedThreshold": "{name} removido — o seu pedido já não tem direito ao item grátis",
-      "freebieRemovedExclusive": "{name} removido — a sua promoção \"{winner}\" poupa mais e não pode ser combinada com esta oferta"
+      "freebieRemovedExclusive": "{name} removido — a sua promoção \"{winner}\" poupa mais e não pode ser combinada com esta oferta",
+      "couponPromoApplied": "Promoção \"{name}\" aplicada!",
+      "couponBlocked": "\"{name}\" não pode ser combinada com \"{winner}\" (já aplicada, poupa mais). Remova-a no seu carrinho para usar esta em vez disso.",
+      "promoReadded": "\"{name}\" adicionada novamente"
     },
     "followUs": "Siga-nos",
     "searchMenu": "Pesquisar no menu…",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Fora da nossa área de entrega.",
     "outOfAreaBlockedBody": "Não fazemos entregas nesta morada. Mude para recolha ou introduza uma morada de entrega diferente.",
     "expandAll": "Expandir tudo",
-    "collapseAll": "Recolher tudo"
+    "collapseAll": "Recolher tudo",
+    "removePromoAria": "Remover promoção",
+    "dealsNotApplied": "Promoções disponíveis (toque para trocar)",
+    "cantCombineWith": "Não pode ser combinada com {winner}",
+    "useThisInstead": "Usar esta em vez disso"
   },
   "pizza": {
     "chooseSize": "Escolher tamanho",

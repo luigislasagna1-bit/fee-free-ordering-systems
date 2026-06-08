@@ -88,6 +88,7 @@ export async function GET(req: NextRequest) {
       id: null,
       discount: 0,
       source: "promotion",
+      promoId: promo.id,
       promoName: promo.name,
       autoApply: promo.autoApply,
     });

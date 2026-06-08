@@ -76,6 +76,10 @@ export async function POST(req: NextRequest) {
       // Promotion.couponCode match can fire on the server recompute.
       // Empty/undefined → engine ignores. Sanitised below.
       couponCode: bodyCouponCode,
+      // Promo IDs the customer removed from the cart so a different
+      // non-stackable deal could apply — excluded from the server recompute so
+      // the charged discount matches the previewed one. Luigi 2026-06-07.
+      suppressedPromoIds: bodySuppressedPromoIds,
       items, tip: clientTip,
       // Marketplace attribution: the customer was redirected here from
       // /marketplace/[slug] (which appends ?from=marketplace). The client
@@ -851,7 +855,7 @@ export async function POST(req: NextRequest) {
     // AND any "brand"-scoped promos owned by the parent.
     const promoOwnerIds: string[] = [restaurant.id];
     if (restaurant.parentRestaurantId) promoOwnerIds.push(restaurant.parentRestaurantId);
-    const activePromos = await prisma.promotion.findMany({
+    const activePromosAll = await prisma.promotion.findMany({
       where: {
         isActive: true,
         OR: [
@@ -860,6 +864,12 @@ export async function POST(req: NextRequest) {
         ],
       },
     });
+    // Honour the customer's manual promo removals so the charged discount
+    // matches the cart preview (apply-promos does the same).
+    const suppressedSet = new Set(
+      Array.isArray(bodySuppressedPromoIds) ? bodySuppressedPromoIds.map((x: unknown) => String(x)) : [],
+    );
+    const activePromos = activePromosAll.filter((p) => !suppressedSet.has(p.id));
     // ── Delivery fee + zone resolution ──────────────────────────────────────
     // Resolved BEFORE applyPromotions() so the engine can evaluate the
     // Delivery Area restriction (Phase 2a) — free-delivery promos with

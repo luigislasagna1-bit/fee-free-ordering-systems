@@ -218,7 +218,10 @@
       "promoItemsAdded": "商品を追加しました — 割引はお会計時に適用されます",
       "promoScheduledForLater": "注文を{time}に設定しました。この特典を追加できるようになりました",
       "freebieRemovedThreshold": "{name} を削除しました — ご注文が無料アイテムの対象条件を満たさなくなりました",
-      "freebieRemovedExclusive": "{name} を削除しました — 「{winner}」の特典の方がお得で、こちらの特典とは併用できません"
+      "freebieRemovedExclusive": "{name} を削除しました — 「{winner}」の特典の方がお得で、こちらの特典とは併用できません",
+      "couponPromoApplied": "プロモ「{name}」を適用しました！",
+      "couponBlocked": "「{name}」は「{winner}」と併用できません（割引額が大きい「{winner}」が既に適用中です）。こちらに切り替えるには、カートで「{winner}」を削除してください。",
+      "promoReadded": "「{name}」を再度追加しました"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "デリバリーエリア外です。",
     "outOfAreaBlockedBody": "このご住所へのデリバリーは対応しておりません。お持ち帰りに変更するか、別のデリバリー先住所をご入力ください。",
     "expandAll": "すべて展開",
-    "collapseAll": "すべて折りたたむ"
+    "collapseAll": "すべて折りたたむ",
+    "removePromoAria": "特典を削除",
+    "dealsNotApplied": "利用できる特典（タップで切り替え）",
+    "cantCombineWith": "{winner}とは併用できません",
+    "useThisInstead": "こちらに切り替える"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

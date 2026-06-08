@@ -218,7 +218,10 @@
       "promoItemsAdded": "Položky přidány — vaše sleva se uplatní při pokladně",
       "promoScheduledForLater": "Objednávka nastavena na {time} — nyní můžete tuto nabídku přidat",
       "freebieRemovedThreshold": "{name} odebráno — vaše objednávka už nesplňuje podmínky pro položku zdarma",
-      "freebieRemovedExclusive": "{name} odebráno — vaše nabídka \"{winner}\" ušetří víc a nelze ji kombinovat s touto akcí"
+      "freebieRemovedExclusive": "{name} odebráno — vaše nabídka \"{winner}\" ušetří víc a nelze ji kombinovat s touto akcí",
+      "couponPromoApplied": "Akce „{name}\" byla uplatněna!",
+      "couponBlocked": "„{name}\" nelze kombinovat s „{winner}\" (již uplatněno, ušetří více). Chcete-li použít místo toho tuto, odeberte ji v košíku.",
+      "promoReadded": "„{name}\" bylo přidáno zpět"
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Mimo naši doručovací oblast.",
     "outOfAreaBlockedBody": "Na tuto adresu nedoručujeme. Přepněte na vyzvednutí, nebo zadejte jinou doručovací adresu.",
     "expandAll": "Rozbalit vše",
-    "collapseAll": "Sbalit vše"
+    "collapseAll": "Sbalit vše",
+    "removePromoAria": "Odebrat nabídku",
+    "dealsNotApplied": "Dostupné nabídky (klepnutím přepnete)",
+    "cantCombineWith": "Nelze kombinovat s {winner}",
+    "useThisInstead": "Použít místo toho tuto"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",

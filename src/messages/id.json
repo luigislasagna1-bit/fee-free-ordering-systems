@@ -218,7 +218,10 @@
       "promoItemsAdded": "Item ditambahkan — diskon Anda berlaku saat checkout",
       "promoScheduledForLater": "Pesanan diatur untuk {time} — Anda kini bisa menambahkan penawaran ini",
       "freebieRemovedThreshold": "{name} dihapus — pesanan Anda tidak lagi memenuhi syarat untuk item gratis",
-      "freebieRemovedExclusive": "{name} dihapus — penawaran \"{winner}\" Anda lebih hemat dan tidak dapat digabungkan dengan promo ini"
+      "freebieRemovedExclusive": "{name} dihapus — penawaran \"{winner}\" Anda lebih hemat dan tidak dapat digabungkan dengan promo ini",
+      "couponPromoApplied": "Promo \"{name}\" diterapkan!",
+      "couponBlocked": "\"{name}\" tidak bisa digabung dengan \"{winner}\" (sudah diterapkan, lebih hemat). Hapus dari keranjang Anda untuk menggunakan ini saja.",
+      "promoReadded": "\"{name}\" ditambahkan kembali"
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Di luar area pengiriman kami.",
     "outOfAreaBlockedBody": "Kami tidak melayani pengiriman ke alamat ini. Pilih ambil sendiri, atau masukkan alamat pengiriman yang berbeda.",
     "expandAll": "Buka semua",
-    "collapseAll": "Tutup semua"
+    "collapseAll": "Tutup semua",
+    "removePromoAria": "Hapus promo",
+    "dealsNotApplied": "Promo tersedia (ketuk untuk beralih)",
+    "cantCombineWith": "Tidak bisa digabung dengan {winner}",
+    "useThisInstead": "Gunakan ini saja"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",

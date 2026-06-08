@@ -218,7 +218,10 @@
       "promoItemsAdded": "Produkti pievienoti — atlaide tiks piemērota apmaksas brīdī",
       "promoScheduledForLater": "Pasūtījums ieplānots uz {time} — tagad varat pievienot šo piedāvājumu",
       "freebieRemovedThreshold": "{name} noņemts — jūsu pasūtījums vairs nav tiesīgs saņemt bezmaksas preci",
-      "freebieRemovedExclusive": "{name} noņemts — jūsu piedāvājums \"{winner}\" ietaupa vairāk un nav apvienojams ar šo piedāvājumu"
+      "freebieRemovedExclusive": "{name} noņemts — jūsu piedāvājums \"{winner}\" ietaupa vairāk un nav apvienojams ar šo piedāvājumu",
+      "couponPromoApplied": "Akcija \"{name}\" piemērota!",
+      "couponBlocked": "\"{name}\" nevar apvienot ar \"{winner}\" (jau piemērots, ietaupa vairāk). Noņemiet to savā grozā, lai izmantotu šo.",
+      "promoReadded": "\"{name}\" pievienots atpakaļ"
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Ārpus mūsu piegādes zonas.",
     "outOfAreaBlockedBody": "Mēs nepiegādājam uz šo adresi. Izvēlieties saņemšanu uz vietas vai ievadiet citu piegādes adresi.",
     "expandAll": "Izvērst visu",
-    "collapseAll": "Sakļaut visu"
+    "collapseAll": "Sakļaut visu",
+    "removePromoAria": "Noņemt piedāvājumu",
+    "dealsNotApplied": "Pieejamie piedāvājumi (pieskarieties, lai mainītu)",
+    "cantCombineWith": "Nevar apvienot ar {winner}",
+    "useThisInstead": "Izmantot šo"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",

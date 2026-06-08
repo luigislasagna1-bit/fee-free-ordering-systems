@@ -218,7 +218,10 @@
       "promoItemsAdded": "Stavke su dodane — vaš popust primjenjuje se na blagajni",
       "promoScheduledForLater": "Narudžba zakazana za {time} — sada možete dodati ovu ponudu",
       "freebieRemovedThreshold": "{name} je uklonjeno — vaša narudžba više ne ispunjava uvjete za besplatnu stavku",
-      "freebieRemovedExclusive": "{name} je uklonjeno — vaša ponuda \"{winner}\" donosi veću uštedu i ne može se kombinirati s ovom ponudom"
+      "freebieRemovedExclusive": "{name} je uklonjeno — vaša ponuda \"{winner}\" donosi veću uštedu i ne može se kombinirati s ovom ponudom",
+      "couponPromoApplied": "Promocija \"{name}\" primijenjena!",
+      "couponBlocked": "\"{name}\" se ne može kombinirati s \"{winner}\" (već primijenjena, donosi veću uštedu). Uklonite je iz košarice da biste umjesto toga koristili ovu.",
+      "promoReadded": "\"{name}\" ponovno dodana"
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Izvan naše zone dostave.",
     "outOfAreaBlockedBody": "Na ovu adresu ne dostavljamo. Odaberite preuzimanje ili unesite drugu adresu za dostavu.",
     "expandAll": "Proširi sve",
-    "collapseAll": "Sažmi sve"
+    "collapseAll": "Sažmi sve",
+    "removePromoAria": "Ukloni ponudu",
+    "dealsNotApplied": "Dostupne ponude (dodirnite za promjenu)",
+    "cantCombineWith": "Ne može se kombinirati s {winner}",
+    "useThisInstead": "Koristi ovu umjesto toga"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",

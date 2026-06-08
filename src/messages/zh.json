@@ -218,7 +218,10 @@
       "promoItemsAdded": "商品已添加 — 折扣将在结账时生效",
       "promoScheduledForLater": "订单已预约至 {time}，现在即可添加此优惠",
       "freebieRemovedThreshold": "已移除{name}——您的订单不再符合获得免费商品的条件",
-      "freebieRemovedExclusive": "已移除{name}——您的\"{winner}\"优惠更划算，且无法与本优惠叠加使用"
+      "freebieRemovedExclusive": "已移除{name}——您的\"{winner}\"优惠更划算，且无法与本优惠叠加使用",
+      "couponPromoApplied": "已应用优惠 \"{name}\"！",
+      "couponBlocked": "\"{name}\" 无法与 \"{winner}\" 同时使用（已应用，更划算）。请在购物车中移除它以改用此优惠。",
+      "promoReadded": "已重新添加 \"{name}\""
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "超出我们的配送范围。",
     "outOfAreaBlockedBody": "我们不配送到此地址。请切换至自取，或输入其他配送地址。",
     "expandAll": "全部展开",
-    "collapseAll": "全部收起"
+    "collapseAll": "全部收起",
+    "removePromoAria": "移除优惠",
+    "dealsNotApplied": "可用优惠（点击切换）",
+    "cantCombineWith": "无法与 {winner} 同时使用",
+    "useThisInstead": "改用此优惠"
   },
   "pizza": {
     "chooseSize": "选择大小",

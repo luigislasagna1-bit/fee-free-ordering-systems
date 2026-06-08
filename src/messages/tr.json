@@ -218,7 +218,10 @@
       "promoItemsAdded": "Ürünler eklendi — indiriminiz ödeme sırasında uygulanır",
       "promoScheduledForLater": "Sipariş {time} için ayarlandı — artık bu fırsatı ekleyebilirsiniz",
       "freebieRemovedThreshold": "{name} kaldırıldı — siparişiniz artık ücretsiz ürün için uygun değil",
-      "freebieRemovedExclusive": "{name} kaldırıldı — \"{winner}\" fırsatınız daha fazla kazandırıyor ve bu teklifle birleştirilemiyor"
+      "freebieRemovedExclusive": "{name} kaldırıldı — \"{winner}\" fırsatınız daha fazla kazandırıyor ve bu teklifle birleştirilemiyor",
+      "couponPromoApplied": "\"{name}\" kampanyası uygulandı!",
+      "couponBlocked": "\"{name}\", \"{winner}\" ile birleştirilemez (zaten uygulandı, daha fazla tasarruf sağlıyor). Bunun yerine bunu kullanmak için sepetinizden kaldırın.",
+      "promoReadded": "\"{name}\" yeniden eklendi"
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Teslimat bölgemiz dışında.",
     "outOfAreaBlockedBody": "Bu adrese teslimat yapamıyoruz. Gel al seçeneğine geçin ya da farklı bir teslimat adresi girin.",
     "expandAll": "Tümünü genişlet",
-    "collapseAll": "Tümünü daralt"
+    "collapseAll": "Tümünü daralt",
+    "removePromoAria": "Kampanyayı kaldır",
+    "dealsNotApplied": "Kullanılabilir kampanyalar (geçmek için dokunun)",
+    "cantCombineWith": "{winner} ile birleştirilemez",
+    "useThisInstead": "Bunun yerine bunu kullan"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",

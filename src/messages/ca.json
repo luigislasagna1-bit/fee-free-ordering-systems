@@ -218,7 +218,10 @@
       "promoItemsAdded": "Articles afegits: el teu descompte s'aplica en finalitzar la comanda",
       "promoScheduledForLater": "Comanda programada per a les {time}: ja pots afegir aquesta oferta",
       "freebieRemovedThreshold": "{name} eliminat — la teva comanda ja no compleix els requisits per a l'article gratuït",
-      "freebieRemovedExclusive": "{name} eliminat — l'oferta \"{winner}\" t'estalvia més i no es pot combinar amb aquesta promoció"
+      "freebieRemovedExclusive": "{name} eliminat — l'oferta \"{winner}\" t'estalvia més i no es pot combinar amb aquesta promoció",
+      "couponPromoApplied": "Promoció \"{name}\" aplicada!",
+      "couponBlocked": "\"{name}\" no es pot combinar amb \"{winner}\" (ja aplicada, estalvia més). Treu-la del cistell per fer servir aquesta.",
+      "promoReadded": "\"{name}\" tornada a afegir"
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Fora de la nostra àrea de lliurament.",
     "outOfAreaBlockedBody": "No fem entregues a aquesta adreça. Canvieu a recollida al local o introduïu una adreça de lliurament diferent.",
     "expandAll": "Desplega-ho tot",
-    "collapseAll": "Replega-ho tot"
+    "collapseAll": "Replega-ho tot",
+    "removePromoAria": "Treure l'oferta",
+    "dealsNotApplied": "Ofertes disponibles (toca per canviar)",
+    "cantCombineWith": "No es pot combinar amb {winner}",
+    "useThisInstead": "Fes servir aquesta"
   },
   "pizza": {
     "chooseSize": "Tria la mida",

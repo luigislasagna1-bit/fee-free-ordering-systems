@@ -752,10 +752,53 @@ export function OrderingPageClient({
   const [promoResults, setPromoResults] = useState<any[]>([]);
   const [promoDiscount, setPromoDiscount] = useState(0);
   const [hasFreeDelivery, setHasFreeDelivery] = useState(false);
-  // Exclusive promos that qualified but lost to a bigger exclusive (only one
-  // exclusive applies per order) — shown as a small "why didn't my deal apply"
-  // notice so the customer isn't confused. Luigi 2026-06-07.
-  const [bumpedExclusives, setBumpedExclusives] = useState<Array<{ promoId: string; name: string; discount: number; winnerName: string }>>([]);
+  // Promos that qualified but were blocked by the winning exclusive (bumped
+  // exclusives + dropped standards). Drives the "can't combine / use this
+  // instead" UX and the clearer freebie-removed message. Luigi 2026-06-07.
+  const [blockedPromos, setBlockedPromos] = useState<Array<{ promoId: string; name: string; discount: number; winnerName: string; wasExclusive: boolean; couponCode?: string }>>([]);
+  // Promo IDs the customer manually removed (X) from the cart, so a different
+  // non-stackable deal can take over. Sent to apply-promos + order placement.
+  const [suppressedPromoIds, setSuppressedPromoIds] = useState<string[]>([]);
+
+  // Remove an applied promo from the cart (X button). Suppressing it re-runs the
+  // engine so the next-best deal can take over. Luigi 2026-06-07.
+  const removePromo = (promoId: string) =>
+    setSuppressedPromoIds((prev) => (prev.includes(promoId) ? prev : [...prev, promoId]));
+
+  // "Use this deal instead" — make a blocked deal apply by removing every
+  // exclusive that's keeping it out. A standard deal is blocked by ALL
+  // exclusives; an exclusive by every OTHER exclusive. We collect every
+  // eligible exclusive (the applied winner + the blocked exclusives) and
+  // suppress all of them except the target.
+  const useThisPromoInstead = (targetId: string) => {
+    const exclusiveIds = new Set<string>();
+    for (const r of promoResults) if (r?.stackingRule === "exclusive" && r.promoId) exclusiveIds.add(r.promoId);
+    for (const b of blockedPromos) if (b.wasExclusive) exclusiveIds.add(b.promoId);
+    exclusiveIds.delete(targetId);
+    if (exclusiveIds.size === 0) return;
+    setSuppressedPromoIds((prev) => [...new Set([...prev, ...exclusiveIds])]);
+  };
+
+  // Re-add a previously removed promo (un-suppress) — e.g. tapping its banner.
+  const restorePromo = (promoId: string) =>
+    setSuppressedPromoIds((prev) => prev.filter((id) => id !== promoId));
+
+  // A coupon-code promo awaiting the next engine evaluation, so we can tell the
+  // customer the TRUTH — "applied" vs "can't combine with your other deal" —
+  // instead of an optimistic "applied!" that may be wrong. Luigi 2026-06-07.
+  const [pendingCoupon, setPendingCoupon] = useState<string | null>(null);
+
+  // Tapping a promo banner: if the customer previously removed (suppressed) it,
+  // tapping re-adds it (the "re-apply normally" path); otherwise open its
+  // detail/claim modal as usual. Luigi 2026-06-07.
+  const openPromoBanner = (promo: typeof promoBanners[number]) => {
+    if (suppressedPromoIds.includes(promo.id)) {
+      restorePromo(promo.id);
+      toast.success(tT("promoReadded", { name: promo.name }));
+      return;
+    }
+    setActivePromoModal(promo);
+  };
   const [orderLoading, setOrderLoading] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>("");
   /** Transient banner shown after a "Reorder" handshake from the order
@@ -1418,6 +1461,9 @@ export function OrderingPageClient({
         // selected. The engine normalizes the legacy "card" value. Fabrizio
         // 2026-06-07.
         paymentMethod: customerInfo.paymentMethod || undefined,
+        // Deals the customer manually removed from the cart — excluded so a
+        // different non-stackable deal can apply instead.
+        suppressedPromoIds,
       }),
     })
       .then(r => r.json())
@@ -1425,12 +1471,12 @@ export function OrderingPageClient({
         setPromoResults(data.applied ?? []);
         setPromoDiscount(data.totalDiscount ?? 0);
         setHasFreeDelivery(data.hasFreeDelivery ?? false);
-        setBumpedExclusives(Array.isArray(data.bumpedExclusives) ? data.bumpedExclusives : []);
+        setBlockedPromos(Array.isArray(data.blockedPromos) ? data.blockedPromos : []);
         promosEvaluatedRef.current = true;
       })
       .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod]);
+  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
   // ── Promo time-window helpers (shared with the engine via promo-window) ──
@@ -1543,10 +1589,10 @@ export function OrderingPageClient({
     const PREFIX = "Free with promo: ";
     const appliedNames = new Set(promoResults.map((r: { name: string }) => r.name));
     // A freebie can fall off for two different reasons; the message should say
-    // which. If its promo is in bumpedExclusives, it DID qualify but lost to a
+    // which. If its promo is in blockedPromos, it DID qualify but lost to a
     // bigger non-stackable deal — don't tell the customer they "no longer
     // qualify" (they do). Luigi 2026-06-07.
-    const bumpedWinner = new Map(bumpedExclusives.map((b) => [b.name, b.winnerName]));
+    const bumpedWinner = new Map(blockedPromos.map((b) => [b.name, b.winnerName]));
     const stale = (ci: { notes?: string }) =>
       typeof ci.notes === "string" && ci.notes.startsWith(PREFIX) && !appliedNames.has(ci.notes.slice(PREFIX.length));
     const removed = cart.find(stale);
@@ -1562,6 +1608,29 @@ export function OrderingPageClient({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [promoResults]);
+
+  // Resolve a just-applied coupon code once the engine has re-evaluated: tell
+  // the customer the truth — "applied" vs "can't combine with your other deal"
+  // (with a one-tap swap in the cart). Replaces the old optimistic "applied!"
+  // toast that lied when an exclusive won. Luigi 2026-06-07.
+  useEffect(() => {
+    if (!pendingCoupon) return;
+    const code = pendingCoupon;
+    const applied = promoResults.find((r: any) => String(r.couponCode ?? "").toUpperCase() === code);
+    if (applied) {
+      toast.success(tT("couponPromoApplied", { name: applied.name }));
+      setPendingCoupon(null);
+      return;
+    }
+    const blocked = blockedPromos.find((b) => String(b.couponCode ?? "").toUpperCase() === code);
+    if (blocked) {
+      toast(tT("couponBlocked", { name: blocked.name, winner: blocked.winnerName }), { duration: 6000 });
+      setPendingCoupon(null);
+    }
+    // Neither yet → the engine hasn't evaluated this code in this pass; a later
+    // promoResults/blockedPromos update resolves it. (No false message.)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [promoResults, blockedPromos, pendingCoupon]);
 
   // ── Catering detection ─────────────────────────────────────────────
   // An item is treated as catering when EITHER its own isCatering flag
@@ -2019,7 +2088,12 @@ export function OrderingPageClient({
       if (data.source === "promotion") {
         setCouponId(null);
         setCouponDiscount(0);
-        toast.success(`Promo "${data.promoName}" applied!`);
+        // Re-applying a code un-suppresses its promo (the "re-add" path), then
+        // we wait for the engine to say whether it actually applied or is
+        // blocked by a non-stackable deal — see the pendingCoupon effect. No
+        // optimistic "applied!" toast (it was lying when an exclusive won).
+        if (data.promoId) restorePromo(String(data.promoId));
+        setPendingCoupon(String(couponCode).trim().toUpperCase());
         // Force a refresh of the auto-apply effect by re-setting cart
         // (cheap — same reference). The cart-change useEffect calls
         // /api/public/apply-promos with the live couponCode and the
@@ -2115,6 +2189,9 @@ export function OrderingPageClient({
     // Required for autoApply=false promos to fire on the server-side
     // recompute. Empty → engine ignores.
     couponCode: couponCode.trim() || undefined,
+    // Promos the customer removed from the cart — server excludes them so the
+    // charged discount matches what they saw. Luigi 2026-06-07.
+    suppressedPromoIds,
     subtotal, taxAmount, deliveryFee, tip: tipAmount, total,
     items: cart.map(ci => {
       // Defensive: a variant-required item must carry a valid variant or the
@@ -2998,11 +3075,11 @@ export function OrderingPageClient({
                   key={promo.id}
                   role="button"
                   tabIndex={0}
-                  onClick={() => setActivePromoModal(promo)}
+                  onClick={() => openPromoBanner(promo)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      setActivePromoModal(promo);
+                      openPromoBanner(promo);
                     }
                   }}
                   // GloriaFood-style tile (Luigi 2026-06-01 v6):
@@ -3630,13 +3707,26 @@ export function OrderingPageClient({
 
             {cart.length > 0 && (
               <div className="flex-shrink-0 border-t border-gray-100">
-                {/* Promo results */}
+                {/* Promo results — each applied deal can be removed (X) so the
+                    customer can choose a different non-stackable deal. Luigi
+                    2026-06-07. */}
                 {promoResults.length > 0 && (
-                  <div className="px-4 py-3 bg-green-50 border-b border-green-100">
+                  <div className="px-4 py-3 bg-green-50 border-b border-green-100 space-y-1">
                     {promoResults.map((r: any) => (
-                      <div key={r.promoId} className="flex justify-between text-sm text-green-700 font-medium">
-                        <span>🎉 {r.name}</span>
-                        <span>-{fmt(r.discount)}</span>
+                      <div key={r.promoId} className="flex justify-between items-center gap-2 text-sm text-green-700 font-medium">
+                        <span className="truncate">🎉 {r.name}</span>
+                        <span className="flex items-center gap-2 flex-shrink-0">
+                          <span>-{fmt(r.discount)}</span>
+                          <button
+                            type="button"
+                            onClick={() => removePromo(r.promoId)}
+                            className="text-green-600/60 hover:text-red-500 p-0.5 rounded transition"
+                            aria-label={t("removePromoAria")}
+                            title={t("removePromoAria")}
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </span>
                       </div>
                     ))}
                     {/* Hide the "Free delivery applied" badge when the
@@ -3644,6 +3734,29 @@ export function OrderingPageClient({
                         discount, so the badge would be confusing.
                         Audit polish #64. */}
                     {hasFreeDelivery && baseDeliveryFee > 0 && <div className="text-sm text-green-700 font-medium">🚚 {t("freeDeliveryApplied")}</div>}
+                  </div>
+                )}
+
+                {/* Deals that qualified but can't combine with an applied
+                    exclusive. One tap swaps to them (removes the blocker). */}
+                {blockedPromos.length > 0 && (
+                  <div className="px-4 py-3 bg-amber-50 border-b border-amber-100 space-y-2">
+                    <div className="text-xs font-semibold text-amber-800">{t("dealsNotApplied")}</div>
+                    {blockedPromos.map((b) => (
+                      <div key={b.promoId} className="flex items-center justify-between gap-2 text-xs">
+                        <span className="min-w-0">
+                          <span className="block font-medium text-amber-900 truncate">{b.name}</span>
+                          <span className="block text-amber-700">{t("cantCombineWith", { winner: b.winnerName })}</span>
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => useThisPromoInstead(b.promoId)}
+                          className="flex-shrink-0 text-xs font-semibold px-2.5 py-1 rounded-lg border border-amber-300 text-amber-800 hover:bg-amber-100 transition"
+                        >
+                          {t("useThisInstead")}
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 )}
 
@@ -3878,7 +3991,7 @@ export function OrderingPageClient({
           // top of the checkout. Each entry = one applied promo (name,
           // type, discount amount, optional couponCode).
           appliedPromos={promoResults}
-          bumpedExclusives={bumpedExclusives}
+          bumpedExclusives={blockedPromos.filter((b) => b.wasExclusive)}
           hasFreeDelivery={hasFreeDelivery}
           baseDeliveryFee={baseDeliveryFee}
           deliveryFee={deliveryFee}

@@ -218,7 +218,10 @@
       "promoItemsAdded": "Artikel hinzugefügt – dein Rabatt wird an der Kasse angewendet",
       "promoScheduledForLater": "Bestellung für {time} eingeplant – Sie können dieses Angebot jetzt hinzufügen",
       "freebieRemovedThreshold": "{name} entfernt — deine Bestellung erfüllt nicht mehr die Bedingungen für den Gratisartikel",
-      "freebieRemovedExclusive": "{name} entfernt — dein Angebot \"{winner}\" spart mehr und lässt sich nicht mit diesem Angebot kombinieren"
+      "freebieRemovedExclusive": "{name} entfernt — dein Angebot \"{winner}\" spart mehr und lässt sich nicht mit diesem Angebot kombinieren",
+      "couponPromoApplied": "Aktion \"{name}\" angewendet!",
+      "couponBlocked": "\"{name}\" lässt sich nicht mit \"{winner}\" kombinieren (bereits angewendet, spart mehr). Entferne es in deinem Warenkorb, um stattdessen dieses zu nutzen.",
+      "promoReadded": "\"{name}\" wieder hinzugefügt"
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Außerhalb unseres Liefergebiets.",
     "outOfAreaBlockedBody": "Wir liefern leider nicht an diese Adresse. Bitte wählen Sie Abholung oder geben Sie eine andere Lieferadresse ein.",
     "expandAll": "Alle ausklappen",
-    "collapseAll": "Alle einklappen"
+    "collapseAll": "Alle einklappen",
+    "removePromoAria": "Angebot entfernen",
+    "dealsNotApplied": "Verfügbare Angebote (zum Wechseln tippen)",
+    "cantCombineWith": "Nicht kombinierbar mit {winner}",
+    "useThisInstead": "Stattdessen dieses nutzen"
   },
   "pizza": {
     "chooseSize": "Größe wählen",

@@ -218,7 +218,10 @@
       "promoItemsAdded": "메뉴가 추가되었습니다 — 결제 시 할인이 적용됩니다",
       "promoScheduledForLater": "{time}에 받도록 주문이 설정되었어요 — 이제 이 혜택을 추가할 수 있어요",
       "freebieRemovedThreshold": "{name}이(가) 제거되었습니다 — 주문 금액이 무료 상품 조건을 더 이상 충족하지 않습니다",
-      "freebieRemovedExclusive": "{name}이(가) 제거되었습니다 — \"{winner}\" 혜택이 더 큰 할인이며 이 혜택과 함께 사용할 수 없습니다"
+      "freebieRemovedExclusive": "{name}이(가) 제거되었습니다 — \"{winner}\" 혜택이 더 큰 할인이며 이 혜택과 함께 사용할 수 없습니다",
+      "couponPromoApplied": "프로모션 \"{name}\"이(가) 적용되었습니다!",
+      "couponBlocked": "\"{name}\"은(는) \"{winner}\"와(과) 함께 사용할 수 없습니다 (이미 적용되었으며 더 많이 할인됩니다). 이것을 대신 사용하려면 장바구니에서 제거하세요.",
+      "promoReadded": "\"{name}\"이(가) 다시 추가되었습니다"
     },
     "searchMenu": "메뉴 검색…",
     "signIn": "로그인",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "배달 가능 지역을 벗어났습니다.",
     "outOfAreaBlockedBody": "이 주소로는 배달이 되지 않습니다. 포장 주문으로 변경하시거나 다른 배달 주소를 입력해 주세요.",
     "expandAll": "모두 펼치기",
-    "collapseAll": "모두 접기"
+    "collapseAll": "모두 접기",
+    "removePromoAria": "혜택 제거",
+    "dealsNotApplied": "사용 가능한 혜택 (탭하여 전환)",
+    "cantCombineWith": "\"{winner}\"와(과) 함께 사용할 수 없습니다",
+    "useThisInstead": "이것으로 바꾸기"
   },
   "pizza": {
     "chooseSize": "크기 선택",

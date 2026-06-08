@@ -218,7 +218,10 @@
       "promoItemsAdded": "Prekės pridėtos – nuolaida bus pritaikyta atsiskaitant",
       "promoScheduledForLater": "Užsakymas suplanuotas {time} — dabar galite pridėti šį pasiūlymą",
       "freebieRemovedThreshold": "{name} pašalinta — jūsų užsakymas nebeatitinka nemokamo produkto sąlygų",
-      "freebieRemovedExclusive": "{name} pašalinta — jūsų pasiūlymas „{winner}“ leidžia sutaupyti daugiau ir negali būti derinamas su šiuo pasiūlymu"
+      "freebieRemovedExclusive": "{name} pašalinta — jūsų pasiūlymas „{winner}“ leidžia sutaupyti daugiau ir negali būti derinamas su šiuo pasiūlymu",
+      "couponPromoApplied": "Pasiūlymas „{name}\" pritaikytas!",
+      "couponBlocked": "„{name}\" negalima derinti su „{winner}\" (jau pritaikytas, sutaupote daugiau). Pašalinkite jį iš krepšelio, kad galėtumėte naudoti šį vietoj to.",
+      "promoReadded": "„{name}\" pridėtas atgal"
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Už mūsų pristatymo zonos ribų.",
     "outOfAreaBlockedBody": "Į šį adresą mes nepristatome. Pasirinkite atsiėmimą arba įveskite kitą pristatymo adresą.",
     "expandAll": "Išskleisti visas",
-    "collapseAll": "Suskleisti visas"
+    "collapseAll": "Suskleisti visas",
+    "removePromoAria": "Pašalinti pasiūlymą",
+    "dealsNotApplied": "Galimi pasiūlymai (bakstelėkite, kad pakeistumėte)",
+    "cantCombineWith": "Negalima derinti su {winner}",
+    "useThisInstead": "Naudoti šį vietoj to"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",

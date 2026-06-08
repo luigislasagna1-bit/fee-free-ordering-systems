@@ -18,6 +18,10 @@ export async function POST(req: NextRequest) {
     // what the order-placement route does. ASAP carts omit it. Fabrizio
     // cmpxejjev: a 20:15 pickup must qualify for an 18:00–21:00 promo.
     scheduledFor,
+    // Promo IDs the customer has manually removed from the cart (so they can
+    // choose a different non-stackable deal). Excluded from evaluation here AND
+    // re-checked on order placement. Luigi 2026-06-07.
+    suppressedPromoIds,
   } = body;
 
   if (!restaurantSlug || subtotal === undefined) {
@@ -27,9 +31,15 @@ export async function POST(req: NextRequest) {
   const restaurant = await prisma.restaurant.findUnique({ where: { slug: restaurantSlug } });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
-  const activePromos = await prisma.promotion.findMany({
+  const activePromosAll = await prisma.promotion.findMany({
     where: { restaurantId: restaurant.id, isActive: true },
   });
+  // Drop promos the customer chose to remove from the cart, so a different
+  // (otherwise-blocked) deal can take over.
+  const suppressed = new Set(
+    Array.isArray(suppressedPromoIds) ? suppressedPromoIds.map((x: unknown) => String(x)) : [],
+  );
+  const activePromos = activePromosAll.filter((p) => !suppressed.has(p.id));
 
   // Re-derive each line's categoryId server-side from its menuItemId, so
   // CATEGORY-targeted promos (BOGO / % off / combos by category) match in the
@@ -80,7 +90,7 @@ export async function POST(req: NextRequest) {
     restaurantTimezone: restaurant.timezone,
   };
 
-  const { results, bumpedExclusives } = resolvePromotions(activePromos as any, ctx);
+  const { results, blockedPromos } = resolvePromotions(activePromos as any, ctx);
   const totalDiscount = totalPromoDiscount(results, ctx.subtotal);
   const hasFreeDelivery = results.some(r => r.type === "free_delivery");
 
@@ -93,8 +103,8 @@ export async function POST(req: NextRequest) {
       : r,
   );
 
-  // Surface exclusives that qualified but lost to a bigger exclusive, so the
-  // customer can be told why a deal they expected didn't apply (only one
-  // exclusive per order). Luigi 2026-06-07.
-  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, bumpedExclusives });
+  // Surface promos that qualified but were blocked by the winning exclusive, so
+  // the cart can explain "can't combine" and offer "remove this to use that
+  // instead". Luigi 2026-06-07.
+  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, blockedPromos });
 }

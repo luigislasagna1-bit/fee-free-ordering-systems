@@ -218,7 +218,10 @@
       "promoItemsAdded": "Tuotteet lisätty — alennus huomioidaan kassalla",
       "promoScheduledForLater": "Tilaus ajoitettu ajalle {time} — voit nyt lisätä tämän tarjouksen",
       "freebieRemovedThreshold": "{name} poistettu — tilauksesi ei enää oikeuta ilmaiseen tuotteeseen",
-      "freebieRemovedExclusive": "{name} poistettu — \"{winner}\"-tarjouksesi säästää enemmän, eikä sitä voi yhdistää tähän etuun"
+      "freebieRemovedExclusive": "{name} poistettu — \"{winner}\"-tarjouksesi säästää enemmän, eikä sitä voi yhdistää tähän etuun",
+      "couponPromoApplied": "Tarjous \"{name}\" lisätty!",
+      "couponBlocked": "Tarjousta \"{name}\" ei voi yhdistää tarjoukseen \"{winner}\" (jo käytössä, säästää enemmän). Poista se ostoskorista käyttääksesi tätä sen sijaan.",
+      "promoReadded": "\"{name}\" lisätty takaisin"
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "Toimitusosoite on toimitusalueemme ulkopuolella.",
     "outOfAreaBlockedBody": "Emme valitettavasti toimita tähän osoitteeseen. Valitse nouto tai syötä toinen toimitusosoite.",
     "expandAll": "Laajenna kaikki",
-    "collapseAll": "Tiivistä kaikki"
+    "collapseAll": "Tiivistä kaikki",
+    "removePromoAria": "Poista tarjous",
+    "dealsNotApplied": "Saatavilla olevat tarjoukset (vaihda napauttamalla)",
+    "cantCombineWith": "Ei voi yhdistää tarjouksen {winner} kanssa",
+    "useThisInstead": "Käytä tätä tarjousta"
   },
   "pizza": {
     "chooseSize": "Valitse koko",

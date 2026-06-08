@@ -218,7 +218,10 @@
       "promoItemsAdded": "Produse adăugate — reducerea se aplică la finalizarea comenzii",
       "promoScheduledForLater": "Comandă programată pentru {time} — acum poți adăuga acest deal",
       "freebieRemovedThreshold": "{name} eliminat — comanda ta nu mai îndeplinește condițiile pentru produsul gratuit",
-      "freebieRemovedExclusive": "{name} eliminat — dealul tău \"{winner}\" te economisește mai mult și nu poate fi combinat cu această ofertă"
+      "freebieRemovedExclusive": "{name} eliminat — dealul tău \"{winner}\" te economisește mai mult și nu poate fi combinat cu această ofertă",
+      "couponPromoApplied": "Promoția „{name}\" a fost aplicată!",
+      "couponBlocked": "„{name}\" nu poate fi combinată cu „{winner}\" (deja aplicată, te economisește mai mult). Elimin-o din coș pentru a o folosi pe aceasta.",
+      "promoReadded": "„{name}\" a fost adăugată din nou"
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "În afara zonei noastre de livrare.",
     "outOfAreaBlockedBody": "Nu livrăm la această adresă. Alegeți ridicarea personală sau introduceți o altă adresă de livrare.",
     "expandAll": "Extinde tot",
-    "collapseAll": "Restrânge tot"
+    "collapseAll": "Restrânge tot",
+    "removePromoAria": "Elimină oferta",
+    "dealsNotApplied": "Oferte disponibile (atinge pentru a comuta)",
+    "cantCombineWith": "Nu poate fi combinată cu {winner}",
+    "useThisInstead": "Folosește-o pe aceasta"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",

@@ -218,7 +218,10 @@
       "promoItemsAdded": "تمت إضافة الأصناف — يُطبَّق خصمك عند الدفع",
       "promoScheduledForLater": "تم تحديد الطلب للساعة {time} — يمكنك الآن إضافة هذا العرض",
       "freebieRemovedThreshold": "تمت إزالة {name} — لم يعد طلبك مؤهلاً للحصول على العنصر المجاني",
-      "freebieRemovedExclusive": "تمت إزالة {name} — عرض \"{winner}\" يوفّر لك أكثر ولا يمكن دمجه مع هذا العرض"
+      "freebieRemovedExclusive": "تمت إزالة {name} — عرض \"{winner}\" يوفّر لك أكثر ولا يمكن دمجه مع هذا العرض",
+      "couponPromoApplied": "تم تطبيق العرض \"{name}\"!",
+      "couponBlocked": "لا يمكن دمج \"{name}\" مع \"{winner}\" (مُطبَّق بالفعل، ويوفّر لك أكثر). أزِله من سلّتك لاستخدام هذا بدلاً منه.",
+      "promoReadded": "تمت إعادة إضافة \"{name}\""
     },
     "searchMenu": "ابحث في القائمة…",
     "signIn": "تسجيل الدخول",
@@ -231,7 +234,11 @@
     "outOfAreaBlockedTitle": "خارج نطاق التوصيل لدينا.",
     "outOfAreaBlockedBody": "لا نقوم بالتوصيل إلى هذا العنوان. يمكنك التبديل إلى الاستلام الشخصي، أو إدخال عنوان توصيل مختلف.",
     "expandAll": "توسيع الكل",
-    "collapseAll": "طي الكل"
+    "collapseAll": "طي الكل",
+    "removePromoAria": "إزالة العرض",
+    "dealsNotApplied": "العروض المتاحة (انقر للتبديل)",
+    "cantCombineWith": "لا يمكن دمجه مع {winner}",
+    "useThisInstead": "استخدم هذا بدلاً منه"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",
