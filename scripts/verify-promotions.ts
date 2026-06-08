@@ -385,6 +385,31 @@ function test_stackingRules() {
     console.log(`  ✓ master kept alongside exclusive`);
     passed++;
   }
+
+  // Luigi 2026-06-08: an exclusive that produces $0 (e.g. "10% off pizzas" with
+  // no pizzas in the cart) must NOT block a real standard deal. Here the
+  // exclusive targets a category absent from the cart, so the standard wins.
+  const inertExclusive = makePromo({
+    id: "excl-pizzas",
+    promotionType: "percentage_off",
+    stackingRule: "exclusive",
+    rules: JSON.stringify({ discountPercent: 10, groups: [{ id: "g", categoryIds: ["pizzas"], itemIds: [] }] }),
+  });
+  const realStandard = makePromo({
+    id: "std-cart",
+    promotionType: "fixed_cart",
+    stackingRule: "standard",
+    rules: JSON.stringify({ discountAmount: 5 }),
+  });
+  const noPizzaCtx = makeContext({ subtotal: 100, items: [{ ...PIZZA, categoryId: "mains", price: 100, subtotal: 100 }] });
+  const r2 = applyPromotions([inertExclusive, realStandard], noPizzaCtx);
+  if (r2.length === 1 && r2[0].promoId === "std-cart") {
+    console.log(`  ✓ $0 exclusive doesn't block a real standard`);
+    passed++;
+  } else {
+    console.log(`  ✗ $0 exclusive wrongly blocked the standard (got ${r2.map(r => r.promoId).join(",") || "none"})`);
+    failed++; failures.push("stacking: inert exclusive blocked standard");
+  }
 }
 
 function test_eligibility() {

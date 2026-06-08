@@ -764,8 +764,15 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
 
   // Stacking resolution
   const masters    = triggered.filter(p => p.stackingRule === "master");
-  const exclusives = triggered.filter(p => p.stackingRule === "exclusive");
   const standards  = triggered.filter(p => p.stackingRule === "standard");
+  // Only exclusives that actually deliver a benefit can occupy the single
+  // exclusive slot. A $0 exclusive — e.g. "10% off ALL PIZZAS" when the cart
+  // has no pizzas — must NOT block a standard deal that would discount. Without
+  // this, an inert exclusive silently suppressed a real coupon promo.
+  // Luigi 2026-06-08.
+  const exclusives = triggered.filter(
+    p => p.stackingRule === "exclusive" && (calcDiscount(p, ctx) > 0 || p.promotionType === "free_delivery"),
+  );
 
   let active: PromoInput[];
   const blockedPromos: BlockedPromo[] = [];
