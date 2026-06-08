@@ -472,7 +472,8 @@
     "nameAndPhone": "Tên và điện thoại là bắt buộc.",
     "reservationFailed": "Đặt bàn thất bại",
     "addFoodToBooking": "Thêm món ăn vào lượt đặt bàn của bạn",
-    "justBookTable": "Chỉ đặt bàn"
+    "justBookTable": "Chỉ đặt bàn",
+    "holdMinutesNote": "Chúng tôi giữ bàn cho bạn {minutes} phút sau giờ đặt chỗ — vui lòng đến đúng giờ."
   },
   "kitchen": {
     "title": "Màn hình bếp",
@@ -3611,7 +3612,8 @@
       "notes": "GHI CHÚ",
       "payment": "Thanh toán",
       "prep": "Chuẩn bị",
-      "minutes": "phút"
+      "minutes": "phút",
+      "tableReservation": "ĐẶT BÀN + ĐẶT TRƯỚC"
     },
     "customer": {
       "title": "ĐƠN {type}",

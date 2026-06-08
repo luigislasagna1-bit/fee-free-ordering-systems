@@ -472,7 +472,8 @@
     "nameAndPhone": "Nombre y teléfono son obligatorios.",
     "reservationFailed": "Falló la reserva",
     "addFoodToBooking": "Añade comida a tu reserva",
-    "justBookTable": "Solo reservar la mesa"
+    "justBookTable": "Solo reservar la mesa",
+    "holdMinutesNote": "Mantenemos su mesa durante {minutes} min después de la hora de su reserva — le rogamos que llegue puntual."
   },
   "kitchen": {
     "title": "Pantalla de cocina",
@@ -3611,7 +3612,8 @@
       "notes": "NOTAS",
       "payment": "Pago",
       "prep": "Prep",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "RESERVA DE MESA + PEDIDO ANTICIPADO"
     },
     "customer": {
       "title": "PEDIDO {type}",

@@ -472,7 +472,8 @@
     "nameAndPhone": "Imię i telefon są wymagane.",
     "reservationFailed": "Rezerwacja nie powiodła się",
     "addFoodToBooking": "Dodaj jedzenie do rezerwacji",
-    "justBookTable": "Zarezerwuj tylko stolik"
+    "justBookTable": "Zarezerwuj tylko stolik",
+    "holdMinutesNote": "Trzymamy Twój stolik przez {minutes} min po godzinie rezerwacji — prosimy o punktualne przybycie."
   },
   "kitchen": {
     "title": "Wyświetlacz kuchenny",
@@ -3611,7 +3612,8 @@
       "notes": "NOTATKI",
       "payment": "Płatność",
       "prep": "Przygotowanie",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "REZERWACJA STOLIKA + ZAMÓWIENIE Z WYPRZEDZENIEM"
     },
     "customer": {
       "title": "ZAMÓWIENIE — {type}",

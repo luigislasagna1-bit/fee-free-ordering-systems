@@ -472,7 +472,8 @@
     "nameAndPhone": "שם וטלפון הם שדות חובה.",
     "reservationFailed": "ההזמנה נכשלה",
     "addFoodToBooking": "הוסיפו אוכל להזמנה שלכם",
-    "justBookTable": "רק להזמין שולחן"
+    "justBookTable": "רק להזמין שולחן",
+    "holdMinutesNote": "אנו שומרים לך את השולחן {minutes} דק' לאחר שעת ההזמנה — נא להגיע בזמן."
   },
   "kitchen": {
     "title": "תצוגת מטבח",
@@ -3611,7 +3612,8 @@
       "notes": "הערות",
       "payment": "תשלום",
       "prep": "הכנה",
-      "minutes": "דק'"
+      "minutes": "דק'",
+      "tableReservation": "הזמנת שולחן + הזמנה מראש"
     },
     "customer": {
       "title": "הזמנת {type}",

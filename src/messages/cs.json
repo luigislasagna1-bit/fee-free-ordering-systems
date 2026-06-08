@@ -472,7 +472,8 @@
     "nameAndPhone": "Jméno a telefon jsou povinné.",
     "reservationFailed": "Rezervace selhala",
     "addFoodToBooking": "Přidat jídlo k rezervaci",
-    "justBookTable": "Pouze rezervovat stůl"
+    "justBookTable": "Pouze rezervovat stůl",
+    "holdMinutesNote": "Váš stůl držíme {minutes} min po čase rezervace — dorazte prosím včas."
   },
   "kitchen": {
     "title": "Kuchyňský displej",
@@ -3611,7 +3612,8 @@
       "notes": "POZNÁMKY",
       "payment": "Platba",
       "prep": "Příprava",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "REZERVACE STOLU + PŘEDOBJEDNÁVKA"
     },
     "customer": {
       "title": "OBJEDNÁVKA — {type}",

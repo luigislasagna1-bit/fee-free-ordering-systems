@@ -472,7 +472,8 @@
     "nameAndPhone": "Ime in telefon sta obvezna.",
     "reservationFailed": "Rezervacija ni uspela",
     "addFoodToBooking": "Dodaj hrano k rezervaciji",
-    "justBookTable": "Samo rezerviraj mizo"
+    "justBookTable": "Samo rezerviraj mizo",
+    "holdMinutesNote": "Vašo mizo zadržimo {minutes} min po terminu rezervacije — prosimo, pridite pravočasno."
   },
   "kitchen": {
     "title": "Kuhinjski zaslon",
@@ -3611,7 +3612,8 @@
       "notes": "OPOMBE",
       "payment": "Plačilo",
       "prep": "Priprava",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "REZERVACIJA MIZE + PREDNAROČILO"
     },
     "customer": {
       "title": "NAROČILO — {type}",

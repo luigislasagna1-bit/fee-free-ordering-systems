@@ -472,7 +472,8 @@
     "nameAndPhone": "Navn og telefon er påkrevd.",
     "reservationFailed": "Reservasjonen mislyktes",
     "addFoodToBooking": "Legg til mat i bestillingen",
-    "justBookTable": "Bare reserver bordet"
+    "justBookTable": "Bare reserver bordet",
+    "holdMinutesNote": "Vi holder bordet ditt i {minutes} min etter reservasjonstiden din — vennligst kom i tide."
   },
   "kitchen": {
     "title": "Kjøkkenvisning",
@@ -3611,7 +3612,8 @@
       "notes": "NOTATER",
       "payment": "Betaling",
       "prep": "Tilberedning",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "BORDRESERVASJON + FORHÅNDSBESTILLING"
     },
     "customer": {
       "title": "{type}-BESTILLING",

@@ -472,7 +472,8 @@
     "nameAndPhone": "Name and phone are required.",
     "reservationFailed": "Reservation failed",
     "addFoodToBooking": "Add Food To Your Booking",
-    "justBookTable": "Just Book The Table"
+    "justBookTable": "Just Book The Table",
+    "holdMinutesNote": "We hold your table for {minutes} min after your reservation time — please arrive on time."
   },
   "kitchen": {
     "title": "Kitchen Display",
@@ -3615,7 +3616,8 @@
       "notes": "NOTES",
       "payment": "Payment",
       "prep": "Prep",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "TABLE RESERVATION + PRE-ORDER"
     },
     "customer": {
       "title": "{type} ORDER",

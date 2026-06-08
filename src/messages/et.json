@@ -472,7 +472,8 @@
     "nameAndPhone": "Nimi ja telefon on nõutavad.",
     "reservationFailed": "Broneerimine ebaõnnestus",
     "addFoodToBooking": "Lisa broneeringule toidud",
-    "justBookTable": "Broneeri ainult laud"
+    "justBookTable": "Broneeri ainult laud",
+    "holdMinutesNote": "Hoiame teie lauda {minutes} min pärast broneeringu aega — palun saabuge õigeks ajaks."
   },
   "kitchen": {
     "title": "Köögi ekraan",
@@ -3611,7 +3612,8 @@
       "notes": "MÄRKUSED",
       "payment": "Makse",
       "prep": "Ettevalmistus",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "LAUA RESERVEERIMINE + ETTETELLIMINE"
     },
     "customer": {
       "title": "{type} TELLIMUS",

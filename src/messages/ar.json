@@ -472,7 +472,8 @@
     "nameAndPhone": "الاسم ورقم الهاتف مطلوبان.",
     "reservationFailed": "فشل الحجز",
     "addFoodToBooking": "أضف طعامًا إلى حجزك",
-    "justBookTable": "احجز الطاولة فقط"
+    "justBookTable": "احجز الطاولة فقط",
+    "holdMinutesNote": "نحتفظ بطاولتك لمدة {minutes} دقيقة بعد موعد الحجز — يرجى الحضور في الوقت المحدد."
   },
   "kitchen": {
     "title": "شاشة المطبخ",
@@ -3611,7 +3612,8 @@
       "notes": "ملاحظات",
       "payment": "الدفع",
       "prep": "التحضير",
-      "minutes": "د"
+      "minutes": "د",
+      "tableReservation": "حجز طاولة + طلب مسبق"
     },
     "customer": {
       "title": "طلب {type}",

@@ -472,7 +472,8 @@
     "nameAndPhone": "A név és telefonszám megadása kötelező.",
     "reservationFailed": "A foglalás nem sikerült",
     "addFoodToBooking": "Étel hozzáadása a foglaláshoz",
-    "justBookTable": "Csak asztalt foglalok"
+    "justBookTable": "Csak asztalt foglalok",
+    "holdMinutesNote": "Az asztalát a foglalás időpontja után még {minutes} percig fenntartjuk — kérjük, érkezzen időben."
   },
   "kitchen": {
     "title": "Konyhai kijelző",
@@ -3611,7 +3612,8 @@
       "notes": "MEGJEGYZÉSEK",
       "payment": "Fizetés",
       "prep": "Elkészítés",
-      "minutes": "perc"
+      "minutes": "perc",
+      "tableReservation": "ASZTALFOGLALÁS + ELŐRENDELÉS"
     },
     "customer": {
       "title": "{type} RENDELÉS",

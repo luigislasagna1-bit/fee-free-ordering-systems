@@ -472,7 +472,8 @@
     "nameAndPhone": "Name und Telefon sind erforderlich.",
     "reservationFailed": "Reservierung fehlgeschlagen",
     "addFoodToBooking": "Essen zu Ihrer Reservierung hinzufügen",
-    "justBookTable": "Nur den Tisch reservieren"
+    "justBookTable": "Nur den Tisch reservieren",
+    "holdMinutesNote": "Wir halten Ihren Tisch {minutes} Min. nach Ihrer Reservierungszeit frei — bitte seien Sie pünktlich."
   },
   "kitchen": {
     "title": "Küchenanzeige",
@@ -3611,7 +3612,8 @@
       "notes": "HINWEISE",
       "payment": "Zahlung",
       "prep": "Zubereitung",
-      "minutes": "Min."
+      "minutes": "Min.",
+      "tableReservation": "TISCHRESERVIERUNG + VORBESTELLUNG"
     },
     "customer": {
       "title": "{type}-BESTELLUNG",

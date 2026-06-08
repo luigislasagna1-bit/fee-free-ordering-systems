@@ -85,6 +85,13 @@ export async function GET(
     return NextResponse.json({ error: "Order not found" }, { status: 404 });
   }
 
+  // Reserve-then-order: the linked table booking (if any) so the kitchen ticket
+  // prints the "TABLE RESERVATION + PRE-ORDER" flag. Null for normal orders.
+  const linkedReservation = await prisma.reservation.findFirst({
+    where: { orderId: order.id },
+    select: { partySize: true, date: true, time: true },
+  });
+
   // ── Load the restaurant's template for the requested receipt type.
   //    Falls back to the DEFAULT_*_CONFIG when no row exists yet, so a
   //    brand-new restaurant still prints a sensible receipt without
@@ -134,6 +141,9 @@ export async function GET(
     scheduledFor: (order as any).scheduledFor ?? null,
     estimatedReady: (order as any).estimatedReady ?? null,
     preparationTime: (order as any).preparationTime ?? null,
+    reservation: linkedReservation
+      ? { partySize: linkedReservation.partySize, date: linkedReservation.date, time: linkedReservation.time }
+      : null,
     items: order.items.map((it: any) => ({
       name: it.name,
       quantity: it.quantity ?? 1,

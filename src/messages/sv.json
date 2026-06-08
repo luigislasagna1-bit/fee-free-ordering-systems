@@ -472,7 +472,8 @@
     "nameAndPhone": "Namn och telefon krävs.",
     "reservationFailed": "Reservationen misslyckades",
     "addFoodToBooking": "Lägg till mat i din bokning",
-    "justBookTable": "Boka bara bordet"
+    "justBookTable": "Boka bara bordet",
+    "holdMinutesNote": "Vi håller ditt bord i {minutes} min efter din bokade tid — kom gärna i tid."
   },
   "kitchen": {
     "title": "Köksdisplay",
@@ -3611,7 +3612,8 @@
       "notes": "ANTECKNINGAR",
       "payment": "Betalning",
       "prep": "Förberedelse",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "BORDSRESERVATION + FÖRBESTÄLLNING"
     },
     "customer": {
       "title": "{type} ORDER",

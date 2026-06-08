@@ -472,7 +472,8 @@
     "nameAndPhone": "Naam en telefoonnummer zijn verplicht.",
     "reservationFailed": "Reservering mislukt",
     "addFoodToBooking": "Eten aan je reservering toevoegen",
-    "justBookTable": "Alleen de tafel reserveren"
+    "justBookTable": "Alleen de tafel reserveren",
+    "holdMinutesNote": "We houden uw tafel tot {minutes} min na uw reserveringstijd vrij — kom alstublieft op tijd."
   },
   "kitchen": {
     "title": "Keukenweergave",
@@ -3611,7 +3612,8 @@
       "notes": "OPMERKINGEN",
       "payment": "Betaling",
       "prep": "Bereiding",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "TAFELRESERVERING + VOORBESTELLING"
     },
     "customer": {
       "title": "{type} ORDER",

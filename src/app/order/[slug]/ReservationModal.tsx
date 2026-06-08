@@ -672,6 +672,15 @@ export function ReservationModal({
                 </div>
               )}
 
+              {/* Table-hold note (GloriaFood parity) — we hold the table for
+                  holdMinutes after the reservation time. Luigi 2026-06-08. */}
+              {settings.holdMinutes > 0 && (
+                <p className="text-xs text-gray-500 flex items-start gap-1.5">
+                  <Clock className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
+                  <span>{tr("holdMinutesNote", { minutes: settings.holdMinutes })}</span>
+                </p>
+              )}
+
               {/* Cancellation policy */}
               {settings.cancellationPolicy && (
                 <p className="text-xs text-gray-400">{settings.cancellationPolicy}</p>

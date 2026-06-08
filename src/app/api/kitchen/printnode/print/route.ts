@@ -397,6 +397,13 @@ export async function POST(req: NextRequest) {
     });
     if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
 
+    // Reserve-then-order: linked table booking → "TABLE RESERVATION + PRE-ORDER"
+    // flag on the printed ticket. Null for normal orders. Luigi 2026-06-08.
+    const linkedReservation = await prisma.reservation.findFirst({
+      where: { orderId: order.id },
+      select: { partySize: true, date: true, time: true },
+    });
+
     const receiptOrder: ReceiptOrder = {
       orderNumber:     order.orderNumber,
       type:            order.type,
@@ -423,6 +430,9 @@ export async function POST(req: NextRequest) {
       scheduledFor:    (order as any).scheduledFor ?? null,
       estimatedReady:  order.estimatedReady,
       preparationTime: order.preparationTime,
+      reservation: linkedReservation
+        ? { partySize: linkedReservation.partySize, date: linkedReservation.date, time: linkedReservation.time }
+        : null,
       items: order.items.map((item) => ({
         // item.name already contains the variant suffix from /api/orders POST,
         // so re-appending variantName here would double-print it.

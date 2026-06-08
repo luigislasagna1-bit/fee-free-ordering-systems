@@ -472,7 +472,8 @@
     "nameAndPhone": "Nome e telefono sono obbligatori.",
     "reservationFailed": "Prenotazione fallita",
     "addFoodToBooking": "Aggiungi piatti alla tua prenotazione",
-    "justBookTable": "Prenota solo il tavolo"
+    "justBookTable": "Prenota solo il tavolo",
+    "holdMinutesNote": "Manteniamo il vostro tavolo per {minutes} min dopo l'orario della prenotazione — vi preghiamo di arrivare puntuali."
   },
   "kitchen": {
     "title": "Display cucina",
@@ -3611,7 +3612,8 @@
       "notes": "NOTE",
       "payment": "Pagamento",
       "prep": "Prep",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "PRENOTAZIONE TAVOLO + PREORDINE"
     },
     "customer": {
       "title": "ORDINE {type}",

@@ -472,7 +472,8 @@
     "nameAndPhone": "Vardas ir telefonas yra privalomi.",
     "reservationFailed": "Rezervacija nepavyko",
     "addFoodToBooking": "Pridėti maisto prie rezervacijos",
-    "justBookTable": "Tik rezervuoti staliuką"
+    "justBookTable": "Tik rezervuoti staliuką",
+    "holdMinutesNote": "Jūsų staliuką laikome {minutes} min po rezervacijos laiko — prašome atvykti laiku."
   },
   "kitchen": {
     "title": "Virtuvės ekranas",
@@ -3611,7 +3612,8 @@
       "notes": "PASTABOS",
       "payment": "Mokėjimas",
       "prep": "Paruošimas",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "STALO REZERVACIJA + IŠANKSTINIS UŽSAKYMAS"
     },
     "customer": {
       "title": "{type} UŽSAKYMAS",

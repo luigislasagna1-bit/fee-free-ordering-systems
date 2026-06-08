@@ -472,7 +472,8 @@
     "nameAndPhone": "Numele și telefonul sunt obligatorii.",
     "reservationFailed": "Rezervarea a eșuat",
     "addFoodToBooking": "Adaugă mâncare la rezervare",
-    "justBookTable": "Doar rezervă masa"
+    "justBookTable": "Doar rezervă masa",
+    "holdMinutesNote": "Vă păstrăm masa timp de {minutes} min după ora rezervării — vă rugăm să ajungeți la timp."
   },
   "kitchen": {
     "title": "Display Bucătărie",
@@ -3611,7 +3612,8 @@
       "notes": "OBSERVAȚII",
       "payment": "Plată",
       "prep": "Preparare",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "REZERVARE MASĂ + PRECOMANDĂ"
     },
     "customer": {
       "title": "COMANDĂ {type}",

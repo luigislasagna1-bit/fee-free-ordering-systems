@@ -472,7 +472,8 @@
     "nameAndPhone": "이름과 전화번호가 필요합니다.",
     "reservationFailed": "예약에 실패했습니다",
     "addFoodToBooking": "예약에 음식 추가하기",
-    "justBookTable": "테이블만 예약하기"
+    "justBookTable": "테이블만 예약하기",
+    "holdMinutesNote": "예약 시간 이후 {minutes}분 동안 자리를 잡아 둡니다 — 시간에 맞춰 도착해 주세요."
   },
   "kitchen": {
     "title": "주방 디스플레이",
@@ -3611,7 +3612,8 @@
       "notes": "메모",
       "payment": "결제",
       "prep": "준비",
-      "minutes": "분"
+      "minutes": "분",
+      "tableReservation": "테이블 예약 + 사전 주문"
     },
     "customer": {
       "title": "{type} 주문서",

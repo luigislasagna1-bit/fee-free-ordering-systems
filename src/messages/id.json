@@ -472,7 +472,8 @@
     "nameAndPhone": "Nama dan nomor telepon diperlukan.",
     "reservationFailed": "Reservasi gagal",
     "addFoodToBooking": "Tambahkan makanan ke pesanan Anda",
-    "justBookTable": "Cukup pesan meja saja"
+    "justBookTable": "Cukup pesan meja saja",
+    "holdMinutesNote": "Kami menahan meja Anda selama {minutes} mnt setelah waktu reservasi — mohon datang tepat waktu."
   },
   "kitchen": {
     "title": "Tampilan Dapur",
@@ -3611,7 +3612,8 @@
       "notes": "CATATAN",
       "payment": "Pembayaran",
       "prep": "Persiapan",
-      "minutes": "mnt"
+      "minutes": "mnt",
+      "tableReservation": "RESERVASI MEJA + PRA-PESAN"
     },
     "customer": {
       "title": "PESANAN {type}",

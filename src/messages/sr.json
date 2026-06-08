@@ -472,7 +472,8 @@
     "nameAndPhone": "Ime i telefon su obavezni.",
     "reservationFailed": "Rezervacija nije uspela",
     "addFoodToBooking": "Dodaj hranu rezervaciji",
-    "justBookTable": "Samo rezerviši sto"
+    "justBookTable": "Samo rezerviši sto",
+    "holdMinutesNote": "Vaš sto čuvamo {minutes} min nakon termina rezervacije — molimo vas da stignete na vreme."
   },
   "kitchen": {
     "title": "Prikaz kuhinje",
@@ -3611,7 +3612,8 @@
       "notes": "NAPOMENE",
       "payment": "Plaćanje",
       "prep": "Priprema",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "REZERVACIJA STOLA + PRETPORUDŽBINA"
     },
     "customer": {
       "title": "{type} NARUDŽBINA",

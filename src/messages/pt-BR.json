@@ -472,7 +472,8 @@
     "nameAndPhone": "Nome e telefone são obrigatórios.",
     "reservationFailed": "Falha na reserva",
     "addFoodToBooking": "Adicionar comida à sua reserva",
-    "justBookTable": "Apenas reservar a mesa"
+    "justBookTable": "Apenas reservar a mesa",
+    "holdMinutesNote": "Guardamos sua mesa por {minutes} min após o horário da sua reserva — por favor, chegue no horário."
   },
   "kitchen": {
     "title": "Tela da Cozinha",
@@ -3611,7 +3612,8 @@
       "notes": "OBSERVAÇÕES",
       "payment": "Pagamento",
       "prep": "Preparo",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "RESERVA DE MESA + PRÉ-PEDIDO"
     },
     "customer": {
       "title": "PEDIDO DE {type}",

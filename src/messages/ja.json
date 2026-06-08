@@ -472,7 +472,8 @@
     "nameAndPhone": "お名前と電話番号は必須です。",
     "reservationFailed": "予約に失敗しました",
     "addFoodToBooking": "予約に料理を追加する",
-    "justBookTable": "席のみ予約する"
+    "justBookTable": "席のみ予約する",
+    "holdMinutesNote": "予約時間から{minutes}分間お席をお取り置きします — 時間どおりにお越しください。"
   },
   "kitchen": {
     "title": "キッチンディスプレイ",
@@ -3611,7 +3612,8 @@
       "notes": "備考",
       "payment": "支払い",
       "prep": "調理",
-      "minutes": "分"
+      "minutes": "分",
+      "tableReservation": "テーブル予約 + 事前注文"
     },
     "customer": {
       "title": "{type} オーダー",

@@ -472,7 +472,8 @@
     "nameAndPhone": "Vārds un tālrunis ir obligāti.",
     "reservationFailed": "Rezervācija neizdevās",
     "addFoodToBooking": "Pievienot rezervācijai ēdienu",
-    "justBookTable": "Tikai rezervēt galdiņu"
+    "justBookTable": "Tikai rezervēt galdiņu",
+    "holdMinutesNote": "Mēs paturam jūsu galdiņu {minutes} min pēc rezervācijas laika — lūdzu, ierodieties laikā."
   },
   "kitchen": {
     "title": "Virtuves ekrāns",
@@ -3611,7 +3612,8 @@
       "notes": "PIEZĪMES",
       "payment": "Maksājums",
       "prep": "Sagatavošana",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "GALDA REZERVĀCIJA + IEPRIEKŠPASŪTĪJUMS"
     },
     "customer": {
       "title": "{type} PASŪTĪJUMS",

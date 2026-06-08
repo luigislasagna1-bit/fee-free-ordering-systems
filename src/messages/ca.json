@@ -472,7 +472,8 @@
     "nameAndPhone": "Cal indicar el nom i el telèfon.",
     "reservationFailed": "Error en la reserva",
     "addFoodToBooking": "Afegeix menjar a la reserva",
-    "justBookTable": "Només reserva la taula"
+    "justBookTable": "Només reserva la taula",
+    "holdMinutesNote": "Reservem la teva taula {minutes} min després de l'hora de la reserva — si us plau, arriba puntual."
   },
   "kitchen": {
     "title": "Pantalla de cuina",
@@ -3611,7 +3612,8 @@
       "notes": "NOTES",
       "payment": "Pagament",
       "prep": "Preparació",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "RESERVA DE TAULA + COMANDA ANTICIPADA"
     },
     "customer": {
       "title": "COMANDA DE {type}",

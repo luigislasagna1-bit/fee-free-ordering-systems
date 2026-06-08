@@ -472,7 +472,8 @@
     "nameAndPhone": "नाम और फ़ोन आवश्यक हैं।",
     "reservationFailed": "आरक्षण विफल हो गया",
     "addFoodToBooking": "अपनी बुकिंग में खाना जोड़ें",
-    "justBookTable": "बस टेबल बुक करें"
+    "justBookTable": "बस टेबल बुक करें",
+    "holdMinutesNote": "हम आपकी मेज़ को आरक्षण समय के बाद {minutes} मिनट तक रोके रखते हैं — कृपया समय पर पहुँचें।"
   },
   "kitchen": {
     "title": "किचन डिस्प्ले",
@@ -3611,7 +3612,8 @@
       "notes": "नोट्स",
       "payment": "भुगतान",
       "prep": "तैयारी",
-      "minutes": "मिनट"
+      "minutes": "मिनट",
+      "tableReservation": "टेबल आरक्षण + प्री-ऑर्डर"
     },
     "customer": {
       "title": "{type} ऑर्डर",

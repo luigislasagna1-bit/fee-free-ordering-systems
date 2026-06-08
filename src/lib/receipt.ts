@@ -510,6 +510,10 @@ export interface ReceiptOrder {
   scheduledFor?: string | Date | null;
   estimatedReady?: string | Date | null;
   preparationTime?: number | null;
+  /** Reserve-then-order: the linked table booking. When set, the kitchen
+   *  ticket prints a "TABLE RESERVATION + PRE-ORDER · Party of N" flag so staff
+   *  see it's a booking, not a normal order. Luigi 2026-06-08. */
+  reservation?: { partySize: number; date: string; time: string } | null;
   items: ReceiptItem[];
 }
 
@@ -621,6 +625,13 @@ async function renderKitchenSection(
 
     case "k_datetime":
       r.line(fmtDateTime(order.createdAt));
+      // Reserve-then-order: flag the table booking right under the date so the
+      // kitchen sees this is a reservation + pre-order, not a plain order. The
+      // scheduled line below already prints the (reservation) time. Luigi 2026-06-08.
+      if (order.reservation) {
+        r.line(`** ${t("receipt.kitchen.tableReservation")} **`);
+        r.line(t("receipt.reservation.partyOf", { n: order.reservation.partySize }));
+      }
       // ASAP vs scheduled — prominent so the kitchen instantly sees whether to
       // make it now or hold it for a later slot. Luigi 2026-06-05.
       if (order.scheduledFor) {

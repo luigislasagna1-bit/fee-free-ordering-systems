@@ -472,7 +472,8 @@
     "nameAndPhone": "Nimi ja puhelinnumero vaaditaan.",
     "reservationFailed": "Varaus epäonnistui",
     "addFoodToBooking": "Lisää ruokaa varaukseesi",
-    "justBookTable": "Varaa vain pöytä"
+    "justBookTable": "Varaa vain pöytä",
+    "holdMinutesNote": "Pidämme pöytäsi varattuna {minutes} min varausaikasi jälkeen — saavuthan ajoissa."
   },
   "kitchen": {
     "title": "Keittiönäyttö",
@@ -3611,7 +3612,8 @@
       "notes": "MUISTIINPANOT",
       "payment": "Maksu",
       "prep": "Valmistus",
-      "minutes": "min"
+      "minutes": "min",
+      "tableReservation": "PÖYTÄVARAUS + ENNAKKOTILAUS"
     },
     "customer": {
       "title": "{type} TILAUS",

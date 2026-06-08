@@ -472,7 +472,8 @@
     "nameAndPhone": "Ad ve telefon zorunludur.",
     "reservationFailed": "Rezervasyon Başarısız",
     "addFoodToBooking": "Rezervasyonunuza yemek ekleyin",
-    "justBookTable": "Sadece masa ayırt"
+    "justBookTable": "Sadece masa ayırt",
+    "holdMinutesNote": "Masanızı rezervasyon saatinden sonra {minutes} dk tutuyoruz — lütfen zamanında gelin."
   },
   "kitchen": {
     "title": "Mutfak Ekranı",
@@ -3611,7 +3612,8 @@
       "notes": "NOTLAR",
       "payment": "Ödeme",
       "prep": "Hazırlama",
-      "minutes": "dk"
+      "minutes": "dk",
+      "tableReservation": "MASA REZERVASYONU + ÖN SIPARIŞ"
     },
     "customer": {
       "title": "{type} SİPARİŞİ",
