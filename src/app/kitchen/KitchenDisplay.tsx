@@ -324,7 +324,7 @@ function Countdown({
   const reference = alertAt ?? notifiedAt ?? createdAt;
   // Closed-placed orders get a 15-minute initial buffer (staff may be
   // a few min late arriving after open). Normal orders keep 3 min.
-  const totalMs = placedWhileClosed ? 15 * 60 * 1000 : 4 * 60 * 1000;
+  const totalMs = placedWhileClosed ? 15 * 60 * 1000 : ACCEPT_WINDOW_MS;
   const ms = totalMs - (now - new Date(reference).getTime());
   if (ms <= 0) return <span className="text-xs font-bold text-red-500 animate-pulse">URGENT</span>;
   const m = Math.floor(ms / 60000);
@@ -372,7 +372,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   // attention with live pending orders.
   const alertParked = !!order.alertAt && new Date(order.alertAt).getTime() > (now || 0);
   const countdownReference = order.alertAt ?? order.notifiedAt ?? order.createdAt;
-  const totalCountdownMs = order.placedWhileClosed ? 15 * 60 * 1000 : 4 * 60 * 1000;
+  const totalCountdownMs = order.placedWhileClosed ? 15 * 60 * 1000 : ACCEPT_WINDOW_MS;
   const msLeft = now && !alertParked
     ? totalCountdownMs - (now - new Date(countdownReference).getTime())
     : Number.POSITIVE_INFINITY;
@@ -661,6 +661,13 @@ const RING_BOOST = 1.6;
 // gets much louder WITHOUT clipping or distorting (same clip, same quality).
 // Luigi 2026-06-09.
 const LONG_ALERT_BOOST = 6;
+// Accept/auto-reject window for a normal (open-restaurant) pending order. Set to
+// the length of the GloriaFood alert TRACK (~245 s) so the full alert plays
+// as the countdown — its built-in louder/faster final stretch lands right as the
+// time runs out — and the order auto-rejects exactly as the audio finishes, with
+// no mid-track cut and no loop restart. Luigi 2026-06-09. (Orders placed while
+// closed keep the longer 15-min buffer.)
+const ACCEPT_WINDOW_MS = 245 * 1000;
 
 export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any; initialOrders: Order[] }) {
   const tk = useTranslations("kitchen");
@@ -1672,7 +1679,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       // full input; the gain does the loudness. Falls back to plain volume = 1
       // if Web Audio routing isn't available.
       ensureLongAlertRouting();
-      a.loop = true;
+      // Play ONCE, full length — the track itself IS the countdown (its
+      // louder/faster finish lands as the accept window runs out, and the order
+      // auto-rejects right as the audio ends). No loop, so the audio is never
+      // restarted or cut. Luigi 2026-06-09: "do not adjust the audio, it's that
+      // length for a reason."
+      a.loop = false;
       a.volume = 1;
       if (a.paused) {
         try { a.currentTime = 0; } catch {}
@@ -1796,7 +1808,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       // yet — alertAt is the future moment when their countdown begins.
       if (order.alertAt && new Date(order.alertAt).getTime() > now) continue;
       const reference = order.alertAt ?? order.notifiedAt ?? order.createdAt;
-      const totalMs = order.placedWhileClosed ? 15 * 60 * 1000 : 4 * 60 * 1000;
+      const totalMs = order.placedWhileClosed ? 15 * 60 * 1000 : ACCEPT_WINDOW_MS;
       const elapsed = now - new Date(reference).getTime();
       // 5-second grace past the countdown — lets the URGENT pulse render
       // for a beat before we kill the row.
