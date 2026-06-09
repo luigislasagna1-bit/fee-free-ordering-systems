@@ -335,8 +335,14 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
 
           {/* Seat / no-show the table from the pre-order's order detail — the
               booking has no separate tile, so the floor controls live here.
-              Tap any state to move it forward OR fix a mistake. Luigi 2026-06-08. */}
-          {order.reservation && onReservationStatusChange && (
+              Tap any state to move it forward OR fix a mistake. Luigi 2026-06-08.
+              HIDDEN while the order is still pending: a pre-order is ONE unit, so
+              it has ONE Accept/Reject — the ORDER's, up top — and accepting it
+              confirms the table too (the order PATCH syncs the booking). Showing
+              the booking's own Accept/Reject here as well gave the tile TWO
+              accept/reject pairs. Once accepted (booking no longer pending) this
+              becomes the Seated / No-show / Completed switcher. Luigi 2026-06-09. */}
+          {order.reservation && onReservationStatusChange && order.reservation.status !== "pending" && (
             <div className="space-y-2">
               <div className={`text-xs font-bold uppercase tracking-wider ${t.muted}`}>{tk("tableReservation")}</div>
               <ReservationStatusControls

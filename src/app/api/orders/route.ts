@@ -172,6 +172,11 @@ export async function POST(req: NextRequest) {
     let reservationData:
       | { date: string; time: string; partySize: number; notes: string | null; tableId: string | null }
       | null = null;
+    // Whether this restaurant auto-CONFIRMS reservations. A pre-order (booking +
+    // food) is ONE unit, so it should auto-accept when auto is on for EITHER
+    // side — order auto-accept OR reservation auto-confirm. Captured here at the
+    // outer scope so the auto-accept decision below can read it. Luigi 2026-06-09.
+    let reservationAutoConfirm = false;
     if (bodyReservation && typeof bodyReservation === "object") {
       const rs = await prisma.reservationSettings.findUnique({
         where: { restaurantId: restaurant.id },
@@ -214,6 +219,7 @@ export async function POST(req: NextRequest) {
         });
         rTableId = tbl?.id ?? null;
       }
+      reservationAutoConfirm = !!rs.autoConfirm;
       reservationData = {
         date: rDate,
         time: rTime,
@@ -1373,7 +1379,10 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Auto-accept handling ────────────────────────────────────────────────
-    const wantsAutoAccept = !!restaurant.autoAcceptOrders;
+    // A pre-order (booking + food) auto-accepts when auto is on for EITHER side:
+    // the restaurant's order auto-accept OR its reservation auto-confirm. A
+    // normal order respects only order auto-accept. Luigi 2026-06-09.
+    const wantsAutoAccept = !!restaurant.autoAcceptOrders || (!!reservationData && reservationAutoConfirm);
     const fulfillmentMinutes = type === "delivery"
       ? restaurant.estimatedDelivery
       : restaurant.estimatedPickup;
