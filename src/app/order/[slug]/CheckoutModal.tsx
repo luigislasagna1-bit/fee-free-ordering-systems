@@ -733,8 +733,13 @@ export function CheckoutModal({
               >
                 {/* Order-type selector — lists every channel the restaurant
                     accepts (pickup / delivery / dine-in / take-out). Only
-                    renders when there's an actual choice (2+ enabled). */}
-                {(() => {
+                    renders when there's an actual choice (2+ enabled).
+                    LOCKED OFF when this checkout is confirming a table booking
+                    (reservationContext): a reserve-then-order is ALWAYS dine-in
+                    — you can't book a table for pickup/delivery/take-out — so we
+                    hide the switcher entirely and the order stays dine-in.
+                    Luigi 2026-06-08. */}
+                {!reservationContext && (() => {
                   const opts = [
                     acceptsPickup && { value: "pickup" as const, icon: <ShoppingBag className="w-4 h-4" />, label: tOrd("pickup") },
                     acceptsDelivery && { value: "delivery" as const, icon: <Truck className="w-4 h-4" />, label: tOrd("delivery") },

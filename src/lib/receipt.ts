@@ -643,9 +643,10 @@ async function renderKitchenSection(
         r.line(t("receipt.reservation.partyOf", { n: order.reservation.partySize }));
       }
       // ASAP vs scheduled — prominent so the kitchen instantly sees whether to
-      // make it now or hold it for a later slot. Luigi 2026-06-05.
+      // make it now or hold it for a later slot. Luigi 2026-06-05. For a
+      // reservation the scheduled time IS the table time, so label it BOOKING.
       if (order.scheduledFor) {
-        r.line(`** ${t("receipt.scheduling.orderForLater")} **`);
+        r.line(`** ${order.reservation ? t("receipt.reservation.booking") : t("receipt.scheduling.orderForLater")} **`);
         r.line(fmtDateTime(order.scheduledFor));
       } else {
         r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
@@ -781,9 +782,14 @@ async function renderCustomerSection(
     case "order_info":
       r.line(`${t("receipt.customer.orderNumber")}${order.orderNumber}`);
       r.line(t("receipt.customer.title", { type: tOrderTypeUpper(order.type, t) }));
+      // Reserve-then-order flag on the customer copy too. Luigi 2026-06-08.
+      if (order.reservation) {
+        r.line(`** ${t("receipt.kitchen.tableReservation")} **`);
+        r.line(t("receipt.reservation.partyOf", { n: order.reservation.partySize }));
+      }
       r.line(`${t("receipt.customer.date")}: ${fmtDateTime(order.createdAt)}`);
       if (order.scheduledFor) {
-        r.line(`${t("receipt.scheduling.orderForLater")}:`);
+        r.line(`${order.reservation ? t("receipt.reservation.booking") : t("receipt.scheduling.orderForLater")}:`);
         r.line(fmtDateTime(order.scheduledFor));
       } else {
         r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);

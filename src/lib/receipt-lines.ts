@@ -240,9 +240,19 @@ function renderKitchenSection(
 
     case "k_datetime":
       r.line(fmtDateTime(order.createdAt));
+      // Reserve-then-order: flag the table booking right under the date so the
+      // kitchen instantly sees this is a reservation + pre-order, not a plain
+      // order. Mirrors the ESC/POS builder in receipt.ts so the bitmap (native
+      // LAN) and raw-TCP/PrintNode copies stay identical. Luigi 2026-06-08.
+      if (order.reservation) {
+        r.line(`** ${t("receipt.kitchen.tableReservation")} **`);
+        r.line(t("receipt.reservation.partyOf", { n: order.reservation.partySize }));
+      }
       // ASAP vs scheduled — prominent for the kitchen. Luigi 2026-06-05.
+      // For a reservation the scheduled time IS the table time, so label that
+      // block BOOKING instead of the generic "order for later".
       if (order.scheduledFor) {
-        r.line(`** ${t("receipt.scheduling.orderForLater")} **`);
+        r.line(`** ${order.reservation ? t("receipt.reservation.booking") : t("receipt.scheduling.orderForLater")} **`);
         r.line(fmtDateTime(order.scheduledFor));
       } else {
         r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
@@ -362,9 +372,14 @@ function renderCustomerSection(
     case "order_info":
       r.line(`${t("receipt.customer.orderNumber")}${order.orderNumber}`);
       r.line(t("receipt.customer.title", { type: tOrderTypeUpper(order.type, t) }));
+      // Reserve-then-order flag on the customer copy too. Luigi 2026-06-08.
+      if (order.reservation) {
+        r.line(`** ${t("receipt.kitchen.tableReservation")} **`);
+        r.line(t("receipt.reservation.partyOf", { n: order.reservation.partySize }));
+      }
       r.line(`${t("receipt.customer.date")}: ${fmtDateTime(order.createdAt)}`);
       if (order.scheduledFor) {
-        r.line(`${t("receipt.scheduling.orderForLater")}:`);
+        r.line(`${order.reservation ? t("receipt.reservation.booking") : t("receipt.scheduling.orderForLater")}:`);
         r.line(fmtDateTime(order.scheduledFor));
       } else {
         r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
