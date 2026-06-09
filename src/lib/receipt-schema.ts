@@ -7,6 +7,11 @@ export type CustomerSectionType =
    *  and booking date/time. Its own section so restaurants can toggle / style /
    *  reposition it. Empty (skipped) for normal orders. Luigi 2026-06-09. */
   | "reservation"
+  /** ASAP vs scheduled timing line — "Order for NOW: HH:MM" or "Order for
+   *  LATER: <date/time>". Its own section so it can be toggled / styled /
+   *  repositioned. Skipped for reservations (their time is in the reservation
+   *  section). Luigi 2026-06-09. */
+  | "timing"
   | "order_info" | "customer_info" | "items" | "modifiers"
   /** Applied-promotions box — renders only when the order has any
    *  promo in its `appliedPromos` snapshot. Shows each promo by name
@@ -21,6 +26,8 @@ export type KitchenSectionType =
   /** Kitchen reserve-then-order block — see CustomerSectionType "reservation".
    *  Renders the booking flag + party + time, only for pre-orders. */
   | "k_reservation"
+  /** Kitchen ASAP-vs-scheduled timing line — see CustomerSectionType "timing". */
+  | "k_timing"
   | "k_datetime" | "k_customer" | "k_items" | "k_modifiers"
   /** Kitchen-side applied-promotions box. Restaurants that don't want
    *  to clutter kitchen tickets with discount info can disable it. */
@@ -98,6 +105,7 @@ export const DEFAULT_CUSTOMER_CONFIG: CustomerConfig = {
     { id: "store_info",    type: "store_info",    label: "Store Address & Phone", enabled: true, style: { ...c,  fontSize: 11, paddingBottom: 8 } },
     { id: "order_info",    type: "order_info",    label: "Order Info",          enabled: true,  style: { ...base, dividerAbove: true, dividerBelow: true, paddingTop: 6, paddingBottom: 6 } },
     { id: "reservation",   type: "reservation",   label: "Table Reservation / Pre-Order", enabled: true, style: { ...bc, fontSize: 13, dividerBelow: true, paddingTop: 4, paddingBottom: 6 } },
+    { id: "timing",        type: "timing",        label: "Order Timing (Now / Later)", enabled: true, style: { ...bc, fontSize: 13, paddingTop: 2, paddingBottom: 5 } },
     { id: "customer_info", type: "customer_info", label: "Customer Info",       enabled: true,  style: { ...base, paddingTop: 5, paddingBottom: 5 } },
     { id: "items",         type: "items",         label: "Items List",          enabled: true,  style: { ...bl,  fontSize: 13, dividerAbove: true, paddingTop: 7, paddingBottom: 4 } },
     { id: "modifiers",     type: "modifiers",     label: "Modifiers",           enabled: true,  style: { ...base, fontSize: 11, paddingTop: 0, paddingBottom: 0 } },
@@ -121,6 +129,7 @@ export const DEFAULT_KITCHEN_CONFIG: KitchenConfig = {
     { id: "k_reservation",  type: "k_reservation", label: "Table Reservation / Pre-Order", enabled: true, style: { ...bc, fontSize: 16, bold: true, paddingTop: 6, paddingBottom: 6, dividerBelow: true } },
     { id: "k_order_number", type: "k_order_number", label: "Order Number",       enabled: true, style: { ...bc, fontSize: 32, bold: true, paddingTop: 6, paddingBottom: 6 } },
     { id: "k_datetime",     type: "k_datetime",    label: "Date & Time",         enabled: true, style: { ...c,  fontSize: 11, paddingBottom: 6, dividerBelow: true } },
+    { id: "k_timing",       type: "k_timing",      label: "Order Timing (Now / Later)", enabled: true, style: { ...bc, fontSize: 15, bold: true, paddingTop: 4, paddingBottom: 6, dividerBelow: true } },
     { id: "k_customer",     type: "k_customer",    label: "Customer Name",       enabled: true, style: { ...base, fontSize: 14, bold: true, paddingTop: 5, paddingBottom: 5 } },
     { id: "k_items",        type: "k_items",       label: "Items (no prices)",   enabled: true, style: { ...bl,  fontSize: 17, dividerAbove: true, paddingTop: 8, paddingBottom: 4 } },
     { id: "k_modifiers",    type: "k_modifiers",   label: "Modifiers",           enabled: true, style: { ...base, fontSize: 14, paddingTop: 0, paddingBottom: 0 } },

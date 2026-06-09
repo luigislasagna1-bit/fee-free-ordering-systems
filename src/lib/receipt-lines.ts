@@ -251,18 +251,21 @@ function renderKitchenSection(
 
     case "k_datetime":
       r.line(fmtDateTime(order.createdAt));
-      // ASAP vs scheduled — prominent for the kitchen. Luigi 2026-06-05. A
-      // reservation's timing lives in the dedicated k_reservation section, so
-      // it isn't repeated here.
-      if (order.reservation) {
-        // booking time shown by k_reservation
-      } else if (order.scheduledFor) {
+      // ASAP-vs-scheduled timing now lives in its OWN k_timing section.
+      if (order.estimatedReady) r.line(`${t("kitchen.ready")} : ${fmtTime(order.estimatedReady)}`);
+      break;
+
+    // ASAP vs scheduled — "ORDER FOR LATER + time" or "ASAP : HH:MM". Its own
+    // section so it can be toggled / styled / repositioned. Skipped for a
+    // reservation (its time is in k_reservation). Luigi 2026-06-09.
+    case "k_timing":
+      if (order.reservation) break;
+      if (order.scheduledFor) {
         r.line(`** ${t("receipt.scheduling.orderForLater")} **`);
         r.line(fmtDateTime(order.scheduledFor));
       } else {
         r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
       }
-      if (order.estimatedReady) r.line(`${t("kitchen.ready")} : ${fmtTime(order.estimatedReady)}`);
       break;
 
     case "k_customer":
@@ -388,10 +391,14 @@ function renderCustomerSection(
       r.line(`${t("receipt.customer.orderNumber")}${order.orderNumber}`);
       r.line(t("receipt.customer.title", { type: tOrderTypeUpper(order.type, t) }));
       r.line(`${t("receipt.customer.date")}: ${fmtDateTime(order.createdAt)}`);
-      // A reservation's booking time lives in the dedicated reservation section.
-      if (order.reservation) {
-        // booking time shown by the reservation section
-      } else if (order.scheduledFor) {
+      // ASAP-vs-scheduled timing now lives in its own "timing" section.
+      break;
+
+    // ASAP vs scheduled timing — own section. Skipped for a reservation (its
+    // time is in the reservation section). Luigi 2026-06-09.
+    case "timing":
+      if (order.reservation) break;
+      if (order.scheduledFor) {
         r.line(`${t("receipt.scheduling.orderForLater")}:`);
         r.line(fmtDateTime(order.scheduledFor));
       } else {
@@ -558,6 +565,9 @@ function renderSections(
     // Reservation sections only exist for a pre-order — skip the WHOLE section
     // (padding + dividers included) on a normal order so it leaves no empty gap.
     if ((section.type === "reservation" || section.type === "k_reservation") && !order.reservation) continue;
+    // Timing sections are the inverse — a reservation's time is in the
+    // reservation section, so skip the standalone timing section for pre-orders.
+    if ((section.type === "timing" || section.type === "k_timing") && order.reservation) continue;
     const s = section.style;
 
     blankLines(r, s.paddingTop);
