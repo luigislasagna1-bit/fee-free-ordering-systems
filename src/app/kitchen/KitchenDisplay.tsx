@@ -598,8 +598,11 @@ type KitchenReservation = {
    *  All / In-Progress tabs — the order tile represents it. Luigi 2026-06-08. */
   orderId: string | null;
   table: { name: string; number: number | null } | null;
-  /** Set when cleared from the Reservations tab — hides it there only. */
+  /** Per-tab clear flags — a walk-up booking is clearable from the All and
+   *  Complete tabs too, each independently, just like an order. */
   clearedFromReservationsAt?: string | null;
+  clearedFromAllAt?: string | null;
+  clearedFromCompleteAt?: string | null;
   /** When the reservation row was inserted in our DB. Used so the
    *  All / In Progress tabs can interleave reservations with orders
    *  in the same "newest first" order as the orders list — sorted
@@ -2175,50 +2178,27 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // `visible` = the orders currently shown in the tab being cleared. We only
   // ever clear THOSE (minus any still-pending order, which must be
   // accepted/rejected first), so a clear on one tab never touches another.
-  const handleClearOrders = (visible: Order[]) => {
-    const eligible = visible.filter(
-      (o) => o.status !== "pending" && !(o as any).clearedFromAllAt,
-    );
-    if (eligible.length === 0) {
-      toast.error(
-        "Nothing to clear — pending orders must be Accepted or Rejected first.",
-      );
-      setClearConfirm(null);
-      return;
-    }
-    setSelectedId(null);
-    setClearConfirm(null);
-    setAcknowledged(true); // silence any stale bell from prior cleared-pending bug
-    callClear("all", eligible.map((o) => o.id));
-  };
-
-  const handleClearComplete = (visible: Order[]) => {
-    setSelectedId(null);
-    setClearConfirm(null);
-    callClear(
-      "complete",
-      visible.filter((o) => !(o as any).clearedFromCompleteAt).map((o) => o.id),
-    );
-  };
-
-  // Clear the Reservations tab — hides those bookings from THIS tab only
-  // (In Progress + All keep showing them). Mirrors the per-tab order clear.
-  const handleClearReservations = (visible: KitchenReservation[]) => {
-    setClearConfirm(null);
-    const ids = visible.filter((r) => !r.clearedFromReservationsAt).map((r) => r.id);
+  // Per-tab booking clear — stamps the matching flag (all / complete /
+  // reservations) so a walk-up booking disappears from THAT tab only, exactly
+  // like an order's per-tab clear. Optimistic + server, with the same
+  // stale-session handling as the order clear. Luigi 2026-06-08.
+  const callClearReservations = (tab: "all" | "complete" | "reservations", ids: string[]) => {
     if (ids.length === 0) return;
     const idSet = new Set(ids);
-    // Optimistic: vanish from the Reservations tab immediately. In Progress
-    // doesn't filter this flag, so those bookings stay there.
+    const stamp = new Date().toISOString();
+    const patch =
+      tab === "all"      ? { clearedFromAllAt: stamp } :
+      tab === "complete" ? { clearedFromCompleteAt: stamp } :
+                           { clearedFromReservationsAt: stamp };
     setReservations((prev) =>
-      prev.map((r) => (idSet.has(r.id) ? { ...r, clearedFromReservationsAt: new Date().toISOString() } : r)),
+      prev.map((r) => (idSet.has(r.id) ? { ...r, ...patch } : r)),
     );
     (async () => {
       try {
         const res = await fetch("/api/kitchen/reservations/clear", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ reservationIds: ids }),
+          body: JSON.stringify({ reservationIds: ids, tab }),
         });
         if (res.status === 401) {
           const body = await res.json().catch(() => null);
@@ -2236,6 +2216,45 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         toast.error(e?.message ?? "Network error clearing reservations.");
       }
     })();
+  };
+
+  const handleClearOrders = (visible: Order[]) => {
+    const eligible = visible.filter(
+      (o) => o.status !== "pending" && !(o as any).clearedFromAllAt,
+    );
+    // Walk-up bookings shown in the All tab clear too — but NOT pending ones,
+    // which (like a pending order) still need an accept/decline first.
+    const resvIds = allTabReservations.filter((r) => r.status !== "pending").map((r) => r.id);
+    if (eligible.length === 0 && resvIds.length === 0) {
+      toast.error(
+        "Nothing to clear — pending orders must be Accepted or Rejected first.",
+      );
+      setClearConfirm(null);
+      return;
+    }
+    setSelectedId(null);
+    setClearConfirm(null);
+    setAcknowledged(true); // silence any stale bell from prior cleared-pending bug
+    if (eligible.length > 0) callClear("all", eligible.map((o) => o.id));
+    callClearReservations("all", resvIds);
+  };
+
+  const handleClearComplete = (visible: Order[]) => {
+    setSelectedId(null);
+    setClearConfirm(null);
+    const orderIds = visible.filter((o) => !(o as any).clearedFromCompleteAt).map((o) => o.id);
+    if (orderIds.length > 0) callClear("complete", orderIds);
+    callClearReservations("complete", completeTabReservations.map((r) => r.id));
+  };
+
+  // Clear the Reservations tab — hides those bookings from THIS tab only
+  // (In Progress + All + Complete keep showing them). Mirrors the per-tab clear.
+  const handleClearReservations = (visible: KitchenReservation[]) => {
+    setClearConfirm(null);
+    callClearReservations(
+      "reservations",
+      visible.filter((r) => !r.clearedFromReservationsAt).map((r) => r.id),
+    );
   };
 
   // Tab data. PER-TAB clear (Luigi 2026-06-04): each tab hides only the
@@ -2311,6 +2330,17 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     .filter((r) => !r.clearedFromReservationsAt)
     .slice()
     .sort((a, b) => (a.date === b.date ? a.time.localeCompare(b.time) : a.date.localeCompare(b.date)));
+  // Walk-up bookings that belong in the All / Complete tabs — they appear there
+  // alongside orders (a pre-order booking is already represented by its ORDER
+  // tile, so orderId bookings are excluded). Each tab hides only what was
+  // cleared FROM that tab, exactly like an order. Luigi 2026-06-08.
+  const TERMINAL_RESERVATION_STATUSES = ["completed", "no_show", "cancelled", "rejected"];
+  const allTabReservations = reservations.filter(
+    (r) => !r.orderId && !r.clearedFromAllAt,
+  );
+  const completeTabReservations = reservations.filter(
+    (r) => !r.orderId && TERMINAL_RESERVATION_STATUSES.includes(r.status) && !r.clearedFromCompleteAt,
+  );
   // Complete tab visibility rule (Luigi 2026-06-02 spec):
   //   "Orders only show in Complete once they DISAPPEAR from In Progress
   //    — i.e. at end-of-day. When the clock goes 11:59 → 12:00, today's
@@ -2580,8 +2610,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         {/* Clear history — a small fixed-size trash icon (tooltip on hover) so
             it never widens with a text label and squeezes the tabs in portrait.
             Luigi 2026-06-08. */}
-        {((activeTab === "orders" && tabCounts.orders > 0) ||
-          (activeTab === "complete" && tabCounts.complete > 0) ||
+        {((activeTab === "orders" && (tabCounts.orders > 0 || allTabReservations.length > 0)) ||
+          (activeTab === "complete" && (tabCounts.complete > 0 || completeTabReservations.length > 0)) ||
           (activeTab === "reservations" && reservationsTabItems.length > 0)) && (
           <button
             type="button"
@@ -2687,19 +2717,23 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               | { kind: "order"; sortTs: number; order: Order }
               | { kind: "reservation"; sortTs: number; r: KitchenReservation };
 
-            // ── ALL tab: orders only, chronological by arrival ────
-            // Walk-up table bookings do NOT appear here — they live in the
-            // dedicated Reservations tab (and In Progress while active). Mixing
-            // them in flooded "All Orders" with bookings staff couldn't clear
-            // (the clear button only clears orders) and hid the clear button
-            // entirely when a tab had bookings but no real orders. Pre-orders
-            // still show here as their normal ORDER tile (flagged). Luigi
-            // 2026-06-08 — reservations belong in the Reservations tab.
+            // ── ALL tab: orders + walk-up bookings, chronological ─
+            // Walk-up table bookings appear here alongside orders, just like a
+            // regular order, and are cleared by THIS tab's trash button (their
+            // clearedFromAllAt flag). Pre-order bookings are already represented
+            // by their ORDER tile, so they're excluded from allTabReservations.
+            // Luigi 2026-06-08.
             if (activeTab === "orders") {
               const items: Mixed[] = [];
               for (const o of tabOrders) {
                 const arrived = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
                 items.push({ kind: "order", sortTs: arrived, order: o });
+              }
+              for (const r of allTabReservations) {
+                // Sort by arrival (createdAt), not the booking date — otherwise a
+                // booking for next week jumps to the top of "newest first".
+                const arrived = r.createdAt ? new Date(r.createdAt).getTime() : Date.now();
+                items.push({ kind: "reservation", sortTs: arrived, r });
               }
               items.sort((a, b) => b.sortTs - a.sortTs);
 
@@ -2785,16 +2819,19 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               );
             }
 
-            // ── COMPLETE tab: finished ORDERS only, newest first ──────
-            // Finished bookings do NOT appear here — a completed booking stays
-            // in the persistent Reservations tab (it no longer vanishes), so it
-            // doesn't need to clutter Complete with rows the Complete clear
-            // button can't remove. Pre-orders show as their order tile. Luigi
-            // 2026-06-08.
+            // ── COMPLETE tab: finished orders + finished bookings ─────
+            // Finished WALK-UP bookings (completed / no-show / cancelled /
+            // rejected) appear here alongside completed orders and are cleared
+            // by THIS tab's trash button (their clearedFromCompleteAt flag).
+            // Pre-orders show as their order tile. Luigi 2026-06-08.
             const items: Mixed[] = [];
             for (const o of tabOrders) {
               const arrived = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
               items.push({ kind: "order", sortTs: arrived, order: o });
+            }
+            for (const r of completeTabReservations) {
+              const arrived = r.createdAt ? new Date(r.createdAt).getTime() : Date.now();
+              items.push({ kind: "reservation", sortTs: arrived, r });
             }
             items.sort((a, b) => b.sortTs - a.sortTs);
             if (items.length === 0) {
