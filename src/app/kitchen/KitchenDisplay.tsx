@@ -2323,13 +2323,22 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     if (!COMPLETE_STATUSES.includes(o.status) && !manual) return false;
     // Hide only what was cleared from the Complete tab itself.
     if ((o as any).clearedFromCompleteAt) return false;
-    // Simple-mode AUTO-completed orders from today stay pinned in In Progress
-    // until midnight, so keep them OUT of Complete until then. Manually-moved
-    // orders skip this — they appear in Complete immediately.
+    // A NON-manually-completed order (i.e. the end-of-day roll flipped it, not
+    // staff) stays pinned in In Progress and OUT of Complete for as long as it
+    // belongs to TODAY's In Progress view. "Belongs to today" is decided by the
+    // order's OWN day — created today, or scheduled for today/later — NOT by
+    // when the roll happened to flip it (the roll stamps completedAt = now, so
+    // keying off completedAt would wrongly hide a prior-day order that rolled
+    // this morning). Mirrors the inProgressItems gate so the two tabs never
+    // disagree and an order can't fall between them. Manually-completed orders
+    // skip this entirely — they appear in Complete immediately. Luigi 2026-06-08.
     if (workflowMode === "simple" && o.status === "completed" && !manual) {
-      const ts = (o as any).completedAt ? new Date((o as any).completedAt).getTime()
-        : o.createdAt ? new Date(o.createdAt).getTime() : NaN;
-      if (!Number.isNaN(ts) && ts >= completeTodayStart) return false;
+      const created = o.createdAt ? new Date(o.createdAt).getTime() : NaN;
+      const scheduled = (o as any).scheduledFor ? new Date((o as any).scheduledFor).getTime() : NaN;
+      const belongsToToday =
+        (!Number.isNaN(created) && created >= completeTodayStart) ||
+        (!Number.isNaN(scheduled) && scheduled >= completeTodayStart);
+      if (belongsToToday) return false;
     }
     return true;
   });

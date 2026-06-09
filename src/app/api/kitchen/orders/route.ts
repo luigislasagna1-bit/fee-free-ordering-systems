@@ -40,31 +40,40 @@ export async function GET() {
     const tz = restaurant?.timezone ?? undefined;
     const startOfToday = parseLocalDateTimeInTz(dateKeyInTimezone(new Date(), tz ?? "UTC"), 0, 0, tz);
 
-    // ── Simple-mode auto-complete sweep ─────────────────────────────────
-    // Simple workflow has no state transitions during prep — orders sit
-    // in "accepted" forever after the kitchen taps Accept. Without this,
-    // the display piles up stale rows the kitchen has to scroll past.
+    // ── Simple-mode END-OF-DAY roll ─────────────────────────────────────
+    // An order is NEVER auto-completed just because its prep / ready time
+    // elapsed. Staff complete each order MANUALLY (the kitchen taps Mark
+    // Complete, which also stamps manuallyClearedAt and moves it straight to
+    // the Complete tab). An order the kitchen never gets to stays "accepted"
+    // and actionable in In Progress for the rest of the day. Luigi 2026-06-08:
+    // "just because its ready time passes, doesnt mean it should be marked
+    // complete" + "it should stay in in progress until the day is over".
     //
-    // Sweep: when the kitchen polls (every 4s), flip any of THIS
-    // restaurant's "accepted" simple-mode orders whose estimatedReady
-    // is more than 15 minutes in the past to "completed". Lazy-on-read
-    // pattern — no new cron needed.
+    // The ONLY automatic transition is the day rolling over: once an order's
+    // due time (estimatedReady — for scheduled orders this equals the chosen
+    // slot) falls before the START OF TODAY in the restaurant's timezone, it
+    // belonged to a previous day, so it's swept to "completed" so it leaves In
+    // Progress and lands in Complete. Today's due-but-unfinished orders, and
+    // future-scheduled orders (estimatedReady still ahead), are left untouched.
     //
-    // Tracking-mode restaurants are skipped entirely: their staff
-    // manually flip status through Preparing → Ready → Complete,
-    // and silently auto-completing those would suppress the customer
-    // notifications they expect at each stage.
+    // Tracking-mode restaurants are skipped entirely: their staff manually
+    // flip status through Preparing → Ready → Complete, and silently
+    // auto-completing those would suppress the per-stage customer notifications.
     if (resolvedMode === "simple") {
-      const cutoff = new Date(Date.now() - 15 * 60 * 1000);
       const now = new Date();
       await prisma.order.updateMany({
         where: {
           restaurantId,
-          // Also sweep manually-readied orders (Simple mode "Mark Ready" sets
-          // status=ready) so they land in reports by end of day. Simple mode
-          // only ever reaches "ready" via that manual action.
+          // Simple mode reaches "ready" only via the manual "Mark Ready" action
+          // (which already sets manuallyClearedAt); included for completeness.
           status: { in: ["accepted", "ready"] },
-          estimatedReady: { not: null, lt: cutoff },
+          OR: [
+            // Due on a previous day → roll it.
+            { estimatedReady: { not: null, lt: startOfToday } },
+            // No due time recorded → fall back to the order's own day so a
+            // prior-day order can never get stranded between tabs.
+            { estimatedReady: null, createdAt: { lt: startOfToday } },
+          ],
         },
         data: { status: "completed", completedAt: now },
       });

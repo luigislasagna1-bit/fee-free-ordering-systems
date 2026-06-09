@@ -693,19 +693,23 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               <CheckCircle className="w-4 h-4" /> {tk("markComplete")}
             </button>
           )}
-          {/* Simple mode: a single "Mark Complete" that moves the order out of
-              In Progress and into Complete IMMEDIATELY (GloriaFood-style), so
-              staff never have to wait for the end-of-day sweep to clear a
-              finished order. Shown for any actively in-progress order opened
-              FROM the In Progress tab — never from the All tab, and not once
-              it's already been cleared.
-              NOTE: previously gated behind the order's due time (Luigi
-              2026-06-07). Removed — Luigi 2026-06-08: the kitchen must be able
-              to complete an order the moment the food is handed over, even if
-              that's earlier than the prep estimate. */}
+          {/* Simple mode: a single "Mark Complete" that moves THIS order out of
+              In Progress and into Complete immediately (sets manuallyClearedAt),
+              instead of waiting for the end-of-day roll to move them all.
+              Shown only for an order opened FROM the In Progress tab — never
+              from the All tab — and not once it's already been cleared.
+              GATED behind the order's due time: until the scheduled slot (or
+              accept-time + prep estimate) is reached the order is still
+              cooking, so no Complete button. Luigi 2026-06-07, reaffirmed
+              2026-06-08 — passing the ready time must NOT auto-complete an
+              order, but it DOES unlock this manual button.
+              "completed" is included so an order the old auto-sweep already
+              flipped (and which is now stranded in In Progress) can still be
+              cleared into Complete by hand. */}
           {isSimpleMode && fromInProgress
-            && (order.status === "accepted" || order.status === "preparing" || order.status === "ready")
-            && !(order as any).manuallyClearedAt && (
+            && ["accepted", "preparing", "ready", "completed"].includes(order.status)
+            && !(order as any).manuallyClearedAt
+            && (dueMs == null || nowTick >= dueMs) && (
             <button
               onClick={() => act(() => onUpdate(order.id, "completed"))}
               disabled={busy}
