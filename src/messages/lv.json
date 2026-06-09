@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Jauns kupona kods",
       "stackingInfo": "<label>Apvienošana: </label><master>Galvenais</master> darījumi tiek piemēroti kopā ar visiem pārējiem. <exclusive>Ekskluzīvie</exclusive> darījumi bloķē visus pārējos, izņemot Galvenos. <standard>Standarta</standard> darījumi apvienojas savā starpā. Kuponu kodus klienti ievada manuāli — tie nekad netiek piemēroti automātiski.",
       "emptyStateTitle": "Vēl nav darījumu",
-      "emptyStateBody": "Noklikšķiniet <newPromo>\"+Jauna akcija\"</newPromo> augšā, lai izveidotu akciju, vai <newCoupon>\"+Jauns kupona kods\"</newCoupon> augstāk, lai izveidotu kuponu."
+      "emptyStateBody": "Noklikšķiniet <newPromo>\"+Jauna akcija\"</newPromo> augšā, lai izveidotu akciju, vai <newCoupon>\"+Jauns kupona kods\"</newCoupon> augstāk, lai izveidotu kuponu.",
+      "tabSelfMade": "Pašu veidotās",
+      "tabPreMade": "Iepriekš sagatavotās"
     },
     "promoWizard": {
       "errorPickType": "Izvēlieties akcijas veidu, lai turpinātu.",

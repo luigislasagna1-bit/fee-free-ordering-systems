@@ -2063,7 +2063,9 @@
       "buttonNewCouponCode": "+ नया कूपन कोड",
       "stackingInfo": "<label>स्टैकिंग: </label><master>Master</master> डील सभी के साथ लागू होती है। <exclusive>Exclusive</exclusive> डील, Master को छोड़कर बाकी सभी को रोकती है। <standard>Standard</standard> डील एक-दूसरे के साथ लागू होती हैं। कूपन कोड ग्राहक द्वारा दर्ज किए जाते हैं और कभी स्वतः लागू नहीं होते।",
       "emptyStateTitle": "अभी तक कोई डील नहीं",
-      "emptyStateBody": "प्रमोशन बनाने के लिए ऊपर <newPromo>\"+New Promo\"</newPromo> पर क्लिक करें, या कूपन बनाने के लिए ऊपर <newCoupon>\"+New coupon code\"</newCoupon> पर क्लिक करें।"
+      "emptyStateBody": "प्रमोशन बनाने के लिए ऊपर <newPromo>\"+New Promo\"</newPromo> पर क्लिक करें, या कूपन बनाने के लिए ऊपर <newCoupon>\"+New coupon code\"</newCoupon> पर क्लिक करें।",
+      "tabSelfMade": "स्वयं बनाई",
+      "tabPreMade": "पूर्व-निर्मित"
     },
     "promoWizard": {
       "errorPickType": "जारी रखने के लिए एक प्रमोशन प्रकार चुनें।",

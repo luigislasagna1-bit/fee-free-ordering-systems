@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Uusi kuponkikoodi",
       "stackingInfo": "<label>Yhdistäminen: </label><master>Master</master>-tarjoukset toimivat kaikkien muiden rinnalla. <exclusive>Exclusive</exclusive>-tarjoukset estävät kaikki muut paitsi Master-tasoiset. <standard>Standard</standard>-tarjoukset yhdistyvät keskenään. Kuponkikoodit syötetään asiakkaan toimesta eikä niitä sovelleta automaattisesti.",
       "emptyStateTitle": "Ei tarjouksia vielä",
-      "emptyStateBody": "Luo tarjous klikkaamalla <newPromo>\"+Uusi tarjous\"</newPromo> yläosassa, tai kuponki klikkaamalla <newCoupon>\"+Uusi kuponkikoodi\"</newCoupon> yllä."
+      "emptyStateBody": "Luo tarjous klikkaamalla <newPromo>\"+Uusi tarjous\"</newPromo> yläosassa, tai kuponki klikkaamalla <newCoupon>\"+Uusi kuponkikoodi\"</newCoupon> yllä.",
+      "tabSelfMade": "Omat",
+      "tabPreMade": "Valmiit"
     },
     "promoWizard": {
       "errorPickType": "Valitse tarjoustyyppi jatkaaksesi.",

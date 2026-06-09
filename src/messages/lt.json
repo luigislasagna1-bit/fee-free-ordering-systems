@@ -2405,7 +2405,9 @@
       "buttonNewCouponCode": "+ Naujas kupono kodas",
       "stackingInfo": "<label>Sujungimas: </label><master>Master</master> pasiūlymai galioja kartu su viskuo. <exclusive>Išskirtiniai</exclusive> pasiūlymai blokuoja visus kitus, išskyrus Master. <standard>Standartiniai</standard> pasiūlymai jungiasi tarpusavyje. Kupono kodus įveda klientai ir jie niekada netaikomi automatiškai.",
       "emptyStateTitle": "Dar nėra pasiūlymų",
-      "emptyStateBody": "Spustelėkite <newPromo>„+ Nauja akcija“</newPromo> viršuje, kad sukurtumėte akciją, arba <newCoupon>„+ Naujas kupono kodas“</newCoupon> aukščiau, kad sukurtumėte kuponą."
+      "emptyStateBody": "Spustelėkite <newPromo>„+ Nauja akcija“</newPromo> viršuje, kad sukurtumėte akciją, arba <newCoupon>„+ Naujas kupono kodas“</newCoupon> aukščiau, kad sukurtumėte kuponą.",
+      "tabSelfMade": "Savos",
+      "tabPreMade": "Iš anksto paruoštos"
     },
     "promoWizard": {
       "errorPickType": "Pasirinkite akcijos tipą, kad tęstumėte.",

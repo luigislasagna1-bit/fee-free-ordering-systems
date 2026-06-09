@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ 新しいクーポンコード",
       "stackingInfo": "<label>重複適用：</label><master>マスター</master>は他のすべてと同時に適用されます。<exclusive>排他的</exclusive>はマスター以外をすべてブロックします。<standard>標準</standard>は他の標準と重複適用されます。クーポンコードは顧客が入力するもので、自動適用されません。",
       "emptyStateTitle": "まだキャンペーンがありません",
-      "emptyStateBody": "上の <newPromo>「+ 新しいプロモ」</newPromo> をクリックしてプロモーションを作成するか、上の <newCoupon>「+ 新しいクーポンコード」</newCoupon> でクーポンを作成してください。"
+      "emptyStateBody": "上の <newPromo>「+ 新しいプロモ」</newPromo> をクリックしてプロモーションを作成するか、上の <newCoupon>「+ 新しいクーポンコード」</newCoupon> でクーポンを作成してください。",
+      "tabSelfMade": "自作",
+      "tabPreMade": "既製"
     },
     "promoWizard": {
       "errorPickType": "続けるにはプロモーションタイプを選択してください。",

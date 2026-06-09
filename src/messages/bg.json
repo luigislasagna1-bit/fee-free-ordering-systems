@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Нов код на купон",
       "stackingInfo": "<label>Комбиниране: </label><master>Главна</master> сделка се прилага заедно с всичко. <exclusive>Ексклузивна</exclusive> сделка блокира всички останали освен Главните. <standard>Стандартна</standard> сделка се комбинира с другите стандартни. Кодовете на купони се въвеждат от клиента и никога не се прилагат автоматично.",
       "emptyStateTitle": "Все още няма сделки",
-      "emptyStateBody": "Натисни <newPromo>\"+ New Promo\"</newPromo> в горната част, за да създадеш промоция, или <newCoupon>\"+ New coupon code\"</newCoupon> по-горе, за да създадеш купон."
+      "emptyStateBody": "Натисни <newPromo>\"+ New Promo\"</newPromo> в горната част, за да създадеш промоция, или <newCoupon>\"+ New coupon code\"</newCoupon> по-горе, за да създадеш купон.",
+      "tabSelfMade": "Собствени",
+      "tabPreMade": "Готови"
     },
     "promoWizard": {
       "errorPickType": "Избери тип промоция, за да продължиш.",

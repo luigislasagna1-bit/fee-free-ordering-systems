@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Ny kupongkode",
       "stackingInfo": "<label>Stabling: </label><master>Master</master>-tilbud gjelder sammen med alt annet. <exclusive>Eksklusive</exclusive> tilbud blokkerer alle andre unntatt Masters. <standard>Standard</standard>-tilbud stables med hverandre. Kupongkoder er kundeinntastede og brukes aldri automatisk.",
       "emptyStateTitle": "Ingen tilbud ennå",
-      "emptyStateBody": "Klikk <newPromo>«+ Nytt tilbud»</newPromo> øverst for å opprette et tilbud, eller <newCoupon>«+ Ny kupongkode»</newCoupon> ovenfor for å opprette en kupong."
+      "emptyStateBody": "Klikk <newPromo>«+ Nytt tilbud»</newPromo> øverst for å opprette et tilbud, eller <newCoupon>«+ Ny kupongkode»</newCoupon> ovenfor for å opprette en kupong.",
+      "tabSelfMade": "Egne",
+      "tabPreMade": "Forhåndslagde"
     },
     "promoWizard": {
       "errorPickType": "Velg en tilbudstype for å fortsette.",

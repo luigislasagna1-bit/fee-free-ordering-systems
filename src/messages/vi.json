@@ -1703,7 +1703,9 @@
       "buttonNewCouponCode": "+ Mã phiếu giảm giá mới",
       "stackingInfo": "<label>Kết hợp: </label><master>Master</master> áp dụng cùng mọi khuyến mãi khác. <exclusive>Độc quyền</exclusive> chặn tất cả trừ Master. <standard>Tiêu chuẩn</standard> kết hợp với nhau. Mã phiếu giảm giá do khách nhập và không bao giờ tự động áp dụng.",
       "emptyStateTitle": "Chưa có ưu đãi",
-      "emptyStateBody": "Nhấn <newPromo>\"+ Khuyến mãi mới\"</newPromo> ở trên để tạo khuyến mãi, hoặc <newCoupon>\"+ Mã phiếu giảm giá mới\"</newCoupon> ở trên để tạo phiếu giảm giá."
+      "emptyStateBody": "Nhấn <newPromo>\"+ Khuyến mãi mới\"</newPromo> ở trên để tạo khuyến mãi, hoặc <newCoupon>\"+ Mã phiếu giảm giá mới\"</newCoupon> ở trên để tạo phiếu giảm giá.",
+      "tabSelfMade": "Tự tạo",
+      "tabPreMade": "Có sẵn"
     },
     "promoWizard": {
       "errorPickType": "Chọn loại khuyến mãi để tiếp tục.",

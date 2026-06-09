@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Kode kupon baru",
       "stackingInfo": "<label>Penggabungan: </label><master>Master</master> berlaku bersamaan dengan semua promo. <exclusive>Eksklusif</exclusive> memblokir semua kecuali Master. <standard>Standar</standard> dapat digabung satu sama lain. Kode kupon dimasukkan pelanggan dan tidak pernah diterapkan otomatis.",
       "emptyStateTitle": "Belum ada promo",
-      "emptyStateBody": "Klik <newPromo>\"+ Promo Baru\"</newPromo> di atas untuk membuat promosi, atau <newCoupon>\"+ Kode kupon baru\"</newCoupon> di atas untuk membuat kupon."
+      "emptyStateBody": "Klik <newPromo>\"+ Promo Baru\"</newPromo> di atas untuk membuat promosi, atau <newCoupon>\"+ Kode kupon baru\"</newCoupon> di atas untuk membuat kupon.",
+      "tabSelfMade": "Buatan sendiri",
+      "tabPreMade": "Siap pakai"
     },
     "promoWizard": {
       "errorPickType": "Pilih jenis promosi untuk melanjutkan.",

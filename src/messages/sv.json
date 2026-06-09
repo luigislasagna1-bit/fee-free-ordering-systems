@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Ny kupongkod",
       "stackingInfo": "<label>Stapelregler: </label><master>Master</master>-erbjudanden gäller tillsammans med allt. <exclusive>Exklusiva</exclusive> erbjudanden blockerar alla andra utom Master. <standard>Standard</standard>-erbjudanden kombineras med varandra. Kupongkoder anges av kunden och tillämpas aldrig automatiskt.",
       "emptyStateTitle": "Inga erbjudanden ännu",
-      "emptyStateBody": "Klicka på <newPromo>\"+  Ny kampanj\"</newPromo> längst upp för att skapa en kampanj, eller på <newCoupon>\"+ Ny kupongkod\"</newCoupon> ovan för att skapa en kupong."
+      "emptyStateBody": "Klicka på <newPromo>\"+  Ny kampanj\"</newPromo> längst upp för att skapa en kampanj, eller på <newCoupon>\"+ Ny kupongkod\"</newCoupon> ovan för att skapa en kupong.",
+      "tabSelfMade": "Egna",
+      "tabPreMade": "Färdiga"
     },
     "promoWizard": {
       "errorPickType": "Välj en kampanjtyp för att fortsätta.",

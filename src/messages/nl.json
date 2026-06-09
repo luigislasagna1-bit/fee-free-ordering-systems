@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Nieuwe couponcode",
       "stackingInfo": "<label>Stapelen: </label><master>Master</master>-deals gelden naast alles. <exclusive>Exclusieve</exclusive> deals blokkeren alle andere, behalve Masters. <standard>Standaard</standard>-deals stapelen met elkaar. Couponcodes worden door de klant ingevoerd en nooit automatisch toegepast.",
       "emptyStateTitle": "Nog geen deals",
-      "emptyStateBody": "Klik op <newPromo>\"+Nieuwe actie\"</newPromo> bovenaan om een promotie aan te maken, of op <newCoupon>\"+Nieuwe couponcode\"</newCoupon> hierboven om een coupon aan te maken."
+      "emptyStateBody": "Klik op <newPromo>\"+Nieuwe actie\"</newPromo> bovenaan om een promotie aan te maken, of op <newCoupon>\"+Nieuwe couponcode\"</newCoupon> hierboven om een coupon aan te maken.",
+      "tabSelfMade": "Eigen",
+      "tabPreMade": "Vooraf gemaakt"
     },
     "promoWizard": {
       "errorPickType": "Kies een promotietype om door te gaan.",

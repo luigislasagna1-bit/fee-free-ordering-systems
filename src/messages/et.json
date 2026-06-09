@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Uus kuponi kood",
       "stackingInfo": "<label>Kokkupanemine: </label><master>Peamine</master> pakkumised kehtivad kõige kõrval. <exclusive>Eksklusiivne</exclusive> pakkumised blokeerivad kõik teised peale peamiste. <standard>Standardne</standard> pakkumised kombineeruvad omavahel. Kuponi koodid sisestab klient käsitsi ja neid ei rakendata automaatselt.",
       "emptyStateTitle": "Pakkumisi pole veel",
-      "emptyStateBody": "Klõpsa <newPromo>„+ Uus kampaania“</newPromo> üleval kampaania loomiseks või <newCoupon>„+ Uus kuponi kood“</newCoupon> üleval kupongi loomiseks."
+      "emptyStateBody": "Klõpsa <newPromo>„+ Uus kampaania“</newPromo> üleval kampaania loomiseks või <newCoupon>„+ Uus kuponi kood“</newCoupon> üleval kupongi loomiseks.",
+      "tabSelfMade": "Omad",
+      "tabPreMade": "Valmis"
     },
     "promoWizard": {
       "errorPickType": "Jätkamiseks vali kampaania tüüp.",

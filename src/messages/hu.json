@@ -1703,7 +1703,9 @@
       "buttonNewCouponCode": "+ Új kuponkód",
       "stackingInfo": "<label>Összekapcsolás: </label><master>Master</master> ajánlatok minden máshoz hozzáadódnak. <exclusive>Kizárólagos</exclusive> ajánlatok blokkolják az összes többit, kivéve a Master ajánlatokat. <standard>Standard</standard> ajánlatok egymással összekapcsolhatók. A kuponkódokat az ügyfelek adják meg, és soha nem kerülnek automatikus alkalmazásra.",
       "emptyStateTitle": "Még nincsenek ajánlatok",
-      "emptyStateBody": "Kattintson a <newPromo>„+ Új promóció”</newPromo> gombra felül promóció létrehozásához, vagy a <newCoupon>„+ Új kuponkód”</newCoupon> gombra kupon létrehozásához."
+      "emptyStateBody": "Kattintson a <newPromo>„+ Új promóció”</newPromo> gombra felül promóció létrehozásához, vagy a <newCoupon>„+ Új kuponkód”</newCoupon> gombra kupon létrehozásához.",
+      "tabSelfMade": "Saját",
+      "tabPreMade": "Előre elkészített"
     },
     "promoWizard": {
       "errorPickType": "Válasszon promóciótípust a folytatáshoz.",

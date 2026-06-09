@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Новий код купону",
       "stackingInfo": "<label>Стакування: </label><master>Майстер</master> — діє разом з усім. <exclusive>Виключний</exclusive> — блокує всі інші, крім Майстра. <standard>Стандартний</standard> — стакується з іншими стандартними. Коди купонів вводяться клієнтом вручну і ніколи не застосовуються автоматично.",
       "emptyStateTitle": "Акцій ще немає",
-      "emptyStateBody": "Натисніть <newPromo>«+ Нова акція»</newPromo> вгорі, щоб створити акцію, або <newCoupon>«+ Новий код купону»</newCoupon> вище, щоб створити купон."
+      "emptyStateBody": "Натисніть <newPromo>«+ Нова акція»</newPromo> вгорі, щоб створити акцію, або <newCoupon>«+ Новий код купону»</newCoupon> вище, щоб створити купон.",
+      "tabSelfMade": "Власні",
+      "tabPreMade": "Готові"
     },
     "promoWizard": {
       "errorPickType": "Виберіть тип акції, щоб продовжити.",

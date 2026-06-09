@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ รหัสคูปองใหม่",
       "stackingInfo": "<label>การซ้อน: </label><master>Master</master> ใช้ร่วมกับทุกอย่าง <exclusive>Exclusive</exclusive> บล็อกทั้งหมดยกเว้น Master <standard>Standard</standard> ซ้อนกันได้ รหัสคูปองต้องลูกค้ากรอกเองและไม่ใช้งานอัตโนมัติ",
       "emptyStateTitle": "ยังไม่มีดีล",
-      "emptyStateBody": "คลิก <newPromo>\"+ โปรโมชั่นใหม่\"</newPromo> ด้านบนเพื่อสร้างโปรโมชั่น หรือ <newCoupon>\"+ รหัสคูปองใหม่\"</newCoupon> ด้านบนเพื่อสร้างคูปอง"
+      "emptyStateBody": "คลิก <newPromo>\"+ โปรโมชั่นใหม่\"</newPromo> ด้านบนเพื่อสร้างโปรโมชั่น หรือ <newCoupon>\"+ รหัสคูปองใหม่\"</newCoupon> ด้านบนเพื่อสร้างคูปอง",
+      "tabSelfMade": "สร้างเอง",
+      "tabPreMade": "สำเร็จรูป"
     },
     "promoWizard": {
       "errorPickType": "เลือกประเภทโปรโมชั่นเพื่อดำเนินการต่อ",

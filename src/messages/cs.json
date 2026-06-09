@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Nový kód kupónu",
       "stackingInfo": "<label>Kombinování: </label><master>Hlavní</master> akce platí společně se vším ostatním. <exclusive>Výhradní</exclusive> akce blokují všechny ostatní kromě Hlavních. <standard>Standardní</standard> akce se vzájemně kombinují. Kódy kupónů zadávají zákazníci sami a nikdy se neaplikují automaticky.",
       "emptyStateTitle": "Zatím žádné akce",
-      "emptyStateBody": "Klikněte na <newPromo>\"+ Nová akce\"</newPromo> nahoře pro vytvoření akce, nebo <newCoupon>\"+ Nový kód kupónu\"</newCoupon> výše pro vytvoření kupónu."
+      "emptyStateBody": "Klikněte na <newPromo>\"+ Nová akce\"</newPromo> nahoře pro vytvoření akce, nebo <newCoupon>\"+ Nový kód kupónu\"</newCoupon> výše pro vytvoření kupónu.",
+      "tabSelfMade": "Vlastní",
+      "tabPreMade": "Předpřipravené"
     },
     "promoWizard": {
       "errorPickType": "Pro pokračování vyberte typ akce.",

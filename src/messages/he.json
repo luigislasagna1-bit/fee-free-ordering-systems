@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ קוד קופון חדש",
       "stackingInfo": "<label>שילוב: </label><master>מאסטר</master> עסקאות חלות לצד כל האחרות. <exclusive>בלעדי</exclusive> חוסם את כולן מלבד מאסטר. <standard>רגיל</standard> מצטבר עם עסקאות רגילות אחרות. קודי קופון מוזנים על ידי הלקוח ואינם מוחלים אוטומטית.",
       "emptyStateTitle": "אין עסקאות עדיין",
-      "emptyStateBody": "לחץ <newPromo>\"+  מבצע חדש\"</newPromo> למעלה ליצירת מבצע, או <newCoupon>\"+ קוד קופון חדש\"</newCoupon> למעלה ליצירת קופון."
+      "emptyStateBody": "לחץ <newPromo>\"+  מבצע חדש\"</newPromo> למעלה ליצירת מבצע, או <newCoupon>\"+ קוד קופון חדש\"</newCoupon> למעלה ליצירת קופון.",
+      "tabSelfMade": "משלך",
+      "tabPreMade": "מוכנות מראש"
     },
     "promoWizard": {
       "errorPickType": "בחר סוג מבצע להמשך.",

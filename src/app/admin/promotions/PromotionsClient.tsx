@@ -475,6 +475,16 @@ function PromoCard({
             </div>
           )}
           <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-gray-400">
+            {/* CREATED-FOR badge (pre-made promos) + a USED count even when the
+                promo has no usage limit. Luigi 2026-06-09. */}
+            {promo.campaignRef && (
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-semibold">
+                {campaignLabel(promo.campaignRef)}
+              </span>
+            )}
+            {promo.campaignRef && !promo.usageLimit && (
+              <span>{t("usedCount", { used: promo.usedCount, max: "∞" })}</span>
+            )}
             {promo.minimumOrder > 0 && <span>{t("minOrder", { amount: promo.minimumOrder })}</span>}
             {promo.endsAt && (
               <span>{t("endsOn", { date: new Date(promo.endsAt).toLocaleDateString() })}</span>
@@ -529,7 +539,17 @@ function PromoCard({
 
 // ─── PromotionsClient ──────────────────────────────────────────────────────
 
-type TabFilter = "all" | "promotions" | "coupons" | "active" | "inactive" | "expired";
+type TabFilter = "all" | "promotions" | "coupons" | "active" | "inactive" | "expired" | "selfmade" | "premade";
+
+/** Friendly "created for" label for a pre-made (campaign-owned) promo. The
+ *  campaign names are PRODUCT names (proper nouns), so they're the same in
+ *  every language — no translation key needed. Luigi 2026-06-09. */
+function campaignLabel(ref: string | null | undefined): string | null {
+  if (!ref) return null;
+  if (ref.startsWith("kickstarter")) return "Kickstarter";
+  if (ref.startsWith("autopilot")) return "Autopilot";
+  return "Campaign";
+}
 
 export function PromotionsClient({
   promotions: initial,
@@ -638,6 +658,10 @@ export function PromotionsClient({
     if (tab === "active") return p.isActive;
     if (tab === "inactive") return !p.isActive;
     if (tab === "expired") return p.endsAt && new Date(p.endsAt) < now;
+    // Self-made = owner-created (no campaignRef); Pre-made = auto-created by a
+    // Kickstarter/Autopilot campaign. Luigi 2026-06-09.
+    if (tab === "selfmade") return !p.campaignRef;
+    if (tab === "premade") return !!p.campaignRef;
     return true;
   });
   const filteredCoupons = coupons.filter((c) => {
@@ -646,6 +670,8 @@ export function PromotionsClient({
     if (tab === "active") return c.isActive && !(c.expiresAt && new Date(c.expiresAt) < now);
     if (tab === "inactive") return !c.isActive;
     if (tab === "expired") return c.expiresAt && new Date(c.expiresAt) < now;
+    // Pre-made/Self-made apply to promotions only, not coupon codes.
+    if (tab === "selfmade" || tab === "premade") return false;
     return true;
   });
 
@@ -660,9 +686,13 @@ export function PromotionsClient({
     promotions.filter((p) => p.endsAt && new Date(p.endsAt) < now).length +
     coupons.filter((c) => c.expiresAt && new Date(c.expiresAt) < now).length;
 
+  const premadeCount = promotions.filter((p) => !!p.campaignRef).length;
+  const selfmadeCount = promotions.filter((p) => !p.campaignRef).length;
+
   const TABS: { id: TabFilter; label: string; count: number }[] = [
     { id: "all",        label: t("tabAll"),         count: totalAll },
-    { id: "promotions", label: t("tabPromotions"),  count: promotions.length },
+    { id: "selfmade",   label: t("tabSelfMade"),    count: selfmadeCount },
+    { id: "premade",    label: t("tabPreMade"),     count: premadeCount },
     { id: "coupons",    label: t("tabCouponCodes"), count: coupons.length },
     { id: "active",     label: t("tabActive"),      count: totalActive },
     { id: "inactive",   label: t("tabInactive"),    count: totalInactive },

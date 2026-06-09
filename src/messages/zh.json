@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ 新建优惠券码",
       "stackingInfo": "<label>叠加规则：</label><master>主控</master>优惠与所有其他优惠并行生效。<exclusive>独占</exclusive>优惠屏蔽除主控外的所有其他优惠。<standard>标准</standard>优惠可相互叠加。优惠券码由顾客手动输入，不会自动生效。",
       "emptyStateTitle": "暂无优惠",
-      "emptyStateBody": "点击顶部的<newPromo>「+ 新建促销」</newPromo>创建促销活动，或点击上方的<newCoupon>「+ 新建优惠券码」</newCoupon>创建优惠券。"
+      "emptyStateBody": "点击顶部的<newPromo>「+ 新建促销」</newPromo>创建促销活动，或点击上方的<newCoupon>「+ 新建优惠券码」</newCoupon>创建优惠券。",
+      "tabSelfMade": "自建",
+      "tabPreMade": "预设"
     },
     "promoWizard": {
       "errorPickType": "请选择促销类型以继续。",

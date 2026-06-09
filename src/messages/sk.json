@@ -2405,7 +2405,9 @@
       "buttonNewCouponCode": "+ Nový kód kupónu",
       "stackingInfo": "<label>Skladanie: </label><master>Hlavné</master> ponuky platia popri všetkom ostatnom. <exclusive>Exkluzívne</exclusive> ponuky blokujú všetky ostatné okrem hlavných. <standard>Štandardné</standard> ponuky sa skladajú navzájom. Kódy kupónov zadáva zákazník a nikdy sa neaplikujú automaticky.",
       "emptyStateTitle": "Zatiaľ žiadne ponuky",
-      "emptyStateBody": "Kliknite na <newPromo>„+ Nová promo akcia“</newPromo> hore a vytvorte promo akciu, alebo na <newCoupon>„+ Nový kód kupónu“</newCoupon> vyššie a vytvorte kupón."
+      "emptyStateBody": "Kliknite na <newPromo>„+ Nová promo akcia“</newPromo> hore a vytvorte promo akciu, alebo na <newCoupon>„+ Nový kód kupónu“</newCoupon> vyššie a vytvorte kupón.",
+      "tabSelfMade": "Vlastné",
+      "tabPreMade": "Predpripravené"
     },
     "promoWizard": {
       "errorPickType": "Pre pokračovanie vyberte typ promo akcie.",

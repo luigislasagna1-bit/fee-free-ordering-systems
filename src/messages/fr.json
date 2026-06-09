@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Nouveau code coupon",
       "stackingInfo": "<label>Cumul : </label><master>Maître</master> les offres s'appliquent avec tout. Les offres <exclusive>Exclusives</exclusive> bloquent toutes les autres sauf les Maîtres. Les offres <standard>Standard</standard> se cumulent entre elles. Les codes coupon sont saisis par le client et ne s'appliquent jamais automatiquement.",
       "emptyStateTitle": "Aucune offre",
-      "emptyStateBody": "Cliquez sur <newPromo>« + Nouvelle promo »</newPromo> en haut pour créer une promotion, ou <newCoupon>« + Nouveau code coupon »</newCoupon> ci-dessus pour créer un coupon."
+      "emptyStateBody": "Cliquez sur <newPromo>« + Nouvelle promo »</newPromo> en haut pour créer une promotion, ou <newCoupon>« + Nouveau code coupon »</newCoupon> ci-dessus pour créer un coupon.",
+      "tabSelfMade": "Personnalisées",
+      "tabPreMade": "Prédéfinies"
     },
     "promoWizard": {
       "errorPickType": "Sélectionnez un type de promotion pour continuer.",

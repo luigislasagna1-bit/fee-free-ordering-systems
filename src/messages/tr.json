@@ -1703,7 +1703,9 @@
       "buttonNewCouponCode": "+ Yeni kupon kodu",
       "stackingInfo": "<label>Birleştirme: </label><master>Ana</master> teklifler herkesle birlikte uygulanır. <exclusive>Özel</exclusive> teklifler Ana'lar dışında hepsini engeller. <standard>Standart</standard> teklifler birbirleriyle birleşir. Kupon kodları müşteri tarafından girilir ve hiçbir zaman otomatik uygulanmaz.",
       "emptyStateTitle": "Henüz teklif yok",
-      "emptyStateBody": "Promosyon oluşturmak için üstteki <newPromo>\"+ Yeni Promosyon\"</newPromo> düğmesine, kupon oluşturmak için yukarıdaki <newCoupon>\"+ Yeni kupon kodu\"</newCoupon> düğmesine tıklayın."
+      "emptyStateBody": "Promosyon oluşturmak için üstteki <newPromo>\"+ Yeni Promosyon\"</newPromo> düğmesine, kupon oluşturmak için yukarıdaki <newCoupon>\"+ Yeni kupon kodu\"</newCoupon> düğmesine tıklayın.",
+      "tabSelfMade": "Kendi",
+      "tabPreMade": "Hazır"
     },
     "promoWizard": {
       "errorPickType": "Devam etmek için bir promosyon türü seçin.",

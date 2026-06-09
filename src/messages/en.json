@@ -2094,7 +2094,9 @@
       "buttonNewCouponCode": "+ New coupon code",
       "stackingInfo": "<label>Stacking: </label><master>Master</master> deals apply alongside everything. <exclusive>Exclusive</exclusive> deals block all others except Masters. <standard>Standard</standard> deals stack with each other. Coupon codes are customer-entered and never auto-applied.",
       "emptyStateTitle": "No deals yet",
-      "emptyStateBody": "Click <newPromo>“+ New Promo”</newPromo> at the top to create a promotion, or <newCoupon>“+ New coupon code”</newCoupon> above to create a coupon."
+      "emptyStateBody": "Click <newPromo>“+ New Promo”</newPromo> at the top to create a promotion, or <newCoupon>“+ New coupon code”</newCoupon> above to create a coupon.",
+      "tabSelfMade": "Self-made",
+      "tabPreMade": "Pre-made"
     },
     "promoWizard": {
       "errorPickType": "Pick a promotion type to continue.",

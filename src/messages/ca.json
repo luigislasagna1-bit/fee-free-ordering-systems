@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Nou codi de cupó",
       "stackingInfo": "<label>Acumulació: </label><master>Mestre</master> les ofertes s'apliquen juntament amb totes les altres. <exclusive>Exclusiu</exclusive> les ofertes bloquegen totes les altres excepte els Mestres. <standard>Estàndard</standard> les ofertes s'acumulen entre si. Els codis de cupó els introdueix el client i mai s'apliquen automàticament.",
       "emptyStateTitle": "Encara no hi ha ofertes",
-      "emptyStateBody": "Feu clic a <newPromo>\"+ Nova promo\"</newPromo> a la part superior per crear una promoció, o <newCoupon>\"+ Nou codi de cupó\"</newCoupon> a dalt per crear un cupó."
+      "emptyStateBody": "Feu clic a <newPromo>\"+ Nova promo\"</newPromo> a la part superior per crear una promoció, o <newCoupon>\"+ Nou codi de cupó\"</newCoupon> a dalt per crear un cupó.",
+      "tabSelfMade": "Pròpies",
+      "tabPreMade": "Predefinides"
     },
     "promoWizard": {
       "errorPickType": "Trieu un tipus de promoció per continuar.",

@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Novi kod kupona",
       "stackingInfo": "<label>Gomilanje: </label><master>Master</master> ponude primjenjuju se uz sve ostale. <exclusive>Ekskluzivne</exclusive> ponude blokiraju sve ostale osim Mastera. <standard>Standardne</standard> ponude se gomilaju međusobno. Kodovi kupona unose kupci i nikada se ne primjenjuju automatski.",
       "emptyStateTitle": "Još nema ponuda",
-      "emptyStateBody": "Kliknite <newPromo>\"+ Nova promo\"</newPromo> na vrhu za kreiranje promocije, ili <newCoupon>\"+ Novi kod kupona\"</newCoupon> gore za kreiranje kupona."
+      "emptyStateBody": "Kliknite <newPromo>\"+ Nova promo\"</newPromo> na vrhu za kreiranje promocije, ili <newCoupon>\"+ Novi kod kupona\"</newCoupon> gore za kreiranje kupona.",
+      "tabSelfMade": "Vlastite",
+      "tabPreMade": "Unaprijed izrađene"
     },
     "promoWizard": {
       "errorPickType": "Odaberite vrstu promocije za nastavak.",

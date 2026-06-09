@@ -1703,7 +1703,9 @@
       "buttonNewCouponCode": "+ Nowy kod kuponu",
       "stackingInfo": "<label>Łączenie: </label><master>Master</master> — stosowane zawsze obok wszystkich. <exclusive>Ekskluzywna</exclusive> — blokuje wszystkie inne oprócz Master. <standard>Standardowa</standard> — łączy się z innymi standardowymi. Kody kuponów są wpisywane przez klienta i nigdy nie są stosowane automatycznie.",
       "emptyStateTitle": "Brak ofert",
-      "emptyStateBody": "Kliknij <newPromo>\"+ Nowa promocja\"</newPromo> u góry, aby utworzyć promocję, lub <newCoupon>\"+ Nowy kod kuponu\"</newCoupon> powyżej, aby utworzyć kupon."
+      "emptyStateBody": "Kliknij <newPromo>\"+ Nowa promocja\"</newPromo> u góry, aby utworzyć promocję, lub <newCoupon>\"+ Nowy kod kuponu\"</newCoupon> powyżej, aby utworzyć kupon.",
+      "tabSelfMade": "Własne",
+      "tabPreMade": "Gotowe"
     },
     "promoWizard": {
       "errorPickType": "Wybierz typ promocji, aby kontynuować.",

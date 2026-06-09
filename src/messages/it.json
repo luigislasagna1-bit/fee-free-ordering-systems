@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Nuovo codice coupon",
       "stackingInfo": "<label>Cumulo: </label><master>Master</master> si applica insieme a tutto. <exclusive>Esclusivo</exclusive> blocca tutti gli altri tranne i Master. <standard>Standard</standard> si cumula con altri standard. I codici coupon sono inseriti dal cliente e non vengono mai applicati automaticamente.",
       "emptyStateTitle": "Nessuna offerta",
-      "emptyStateBody": "Clicca <newPromo>\"+ Nuova promo\"</newPromo> in alto per creare una promozione, o <newCoupon>\"+ Nuovo codice coupon\"</newCoupon> sopra per creare un coupon."
+      "emptyStateBody": "Clicca <newPromo>\"+ Nuova promo\"</newPromo> in alto per creare una promozione, o <newCoupon>\"+ Nuovo codice coupon\"</newCoupon> sopra per creare un coupon.",
+      "tabSelfMade": "Personalizzate",
+      "tabPreMade": "Predefinite"
     },
     "promoWizard": {
       "errorPickType": "Scegli un tipo di promozione per continuare.",

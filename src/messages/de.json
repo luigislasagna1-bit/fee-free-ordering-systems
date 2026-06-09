@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Neuer Gutscheincode",
       "stackingInfo": "<label>Kombinierbarkeit: </label><master>Master</master>-Aktionen gelten neben allen anderen. <exclusive>Exklusive</exclusive> Aktionen blockieren alle anderen außer Master. <standard>Standard</standard>-Aktionen lassen sich untereinander kombinieren. Gutscheincodes werden vom Kunden eingegeben und nie automatisch angewendet.",
       "emptyStateTitle": "Noch keine Aktionen",
-      "emptyStateBody": "Klicken Sie oben auf <newPromo>„+ Neue Aktion“</newPromo>, um eine Aktion zu erstellen, oder auf <newCoupon>„+ Neuer Gutscheincode“</newCoupon>, um einen Gutschein zu erstellen."
+      "emptyStateBody": "Klicken Sie oben auf <newPromo>„+ Neue Aktion“</newPromo>, um eine Aktion zu erstellen, oder auf <newCoupon>„+ Neuer Gutscheincode“</newCoupon>, um einen Gutschein zu erstellen.",
+      "tabSelfMade": "Eigene",
+      "tabPreMade": "Vorgefertigt"
     },
     "promoWizard": {
       "errorPickType": "Wählen Sie einen Aktionstyp, um fortzufahren.",

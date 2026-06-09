@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Cod cupon nou",
       "stackingInfo": "<label>Cumulare: </label><master>Master</master> se aplică alături de orice alt deal. <exclusive>Exclusiv</exclusive> blochează toate celelalte cu excepția Master. <standard>Standard</standard> se cumulează între ele. Codurile cupon sunt introduse de client și nu se aplică automat niciodată.",
       "emptyStateTitle": "Niciun deal încă",
-      "emptyStateBody": "Apasă <newPromo>\"+ Promoție nouă\"</newPromo> în partea de sus pentru a crea o promoție sau <newCoupon>\"+ Cod cupon nou\"</newCoupon> mai sus pentru a crea un cupon."
+      "emptyStateBody": "Apasă <newPromo>\"+ Promoție nouă\"</newPromo> în partea de sus pentru a crea o promoție sau <newCoupon>\"+ Cod cupon nou\"</newCoupon> mai sus pentru a crea un cupon.",
+      "tabSelfMade": "Proprii",
+      "tabPreMade": "Predefinite"
     },
     "promoWizard": {
       "errorPickType": "Alege un tip de promoție pentru a continua.",

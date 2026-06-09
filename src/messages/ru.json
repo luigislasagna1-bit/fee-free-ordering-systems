@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ Новый код купона",
       "stackingInfo": "<label>Совместное использование: </label><master>Мастер</master> применяется вместе со всеми. <exclusive>Исключительная</exclusive> блокирует все остальные, кроме Мастер. <standard>Стандартная</standard> совместима с другими стандартными. Купоны вводятся клиентом вручную и никогда не применяются автоматически.",
       "emptyStateTitle": "Акций пока нет",
-      "emptyStateBody": "Нажмите <newPromo>«+ Новая акция»</newPromo> вверху для создания акции или <newCoupon>«+ Новый код купона»</newCoupon> выше для создания купона."
+      "emptyStateBody": "Нажмите <newPromo>«+ Новая акция»</newPromo> вверху для создания акции или <newCoupon>«+ Новый код купона»</newCoupon> выше для создания купона.",
+      "tabSelfMade": "Свои",
+      "tabPreMade": "Готовые"
     },
     "promoWizard": {
       "errorPickType": "Выберите тип акции для продолжения.",

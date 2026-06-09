@@ -1740,7 +1740,9 @@
       "buttonNewCouponCode": "+ رمز كوبون جديد",
       "stackingInfo": "<label>التجميع: </label>تُطبَّق عروض <master>الرئيسي</master> جانباً لكل شيء. عروض <exclusive>الحصري</exclusive> تمنع جميع الآخرين إلا الرئيسيين. تتجمع عروض <standard>العادي</standard> مع بعضها. رموز الكوبون يدخلها العميل ولا تُطبَّق تلقائياً أبداً.",
       "emptyStateTitle": "لا توجد عروض بعد",
-      "emptyStateBody": "انقر <newPromo>\"+ عرض جديد\"</newPromo> في الأعلى لإنشاء عرض، أو <newCoupon>\"+ رمز كوبون جديد\"</newCoupon> أعلاه لإنشاء كوبون."
+      "emptyStateBody": "انقر <newPromo>\"+ عرض جديد\"</newPromo> في الأعلى لإنشاء عرض، أو <newCoupon>\"+ رمز كوبون جديد\"</newCoupon> أعلاه لإنشاء كوبون.",
+      "tabSelfMade": "خاصة بك",
+      "tabPreMade": "جاهزة"
     },
     "promoWizard": {
       "errorPickType": "اختر نوع العرض للمتابعة.",
