@@ -2489,17 +2489,18 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     activeTab === "inprogress" ? inProgressItems :
     completeItems;
 
+  // Each badge = the number of items ACTUALLY shown in that tab, so the count
+  // always matches what staff see on screen. The All / In Progress / Complete
+  // tabs display walk-up bookings ALONGSIDE orders, so those are added in; the
+  // Reservations tab is the full ledger. Previously the order tabs counted
+  // orders only and the Reservations tab counted only "active" bookings, so
+  // every badge under-counted by exactly the bookings on that tab. Luigi
+  // 2026-06-08: "none of the numbers are correct for the tabs".
   const tabCounts = {
-    orders: ordersTabItems.length,
-    inprogress: inProgressItems.length,
-    complete: completeItems.length,
-    // Badge = bookings that still need attention, NOT the whole 30-day ledger:
-    // any pending awaiting accept (today/future) + confirmed bookings for
-    // today/tomorrow. Old/terminal history in the tab doesn't inflate it.
-    reservations: reservationsTabItems.filter(r =>
-      (r.status === "pending" && r.date >= todayISO) ||
-      (r.status === "confirmed" && (r.date === todayISO || r.date === tomorrowISO)),
-    ).length,
+    orders: ordersTabItems.length + allTabReservations.length,
+    inprogress: inProgressItems.length + inProgressReservations.length,
+    complete: completeItems.length + completeTabReservations.length,
+    reservations: reservationsTabItems.length,
   };
 
   // pendingCount is declared above next to `alerting`.
