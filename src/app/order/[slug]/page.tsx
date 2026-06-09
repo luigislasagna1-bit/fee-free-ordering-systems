@@ -191,6 +191,9 @@ export default async function OrderingPage({
       paymentMethodSlugs: true,
       deliveryZoneIds: true,
       onceLifetimePerClient: true,
+      // Campaign ownership — lets the ordering page lift the Kickstarter
+      // first-buy promo out of the regular strip into a prominent hero.
+      campaignRef: true,
     },
     orderBy: { createdAt: "desc" },
     take: 10, // hard cap — UI is a horizontal scroller anyway

@@ -657,6 +657,10 @@ export function OrderingPageClient({
     paymentMethodSlugs?: string | null;
     deliveryZoneIds?: string | null;
     onceLifetimePerClient?: boolean;
+    /** Owning campaign (null = self-made). The Kickstarter first-buy promo
+     *  (campaignRef === "kickstarter_first_buy") is rendered as a prominent
+     *  hero above the regular promo strip. */
+    campaignRef?: string | null;
   }>;
   /** The logged-in per-restaurant customer at this restaurant, if any.
    *  Server-resolved via getCurrentRestaurantCustomer in page.tsx and
@@ -3139,9 +3143,97 @@ export function OrderingPageClient({
             </div>
           </div>
         )}
-        {promoBanners.length > 0 && (
+        {/* ── First-buy hero (Kickstarter) ─────────────────────────────────
+            The Kickstarter "first order" promo gets prime, full-width real
+            estate at the very TOP — GloriaFood-style "X% Off Your 1st Order"
+            — instead of blending into the horizontal strip. Only present when
+            the owner has switched on First Buy Promo in /admin/kickstarter
+            (which is what creates this campaignRef promo + sets showOnBanner).
+            Clicking opens the same detail modal as any other promo. Theme-
+            colored per the /order/ styling rule. Luigi 2026-06-09. */}
+        {(() => {
+          // Source of truth for the ref string: KICKSTARTER_FIRST_BUY_REF in
+          // src/lib/kickstarter.ts — kept as a literal here so we don't import
+          // a server-only (prisma) module into this client component.
+          const hero = promoBanners.find((p) => p.campaignRef === "kickstarter_first_buy");
+          if (!hero) return null;
+          const headline = hero.bannerHeadline?.trim() || hero.name;
+          const heroImg = hero.imageUrl?.trim() || null;
+          return (
+            <div className="mb-4">
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => openPromoBanner(hero)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    openPromoBanner(hero);
+                  }
+                }}
+                className="relative overflow-hidden rounded-2xl text-white shadow-lg cursor-pointer hover:scale-[1.01] transition focus:outline-none focus:ring-2 focus:ring-white/60"
+                style={
+                  heroImg
+                    ? {
+                        backgroundImage: `url("${heroImg}")`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundColor: theme.primaryColor,
+                      }
+                    : { background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)` }
+                }
+              >
+                {heroImg && (
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        "linear-gradient(110deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.15) 100%)",
+                    }}
+                  />
+                )}
+                <div className="relative p-5 flex items-center gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div
+                      className="text-[11px] uppercase tracking-widest font-bold opacity-90 mb-1"
+                      style={{ textShadow: "0 1px 2px rgba(0,0,0,0.5)" }}
+                    >
+                      ⭐ {t("promoLabel")}
+                    </div>
+                    <div
+                      className="text-xl sm:text-2xl font-black leading-tight"
+                      style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}
+                    >
+                      {headline}
+                    </div>
+                    {hero.description && (
+                      <div
+                        className="text-xs sm:text-sm font-medium opacity-95 mt-1 line-clamp-2"
+                        style={{ textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}
+                      >
+                        {hero.description}
+                      </div>
+                    )}
+                    {hero.couponCode && (
+                      <div className="mt-2 inline-block text-xs font-mono font-bold bg-white/95 text-gray-900 rounded-md px-2 py-1">
+                        {hero.couponCode}
+                      </div>
+                    )}
+                  </div>
+                  <span
+                    className="flex-shrink-0 text-sm font-bold px-4 py-2 rounded-lg shadow-md whitespace-nowrap bg-white"
+                    style={{ color: theme.primaryColor, boxShadow: "0 2px 8px rgba(0,0,0,0.35)" }}
+                  >
+                    {t("promoGetItNow")}
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+        {promoBanners.filter((p) => p.campaignRef !== "kickstarter_first_buy").length > 0 && (
           <div className="mb-6 flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
-            {promoBanners.map((promo) => {
+            {promoBanners.filter((p) => p.campaignRef !== "kickstarter_first_buy").map((promo) => {
               const headline = promo.bannerHeadline?.trim() || promo.name;
               const hasUsableWindow =
                 typeof promo.usableHourStart === "number" &&
