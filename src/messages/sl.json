@@ -631,7 +631,8 @@
     "refundAlreadyFull": "To naročilo je že bilo v celoti povrnjeno",
     "refundNotCaptured": "Ni zajetega plačila s kartico za povračilo",
     "preOrder": "Prednaročilo",
-    "tableReservation": "Rezervacija mize"
+    "tableReservation": "Rezervacija mize",
+    "missed": "Zamujeno"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",

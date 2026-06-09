@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Đơn hàng này đã được hoàn tiền đầy đủ",
     "refundNotCaptured": "Không có khoản thanh toán bằng thẻ đã thu để hoàn tiền",
     "preOrder": "Đặt trước",
-    "tableReservation": "Đặt bàn"
+    "tableReservation": "Đặt bàn",
+    "missed": "Bị bỏ lỡ"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

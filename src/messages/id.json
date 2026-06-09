@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Pesanan ini sudah dikembalikan sepenuhnya",
     "refundNotCaptured": "Tidak ada pembayaran kartu yang ditagih untuk dikembalikan",
     "preOrder": "Pra-pesan",
-    "tableReservation": "Reservasi Meja"
+    "tableReservation": "Reservasi Meja",
+    "missed": "Terlewat"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

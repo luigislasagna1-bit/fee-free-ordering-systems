@@ -631,7 +631,8 @@
     "refundAlreadyFull": "הזמנה זו כבר זוכתה במלואה",
     "refundNotCaptured": "אין תשלום כרטיס שנגבה להחזר",
     "preOrder": "הזמנה מראש",
-    "tableReservation": "הזמנת שולחן"
+    "tableReservation": "הזמנת שולחן",
+    "missed": "הוחמצה"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

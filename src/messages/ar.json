@@ -631,7 +631,8 @@
     "refundAlreadyFull": "تم بالفعل استرداد كامل مبلغ هذا الطلب",
     "refundNotCaptured": "لا يوجد دفع بطاقة محصّل لاستردادها",
     "preOrder": "طلب مسبق",
-    "tableReservation": "حجز طاولة"
+    "tableReservation": "حجز طاولة",
+    "missed": "فائت"
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",

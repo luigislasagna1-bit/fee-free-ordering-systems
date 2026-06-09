@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Den här beställningen har redan återbetalats i sin helhet",
     "refundNotCaptured": "Ingen genomförd kortbetalning att återbetala",
     "preOrder": "Förbeställning",
-    "tableReservation": "Bordsreservation"
+    "tableReservation": "Bordsreservation",
+    "missed": "Missad"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",

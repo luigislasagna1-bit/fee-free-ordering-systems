@@ -631,7 +631,8 @@
     "printerHelpSummary": "Test Print said success but no paper came out?",
     "printerSaveClose": "Save & Close",
     "preOrder": "Pre-order",
-    "tableReservation": "Table Reservation"
+    "tableReservation": "Table Reservation",
+    "missed": "Missed"
   },
   "admin": {
     "comingSoonPlaceholder": {

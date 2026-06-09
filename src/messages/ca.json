@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Aquesta comanda ja s'ha reemborsat completament",
     "refundNotCaptured": "No hi ha cap pagament amb targeta capturat per reemborsar",
     "preOrder": "Comanda anticipada",
-    "tableReservation": "Reserva de taula"
+    "tableReservation": "Reserva de taula",
+    "missed": "Perduda"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

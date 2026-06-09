@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Тази поръчка вече е изцяло възстановена",
     "refundNotCaptured": "Няма прихванато плащане с карта за възстановяване",
     "preOrder": "Предварителна поръчка",
-    "tableReservation": "Резервация на маса"
+    "tableReservation": "Резервация на маса",
+    "missed": "Пропуснато"
   },
   "admin": {
     "welcomeBack": "Добре дошъл отново",

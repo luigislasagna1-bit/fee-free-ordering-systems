@@ -631,7 +631,8 @@
     "refundAlreadyFull": "To zamówienie zostało już w pełni zwrócone",
     "refundNotCaptured": "Brak pobranej płatności kartą do zwrotu",
     "preOrder": "Zamówienie z wyprzedzeniem",
-    "tableReservation": "Rezerwacja stolika"
+    "tableReservation": "Rezerwacja stolika",
+    "missed": "Przegapione"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

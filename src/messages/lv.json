@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Šis pasūtījums jau ir pilnībā atmaksāts",
     "refundNotCaptured": "Nav apstiprināta kartes maksājuma, ko atmaksāt",
     "preOrder": "Iepriekšpasūtījums",
-    "tableReservation": "Galda rezervācija"
+    "tableReservation": "Galda rezervācija",
+    "missed": "Nokavēts"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

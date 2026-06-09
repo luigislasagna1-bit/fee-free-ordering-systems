@@ -631,7 +631,8 @@
     "refundAlreadyFull": "此订单已全额退款",
     "refundNotCaptured": "无可退款的已扣款刷卡付款",
     "preOrder": "预点餐",
-    "tableReservation": "餐桌预订"
+    "tableReservation": "餐桌预订",
+    "missed": "已错过"
   },
   "admin": {
     "welcomeBack": "欢迎回来",

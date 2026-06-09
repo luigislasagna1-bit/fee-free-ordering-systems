@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Кошти за це замовлення вже повністю повернено",
     "refundNotCaptured": "Немає списаного карткового платежу для повернення",
     "preOrder": "Попереднє замовлення",
-    "tableReservation": "Бронювання столика"
+    "tableReservation": "Бронювання столика",
+    "missed": "Пропущено"
   },
   "admin": {
     "welcomeBack": "З поверненням",

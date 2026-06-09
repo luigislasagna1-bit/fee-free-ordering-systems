@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Denne bestillingen er allerede fullt refundert",
     "refundNotCaptured": "Ingen belastet kortbetaling å refundere",
     "preOrder": "Forhåndsbestilling",
-    "tableReservation": "Bordreservasjon"
+    "tableReservation": "Bordreservasjon",
+    "missed": "Mistet"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",

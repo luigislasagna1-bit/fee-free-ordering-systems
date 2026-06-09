@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Ezt a rendelést már teljesen visszatérítették",
     "refundNotCaptured": "Nincs levonott kártyás fizetés a visszatérítéshez",
     "preOrder": "Előrendelés",
-    "tableReservation": "Asztalfoglalás"
+    "tableReservation": "Asztalfoglalás",
+    "missed": "Elmulasztott"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

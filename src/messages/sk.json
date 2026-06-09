@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Táto objednávka už bola plne refundovaná",
     "refundNotCaptured": "Žiadna zúčtovaná platba kartou na vrátenie",
     "preOrder": "Predobjednávka",
-    "tableReservation": "Rezervácia stola"
+    "tableReservation": "Rezervácia stola",
+    "missed": "Zmeškané"
   },
   "admin": {
     "welcomeBack": "Vitajte späť",

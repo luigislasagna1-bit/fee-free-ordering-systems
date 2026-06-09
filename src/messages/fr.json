@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Cette commande a déjà été intégralement remboursée",
     "refundNotCaptured": "Aucun paiement par carte capturé à rembourser",
     "preOrder": "Précommande",
-    "tableReservation": "Réservation de table"
+    "tableReservation": "Réservation de table",
+    "missed": "Manquée"
   },
   "admin": {
     "welcomeBack": "Bon retour",

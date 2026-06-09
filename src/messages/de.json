@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Diese Bestellung wurde bereits vollständig erstattet",
     "refundNotCaptured": "Keine eingezogene Kartenzahlung zum Erstatten vorhanden",
     "preOrder": "Vorbestellung",
-    "tableReservation": "Tischreservierung"
+    "tableReservation": "Tischreservierung",
+    "missed": "Verpasst"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

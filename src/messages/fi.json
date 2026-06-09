@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Tämä tilaus on jo hyvitetty kokonaan",
     "refundNotCaptured": "Ei veloitettua korttimaksua hyvitettäväksi",
     "preOrder": "Ennakkotilaus",
-    "tableReservation": "Pöytävaraus"
+    "tableReservation": "Pöytävaraus",
+    "missed": "Menetetty"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

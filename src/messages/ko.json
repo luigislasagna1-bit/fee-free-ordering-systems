@@ -631,7 +631,8 @@
     "refundAlreadyFull": "이 주문은 이미 전액 환불되었습니다",
     "refundNotCaptured": "환불할 승인된 카드 결제가 없습니다",
     "preOrder": "사전 주문",
-    "tableReservation": "테이블 예약"
+    "tableReservation": "테이블 예약",
+    "missed": "놓침"
   },
   "admin": {
     "welcomeBack": "환영합니다",

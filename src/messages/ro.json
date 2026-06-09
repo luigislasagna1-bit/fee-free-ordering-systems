@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Această comandă a fost deja rambursată integral",
     "refundNotCaptured": "Nicio plată cu cardul capturată pentru rambursare",
     "preOrder": "Precomandă",
-    "tableReservation": "Rezervare masă"
+    "tableReservation": "Rezervare masă",
+    "missed": "Ratată"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Denne ordre er allerede fuldt refunderet",
     "refundNotCaptured": "Ingen gennemført kortbetaling at refundere",
     "preOrder": "Forudbestilling",
-    "tableReservation": "Bordbooking"
+    "tableReservation": "Bordbooking",
+    "missed": "Mistet"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",

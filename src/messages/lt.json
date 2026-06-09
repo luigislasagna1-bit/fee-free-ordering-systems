@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Už šį užsakymą jau grąžinta visa suma",
     "refundNotCaptured": "Nėra užfiksuoto mokėjimo kortele, kurį būtų galima grąžinti",
     "preOrder": "Išankstinis užsakymas",
-    "tableReservation": "Stalo rezervacija"
+    "tableReservation": "Stalo rezervacija",
+    "missed": "Praleista"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

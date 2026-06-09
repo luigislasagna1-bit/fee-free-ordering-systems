@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Bu siparişin tamamı zaten iade edilmiş",
     "refundNotCaptured": "İade edilecek tahsil edilmiş kart ödemesi yok",
     "preOrder": "Ön sipariş",
-    "tableReservation": "Masa Rezervasyonu"
+    "tableReservation": "Masa Rezervasyonu",
+    "missed": "Kaçırıldı"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

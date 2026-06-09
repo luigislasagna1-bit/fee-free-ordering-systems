@@ -631,7 +631,8 @@
     "refundAlreadyFull": "По этому заказу уже выполнен полный возврат",
     "refundNotCaptured": "Нет списанного платежа картой для возврата",
     "preOrder": "Предзаказ",
-    "tableReservation": "Бронирование столика"
+    "tableReservation": "Бронирование столика",
+    "missed": "Пропущен"
   },
   "admin": {
     "welcomeBack": "С возвращением",

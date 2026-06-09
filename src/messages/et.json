@@ -631,7 +631,8 @@
     "refundAlreadyFull": "See tellimus on juba täielikult tagastatud",
     "refundNotCaptured": "Pole kinnitatud kaardimakset, mida tagastada",
     "preOrder": "Ettetellimine",
-    "tableReservation": "Laua reserveerimine"
+    "tableReservation": "Laua reserveerimine",
+    "missed": "Vastamata"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

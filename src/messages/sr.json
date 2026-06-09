@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Za ovu porudžbinu je već izvršen pun povraćaj",
     "refundNotCaptured": "Nema naplaćenog plaćanja karticom za povraćaj",
     "preOrder": "Pretporudžbina",
-    "tableReservation": "Rezervacija stola"
+    "tableReservation": "Rezervacija stola",
+    "missed": "Пропуштено"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazad",

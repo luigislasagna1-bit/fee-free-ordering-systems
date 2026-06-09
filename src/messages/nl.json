@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Deze bestelling is al volledig terugbetaald",
     "refundNotCaptured": "Geen vastgelegde kaartbetaling om terug te betalen",
     "preOrder": "Voorbestelling",
-    "tableReservation": "Tafelreservering"
+    "tableReservation": "Tafelreservering",
+    "missed": "Gemist"
   },
   "admin": {
     "welcomeBack": "Welkom terug",

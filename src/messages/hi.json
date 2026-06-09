@@ -631,7 +631,8 @@
     "refundAlreadyFull": "इस ऑर्डर का पूरा रिफंड पहले ही किया जा चुका है",
     "refundNotCaptured": "रिफंड के लिए कोई कैप्चर किया गया कार्ड भुगतान नहीं है",
     "preOrder": "प्री-ऑर्डर",
-    "tableReservation": "टेबल आरक्षण"
+    "tableReservation": "टेबल आरक्षण",
+    "missed": "छूट गया"
   },
   "admin": {
     "comingSoonPlaceholder": {

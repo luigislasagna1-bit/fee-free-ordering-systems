@@ -631,7 +631,8 @@
     "refundAlreadyFull": "Questo ordine è già stato rimborsato per intero",
     "refundNotCaptured": "Nessun pagamento con carta acquisito da rimborsare",
     "preOrder": "Preordine",
-    "tableReservation": "Prenotazione tavolo"
+    "tableReservation": "Prenotazione tavolo",
+    "missed": "Perso"
   },
   "admin": {
     "welcomeBack": "Bentornato",
