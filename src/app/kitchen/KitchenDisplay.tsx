@@ -257,7 +257,7 @@ function ReservationDetail({
   );
 }
 
-function StatusBadge({ status, t }: { status: string; t: T }) {
+function StatusBadge({ status, t, rejectionReason }: { status: string; t: T; rejectionReason?: string | null }) {
   const tk = useTranslations("kitchen");
   const cls: Record<string, string> = {
     pending: t.badgePending, accepted: t.badgeAccepted, preparing: t.badgePreparing,
@@ -268,7 +268,15 @@ function StatusBadge({ status, t }: { status: string; t: T }) {
     pending: "pending", accepted: "accepted", preparing: "preparing",
     ready: "ready", completed: "done", rejected: "rejected", cancelled: "cancelled",
   };
-  const k = keyMap[status];
+  // An order auto-rejected by the unattended-timeout (the client countdown OR
+  // the server cron backstop) is a MISSED order, not a manual rejection. Both
+  // paths stamp a rejectionReason that starts with "Auto-rejected:" — use that
+  // to relabel the (still red) badge "MISSED". A genuine staff reject — no
+  // reason, or any non-"Auto-rejected" reason — stays "REJECTED". Same rule as
+  // OrderDetail's badge so the tile and the detail view never disagree.
+  // Luigi 2026-06-09.
+  const isMissed = status === "rejected" && (rejectionReason?.startsWith("Auto-rejected") ?? false);
+  const k = isMissed ? "missed" : keyMap[status];
   const label = k ? tk(k).toUpperCase() : status.toUpperCase();
   return (
     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap ${cls[status] ?? t.badgeCompleted}`}>
@@ -453,7 +461,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className={`font-bold text-sm ${t.text}`}>#{order.orderNumber}</span>
-            <StatusBadge status={order.status} t={t} />
+            <StatusBadge status={order.status} t={t} rejectionReason={order.rejectionReason} />
             {order.status === "pending" && (
               <Countdown
                 notifiedAt={order.notifiedAt}
