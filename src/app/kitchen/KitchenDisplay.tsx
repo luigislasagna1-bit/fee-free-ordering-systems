@@ -1354,9 +1354,20 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       // Also unlock the long-alert <audio> element on the same gesture so the
       // 4-min new-order alert can autoplay later (browsers gate HTMLAudio
       // playback on a user gesture, separately from the AudioContext).
+      //
+      // CRITICAL: only "prime" the element (the muted play→pause dance) when
+      // it is NOT already playing. On the native kitchen app autoplay is
+      // allowed, so a new order's alert track can already be RINGING before
+      // the staff's very first tap. If that first tap is on the ringing order
+      // (the natural thing to do), priming would pause + rewind the live
+      // alarm — and since the long-track effect's deps didn't change it never
+      // restarts, so the order goes silent the instant it's opened. Guarding
+      // on `a.paused` means: idle element → prime it for later; already
+      // ringing → it's clearly unlocked, so leave it playing. Luigi 2026-06-09
+      // ("clicking the order must NOT stop the ring").
       try {
         const a = getLongAlert();
-        if (a) {
+        if (a && a.paused) {
           a.muted = true;
           a.play().then(() => { a.pause(); a.currentTime = 0; a.muted = false; }).catch(() => { a.muted = false; });
         }
