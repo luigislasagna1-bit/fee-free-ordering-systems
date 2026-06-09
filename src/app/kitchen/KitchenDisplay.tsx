@@ -646,6 +646,14 @@ function saveSet(key: string, s: Set<string>) {
 
 const IN_PROGRESS_STATUSES = ["accepted", "preparing", "ready"];
 const COMPLETE_STATUSES = ["completed", "rejected", "cancelled"];
+// Loudness boost for the WebAudio gain-node alarm sounds (synth bell + the
+// band-limited ding samples). They play quieter than the full-spectrum
+// GloriaFood alarm track, which made the ring "sometimes low, sometimes
+// higher". Boosting them up levels every alarm sound to a uniform,
+// as-loud-as-possible volume (gain nodes can exceed unity; a touch of clip on
+// an alarm only adds cut-through). Module-scope so the useCallback([]) sound
+// fns can read it without a dep. Luigi 2026-06-09.
+const RING_BOOST = 1.6;
 
 export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any; initialOrders: Order[] }) {
   const tk = useTranslations("kitchen");
@@ -1321,9 +1329,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       ];
 
       const master = ctx.createGain();
-      // 0.6 peak at full volume is loud-but-safe over kitchen tablets / TVs.
+      // Boosted to match the GloriaFood alarm track's loudness — the synth used
+      // to peak at only 0.6 and read noticeably quieter than the other sounds.
       master.gain.setValueAtTime(0.0001, t0);
-      master.gain.exponentialRampToValueAtTime(0.6 * vol, t0 + 0.005);
+      master.gain.exponentialRampToValueAtTime(RING_BOOST * vol, t0 + 0.005);
       master.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.2);
       master.connect(ctx.destination);
 
@@ -1397,7 +1406,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       presence.gain.value = 4;
 
       const gain = ctx.createGain();
-      gain.gain.value = vol;
+      // Boosted (RING_BOOST) to make up for the band-pass filtering above, which
+      // trims energy and otherwise leaves the ding quieter than the alarm track.
+      gain.gain.value = RING_BOOST * vol;
       src.connect(highpass).connect(lowpass).connect(presence).connect(gain).connect(ctx.destination);
       src.start();
       return true;
