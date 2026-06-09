@@ -654,6 +654,13 @@ const COMPLETE_STATUSES = ["completed", "rejected", "cancelled"];
 // an alarm only adds cut-through). Module-scope so the useCallback([]) sound
 // fns can read it without a dep. Luigi 2026-06-09.
 const RING_BOOST = 1.6;
+// Amplification for the full-length GloriaFood alert TRACK. An HTMLAudio element
+// caps at its own recorded level (volume = 1), which Luigi found too quiet, so
+// we route the track through a gain node + a brick-wall limiter: the gain pushes
+// it WAY past the file level, the limiter pins the peaks just under 0 dBFS so it
+// gets much louder WITHOUT clipping or distorting (same clip, same quality).
+// Luigi 2026-06-09.
+const LONG_ALERT_BOOST = 6;
 
 export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any; initialOrders: Order[] }) {
   const tk = useTranslations("kitchen");
@@ -1015,6 +1022,44 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       longAlertRef.current = a;
     }
     return longAlertRef.current;
+  }, []);
+
+  // Route the long alert track through gain + limiter so it can play MUCH louder
+  // than the raw file (which capped at element volume = 1) without clipping. The
+  // gain amplifies past unity; the DynamicsCompressor, configured as a hard
+  // limiter, pins peaks just under 0 dBFS so loudness goes up but the waveform
+  // never distorts. A media element can only be tapped by ONE source node, so we
+  // build the chain once and cache it. Returns false if Web Audio is
+  // unavailable — the caller then just falls back to plain element volume.
+  // Luigi 2026-06-09.
+  const longAlertSourceRef = useRef<MediaElementAudioSourceNode | null>(null);
+  const ensureLongAlertRouting = useCallback((): boolean => {
+    const a = longAlertRef.current;
+    if (!a) return false;
+    if (longAlertSourceRef.current) return true; // already routed
+    try {
+      const Ctx = (window.AudioContext || (window as any).webkitAudioContext);
+      if (!Ctx) return false;
+      let ctx = audioCtxRef.current;
+      if (!ctx) { ctx = new Ctx(); audioCtxRef.current = ctx; }
+      if (ctx.state === "suspended") ctx.resume().catch(() => {});
+      const src = ctx.createMediaElementSource(a);
+      const gain = ctx.createGain();
+      gain.gain.value = LONG_ALERT_BOOST;
+      const limiter = ctx.createDynamicsCompressor();
+      const now = ctx.currentTime;
+      limiter.threshold.setValueAtTime(-1.5, now); // limit just under 0 dBFS
+      limiter.knee.setValueAtTime(0, now);         // hard knee
+      limiter.ratio.setValueAtTime(20, now);       // ~brick-wall
+      limiter.attack.setValueAtTime(0.002, now);
+      limiter.release.setValueAtTime(0.12, now);
+      src.connect(gain).connect(limiter).connect(ctx.destination);
+      longAlertSourceRef.current = src;
+      return true;
+    } catch (e) {
+      console.warn("[KDS] loud alert routing unavailable; using plain volume", e);
+      return false;
+    }
   }, []);
 
   // Decoded GloriaFood sample as a Web Audio buffer. We use the
@@ -1622,8 +1667,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     if (!a) return;
     const shouldPlay = alerting && alertSound === "gloriafood" && !alertMuted && alertVolume > 0;
     if (shouldPlay) {
+      // Route through the gain+limiter chain so the track plays WAY louder than
+      // the file's own level (without clipping). volume = 1 feeds the chain at
+      // full input; the gain does the loudness. Falls back to plain volume = 1
+      // if Web Audio routing isn't available.
+      ensureLongAlertRouting();
       a.loop = true;
-      a.volume = 1; // MAX — Luigi wants it as loud as the device allows.
+      a.volume = 1;
       if (a.paused) {
         try { a.currentTime = 0; } catch {}
         a.play().catch(() => { /* autoplay blocked until a gesture — unlock effect handles it */ });
@@ -1633,7 +1683,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (!a.paused) a.pause();
       try { a.currentTime = 0; } catch {}
     }
-  }, [alerting, alertSound, alertMuted, alertVolume, getLongAlert]);
+  }, [alerting, alertSound, alertMuted, alertVolume, getLongAlert, ensureLongAlertRouting]);
 
   // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
   // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause
@@ -1656,6 +1706,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       // gloriafood resumes its full-length track; other sounds fire one ding
       // (the cadence effect keeps them going). Luigi 2026-06-09.
       if (alertSound === "gloriafood") {
+        ensureLongAlertRouting();
         const a = longAlertRef.current;
         if (a) { a.volume = 1; if (a.paused) a.play().catch(() => {}); }
       } else {
@@ -1670,7 +1721,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       window.removeEventListener("focus", rearm);
       window.removeEventListener("pageshow", rearm);
     };
-  }, [alerting, alertMuted, alertVolume, alertSound, ringBellOnce]);
+  }, [alerting, alertMuted, alertVolume, alertSound, ringBellOnce, ensureLongAlertRouting]);
 
   const testAlertSound = useCallback(() => {
     // ONE strike only — restaurants confused "I keep hearing it" with
