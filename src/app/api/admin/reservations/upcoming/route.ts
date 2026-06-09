@@ -19,32 +19,33 @@ export async function GET() {
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
   const toISO = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
-  // `date` is a YYYY-MM-DD string, so lexicographic >= compares correctly.
+  // Persistent ledger window for the kitchen Reservations tab. A booking must
+  // NEVER disappear from that tab just because its day passed or its status
+  // changed (completed / seated / no-show / cancelled / rejected) — the ONLY
+  // thing that hides it there is staff pressing "clear history"
+  // (clearedFromReservationsAt, applied client-side). So we return every
+  // booking from the last RETENTION_DAYS days onward; because `date` is a
+  // YYYY-MM-DD string, a single lexicographic `>=` also sweeps in ALL future
+  // dates (next week, next month). Mirrors how the orders feed keeps ~30 days.
+  // Luigi 2026-06-08.
+  const RETENTION_DAYS = 30;
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - RETENTION_DAYS);
+
   const reservations = await prisma.reservation.findMany({
     where: {
       restaurantId,
-      OR: [
-        // Today + tomorrow — ALL statuses. Completed / no-show / cancelled /
-        // rejected bookings must NOT vanish when the kitchen marks them; they
-        // move to the Complete tab and stay until the day rolls over (or a
-        // manual clear), mirroring how completed orders behave. Luigi 2026-06-08.
-        {
-          date: { in: [toISO(today), toISO(tomorrow)] },
-        },
-        // Future bookings still awaiting staff acceptance (any date from today
-        // onward) — capped so we never pull stale past pendings.
-        {
-          status: "pending",
-          date: { gte: toISO(today) },
-        },
-      ],
+      date: { gte: toISO(cutoff) },
     },
-    orderBy: [{ date: "asc" }, { time: "asc" }],
+    // DESC + cap is the safe truncation: if a restaurant ever exceeds the cap,
+    // we keep ALL upcoming bookings + the most recent past and only drop the
+    // oldest history — never a future booking. The client re-sorts the
+    // Reservations tab soonest-first for display. take is the scale guard,
+    // same shape as the orders feed.
+    orderBy: [{ date: "desc" }, { time: "desc" }],
+    take: 500,
     include: { table: true },
   });
 

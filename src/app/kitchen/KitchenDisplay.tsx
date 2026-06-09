@@ -1448,13 +1448,23 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const pendingCount = orders.filter(
     (o) => o.status === "pending" && !(o.alertAt && new Date(o.alertAt).getTime() > nowMs),
   ).length;
+  // Today / tomorrow as YYYY-MM-DD (restaurant-local via the tablet clock) —
+  // used to tell "actionable" bookings apart from the ~30 days of history the
+  // feed now carries for the persistent Reservations tab. Luigi 2026-06-08.
+  const isoOf = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const todayISO = isoOf(new Date());
+  const tomorrowISO = (() => { const d = new Date(); d.setDate(d.getDate() + 1); return isoOf(d); })();
   // Pending reservations (manual-accept mode arrivals not yet
   // accepted/declined by staff) re-arm the alarm right alongside
   // pending orders. The existing alarm-loop reads pendingCount, so
   // adding reservations here is the single hook that ties the
   // reservation-side ring to the order-side cadence — no duplicate
   // loop required. Luigi 2026-06-01: "the ring should be the same".
-  const pendingReservationCount = reservations.filter((r) => r.status === "pending").length;
+  // Only TODAY-or-future pendings ring — a stale past pending the feed still
+  // carries for history must not ring the bell forever. Luigi 2026-06-08.
+  const pendingReservationCount = reservations.filter(
+    (r) => r.status === "pending" && r.date >= todayISO,
+  ).length;
   const alerting = (pendingCount + pendingReservationCount) > 0 && !acknowledged;
 
   // Silence the current alarm. Bell stops; the visual "X new" badge
@@ -2284,14 +2294,23 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // PRE-ORDER bookings (orderId set) are EXCLUDED here — they're represented by
   // their (flagged) order tile, so they don't double up as a second tile. They
   // still live in the dedicated Reservations tab. Luigi 2026-06-08.
+  // DATE-GUARDED to today/tomorrow: the feed now keeps ~30 days of history for
+  // the Reservations tab, but In Progress is the live floor view — a confirmed
+  // booking from last week (never marked completed) must NOT linger here. Only
+  // today's + tomorrow's active bookings are "in progress". Luigi 2026-06-08.
   const inProgressReservations = reservations.filter(
-    r => !r.orderId && (r.status === "confirmed" || r.status === "seated"),
+    r => !r.orderId && (r.status === "confirmed" || r.status === "seated")
+      && (r.date === todayISO || r.date === tomorrowISO),
   );
-  // Reservations tab list — hides only what was cleared FROM the Reservations
-  // tab (In Progress + All keep showing those bookings). Luigi 2026-06-04.
-  const reservationsTabItems = reservations.filter(
-    (r) => !r.clearedFromReservationsAt,
-  );
+  // Reservations tab list — the persistent ledger. Shows EVERY booking the feed
+  // returns (all statuses, ~30 days + all future), hiding ONLY what staff
+  // cleared FROM this tab (clearedFromReservationsAt). Nothing else removes a
+  // booking from here. Sorted soonest-first for the floor view (the feed itself
+  // comes back newest-first for safe truncation). Luigi 2026-06-08.
+  const reservationsTabItems = reservations
+    .filter((r) => !r.clearedFromReservationsAt)
+    .slice()
+    .sort((a, b) => (a.date === b.date ? a.time.localeCompare(b.time) : a.date.localeCompare(b.date)));
   // Complete tab visibility rule (Luigi 2026-06-02 spec):
   //   "Orders only show in Complete once they DISAPPEAR from In Progress
   //    — i.e. at end-of-day. When the clock goes 11:59 → 12:00, today's
@@ -2352,7 +2371,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     orders: ordersTabItems.length,
     inprogress: inProgressItems.length,
     complete: completeItems.length,
-    reservations: reservationsTabItems.filter(r => r.status === "pending" || r.status === "confirmed").length,
+    // Badge = bookings that still need attention, NOT the whole 30-day ledger:
+    // any pending awaiting accept (today/future) + confirmed bookings for
+    // today/tomorrow. Old/terminal history in the tab doesn't inflate it.
+    reservations: reservationsTabItems.filter(r =>
+      (r.status === "pending" && r.date >= todayISO) ||
+      (r.status === "confirmed" && (r.date === todayISO || r.date === tomorrowISO)),
+    ).length,
   };
 
   // pendingCount is declared above next to `alerting`.
