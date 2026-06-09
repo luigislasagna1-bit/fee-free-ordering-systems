@@ -94,7 +94,13 @@ export async function enableFirstBuyPromo(restaurantId: string) {
       description: "10% off your first order — welcome!",
       promotionType: "percentage_off",
       isActive: true,
-      stackingRule: "exclusive",
+      // MASTER by default for campaign (Kickstarter/Autopilot) promos: a master
+      // promo stacks WITH everything else (it never blocks another deal, and is
+      // never blocked) — the right behaviour for a "welcome" incentive that
+      // should layer on top of whatever else is running. The owner can still
+      // switch it to "exclusive" (stand-alone) or "standard" (stacks only with
+      // other standards) in the promo editor. Luigi 2026-06-09.
+      stackingRule: "master",
       orderType: "both",
       customerType: "new",
       minimumOrder: 0,

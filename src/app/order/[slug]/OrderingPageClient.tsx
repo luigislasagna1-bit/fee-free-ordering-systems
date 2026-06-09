@@ -3183,7 +3183,19 @@ export function OrderingPageClient({
           // this device before. Luigi 2026-06-09.
           if (!hero || customerIsReturning || hasOrderedHere) return null;
           const headline = hero.bannerHeadline?.trim() || hero.name;
-          const heroImg = hero.imageUrl?.trim() || null;
+          // The default background must never be flat black (theme.primaryColor
+          // is black for some brands, incl. Luigi's). Use the owner's custom
+          // image when set, else a deterministic appetising stock food image —
+          // the same source the strip tiles use — so the special always looks
+          // inviting. A left-heavy dark curtain keeps text legible over either.
+          // Custom image / headline / min order / show-or-hide are all editable
+          // per restaurant via the promo editor. Luigi 2026-06-09.
+          const heroStock = (() => {
+            let h = 0;
+            for (let i = 0; i < hero.id.length; i++) h = (h * 31 + hero.id.charCodeAt(i)) | 0;
+            return PROMO_STOCK_IMAGES[Math.abs(h) % PROMO_STOCK_IMAGES.length];
+          })();
+          const heroImg = hero.imageUrl?.trim() || heroStock;
           return (
             <div className="mb-4">
               <div
@@ -3196,58 +3208,56 @@ export function OrderingPageClient({
                     openPromoBanner(hero);
                   }
                 }}
-                className="relative overflow-hidden rounded-2xl text-white shadow-lg cursor-pointer hover:scale-[1.01] transition focus:outline-none focus:ring-2 focus:ring-white/60"
-                style={
-                  heroImg
-                    ? {
-                        backgroundImage: `url("${heroImg}")`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        backgroundColor: theme.primaryColor,
-                      }
-                    : { background: `linear-gradient(135deg, ${theme.primaryColor}, ${theme.primaryColor}dd)` }
-                }
+                className="relative overflow-hidden rounded-xl text-white shadow-md cursor-pointer hover:scale-[1.01] transition focus:outline-none focus:ring-2 focus:ring-white/60"
+                style={{
+                  backgroundImage: `url("${heroImg}")`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundColor: theme.primaryColor,
+                }}
               >
-                {heroImg && (
-                  <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      background:
-                        "linear-gradient(110deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.15) 100%)",
-                    }}
-                  />
-                )}
-                <div className="relative p-5 flex items-center gap-4">
+                {/* Warm dark curtain — heaviest on the left where the text sits,
+                    fading right so the food photo still reads. */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(100deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.5) 52%, rgba(0,0,0,0.18) 100%)",
+                  }}
+                />
+                <div className="relative px-4 py-3 flex items-center gap-3">
                   <div className="flex-1 min-w-0">
                     <div
-                      className="text-[11px] uppercase tracking-widest font-bold opacity-90 mb-1"
-                      style={{ textShadow: "0 1px 2px rgba(0,0,0,0.5)" }}
+                      className="text-[10px] uppercase tracking-widest font-bold opacity-90 mb-0.5"
+                      style={{ textShadow: "0 1px 2px rgba(0,0,0,0.6)" }}
                     >
                       ⭐ {t("promoLabel")}
                     </div>
                     <div
-                      className="text-xl sm:text-2xl font-black leading-tight"
-                      style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}
+                      className="text-base sm:text-lg font-black leading-tight line-clamp-1"
+                      style={{ textShadow: "0 1px 3px rgba(0,0,0,0.6)" }}
                     >
                       {headline}
                     </div>
-                    {hero.description && (
-                      <div
-                        className="text-xs sm:text-sm font-medium opacity-95 mt-1 line-clamp-2"
-                        style={{ textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}
-                      >
-                        {hero.description}
-                      </div>
-                    )}
-                    {hero.couponCode && (
-                      <div className="mt-2 inline-block text-xs font-mono font-bold bg-white/95 text-gray-900 rounded-md px-2 py-1">
-                        {hero.couponCode}
-                      </div>
-                    )}
+                    <div className="flex items-center gap-2 mt-1 min-w-0">
+                      {hero.description && (
+                        <span
+                          className="text-[11px] font-medium opacity-95 line-clamp-1 min-w-0"
+                          style={{ textShadow: "0 1px 2px rgba(0,0,0,0.6)" }}
+                        >
+                          {hero.description}
+                        </span>
+                      )}
+                      {hero.couponCode && (
+                        <span className="flex-shrink-0 text-[10px] font-mono font-bold bg-white/95 text-gray-900 rounded px-1.5 py-0.5">
+                          {hero.couponCode}
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <span
-                    className="flex-shrink-0 text-sm font-bold px-4 py-2 rounded-lg shadow-md whitespace-nowrap bg-white"
-                    style={{ color: theme.primaryColor, boxShadow: "0 2px 8px rgba(0,0,0,0.35)" }}
+                    className="flex-shrink-0 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-lg shadow-md whitespace-nowrap bg-white"
+                    style={{ color: theme.primaryColor, boxShadow: "0 2px 6px rgba(0,0,0,0.35)" }}
                   >
                     {t("promoGetItNow")}
                   </span>
