@@ -694,17 +694,18 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
             </button>
           )}
           {/* Simple mode: a single "Mark Complete" that moves the order out of
-              In Progress and into Complete immediately (GloriaFood-style). Only
-              shown for an actively in-progress order opened FROM the In Progress
-              tab — never from the All tab, and not once it's already been
-              cleared. cmpxemqle / Luigi 2026-06-07. */}
+              In Progress and into Complete IMMEDIATELY (GloriaFood-style), so
+              staff never have to wait for the end-of-day sweep to clear a
+              finished order. Shown for any actively in-progress order opened
+              FROM the In Progress tab — never from the All tab, and not once
+              it's already been cleared.
+              NOTE: previously gated behind the order's due time (Luigi
+              2026-06-07). Removed — Luigi 2026-06-08: the kitchen must be able
+              to complete an order the moment the food is handed over, even if
+              that's earlier than the prep estimate. */}
           {isSimpleMode && fromInProgress
             && (order.status === "accepted" || order.status === "preparing" || order.status === "ready")
-            && !(order as any).manuallyClearedAt
-            // Only after the order has passed its due time — the scheduled slot,
-            // or accept-time + prep estimate (estimatedReady). Before that, the
-            // order isn't ready to complete, so no button. Luigi 2026-06-07.
-            && (dueMs == null || nowTick >= dueMs) && (
+            && !(order as any).manuallyClearedAt && (
             <button
               onClick={() => act(() => onUpdate(order.id, "completed"))}
               disabled={busy}
