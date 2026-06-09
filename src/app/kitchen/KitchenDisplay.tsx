@@ -706,7 +706,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // does; auto-accept (status "confirmed") shows a single toast so staff
   // know a booking just landed without the alarm cadence.
   useEffect(() => {
-    if (activeTab !== "reservations" && activeTab !== "orders") return;
+    // Poll on EVERY tab. Bookings now appear in In Progress (confirmed/seated)
+    // and Complete (finished) as well as the Reservations / All tabs, and an
+    // auto-confirmed booking must ring + auto-print no matter which tab the
+    // kitchen is sitting on. This was previously gated to the reservations /
+    // orders tabs, so a booking placed while the kitchen sat on In Progress
+    // didn't ring, print, or update any count until staff tapped over to one
+    // of those tabs. Mirrors the always-on order poll. Luigi 2026-06-08.
     let cancelled = false;
     const fetchRes = async () => {
       try {
