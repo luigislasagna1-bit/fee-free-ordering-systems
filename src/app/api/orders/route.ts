@@ -24,7 +24,7 @@ import {
   isOnMarketplace,
 } from "@/lib/marketplace";
 import { getCurrentCustomer } from "@/lib/customer-session";
-import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
+import { validateBooking, resolveDayHours, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { isPaymentMethodAcceptedForType } from "@/lib/payment-methods";
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "take_out", "catering"] as const;
@@ -195,6 +195,7 @@ export async function POST(req: NextRequest) {
         { date: rDate, time: rTime, partySize: rPartySize },
         new Date(),
         (restaurant as any).timezone,
+        resolveDayHours(rs.reservationHours, (restaurant as any).openingHours ?? [], rDate),
       );
       if (!v.ok) return NextResponse.json({ error: v.reason, code: "reservation_rejected" }, { status: 400 });
       const cap = await checkReservationCapacity(

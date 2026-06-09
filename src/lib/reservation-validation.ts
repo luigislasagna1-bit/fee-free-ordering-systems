@@ -42,6 +42,35 @@ function parseTimeToMinutes(hhmm: string): number {
   return h * 60 + m;
 }
 
+/**
+ * Resolve a day's EFFECTIVE reservation open/close — the same fallback chain the
+ * customer-side slot picker uses: an explicit reservationHours row for the day,
+ * otherwise the restaurant's opening hours (preferring a "reservation"-scoped
+ * row, else the default row). Returns null when nothing is configured. Pass the
+ * result to validateBooking's effectiveDayHours so a cross-midnight close
+ * (e.g. 04:00) is honoured even with empty reservationHours. Luigi 2026-06-08.
+ */
+export function resolveDayHours(
+  reservationHoursJson: string | null | undefined,
+  openingHours: Array<{ dayOfWeek: number; openTime?: string | null; closeTime?: string | null; service?: string | null }>,
+  date: string,
+): { open: string; close: string } | null {
+  const dayOfWeek = new Date(`${date}T12:00:00Z`).getUTCDay();
+  let map: Record<string, { open?: string; close?: string }> = {};
+  try { map = JSON.parse(reservationHoursJson || "{}"); } catch { map = {}; }
+  const explicit = map[String(dayOfWeek)];
+  if (explicit && explicit.open && explicit.close) {
+    return { open: explicit.open, close: explicit.close };
+  }
+  const resRow = openingHours.find((h) => h.dayOfWeek === dayOfWeek && h.service === "reservation");
+  const defRow = openingHours.find((h) => h.dayOfWeek === dayOfWeek && (h.service == null || h.service === ""));
+  const row = resRow ?? defRow;
+  if (row && row.openTime && row.closeTime) {
+    return { open: row.openTime, close: row.closeTime };
+  }
+  return null;
+}
+
 export function validateBooking(
   s: ReservationSettingsLike,
   proposal: BookingProposal,
@@ -56,6 +85,13 @@ export function validateBooking(
    *  Luigi bug 2026-06-01: "trying to book and its more than 2
    *  hours in advance but still not working". */
   timezone?: string,
+  /** The day's EFFECTIVE open/close ("HH:MM"), used only when this restaurant
+   *  has no reservation-specific hours row for the day and instead relies on
+   *  its regular opening hours (the same fallback the slot picker uses). Lets
+   *  the cross-midnight detection below recognise a 1 AM slot as a post-
+   *  midnight (next-day) booking even with empty reservationHours. Pass null /
+   *  omit when there's no fallback. Luigi 2026-06-08. */
+  effectiveDayHours?: { open: string; close: string } | null,
 ): ValidationResult {
   const { date, time, partySize } = proposal;
 
@@ -96,9 +132,18 @@ export function validateBooking(
   // Without this, a 12:30 AM booking made at 10 PM looked ~22 h in the PAST and
   // was rejected as "book at least 2 hours in advance" — and the picker showed
   // no late-night slots at all. Luigi 2026-06-08 (restaurant open until 4 AM).
+  // Effective open/close for the cross-midnight check: an explicit
+  // reservationHours row wins; otherwise the caller's fallback (the restaurant's
+  // opening hours for that day — the SAME source the slot picker uses). This is
+  // what lets the validator know a restaurant "closes at 04:00" when it has no
+  // reservation-specific hours, so a 1 AM slot isn't mistaken for the PAST.
+  // (The in-hours window check in step 6 stays gated on the reservationHours
+  // row only, so this never adds a new out-of-hours rejection.) Luigi 2026-06-08.
+  const effOpen = day && day.open ? day.open : (effectiveDayHours?.open ?? null);
+  const effClose = day && day.close ? day.close : (effectiveDayHours?.close ?? null);
   const reqMin = parseTimeToMinutes(time);
-  const openMin = day && day.open ? parseTimeToMinutes(day.open) : null;
-  const closeMin = day && day.close ? parseTimeToMinutes(day.close) : null;
+  const openMin = effOpen !== null ? parseTimeToMinutes(effOpen) : null;
+  const closeMin = effClose !== null ? parseTimeToMinutes(effClose) : null;
   const crossesMidnight = openMin !== null && closeMin !== null && closeMin <= openMin;
   const wrapsToNextDay = crossesMidnight && openMin !== null && reqMin < openMin;
 

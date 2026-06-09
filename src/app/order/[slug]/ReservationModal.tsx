@@ -267,10 +267,8 @@ export function ReservationModal({
   const [confirmationCode, setConfirmationCode] = useState<string | null>(null);
   const [finalStatus, setFinalStatus] = useState<"confirmed" | "pending" | null>(null);
 
-  const validation = useMemo(
-    () => validateBooking(settings, { date, time, partySize }, new Date(), timezone),
-    [settings, date, time, partySize, timezone],
-  );
+  // (validation is computed below, AFTER dayHours / fallbackRow are resolved —
+  // it needs the day's effective open/close to handle cross-midnight windows.)
 
   // On modal mount, auto-snap the date to the next open day IF today
   // is explicitly closed (per admin hours). When today is open or the
@@ -313,6 +311,25 @@ export function ReservationModal({
   // restaurants only have default rows so the result matches the
   // legacy behaviour.
   const fallbackRow = pickHoursForService(fallbackOpeningHours as any, dayOfWeek, "reservation");
+
+  // The day's effective open/close — same fallback chain the slot list uses
+  // (explicit reservationHours row, else the opening-hours row). Fed to the
+  // validator so it recognises a cross-midnight close (e.g. 04:00) and stops
+  // rejecting a valid post-midnight slot as "in the past". Luigi 2026-06-08.
+  const effectiveDayHours = useMemo<{ open: string; close: string } | null>(() => {
+    if (dayHours && dayHours.open && dayHours.close) {
+      return { open: dayHours.open, close: dayHours.close };
+    }
+    if (fallbackRow && fallbackRow.openTime && fallbackRow.closeTime) {
+      return { open: fallbackRow.openTime, close: fallbackRow.closeTime };
+    }
+    return null;
+  }, [dayHours, fallbackRow]);
+  const validation = useMemo(
+    () => validateBooking(settings, { date, time, partySize }, new Date(), timezone, effectiveDayHours),
+    [settings, date, time, partySize, timezone, effectiveDayHours],
+  );
+
   // Whether the day looks closed per the data we have. Used to render
   // a soft amber warning ABOVE the slots — we still surface slots so
   // the customer can submit a request the kitchen can accept or

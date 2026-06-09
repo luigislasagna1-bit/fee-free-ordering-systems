@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
+import { validateBooking, resolveDayHours, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { notifyStaff, notifyCustomer } from "@/lib/notifications";
 
@@ -41,7 +41,10 @@ export async function POST(req: NextRequest) {
         // button — hand-crafted POSTs can't sneak through. Luigi
         // 2026-06-01: "if the restaurant is closed in settings, it
         // shouldn't allow anyone to put in a reservation."
-        openingHours: { select: { dayOfWeek: true, isOpen: true, service: true } },
+        // openTime/closeTime added so the validator can see a cross-midnight
+        // close (e.g. 04:00) when this restaurant relies on opening-hours
+        // fallback for reservations. Luigi 2026-06-08.
+        openingHours: { select: { dayOfWeek: true, isOpen: true, service: true, openTime: true, closeTime: true } },
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
@@ -65,6 +68,7 @@ export async function POST(req: NextRequest) {
       { date, time, partySize: parseInt(String(partySize)) },
       new Date(),
       restaurant.timezone,
+      resolveDayHours(settings.reservationHours, restaurant.openingHours, date),
     );
     if (!v.ok) return NextResponse.json({ error: v.reason }, { status: 400 });
 
