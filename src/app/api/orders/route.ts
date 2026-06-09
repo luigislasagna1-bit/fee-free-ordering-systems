@@ -1060,37 +1060,50 @@ export async function POST(req: NextRequest) {
       // orders) and feeds hasUsedLifetime lookup.
       const existingCustomer = await prisma.customer.findFirst({
         where: { restaurantId: restaurant.id, email: promoCustomerEmail },
-        select: { id: true, totalOrders: true },
+        select: { id: true },
       });
-      if (existingCustomer && existingCustomer.totalOrders > 0) {
-        isNewCustomerForPromo = false;
-        // For each promo with onceLifetimePerClient, check if this
-        // customer has ever applied it before. We bulk-query OrderItem-
-        // free aggregates by Order so a customer can't redeem the same
-        // once-per-lifetime promo twice. We match via the campaign
-        // sequence (recorded on Order via the deprecated `couponId`
-        // field for legacy promos, or via promoDiscount + name for
-        // newer pre-made campaigns). For now we approximate: any
-        // prior Order with a non-zero promoDiscount that matches the
-        // promo's campaignRef.
-        const lifetimePromos = activePromos.filter((p) => p.onceLifetimePerClient);
-        if (lifetimePromos.length > 0) {
-          // Quick approximation: did this customer ever place an order
-          // where ANY promo with the lifetime flag was active? We mark
-          // them all "used". This is conservative — it errs toward
-          // not-applying the promo on a 2nd order, which is the safer
-          // failure mode (vs. over-redeeming). Future enhancement:
-          // track promoId on Order directly.
-          const priorOrderCount = await prisma.order.count({
-            where: {
-              restaurantId: restaurant.id,
-              customerId: existingCustomer.id,
-              status: { notIn: ["cancelled", "rejected"] },
-              promoDiscount: { gt: 0 },
-            },
-          });
-          if (priorOrderCount > 0) {
-            for (const p of lifetimePromos) hasUsedLifetimeForPromo[p.id] = true;
+      if (existingCustomer) {
+        // "New customer" (and "has already used a once-per-lifetime promo")
+        // must be judged on FULFILLED orders only — never on orders that
+        // failed. An order that was MISSED (auto-rejected on the unattended
+        // timeout), rejected, or cancelled never actually served the customer,
+        // so it must NOT flip them to "returning" nor consume a first-time-only
+        // promo: they keep the offer until an order genuinely goes through.
+        // (Replaces the old `totalOrders > 0` test — totalOrders is incremented
+        // at PLACEMENT regardless of outcome, so a missed first order wrongly
+        // disqualified the customer from the new-customer / first-buy promo on
+        // their retry.) The fulfillment-tied coupon-grant ledger (next phase)
+        // will make this exact and also match on phone; this is the surgical
+        // correctness fix. Luigi 2026-06-09.
+        const FAILED_ORDER_STATES = ["cancelled", "rejected"]; // "missed" == auto-rejected
+        const priorFulfilledCount = await prisma.order.count({
+          where: {
+            restaurantId: restaurant.id,
+            customerId: existingCustomer.id,
+            status: { notIn: FAILED_ORDER_STATES },
+          },
+        });
+        if (priorFulfilledCount > 0) {
+          isNewCustomerForPromo = false;
+          // Same fulfillment rule for "have they already used this lifetime
+          // promo": count only prior FULFILLED orders that carried a discount,
+          // so a missed/cancelled order that had the promo applied doesn't burn
+          // it. Conservative approximation (any fulfilled order with a non-zero
+          // promoDiscount) — errs toward not re-applying. The ledger will track
+          // redemption per-coupon precisely.
+          const lifetimePromos = activePromos.filter((p) => p.onceLifetimePerClient);
+          if (lifetimePromos.length > 0) {
+            const priorOrderCount = await prisma.order.count({
+              where: {
+                restaurantId: restaurant.id,
+                customerId: existingCustomer.id,
+                status: { notIn: FAILED_ORDER_STATES },
+                promoDiscount: { gt: 0 },
+              },
+            });
+            if (priorOrderCount > 0) {
+              for (const p of lifetimePromos) hasUsedLifetimeForPromo[p.id] = true;
+            }
           }
         }
       }
