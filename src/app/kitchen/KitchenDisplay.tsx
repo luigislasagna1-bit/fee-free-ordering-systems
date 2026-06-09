@@ -653,7 +653,7 @@ const COMPLETE_STATUSES = ["completed", "rejected", "cancelled"];
 // as-loud-as-possible volume (gain nodes can exceed unity; a touch of clip on
 // an alarm only adds cut-through). Module-scope so the useCallback([]) sound
 // fns can read it without a dep. Luigi 2026-06-09.
-const RING_BOOST = 2.4;
+const RING_BOOST = 1.6;
 
 export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any; initialOrders: Order[] }) {
   const tk = useTranslations("kitchen");
@@ -1579,14 +1579,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   };
   useEffect(() => {
     if (!alerting || alertMuted || alertVolume <= 0) return;
-    // ALL sounds — including "gloriafood" — ring through this boosted ding
-    // cadence now. Previously gloriafood used a separate full-length HTMLAudio
-    // track, which RING_BOOST can't amplify, so it played at a different
-    // (quieter / louder) level than the ding chime — the inconsistency Luigi
-    // kept hearing. Using the same boosted ding for the chime AND the
-    // continuous alarm makes every alert identical by construction, and it's
-    // also the sound the "GloriaFood Ding" choice actually names. Luigi
+    // "gloriafood" rings via the full-length uploaded alert TRACK (the
+    // dedicated long-alert effect below), NOT this short-ding cadence — Luigi
+    // wants his exact full-length GloriaFood alert at max volume, not a trimmed
+    // ding. This cadence drives the synth / custom-sample sounds. Luigi
     // 2026-06-09.
+    if (alertSound === "gloriafood") return;
     let cancelled = false;
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
@@ -1613,19 +1611,29 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     };
   }, [alerting, alertMuted, alertVolume, ringBellOnce]);
 
-  // Legacy full-length GloriaFood alert track — DISABLED. gloriafood now rings
-  // through the boosted ding cadence above (so every alert is the same loudness
-  // and matches the "GloriaFood Ding" the owner actually chose). This effect
-  // just makes sure the old HTMLAudio track is never playing — kept (instead of
-  // deleted) so it's trivial to restore the long track if ever wanted. Luigi
-  // 2026-06-09.
+  // Full-length GloriaFood alert track — the owner's uploaded
+  // /sounds/gloriafood-alert.mp3, played at MAX volume and LOOPED until the
+  // kitchen accepts/rejects (alerting → false) or the auto-reject cron kills
+  // the order. This is the real "order is ringing" sound for the gloriafood
+  // choice — Luigi wants his exact full-length alert, not a trimmed ding.
+  // Luigi 2026-06-04 / restored + maxed 2026-06-09.
   useEffect(() => {
     const a = getLongAlert();
     if (!a) return;
-    a.loop = false;
-    if (!a.paused) a.pause();
-    try { a.currentTime = 0; } catch {}
-  }, [getLongAlert]);
+    const shouldPlay = alerting && alertSound === "gloriafood" && !alertMuted && alertVolume > 0;
+    if (shouldPlay) {
+      a.loop = true;
+      a.volume = 1; // MAX — Luigi wants it as loud as the device allows.
+      if (a.paused) {
+        try { a.currentTime = 0; } catch {}
+        a.play().catch(() => { /* autoplay blocked until a gesture — unlock effect handles it */ });
+      }
+    } else {
+      a.loop = false;
+      if (!a.paused) a.pause();
+      try { a.currentTime = 0; } catch {}
+    }
+  }, [alerting, alertSound, alertMuted, alertVolume, getLongAlert]);
 
   // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
   // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause
@@ -1645,10 +1653,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (typeof document !== "undefined" && document.visibilityState !== "visible") return;
       try { audioCtxRef.current?.resume?.().catch?.(() => {}); } catch {}
       if (!alerting || alertMuted || alertVolume <= 0) return;
-      // Every sound (gloriafood included) now re-arms via one boosted ding on
-      // focus regain; the cadence effect keeps the continuous ring going. The
-      // legacy long-track replay is gone. Luigi 2026-06-09.
-      ringBellOnce();
+      // gloriafood resumes its full-length track; other sounds fire one ding
+      // (the cadence effect keeps them going). Luigi 2026-06-09.
+      if (alertSound === "gloriafood") {
+        const a = longAlertRef.current;
+        if (a) { a.volume = 1; if (a.paused) a.play().catch(() => {}); }
+      } else {
+        ringBellOnce();
+      }
     };
     document.addEventListener("visibilitychange", rearm);
     window.addEventListener("focus", rearm);
