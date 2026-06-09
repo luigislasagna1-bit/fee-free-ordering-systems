@@ -632,7 +632,8 @@
     "refundNotCaptured": "Žiadna zúčtovaná platba kartou na vrátenie",
     "preOrder": "Predobjednávka",
     "tableReservation": "Rezervácia stola",
-    "missed": "Zmeškané"
+    "missed": "Zmeškané",
+    "firstOrder": "Prvá objednávka"
   },
   "admin": {
     "welcomeBack": "Vitajte späť",

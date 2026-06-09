@@ -632,7 +632,8 @@
     "refundNotCaptured": "Geen vastgelegde kaartbetaling om terug te betalen",
     "preOrder": "Voorbestelling",
     "tableReservation": "Tafelreservering",
-    "missed": "Gemist"
+    "missed": "Gemist",
+    "firstOrder": "Eerste bestelling"
   },
   "admin": {
     "welcomeBack": "Welkom terug",

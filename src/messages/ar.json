@@ -632,7 +632,8 @@
     "refundNotCaptured": "لا يوجد دفع بطاقة محصّل لاستردادها",
     "preOrder": "طلب مسبق",
     "tableReservation": "حجز طاولة",
-    "missed": "فائت"
+    "missed": "فائت",
+    "firstOrder": "أول طلب"
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",

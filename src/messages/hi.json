@@ -632,7 +632,8 @@
     "refundNotCaptured": "रिफंड के लिए कोई कैप्चर किया गया कार्ड भुगतान नहीं है",
     "preOrder": "प्री-ऑर्डर",
     "tableReservation": "टेबल आरक्षण",
-    "missed": "छूट गया"
+    "missed": "छूट गया",
+    "firstOrder": "पहला ऑर्डर"
   },
   "admin": {
     "comingSoonPlaceholder": {

@@ -632,7 +632,8 @@
     "refundNotCaptured": "No hi ha cap pagament amb targeta capturat per reemborsar",
     "preOrder": "Comanda anticipada",
     "tableReservation": "Reserva de taula",
-    "missed": "Perduda"
+    "missed": "Perduda",
+    "firstOrder": "Primera comanda"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

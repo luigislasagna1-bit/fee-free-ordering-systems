@@ -632,7 +632,8 @@
     "refundNotCaptured": "Không có khoản thanh toán bằng thẻ đã thu để hoàn tiền",
     "preOrder": "Đặt trước",
     "tableReservation": "Đặt bàn",
-    "missed": "Bị bỏ lỡ"
+    "missed": "Bị bỏ lỡ",
+    "firstOrder": "Đơn hàng đầu tiên"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

@@ -632,7 +632,8 @@
     "refundNotCaptured": "Nėra užfiksuoto mokėjimo kortele, kurį būtų galima grąžinti",
     "preOrder": "Išankstinis užsakymas",
     "tableReservation": "Stalo rezervacija",
-    "missed": "Praleista"
+    "missed": "Praleista",
+    "firstOrder": "Pirmasis užsakymas"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

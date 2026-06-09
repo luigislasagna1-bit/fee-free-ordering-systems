@@ -632,7 +632,8 @@
     "refundNotCaptured": "Δεν υπάρχει χρεωμένη πληρωμή με κάρτα προς επιστροφή",
     "preOrder": "Προπαραγγελία",
     "tableReservation": "Κράτηση τραπεζιού",
-    "missed": "Χαμένη"
+    "missed": "Χαμένη",
+    "firstOrder": "Πρώτη παραγγελία"
   },
   "admin": {
     "welcomeBack": "Καλώς ορίσατε",

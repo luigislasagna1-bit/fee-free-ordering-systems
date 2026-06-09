@@ -632,7 +632,8 @@
     "refundNotCaptured": "환불할 승인된 카드 결제가 없습니다",
     "preOrder": "사전 주문",
     "tableReservation": "테이블 예약",
-    "missed": "놓침"
+    "missed": "놓침",
+    "firstOrder": "첫 주문"
   },
   "admin": {
     "welcomeBack": "환영합니다",

@@ -632,7 +632,8 @@
     "printerSaveClose": "Save & Close",
     "preOrder": "Pre-order",
     "tableReservation": "Table Reservation",
-    "missed": "Missed"
+    "missed": "Missed",
+    "firstOrder": "First order"
   },
   "admin": {
     "comingSoonPlaceholder": {

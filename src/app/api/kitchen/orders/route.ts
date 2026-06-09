@@ -128,10 +128,38 @@ export async function GET() {
         })
       : [];
     const bookingByOrderId = new Map(bookings.map((b) => [b.orderId as string, b]));
+
+    // ── First-order flag (reseller report cmq3knaqj, FABRIZIO) ──────────────
+    // Badge an order when it's the customer's FIRST-EVER order at this
+    // restaurant. We match on phone (the kitchen's customer identifier) and
+    // find each customer's earliest order via ONE groupBy — an order is "first"
+    // when its createdAt equals that minimum. O(1) queries regardless of feed
+    // size. Luigi 2026-06-09.
+    const phones = Array.from(
+      new Set(orders.map((o) => (o as any).customerPhone).filter((p: unknown): p is string => !!p)),
+    );
+    const firstAtByPhone = new Map<string, number>();
+    if (phones.length > 0) {
+      const grouped = await prisma.order.groupBy({
+        by: ["customerPhone"],
+        where: { restaurantId, customerPhone: { in: phones } },
+        _min: { createdAt: true },
+      });
+      for (const g of grouped) {
+        if (g.customerPhone && g._min.createdAt) {
+          firstAtByPhone.set(g.customerPhone, g._min.createdAt.getTime());
+        }
+      }
+    }
+
     const ordersWithReservation = orders.map((o) => {
       const b = bookingByOrderId.get(o.id);
+      const phone = (o as any).customerPhone as string | null;
+      const isFirstOrder =
+        !!phone && firstAtByPhone.get(phone) === new Date(o.createdAt).getTime();
       return {
         ...o,
+        isFirstOrder,
         reservation: b
           ? { id: b.id, partySize: b.partySize, date: b.date, time: b.time, confirmationCode: b.confirmationCode, status: b.status }
           : null,

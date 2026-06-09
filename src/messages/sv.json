@@ -632,7 +632,8 @@
     "refundNotCaptured": "Ingen genomförd kortbetalning att återbetala",
     "preOrder": "Förbeställning",
     "tableReservation": "Bordsreservation",
-    "missed": "Missad"
+    "missed": "Missad",
+    "firstOrder": "Första beställning"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",

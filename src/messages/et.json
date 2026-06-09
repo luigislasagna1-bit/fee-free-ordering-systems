@@ -632,7 +632,8 @@
     "refundNotCaptured": "Pole kinnitatud kaardimakset, mida tagastada",
     "preOrder": "Ettetellimine",
     "tableReservation": "Laua reserveerimine",
-    "missed": "Vastamata"
+    "missed": "Vastamata",
+    "firstOrder": "Esimene tellimus"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

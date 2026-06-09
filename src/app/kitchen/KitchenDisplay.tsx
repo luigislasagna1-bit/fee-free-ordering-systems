@@ -480,6 +480,13 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
                 🪑 {tk("tableReservation").toUpperCase()} + {tk("preOrder").toUpperCase()} · {tk("partyOf", { n: order.reservation.partySize })}
               </span>
             )}
+            {/* First-ever order from this customer — staff can give them extra
+                care / a warm welcome. Reseller report cmq3knaqj. Luigi 2026-06-09. */}
+            {order.isFirstOrder && (
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-teal-500/20 text-teal-700 dark:text-teal-300">
+                ⭐ {tk("firstOrder").toUpperCase()}
+              </span>
+            )}
           </div>
           <div className={`text-sm ${t.textMuted} truncate`}>
             {order.customerName.replace("[TEST] ", "")}

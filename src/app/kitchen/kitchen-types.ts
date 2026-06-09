@@ -92,6 +92,10 @@ export type Order = {
    *  Kitchen display shows a purple "MARKETPLACE" badge so staff knows
    *  it's a discovery-channel order vs a direct walk-up / widget order. */
   viaMarketplace: boolean;
+  /** True when this is the customer's FIRST-EVER order at this restaurant
+   *  (matched by phone). Drives a "first order" badge so staff can give a new
+   *  customer extra care. Reseller report cmq3knaqj. Luigi 2026-06-09. */
+  isFirstOrder?: boolean;
   items: {
     id: string;
     name: string;

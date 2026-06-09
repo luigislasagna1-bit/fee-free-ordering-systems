@@ -632,7 +632,8 @@
     "refundNotCaptured": "Ei veloitettua korttimaksua hyvitettäväksi",
     "preOrder": "Ennakkotilaus",
     "tableReservation": "Pöytävaraus",
-    "missed": "Menetetty"
+    "missed": "Menetetty",
+    "firstOrder": "Ensimmäinen tilaus"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

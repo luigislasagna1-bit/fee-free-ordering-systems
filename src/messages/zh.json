@@ -632,7 +632,8 @@
     "refundNotCaptured": "无可退款的已扣款刷卡付款",
     "preOrder": "预点餐",
     "tableReservation": "餐桌预订",
-    "missed": "已错过"
+    "missed": "已错过",
+    "firstOrder": "首次下单"
   },
   "admin": {
     "welcomeBack": "欢迎回来",

@@ -632,7 +632,8 @@
     "refundNotCaptured": "Nenhum pagamento com cartão capturado para reembolsar",
     "preOrder": "Pré-pedido",
     "tableReservation": "Reserva de Mesa",
-    "missed": "Perdido"
+    "missed": "Perdido",
+    "firstOrder": "Primeiro pedido"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",

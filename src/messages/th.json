@@ -632,7 +632,8 @@
     "refundNotCaptured": "ไม่มีการชำระด้วยบัตรที่ตัดเงินแล้วให้คืนเงิน",
     "preOrder": "สั่งล่วงหน้า",
     "tableReservation": "จองโต๊ะ",
-    "missed": "พลาด"
+    "missed": "พลาด",
+    "firstOrder": "ออเดอร์แรก"
   },
   "admin": {
     "welcomeBack": "ยินดีต้อนรับกลับ",

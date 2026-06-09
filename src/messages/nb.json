@@ -632,7 +632,8 @@
     "refundNotCaptured": "Ingen belastet kortbetaling å refundere",
     "preOrder": "Forhåndsbestilling",
     "tableReservation": "Bordreservasjon",
-    "missed": "Mistet"
+    "missed": "Mistet",
+    "firstOrder": "Første bestilling"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",

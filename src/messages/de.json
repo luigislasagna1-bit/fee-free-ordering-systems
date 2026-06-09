@@ -632,7 +632,8 @@
     "refundNotCaptured": "Keine eingezogene Kartenzahlung zum Erstatten vorhanden",
     "preOrder": "Vorbestellung",
     "tableReservation": "Tischreservierung",
-    "missed": "Verpasst"
+    "missed": "Verpasst",
+    "firstOrder": "Erste Bestellung"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

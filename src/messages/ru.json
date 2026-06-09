@@ -632,7 +632,8 @@
     "refundNotCaptured": "Нет списанного платежа картой для возврата",
     "preOrder": "Предзаказ",
     "tableReservation": "Бронирование столика",
-    "missed": "Пропущен"
+    "missed": "Пропущен",
+    "firstOrder": "Первый заказ"
   },
   "admin": {
     "welcomeBack": "С возвращением",

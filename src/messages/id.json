@@ -632,7 +632,8 @@
     "refundNotCaptured": "Tidak ada pembayaran kartu yang ditagih untuk dikembalikan",
     "preOrder": "Pra-pesan",
     "tableReservation": "Reservasi Meja",
-    "missed": "Terlewat"
+    "missed": "Terlewat",
+    "firstOrder": "Pesanan pertama"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

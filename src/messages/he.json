@@ -632,7 +632,8 @@
     "refundNotCaptured": "אין תשלום כרטיס שנגבה להחזר",
     "preOrder": "הזמנה מראש",
     "tableReservation": "הזמנת שולחן",
-    "missed": "הוחמצה"
+    "missed": "הוחמצה",
+    "firstOrder": "הזמנה ראשונה"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

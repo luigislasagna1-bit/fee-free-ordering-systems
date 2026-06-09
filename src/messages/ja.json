@@ -632,7 +632,8 @@
     "refundNotCaptured": "返金可能な確定済みカード決済がありません",
     "preOrder": "事前注文",
     "tableReservation": "テーブル予約",
-    "missed": "見逃し"
+    "missed": "見逃し",
+    "firstOrder": "初回注文"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

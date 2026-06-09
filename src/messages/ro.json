@@ -632,7 +632,8 @@
     "refundNotCaptured": "Nicio plată cu cardul capturată pentru rambursare",
     "preOrder": "Precomandă",
     "tableReservation": "Rezervare masă",
-    "missed": "Ratată"
+    "missed": "Ratată",
+    "firstOrder": "Prima comandă"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

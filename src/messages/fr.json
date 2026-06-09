@@ -632,7 +632,8 @@
     "refundNotCaptured": "Aucun paiement par carte capturé à rembourser",
     "preOrder": "Précommande",
     "tableReservation": "Réservation de table",
-    "missed": "Manquée"
+    "missed": "Manquée",
+    "firstOrder": "Première commande"
   },
   "admin": {
     "welcomeBack": "Bon retour",

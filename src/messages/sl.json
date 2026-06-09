@@ -632,7 +632,8 @@
     "refundNotCaptured": "Ni zajetega plačila s kartico za povračilo",
     "preOrder": "Prednaročilo",
     "tableReservation": "Rezervacija mize",
-    "missed": "Zamujeno"
+    "missed": "Zamujeno",
+    "firstOrder": "Prvo naročilo"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",
