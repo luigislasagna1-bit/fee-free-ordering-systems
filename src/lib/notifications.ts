@@ -66,6 +66,12 @@ function buildCustomerSms(
       if (s === "ready") return `${restaurantName}: Order #${payload.orderNumber} is ready for pickup!`;
       if (s === "completed") return `${restaurantName}: Order #${payload.orderNumber} is complete. Thanks!`;
       if (s === "rejected" || s === "cancelled" || s === "canceled") {
+        // A timed-out order is auto-rejected → tell the customer it was "missed",
+        // and never echo the internal "Auto-rejected:" reason. Luigi 2026-06-09.
+        const autoMissed = s === "rejected" && (payload.rejectionReason?.startsWith("Auto-rejected") ?? false);
+        if (autoMissed) {
+          return `${restaurantName}: Sorry — we couldn't get to Order #${payload.orderNumber} in time. If you paid online, you won't be charged.`;
+        }
         return `${restaurantName}: Order #${payload.orderNumber} was ${s}${payload.rejectionReason ? ` — ${payload.rejectionReason}` : ""}.`;
       }
       return null;

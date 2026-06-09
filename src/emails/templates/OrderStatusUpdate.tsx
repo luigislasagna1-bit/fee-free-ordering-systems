@@ -99,10 +99,15 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
   const normalized = status.toLowerCase();
   // Map "canceled" (US) → "cancelled" (UK) so both spellings hit the same copy.
   const key = normalized === "canceled" ? "cancelled" : normalized;
+  // A timed-out order is auto-rejected (rejectionReason starts with
+  // "Auto-rejected") — relabel the badge MISSED (the kitchen's word, already
+  // translated in all 38 locales) and hide the internal reason text from the
+  // customer. Same rule as the kitchen + the status page. Luigi 2026-06-09.
+  const isMissed = normalized === "rejected" && (rejectionReason ?? "").trim().startsWith("Auto-rejected");
   const copyKeys: StatusCopyKeys | undefined = STATUS_COPY_KEYS[key];
   const title = copyKeys ? t(copyKeys.titleKey) : t("email.orderStatus.fallbackTitle");
   const body = copyKeys ? t(copyKeys.bodyKey) : t("email.orderStatus.fallbackBody");
-  const badge = copyKeys ? t(copyKeys.badgeKey) : status;
+  const badge = isMissed ? t("kitchen.missed") : (copyKeys ? t(copyKeys.badgeKey) : status);
   const badgeColor = copyKeys?.badgeColor ?? "sky";
   const isNegative = copyKeys?.isNegative ?? false;
   const reason = rejectionReason?.trim();
@@ -137,7 +142,7 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
           <Badge color={badgeColor}>{badge}</Badge>
         </div>
         <P>{statusMessage ?? body}</P>
-        {isNegative && reason && (
+        {isNegative && reason && !isMissed && (
           <InfoCard label={t("email.orderStatus.reasonLabel")} accent="rose">
             {reason}
           </InfoCard>

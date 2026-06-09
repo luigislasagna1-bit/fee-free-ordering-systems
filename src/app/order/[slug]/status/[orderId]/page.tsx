@@ -27,6 +27,10 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   const { slug, orderId } = use(params);
   const router = useRouter();
   const t = useTranslations("customer.orderStatus");
+  // Reused for the "Missed" label on a timed-out (auto-rejected) order — the
+  // same word the kitchen uses, already translated in all 38 locales. Luigi
+  // 2026-06-09.
+  const tk = useTranslations("kitchen");
 
   const TRACKING_STEPS = [
     { key: "pending", label: t("stepPendingLabel"), icon: Clock, desc: t("stepPendingDesc") },
@@ -216,6 +220,10 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   );
 
   const isRejected = order.status === "rejected" || order.status === "cancelled";
+  // A timed-out order is auto-rejected (rejectionReason starts with
+  // "Auto-rejected") — show the customer MISSED, not "Order Rejected", and hide
+  // the internal reason text. Matches the kitchen + the email. Luigi 2026-06-09.
+  const isMissed = order.status === "rejected" && (order.rejectionReason?.startsWith("Auto-rejected") ?? false);
   const isTerminal = isRejected || order.status === "completed";
   // A SCHEDULED order (customer picked a future time) should show that time —
   // not a "ready in ~20 min" prep countdown, which is meaningless for an order
@@ -325,9 +333,9 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
             <div className="bg-white rounded-2xl shadow-sm border border-red-100 p-8 text-center mb-6">
               <XCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
               <h2 className="text-xl font-bold text-gray-900 mb-2">
-                {order.status === "rejected" ? t("orderRejected") : t("orderCancelled")}
+                {order.status === "rejected" ? (isMissed ? tk("missed") : t("orderRejected")) : t("orderCancelled")}
               </h2>
-              {order.rejectionReason && <p className="text-gray-600 mb-4">{t("rejectionReason", { reason: order.rejectionReason })}</p>}
+              {order.rejectionReason && !isMissed && <p className="text-gray-600 mb-4">{t("rejectionReason", { reason: order.rejectionReason })}</p>}
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <Link
                   href={cameFromMarketplace ? "/" : `/order/${slug}`}
