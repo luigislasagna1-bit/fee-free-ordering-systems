@@ -961,7 +961,18 @@ export async function POST(req: NextRequest) {
     const suppressedSet = new Set(
       Array.isArray(bodySuppressedPromoIds) ? bodySuppressedPromoIds.map((x: unknown) => String(x)) : [],
     );
-    const activePromos = activePromosAll.filter((p) => !suppressedSet.has(p.id));
+    // Acquisition channel gate (Luigi 2026-06-09): a marketplace-channel order
+    // only gets "marketplace"/"both" promos; a website order only "website"/
+    // "both". Resolved authoritatively here (via isOnMarketplace) so the charged
+    // discount matches the cart preview; reused for the viaMarketplace stamp +
+    // billing below, so isOnMarketplace runs exactly once.
+    const orderViaMarketplace = from === "marketplace" ? await isOnMarketplace(restaurant.id) : false;
+    const orderChannel = orderViaMarketplace ? "marketplace" : "website";
+    const activePromos = activePromosAll.filter(
+      (p) =>
+        !suppressedSet.has(p.id) &&
+        ((p as any).channel === "both" || (p as any).channel === orderChannel),
+    );
     // ── Delivery fee + zone resolution ──────────────────────────────────────
     // Resolved BEFORE applyPromotions() so the engine can evaluate the
     // Delivery Area restriction (Phase 2a) — free-delivery promos with
@@ -1331,9 +1342,9 @@ export async function POST(req: NextRequest) {
     // membership is enforced server-side. Direct widget/website orders
     // (no ?from=marketplace) stay viaMarketplace=false → never billed.
     const claimsMarketplace = from === "marketplace";
-    const viaMarketplace = claimsMarketplace
-      ? await isOnMarketplace(restaurant.id)
-      : false;
+    // Resolved once above (orderViaMarketplace) for promo channel gating — reuse
+    // it so isOnMarketplace isn't queried twice for the same order.
+    const viaMarketplace = orderViaMarketplace;
     const savedVsUberEatsCents = viaMarketplace
       ? computeUberEatsEquivalentCents(Math.round(serverTotal * 100))
       : null;

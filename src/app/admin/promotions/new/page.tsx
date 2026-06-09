@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import { isOnMarketplace } from "@/lib/marketplace";
 import { currencySymbol } from "@/lib/utils";
 import { PromoWizard } from "../_wizard/PromoWizard";
 
@@ -12,7 +13,7 @@ export default async function NewPromotionPage() {
 
   const restaurantId = user.restaurantId;
 
-  const [restaurant, categories, menuItems, deliveryZones, hasAdvanced] =
+  const [restaurant, categories, menuItems, deliveryZones, hasAdvanced, onMarketplace] =
     await Promise.all([
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
@@ -40,6 +41,7 @@ export default async function NewPromotionPage() {
         select: { id: true, name: true },
       }),
       hasFeature(restaurantId, "advanced_promo_types"),
+      isOnMarketplace(restaurantId),
     ]);
 
   let paymentMethods: string[] = [];
@@ -61,6 +63,7 @@ export default async function NewPromotionPage() {
       paymentMethods={paymentMethods}
       deliveryZones={deliveryZones}
       currencySymbol={currencySymbol(restaurant?.currency)}
+      isOnMarketplace={onMarketplace}
     />
   );
 }

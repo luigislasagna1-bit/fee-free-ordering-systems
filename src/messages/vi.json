@@ -1884,7 +1884,12 @@
       "bannerHeadlineOptional": "(tùy chọn — mặc định là tên)",
       "bannerHeadlinePlaceholder": "ví dụ: Giảm 20% bữa trưa — hôm nay thôi!",
       "promoIsActiveLabel": "Khuyến mãi đang hoạt động",
-      "promoIsActiveSub": "Nếu tắt, khuyến mãi sẽ không áp dụng dù điều kiện được đáp ứng."
+      "promoIsActiveSub": "Nếu tắt, khuyến mãi sẽ không áp dụng dù điều kiện được đáp ứng.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Khách hàng Marketplace là nhóm đối tượng riêng — chọn nơi áp dụng ưu đãi này.",
+      "channelWebsiteLabel": "Chỉ trang web của bạn",
+      "channelMarketplaceLabel": "Chỉ Marketplace",
+      "channelBothLabel": "Cả hai"
     },
     "customersList": {
       "heading": "Khách Hàng",

@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(opsional — default ke nama)",
       "bannerHeadlinePlaceholder": "mis. Diskon 20% makan siang — hari ini saja!",
       "promoIsActiveLabel": "Promo aktif",
-      "promoIsActiveSub": "Jika mati, promo tidak akan berlaku meskipun kondisinya terpenuhi."
+      "promoIsActiveSub": "Jika mati, promo tidak akan berlaku meskipun kondisinya terpenuhi.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Pelanggan Marketplace adalah audiens terpisah — pilih di mana penawaran ini berlaku.",
+      "channelWebsiteLabel": "Hanya situs web Anda",
+      "channelMarketplaceLabel": "Hanya Marketplace",
+      "channelBothLabel": "Keduanya"
     },
     "customersList": {
       "heading": "Pelanggan",

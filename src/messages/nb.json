@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(valgfritt — standard er navnet)",
       "bannerHeadlinePlaceholder": "f.eks. 20% av lunsj — kun i dag!",
       "promoIsActiveLabel": "Tilbud er aktivt",
-      "promoIsActiveSub": "Hvis av, gjelder ikke tilbudet selv om betingelsene er oppfylt."
+      "promoIsActiveSub": "Hvis av, gjelder ikke tilbudet selv om betingelsene er oppfylt.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace-kunder er et eget publikum – velg hvor dette tilbudet gjelder.",
+      "channelWebsiteLabel": "Bare nettstedet ditt",
+      "channelMarketplaceLabel": "Bare Marketplace",
+      "channelBothLabel": "Begge"
     },
     "customersList": {
       "heading": "Kunder",

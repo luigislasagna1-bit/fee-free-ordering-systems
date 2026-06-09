@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import { isOnMarketplace } from "@/lib/marketplace";
 import { currencySymbol } from "@/lib/utils";
 import { PromoWizard, PromoRow } from "../../_wizard/PromoWizard";
 
@@ -17,7 +18,7 @@ export default async function EditPromotionPage({
   const restaurantId = user.restaurantId;
   const { id } = await params;
 
-  const [promo, restaurant, categories, menuItems, deliveryZones, hasAdvanced] =
+  const [promo, restaurant, categories, menuItems, deliveryZones, hasAdvanced, onMarketplace] =
     await Promise.all([
       prisma.promotion.findFirst({
         where: { id, restaurantId },
@@ -48,6 +49,7 @@ export default async function EditPromotionPage({
         select: { id: true, name: true },
       }),
       hasFeature(restaurantId, "advanced_promo_types"),
+      isOnMarketplace(restaurantId),
     ]);
 
   if (!promo) notFound();
@@ -70,6 +72,7 @@ export default async function EditPromotionPage({
     promotionType: promo.promotionType,
     isActive: promo.isActive,
     stackingRule: promo.stackingRule,
+    channel: promo.channel,
     orderType: promo.orderType,
     customerType: promo.customerType,
     minimumOrder: promo.minimumOrder,
@@ -104,6 +107,7 @@ export default async function EditPromotionPage({
       deliveryZones={deliveryZones}
       initialPromo={initialPromo}
       currencySymbol={currencySymbol((restaurant as any)?.currency)}
+      isOnMarketplace={onMarketplace}
     />
   );
 }

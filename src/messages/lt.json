@@ -2586,7 +2586,12 @@
       "bannerHeadlineOptional": "(neprivaloma — pagal numatymą naudojamas pavadinimas)",
       "bannerHeadlinePlaceholder": "pvz. 20 % nuolaida pietums — tik šiandien!",
       "promoIsActiveLabel": "Akcija aktyvi",
-      "promoIsActiveSub": "Jei išjungta, akcija nebus taikoma, net jei jos sąlygos įvykdytos."
+      "promoIsActiveSub": "Jei išjungta, akcija nebus taikoma, net jei jos sąlygos įvykdytos.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace klientai yra atskira auditorija — pasirinkite, kur galioja šis pasiūlymas.",
+      "channelWebsiteLabel": "Tik jūsų svetainė",
+      "channelMarketplaceLabel": "Tik Marketplace",
+      "channelBothLabel": "Abu"
     },
     "customersList": {
       "heading": "Klientai",

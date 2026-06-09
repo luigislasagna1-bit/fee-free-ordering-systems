@@ -41,6 +41,8 @@ export type Step3Form = {
   onceLifetimePerClient: boolean;
   // Exclusivity
   stackingRule: string; // standard | exclusive | master
+  // Acquisition channel — website | marketplace | both
+  channel: string;
   // Limited Showtime (display-time gate)
   limitedShowtimeSchedules: ShowtimeSchedule[];
   // Display
@@ -74,12 +76,16 @@ export function StepRestrictions({
   paymentMethods,
   deliveryZones,
   currencySymbol = "$",
+  isOnMarketplace = false,
 }: {
   form: Step3Form;
   setForm: (patch: Partial<Step3Form>) => void;
   paymentMethods: string[]; // restaurant's enabled payment slugs
   deliveryZones: { id: string; name: string }[];
   currencySymbol?: string;
+  /** Only restaurants actually listed on the marketplace see the channel
+   *  picker — otherwise the choice is meaningless. Luigi 2026-06-09. */
+  isOnMarketplace?: boolean;
 }) {
   const t = useTranslations("admin.promoStepRestrictions");
 
@@ -107,6 +113,12 @@ export function StepRestrictions({
     { value: "standard", label: t("stackingStandardLabel"), desc: t("stackingStandardDesc") },
     { value: "exclusive", label: t("stackingExclusiveLabel"), desc: t("stackingExclusiveDesc") },
     { value: "master", label: t("stackingMasterLabel"), desc: t("stackingMasterDesc") },
+  ];
+
+  const CHANNEL_OPTIONS = [
+    { value: "website", label: t("channelWebsiteLabel") },
+    { value: "marketplace", label: t("channelMarketplaceLabel") },
+    { value: "both", label: t("channelBothLabel") },
   ];
 
   const toggleDay = (d: number) => {
@@ -417,6 +429,37 @@ export function StepRestrictions({
           })}
         </div>
       </Section>
+
+      {/* MARKETPLACE CHANNEL — only shown to restaurants actually listed on
+          the marketplace (the choice is meaningless otherwise). Luigi 2026-06-09. */}
+      {isOnMarketplace && (
+        <Section title={t("channelTitle")} subtitle={t("channelSubtitle")}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {CHANNEL_OPTIONS.map((r) => {
+              const active = form.channel === r.value;
+              return (
+                <button
+                  key={r.value}
+                  onClick={() => setForm({ channel: r.value })}
+                  className={`flex items-center justify-center p-3 rounded-xl border-2 text-center transition ${
+                    active
+                      ? "border-emerald-500 bg-emerald-50"
+                      : "border-gray-200 hover:border-emerald-200"
+                  }`}
+                >
+                  <span
+                    className={`text-sm font-semibold ${
+                      active ? "text-emerald-700" : "text-gray-700"
+                    }`}
+                  >
+                    {r.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </Section>
+      )}
 
       {/* LIMITED SHOWTIME (visibility windows) */}
       <Section

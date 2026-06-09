@@ -1884,7 +1884,12 @@
       "bannerHeadlineOptional": "(opcjonalny — domyślnie nazwa)",
       "bannerHeadlinePlaceholder": "np. 20% zniżki na lunch — tylko dziś!",
       "promoIsActiveLabel": "Promocja jest aktywna",
-      "promoIsActiveSub": "Gdy wyłączone, promocja nie będzie stosowana, nawet jeśli warunki są spełnione."
+      "promoIsActiveSub": "Gdy wyłączone, promocja nie będzie stosowana, nawet jeśli warunki są spełnione.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Klienci Marketplace to osobna grupa odbiorców — wybierz, gdzie obowiązuje ta oferta.",
+      "channelWebsiteLabel": "Tylko Twoja witryna",
+      "channelMarketplaceLabel": "Tylko Marketplace",
+      "channelBothLabel": "Oba"
     },
     "customersList": {
       "heading": "Klienci",

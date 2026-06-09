@@ -17,6 +17,10 @@ export async function POST(req: NextRequest) {
     // customer session — forwarding both lets the engine evaluate the
     // Delivery Area + Client Type ("member") restrictions correctly.
     deliveryZoneId, isMember,
+    // Acquisition channel ("website" | "marketplace") — gates which promos
+    // apply: a marketplace-channel customer only gets "marketplace"/"both"
+    // promos; a website customer only "website"/"both". Luigi 2026-06-09.
+    channel,
     // Chosen fulfillment time for a scheduled ("order for later") cart, so the
     // Happy-Hour window is evaluated against WHEN the order is for — matching
     // what the order-placement route does. ASAP carts omit it. Fabrizio
@@ -43,7 +47,10 @@ export async function POST(req: NextRequest) {
   const suppressed = new Set(
     Array.isArray(suppressedPromoIds) ? suppressedPromoIds.map((x: unknown) => String(x)) : [],
   );
-  const activePromos = activePromosAll.filter((p) => !suppressed.has(p.id));
+  const reqChannel = channel === "marketplace" ? "marketplace" : "website";
+  const activePromos = activePromosAll.filter(
+    (p) => !suppressed.has(p.id) && ((p as any).channel === "both" || (p as any).channel === reqChannel),
+  );
 
   // ── First-buy eligibility for the cart preview (Luigi 2026-06-09) ─────────
   // The cart shows the first-buy / new-customer discount OPTIMISTICALLY for a

@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(по желание — по подразбиране е името)",
       "bannerHeadlinePlaceholder": "напр. 20% отстъпка за обяд — само днес!",
       "promoIsActiveLabel": "Промоцията е активна",
-      "promoIsActiveSub": "Ако е изключена, промоцията няма да се прилага дори при отговаряне на условията."
+      "promoIsActiveSub": "Ако е изключена, промоцията няма да се прилага дори при отговаряне на условията.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Клиентите на Marketplace са отделна аудитория — изберете къде да се прилага тази оферта.",
+      "channelWebsiteLabel": "Само вашия уебсайт",
+      "channelMarketplaceLabel": "Само Marketplace",
+      "channelBothLabel": "И двете"
     },
     "customersList": {
       "heading": "Клиенти",

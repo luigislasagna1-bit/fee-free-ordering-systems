@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "（任意 — デフォルトは名前）",
       "bannerHeadlinePlaceholder": "例：ランチ20%オフ — 本日限り！",
       "promoIsActiveLabel": "プロモを有効にする",
-      "promoIsActiveSub": "オフにすると、条件を満たしていてもプロモは適用されません。"
+      "promoIsActiveSub": "オフにすると、条件を満たしていてもプロモは適用されません。",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "マーケットプレイスの顧客は別の客層です。この特典を適用する場所を選んでください。",
+      "channelWebsiteLabel": "自社サイトのみ",
+      "channelMarketplaceLabel": "マーケットプレイスのみ",
+      "channelBothLabel": "両方"
     },
     "customersList": {
       "heading": "顧客",

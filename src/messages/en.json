@@ -2275,7 +2275,12 @@
       "bannerHeadlineOptional": "(optional — defaults to name)",
       "bannerHeadlinePlaceholder": "e.g. 20% off lunch — today only!",
       "promoIsActiveLabel": "Promo is active",
-      "promoIsActiveSub": "If off, the promo won't apply even if its conditions are met."
+      "promoIsActiveSub": "If off, the promo won't apply even if its conditions are met.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace customers are a separate audience — choose where this offer runs.",
+      "channelWebsiteLabel": "Your website only",
+      "channelMarketplaceLabel": "Marketplace only",
+      "channelBothLabel": "Both"
     },
     "customersList": {
       "heading": "Customers",

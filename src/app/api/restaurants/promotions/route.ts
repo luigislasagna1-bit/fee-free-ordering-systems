@@ -20,6 +20,7 @@ import {
   normalizeOrderType,
   normalizeRuleConfig,
   normalizeStackingRule,
+  normalizeChannel,
 } from "@/lib/promo-fields";
 
 export async function GET() {
@@ -59,7 +60,7 @@ export async function POST(req: NextRequest) {
     name, description, promotionType, isActive, stackingRule, orderType, customerType,
     minimumOrder, rules, ruleConfig,
     daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
-    scope,
+    scope, channel,
     usableHourStart, usableHourEnd, showOnBanner, bannerHeadline,
     paymentMethodSlugs, deliveryZoneIds, onceLifetimePerClient, limitedShowtimeSchedules,
     imageUrl, displayMode, highlightThreshold,
@@ -138,6 +139,7 @@ export async function POST(req: NextRequest) {
       autoApply: autoApply ?? true,
       couponCode: couponCode || null,
       scope: resolvedScope,
+      channel: normalizeChannel(channel),
       usableHourStart: clampMin(usableHourStart),
       usableHourEnd: clampMin(usableHourEnd),
       showOnBanner: showOnBanner === undefined ? true : !!showOnBanner,

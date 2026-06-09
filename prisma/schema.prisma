@@ -1341,6 +1341,19 @@ model Promotion {
   ///                evaluates both location-scoped and parent-brand-scoped
   ///                active promos for each cart.
   scope           String    @default("location")
+  /// Acquisition CHANNEL this promo applies to (Luigi 2026-06-09):
+  ///   "website"     → only the restaurant's own ordering page (default)
+  ///   "marketplace" → only customers who arrived via the marketplace
+  ///                   (from=marketplace / Order.viaMarketplace)
+  ///   "both"        → applies on both channels
+  /// The marketplace customer base is distinct from the website's, so an owner
+  /// can run separate offers per channel (incl. a separate marketplace
+  /// first-buy). Default "website" = opt-in for the marketplace, matching
+  /// "if not selected, it won't extend to the marketplace". The promo editor
+  /// only shows the picker when the restaurant is actually listed on the
+  /// marketplace (isOnMarketplace). Evaluated for EVERY promo type, incl.
+  /// Kickstarter/Autopilot pre-made promos.
+  channel         String    @default("website")
 
   // ── GloriaFood-parity marketing suite (2026-05-29) ───────────────────
   //

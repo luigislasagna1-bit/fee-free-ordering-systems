@@ -20,6 +20,7 @@ import {
   normalizeOrderType,
   normalizeRuleConfig,
   normalizeStackingRule,
+  normalizeChannel,
 } from "@/lib/promo-fields";
 
 async function getRestaurantId() {
@@ -37,7 +38,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     name, description, promotionType, isActive, stackingRule, orderType, customerType,
     minimumOrder, rules, ruleConfig,
     daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
-    scope,
+    scope, channel,
     usableHourStart, usableHourEnd, showOnBanner, bannerHeadline,
     paymentMethodSlugs, deliveryZoneIds, onceLifetimePerClient, limitedShowtimeSchedules,
     imageUrl, displayMode, highlightThreshold,
@@ -134,6 +135,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       }),
       ...(imageUrl !== undefined && { imageUrl: normalizeImageUrl(imageUrl) }),
       ...(displayMode !== undefined && { displayMode: normalizeDisplayMode(displayMode) }),
+      ...(channel !== undefined && { channel: normalizeChannel(channel) }),
       ...(highlightThreshold !== undefined && { highlightThreshold: normalizeNonNegativeFloat(highlightThreshold) }),
       ...(requiredAddOnSlugUpdate !== undefined && { requiredAddOnSlug: requiredAddOnSlugUpdate }),
       ...scopeUpdate,

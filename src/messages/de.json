@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(optional — Standard ist der Name)",
       "bannerHeadlinePlaceholder": "z. B. 20 % auf das Mittagsmenü — nur heute!",
       "promoIsActiveLabel": "Aktion ist aktiv",
-      "promoIsActiveSub": "Wenn deaktiviert, wird die Aktion nicht angewendet, auch wenn ihre Bedingungen erfüllt sind."
+      "promoIsActiveSub": "Wenn deaktiviert, wird die Aktion nicht angewendet, auch wenn ihre Bedingungen erfüllt sind.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace-Kunden sind eine eigene Zielgruppe – wählen Sie, wo dieses Angebot gilt.",
+      "channelWebsiteLabel": "Nur Ihre Website",
+      "channelMarketplaceLabel": "Nur Marketplace",
+      "channelBothLabel": "Beide"
     },
     "customersList": {
       "heading": "Kunden",

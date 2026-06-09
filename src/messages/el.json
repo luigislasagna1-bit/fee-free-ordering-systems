@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(προαιρετικό — προεπιλογή στο όνομα)",
       "bannerHeadlinePlaceholder": "π.χ. 20% έκπτωση στο μεσημεριανό — μόνο σήμερα!",
       "promoIsActiveLabel": "Η προσφορά είναι ενεργή",
-      "promoIsActiveSub": "Εάν είναι ανενεργή, η προσφορά δεν θα εφαρμοστεί ακόμα και αν πληρούνται οι προϋποθέσεις."
+      "promoIsActiveSub": "Εάν είναι ανενεργή, η προσφορά δεν θα εφαρμοστεί ακόμα και αν πληρούνται οι προϋποθέσεις.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Οι πελάτες του Marketplace είναι ξεχωριστό κοινό — επιλέξτε πού ισχύει αυτή η προσφορά.",
+      "channelWebsiteLabel": "Μόνο ο ιστότοπός σας",
+      "channelMarketplaceLabel": "Μόνο Marketplace",
+      "channelBothLabel": "Και τα δύο"
     },
     "customersList": {
       "heading": "Πελάτες",

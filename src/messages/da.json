@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(valgfri — bruger navn som standard)",
       "bannerHeadlinePlaceholder": "f.eks. 20 % rabat på frokost — kun i dag!",
       "promoIsActiveLabel": "Kampagne er aktiv",
-      "promoIsActiveSub": "Hvis slået fra gælder kampagnen ikke, selv om dens betingelser er opfyldt."
+      "promoIsActiveSub": "Hvis slået fra gælder kampagnen ikke, selv om dens betingelser er opfyldt.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace-kunder er et separat publikum – vælg, hvor dette tilbud gælder.",
+      "channelWebsiteLabel": "Kun dit website",
+      "channelMarketplaceLabel": "Kun Marketplace",
+      "channelBothLabel": "Begge"
     },
     "customersList": {
       "heading": "Kunder",

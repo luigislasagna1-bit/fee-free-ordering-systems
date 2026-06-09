@@ -2586,7 +2586,12 @@
       "bannerHeadlineOptional": "(voliteľné — predvolene názov)",
       "bannerHeadlinePlaceholder": "napr. 20 % zľava na obed — iba dnes!",
       "promoIsActiveLabel": "Promo akcia je aktívna",
-      "promoIsActiveSub": "Ak je vypnuté, promo akcia sa neaplikuje, ani keď sú splnené jej podmienky."
+      "promoIsActiveSub": "Ak je vypnuté, promo akcia sa neaplikuje, ani keď sú splnené jej podmienky.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Zákazníci Marketplace sú samostatné publikum — vyberte, kde táto ponuka platí.",
+      "channelWebsiteLabel": "Iba váš web",
+      "channelMarketplaceLabel": "Iba Marketplace",
+      "channelBothLabel": "Oboje"
     },
     "customersList": {
       "heading": "Zákazníci",

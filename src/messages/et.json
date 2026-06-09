@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(valikuline — vaikimisi nimi)",
       "bannerHeadlinePlaceholder": "nt 20% soodustust lõunale — ainult täna!",
       "promoIsActiveLabel": "Kampaania on aktiivne",
-      "promoIsActiveSub": "Kui väljas, ei rakendu kampaania, isegi kui selle tingimused on täidetud."
+      "promoIsActiveSub": "Kui väljas, ei rakendu kampaania, isegi kui selle tingimused on täidetud.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace'i kliendid on eraldi sihtrühm — valige, kus see pakkumine kehtib.",
+      "channelWebsiteLabel": "Ainult teie veebisait",
+      "channelMarketplaceLabel": "Ainult Marketplace",
+      "channelBothLabel": "Mõlemad"
     },
     "customersList": {
       "heading": "Kliendid",

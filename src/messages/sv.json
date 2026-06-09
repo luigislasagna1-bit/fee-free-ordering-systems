@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(valfri — standard är kampanjnamnet)",
       "bannerHeadlinePlaceholder": "t.ex. 20% rabatt på lunch — bara idag!",
       "promoIsActiveLabel": "Kampanj är aktiv",
-      "promoIsActiveSub": "Om av tillämpas inte kampanjen även om dess villkor uppfylls."
+      "promoIsActiveSub": "Om av tillämpas inte kampanjen även om dess villkor uppfylls.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace-kunder är en egen målgrupp – välj var det här erbjudandet gäller.",
+      "channelWebsiteLabel": "Endast din webbplats",
+      "channelMarketplaceLabel": "Endast Marketplace",
+      "channelBothLabel": "Båda"
     },
     "customersList": {
       "heading": "Kunder",

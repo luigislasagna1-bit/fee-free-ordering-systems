@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(opcionalno — podrazumevano je naziv)",
       "bannerHeadlinePlaceholder": "npr. 20% popusta na ručak — samo danas!",
       "promoIsActiveLabel": "Promo ponuda je aktivna",
-      "promoIsActiveSub": "Ako je isključeno, promo ponuda se neće primeniti čak i ako su ispunjeni uslovi."
+      "promoIsActiveSub": "Ako je isključeno, promo ponuda se neće primeniti čak i ako su ispunjeni uslovi.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Купци Marketplace-а су посебна публика — изаберите где важи ова понуда.",
+      "channelWebsiteLabel": "Само ваш сајт",
+      "channelMarketplaceLabel": "Само Marketplace",
+      "channelBothLabel": "Оба"
     },
     "customersList": {
       "heading": "Kupci",

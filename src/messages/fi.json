@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(valinnainen — oletuksena nimi)",
       "bannerHeadlinePlaceholder": "esim. 20 % alennus lounaasta — vain tänään!",
       "promoIsActiveLabel": "Tarjous on aktiivinen",
-      "promoIsActiveSub": "Jos pois päältä, tarjous ei kohdistuu, vaikka sen ehdot täyttyisivät."
+      "promoIsActiveSub": "Jos pois päältä, tarjous ei kohdistuu, vaikka sen ehdot täyttyisivät.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace-asiakkaat ovat eri yleisö — valitse, missä tämä tarjous on voimassa.",
+      "channelWebsiteLabel": "Vain verkkosivustosi",
+      "channelMarketplaceLabel": "Vain Marketplace",
+      "channelBothLabel": "Molemmat"
     },
     "customersList": {
       "heading": "Asiakkaat",

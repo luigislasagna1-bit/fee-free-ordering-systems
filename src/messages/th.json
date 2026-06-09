@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(ไม่บังคับ — ค่าเริ่มต้นคือชื่อ)",
       "bannerHeadlinePlaceholder": "เช่น ลด 20% มื้อกลางวัน — วันนี้เท่านั้น!",
       "promoIsActiveLabel": "โปรโมชั่นใช้งานอยู่",
-      "promoIsActiveSub": "หากปิด โปรโมชั่นจะไม่ทำงานแม้ตรงเงื่อนไข"
+      "promoIsActiveSub": "หากปิด โปรโมชั่นจะไม่ทำงานแม้ตรงเงื่อนไข",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "ลูกค้า Marketplace เป็นกลุ่มผู้ชมแยกต่างหาก — เลือกว่าข้อเสนอนี้จะใช้ที่ใด",
+      "channelWebsiteLabel": "เฉพาะเว็บไซต์ของคุณ",
+      "channelMarketplaceLabel": "เฉพาะ Marketplace",
+      "channelBothLabel": "ทั้งสอง"
     },
     "customersList": {
       "heading": "ลูกค้า",

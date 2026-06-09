@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(facultatif — par défaut le nom)",
       "bannerHeadlinePlaceholder": "ex. 20 % de remise sur le déjeuner — aujourd'hui seulement !",
       "promoIsActiveLabel": "Promo active",
-      "promoIsActiveSub": "Désactivé, la promo ne s'appliquera pas même si ses conditions sont remplies."
+      "promoIsActiveSub": "Désactivé, la promo ne s'appliquera pas même si ses conditions sont remplies.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Les clients du Marketplace sont un public distinct — choisissez où cette offre s'applique.",
+      "channelWebsiteLabel": "Votre site web uniquement",
+      "channelMarketplaceLabel": "Marketplace uniquement",
+      "channelBothLabel": "Les deux"
     },
     "customersList": {
       "heading": "Clients",

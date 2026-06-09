@@ -100,6 +100,14 @@ export function normalizeDisplayMode(v: unknown): string {
   return "menu_visible";
 }
 
+/** Acquisition channel a promo applies to: website (default) | marketplace |
+ *  both. Default "website" so the marketplace is opt-in. Luigi 2026-06-09. */
+export function normalizeChannel(v: unknown): string {
+  const allowed = ["website", "marketplace", "both"];
+  if (typeof v === "string" && allowed.includes(v)) return v;
+  return "website";
+}
+
 /** Round-trip a Json-typed payload to a parsed object/array suitable for
  *  Prisma's Json column. Garbage in → {} out. */
 export function normalizeRuleConfig(v: unknown): unknown {

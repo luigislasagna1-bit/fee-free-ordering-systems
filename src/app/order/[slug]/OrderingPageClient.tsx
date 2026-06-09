@@ -609,6 +609,7 @@ export function OrderingPageClient({
   fromHostedSite = false,
   hostedSiteBackUrl,
   promoBanners = [],
+  customerChannel = "website",
   customerIsReturning = false,
   currentCustomer = null,
   todayHolidayName = null,
@@ -668,6 +669,11 @@ export function OrderingPageClient({
    *  server-side in page.tsx). Anonymous guests default false + get the
    *  client-side same-device guard. */
   customerIsReturning?: boolean;
+  /** Acquisition channel resolved server-side ("marketplace" only when the
+   *  customer arrived via the marketplace AND the restaurant is listed).
+   *  Forwarded to apply-promos so the cart preview matches what the order route
+   *  will actually apply. */
+  customerChannel?: "website" | "marketplace";
   /** The logged-in per-restaurant customer at this restaurant, if any.
    *  Server-resolved via getCurrentRestaurantCustomer in page.tsx and
    *  passed in so the header can render the right Sign-in vs. Hi-name
@@ -1558,6 +1564,9 @@ export function OrderingPageClient({
         // e.g. pickup orders skip deliveryZoneId.
         deliveryZoneId: orderType === "delivery" && resolvedZone?.inside ? resolvedZone.zone.id : undefined,
         isMember: !!currentCustomer,
+        // Acquisition channel → the preview only applies promos channelled to
+        // this customer's channel (website vs marketplace). Luigi 2026-06-09.
+        channel: customerChannel,
         // First-buy preview gating: optimistically treat the visitor as NEW
         // unless we can already tell they're returning (same rule as the hero
         // banner) — so the first-order discount shows in the cart. The server

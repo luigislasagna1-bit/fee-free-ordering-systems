@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(opțional — implicit la nume)",
       "bannerHeadlinePlaceholder": "ex. 20% reducere la prânz — doar azi!",
       "promoIsActiveLabel": "Promoția este activă",
-      "promoIsActiveSub": "Dacă este dezactivată, promoția nu se aplică chiar dacă condițiile sunt îndeplinite."
+      "promoIsActiveSub": "Dacă este dezactivată, promoția nu se aplică chiar dacă condițiile sunt îndeplinite.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Clienții Marketplace sunt un public separat — alege unde se aplică această ofertă.",
+      "channelWebsiteLabel": "Doar site-ul dvs.",
+      "channelMarketplaceLabel": "Doar Marketplace",
+      "channelBothLabel": "Ambele"
     },
     "customersList": {
       "heading": "Clienți",

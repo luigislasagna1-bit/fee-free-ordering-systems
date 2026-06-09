@@ -1884,7 +1884,12 @@
       "bannerHeadlineOptional": "(opcionális — alapértelmezetten a neve)",
       "bannerHeadlinePlaceholder": "pl. 20% kedvezmény az ebédre — csak ma!",
       "promoIsActiveLabel": "Promóció aktív",
-      "promoIsActiveSub": "Ha ki van kapcsolva, a promóció nem érvényes, még ha a feltételek teljesülnek is."
+      "promoIsActiveSub": "Ha ki van kapcsolva, a promóció nem érvényes, még ha a feltételek teljesülnek is.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "A Marketplace ügyfelei külön közönség — válassza ki, hol érvényes ez az ajánlat.",
+      "channelWebsiteLabel": "Csak a webhelye",
+      "channelMarketplaceLabel": "Csak Marketplace",
+      "channelBothLabel": "Mindkettő"
     },
     "customersList": {
       "heading": "Ügyfelek",

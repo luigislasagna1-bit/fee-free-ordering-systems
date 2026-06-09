@@ -2244,7 +2244,12 @@
       "bannerHeadlineOptional": "(वैकल्पिक — नाम पर डिफ़ॉल्ट)",
       "bannerHeadlinePlaceholder": "जैसे लंच पर 20% छूट — केवल आज!",
       "promoIsActiveLabel": "प्रोमो सक्रिय है",
-      "promoIsActiveSub": "यदि बंद है, तो प्रोमो लागू नहीं होगा, भले ही इसकी शर्तें पूरी हों।"
+      "promoIsActiveSub": "यदि बंद है, तो प्रोमो लागू नहीं होगा, भले ही इसकी शर्तें पूरी हों।",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace के ग्राहक एक अलग दर्शक वर्ग हैं — चुनें कि यह ऑफ़र कहाँ लागू हो।",
+      "channelWebsiteLabel": "केवल आपकी वेबसाइट",
+      "channelMarketplaceLabel": "केवल Marketplace",
+      "channelBothLabel": "दोनों"
     },
     "customersList": {
       "heading": "ग्राहक",

@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(volitelné — výchozí je název)",
       "bannerHeadlinePlaceholder": "např. 20% sleva na oběd — jen dnes!",
       "promoIsActiveLabel": "Akce je aktivní",
-      "promoIsActiveSub": "Pokud je vypnuto, akce se nespustí ani při splnění podmínek."
+      "promoIsActiveSub": "Pokud je vypnuto, akce se nespustí ani při splnění podmínek.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Zákazníci Marketplace jsou samostatné publikum — vyberte, kde se tato nabídka uplatní.",
+      "channelWebsiteLabel": "Pouze váš web",
+      "channelMarketplaceLabel": "Pouze Marketplace",
+      "channelBothLabel": "Obojí"
     },
     "customersList": {
       "heading": "Zákazníci",

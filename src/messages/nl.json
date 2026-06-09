@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(optioneel — standaard de naam)",
       "bannerHeadlinePlaceholder": "bijv. 20% korting op lunch — alleen vandaag!",
       "promoIsActiveLabel": "Actie is actief",
-      "promoIsActiveSub": "Indien uitgeschakeld, wordt de actie niet toegepast, ook niet als aan de voorwaarden is voldaan."
+      "promoIsActiveSub": "Indien uitgeschakeld, wordt de actie niet toegepast, ook niet als aan de voorwaarden is voldaan.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace-klanten zijn een apart publiek — kies waar deze aanbieding geldt.",
+      "channelWebsiteLabel": "Alleen uw website",
+      "channelMarketplaceLabel": "Alleen Marketplace",
+      "channelBothLabel": "Beide"
     },
     "customersList": {
       "heading": "Klanten",

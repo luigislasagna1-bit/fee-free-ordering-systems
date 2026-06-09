@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(neobvezno — privzeto ime)",
       "bannerHeadlinePlaceholder": "npr. 20 % popust na kosilo — samo danes!",
       "promoIsActiveLabel": "Promocija je aktivna",
-      "promoIsActiveSub": "Če je izklopljeno, promocija ne bo veljala, tudi če so njeni pogoji izpolnjeni."
+      "promoIsActiveSub": "Če je izklopljeno, promocija ne bo veljala, tudi če so njeni pogoji izpolnjeni.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Stranke Marketplacea so ločeno občinstvo — izberite, kje velja ta ponudba.",
+      "channelWebsiteLabel": "Samo vaše spletno mesto",
+      "channelMarketplaceLabel": "Samo Marketplace",
+      "channelBothLabel": "Oboje"
     },
     "customersList": {
       "heading": "Stranke",

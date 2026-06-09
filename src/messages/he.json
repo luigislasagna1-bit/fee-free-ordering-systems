@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(אופציונלי — ברירת מחדל לשם)",
       "bannerHeadlinePlaceholder": "לדוג' 20% הנחה על צהריים — היום בלבד!",
       "promoIsActiveLabel": "המבצע פעיל",
-      "promoIsActiveSub": "אם כבוי, המבצע לא יחול אפילו אם תנאיו מתקיימים."
+      "promoIsActiveSub": "אם כבוי, המבצע לא יחול אפילו אם תנאיו מתקיימים.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "לקוחות ה-Marketplace הם קהל נפרד — בחר היכן ההצעה הזו חלה.",
+      "channelWebsiteLabel": "האתר שלך בלבד",
+      "channelMarketplaceLabel": "Marketplace בלבד",
+      "channelBothLabel": "שניהם"
     },
     "customersList": {
       "heading": "לקוחות",

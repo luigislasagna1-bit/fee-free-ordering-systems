@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(neobligāts — noklusējums ir nosaukums)",
       "bannerHeadlinePlaceholder": "piem. 20% atlaide pusdienām — tikai šodien!",
       "promoIsActiveLabel": "Akcija ir aktīva",
-      "promoIsActiveSub": "Ja izslēgts, akcija netiks piemērota pat tad, ja nosacījumi ir izpildīti."
+      "promoIsActiveSub": "Ja izslēgts, akcija netiks piemērota pat tad, ja nosacījumi ir izpildīti.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace klienti ir atsevišķa auditorija — izvēlieties, kur šis piedāvājums ir spēkā.",
+      "channelWebsiteLabel": "Tikai jūsu vietne",
+      "channelMarketplaceLabel": "Tikai Marketplace",
+      "channelBothLabel": "Abi"
     },
     "customersList": {
       "heading": "Klienti",

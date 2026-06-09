@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(необязательно — по умолчанию название)",
       "bannerHeadlinePlaceholder": "напр. 20% скидка на обед — только сегодня!",
       "promoIsActiveLabel": "Акция активна",
-      "promoIsActiveSub": "Если выключено, акция не применяется, даже если её условия выполнены."
+      "promoIsActiveSub": "Если выключено, акция не применяется, даже если её условия выполнены.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Клиенты Marketplace — отдельная аудитория. Выберите, где действует это предложение.",
+      "channelWebsiteLabel": "Только ваш сайт",
+      "channelMarketplaceLabel": "Только Marketplace",
+      "channelBothLabel": "Оба"
     },
     "customersList": {
       "heading": "Клиенты",

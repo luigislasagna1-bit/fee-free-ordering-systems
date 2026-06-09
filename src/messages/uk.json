@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(необов'язково — за замовчуванням назва акції)",
       "bannerHeadlinePlaceholder": "напр. 20% знижки на обід — лише сьогодні!",
       "promoIsActiveLabel": "Акція активна",
-      "promoIsActiveSub": "Якщо вимкнено, акція не застосовуватиметься, навіть якщо умови виконані."
+      "promoIsActiveSub": "Якщо вимкнено, акція не застосовуватиметься, навіть якщо умови виконані.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Клієнти Marketplace — окрема аудиторія. Виберіть, де діє ця пропозиція.",
+      "channelWebsiteLabel": "Лише ваш сайт",
+      "channelMarketplaceLabel": "Лише Marketplace",
+      "channelBothLabel": "Обидва"
     },
     "customersList": {
       "heading": "Клієнти",

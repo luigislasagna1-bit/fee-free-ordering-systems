@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "（可选——默认为促销名称）",
       "bannerHeadlinePlaceholder": "例如：午餐八折——仅限今天！",
       "promoIsActiveLabel": "促销已启用",
-      "promoIsActiveSub": "关闭后，即使满足条件，促销也不会生效。"
+      "promoIsActiveSub": "关闭后，即使满足条件，促销也不会生效。",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace 客户是不同的受众——请选择此优惠的适用范围。",
+      "channelWebsiteLabel": "仅限您的网站",
+      "channelMarketplaceLabel": "仅限 Marketplace",
+      "channelBothLabel": "两者"
     },
     "customersList": {
       "heading": "顾客",

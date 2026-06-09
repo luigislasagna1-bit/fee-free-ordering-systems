@@ -1884,7 +1884,12 @@
       "bannerHeadlineOptional": "(isteğe bağlı — varsayılan olarak ad kullanılır)",
       "bannerHeadlinePlaceholder": "örn. Öğle yemeğinde %20 indirim — yalnızca bugün!",
       "promoIsActiveLabel": "Promo aktif",
-      "promoIsActiveSub": "Kapalıysa, koşullar sağlansa bile promo uygulanmaz."
+      "promoIsActiveSub": "Kapalıysa, koşullar sağlansa bile promo uygulanmaz.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Marketplace müşterileri ayrı bir kitledir — bu teklifin nerede geçerli olacağını seçin.",
+      "channelWebsiteLabel": "Yalnızca web siteniz",
+      "channelMarketplaceLabel": "Yalnızca Marketplace",
+      "channelBothLabel": "Her ikisi"
     },
     "customersList": {
       "heading": "Müşteriler",

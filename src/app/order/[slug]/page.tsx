@@ -31,6 +31,7 @@ import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveActiveMenuId } from "@/lib/menu";
 import { holidayNameForToday } from "@/lib/restaurant-hours";
+import { isOnMarketplace } from "@/lib/marketplace";
 
 export default async function OrderingPage({
   params,
@@ -144,10 +145,21 @@ export default async function OrderingPage({
   // promotions scoped as "brand".
   if (menuRestaurantId !== restaurantBase.id) candidateRestaurantIds.push(menuRestaurantId);
 
+  // Acquisition channel for promo gating (Luigi 2026-06-09): a customer who
+  // arrived via the marketplace (and the restaurant is genuinely LISTED) only
+  // sees promos channelled to "marketplace" or "both"; a direct website visitor
+  // sees "website" or "both". Mirrors the authoritative viaMarketplace check the
+  // order route does — and only calls isOnMarketplace on the (rare) marketplace
+  // path, so normal website loads pay nothing.
+  const customerChannel: "website" | "marketplace" =
+    fromMarketplace && (await isOnMarketplace(restaurantBase.id)) ? "marketplace" : "website";
+  const channelFilter = customerChannel === "marketplace" ? ["marketplace", "both"] : ["website", "both"];
+
   const rawPromotions = await prisma.promotion.findMany({
     where: {
       isActive: true,
       showOnBanner: true,
+      channel: { in: channelFilter },
       OR: [
         { restaurantId: restaurantBase.id },
         { restaurantId: menuRestaurantId, scope: "brand" },
@@ -368,6 +380,7 @@ export default async function OrderingPage({
         fromHostedSite={fromHostedSite}
         hostedSiteBackUrl={hostedSiteBackUrl}
         promoBanners={promoBanners}
+        customerChannel={customerChannel}
         customerIsReturning={customerIsReturning}
         todayHolidayName={holidayNameForToday((restaurant as any).holidays, (restaurant as any).timezone)}
         currentCustomer={currentCustomer

@@ -38,6 +38,9 @@ export type WizardProps = {
   currencySymbol?: string;
   /** When mode === "edit", the existing promo (already scoped to restaurantId). */
   initialPromo?: PromoRow | null;
+  /** True when the restaurant is actually listed on the marketplace — gates the
+   *  channel (website / marketplace / both) picker in Step 3. Luigi 2026-06-09. */
+  isOnMarketplace?: boolean;
 };
 
 export type PromoRow = {
@@ -47,6 +50,7 @@ export type PromoRow = {
   promotionType: string;
   isActive: boolean;
   stackingRule: string;
+  channel: string; // website | marketplace | both
   orderType: string; // legacy "both"/"pickup"/"delivery"/CSV
   customerType: string;
   minimumOrder: number;
@@ -163,6 +167,7 @@ function initialFormFromPromo(p: PromoRow | null | undefined): Step3Form {
     usageLimit: p?.usageLimit != null ? String(p.usageLimit) : "",
     onceLifetimePerClient: !!p?.onceLifetimePerClient,
     stackingRule: p?.stackingRule ?? "standard",
+    channel: p?.channel ?? "website",
     limitedShowtimeSchedules: parseShowtimes(p?.limitedShowtimeSchedules),
     displayMode: p?.displayMode ?? "menu_visible",
     highlightThreshold: p?.highlightThreshold != null ? String(p.highlightThreshold) : "",
@@ -178,7 +183,7 @@ function initialFormFromPromo(p: PromoRow | null | undefined): Step3Form {
 // ─── Component ──────────────────────────────────────────────────────────────
 
 export function PromoWizard(props: WizardProps) {
-  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo, currencySymbol = "$" } =
+  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo, currencySymbol = "$", isOnMarketplace = false } =
     props;
   const router = useRouter();
   const t = useTranslations("admin.promoWizard");
@@ -266,6 +271,7 @@ export function PromoWizard(props: WizardProps) {
       promotionType,
       isActive: step3.isActive,
       stackingRule: step3.stackingRule,
+      channel: step3.channel,
       orderType: step3.orderType, // API accepts string[]
       customerType: step3.customerType,
       minimumOrder: parseFloat(step3.minimumOrder) || 0,
@@ -380,6 +386,7 @@ export function PromoWizard(props: WizardProps) {
               paymentMethods={paymentMethods}
               deliveryZones={deliveryZones}
               currencySymbol={currencySymbol}
+              isOnMarketplace={isOnMarketplace}
             />
           )}
         </div>

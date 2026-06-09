@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(opcional — per defecte, el nom)",
       "bannerHeadlinePlaceholder": "p. ex. 20% de descompte en el dinar — només avui!",
       "promoIsActiveLabel": "La promo és activa",
-      "promoIsActiveSub": "Si està desactivada, la promo no s'aplicarà fins i tot si es compleixen les condicions."
+      "promoIsActiveSub": "Si està desactivada, la promo no s'aplicarà fins i tot si es compleixen les condicions.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "Els clients del Marketplace són un públic diferent: tria on s'aplica aquesta oferta.",
+      "channelWebsiteLabel": "Només el teu lloc web",
+      "channelMarketplaceLabel": "Només Marketplace",
+      "channelBothLabel": "Tots dos"
     },
     "customersList": {
       "heading": "Clients",

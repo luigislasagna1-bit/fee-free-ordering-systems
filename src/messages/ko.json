@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(선택사항 — 기본값은 이름)",
       "bannerHeadlinePlaceholder": "예) 점심 20% 할인 — 오늘만!",
       "promoIsActiveLabel": "프로모션 활성",
-      "promoIsActiveSub": "끄면 조건이 충족되더라도 프로모션이 적용되지 않습니다."
+      "promoIsActiveSub": "끄면 조건이 충족되더라도 프로모션이 적용되지 않습니다.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "마켓플레이스 고객은 별도의 고객층입니다 — 이 혜택을 적용할 위치를 선택하세요.",
+      "channelWebsiteLabel": "내 웹사이트만",
+      "channelMarketplaceLabel": "마켓플레이스만",
+      "channelBothLabel": "둘 다"
     },
     "customersList": {
       "heading": "고객",

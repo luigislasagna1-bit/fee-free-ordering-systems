@@ -1921,7 +1921,12 @@
       "bannerHeadlineOptional": "(اختياري — الافتراضي هو الاسم)",
       "bannerHeadlinePlaceholder": "مثال: خصم 20% على الغداء — اليوم فقط!",
       "promoIsActiveLabel": "العرض نشط",
-      "promoIsActiveSub": "عند الإيقاف، لن يسري العرض حتى لو استُوفيت شروطه."
+      "promoIsActiveSub": "عند الإيقاف، لن يسري العرض حتى لو استُوفيت شروطه.",
+      "channelTitle": "Marketplace",
+      "channelSubtitle": "عملاء Marketplace جمهور منفصل — اختر أين يسري هذا العرض.",
+      "channelWebsiteLabel": "موقعك فقط",
+      "channelMarketplaceLabel": "Marketplace فقط",
+      "channelBothLabel": "كلاهما"
     },
     "customersList": {
       "heading": "العملاء",
