@@ -1904,6 +1904,44 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     };
   }, [fetchOrders]);
 
+  // Screen Wake Lock — a kitchen display must stay awake. When the tablet
+  // dims / sleeps to save battery, the OS throttles (or suspends) the 4s
+  // order-poll timer, so a new order doesn't show or ring until the screen is
+  // touched again — exactly what Luigi hit (a cash, auto-accepted order didn't
+  // chime/print on the In Progress tab until he tapped over to All Orders, and
+  // the tap is what woke the throttled timer). Holding a screen wake lock keeps
+  // the display on so polling keeps its cadence. Re-acquired whenever the page
+  // becomes visible again (the lock auto-releases when the page is hidden).
+  // No-op on browsers / WebViews without the API. Luigi 2026-06-08.
+  useEffect(() => {
+    let lock: { release?: () => Promise<void> } | null = null;
+    const request = async () => {
+      try {
+        if (document.visibilityState !== "visible") return;
+        const nav = navigator as unknown as { wakeLock?: { request?: (t: string) => Promise<{ release?: () => Promise<void>; addEventListener?: (e: string, cb: () => void) => void }> } };
+        if (!nav.wakeLock?.request) return;
+        const sentinel = await nav.wakeLock.request("screen");
+        lock = sentinel;
+        sentinel.addEventListener?.("release", () => { lock = null; });
+      } catch { /* denied / unsupported — fine, the visibility/focus wakes still catch up */ }
+    };
+    const onVis = () => { if (document.visibilityState === "visible" && !lock) request(); };
+    request();
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      document.removeEventListener("visibilitychange", onVis);
+      try { void lock?.release?.(); } catch { /* noop */ }
+    };
+  }, []);
+
+  // Resync orders the instant the active tab changes. On mobile WebViews a tab
+  // tap is a user interaction that should immediately refresh rather than wait
+  // for the (possibly throttled) next poll tick — so switching tabs always
+  // shows the latest orders right away. Cheap idempotent GET. Luigi 2026-06-08.
+  useEffect(() => {
+    fetchOrders();
+  }, [activeTab, fetchOrders]);
+
   // Heartbeat: tell the server this device is online. Used by the admin
   // publishing checklist to know an order-taking app is connected. Sends
   // immediately on mount + every 60s while the page is open.
