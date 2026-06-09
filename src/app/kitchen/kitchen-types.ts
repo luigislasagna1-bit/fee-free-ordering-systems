@@ -153,6 +153,9 @@ const THEMES = {
     badgeReady: "bg-green-100 text-green-800 border border-green-200",
     badgeCompleted: "bg-gray-100 text-gray-600 border border-gray-200",
     badgeRejected: "bg-red-100 text-red-800 border border-red-200",
+    // MISSED (timed-out) is distinct from a manual REJECT — amber/orange "we
+    // didn't get to it" vs red "we declined it". Luigi 2026-06-09.
+    badgeMissed: "bg-orange-100 text-orange-800 border border-orange-200",
     badgeCancelled: "bg-red-100 text-red-800 border border-red-200",
   },
   dark: {
@@ -180,6 +183,7 @@ const THEMES = {
     badgeReady: "bg-green-500/20 text-green-300 border border-green-500/30",
     badgeCompleted: "bg-gray-700 text-gray-400 border border-gray-600",
     badgeRejected: "bg-red-500/20 text-red-300 border border-red-500/30",
+    badgeMissed: "bg-orange-500/20 text-orange-300 border border-orange-500/30",
     badgeCancelled: "bg-red-500/20 text-red-300 border border-red-500/30",
   },
 } as const;

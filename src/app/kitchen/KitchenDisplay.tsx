@@ -278,8 +278,9 @@ function StatusBadge({ status, t, rejectionReason }: { status: string; t: T; rej
   const isMissed = status === "rejected" && (rejectionReason?.startsWith("Auto-rejected") ?? false);
   const k = isMissed ? "missed" : keyMap[status];
   const label = k ? tk(k).toUpperCase() : status.toUpperCase();
+  // MISSED gets its own (orange) tone so it never looks like a manual REJECT.
   return (
-    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap ${cls[status] ?? t.badgeCompleted}`}>
+    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap ${isMissed ? t.badgeMissed : (cls[status] ?? t.badgeCompleted)}`}>
       {label}
     </span>
   );
@@ -479,7 +480,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
                 MARKETPLACE
               </span>
             )}
-            {isTest && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-500">TEST</span>}
+            {isTest && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-400 text-amber-950">TEST</span>}
             {/* Reserve-then-order: this order came with a table booking — flag it
                 so the kitchen treats it as one unit (the due-chip already shows
                 the reservation time). Luigi 2026-06-08. */}

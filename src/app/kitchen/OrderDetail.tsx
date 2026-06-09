@@ -288,13 +288,15 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
     // never acted) reads "Missed" — distinct from one the restaurant actively
     // Rejected. Both the client auto-reject and the server cron stamp
     // rejectionReason with the "Auto-rejected:" prefix, so that's the marker.
-    // Stays red. Reseller report cmq3k0m4d (FABRIZIO). Luigi 2026-06-09.
+    // Shown in ORANGE (not red) so a timed-out "Missed" is visually distinct
+    // from a manual "Rejected". Reseller report cmq3k0m4d (FABRIZIO). Luigi
+    // 2026-06-09.
     const isMissed =
       order.status === "rejected" &&
       (order.rejectionReason?.startsWith("Auto-rejected") ?? false);
     const label = isMissed ? tk("missed") : (STATUS_LABEL[order.status] ?? order.status);
     return (
-      <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${cls[order.status] ?? "bg-gray-500 text-white"}`}>
+      <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${isMissed ? "bg-orange-500 text-white" : (cls[order.status] ?? "bg-gray-500 text-white")}`}>
         {label}
       </span>
     );
