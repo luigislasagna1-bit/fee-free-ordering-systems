@@ -325,6 +325,31 @@ export default async function OrderingPage({
     expectedRestaurantId: restaurant.id,
   });
 
+  // First-buy hero gating: only entice customers we CAN'T rule out as new. If a
+  // customer is LOGGED IN and already has a FULFILLED order here (matched by
+  // their Customer row / email / phone), they're returning — hide the first-buy
+  // hero (it isn't for them anyway). Missed/rejected/cancelled orders don't
+  // count (consistent with the coupon ledger), so a first-timer whose debut
+  // order failed still sees it. Anonymous visitors (most genuine new customers)
+  // still see it; the discount itself stays new-customers-only at checkout. The
+  // client adds a same-device "ordered here before" guard for guests on top of
+  // this. Luigi 2026-06-09.
+  let customerIsReturning = false;
+  if (currentCustomer) {
+    const priorFulfilled = await prisma.order.count({
+      where: {
+        restaurantId: restaurant.id,
+        status: { notIn: ["cancelled", "rejected"] },
+        OR: [
+          { customerId: currentCustomer.id },
+          ...(currentCustomer.email ? [{ customerEmail: currentCustomer.email }] : []),
+          ...(currentCustomer.phone ? [{ customerPhone: currentCustomer.phone }] : []),
+        ],
+      },
+    });
+    customerIsReturning = priorFulfilled > 0;
+  }
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       {/* Analytics beacon — fires /api/track/visit once on mount so
@@ -343,6 +368,7 @@ export default async function OrderingPage({
         fromHostedSite={fromHostedSite}
         hostedSiteBackUrl={hostedSiteBackUrl}
         promoBanners={promoBanners}
+        customerIsReturning={customerIsReturning}
         todayHolidayName={holidayNameForToday((restaurant as any).holidays, (restaurant as any).timezone)}
         currentCustomer={currentCustomer
           ? {

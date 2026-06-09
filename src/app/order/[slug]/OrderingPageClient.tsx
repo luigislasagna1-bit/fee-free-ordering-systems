@@ -609,6 +609,7 @@ export function OrderingPageClient({
   fromHostedSite = false,
   hostedSiteBackUrl,
   promoBanners = [],
+  customerIsReturning = false,
   currentCustomer = null,
   todayHolidayName = null,
 }: {
@@ -662,6 +663,11 @@ export function OrderingPageClient({
      *  hero above the regular promo strip. */
     campaignRef?: string | null;
   }>;
+  /** True when the viewer is a LOGGED-IN customer with a prior fulfilled order
+   *  here — used to hide the first-buy hero from returning customers (computed
+   *  server-side in page.tsx). Anonymous guests default false + get the
+   *  client-side same-device guard. */
+  customerIsReturning?: boolean;
   /** The logged-in per-restaurant customer at this restaurant, if any.
    *  Server-resolved via getCurrentRestaurantCustomer in page.tsx and
    *  passed in so the header can render the right Sign-in vs. Hi-name
@@ -719,6 +725,16 @@ export function OrderingPageClient({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
   const [cart, setCart] = useState<CartItem[]>([]);
+  // Same-device "ordered here before" guard for the first-buy hero — a repeat
+  // GUEST (not logged in, so the server can't flag them) who has already placed
+  // an order on THIS device stops seeing the new-customer enticement. Written in
+  // placeOrder() on a successful submit; read once on mount. Best-effort
+  // (cleared storage / a new device falls back to showing it) — the discount is
+  // always enforced new-customers-only at checkout regardless. Luigi 2026-06-09.
+  const [hasOrderedHere, setHasOrderedHere] = useState(false);
+  useEffect(() => {
+    try { if (localStorage.getItem(`ff-ordered-${restaurant.id}`) === "1") setHasOrderedHere(true); } catch {}
+  }, [restaurant.id]);
   const [cartOpen, setCartOpen] = useState(false);
   /** When non-null, the customer has tapped a promo banner card and the
    *  detail modal is showing. The promo object is the same shape we
@@ -2453,6 +2469,12 @@ export function OrderingPageClient({
       // a fresh visit starts a fresh CartSession.
       try { localStorage.removeItem(CART_STORAGE_KEY); } catch {}
       try { localStorage.removeItem(CART_SESSION_KEY); } catch {}
+      // Remember on THIS device that an order was placed here, so the first-buy
+      // hero stops showing to a repeat guest. Cosmetic only — the discount is
+      // gated new-customers-only server-side, so an over-eager hide (e.g. a
+      // card payment later abandoned) never costs a genuine new customer the
+      // offer. Luigi 2026-06-09.
+      try { localStorage.setItem(`ff-ordered-${restaurant.id}`, "1"); } catch {}
       sessionTokenRef.current = null;
       // Reserve-then-order: the booking went in with the order — leave
       // reservation mode so a fresh visit starts clean.
@@ -3156,7 +3178,10 @@ export function OrderingPageClient({
           // src/lib/kickstarter.ts — kept as a literal here so we don't import
           // a server-only (prisma) module into this client component.
           const hero = promoBanners.find((p) => p.campaignRef === "kickstarter_first_buy");
-          if (!hero) return null;
+          // Only entice customers we can't rule out as new: hide for a logged-in
+          // returning customer (server-resolved) OR a guest who has ordered on
+          // this device before. Luigi 2026-06-09.
+          if (!hero || customerIsReturning || hasOrderedHere) return null;
           const headline = hero.bannerHeadline?.trim() || hero.name;
           const heroImg = hero.imageUrl?.trim() || null;
           return (
