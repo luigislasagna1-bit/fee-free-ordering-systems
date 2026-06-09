@@ -78,15 +78,41 @@ export function validateBooking(
     return { ok: false, reason: "Please pick a valid time." };
   }
 
-  // Build the real-world UTC instant that corresponds to (date, time)
-  // in the restaurant's local timezone. parseLocalDateTimeInTz does the
-  // DST-aware projection. Without a timezone we fall back to the legacy
-  // "trust the server's wall clock" path — fine for local dev where
-  // server tz == restaurant tz, broken on Vercel UTC.
+  // Reservation hours for this day of week — loaded up-front because we need
+  // the day's open/close to detect a cross-midnight service window (below).
+  // Day-of-week from the calendar `date` via noon-UTC so it's timezone-
+  // independent. Previously a reservationAt.getDay() here read the SERVER's
+  // (UTC) day-of-week. (Phase 2 timezone sweep.) 0 = Sun.
+  let hoursMap: Record<string, { open: string; close: string; enabled: boolean }> = {};
+  try { hoursMap = JSON.parse(s.reservationHours || "{}"); } catch { hoursMap = {}; }
+  const dayOfWeek = new Date(`${date}T12:00:00Z`).getUTCDay();
+  const day = hoursMap[String(dayOfWeek)];
+
+  // Cross-midnight service. When a day's window closes at/after midnight
+  // (close <= open, e.g. 11:00 → 04:00), a requested time in the post-midnight
+  // portion (BEFORE open, like 00:30) belongs to that SAME service day but
+  // lands on the next CALENDAR day. The picker generates those slots under the
+  // chosen ("service") date, so the real-world instant is one day later.
+  // Without this, a 12:30 AM booking made at 10 PM looked ~22 h in the PAST and
+  // was rejected as "book at least 2 hours in advance" — and the picker showed
+  // no late-night slots at all. Luigi 2026-06-08 (restaurant open until 4 AM).
+  const reqMin = parseTimeToMinutes(time);
+  const openMin = day && day.open ? parseTimeToMinutes(day.open) : null;
+  const closeMin = day && day.close ? parseTimeToMinutes(day.close) : null;
+  const crossesMidnight = openMin !== null && closeMin !== null && closeMin <= openMin;
+  const wrapsToNextDay = crossesMidnight && openMin !== null && reqMin < openMin;
+
+  // Build the real-world UTC instant that corresponds to (date, time) in the
+  // restaurant's local timezone. parseLocalDateTimeInTz does the DST-aware
+  // projection. Without a timezone we fall back to the server wall clock —
+  // fine for local dev (server tz == restaurant tz), broken on Vercel UTC.
   const [hh, mm] = time.split(":").map(Number);
-  const reservationAt = parseLocalDateTimeInTz(date, hh ?? 0, mm ?? 0, timezone);
+  let reservationAt = parseLocalDateTimeInTz(date, hh ?? 0, mm ?? 0, timezone);
   if (Number.isNaN(reservationAt.getTime())) {
     return { ok: false, reason: "Please pick a valid date and time." };
+  }
+  if (wrapsToNextDay) {
+    reservationAt = new Date(reservationAt.getTime() + 24 * 60 * 60 * 1000);
   }
 
   // 3. Minimum notice. Prefer minNoticeMinutes when present; fall back
@@ -119,25 +145,15 @@ export function validateBooking(
     return { ok: false, reason: "We're not accepting reservations on this date." };
   }
 
-  // 6. Reservation hours for this day of week
-  let hoursMap: Record<string, { open: string; close: string; enabled: boolean }> = {};
-  try { hoursMap = JSON.parse(s.reservationHours || "{}"); } catch { hoursMap = {}; }
-  // Day-of-week of the restaurant-local calendar date. Derive it from the
-  // `date` string (a plain calendar date) via noon-UTC so it's timezone-
-  // independent. Previously this used reservationAt.getDay(), which reads
-  // the SERVER's (UTC) day-of-week — a Friday 11 PM Toronto booking is
-  // Saturday 04:00 UTC, so it was validated against Saturday's hours.
-  // (Phase 2 timezone sweep.)
-  const dayOfWeek = new Date(`${date}T12:00:00Z`).getUTCDay(); // 0 = Sun
-  const day = hoursMap[String(dayOfWeek)];
+  // 6. Within the day's reservation window (cross-midnight aware).
   if (day && day.enabled === false) {
     return { ok: false, reason: "We don't take reservations on this day." };
   }
-  if (day && day.open && day.close) {
-    const openMin = parseTimeToMinutes(day.open);
-    const closeMin = parseTimeToMinutes(day.close);
-    const reqMin = parseTimeToMinutes(time);
-    if (reqMin < openMin || reqMin > closeMin) {
+  if (day && openMin !== null && closeMin !== null) {
+    const withinWindow = crossesMidnight
+      ? (reqMin >= openMin || reqMin <= closeMin)   // 11:00 → 04:00 wraps midnight
+      : (reqMin >= openMin && reqMin <= closeMin);  // same-day window
+    if (!withinWindow) {
       return { ok: false, reason: `On this day we take reservations between ${day.open} and ${day.close}.` };
     }
   }

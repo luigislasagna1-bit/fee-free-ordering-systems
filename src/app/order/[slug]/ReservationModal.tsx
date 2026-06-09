@@ -365,10 +365,13 @@ export function ReservationModal({
   const timeSlots = useMemo(() => {
     // 1. Generate the raw list from the day's hours.
     let raw: string[];
+    let openHHMM = "10:00";
     if (dayHours && dayHours.enabled !== false) {
-      raw = generateTimeSlots(dayHours.open || "10:00", dayHours.close || "22:00", slotStep);
+      openHHMM = dayHours.open || "10:00";
+      raw = generateTimeSlots(openHHMM, dayHours.close || "22:00", slotStep);
     } else if (fallbackRow && fallbackRow.isOpen) {
-      raw = generateTimeSlots(fallbackRow.openTime || "10:00", fallbackRow.closeTime || "22:00", slotStep);
+      openHHMM = fallbackRow.openTime || "10:00";
+      raw = generateTimeSlots(openHHMM, fallbackRow.closeTime || "22:00", slotStep);
     } else if (dayStatus === "closedHard") {
       // Hard-closed days: empty list. The JSX below switches to the
       // "We're closed on Monday — pick another date" + Jump-to-next CTA.
@@ -376,6 +379,7 @@ export function ReservationModal({
     } else {
       // Ambiguous (no row): permissive default so an incomplete setup
       // doesn't block the customer.
+      openHHMM = "10:00";
       raw = generateTimeSlots("10:00", "22:00", slotStep);
     }
 
@@ -396,9 +400,19 @@ export function ReservationModal({
       const now = new Date();
       const cutoffMin =
         now.getHours() * 60 + now.getMinutes() + Math.max(0, minNotice);
+      // Slots generated PAST MIDNIGHT (a day that closes at/after 00:00) come
+      // back as small HH:MM (e.g. 00:30) but happen TONIGHT, after midnight.
+      // Shift them a full day before comparing to the cutoff, otherwise they
+      // look ~22 h in the past and get dropped — which is exactly why a
+      // restaurant open until 4 AM showed NO slots after ~10 PM. A slot is
+      // post-midnight when its minute-of-day is below the open time (the
+      // generator emits slots in order from open, wrapping). Luigi 2026-06-08.
+      const [ohh, omm] = openHHMM.split(":").map(Number);
+      const openMin = (ohh ?? 0) * 60 + (omm ?? 0);
       raw = raw.filter((hhmm) => {
         const [hh, mm] = hhmm.split(":").map(Number);
-        const slotMin = (hh ?? 0) * 60 + (mm ?? 0);
+        let slotMin = (hh ?? 0) * 60 + (mm ?? 0);
+        if (slotMin < openMin) slotMin += 24 * 60;
         return slotMin >= cutoffMin;
       });
     }
