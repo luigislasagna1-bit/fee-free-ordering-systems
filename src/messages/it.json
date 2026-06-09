@@ -569,7 +569,7 @@
     "autoCallMessage": "Il nuovo ordine {number} presso {restaurant} è in attesa e non è ancora stato accettato. Apri il display della cucina per accettarlo o rifiutarlo.",
     "outsideZoneNote": "Questo ordine potrebbe trovarsi fuori dalla tua zona di consegna abituale",
     "readyIn": "Pronto tra",
-    "asap": "ASAP",
+    "asap": "Appena possibile",
     "orderForLater": "Ordine programmato",
     "soundTitle": "Suono di avviso",
     "soundDesc": "Il campanello suona ogni volta che un nuovo ordine è in attesa. All'inizio a intervalli, poi accelera negli ultimi 30 secondi prima che l'ordine venga rifiutato automaticamente. Tienilo a volume alto per non perderne nessuno.",
@@ -3659,7 +3659,7 @@
       "confirmationCode": "Codice di conferma"
     },
     "scheduling": {
-      "asap": "ASAP",
+      "asap": "Appena possibile",
       "orderForLater": "ORDINE PROGRAMMATO"
     }
   },
