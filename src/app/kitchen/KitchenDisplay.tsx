@@ -664,6 +664,18 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // booking — we seed inside the first fetchRes() below.
   const seenReservationIdsRef = useRef<Set<string> | null>(null);
 
+  // Auto-print bookkeeping for AUTO-CONFIRMED reservations. A booking that
+  // arrives already "confirmed" (auto-accept ON) never passes through the
+  // manual Accept that prints, so we print it on arrival here. These two refs
+  // make that reliable + safe:
+  //   • autoPrintedReservationsRef — print each booking at most once.
+  //   • kitchenSessionStartRef — only print bookings created AFTER this kitchen
+  //     session started, so we never reprint history on load / reload (and the
+  //     "fresh"-detection seeding race below can't swallow a brand-new one).
+  // Luigi 2026-06-08: "auto accept should still print".
+  const autoPrintedReservationsRef = useRef<Set<string>>(new Set());
+  const kitchenSessionStartRef = useRef<number>(Date.now());
+
   // Poll upcoming reservations whenever the Reservations OR Orders tab is open
   // (Orders tab shows reservations alongside the order list). Also drives
   // the kitchen ring/toast for NEW reservation arrivals — manual-accept
@@ -715,45 +727,58 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 `📅 ${newConfirmed.length} new reservation${newConfirmed.length > 1 ? "s" : ""} confirmed`,
                 { icon: "✅", duration: 5000 },
               );
-              // Auto-print each confirmed reservation. Mirrors the
-              // order auto-print preference: direct LAN first when
-              // configured (fastest, no PrintNode dependency), then
-              // PrintNode as fallback. Skips silently when neither
-              // is configured — same posture as the order auto-print
-              // path. Luigi 2026-06-01 — full parity with orders.
-              const directCfg = getDirectPrinterConfig();
-              for (const r of newConfirmed) {
-                if (directCfg) {
-                  doPrintDirectReservation(r.id).catch((err) => {
-                    console.warn("[kds reservation auto-print direct] failed, trying PrintNode", err);
-                    if (
-                      printerSettingsRef.current?.printNodeConnected &&
-                      printerSettingsRef.current.selectedPrinterId
-                    ) {
-                      fetch("/api/kitchen/printnode/print", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ reservationId: r.id }),
-                      }).catch((e) =>
-                        console.warn("[kds reservation auto-print printnode]", e),
-                      );
-                    }
-                  });
-                } else if (
-                  printerSettingsRef.current?.printNodeConnected &&
-                  printerSettingsRef.current.selectedPrinterId
-                ) {
-                  fetch("/api/kitchen/printnode/print", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ reservationId: r.id }),
-                  }).catch((err) =>
-                    console.warn("[kds reservation auto-print] failed:", err),
-                  );
-                }
-              }
+              // (Auto-PRINTING of confirmed bookings is handled by the robust
+              // pass below — it runs every poll and can't be swallowed by the
+              // first-poll seeding race the way this `fresh` branch can.)
             }
             fresh.forEach((r) => seen.add(r.id));
+          }
+        }
+        // ── Robust auto-print for AUTO-CONFIRMED bookings ────────────────────
+        // A booking that arrives already "confirmed" skips the manual Accept
+        // (which is what prints), so print it here. Runs every poll over the
+        // full list — NOT gated on the seeding/"fresh" race above — guarded so
+        // it prints each booking at most once (autoPrintedReservationsRef) and
+        // never reprints history (only bookings created after this kitchen
+        // session started). Pre-orders print via their linked ORDER, so they're
+        // skipped. Same printer preference as orders: direct LAN first, then
+        // PrintNode fallback. Luigi 2026-06-08.
+        for (const r of data) {
+          if (r.orderId) continue;
+          if (r.status !== "confirmed") continue;
+          if (autoPrintedReservationsRef.current.has(r.id)) continue;
+          const created = r.createdAt ? new Date(r.createdAt).getTime() : 0;
+          // Mark-and-skip anything from before this session so it never prints
+          // again on a reload, and skip rows with no createdAt.
+          if (!created || created <= kitchenSessionStartRef.current) {
+            autoPrintedReservationsRef.current.add(r.id);
+            continue;
+          }
+          autoPrintedReservationsRef.current.add(r.id);
+          const directCfg = getDirectPrinterConfig();
+          if (directCfg) {
+            doPrintDirectReservation(r.id).catch((err) => {
+              console.warn("[kds reservation auto-print direct] failed, trying PrintNode", err);
+              if (
+                printerSettingsRef.current?.printNodeConnected &&
+                printerSettingsRef.current.selectedPrinterId
+              ) {
+                fetch("/api/kitchen/printnode/print", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ reservationId: r.id }),
+                }).catch((e) => console.warn("[kds reservation auto-print printnode]", e));
+              }
+            });
+          } else if (
+            printerSettingsRef.current?.printNodeConnected &&
+            printerSettingsRef.current.selectedPrinterId
+          ) {
+            fetch("/api/kitchen/printnode/print", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ reservationId: r.id }),
+            }).catch((err) => console.warn("[kds reservation auto-print] failed:", err));
           }
         }
         setReservations(data);
