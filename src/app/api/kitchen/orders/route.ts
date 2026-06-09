@@ -131,32 +131,52 @@ export async function GET() {
 
     // ── First-order flag (reseller report cmq3knaqj, FABRIZIO) ──────────────
     // Badge an order when it's the customer's FIRST-EVER order at this
-    // restaurant. We match on phone (the kitchen's customer identifier) and
-    // find each customer's earliest order via ONE groupBy — an order is "first"
-    // when its createdAt equals that minimum. O(1) queries regardless of feed
-    // size. Luigi 2026-06-09.
+    // restaurant, recognising the customer by PHONE *or* EMAIL (Luigi 2026-06-09)
+    // — so a returning guest is matched on either identifier. Two groupBys find
+    // each phone's + each email's earliest order; an order is "first" only when
+    // its createdAt equals the earliest across BOTH identifiers. O(1) queries
+    // regardless of feed size.
     const phones = Array.from(
       new Set(orders.map((o) => (o as any).customerPhone).filter((p: unknown): p is string => !!p)),
     );
+    const emails = Array.from(
+      new Set(orders.map((o) => (o as any).customerEmail).filter((e: unknown): e is string => !!e)),
+    );
     const firstAtByPhone = new Map<string, number>();
+    const firstAtByEmail = new Map<string, number>();
     if (phones.length > 0) {
-      const grouped = await prisma.order.groupBy({
+      const g = await prisma.order.groupBy({
         by: ["customerPhone"],
         where: { restaurantId, customerPhone: { in: phones } },
         _min: { createdAt: true },
       });
-      for (const g of grouped) {
-        if (g.customerPhone && g._min.createdAt) {
-          firstAtByPhone.set(g.customerPhone, g._min.createdAt.getTime());
-        }
+      for (const row of g) {
+        if (row.customerPhone && row._min.createdAt) firstAtByPhone.set(row.customerPhone, row._min.createdAt.getTime());
+      }
+    }
+    if (emails.length > 0) {
+      const g = await prisma.order.groupBy({
+        by: ["customerEmail"],
+        where: { restaurantId, customerEmail: { in: emails } },
+        _min: { createdAt: true },
+      });
+      for (const row of g) {
+        if (row.customerEmail && row._min.createdAt) firstAtByEmail.set(row.customerEmail, row._min.createdAt.getTime());
       }
     }
 
     const ordersWithReservation = orders.map((o) => {
       const b = bookingByOrderId.get(o.id);
       const phone = (o as any).customerPhone as string | null;
+      const email = (o as any).customerEmail as string | null;
+      // Earliest order time across this customer's phone AND email histories.
+      const candidates = [
+        phone ? firstAtByPhone.get(phone) : undefined,
+        email ? firstAtByEmail.get(email) : undefined,
+      ].filter((n): n is number => typeof n === "number");
+      const earliest = candidates.length ? Math.min(...candidates) : undefined;
       const isFirstOrder =
-        !!phone && firstAtByPhone.get(phone) === new Date(o.createdAt).getTime();
+        earliest !== undefined && earliest === new Date(o.createdAt).getTime();
       return {
         ...o,
         isFirstOrder,
