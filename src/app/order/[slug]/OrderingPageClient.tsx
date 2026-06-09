@@ -740,8 +740,10 @@ export function OrderingPageClient({
   // always enforced new-customers-only at checkout regardless. Luigi 2026-06-09.
   const [hasOrderedHere, setHasOrderedHere] = useState(false);
   useEffect(() => {
-    try { if (localStorage.getItem(`ff-ordered-${restaurant.id}`) === "1") setHasOrderedHere(true); } catch {}
-  }, [restaurant.id]);
+    // Channel-aware (H2): a website order doesn't hide the MARKETPLACE first-buy
+    // hero, and vice-versa. Luigi 2026-06-09.
+    try { if (localStorage.getItem(`ff-ordered-${restaurant.id}-${customerChannel}`) === "1") setHasOrderedHere(true); } catch {}
+  }, [restaurant.id, customerChannel]);
   const [cartOpen, setCartOpen] = useState(false);
   /** When non-null, the customer has tapped a promo banner card and the
    *  detail modal is showing. The promo object is the same shape we
@@ -2511,7 +2513,7 @@ export function OrderingPageClient({
       // gated new-customers-only server-side, so an over-eager hide (e.g. a
       // card payment later abandoned) never costs a genuine new customer the
       // offer. Luigi 2026-06-09.
-      try { localStorage.setItem(`ff-ordered-${restaurant.id}`, "1"); } catch {}
+      try { localStorage.setItem(`ff-ordered-${restaurant.id}-${customerChannel}`, "1"); } catch {}
       sessionTokenRef.current = null;
       // Reserve-then-order: the booking went in with the order — leave
       // reservation mode so a fresh visit starts clean.

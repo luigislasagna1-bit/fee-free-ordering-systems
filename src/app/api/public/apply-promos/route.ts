@@ -71,6 +71,10 @@ export async function POST(req: NextRequest) {
       where: {
         restaurantId: restaurant.id,
         status: { notIn: ["cancelled", "rejected"] },
+        // Per-channel new-customer (H2): judged within this channel, so the
+        // preview matches the order route — a marketplace order is "new" for a
+        // website regular. Luigi 2026-06-09.
+        viaMarketplace: reqChannel === "marketplace",
         OR: [
           ...(previewEmail ? [{ customerEmail: previewEmail }] : []),
           ...(previewPhone ? [{ customerPhone: previewPhone }] : []),

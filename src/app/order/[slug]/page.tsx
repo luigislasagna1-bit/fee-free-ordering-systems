@@ -352,6 +352,10 @@ export default async function OrderingPage({
       where: {
         restaurantId: restaurant.id,
         status: { notIn: ["cancelled", "rejected"] },
+        // Per-channel (H2): on a marketplace visit, only prior MARKETPLACE
+        // orders count as "returning" — so a website regular still sees the
+        // marketplace first-buy hero (and vice-versa). Luigi 2026-06-09.
+        viaMarketplace: customerChannel === "marketplace",
         OR: [
           { customerId: currentCustomer.id },
           ...(currentCustomer.email ? [{ customerEmail: currentCustomer.email }] : []),

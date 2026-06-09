@@ -1093,6 +1093,11 @@ export async function POST(req: NextRequest) {
             restaurantId: restaurant.id,
             customerId: existingCustomer.id,
             status: { notIn: FAILED_ORDER_STATES },
+            // Per-channel new-customer (Luigi 2026-06-09, H2): the marketplace is
+            // a SEPARATE customer base, so "new" is judged WITHIN this order's
+            // channel. A website regular ordering via the marketplace counts as
+            // new there (and vice-versa) — so each channel gets its own first-buy.
+            viaMarketplace: orderViaMarketplace,
           },
         });
         if (priorFulfilledCount > 0) {
@@ -1111,6 +1116,9 @@ export async function POST(req: NextRequest) {
                 customerId: existingCustomer.id,
                 status: { notIn: FAILED_ORDER_STATES },
                 promoDiscount: { gt: 0 },
+                // Same per-channel rule — a once-per-lifetime promo on the
+                // marketplace isn't "used" by a website redemption.
+                viaMarketplace: orderViaMarketplace,
               },
             });
             if (priorOrderCount > 0) {
