@@ -2687,25 +2687,19 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               | { kind: "order"; sortTs: number; order: Order }
               | { kind: "reservation"; sortTs: number; r: KitchenReservation };
 
-            // ── ALL tab: chronological by arrival ─────────────────
+            // ── ALL tab: orders only, chronological by arrival ────
+            // Walk-up table bookings do NOT appear here — they live in the
+            // dedicated Reservations tab (and In Progress while active). Mixing
+            // them in flooded "All Orders" with bookings staff couldn't clear
+            // (the clear button only clears orders) and hid the clear button
+            // entirely when a tab had bookings but no real orders. Pre-orders
+            // still show here as their normal ORDER tile (flagged). Luigi
+            // 2026-06-08 — reservations belong in the Reservations tab.
             if (activeTab === "orders") {
               const items: Mixed[] = [];
               for (const o of tabOrders) {
                 const arrived = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
                 items.push({ kind: "order", sortTs: arrived, order: o });
-              }
-              for (const r of reservations) {
-                // PRE-ORDER bookings are represented by their order tile (above)
-                // — skip them here so a booking-with-food shows as ONE tile, not
-                // two. They still appear in the dedicated Reservations tab.
-                // Luigi 2026-06-08.
-                if (r.orderId) continue;
-                // Sort by createdAt — when the reservation arrived
-                // into the kitchen — NOT by the booking date+time.
-                // Otherwise a reservation booked for next week would
-                // sort to the top of "newest first".
-                const arrived = r.createdAt ? new Date(r.createdAt).getTime() : Date.now();
-                items.push({ kind: "reservation", sortTs: arrived, r });
               }
               items.sort((a, b) => b.sortTs - a.sortTs);
 
@@ -2791,21 +2785,16 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               );
             }
 
-            // ── COMPLETE tab: finished orders + finished bookings ─────
+            // ── COMPLETE tab: finished ORDERS only, newest first ──────
+            // Finished bookings do NOT appear here — a completed booking stays
+            // in the persistent Reservations tab (it no longer vanishes), so it
+            // doesn't need to clutter Complete with rows the Complete clear
+            // button can't remove. Pre-orders show as their order tile. Luigi
+            // 2026-06-08.
             const items: Mixed[] = [];
             for (const o of tabOrders) {
               const arrived = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
               items.push({ kind: "order", sortTs: arrived, order: o });
-            }
-            // Finished WALK-UP bookings (completed / no-show / cancelled /
-            // rejected) live here too, so marking one complete moves it to the
-            // Complete tab instead of making it vanish. Pre-order bookings are
-            // represented by their order tile. Luigi 2026-06-08.
-            for (const r of reservations) {
-              if (r.orderId) continue;
-              if (!["completed", "no_show", "cancelled", "rejected"].includes(r.status)) continue;
-              const arrived = r.createdAt ? new Date(r.createdAt).getTime() : Date.now();
-              items.push({ kind: "reservation", sortTs: arrived, r });
             }
             items.sort((a, b) => b.sortTs - a.sortTs);
             if (items.length === 0) {
