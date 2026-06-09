@@ -59,7 +59,7 @@ function ReservationStatusBadge({ status, t }: { status: string; t: T }) {
 }
 
 function ReservationCard({
-  r, t, onOpen, selected, compact, dayChip, hoursFormat = "24h",
+  r, t, onOpen, selected, compact, dayChip, hoursFormat = "24h", now,
 }: {
   r: KitchenReservation;
   t: T;
@@ -76,8 +76,26 @@ function ReservationCard({
    *  name so the kitchen can scan upcoming-day items at a glance,
    *  matching the GloriaFood KDS pattern. */
   dayChip?: string;
+  /** Live clock (ms). When given AND no explicit dayChip is supplied, the card
+   *  shows its own countdown-to-reservation chip — same formatDueLabel system
+   *  orders use (weekday name when >24h out, HH:MM / MM:SS countdown when
+   *  ≤24h). Luigi 2026-06-08. */
+  now?: number;
 }) {
   const tk = useTranslations("kitchen");
+  // Countdown to the booking time, shown only for still-active bookings
+  // (pending / confirmed / seated) and only when the caller didn't already
+  // pass a dayChip (the In Progress tab supplies its own). Past/terminal
+  // bookings show no countdown. Parsed in the tablet's local time, which at
+  // the restaurant matches the venue timezone — same basis as the order
+  // countdowns. Luigi 2026-06-08.
+  const isActiveBooking = r.status === "pending" || r.status === "confirmed" || r.status === "seated";
+  const autoCountdown = (() => {
+    if (dayChip || !now || !isActiveBooking) return null;
+    const dueTs = new Date(`${r.date}T${r.time}:00`).getTime();
+    if (!Number.isFinite(dueTs)) return null;
+    return formatDueLabel(dueTs, now).text;
+  })();
   // A reservation tile carries NO action buttons — tapping it opens the
   // reservation detail panel where Accept / Reject (pending) and Seated /
   // No-show (confirmed) live, exactly like an order tile opens OrderDetail.
@@ -122,7 +140,12 @@ function ReservationCard({
               </span>
             )}
           </div>
-          <div className={`text-xs ${t.muted} mt-1 flex gap-3 flex-wrap`}>
+          <div className={`text-xs ${t.muted} mt-1 flex gap-3 flex-wrap items-center`}>
+            {autoCountdown && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">
+                <Clock className="w-3 h-3" /> {autoCountdown}
+              </span>
+            )}
             <span>{r.date} · {formatTime(r.time, hoursFormat)}</span>
             <span>{tk("partyOf", { n: r.partySize })}</span>
             {r.table && <span>{r.table.name}</span>}
@@ -2677,6 +2700,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 hoursFormat={hoursFmt}
                 onOpen={openReservation}
                 selected={selectedReservationId === r.id}
+                now={now}
               />
             ))}
           </div>
@@ -2914,6 +2938,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                   selected={selectedReservationId === it.r.id}
                   compact
                   dayChip={dayChip}
+                  now={now}
                 />
               );
             }
