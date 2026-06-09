@@ -145,6 +145,16 @@ function renderCustomer(
         </span>
       );
 
+    // Reserve-then-order block. Preview shows a representative sample so the
+    // owner can style it; on a real receipt it prints only for pre-orders.
+    case "reservation":
+      return (
+        <span>
+          <span style={{ display: "block", fontWeight: "bold" }}>🪑 TABLE RESERVATION + PRE-ORDER</span>
+          <span style={{ display: "block" }}>Party of 2 · {fmtDate(order.createdAt)} {fmtTime(order.createdAt)}</span>
+        </span>
+      );
+
     case "customer_info":
       return (
         <span>
@@ -287,6 +297,15 @@ function renderKitchen(section: Section, order: SampleOrder, config: KitchenConf
 
     case "k_order_type":
       return <span>{order.type.toUpperCase()}</span>;
+
+    // Reserve-then-order block. Preview shows a sample; prints only for pre-orders.
+    case "k_reservation":
+      return (
+        <span>
+          <span style={{ display: "block", fontWeight: "bold" }}>🪑 TABLE RESERVATION + PRE-ORDER</span>
+          <span style={{ display: "block" }}>Party of 2 · {fmtDate(order.createdAt)} {fmtTime(order.createdAt)}</span>
+        </span>
+      );
 
     case "k_order_number":
       return <span>#{order.orderNumber}</span>;

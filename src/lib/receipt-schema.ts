@@ -2,6 +2,11 @@
 
 export type CustomerSectionType =
   | "store_name" | "store_info"
+  /** Reserve-then-order block — renders ONLY when the order is linked to a
+   *  table booking. Shows the "TABLE RESERVATION + PRE-ORDER" flag, party size
+   *  and booking date/time. Its own section so restaurants can toggle / style /
+   *  reposition it. Empty (skipped) for normal orders. Luigi 2026-06-09. */
+  | "reservation"
   | "order_info" | "customer_info" | "items" | "modifiers"
   /** Applied-promotions box — renders only when the order has any
    *  promo in its `appliedPromos` snapshot. Shows each promo by name
@@ -13,6 +18,9 @@ export type CustomerSectionType =
 
 export type KitchenSectionType =
   | "k_title" | "k_order_type" | "k_order_number"
+  /** Kitchen reserve-then-order block — see CustomerSectionType "reservation".
+   *  Renders the booking flag + party + time, only for pre-orders. */
+  | "k_reservation"
   | "k_datetime" | "k_customer" | "k_items" | "k_modifiers"
   /** Kitchen-side applied-promotions box. Restaurants that don't want
    *  to clutter kitchen tickets with discount info can disable it. */
@@ -89,6 +97,7 @@ export const DEFAULT_CUSTOMER_CONFIG: CustomerConfig = {
     { id: "store_name",    type: "store_name",    label: "Store Name",          enabled: true,  style: { ...bc, fontSize: 18, paddingTop: 10, paddingBottom: 2 } },
     { id: "store_info",    type: "store_info",    label: "Store Address & Phone", enabled: true, style: { ...c,  fontSize: 11, paddingBottom: 8 } },
     { id: "order_info",    type: "order_info",    label: "Order Info",          enabled: true,  style: { ...base, dividerAbove: true, dividerBelow: true, paddingTop: 6, paddingBottom: 6 } },
+    { id: "reservation",   type: "reservation",   label: "Table Reservation / Pre-Order", enabled: true, style: { ...bc, fontSize: 13, dividerBelow: true, paddingTop: 4, paddingBottom: 6 } },
     { id: "customer_info", type: "customer_info", label: "Customer Info",       enabled: true,  style: { ...base, paddingTop: 5, paddingBottom: 5 } },
     { id: "items",         type: "items",         label: "Items List",          enabled: true,  style: { ...bl,  fontSize: 13, dividerAbove: true, paddingTop: 7, paddingBottom: 4 } },
     { id: "modifiers",     type: "modifiers",     label: "Modifiers",           enabled: true,  style: { ...base, fontSize: 11, paddingTop: 0, paddingBottom: 0 } },
@@ -109,6 +118,7 @@ export const DEFAULT_KITCHEN_CONFIG: KitchenConfig = {
   sections: [
     { id: "k_title",        type: "k_title",       label: "Kitchen Header",      enabled: true, style: { ...bc, fontSize: 15, paddingTop: 8, paddingBottom: 6, dividerBelow: true } },
     { id: "k_order_type",   type: "k_order_type",  label: "Order Type Badge",    enabled: true, style: { ...bc, fontSize: 22, bold: true, highlight: true, paddingTop: 10, paddingBottom: 10 } },
+    { id: "k_reservation",  type: "k_reservation", label: "Table Reservation / Pre-Order", enabled: true, style: { ...bc, fontSize: 16, bold: true, paddingTop: 6, paddingBottom: 6, dividerBelow: true } },
     { id: "k_order_number", type: "k_order_number", label: "Order Number",       enabled: true, style: { ...bc, fontSize: 32, bold: true, paddingTop: 6, paddingBottom: 6 } },
     { id: "k_datetime",     type: "k_datetime",    label: "Date & Time",         enabled: true, style: { ...c,  fontSize: 11, paddingBottom: 6, dividerBelow: true } },
     { id: "k_customer",     type: "k_customer",    label: "Customer Name",       enabled: true, style: { ...base, fontSize: 14, bold: true, paddingTop: 5, paddingBottom: 5 } },
@@ -142,11 +152,15 @@ export function parseReceiptConfig(raw: string | null | undefined, receiptType: 
         // saved config (e.g. modifiers added after the user first saved).
         const defaults = receiptType === "customer" ? DEFAULT_CUSTOMER_CONFIG : DEFAULT_KITCHEN_CONFIG;
         const savedIds = new Set((parsed.sections as any[]).map((s: any) => s.id));
-        for (const def of defaults.sections) {
+        // Insert each missing default section NEAR its position in the current
+        // default layout (clamped) — so a newly-added section (e.g. the
+        // reservation block) lands somewhere sensible for restaurants that
+        // already saved a template, instead of being dumped at the very end.
+        defaults.sections.forEach((def, idx) => {
           if (!savedIds.has(def.id)) {
-            parsed.sections.push(def);
+            parsed.sections.splice(Math.min(idx, parsed.sections.length), 0, def);
           }
-        }
+        });
 
         return parsed as ReceiptConfig;
       }

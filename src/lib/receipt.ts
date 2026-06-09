@@ -633,20 +633,28 @@ async function renderKitchenSection(
       r.line(`#${order.orderNumber}`);
       break;
 
+    // Reserve-then-order block — its OWN section so restaurants can toggle /
+    // style / reposition it in the template editor. Renders only for a
+    // pre-order; the section is skipped entirely for normal orders (see the
+    // section loop). Mirrors the lines builder in receipt-lines.ts so the
+    // bitmap (native LAN) and raw-TCP/PrintNode copies stay identical. Luigi
+    // 2026-06-09.
+    case "k_reservation":
+      if (!order.reservation) break;
+      r.line(`** ${t("receipt.kitchen.tableReservation")} **`);
+      r.line(t("receipt.reservation.partyOf", { n: order.reservation.partySize }));
+      r.line(`${t("receipt.reservation.booking")}: ${fmtDateTime(order.scheduledFor ?? `${order.reservation.date}T${order.reservation.time}`)}`);
+      break;
+
     case "k_datetime":
       r.line(fmtDateTime(order.createdAt));
-      // Reserve-then-order: flag the table booking right under the date so the
-      // kitchen sees this is a reservation + pre-order, not a plain order. The
-      // scheduled line below already prints the (reservation) time. Luigi 2026-06-08.
-      if (order.reservation) {
-        r.line(`** ${t("receipt.kitchen.tableReservation")} **`);
-        r.line(t("receipt.reservation.partyOf", { n: order.reservation.partySize }));
-      }
       // ASAP vs scheduled — prominent so the kitchen instantly sees whether to
-      // make it now or hold it for a later slot. Luigi 2026-06-05. For a
-      // reservation the scheduled time IS the table time, so label it BOOKING.
-      if (order.scheduledFor) {
-        r.line(`** ${order.reservation ? t("receipt.reservation.booking") : t("receipt.scheduling.orderForLater")} **`);
+      // make it now or hold it for a later slot. Luigi 2026-06-05. A
+      // reservation's timing lives in the dedicated k_reservation section.
+      if (order.reservation) {
+        // booking time shown by k_reservation
+      } else if (order.scheduledFor) {
+        r.line(`** ${t("receipt.scheduling.orderForLater")} **`);
         r.line(fmtDateTime(order.scheduledFor));
       } else {
         r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
@@ -779,17 +787,25 @@ async function renderCustomerSection(
       if (restaurant.email) r.wrapped(restaurant.email);
       break;
 
+    // Reserve-then-order block (customer copy) — its own toggleable/styleable
+    // section. Renders only for a pre-order; skipped for normal orders. Luigi
+    // 2026-06-09.
+    case "reservation":
+      if (!order.reservation) break;
+      r.line(`** ${t("receipt.kitchen.tableReservation")} **`);
+      r.line(t("receipt.reservation.partyOf", { n: order.reservation.partySize }));
+      r.line(`${t("receipt.reservation.booking")}: ${fmtDateTime(order.scheduledFor ?? `${order.reservation.date}T${order.reservation.time}`)}`);
+      break;
+
     case "order_info":
       r.line(`${t("receipt.customer.orderNumber")}${order.orderNumber}`);
       r.line(t("receipt.customer.title", { type: tOrderTypeUpper(order.type, t) }));
-      // Reserve-then-order flag on the customer copy too. Luigi 2026-06-08.
-      if (order.reservation) {
-        r.line(`** ${t("receipt.kitchen.tableReservation")} **`);
-        r.line(t("receipt.reservation.partyOf", { n: order.reservation.partySize }));
-      }
       r.line(`${t("receipt.customer.date")}: ${fmtDateTime(order.createdAt)}`);
-      if (order.scheduledFor) {
-        r.line(`${order.reservation ? t("receipt.reservation.booking") : t("receipt.scheduling.orderForLater")}:`);
+      // A reservation's booking time lives in the dedicated reservation section.
+      if (order.reservation) {
+        // booking time shown by the reservation section
+      } else if (order.scheduledFor) {
+        r.line(`${t("receipt.scheduling.orderForLater")}:`);
         r.line(fmtDateTime(order.scheduledFor));
       } else {
         r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
@@ -967,6 +983,9 @@ async function renderSections(
   for (const section of config.sections) {
     if (!section.enabled) continue;
     if (STYLE_ONLY_SECTIONS.has(section.type)) continue;
+    // Reservation sections only exist for a pre-order — skip the WHOLE section
+    // (padding + dividers included) on a normal order so it leaves no empty gap.
+    if ((section.type === "reservation" || section.type === "k_reservation") && !order.reservation) continue;
     const s = section.style;
 
     blankLines(r, s.paddingTop);
