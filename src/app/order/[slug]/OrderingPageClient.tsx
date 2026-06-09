@@ -705,6 +705,7 @@ export function OrderingPageClient({
   const tT = useTranslations("ordering.toasts");
   const tCombo = useTranslations("customer.combo");
   const tAddr = useTranslations("checkout.addressFields");
+  const tPromoDetail = useTranslations("customer.promoDetail");
   const theme = parseTheme(themeSettings);
   // Owner's chosen clock display format ("12h" → AM/PM, "24h" → 14:30).
   // Applied wherever times are shown to customers: header hours, info
@@ -783,6 +784,15 @@ export function OrderingPageClient({
   // exclusives + dropped standards). Drives the "can't combine / use this
   // instead" UX and the clearer freebie-removed message. Luigi 2026-06-07.
   const [blockedPromos, setBlockedPromos] = useState<Array<{ promoId: string; name: string; discount: number; winnerName: string; wasExclusive: boolean; couponCode?: string }>>([]);
+  // Cart preview: the first-buy discount was dropped because the email/phone the
+  // customer entered turns out to be a returning customer. Drives the gentle
+  // "new customers only" note — shown ONLY when the hero banner was visible to
+  // them (i.e. they looked new), per Luigi's rule. Luigi 2026-06-09.
+  const [firstBuyUnavailable, setFirstBuyUnavailable] = useState(false);
+  // Debounced checkout identity → re-evaluate promos ~500ms after they stop
+  // typing, so the previewed total settles to the real charge without firing a
+  // request per keystroke.
+  const [debouncedIdentity, setDebouncedIdentity] = useState({ email: "", phone: "" });
   // Promo IDs the customer manually removed (X) from the cart, so a different
   // non-stackable deal can take over. Sent to apply-promos + order placement.
   const [suppressedPromoIds, setSuppressedPromoIds] = useState<string[]>([]);
@@ -922,6 +932,15 @@ export function OrderingPageClient({
     lng: null as number | null,
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
+  // Debounce the entered email/phone so the promo preview re-evaluates ~500ms
+  // after the customer stops typing (not on every keystroke). Luigi 2026-06-09.
+  useEffect(() => {
+    const h = setTimeout(
+      () => setDebouncedIdentity({ email: customerInfo.email || "", phone: customerInfo.phone || "" }),
+      500,
+    );
+    return () => clearTimeout(h);
+  }, [customerInfo.email, customerInfo.phone]);
 
   // Per-order-type payment methods: if the customer switches order type and
   // their currently-selected payment method is no longer accepted for the new
@@ -1539,6 +1558,14 @@ export function OrderingPageClient({
         // e.g. pickup orders skip deliveryZoneId.
         deliveryZoneId: orderType === "delivery" && resolvedZone?.inside ? resolvedZone.zone.id : undefined,
         isMember: !!currentCustomer,
+        // First-buy preview gating: optimistically treat the visitor as NEW
+        // unless we can already tell they're returning (same rule as the hero
+        // banner) — so the first-order discount shows in the cart. The server
+        // re-derives this authoritatively once email/phone are entered, so the
+        // shown total always matches the real charge. Luigi 2026-06-09.
+        isNewCustomer: !customerIsReturning && !hasOrderedHere,
+        email: debouncedIdentity.email || undefined,
+        phone: debouncedIdentity.phone || undefined,
         // Customer-typed coupon code — engine matches it against
         // Promotion.couponCode in the couponPromos branch. Required
         // for autoApply=false promos to fire. Empty string is fine
@@ -1565,11 +1592,12 @@ export function OrderingPageClient({
         setPromoDiscount(data.totalDiscount ?? 0);
         setHasFreeDelivery(data.hasFreeDelivery ?? false);
         setBlockedPromos(Array.isArray(data.blockedPromos) ? data.blockedPromos : []);
+        setFirstBuyUnavailable(!!data.newCustomerOfferUnavailable);
         promosEvaluatedRef.current = true;
       })
       .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds]);
+  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds, debouncedIdentity, customerIsReturning, hasOrderedHere]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
   // ── Promo time-window helpers (shared with the engine via promo-window) ──
@@ -4015,6 +4043,26 @@ export function OrderingPageClient({
                     ))}
                   </div>
                 )}
+
+                {/* First-buy dropped because the entered email/phone is a
+                    returning customer. Shown ONLY when the hero banner was
+                    visible to them (they looked new) — otherwise they never saw
+                    the offer and need no explanation. Reuses the existing
+                    "New customers only" string (no new locale key). Luigi
+                    2026-06-09. */}
+                {firstBuyUnavailable && !customerIsReturning && !hasOrderedHere && (() => {
+                  const fb = promoBanners.find((p) => p.campaignRef === "kickstarter_first_buy");
+                  if (!fb) return null;
+                  const fbName = fb.bannerHeadline?.trim() || fb.name;
+                  return (
+                    <div className="px-4 py-2.5 bg-blue-50 border-b border-blue-100 text-xs text-blue-800 flex items-start gap-2">
+                      <span className="flex-shrink-0">ℹ️</span>
+                      <span>
+                        <span className="font-semibold">{fbName}</span> — {tPromoDetail("conditionNewCustomers")}
+                      </span>
+                    </div>
+                  );
+                })()}
 
                 {/* Coupon */}
                 <div className="p-4 border-b border-gray-100">

@@ -7,6 +7,10 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const {
     restaurantSlug, orderType, subtotal, items, couponCode, isNewCustomer, paymentMethod,
+    // Checkout identity (optional) — once the customer types their email / phone
+    // we re-derive new-vs-returning AUTHORITATIVELY (below) so the previewed
+    // total matches the real charge. Empty until they reach the details step.
+    email, phone,
     // Phase 2a restriction inputs from the client. The page already
     // resolves the customer's delivery zone via geocoding (for the in-
     // zone fee display) and the member flag from the per-restaurant
@@ -40,6 +44,37 @@ export async function POST(req: NextRequest) {
     Array.isArray(suppressedPromoIds) ? suppressedPromoIds.map((x: unknown) => String(x)) : [],
   );
   const activePromos = activePromosAll.filter((p) => !suppressed.has(p.id));
+
+  // ── First-buy eligibility for the cart preview (Luigi 2026-06-09) ─────────
+  // The cart shows the first-buy / new-customer discount OPTIMISTICALLY for a
+  // visitor we can't rule out as new (the client sends isNewCustomer using the
+  // same logic that decides whether the hero banner shows). The moment they
+  // enter an email / phone at checkout we re-derive it here AUTHORITATIVELY —
+  // counting prior FULFILLED orders only (missed/rejected don't count, mirroring
+  // order placement) — so the previewed total always matches what they'll be
+  // charged. If they turn out returning, flag the dropped first-buy so the cart
+  // can show a gentle "new customers only" note (only meaningful because the
+  // banner was visible to them in the first place).
+  const previewEmail = typeof email === "string" ? email.trim().toLowerCase() : null;
+  const previewPhone = typeof phone === "string" ? phone.trim() : null;
+  let effectiveIsNew = isNewCustomer ?? false;
+  let newCustomerOfferUnavailable = false;
+  if (previewEmail || previewPhone) {
+    const priorFulfilled = await prisma.order.count({
+      where: {
+        restaurantId: restaurant.id,
+        status: { notIn: ["cancelled", "rejected"] },
+        OR: [
+          ...(previewEmail ? [{ customerEmail: previewEmail }] : []),
+          ...(previewPhone ? [{ customerPhone: previewPhone }] : []),
+        ],
+      },
+    });
+    effectiveIsNew = priorFulfilled === 0;
+    if (!effectiveIsNew && activePromos.some((p: any) => p.campaignRef === "kickstarter_first_buy" && p.isActive)) {
+      newCustomerOfferUnavailable = true;
+    }
+  }
 
   // Re-derive each line's categoryId server-side from its menuItemId, so
   // CATEGORY-targeted promos (BOGO / % off / combos by category) match in the
@@ -75,7 +110,7 @@ export async function POST(req: NextRequest) {
   const ctx: ApplyContext = {
     orderType: orderType ?? "pickup",
     now: promoEvalNow,
-    isNewCustomer: isNewCustomer ?? false,
+    isNewCustomer: effectiveIsNew,
     isMember: isMember ?? false,
     subtotal: parseFloat(subtotal),
     items: ctxItems,
@@ -106,5 +141,5 @@ export async function POST(req: NextRequest) {
   // Surface promos that qualified but were blocked by the winning exclusive, so
   // the cart can explain "can't combine" and offer "remove this to use that
   // instead". Luigi 2026-06-07.
-  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, blockedPromos });
+  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, blockedPromos, newCustomerOfferUnavailable });
 }
