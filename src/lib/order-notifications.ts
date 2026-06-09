@@ -18,6 +18,7 @@
 
 import prisma from "@/lib/db";
 import { notifyStaff, notifyCustomer } from "@/lib/notifications";
+import { recordAppliedCoupons } from "@/lib/coupon-ledger";
 
 export async function fireOrderNotifications(orderId: string): Promise<{ fired: boolean }> {
   // Atomic claim: only ONE caller wins the right to fire notifications.
@@ -79,11 +80,33 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
   // hides the box). Free-delivery entries already carry the saved
   // delivery fee as their discount, frozen at order-create time.
   let appliedPromosForEmail: Array<{ name: string; type: string; discount: number; couponCode?: string }> | undefined;
+  let appliedPromoIds: string[] = [];
   if ((order as any).appliedPromos) {
     try {
       const parsed = JSON.parse((order as any).appliedPromos);
-      if (Array.isArray(parsed) && parsed.length > 0) appliedPromosForEmail = parsed;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        appliedPromosForEmail = parsed;
+        appliedPromoIds = parsed.map((p: any) => p?.promoId).filter((x: unknown): x is string => typeof x === "string" && !!x);
+      }
     } catch { /* malformed JSON — leave undefined */ }
+  }
+
+  // ── Coupon ledger: record the campaign / once-per-lifetime promos this order
+  // applied, NOW that it's actually LIVE (released to the kitchen). Doing it at
+  // release — not at order-create — means an abandoned unpaid card order never
+  // reserves the coupon, so the customer can freely retry; only a real, released
+  // order ties up the offer (and it's released again if later missed/cancelled).
+  // Awaited (fast, internally safe) so the row exists before any completion/
+  // release hook can act on it. Luigi 2026-06-09.
+  if (appliedPromoIds.length > 0) {
+    await recordAppliedCoupons({
+      restaurantId: (order as any).restaurantId,
+      orderId: order.id,
+      email: order.customerEmail,
+      phone: order.customerPhone,
+      customerId: (order as any).customerId ?? null,
+      appliedPromoIds,
+    });
   }
 
   // Map order items for the email — include each item's own modifiers AND, for

@@ -16,6 +16,7 @@ import {
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { dispatchOrderToShipday, cancelShipdayOrder, shouldDispatchToShipday } from "@/lib/shipday";
 import { verifyOrderToken } from "@/lib/order-status-token";
+import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
 
 const ALLOWED_STATUSES = ["pending", "accepted", "preparing", "ready", "completed", "rejected", "cancelled"] as const;
 
@@ -369,6 +370,18 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     } catch (e) {
       console.error("[orders PATCH] reservation sync:", e);
     }
+  }
+
+  // ── Coupon ledger lifecycle ──────────────────────────────────────────────
+  // A COMPLETED order's coupons are terminally redeemed; a REJECTED/CANCELLED
+  // order's coupons are released back to the customer (available again). Both
+  // calls are idempotent + internally safe (never throw). This is the single
+  // rule that makes "a missed/rejected order never burns the offer" hold for
+  // every campaign. Luigi 2026-06-09.
+  if (newStatus === "completed") {
+    await redeemCouponsForOrder(id);
+  } else if (newStatus === "rejected" || newStatus === "cancelled") {
+    await releaseCouponsForOrder(id);
   }
 
   // ── Kill flow: void vs refund ────────────────────────────────────────────

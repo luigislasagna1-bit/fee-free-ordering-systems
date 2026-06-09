@@ -310,6 +310,7 @@ model Restaurant {
   kickstarterState       KickstarterState?
   cartSessions           CartSession[]
   prospectImports        ProspectImport[]
+  customerCoupons        CustomerCoupon[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
@@ -1148,6 +1149,7 @@ model Customer {
   orders          Order[]
   addresses       RestaurantCustomerAddress[]
   assignedCoupons Coupon[]         @relation("CouponAssignedCustomer")
+  customerCoupons CustomerCoupon[]
 
   @@index([restaurantId])
   @@index([restaurantId, email])
@@ -1412,10 +1414,79 @@ model Promotion {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant      Restaurant       @relation(fields: [restaurantId], references: [id])
+  customerCoupons CustomerCoupon[]
 
   @@index([restaurantId, isActive])
   @@index([campaignRef])
+}
+
+/// ── Coupon-grant ledger (Luigi 2026-06-09) ──────────────────────────────
+/// Tracks, per customer (matched by email OR phone), which campaign coupons
+/// they HOLD and whether each has TRULY been used. Redemption is tied to
+/// ORDER FULFILLMENT, never to placement: a coupon applied to an order is
+/// only "redeemed" once that order COMPLETES, and is "released" (made
+/// available again) if the order is missed / rejected / cancelled / refunded.
+/// So a coupon is never burned by an order that didn't happen — anywhere in
+/// the system. This is the shared engine under Kickstarter (auto-apply
+/// first-buy), Autopilot (per-campaign auto-apply OR code/link), and future
+/// flyer/QR grants.
+///
+///   granted ──apply──▶ applied ──order completes──▶ redeemed
+///                ▲          │
+///                └──────────┘  order failed → released → available again
+///
+/// Deliberately a SIDE TABLE (sparse, off the hot Order/MenuItem tables) per
+/// the scaling rules. `appliedOrderId` is a loose reference (not an FK) to
+/// avoid a back-relation on the hot Order table.
+model CustomerCoupon {
+  id           String  @id @default(cuid())
+  restaurantId String
+  promotionId  String
+  /// Denormalised from the promotion at grant time so "does this customer
+  /// already hold a <campaign> coupon?" needs no join.
+  campaignRef  String?
+
+  /// WHO holds it — matched on EITHER identifier at checkout. At least one is
+  /// set; customerId is filled in when the Customer row is resolvable.
+  email      String?
+  phone      String?
+  customerId String?
+
+  /// Code shown / typed (mirrors the promotion's couponCode).
+  code      String?
+  /// Snapshot of the owning campaign's auto-apply setting AT GRANT TIME, so a
+  /// later config change can't retroactively change how this grant behaves.
+  autoApply Boolean @default(false)
+
+  /// granted | applied | redeemed | released | expired | revoked
+  status      String  @default("granted")
+  /// What created this grant: "rule:new_customer", "kickstarter_first_buy",
+  /// "autopilot_reengage_win3", "invite", "flyer:<code>", ...
+  grantSource String?
+
+  grantedAt DateTime @default(now())
+  /// The order it is CURRENTLY applied to (while status = applied); retained
+  /// as the redeeming order once redeemed; cleared on release.
+  appliedOrderId String?
+  appliedAt      DateTime?
+  redeemedAt     DateTime?
+  releasedAt     DateTime?
+  /// Optional hard validity window (e.g. first-buy good for 90 days).
+  expiresAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  promotion  Promotion  @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  customer   Customer?  @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  // Checkout lookups: "active grants for this identity at this restaurant".
+  @@index([restaurantId, email, status])
+  @@index([restaurantId, phone, status])
+  @@index([restaurantId, promotionId, status])
+  @@index([appliedOrderId])
 }
 
 // ─── Marketing Suite (GloriaFood parity, 2026-05-29) ───────────────────

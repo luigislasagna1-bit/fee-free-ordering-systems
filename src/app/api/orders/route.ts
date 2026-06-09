@@ -15,6 +15,7 @@ import {
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
+import { usedPromoIds } from "@/lib/coupon-ledger";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
@@ -1115,6 +1116,27 @@ export async function POST(req: NextRequest) {
         select: { id: true },
       });
       if (account) isMemberForPromo = true;
+    }
+
+    // ── Coupon ledger (precise, phone-aware) ────────────────────────────────
+    // The fulfilled-order heuristic above is keyed on the email→Customer row, so
+    // it can miss a guest who used the offer with an email and returns with only
+    // a phone (or vice-versa). The ledger matches on email OR phone and records
+    // redemption by FULFILLMENT — a missed/rejected order is "released", never
+    // "used" — so this both tightens once-per-lifetime enforcement across
+    // identities AND keeps a missed first order's offer alive. Additive: it can
+    // only mark MORE lifetime promos used, never fewer. Luigi 2026-06-09.
+    {
+      const lifetimeIds = activePromos.filter((p) => p.onceLifetimePerClient).map((p) => p.id);
+      if (lifetimeIds.length > 0 && (promoCustomerEmail || customerPhone)) {
+        const usedIds = await usedPromoIds({
+          restaurantId: restaurant.id,
+          promotionIds: lifetimeIds,
+          email: promoCustomerEmail,
+          phone: customerPhone,
+        });
+        for (const id of usedIds) hasUsedLifetimeForPromo[id] = true;
+      }
     }
 
     // ── Promo engine evaluation (now has resolved zone + customer context) ──

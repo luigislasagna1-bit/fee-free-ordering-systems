@@ -13,6 +13,7 @@
 import prisma from "@/lib/db";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
 import { refundDirectPayment, voidPayment } from "@/lib/stripe";
+import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 
 /** Minutes a regular pending order can sit before we auto-reject.
@@ -154,6 +155,9 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
         },
       });
       result.abandonedCancelled += 1;
+      // Free any coupon this abandoned order had reserved, so the customer can
+      // re-use the offer on a fresh order. Idempotent + internally safe.
+      await releaseCouponsForOrder(o.id);
       // Marketplace attribution shouldn't include orders that never paid.
       // (For belt-and-suspenders — usually marketplaceCounterApplied is
       // false on never-paid orders, but the rollback is idempotent.)
@@ -192,6 +196,10 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
         },
       });
       result.rejected += 1;
+
+      // Coupon ledger: a timed-out ("missed") order releases its coupon back to
+      // the customer — never burned by an order the restaurant never accepted.
+      await releaseCouponsForOrder(order.id);
 
       // Marketplace counter rollback (idempotent). Auto-rejected
       // marketplace orders shouldn't count toward the restaurant's
