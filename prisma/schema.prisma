@@ -296,6 +296,7 @@ model Restaurant {
   promotions             Promotion[]
   printerSettings        PrinterSettings?
   autopilotCampaigns     AutopilotCampaign[]
+  autopilotSteps         AutopilotStep[]
   paymentProvider        PaymentProvider?
   billingProfile         RestaurantBillingProfile?
   printLogs              PrintLog[]
@@ -1809,11 +1810,17 @@ model AutopilotCampaign {
 
 /// Tracks which autopilot emails have been sent to which customers, so
 /// the cron doesn't double-send when it runs every hour. Unique on
-/// (campaignId, customerEmail) makes attempted double-sends a constraint
-/// violation that the runner catches + ignores — defense-in-depth in
-/// case two cron instances fire close together. Email is the de-dup key
+/// (campaignId, customerEmail, sequence) makes attempted double-sends a
+/// constraint violation that the runner catches + ignores — defense-in-depth
+/// in case two cron instances fire close together. Email is the de-dup key
 /// rather than customerId because a customer may have multiple Customer
 /// rows (one per restaurant they've ordered from) but only one inbox.
+///
+/// `sequence` is the drip-ladder step number (Luigi 2026-06-10): a single-send
+/// (legacy / cart-abandon) is sequence 0; a stepped re-engagement send is
+/// 1..N. Including it in the unique key lets one customer receive each step of
+/// a multi-email win-back sequence exactly once, while still blocking true
+/// double-sends of the SAME step.
 model AutopilotSend {
   id            String   @id @default(cuid())
   campaignId    String
@@ -1821,12 +1828,48 @@ model AutopilotSend {
   /// Optional FK to a specific Customer row for the restaurant — handy
   /// for analytics but not the de-dup key (see comment above).
   customerId    String?
+  /// Drip-sequence step this send was for. 0 = single-send (legacy). 1..N =
+  /// the Nth email of a multi-step win-back ladder.
+  sequence      Int      @default(0)
   sentAt        DateTime @default(now())
 
   campaign AutopilotCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 
-  @@unique([campaignId, customerEmail])
+  @@unique([campaignId, customerEmail, sequence])
   @@index([campaignId])
+  /// Batch the per-run "who already got which step?" lookup (campaign + email).
+  @@index([campaignId, customerEmail])
+}
+
+/// One configurable step of an Autopilot drip sequence (Luigi 2026-06-10).
+/// A campaign (e.g. "reengagement") can have several of these — each its own
+/// follow-up email with its own delay + discount %, forming an escalating
+/// win-back ladder that stops the moment the customer re-orders. Sparse,
+/// owner-edited email copy lives here (a side table) rather than bloating the
+/// hot Promotion table. The discount % is mirrored to the matching
+/// campaignSequence Promotion row, which is what the email advertises + the
+/// ordering page applies, so the two can never drift.
+///   delayHours      — measured from the trigger event (last order for
+///                     reengagement, first order for second_order).
+///   discountPercent — drives Promotion.ruleConfig.discountPercent for the
+///                     row whose campaignSequence == stepNumber.
+model AutopilotStep {
+  id              String   @id @default(cuid())
+  restaurantId    String
+  campaignType    String // second_order | reengagement | cart_abandonment
+  stepNumber      Int // 1-based position in the ladder
+  delayHours      Int      @default(168)
+  discountPercent Int      @default(0)
+  subject         String   @default("")
+  emailBody       String   @default("")
+  isEnabled       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@unique([restaurantId, campaignType, stepNumber])
+  @@index([restaurantId, campaignType])
 }
 
 model ReservationSettings {
