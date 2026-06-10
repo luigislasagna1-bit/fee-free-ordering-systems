@@ -144,10 +144,18 @@ export async function GET() {
     );
     const firstAtByPhone = new Map<string, number>();
     const firstAtByEmail = new Map<string, number>();
+    // Fulfillment-aware "first order" (Luigi 2026-06-10): a cancelled / rejected /
+    // MISSED (auto-rejected) prior order must NOT count, so the badge agrees with
+    // the first-buy special + coupon ledger — all of which judge "new customer"
+    // by FULFILLED orders only. Without this filter a customer whose first order
+    // was cancelled correctly got the welcome discount but the kitchen tile never
+    // showed the ⭐ FIRST ORDER badge. Same exclusion set as
+    // FAILED_ORDER_STATES in /api/orders + apply-promos. Keep these in sync.
+    const FAILED_ORDER_STATES = ["cancelled", "rejected"];
     if (phones.length > 0) {
       const g = await prisma.order.groupBy({
         by: ["customerPhone"],
-        where: { restaurantId, customerPhone: { in: phones } },
+        where: { restaurantId, customerPhone: { in: phones }, status: { notIn: FAILED_ORDER_STATES } },
         _min: { createdAt: true },
       });
       for (const row of g) {
@@ -157,7 +165,7 @@ export async function GET() {
     if (emails.length > 0) {
       const g = await prisma.order.groupBy({
         by: ["customerEmail"],
-        where: { restaurantId, customerEmail: { in: emails } },
+        where: { restaurantId, customerEmail: { in: emails }, status: { notIn: FAILED_ORDER_STATES } },
         _min: { createdAt: true },
       });
       for (const row of g) {
