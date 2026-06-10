@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Už mūsų pristatymo zonos ribų.",
     "outsideNotAcceptedBody": "Užsakymų už standartinių pristatymo zonų ribų nepriimame. Pasirinkite atsiėmimą arba naudokite kitą adresą.",
     "reservationTitle": "Staliuko rezervacijos patvirtinimas",
-    "reservationDetail": "{date} {time} · {n} asmenims — jūsų staliukas rezervuojamas, kai pateikiate šį užsakymą."
+    "reservationDetail": "{date} {time} · {n} asmenims — jūsų staliukas rezervuojamas, kai pateikiate šį užsakymą.",
+    "rememberedHint": "Užpildėme jūsų duomenis iš šio įrenginio.",
+    "rememberedClear": "Ne jūs? Išvalyti"
   },
   "reservation": {
     "title": "Rezervuoti stalą",

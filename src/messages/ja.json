@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "配達エリア外です。",
     "outsideNotAcceptedBody": "標準の配達エリア外のご注文はお受けしておりません。お受け取り（ピックアップ）に切り替えるか、別の住所をご利用ください。",
     "reservationTitle": "テーブル予約の確認",
-    "reservationDetail": "{date} {time} · {n}名様 — この注文を確定すると席が予約されます。"
+    "reservationDetail": "{date} {time} · {n}名様 — この注文を確定すると席が予約されます。",
+    "rememberedHint": "この端末に保存された情報を入力しました。",
+    "rememberedClear": "本人ではない場合は消去"
   },
   "reservation": {
     "title": "テーブルを予約",

@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Di luar area pengiriman kami.",
     "outsideNotAcceptedBody": "Kami tidak menerima pesanan di luar zona pengiriman standar kami. Beralihlah ke ambil sendiri atau gunakan alamat yang berbeda.",
     "reservationTitle": "Mengonfirmasi reservasi meja Anda",
-    "reservationDetail": "{date} pukul {time} · untuk {n} orang — meja Anda dipesan saat Anda melakukan pesanan ini."
+    "reservationDetail": "{date} pukul {time} · untuk {n} orang — meja Anda dipesan saat Anda melakukan pesanan ini.",
+    "rememberedHint": "Kami mengisi detail Anda dari perangkat ini.",
+    "rememberedClear": "Bukan Anda? Hapus"
   },
   "reservation": {
     "title": "Pesan meja",

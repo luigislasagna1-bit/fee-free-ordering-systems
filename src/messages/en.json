@@ -425,7 +425,9 @@
     "leadTimePrompt": "⏰ This restaurant takes orders in advance — please pick a time. The earliest available slot is shown below.",
     "asapOnly": "This order will be prepared as soon as possible.",
     "reservationTitle": "Confirming your table reservation",
-    "reservationDetail": "{date} at {time} · party of {n} — your table is booked when you place this order."
+    "reservationDetail": "{date} at {time} · party of {n} — your table is booked when you place this order.",
+    "rememberedHint": "We filled in your details from this device.",
+    "rememberedClear": "Not you? Clear"
   },
   "reservation": {
     "title": "Book a table",

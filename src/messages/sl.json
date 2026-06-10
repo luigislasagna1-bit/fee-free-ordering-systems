@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Zunaj našega dostavnega območja.",
     "outsideNotAcceptedBody": "Naročil zunaj naših standardnih dostavnih območij ne sprejemamo. Preklopite na prevzem ali uporabite drug naslov.",
     "reservationTitle": "Potrditev rezervacije mize",
-    "reservationDetail": "{date} ob {time} · {n} oseb — miza je rezervirana, ko oddate to naročilo."
+    "reservationDetail": "{date} ob {time} · {n} oseb — miza je rezervirana, ko oddate to naročilo.",
+    "rememberedHint": "Vaše podatke smo izpolnili iz te naprave.",
+    "rememberedClear": "Niste vi? Počisti"
   },
   "reservation": {
     "title": "Rezerviraj mizo",

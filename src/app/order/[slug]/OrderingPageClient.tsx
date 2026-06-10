@@ -749,6 +749,12 @@ export function OrderingPageClient({
     // hero, and vice-versa. Luigi 2026-06-09.
     try { if (localStorage.getItem(`ff-ordered-${restaurant.id}-${customerChannel}`) === "1") setHasOrderedHere(true); } catch {}
   }, [restaurant.id, customerChannel]);
+  // Silent guest "remember me" (Luigi 2026-06-10): true once we've pre-filled the
+  // checkout form from contact/address saved on THIS device by a prior order
+  // (any restaurant / marketplace — it's the customer's own info). Drives the
+  // "Not you? Clear" affordance for shared devices. A logged-in account always
+  // wins over this; card data is NEVER stored here.
+  const [hasSavedGuestInfo, setHasSavedGuestInfo] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   /** When non-null, the customer has tapped a promo banner card and the
    *  detail modal is showing. The promo object is the same shape we
@@ -954,6 +960,62 @@ export function OrderingPageClient({
     );
     return () => clearTimeout(h);
   }, [customerInfo.email, customerInfo.phone]);
+
+  // Silent guest "remember me" (Luigi 2026-06-10): pre-fill the checkout form
+  // from contact + delivery details this device saved on a prior order — so a
+  // returning guest who never made an account doesn't retype name / email /
+  // phone / address every time (GloriaFood-parity). The store is device-global
+  // (key `ff-guest-info`, NOT per-restaurant) because it's the customer's own
+  // info — so it carries across the marketplace AND every restaurant's direct
+  // site, exactly as Luigi asked. A signed-in account always wins (we skip when
+  // currentCustomer is set). We only ever fill EMPTY fields, so we never clobber
+  // something already typed, the account pre-fill, or the consent-lookup effect.
+  // Card data is never stored here (Stripe owns that — PCI-safe). Runs once on
+  // mount; best-effort (storage disabled/cleared just means an empty form).
+  useEffect(() => {
+    if (currentCustomer) return; // signed-in account takes precedence
+    try {
+      const raw = localStorage.getItem("ff-guest-info");
+      if (!raw) return;
+      const s = JSON.parse(raw) as Record<string, unknown>;
+      const str = (v: unknown) => (typeof v === "string" ? v : "");
+      if (!str(s.name) && !str(s.email) && !str(s.phone)) return;
+      setCustomerInfo((ci) => ({
+        ...ci,
+        name: ci.name || str(s.name),
+        email: ci.email || str(s.email),
+        phone: ci.phone || str(s.phone),
+        address: ci.address || str(s.address),
+        city: ci.city || str(s.city),
+        zip: ci.zip || str(s.zip),
+        unit: ci.unit || str(s.unit),
+        buzzer: ci.buzzer || str(s.buzzer),
+        deliveryNotes: ci.deliveryNotes || str(s.deliveryNotes),
+        neighbourhood: ci.neighbourhood || str(s.neighbourhood),
+        building: ci.building || str(s.building),
+        floor: ci.floor || str(s.floor),
+        parking: ci.parking || str(s.parking),
+      }));
+      setHasSavedGuestInfo(true);
+    } catch {}
+    // currentCustomer is a stable server prop; run once on mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // "Not you?" — wipe the device-saved guest details and blank the contact +
+  // delivery fields so a different person on a shared device starts clean. We
+  // keep order-type / payment / scheduling (those aren't identity). Luigi 2026-06-10.
+  const clearSavedGuestInfo = () => {
+    try { localStorage.removeItem("ff-guest-info"); } catch {}
+    setHasSavedGuestInfo(false);
+    setCustomerInfo((ci) => ({
+      ...ci,
+      name: "", email: "", phone: "", address: "", city: "", zip: "",
+      unit: "", buzzer: "", deliveryNotes: "",
+      neighbourhood: "", building: "", floor: "", parking: "",
+      lat: null, lng: null,
+    }));
+  };
 
   // Per-order-type payment methods: if the customer switches order type and
   // their currently-selected payment method is no longer accepted for the new
@@ -2519,6 +2581,23 @@ export function OrderingPageClient({
       // card payment later abandoned) never costs a genuine new customer the
       // offer. Luigi 2026-06-09.
       try { localStorage.setItem(`ff-ordered-${restaurant.id}-${customerChannel}`, "1"); } catch {}
+      // Silent "remember me" (Luigi 2026-06-10): stash this guest's contact +
+      // delivery details on the device so their next order — here OR on any
+      // other Fee Free restaurant / the marketplace — pre-fills automatically,
+      // no account required. Device-global key (it's the customer's own info).
+      // NEVER stores card data (Stripe owns that — PCI-safe). Only when they
+      // actually gave a name+contact, so we don't persist a blank shell.
+      try {
+        if (customerInfo.name.trim() && (customerInfo.email.trim() || customerInfo.phone.trim())) {
+          localStorage.setItem("ff-guest-info", JSON.stringify({
+            name: customerInfo.name, email: customerInfo.email, phone: customerInfo.phone,
+            address: customerInfo.address, city: customerInfo.city, zip: customerInfo.zip,
+            unit: customerInfo.unit, buzzer: customerInfo.buzzer, deliveryNotes: customerInfo.deliveryNotes,
+            neighbourhood: customerInfo.neighbourhood, building: customerInfo.building,
+            floor: customerInfo.floor, parking: customerInfo.parking,
+          }));
+        }
+      } catch {}
       sessionTokenRef.current = null;
       // Reserve-then-order: the booking went in with the order — leave
       // reservation mode so a fresh visit starts clean.
@@ -4350,6 +4429,8 @@ export function OrderingPageClient({
           customerInfo={customerInfo}
           setCustomerInfo={setCustomerInfo}
           onMarketingToggle={handleMarketingToggle}
+          savedGuestInfo={hasSavedGuestInfo}
+          onClearSavedInfo={clearSavedGuestInfo}
           editingSection={editingSection}
           setEditingSection={setEditingSection}
           orderLoading={orderLoading}

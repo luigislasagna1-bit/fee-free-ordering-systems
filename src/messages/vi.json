@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Nằm ngoài khu vực giao hàng của chúng tôi.",
     "outsideNotAcceptedBody": "Chúng tôi không nhận đơn hàng nằm ngoài khu vực giao hàng tiêu chuẩn của mình. Hãy chuyển sang lấy tại cửa hàng hoặc dùng một địa chỉ khác.",
     "reservationTitle": "Xác nhận đặt bàn của bạn",
-    "reservationDetail": "{date} lúc {time} · nhóm {n} người — bàn của bạn được đặt khi bạn hoàn tất đơn này."
+    "reservationDetail": "{date} lúc {time} · nhóm {n} người — bàn của bạn được đặt khi bạn hoàn tất đơn này.",
+    "rememberedHint": "Chúng tôi đã điền thông tin của bạn từ thiết bị này.",
+    "rememberedClear": "Không phải bạn? Xóa"
   },
   "reservation": {
     "title": "Đặt bàn",

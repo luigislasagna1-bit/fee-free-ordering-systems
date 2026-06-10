@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Ārpus mūsu piegādes zonas.",
     "outsideNotAcceptedBody": "Mēs nepieņemam pasūtījumus ārpus mūsu standarta piegādes zonām. Izvēlieties saņemšanu uz vietas vai izmantojiet citu adresi.",
     "reservationTitle": "Galdiņa rezervācijas apstiprināšana",
-    "reservationDetail": "{date} plkst. {time} · {n} personas — jūsu galdiņš tiek rezervēts, kad veicat šo pasūtījumu."
+    "reservationDetail": "{date} plkst. {time} · {n} personas — jūsu galdiņš tiek rezervēts, kad veicat šo pasūtījumu.",
+    "rememberedHint": "Mēs aizpildījām jūsu datus no šīs ierīces.",
+    "rememberedClear": "Vai tas neesat jūs? Notīrīt"
   },
   "reservation": {
     "title": "Rezervēt galdu",

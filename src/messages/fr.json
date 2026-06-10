@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "En dehors de notre zone de livraison.",
     "outsideNotAcceptedBody": "Nous n'acceptons pas les commandes en dehors de nos zones de livraison habituelles. Optez pour le retrait ou utilisez une autre adresse.",
     "reservationTitle": "Confirmation de votre réservation de table",
-    "reservationDetail": "{date} à {time} · table de {n} — votre table est réservée dès que vous passez cette commande."
+    "reservationDetail": "{date} à {time} · table de {n} — votre table est réservée dès que vous passez cette commande.",
+    "rememberedHint": "Nous avons rempli vos coordonnées depuis cet appareil.",
+    "rememberedClear": "Ce n'est pas vous ? Effacer"
   },
   "reservation": {
     "title": "Réserver une table",

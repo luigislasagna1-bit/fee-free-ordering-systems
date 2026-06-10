@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Mimo našej oblasti doručenia.",
     "outsideNotAcceptedBody": "Neprijímame objednávky mimo našich štandardných zón doručenia. Prepnite na osobný odber alebo použite inú adresu.",
     "reservationTitle": "Potvrdenie rezervácie stola",
-    "reservationDetail": "{date} o {time} · {n} osôb — stôl bude rezervovaný po dokončení objednávky."
+    "reservationDetail": "{date} o {time} · {n} osôb — stôl bude rezervovaný po dokončení objednávky.",
+    "rememberedHint": "Vyplnili sme vaše údaje z tohto zariadenia.",
+    "rememberedClear": "Nie ste to vy? Vymazať"
   },
   "reservation": {
     "title": "Rezervovať stôl",

@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Außerhalb unseres Liefergebiets.",
     "outsideNotAcceptedBody": "Wir nehmen keine Bestellungen außerhalb unserer üblichen Liefergebiete an. Wechseln Sie zur Abholung oder verwenden Sie eine andere Adresse.",
     "reservationTitle": "Bestätigung Ihrer Tischreservierung",
-    "reservationDetail": "{date} um {time} · Tisch für {n} — Ihr Tisch ist reserviert, sobald Sie diese Bestellung aufgeben."
+    "reservationDetail": "{date} um {time} · Tisch für {n} — Ihr Tisch ist reserviert, sobald Sie diese Bestellung aufgeben.",
+    "rememberedHint": "Wir haben Ihre Daten von diesem Gerät übernommen.",
+    "rememberedClear": "Nicht Sie? Löschen"
   },
   "reservation": {
     "title": "Tisch reservieren",

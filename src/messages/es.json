@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Fuera de nuestra zona de entrega.",
     "outsideNotAcceptedBody": "No aceptamos pedidos fuera de nuestras zonas de entrega estándar. Cambie a recogida en local o use una dirección diferente.",
     "reservationTitle": "Confirmando tu reserva de mesa",
-    "reservationDetail": "{date} a las {time} · mesa para {n} — tu mesa queda reservada al realizar este pedido."
+    "reservationDetail": "{date} a las {time} · mesa para {n} — tu mesa queda reservada al realizar este pedido.",
+    "rememberedHint": "Hemos completado tus datos desde este dispositivo.",
+    "rememberedClear": "¿No eres tú? Borrar"
   },
   "reservation": {
     "title": "Reservar mesa",

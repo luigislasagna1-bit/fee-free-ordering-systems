@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "خارج منطقة التوصيل لدينا.",
     "outsideNotAcceptedBody": "لا نقبل الطلبات خارج مناطق التوصيل القياسية لدينا. بدّل إلى الاستلام أو استخدم عنوانًا مختلفًا.",
     "reservationTitle": "تأكيد حجز طاولتك",
-    "reservationDetail": "{date} الساعة {time} · مجموعة من {n} — يتم حجز طاولتك عند إتمام هذا الطلب."
+    "reservationDetail": "{date} الساعة {time} · مجموعة من {n} — يتم حجز طاولتك عند إتمام هذا الطلب.",
+    "rememberedHint": "لقد ملأنا بياناتك من هذا الجهاز.",
+    "rememberedClear": "لست أنت؟ مسح"
   },
   "reservation": {
     "title": "احجز طاولة",

@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "超出我们的配送范围。",
     "outsideNotAcceptedBody": "我们不接受标准配送区域以外的订单。请改为自取，或使用其他地址。",
     "reservationTitle": "确认您的餐桌预订",
-    "reservationDetail": "{date} {time} · {n} 人 — 提交此订单后即完成餐桌预订。"
+    "reservationDetail": "{date} {time} · {n} 人 — 提交此订单后即完成餐桌预订。",
+    "rememberedHint": "我们已根据此设备填写了您的信息。",
+    "rememberedClear": "不是您？清除"
   },
   "reservation": {
     "title": "预订餐桌",

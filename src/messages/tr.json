@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Teslimat alanımızın dışında.",
     "outsideNotAcceptedBody": "Standart teslimat bölgelerimiz dışındaki siparişleri kabul etmiyoruz. Gel al seçeneğine geçin ya da farklı bir adres kullanın.",
     "reservationTitle": "Masa rezervasyonunuzu onaylama",
-    "reservationDetail": "{date} saat {time} · {n} kişilik — bu siparişi verdiğinizde masanız ayrılır."
+    "reservationDetail": "{date} saat {time} · {n} kişilik — bu siparişi verdiğinizde masanız ayrılır.",
+    "rememberedHint": "Bilgilerinizi bu cihazdan doldurduk.",
+    "rememberedClear": "Siz değil misiniz? Temizle"
   },
   "reservation": {
     "title": "Masa Rezervasyonu",

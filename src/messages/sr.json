@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Van naše zone dostave.",
     "outsideNotAcceptedBody": "Ne prihvatamo porudžbine van naših standardnih zona dostave. Prebacite se na preuzimanje ili unesite drugu adresu.",
     "reservationTitle": "Potvrda rezervacije stola",
-    "reservationDetail": "{date} u {time} · {n} osoba — sto je rezervisan kada pošaljete ovu porudžbinu."
+    "reservationDetail": "{date} u {time} · {n} osoba — sto je rezervisan kada pošaljete ovu porudžbinu.",
+    "rememberedHint": "Попунили смо ваше податке са овог уређаја.",
+    "rememberedClear": "Нисте ви? Обриши"
   },
   "reservation": {
     "title": "Rezerviši sto",

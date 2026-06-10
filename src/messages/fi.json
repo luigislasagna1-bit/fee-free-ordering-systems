@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Toimitusalueemme ulkopuolella.",
     "outsideNotAcceptedBody": "Emme ota vastaan tilauksia vakiotoimitusvyöhykkeidemme ulkopuolelle. Valitse nouto tai käytä toista osoitetta.",
     "reservationTitle": "Vahvistetaan pöytävarauksesi",
-    "reservationDetail": "{date} klo {time} · {n} hengen seurue — pöytä varataan, kun teet tämän tilauksen."
+    "reservationDetail": "{date} klo {time} · {n} hengen seurue — pöytä varataan, kun teet tämän tilauksen.",
+    "rememberedHint": "Täytimme tietosi tältä laitteelta.",
+    "rememberedClear": "Etkö sinä? Tyhjennä"
   },
   "reservation": {
     "title": "Varaa pöytä",

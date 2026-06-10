@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Fuori dalla nostra area di consegna.",
     "outsideNotAcceptedBody": "Non accettiamo ordini al di fuori delle nostre zone di consegna standard. Passa al ritiro oppure usa un indirizzo diverso.",
     "reservationTitle": "Conferma della tua prenotazione del tavolo",
-    "reservationDetail": "{date} alle {time} · tavolo per {n} — il tuo tavolo è prenotato quando effettui questo ordine."
+    "reservationDetail": "{date} alle {time} · tavolo per {n} — il tuo tavolo è prenotato quando effettui questo ordine.",
+    "rememberedHint": "Abbiamo compilato i tuoi dati da questo dispositivo.",
+    "rememberedClear": "Non sei tu? Cancella"
   },
   "reservation": {
     "title": "Prenota un tavolo",

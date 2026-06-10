@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Poza naszym obszarem dostawy.",
     "outsideNotAcceptedBody": "Nie przyjmujemy zamówień poza naszymi standardowymi strefami dostawy. Przełącz się na odbiór osobisty lub użyj innego adresu.",
     "reservationTitle": "Potwierdzanie rezerwacji stolika",
-    "reservationDetail": "{date} o {time} · grupa {n} osób — stolik zostaje zarezerwowany po złożeniu tego zamówienia."
+    "reservationDetail": "{date} o {time} · grupa {n} osób — stolik zostaje zarezerwowany po złożeniu tego zamówienia.",
+    "rememberedHint": "Uzupełniliśmy Twoje dane z tego urządzenia.",
+    "rememberedClear": "To nie Ty? Wyczyść"
   },
   "reservation": {
     "title": "Zarezerwuj stolik",

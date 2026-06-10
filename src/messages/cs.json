@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Mimo naši oblast rozvozu.",
     "outsideNotAcceptedBody": "Objednávky mimo naše standardní zóny rozvozu nepřijímáme. Přejděte na osobní odběr nebo použijte jinou adresu.",
     "reservationTitle": "Potvrzujeme rezervaci stolu",
-    "reservationDetail": "{date} v {time} · skupina {n} osob — stůl je rezervován po odeslání této objednávky."
+    "reservationDetail": "{date} v {time} · skupina {n} osob — stůl je rezervován po odeslání této objednávky.",
+    "rememberedHint": "Vyplnili jsme vaše údaje z tohoto zařízení.",
+    "rememberedClear": "Nejste to vy? Vymazat"
   },
   "reservation": {
     "title": "Rezervovat stůl",

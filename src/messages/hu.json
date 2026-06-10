@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "A kiszállítási területünkön kívül esik.",
     "outsideNotAcceptedBody": "Nem fogadunk el rendeléseket a szokásos kiszállítási területünkön kívülről. Válts át személyes átvételre, vagy használj másik címet.",
     "reservationTitle": "Asztalfoglalás megerősítése",
-    "reservationDetail": "{date} {time} · {n} fő — az asztalt a rendelés leadásakor lefoglaljuk."
+    "reservationDetail": "{date} {time} · {n} fő — az asztalt a rendelés leadásakor lefoglaljuk.",
+    "rememberedHint": "Az adatait erről az eszközről töltöttük ki.",
+    "rememberedClear": "Nem Ön az? Törlés"
   },
   "reservation": {
     "title": "Asztal foglalása",

@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Fora de la nostra àrea de lliurament.",
     "outsideNotAcceptedBody": "No acceptem comandes fora de les nostres zones de lliurament habituals. Canvieu a recollida o utilitzeu una altra adreça.",
     "reservationTitle": "Confirmació de la teva reserva de taula",
-    "reservationDetail": "{date} a les {time} · grup de {n} — la teva taula queda reservada en fer aquesta comanda."
+    "reservationDetail": "{date} a les {time} · grup de {n} — la teva taula queda reservada en fer aquesta comanda.",
+    "rememberedHint": "Hem emplenat les teves dades des d'aquest dispositiu.",
+    "rememberedClear": "No ets tu? Esborra"
   },
   "reservation": {
     "title": "Reservar taula",

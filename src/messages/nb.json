@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Utenfor vårt leveringsområde.",
     "outsideNotAcceptedBody": "Vi tar ikke imot bestillinger utenfor våre vanlige leveringssoner. Bytt til henting eller bruk en annen adresse.",
     "reservationTitle": "Bekrefter bordreservasjonen din",
-    "reservationDetail": "{date} kl. {time} · {n} personer — bordet reserveres når du legger inn denne bestillingen."
+    "reservationDetail": "{date} kl. {time} · {n} personer — bordet reserveres når du legger inn denne bestillingen.",
+    "rememberedHint": "Vi fylte ut opplysningene dine fra denne enheten.",
+    "rememberedClear": "Ikke deg? Tøm"
   },
   "reservation": {
     "title": "Bestill bord",

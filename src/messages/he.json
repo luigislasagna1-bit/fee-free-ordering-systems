@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "מחוץ לאזור המשלוח שלנו.",
     "outsideNotAcceptedBody": "איננו מקבלים הזמנות מחוץ לאזורי המשלוח הרגילים שלנו. עברו לאיסוף עצמי או השתמשו בכתובת אחרת.",
     "reservationTitle": "מאשרים את שמירת השולחן שלכם",
-    "reservationDetail": "{date} בשעה {time} · סועדים: {n} — השולחן שלכם נשמר כאשר תבצעו את ההזמנה הזו."
+    "reservationDetail": "{date} בשעה {time} · סועדים: {n} — השולחן שלכם נשמר כאשר תבצעו את ההזמנה הזו.",
+    "rememberedHint": "מילאנו את הפרטים שלך מהמכשיר הזה.",
+    "rememberedClear": "לא אתה? נקה"
   },
   "reservation": {
     "title": "הזמן שולחן",

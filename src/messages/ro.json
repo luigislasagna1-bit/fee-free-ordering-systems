@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "În afara zonei noastre de livrare.",
     "outsideNotAcceptedBody": "Nu acceptăm comenzi în afara zonelor noastre standard de livrare. Treci la ridicare personală sau folosește o altă adresă.",
     "reservationTitle": "Confirmăm rezervarea mesei",
-    "reservationDetail": "{date} la {time} · grup de {n} — masa este rezervată când plasezi această comandă."
+    "reservationDetail": "{date} la {time} · grup de {n} — masa este rezervată când plasezi această comandă.",
+    "rememberedHint": "Am completat datele tale de pe acest dispozitiv.",
+    "rememberedClear": "Nu ești tu? Șterge"
   },
   "reservation": {
     "title": "Rezervă o masă",

@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Väljaspool meie tarneala.",
     "outsideNotAcceptedBody": "Me ei võta vastu tellimusi väljaspool meie tavapäraseid tarnealasid. Vali järeletulemine või kasuta teist aadressi.",
     "reservationTitle": "Lauabroneeringu kinnitamine",
-    "reservationDetail": "{date} kell {time} · {n} inimest — teie laud broneeritakse selle tellimuse esitamisel."
+    "reservationDetail": "{date} kell {time} · {n} inimest — teie laud broneeritakse selle tellimuse esitamisel.",
+    "rememberedHint": "Täitsime teie andmed sellest seadmest.",
+    "rememberedClear": "Kas pole teie? Tühjenda"
   },
   "reservation": {
     "title": "Broneeri laud",

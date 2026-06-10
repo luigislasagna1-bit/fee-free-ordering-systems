@@ -60,6 +60,15 @@ Let an order time out (Missed), then check each surface:
 30. **2nd order** — turn **Encourage second order ON** → **2NDOFF** (15%) appears in Pre-made. ❑
 31. **Editable + reversible** — edit a WIN promo's discount/copy → saved; turn the campaign **OFF** → those promos go inactive (kept for re-enable). ❑
 
+## J. Remember-me — guest checkout pre-fill (no account)
+A returning guest shouldn't retype their details. Device-saved, no account needed.
+32. **Saves on order** — fresh/incognito [menu] → checkout as a **guest** (name + email/phone + address) → place the order. ❑
+33. **Pre-fills next time** — revisit [menu] (same browser, still no account) → start checkout → name / email / phone / address are **already filled in**, with a small **"Not you? Clear"** line above the name. ❑
+34. **Works across the platform** — open a **different** restaurant's [menu] (or the **[MP]** view) on that same browser → the same details pre-fill (it's the customer's own info, device-global). ❑
+35. **"Not you? Clear" works** — tap it → contact + address fields blank out and the device memory is wiped (refresh → stays blank until the next order). ❑
+36. **Account still wins** — sign in to a restaurant/marketplace account → the form uses the **account** details (no "Not you?" line); device memory never overrides a signed-in customer. ❑
+37. **No card data saved** — only name/contact/address are remembered; payment card details are **never** stored (you always re-enter the card). ❑
+
 ---
 
 ## Not yet built (queued — do NOT test, they're not live)

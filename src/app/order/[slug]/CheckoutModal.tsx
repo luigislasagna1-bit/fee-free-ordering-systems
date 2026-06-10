@@ -148,6 +148,13 @@ interface Props {
    *  that the customer manually set consent for THIS email — which stops the
    *  async consent pre-fill from later overriding their choice. */
   onMarketingToggle?: (checked: boolean) => void;
+  /** True when the contact/delivery fields were silently pre-filled from
+   *  details this device remembered from a prior order (guest "remember me").
+   *  When true we show a small "Not you? Clear" link so a different person on a
+   *  shared device can wipe it. Luigi 2026-06-10. */
+  savedGuestInfo?: boolean;
+  /** Wipes the device-saved guest details + blanks the identity fields. */
+  onClearSavedInfo?: () => void;
   editingSection: SectionKey;
   setEditingSection: (s: SectionKey) => void;
   orderLoading: boolean;
@@ -259,7 +266,7 @@ export function CheckoutModal({
   appliedPromos = [], bumpedExclusives = [], hasFreeDelivery = false, baseDeliveryFee = 0,
   deliveryFee, appliedServiceFees, taxAmount,
   tipAmount, tipPercent, setTipPercent, tipsEnabled = true, total, taxRate,
-  customerInfo, setCustomerInfo, onMarketingToggle,
+  customerInfo, setCustomerInfo, onMarketingToggle, savedGuestInfo, onClearSavedInfo,
   editingSection, setEditingSection,
   orderLoading, placeOrder,
   cardPaymentEnabled,
@@ -618,6 +625,23 @@ export function CheckoutModal({
                       to skip re-typing your details.
                     </div>
                   )
+                )}
+                {/* Silent guest "remember me" (Luigi 2026-06-10): we pre-filled
+                    these fields from details this device saved on a prior order.
+                    Offer a one-tap "Not you? Clear" so a different person on a
+                    shared device wipes them and starts fresh. */}
+                {savedGuestInfo && onClearSavedInfo && (
+                  <div className="pt-3 -mb-1 text-xs text-gray-500">
+                    {tc("rememberedHint")}{" "}
+                    <button
+                      type="button"
+                      onClick={onClearSavedInfo}
+                      className="font-semibold underline hover:no-underline"
+                      style={{ color: theme.primaryColor }}
+                    >
+                      {tc("rememberedClear")}
+                    </button>
+                  </div>
                 )}
                 {/* GloriaFood-parity (Luigi 2026-06-01): first + last
                     name as SEPARATE inputs. DB schema unchanged —

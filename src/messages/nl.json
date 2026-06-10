@@ -425,7 +425,9 @@
     "outsideNotAcceptedTitle": "Buiten ons bezorggebied.",
     "outsideNotAcceptedBody": "We accepteren geen bestellingen buiten onze standaard bezorggebieden. Schakel over naar afhalen of gebruik een ander adres.",
     "reservationTitle": "Je tafelreservering bevestigen",
-    "reservationDetail": "{date} om {time} · tafel voor {n} — je tafel is gereserveerd zodra je deze bestelling plaatst."
+    "reservationDetail": "{date} om {time} · tafel voor {n} — je tafel is gereserveerd zodra je deze bestelling plaatst.",
+    "rememberedHint": "We hebben je gegevens van dit apparaat ingevuld.",
+    "rememberedClear": "Niet jij? Wissen"
   },
   "reservation": {
     "title": "Tafel reserveren",
