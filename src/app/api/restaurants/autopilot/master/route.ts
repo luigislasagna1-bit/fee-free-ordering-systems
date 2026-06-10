@@ -21,6 +21,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import { getOrCreateAutopilotState } from "@/lib/autopilot-state";
+import { syncCampaignPromos } from "@/lib/autopilot-promos";
 import prisma from "@/lib/db";
 
 export const runtime = "nodejs";
@@ -81,6 +82,18 @@ export async function PATCH(req: NextRequest) {
     where: { restaurantId },
     data,
   });
+
+  // Sync each campaign's PRE-MADE promos to its toggle (Luigi 2026-06-09, C):
+  // enabling Re-engage creates the WIN1..WIN5 ladder; enabling 2nd-order creates
+  // 2NDOFF; disabling soft-disables them. cart_abandonment has no fixed promo.
+  const TOGGLE_TO_TYPE: Record<string, string> = {
+    secondOrderEnabled: "second_order",
+    reEngageEnabled: "reengagement",
+  };
+  for (const [key, type] of Object.entries(TOGGLE_TO_TYPE)) {
+    const v = data[key as keyof typeof data];
+    if (typeof v === "boolean") await syncCampaignPromos(restaurantId, type, v);
+  }
 
   return NextResponse.json({
     masterEnabled: updated.masterEnabled,
