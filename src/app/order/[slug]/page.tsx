@@ -32,6 +32,7 @@ import { resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveActiveMenuId } from "@/lib/menu";
 import { holidayNameForToday } from "@/lib/restaurant-hours";
 import { isOnMarketplace } from "@/lib/marketplace";
+import { getCurrentCustomer } from "@/lib/customer-session";
 
 export default async function OrderingPage({
   params,
@@ -337,6 +338,13 @@ export default async function OrderingPage({
     expectedRestaurantId: restaurant.id,
   });
 
+  // Marketplace-wide account (CustomerAccount) — only looked up on the
+  // marketplace view, where its sign-in replaces the per-restaurant one. The
+  // marketplace customer base is distinct, so a marketplace visitor signs into
+  // their ONE cross-restaurant account. Luigi 2026-06-09.
+  const marketplaceAccountRow = fromMarketplace ? await getCurrentCustomer() : null;
+  const marketplaceAccount = marketplaceAccountRow ? { name: marketplaceAccountRow.name } : null;
+
   // First-buy hero gating: only entice customers we CAN'T rule out as new. If a
   // customer is LOGGED IN and already has a FULFILLED order here (matched by
   // their Customer row / email / phone), they're returning — hide the first-buy
@@ -385,6 +393,7 @@ export default async function OrderingPage({
         hostedSiteBackUrl={hostedSiteBackUrl}
         promoBanners={promoBanners}
         customerChannel={customerChannel}
+        marketplaceAccount={marketplaceAccount}
         customerIsReturning={customerIsReturning}
         todayHolidayName={holidayNameForToday((restaurant as any).holidays, (restaurant as any).timezone)}
         currentCustomer={currentCustomer

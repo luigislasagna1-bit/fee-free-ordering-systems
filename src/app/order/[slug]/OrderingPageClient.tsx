@@ -610,6 +610,7 @@ export function OrderingPageClient({
   hostedSiteBackUrl,
   promoBanners = [],
   customerChannel = "website",
+  marketplaceAccount = null,
   customerIsReturning = false,
   currentCustomer = null,
   todayHolidayName = null,
@@ -674,6 +675,10 @@ export function OrderingPageClient({
    *  Forwarded to apply-promos so the cart preview matches what the order route
    *  will actually apply. */
   customerChannel?: "website" | "marketplace";
+  /** Marketplace-wide account (CustomerAccount) for the marketplace-view sign-in
+   *  button. Null when the visitor isn't on the marketplace channel or isn't
+   *  signed into a marketplace account. */
+  marketplaceAccount?: { name: string | null } | null;
   /** The logged-in per-restaurant customer at this restaurant, if any.
    *  Server-resolved via getCurrentRestaurantCustomer in page.tsx and
    *  passed in so the header can render the right Sign-in vs. Hi-name
@@ -2986,7 +2991,22 @@ export function OrderingPageClient({
                 than "Reservation") nothing gets cut off. */}
             <div className="w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-1.5 sm:gap-2">
               <LanguageSwitcher currentLocale={locale} />
-              {!fromMarketplace && (
+              {fromMarketplace ? (
+                // Marketplace-wide account (CustomerAccount) — one identity
+                // across all Fee Free restaurants, not the per-restaurant
+                // account. Luigi 2026-06-09.
+                <a
+                  href={marketplaceAccount ? "/account" : "/account/login"}
+                  className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full border-2 transition hover:bg-gray-50"
+                  style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
+                  title={marketplaceAccount ? "View your Marketplace account" : t("signInTooltip")}
+                >
+                  {marketplaceAccount ? <UserCircle className="w-4 h-4 flex-shrink-0" /> : <LogIn className="w-4 h-4 flex-shrink-0" />}
+                  <span className="hidden sm:inline">
+                    {marketplaceAccount ? `Hi, ${(marketplaceAccount.name ?? "").split(/\s+/)[0] || ""}`.trim() : t("signIn")}
+                  </span>
+                </a>
+              ) : (
                 currentCustomer ? (
                   <a
                     href={`/order/${restaurant.slug}/account`}
