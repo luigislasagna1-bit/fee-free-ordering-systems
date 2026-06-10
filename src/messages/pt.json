@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Envia um e-mail de reengajamento a clientes que não fizeram um pedido por um número definido de dias.",
       "campaign_reengagement_triggerLabel": "Enviar após este número de dias sem pedido:",
       "campaign_reengagement_defaultSubject": "Sentimos sua falta! Volte para algo delicioso",
-      "campaign_reengagement_defaultBody": "Olá {customer_name},\n\nFaz um tempo desde seu último pedido em {restaurant_name} e sentimos sua falta!\n\nVolte e se presenteie — temos pratos incríveis esperando por você.\n\n{coupon_section}\n\nEsperamos vê-lo em breve!\n\n– A equipe {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Olá {customer_name},\n\nFaz um tempo desde seu último pedido em {restaurant_name} e sentimos sua falta!\n\nVolte e se presenteie — temos pratos incríveis esperando por você.\n\n{coupon_section}\n\nEsperamos vê-lo em breve!\n\n– A equipe {restaurant_name}",
+      "resultSent": "Enviados",
+      "resultSales": "Vendas · 30d",
+      "resultFees": "Taxas"
     },
     "marketplaceSettings": {
       "pageTitle": "Listagem no Marketplace",

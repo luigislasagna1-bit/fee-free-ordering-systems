@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Odešle e-mail pro znovuzapojení zákazníkům, kteří nezadali objednávku po nastavený počet dní.",
       "campaign_reengagement_triggerLabel": "Odeslat po tolika dnech bez objednávky:",
       "campaign_reengagement_defaultSubject": "Chybíte nám! Vraťte se pro něco dobrého",
-      "campaign_reengagement_defaultBody": "Dobrý den {customer_name},\n\nOd vaší poslední objednávky z {restaurant_name} uplynul nějaký čas a chybíte nám!\n\nVraťte se a dopřejte si — čekají na vás báječná jídla.\n\n{coupon_section}\n\nDoufáme, že vás brzy uvidíme!\n\n– Tým {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Dobrý den {customer_name},\n\nOd vaší poslední objednávky z {restaurant_name} uplynul nějaký čas a chybíte nám!\n\nVraťte se a dopřejte si — čekají na vás báječná jídla.\n\n{coupon_section}\n\nDoufáme, že vás brzy uvidíme!\n\n– Tým {restaurant_name}",
+      "resultSent": "Odesláno",
+      "resultSales": "Tržby · 30d",
+      "resultFees": "Poplatky"
     },
     "marketplaceSettings": {
       "pageTitle": "Zápis na Marketplace",

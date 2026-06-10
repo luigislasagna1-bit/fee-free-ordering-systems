@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Στέλνει email επανενεργοποίησης σε πελάτες που δεν έχουν κάνει παραγγελία για ορισμένες μέρες.",
       "campaign_reengagement_triggerLabel": "Αποστολή μετά από τόσες μέρες χωρίς παραγγελία:",
       "campaign_reengagement_defaultSubject": "Μας λείπετε! Επιστρέψτε για κάτι νόστιμο",
-      "campaign_reengagement_defaultBody": "Γεια {customer_name},\n\nΠέρασε καιρός από την τελευταία σας παραγγελία από το {restaurant_name} και μας λείπετε!\n\nΕλάτε να περιποιηθείτε τον εαυτό σας — σας περιμένουν καταπληκτικά πιάτα.\n\n{coupon_section}\n\nΕλπίζουμε να σας δούμε σύντομα!\n\n– Η ομάδα του {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Γεια {customer_name},\n\nΠέρασε καιρός από την τελευταία σας παραγγελία από το {restaurant_name} και μας λείπετε!\n\nΕλάτε να περιποιηθείτε τον εαυτό σας — σας περιμένουν καταπληκτικά πιάτα.\n\n{coupon_section}\n\nΕλπίζουμε να σας δούμε σύντομα!\n\n– Η ομάδα του {restaurant_name}",
+      "resultSent": "Απεσταλμένα",
+      "resultSales": "Πωλήσεις · 30η",
+      "resultFees": "Χρεώσεις"
     },
     "marketplaceSettings": {
       "pageTitle": "Καταχώρηση Marketplace",

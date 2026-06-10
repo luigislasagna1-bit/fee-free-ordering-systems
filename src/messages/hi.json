@@ -2428,7 +2428,10 @@
       "campaign_reengagement_description": "उन ग्राहकों को री-एंगेजमेंट ईमेल भेजता है जिन्होंने निर्धारित दिनों से ऑर्डर नहीं दिया है।",
       "campaign_reengagement_triggerLabel": "ऑर्डर न होने के इतने दिन बाद भेजें:",
       "campaign_reengagement_defaultSubject": "आपकी याद आ रही है! कुछ स्वादिष्ट के लिए वापस आएं",
-      "campaign_reengagement_defaultBody": "नमस्ते {customer_name},\n\n{restaurant_name} से आपका आखिरी ऑर्डर हुए काफी समय हो गया है और हमें आपकी याद आ रही है!\n\nवापस आएं और खुद को कुछ खास दें — हमारे पास आपके लिए कुछ लाजवाब व्यंजन तैयार हैं।\n\n{coupon_section}\n\nहम जल्द आपसे मिलने की उम्मीद करते हैं!\n\n– {restaurant_name} टीम"
+      "campaign_reengagement_defaultBody": "नमस्ते {customer_name},\n\n{restaurant_name} से आपका आखिरी ऑर्डर हुए काफी समय हो गया है और हमें आपकी याद आ रही है!\n\nवापस आएं और खुद को कुछ खास दें — हमारे पास आपके लिए कुछ लाजवाब व्यंजन तैयार हैं।\n\n{coupon_section}\n\nहम जल्द आपसे मिलने की उम्मीद करते हैं!\n\n– {restaurant_name} टीम",
+      "resultSent": "भेजे गए",
+      "resultSales": "बिक्री · 30द",
+      "resultFees": "शुल्क"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace लिस्टिंग",

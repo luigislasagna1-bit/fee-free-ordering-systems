@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Saadab taaskaasamismeili klientidele, kes pole määratud arvu päevade jooksul tellimust esitanud.",
       "campaign_reengagement_triggerLabel": "Saada pärast nii mitut tellimusteta päeva:",
       "campaign_reengagement_defaultSubject": "Igatseme sind! Tule tagasi midagi maitsvat nautima",
-      "campaign_reengagement_defaultBody": "Tere {customer_name},\n\nSinu viimase tellimusest restoranist {restaurant_name} on möödunud veidi aega ja igatseme sind!\n\nTule tagasi ja hellita ennast — sul ootavad imelised road.\n\n{coupon_section}\n\nLoodame sinuga peagi kohtuda!\n\n— Meeskond {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Tere {customer_name},\n\nSinu viimase tellimusest restoranist {restaurant_name} on möödunud veidi aega ja igatseme sind!\n\nTule tagasi ja hellita ennast — sul ootavad imelised road.\n\n{coupon_section}\n\nLoodame sinuga peagi kohtuda!\n\n— Meeskond {restaurant_name}",
+      "resultSent": "Saadetud",
+      "resultSales": "Müük · 30p",
+      "resultFees": "Tasud"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace'i kuulutus",

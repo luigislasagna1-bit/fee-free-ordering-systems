@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "設定した日数間注文がなかった顧客に再活性化メールを送信します。",
       "campaign_reengagement_triggerLabel": "注文なしから何日後に送信するか：",
       "campaign_reengagement_defaultSubject": "お会いできなくて寂しいです！おいしい料理でまた会いましょう",
-      "campaign_reengagement_defaultBody": "{customer_name} 様、\n\n{restaurant_name} での最後のご注文からしばらく経ちましたね。またのご来店をお待ちしています！\n\n素敵な料理が揃ってお待ちしています。ぜひまたご利用ください。\n\n{coupon_section}\n\nまた会える日を楽しみにしています！\n\n— {restaurant_name} チーム"
+      "campaign_reengagement_defaultBody": "{customer_name} 様、\n\n{restaurant_name} での最後のご注文からしばらく経ちましたね。またのご来店をお待ちしています！\n\n素敵な料理が揃ってお待ちしています。ぜひまたご利用ください。\n\n{coupon_section}\n\nまた会える日を楽しみにしています！\n\n— {restaurant_name} チーム",
+      "resultSent": "送信済み",
+      "resultSales": "売上 · 30日",
+      "resultFees": "手数料"
     },
     "marketplaceSettings": {
       "pageTitle": "マーケットプレイス掲載",

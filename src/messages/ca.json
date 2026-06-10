@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Envia un correu de reactivació als clients que no han fet cap comanda durant un nombre determinat de dies.",
       "campaign_reengagement_triggerLabel": "Envia després d'aquest nombre de dies sense comanda:",
       "campaign_reengagement_defaultSubject": "Us trobem a faltar! Torneu per gaudir d'alguna cosa deliciosa",
-      "campaign_reengagement_defaultBody": "Hola {customer_name},\n\nFa temps que no feu cap comanda a {restaurant_name} i us trobem a faltar!\n\nTorneu i feu-vos un regal — tenim plats increïbles esperant-vos.\n\n{coupon_section}\n\nEsperem veure-us aviat!\n\n— L'equip de {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Hola {customer_name},\n\nFa temps que no feu cap comanda a {restaurant_name} i us trobem a faltar!\n\nTorneu i feu-vos un regal — tenim plats increïbles esperant-vos.\n\n{coupon_section}\n\nEsperem veure-us aviat!\n\n— L'equip de {restaurant_name}",
+      "resultSent": "Enviats",
+      "resultSales": "Vendes · 30d",
+      "resultFees": "Comissions"
     },
     "marketplaceSettings": {
       "pageTitle": "Llistat al Marketplace",

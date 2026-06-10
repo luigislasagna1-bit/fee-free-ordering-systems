@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "يرسل بريداً إلكترونياً لإعادة التفاعل للعملاء الذين لم يضعوا طلباً منذ عدد معين من الأيام.",
       "campaign_reengagement_triggerLabel": "أرسل بعد هذا العدد من الأيام بدون طلب:",
       "campaign_reengagement_defaultSubject": "اشتقنا إليك! عد لشيء لذيذ",
-      "campaign_reengagement_defaultBody": "مرحباً {customer_name}،\n\nمضى وقت منذ آخر طلب من {restaurant_name} واشتقنا إليك!\n\nعد ودلّل نفسك — لدينا أطباق رائعة تنتظرك.\n\n{coupon_section}\n\nنأمل رؤيتك قريباً!\n\n— فريق {restaurant_name}"
+      "campaign_reengagement_defaultBody": "مرحباً {customer_name}،\n\nمضى وقت منذ آخر طلب من {restaurant_name} واشتقنا إليك!\n\nعد ودلّل نفسك — لدينا أطباق رائعة تنتظرك.\n\n{coupon_section}\n\nنأمل رؤيتك قريباً!\n\n— فريق {restaurant_name}",
+      "resultSent": "المرسلة",
+      "resultSales": "المبيعات · 30 يوم",
+      "resultFees": "الرسوم"
     },
     "marketplaceSettings": {
       "pageTitle": "قائمة Marketplace",

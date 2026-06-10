@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Изпраща имейл за реангажиране на клиенти, които не са направили поръчка за определен брой дни.",
       "campaign_reengagement_triggerLabel": "Изпрати след толкова дни без поръчка:",
       "campaign_reengagement_defaultSubject": "Липсваш ни! Върни се за нещо вкусно",
-      "campaign_reengagement_defaultBody": "Здравей {customer_name},\n\nМина известно време от последната ти поръчка от {restaurant_name} и ни липсваш!\n\nВърни се и се поглези — очакват те невероятни ястия.\n\n{coupon_section}\n\nНадяваме се да те видим скоро!\n\n– Екипът на {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Здравей {customer_name},\n\nМина известно време от последната ти поръчка от {restaurant_name} и ни липсваш!\n\nВърни се и се поглези — очакват те невероятни ястия.\n\n{coupon_section}\n\nНадяваме се да те видим скоро!\n\n– Екипът на {restaurant_name}",
+      "resultSent": "Изпратени",
+      "resultSales": "Продажби · 30д",
+      "resultFees": "Такси"
     },
     "marketplaceSettings": {
       "pageTitle": "Обява в Marketplace",

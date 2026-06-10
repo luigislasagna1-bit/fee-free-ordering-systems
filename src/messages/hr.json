@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Šalje e-mail za reaktivaciju kupcima koji nisu naručili određeni broj dana.",
       "campaign_reengagement_triggerLabel": "Pošalji nakon ovog broja dana bez narudžbe:",
       "campaign_reengagement_defaultSubject": "Nedostajete nam! Vratite se za nešto ukusno",
-      "campaign_reengagement_defaultBody": "Zdravo {customer_name},\n\nProšlo je neko vrijeme od vaše zadnje narudžbe od {restaurant_name} i nedostajete nam!\n\nVratite se i počastite se — čekaju vas divna jela.\n\n{coupon_section}\n\nNadamo se da ćemo vas uskoro vidjeti!\n\n– Tim {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Zdravo {customer_name},\n\nProšlo je neko vrijeme od vaše zadnje narudžbe od {restaurant_name} i nedostajete nam!\n\nVratite se i počastite se — čekaju vas divna jela.\n\n{coupon_section}\n\nNadamo se da ćemo vas uskoro vidjeti!\n\n– Tim {restaurant_name}",
+      "resultSent": "Poslano",
+      "resultSales": "Prodaja · 30d",
+      "resultFees": "Naknade"
     },
     "marketplaceSettings": {
       "pageTitle": "Oglas na Marketplaceu",

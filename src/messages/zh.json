@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "向超过指定天数未下单的顾客发送唤回邮件。",
       "campaign_reengagement_triggerLabel": "未下单多少天后发送：",
       "campaign_reengagement_defaultSubject": "我们想念您了！回来尝尝美食吧",
-      "campaign_reengagement_defaultBody": "你好 {customer_name}，\n\n您上次在 {restaurant_name} 下单已经过去一段时间了，我们很想念您！\n\n回来犒劳一下自己吧——美味佳肴等您来享。\n\n{coupon_section}\n\n期待很快再见！\n\n— {restaurant_name} 团队"
+      "campaign_reengagement_defaultBody": "你好 {customer_name}，\n\n您上次在 {restaurant_name} 下单已经过去一段时间了，我们很想念您！\n\n回来犒劳一下自己吧——美味佳肴等您来享。\n\n{coupon_section}\n\n期待很快再见！\n\n— {restaurant_name} 团队",
+      "resultSent": "已发送",
+      "resultSales": "销售额 · 30天",
+      "resultFees": "费用"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace 上架",

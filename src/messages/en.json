@@ -2459,7 +2459,10 @@
       "campaign_reengagement_description": "Sends a re-engagement email to customers who haven't placed an order for a set number of days.",
       "campaign_reengagement_triggerLabel": "Send after this many days without an order:",
       "campaign_reengagement_defaultSubject": "We miss you! Come back for something delicious",
-      "campaign_reengagement_defaultBody": "Hi {customer_name},\n\nIt's been a while since your last order from {restaurant_name} and we miss you!\n\nCome back and treat yourself — we have some amazing dishes waiting for you.\n\n{coupon_section}\n\nWe hope to see you soon!\n\n– The {restaurant_name} team"
+      "campaign_reengagement_defaultBody": "Hi {customer_name},\n\nIt's been a while since your last order from {restaurant_name} and we miss you!\n\nCome back and treat yourself — we have some amazing dishes waiting for you.\n\n{coupon_section}\n\nWe hope to see you soon!\n\n– The {restaurant_name} team",
+      "resultSent": "Sent",
+      "resultSales": "Sales · 30d",
+      "resultFees": "Fees"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace Listing",

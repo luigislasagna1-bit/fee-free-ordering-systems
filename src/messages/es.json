@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Envía un correo de reactivación a clientes que no han realizado un pedido en un número determinado de días.",
       "campaign_reengagement_triggerLabel": "Enviar después de estos días sin pedido:",
       "campaign_reengagement_defaultSubject": "¡Te echamos de menos! Vuelve a disfrutar algo delicioso",
-      "campaign_reengagement_defaultBody": "Hola {customer_name},\n\n¡Ha pasado un tiempo desde tu último pedido en {restaurant_name} y te echamos de menos!\n\nVuelve y date un capricho — tenemos platos increíbles esperándote.\n\n{coupon_section}\n\n¡Esperamos verte pronto!\n\n— El equipo de {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Hola {customer_name},\n\n¡Ha pasado un tiempo desde tu último pedido en {restaurant_name} y te echamos de menos!\n\nVuelve y date un capricho — tenemos platos increíbles esperándote.\n\n{coupon_section}\n\n¡Esperamos verte pronto!\n\n— El equipo de {restaurant_name}",
+      "resultSent": "Enviados",
+      "resultSales": "Ventas · 30d",
+      "resultFees": "Comisiones"
     },
     "marketplaceSettings": {
       "pageTitle": "Listado en el Marketplace",

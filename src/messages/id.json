@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Mengirim email re-engagement kepada pelanggan yang belum melakukan pesanan selama sejumlah hari yang ditetapkan.",
       "campaign_reengagement_triggerLabel": "Kirim setelah sekian hari tanpa pesanan:",
       "campaign_reengagement_defaultSubject": "Kami merindukanmu! Kembali untuk sesuatu yang lezat",
-      "campaign_reengagement_defaultBody": "Hai {customer_name},\n\nSudah lama sejak pesanan terakhir Anda dari {restaurant_name} dan kami merindukanmu!\n\nKembali dan manjakan diri Anda — ada hidangan luar biasa menunggu Anda.\n\n{coupon_section}\n\nSampai jumpa!\n\n— Tim {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Hai {customer_name},\n\nSudah lama sejak pesanan terakhir Anda dari {restaurant_name} dan kami merindukanmu!\n\nKembali dan manjakan diri Anda — ada hidangan luar biasa menunggu Anda.\n\n{coupon_section}\n\nSampai jumpa!\n\n— Tim {restaurant_name}",
+      "resultSent": "Terkirim",
+      "resultSales": "Penjualan · 30h",
+      "resultFees": "Biaya"
     },
     "marketplaceSettings": {
       "pageTitle": "Listing Marketplace",

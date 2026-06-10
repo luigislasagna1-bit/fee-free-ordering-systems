@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "설정한 일수 동안 주문하지 않은 고객에게 재참여 이메일을 발송합니다.",
       "campaign_reengagement_triggerLabel": "주문 없이 지난 일수 후 발송:",
       "campaign_reengagement_defaultSubject": "보고 싶어요! 맛있는 음식으로 돌아오세요",
-      "campaign_reengagement_defaultBody": "안녕하세요 {customer_name}님,\n\n{restaurant_name}에서 마지막 주문 이후 시간이 꽤 흘렀습니다. 보고 싶어요!\n\n돌아와서 맛있는 음식을 즐기세요 — 멋진 요리가 기다리고 있습니다.\n\n{coupon_section}\n\n곧 다시 뵙기를 바랍니다!\n\n— {restaurant_name} 팀"
+      "campaign_reengagement_defaultBody": "안녕하세요 {customer_name}님,\n\n{restaurant_name}에서 마지막 주문 이후 시간이 꽤 흘렀습니다. 보고 싶어요!\n\n돌아와서 맛있는 음식을 즐기세요 — 멋진 요리가 기다리고 있습니다.\n\n{coupon_section}\n\n곧 다시 뵙기를 바랍니다!\n\n— {restaurant_name} 팀",
+      "resultSent": "발송됨",
+      "resultSales": "매출 · 30일",
+      "resultFees": "수수료"
     },
     "marketplaceSettings": {
       "pageTitle": "마켓플레이스 등록",

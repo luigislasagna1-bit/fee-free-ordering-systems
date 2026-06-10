@@ -2770,7 +2770,10 @@
       "campaign_reengagement_description": "Siunčia sugrąžinimo el. laišką klientams, kurie nepateikė užsakymo nustatytą dienų skaičių.",
       "campaign_reengagement_triggerLabel": "Siųsti praėjus tiek dienų be užsakymo:",
       "campaign_reengagement_defaultSubject": "Mums jūsų trūksta! Grįžkite dėl kažko skanaus",
-      "campaign_reengagement_defaultBody": "Sveiki, {customer_name},\n\nJau praėjo nemažai laiko nuo jūsų paskutinio užsakymo iš {restaurant_name} ir mums jūsų trūksta!\n\nGrįžkite ir palepinkite save — turime keletą nuostabių patiekalų, laukiančių jūsų.\n\n{coupon_section}\n\nTikimės pamatyti jus greitai!\n\n– {restaurant_name} komanda"
+      "campaign_reengagement_defaultBody": "Sveiki, {customer_name},\n\nJau praėjo nemažai laiko nuo jūsų paskutinio užsakymo iš {restaurant_name} ir mums jūsų trūksta!\n\nGrįžkite ir palepinkite save — turime keletą nuostabių patiekalų, laukiančių jūsų.\n\n{coupon_section}\n\nTikimės pamatyti jus greitai!\n\n– {restaurant_name} komanda",
+      "resultSent": "Išsiųsta",
+      "resultSales": "Pardavimai · 30d",
+      "resultFees": "Mokesčiai"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace skelbimas",

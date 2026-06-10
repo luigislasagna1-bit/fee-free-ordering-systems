@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Invia un'email di riattivazione ai clienti che non hanno effettuato un ordine per un numero impostato di giorni.",
       "campaign_reengagement_triggerLabel": "Invia dopo questo numero di giorni senza un ordine:",
       "campaign_reengagement_defaultSubject": "Ci manchi! Torna per qualcosa di delizioso",
-      "campaign_reengagement_defaultBody": "Ciao {customer_name},\n\nÈ passato un po' dall'ultimo tuo ordine da {restaurant_name} e ci manchi!\n\nTorna a coccolarti — abbiamo piatti fantastici che ti aspettano.\n\n{coupon_section}\n\nSperiamo di rivederti presto!\n\n– Il team di {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Ciao {customer_name},\n\nÈ passato un po' dall'ultimo tuo ordine da {restaurant_name} e ci manchi!\n\nTorna a coccolarti — abbiamo piatti fantastici che ti aspettano.\n\n{coupon_section}\n\nSperiamo di rivederti presto!\n\n– Il team di {restaurant_name}",
+      "resultSent": "Inviati",
+      "resultSales": "Vendite · 30g",
+      "resultFees": "Commissioni"
     },
     "marketplaceSettings": {
       "pageTitle": "Scheda Marketplace",

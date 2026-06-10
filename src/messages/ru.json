@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Отправляет письмо реактивации клиентам, которые не делали заказ в течение заданного количества дней.",
       "campaign_reengagement_triggerLabel": "Отправить после стольких дней без заказа:",
       "campaign_reengagement_defaultSubject": "Мы скучаем по вам! Возвращайтесь за чем-нибудь вкусным",
-      "campaign_reengagement_defaultBody": "Привет, {customer_name}!\n\nС вашего последнего заказа в {restaurant_name} прошло немало времени — мы скучаем!\n\nВернитесь и побалуйте себя — у нас есть замечательные блюда, которые вас ждут.\n\n{coupon_section}\n\nНадеемся вас скоро увидеть!\n\n— Команда {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Привет, {customer_name}!\n\nС вашего последнего заказа в {restaurant_name} прошло немало времени — мы скучаем!\n\nВернитесь и побалуйте себя — у нас есть замечательные блюда, которые вас ждут.\n\n{coupon_section}\n\nНадеемся вас скоро увидеть!\n\n— Команда {restaurant_name}",
+      "resultSent": "Отправлено",
+      "resultSales": "Продажи · 30д",
+      "resultFees": "Сборы"
     },
     "marketplaceSettings": {
       "pageTitle": "Размещение в Marketplace",

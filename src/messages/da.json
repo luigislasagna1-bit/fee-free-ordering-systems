@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Sender en genengagerings-e-mail til kunder, der ikke har afgivet en ordre i et angivet antal dage.",
       "campaign_reengagement_triggerLabel": "Send efter dette antal dage uden en ordre:",
       "campaign_reengagement_defaultSubject": "Vi savner dig! Kom tilbage til noget lækkert",
-      "campaign_reengagement_defaultBody": "Hej {customer_name},\n\nDet er et stykke tid siden din sidste ordre hos {restaurant_name}, og vi savner dig!\n\nKom tilbage og forkæl dig selv — vi har nogle fantastiske retter klar til dig.\n\n{coupon_section}\n\nVi håber at se dig snart!\n\n– {restaurant_name}-teamet"
+      "campaign_reengagement_defaultBody": "Hej {customer_name},\n\nDet er et stykke tid siden din sidste ordre hos {restaurant_name}, og vi savner dig!\n\nKom tilbage og forkæl dig selv — vi har nogle fantastiske retter klar til dig.\n\n{coupon_section}\n\nVi håber at se dig snart!\n\n– {restaurant_name}-teamet",
+      "resultSent": "Sendt",
+      "resultSales": "Salg · 30d",
+      "resultFees": "Gebyrer"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-annonce",

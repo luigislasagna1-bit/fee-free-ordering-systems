@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "ส่งอีเมลดึงลูกค้ากลับให้กับลูกค้าที่ไม่ได้สั่งออเดอร์เป็นจำนวนวันที่กำหนด",
       "campaign_reengagement_triggerLabel": "ส่งหลังไม่มีออเดอร์กี่วัน:",
       "campaign_reengagement_defaultSubject": "คิดถึงคุณ! กลับมาลองอะไรอร่อยๆ",
-      "campaign_reengagement_defaultBody": "สวัสดี {customer_name},\n\nผ่านมาสักพักแล้วนับตั้งแต่ออเดอร์ล่าสุดของคุณจาก {restaurant_name} และเราคิดถึงคุณ!\n\nกลับมาเลี้ยงตัวเอง — เรามีเมนูอร่อยๆ รอคุณอยู่\n\n{coupon_section}\n\nหวังว่าจะได้พบคุณเร็วๆ นี้!\n\n– ทีม {restaurant_name}"
+      "campaign_reengagement_defaultBody": "สวัสดี {customer_name},\n\nผ่านมาสักพักแล้วนับตั้งแต่ออเดอร์ล่าสุดของคุณจาก {restaurant_name} และเราคิดถึงคุณ!\n\nกลับมาเลี้ยงตัวเอง — เรามีเมนูอร่อยๆ รอคุณอยู่\n\n{coupon_section}\n\nหวังว่าจะได้พบคุณเร็วๆ นี้!\n\n– ทีม {restaurant_name}",
+      "resultSent": "ส่งแล้ว",
+      "resultSales": "ยอดขาย · 30 วัน",
+      "resultFees": "ค่าธรรมเนียม"
     },
     "marketplaceSettings": {
       "pageTitle": "รายการ Marketplace",

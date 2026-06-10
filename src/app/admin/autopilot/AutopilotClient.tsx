@@ -7,6 +7,7 @@ import {
   ChevronDown, ChevronUp, ToggleLeft, ToggleRight, Save, AlertTriangle,
   Target, Rocket,
 } from "lucide-react";
+import { formatCurrency } from "@/lib/utils";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -68,7 +69,7 @@ const COLOR_MAP: Record<string, { bg: string; icon: string; border: string; badg
 // ─── CampaignCard ─────────────────────────────────────────────────────────────
 
 function CampaignCard({
-  config, campaign, stateEnabled, masterEnabled, emailConfigured, coupons, onChange, onToggleStateEnabled,
+  config, campaign, stateEnabled, masterEnabled, emailConfigured, coupons, result, currency = "usd", onChange, onToggleStateEnabled,
 }: {
   config: typeof CAMPAIGN_CONFIGS[0];
   campaign: Campaign;
@@ -78,6 +79,9 @@ function CampaignCard({
   masterEnabled: boolean;
   emailConfigured: boolean;
   coupons: { id: string; code: string; description?: string | null }[];
+  /** Sent / Sales (last 30d) for this campaign. Luigi 2026-06-09. */
+  result?: { sent: number; sales: number };
+  currency?: string;
   onChange: (updated: Partial<Campaign>) => void;
   onToggleStateEnabled: (next: boolean) => void;
 }) {
@@ -161,6 +165,16 @@ function CampaignCard({
             <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
               <Clock className="w-3 h-3" /> {t("triggerLabel", { delay: delayDisplay })}
             </p>
+          )}
+          {/* Results (Luigi 2026-06-09, E): Sent / Sales last 30d / Fees ($0 —
+              Fee Free never bills per message). Shown for every campaign that
+              has any send history, active or stopped. */}
+          {result && result.sent > 0 && (
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-xs">
+              <span className="text-gray-500">{t("resultSent")}: <span className="font-semibold text-gray-800">{result.sent.toLocaleString()}</span></span>
+              <span className="text-gray-500">{t("resultSales")}: <span className="font-semibold text-emerald-600">{formatCurrency(result.sales, currency)}</span></span>
+              <span className="text-gray-500">{t("resultFees")}: <span className="font-semibold text-gray-800">{formatCurrency(0, currency)}</span></span>
+            </div>
           )}
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">
@@ -293,10 +307,15 @@ export function AutopilotClient({
   campaigns: initialCampaigns,
   coupons,
   emailConfigured,
+  results = {},
+  currency = "usd",
 }: {
   campaigns: Campaign[];
   coupons: { id: string; code: string; description?: string | null }[];
   emailConfigured: boolean;
+  /** Per-campaignType results (Sent / Sales last 30d). Luigi 2026-06-09. */
+  results?: Record<string, { sent: number; sales: number }>;
+  currency?: string;
 }) {
   const t = useTranslations("admin.autopilotClient");
   const [campaigns, setCampaigns] = useState<Campaign[]>(() =>
@@ -478,6 +497,8 @@ export function AutopilotClient({
             masterEnabled={master.masterEnabled}
             emailConfigured={emailConfigured}
             coupons={coupons}
+            result={results[config.type]}
+            currency={currency}
             onChange={partial => update(config.type, partial)}
             onToggleStateEnabled={(next) => patchMaster({ [config.stateKey]: next } as Partial<MasterState>)}
           />

@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Envoie un e-mail de réengagement aux clients qui n'ont pas passé de commande depuis un certain nombre de jours.",
       "campaign_reengagement_triggerLabel": "Envoyer après ce nombre de jours sans commande :",
       "campaign_reengagement_defaultSubject": "Vous nous manquez ! Revenez pour quelque chose de délicieux",
-      "campaign_reengagement_defaultBody": "Bonjour {customer_name},\n\nCela fait un moment que vous n'avez pas commandé chez {restaurant_name} et vous nous manquez !\n\nRevenez vous faire plaisir — nous avons de délicieux plats qui vous attendent.\n\n{coupon_section}\n\nNous espérons vous revoir bientôt !\n\n– L'équipe {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Bonjour {customer_name},\n\nCela fait un moment que vous n'avez pas commandé chez {restaurant_name} et vous nous manquez !\n\nRevenez vous faire plaisir — nous avons de délicieux plats qui vous attendent.\n\n{coupon_section}\n\nNous espérons vous revoir bientôt !\n\n– L'équipe {restaurant_name}",
+      "resultSent": "Envoyés",
+      "resultSales": "Ventes · 30j",
+      "resultFees": "Frais"
     },
     "marketplaceSettings": {
       "pageTitle": "Fiche Marketplace",

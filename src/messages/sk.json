@@ -2770,7 +2770,10 @@
       "campaign_reengagement_description": "Pošle reaktivačný e-mail zákazníkom, ktorí si nezadali objednávku stanovený počet dní.",
       "campaign_reengagement_triggerLabel": "Odoslať po toľkýchto dňoch bez objednávky:",
       "campaign_reengagement_defaultSubject": "Chýbate nám! Vráťte sa po niečo lahodné",
-      "campaign_reengagement_defaultBody": "Ahoj {customer_name},\n\nUž je to nejaký čas od vašej poslednej objednávky z {restaurant_name} a chýbate nám!\n\nVráťte sa a doprajte si — máme pre vás pripravené úžasné jedlá.\n\n{coupon_section}\n\nDúfame, že vás čoskoro uvidíme!\n\n– Tím {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Ahoj {customer_name},\n\nUž je to nejaký čas od vašej poslednej objednávky z {restaurant_name} a chýbate nám!\n\nVráťte sa a doprajte si — máme pre vás pripravené úžasné jedlá.\n\n{coupon_section}\n\nDúfame, že vás čoskoro uvidíme!\n\n– Tím {restaurant_name}",
+      "resultSent": "Odoslané",
+      "resultSales": "Tržby · 30d",
+      "resultFees": "Poplatky"
     },
     "marketplaceSettings": {
       "pageTitle": "Záznam na Marketplace",

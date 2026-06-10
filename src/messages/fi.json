@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Lähettää uudelleenaktivointi-sähköpostin asiakkaille, jotka eivät ole tehneet tilausta tiettyyn päivämäärään.",
       "campaign_reengagement_triggerLabel": "Lähetä tämän monen päivän kuluttua ilman tilausta:",
       "campaign_reengagement_defaultSubject": "Kaipaamme sinua! Tule takaisin herkuttelemaan",
-      "campaign_reengagement_defaultBody": "Hei {customer_name},\n\nViime tilauksestasi ravintolassa {restaurant_name} on kulunut jo hetki ja kaipaamme sinua!\n\nTule takaisin ja hemmottele itseäsi — meillä on ihania annoksia odottamassa sinua.\n\n{coupon_section}\n\nToivottavasti näemme sinut pian!\n\n– {restaurant_name}n tiimi"
+      "campaign_reengagement_defaultBody": "Hei {customer_name},\n\nViime tilauksestasi ravintolassa {restaurant_name} on kulunut jo hetki ja kaipaamme sinua!\n\nTule takaisin ja hemmottele itseäsi — meillä on ihania annoksia odottamassa sinua.\n\n{coupon_section}\n\nToivottavasti näemme sinut pian!\n\n– {restaurant_name}n tiimi",
+      "resultSent": "Lähetetyt",
+      "resultSales": "Myynti · 30pv",
+      "resultFees": "Maksut"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-listaus",

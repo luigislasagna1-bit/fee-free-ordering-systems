@@ -2068,7 +2068,10 @@
       "campaign_reengagement_description": "Gửi email thu hút lại cho khách chưa đặt đơn trong một số ngày nhất định.",
       "campaign_reengagement_triggerLabel": "Gửi sau bao nhiêu ngày không có đơn:",
       "campaign_reengagement_defaultSubject": "Chúng tôi nhớ bạn! Quay lại thưởng thức món ngon nhé",
-      "campaign_reengagement_defaultBody": "Xin chào {customer_name},\n\nĐã lâu từ đơn hàng cuối của bạn tại {restaurant_name} và chúng tôi nhớ bạn!\n\nQuay lại và chiêu đãi bản thân — chúng tôi có những món tuyệt vời đang chờ bạn.\n\n{coupon_section}\n\nChúng tôi hy vọng được gặp lại bạn sớm!\n\n– Đội ngũ {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Xin chào {customer_name},\n\nĐã lâu từ đơn hàng cuối của bạn tại {restaurant_name} và chúng tôi nhớ bạn!\n\nQuay lại và chiêu đãi bản thân — chúng tôi có những món tuyệt vời đang chờ bạn.\n\n{coupon_section}\n\nChúng tôi hy vọng được gặp lại bạn sớm!\n\n– Đội ngũ {restaurant_name}",
+      "resultSent": "Đã gửi",
+      "resultSales": "Doanh số · 30n",
+      "resultFees": "Phí"
     },
     "marketplaceSettings": {
       "pageTitle": "Danh Sách Marketplace",

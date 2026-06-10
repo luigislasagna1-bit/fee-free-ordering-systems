@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Stuurt een heractiverings-e-mail naar klanten die een ingesteld aantal dagen geen bestelling hebben geplaatst.",
       "campaign_reengagement_triggerLabel": "Verzenden na dit aantal dagen zonder bestelling:",
       "campaign_reengagement_defaultSubject": "We missen u! Kom terug voor iets lekkers",
-      "campaign_reengagement_defaultBody": "Hallo {customer_name},\n\nHet is alweer een tijdje geleden dat u voor het laatste heeft besteld bij {restaurant_name} en we missen u!\n\nKom uzelf verwennen — we hebben heerlijke gerechten voor u klaarstaan.\n\n{coupon_section}\n\nWe hopen u snel te zien!\n\n– Het team van {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Hallo {customer_name},\n\nHet is alweer een tijdje geleden dat u voor het laatste heeft besteld bij {restaurant_name} en we missen u!\n\nKom uzelf verwennen — we hebben heerlijke gerechten voor u klaarstaan.\n\n{coupon_section}\n\nWe hopen u snel te zien!\n\n– Het team van {restaurant_name}",
+      "resultSent": "Verzonden",
+      "resultSales": "Omzet · 30d",
+      "resultFees": "Kosten"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-vermelding",

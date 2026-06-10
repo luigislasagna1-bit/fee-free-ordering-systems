@@ -2068,7 +2068,10 @@
       "campaign_reengagement_description": "Visszaaktiváló e-mailt küld azoknak az ügyfeleknek, akik meghatározott számú napja nem adtak le rendelést.",
       "campaign_reengagement_triggerLabel": "Ennyivel rendelés nélküli napok után küldje ki:",
       "campaign_reengagement_defaultSubject": "Hiányoznak! Térjen vissza valami finomságért",
-      "campaign_reengagement_defaultBody": "Kedves {customer_name}!\n\nMár egy ideje nem rendelt a(z) {restaurant_name} étteremből, és hiányozzák!\n\nKényeztesse magát — fantasztikus fogásaink várják.\n\n{coupon_section}\n\nReméljük, hamarosan visszatér!\n\n– A(z) {restaurant_name} csapata"
+      "campaign_reengagement_defaultBody": "Kedves {customer_name}!\n\nMár egy ideje nem rendelt a(z) {restaurant_name} étteremből, és hiányozzák!\n\nKényeztesse magát — fantasztikus fogásaink várják.\n\n{coupon_section}\n\nReméljük, hamarosan visszatér!\n\n– A(z) {restaurant_name} csapata",
+      "resultSent": "Elküldve",
+      "resultSales": "Eladás · 30n",
+      "resultFees": "Díjak"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace listázás",

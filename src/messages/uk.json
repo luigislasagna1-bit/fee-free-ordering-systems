@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Надсилає лист повторного залучення клієнтам, які не робили замовлень протягом заданої кількості днів.",
       "campaign_reengagement_triggerLabel": "Надіслати після стількох днів без замовлення:",
       "campaign_reengagement_defaultSubject": "Сумуємо за вами! Повертайтесь за чимось смачненьким",
-      "campaign_reengagement_defaultBody": "Привіт, {customer_name}!\n\nМи не бачили вас у {restaurant_name} вже давно — сумуємо!\n\nПовертайтеся та побалуйте себе — у нас чекають чудові страви.\n\n{coupon_section}\n\nСподіваємось побачити вас скоро!\n\n— Команда {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Привіт, {customer_name}!\n\nМи не бачили вас у {restaurant_name} вже давно — сумуємо!\n\nПовертайтеся та побалуйте себе — у нас чекають чудові страви.\n\n{coupon_section}\n\nСподіваємось побачити вас скоро!\n\n— Команда {restaurant_name}",
+      "resultSent": "Надіслано",
+      "resultSales": "Продажі · 30д",
+      "resultFees": "Збори"
     },
     "marketplaceSettings": {
       "pageTitle": "Оголошення на Marketplace",

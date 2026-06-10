@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "שולח אימייל החזרה ללקוחות שלא הזמינו מספר ימים מוגדר.",
       "campaign_reengagement_triggerLabel": "שלח לאחר כמה ימים ללא הזמנה:",
       "campaign_reengagement_defaultSubject": "התגעגענו אליך! חזור לטעום משהו טעים",
-      "campaign_reengagement_defaultBody": "היי {customer_name},\n\nעבר הרבה זמן מאז הזמנתך האחרונה מ-{restaurant_name} ואנחנו מתגעגעים!\n\nחזור ופנק את עצמך — יש לנו מנות מדהימות שממתינות לך.\n\n{coupon_section}\n\nמקווים לראותך בקרוב!\n\n– צוות {restaurant_name}"
+      "campaign_reengagement_defaultBody": "היי {customer_name},\n\nעבר הרבה זמן מאז הזמנתך האחרונה מ-{restaurant_name} ואנחנו מתגעגעים!\n\nחזור ופנק את עצמך — יש לנו מנות מדהימות שממתינות לך.\n\n{coupon_section}\n\nמקווים לראותך בקרוב!\n\n– צוות {restaurant_name}",
+      "resultSent": "נשלחו",
+      "resultSales": "מכירות · 30 ימים",
+      "resultFees": "עמלות"
     },
     "marketplaceSettings": {
       "pageTitle": "רישום ב-Marketplace",

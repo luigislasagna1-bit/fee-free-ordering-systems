@@ -2068,7 +2068,10 @@
       "campaign_reengagement_description": "Belirli sayıda gündür sipariş vermemiş müşterilere yeniden katılım e-postası gönderir.",
       "campaign_reengagement_triggerLabel": "Siparişsiz bu kadar gün sonra gönder:",
       "campaign_reengagement_defaultSubject": "Sizi özledik! Lezzetli bir şeyler için geri gelin",
-      "campaign_reengagement_defaultBody": "Merhaba {customer_name},\n\n{restaurant_name}'deki son siparişinizden bu yana epey zaman geçti ve sizi özledik!\n\nGelin kendinizi şımartın — sizi bekleyen harika yemeklerimiz var.\n\n{coupon_section}\n\nUmarız yakında görüşürüz!\n\n– {restaurant_name} ekibi"
+      "campaign_reengagement_defaultBody": "Merhaba {customer_name},\n\n{restaurant_name}'deki son siparişinizden bu yana epey zaman geçti ve sizi özledik!\n\nGelin kendinizi şımartın — sizi bekleyen harika yemeklerimiz var.\n\n{coupon_section}\n\nUmarız yakında görüşürüz!\n\n– {restaurant_name} ekibi",
+      "resultSent": "Gönderildi",
+      "resultSales": "Satış · 30g",
+      "resultFees": "Ücretler"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace Listesi",

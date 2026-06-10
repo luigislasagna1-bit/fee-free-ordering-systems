@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Sūta atkārtotas iesaistes e-pastu klientiem, kuri noteiktu dienu skaitu nav veikuši nevienu pasūtījumu.",
       "campaign_reengagement_triggerLabel": "Sūtīt pēc tik dienām bez pasūtījuma:",
       "campaign_reengagement_defaultSubject": "Mēs ilgojamies pēc jums! Atgriezieties pēc kaut kā garšīga",
-      "campaign_reengagement_defaultBody": "Sveiki {customer_name},\n\nKopš pēdējā pasūtījuma no {restaurant_name} ir pagājis laiciņš un mēs jūs garām ilgojamies!\n\nNāciet un palutiniet sevi — mums ir lieliski ēdieni, kas gaida jūs.\n\n{coupon_section}\n\nCerams drīz jūs redzēt!\n\n– Komanda {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Sveiki {customer_name},\n\nKopš pēdējā pasūtījuma no {restaurant_name} ir pagājis laiciņš un mēs jūs garām ilgojamies!\n\nNāciet un palutiniet sevi — mums ir lieliski ēdieni, kas gaida jūs.\n\n{coupon_section}\n\nCerams drīz jūs redzēt!\n\n– Komanda {restaurant_name}",
+      "resultSent": "Nosūtīts",
+      "resultSales": "Pārdošana · 30d",
+      "resultFees": "Maksas"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace ieraksts",

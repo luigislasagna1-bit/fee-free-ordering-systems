@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Sendet eine Reaktivierungs-E-Mail an Kunden, die seit einer festgelegten Anzahl von Tagen keine Bestellung aufgegeben haben.",
       "campaign_reengagement_triggerLabel": "Senden nach dieser Anzahl von Tagen ohne Bestellung:",
       "campaign_reengagement_defaultSubject": "Wir vermissen Sie! Kommen Sie für etwas Leckeres zurück",
-      "campaign_reengagement_defaultBody": "Hallo {customer_name},\n\nEs ist eine Weile her, seit Ihrer letzten Bestellung bei {restaurant_name}, und wir vermissen Sie!\n\nKommen Sie zurück und gönnen Sie sich etwas — wir haben tolle Gerichte für Sie bereit.\n\n{coupon_section}\n\nWir hoffen, Sie bald zu sehen!\n\n– Das Team von {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Hallo {customer_name},\n\nEs ist eine Weile her, seit Ihrer letzten Bestellung bei {restaurant_name}, und wir vermissen Sie!\n\nKommen Sie zurück und gönnen Sie sich etwas — wir haben tolle Gerichte für Sie bereit.\n\n{coupon_section}\n\nWir hoffen, Sie bald zu sehen!\n\n– Das Team von {restaurant_name}",
+      "resultSent": "Gesendet",
+      "resultSales": "Umsatz · 30T",
+      "resultFees": "Gebühren"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-Eintrag",

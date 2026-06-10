@@ -2068,7 +2068,10 @@
       "campaign_reengagement_description": "Wysyła e-mail ponownego zaangażowania do klientów, którzy nie złożyli zamówienia przez określoną liczbę dni.",
       "campaign_reengagement_triggerLabel": "Wyślij po tylu dniach bez zamówienia:",
       "campaign_reengagement_defaultSubject": "Tęsknimy za Tobą! Wróć po coś pysznego",
-      "campaign_reengagement_defaultBody": "Cześć {customer_name},\n\nMinęło trochę czasu od Twojego ostatniego zamówienia z {restaurant_name} i tęsknimy za Tobą!\n\nWróć i rozpieszcz się — czekają na Ciebie pyszne dania.\n\n{coupon_section}\n\nMamy nadzieję, że wkrótce Cię zobaczymy!\n\n— Zespół {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Cześć {customer_name},\n\nMinęło trochę czasu od Twojego ostatniego zamówienia z {restaurant_name} i tęsknimy za Tobą!\n\nWróć i rozpieszcz się — czekają na Ciebie pyszne dania.\n\n{coupon_section}\n\nMamy nadzieję, że wkrótce Cię zobaczymy!\n\n— Zespół {restaurant_name}",
+      "resultSent": "Wysłane",
+      "resultSales": "Sprzedaż · 30d",
+      "resultFees": "Opłaty"
     },
     "marketplaceSettings": {
       "pageTitle": "Listing w Marketplace",

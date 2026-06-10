@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Pošlje e-pošto za ponovno aktivacijo strankam, ki določeno število dni niso oddaly naročila.",
       "campaign_reengagement_triggerLabel": "Pošlji po toliko dneh brez naročila:",
       "campaign_reengagement_defaultSubject": "Pogrešamo vas! Pridite nazaj po kaj slastnega",
-      "campaign_reengagement_defaultBody": "Pozdravljeni {customer_name},\n\nže dolgo ni bilo vašega naročila pri {restaurant_name} in pogrešamo vas!\n\nPrivoščite si in nas obiščite — čakajo vas odlične jedi.\n\n{coupon_section}\n\nUpamo, da se kmalu vidimo!\n\n– Ekipa {restaurant_name}"
+      "campaign_reengagement_defaultBody": "Pozdravljeni {customer_name},\n\nže dolgo ni bilo vašega naročila pri {restaurant_name} in pogrešamo vas!\n\nPrivoščite si in nas obiščite — čakajo vas odlične jedi.\n\n{coupon_section}\n\nUpamo, da se kmalu vidimo!\n\n– Ekipa {restaurant_name}",
+      "resultSent": "Poslano",
+      "resultSales": "Prodaja · 30d",
+      "resultFees": "Pristojbine"
     },
     "marketplaceSettings": {
       "pageTitle": "Uvrstitev na Marketplace",

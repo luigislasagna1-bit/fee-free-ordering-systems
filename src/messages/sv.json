@@ -2105,7 +2105,10 @@
       "campaign_reengagement_description": "Skickar ett återaktiveringsmail till kunder som inte lagt en beställning under ett angivet antal dagar.",
       "campaign_reengagement_triggerLabel": "Skicka efter detta antal dagar utan beställning:",
       "campaign_reengagement_defaultSubject": "Vi saknar dig! Kom tillbaka för något gott",
-      "campaign_reengagement_defaultBody": "Hej {customer_name},\n\nDet har gått ett tag sedan din senaste beställning från {restaurant_name} och vi saknar dig!\n\nKom tillbaka och unna dig — vi har fantastiska rätter som väntar på dig.\n\n{coupon_section}\n\nVi hoppas se dig snart!\n\n– {restaurant_name}-teamet"
+      "campaign_reengagement_defaultBody": "Hej {customer_name},\n\nDet har gått ett tag sedan din senaste beställning från {restaurant_name} och vi saknar dig!\n\nKom tillbaka och unna dig — vi har fantastiska rätter som väntar på dig.\n\n{coupon_section}\n\nVi hoppas se dig snart!\n\n– {restaurant_name}-teamet",
+      "resultSent": "Skickade",
+      "resultSales": "Försäljning · 30d",
+      "resultFees": "Avgifter"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-annons",
