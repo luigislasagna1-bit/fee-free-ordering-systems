@@ -205,10 +205,7 @@ function CampaignCard({
               <AlertTriangle className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
               <div className="text-sm text-yellow-800">
                 <span className="font-semibold">{t("emailNotConfiguredTitle")}</span>{" "}
-                {t.rich("emailNotConfiguredBody", {
-                  emailServer: (c) => <code className="bg-yellow-100 px-1 rounded">{c}</code>,
-                  emailFrom: (c) => <code className="bg-yellow-100 px-1 rounded">{c}</code>,
-                })}
+                {t("emailNotConfiguredBody")}
               </div>
             </div>
           )}

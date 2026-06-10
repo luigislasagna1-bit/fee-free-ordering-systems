@@ -1,5 +1,6 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { isEmailEnabled } from "@/lib/email";
 import { AutopilotClient } from "./AutopilotClient";
 
 export default async function AutopilotPage() {
@@ -49,7 +50,11 @@ export default async function AutopilotPage() {
     }
   }
 
-  const emailConfigured = !!(process.env.EMAIL_SERVER && process.env.EMAIL_FROM);
+  // Reflect the ACTUAL send capability (Resend — platform key or per-restaurant
+  // key), not the legacy EMAIL_SERVER/EMAIL_FROM SMTP vars the send path never
+  // reads. Old check falsely warned "email not configured" on every Autopilot
+  // campaign even though order emails were sending fine via Resend. Luigi 2026-06-10.
+  const emailConfigured = await isEmailEnabled();
 
   return (
     <AutopilotClient
