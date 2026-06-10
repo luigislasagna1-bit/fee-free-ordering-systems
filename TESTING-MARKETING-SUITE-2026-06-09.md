@@ -69,6 +69,14 @@ A returning guest shouldn't retype their details. Device-saved, no account neede
 36. **Account still wins** — sign in to a restaurant/marketplace account → the form uses the **account** details (no "Not you?" line); device memory never overrides a signed-in customer. ❑
 37. **No card data saved** — only name/contact/address are remembered; payment card details are **never** stored (you always re-enter the card). ❑
 
+## K. Autopilot drip sequences (multi-email win-back)
+A re-engage campaign can now send SEVERAL escalating emails, owner-configured.
+38. **Sequence editor** — [admin] Autopilot → **Re-engage clients** → expand → a **list of emails** (seeded: Day 7/14/21/28/35 at 10/15/15/20/20% off), each with its own **delay**, **discount %**, subject + body. ❑
+39. **Choose how many + how much** — change a step's **% / days**, **Add another email** / **Remove** (up to 5), **Save sequence** → "saved". ❑
+40. **Stays in sync** — the % you set on a step shows on the matching **WIN** promo in Promotions → **Pre-made** (the email advertises exactly what the menu applies). ❑
+41. **Second order** — Encourage Second Order shows a **single** email (1 step, 15%). cart_abandonment keeps its old single-email config. ❑
+42. **Behavior (over time / cron)** — a customer idle 7 days gets email 1; still idle at 14 → email 2 (bigger %); a **deeply-lapsed** customer jumps straight to the right tier; **ordering again STOPS the sequence** (verified in `scripts/verify-drip-logic.ts`). ❑
+
 ---
 
 ## Not yet built (queued — do NOT test, they're not live)
