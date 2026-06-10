@@ -40,6 +40,7 @@ import {
   markCampaignRan,
   type AutopilotCampaignKind,
 } from "@/lib/autopilot-state";
+import { getStepPromos } from "@/lib/autopilot-promos";
 
 export type AutopilotRunSummary = {
   restaurantId: string;
@@ -128,35 +129,61 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
     // here so we don't double-run on the AutopilotCampaign loop.
     if (kind === "cart_abandonment") continue;
 
-    const subject = campaign.subject;
-    const emailBody = campaign.emailBody;
-    if (!subject || !emailBody) {
-      // Owner enabled the campaign but didn't fill in subject/body. Skip silently.
-      summary.results.push({ campaignType: campaign.campaignType, eligible: 0, sent: 0, errors: 0 });
-      continue;
-    }
-
-    const { sent, errors, eligible } = await runStandardCampaign({
-      campaignId: campaign.id,
-      campaignType: campaign.campaignType,
-      restaurantId,
-      restaurantName: restaurant.name,
-      restaurantOrderUrl,
-      unsubscribeUrl,
-      restaurantEmail: restaurant.email,
-      restaurantPhone: restaurant.phone,
-      baseUrl,
-      slug: restaurant.slug,
-      imprint,
-      delayHours: campaign.delayHours,
-      couponId: campaign.couponId,
-      subject,
-      emailBody,
+    // Drip sequence (Luigi 2026-06-10): when the owner has configured ordered
+    // STEPS for this campaign, send the multi-email win-back ladder; otherwise
+    // fall back to the legacy single-send so untouched campaigns keep working.
+    const steps = await prisma.autopilotStep.findMany({
+      where: { restaurantId, campaignType: campaign.campaignType, isEnabled: true },
+      orderBy: { stepNumber: "asc" },
+      select: { stepNumber: true, delayHours: true, discountPercent: true, subject: true, emailBody: true },
     });
+
+    let result: { eligible: number; sent: number; errors: number };
+    if (steps.length > 0) {
+      result = await runSteppedCampaign({
+        campaignId: campaign.id,
+        campaignType: campaign.campaignType,
+        restaurantId,
+        restaurantName: restaurant.name,
+        restaurantOrderUrl,
+        unsubscribeUrl,
+        restaurantEmail: restaurant.email,
+        restaurantPhone: restaurant.phone,
+        baseUrl,
+        slug: restaurant.slug,
+        imprint,
+        steps,
+      });
+    } else {
+      const subject = campaign.subject;
+      const emailBody = campaign.emailBody;
+      if (!subject || !emailBody) {
+        // Owner enabled the campaign but didn't fill in subject/body. Skip silently.
+        summary.results.push({ campaignType: campaign.campaignType, eligible: 0, sent: 0, errors: 0 });
+        continue;
+      }
+      result = await runStandardCampaign({
+        campaignId: campaign.id,
+        campaignType: campaign.campaignType,
+        restaurantId,
+        restaurantName: restaurant.name,
+        restaurantOrderUrl,
+        unsubscribeUrl,
+        restaurantEmail: restaurant.email,
+        restaurantPhone: restaurant.phone,
+        baseUrl,
+        slug: restaurant.slug,
+        imprint,
+        delayHours: campaign.delayHours,
+        couponId: campaign.couponId,
+        subject,
+        emailBody,
+      });
+    }
 
     summary.results.push({
       campaignType: campaign.campaignType,
-      eligible, sent, errors,
+      eligible: result.eligible, sent: result.sent, errors: result.errors,
     });
     await markCampaignRan(restaurantId, kind);
   }
@@ -289,6 +316,132 @@ async function runStandardCampaign(opts: {
 }
 
 /**
+ * Stepped (drip) campaign — the owner-configured multi-email win-back ladder
+ * (Luigi 2026-06-10). For each candidate we send the HIGHEST step that's due
+ * (so a deeply-lapsed customer who never got step 1 jumps straight to the right
+ * tier instead of crawling up one cron-hour at a time), at most one email per
+ * run. A re-order automatically RESTARTS the ladder: we only count sends made
+ * AFTER the customer's current lastOrderAt, so a fresh order (which moves
+ * lastOrderAt forward) drops every prior send and resets lastSentStep to 0.
+ *
+ * Query budget is flat (no N+1): one candidate query (≤200), one batched
+ * AutopilotSend lookup over the (campaignId, customerEmail) index, one promo
+ * map — identical shape to runStandardCampaign.
+ */
+async function runSteppedCampaign(opts: {
+  campaignId: string;
+  campaignType: string;
+  restaurantId: string;
+  restaurantName: string;
+  restaurantOrderUrl: string;
+  unsubscribeUrl: string;
+  restaurantEmail: string | null;
+  restaurantPhone: string | null;
+  baseUrl: string;
+  slug: string;
+  imprint: string | null;
+  steps: { stepNumber: number; delayHours: number; discountPercent: number; subject: string; emailBody: string }[];
+}): Promise<{ eligible: number; sent: number; errors: number }> {
+  const steps = opts.steps;
+  if (steps.length === 0) return { eligible: 0, sent: 0, errors: 0 };
+
+  // Cohort gated by the FIRST step's delay (the soonest anyone could enter).
+  const candidates = await pickCandidates(opts.restaurantId, opts.campaignType, steps[0].delayHours);
+  const candidateEmails = candidates.map(c => c.email).filter((e): e is string => !!e);
+  if (candidateEmails.length === 0) return { eligible: 0, sent: 0, errors: 0 };
+
+  // Batch 1 — every prior send for these emails (with step + timestamp).
+  const allSends = await prisma.autopilotSend.findMany({
+    where: { campaignId: opts.campaignId, customerEmail: { in: candidateEmails } },
+    select: { customerEmail: true, sequence: true, sentAt: true },
+  });
+  const sendsByEmail = new Map<string, { sequence: number; sentAt: Date }[]>();
+  for (const s of allSends) {
+    const arr = sendsByEmail.get(s.customerEmail) ?? [];
+    arr.push({ sequence: s.sequence, sentAt: s.sentAt });
+    sendsByEmail.set(s.customerEmail, arr);
+  }
+
+  // Batch 2 — each step's coupon code + % (the email advertises it, the
+  // ordering page pre-applies it via ?coupon=CODE).
+  const stepPromos = await getStepPromos(opts.restaurantId, opts.campaignType);
+
+  const now = Date.now();
+  let sent = 0;
+  let errors = 0;
+  let eligible = 0;
+  for (const customer of candidates) {
+    if (!customer.email) continue;
+    // Reorder-restart anchor: last order (reengagement) or signup/first-order
+    // (second_order). Sends before this are from a PRIOR lapse and ignored.
+    const lref = customer.lastOrderAt ?? customer.createdAt;
+    const lrefMs = lref.getTime();
+    const priorSends = (sendsByEmail.get(customer.email) ?? []).filter(s => s.sentAt.getTime() > lrefMs);
+    const lastSentStep = priorSends.reduce((m, s) => Math.max(m, s.sequence), 0);
+    const daysSince = (now - lrefMs) / 86_400_000;
+
+    const due = steps.filter(s => s.stepNumber > lastSentStep && daysSince >= s.delayHours / 24);
+    if (due.length === 0) continue;
+    const target = due[due.length - 1]; // highest due step
+    eligible++;
+
+    const promo = stepPromos.get(target.stepNumber);
+    const couponCode = promo?.couponCode;
+    const pct = promo?.discountPercent ?? target.discountPercent;
+    const couponLabel = couponCode ? `${pct}% off your next order` : null;
+    const ctaUrl = couponCode
+      ? `${opts.restaurantOrderUrl}?coupon=${encodeURIComponent(couponCode)}`
+      : opts.restaurantOrderUrl;
+
+    setEmailImprint(opts.imprint);
+    try {
+      const res = await sendAutopilotEmail({
+        to: customer.email,
+        customerName: customer.name || "there",
+        restaurantName: opts.restaurantName,
+        subject: target.subject,
+        body: target.emailBody,
+        couponCode,
+        couponLabel,
+        ctaUrl,
+        ctaLabel: couponCode ? "Order with coupon" : "Order now",
+        restaurantUrl: opts.baseUrl ? `${opts.baseUrl}/order/${opts.slug}` : undefined,
+        restaurantEmail: opts.restaurantEmail ?? undefined,
+        restaurantPhone: opts.restaurantPhone ?? undefined,
+        unsubscribeUrl: opts.unsubscribeUrl,
+      });
+
+      if (res.success) {
+        try {
+          await prisma.autopilotSend.create({
+            data: {
+              campaignId: opts.campaignId,
+              customerEmail: customer.email,
+              customerId: customer.id,
+              sequence: target.stepNumber,
+            },
+          });
+          sent++;
+        } catch (e: unknown) {
+          const msg = e instanceof Error ? e.message : String(e);
+          if (!msg.includes("Unique constraint")) {
+            console.error("[autopilot] stepped AutopilotSend.create failed", e);
+            errors++;
+          }
+        }
+      } else {
+        console.error("[autopilot] stepped send failed", { campaignId: opts.campaignId, email: customer.email, step: target.stepNumber, error: res.error });
+        errors++;
+      }
+    } finally {
+      setEmailImprint(null);
+    }
+  }
+
+  return { eligible, sent, errors };
+}
+
+/**
  * Returns the candidate Customer rows for a given campaign type +
  * delay window. Pure query — no email sending.
  *
@@ -305,7 +458,7 @@ async function pickCandidates(
   restaurantId: string,
   campaignType: string,
   delayHours: number,
-): Promise<{ id: string; name: string | null; email: string | null }[]> {
+): Promise<{ id: string; name: string | null; email: string | null; lastOrderAt: Date | null; createdAt: Date }[]> {
   const cutoff = new Date(Date.now() - delayHours * 3600_000);
 
   if (campaignType === "second_order") {
@@ -320,7 +473,9 @@ async function pickCandidates(
         // transactional order emails). Luigi 2026-06-03.
         marketingConsent: true,
       },
-      select: { id: true, name: true, email: true },
+      // lastOrderAt + createdAt feed the drip-sequence timing (Luigi 2026-06-10);
+      // the legacy single-send path simply ignores them.
+      select: { id: true, name: true, email: true, lastOrderAt: true, createdAt: true },
       take: 200,
     });
   }
@@ -348,7 +503,7 @@ async function pickCandidates(
         // from re-engagement sends. Luigi 2026-06-03.
         marketingConsent: true,
       },
-      select: { id: true, name: true, email: true, lastOrderAt: true },
+      select: { id: true, name: true, email: true, lastOrderAt: true, createdAt: true },
       orderBy: { lastOrderAt: "asc" },
     });
 
@@ -359,19 +514,13 @@ async function pickCandidates(
     // we lose meaningful tiering — fall back to "any customer older
     // than `delayHours`" using the cutoff above.
     if (cohort.length < 5) {
-      return cohort
-        .filter(c => c.lastOrderAt && c.lastOrderAt < cutoff)
-        .slice(0, 200)
-        .map(c => ({ id: c.id, name: c.name, email: c.email }));
+      return cohort.filter(c => c.lastOrderAt && c.lastOrderAt < cutoff).slice(0, 200);
     }
 
     const idx = Math.floor(cohort.length * 0.4);
     const percentileCutoff = cohort[idx].lastOrderAt;
     if (!percentileCutoff) return [];
-    return cohort
-      .filter(c => c.lastOrderAt && c.lastOrderAt < percentileCutoff)
-      .slice(0, 200)
-      .map(c => ({ id: c.id, name: c.name, email: c.email }));
+    return cohort.filter(c => c.lastOrderAt && c.lastOrderAt < percentileCutoff).slice(0, 200);
   }
 
   // cart_abandonment is handled by runCartAbandonmentForRestaurant.

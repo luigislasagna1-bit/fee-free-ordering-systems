@@ -84,6 +84,40 @@ async function ensurePromo(restaurantId: string, def: PromoDef, enabled: boolean
   });
 }
 
+/** The campaignRefs that belong to a given campaign type (drip steps). */
+function campaignRefsFor(campaignType: string): string[] {
+  if (campaignType === "reengagement") return REENGAGE_TIERS.map((t) => t.campaignRef);
+  if (campaignType === "second_order") return [SECOND_ORDER.campaignRef];
+  return [];
+}
+
+/**
+ * The discount each drip STEP advertises, keyed by stepNumber. Single batched
+ * query (Luigi 2026-06-10): the cron looks this up once per campaign and reads
+ * `{couponCode, discountPercent}` per step — the code the email shows + the
+ * ordering page pre-applies via `?coupon=CODE`. stepNumber maps to
+ * Promotion.campaignSequence (second_order's null sequence → step 1).
+ */
+export async function getStepPromos(
+  restaurantId: string,
+  campaignType: string,
+): Promise<Map<number, { couponCode: string; discountPercent: number }>> {
+  const map = new Map<number, { couponCode: string; discountPercent: number }>();
+  const refs = campaignRefsFor(campaignType);
+  if (!refs.length) return map;
+  const promos = await prisma.promotion.findMany({
+    where: { restaurantId, campaignRef: { in: refs } },
+    select: { campaignSequence: true, couponCode: true, ruleConfig: true },
+  });
+  for (const p of promos) {
+    const stepNumber = p.campaignSequence ?? 1;
+    const rc = p.ruleConfig as { discountPercent?: unknown } | null;
+    const pct = typeof rc?.discountPercent === "number" ? rc.discountPercent : 0;
+    if (p.couponCode) map.set(stepNumber, { couponCode: p.couponCode, discountPercent: pct });
+  }
+  return map;
+}
+
 /**
  * Create / enable / soft-disable the pre-made promos for an Autopilot campaign.
  * Idempotent + internally safe — never throws into the toggle path.
