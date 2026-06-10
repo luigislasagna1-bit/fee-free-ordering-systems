@@ -3775,7 +3775,8 @@
       "paymentLabel": "Pagamento",
       "notChargedBody": "La tua carta non è stata addebitata. Il blocco di autorizzazione sulla tua carta verrà rilasciato automaticamente entro qualche giorno lavorativo.",
       "questionsLine": "Domande? Chiama direttamente il ristorante:",
-      "closingLine": "Ci scusiamo per l'inconveniente. Prova a ordinare di nuovo più tardi, oppure contatta il ristorante per qualsiasi domanda."
+      "closingLine": "Ci scusiamo per l'inconveniente. Prova a ordinare di nuovo più tardi, oppure contatta il ristorante per qualsiasi domanda.",
+      "subjectMissed": "Ordine n. {orderNumber} perso"
     },
     "orderCanceled": {
       "subject": "Ordine #{orderNumber} annullato",

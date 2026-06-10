@@ -3775,7 +3775,8 @@
       "paymentLabel": "Betaling",
       "notChargedBody": "Uw kaart is niet belast. De reservering op uw kaart wordt binnen enkele werkdagen automatisch vrijgegeven.",
       "questionsLine": "Vragen? Bel het restaurant rechtstreeks:",
-      "closingLine": "Onze excuses voor het ongemak. Probeer later opnieuw te bestellen of neem contact op met het restaurant als u vragen heeft."
+      "closingLine": "Onze excuses voor het ongemak. Probeer later opnieuw te bestellen of neem contact op met het restaurant als u vragen heeft.",
+      "subjectMissed": "Bestelling #{orderNumber} gemist"
     },
     "orderCanceled": {
       "subject": "Bestelling #{orderNumber} geannuleerd",

@@ -3775,7 +3775,8 @@
       "paymentLabel": "Betaling",
       "notChargedBody": "Kortet ditt ble ikke belastet. Reservasjonen på kortet ditt vil falle bort automatisk i løpet av noen virkedager.",
       "questionsLine": "Spørsmål? Ring restauranten direkte:",
-      "closingLine": "Vi beklager ulempen. Prøv å bestille igjen senere, eller ta kontakt med restauranten dersom du har spørsmål."
+      "closingLine": "Vi beklager ulempen. Prøv å bestille igjen senere, eller ta kontakt med restauranten dersom du har spørsmål.",
+      "subjectMissed": "Bestilling #{orderNumber} gått glipp av"
     },
     "orderCanceled": {
       "subject": "Bestilling #{orderNumber} kansellert",

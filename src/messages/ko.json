@@ -3775,7 +3775,8 @@
       "paymentLabel": "결제",
       "notChargedBody": "카드 청구는 이루어지지 않았습니다. 카드에 걸린 임시 승인 금액은 영업일 기준 며칠 내에 자동으로 해제됩니다.",
       "questionsLine": "문의 사항이 있으신가요? 레스토랑에 직접 전화해 주세요:",
-      "closingLine": "불편을 드려 죄송합니다. 나중에 다시 주문해 보시거나, 궁금한 점이 있으시면 레스토랑에 문의해 주세요."
+      "closingLine": "불편을 드려 죄송합니다. 나중에 다시 주문해 보시거나, 궁금한 점이 있으시면 레스토랑에 문의해 주세요.",
+      "subjectMissed": "주문 #{orderNumber} 놓침"
     },
     "orderCanceled": {
       "subject": "주문 #{orderNumber} 취소됨",

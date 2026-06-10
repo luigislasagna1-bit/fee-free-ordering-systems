@@ -3775,7 +3775,8 @@
       "paymentLabel": "Plaćanje",
       "notChargedBody": "Vaša kartica nije terećena. Predautorizacija na vašoj kartici bit će automatski oslobođena u roku od nekoliko radnih dana.",
       "questionsLine": "Pitanja? Nazovite restoran izravno:",
-      "closingLine": "Ispričavamo se zbog neugodnosti. Pokušajte naručiti opet kasnije ili se obratite restoranu ako imate pitanja."
+      "closingLine": "Ispričavamo se zbog neugodnosti. Pokušajte naručiti opet kasnije ili se obratite restoranu ako imate pitanja.",
+      "subjectMissed": "Narudžba #{orderNumber} propuštena"
     },
     "orderCanceled": {
       "subject": "Narudžba #{orderNumber} otkazana",

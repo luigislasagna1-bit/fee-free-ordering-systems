@@ -3775,7 +3775,8 @@
       "paymentLabel": "Pagamento",
       "notChargedBody": "Seu cartão não foi cobrado. A reserva de autorização no seu cartão será liberada automaticamente em alguns dias úteis.",
       "questionsLine": "Dúvidas? Ligue diretamente para o restaurante:",
-      "closingLine": "Pedimos desculpas pelo transtorno. Tente fazer o pedido novamente mais tarde ou entre em contato com o restaurante se tiver dúvidas."
+      "closingLine": "Pedimos desculpas pelo transtorno. Tente fazer o pedido novamente mais tarde ou entre em contato com o restaurante se tiver dúvidas.",
+      "subjectMissed": "Pedido nº {orderNumber} perdido"
     },
     "orderCanceled": {
       "subject": "Pedido #{orderNumber} cancelado",

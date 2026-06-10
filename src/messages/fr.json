@@ -3775,7 +3775,8 @@
       "paymentLabel": "Paiement",
       "notChargedBody": "Votre carte n'a pas été débitée. L'autorisation de prélèvement sera levée automatiquement dans quelques jours ouvrés.",
       "questionsLine": "Des questions ? Appelez le restaurant directement :",
-      "closingLine": "Nous vous prions de nous excuser pour la gêne occasionnée. Réessayez de commander ultérieurement ou contactez le restaurant si vous avez des questions."
+      "closingLine": "Nous vous prions de nous excuser pour la gêne occasionnée. Réessayez de commander ultérieurement ou contactez le restaurant si vous avez des questions.",
+      "subjectMissed": "Commande n°{orderNumber} manquée"
     },
     "orderCanceled": {
       "subject": "Commande #{orderNumber} annulée",

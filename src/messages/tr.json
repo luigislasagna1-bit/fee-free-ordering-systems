@@ -3775,7 +3775,8 @@
       "paymentLabel": "Ödeme",
       "notChargedBody": "Kartınızdan ücret alınmadı. Kartınızdaki ön provizyon birkaç iş günü içinde otomatik olarak kaldırılacaktır.",
       "questionsLine": "Sorularınız mı var? Restoranı doğrudan arayın:",
-      "closingLine": "Yaşanan aksaklık için özür dileriz. Daha sonra tekrar sipariş vermeyi deneyebilir ya da sorularınız için restoranla iletişime geçebilirsiniz."
+      "closingLine": "Yaşanan aksaklık için özür dileriz. Daha sonra tekrar sipariş vermeyi deneyebilir ya da sorularınız için restoranla iletişime geçebilirsiniz.",
+      "subjectMissed": "#{orderNumber} numaralı sipariş kaçırıldı"
     },
     "orderCanceled": {
       "subject": "#{orderNumber} numaralı sipariş iptal edildi",

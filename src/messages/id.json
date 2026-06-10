@@ -3775,7 +3775,8 @@
       "paymentLabel": "Pembayaran",
       "notChargedBody": "Kartu Anda tidak dikenakan biaya. Tahan otorisasi pada kartu Anda akan otomatis berakhir dalam beberapa hari kerja.",
       "questionsLine": "Ada pertanyaan? Hubungi restoran langsung:",
-      "closingLine": "Kami mohon maaf atas ketidaknyamanan ini. Coba pesan lagi nanti, atau hubungi restoran jika Anda memiliki pertanyaan."
+      "closingLine": "Kami mohon maaf atas ketidaknyamanan ini. Coba pesan lagi nanti, atau hubungi restoran jika Anda memiliki pertanyaan.",
+      "subjectMissed": "Pesanan #{orderNumber} terlewat"
     },
     "orderCanceled": {
       "subject": "Pesanan #{orderNumber} dibatalkan",

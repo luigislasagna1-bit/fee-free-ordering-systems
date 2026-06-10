@@ -3775,7 +3775,8 @@
       "paymentLabel": "Fizetés",
       "notChargedBody": "A kártyáját nem terheltük meg. Az előzetes zárolás néhány munkanapon belül automatikusan feloldásra kerül.",
       "questionsLine": "Kérdése van? Hívja fel közvetlenül az éttermet:",
-      "closingLine": "Elnézést kérünk a kellemetlenségért. Próbáljon rendelni később, vagy vegye fel a kapcsolatot az étteremmel, ha kérdése van."
+      "closingLine": "Elnézést kérünk a kellemetlenségért. Próbáljon rendelni később, vagy vegye fel a kapcsolatot az étteremmel, ha kérdése van.",
+      "subjectMissed": "A(z) #{orderNumber} rendelés lemaradt"
     },
     "orderCanceled": {
       "subject": "#{orderNumber}. rendelés lemondva",

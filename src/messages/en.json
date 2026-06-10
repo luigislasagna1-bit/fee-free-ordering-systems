@@ -3775,7 +3775,8 @@
       "paymentLabel": "Payment",
       "notChargedBody": "Your card was not charged. The authorization hold on your card will drop off automatically within a few business days.",
       "questionsLine": "Questions? Call the restaurant directly:",
-      "closingLine": "We're sorry for the inconvenience. Try ordering again later, or reach out to the restaurant if you have questions."
+      "closingLine": "We're sorry for the inconvenience. Try ordering again later, or reach out to the restaurant if you have questions.",
+      "subjectMissed": "Order #{orderNumber} missed"
     },
     "orderCanceled": {
       "subject": "Order #{orderNumber} canceled",

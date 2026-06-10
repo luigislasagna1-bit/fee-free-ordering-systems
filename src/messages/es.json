@@ -3775,7 +3775,8 @@
       "paymentLabel": "Pago",
       "notChargedBody": "No se realizó ningún cargo a tu tarjeta. La retención de autorización se liberará automáticamente en unos pocos días hábiles.",
       "questionsLine": "¿Tienes preguntas? Llama directamente al restaurante:",
-      "closingLine": "Lamentamos los inconvenientes. Intenta hacer tu pedido más tarde o comunícate con el restaurante si tienes alguna duda."
+      "closingLine": "Lamentamos los inconvenientes. Intenta hacer tu pedido más tarde o comunícate con el restaurante si tienes alguna duda.",
+      "subjectMissed": "Pedido n.º {orderNumber} perdido"
     },
     "orderCanceled": {
       "subject": "Pedido #{orderNumber} cancelado",

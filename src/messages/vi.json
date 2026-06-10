@@ -3775,7 +3775,8 @@
       "paymentLabel": "Thanh toán",
       "notChargedBody": "Thẻ của bạn chưa bị tính tiền. Khoản giữ chỗ trên thẻ sẽ tự động được giải phóng trong vài ngày làm việc.",
       "questionsLine": "Có câu hỏi? Gọi trực tiếp cho nhà hàng:",
-      "closingLine": "Chúng tôi xin lỗi vì sự bất tiện này. Vui lòng thử đặt hàng lại sau, hoặc liên hệ nhà hàng nếu bạn có thắc mắc."
+      "closingLine": "Chúng tôi xin lỗi vì sự bất tiện này. Vui lòng thử đặt hàng lại sau, hoặc liên hệ nhà hàng nếu bạn có thắc mắc.",
+      "subjectMissed": "Đơn hàng #{orderNumber} bị bỏ lỡ"
     },
     "orderCanceled": {
       "subject": "Đơn #{orderNumber} đã hủy",

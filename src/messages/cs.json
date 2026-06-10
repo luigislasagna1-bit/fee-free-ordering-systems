@@ -3775,7 +3775,8 @@
       "paymentLabel": "Platba",
       "notChargedBody": "Vaše karta nebyla zatížena. Autorizační blokace na vaší kartě bude automaticky uvolněna během několika pracovních dnů.",
       "questionsLine": "Dotazy? Kontaktujte restauraci přímo:",
-      "closingLine": "Omlouváme se za způsobené nepříjemnosti. Zkuste objednat znovu později, nebo kontaktujte restauraci, pokud máte otázky."
+      "closingLine": "Omlouváme se za způsobené nepříjemnosti. Zkuste objednat znovu později, nebo kontaktujte restauraci, pokud máte otázky.",
+      "subjectMissed": "Objednávka #{orderNumber} promeškána"
     },
     "orderCanceled": {
       "subject": "Objednávka #{orderNumber} zrušena",

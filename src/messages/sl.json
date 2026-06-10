@@ -3775,7 +3775,8 @@
       "paymentLabel": "Plačilo",
       "notChargedBody": "Vaša kartica ni bila obremenjena. Avtorizacijska rezervacija bo samodejno sproščena v nekaj delovnih dneh.",
       "questionsLine": "Vprašanja? Pokličite restavracijo neposredno:",
-      "closingLine": "Opravičujemo se za nevšečnosti. Poskusite naročiti znova pozneje ali se obrnite na restavracijo, če imate vprašanja."
+      "closingLine": "Opravičujemo se za nevšečnosti. Poskusite naročiti znova pozneje ali se obrnite na restavracijo, če imate vprašanja.",
+      "subjectMissed": "Naročilo #{orderNumber} zamujeno"
     },
     "orderCanceled": {
       "subject": "Naročilo #{orderNumber} preklicano",

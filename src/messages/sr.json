@@ -3775,7 +3775,8 @@
       "paymentLabel": "Plaćanje",
       "notChargedBody": "Vaša kartica nije naplaćena. Autorizaciona rezervacija na vašoj kartici biće automatski otpuštena u roku od nekoliko radnih dana.",
       "questionsLine": "Imate pitanja? Pozovite restoran direktno:",
-      "closingLine": "Žao nam je zbog neprijatnosti. Pokušajte ponovo naručiti kasnije ili kontaktirajte restoran ukoliko imate pitanja."
+      "closingLine": "Žao nam je zbog neprijatnosti. Pokušajte ponovo naručiti kasnije ili kontaktirajte restoran ukoliko imate pitanja.",
+      "subjectMissed": "Поруџбина #{orderNumber} пропуштена"
     },
     "orderCanceled": {
       "subject": "Porudžbina #{orderNumber} otkazana",

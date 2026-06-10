@@ -3775,7 +3775,8 @@
       "paymentLabel": "Plată",
       "notChargedBody": "Cardul dvs. nu a fost debitat. Autorizarea temporară va fi anulată automat în câteva zile lucrătoare.",
       "questionsLine": "Aveți întrebări? Contactați direct restaurantul:",
-      "closingLine": "Ne cerem scuze pentru inconveniență. Puteți încerca să plasați o nouă comandă mai târziu sau să contactați restaurantul dacă aveți nelămuriri."
+      "closingLine": "Ne cerem scuze pentru inconveniență. Puteți încerca să plasați o nouă comandă mai târziu sau să contactați restaurantul dacă aveți nelămuriri.",
+      "subjectMissed": "Comanda #{orderNumber} ratată"
     },
     "orderCanceled": {
       "subject": "Comanda #{orderNumber} anulată",

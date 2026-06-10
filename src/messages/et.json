@@ -3775,7 +3775,8 @@
       "paymentLabel": "Makse",
       "notChargedBody": "Teie kaarti ei debiteeritud. Kaardil olev autoriseering eemaldatakse automaatselt mõne tööpäeva jooksul.",
       "questionsLine": "Küsimused? Helistage otse restorani:",
-      "closingLine": "Vabandame ebamugavuste pärast. Proovige hiljem uuesti tellida või võtke ühendust restoraniga, kui teil on küsimusi."
+      "closingLine": "Vabandame ebamugavuste pärast. Proovige hiljem uuesti tellida või võtke ühendust restoraniga, kui teil on küsimusi.",
+      "subjectMissed": "Tellimus #{orderNumber} jäi märkamata"
     },
     "orderCanceled": {
       "subject": "Tellimus #{orderNumber} tühistatud",

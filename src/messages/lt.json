@@ -3775,7 +3775,8 @@
       "paymentLabel": "Mokėjimas",
       "notChargedBody": "Jūsų kortelė nebuvo apmokestinta. Laikinas lėšų rezervavimas bus automatiškai panaikintas per kelias darbo dienas.",
       "questionsLine": "Turite klausimų? Skambinkite tiesiai į restoraną:",
-      "closingLine": "Atsiprašome už nepatogumus. Pabandykite užsisakyti vėliau arba susisiekite su restoranu, jei turite klausimų."
+      "closingLine": "Atsiprašome už nepatogumus. Pabandykite užsisakyti vėliau arba susisiekite su restoranu, jei turite klausimų.",
+      "subjectMissed": "Užsakymas #{orderNumber} praleistas"
     },
     "orderCanceled": {
       "subject": "Užsakymas #{orderNumber} atšauktas",

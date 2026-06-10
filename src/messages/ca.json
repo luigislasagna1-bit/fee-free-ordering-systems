@@ -3775,7 +3775,8 @@
       "paymentLabel": "Pagament",
       "notChargedBody": "No se us ha cobrat res. La retenció d'autorització a la vostra targeta s'alliberarà automàticament en uns quants dies hàbils.",
       "questionsLine": "Teniu preguntes? Truqueu directament al restaurant:",
-      "closingLine": "Disculpeu les molèsties. Torneu a fer la comanda més tard, o poseu-vos en contacte amb el restaurant si teniu alguna pregunta."
+      "closingLine": "Disculpeu les molèsties. Torneu a fer la comanda més tard, o poseu-vos en contacte amb el restaurant si teniu alguna pregunta.",
+      "subjectMissed": "Comanda #{orderNumber} perduda"
     },
     "orderCanceled": {
       "subject": "Comanda #{orderNumber} cancel·lada",

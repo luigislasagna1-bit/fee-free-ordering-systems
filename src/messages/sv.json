@@ -3775,7 +3775,8 @@
       "paymentLabel": "Betalning",
       "notChargedBody": "Ditt kort har inte debiterats. Reservationen på ditt kort tas bort automatiskt inom några arbetsdagar.",
       "questionsLine": "Frågor? Ring restaurangen direkt:",
-      "closingLine": "Vi beklagar besväret. Försök beställa igen senare, eller kontakta restaurangen om du har frågor."
+      "closingLine": "Vi beklagar besväret. Försök beställa igen senare, eller kontakta restaurangen om du har frågor.",
+      "subjectMissed": "Beställning #{orderNumber} missad"
     },
     "orderCanceled": {
       "subject": "Beställning #{orderNumber} avbruten",

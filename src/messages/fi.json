@@ -3775,7 +3775,8 @@
       "paymentLabel": "Maksu",
       "notChargedBody": "Korttiasi ei veloitettu. Kortillesi asetettu varaus vapautuu automaattisesti muutaman arkipäivän kuluessa.",
       "questionsLine": "Kysyttävää? Soita suoraan ravintolaan:",
-      "closingLine": "Pahoittelemme aiheutunutta haittaa. Voit yrittää tilata myöhemmin uudelleen tai ottaa yhteyttä ravintolaan, jos sinulla on kysyttävää."
+      "closingLine": "Pahoittelemme aiheutunutta haittaa. Voit yrittää tilata myöhemmin uudelleen tai ottaa yhteyttä ravintolaan, jos sinulla on kysyttävää.",
+      "subjectMissed": "Tilaus #{orderNumber} jäi huomaamatta"
     },
     "orderCanceled": {
       "subject": "Tilaus #{orderNumber} peruutettu",

@@ -3775,7 +3775,8 @@
       "paymentLabel": "付款情况",
       "notChargedBody": "您的银行卡未被扣款。卡上的预授权冻结将在几个工作日内自动解除。",
       "questionsLine": "有疑问？请直接致电餐厅：",
-      "closingLine": "对此带来的不便深感抱歉。请稍后再试，或如有疑问请直接联系餐厅。"
+      "closingLine": "对此带来的不便深感抱歉。请稍后再试，或如有疑问请直接联系餐厅。",
+      "subjectMissed": "错过订单 #{orderNumber}"
     },
     "orderCanceled": {
       "subject": "订单 #{orderNumber} 已取消",

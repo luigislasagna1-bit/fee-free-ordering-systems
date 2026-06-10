@@ -3775,7 +3775,8 @@
       "paymentLabel": "Pagamento",
       "notChargedBody": "O seu cartão não foi debitado. A autorização de pagamento pendente no seu cartão será cancelada automaticamente em alguns dias úteis.",
       "questionsLine": "Tem dúvidas? Contacte diretamente o restaurante:",
-      "closingLine": "Pedimos desculpa pelo inconveniente. Tente encomendar novamente mais tarde ou contacte o restaurante se tiver alguma questão."
+      "closingLine": "Pedimos desculpa pelo inconveniente. Tente encomendar novamente mais tarde ou contacte o restaurante se tiver alguma questão.",
+      "subjectMissed": "Pedido n.º {orderNumber} perdido"
     },
     "orderCanceled": {
       "subject": "Pedido #{orderNumber} cancelado",

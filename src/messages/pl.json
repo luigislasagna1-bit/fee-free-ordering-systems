@@ -3775,7 +3775,8 @@
       "paymentLabel": "Płatność",
       "notChargedBody": "Twoja karta nie została obciążona. Tymczasowa autoryzacja zostanie automatycznie usunięta w ciągu kilku dni roboczych.",
       "questionsLine": "Masz pytania? Zadzwoń bezpośrednio do restauracji:",
-      "closingLine": "Przepraszamy za niedogodności. Spróbuj zamówić ponownie lub skontaktuj się z restauracją, jeśli masz pytania."
+      "closingLine": "Przepraszamy za niedogodności. Spróbuj zamówić ponownie lub skontaktuj się z restauracją, jeśli masz pytania.",
+      "subjectMissed": "Zamówienie #{orderNumber} przeoczone"
     },
     "orderCanceled": {
       "subject": "Zamówienie #{orderNumber} anulowane",

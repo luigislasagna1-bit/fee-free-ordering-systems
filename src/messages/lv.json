@@ -3775,7 +3775,8 @@
       "paymentLabel": "Maksājums",
       "notChargedBody": "Jūsu karte netika debetēta. Autorizācijas aizturējums uz jūsu kartes automātiski pazudīs dažu darba dienu laikā.",
       "questionsLine": "Jautājumi? Zvaniet tieši uz restorānu:",
-      "closingLine": "Atvainojamies par sagādātajām neērtībām. Mēģiniet pasūtīt vēlāk vai sazinieties ar restorānu, ja jums ir jautājumi."
+      "closingLine": "Atvainojamies par sagādātajām neērtībām. Mēģiniet pasūtīt vēlāk vai sazinieties ar restorānu, ja jums ir jautājumi.",
+      "subjectMissed": "Pasūtījums #{orderNumber} nokavēts"
     },
     "orderCanceled": {
       "subject": "Pasūtījums #{orderNumber} atcelts",

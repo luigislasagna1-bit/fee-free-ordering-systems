@@ -33,6 +33,10 @@ export type OrderRejectedProps = {
 export default function OrderRejected(props: OrderRejectedProps) {
   const { t, customerName, orderNumber, restaurantName, reason, paidOnline, paymentCaptured,
     restaurantUrl, restaurantEmail, restaurantPhone, imprint } = props;
+  // A timed-out order is auto-rejected ("missed") — show the MISSED badge (amber,
+  // reusing the kitchen's word) and hide the internal "Auto-rejected:" reason,
+  // consistent with the kitchen + the customer email. Luigi 2026-06-09.
+  const isMissed = (reason ?? "").trim().startsWith("Auto-rejected");
   return (
     <EmailLayout preview={t("email.orderRejected.preview", { orderNumber })}>
       <EmailHeader
@@ -43,10 +47,10 @@ export default function OrderRejected(props: OrderRejectedProps) {
       <EmailBody>
         <P>{t("email.orderRejected.greeting", { customerName })}</P>
         <div style={{ margin: "8px 0 16px" }}>
-          <Badge color="rose">{t("email.orderRejected.badgeRejected")}</Badge>
+          <Badge color={isMissed ? "amber" : "rose"}>{isMissed ? t("kitchen.missed") : t("email.orderRejected.badgeRejected")}</Badge>
         </div>
         <P>{t("email.orderRejected.sorryLine", { restaurantName })}</P>
-        {reason && (
+        {reason && !isMissed && (
           <InfoCard label={t("email.orderRejected.reasonLabel")} accent="amber">
             {reason}
           </InfoCard>

@@ -3775,7 +3775,8 @@
       "paymentLabel": "Zahlung",
       "notChargedBody": "Ihre Karte wurde nicht belastet. Die Autorisierungsreservierung auf Ihrer Karte wird innerhalb weniger Werktage automatisch aufgehoben.",
       "questionsLine": "Fragen? Rufen Sie das Restaurant direkt an:",
-      "closingLine": "Wir entschuldigen uns für die Unannehmlichkeiten. Versuchen Sie es später erneut oder wenden Sie sich bei Fragen direkt an das Restaurant."
+      "closingLine": "Wir entschuldigen uns für die Unannehmlichkeiten. Versuchen Sie es später erneut oder wenden Sie sich bei Fragen direkt an das Restaurant.",
+      "subjectMissed": "Bestellung #{orderNumber} verpasst"
     },
     "orderCanceled": {
       "subject": "Bestellung #{orderNumber} storniert",

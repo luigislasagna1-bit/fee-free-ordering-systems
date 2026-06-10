@@ -3775,7 +3775,8 @@
       "paymentLabel": "Betaling",
       "notChargedBody": "Dit kort er ikke blevet belastet. Den midlertidige reservation på dit kort bortfalder automatisk inden for få hverdage.",
       "questionsLine": "Spørgsmål? Ring direkte til restauranten:",
-      "closingLine": "Vi beklager ulejligheden. Prøv at bestille igen senere, eller kontakt restauranten, hvis du har spørgsmål."
+      "closingLine": "Vi beklager ulejligheden. Prøv at bestille igen senere, eller kontakt restauranten, hvis du har spørgsmål.",
+      "subjectMissed": "Ordre #{orderNumber} gået glip af"
     },
     "orderCanceled": {
       "subject": "Ordre #{orderNumber} annulleret",

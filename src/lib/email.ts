@@ -568,9 +568,13 @@ export async function sendOrderRejectedEmail(params: {
       imprint: currentImprint(),
     })
   );
+  // A timed-out order is auto-rejected ("missed") — use the missed subject so
+  // the restaurant's email matches the kitchen + customer wording. Luigi
+  // 2026-06-09.
+  const isMissed = (params.reason ?? "").startsWith("Auto-rejected");
   return send({
     to: params.to,
-    subject: t("email.orderRejected.subject", { orderNumber: params.orderNumber }),
+    subject: t(isMissed ? "email.orderRejected.subjectMissed" : "email.orderRejected.subject", { orderNumber: params.orderNumber }),
     html,
     replyTo: params.restaurantEmail,
     fromName: params.restaurantName,
