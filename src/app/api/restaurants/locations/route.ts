@@ -22,15 +22,25 @@ export async function GET() {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  // Resolve the brand's parent. If the caller's restaurant has a parent, walk
-  // up. Otherwise treat the caller's restaurant as the parent.
-  const current = await prisma.restaurant.findUnique({
-    where: { id: user.restaurantId },
-    select: { id: true, parentRestaurantId: true },
-  });
-  if (!current) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+  // Brand role from the CANONICAL owning restaurant (User.restaurantId), not the
+  // cookie-swapped active location. A CHILD admin (their own restaurant has a
+  // parent) sees ONLY their own location — never the brand HQ or siblings. Only
+  // the brand-parent owner sees the whole tree. Luigi 2026-06-10.
+  const userRow = await prisma.user.findUnique({ where: { id: user.id }, select: { restaurantId: true } });
+  const canonical = userRow?.restaurantId
+    ? await prisma.restaurant.findUnique({ where: { id: userRow.restaurantId }, select: { id: true, parentRestaurantId: true } })
+    : null;
+  if (!canonical) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
-  const parentId = current.parentRestaurantId ?? current.id;
+  if (canonical.parentRestaurantId) {
+    const self = await prisma.restaurant.findUnique({
+      where: { id: canonical.id },
+      select: { id: true, name: true, slug: true, subscriptionStatus: true, city: true, state: true },
+    });
+    return NextResponse.json({ parent: self, children: [] });
+  }
+
+  const parentId = canonical.id;
 
   const [parent, children] = await Promise.all([
     prisma.restaurant.findUnique({
@@ -82,14 +92,22 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  // Caller's restaurantId points at the parent (their primary owned restaurant).
-  // If they're already viewing a child location via active_location, walk up.
-  const current = await prisma.restaurant.findUnique({
-    where: { id: user.restaurantId },
-    select: { id: true, parentRestaurantId: true, name: true },
-  });
-  if (!current) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
-  const parentId = current.parentRestaurantId ?? current.id;
+  // Only the BRAND-PARENT owner may add locations. Resolve the role from the
+  // canonical User.restaurantId (not the cookie-swapped active location): a
+  // child admin's own restaurant has a parent → they manage only their own
+  // location and cannot create siblings. Luigi 2026-06-10.
+  const userRow = await prisma.user.findUnique({ where: { id: user.id }, select: { restaurantId: true } });
+  const canonical = userRow?.restaurantId
+    ? await prisma.restaurant.findUnique({ where: { id: userRow.restaurantId }, select: { id: true, parentRestaurantId: true } })
+    : null;
+  if (!canonical) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+  if (canonical.parentRestaurantId) {
+    return NextResponse.json(
+      { error: "Only the brand owner can add locations. Manage from your brand HQ account." },
+      { status: 403 },
+    );
+  }
+  const parentId = canonical.id;
 
   const body = await req.json().catch(() => ({}));
   const name = String(body.name ?? "").trim().slice(0, 100);

@@ -19,10 +19,14 @@ export function LocationsClient({
   parent,
   children,
   activeId,
+  isBrandParent = true,
 }: {
   parent: Location;
   children: Location[];
   activeId: string;
+  /** Only the brand-parent owner may add/see other locations. A child admin
+   *  sees ONLY their own location and never the "add location" affordance. */
+  isBrandParent?: boolean;
 }) {
   const t = useTranslations("admin.locations");
   const [showAdd, setShowAdd] = useState(false);
@@ -97,12 +101,16 @@ export function LocationsClient({
             {t("pageSubtitle")}
           </p>
         </div>
-        <button
-          onClick={() => setShowAdd(true)}
-          className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
-        >
-          <Plus className="w-4 h-4" /> {t("addAnotherLocation")}
-        </button>
+        {/* Only the brand-parent owner may add locations — a child admin manages
+            only their own. Luigi 2026-06-10. */}
+        {isBrandParent && (
+          <button
+            onClick={() => setShowAdd(true)}
+            className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
+          >
+            <Plus className="w-4 h-4" /> {t("addAnotherLocation")}
+          </button>
+        )}
       </div>
 
       {error && (
@@ -111,11 +119,13 @@ export function LocationsClient({
         </div>
       )}
 
-      <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 text-sm text-blue-800">
-        <strong>{t("infoHeadsUp")}</strong> {t("infoBillingBody")}
-        {" "}
-        <strong>{t("infoMenusShared")}</strong> {t("infoMenusSharedBody")}
-      </div>
+      {isBrandParent && (
+        <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 text-sm text-blue-800">
+          <strong>{t("infoHeadsUp")}</strong> {t("infoBillingBody")}
+          {" "}
+          <strong>{t("infoMenusShared")}</strong> {t("infoMenusSharedBody")}
+        </div>
+      )}
 
       <div className="space-y-3">
         {allLocations.map((loc) => {
