@@ -30,6 +30,9 @@ export function LocationsClient({
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
     name: "",
+    // Mandatory: becomes the new location's OWN admin login (its own,
+    // separately-billed account) — the API emails a set-password link. Luigi 2026-06-10.
+    email: "",
     phone: "",
     address: "",
     city: "",
@@ -200,6 +203,16 @@ export function LocationsClient({
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </Field>
+              <Field label={t("fieldEmail")}>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  placeholder="owner@location.com"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                />
+                <p className="text-xs text-gray-400 mt-1">{t("fieldEmailHint")}</p>
+              </Field>
               <Field label={t("fieldPhone")}>
                 <input
                   type="text"
@@ -265,7 +278,7 @@ export function LocationsClient({
             <div className="flex gap-2 mt-5">
               <button
                 onClick={submitAdd}
-                disabled={busy !== null || !form.name.trim()}
+                disabled={busy !== null || !form.name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())}
                 className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition disabled:opacity-50"
               >
                 {busy === "add" && <Loader2 className="w-4 h-4 animate-spin" />}

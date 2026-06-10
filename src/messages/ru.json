@@ -1444,7 +1444,9 @@
       "createLocation": "Создать локацию",
       "cancel": "Отмена",
       "errorCouldNotCreate": "Не удалось создать локацию",
-      "errorCouldNotSwitch": "Не удалось переключиться"
+      "errorCouldNotSwitch": "Не удалось переключиться",
+      "fieldEmail": "Эл. почта для входа",
+      "fieldEmailHint": "Это станет собственным входом администратора для точки — мы отправим ссылку для установки пароля."
     },
     "menuEditor": {
       "sectionSizeLabel": "Выбор размера",

@@ -1444,7 +1444,9 @@
       "createLocation": "Създай локация",
       "cancel": "Отказ",
       "errorCouldNotCreate": "Локацията не може да бъде създадена",
-      "errorCouldNotSwitch": "Превключването е неуспешно"
+      "errorCouldNotSwitch": "Превключването е неуспешно",
+      "fieldEmail": "Имейл за вход",
+      "fieldEmailHint": "Това става собственият администраторски вход на обекта — ще изпратим връзка за задаване на парола."
     },
     "menuEditor": {
       "sectionSizeLabel": "Избор на размер",

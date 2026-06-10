@@ -1444,7 +1444,9 @@
       "createLocation": "Opret lokation",
       "cancel": "Annuller",
       "errorCouldNotCreate": "Kunne ikke oprette lokation",
-      "errorCouldNotSwitch": "Kunne ikke skifte"
+      "errorCouldNotSwitch": "Kunne ikke skifte",
+      "fieldEmail": "Login-e-mail",
+      "fieldEmailHint": "Dette bliver lokationens egen admin-login — vi sender et link til at oprette en adgangskode."
     },
     "menuEditor": {
       "sectionSizeLabel": "Størrelsesvalg",

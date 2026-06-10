@@ -1444,7 +1444,9 @@
       "createLocation": "Creează locație",
       "cancel": "Anulează",
       "errorCouldNotCreate": "Nu s-a putut crea locația",
-      "errorCouldNotSwitch": "Nu s-a putut comuta"
+      "errorCouldNotSwitch": "Nu s-a putut comuta",
+      "fieldEmail": "E-mail de conectare",
+      "fieldEmailHint": "Acesta devine contul de administrator propriu al locației — îi vom trimite un link pentru a seta o parolă."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selecție mărime",

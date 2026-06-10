@@ -2210,7 +2210,9 @@
       "createLocation": "Tạo chi nhánh",
       "cancel": "Hủy",
       "errorCouldNotCreate": "Không thể tạo chi nhánh",
-      "errorCouldNotSwitch": "Không thể chuyển đổi"
+      "errorCouldNotSwitch": "Không thể chuyển đổi",
+      "fieldEmail": "Email đăng nhập",
+      "fieldEmailHint": "Đây sẽ là tài khoản quản trị riêng của địa điểm — chúng tôi sẽ gửi liên kết để đặt mật khẩu."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Bảng điều khiển thương hiệu",

@@ -1444,7 +1444,9 @@
       "createLocation": "Створити локацію",
       "cancel": "Скасувати",
       "errorCouldNotCreate": "Не вдалося створити локацію",
-      "errorCouldNotSwitch": "Не вдалося переключитися"
+      "errorCouldNotSwitch": "Не вдалося переключитися",
+      "fieldEmail": "Електронна пошта для входу",
+      "fieldEmailHint": "Це стане власним входом адміністратора для точки — ми надішлемо посилання для встановлення пароля."
     },
     "menuEditor": {
       "sectionSizeLabel": "Вибір розміру",

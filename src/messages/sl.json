@@ -1444,7 +1444,9 @@
       "createLocation": "Ustvari lokacijo",
       "cancel": "Prekliči",
       "errorCouldNotCreate": "Lokacije ni bilo mogoče ustvariti",
-      "errorCouldNotSwitch": "Preklapljanje ni uspelo"
+      "errorCouldNotSwitch": "Preklapljanje ni uspelo",
+      "fieldEmail": "E-naslov za prijavo",
+      "fieldEmailHint": "To postane lastna skrbniška prijava lokacije — poslali bomo povezavo za nastavitev gesla."
     },
     "menuEditor": {
       "sectionSizeLabel": "Izbira velikosti",

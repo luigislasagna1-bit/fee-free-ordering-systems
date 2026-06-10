@@ -1444,7 +1444,9 @@
       "createLocation": "Opprett sted",
       "cancel": "Avbryt",
       "errorCouldNotCreate": "Kunne ikke opprette sted",
-      "errorCouldNotSwitch": "Kunne ikke bytte"
+      "errorCouldNotSwitch": "Kunne ikke bytte",
+      "fieldEmail": "Innloggings-e-post",
+      "fieldEmailHint": "Dette blir stedets egen admin-pålogging — vi sender en lenke for å sette et passord."
     },
     "menuEditor": {
       "sectionSizeLabel": "Størrelsesvalg",

@@ -1444,7 +1444,9 @@
       "createLocation": "Crear sucursal",
       "cancel": "Cancelar",
       "errorCouldNotCreate": "No se pudo crear la sucursal",
-      "errorCouldNotSwitch": "No se pudo cambiar de sucursal"
+      "errorCouldNotSwitch": "No se pudo cambiar de sucursal",
+      "fieldEmail": "Correo de inicio de sesión",
+      "fieldEmailHint": "Este será el acceso de administrador propio de la ubicación — le enviaremos un enlace para establecer una contraseña."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selección de tamaño",

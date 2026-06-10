@@ -1444,7 +1444,9 @@
       "createLocation": "צור סניף",
       "cancel": "ביטול",
       "errorCouldNotCreate": "לא ניתן ליצור סניף",
-      "errorCouldNotSwitch": "לא ניתן לעבור"
+      "errorCouldNotSwitch": "לא ניתן לעבור",
+      "fieldEmail": "אימייל להתחברות",
+      "fieldEmailHint": "זה הופך לכניסת המנהל הייחודית של הסניף — נשלח קישור להגדרת סיסמה."
     },
     "menuEditor": {
       "sectionSizeLabel": "בחירת גודל",

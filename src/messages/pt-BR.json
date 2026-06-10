@@ -1444,7 +1444,9 @@
       "createLocation": "Criar unidade",
       "cancel": "Cancelar",
       "errorCouldNotCreate": "Não foi possível criar a unidade",
-      "errorCouldNotSwitch": "Não foi possível alternar"
+      "errorCouldNotSwitch": "Não foi possível alternar",
+      "fieldEmail": "E-mail de login",
+      "fieldEmailHint": "Este será o login de administrador próprio do local — enviaremos um link para definir uma senha."
     },
     "menuEditor": {
       "sectionSizeLabel": "Seleção de tamanho",

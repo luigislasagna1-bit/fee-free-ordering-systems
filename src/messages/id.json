@@ -1444,7 +1444,9 @@
       "createLocation": "Buat lokasi",
       "cancel": "Batal",
       "errorCouldNotCreate": "Tidak dapat membuat lokasi",
-      "errorCouldNotSwitch": "Tidak dapat beralih"
+      "errorCouldNotSwitch": "Tidak dapat beralih",
+      "fieldEmail": "Email login",
+      "fieldEmailHint": "Ini menjadi login admin lokasi tersebut — kami akan mengirim tautan untuk mengatur kata sandi."
     },
     "menuEditor": {
       "sectionSizeLabel": "Pilihan ukuran",

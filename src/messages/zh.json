@@ -1444,7 +1444,9 @@
       "createLocation": "创建门店",
       "cancel": "取消",
       "errorCouldNotCreate": "无法创建门店",
-      "errorCouldNotSwitch": "切换失败"
+      "errorCouldNotSwitch": "切换失败",
+      "fieldEmail": "登录邮箱",
+      "fieldEmailHint": "这将成为该门店自己的管理员登录账号——我们会发送设置密码的链接。"
     },
     "menuEditor": {
       "sectionSizeLabel": "尺寸选择",

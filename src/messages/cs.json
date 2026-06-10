@@ -1444,7 +1444,9 @@
       "createLocation": "Vytvořit pobočku",
       "cancel": "Zrušit",
       "errorCouldNotCreate": "Pobočku se nepodařilo vytvořit",
-      "errorCouldNotSwitch": "Přepnutí se nepodařilo"
+      "errorCouldNotSwitch": "Přepnutí se nepodařilo",
+      "fieldEmail": "Přihlašovací e-mail",
+      "fieldEmailHint": "Toto se stane vlastním administrátorským přihlášením pobočky — pošleme odkaz pro nastavení hesla."
     },
     "menuEditor": {
       "sectionSizeLabel": "Výběr velikosti",

@@ -1444,7 +1444,9 @@
       "createLocation": "สร้างสาขา",
       "cancel": "ยกเลิก",
       "errorCouldNotCreate": "ไม่สามารถสร้างสาขาได้",
-      "errorCouldNotSwitch": "ไม่สามารถสลับสาขาได้"
+      "errorCouldNotSwitch": "ไม่สามารถสลับสาขาได้",
+      "fieldEmail": "อีเมลสำหรับเข้าสู่ระบบ",
+      "fieldEmailHint": "อีเมลนี้จะกลายเป็นบัญชีผู้ดูแลของสาขานี้เอง — เราจะส่งลิงก์ให้ตั้งรหัสผ่าน"
     },
     "menuEditor": {
       "sectionSizeLabel": "การเลือกขนาด",

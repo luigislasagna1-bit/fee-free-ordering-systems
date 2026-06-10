@@ -2109,7 +2109,9 @@
       "createLocation": "Vytvoriť prevádzku",
       "cancel": "Zrušiť",
       "errorCouldNotCreate": "Prevádzku sa nepodarilo vytvoriť",
-      "errorCouldNotSwitch": "Prepnutie sa nepodarilo"
+      "errorCouldNotSwitch": "Prepnutie sa nepodarilo",
+      "fieldEmail": "Prihlasovací e-mail",
+      "fieldEmailHint": "Toto sa stane vlastným administrátorským prihlásením prevádzky — pošleme odkaz na nastavenie hesla."
     },
     "menuEditor": {
       "sectionSizeLabel": "Výber veľkosti",

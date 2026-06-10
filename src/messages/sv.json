@@ -1444,7 +1444,9 @@
       "createLocation": "Skapa plats",
       "cancel": "Avbryt",
       "errorCouldNotCreate": "Kunde inte skapa platsen",
-      "errorCouldNotSwitch": "Kunde inte byta"
+      "errorCouldNotSwitch": "Kunde inte byta",
+      "fieldEmail": "Inloggnings-e-post",
+      "fieldEmailHint": "Detta blir platsens egna admininloggning — vi mejlar en länk för att ange ett lösenord."
     },
     "menuEditor": {
       "sectionSizeLabel": "Storleksval",

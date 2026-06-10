@@ -1444,7 +1444,9 @@
       "createLocation": "Criar localização",
       "cancel": "Cancelar",
       "errorCouldNotCreate": "Não foi possível criar a localização",
-      "errorCouldNotSwitch": "Não foi possível alternar"
+      "errorCouldNotSwitch": "Não foi possível alternar",
+      "fieldEmail": "E-mail de início de sessão",
+      "fieldEmailHint": "Torna-se o acesso de administrador próprio do local — enviaremos um link para definir uma palavra-passe."
     },
     "menuEditor": {
       "sectionSizeLabel": "Seleção de tamanho",

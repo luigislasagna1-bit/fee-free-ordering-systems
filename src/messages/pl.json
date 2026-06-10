@@ -2210,7 +2210,9 @@
       "createLocation": "Utwórz lokalizację",
       "cancel": "Anuluj",
       "errorCouldNotCreate": "Nie udało się utworzyć lokalizacji",
-      "errorCouldNotSwitch": "Nie udało się przełączyć"
+      "errorCouldNotSwitch": "Nie udało się przełączyć",
+      "fieldEmail": "E-mail logowania",
+      "fieldEmailHint": "To będzie własny login administratora lokalu — wyślemy link do ustawienia hasła."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Panel marki",

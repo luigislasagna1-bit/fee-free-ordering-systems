@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { isRestaurantAdmin } from "@/lib/roles";
 import { slugify } from "@/lib/utils";
+import { sendPasswordResetEmail } from "@/lib/email";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * GET /api/restaurants/locations
@@ -92,6 +97,24 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Location name is required" }, { status: 400 });
   }
 
+  // Each location is its OWN separately-billed restaurant, so it gets its OWN
+  // admin login (Luigi 2026-06-10): a mandatory email becomes that location's
+  // account identity AND its sign-in. We provision a User now and email them a
+  // set-password link; the parent still manages the location from HQ.
+  const email = String(body.email ?? "").trim().toLowerCase().slice(0, 254);
+  if (!EMAIL_RE.test(email)) {
+    return NextResponse.json({ error: "A valid login email is required for the new location" }, { status: 400 });
+  }
+  // Email is a login identity — must be unique across all accounts. Reject a
+  // taken address with a clear message instead of a raw constraint error.
+  const emailTaken = await prisma.user.findUnique({ where: { email }, select: { id: true } });
+  if (emailTaken) {
+    return NextResponse.json(
+      { error: "That email already has an account. Use a different email for this location." },
+      { status: 409 },
+    );
+  }
+
   const phone = body.phone ? String(body.phone).trim().slice(0, 30) : null;
   const address = body.address ? String(body.address).trim().slice(0, 200) : null;
   const city = body.city ? String(body.city).trim().slice(0, 100) : null;
@@ -122,6 +145,7 @@ export async function POST(req: NextRequest) {
       name,
       slug,
       subdomain: slug,
+      email,
       phone,
       address,
       city,
@@ -154,8 +178,8 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  // Grant the owner explicit access on the child so the RBAC helper admits
-  // them when they switch to that location.
+  // Grant the PARENT owner explicit access on the child so they can keep
+  // managing it from HQ (switch into it).
   await prisma.restaurantAccess.create({
     data: {
       userId: user.id,
@@ -165,8 +189,57 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  // Provision the location's OWN admin account. Random unguessable password —
+  // the owner sets their real one via the emailed link (so we never transmit a
+  // password). emailVerifiedAt is stamped now: the parent vouches for it, and
+  // clicking the set-password link re-proves inbox control.
+  let inviteEmailed = false;
+  try {
+    const randomHash = await bcrypt.hash(crypto.randomBytes(24).toString("hex"), 12);
+    const childUser = await prisma.user.create({
+      data: {
+        email,
+        name,
+        passwordHash: randomHash,
+        role: "restaurant_admin",
+        restaurantId: newLocation.id,
+        emailVerifiedAt: new Date(),
+      },
+    });
+    // The child owner gets owner access on their OWN location (and only it).
+    await prisma.restaurantAccess.create({
+      data: { userId: childUser.id, restaurantId: newLocation.id, accessRole: "owner", grantedBy: user.id },
+    });
+
+    // Set-password link (reuses the password-reset flow). 30-day window — this
+    // is an onboarding invite, not a self-service reset, so it lives longer.
+    const token = crypto.randomBytes(32).toString("hex");
+    await prisma.passwordResetToken.create({
+      data: { token, userId: childUser.id, expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) },
+    });
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+    try {
+      await sendPasswordResetEmail({
+        to: email,
+        name,
+        resetUrl: `${baseUrl}/reset-password?token=${token}`,
+        locale: undefined,
+      });
+      inviteEmailed = true;
+    } catch (err) {
+      // A mail outage must NOT fail location creation — the account exists; the
+      // owner can use "Forgot password" to get a fresh link. Luigi 2026-06-10.
+      console.error("[locations] set-password email failed", err);
+    }
+  } catch (err) {
+    // The location is already created + parent-managed; a failure here just means
+    // no separate login yet (e.g. a rare email race). Surface a soft warning.
+    console.error("[locations] child login provisioning failed", err);
+  }
+
   return NextResponse.json({
     ok: true,
+    inviteEmailed,
     location: { id: newLocation.id, name: newLocation.name, slug: newLocation.slug },
   });
 }

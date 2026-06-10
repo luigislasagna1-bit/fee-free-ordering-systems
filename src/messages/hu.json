@@ -2210,7 +2210,9 @@
       "createLocation": "Helyszín létrehozása",
       "cancel": "Mégse",
       "errorCouldNotCreate": "Nem sikerült létrehozni a helyszínt",
-      "errorCouldNotSwitch": "Nem sikerült váltani"
+      "errorCouldNotSwitch": "Nem sikerült váltani",
+      "fieldEmail": "Bejelentkezési e-mail",
+      "fieldEmailHint": "Ez lesz a helyszín saját rendszergazdai bejelentkezése — küldünk egy linket a jelszó beállításához."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Márka irányítópult",

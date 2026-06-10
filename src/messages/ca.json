@@ -1444,7 +1444,9 @@
       "createLocation": "Crea la ubicació",
       "cancel": "Cancel·la",
       "errorCouldNotCreate": "No s'ha pogut crear la ubicació",
-      "errorCouldNotSwitch": "No s'ha pogut canviar"
+      "errorCouldNotSwitch": "No s'ha pogut canviar",
+      "fieldEmail": "Correu d'inici de sessió",
+      "fieldEmailHint": "Aquest serà l'accés d'administrador propi de la ubicació — li enviarem un enllaç per definir una contrasenya."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selecció de mida",

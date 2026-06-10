@@ -1381,7 +1381,9 @@
       "createLocation": "Izveidot atrašanās vietu",
       "cancel": "Atcelt",
       "errorCouldNotCreate": "Nevarēja izveidot atrašanās vietu",
-      "errorCouldNotSwitch": "Nevarēja pārslēgties"
+      "errorCouldNotSwitch": "Nevarēja pārslēgties",
+      "fieldEmail": "Pieteikšanās e-pasts",
+      "fieldEmailHint": "Tas kļūst par atrašanās vietas savu administratora pieteikšanos — nosūtīsim saiti paroles iestatīšanai."
     },
     "toasts": {
       "saved": "Izmaiņas saglabātas",

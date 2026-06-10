@@ -1444,7 +1444,9 @@
       "createLocation": "Standort erstellen",
       "cancel": "Abbrechen",
       "errorCouldNotCreate": "Standort konnte nicht erstellt werden",
-      "errorCouldNotSwitch": "Wechsel nicht möglich"
+      "errorCouldNotSwitch": "Wechsel nicht möglich",
+      "fieldEmail": "Anmelde-E-Mail",
+      "fieldEmailHint": "Dies wird der eigene Admin-Login des Standorts — wir senden einen Link zum Festlegen eines Passworts."
     },
     "menuEditor": {
       "sectionSizeLabel": "Größenauswahl",

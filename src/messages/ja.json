@@ -1444,7 +1444,9 @@
       "createLocation": "店舗を作成",
       "cancel": "キャンセル",
       "errorCouldNotCreate": "店舗を作成できませんでした",
-      "errorCouldNotSwitch": "切り替えできませんでした"
+      "errorCouldNotSwitch": "切り替えできませんでした",
+      "fieldEmail": "ログイン用メール",
+      "fieldEmailHint": "これはその店舗専用の管理者ログインになります。パスワード設定用のリンクをメールで送信します。"
     },
     "menuEditor": {
       "sectionSizeLabel": "サイズ選択",

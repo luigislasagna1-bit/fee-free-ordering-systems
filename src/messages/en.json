@@ -1798,7 +1798,9 @@
       "createLocation": "Create location",
       "cancel": "Cancel",
       "errorCouldNotCreate": "Could not create location",
-      "errorCouldNotSwitch": "Could not switch"
+      "errorCouldNotSwitch": "Could not switch",
+      "fieldEmail": "Login email",
+      "fieldEmailHint": "This becomes the location's own admin login — we'll email them a link to set a password."
     },
     "menuEditor": {
       "sectionSizeLabel": "Size selection",

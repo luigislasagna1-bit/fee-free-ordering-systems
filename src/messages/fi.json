@@ -1444,7 +1444,9 @@
       "createLocation": "Luo toimipiste",
       "cancel": "Peruuta",
       "errorCouldNotCreate": "Toimipisteen luominen epäonnistui",
-      "errorCouldNotSwitch": "Vaihtaminen epäonnistui"
+      "errorCouldNotSwitch": "Vaihtaminen epäonnistui",
+      "fieldEmail": "Kirjautumissähköposti",
+      "fieldEmailHint": "Tästä tulee toimipisteen oma järjestelmänvalvojan kirjautuminen — lähetämme linkin salasanan asettamiseksi."
     },
     "menuEditor": {
       "sectionSizeLabel": "Koon valinta",

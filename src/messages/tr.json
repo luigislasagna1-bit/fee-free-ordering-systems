@@ -2210,7 +2210,9 @@
       "createLocation": "Konum oluştur",
       "cancel": "İptal",
       "errorCouldNotCreate": "Konum oluşturulamadı",
-      "errorCouldNotSwitch": "Geçiş yapılamadı"
+      "errorCouldNotSwitch": "Geçiş yapılamadı",
+      "fieldEmail": "Giriş e-postası",
+      "fieldEmailHint": "Bu, konumun kendi yönetici girişi olur — şifre belirlemeleri için bir bağlantı e-postayla göndereceğiz."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Marka paneli",

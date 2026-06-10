@@ -1767,7 +1767,9 @@
       "createLocation": "स्थान बनाएं",
       "cancel": "रद्द करें",
       "errorCouldNotCreate": "स्थान नहीं बनाया जा सका",
-      "errorCouldNotSwitch": "स्विच नहीं किया जा सका"
+      "errorCouldNotSwitch": "स्विच नहीं किया जा सका",
+      "fieldEmail": "लॉगिन ईमेल",
+      "fieldEmailHint": "यह उस लोकेशन का अपना एडमिन लॉगिन बन जाता है — हम पासवर्ड सेट करने के लिए एक लिंक ईमेल करेंगे।"
     },
     "menuEditor": {
       "sectionSizeLabel": "आकार चयन",

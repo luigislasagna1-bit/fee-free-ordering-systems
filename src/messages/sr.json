@@ -1444,7 +1444,9 @@
       "createLocation": "Kreiraj lokaciju",
       "cancel": "Otkaži",
       "errorCouldNotCreate": "Nije moguće kreirati lokaciju",
-      "errorCouldNotSwitch": "Prebacivanje nije uspelo"
+      "errorCouldNotSwitch": "Prebacivanje nije uspelo",
+      "fieldEmail": "Имејл за пријаву",
+      "fieldEmailHint": "Ово постаје сопствена администраторска пријава локације — послаћемо везу за постављање лозинке."
     },
     "menuEditor": {
       "sectionSizeLabel": "Izbor veličine",

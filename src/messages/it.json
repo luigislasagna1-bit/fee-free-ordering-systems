@@ -1444,7 +1444,9 @@
       "createLocation": "Crea sede",
       "cancel": "Annulla",
       "errorCouldNotCreate": "Impossibile creare la sede",
-      "errorCouldNotSwitch": "Impossibile effettuare il passaggio"
+      "errorCouldNotSwitch": "Impossibile effettuare il passaggio",
+      "fieldEmail": "Email di accesso",
+      "fieldEmailHint": "Diventa l'accesso amministratore dedicato della sede — invieremo un link per impostare una password."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selezione taglia",

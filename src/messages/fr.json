@@ -1444,7 +1444,9 @@
       "createLocation": "Créer l'emplacement",
       "cancel": "Annuler",
       "errorCouldNotCreate": "Impossible de créer l'emplacement",
-      "errorCouldNotSwitch": "Impossible de basculer"
+      "errorCouldNotSwitch": "Impossible de basculer",
+      "fieldEmail": "E-mail de connexion",
+      "fieldEmailHint": "Cela devient l'identifiant d'administration propre à l'établissement — nous lui enverrons un lien pour définir un mot de passe."
     },
     "menuEditor": {
       "sectionSizeLabel": "Sélection de la taille",

@@ -1444,7 +1444,9 @@
       "createLocation": "Loo asukoht",
       "cancel": "Tühista",
       "errorCouldNotCreate": "Asukoha loomine ebaõnnestus",
-      "errorCouldNotSwitch": "Asukoha vahetus ebaõnnestus"
+      "errorCouldNotSwitch": "Asukoha vahetus ebaõnnestus",
+      "fieldEmail": "Sisselogimise e-post",
+      "fieldEmailHint": "Sellest saab asukoha oma administraatori sisselogimine — saadame lingi parooli määramiseks."
     },
     "menuEditor": {
       "sectionSizeLabel": "Suuruse valik",

@@ -1381,7 +1381,9 @@
       "createLocation": "Sukurti vietą",
       "cancel": "Atšaukti",
       "errorCouldNotCreate": "Nepavyko sukurti vietos",
-      "errorCouldNotSwitch": "Nepavyko perjungti"
+      "errorCouldNotSwitch": "Nepavyko perjungti",
+      "fieldEmail": "Prisijungimo el. paštas",
+      "fieldEmailHint": "Tai taps vietos administratoriaus prisijungimu — atsiųsime nuorodą slaptažodžiui nustatyti."
     },
     "toasts": {
       "saved": "Pakeitimai išsaugoti",

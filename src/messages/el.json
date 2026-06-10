@@ -1444,7 +1444,9 @@
       "createLocation": "Δημιουργία τοποθεσίας",
       "cancel": "Άκυρο",
       "errorCouldNotCreate": "Δεν ήταν δυνατή η δημιουργία τοποθεσίας",
-      "errorCouldNotSwitch": "Δεν ήταν δυνατή η μετάβαση"
+      "errorCouldNotSwitch": "Δεν ήταν δυνατή η μετάβαση",
+      "fieldEmail": "Email σύνδεσης",
+      "fieldEmailHint": "Αυτό γίνεται το δικό του διαχειριστικό login της τοποθεσίας — θα στείλουμε σύνδεσμο για ορισμό κωδικού."
     },
     "menuEditor": {
       "sectionSizeLabel": "Επιλογή μεγέθους",

@@ -1444,7 +1444,9 @@
       "createLocation": "Locatie aanmaken",
       "cancel": "Annuleren",
       "errorCouldNotCreate": "Locatie kon niet worden aangemaakt",
-      "errorCouldNotSwitch": "Overschakelen mislukt"
+      "errorCouldNotSwitch": "Overschakelen mislukt",
+      "fieldEmail": "Inlog-e-mail",
+      "fieldEmailHint": "Dit wordt de eigen beheerderslogin van de locatie — we sturen een link om een wachtwoord in te stellen."
     },
     "menuEditor": {
       "sectionSizeLabel": "Maatkeuze",
