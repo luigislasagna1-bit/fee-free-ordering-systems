@@ -2073,7 +2073,14 @@
       "campaign_reengagement_defaultBody": "Kedves {customer_name}!\n\nMár egy ideje nem rendelt a(z) {restaurant_name} étteremből, és hiányozzák!\n\nKényeztesse magát — fantasztikus fogásaink várják.\n\n{coupon_section}\n\nReméljük, hamarosan visszatér!\n\n– A(z) {restaurant_name} csapata",
       "resultSent": "Elküldve",
       "resultSales": "Eladás · 30n",
-      "resultFees": "Díjak"
+      "resultFees": "Díjak",
+      "stepLabel": "{n}. e-mail",
+      "stepDelayLabel": "Küldés ennyi után",
+      "stepDiscountLabel": "Kedvezmény",
+      "stepAdd": "Másik e-mail hozzáadása",
+      "stepsSave": "Sorozat mentése",
+      "stepsNeedOne": "Adjon hozzá legalább egy e-mailt.",
+      "stepsHint": "Minden e-mail később megy ki az utolsó rendeléshez képest, saját kedvezménnyel. A sorozat automatikusan leáll, amint újra rendelnek."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace listázás",

@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "مرحباً {customer_name}،\n\nمضى وقت منذ آخر طلب من {restaurant_name} واشتقنا إليك!\n\nعد ودلّل نفسك — لدينا أطباق رائعة تنتظرك.\n\n{coupon_section}\n\nنأمل رؤيتك قريباً!\n\n— فريق {restaurant_name}",
       "resultSent": "المرسلة",
       "resultSales": "المبيعات · 30 يوم",
-      "resultFees": "الرسوم"
+      "resultFees": "الرسوم",
+      "stepLabel": "البريد {n}",
+      "stepDelayLabel": "إرسال بعد",
+      "stepDiscountLabel": "خصم",
+      "stepAdd": "إضافة بريد إلكتروني آخر",
+      "stepsSave": "حفظ التسلسل",
+      "stepsNeedOne": "أضف بريدًا إلكترونيًا واحدًا على الأقل.",
+      "stepsHint": "يُرسَل كل بريد إلكتروني بعد فترة أطول من آخر طلب لهم، مع خصمه الخاص. تتوقف السلسلة تلقائيًا بمجرد أن يطلبوا مرة أخرى."
     },
     "marketplaceSettings": {
       "pageTitle": "قائمة Marketplace",

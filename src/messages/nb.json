@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Hei {customer_name},\n\nDet har gått en stund siden din siste bestilling fra {restaurant_name} og vi savner deg!\n\nKom tilbake og kos deg — vi har fantastiske retter som venter på deg.\n\n{coupon_section}\n\nVi håper å se deg snart!\n\n– {restaurant_name}-teamet",
       "resultSent": "Sendt",
       "resultSales": "Salg · 30d",
-      "resultFees": "Gebyrer"
+      "resultFees": "Gebyrer",
+      "stepLabel": "E-post {n}",
+      "stepDelayLabel": "Send etter",
+      "stepDiscountLabel": "Rabatt",
+      "stepAdd": "Legg til en e-post til",
+      "stepsSave": "Lagre sekvens",
+      "stepsNeedOne": "Legg til minst én e-post.",
+      "stepsHint": "Hver e-post sendes lenger etter den siste bestillingen, med sin egen rabatt. Sekvensen stopper automatisk så snart de bestiller igjen."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-oppføring",

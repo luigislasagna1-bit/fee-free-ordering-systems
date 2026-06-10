@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Bună {customer_name},\n\nA trecut ceva timp de la ultima ta comandă de la {restaurant_name} și ne ești dor!\n\nVino înapoi și răsfață-te — avem preparate minunate care te așteaptă.\n\n{coupon_section}\n\nSperăm să te vedem în curând!\n\n– Echipa {restaurant_name}",
       "resultSent": "Trimise",
       "resultSales": "Vânzări · 30z",
-      "resultFees": "Comisioane"
+      "resultFees": "Comisioane",
+      "stepLabel": "E-mail {n}",
+      "stepDelayLabel": "Trimite după",
+      "stepDiscountLabel": "Reducere",
+      "stepAdd": "Adaugă alt e-mail",
+      "stepsSave": "Salvează secvența",
+      "stepsNeedOne": "Adaugă cel puțin un e-mail.",
+      "stepsHint": "Fiecare e-mail este trimis mai târziu după ultima comandă, cu propria reducere. Secvența se oprește automat în momentul în care comandă din nou."
     },
     "marketplaceSettings": {
       "pageTitle": "Listare Marketplace",

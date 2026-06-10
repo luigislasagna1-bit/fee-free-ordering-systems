@@ -21,7 +21,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import { getOrCreateAutopilotState } from "@/lib/autopilot-state";
-import { syncCampaignPromos } from "@/lib/autopilot-promos";
+import { ensureSteppedCampaign } from "@/lib/autopilot-steps";
 import prisma from "@/lib/db";
 
 export const runtime = "nodejs";
@@ -83,16 +83,18 @@ export async function PATCH(req: NextRequest) {
     data,
   });
 
-  // Sync each campaign's PRE-MADE promos to its toggle (Luigi 2026-06-09, C):
-  // enabling Re-engage creates the WIN1..WIN5 ladder; enabling 2nd-order creates
-  // 2NDOFF; disabling soft-disables them. cart_abandonment has no fixed promo.
+  // Sync each campaign's drip steps + PRE-MADE promos to its toggle (Luigi
+  // 2026-06-09/10): enabling Re-engage seeds the 5-step win-back ladder (+ WIN1..5
+  // promos) and an AutopilotCampaign anchor row; enabling 2nd-order seeds its
+  // single step (+ 2NDOFF). Disabling soft-disables the promos. Step %s drive the
+  // promos. cart_abandonment is not stepped (own sweep, no fixed promo).
   const TOGGLE_TO_TYPE: Record<string, string> = {
     secondOrderEnabled: "second_order",
     reEngageEnabled: "reengagement",
   };
   for (const [key, type] of Object.entries(TOGGLE_TO_TYPE)) {
     const v = data[key as keyof typeof data];
-    if (typeof v === "boolean") await syncCampaignPromos(restaurantId, type, v);
+    if (typeof v === "boolean") await ensureSteppedCampaign(restaurantId, type, v);
   }
 
   return NextResponse.json({

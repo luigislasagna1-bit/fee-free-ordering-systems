@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Здравей {customer_name},\n\nМина известно време от последната ти поръчка от {restaurant_name} и ни липсваш!\n\nВърни се и се поглези — очакват те невероятни ястия.\n\n{coupon_section}\n\nНадяваме се да те видим скоро!\n\n– Екипът на {restaurant_name}",
       "resultSent": "Изпратени",
       "resultSales": "Продажби · 30д",
-      "resultFees": "Такси"
+      "resultFees": "Такси",
+      "stepLabel": "Имейл {n}",
+      "stepDelayLabel": "Изпрати след",
+      "stepDiscountLabel": "Отстъпка",
+      "stepAdd": "Добави още имейл",
+      "stepsSave": "Запази последователността",
+      "stepsNeedOne": "Добавете поне един имейл.",
+      "stepsHint": "Всеки имейл се изпраща по-късно след последната им поръчка, със собствена отстъпка. Последователността спира автоматично, щом поръчат отново."
     },
     "marketplaceSettings": {
       "pageTitle": "Обява в Marketplace",

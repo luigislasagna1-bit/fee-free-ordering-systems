@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "你好 {customer_name}，\n\n您上次在 {restaurant_name} 下单已经过去一段时间了，我们很想念您！\n\n回来犒劳一下自己吧——美味佳肴等您来享。\n\n{coupon_section}\n\n期待很快再见！\n\n— {restaurant_name} 团队",
       "resultSent": "已发送",
       "resultSales": "销售额 · 30天",
-      "resultFees": "费用"
+      "resultFees": "费用",
+      "stepLabel": "邮件 {n}",
+      "stepDelayLabel": "发送间隔",
+      "stepDiscountLabel": "折扣",
+      "stepAdd": "添加另一封邮件",
+      "stepsSave": "保存序列",
+      "stepsNeedOne": "请至少添加一封邮件。",
+      "stepsHint": "每封邮件会在客户上次下单后更久才发送，并带有各自的折扣。一旦客户再次下单，序列会自动停止。"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace 上架",

@@ -2775,7 +2775,14 @@
       "campaign_reengagement_defaultBody": "Ahoj {customer_name},\n\nUž je to nejaký čas od vašej poslednej objednávky z {restaurant_name} a chýbate nám!\n\nVráťte sa a doprajte si — máme pre vás pripravené úžasné jedlá.\n\n{coupon_section}\n\nDúfame, že vás čoskoro uvidíme!\n\n– Tím {restaurant_name}",
       "resultSent": "Odoslané",
       "resultSales": "Tržby · 30d",
-      "resultFees": "Poplatky"
+      "resultFees": "Poplatky",
+      "stepLabel": "E-mail {n}",
+      "stepDelayLabel": "Odoslať po",
+      "stepDiscountLabel": "Zľava",
+      "stepAdd": "Pridať ďalší e-mail",
+      "stepsSave": "Uložiť sekvenciu",
+      "stepsNeedOne": "Pridajte aspoň jeden e-mail.",
+      "stepsHint": "Každý e-mail sa odošle neskôr po poslednej objednávke, s vlastnou zľavou. Sekvencia sa automaticky zastaví, hneď ako zákazník znova objedná."
     },
     "marketplaceSettings": {
       "pageTitle": "Záznam na Marketplace",

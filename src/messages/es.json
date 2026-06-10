@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Hola {customer_name},\n\n¡Ha pasado un tiempo desde tu último pedido en {restaurant_name} y te echamos de menos!\n\nVuelve y date un capricho — tenemos platos increíbles esperándote.\n\n{coupon_section}\n\n¡Esperamos verte pronto!\n\n— El equipo de {restaurant_name}",
       "resultSent": "Enviados",
       "resultSales": "Ventas · 30d",
-      "resultFees": "Comisiones"
+      "resultFees": "Comisiones",
+      "stepLabel": "Correo {n}",
+      "stepDelayLabel": "Enviar después de",
+      "stepDiscountLabel": "Descuento",
+      "stepAdd": "Añadir otro correo",
+      "stepsSave": "Guardar secuencia",
+      "stepsNeedOne": "Añade al menos un correo.",
+      "stepsHint": "Cada correo se envía más tarde tras su último pedido, con su propio descuento. La secuencia se detiene automáticamente en cuanto vuelven a pedir."
     },
     "marketplaceSettings": {
       "pageTitle": "Listado en el Marketplace",

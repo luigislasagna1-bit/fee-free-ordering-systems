@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Pozdravljeni {customer_name},\n\nže dolgo ni bilo vašega naročila pri {restaurant_name} in pogrešamo vas!\n\nPrivoščite si in nas obiščite — čakajo vas odlične jedi.\n\n{coupon_section}\n\nUpamo, da se kmalu vidimo!\n\n– Ekipa {restaurant_name}",
       "resultSent": "Poslano",
       "resultSales": "Prodaja · 30d",
-      "resultFees": "Pristojbine"
+      "resultFees": "Pristojbine",
+      "stepLabel": "E-sporočilo {n}",
+      "stepDelayLabel": "Pošlji po",
+      "stepDiscountLabel": "Popust",
+      "stepAdd": "Dodaj še eno e-sporočilo",
+      "stepsSave": "Shrani zaporedje",
+      "stepsNeedOne": "Dodajte vsaj eno e-sporočilo.",
+      "stepsHint": "Vsako e-sporočilo se pošlje pozneje po njihovem zadnjem naročilu, z lastnim popustom. Zaporedje se samodejno ustavi takoj, ko znova naročijo."
     },
     "marketplaceSettings": {
       "pageTitle": "Uvrstitev na Marketplace",

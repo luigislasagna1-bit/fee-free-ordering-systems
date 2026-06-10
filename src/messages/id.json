@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Hai {customer_name},\n\nSudah lama sejak pesanan terakhir Anda dari {restaurant_name} dan kami merindukanmu!\n\nKembali dan manjakan diri Anda — ada hidangan luar biasa menunggu Anda.\n\n{coupon_section}\n\nSampai jumpa!\n\n— Tim {restaurant_name}",
       "resultSent": "Terkirim",
       "resultSales": "Penjualan · 30h",
-      "resultFees": "Biaya"
+      "resultFees": "Biaya",
+      "stepLabel": "Email {n}",
+      "stepDelayLabel": "Kirim setelah",
+      "stepDiscountLabel": "Diskon",
+      "stepAdd": "Tambah email lain",
+      "stepsSave": "Simpan urutan",
+      "stepsNeedOne": "Tambahkan setidaknya satu email.",
+      "stepsHint": "Setiap email dikirim lebih lama setelah pesanan terakhir mereka, dengan diskonnya sendiri. Urutan berhenti otomatis begitu mereka memesan lagi."
     },
     "marketplaceSettings": {
       "pageTitle": "Listing Marketplace",

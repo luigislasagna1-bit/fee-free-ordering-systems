@@ -2073,7 +2073,14 @@
       "campaign_reengagement_defaultBody": "Merhaba {customer_name},\n\n{restaurant_name}'deki son siparişinizden bu yana epey zaman geçti ve sizi özledik!\n\nGelin kendinizi şımartın — sizi bekleyen harika yemeklerimiz var.\n\n{coupon_section}\n\nUmarız yakında görüşürüz!\n\n– {restaurant_name} ekibi",
       "resultSent": "Gönderildi",
       "resultSales": "Satış · 30g",
-      "resultFees": "Ücretler"
+      "resultFees": "Ücretler",
+      "stepLabel": "E-posta {n}",
+      "stepDelayLabel": "Şu kadar sonra gönder",
+      "stepDiscountLabel": "İndirim",
+      "stepAdd": "Başka bir e-posta ekle",
+      "stepsSave": "Diziyi kaydet",
+      "stepsNeedOne": "En az bir e-posta ekleyin.",
+      "stepsHint": "Her e-posta, son siparişlerinden daha sonra kendi indirimiyle gönderilir. Müşteri tekrar sipariş verdiği anda dizi otomatik olarak durur."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace Listesi",

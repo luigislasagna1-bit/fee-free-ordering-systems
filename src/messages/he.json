@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "היי {customer_name},\n\nעבר הרבה זמן מאז הזמנתך האחרונה מ-{restaurant_name} ואנחנו מתגעגעים!\n\nחזור ופנק את עצמך — יש לנו מנות מדהימות שממתינות לך.\n\n{coupon_section}\n\nמקווים לראותך בקרוב!\n\n– צוות {restaurant_name}",
       "resultSent": "נשלחו",
       "resultSales": "מכירות · 30 ימים",
-      "resultFees": "עמלות"
+      "resultFees": "עמלות",
+      "stepLabel": "אימייל {n}",
+      "stepDelayLabel": "שלח לאחר",
+      "stepDiscountLabel": "הנחה",
+      "stepAdd": "הוסף אימייל נוסף",
+      "stepsSave": "שמור רצף",
+      "stepsNeedOne": "הוסף לפחות אימייל אחד.",
+      "stepsHint": "כל אימייל נשלח רחוק יותר מההזמנה האחרונה שלהם, עם הנחה משלו. הרצף נעצר אוטומטית ברגע שהם מזמינים שוב."
     },
     "marketplaceSettings": {
       "pageTitle": "רישום ב-Marketplace",

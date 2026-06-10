@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Привет, {customer_name}!\n\nС вашего последнего заказа в {restaurant_name} прошло немало времени — мы скучаем!\n\nВернитесь и побалуйте себя — у нас есть замечательные блюда, которые вас ждут.\n\n{coupon_section}\n\nНадеемся вас скоро увидеть!\n\n— Команда {restaurant_name}",
       "resultSent": "Отправлено",
       "resultSales": "Продажи · 30д",
-      "resultFees": "Сборы"
+      "resultFees": "Сборы",
+      "stepLabel": "Письмо {n}",
+      "stepDelayLabel": "Отправить через",
+      "stepDiscountLabel": "Скидка",
+      "stepAdd": "Добавить ещё письмо",
+      "stepsSave": "Сохранить последовательность",
+      "stepsNeedOne": "Добавьте хотя бы одно письмо.",
+      "stepsHint": "Каждое письмо отправляется позже после последнего заказа, со своей скидкой. Последовательность останавливается автоматически, как только клиент заказывает снова."
     },
     "marketplaceSettings": {
       "pageTitle": "Размещение в Marketplace",

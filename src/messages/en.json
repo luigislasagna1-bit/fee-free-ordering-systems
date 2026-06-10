@@ -2464,7 +2464,14 @@
       "campaign_reengagement_defaultBody": "Hi {customer_name},\n\nIt's been a while since your last order from {restaurant_name} and we miss you!\n\nCome back and treat yourself — we have some amazing dishes waiting for you.\n\n{coupon_section}\n\nWe hope to see you soon!\n\n– The {restaurant_name} team",
       "resultSent": "Sent",
       "resultSales": "Sales · 30d",
-      "resultFees": "Fees"
+      "resultFees": "Fees",
+      "stepLabel": "Email {n}",
+      "stepDelayLabel": "Send after",
+      "stepDiscountLabel": "Discount",
+      "stepAdd": "Add another email",
+      "stepsSave": "Save sequence",
+      "stepsNeedOne": "Add at least one email.",
+      "stepsHint": "Each email goes out further from their last order, with its own discount. The sequence stops automatically the moment they order again."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace Listing",

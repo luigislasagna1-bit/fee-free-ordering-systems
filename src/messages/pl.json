@@ -2073,7 +2073,14 @@
       "campaign_reengagement_defaultBody": "Cześć {customer_name},\n\nMinęło trochę czasu od Twojego ostatniego zamówienia z {restaurant_name} i tęsknimy za Tobą!\n\nWróć i rozpieszcz się — czekają na Ciebie pyszne dania.\n\n{coupon_section}\n\nMamy nadzieję, że wkrótce Cię zobaczymy!\n\n— Zespół {restaurant_name}",
       "resultSent": "Wysłane",
       "resultSales": "Sprzedaż · 30d",
-      "resultFees": "Opłaty"
+      "resultFees": "Opłaty",
+      "stepLabel": "E-mail {n}",
+      "stepDelayLabel": "Wyślij po",
+      "stepDiscountLabel": "Rabat",
+      "stepAdd": "Dodaj kolejny e-mail",
+      "stepsSave": "Zapisz sekwencję",
+      "stepsNeedOne": "Dodaj co najmniej jeden e-mail.",
+      "stepsHint": "Każdy e-mail jest wysyłany później po ostatnim zamówieniu, z własnym rabatem. Sekwencja zatrzymuje się automatycznie, gdy klient ponownie złoży zamówienie."
     },
     "marketplaceSettings": {
       "pageTitle": "Listing w Marketplace",

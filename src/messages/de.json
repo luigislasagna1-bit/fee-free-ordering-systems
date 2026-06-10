@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Hallo {customer_name},\n\nEs ist eine Weile her, seit Ihrer letzten Bestellung bei {restaurant_name}, und wir vermissen Sie!\n\nKommen Sie zurück und gönnen Sie sich etwas — wir haben tolle Gerichte für Sie bereit.\n\n{coupon_section}\n\nWir hoffen, Sie bald zu sehen!\n\n– Das Team von {restaurant_name}",
       "resultSent": "Gesendet",
       "resultSales": "Umsatz · 30T",
-      "resultFees": "Gebühren"
+      "resultFees": "Gebühren",
+      "stepLabel": "E-Mail {n}",
+      "stepDelayLabel": "Senden nach",
+      "stepDiscountLabel": "Rabatt",
+      "stepAdd": "Weitere E-Mail hinzufügen",
+      "stepsSave": "Sequenz speichern",
+      "stepsNeedOne": "Fügen Sie mindestens eine E-Mail hinzu.",
+      "stepsHint": "Jede E-Mail wird später nach der letzten Bestellung gesendet, mit eigenem Rabatt. Die Sequenz stoppt automatisch, sobald wieder bestellt wird."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-Eintrag",

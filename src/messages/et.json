@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Tere {customer_name},\n\nSinu viimase tellimusest restoranist {restaurant_name} on möödunud veidi aega ja igatseme sind!\n\nTule tagasi ja hellita ennast — sul ootavad imelised road.\n\n{coupon_section}\n\nLoodame sinuga peagi kohtuda!\n\n— Meeskond {restaurant_name}",
       "resultSent": "Saadetud",
       "resultSales": "Müük · 30p",
-      "resultFees": "Tasud"
+      "resultFees": "Tasud",
+      "stepLabel": "E-kiri {n}",
+      "stepDelayLabel": "Saada pärast",
+      "stepDiscountLabel": "Allahindlus",
+      "stepAdd": "Lisa veel üks e-kiri",
+      "stepsSave": "Salvesta jada",
+      "stepsNeedOne": "Lisa vähemalt üks e-kiri.",
+      "stepsHint": "Iga e-kiri saadetakse viimasest tellimusest hiljem, oma allahindlusega. Jada peatub automaatselt niipea, kui klient uuesti tellib."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace'i kuulutus",

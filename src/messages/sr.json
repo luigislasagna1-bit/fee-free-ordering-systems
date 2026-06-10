@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Zdravo {customer_name},\n\nProšlo je neko vreme od vaše poslednje porudžbine iz {restaurant_name} i nedostajete nam!\n\nVratite se i počastite sebe — imamo predivna jela koja čekaju na vas.\n\n{coupon_section}\n\nNadamo se da ćemo vas uskoro videti!\n\n— Tim {restaurant_name}",
       "resultSent": "Послато",
       "resultSales": "Продаја · 30д",
-      "resultFees": "Накнаде"
+      "resultFees": "Накнаде",
+      "stepLabel": "Имејл {n}",
+      "stepDelayLabel": "Пошаљи након",
+      "stepDiscountLabel": "Попуст",
+      "stepAdd": "Додај још један имејл",
+      "stepsSave": "Сачувај низ",
+      "stepsNeedOne": "Додајте барем један имејл.",
+      "stepsHint": "Сваки имејл се шаље касније у односу на њихову последњу поруџбину, са сопственим попустом. Низ се аутоматски зауставља чим поново наруче."
     },
     "marketplaceSettings": {
       "pageTitle": "Listing na Marketplace-u",

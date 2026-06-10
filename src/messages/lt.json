@@ -2775,7 +2775,14 @@
       "campaign_reengagement_defaultBody": "Sveiki, {customer_name},\n\nJau praėjo nemažai laiko nuo jūsų paskutinio užsakymo iš {restaurant_name} ir mums jūsų trūksta!\n\nGrįžkite ir palepinkite save — turime keletą nuostabių patiekalų, laukiančių jūsų.\n\n{coupon_section}\n\nTikimės pamatyti jus greitai!\n\n– {restaurant_name} komanda",
       "resultSent": "Išsiųsta",
       "resultSales": "Pardavimai · 30d",
-      "resultFees": "Mokesčiai"
+      "resultFees": "Mokesčiai",
+      "stepLabel": "El. laiškas {n}",
+      "stepDelayLabel": "Siųsti po",
+      "stepDiscountLabel": "Nuolaida",
+      "stepAdd": "Pridėti dar vieną el. laišką",
+      "stepsSave": "Išsaugoti seką",
+      "stepsNeedOne": "Pridėkite bent vieną el. laišką.",
+      "stepsHint": "Kiekvienas el. laiškas siunčiamas vėliau po paskutinio užsakymo, su savo nuolaida. Seka automatiškai sustoja, kai klientas užsako dar kartą."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace skelbimas",

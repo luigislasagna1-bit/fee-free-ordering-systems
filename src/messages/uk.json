@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Привіт, {customer_name}!\n\nМи не бачили вас у {restaurant_name} вже давно — сумуємо!\n\nПовертайтеся та побалуйте себе — у нас чекають чудові страви.\n\n{coupon_section}\n\nСподіваємось побачити вас скоро!\n\n— Команда {restaurant_name}",
       "resultSent": "Надіслано",
       "resultSales": "Продажі · 30д",
-      "resultFees": "Збори"
+      "resultFees": "Збори",
+      "stepLabel": "Лист {n}",
+      "stepDelayLabel": "Надіслати через",
+      "stepDiscountLabel": "Знижка",
+      "stepAdd": "Додати ще лист",
+      "stepsSave": "Зберегти послідовність",
+      "stepsNeedOne": "Додайте хоча б один лист.",
+      "stepsHint": "Кожен лист надсилається пізніше після останнього замовлення, з власною знижкою. Послідовність зупиняється автоматично, щойно клієнт замовляє знову."
     },
     "marketplaceSettings": {
       "pageTitle": "Оголошення на Marketplace",

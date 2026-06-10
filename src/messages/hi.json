@@ -2433,7 +2433,14 @@
       "campaign_reengagement_defaultBody": "नमस्ते {customer_name},\n\n{restaurant_name} से आपका आखिरी ऑर्डर हुए काफी समय हो गया है और हमें आपकी याद आ रही है!\n\nवापस आएं और खुद को कुछ खास दें — हमारे पास आपके लिए कुछ लाजवाब व्यंजन तैयार हैं।\n\n{coupon_section}\n\nहम जल्द आपसे मिलने की उम्मीद करते हैं!\n\n– {restaurant_name} टीम",
       "resultSent": "भेजे गए",
       "resultSales": "बिक्री · 30द",
-      "resultFees": "शुल्क"
+      "resultFees": "शुल्क",
+      "stepLabel": "ईमेल {n}",
+      "stepDelayLabel": "इसके बाद भेजें",
+      "stepDiscountLabel": "छूट",
+      "stepAdd": "एक और ईमेल जोड़ें",
+      "stepsSave": "अनुक्रम सहेजें",
+      "stepsNeedOne": "कम से कम एक ईमेल जोड़ें।",
+      "stepsHint": "हर ईमेल उनके पिछले ऑर्डर से और बाद में भेजा जाता है, अपनी छूट के साथ। जैसे ही वे दोबारा ऑर्डर करते हैं, क्रम अपने आप रुक जाता है।"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace लिस्टिंग",

@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Hallo {customer_name},\n\nHet is alweer een tijdje geleden dat u voor het laatste heeft besteld bij {restaurant_name} en we missen u!\n\nKom uzelf verwennen — we hebben heerlijke gerechten voor u klaarstaan.\n\n{coupon_section}\n\nWe hopen u snel te zien!\n\n– Het team van {restaurant_name}",
       "resultSent": "Verzonden",
       "resultSales": "Omzet · 30d",
-      "resultFees": "Kosten"
+      "resultFees": "Kosten",
+      "stepLabel": "E-mail {n}",
+      "stepDelayLabel": "Verzenden na",
+      "stepDiscountLabel": "Korting",
+      "stepAdd": "Nog een e-mail toevoegen",
+      "stepsSave": "Reeks opslaan",
+      "stepsNeedOne": "Voeg minstens één e-mail toe.",
+      "stepsHint": "Elke e-mail wordt later na hun laatste bestelling verzonden, met een eigen korting. De reeks stopt automatisch zodra ze opnieuw bestellen."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-vermelding",

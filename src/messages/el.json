@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Γεια {customer_name},\n\nΠέρασε καιρός από την τελευταία σας παραγγελία από το {restaurant_name} και μας λείπετε!\n\nΕλάτε να περιποιηθείτε τον εαυτό σας — σας περιμένουν καταπληκτικά πιάτα.\n\n{coupon_section}\n\nΕλπίζουμε να σας δούμε σύντομα!\n\n– Η ομάδα του {restaurant_name}",
       "resultSent": "Απεσταλμένα",
       "resultSales": "Πωλήσεις · 30η",
-      "resultFees": "Χρεώσεις"
+      "resultFees": "Χρεώσεις",
+      "stepLabel": "Email {n}",
+      "stepDelayLabel": "Αποστολή μετά από",
+      "stepDiscountLabel": "Έκπτωση",
+      "stepAdd": "Προσθήκη άλλου email",
+      "stepsSave": "Αποθήκευση ακολουθίας",
+      "stepsNeedOne": "Προσθέστε τουλάχιστον ένα email.",
+      "stepsHint": "Κάθε email στέλνεται πιο μακριά από την τελευταία τους παραγγελία, με τη δική του έκπτωση. Η ακολουθία σταματά αυτόματα μόλις παραγγείλουν ξανά."
     },
     "marketplaceSettings": {
       "pageTitle": "Καταχώρηση Marketplace",

@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Sveiki {customer_name},\n\nKopš pēdējā pasūtījuma no {restaurant_name} ir pagājis laiciņš un mēs jūs garām ilgojamies!\n\nNāciet un palutiniet sevi — mums ir lieliski ēdieni, kas gaida jūs.\n\n{coupon_section}\n\nCerams drīz jūs redzēt!\n\n– Komanda {restaurant_name}",
       "resultSent": "Nosūtīts",
       "resultSales": "Pārdošana · 30d",
-      "resultFees": "Maksas"
+      "resultFees": "Maksas",
+      "stepLabel": "E-pasts {n}",
+      "stepDelayLabel": "Sūtīt pēc",
+      "stepDiscountLabel": "Atlaide",
+      "stepAdd": "Pievienot vēl vienu e-pastu",
+      "stepsSave": "Saglabāt secību",
+      "stepsNeedOne": "Pievienojiet vismaz vienu e-pastu.",
+      "stepsHint": "Katrs e-pasts tiek nosūtīts vēlāk pēc pēdējā pasūtījuma, ar savu atlaidi. Secība automātiski apstājas, tiklīdz klients pasūta atkārtoti."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace ieraksts",

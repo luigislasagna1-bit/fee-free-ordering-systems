@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Hej {customer_name},\n\nDet har gått ett tag sedan din senaste beställning från {restaurant_name} och vi saknar dig!\n\nKom tillbaka och unna dig — vi har fantastiska rätter som väntar på dig.\n\n{coupon_section}\n\nVi hoppas se dig snart!\n\n– {restaurant_name}-teamet",
       "resultSent": "Skickade",
       "resultSales": "Försäljning · 30d",
-      "resultFees": "Avgifter"
+      "resultFees": "Avgifter",
+      "stepLabel": "E-post {n}",
+      "stepDelayLabel": "Skicka efter",
+      "stepDiscountLabel": "Rabatt",
+      "stepAdd": "Lägg till ännu ett e-postmeddelande",
+      "stepsSave": "Spara sekvens",
+      "stepsNeedOne": "Lägg till minst ett e-postmeddelande.",
+      "stepsHint": "Varje e-post skickas längre efter deras senaste beställning, med en egen rabatt. Sekvensen stoppas automatiskt så snart de beställer igen."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-annons",

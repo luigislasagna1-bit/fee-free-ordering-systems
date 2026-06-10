@@ -2073,7 +2073,14 @@
       "campaign_reengagement_defaultBody": "Xin chào {customer_name},\n\nĐã lâu từ đơn hàng cuối của bạn tại {restaurant_name} và chúng tôi nhớ bạn!\n\nQuay lại và chiêu đãi bản thân — chúng tôi có những món tuyệt vời đang chờ bạn.\n\n{coupon_section}\n\nChúng tôi hy vọng được gặp lại bạn sớm!\n\n– Đội ngũ {restaurant_name}",
       "resultSent": "Đã gửi",
       "resultSales": "Doanh số · 30n",
-      "resultFees": "Phí"
+      "resultFees": "Phí",
+      "stepLabel": "Email {n}",
+      "stepDelayLabel": "Gửi sau",
+      "stepDiscountLabel": "Giảm giá",
+      "stepAdd": "Thêm email khác",
+      "stepsSave": "Lưu chuỗi",
+      "stepsNeedOne": "Thêm ít nhất một email.",
+      "stepsHint": "Mỗi email được gửi xa hơn so với đơn hàng gần nhất của họ, kèm ưu đãi riêng. Chuỗi tự động dừng ngay khi họ đặt hàng lại."
     },
     "marketplaceSettings": {
       "pageTitle": "Danh Sách Marketplace",

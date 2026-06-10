@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Hej {customer_name},\n\nDet er et stykke tid siden din sidste ordre hos {restaurant_name}, og vi savner dig!\n\nKom tilbage og forkæl dig selv — vi har nogle fantastiske retter klar til dig.\n\n{coupon_section}\n\nVi håber at se dig snart!\n\n– {restaurant_name}-teamet",
       "resultSent": "Sendt",
       "resultSales": "Salg · 30d",
-      "resultFees": "Gebyrer"
+      "resultFees": "Gebyrer",
+      "stepLabel": "E-mail {n}",
+      "stepDelayLabel": "Send efter",
+      "stepDiscountLabel": "Rabat",
+      "stepAdd": "Tilføj endnu en e-mail",
+      "stepsSave": "Gem sekvens",
+      "stepsNeedOne": "Tilføj mindst én e-mail.",
+      "stepsHint": "Hver e-mail sendes længere efter deres seneste ordre, med sin egen rabat. Sekvensen stopper automatisk, så snart de bestiller igen."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-annonce",

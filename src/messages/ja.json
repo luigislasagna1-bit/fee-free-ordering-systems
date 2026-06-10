@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "{customer_name} 様、\n\n{restaurant_name} での最後のご注文からしばらく経ちましたね。またのご来店をお待ちしています！\n\n素敵な料理が揃ってお待ちしています。ぜひまたご利用ください。\n\n{coupon_section}\n\nまた会える日を楽しみにしています！\n\n— {restaurant_name} チーム",
       "resultSent": "送信済み",
       "resultSales": "売上 · 30日",
-      "resultFees": "手数料"
+      "resultFees": "手数料",
+      "stepLabel": "メール {n}",
+      "stepDelayLabel": "送信タイミング",
+      "stepDiscountLabel": "割引",
+      "stepAdd": "メールを追加",
+      "stepsSave": "シーケンスを保存",
+      "stepsNeedOne": "メールを少なくとも1通追加してください。",
+      "stepsHint": "各メールは前回の注文からさらに時間を空けて、それぞれの割引付きで送信されます。お客様が再度注文するとシーケンスは自動的に停止します。"
     },
     "marketplaceSettings": {
       "pageTitle": "マーケットプレイス掲載",

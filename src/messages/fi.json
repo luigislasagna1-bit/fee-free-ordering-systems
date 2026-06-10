@@ -2110,7 +2110,14 @@
       "campaign_reengagement_defaultBody": "Hei {customer_name},\n\nViime tilauksestasi ravintolassa {restaurant_name} on kulunut jo hetki ja kaipaamme sinua!\n\nTule takaisin ja hemmottele itseäsi — meillä on ihania annoksia odottamassa sinua.\n\n{coupon_section}\n\nToivottavasti näemme sinut pian!\n\n– {restaurant_name}n tiimi",
       "resultSent": "Lähetetyt",
       "resultSales": "Myynti · 30pv",
-      "resultFees": "Maksut"
+      "resultFees": "Maksut",
+      "stepLabel": "Sähköposti {n}",
+      "stepDelayLabel": "Lähetä jälkeen",
+      "stepDiscountLabel": "Alennus",
+      "stepAdd": "Lisää toinen sähköposti",
+      "stepsSave": "Tallenna sarja",
+      "stepsNeedOne": "Lisää vähintään yksi sähköposti.",
+      "stepsHint": "Jokainen sähköposti lähetetään myöhemmin viimeisestä tilauksesta, omalla alennuksellaan. Sarja pysähtyy automaattisesti heti, kun asiakas tilaa uudelleen."
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-listaus",

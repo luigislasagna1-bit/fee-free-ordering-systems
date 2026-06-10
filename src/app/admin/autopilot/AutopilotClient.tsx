@@ -8,6 +8,7 @@ import {
   Target, Rocket,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { StepSequenceEditor } from "./StepSequenceEditor";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -212,28 +213,27 @@ function CampaignCard({
 
           <p className="text-sm text-gray-600">{campaignDescription}</p>
 
+          {/* Stepped campaigns (reengagement / second_order) → the drip-sequence
+              editor: owner-configured count + delay + % per email. cart_abandonment
+              keeps the single-email config below. Luigi 2026-06-10. */}
+          {config.type !== "cart_abandonment" ? (
+            <StepSequenceEditor campaignType={config.type} stateEnabled={stateEnabled} />
+          ) : (
+          <>
           {/* Trigger delay */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               {campaignTriggerLabel}
             </label>
-            {config.type === "reengagement" ? (
-              <div className="flex items-center gap-2">
-                <input type="number" min="1" max="365"
-                  className="w-24 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                  value={Math.round(campaign.delayHours / 24)}
-                  onChange={e => onChange({ delayHours: (parseInt(e.target.value) || 7) * 24 })} />
-                <span className="text-sm text-gray-500">{t("unitDays")}</span>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <input type="number" min="1" max="168"
-                  className="w-24 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                  value={campaign.delayHours}
-                  onChange={e => onChange({ delayHours: parseInt(e.target.value) || 24 })} />
-                <span className="text-sm text-gray-500">{t("unitHours")}</span>
-              </div>
-            )}
+            {/* cart_abandonment only (stepped campaigns use the StepSequenceEditor
+                above); the delay is in HOURS. */}
+            <div className="flex items-center gap-2">
+              <input type="number" min="1" max="168"
+                className="w-24 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                value={campaign.delayHours}
+                onChange={e => onChange({ delayHours: parseInt(e.target.value) || 24 })} />
+              <span className="text-sm text-gray-500">{t("unitHours")}</span>
+            </div>
           </div>
 
           {/* Linked coupon */}
@@ -292,6 +292,8 @@ function CampaignCard({
               {saving ? t("savingButton") : t("saveButton")}
             </button>
           </div>
+          </>
+          )}
         </div>
       )}
     </div>
