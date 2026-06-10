@@ -3317,9 +3317,18 @@ export function OrderingPageClient({
           // a server-only (prisma) module into this client component.
           const hero = promoBanners.find((p) => p.campaignRef === "kickstarter_first_buy");
           // Only entice customers we can't rule out as new: hide for a logged-in
-          // returning customer (server-resolved) OR a guest who has ordered on
-          // this device before. Luigi 2026-06-09.
-          if (!hero || customerIsReturning || hasOrderedHere) return null;
+          // returning customer (server-resolved), a guest who has ordered on this
+          // device before, OR a guest whose checkout identity (typed, or silently
+          // restored by the remember-me pre-fill) the cart preview has since
+          // resolved to a RETURNING customer at this restaurant+channel
+          // (firstBuyUnavailable). Without that last clause the hero and the
+          // discount diverge: the banner shouts "first-time special" while the
+          // cart correctly refuses to apply it because the remembered contact
+          // already ordered here — exactly the "visible but not applying"
+          // inconsistency Luigi caught, and a direct violation of his rule that
+          // the banner must disappear for a non-first-time customer. Luigi
+          // 2026-06-10.
+          if (!hero || customerIsReturning || hasOrderedHere || firstBuyUnavailable) return null;
           const headline = hero.bannerHeadline?.trim() || hero.name;
           // The default background must never be flat black (theme.primaryColor
           // is black for some brands, incl. Luigi's). Use the owner's custom
