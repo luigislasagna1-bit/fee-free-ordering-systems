@@ -184,6 +184,38 @@ export function StepRestrictions({
         </p>
       </div>
 
+      {/* MARKETPLACE CHANNEL — placed FIRST so it's unmissable. Only shown to
+          restaurants actually listed on the marketplace. Luigi 2026-06-09. */}
+      {isOnMarketplace && (
+        <Section title={t("channelTitle")} subtitle={t("channelSubtitle")}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {CHANNEL_OPTIONS.map((r) => {
+              const active = form.channel === r.value;
+              return (
+                <button
+                  key={r.value}
+                  type="button"
+                  onClick={() => setForm({ channel: r.value })}
+                  className={`flex items-center justify-center p-3 rounded-xl border-2 text-center transition ${
+                    active
+                      ? "border-emerald-500 bg-emerald-50"
+                      : "border-gray-200 hover:border-emerald-200"
+                  }`}
+                >
+                  <span
+                    className={`text-sm font-semibold ${
+                      active ? "text-emerald-700" : "text-gray-700"
+                    }`}
+                  >
+                    {r.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </Section>
+      )}
+
       {/* HAPPY HOUR (days + usable-hour window) */}
       <Section title={t("happyHourTitle")} subtitle={t("happyHourSubtitle")}>
         <div>
@@ -239,7 +271,10 @@ export function StepRestrictions({
             type="number"
             min="0"
             step="0.01"
-            className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+            // Pad left enough to clear a MULTI-char currency prefix (e.g. "CA$")
+            // so the typed number never overlaps it. Luigi 2026-06-09.
+            style={{ paddingLeft: `calc(0.75rem + ${currencySymbol.length}ch + 0.25rem)` }}
+            className="w-full border border-gray-300 rounded-lg pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             value={form.minimumOrder}
             onChange={(e) => setForm({ minimumOrder: e.target.value })}
           />
@@ -430,37 +465,6 @@ export function StepRestrictions({
         </div>
       </Section>
 
-      {/* MARKETPLACE CHANNEL — only shown to restaurants actually listed on
-          the marketplace (the choice is meaningless otherwise). Luigi 2026-06-09. */}
-      {isOnMarketplace && (
-        <Section title={t("channelTitle")} subtitle={t("channelSubtitle")}>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            {CHANNEL_OPTIONS.map((r) => {
-              const active = form.channel === r.value;
-              return (
-                <button
-                  key={r.value}
-                  onClick={() => setForm({ channel: r.value })}
-                  className={`flex items-center justify-center p-3 rounded-xl border-2 text-center transition ${
-                    active
-                      ? "border-emerald-500 bg-emerald-50"
-                      : "border-gray-200 hover:border-emerald-200"
-                  }`}
-                >
-                  <span
-                    className={`text-sm font-semibold ${
-                      active ? "text-emerald-700" : "text-gray-700"
-                    }`}
-                  >
-                    {r.label}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </Section>
-      )}
-
       {/* LIMITED SHOWTIME (visibility windows) */}
       <Section
         title={t("limitedShowtimeTitle")}
@@ -582,7 +586,8 @@ export function StepRestrictions({
                 type="number"
                 min="0"
                 step="0.01"
-                className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                style={{ paddingLeft: `calc(0.75rem + ${currencySymbol.length}ch + 0.25rem)` }}
+                className="w-full border border-gray-300 rounded-lg pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={form.highlightThreshold}
                 onChange={(e) => setForm({ highlightThreshold: e.target.value })}
               />
