@@ -352,7 +352,17 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
 
 function itemsMatchingGroup(group: ItemGroup, items: CartItem[]): CartItem[] {
   const { itemIds = [], categoryIds = [], variantIds = [] } = group;
-  if (!itemIds.length && !categoryIds.length && !variantIds.length) return items;
+  // A group with NO targeting (no items, categories, AND no variants) matches
+  // NOTHING — not the whole cart. CRITICAL money-safety rule (Luigi 2026-06-11):
+  // whole-cart promos carry NO groups at all (handled by the no-groups branch
+  // in calcPercentageOff), so a fully-empty *group* is always corruption /
+  // misconfiguration. The old "empty → all items" behaviour turned a single
+  // lost categoryIds array into catastrophic over-discounting — a 2-group
+  // "Drink/Salad 50%" combo discounted 100% of a cart that had neither, because
+  // both empty groups matched everything and the value was double-counted. This
+  // is shared logic, so the guard protects EVERY multi-group promo type
+  // (combo / bogo / buy_n_get_free / meal_bundle / free_item / …) at once.
+  if (!itemIds.length && !categoryIds.length && !variantIds.length) return [];
   return items.filter(i =>
     itemIds.includes(i.menuItemId) ||
     (i.categoryId != null && categoryIds.includes(i.categoryId)) ||

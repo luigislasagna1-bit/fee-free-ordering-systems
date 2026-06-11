@@ -283,6 +283,9 @@ function renderKitchenSection(
       if (order.scheduledFor) {
         r.line(`** ${t("receipt.scheduling.orderForLater")} **`);
         r.line(fmtDateTime(order.scheduledFor));
+      } else if (order.estimatedReady) {
+        // ASAP: show the READY time, not when it was placed (Luigi 2026-06-11).
+        r.line(`${t("receipt.scheduling.asap")} · ${t("kitchen.ready")} ${fmtTime(order.estimatedReady)}`);
       } else {
         r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
       }
@@ -431,6 +434,9 @@ function renderCustomerSection(
       if (order.scheduledFor) {
         r.line(`${t("receipt.scheduling.orderForLater")}:`);
         r.line(fmtDateTime(order.scheduledFor));
+      } else if (order.estimatedReady) {
+        // ASAP: show the READY time, not when it was placed (Luigi 2026-06-11).
+        r.line(`${t("receipt.scheduling.asap")} · ${t("kitchen.ready")} ${fmtTime(order.estimatedReady)}`);
       } else {
         r.line(`${t("receipt.scheduling.asap")} : ${fmtTime(order.createdAt)}`);
       }

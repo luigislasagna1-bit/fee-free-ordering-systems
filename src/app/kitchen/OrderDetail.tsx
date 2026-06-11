@@ -408,13 +408,24 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           {(() => {
             const schedMs = (order as any).scheduledFor ? new Date((order as any).scheduledFor).getTime() : NaN;
             const isLater = Number.isFinite(schedMs) && schedMs > Date.now();
+            // For an ASAP order the big number should be the READY time, not
+            // when the order came in — that's what the kitchen acts on once a
+            // prep time is punched in (order at 7:00 + 20 min → "Ready 7:20").
+            // Falls back to the received time only before any ready estimate
+            // exists. Luigi 2026-06-11.
+            const erMs = order.estimatedReady ? new Date(order.estimatedReady).getTime() : NaN;
+            const hasReady = !isLater && Number.isFinite(erMs);
             return (
               <div className={`rounded-xl px-4 py-3 ${isLater ? "bg-sky-500/10 border border-sky-500/30" : "bg-emerald-500/10 border border-emerald-500/30"}`}>
                 <div className={`text-xs font-extrabold uppercase tracking-wide ${isLater ? "text-sky-700 dark:text-sky-300" : "text-emerald-700 dark:text-emerald-300"}`}>
                   {isLater ? tk("orderForLater") : tk("asap")}
                 </div>
                 <div className={`text-lg font-bold mt-0.5 ${t.text}`}>
-                  {isLater ? fmtDateTime((order as any).scheduledFor, hoursFormat) : fmtTimeOnly(order.createdAt, hoursFormat)}
+                  {isLater
+                    ? fmtDateTime((order as any).scheduledFor, hoursFormat)
+                    : hasReady
+                      ? `${tk("ready")} ${fmtTimeOnly(order.estimatedReady, hoursFormat)}`
+                      : fmtTimeOnly(order.createdAt, hoursFormat)}
                 </div>
               </div>
             );
