@@ -3633,7 +3633,8 @@
       "emptyTitle": "Ingen smarte links endnu",
       "emptyBody": "Opret et sporbart link, sæt dets QR på en folder eller et opslag, og se scanninger blive til ordrer.",
       "pageSubtitle": "Sporbare links + QR-koder — se hvilke foldere og opslag der giver rigtige ordrer.",
-      "pointsToHint": "Peger på dit menukort. Du får et delingslink + QR til at spore scanninger og ordrer."
+      "pointsToHint": "Peger på dit menukort. Du får et delingslink + QR til at spore scanninger og ordrer.",
+      "downloadQr": "Download QR"
     }
   },
   "impersonation": {

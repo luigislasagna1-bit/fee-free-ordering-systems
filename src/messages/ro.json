@@ -3633,7 +3633,8 @@
       "emptyTitle": "Încă niciun link inteligent",
       "emptyBody": "Creează un link urmăribil, pune-i codul QR pe un pliant sau o postare și vezi cum scanările devin comenzi.",
       "pageSubtitle": "Linkuri urmăribile + coduri QR — vezi ce pliante și postări aduc comenzi reale.",
-      "pointsToHint": "Trimite către meniul tău. Vei primi un link de partajare + QR pentru a urmări scanările și comenzile."
+      "pointsToHint": "Trimite către meniul tău. Vei primi un link de partajare + QR pentru a urmări scanările și comenzile.",
+      "downloadQr": "Descarcă QR"
     }
   },
   "impersonation": {

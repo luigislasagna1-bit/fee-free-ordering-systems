@@ -3633,7 +3633,8 @@
       "emptyTitle": "Še ni pametnih povezav",
       "emptyBody": "Ustvarite sledljivo povezavo, postavite njeno kodo QR na letak ali objavo in glejte, kako se skeniranja spremenijo v naročila.",
       "pageSubtitle": "Sledljive povezave + kode QR — poglejte, kateri letaki in objave prinašajo prava naročila.",
-      "pointsToHint": "Kaže na vaš meni. Dobili boste povezavo za deljenje + QR za sledenje skeniranj in naročil."
+      "pointsToHint": "Kaže na vaš meni. Dobili boste povezavo za deljenje + QR za sledenje skeniranj in naročil.",
+      "downloadQr": "Prenesi QR"
     }
   },
   "impersonation": {

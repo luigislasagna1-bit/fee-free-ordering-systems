@@ -3633,7 +3633,8 @@
       "emptyTitle": "Ancora nessun link intelligente",
       "emptyBody": "Crea un link tracciabile, metti il suo QR su un volantino o post e guarda le scansioni trasformarsi in ordini.",
       "pageSubtitle": "Link tracciabili + codici QR: scopri quali volantini e post generano ordini reali.",
-      "pointsToHint": "Punta al tuo menu. Otterrai un link da condividere + QR per tracciare scansioni e ordini."
+      "pointsToHint": "Punta al tuo menu. Otterrai un link da condividere + QR per tracciare scansioni e ordini.",
+      "downloadQr": "Scarica QR"
     }
   },
   "impersonation": {

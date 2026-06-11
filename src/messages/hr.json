@@ -3633,7 +3633,8 @@
       "emptyTitle": "Još nema pametnih poveznica",
       "emptyBody": "Stvorite pratljivu poveznicu, stavite njezin QR na letak ili objavu i gledajte kako se skeniranja pretvaraju u narudžbe.",
       "pageSubtitle": "Pratljive poveznice + QR kodovi — vidite koji letci i objave donose prave narudžbe.",
-      "pointsToHint": "Vodi na vaš jelovnik. Dobit ćete poveznicu za dijeljenje + QR za praćenje skeniranja i narudžbi."
+      "pointsToHint": "Vodi na vaš jelovnik. Dobit ćete poveznicu za dijeljenje + QR za praćenje skeniranja i narudžbi.",
+      "downloadQr": "Preuzmi QR"
     }
   },
   "impersonation": {

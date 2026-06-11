@@ -3633,7 +3633,8 @@
       "emptyTitle": "Pagaidām nav viedo saišu",
       "emptyBody": "Izveidojiet izsekojamu saiti, ievietojiet tās QR uz bukleta vai ziņas un vērojiet, kā skenēšanas kļūst par pasūtījumiem.",
       "pageSubtitle": "Izsekojamas saites + QR kodi — uzziniet, kuri bukleti un ziņas dod reālus pasūtījumus.",
-      "pointsToHint": "Norāda uz jūsu ēdienkarti. Saņemsiet kopīgošanas saiti + QR, lai sekotu skenēšanām un pasūtījumiem."
+      "pointsToHint": "Norāda uz jūsu ēdienkarti. Saņemsiet kopīgošanas saiti + QR, lai sekotu skenēšanām un pasūtījumiem.",
+      "downloadQr": "Lejupielādēt QR"
     }
   },
   "impersonation": {

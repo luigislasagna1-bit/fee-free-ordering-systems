@@ -3633,7 +3633,8 @@
       "emptyTitle": "Nog geen slimme links",
       "emptyBody": "Maak een volgbare link, zet de QR op een flyer of post en zie scans veranderen in bestellingen.",
       "pageSubtitle": "Volgbare links + QR-codes — zie welke flyers en posts echte bestellingen opleveren.",
-      "pointsToHint": "Verwijst naar je menu. Je krijgt een deellink + QR om scans en bestellingen te volgen."
+      "pointsToHint": "Verwijst naar je menu. Je krijgt een deellink + QR om scans en bestellingen te volgen.",
+      "downloadQr": "QR downloaden"
     }
   },
   "impersonation": {

@@ -3633,7 +3633,8 @@
       "emptyTitle": "Chưa có liên kết thông minh",
       "emptyBody": "Tạo một liên kết theo dõi được, đặt mã QR của nó lên tờ rơi hoặc bài đăng, và xem lượt quét biến thành đơn hàng.",
       "pageSubtitle": "Liên kết theo dõi được + mã QR — xem tờ rơi và bài đăng nào tạo ra đơn hàng thực.",
-      "pointsToHint": "Trỏ đến thực đơn của bạn. Bạn sẽ nhận được liên kết chia sẻ + QR để theo dõi lượt quét và đơn hàng."
+      "pointsToHint": "Trỏ đến thực đơn của bạn. Bạn sẽ nhận được liên kết chia sẻ + QR để theo dõi lượt quét và đơn hàng.",
+      "downloadQr": "Tải QR"
     }
   },
   "impersonation": {

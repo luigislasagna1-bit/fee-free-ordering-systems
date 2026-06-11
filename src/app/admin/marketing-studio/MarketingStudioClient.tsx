@@ -2,7 +2,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
-import { Link2, Plus, Copy, Check, Trash2, ToggleLeft, ToggleRight, MousePointerClick, ShoppingBag, X } from "lucide-react";
+import { Link2, Plus, Copy, Check, Trash2, ToggleLeft, ToggleRight, MousePointerClick, ShoppingBag, X, QrCode } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
 type SmartLink = {
@@ -126,6 +126,14 @@ export function MarketingStudioClient({ currency, initialLinks }: { currency: st
                   </button>
                 </div>
                 <div className="flex items-center gap-1">
+                  <a
+                    href={`/api/admin/marketing-studio/smart-links/${l.id}/qr?format=png`}
+                    download
+                    className="p-1.5 text-gray-400 hover:text-emerald-600"
+                    title={t("downloadQr")}
+                  >
+                    <QrCode className="w-4 h-4" />
+                  </a>
                   <button onClick={() => toggle(l)} className="p-1.5 text-gray-400 hover:text-gray-700" title={l.isActive ? tc("active") : tc("off")}>
                     {l.isActive ? <ToggleRight className="w-5 h-5 text-emerald-500" /> : <ToggleLeft className="w-5 h-5" />}
                   </button>

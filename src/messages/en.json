@@ -3633,7 +3633,8 @@
       "emptyTitle": "No smart links yet",
       "emptyBody": "Create a trackable link, put its QR on a flyer or post, and watch scans turn into orders.",
       "pageSubtitle": "Trackable links + QR codes — see which flyers and posts drive real orders.",
-      "pointsToHint": "Points to your menu. You'll get a share link + QR to track scans and orders."
+      "pointsToHint": "Points to your menu. You'll get a share link + QR to track scans and orders.",
+      "downloadQr": "Download QR"
     }
   },
   "impersonation": {

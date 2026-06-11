@@ -3633,7 +3633,8 @@
       "emptyTitle": "Ingen smartlenker ennå",
       "emptyBody": "Lag en sporbar lenke, sett QR-koden på et flygeblad eller innlegg, og se skanninger bli til bestillinger.",
       "pageSubtitle": "Sporbare lenker + QR-koder — se hvilke flygeblader og innlegg som gir ekte bestillinger.",
-      "pointsToHint": "Peker til menyen din. Du får en delingslenke + QR for å spore skanninger og bestillinger."
+      "pointsToHint": "Peker til menyen din. Du får en delingslenke + QR for å spore skanninger og bestillinger.",
+      "downloadQr": "Last ned QR"
     }
   },
   "impersonation": {

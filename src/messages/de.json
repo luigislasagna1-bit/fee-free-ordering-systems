@@ -3633,7 +3633,8 @@
       "emptyTitle": "Noch keine Smart-Links",
       "emptyBody": "Erstellen Sie einen nachverfolgbaren Link, setzen Sie seinen QR auf einen Flyer oder Post und sehen Sie, wie Scans zu Bestellungen werden.",
       "pageSubtitle": "Nachverfolgbare Links + QR-Codes — sehen Sie, welche Flyer und Posts echte Bestellungen bringen.",
-      "pointsToHint": "Verweist auf Ihr Menü. Sie erhalten einen Teilen-Link + QR, um Scans und Bestellungen zu verfolgen."
+      "pointsToHint": "Verweist auf Ihr Menü. Sie erhalten einen Teilen-Link + QR, um Scans und Bestellungen zu verfolgen.",
+      "downloadQr": "QR herunterladen"
     }
   },
   "impersonation": {

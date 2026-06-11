@@ -3633,7 +3633,8 @@
       "emptyTitle": "Ainda sem links inteligentes",
       "emptyBody": "Crie um link rastreável, coloque o QR em um panfleto ou post e veja as leituras virarem pedidos.",
       "pageSubtitle": "Links rastreáveis + QR codes — veja quais panfletos e posts geram pedidos reais.",
-      "pointsToHint": "Aponta para o seu cardápio. Você recebe um link de compartilhamento + QR para acompanhar leituras e pedidos."
+      "pointsToHint": "Aponta para o seu cardápio. Você recebe um link de compartilhamento + QR para acompanhar leituras e pedidos.",
+      "downloadQr": "Baixar QR"
     }
   },
   "impersonation": {

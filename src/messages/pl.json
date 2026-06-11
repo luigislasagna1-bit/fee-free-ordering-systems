@@ -3633,7 +3633,8 @@
       "emptyTitle": "Brak inteligentnych linków",
       "emptyBody": "Utwórz śledzony link, umieść jego kod QR na ulotce lub poście i obserwuj, jak skany zamieniają się w zamówienia.",
       "pageSubtitle": "Śledzone linki + kody QR — zobacz, które ulotki i posty generują prawdziwe zamówienia.",
-      "pointsToHint": "Prowadzi do Twojego menu. Otrzymasz link do udostępniania + QR, aby śledzić skany i zamówienia."
+      "pointsToHint": "Prowadzi do Twojego menu. Otrzymasz link do udostępniania + QR, aby śledzić skany i zamówienia.",
+      "downloadQr": "Pobierz QR"
     }
   },
   "impersonation": {

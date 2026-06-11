@@ -3633,7 +3633,8 @@
       "emptyTitle": "Kol kas nėra išmaniųjų nuorodų",
       "emptyBody": "Sukurkite stebimą nuorodą, įdėkite jos QR ant skrajutės ar įrašo ir stebėkite, kaip nuskaitymai virsta užsakymais.",
       "pageSubtitle": "Stebimos nuorodos + QR kodai — sužinokite, kurios skrajutės ir įrašai duoda tikrų užsakymų.",
-      "pointsToHint": "Nukreipia į jūsų meniu. Gausite bendrinimo nuorodą + QR nuskaitymams ir užsakymams sekti."
+      "pointsToHint": "Nukreipia į jūsų meniu. Gausite bendrinimo nuorodą + QR nuskaitymams ir užsakymams sekti.",
+      "downloadQr": "Atsisiųsti QR"
     }
   },
   "impersonation": {

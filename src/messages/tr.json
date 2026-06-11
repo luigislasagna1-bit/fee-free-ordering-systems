@@ -3633,7 +3633,8 @@
       "emptyTitle": "Henüz akıllı bağlantı yok",
       "emptyBody": "Takip edilebilir bir bağlantı oluşturun, QR'ını bir broşüre veya paylaşıma koyun ve taramaların siparişe dönüşmesini izleyin.",
       "pageSubtitle": "Takip edilebilir bağlantılar + QR kodları — hangi broşür ve paylaşımların gerçek sipariş getirdiğini görün.",
-      "pointsToHint": "Menünüze yönlendirir. Taramaları ve siparişleri izlemek için bir paylaşım bağlantısı + QR alırsınız."
+      "pointsToHint": "Menünüze yönlendirir. Taramaları ve siparişleri izlemek için bir paylaşım bağlantısı + QR alırsınız.",
+      "downloadQr": "QR'ı indir"
     }
   },
   "impersonation": {

@@ -3633,7 +3633,8 @@
       "emptyTitle": "Aún no hay enlaces inteligentes",
       "emptyBody": "Crea un enlace rastreable, pon su QR en un folleto o publicación y observa cómo los escaneos se convierten en pedidos.",
       "pageSubtitle": "Enlaces rastreables + códigos QR: descubre qué folletos y publicaciones generan pedidos reales.",
-      "pointsToHint": "Apunta a tu menú. Obtendrás un enlace para compartir + QR para seguir escaneos y pedidos."
+      "pointsToHint": "Apunta a tu menú. Obtendrás un enlace para compartir + QR para seguir escaneos y pedidos.",
+      "downloadQr": "Descargar QR"
     }
   },
   "impersonation": {

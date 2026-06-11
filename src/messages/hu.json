@@ -3633,7 +3633,8 @@
       "emptyTitle": "Még nincs okos link",
       "emptyBody": "Hozzon létre egy követhető linket, tegye a QR-kódját szórólapra vagy posztra, és nézze, ahogy a beolvasások rendelésekké válnak.",
       "pageSubtitle": "Követhető linkek + QR-kódok — nézze meg, mely szórólapok és posztok hoznak valódi rendeléseket.",
-      "pointsToHint": "Az étlapodra mutat. Kapsz egy megosztható linket + QR-t a beolvasások és rendelések követéséhez."
+      "pointsToHint": "Az étlapodra mutat. Kapsz egy megosztható linket + QR-t a beolvasások és rendelések követéséhez.",
+      "downloadQr": "QR letöltése"
     }
   },
   "impersonation": {

@@ -3633,7 +3633,8 @@
       "emptyTitle": "Zatiaľ žiadne inteligentné odkazy",
       "emptyBody": "Vytvorte sledovateľný odkaz, umiestnite jeho QR na leták alebo príspevok a sledujte, ako sa skeny menia na objednávky.",
       "pageSubtitle": "Sledovateľné odkazy + QR kódy — zistite, ktoré letáky a príspevky prinášajú skutočné objednávky.",
-      "pointsToHint": "Odkazuje na vaše menu. Získate odkaz na zdieľanie + QR na sledovanie skenov a objednávok."
+      "pointsToHint": "Odkazuje na vaše menu. Získate odkaz na zdieľanie + QR na sledovanie skenov a objednávok.",
+      "downloadQr": "Stiahnuť QR"
     }
   },
   "impersonation": {

@@ -3633,7 +3633,8 @@
       "emptyTitle": "Inga smarta länkar ännu",
       "emptyBody": "Skapa en spårbar länk, sätt dess QR på ett flygblad eller inlägg och se skanningar bli beställningar.",
       "pageSubtitle": "Spårbara länkar + QR-koder — se vilka flygblad och inlägg som ger riktiga beställningar.",
-      "pointsToHint": "Pekar på din meny. Du får en delningslänk + QR för att spåra skanningar och beställningar."
+      "pointsToHint": "Pekar på din meny. Du får en delningslänk + QR för att spåra skanningar och beställningar.",
+      "downloadQr": "Ladda ner QR"
     }
   },
   "impersonation": {

@@ -3633,7 +3633,8 @@
       "emptyTitle": "Ei vielä älylinkkejä",
       "emptyBody": "Luo seurattava linkki, lisää sen QR esitteeseen tai julkaisuun ja katso, kuinka skannaukset muuttuvat tilauksiksi.",
       "pageSubtitle": "Seurattavat linkit + QR-koodit — näe, mitkä esitteet ja julkaisut tuovat oikeita tilauksia.",
-      "pointsToHint": "Osoittaa ruokalistaasi. Saat jakolinkin + QR:n skannausten ja tilausten seuraamiseen."
+      "pointsToHint": "Osoittaa ruokalistaasi. Saat jakolinkin + QR:n skannausten ja tilausten seuraamiseen.",
+      "downloadQr": "Lataa QR"
     }
   },
   "impersonation": {
