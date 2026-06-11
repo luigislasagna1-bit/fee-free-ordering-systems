@@ -46,14 +46,17 @@ export default async function ResellerLayout({ children }: { children: React.Rea
   // invited to the report center (or superadmins). Same gate the page uses.
   const reportAccess = await getReportAccess();
   const canViewReports = reportAccess.canView;
-  // Count of reports with activity this reseller hasn't seen — drives the nav
-  // badge so they notice replies / status changes without opening the tracker.
-  const [reportsNewCount, notificationsCount] = canViewReports
-    ? await Promise.all([
-        countNewReportsForViewer(reportAccess.email),
-        countUnreadNotifications(reportAccess.email),
-      ])
-    : [0, 0];
+  // reportsNewCount is the report-center activity badge — invite-gated, so it's
+  // 0 for resellers without report access. notificationsCount drives the
+  // Notifications bell, which is for EVERY approved reseller: platform
+  // notifications (a new restaurant under them, a client's add-on subscribe /
+  // cancel) land in the same ResellerNotification inbox keyed by their email,
+  // so the bell must work even when they have no report-center access.
+  // Luigi 2026-06-11.
+  const [reportsNewCount, notificationsCount] = await Promise.all([
+    canViewReports ? countNewReportsForViewer(reportAccess.email) : Promise.resolve(0),
+    isApproved ? countUnreadNotifications(user.email) : Promise.resolve(0),
+  ]);
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden flex-col">

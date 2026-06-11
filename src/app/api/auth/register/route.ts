@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
+import { notifyRestaurantSignup } from "@/lib/platform-notifications";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import prisma from "@/lib/db";
@@ -271,6 +272,12 @@ export async function POST(req: NextRequest) {
       verifyUrl: `${baseUrl}/api/auth/verify-email?token=${emailVerifyToken}`,
       locale: signupLocale,
     }).catch(() => {});
+
+    // Tell the superadmin(s) + the referring reseller (if any) about the new
+    // account — in-app notification + email. after() so the signup response
+    // returns immediately and the fan-out runs to completion post-response.
+    // Best-effort inside; a notification failure never affects signup.
+    after(() => notifyRestaurantSignup(restaurant.id));
 
     return NextResponse.json({ success: true, slug });
   } catch (err) {

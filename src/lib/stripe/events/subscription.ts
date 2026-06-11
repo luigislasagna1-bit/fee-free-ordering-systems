@@ -1,6 +1,7 @@
 import type Stripe from "stripe";
 import prisma from "@/lib/db";
 import { ensureMarketplaceListing } from "@/lib/marketplace";
+import { notifyAddOnChange } from "@/lib/platform-notifications";
 
 /**
  * Handle customer.subscription.* events.
@@ -123,6 +124,16 @@ async function handleAddOnSubscriptionEvent(
     return;
   }
 
+  // Read the PRIOR state before we mutate so we can fire platform notifications
+  // only on the real transition — not on every redundant Stripe retry / update
+  // event. "Was it active before this event?" is the dedupe key. (Notification
+  // failures never affect the webhook — notifyAddOnChange is best-effort.)
+  const prior = await prisma.restaurantAddOn.findUnique({
+    where: { restaurantId_addOnId: { restaurantId, addOnId: addOn.id } },
+    select: { status: true },
+  });
+  const wasActive = !!prior && (prior.status === "active" || prior.status === "trialing");
+
   if (event.type === "customer.subscription.deleted") {
     await prisma.restaurantAddOn.updateMany({
       where: { restaurantId, addOnId: addOn.id },
@@ -131,6 +142,15 @@ async function handleAddOnSubscriptionEvent(
         cancelAtPeriodEnd: false,
       },
     });
+    // Only notify if it was actually active before — a repeat "deleted" or a
+    // delete of an already-cancelled row shouldn't re-alert anyone.
+    if (wasActive) {
+      try {
+        await notifyAddOnChange(restaurantId, { slug: addOn.slug, name: addOn.name }, "cancelled");
+      } catch (e) {
+        console.error("[stripe] add-on cancel notification failed", e);
+      }
+    }
     return;
   }
 
@@ -166,6 +186,18 @@ async function handleAddOnSubscriptionEvent(
   // the customer-facing UI lights up immediately instead of waiting for
   // a first admin-page visit. Idempotent helpers — safe on Stripe retries.
   const isActive = status === "active" || status === "trialing";
+
+  // Platform notification on the not-active → active transition (a NEW paid
+  // add-on subscription). Gated on wasActive so a renewal / metadata-only
+  // update event doesn't re-notify. Best-effort; never blocks the webhook.
+  if (!wasActive && isActive) {
+    try {
+      await notifyAddOnChange(restaurantId, { slug: addOn.slug, name: addOn.name }, "activated");
+    } catch (e) {
+      console.error("[stripe] add-on activate notification failed", e);
+    }
+  }
+
   if (addOn.slug === "marketplace") {
     if (isActive) {
       // Marketplace listing auto-creation: the moment the customer's

@@ -122,17 +122,18 @@ function pathMatchesGroup(path: string, group: Group): boolean {
 
 export function ResellerNav({ canViewReports = false, reportsNewCount = 0, notificationsCount = 0 }: { canViewReports?: boolean; reportsNewCount?: number; notificationsCount?: number }) {
   const path = usePathname();
-  // Invited resellers (added via the report center's "Manage access") also
-  // get a "Reports & Requests" entry that opens the shared bug/feature
-  // tracker at /reseller-reports, plus a Notifications feed. Non-invited
-  // resellers don't see either.
-  const navGroups: Group[] = canViewReports
-    ? [
-        ...groups,
-        { id: "reports", label: "Reports & Requests", icon: Bug, href: "/reseller-reports" },
-        { id: "notifications", label: "Notifications", icon: Bell, href: "/reseller-reports/notifications" },
-      ]
-    : groups;
+  // Notifications is for EVERY approved reseller (this nav only renders for
+  // approved ones) — it surfaces platform alerts: a new restaurant under them,
+  // a client subscribing to / cancelling a paid add-on, plus any report
+  // updates. "Reports & Requests" stays invite-only (the report center is
+  // gated separately). Luigi 2026-06-11.
+  const navGroups: Group[] = [
+    ...groups,
+    ...(canViewReports
+      ? [{ id: "reports", label: "Reports & Requests", icon: Bug, href: "/reseller-reports" } as Group]
+      : []),
+    { id: "notifications", label: "Notifications", icon: Bell, href: "/reseller/notifications" },
+  ];
   // Track which group is currently expanded. Default to whichever group
   // contains the active route so the user lands inside the right section.
   const initiallyOpen =
