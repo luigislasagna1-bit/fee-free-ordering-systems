@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
-import { Mail, Plus, Trash2, Save, Clock, Percent } from "lucide-react";
+import { Mail, Plus, Trash2, Save, Clock, Percent, RotateCcw } from "lucide-react";
 
 /**
  * Owner-facing drip-sequence editor (Luigi 2026-06-10). For stepped Autopilot
@@ -35,8 +35,19 @@ export function StepSequenceEditor({
   const tc = useTranslations("common");
   const max = MAX[campaignType] ?? 1;
   const [steps, setSteps] = useState<Step[]>([]);
+  // The default template ladder (from the server) — drives "Add another email"
+  // restoring that tier's default copy, and "Reset to defaults". Luigi 2026-06-10.
+  const [defaults, setDefaults] = useState<Step[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+
+  const normalize = (s: Partial<Step>): Step => ({
+    delayHours: s.delayHours ?? 168,
+    discountPercent: s.discountPercent ?? 0,
+    subject: s.subject ?? "",
+    emailBody: s.emailBody ?? "",
+    isEnabled: s.isEnabled !== false,
+  });
 
   useEffect(() => {
     let alive = true;
@@ -44,17 +55,8 @@ export function StepSequenceEditor({
       .then((r) => r.json())
       .then((d) => {
         if (!alive) return;
-        if (Array.isArray(d?.steps)) {
-          setSteps(
-            d.steps.map((s: Partial<Step>) => ({
-              delayHours: s.delayHours ?? 168,
-              discountPercent: s.discountPercent ?? 0,
-              subject: s.subject ?? "",
-              emailBody: s.emailBody ?? "",
-              isEnabled: s.isEnabled !== false,
-            })),
-          );
-        }
+        if (Array.isArray(d?.steps)) setSteps(d.steps.map(normalize));
+        if (Array.isArray(d?.defaults)) setDefaults(d.defaults.map(normalize));
       })
       .catch(() => {})
       .finally(() => alive && setLoading(false));
@@ -68,11 +70,17 @@ export function StepSequenceEditor({
 
   const addStep = () => {
     if (steps.length >= max) return;
+    // Prefer that tier's DEFAULT template (so you get the nice copy back); fall
+    // back to a sensible blank (+7 days, +5%) only past the defaults.
+    const def = defaults[steps.length];
+    if (def) {
+      setSteps((prev) => [...prev, { ...def }]);
+      return;
+    }
     const last = steps[steps.length - 1];
     setSteps((prev) => [
       ...prev,
       {
-        // +7 days past the previous email, +5% (capped), fresh copy.
         delayHours: (last ? last.delayHours : 0) + 7 * 24,
         discountPercent: Math.min(100, (last ? last.discountPercent : 10) + 5),
         subject: "",
@@ -83,6 +91,12 @@ export function StepSequenceEditor({
   };
 
   const removeStep = (i: number) => setSteps((prev) => prev.filter((_, idx) => idx !== i));
+
+  const resetDefaults = () => {
+    if (!defaults.length) return;
+    if (!confirm(t("stepsResetConfirm"))) return;
+    setSteps(defaults.map((d) => ({ ...d })));
+  };
 
   const save = async () => {
     if (steps.length === 0) {
@@ -194,19 +208,29 @@ export function StepSequenceEditor({
         </div>
       ))}
 
-      <div className="flex items-center justify-between">
-        {steps.length < max ? (
-          <button
-            type="button"
-            onClick={addStep}
-            className="flex items-center gap-1.5 text-sm font-medium text-amber-600 hover:text-amber-700"
-          >
-            <Plus className="w-4 h-4" />
-            {t("stepAdd")}
-          </button>
-        ) : (
-          <span />
-        )}
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <div className="flex items-center gap-4">
+          {steps.length < max && (
+            <button
+              type="button"
+              onClick={addStep}
+              className="flex items-center gap-1.5 text-sm font-medium text-amber-600 hover:text-amber-700"
+            >
+              <Plus className="w-4 h-4" />
+              {t("stepAdd")}
+            </button>
+          )}
+          {defaults.length > 0 && (
+            <button
+              type="button"
+              onClick={resetDefaults}
+              className="flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-700"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              {t("stepsReset")}
+            </button>
+          )}
+        </div>
         <button
           onClick={save}
           disabled={saving}

@@ -2785,7 +2785,9 @@
       "stepAdd": "Pridėti dar vieną el. laišką",
       "stepsSave": "Išsaugoti seką",
       "stepsNeedOne": "Pridėkite bent vieną el. laišką.",
-      "stepsHint": "Kiekvienas el. laiškas siunčiamas vėliau po paskutinio užsakymo, su savo nuolaida. Seka automatiškai sustoja, kai klientas užsako dar kartą."
+      "stepsHint": "Kiekvienas el. laiškas siunčiamas vėliau po paskutinio užsakymo, su savo nuolaida. Seka automatiškai sustoja, kai klientas užsako dar kartą.",
+      "stepsReset": "Atstatyti numatytuosius",
+      "stepsResetConfirm": "Pakeisti visus el. laiškus numatytąja seka?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace skelbimas",

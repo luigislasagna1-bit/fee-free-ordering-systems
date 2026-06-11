@@ -2120,7 +2120,9 @@
       "stepAdd": "Adaugă alt e-mail",
       "stepsSave": "Salvează secvența",
       "stepsNeedOne": "Adaugă cel puțin un e-mail.",
-      "stepsHint": "Fiecare e-mail este trimis mai târziu după ultima comandă, cu propria reducere. Secvența se oprește automat în momentul în care comandă din nou."
+      "stepsHint": "Fiecare e-mail este trimis mai târziu după ultima comandă, cu propria reducere. Secvența se oprește automat în momentul în care comandă din nou.",
+      "stepsReset": "Resetează la implicit",
+      "stepsResetConfirm": "Înlocuiești toate e-mailurile cu secvența implicită?"
     },
     "marketplaceSettings": {
       "pageTitle": "Listare Marketplace",

@@ -2120,7 +2120,9 @@
       "stepAdd": "Tilføj endnu en e-mail",
       "stepsSave": "Gem sekvens",
       "stepsNeedOne": "Tilføj mindst én e-mail.",
-      "stepsHint": "Hver e-mail sendes længere efter deres seneste ordre, med sin egen rabat. Sekvensen stopper automatisk, så snart de bestiller igen."
+      "stepsHint": "Hver e-mail sendes længere efter deres seneste ordre, med sin egen rabat. Sekvensen stopper automatisk, så snart de bestiller igen.",
+      "stepsReset": "Nulstil til standard",
+      "stepsResetConfirm": "Erstat alle e-mails med standardsekvensen?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-annonce",

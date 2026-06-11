@@ -2120,7 +2120,9 @@
       "stepAdd": "Afegeix un altre correu",
       "stepsSave": "Desa la seqüència",
       "stepsNeedOne": "Afegeix almenys un correu.",
-      "stepsHint": "Cada correu s'envia més tard després de la seva última comanda, amb el seu propi descompte. La seqüència s'atura automàticament en el moment que tornen a demanar."
+      "stepsHint": "Cada correu s'envia més tard després de la seva última comanda, amb el seu propi descompte. La seqüència s'atura automàticament en el moment que tornen a demanar.",
+      "stepsReset": "Restableix els valors predeterminats",
+      "stepsResetConfirm": "Vols substituir tots els correus per la seqüència predeterminada?"
     },
     "marketplaceSettings": {
       "pageTitle": "Llistat al Marketplace",

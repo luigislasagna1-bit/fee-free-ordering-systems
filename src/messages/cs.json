@@ -2120,7 +2120,9 @@
       "stepAdd": "Přidat další e-mail",
       "stepsSave": "Uložit sekvenci",
       "stepsNeedOne": "Přidejte alespoň jeden e-mail.",
-      "stepsHint": "Každý e-mail se odešle déle po posledním objednání, s vlastní slevou. Sekvence se automaticky zastaví, jakmile zákazník znovu objedná."
+      "stepsHint": "Každý e-mail se odešle déle po posledním objednání, s vlastní slevou. Sekvence se automaticky zastaví, jakmile zákazník znovu objedná.",
+      "stepsReset": "Obnovit výchozí",
+      "stepsResetConfirm": "Nahradit všechny e-maily výchozí sekvencí?"
     },
     "marketplaceSettings": {
       "pageTitle": "Zápis na Marketplace",

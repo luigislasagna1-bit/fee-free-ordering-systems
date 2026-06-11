@@ -2120,7 +2120,9 @@
       "stepAdd": "Lägg till ännu ett e-postmeddelande",
       "stepsSave": "Spara sekvens",
       "stepsNeedOne": "Lägg till minst ett e-postmeddelande.",
-      "stepsHint": "Varje e-post skickas längre efter deras senaste beställning, med en egen rabatt. Sekvensen stoppas automatiskt så snart de beställer igen."
+      "stepsHint": "Varje e-post skickas längre efter deras senaste beställning, med en egen rabatt. Sekvensen stoppas automatiskt så snart de beställer igen.",
+      "stepsReset": "Återställ standard",
+      "stepsResetConfirm": "Ersätt alla e-postmeddelanden med standardsekvensen?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-annons",

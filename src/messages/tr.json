@@ -2081,7 +2081,9 @@
       "stepAdd": "Başka bir e-posta ekle",
       "stepsSave": "Diziyi kaydet",
       "stepsNeedOne": "En az bir e-posta ekleyin.",
-      "stepsHint": "Her e-posta, son siparişlerinden daha sonra kendi indirimiyle gönderilir. Müşteri tekrar sipariş verdiği anda dizi otomatik olarak durur."
+      "stepsHint": "Her e-posta, son siparişlerinden daha sonra kendi indirimiyle gönderilir. Müşteri tekrar sipariş verdiği anda dizi otomatik olarak durur.",
+      "stepsReset": "Varsayılanlara sıfırla",
+      "stepsResetConfirm": "Tüm e-postalar varsayılan diziyle değiştirilsin mi?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace Listesi",

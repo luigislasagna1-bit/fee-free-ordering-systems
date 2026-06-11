@@ -2120,7 +2120,9 @@
       "stepAdd": "Pievienot vēl vienu e-pastu",
       "stepsSave": "Saglabāt secību",
       "stepsNeedOne": "Pievienojiet vismaz vienu e-pastu.",
-      "stepsHint": "Katrs e-pasts tiek nosūtīts vēlāk pēc pēdējā pasūtījuma, ar savu atlaidi. Secība automātiski apstājas, tiklīdz klients pasūta atkārtoti."
+      "stepsHint": "Katrs e-pasts tiek nosūtīts vēlāk pēc pēdējā pasūtījuma, ar savu atlaidi. Secība automātiski apstājas, tiklīdz klients pasūta atkārtoti.",
+      "stepsReset": "Atiestatīt uz noklusējumu",
+      "stepsResetConfirm": "Aizstāt visus e-pastus ar noklusējuma secību?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace ieraksts",

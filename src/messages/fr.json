@@ -2120,7 +2120,9 @@
       "stepAdd": "Ajouter un autre e-mail",
       "stepsSave": "Enregistrer la séquence",
       "stepsNeedOne": "Ajoutez au moins un e-mail.",
-      "stepsHint": "Chaque e-mail est envoyé plus tard après leur dernière commande, avec sa propre remise. La séquence s'arrête automatiquement dès qu'ils recommandent."
+      "stepsHint": "Chaque e-mail est envoyé plus tard après leur dernière commande, avec sa propre remise. La séquence s'arrête automatiquement dès qu'ils recommandent.",
+      "stepsReset": "Réinitialiser",
+      "stepsResetConfirm": "Remplacer tous les e-mails par la séquence par défaut ?"
     },
     "marketplaceSettings": {
       "pageTitle": "Fiche Marketplace",

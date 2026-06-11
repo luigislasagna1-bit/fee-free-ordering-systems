@@ -2120,7 +2120,9 @@
       "stepAdd": "添加另一封邮件",
       "stepsSave": "保存序列",
       "stepsNeedOne": "请至少添加一封邮件。",
-      "stepsHint": "每封邮件会在客户上次下单后更久才发送，并带有各自的折扣。一旦客户再次下单，序列会自动停止。"
+      "stepsHint": "每封邮件会在客户上次下单后更久才发送，并带有各自的折扣。一旦客户再次下单，序列会自动停止。",
+      "stepsReset": "恢复默认",
+      "stepsResetConfirm": "用默认序列替换所有邮件？"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace 上架",

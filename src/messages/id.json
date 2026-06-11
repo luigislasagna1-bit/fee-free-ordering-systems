@@ -2120,7 +2120,9 @@
       "stepAdd": "Tambah email lain",
       "stepsSave": "Simpan urutan",
       "stepsNeedOne": "Tambahkan setidaknya satu email.",
-      "stepsHint": "Setiap email dikirim lebih lama setelah pesanan terakhir mereka, dengan diskonnya sendiri. Urutan berhenti otomatis begitu mereka memesan lagi."
+      "stepsHint": "Setiap email dikirim lebih lama setelah pesanan terakhir mereka, dengan diskonnya sendiri. Urutan berhenti otomatis begitu mereka memesan lagi.",
+      "stepsReset": "Setel ulang ke default",
+      "stepsResetConfirm": "Ganti semua email dengan urutan default?"
     },
     "marketplaceSettings": {
       "pageTitle": "Listing Marketplace",

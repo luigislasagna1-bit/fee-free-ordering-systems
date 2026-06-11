@@ -2081,7 +2081,9 @@
       "stepAdd": "Dodaj kolejny e-mail",
       "stepsSave": "Zapisz sekwencję",
       "stepsNeedOne": "Dodaj co najmniej jeden e-mail.",
-      "stepsHint": "Każdy e-mail jest wysyłany później po ostatnim zamówieniu, z własnym rabatem. Sekwencja zatrzymuje się automatycznie, gdy klient ponownie złoży zamówienie."
+      "stepsHint": "Każdy e-mail jest wysyłany później po ostatnim zamówieniu, z własnym rabatem. Sekwencja zatrzymuje się automatycznie, gdy klient ponownie złoży zamówienie.",
+      "stepsReset": "Przywróć domyślne",
+      "stepsResetConfirm": "Zastąpić wszystkie e-maile domyślną sekwencją?"
     },
     "marketplaceSettings": {
       "pageTitle": "Listing w Marketplace",

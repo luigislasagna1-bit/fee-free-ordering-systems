@@ -2120,7 +2120,9 @@
       "stepAdd": "Lisää toinen sähköposti",
       "stepsSave": "Tallenna sarja",
       "stepsNeedOne": "Lisää vähintään yksi sähköposti.",
-      "stepsHint": "Jokainen sähköposti lähetetään myöhemmin viimeisestä tilauksesta, omalla alennuksellaan. Sarja pysähtyy automaattisesti heti, kun asiakas tilaa uudelleen."
+      "stepsHint": "Jokainen sähköposti lähetetään myöhemmin viimeisestä tilauksesta, omalla alennuksellaan. Sarja pysähtyy automaattisesti heti, kun asiakas tilaa uudelleen.",
+      "stepsReset": "Palauta oletukset",
+      "stepsResetConfirm": "Korvataanko kaikki sähköpostit oletussarjalla?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-listaus",

@@ -2120,7 +2120,9 @@
       "stepAdd": "Dodaj še eno e-sporočilo",
       "stepsSave": "Shrani zaporedje",
       "stepsNeedOne": "Dodajte vsaj eno e-sporočilo.",
-      "stepsHint": "Vsako e-sporočilo se pošlje pozneje po njihovem zadnjem naročilu, z lastnim popustom. Zaporedje se samodejno ustavi takoj, ko znova naročijo."
+      "stepsHint": "Vsako e-sporočilo se pošlje pozneje po njihovem zadnjem naročilu, z lastnim popustom. Zaporedje se samodejno ustavi takoj, ko znova naročijo.",
+      "stepsReset": "Ponastavi na privzeto",
+      "stepsResetConfirm": "Zamenjati vsa e-poštna sporočila s privzetim zaporedjem?"
     },
     "marketplaceSettings": {
       "pageTitle": "Uvrstitev na Marketplace",

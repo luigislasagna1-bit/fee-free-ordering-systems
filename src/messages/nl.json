@@ -2120,7 +2120,9 @@
       "stepAdd": "Nog een e-mail toevoegen",
       "stepsSave": "Reeks opslaan",
       "stepsNeedOne": "Voeg minstens één e-mail toe.",
-      "stepsHint": "Elke e-mail wordt later na hun laatste bestelling verzonden, met een eigen korting. De reeks stopt automatisch zodra ze opnieuw bestellen."
+      "stepsHint": "Elke e-mail wordt later na hun laatste bestelling verzonden, met een eigen korting. De reeks stopt automatisch zodra ze opnieuw bestellen.",
+      "stepsReset": "Standaard herstellen",
+      "stepsResetConfirm": "Alle e-mails vervangen door de standaardreeks?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-vermelding",

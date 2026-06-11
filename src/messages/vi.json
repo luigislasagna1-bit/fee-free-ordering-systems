@@ -2081,7 +2081,9 @@
       "stepAdd": "Thêm email khác",
       "stepsSave": "Lưu chuỗi",
       "stepsNeedOne": "Thêm ít nhất một email.",
-      "stepsHint": "Mỗi email được gửi xa hơn so với đơn hàng gần nhất của họ, kèm ưu đãi riêng. Chuỗi tự động dừng ngay khi họ đặt hàng lại."
+      "stepsHint": "Mỗi email được gửi xa hơn so với đơn hàng gần nhất của họ, kèm ưu đãi riêng. Chuỗi tự động dừng ngay khi họ đặt hàng lại.",
+      "stepsReset": "Đặt lại mặc định",
+      "stepsResetConfirm": "Thay tất cả email bằng chuỗi mặc định?"
     },
     "marketplaceSettings": {
       "pageTitle": "Danh Sách Marketplace",

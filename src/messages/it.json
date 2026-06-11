@@ -2120,7 +2120,9 @@
       "stepAdd": "Aggiungi un'altra email",
       "stepsSave": "Salva sequenza",
       "stepsNeedOne": "Aggiungi almeno un'email.",
-      "stepsHint": "Ogni email viene inviata più avanti rispetto all'ultimo ordine, con il proprio sconto. La sequenza si interrompe automaticamente non appena ordinano di nuovo."
+      "stepsHint": "Ogni email viene inviata più avanti rispetto all'ultimo ordine, con il proprio sconto. La sequenza si interrompe automaticamente non appena ordinano di nuovo.",
+      "stepsReset": "Ripristina predefiniti",
+      "stepsResetConfirm": "Sostituire tutte le email con la sequenza predefinita?"
     },
     "marketplaceSettings": {
       "pageTitle": "Scheda Marketplace",

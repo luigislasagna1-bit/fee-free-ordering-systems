@@ -2120,7 +2120,9 @@
       "stepAdd": "Lisa veel üks e-kiri",
       "stepsSave": "Salvesta jada",
       "stepsNeedOne": "Lisa vähemalt üks e-kiri.",
-      "stepsHint": "Iga e-kiri saadetakse viimasest tellimusest hiljem, oma allahindlusega. Jada peatub automaatselt niipea, kui klient uuesti tellib."
+      "stepsHint": "Iga e-kiri saadetakse viimasest tellimusest hiljem, oma allahindlusega. Jada peatub automaatselt niipea, kui klient uuesti tellib.",
+      "stepsReset": "Lähtesta vaikeväärtustele",
+      "stepsResetConfirm": "Asendada kõik e-kirjad vaikejadaga?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace'i kuulutus",

@@ -2081,7 +2081,9 @@
       "stepAdd": "Másik e-mail hozzáadása",
       "stepsSave": "Sorozat mentése",
       "stepsNeedOne": "Adjon hozzá legalább egy e-mailt.",
-      "stepsHint": "Minden e-mail később megy ki az utolsó rendeléshez képest, saját kedvezménnyel. A sorozat automatikusan leáll, amint újra rendelnek."
+      "stepsHint": "Minden e-mail később megy ki az utolsó rendeléshez képest, saját kedvezménnyel. A sorozat automatikusan leáll, amint újra rendelnek.",
+      "stepsReset": "Alapértékek visszaállítása",
+      "stepsResetConfirm": "Lecseréli az összes e-mailt az alapértelmezett sorozatra?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace listázás",

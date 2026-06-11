@@ -2120,7 +2120,9 @@
       "stepAdd": "Legg til en e-post til",
       "stepsSave": "Lagre sekvens",
       "stepsNeedOne": "Legg til minst én e-post.",
-      "stepsHint": "Hver e-post sendes lenger etter den siste bestillingen, med sin egen rabatt. Sekvensen stopper automatisk så snart de bestiller igjen."
+      "stepsHint": "Hver e-post sendes lenger etter den siste bestillingen, med sin egen rabatt. Sekvensen stopper automatisk så snart de bestiller igjen.",
+      "stepsReset": "Tilbakestill til standard",
+      "stepsResetConfirm": "Erstatte alle e-poster med standardsekvensen?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-oppføring",

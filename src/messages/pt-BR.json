@@ -2120,7 +2120,9 @@
       "stepAdd": "Adicionar outro e-mail",
       "stepsSave": "Salvar sequência",
       "stepsNeedOne": "Adicione pelo menos um e-mail.",
-      "stepsHint": "Cada e-mail é enviado mais tarde após o último pedido, com seu próprio desconto. A sequência para automaticamente assim que o cliente pede de novo."
+      "stepsHint": "Cada e-mail é enviado mais tarde após o último pedido, com seu próprio desconto. A sequência para automaticamente assim que o cliente pede de novo.",
+      "stepsReset": "Restaurar padrões",
+      "stepsResetConfirm": "Substituir todos os e-mails pela sequência padrão?"
     },
     "marketplaceSettings": {
       "pageTitle": "Listagem no Marketplace",

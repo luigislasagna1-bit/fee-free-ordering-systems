@@ -2120,7 +2120,9 @@
       "stepAdd": "Dodaj još jednu e-poruku",
       "stepsSave": "Spremi niz",
       "stepsNeedOne": "Dodajte barem jednu e-poruku.",
-      "stepsHint": "Svaka se e-poruka šalje kasnije od njihove zadnje narudžbe, s vlastitim popustom. Niz se automatski zaustavlja čim ponovno naruče."
+      "stepsHint": "Svaka se e-poruka šalje kasnije od njihove zadnje narudžbe, s vlastitim popustom. Niz se automatski zaustavlja čim ponovno naruče.",
+      "stepsReset": "Vrati zadano",
+      "stepsResetConfirm": "Zamijeniti sve e-poruke zadanim nizom?"
     },
     "marketplaceSettings": {
       "pageTitle": "Oglas na Marketplaceu",

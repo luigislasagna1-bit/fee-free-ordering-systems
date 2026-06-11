@@ -2120,7 +2120,9 @@
       "stepAdd": "Weitere E-Mail hinzufügen",
       "stepsSave": "Sequenz speichern",
       "stepsNeedOne": "Fügen Sie mindestens eine E-Mail hinzu.",
-      "stepsHint": "Jede E-Mail wird später nach der letzten Bestellung gesendet, mit eigenem Rabatt. Die Sequenz stoppt automatisch, sobald wieder bestellt wird."
+      "stepsHint": "Jede E-Mail wird später nach der letzten Bestellung gesendet, mit eigenem Rabatt. Die Sequenz stoppt automatisch, sobald wieder bestellt wird.",
+      "stepsReset": "Auf Standard zurücksetzen",
+      "stepsResetConfirm": "Alle E-Mails durch die Standardsequenz ersetzen?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-Eintrag",

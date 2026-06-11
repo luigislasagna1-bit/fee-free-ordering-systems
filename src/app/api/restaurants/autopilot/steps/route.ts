@@ -27,8 +27,11 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "campaignType must be reengagement or second_order" }, { status: 400 });
   }
   const persisted = await getSteps(restaurantId, type);
-  const steps = persisted.length ? persisted : defaultSteps(type);
-  return NextResponse.json({ steps });
+  const defaults = defaultSteps(type);
+  const steps = persisted.length ? persisted : defaults;
+  // Hand the editor the default template ladder too, so "Add another email"
+  // restores that tier's default copy and "Reset to defaults" works offline.
+  return NextResponse.json({ steps, defaults });
 }
 
 export async function PUT(req: NextRequest) {

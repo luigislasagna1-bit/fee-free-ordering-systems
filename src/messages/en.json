@@ -2474,7 +2474,9 @@
       "stepAdd": "Add another email",
       "stepsSave": "Save sequence",
       "stepsNeedOne": "Add at least one email.",
-      "stepsHint": "Each email goes out further from their last order, with its own discount. The sequence stops automatically the moment they order again."
+      "stepsHint": "Each email goes out further from their last order, with its own discount. The sequence stops automatically the moment they order again.",
+      "stepsReset": "Reset to defaults",
+      "stepsResetConfirm": "Replace all emails with the default sequence?"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace Listing",

@@ -2785,7 +2785,9 @@
       "stepAdd": "Pridať ďalší e-mail",
       "stepsSave": "Uložiť sekvenciu",
       "stepsNeedOne": "Pridajte aspoň jeden e-mail.",
-      "stepsHint": "Každý e-mail sa odošle neskôr po poslednej objednávke, s vlastnou zľavou. Sekvencia sa automaticky zastaví, hneď ako zákazník znova objedná."
+      "stepsHint": "Každý e-mail sa odošle neskôr po poslednej objednávke, s vlastnou zľavou. Sekvencia sa automaticky zastaví, hneď ako zákazník znova objedná.",
+      "stepsReset": "Obnoviť predvolené",
+      "stepsResetConfirm": "Nahradiť všetky e-maily predvolenou sekvenciou?"
     },
     "marketplaceSettings": {
       "pageTitle": "Záznam na Marketplace",
