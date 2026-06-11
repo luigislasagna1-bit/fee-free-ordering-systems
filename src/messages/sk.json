@@ -3655,7 +3655,9 @@
       "savedFlyers": "Uložené letáky",
       "flyerSaved": "Leták uložený",
       "needLinkFirst": "Najprv vytvorte inteligentný odkaz — leták ho potrebuje pre QR.",
-      "printHint": "Váš leták je pripravený — na tlač alebo uloženie do PDF použite dialóg tlače prehliadača."
+      "printHint": "Váš leták je pripravený — na tlač alebo uloženie do PDF použite dialóg tlače prehliadača.",
+      "scansOverTime": "Skeny (posledných 30 dní)",
+      "noScansYet": "Zatiaľ žiadne skeny"
     }
   },
   "impersonation": {

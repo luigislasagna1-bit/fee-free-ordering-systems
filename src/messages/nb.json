@@ -3655,7 +3655,9 @@
       "savedFlyers": "Lagrede flygeblader",
       "flyerSaved": "Flygeblad lagret",
       "needLinkFirst": "Lag en smartlenke først — et flygeblad trenger den til QR-koden.",
-      "printHint": "Flygebladet ditt er klart — bruk nettleserens utskriftsdialog for å skrive ut eller lagre som PDF."
+      "printHint": "Flygebladet ditt er klart — bruk nettleserens utskriftsdialog for å skrive ut eller lagre som PDF.",
+      "scansOverTime": "Skanninger (siste 30 dager)",
+      "noScansYet": "Ingen skanninger ennå"
     }
   },
   "impersonation": {

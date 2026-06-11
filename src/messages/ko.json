@@ -3655,7 +3655,9 @@
       "savedFlyers": "저장된 전단지",
       "flyerSaved": "전단지가 저장되었습니다",
       "needLinkFirst": "먼저 스마트 링크를 만드세요 — 전단지의 QR에 필요합니다.",
-      "printHint": "전단지가 준비되었습니다 — 브라우저의 인쇄 대화상자를 사용해 인쇄하거나 PDF로 저장하세요."
+      "printHint": "전단지가 준비되었습니다 — 브라우저의 인쇄 대화상자를 사용해 인쇄하거나 PDF로 저장하세요.",
+      "scansOverTime": "스캔 (최근 30일)",
+      "noScansYet": "아직 스캔이 없습니다"
     }
   },
   "impersonation": {

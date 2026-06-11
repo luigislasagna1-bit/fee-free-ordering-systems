@@ -3655,7 +3655,9 @@
       "savedFlyers": "Shranjeni letaki",
       "flyerSaved": "Letak shranjen",
       "needLinkFirst": "Najprej ustvarite pametno povezavo — letak jo potrebuje za svojo kodo QR.",
-      "printHint": "Vaš letak je pripravljen — za tiskanje ali shranjevanje v PDF uporabite pogovorno okno za tiskanje brskalnika."
+      "printHint": "Vaš letak je pripravljen — za tiskanje ali shranjevanje v PDF uporabite pogovorno okno za tiskanje brskalnika.",
+      "scansOverTime": "Skeniranja (zadnjih 30 dni)",
+      "noScansYet": "Še ni skeniranj"
     }
   },
   "impersonation": {

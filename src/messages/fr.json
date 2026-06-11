@@ -3655,7 +3655,9 @@
       "savedFlyers": "Prospectus enregistrés",
       "flyerSaved": "Prospectus enregistré",
       "needLinkFirst": "Créez d'abord un lien intelligent — un prospectus en a besoin pour son QR.",
-      "printHint": "Votre prospectus est prêt — utilisez la boîte d'impression de votre navigateur pour imprimer ou enregistrer en PDF."
+      "printHint": "Votre prospectus est prêt — utilisez la boîte d'impression de votre navigateur pour imprimer ou enregistrer en PDF.",
+      "scansOverTime": "Scans (30 derniers jours)",
+      "noScansYet": "Aucun scan pour l'instant"
     }
   },
   "impersonation": {

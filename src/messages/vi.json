@@ -3655,7 +3655,9 @@
       "savedFlyers": "Tờ rơi đã lưu",
       "flyerSaved": "Đã lưu tờ rơi",
       "needLinkFirst": "Hãy tạo một liên kết thông minh trước — tờ rơi cần nó cho mã QR.",
-      "printHint": "Tờ rơi của bạn đã sẵn sàng — dùng hộp thoại in của trình duyệt để in hoặc lưu PDF."
+      "printHint": "Tờ rơi của bạn đã sẵn sàng — dùng hộp thoại in của trình duyệt để in hoặc lưu PDF.",
+      "scansOverTime": "Lượt quét (30 ngày qua)",
+      "noScansYet": "Chưa có lượt quét"
     }
   },
   "impersonation": {

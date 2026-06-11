@@ -3655,7 +3655,9 @@
       "savedFlyers": "Fullets desats",
       "flyerSaved": "Fullet desat",
       "needLinkFirst": "Crea primer un enllaç intel·ligent — el fullet el necessita per al seu QR.",
-      "printHint": "El teu fullet està a punt — fes servir el quadre d'impressió del navegador per imprimir o desar com a PDF."
+      "printHint": "El teu fullet està a punt — fes servir el quadre d'impressió del navegador per imprimir o desar com a PDF.",
+      "scansOverTime": "Escanejos (últims 30 dies)",
+      "noScansYet": "Encara no hi ha escanejos"
     }
   },
   "impersonation": {

@@ -3655,7 +3655,9 @@
       "savedFlyers": "Pliante salvate",
       "flyerSaved": "Pliant salvat",
       "needLinkFirst": "Creează mai întâi un link inteligent — pliantul are nevoie de el pentru QR.",
-      "printHint": "Pliantul tău este gata — folosește dialogul de printare al browserului pentru a printa sau salva ca PDF."
+      "printHint": "Pliantul tău este gata — folosește dialogul de printare al browserului pentru a printa sau salva ca PDF.",
+      "scansOverTime": "Scanări (ultimele 30 de zile)",
+      "noScansYet": "Încă nicio scanare"
     }
   },
   "impersonation": {

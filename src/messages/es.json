@@ -3655,7 +3655,9 @@
       "savedFlyers": "Folletos guardados",
       "flyerSaved": "Folleto guardado",
       "needLinkFirst": "Primero crea un enlace inteligente — el folleto lo necesita para su QR.",
-      "printHint": "Tu folleto está listo — usa el cuadro de impresión del navegador para imprimir o guardar en PDF."
+      "printHint": "Tu folleto está listo — usa el cuadro de impresión del navegador para imprimir o guardar en PDF.",
+      "scansOverTime": "Escaneos (últimos 30 días)",
+      "noScansYet": "Aún no hay escaneos"
     }
   },
   "impersonation": {

@@ -3655,7 +3655,9 @@
       "savedFlyers": "已保存的传单",
       "flyerSaved": "传单已保存",
       "needLinkFirst": "请先创建一个智能链接——传单的二维码需要它。",
-      "printHint": "您的传单已就绪——使用浏览器的打印对话框来打印或另存为 PDF。"
+      "printHint": "您的传单已就绪——使用浏览器的打印对话框来打印或另存为 PDF。",
+      "scansOverTime": "扫描（最近30天）",
+      "noScansYet": "暂无扫描"
     }
   },
   "impersonation": {

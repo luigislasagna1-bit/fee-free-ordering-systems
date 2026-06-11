@@ -3655,7 +3655,9 @@
       "savedFlyers": "Zapisane ulotki",
       "flyerSaved": "Ulotka zapisana",
       "needLinkFirst": "Najpierw utwórz inteligentny link — ulotka potrzebuje go do swojego QR.",
-      "printHint": "Twoja ulotka jest gotowa — użyj okna drukowania przeglądarki, aby wydrukować lub zapisać jako PDF."
+      "printHint": "Twoja ulotka jest gotowa — użyj okna drukowania przeglądarki, aby wydrukować lub zapisać jako PDF.",
+      "scansOverTime": "Skany (ostatnie 30 dni)",
+      "noScansYet": "Brak skanów"
     }
   },
   "impersonation": {

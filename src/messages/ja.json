@@ -3655,7 +3655,9 @@
       "savedFlyers": "保存したチラシ",
       "flyerSaved": "チラシを保存しました",
       "needLinkFirst": "まずスマートリンクを作成してください — チラシのQRに必要です。",
-      "printHint": "チラシの準備ができました — ブラウザの印刷ダイアログから印刷またはPDFで保存してください。"
+      "printHint": "チラシの準備ができました — ブラウザの印刷ダイアログから印刷またはPDFで保存してください。",
+      "scansOverTime": "スキャン（過去30日）",
+      "noScansYet": "スキャンはまだありません"
     }
   },
   "impersonation": {

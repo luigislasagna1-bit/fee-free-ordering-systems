@@ -3655,7 +3655,9 @@
       "savedFlyers": "Selebaran tersimpan",
       "flyerSaved": "Selebaran disimpan",
       "needLinkFirst": "Buat tautan pintar dulu — selebaran membutuhkannya untuk QR.",
-      "printHint": "Selebaran Anda siap — gunakan dialog cetak browser untuk mencetak atau menyimpan sebagai PDF."
+      "printHint": "Selebaran Anda siap — gunakan dialog cetak browser untuk mencetak atau menyimpan sebagai PDF.",
+      "scansOverTime": "Pemindaian (30 hari terakhir)",
+      "noScansYet": "Belum ada pemindaian"
     }
   },
   "impersonation": {

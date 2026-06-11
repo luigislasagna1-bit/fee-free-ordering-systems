@@ -3655,7 +3655,9 @@
       "savedFlyers": "Gespeicherte Flyer",
       "flyerSaved": "Flyer gespeichert",
       "needLinkFirst": "Erstellen Sie zuerst einen Smart-Link — ein Flyer braucht ihn für den QR.",
-      "printHint": "Ihr Flyer ist fertig — nutzen Sie den Druckdialog Ihres Browsers zum Drucken oder als PDF zu speichern."
+      "printHint": "Ihr Flyer ist fertig — nutzen Sie den Druckdialog Ihres Browsers zum Drucken oder als PDF zu speichern.",
+      "scansOverTime": "Scans (letzte 30 Tage)",
+      "noScansYet": "Noch keine Scans"
     }
   },
   "impersonation": {

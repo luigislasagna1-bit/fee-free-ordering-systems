@@ -3655,7 +3655,9 @@
       "savedFlyers": "Gemte foldere",
       "flyerSaved": "Folder gemt",
       "needLinkFirst": "Opret først et smart link — en folder skal bruge det til sin QR.",
-      "printHint": "Din folder er klar — brug browserens udskriftsdialog for at udskrive eller gemme som PDF."
+      "printHint": "Din folder er klar — brug browserens udskriftsdialog for at udskrive eller gemme som PDF.",
+      "scansOverTime": "Scanninger (seneste 30 dage)",
+      "noScansYet": "Ingen scanninger endnu"
     }
   },
   "impersonation": {

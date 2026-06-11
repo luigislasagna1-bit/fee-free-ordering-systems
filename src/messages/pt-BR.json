@@ -3655,7 +3655,9 @@
       "savedFlyers": "Panfletos salvos",
       "flyerSaved": "Panfleto salvo",
       "needLinkFirst": "Crie primeiro um link inteligente — o panfleto precisa dele para o QR.",
-      "printHint": "Seu panfleto está pronto — use a caixa de impressão do navegador para imprimir ou salvar em PDF."
+      "printHint": "Seu panfleto está pronto — use a caixa de impressão do navegador para imprimir ou salvar em PDF.",
+      "scansOverTime": "Leituras (últimos 30 dias)",
+      "noScansYet": "Ainda sem leituras"
     }
   },
   "impersonation": {

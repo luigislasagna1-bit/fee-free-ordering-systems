@@ -3655,7 +3655,9 @@
       "savedFlyers": "Sparade flygblad",
       "flyerSaved": "Flygblad sparat",
       "needLinkFirst": "Skapa först en smart länk — flygbladet behöver den för sin QR.",
-      "printHint": "Ditt flygblad är klart — använd webbläsarens utskriftsdialog för att skriva ut eller spara som PDF."
+      "printHint": "Ditt flygblad är klart — använd webbläsarens utskriftsdialog för att skriva ut eller spara som PDF.",
+      "scansOverTime": "Skanningar (senaste 30 dagarna)",
+      "noScansYet": "Inga skanningar ännu"
     }
   },
   "impersonation": {

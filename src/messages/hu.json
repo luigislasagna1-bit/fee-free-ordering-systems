@@ -3655,7 +3655,9 @@
       "savedFlyers": "Mentett szórólapok",
       "flyerSaved": "Szórólap mentve",
       "needLinkFirst": "Először hozzon létre egy okos linket — a szórólapnak szüksége van rá a QR-hez.",
-      "printHint": "A szórólap kész — a nyomtatáshoz vagy PDF-mentéshez használja a böngésző nyomtatási ablakát."
+      "printHint": "A szórólap kész — a nyomtatáshoz vagy PDF-mentéshez használja a böngésző nyomtatási ablakát.",
+      "scansOverTime": "Beolvasások (utolsó 30 nap)",
+      "noScansYet": "Még nincs beolvasás"
     }
   },
   "impersonation": {

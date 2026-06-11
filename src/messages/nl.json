@@ -3655,7 +3655,9 @@
       "savedFlyers": "Opgeslagen flyers",
       "flyerSaved": "Flyer opgeslagen",
       "needLinkFirst": "Maak eerst een slimme link — een flyer heeft die nodig voor de QR.",
-      "printHint": "Je flyer is klaar — gebruik het printvenster van je browser om af te drukken of op te slaan als pdf."
+      "printHint": "Je flyer is klaar — gebruik het printvenster van je browser om af te drukken of op te slaan als pdf.",
+      "scansOverTime": "Scans (laatste 30 dagen)",
+      "noScansYet": "Nog geen scans"
     }
   },
   "impersonation": {

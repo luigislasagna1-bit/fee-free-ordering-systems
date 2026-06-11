@@ -122,7 +122,7 @@ export function MarketingStudioClient({ currency, initialLinks }: { currency: st
               <div className="flex items-start justify-between gap-3 flex-wrap">
                 <div className="min-w-0">
                   <div className="font-semibold text-gray-900 flex items-center gap-2">
-                    {l.name}
+                    <Link href={`/admin/marketing-studio/${l.id}`} className="hover:text-emerald-600">{l.name}</Link>
                     {!l.isActive && <span className="text-xs font-medium text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">{tc("off")}</span>}
                   </div>
                   <button

@@ -3655,7 +3655,9 @@
       "savedFlyers": "Tallennetut esitteet",
       "flyerSaved": "Esite tallennettu",
       "needLinkFirst": "Luo ensin älylinkki — esite tarvitsee sen QR:ää varten.",
-      "printHint": "Esitteesi on valmis — käytä selaimen tulostusvalintaikkunaa tulostamiseen tai PDF:ksi tallentamiseen."
+      "printHint": "Esitteesi on valmis — käytä selaimen tulostusvalintaikkunaa tulostamiseen tai PDF:ksi tallentamiseen.",
+      "scansOverTime": "Skannaukset (viimeiset 30 päivää)",
+      "noScansYet": "Ei vielä skannauksia"
     }
   },
   "impersonation": {

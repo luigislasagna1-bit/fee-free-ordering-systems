@@ -3655,7 +3655,9 @@
       "savedFlyers": "Salvestatud flaierid",
       "flyerSaved": "Flaier salvestatud",
       "needLinkFirst": "Loo kõigepealt nutilink — flaier vajab seda oma QR-i jaoks.",
-      "printHint": "Sinu flaier on valmis — kasuta brauseri printimisdialoogi printimiseks või PDF-ina salvestamiseks."
+      "printHint": "Sinu flaier on valmis — kasuta brauseri printimisdialoogi printimiseks või PDF-ina salvestamiseks.",
+      "scansOverTime": "Skannimised (viimased 30 päeva)",
+      "noScansYet": "Skannimisi veel pole"
     }
   },
   "impersonation": {

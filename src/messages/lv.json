@@ -3655,7 +3655,9 @@
       "savedFlyers": "Saglabātie bukleti",
       "flyerSaved": "Buklets saglabāts",
       "needLinkFirst": "Vispirms izveidojiet viedo saiti — bukletam tā nepieciešama QR kodam.",
-      "printHint": "Jūsu buklets ir gatavs — izmantojiet pārlūka drukāšanas dialogu, lai drukātu vai saglabātu kā PDF."
+      "printHint": "Jūsu buklets ir gatavs — izmantojiet pārlūka drukāšanas dialogu, lai drukātu vai saglabātu kā PDF.",
+      "scansOverTime": "Skenēšanas (pēdējās 30 dienas)",
+      "noScansYet": "Pagaidām nav skenēšanu"
     }
   },
   "impersonation": {
