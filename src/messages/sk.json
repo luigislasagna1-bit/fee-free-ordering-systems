@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Vaša webová stránka",
       "footerTextLabel": "Ďalší text (pod QR)",
       "footerTextPlaceholder": "Voliteľný ďalší riadok"
+    },
+    "featureLocked": {
+      "badge": "Platený doplnok",
+      "subtitle": "Táto prémiová funkcia nie je súčasťou vášho aktuálneho plánu. Predplaťte si doplnok a odomknite ju pre svoju reštauráciu.",
+      "cta": "Odomknúť tento doplnok",
+      "footerNote": "Fakturácia prebieha bezpečne cez Stripe. Zrušiť môžete kedykoľvek."
     }
   },
   "impersonation": {

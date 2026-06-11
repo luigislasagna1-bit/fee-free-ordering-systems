@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Vaša web-stranica",
       "footerTextLabel": "Dodatni tekst (ispod QR-a)",
       "footerTextPlaceholder": "Neobavezni dodatni redak"
+    },
+    "featureLocked": {
+      "badge": "Plaćeni dodatak",
+      "subtitle": "Ova premium značajka nije uključena u vaš trenutni plan. Pretplatite se na dodatak da biste je otključali za svoj restoran.",
+      "cta": "Otključaj ovaj dodatak",
+      "footerNote": "Naplata se sigurno obrađuje putem Stripea. Otkažite bilo kada."
     }
   },
   "impersonation": {

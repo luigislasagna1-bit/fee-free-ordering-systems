@@ -51,7 +51,14 @@ export type Feature =
    *  active, sendSms() short-circuits to a no-op even when Twilio
    *  env vars are configured platform-wide. Granted by the
    *  `customer_sms` add-on. */
-  | "customer_sms";
+  | "customer_sms"
+  /** Marketing Studio — trackable QR codes, smart links, and branded
+   *  flyers/posters with scan→order→revenue analytics. Granted by the
+   *  `marketing_studio` add-on. Free accounts see a locked upsell. */
+  | "marketing_studio"
+  /** Kickstarter launch-campaign tools. Granted by the `kickstarter`
+   *  add-on. Free accounts see a locked upsell. */
+  | "kickstarter";
 
 /** Statuses on RestaurantAddOn that grant entitlements. past_due / cancelled
  *  / incomplete subscriptions do NOT grant access — the feature drops the
@@ -147,4 +154,7 @@ export const ALL_FEATURES: readonly Feature[] = [
   "marketplace_listing",
   "driver_pool",
   "advanced_promo_types",
+  "customer_sms",
+  "marketing_studio",
+  "kickstarter",
 ];

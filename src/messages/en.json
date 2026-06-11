@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Your website",
       "footerTextLabel": "Extra text (under QR)",
       "footerTextPlaceholder": "Optional extra line"
+    },
+    "featureLocked": {
+      "badge": "Paid add-on",
+      "subtitle": "This premium feature isn't included on your current plan. Subscribe to the add-on to unlock it for your restaurant.",
+      "cta": "Unlock this add-on",
+      "footerNote": "Billing is handled securely through Stripe. Cancel anytime."
     }
   },
   "impersonation": {

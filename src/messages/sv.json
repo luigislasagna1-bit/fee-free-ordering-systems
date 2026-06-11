@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Din webbplats",
       "footerTextLabel": "Extra text (under QR)",
       "footerTextPlaceholder": "Valfri extra rad"
+    },
+    "featureLocked": {
+      "badge": "Betalt tillägg",
+      "subtitle": "Den här premiumfunktionen ingår inte i din nuvarande plan. Prenumerera på tillägget för att låsa upp den för din restaurang.",
+      "cta": "Lås upp detta tillägg",
+      "footerNote": "Faktureringen hanteras säkert via Stripe. Avbryt när som helst."
     }
   },
   "impersonation": {

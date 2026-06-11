@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Web siteniz",
       "footerTextLabel": "Ek metin (QR'ın altında)",
       "footerTextPlaceholder": "İsteğe bağlı ek satır"
+    },
+    "featureLocked": {
+      "badge": "Ücretli eklenti",
+      "subtitle": "Bu premium özellik mevcut planınıza dahil değil. Restoranınız için kilidini açmak üzere eklentiye abone olun.",
+      "cta": "Bu eklentinin kilidini aç",
+      "footerNote": "Faturalandırma Stripe üzerinden güvenle yapılır. İstediğiniz zaman iptal edin."
     }
   },
   "impersonation": {

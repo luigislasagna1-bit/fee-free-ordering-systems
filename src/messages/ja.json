@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "ウェブサイト",
       "footerTextLabel": "追加テキスト（QRの下）",
       "footerTextPlaceholder": "任意の追加行"
+    },
+    "featureLocked": {
+      "badge": "有料アドオン",
+      "subtitle": "このプレミアム機能は現在のプランには含まれていません。アドオンを購読してレストランで利用できるようにしましょう。",
+      "cta": "このアドオンを解除",
+      "footerNote": "請求は Stripe を通じて安全に処理されます。いつでもキャンセルできます。"
     }
   },
   "impersonation": {

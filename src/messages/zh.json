@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "您的网站",
       "footerTextLabel": "附加文字（二维码下方）",
       "footerTextPlaceholder": "可选的额外文字"
+    },
+    "featureLocked": {
+      "badge": "付费附加功能",
+      "subtitle": "此高级功能不包含在您当前的套餐中。订阅此附加功能即可为您的餐厅解锁。",
+      "cta": "解锁此附加功能",
+      "footerNote": "账单通过 Stripe 安全处理。随时可取消。"
     }
   },
   "impersonation": {

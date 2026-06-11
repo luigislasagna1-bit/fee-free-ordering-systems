@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Sinu veebisait",
       "footerTextLabel": "Lisatekst (QR-koodi all)",
       "footerTextPlaceholder": "Valikuline lisarida"
+    },
+    "featureLocked": {
+      "badge": "Tasuline lisa",
+      "subtitle": "See lisafunktsioon ei sisaldu teie praeguses paketis. Tellige lisa, et see oma restorani jaoks avada.",
+      "cta": "Ava see lisa",
+      "footerNote": "Arveldus toimub turvaliselt Stripe'i kaudu. Tühista igal ajal."
     }
   },
   "impersonation": {

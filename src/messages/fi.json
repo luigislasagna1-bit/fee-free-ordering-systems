@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Verkkosivustosi",
       "footerTextLabel": "Lisäteksti (QR:n alla)",
       "footerTextPlaceholder": "Valinnainen lisärivi"
+    },
+    "featureLocked": {
+      "badge": "Maksullinen lisäosa",
+      "subtitle": "Tämä premium-ominaisuus ei sisälly nykyiseen tilaukseesi. Tilaa lisäosa avataksesi sen ravintolallesi.",
+      "cta": "Avaa tämä lisäosa",
+      "footerNote": "Laskutus hoidetaan turvallisesti Stripen kautta. Peru milloin tahansa."
     }
   },
   "impersonation": {

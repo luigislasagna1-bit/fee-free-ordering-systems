@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Site-ul tău web",
       "footerTextLabel": "Text suplimentar (sub QR)",
       "footerTextPlaceholder": "Rând suplimentar (opțional)"
+    },
+    "featureLocked": {
+      "badge": "Supliment cu plată",
+      "subtitle": "Această funcție premium nu este inclusă în planul tău actual. Abonează-te la supliment pentru a o debloca pentru restaurantul tău.",
+      "cta": "Deblochează acest supliment",
+      "footerNote": "Facturarea este gestionată în siguranță prin Stripe. Anulează oricând."
     }
   },
   "impersonation": {

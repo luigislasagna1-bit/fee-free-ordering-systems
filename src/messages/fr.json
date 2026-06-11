@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Votre site web",
       "footerTextLabel": "Texte supplémentaire (sous le QR)",
       "footerTextPlaceholder": "Ligne supplémentaire (facultatif)"
+    },
+    "featureLocked": {
+      "badge": "Module payant",
+      "subtitle": "Cette fonctionnalité premium n'est pas incluse dans votre forfait actuel. Abonnez-vous au module pour la débloquer pour votre restaurant.",
+      "cta": "Débloquer ce module",
+      "footerNote": "La facturation est gérée en toute sécurité via Stripe. Annulez à tout moment."
     }
   },
   "impersonation": {

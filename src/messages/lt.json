@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Jūsų svetainė",
       "footerTextLabel": "Papildomas tekstas (po QR)",
       "footerTextPlaceholder": "Neprivaloma papildoma eilutė"
+    },
+    "featureLocked": {
+      "badge": "Mokamas priedas",
+      "subtitle": "Ši aukščiausios klasės funkcija neįtraukta į jūsų dabartinį planą. Užsiprenumeruokite priedą, kad atrakintumėte ją savo restoranui.",
+      "cta": "Atrakinti šį priedą",
+      "footerNote": "Atsiskaitymai saugiai tvarkomi per Stripe. Atšaukite bet kada."
     }
   },
   "impersonation": {

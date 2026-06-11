@@ -15,7 +15,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { loadSetupProgress } from "@/lib/setup-checklist-loader";
 import type { SetupProgress } from "@/lib/setup-checklist";
-import { hasFeature } from "@/lib/entitlements";
+import { getEntitlements } from "@/lib/entitlements";
 import { CurrencyProvider } from "@/lib/currency-context";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -46,6 +46,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   let restaurantCurrency = "usd";
   let setupProgress: SetupProgress | null = null;
   let hasHostedSite = false;
+  /** Full set of unlocked feature slugs — drives the sidebar lock icons on
+   *  paid marketing items (Marketplace / Autopilot / Marketing Studio /
+   *  Kickstarter). Empty for free accounts. */
+  let entitlements: string[] = [];
   /** True iff Restaurant.publishedAt is set — hides the "Ready to publish"
    *  sidebar chip once the restaurant is actually live. */
   let isPublished = false;
@@ -123,13 +127,18 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       setupProgress = null;
     }
 
-    // Resolve the hosted-marketing-page entitlement so the sidebar can
-    // gate the Website Editor link. Failure here is also non-fatal —
-    // the link just stays hidden, which is the safe default.
+    // Resolve the restaurant's full entitlement set ONCE here (single Prisma
+    // round-trip) so the sidebar can both hide the Website Editor link
+    // (hosted_marketing_page) and lock paid marketing items (requiresFeature).
+    // Failure is non-fatal — an empty set means "free account", the safe
+    // default (everything paid stays locked).
     try {
-      hasHostedSite = await hasFeature(restaurantId, "hosted_marketing_page");
+      const ent = await getEntitlements(restaurantId);
+      entitlements = [...ent];
+      hasHostedSite = ent.has("hosted_marketing_page");
     } catch (err) {
-      console.error("[admin-layout] hasFeature(hosted_marketing_page) failed", err);
+      console.error("[admin-layout] getEntitlements failed", err);
+      entitlements = [];
       hasHostedSite = false;
     }
 
@@ -251,6 +260,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               pendingOrders={pendingOrders}
               setupProgress={setupProgress}
               hasHostedSite={hasHostedSite}
+              entitlements={entitlements}
               isPublished={isPublished}
             />
             <div className="flex-1 flex flex-col overflow-hidden">

@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Situs web Anda",
       "footerTextLabel": "Teks tambahan (di bawah QR)",
       "footerTextPlaceholder": "Baris tambahan (opsional)"
+    },
+    "featureLocked": {
+      "badge": "Add-on berbayar",
+      "subtitle": "Fitur premium ini tidak termasuk dalam paket Anda saat ini. Berlangganan add-on untuk membukanya bagi restoran Anda.",
+      "cta": "Buka add-on ini",
+      "footerNote": "Penagihan ditangani dengan aman melalui Stripe. Batalkan kapan saja."
     }
   },
   "impersonation": {

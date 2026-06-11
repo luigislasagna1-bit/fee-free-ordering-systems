@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Deine Website",
       "footerTextLabel": "Zusätzlicher Text (unter dem QR)",
       "footerTextPlaceholder": "Optionale Zusatzzeile"
+    },
+    "featureLocked": {
+      "badge": "Kostenpflichtiges Add-on",
+      "subtitle": "Diese Premium-Funktion ist in Ihrem aktuellen Tarif nicht enthalten. Abonnieren Sie das Add-on, um sie für Ihr Restaurant freizuschalten.",
+      "cta": "Dieses Add-on freischalten",
+      "footerNote": "Die Abrechnung erfolgt sicher über Stripe. Jederzeit kündbar."
     }
   },
   "impersonation": {

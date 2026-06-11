@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Twoja strona internetowa",
       "footerTextLabel": "Dodatkowy tekst (pod QR)",
       "footerTextPlaceholder": "Opcjonalny dodatkowy wiersz"
+    },
+    "featureLocked": {
+      "badge": "Płatny dodatek",
+      "subtitle": "Ta funkcja premium nie jest objęta Twoim obecnym planem. Subskrybuj dodatek, aby odblokować ją dla swojej restauracji.",
+      "cta": "Odblokuj ten dodatek",
+      "footerNote": "Płatności są obsługiwane bezpiecznie przez Stripe. Anuluj w dowolnym momencie."
     }
   },
   "impersonation": {

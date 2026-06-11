@@ -137,7 +137,7 @@ async function main() {
       slug: "advanced_promos",
       name: "Advanced Promo Marketing",
       description:
-        "Unlocks 8 advanced promo types: payment-method reward, free item, meal bundle, buy-N-get-free, free dish as part of meal, fixed/percentage discount on combo, meal bundle with speciality. Plus customer segmentation and automated marketing campaigns (Kickstarter + Autopilot).",
+        "Unlocks 8 advanced promo types: payment-method reward, free item, meal bundle, buy-N-get-free, free dish as part of meal, fixed/percentage discount on combo, meal bundle with speciality. Plus customer segmentation and automated marketing campaigns (Autopilot).",
       monthlyPriceCents: 1999, // $19.99/mo
       displayOrder: 40,
       enabledFeatures: [
@@ -254,6 +254,33 @@ async function main() {
       monthlyPriceCents: 1999, // $19.99 / month
       displayOrder: 95,
       enabledFeatures: ["customer_sms"],
+    },
+    {
+      // Marketing Studio — trackable QR codes + smart links + branded
+      // flyer/poster builder with scan→order→revenue analytics. The pages
+      // live under /admin/marketing-studio (built); this add-on gates them
+      // so FREE accounts see a locked upsell. Price is a placeholder until
+      // the superadmin sets the real one + syncs Stripe. Luigi 2026-06-11.
+      slug: "marketing_studio",
+      name: "Marketing Studio",
+      description:
+        "Generate trackable QR codes and smart links, design branded flyers and posters that auto-pull your branding, and see exactly how many scans turned into real orders and revenue.",
+      monthlyPriceCents: 999, // $9.99 placeholder — superadmin sets real price
+      displayOrder: 96,
+      enabledFeatures: ["marketing_studio"],
+    },
+    {
+      // Kickstarter — launch / win-back campaign tools. The page lives under
+      // /admin/kickstarter (built); this add-on gates it so FREE accounts see
+      // a locked upsell. Split out from advanced_promos per Luigi 2026-06-11
+      // ("separate add-on each"). Price is a placeholder until set + synced.
+      slug: "kickstarter",
+      name: "Kickstarter",
+      description:
+        "Launch your restaurant with ready-to-send campaigns — first-order incentives and win-back offers that bring customers in from day one.",
+      monthlyPriceCents: 999, // $9.99 placeholder — superadmin sets real price
+      displayOrder: 97,
+      enabledFeatures: ["kickstarter"],
     },
     {
       // Driver Pool: standalone access to the ShipDay third-party driver

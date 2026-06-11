@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Trang web của bạn",
       "footerTextLabel": "Văn bản thêm (dưới mã QR)",
       "footerTextPlaceholder": "Dòng bổ sung (tùy chọn)"
+    },
+    "featureLocked": {
+      "badge": "Tiện ích trả phí",
+      "subtitle": "Tính năng cao cấp này không có trong gói hiện tại của bạn. Đăng ký tiện ích để mở khóa nó cho nhà hàng của bạn.",
+      "cta": "Mở khóa tiện ích này",
+      "footerNote": "Việc thanh toán được xử lý an toàn qua Stripe. Hủy bất cứ lúc nào."
     }
   },
   "impersonation": {

@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "El teu lloc web",
       "footerTextLabel": "Text addicional (sota el QR)",
       "footerTextPlaceholder": "Línia addicional (opcional)"
+    },
+    "featureLocked": {
+      "badge": "Complement de pagament",
+      "subtitle": "Aquesta funció premium no s'inclou en el teu pla actual. Subscriu-te al complement per desbloquejar-la per al teu restaurant.",
+      "cta": "Desbloqueja aquest complement",
+      "footerNote": "La facturació es gestiona de manera segura a través de Stripe. Cancel·la quan vulguis."
     }
   },
   "impersonation": {

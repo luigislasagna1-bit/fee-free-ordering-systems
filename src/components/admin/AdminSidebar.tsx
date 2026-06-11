@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle, Sparkles, Rocket, Phone, QrCode,
+  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock,
   // Reports sub-section icons — match GloriaFood's iconography by purpose:
   // TrendingUp for Sales (line going up), PieChart for Menu Insights (mix
   // breakdown), Globe2 for Online Ordering family, ListChecks for List View.
@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import type { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import type { SetupProgress, StepId } from "@/lib/setup-checklist";
+import type { Feature } from "@/lib/entitlements";
 import { useSetupProgress } from "@/components/admin/SetupProgressProvider";
 
 type NavItem = {
@@ -35,6 +36,11 @@ type NavItem = {
    *  `hosted_marketing_page` entitlement (Sales Optimized Website add-on).
    *  Used to gate the Website Editor link so non-subscribers never see it. */
   requiresHostedSite?: boolean;
+  /** When set, this is a PAID feature: if the restaurant lacks the entitlement,
+   *  the item stays VISIBLE but renders with a lock icon and the page behind it
+   *  shows an upsell wall (Luigi 2026-06-11 — "show with lock + upgrade"). This
+   *  differs from requiresHostedSite, which HIDES the item entirely. */
+  requiresFeature?: Feature;
 };
 
 type NavSubGroup = {
@@ -190,18 +196,22 @@ const navGroups: NavGroup[] = [
       // out to customers, assigns personal coupons, leaves internal notes.
       // The comment block above the Reports section promises this is
       // linked here; for a long time it wasn't. Now it is.
+      // FREE for everyone: Customers, Promotions (basic types — advanced types
+      // are gated inside the promo wizard), Social Media. Everything else in
+      // this group is a PAID add-on and renders with a lock for free accounts.
+      // Luigi 2026-06-11.
       { href: "/admin/customers",    labelKey: "customers",    label: "Customers",    icon: Users },
       { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",   icon: Tag },
-      { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles },
+      { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles, requiresFeature: "marketplace_listing" },
       { href: "/admin/social-media", labelKey: "socialMedia",  label: "Social Media", icon: Share2 },
       // Kickstarter — Marketing Suite Phase 4 (First Buy Promo + Invite Prospects).
       // Sits above Autopilot because it acquires NEW customers (the funnel
       // step before retention/reactivation that Autopilot handles).
-      { href: "/admin/kickstarter",  labelKey: "kickstarter",  label: "Kickstarter",  icon: Rocket },
-      { href: "/admin/autopilot",    labelKey: "autopilot",    label: "Autopilot",    icon: Zap },
+      { href: "/admin/kickstarter",  labelKey: "kickstarter",  label: "Kickstarter",  icon: Rocket, requiresFeature: "kickstarter" },
+      { href: "/admin/autopilot",    labelKey: "autopilot",    label: "Autopilot",    icon: Zap, requiresFeature: "automated_campaigns" },
       // Marketing Studio — trackable smart links + QR codes + flyers with
       // scan→order attribution. Luigi 2026-06-10.
-      { href: "/admin/marketing-studio", labelKey: "marketingStudio", label: "Marketing Studio", icon: QrCode },
+      { href: "/admin/marketing-studio", labelKey: "marketingStudio", label: "Marketing Studio", icon: QrCode, requiresFeature: "marketing_studio" },
     ],
   },
 
@@ -415,6 +425,7 @@ export function AdminSidebar({
   pendingOrders = 0,
   setupProgress: setupProgressProp,
   hasHostedSite = false,
+  entitlements = [],
   isPublished = false,
 }: {
   session: Session;
@@ -425,10 +436,18 @@ export function AdminSidebar({
    *  the Website Editor link can be hidden cleanly for non-subscribers
    *  without flashing in and out as the page renders. */
   hasHostedSite?: boolean;
+  /** The restaurant's full set of unlocked feature slugs (from getEntitlements
+   *  in the layout). Drives the lock icon on paid marketing items flagged with
+   *  `requiresFeature`. */
+  entitlements?: string[];
   /** True iff Restaurant.publishedAt is set. Hides the "Ready to publish"
    *  chip once the restaurant is already live — no nudge needed. */
   isPublished?: boolean;
 }) {
+  // Set for O(1) lookups when deciding whether a paid item is locked.
+  const entitled = new Set(entitlements);
+  // Reuse the already-translated "Paid add-on" badge for the lock tooltip.
+  const tLock = useTranslations("admin.featureLocked");
   const tr = useSafeT();
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
@@ -568,12 +587,15 @@ export function AdminSidebar({
     const active = exact ? pathname === href : pathname.startsWith(href);
     const badge = badgeKey === "orders" && pendingOrders > 0 ? pendingOrders : null;
     const isStepComplete = step ? stepComplete.get(step) : undefined;
+    // Paid item without the entitlement → keep it visible but show a lock.
+    // The link still points at the page, which renders the upsell wall.
+    const locked = !!item.requiresFeature && !entitled.has(item.requiresFeature);
 
     return (
       <Link
         key={href}
         href={href}
-        title={display}
+        title={locked ? `${display} · ${tLock("badge")}` : display}
         className={cn(
           // LEAF ITEM — text-sm + medium weight, mixed case, smaller padding
           // than sub-group buttons so the visual indentation reads as
@@ -583,7 +605,7 @@ export function AdminSidebar({
         )}
       >
         <div className="relative flex-shrink-0">
-          <Icon className="w-4 h-4" />
+          <Icon className={cn("w-4 h-4", locked && !active && "opacity-60")} />
           {badge !== null && (
             <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-1">
               {badge > 99 ? "99+" : badge}
@@ -592,11 +614,17 @@ export function AdminSidebar({
         </div>
         {!collapsed && (
           <>
-            <span className="flex-1 truncate">{display}</span>
-            {isStepComplete === true && (
+            <span className={cn("flex-1 truncate", locked && !active && "opacity-70")}>{display}</span>
+            {/* Lock marker for paid items the restaurant hasn't unlocked. Sits
+                where the badge/step marker would; badges/steps never co-occur
+                with requiresFeature items so there's no collision. */}
+            {locked && (
+              <Lock className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-amber-400/80")} />
+            )}
+            {!locked && isStepComplete === true && (
               <Check className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-green-400")} />
             )}
-            {isStepComplete === false && (
+            {!locked && isStepComplete === false && (
               <Circle className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-gray-500")} />
             )}
             {badge !== null && (

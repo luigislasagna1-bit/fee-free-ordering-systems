@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Il tuo sito web",
       "footerTextLabel": "Testo aggiuntivo (sotto il QR)",
       "footerTextPlaceholder": "Riga aggiuntiva (facoltativa)"
+    },
+    "featureLocked": {
+      "badge": "Componente aggiuntivo a pagamento",
+      "subtitle": "Questa funzione premium non è inclusa nel tuo piano attuale. Abbonati al componente aggiuntivo per sbloccarla per il tuo ristorante.",
+      "cta": "Sblocca questo componente aggiuntivo",
+      "footerNote": "La fatturazione è gestita in modo sicuro tramite Stripe. Annulla quando vuoi."
     }
   },
   "impersonation": {

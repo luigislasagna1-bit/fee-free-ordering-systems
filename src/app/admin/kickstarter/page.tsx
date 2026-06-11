@@ -21,6 +21,7 @@ import {
   KICKSTARTER_FIRST_BUY_REF,
   getOrCreateKickstarterState,
 } from "@/lib/kickstarter";
+import { featureGate } from "@/lib/feature-gate";
 import { KickstarterClient } from "./KickstarterClient";
 
 export const dynamic = "force-dynamic";
@@ -30,6 +31,10 @@ export default async function KickstarterPage() {
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
   const restaurantId = user.restaurantId;
+
+  // Paid add-on: free accounts see the locked upsell. Luigi 2026-06-11.
+  const gate = await featureGate(restaurantId, "kickstarter", "kickstarter");
+  if (gate) return gate;
 
   const [state, firstBuyPromo, imports] = await Promise.all([
     getOrCreateKickstarterState(restaurantId),

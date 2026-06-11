@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Jūsu vietne",
       "footerTextLabel": "Papildu teksts (zem QR)",
       "footerTextPlaceholder": "Neobligāta papildu rinda"
+    },
+    "featureLocked": {
+      "badge": "Maksas papildinājums",
+      "subtitle": "Šī premium funkcija nav iekļauta jūsu pašreizējā plānā. Abonējiet papildinājumu, lai to atbloķētu savam restorānam.",
+      "cta": "Atbloķēt šo papildinājumu",
+      "footerNote": "Norēķini tiek droši apstrādāti, izmantojot Stripe. Atceliet jebkurā laikā."
     }
   },
   "impersonation": {

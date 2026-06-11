@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Je website",
       "footerTextLabel": "Extra tekst (onder QR)",
       "footerTextPlaceholder": "Optionele extra regel"
+    },
+    "featureLocked": {
+      "badge": "Betaalde add-on",
+      "subtitle": "Deze premiumfunctie zit niet in je huidige abonnement. Abonneer je op de add-on om deze te ontgrendelen voor je restaurant.",
+      "cta": "Deze add-on ontgrendelen",
+      "footerNote": "Facturering verloopt veilig via Stripe. Altijd opzegbaar."
     }
   },
   "impersonation": {

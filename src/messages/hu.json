@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Webhelyed",
       "footerTextLabel": "További szöveg (a QR alatt)",
       "footerTextPlaceholder": "Választható plusz sor"
+    },
+    "featureLocked": {
+      "badge": "Fizetős bővítmény",
+      "subtitle": "Ez a prémium funkció nem része a jelenlegi csomagodnak. Fizess elő a bővítményre, hogy feloldd az éttermed számára.",
+      "cta": "Bővítmény feloldása",
+      "footerNote": "A számlázás biztonságosan a Stripe-on keresztül történik. Bármikor lemondható."
     }
   },
   "impersonation": {

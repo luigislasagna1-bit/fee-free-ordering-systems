@@ -1,11 +1,19 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { isEmailEnabled } from "@/lib/email";
+import { featureGate } from "@/lib/feature-gate";
 import { AutopilotClient } from "./AutopilotClient";
 
 export default async function AutopilotPage() {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
+
+  // Automated campaigns are part of the Advanced Promo Marketing add-on; free
+  // accounts see the locked upsell. Luigi 2026-06-11.
+  if (restaurantId) {
+    const gate = await featureGate(restaurantId, "automated_campaigns", "advanced_promos");
+    if (gate) return gate;
+  }
 
   const [campaigns, couponPromos, restaurant] = await Promise.all([
     prisma.autopilotCampaign.findMany({ where: { restaurantId } }),

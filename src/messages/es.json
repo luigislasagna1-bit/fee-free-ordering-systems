@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "Tu sitio web",
       "footerTextLabel": "Texto adicional (debajo del QR)",
       "footerTextPlaceholder": "Línea adicional (opcional)"
+    },
+    "featureLocked": {
+      "badge": "Complemento de pago",
+      "subtitle": "Esta función premium no está incluida en tu plan actual. Suscríbete al complemento para desbloquearla para tu restaurante.",
+      "cta": "Desbloquear este complemento",
+      "footerNote": "La facturación se gestiona de forma segura a través de Stripe. Cancela cuando quieras."
     }
   },
   "impersonation": {

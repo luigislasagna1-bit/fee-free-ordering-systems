@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "האתר שלך",
       "footerTextLabel": "טקסט נוסף (מתחת ל-QR)",
       "footerTextPlaceholder": "שורה נוספת (אופציונלי)"
+    },
+    "featureLocked": {
+      "badge": "תוסף בתשלום",
+      "subtitle": "תכונת הפרימיום הזו אינה כלולה בתוכנית הנוכחית שלך. הירשם לתוסף כדי לפתוח אותה עבור המסעדה שלך.",
+      "cta": "פתח תוסף זה",
+      "footerNote": "החיוב מטופל באופן מאובטח דרך Stripe. ניתן לבטל בכל עת."
     }
   },
   "impersonation": {

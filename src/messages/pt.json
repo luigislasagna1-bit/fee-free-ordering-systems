@@ -3723,6 +3723,12 @@
       "websitePlaceholder": "O seu site",
       "footerTextLabel": "Texto extra (abaixo do QR)",
       "footerTextPlaceholder": "Linha extra (opcional)"
+    },
+    "featureLocked": {
+      "badge": "Extra pago",
+      "subtitle": "Esta funcionalidade premium não está incluída no seu plano atual. Subscreva o extra para a desbloquear para o seu restaurante.",
+      "cta": "Desbloquear este extra",
+      "footerNote": "A faturação é processada de forma segura através do Stripe. Cancele quando quiser."
     }
   },
   "impersonation": {
