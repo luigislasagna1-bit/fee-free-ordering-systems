@@ -3728,7 +3728,22 @@
       "badge": "付费附加功能",
       "subtitle": "此高级功能不包含在您当前的套餐中。订阅此附加功能即可为您的餐厅解锁。",
       "cta": "解锁此附加功能",
-      "footerNote": "账单通过 Stripe 安全处理。随时可取消。"
+      "footerNote": "账单通过 Stripe 安全处理。随时可取消。",
+      "growthNetHint": "或者以折扣价一次解锁所有营销工具——"
+    },
+    "growthnet": {
+      "tagline": "Fee Free 餐厅增长系统",
+      "heroBody": "所有付费营销、客户留存和获客工具集于一个套餐——一个优惠价。我们推荐它以最大化您餐厅的增长和销售。",
+      "savingsBadge": "节省 {percent}%",
+      "individualValue": "单独购买价值 {amount}",
+      "ctaSubscribe": "获取 GrowthNet",
+      "activeBanner": "GrowthNet 已激活——以下所有工具均已解锁。",
+      "includedViaBundle": "包含在 GrowthNet 中",
+      "enableIndividually": "单独启用",
+      "soldSeparately": "单独出售",
+      "futureNote": "新的增长工具会随发布持续加入 GrowthNet——订阅者自动获得每项新增功能，无需额外付费。",
+      "whatsInside": "包含内容",
+      "moreChannels": "更多增长渠道"
     }
   },
   "impersonation": {

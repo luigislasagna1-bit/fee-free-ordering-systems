@@ -3728,7 +3728,22 @@
       "badge": "תוסף בתשלום",
       "subtitle": "תכונת הפרימיום הזו אינה כלולה בתוכנית הנוכחית שלך. הירשם לתוסף כדי לפתוח אותה עבור המסעדה שלך.",
       "cta": "פתח תוסף זה",
-      "footerNote": "החיוב מטופל באופן מאובטח דרך Stripe. ניתן לבטל בכל עת."
+      "footerNote": "החיוב מטופל באופן מאובטח דרך Stripe. ניתן לבטל בכל עת.",
+      "growthNetHint": "או פתח את כל כלי השיווק בבת אחת — בהנחה — עם"
+    },
+    "growthnet": {
+      "tagline": "מערכת הצמיחה למסעדות של Fee Free",
+      "heroBody": "כל כלי השיווק, השימור וגיוס הלקוחות בתשלום בחבילה אחת — במחיר מוזל אחד. אנו ממליצים עליה כדי למקסם את הצמיחה והמכירות של המסעדה שלך.",
+      "savingsBadge": "חסוך {percent}%",
+      "individualValue": "בשווי {amount} ברכישה בנפרד",
+      "ctaSubscribe": "קבל את GrowthNet",
+      "activeBanner": "GrowthNet פעיל — כל הכלים שלמטה פתוחים.",
+      "includedViaBundle": "כלול ב-GrowthNet",
+      "enableIndividually": "הפעל בנפרד",
+      "soldSeparately": "נמכר בנפרד",
+      "futureNote": "כלי צמיחה חדשים מתווספים ל-GrowthNet עם השקתם — מנויים מקבלים כל תוספת חדשה אוטומטית, ללא עלות נוספת.",
+      "whatsInside": "מה כלול",
+      "moreChannels": "ערוצי צמיחה נוספים"
     }
   },
   "impersonation": {

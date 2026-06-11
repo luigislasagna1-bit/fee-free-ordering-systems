@@ -3728,7 +3728,22 @@
       "badge": "Complemento de pago",
       "subtitle": "Esta función premium no está incluida en tu plan actual. Suscríbete al complemento para desbloquearla para tu restaurante.",
       "cta": "Desbloquear este complemento",
-      "footerNote": "La facturación se gestiona de forma segura a través de Stripe. Cancela cuando quieras."
+      "footerNote": "La facturación se gestiona de forma segura a través de Stripe. Cancela cuando quieras.",
+      "growthNetHint": "O desbloquea todas las herramientas de marketing a la vez, con descuento, con"
+    },
+    "growthnet": {
+      "tagline": "El sistema de crecimiento para restaurantes de Fee Free",
+      "heroBody": "Todas las herramientas de pago de marketing, retención y captación de clientes en un solo paquete, a un precio con descuento. Lo recomendamos para maximizar el crecimiento y las ventas de tu restaurante.",
+      "savingsBadge": "Ahorra un {percent}%",
+      "individualValue": "Valor de {amount} si se compra por separado",
+      "ctaSubscribe": "Obtener GrowthNet",
+      "activeBanner": "GrowthNet está activo: todas las herramientas de abajo están desbloqueadas.",
+      "includedViaBundle": "Incluido en GrowthNet",
+      "enableIndividually": "Activar por separado",
+      "soldSeparately": "Se vende por separado",
+      "futureNote": "Se añaden nuevas herramientas de crecimiento a GrowthNet a medida que las lanzamos: los suscriptores reciben cada novedad automáticamente, sin coste adicional.",
+      "whatsInside": "Qué incluye",
+      "moreChannels": "Más canales de crecimiento"
     }
   },
   "impersonation": {

@@ -3728,7 +3728,22 @@
       "badge": "Tiện ích trả phí",
       "subtitle": "Tính năng cao cấp này không có trong gói hiện tại của bạn. Đăng ký tiện ích để mở khóa nó cho nhà hàng của bạn.",
       "cta": "Mở khóa tiện ích này",
-      "footerNote": "Việc thanh toán được xử lý an toàn qua Stripe. Hủy bất cứ lúc nào."
+      "footerNote": "Việc thanh toán được xử lý an toàn qua Stripe. Hủy bất cứ lúc nào.",
+      "growthNetHint": "Hoặc mở khóa mọi công cụ tiếp thị cùng lúc — với giá ưu đãi — bằng"
+    },
+    "growthnet": {
+      "tagline": "Hệ thống tăng trưởng nhà hàng của Fee Free",
+      "heroBody": "Tất cả công cụ trả phí về tiếp thị, giữ chân và thu hút khách hàng trong một gói — với một mức giá ưu đãi. Chúng tôi khuyên dùng để tối đa hóa tăng trưởng và doanh số cho nhà hàng của bạn.",
+      "savingsBadge": "Tiết kiệm {percent}%",
+      "individualValue": "Trị giá {amount} nếu mua riêng lẻ",
+      "ctaSubscribe": "Nhận GrowthNet",
+      "activeBanner": "GrowthNet đang hoạt động — mọi công cụ bên dưới đã được mở khóa.",
+      "includedViaBundle": "Bao gồm trong GrowthNet",
+      "enableIndividually": "Bật riêng lẻ",
+      "soldSeparately": "Bán riêng",
+      "futureNote": "Các công cụ tăng trưởng mới được thêm vào GrowthNet khi chúng tôi ra mắt — người đăng ký tự động nhận mọi bổ sung mới mà không tốn thêm phí.",
+      "whatsInside": "Bao gồm những gì",
+      "moreChannels": "Các kênh tăng trưởng khác"
     }
   },
   "impersonation": {

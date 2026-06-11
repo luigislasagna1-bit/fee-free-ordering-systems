@@ -3728,7 +3728,22 @@
       "badge": "Ücretli eklenti",
       "subtitle": "Bu premium özellik mevcut planınıza dahil değil. Restoranınız için kilidini açmak üzere eklentiye abone olun.",
       "cta": "Bu eklentinin kilidini aç",
-      "footerNote": "Faturalandırma Stripe üzerinden güvenle yapılır. İstediğiniz zaman iptal edin."
+      "footerNote": "Faturalandırma Stripe üzerinden güvenle yapılır. İstediğiniz zaman iptal edin.",
+      "growthNetHint": "Ya da tüm pazarlama araçlarının kilidini tek seferde — indirimli olarak — açın:"
+    },
+    "growthnet": {
+      "tagline": "Fee Free'nin Restoran Büyüme Sistemi",
+      "heroBody": "Tüm ücretli pazarlama, müşteri tutma ve müşteri kazanma araçları tek pakette — indirimli tek fiyata. Restoranınızın büyümesini ve satışlarını en üst düzeye çıkarmak için öneriyoruz.",
+      "savingsBadge": "%{percent} tasarruf edin",
+      "individualValue": "Tek tek satın alındığında {amount} değerinde",
+      "ctaSubscribe": "GrowthNet'i edinin",
+      "activeBanner": "GrowthNet etkin — aşağıdaki tüm araçların kilidi açık.",
+      "includedViaBundle": "GrowthNet'e dahil",
+      "enableIndividually": "Tek tek etkinleştir",
+      "soldSeparately": "Ayrı satılır",
+      "futureNote": "Yeni büyüme araçları yayınladıkça GrowthNet'e eklenir — aboneler her yeniliği otomatik olarak, ek ücret ödemeden alır.",
+      "whatsInside": "İçinde neler var",
+      "moreChannels": "Daha fazla büyüme kanalı"
     }
   },
   "impersonation": {

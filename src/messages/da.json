@@ -3728,7 +3728,22 @@
       "badge": "Betalt tilføjelse",
       "subtitle": "Denne premium-funktion er ikke inkluderet i din nuværende plan. Abonner på tilføjelsen for at låse den op for din restaurant.",
       "cta": "Lås denne tilføjelse op",
-      "footerNote": "Betaling håndteres sikkert via Stripe. Opsig når som helst."
+      "footerNote": "Betaling håndteres sikkert via Stripe. Opsig når som helst.",
+      "growthNetHint": "Eller lås alle marketingværktøjer op på én gang — med rabat — med"
+    },
+    "growthnet": {
+      "tagline": "Fee Frees vækstsystem til restauranter",
+      "heroBody": "Alle betalte værktøjer til marketing, fastholdelse og kundetilgang i én pakke — til én rabatteret pris. Vi anbefaler den for at maksimere din restaurants vækst og salg.",
+      "savingsBadge": "Spar {percent}%",
+      "individualValue": "Værdi på {amount} ved køb enkeltvis",
+      "ctaSubscribe": "Få GrowthNet",
+      "activeBanner": "GrowthNet er aktivt — alle værktøjer nedenfor er låst op.",
+      "includedViaBundle": "Inkluderet i GrowthNet",
+      "enableIndividually": "Aktivér enkeltvis",
+      "soldSeparately": "Sælges separat",
+      "futureNote": "Nye vækstværktøjer føjes til GrowthNet, efterhånden som vi udgiver dem — abonnenter får hver nyhed automatisk, uden ekstra omkostninger.",
+      "whatsInside": "Hvad er inkluderet",
+      "moreChannels": "Flere vækstkanaler"
     }
   },
   "impersonation": {

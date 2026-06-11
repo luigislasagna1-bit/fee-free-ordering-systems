@@ -3728,7 +3728,22 @@
       "badge": "Complement de pagament",
       "subtitle": "Aquesta funció premium no s'inclou en el teu pla actual. Subscriu-te al complement per desbloquejar-la per al teu restaurant.",
       "cta": "Desbloqueja aquest complement",
-      "footerNote": "La facturació es gestiona de manera segura a través de Stripe. Cancel·la quan vulguis."
+      "footerNote": "La facturació es gestiona de manera segura a través de Stripe. Cancel·la quan vulguis.",
+      "growthNetHint": "O desbloqueja totes les eines de màrqueting alhora — amb descompte — amb"
+    },
+    "growthnet": {
+      "tagline": "El sistema de creixement per a restaurants de Fee Free",
+      "heroBody": "Totes les eines de pagament de màrqueting, retenció i captació de clients en un sol paquet — a un preu rebaixat. El recomanem per maximitzar el creixement i les vendes del teu restaurant.",
+      "savingsBadge": "Estalvia un {percent}%",
+      "individualValue": "Valor de {amount} si es compra per separat",
+      "ctaSubscribe": "Obtén GrowthNet",
+      "activeBanner": "GrowthNet està actiu — totes les eines de sota estan desbloquejades.",
+      "includedViaBundle": "Inclòs a GrowthNet",
+      "enableIndividually": "Activa per separat",
+      "soldSeparately": "Es ven per separat",
+      "futureNote": "S'afegeixen noves eines de creixement a GrowthNet a mesura que les llancem — els subscriptors reben cada novetat automàticament, sense cost addicional.",
+      "whatsInside": "Què inclou",
+      "moreChannels": "Més canals de creixement"
     }
   },
   "impersonation": {

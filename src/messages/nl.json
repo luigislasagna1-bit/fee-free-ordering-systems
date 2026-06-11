@@ -3728,7 +3728,22 @@
       "badge": "Betaalde add-on",
       "subtitle": "Deze premiumfunctie zit niet in je huidige abonnement. Abonneer je op de add-on om deze te ontgrendelen voor je restaurant.",
       "cta": "Deze add-on ontgrendelen",
-      "footerNote": "Facturering verloopt veilig via Stripe. Altijd opzegbaar."
+      "footerNote": "Facturering verloopt veilig via Stripe. Altijd opzegbaar.",
+      "growthNetHint": "Of ontgrendel alle marketingtools in één keer — met korting — via"
+    },
+    "growthnet": {
+      "tagline": "Het restaurantgroeisysteem van Fee Free",
+      "heroBody": "Alle betaalde tools voor marketing, retentie en klantenwerving in één bundel — tegen één gereduceerde prijs. We raden het aan om de groei en omzet van je restaurant te maximaliseren.",
+      "savingsBadge": "Bespaar {percent}%",
+      "individualValue": "{amount} waarde bij losse aanschaf",
+      "ctaSubscribe": "GrowthNet nemen",
+      "activeBanner": "GrowthNet is actief — alle tools hieronder zijn ontgrendeld.",
+      "includedViaBundle": "Inbegrepen in GrowthNet",
+      "enableIndividually": "Los activeren",
+      "soldSeparately": "Apart verkrijgbaar",
+      "futureNote": "Nieuwe groeitools worden aan GrowthNet toegevoegd zodra we ze uitbrengen — abonnees krijgen elke toevoeging automatisch, zonder extra kosten.",
+      "whatsInside": "Wat zit erin",
+      "moreChannels": "Meer groeikanalen"
     }
   },
   "impersonation": {

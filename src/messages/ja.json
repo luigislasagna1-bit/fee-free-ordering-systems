@@ -3728,7 +3728,22 @@
       "badge": "有料アドオン",
       "subtitle": "このプレミアム機能は現在のプランには含まれていません。アドオンを購読してレストランで利用できるようにしましょう。",
       "cta": "このアドオンを解除",
-      "footerNote": "請求は Stripe を通じて安全に処理されます。いつでもキャンセルできます。"
+      "footerNote": "請求は Stripe を通じて安全に処理されます。いつでもキャンセルできます。",
+      "growthNetHint": "またはすべてのマーケティングツールを割引価格で一括解除 —"
+    },
+    "growthnet": {
+      "tagline": "Fee Free のレストラン成長システム",
+      "heroBody": "マーケティング・リピーター獲得・新規顧客獲得の有料ツールをすべて1つのバンドルに — 割引価格でご提供。レストランの成長と売上を最大化するためにおすすめです。",
+      "savingsBadge": "{percent}%お得",
+      "individualValue": "個別購入なら{amount}相当",
+      "ctaSubscribe": "GrowthNet を入手",
+      "activeBanner": "GrowthNet は有効です — 以下のすべてのツールが利用可能です。",
+      "includedViaBundle": "GrowthNet に含まれます",
+      "enableIndividually": "個別に有効化",
+      "soldSeparately": "別売り",
+      "futureNote": "新しい成長ツールはリリースのたびに GrowthNet に追加されます — 加入者は追加料金なしで自動的に利用できます。",
+      "whatsInside": "含まれるもの",
+      "moreChannels": "その他の成長チャネル"
     }
   },
   "impersonation": {

@@ -2297,6 +2297,14 @@ model AddOn {
   /// JSON-encoded array of other add-on slugs that must be active for this
   /// to work (e.g. custom_domain requires hosted_website).
   requiredDependencies String  @default("[]")
+  /// GrowthNet bundle membership. When true, this add-on's enabledFeatures
+  /// are ALSO granted to every restaurant with an active `growthnet`
+  /// subscription (Fee Free's Restaurant Growth System — every paid
+  /// marketing / retention / acquisition add-on at one discounted price).
+  /// Membership is data-driven on purpose: flag a future add-on true and
+  /// every GrowthNet subscriber gets it automatically, zero code changes.
+  /// Luigi 2026-06-11.
+  inGrowthNet          Boolean @default(false)
   /// Stripe wiring — populated when the superadmin syncs an add-on (Phase 5).
   stripePriceId        String? @unique
   stripeProductId      String? @unique

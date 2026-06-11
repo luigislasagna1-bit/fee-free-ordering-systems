@@ -95,6 +95,12 @@ export async function hasAnyPaidAddOn(restaurantId: string): Promise<boolean> {
   return count > 0;
 }
 
+/** The bundle add-on slug. An active subscription to it grants the union of
+ *  enabledFeatures across every AddOn flagged `inGrowthNet` — resolved live
+ *  in getEntitlements, so newly-flagged add-ons reach existing subscribers
+ *  automatically (Luigi 2026-06-11: GrowthNet keeps growing). */
+export const GROWTHNET_SLUG = "growthnet";
+
 /** Returns the full set of features this restaurant has unlocked. Useful
  *  for rendering UI (e.g. "all add-ons you have" page) and for bulk gating. */
 export async function getEntitlements(restaurantId: string): Promise<Set<Feature>> {
@@ -103,23 +109,42 @@ export async function getEntitlements(restaurantId: string): Promise<Set<Feature
       restaurantId,
       status: { in: [...GRANTING_STATUSES] },
     },
-    select: { addOn: { select: { enabledFeatures: true } } },
+    select: { addOn: { select: { slug: true, enabledFeatures: true } } },
   });
 
   const features = new Set<Feature>();
-  for (const row of rows) {
+  const addFeatures = (json: string | null | undefined) => {
     let arr: unknown;
     try {
-      arr = JSON.parse(row.addOn.enabledFeatures || "[]");
+      arr = JSON.parse(json || "[]");
     } catch {
-      continue;
+      return;
     }
     if (Array.isArray(arr)) {
       for (const f of arr) {
         if (typeof f === "string") features.add(f as Feature);
       }
     }
+  };
+
+  let hasGrowthNet = false;
+  for (const row of rows) {
+    if (row.addOn.slug === GROWTHNET_SLUG) hasGrowthNet = true;
+    addFeatures(row.addOn.enabledFeatures);
   }
+
+  // GrowthNet bundle: union in every member add-on's features. One extra
+  // query, only for bundle subscribers — the AddOn catalog is a tiny table.
+  // (If this ever sits on a hotter path than the admin layout, cache the
+  // member-feature union; it changes only when the catalog changes.)
+  if (hasGrowthNet) {
+    const members = await prisma.addOn.findMany({
+      where: { inGrowthNet: true, isActive: true },
+      select: { enabledFeatures: true },
+    });
+    for (const m of members) addFeatures(m.enabledFeatures);
+  }
+
   return features;
 }
 

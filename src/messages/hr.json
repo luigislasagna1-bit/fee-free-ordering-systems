@@ -3728,7 +3728,22 @@
       "badge": "Plaćeni dodatak",
       "subtitle": "Ova premium značajka nije uključena u vaš trenutni plan. Pretplatite se na dodatak da biste je otključali za svoj restoran.",
       "cta": "Otključaj ovaj dodatak",
-      "footerNote": "Naplata se sigurno obrađuje putem Stripea. Otkažite bilo kada."
+      "footerNote": "Naplata se sigurno obrađuje putem Stripea. Otkažite bilo kada.",
+      "growthNetHint": "Ili otključajte sve marketinške alate odjednom — uz popust — uz"
+    },
+    "growthnet": {
+      "tagline": "Sustav rasta restorana tvrtke Fee Free",
+      "heroBody": "Svi plaćeni alati za marketing, zadržavanje i privlačenje kupaca u jednom paketu — po sniženoj cijeni. Preporučujemo ga za maksimalan rast i prodaju vašeg restorana.",
+      "savingsBadge": "Uštedite {percent}%",
+      "individualValue": "Vrijednost od {amount} pri pojedinačnoj kupnji",
+      "ctaSubscribe": "Nabavite GrowthNet",
+      "activeBanner": "GrowthNet je aktivan — svi alati u nastavku su otključani.",
+      "includedViaBundle": "Uključeno u GrowthNet",
+      "enableIndividually": "Aktiviraj pojedinačno",
+      "soldSeparately": "Prodaje se zasebno",
+      "futureNote": "Novi alati za rast dodaju se u GrowthNet kako ih objavljujemo — pretplatnici svaku novost dobivaju automatski, bez dodatnih troškova.",
+      "whatsInside": "Što uključuje",
+      "moreChannels": "Više kanala rasta"
     }
   },
   "impersonation": {

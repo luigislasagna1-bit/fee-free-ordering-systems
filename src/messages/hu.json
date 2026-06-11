@@ -3728,7 +3728,22 @@
       "badge": "Fizetős bővítmény",
       "subtitle": "Ez a prémium funkció nem része a jelenlegi csomagodnak. Fizess elő a bővítményre, hogy feloldd az éttermed számára.",
       "cta": "Bővítmény feloldása",
-      "footerNote": "A számlázás biztonságosan a Stripe-on keresztül történik. Bármikor lemondható."
+      "footerNote": "A számlázás biztonságosan a Stripe-on keresztül történik. Bármikor lemondható.",
+      "growthNetHint": "Vagy oldd fel az összes marketingeszközt egyszerre — kedvezménnyel — a"
+    },
+    "growthnet": {
+      "tagline": "A Fee Free éttermi növekedési rendszere",
+      "heroBody": "Minden fizetős marketing-, megtartási és ügyfélszerzési eszköz egyetlen csomagban — kedvezményes áron. Ajánljuk éttermed növekedésének és eladásainak maximalizálásához.",
+      "savingsBadge": "Spórolj {percent}%-ot",
+      "individualValue": "{amount} érték külön-külön megvásárolva",
+      "ctaSubscribe": "GrowthNet beszerzése",
+      "activeBanner": "A GrowthNet aktív — az összes alábbi eszköz fel van oldva.",
+      "includedViaBundle": "A GrowthNet része",
+      "enableIndividually": "Aktiválás külön",
+      "soldSeparately": "Külön kapható",
+      "futureNote": "Új növekedési eszközök kerülnek a GrowthNetbe, ahogy kiadjuk őket — az előfizetők minden újdonságot automatikusan, felár nélkül megkapnak.",
+      "whatsInside": "Mit tartalmaz",
+      "moreChannels": "További növekedési csatornák"
     }
   },
   "impersonation": {

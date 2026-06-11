@@ -3728,7 +3728,22 @@
       "badge": "유료 부가 기능",
       "subtitle": "이 프리미엄 기능은 현재 요금제에 포함되어 있지 않습니다. 부가 기능을 구독하여 레스토랑에서 사용해 보세요.",
       "cta": "이 부가 기능 잠금 해제",
-      "footerNote": "결제는 Stripe를 통해 안전하게 처리됩니다. 언제든지 취소할 수 있습니다."
+      "footerNote": "결제는 Stripe를 통해 안전하게 처리됩니다. 언제든지 취소할 수 있습니다.",
+      "growthNetHint": "또는 모든 마케팅 도구를 할인된 가격에 한 번에 잠금 해제하세요 —"
+    },
+    "growthnet": {
+      "tagline": "Fee Free의 레스토랑 성장 시스템",
+      "heroBody": "마케팅, 고객 유지, 신규 고객 확보를 위한 모든 유료 도구를 하나의 번들로 — 할인된 가격에. 레스토랑의 성장과 매출을 극대화하기 위해 추천합니다.",
+      "savingsBadge": "{percent}% 절약",
+      "individualValue": "개별 구매 시 {amount} 상당",
+      "ctaSubscribe": "GrowthNet 시작하기",
+      "activeBanner": "GrowthNet이 활성화되어 있습니다 — 아래 모든 도구가 잠금 해제되었습니다.",
+      "includedViaBundle": "GrowthNet에 포함됨",
+      "enableIndividually": "개별 사용 설정",
+      "soldSeparately": "별도 판매",
+      "futureNote": "새로운 성장 도구는 출시되는 대로 GrowthNet에 추가됩니다 — 구독자는 추가 비용 없이 모든 신규 기능을 자동으로 받습니다.",
+      "whatsInside": "포함된 항목",
+      "moreChannels": "더 많은 성장 채널"
     }
   },
   "impersonation": {

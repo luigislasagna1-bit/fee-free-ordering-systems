@@ -3728,7 +3728,22 @@
       "badge": "Tasuline lisa",
       "subtitle": "See lisafunktsioon ei sisaldu teie praeguses paketis. Tellige lisa, et see oma restorani jaoks avada.",
       "cta": "Ava see lisa",
-      "footerNote": "Arveldus toimub turvaliselt Stripe'i kaudu. Tühista igal ajal."
+      "footerNote": "Arveldus toimub turvaliselt Stripe'i kaudu. Tühista igal ajal.",
+      "growthNetHint": "Või ava kõik turundustööriistad korraga — soodushinnaga —"
+    },
+    "growthnet": {
+      "tagline": "Fee Free restoranide kasvusüsteem",
+      "heroBody": "Kõik tasulised turunduse, hoidmise ja klientide hankimise tööriistad ühes paketis — soodushinnaga. Soovitame seda teie restorani kasvu ja müügi maksimeerimiseks.",
+      "savingsBadge": "Säästa {percent}%",
+      "individualValue": "{amount} väärtus eraldi ostes",
+      "ctaSubscribe": "Hangi GrowthNet",
+      "activeBanner": "GrowthNet on aktiivne — kõik allolevad tööriistad on avatud.",
+      "includedViaBundle": "Sisaldub GrowthNetis",
+      "enableIndividually": "Aktiveeri eraldi",
+      "soldSeparately": "Müüakse eraldi",
+      "futureNote": "Uusi kasvutööriistu lisatakse GrowthNetti jooksvalt — tellijad saavad iga uuenduse automaatselt, lisatasuta.",
+      "whatsInside": "Mida sisaldab",
+      "moreChannels": "Veel kasvukanaleid"
     }
   },
   "impersonation": {

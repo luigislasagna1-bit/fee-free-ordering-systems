@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock,
+  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock, Network,
   // Reports sub-section icons — match GloriaFood's iconography by purpose:
   // TrendingUp for Sales (line going up), PieChart for Menu Insights (mix
   // breakdown), Globe2 for Online Ordering family, ListChecks for List View.
@@ -202,6 +202,11 @@ const navGroups: NavGroup[] = [
       // Luigi 2026-06-11.
       { href: "/admin/customers",    labelKey: "customers",    label: "Customers",    icon: Users },
       { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",   icon: Tag },
+      // GrowthNet — Fee Free's Restaurant Growth System: the bundle hub where
+      // every paid marketing add-on lives (activate one at a time or all at
+      // once at the discounted bundle price). Always visible — it IS the
+      // upsell surface, so no requiresFeature. Brand name, untranslated.
+      { href: "/admin/growthnet",    labelKey: "growthNet",    label: "GrowthNet",    icon: Network },
       { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles, requiresFeature: "marketplace_listing" },
       { href: "/admin/social-media", labelKey: "socialMedia",  label: "Social Media", icon: Share2 },
       // Kickstarter — Marketing Suite Phase 4 (First Buy Promo + Invite Prospects).

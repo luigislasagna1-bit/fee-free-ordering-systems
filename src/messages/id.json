@@ -3728,7 +3728,22 @@
       "badge": "Add-on berbayar",
       "subtitle": "Fitur premium ini tidak termasuk dalam paket Anda saat ini. Berlangganan add-on untuk membukanya bagi restoran Anda.",
       "cta": "Buka add-on ini",
-      "footerNote": "Penagihan ditangani dengan aman melalui Stripe. Batalkan kapan saja."
+      "footerNote": "Penagihan ditangani dengan aman melalui Stripe. Batalkan kapan saja.",
+      "growthNetHint": "Atau buka semua alat pemasaran sekaligus — dengan diskon — lewat"
+    },
+    "growthnet": {
+      "tagline": "Sistem Pertumbuhan Restoran dari Fee Free",
+      "heroBody": "Semua alat berbayar untuk pemasaran, retensi, dan akuisisi pelanggan dalam satu paket — dengan satu harga diskon. Kami merekomendasikannya untuk memaksimalkan pertumbuhan dan penjualan restoran Anda.",
+      "savingsBadge": "Hemat {percent}%",
+      "individualValue": "Senilai {amount} jika dibeli satuan",
+      "ctaSubscribe": "Dapatkan GrowthNet",
+      "activeBanner": "GrowthNet aktif — semua alat di bawah ini terbuka.",
+      "includedViaBundle": "Termasuk dalam GrowthNet",
+      "enableIndividually": "Aktifkan satuan",
+      "soldSeparately": "Dijual terpisah",
+      "futureNote": "Alat pertumbuhan baru ditambahkan ke GrowthNet saat kami merilisnya — pelanggan mendapatkan setiap tambahan baru secara otomatis, tanpa biaya ekstra.",
+      "whatsInside": "Apa saja isinya",
+      "moreChannels": "Saluran pertumbuhan lainnya"
     }
   },
   "impersonation": {

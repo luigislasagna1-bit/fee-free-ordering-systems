@@ -3728,7 +3728,22 @@
       "badge": "Module payant",
       "subtitle": "Cette fonctionnalité premium n'est pas incluse dans votre forfait actuel. Abonnez-vous au module pour la débloquer pour votre restaurant.",
       "cta": "Débloquer ce module",
-      "footerNote": "La facturation est gérée en toute sécurité via Stripe. Annulez à tout moment."
+      "footerNote": "La facturation est gérée en toute sécurité via Stripe. Annulez à tout moment.",
+      "growthNetHint": "Ou débloquez tous les outils marketing d'un coup — à prix réduit — avec"
+    },
+    "growthnet": {
+      "tagline": "Le système de croissance pour restaurants de Fee Free",
+      "heroBody": "Tous les outils payants de marketing, de fidélisation et d'acquisition de clients dans une seule offre groupée — à un prix réduit. Nous la recommandons pour maximiser la croissance et les ventes de votre restaurant.",
+      "savingsBadge": "Économisez {percent} %",
+      "individualValue": "Valeur de {amount} si acheté séparément",
+      "ctaSubscribe": "Obtenir GrowthNet",
+      "activeBanner": "GrowthNet est actif — tous les outils ci-dessous sont débloqués.",
+      "includedViaBundle": "Inclus dans GrowthNet",
+      "enableIndividually": "Activer séparément",
+      "soldSeparately": "Vendu séparément",
+      "futureNote": "De nouveaux outils de croissance sont ajoutés à GrowthNet au fil de leur sortie — les abonnés reçoivent automatiquement chaque nouveauté, sans frais supplémentaires.",
+      "whatsInside": "Ce qui est inclus",
+      "moreChannels": "Autres canaux de croissance"
     }
   },
   "impersonation": {

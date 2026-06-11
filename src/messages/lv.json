@@ -3728,7 +3728,22 @@
       "badge": "Maksas papildinājums",
       "subtitle": "Šī premium funkcija nav iekļauta jūsu pašreizējā plānā. Abonējiet papildinājumu, lai to atbloķētu savam restorānam.",
       "cta": "Atbloķēt šo papildinājumu",
-      "footerNote": "Norēķini tiek droši apstrādāti, izmantojot Stripe. Atceliet jebkurā laikā."
+      "footerNote": "Norēķini tiek droši apstrādāti, izmantojot Stripe. Atceliet jebkurā laikā.",
+      "growthNetHint": "Vai atbloķējiet visus mārketinga rīkus uzreiz — ar atlaidi — ar"
+    },
+    "growthnet": {
+      "tagline": "Fee Free restorānu izaugsmes sistēma",
+      "heroBody": "Visi maksas mārketinga, noturēšanas un klientu piesaistes rīki vienā komplektā — par atlaides cenu. Mēs to iesakām, lai maksimāli palielinātu jūsu restorāna izaugsmi un pārdošanu.",
+      "savingsBadge": "Ietaupiet {percent}%",
+      "individualValue": "{amount} vērtība, pērkot atsevišķi",
+      "ctaSubscribe": "Iegūt GrowthNet",
+      "activeBanner": "GrowthNet ir aktīvs — visi tālāk norādītie rīki ir atbloķēti.",
+      "includedViaBundle": "Iekļauts GrowthNet",
+      "enableIndividually": "Aktivizēt atsevišķi",
+      "soldSeparately": "Pārdod atsevišķi",
+      "futureNote": "Jauni izaugsmes rīki tiek pievienoti GrowthNet, tiklīdz tos izlaižam — abonenti katru jaunumu saņem automātiski, bez papildu maksas.",
+      "whatsInside": "Kas iekļauts",
+      "moreChannels": "Vairāk izaugsmes kanālu"
     }
   },
   "impersonation": {

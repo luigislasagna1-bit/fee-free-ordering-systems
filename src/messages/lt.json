@@ -3728,7 +3728,22 @@
       "badge": "Mokamas priedas",
       "subtitle": "Ši aukščiausios klasės funkcija neįtraukta į jūsų dabartinį planą. Užsiprenumeruokite priedą, kad atrakintumėte ją savo restoranui.",
       "cta": "Atrakinti šį priedą",
-      "footerNote": "Atsiskaitymai saugiai tvarkomi per Stripe. Atšaukite bet kada."
+      "footerNote": "Atsiskaitymai saugiai tvarkomi per Stripe. Atšaukite bet kada.",
+      "growthNetHint": "Arba atrakinkite visus rinkodaros įrankius iš karto — su nuolaida — su"
+    },
+    "growthnet": {
+      "tagline": "„Fee Free“ restoranų augimo sistema",
+      "heroBody": "Visi mokami rinkodaros, išlaikymo ir klientų pritraukimo įrankiai viename rinkinyje — už nuolaidos kainą. Rekomenduojame jį, kad maksimaliai padidintumėte savo restorano augimą ir pardavimus.",
+      "savingsBadge": "Sutaupykite {percent}%",
+      "individualValue": "{amount} vertė perkant atskirai",
+      "ctaSubscribe": "Gauti „GrowthNet“",
+      "activeBanner": "„GrowthNet“ aktyvus — visi toliau pateikti įrankiai atrakinti.",
+      "includedViaBundle": "Įtraukta į „GrowthNet“",
+      "enableIndividually": "Įjungti atskirai",
+      "soldSeparately": "Parduodama atskirai",
+      "futureNote": "Nauji augimo įrankiai į „GrowthNet“ pridedami juos išleidus — prenumeratoriai kiekvieną naujovę gauna automatiškai, be papildomo mokesčio.",
+      "whatsInside": "Kas viduje",
+      "moreChannels": "Daugiau augimo kanalų"
     }
   },
   "impersonation": {

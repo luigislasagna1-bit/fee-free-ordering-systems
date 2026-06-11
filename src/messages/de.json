@@ -3728,7 +3728,22 @@
       "badge": "Kostenpflichtiges Add-on",
       "subtitle": "Diese Premium-Funktion ist in Ihrem aktuellen Tarif nicht enthalten. Abonnieren Sie das Add-on, um sie für Ihr Restaurant freizuschalten.",
       "cta": "Dieses Add-on freischalten",
-      "footerNote": "Die Abrechnung erfolgt sicher über Stripe. Jederzeit kündbar."
+      "footerNote": "Die Abrechnung erfolgt sicher über Stripe. Jederzeit kündbar.",
+      "growthNetHint": "Oder schalten Sie alle Marketing-Tools auf einmal frei — vergünstigt — mit"
+    },
+    "growthnet": {
+      "tagline": "Das Restaurant-Wachstumssystem von Fee Free",
+      "heroBody": "Alle kostenpflichtigen Tools für Marketing, Kundenbindung und Neukundengewinnung in einem Paket — zu einem vergünstigten Preis. Wir empfehlen es, um Wachstum und Umsatz Ihres Restaurants zu maximieren.",
+      "savingsBadge": "{percent}% sparen",
+      "individualValue": "{amount} Wert bei Einzelkauf",
+      "ctaSubscribe": "GrowthNet holen",
+      "activeBanner": "GrowthNet ist aktiv — alle Tools unten sind freigeschaltet.",
+      "includedViaBundle": "In GrowthNet enthalten",
+      "enableIndividually": "Einzeln aktivieren",
+      "soldSeparately": "Separat erhältlich",
+      "futureNote": "Neue Wachstums-Tools werden laufend zu GrowthNet hinzugefügt — Abonnenten erhalten jede Neuerung automatisch, ohne Aufpreis.",
+      "whatsInside": "Das ist enthalten",
+      "moreChannels": "Weitere Wachstumskanäle"
     }
   },
   "impersonation": {

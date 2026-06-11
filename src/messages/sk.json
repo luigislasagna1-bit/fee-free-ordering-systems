@@ -3728,7 +3728,22 @@
       "badge": "Platený doplnok",
       "subtitle": "Táto prémiová funkcia nie je súčasťou vášho aktuálneho plánu. Predplaťte si doplnok a odomknite ju pre svoju reštauráciu.",
       "cta": "Odomknúť tento doplnok",
-      "footerNote": "Fakturácia prebieha bezpečne cez Stripe. Zrušiť môžete kedykoľvek."
+      "footerNote": "Fakturácia prebieha bezpečne cez Stripe. Zrušiť môžete kedykoľvek.",
+      "growthNetHint": "Alebo odomknite všetky marketingové nástroje naraz — so zľavou — s"
+    },
+    "growthnet": {
+      "tagline": "Rastový systém pre reštaurácie od Fee Free",
+      "heroBody": "Všetky platené nástroje pre marketing, udržanie a získavanie zákazníkov v jednom balíku — za zvýhodnenú cenu. Odporúčame ho na maximalizáciu rastu a tržieb vašej reštaurácie.",
+      "savingsBadge": "Ušetrite {percent} %",
+      "individualValue": "Hodnota {amount} pri samostatnom nákupe",
+      "ctaSubscribe": "Získať GrowthNet",
+      "activeBanner": "GrowthNet je aktívny — všetky nástroje nižšie sú odomknuté.",
+      "includedViaBundle": "Súčasť GrowthNet",
+      "enableIndividually": "Aktivovať samostatne",
+      "soldSeparately": "Predávané samostatne",
+      "futureNote": "Nové rastové nástroje pridávame do GrowthNet priebežne — predplatitelia dostávajú každú novinku automaticky a bez príplatku.",
+      "whatsInside": "Čo obsahuje",
+      "moreChannels": "Ďalšie rastové kanály"
     }
   },
   "impersonation": {

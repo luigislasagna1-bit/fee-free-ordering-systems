@@ -3728,7 +3728,22 @@
       "badge": "Maksullinen lisäosa",
       "subtitle": "Tämä premium-ominaisuus ei sisälly nykyiseen tilaukseesi. Tilaa lisäosa avataksesi sen ravintolallesi.",
       "cta": "Avaa tämä lisäosa",
-      "footerNote": "Laskutus hoidetaan turvallisesti Stripen kautta. Peru milloin tahansa."
+      "footerNote": "Laskutus hoidetaan turvallisesti Stripen kautta. Peru milloin tahansa.",
+      "growthNetHint": "Tai avaa kaikki markkinointityökalut kerralla — alennettuun hintaan —"
+    },
+    "growthnet": {
+      "tagline": "Fee Freen ravintoloiden kasvujärjestelmä",
+      "heroBody": "Kaikki maksulliset markkinoinnin, asiakaspysyvyyden ja asiakashankinnan työkalut yhdessä paketissa — yhteen alennettuun hintaan. Suosittelemme sitä ravintolasi kasvun ja myynnin maksimoimiseksi.",
+      "savingsBadge": "Säästä {percent} %",
+      "individualValue": "{amount} arvo erikseen ostettuna",
+      "ctaSubscribe": "Hanki GrowthNet",
+      "activeBanner": "GrowthNet on käytössä — kaikki alla olevat työkalut on avattu.",
+      "includedViaBundle": "Sisältyy GrowthNetiin",
+      "enableIndividually": "Ota käyttöön erikseen",
+      "soldSeparately": "Myydään erikseen",
+      "futureNote": "Uusia kasvutyökaluja lisätään GrowthNetiin sitä mukaa kuin julkaisemme niitä — tilaajat saavat jokaisen uutuuden automaattisesti ilman lisämaksua.",
+      "whatsInside": "Mitä sisältyy",
+      "moreChannels": "Lisää kasvukanavia"
     }
   },
   "impersonation": {

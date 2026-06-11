@@ -3728,7 +3728,22 @@
       "badge": "Płatny dodatek",
       "subtitle": "Ta funkcja premium nie jest objęta Twoim obecnym planem. Subskrybuj dodatek, aby odblokować ją dla swojej restauracji.",
       "cta": "Odblokuj ten dodatek",
-      "footerNote": "Płatności są obsługiwane bezpiecznie przez Stripe. Anuluj w dowolnym momencie."
+      "footerNote": "Płatności są obsługiwane bezpiecznie przez Stripe. Anuluj w dowolnym momencie.",
+      "growthNetHint": "Lub odblokuj wszystkie narzędzia marketingowe naraz — w obniżonej cenie — dzięki"
+    },
+    "growthnet": {
+      "tagline": "System rozwoju restauracji od Fee Free",
+      "heroBody": "Wszystkie płatne narzędzia marketingu, utrzymania i pozyskiwania klientów w jednym pakiecie — w obniżonej cenie. Polecamy go, aby zmaksymalizować wzrost i sprzedaż Twojej restauracji.",
+      "savingsBadge": "Oszczędź {percent}%",
+      "individualValue": "Wartość {amount} przy zakupie osobno",
+      "ctaSubscribe": "Zdobądź GrowthNet",
+      "activeBanner": "GrowthNet jest aktywny — wszystkie narzędzia poniżej są odblokowane.",
+      "includedViaBundle": "Zawarte w GrowthNet",
+      "enableIndividually": "Włącz osobno",
+      "soldSeparately": "Sprzedawane osobno",
+      "futureNote": "Nowe narzędzia rozwoju są dodawane do GrowthNet w miarę ich wydawania — subskrybenci otrzymują każdą nowość automatycznie, bez dodatkowych opłat.",
+      "whatsInside": "Co zawiera",
+      "moreChannels": "Więcej kanałów rozwoju"
     }
   },
   "impersonation": {

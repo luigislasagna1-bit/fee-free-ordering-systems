@@ -3728,7 +3728,22 @@
       "badge": "Placený doplněk",
       "subtitle": "Tato prémiová funkce není součástí vašeho aktuálního plánu. Předplaťte si doplněk a odemkněte ji pro svou restauraci.",
       "cta": "Odemknout tento doplněk",
-      "footerNote": "Fakturace probíhá bezpečně přes Stripe. Zrušit můžete kdykoli."
+      "footerNote": "Fakturace probíhá bezpečně přes Stripe. Zrušit můžete kdykoli.",
+      "growthNetHint": "Nebo odemkněte všechny marketingové nástroje najednou — se slevou — s"
+    },
+    "growthnet": {
+      "tagline": "Růstový systém pro restaurace od Fee Free",
+      "heroBody": "Všechny placené nástroje pro marketing, udržení a získávání zákazníků v jednom balíčku — za zvýhodněnou cenu. Doporučujeme ho pro maximalizaci růstu a tržeb vaší restaurace.",
+      "savingsBadge": "Ušetřete {percent} %",
+      "individualValue": "Hodnota {amount} při samostatném nákupu",
+      "ctaSubscribe": "Získat GrowthNet",
+      "activeBanner": "GrowthNet je aktivní — všechny nástroje níže jsou odemčené.",
+      "includedViaBundle": "Součást GrowthNet",
+      "enableIndividually": "Aktivovat samostatně",
+      "soldSeparately": "Prodáváno samostatně",
+      "futureNote": "Nové růstové nástroje přidáváme do GrowthNet průběžně — předplatitelé dostávají každou novinku automaticky a bez příplatku.",
+      "whatsInside": "Co obsahuje",
+      "moreChannels": "Další růstové kanály"
     }
   },
   "impersonation": {

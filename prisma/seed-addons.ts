@@ -83,7 +83,30 @@ async function main() {
     enabledFeatures: string[];
     requiredDependencies?: string[];
     comingSoon?: boolean;
+    /** GrowthNet bundle membership — an active `growthnet` subscription
+     *  grants this add-on's features too (union resolved live in
+     *  src/lib/entitlements.ts). Flag future marketing add-ons true and
+     *  existing GrowthNet subscribers get them automatically. */
+    inGrowthNet?: boolean;
   }> = [
+    {
+      // GrowthNet — Fee Free's Restaurant Growth System. THE bundle: every
+      // paid marketing / retention / customer-acquisition add-on at one
+      // discounted price. Subscribing grants the union of features across
+      // all add-ons flagged inGrowthNet (dynamic — see entitlements.ts), so
+      // the bundle automatically grows as we ship new growth tools.
+      // Marketplace stays OUTSIDE the bundle (its $199.99 / PAYG per-order
+      // billing doesn't fit a flat bundle); flip its inGrowthNet flag if
+      // that call ever changes. Price below is a placeholder — superadmin
+      // sets the real discounted price + syncs Stripe. Luigi 2026-06-11.
+      slug: "growthnet",
+      name: "GrowthNet",
+      description:
+        "Fee Free's Restaurant Growth System — every paid marketing, retention and customer-acquisition add-on in one discounted bundle: Advanced Promo Marketing (incl. Autopilot), Marketing Studio, Kickstarter and Customer SMS. New growth tools are added to GrowthNet as we ship them — subscribers get them automatically at no extra cost.",
+      monthlyPriceCents: 3999, // $39.99 placeholder (~33% off the ~$59.96 individual value) — superadmin sets the real price
+      displayOrder: 35,
+      enabledFeatures: [], // features come from the live union of inGrowthNet members
+    },
     {
       // The FREE-plan order cap exemption. Every restaurant lands on
       // the FREE plan with 100 orders/month included. This add-on
@@ -135,6 +158,7 @@ async function main() {
     },
     {
       slug: "advanced_promos",
+      inGrowthNet: true,
       name: "Advanced Promo Marketing",
       description:
         "Unlocks 8 advanced promo types: payment-method reward, free item, meal bundle, buy-N-get-free, free dish as part of meal, fixed/percentage discount on combo, meal bundle with speciality. Plus customer segmentation and automated marketing campaigns (Autopilot).",
@@ -248,6 +272,7 @@ async function main() {
       // no-op even when the platform-shared Twilio creds are set in
       // Vercel env.
       slug: "customer_sms",
+      inGrowthNet: true,
       name: "Customer SMS Notifications",
       description:
         "Text customers as their order moves through the kitchen — confirmed, accepted, ready for pickup, complete. Drives pickup compliance + customer trust. Uses our shared Twilio number; no setup on your side.",
@@ -262,6 +287,7 @@ async function main() {
       // so FREE accounts see a locked upsell. Price is a placeholder until
       // the superadmin sets the real one + syncs Stripe. Luigi 2026-06-11.
       slug: "marketing_studio",
+      inGrowthNet: true,
       name: "Marketing Studio",
       description:
         "Generate trackable QR codes and smart links, design branded flyers and posters that auto-pull your branding, and see exactly how many scans turned into real orders and revenue.",
@@ -275,6 +301,7 @@ async function main() {
       // a locked upsell. Split out from advanced_promos per Luigi 2026-06-11
       // ("separate add-on each"). Price is a placeholder until set + synced.
       slug: "kickstarter",
+      inGrowthNet: true,
       name: "Kickstarter",
       description:
         "Launch your restaurant with ready-to-send campaigns — first-order incentives and win-back offers that bring customers in from day one.",
@@ -317,6 +344,10 @@ async function main() {
         displayOrder: a.displayOrder,
         enabledFeatures: JSON.stringify(a.enabledFeatures),
         requiredDependencies: JSON.stringify(a.requiredDependencies ?? []),
+        // GrowthNet membership IS re-applied on every seed — it's catalog
+        // truth (which add-ons the bundle includes), not a superadmin-tuned
+        // field like price/comingSoon.
+        inGrowthNet: a.inGrowthNet ?? false,
         // comingSoon deliberately NOT updated on re-seed. Superadmin sets
         // it in /superadmin/add-ons after launch — seed-time defaults
         // would otherwise bulldoze that. (Same sticky-once-set principle
@@ -330,6 +361,7 @@ async function main() {
         displayOrder: a.displayOrder,
         enabledFeatures: JSON.stringify(a.enabledFeatures),
         requiredDependencies: JSON.stringify(a.requiredDependencies ?? []),
+        inGrowthNet: a.inGrowthNet ?? false,
         isActive: true,
         comingSoon: a.comingSoon ?? false,
       },

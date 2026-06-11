@@ -56,6 +56,15 @@ export function FeatureLockedView({
             <Lock className="w-4 h-4" /> {t("cta")} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
+
+        {/* Cross-sell the GrowthNet bundle — every paid marketing add-on at
+            one discounted price. Brand name stays untranslated. */}
+        <p className="mt-4 text-xs text-white/80">
+          {t("growthNetHint")}{" "}
+          <Link href="/admin/growthnet" className="font-semibold underline underline-offset-2 hover:text-white">
+            GrowthNet →
+          </Link>
+        </p>
       </div>
 
       <p className="mt-5 text-xs text-gray-500 text-center">{t("footerNote")}</p>

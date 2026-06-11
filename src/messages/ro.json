@@ -3728,7 +3728,22 @@
       "badge": "Supliment cu plată",
       "subtitle": "Această funcție premium nu este inclusă în planul tău actual. Abonează-te la supliment pentru a o debloca pentru restaurantul tău.",
       "cta": "Deblochează acest supliment",
-      "footerNote": "Facturarea este gestionată în siguranță prin Stripe. Anulează oricând."
+      "footerNote": "Facturarea este gestionată în siguranță prin Stripe. Anulează oricând.",
+      "growthNetHint": "Sau deblochează toate instrumentele de marketing deodată — cu reducere — cu"
+    },
+    "growthnet": {
+      "tagline": "Sistemul de creștere pentru restaurante de la Fee Free",
+      "heroBody": "Toate instrumentele plătite de marketing, fidelizare și atragere de clienți într-un singur pachet — la un preț redus. Îl recomandăm pentru a maximiza creșterea și vânzările restaurantului tău.",
+      "savingsBadge": "Economisești {percent}%",
+      "individualValue": "Valoare de {amount} dacă sunt cumpărate individual",
+      "ctaSubscribe": "Obține GrowthNet",
+      "activeBanner": "GrowthNet este activ — toate instrumentele de mai jos sunt deblocate.",
+      "includedViaBundle": "Inclus în GrowthNet",
+      "enableIndividually": "Activează individual",
+      "soldSeparately": "Vândut separat",
+      "futureNote": "Instrumente noi de creștere sunt adăugate în GrowthNet pe măsură ce le lansăm — abonații primesc automat fiecare noutate, fără costuri suplimentare.",
+      "whatsInside": "Ce conține",
+      "moreChannels": "Mai multe canale de creștere"
     }
   },
   "impersonation": {

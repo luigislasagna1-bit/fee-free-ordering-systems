@@ -3728,7 +3728,22 @@
       "badge": "Paid add-on",
       "subtitle": "This premium feature isn't included on your current plan. Subscribe to the add-on to unlock it for your restaurant.",
       "cta": "Unlock this add-on",
-      "footerNote": "Billing is handled securely through Stripe. Cancel anytime."
+      "footerNote": "Billing is handled securely through Stripe. Cancel anytime.",
+      "growthNetHint": "Or unlock every marketing tool at once — at a discount — with"
+    },
+    "growthnet": {
+      "tagline": "Fee Free's Restaurant Growth System",
+      "heroBody": "Every paid marketing, retention and customer-acquisition tool in one bundle — at one discounted price. We recommend it to maximize growth and sales for your restaurant.",
+      "savingsBadge": "Save {percent}%",
+      "individualValue": "{amount} value if purchased individually",
+      "ctaSubscribe": "Get GrowthNet",
+      "activeBanner": "GrowthNet is active — every tool below is unlocked.",
+      "includedViaBundle": "Included in GrowthNet",
+      "enableIndividually": "Enable individually",
+      "soldSeparately": "Sold separately",
+      "futureNote": "New growth tools are added to GrowthNet as we ship them — subscribers get every new addition automatically, at no extra cost.",
+      "whatsInside": "What's inside",
+      "moreChannels": "More growth channels"
     }
   },
   "impersonation": {

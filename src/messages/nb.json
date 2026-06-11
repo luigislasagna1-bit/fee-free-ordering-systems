@@ -3728,7 +3728,22 @@
       "badge": "Betalt tillegg",
       "subtitle": "Denne premiumfunksjonen er ikke inkludert i din nåværende plan. Abonner på tillegget for å låse den opp for restauranten din.",
       "cta": "Lås opp dette tillegget",
-      "footerNote": "Faktureringen håndteres sikkert via Stripe. Si opp når som helst."
+      "footerNote": "Faktureringen håndteres sikkert via Stripe. Si opp når som helst.",
+      "growthNetHint": "Eller lås opp alle markedsføringsverktøyene på én gang — med rabatt — med"
+    },
+    "growthnet": {
+      "tagline": "Fee Frees vekstsystem for restauranter",
+      "heroBody": "Alle betalte verktøy for markedsføring, kundelojalitet og kundeanskaffelse i én pakke — til én rabattert pris. Vi anbefaler den for å maksimere restaurantens vekst og salg.",
+      "savingsBadge": "Spar {percent}%",
+      "individualValue": "Verdi på {amount} ved kjøp enkeltvis",
+      "ctaSubscribe": "Skaff GrowthNet",
+      "activeBanner": "GrowthNet er aktivt — alle verktøyene nedenfor er låst opp.",
+      "includedViaBundle": "Inkludert i GrowthNet",
+      "enableIndividually": "Aktiver enkeltvis",
+      "soldSeparately": "Selges separat",
+      "futureNote": "Nye vekstverktøy legges til i GrowthNet etter hvert som vi lanserer dem — abonnenter får hver nyhet automatisk, uten ekstra kostnad.",
+      "whatsInside": "Hva som er inkludert",
+      "moreChannels": "Flere vekstkanaler"
     }
   },
   "impersonation": {
