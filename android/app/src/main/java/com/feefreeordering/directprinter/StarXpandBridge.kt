@@ -173,6 +173,13 @@ object StarXpandBridge {
                 "divider" -> totalHeight += defaultLineHeight
                 "feed" -> totalHeight += defaultLineHeight * item.optInt("count", 1)
                 "cut" -> { /* SDK action, no bitmap height */ }
+                // Receipt-logo image (additive 2026-06-11). decodeImageLine
+                // returns null on ANY problem, so a bad/absent logo adds no
+                // height and the receipt lays out exactly as before.
+                "image" -> {
+                    val img = decodeImageLine(item, drawableWidth)
+                    if (img != null) totalHeight += img.height + 8
+                }
             }
         }
         totalHeight += 16 // bottom margin
@@ -256,9 +263,52 @@ object StarXpandBridge {
                     y += defaultLineHeight * item.optInt("count", 1)
                 }
                 "cut" -> { /* SDK action */ }
+                // Receipt-logo image (additive 2026-06-11): pre-scaled by
+                // decodeImageLine; skipped entirely when decoding fails so
+                // the logo can never break a print.
+                "image" -> {
+                    val img = decodeImageLine(item, drawableWidth)
+                    if (img != null) {
+                        val x = when (item.optString("align", "center")) {
+                            "left" -> leftMargin
+                            "right" -> widthDots - rightMargin - img.width
+                            else -> leftMargin + (drawableWidth - img.width) / 2f
+                        }
+                        canvas.drawBitmap(img, x, y, null)
+                        y += img.height + 8
+                    }
+                }
             }
         }
         return bitmap
+    }
+
+    /**
+     * Decode + scale a {"kind":"image"} receipt line (the server inlines the
+     * logo as base64 — the tablet never fetches URLs mid-print). Width is
+     * capped at maxWidthDots when provided, else 60% of the drawable width,
+     * and never exceeds the paper. Returns null on ANY problem so a corrupt
+     * or oversized logo silently skips instead of breaking the print.
+     * Additive 2026-06-11 — no existing line kinds are affected.
+     */
+    private fun decodeImageLine(item: org.json.JSONObject, drawableWidth: Float): Bitmap? {
+        return try {
+            val b64 = item.optString("dataBase64", "")
+            if (b64.isEmpty()) return null
+            val bytes = android.util.Base64.decode(b64, android.util.Base64.DEFAULT)
+            val src = android.graphics.BitmapFactory.decodeByteArray(bytes, 0, bytes.size) ?: return null
+            val cap = item.optInt("maxWidthDots", 0)
+            val maxW = if (cap > 0) minOf(cap.toFloat(), drawableWidth) else drawableWidth * 0.6f
+            if (src.width.toFloat() <= maxW) {
+                src
+            } else {
+                val scale = maxW / src.width
+                Bitmap.createScaledBitmap(src, maxW.toInt(), (src.height * scale).toInt().coerceAtLeast(1), true)
+            }
+        } catch (e: Exception) {
+            Log.w("StarXpandBridge", "decodeImageLine failed: " + e.message)
+            null
+        }
     }
 
     /**

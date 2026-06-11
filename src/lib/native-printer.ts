@@ -67,7 +67,18 @@ export type ReceiptLine =
     }
   | { kind: "divider" }
   | { kind: "feed"; count: number }
-  | { kind: "cut" };
+  | { kind: "cut" }
+  | {
+      /** Receipt-logo image — server inlines the bytes as base64; the
+       *  Android renderer draws it into the bitmap. App builds without
+       *  image support skip unknown kinds safely (no else in the Kotlin
+       *  when), so this is forward-compatible. */
+      kind: "image";
+      url?: string;
+      dataBase64?: string;
+      maxWidthDots?: number;
+      align?: "left" | "center" | "right";
+    };
 
 export interface NativePrintOpts {
   /** Printer IP on the local network, e.g. "192.168.1.50". */

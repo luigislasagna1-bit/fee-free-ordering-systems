@@ -56,6 +56,8 @@ export type OrderConfirmationProps = {
   restaurantEmail?: string;
   restaurantPhone?: string;
   imprint?: string;
+  /** Receipt-header logo URL (Restaurant.receiptLogoUrl). */
+  logoUrl?: string;
   currency?: string;
   /** Promotions that fired for this order — rendered as a highlighted
    *  box above the totals so the customer sees the applied promo by
@@ -75,7 +77,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
     customerName, orderNumber, restaurantName, orderType, paidOnline,
     estimatedMinutes, scheduledLabel, reservationPartySize, reservationLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
     discount, total, deliveryAddress, trackingUrl, restaurantUrl,
-    restaurantEmail, restaurantPhone, imprint, currency,
+    restaurantEmail, restaurantPhone, imprint, logoUrl, currency,
     appliedPromos, t,
   } = props;
   const cur = currency ?? "usd";
@@ -106,6 +108,19 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
         subtitle={t("email.orderConfirmed.headerSubtitle")}
       />
       <EmailBody>
+        {logoUrl ? (
+          // Receipt-header logo — table-wrapped + inline styles for email
+          // client compatibility (no flex/max-w classes in email HTML).
+          <table role="presentation" width="100%" cellPadding={0} cellSpacing={0} style={{ marginBottom: 12 }}>
+            <tbody>
+              <tr>
+                <td align="center">
+                  <img src={logoUrl} alt="" width="160" style={{ display: "block", maxWidth: "160px", maxHeight: "90px", objectFit: "contain" }} />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        ) : null}
         <P>{t("email.orderConfirmed.greeting", { customerName })}</P>
         <P>
           {t("email.orderConfirmed.bodyThanks", { restaurantName })}{" "}

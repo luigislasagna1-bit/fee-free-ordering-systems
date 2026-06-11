@@ -1060,7 +1060,9 @@
       "preview": "Pratinjau",
       "default": "Default",
       "setAsDefault": "Jadikan default",
-      "confirmDelete": "Hapus template ini?"
+      "confirmDelete": "Hapus template ini?",
+      "logoTitle": "Logo struk",
+      "logoHint": "Ditampilkan di bagian atas struk pelanggan — di pratinjau, pada struk cetak, dan di email pesanan. Gambar kontras tinggi paling baik dicetak di kertas termal. Seret bagian Logo untuk memindahkannya."
     },
     "promotions": {
       "title": "Promosi & Kupon",

@@ -1060,7 +1060,9 @@
       "preview": "Previzualizare",
       "default": "Implicit",
       "setAsDefault": "Setează ca implicit",
-      "confirmDelete": "Ștergi acest șablon?"
+      "confirmDelete": "Ștergi acest șablon?",
+      "logoTitle": "Sigla bonului",
+      "logoHint": "Afișat în partea de sus a bonului clientului — în previzualizare, pe bonul tipărit și în e-mailul comenzii. Imaginile cu contrast ridicat se imprimă cel mai bine pe hârtie termică. Trage secțiunea Logo pentru a o repoziționa."
     },
     "promotions": {
       "title": "Promoții & Cupoane",

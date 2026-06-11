@@ -1060,7 +1060,9 @@
       "preview": "Pregled",
       "default": "Zadano",
       "setAsDefault": "Postavi kao zadano",
-      "confirmDelete": "Izbrisati ovaj predložak?"
+      "confirmDelete": "Izbrisati ovaj predložak?",
+      "logoTitle": "Logotip računa",
+      "logoHint": "Prikazuje se na vrhu računa za kupca — u pregledu, na ispisanom računu i u e-poruci narudžbe. Slike visokog kontrasta najbolje se ispisuju na termalnom papiru. Povucite odjeljak Logotip da biste ga premjestili."
     },
     "promotions": {
       "title": "Promocije i kuponi",

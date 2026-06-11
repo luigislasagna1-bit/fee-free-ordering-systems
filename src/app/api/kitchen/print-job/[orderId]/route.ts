@@ -75,7 +75,7 @@ export async function GET(
         select: {
           name: true, phone: true, email: true,
           address: true, city: true, state: true, zip: true, currency: true,
-          timezone: true, hoursFormat: true,
+          timezone: true, hoursFormat: true, receiptLogoUrl: true,
         },
       },
     },
@@ -113,6 +113,7 @@ export async function GET(
     currency: order.restaurant.currency,
     timezone: order.restaurant.timezone,
     hoursFormat: (order.restaurant as any).hoursFormat,
+    receiptLogoUrl: (order.restaurant as any).receiptLogoUrl ?? null,
   };
 
   const receiptOrder: ReceiptOrder = {
@@ -184,6 +185,34 @@ export async function GET(
     lines = await buildKitchenReceiptLines(
       receiptOrder, restaurant, cfg, paperWidth, "en",
     );
+  }
+
+  // ── Resolve logo image lines: url → base64 ──
+  // The Android renderer must not fetch arbitrary URLs mid-print (latency +
+  // failure modes on the tablet network), so the server inlines the bytes.
+  // Best-effort: any failure (unreachable blob, oversize, non-image) drops
+  // the logo line and the receipt prints exactly as before — printing is
+  // never blocked by the logo. Old app builds skip the line anyway.
+  if (Array.isArray(lines) && lines.some((l: any) => l?.kind === "image" && l.url)) {
+    lines = (
+      await Promise.all(
+        lines.map(async (l: any) => {
+          if (l?.kind !== "image" || !l.url) return l;
+          try {
+            const res = await fetch(l.url, { signal: AbortSignal.timeout(5000) });
+            if (!res.ok) return null;
+            const contentType = res.headers.get("content-type") ?? "";
+            if (!/^image\/(png|jpe?g|webp)/i.test(contentType)) return null;
+            const buf = Buffer.from(await res.arrayBuffer());
+            if (buf.length > 1_500_000) return null; // 1.5MB cap — receipts don't need more
+            const { url: _drop, ...rest } = l;
+            return { ...rest, dataBase64: buf.toString("base64") };
+          } catch {
+            return null;
+          }
+        }),
+      )
+    ).filter(Boolean);
   }
 
   return NextResponse.json({

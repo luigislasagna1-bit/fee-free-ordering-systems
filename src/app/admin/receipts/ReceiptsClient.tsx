@@ -18,6 +18,7 @@ import { ReceiptRenderer, PAPER_WIDTH_PX, PAPER_WIDTH_58_PX, SAMPLE_ORDER, makeS
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "@/lib/receipt-schema";
 import { parseReceiptConfig } from "@/lib/receipt-schema";
 import { useTranslations } from "next-intl";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -259,6 +260,10 @@ export function ReceiptsClient({
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [kitchenCopies,  setKitchenCopies]  = useState<number>(printerSettings?.kitchenCopies ?? 1);
   const [customerCopies, setCustomerCopies] = useState<number>(printerSettings?.customerCopies ?? 1);
+  // Receipt-header logo (customer receipt only). Lives on Restaurant, not in
+  // the template JSON, so one upload covers print + preview + email. Saved by
+  // the same Save button as the template. Luigi 2026-06-11.
+  const [receiptLogoUrl, setReceiptLogoUrl] = useState<string>(restaurant?.receiptLogoUrl ?? "");
   const [saving, setSaving]         = useState(false);
 
   const previewRef = useRef<HTMLDivElement>(null);
@@ -316,7 +321,7 @@ export function ReceiptsClient({
       const res = await fetch("/api/restaurants/receipts", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ customerTemplate: custConfig, kitchenTemplate: kitConfig, kitchenCopies, customerCopies }),
+        body: JSON.stringify({ customerTemplate: custConfig, kitchenTemplate: kitConfig, kitchenCopies, customerCopies, receiptLogoUrl: receiptLogoUrl || null }),
       });
       if (!res.ok) throw new Error("Failed");
       if (!silent) toast.success(tToasts("saved"));
@@ -453,7 +458,16 @@ export function ReceiptsClient({
 
           {/* Customer-only panels */}
           {activeType === "customer" && (
-            <MessagePanel config={custConfig} onChange={setCustConfig} />
+            <>
+              <MessagePanel config={custConfig} onChange={setCustConfig} />
+              <div className="border-t border-gray-100 px-3 py-3">
+                <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
+                  {tR("logoTitle")}
+                </div>
+                <ImageUpload value={receiptLogoUrl} onChange={setReceiptLogoUrl} aspectRatio="auto" />
+                <p className="text-[11px] text-gray-400 mt-2 leading-relaxed">{tR("logoHint")}</p>
+              </div>
+            </>
           )}
 
           {/* Print copy count */}
@@ -590,7 +604,7 @@ export function ReceiptsClient({
               ref={previewRef}
               type="customer"
               config={custConfig}
-              restaurant={restaurant}
+              restaurant={{ ...restaurant, receiptLogoUrl: receiptLogoUrl || null }}
               order={previewOrder}
               widthPx={previewWidthPx}
             />

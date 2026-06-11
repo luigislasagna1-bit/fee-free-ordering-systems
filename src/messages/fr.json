@@ -1060,7 +1060,9 @@
       "preview": "Aperçu",
       "default": "Par défaut",
       "setAsDefault": "Définir par défaut",
-      "confirmDelete": "Supprimer ce modèle ?"
+      "confirmDelete": "Supprimer ce modèle ?",
+      "logoTitle": "Logo du reçu",
+      "logoHint": "Affiché en haut du reçu client — dans l'aperçu, sur le reçu imprimé et dans l'e-mail de commande. Les images très contrastées s'impriment mieux sur papier thermique. Faites glisser la section Logo pour la repositionner."
     },
     "promotions": {
       "title": "Promotions et coupons",

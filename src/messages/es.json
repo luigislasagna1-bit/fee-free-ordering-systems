@@ -1060,7 +1060,9 @@
       "preview": "Vista previa",
       "default": "Predeterminada",
       "setAsDefault": "Establecer como predeterminada",
-      "confirmDelete": "¿Eliminar esta plantilla?"
+      "confirmDelete": "¿Eliminar esta plantilla?",
+      "logoTitle": "Logotipo del recibo",
+      "logoHint": "Se muestra en la parte superior del recibo del cliente: en la vista previa, en el recibo impreso y en el correo del pedido. Las imágenes de alto contraste se imprimen mejor en papel térmico. Arrastra la sección Logo para reubicarla."
     },
     "promotions": {
       "title": "Promociones y cupones",

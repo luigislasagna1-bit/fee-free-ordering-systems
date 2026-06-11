@@ -1060,7 +1060,9 @@
       "preview": "Xem trước",
       "default": "Mặc định",
       "setAsDefault": "Đặt làm mặc định",
-      "confirmDelete": "Xóa mẫu này?"
+      "confirmDelete": "Xóa mẫu này?",
+      "logoTitle": "Logo hóa đơn",
+      "logoHint": "Hiển thị ở đầu hóa đơn của khách — trong bản xem trước, trên hóa đơn in và trong email đơn hàng. Hình ảnh tương phản cao in đẹp nhất trên giấy nhiệt. Kéo phần Logo để thay đổi vị trí."
     },
     "promotions": {
       "title": "Khuyến mãi & Phiếu giảm giá",

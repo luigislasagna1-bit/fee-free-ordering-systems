@@ -1060,7 +1060,9 @@
       "preview": "Előnézet",
       "default": "Alapértelmezett",
       "setAsDefault": "Beállítás alapértelmezettként",
-      "confirmDelete": "Törli ezt a sablont?"
+      "confirmDelete": "Törli ezt a sablont?",
+      "logoTitle": "Nyugta logó",
+      "logoHint": "A vásárlói nyugta tetején jelenik meg — az előnézetben, a nyomtatott nyugtán és a rendelési e-mailben. A nagy kontrasztú képek nyomtathatók legjobban hőpapírra. A Logó szakasz húzással áthelyezhető."
     },
     "promotions": {
       "title": "Promóciók és kuponok",

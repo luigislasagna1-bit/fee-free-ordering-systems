@@ -1060,7 +1060,9 @@
       "preview": "Pré-visualizar",
       "default": "Padrão",
       "setAsDefault": "Definir como padrão",
-      "confirmDelete": "Excluir este modelo?"
+      "confirmDelete": "Excluir este modelo?",
+      "logoTitle": "Logotipo do recibo",
+      "logoHint": "Exibido no topo do recibo do cliente — na prévia, no recibo impresso e no e-mail do pedido. Imagens de alto contraste imprimem melhor em papel térmico. Arraste a seção Logotipo para reposicioná-la."
     },
     "promotions": {
       "title": "Promoções e Cupons",

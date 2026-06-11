@@ -1060,7 +1060,9 @@
       "preview": "Önizleme",
       "default": "Varsayılan",
       "setAsDefault": "Varsayılan olarak ayarla",
-      "confirmDelete": "Bu şablon silinsin mi?"
+      "confirmDelete": "Bu şablon silinsin mi?",
+      "logoTitle": "Fiş logosu",
+      "logoHint": "Müşteri fişinin üstünde gösterilir — önizlemede, yazdırılan fişte ve sipariş e-postasında. Yüksek kontrastlı görseller termal kağıtta en iyi şekilde yazdırılır. Logo bölümünü taşımak için sürükleyin."
     },
     "promotions": {
       "title": "Promosyonlar & Kuponlar",

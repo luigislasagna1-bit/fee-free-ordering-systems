@@ -1060,7 +1060,9 @@
       "preview": "Forhåndsvisning",
       "default": "Standard",
       "setAsDefault": "Angi som standard",
-      "confirmDelete": "Slett denne malen?"
+      "confirmDelete": "Slett denne malen?",
+      "logoTitle": "Kvitteringslogo",
+      "logoHint": "Vises øverst på kundens kvittering — i forhåndsvisningen, på den utskrevne kvitteringen og i ordre-e-posten. Bilder med høy kontrast skrives best ut på termopapir. Dra Logo-seksjonen for å flytte den."
     },
     "promotions": {
       "title": "Kampanjer og kuponger",

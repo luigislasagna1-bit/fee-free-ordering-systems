@@ -1060,7 +1060,9 @@
       "preview": "Forhåndsvisning",
       "default": "Standard",
       "setAsDefault": "Angiv som standard",
-      "confirmDelete": "Slet denne skabelon?"
+      "confirmDelete": "Slet denne skabelon?",
+      "logoTitle": "Kvitteringslogo",
+      "logoHint": "Vises øverst på kundens kvittering — i forhåndsvisningen, på den printede kvittering og i ordremailen. Billeder med høj kontrast printer bedst på termopapir. Træk Logo-sektionen for at flytte den."
     },
     "promotions": {
       "title": "Kampagner og kuponer",

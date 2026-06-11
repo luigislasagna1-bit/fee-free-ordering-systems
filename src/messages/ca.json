@@ -1060,7 +1060,9 @@
       "preview": "Vista prèvia",
       "default": "Per defecte",
       "setAsDefault": "Establir com a predeterminat",
-      "confirmDelete": "Elimineu aquesta plantilla?"
+      "confirmDelete": "Elimineu aquesta plantilla?",
+      "logoTitle": "Logotip del rebut",
+      "logoHint": "Es mostra a la part superior del rebut del client — a la previsualització, al rebut imprès i al correu de la comanda. Les imatges d'alt contrast s'imprimeixen millor en paper tèrmic. Arrossega la secció Logotip per reubicar-la."
     },
     "promotions": {
       "title": "Promocions i cupons",

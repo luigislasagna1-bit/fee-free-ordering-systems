@@ -7,7 +7,24 @@ export async function PUT(req: NextRequest) {
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { customerTemplate, kitchenTemplate, kitchenCopies, customerCopies } = await req.json();
+  const { customerTemplate, kitchenTemplate, kitchenCopies, customerCopies, receiptLogoUrl } = await req.json();
+
+  // Receipt-header logo — stored on Restaurant (one upload covers the printed
+  // receipt, the editor preview and the email receipt). `null`/"" clears it.
+  // Only http(s) or our own /uploads paths are accepted; anything else is
+  // ignored rather than failing the whole template save. Luigi 2026-06-11.
+  if (receiptLogoUrl !== undefined) {
+    const v = typeof receiptLogoUrl === "string" ? receiptLogoUrl.trim() : "";
+    const valid =
+      v === "" ||
+      ((v.startsWith("https://") || v.startsWith("http://") || v.startsWith("/uploads/")) && v.length <= 500);
+    if (valid) {
+      await prisma.restaurant.update({
+        where: { id: restaurantId },
+        data: { receiptLogoUrl: v === "" ? null : v },
+      });
+    }
+  }
 
   const custExisting = await prisma.receiptTemplate.findFirst({ where: { restaurantId, type: "customer", isDefault: true } });
   if (custExisting) {

@@ -1060,7 +1060,9 @@
       "preview": "Náhľad",
       "default": "Predvolené",
       "setAsDefault": "Nastaviť ako predvolené",
-      "confirmDelete": "Odstrániť túto šablónu?"
+      "confirmDelete": "Odstrániť túto šablónu?",
+      "logoTitle": "Logo účtenky",
+      "logoHint": "Zobrazuje sa v hornej časti zákazníckej účtenky — v náhľade, na vytlačenej účtenke a v e-maile objednávky. Obrázky s vysokým kontrastom sa na termopapier tlačia najlepšie. Sekciu Logo presuniete potiahnutím."
     },
     "promotions": {
       "title": "Akcie a kupóny",

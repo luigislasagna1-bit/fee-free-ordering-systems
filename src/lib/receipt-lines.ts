@@ -55,7 +55,21 @@ export type ReceiptLine =
     }
   | { kind: "divider" }
   | { kind: "feed"; count: number }
-  | { kind: "cut" };
+  | { kind: "cut" }
+  | {
+      /** Receipt-logo image, drawn into the StarXpand bitmap by the Android
+       *  renderer. The builder emits `url`; the print-job route resolves it
+       *  to `dataBase64` server-side (the tablet shouldn't fetch arbitrary
+       *  URLs mid-print). Older app builds that predate image support skip
+       *  unknown kinds safely (the Kotlin `when` has no else branch), so
+       *  emitting this is a no-op until the app updates — never a crash. */
+      kind: "image";
+      url?: string;
+      dataBase64?: string;
+      /** Cap the drawn width in printer dots; renderer also clamps to paper. */
+      maxWidthDots?: number;
+      align?: "left" | "center" | "right";
+    };
 
 // ─── Internal builder ────────────────────────────────────────────────────────
 
@@ -109,6 +123,12 @@ class LinesBuilder {
 
   /** Same as line() for our purposes — Kotlin renderer wraps on its side. */
   wrapped(text: string, _indent?: number) { return this.line(text); }
+
+  /** Receipt-logo image line (resolved to base64 by the print-job route). */
+  image(url: string, maxWidthDots?: number) {
+    this.lines.push({ kind: "image", url, maxWidthDots, align: this.curAlign });
+    return this;
+  }
 
   columns(left: string, right: string) {
     this.lines.push({
@@ -357,6 +377,16 @@ function renderCustomerSection(
 ): void {
   const s = section.style;
   switch (section.type) {
+    case "store_logo":
+      // Renders only when the restaurant uploaded a receipt logo. Width is
+      // capped at ~60% of the paper so even a square logo stays a tasteful
+      // header, not a banner. align comes from the section style (default
+      // center). Old app builds skip the line (unknown kind) — harmless.
+      if (restaurant.receiptLogoUrl) {
+        r.align(s.align).image(restaurant.receiptLogoUrl, undefined);
+      }
+      break;
+
     case "store_name":
       r.wrapped(restaurant.name);
       break;
@@ -568,6 +598,10 @@ function renderSections(
     // Timing sections are the inverse — a reservation's time is in the
     // reservation section, so skip the standalone timing section for pre-orders.
     if ((section.type === "timing" || section.type === "k_timing") && order.reservation) continue;
+    // Logo section renders only when a receipt logo is uploaded — skip the
+    // WHOLE section (padding included) otherwise, so restaurants without a
+    // logo see zero change at the top of their receipts.
+    if (section.type === "store_logo" && !restaurant.receiptLogoUrl) continue;
     const s = section.style;
 
     blankLines(r, s.paddingTop);

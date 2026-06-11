@@ -1060,7 +1060,9 @@
       "preview": "预览",
       "default": "默认",
       "setAsDefault": "设为默认",
-      "confirmDelete": "确认删除此模板？"
+      "confirmDelete": "确认删除此模板？",
+      "logoTitle": "小票标志",
+      "logoHint": "显示在顾客小票顶部——预览、打印小票和订单邮件中均会显示。高对比度图片在热敏纸上打印效果最佳。拖动「标志」区块可调整位置。"
     },
     "promotions": {
       "title": "促销与优惠券",

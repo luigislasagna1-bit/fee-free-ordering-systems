@@ -1060,7 +1060,9 @@
       "preview": "Náhled",
       "default": "Výchozí",
       "setAsDefault": "Nastavit jako výchozí",
-      "confirmDelete": "Smazat tuto šablonu?"
+      "confirmDelete": "Smazat tuto šablonu?",
+      "logoTitle": "Logo účtenky",
+      "logoHint": "Zobrazuje se v horní části zákaznické účtenky — v náhledu, na vytištěné účtence a v e-mailu objednávky. Obrázky s vysokým kontrastem se na termopapír tisknou nejlépe. Sekci Logo přesunete přetažením."
     },
     "promotions": {
       "title": "Akce a kupóny",

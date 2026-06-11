@@ -123,6 +123,17 @@ function renderCustomer(
   const row: React.CSSProperties = { display: "flex", justifyContent: "space-between", marginBottom: "1px" };
 
   switch (section.type) {
+    case "store_logo":
+      // Mirrors the printed result: skipped entirely when no receipt logo is
+      // uploaded; grayscale because the thermal printer prints 1-bit.
+      return restaurant?.receiptLogoUrl ? (
+        <img
+          src={restaurant.receiptLogoUrl}
+          alt=""
+          style={{ maxWidth: "60%", maxHeight: 80, display: "inline-block", filter: "grayscale(100%)" }}
+        />
+      ) : null;
+
     case "store_name":
       return <span>{restaurant?.name || t("yourRestaurant")}</span>;
 

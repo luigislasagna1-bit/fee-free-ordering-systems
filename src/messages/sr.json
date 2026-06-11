@@ -1060,7 +1060,9 @@
       "preview": "Pregled",
       "default": "Podrazumevano",
       "setAsDefault": "Postavi kao podrazumevano",
-      "confirmDelete": "Obrisati ovaj predložak?"
+      "confirmDelete": "Obrisati ovaj predložak?",
+      "logoTitle": "Логотип рачуна",
+      "logoHint": "Приказује се на врху рачуна за купца — у прегледу, на одштампаном рачуну и у имејлу поруџбине. Слике високог контраста најбоље се штампају на термо папиру. Превуците одељак Логотип да бисте га преместили."
     },
     "promotions": {
       "title": "Promocije i kuponi",

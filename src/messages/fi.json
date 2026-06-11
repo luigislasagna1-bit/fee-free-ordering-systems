@@ -1060,7 +1060,9 @@
       "preview": "Esikatselu",
       "default": "Oletus",
       "setAsDefault": "Aseta oletukseksi",
-      "confirmDelete": "Poistetaanko tämä malli?"
+      "confirmDelete": "Poistetaanko tämä malli?",
+      "logoTitle": "Kuitin logo",
+      "logoHint": "Näkyy asiakaskuitin yläosassa — esikatselussa, tulostetussa kuitissa ja tilaussähköpostissa. Korkean kontrastin kuvat tulostuvat parhaiten lämpöpaperille. Siirrä Logo-osiota vetämällä."
     },
     "promotions": {
       "title": "Tarjoukset ja kupongit",

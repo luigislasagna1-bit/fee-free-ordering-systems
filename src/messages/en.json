@@ -1114,7 +1114,9 @@
       "preview": "Preview",
       "default": "Default",
       "setAsDefault": "Set as default",
-      "confirmDelete": "Delete this template?"
+      "confirmDelete": "Delete this template?",
+      "logoTitle": "Receipt logo",
+      "logoHint": "Shown at the top of the customer receipt — in the preview, on the printed receipt and in the order email. High-contrast images print best on thermal paper. Drag the Logo section to reposition it."
     },
     "promotions": {
       "title": "Promotions & Coupons",

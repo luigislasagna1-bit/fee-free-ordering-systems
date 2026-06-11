@@ -1060,7 +1060,9 @@
       "preview": "Predogled",
       "default": "Privzeto",
       "setAsDefault": "Nastavi kot privzeto",
-      "confirmDelete": "Izbrišete to predlogo?"
+      "confirmDelete": "Izbrišete to predlogo?",
+      "logoTitle": "Logotip računa",
+      "logoHint": "Prikazano na vrhu računa za stranko — v predogledu, na natisnjenem računu in v e-pošti naročila. Slike z visokim kontrastom se najbolje natisnejo na termo papir. Povlecite razdelek Logotip, da ga prestavite."
     },
     "promotions": {
       "title": "Promocije in kuponi",

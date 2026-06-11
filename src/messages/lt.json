@@ -1060,7 +1060,9 @@
       "preview": "Peržiūra",
       "default": "Numatytasis",
       "setAsDefault": "Nustatyti kaip numatytąjį",
-      "confirmDelete": "Ištrinti šį šabloną?"
+      "confirmDelete": "Ištrinti šį šabloną?",
+      "logoTitle": "Kvito logotipas",
+      "logoHint": "Rodomas kliento kvito viršuje — peržiūroje, atspausdintame kvite ir užsakymo el. laiške. Didelio kontrasto vaizdai geriausiai spausdinami ant terminio popieriaus. Vilkite logotipo skiltį, kad ją perkeltumėte."
     },
     "promotions": {
       "title": "Akcijos ir kuponai",

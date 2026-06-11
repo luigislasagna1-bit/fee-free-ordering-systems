@@ -1060,7 +1060,9 @@
       "preview": "Podgląd",
       "default": "Domyślny",
       "setAsDefault": "Ustaw jako domyślny",
-      "confirmDelete": "Usunąć ten szablon?"
+      "confirmDelete": "Usunąć ten szablon?",
+      "logoTitle": "Logo paragonu",
+      "logoHint": "Wyświetlane u góry paragonu klienta — w podglądzie, na wydrukowanym paragonie i w e-mailu zamówienia. Obrazy o wysokim kontraście drukują się najlepiej na papierze termicznym. Przeciągnij sekcję Logo, aby zmienić jej położenie."
     },
     "promotions": {
       "title": "Promocje i kupony",

@@ -556,6 +556,12 @@ export interface ReceiptRestaurant {
   /** 12h/24h preference — drives clock-time formatting on the receipt.
    *  Defaults to 12h when absent (legacy behaviour). Luigi 2026-06-08. */
   hoursFormat?: string | null;
+  /** Receipt-header logo URL. CONSUMED ONLY by the structured-lines path
+   *  (receipt-lines.ts → StarXpand bitmap + HTML preview + email). This
+   *  ESC/POS byte path NEVER prints images — ESC * and GS v 0 both fail on
+   *  the Star TSP143IIIW (GOLDEN rule) — so renderCustomerSection treats the
+   *  store_logo section as a no-op here. Luigi 2026-06-11. */
+  receiptLogoUrl?: string | null;
 }
 
 // ── Format helpers ────────────────────────────────────────────────────────────
@@ -768,6 +774,12 @@ async function renderCustomerSection(
   const s = section.style;
 
   switch (section.type) {
+    case "store_logo":
+      // No-op on the ESC/POS byte path: this hardware cannot print images
+      // (ESC * / GS v 0 both fail — see the GOLDEN note near line 473).
+      // The logo prints via the StarXpand bitmap path (receipt-lines.ts).
+      break;
+
     case "store_name":
       r.wrapped(restaurant.name);
       break;
@@ -996,6 +1008,11 @@ async function renderSections(
     // Timing sections are the inverse — skip them for a pre-order (its time is
     // in the reservation section).
     if ((section.type === "timing" || section.type === "k_timing") && order.reservation) continue;
+    // store_logo is ALWAYS skipped on this ESC/POS byte path — this hardware
+    // can't print images (GOLDEN), and rendering just the section's padding
+    // would add an empty gap at the top of every receipt. The logo prints via
+    // the StarXpand bitmap path (receipt-lines.ts). Luigi 2026-06-11.
+    if (section.type === "store_logo") continue;
     const s = section.style;
 
     blankLines(r, s.paddingTop);

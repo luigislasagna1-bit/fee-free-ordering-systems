@@ -1060,7 +1060,9 @@
       "preview": "Priekšskatījums",
       "default": "Noklusējums",
       "setAsDefault": "Iestatīt kā noklusējumu",
-      "confirmDelete": "Dzēst šo veidni?"
+      "confirmDelete": "Dzēst šo veidni?",
+      "logoTitle": "Čeka logotips",
+      "logoHint": "Tiek rādīts klienta čeka augšdaļā — priekšskatījumā, izdrukātajā čekā un pasūtījuma e-pastā. Augsta kontrasta attēli vislabāk drukājas uz termopapīra. Velciet sadaļu Logotips, lai to pārvietotu."
     },
     "promotions": {
       "title": "Akcijas un kuponi",

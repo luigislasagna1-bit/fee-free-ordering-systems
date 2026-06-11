@@ -53,6 +53,13 @@ model Restaurant {
   printNodeEnabled     Boolean @default(false)
   cuisineType          String?
   logoUrl              String?
+  /// Dedicated receipt-header logo (Vercel Blob URL). When set, the
+  /// "store_logo" section prints/renders it at the top of the CUSTOMER
+  /// receipt (HTML preview + email immediately; physical Star print after
+  /// the Android app picks up image-line support). Separate from logoUrl on
+  /// purpose: thermal printing wants a high-contrast image, which is often
+  /// not the colored web logo. Luigi 2026-06-11.
+  receiptLogoUrl       String?
   bannerUrl            String?
   /// Optional per-restaurant favicon (square icon, recommended 350x350) shown
   /// in the browser tab on the customer ordering page. Falls back to the

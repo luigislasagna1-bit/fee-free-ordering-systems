@@ -1060,7 +1060,9 @@
       "preview": "Eelvaade",
       "default": "Vaikimisi",
       "setAsDefault": "Määra vaikimisi",
-      "confirmDelete": "Kustuta see mall?"
+      "confirmDelete": "Kustuta see mall?",
+      "logoTitle": "Kviitungi logo",
+      "logoHint": "Kuvatakse kliendi kviitungi ülaosas — eelvaates, prinditud kviitungil ja tellimuse e-kirjas. Kõrge kontrastsusega pildid prindivad termopaberile kõige paremini. Logo jaotise liigutamiseks lohistage seda."
     },
     "promotions": {
       "title": "Kampaaniad ja kupongid",

@@ -226,6 +226,9 @@ function localizeOrderType(type: string, t: Translator): string {
 
 interface OrderEmailParams {
   to: string;
+  /** Receipt-header logo (Restaurant.receiptLogoUrl) — rendered above the
+   *  greeting in the email receipt. Optional; omitted = no logo. */
+  logoUrl?: string;
   customerName: string;
   orderNumber: string;
   restaurantName: string;
@@ -327,6 +330,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       restaurantUrl: params.restaurantUrl,
       restaurantEmail: params.restaurantEmail,
       restaurantPhone: params.restaurantPhone,
+      logoUrl: params.logoUrl,
       imprint: currentImprint(),
       appliedPromos: params.appliedPromos,
       currency: params.currency,

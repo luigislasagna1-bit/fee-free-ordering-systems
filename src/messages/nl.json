@@ -1060,7 +1060,9 @@
       "preview": "Voorbeeld",
       "default": "Standaard",
       "setAsDefault": "Als standaard instellen",
-      "confirmDelete": "Dit sjabloon verwijderen?"
+      "confirmDelete": "Dit sjabloon verwijderen?",
+      "logoTitle": "Bonlogo",
+      "logoHint": "Wordt bovenaan de klantbon getoond — in de voorvertoning, op de geprinte bon en in de bestel-e-mail. Beelden met veel contrast printen het best op thermisch papier. Sleep de Logo-sectie om deze te verplaatsen."
     },
     "promotions": {
       "title": "Promoties en coupons",

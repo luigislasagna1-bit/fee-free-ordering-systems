@@ -1060,7 +1060,9 @@
       "preview": "Vorschau",
       "default": "Standard",
       "setAsDefault": "Als Standard festlegen",
-      "confirmDelete": "Diese Vorlage löschen?"
+      "confirmDelete": "Diese Vorlage löschen?",
+      "logoTitle": "Beleg-Logo",
+      "logoHint": "Wird oben auf dem Kundenbeleg angezeigt — in der Vorschau, auf dem gedruckten Beleg und in der Bestell-E-Mail. Kontrastreiche Bilder drucken auf Thermopapier am besten. Ziehen Sie den Logo-Abschnitt, um ihn zu verschieben."
     },
     "promotions": {
       "title": "Aktionen & Gutscheine",

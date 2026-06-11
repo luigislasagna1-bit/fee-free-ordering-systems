@@ -453,6 +453,8 @@ export async function notifyCustomer(args: {
       timezone: true,
       // 12h/24h preference — formats reservation/scheduled times in emails.
       hoursFormat: true,
+      // Receipt-header logo — rendered at the top of the email receipt.
+      receiptLogoUrl: true,
       // Per-toggle email switches — let owners mute individual status
       // notifications without affecting the others.
       customerEmailOrderConfirm: true,
@@ -524,6 +526,7 @@ export async function notifyCustomer(args: {
           locale,
           appliedPromos: payload.appliedPromos,
           currency: restaurant.currency,
+          logoUrl: (restaurant as any).receiptLogoUrl ?? undefined,
         });
       });
       await fireSms();

@@ -1,6 +1,14 @@
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export type CustomerSectionType =
+  /** Restaurant logo at the top of the customer receipt. Renders ONLY when
+   *  Restaurant.receiptLogoUrl is set (skipped otherwise, so the section can
+   *  stay enabled by default). Named "store_logo" — NOT the legacy "logo"
+   *  type, which parseReceiptConfig still strips (the old ESC/POS image
+   *  attempt failed on this hardware). The new path renders the image into
+   *  the StarXpand Android bitmap instead, plus HTML preview + email.
+   *  Luigi 2026-06-11. */
+  | "store_logo"
   | "store_name" | "store_info"
   /** Reserve-then-order block — renders ONLY when the order is linked to a
    *  table booking. Shows the "TABLE RESERVATION + PRE-ORDER" flag, party size
@@ -101,6 +109,11 @@ export const DEFAULT_CUSTOMER_CONFIG: CustomerConfig = {
   thankYouMessage: "Thank you for your order!",
   footerText: "We appreciate your business.",
   sections: [
+    // store_logo renders only when the restaurant has uploaded a receipt
+    // logo — enabled-by-default is safe (no logo → section is skipped).
+    // parseReceiptConfig's back-fill inserts this into already-saved
+    // templates at this position automatically.
+    { id: "store_logo",    type: "store_logo",    label: "Logo",                enabled: true,  style: { ...c, fontSize: 12, paddingTop: 10, paddingBottom: 2 } },
     { id: "store_name",    type: "store_name",    label: "Store Name",          enabled: true,  style: { ...bc, fontSize: 18, paddingTop: 10, paddingBottom: 2 } },
     { id: "store_info",    type: "store_info",    label: "Store Address & Phone", enabled: true, style: { ...c,  fontSize: 11, paddingBottom: 8 } },
     { id: "order_info",    type: "order_info",    label: "Order Info",          enabled: true,  style: { ...base, dividerAbove: true, dividerBelow: true, paddingTop: 6, paddingBottom: 6 } },

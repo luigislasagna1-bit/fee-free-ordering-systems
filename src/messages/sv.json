@@ -1060,7 +1060,9 @@
       "preview": "Förhandsgranska",
       "default": "Standard",
       "setAsDefault": "Ange som standard",
-      "confirmDelete": "Ta bort den här mallen?"
+      "confirmDelete": "Ta bort den här mallen?",
+      "logoTitle": "Kvittologotyp",
+      "logoHint": "Visas högst upp på kundkvittot — i förhandsvisningen, på det utskrivna kvittot och i ordermejlet. Bilder med hög kontrast skrivs ut bäst på termopapper. Dra Logotyp-sektionen för att flytta den."
     },
     "promotions": {
       "title": "Kampanjer och kuponger",
