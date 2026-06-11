@@ -113,6 +113,18 @@ export async function POST(
   const previousReady = order.estimatedReady ?? new Date();
   const newReady = new Date(previousReady.getTime() + minutes * 60_000);
 
+  // CRITICAL: push scheduledFor back by the same amount too (when set).
+  // BOTH the kitchen "ready in" countdown AND the Simple-mode auto-complete
+  // cron PREFER scheduledFor over estimatedReady. Accepted orders carry a
+  // scheduledFor (the promised slot — set even for ASAP accepts), so bumping
+  // only estimatedReady left the timer frozen at the OLD time and let the cron
+  // flip the order to "Completed" ~60s past the original scheduledFor — exactly
+  // the bug the reporter saw (order auto-completed at the original ready time
+  // despite a +25m delay). Luigi 2026-06-11 (reseller report cmq3sse8i).
+  const newScheduledFor = order.scheduledFor
+    ? new Date(order.scheduledFor.getTime() + minutes * 60_000)
+    : null;
+
   // Append a structured delay line to notes so it's auditable in the
   // admin orders detail page later. HH:MM in restaurant tz would be
   // ideal but adds dependency; plain ISO is fine for an audit trail.
@@ -126,6 +138,7 @@ export async function POST(
     where: { id: order.id },
     data: {
       estimatedReady: newReady,
+      ...(newScheduledFor ? { scheduledFor: newScheduledFor } : {}),
       notes: newNotes,
     },
   });
