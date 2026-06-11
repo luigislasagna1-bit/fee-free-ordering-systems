@@ -75,3 +75,54 @@ export async function recordSmartLinkOrder(opts: {
     console.error("[marketing-studio recordSmartLinkOrder]", e);
   }
 }
+
+/**
+ * Reverse a previous recordSmartLinkOrder when an attributed order is
+ * rejected / cancelled / auto-rejected, so a smart link's Orders + Revenue
+ * reflect only orders that actually stuck (matches what the marketplace
+ * counters do via unrecordMarketplaceOrder). Reads the attributed link id off
+ * the order (set at record time), so callers don't need the ref code.
+ *
+ * Idempotency mirrors record: atomically flips Order.smartLinkCounterApplied
+ * true → false exactly once, then decrements the link counters — clamped at 0
+ * so a manual DB edit can't push them negative. Internally safe — never throws
+ * into the order path. Revenue is in CENTS (same unit record incremented).
+ */
+export async function unrecordSmartLinkOrder(opts: {
+  orderId: string;
+  orderTotalCents: number;
+}): Promise<void> {
+  try {
+    await prisma.$transaction(async (tx) => {
+      const order = await tx.order.findUnique({
+        where: { id: opts.orderId },
+        select: { smartLinkId: true, smartLinkCounterApplied: true },
+      });
+      if (!order?.smartLinkId || !order.smartLinkCounterApplied) return;
+
+      // Atomic release: only decrement if the flag is still true. updateMany
+      // returns count=0 if another flip already released it.
+      const released = await tx.order.updateMany({
+        where: { id: opts.orderId, smartLinkCounterApplied: true },
+        data: { smartLinkCounterApplied: false },
+      });
+      if (released.count === 0) return;
+
+      const link = await tx.smartLink.findUnique({
+        where: { id: order.smartLinkId },
+        select: { orderCount: true, revenueCents: true },
+      });
+      if (!link) return;
+      const dec = Math.max(0, Math.round(opts.orderTotalCents));
+      await tx.smartLink.update({
+        where: { id: order.smartLinkId },
+        data: {
+          orderCount: { decrement: link.orderCount > 0 ? 1 : 0 },
+          revenueCents: { decrement: Math.min(link.revenueCents, dec) },
+        },
+      });
+    });
+  } catch (e) {
+    console.error("[marketing-studio unrecordSmartLinkOrder]", e);
+  }
+}

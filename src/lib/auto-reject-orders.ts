@@ -15,6 +15,7 @@ import { notifyCustomer, notifyStaff } from "@/lib/notifications";
 import { refundDirectPayment, voidPayment } from "@/lib/stripe";
 import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
+import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 
 /** Minutes a regular pending order can sit before we auto-reject.
  *  Matches the kitchen-display visual countdown (4 min) so the bell —
@@ -93,6 +94,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       restaurantId: true,
       viaMarketplace: true,
       marketplaceCounterApplied: true,
+      smartLinkCounterApplied: true,
       placedWhileClosed: true,
       restaurant: {
         select: { id: true, name: true, slug: true, defaultLanguage: true, stripeAccountId: true },
@@ -141,7 +143,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       paymentStatus: { in: ["pending", "requires_action", "processing"] },
       createdAt: { lt: abandonedCutoff },
     },
-    select: { id: true, orderNumber: true, restaurantId: true, viaMarketplace: true, marketplaceCounterApplied: true, total: true },
+    select: { id: true, orderNumber: true, restaurantId: true, viaMarketplace: true, marketplaceCounterApplied: true, smartLinkCounterApplied: true, total: true },
   });
   for (const o of abandoned) {
     try {
@@ -167,6 +169,13 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
           restaurantId: o.restaurantId,
           orderTotalCents: Math.round(o.total * 100),
         }).catch((e) => console.error("[auto-reject abandoned unrecord]", e));
+      }
+      // Same rollback for a smart-link-attributed order that never paid.
+      if (o.smartLinkCounterApplied) {
+        unrecordSmartLinkOrder({
+          orderId: o.id,
+          orderTotalCents: Math.round(o.total * 100),
+        }).catch((e) => console.error("[auto-reject abandoned smart-link unrecord]", e));
       }
     } catch (e) {
       result.errors.push({
@@ -212,6 +221,14 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
         }).catch((e) =>
           console.error("[auto-reject unrecordMarketplaceOrder]", e),
         );
+      }
+      // Smart-link rollback — an auto-rejected order drops off its flyer/QR
+      // link's Orders + Revenue too.
+      if (order.smartLinkCounterApplied) {
+        unrecordSmartLinkOrder({
+          orderId: order.id,
+          orderTotalCents: Math.round(order.total * 100),
+        }).catch((e) => console.error("[auto-reject smart-link unrecord]", e));
       }
 
       // Card order: void the authorization (if not yet captured) or

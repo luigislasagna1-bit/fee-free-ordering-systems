@@ -14,6 +14,7 @@ import {
   refundPaypalCapture,
 } from "@/lib/paypal";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
+import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { dispatchOrderToShipday, cancelShipdayOrder, shouldDispatchToShipday } from "@/lib/shipday";
 import { verifyOrderToken } from "@/lib/order-status-token";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
@@ -136,6 +137,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       paymentMethod: true,
       viaMarketplace: true,
       marketplaceCounterApplied: true,
+      smartLinkCounterApplied: true,
       total: true,
       // Scheduled slot — on accept we set estimatedReady to this (not now+prep)
       // so a future pickup/delivery shows its real ready time, not "20 min".
@@ -611,6 +613,23 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           });
         } catch (e) {
           console.error("[orders PATCH] unrecordMarketplaceOrder:", e);
+        }
+      })(),
+    );
+  }
+
+  // Smart-link counter rollback — same idea for Marketing Studio links: a
+  // rejected/cancelled order shouldn't keep counting toward a flyer/QR link's
+  // Orders + Revenue. Idempotent (atomic release), so repeat status flips are
+  // safe. Mirrors the marketplace rollback above.
+  if (isKilled && existing.smartLinkCounterApplied) {
+    const totalCents = Math.round(existing.total * 100);
+    after(
+      (async () => {
+        try {
+          await unrecordSmartLinkOrder({ orderId: id, orderTotalCents: totalCents });
+        } catch (e) {
+          console.error("[orders PATCH] unrecordSmartLinkOrder:", e);
         }
       })(),
     );

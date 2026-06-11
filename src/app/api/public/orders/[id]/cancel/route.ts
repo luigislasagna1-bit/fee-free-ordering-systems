@@ -30,6 +30,7 @@ import { getCurrentCustomer } from "@/lib/customer-session";
 import { voidPayment } from "@/lib/stripe";
 import { voidPaypalAuthorization } from "@/lib/paypal";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
+import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 
 /**
  * Verify that the current viewer owns `order` by either:
@@ -76,7 +77,7 @@ export async function POST(_req: NextRequest, ctx: { params: Promise<{ id: strin
       restaurantId: true, createdAt: true,
       paymentMethod: true, paymentStatus: true, paymentIntentId: true,
       paypalAuthorizationId: true,
-      viaMarketplace: true, marketplaceCounterApplied: true, total: true,
+      viaMarketplace: true, marketplaceCounterApplied: true, smartLinkCounterApplied: true, total: true,
       restaurant: { select: { stripeAccountId: true } },
     },
   });
@@ -173,6 +174,19 @@ export async function POST(_req: NextRequest, ctx: { params: Promise<{ id: strin
           });
         } catch (e) {
           console.error(`[public cancel] marketplace unrecord failed for order ${id}:`, e);
+        }
+      })(),
+    );
+  }
+  // Smart-link counter rollback — a customer-cancelled order shouldn't keep
+  // counting toward a Marketing Studio link's Orders + Revenue. Idempotent.
+  if (order.smartLinkCounterApplied) {
+    after(
+      (async () => {
+        try {
+          await unrecordSmartLinkOrder({ orderId: id, orderTotalCents: Math.round(order.total * 100) });
+        } catch (e) {
+          console.error(`[public cancel] smart-link unrecord failed for order ${id}:`, e);
         }
       })(),
     );
