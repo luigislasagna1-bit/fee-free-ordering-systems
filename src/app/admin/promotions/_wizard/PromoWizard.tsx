@@ -197,7 +197,18 @@ export function PromoWizard(props: WizardProps) {
   const [name, setName] = useState(initialPromo?.name ?? "");
   const [description, setDescription] = useState(initialPromo?.description ?? "");
   const [rules, setRules] = useState<PromoRules>(() => {
-    if (initialPromo) return parseRules(initialPromo.rules);
+    if (initialPromo) {
+      // Prefer `ruleConfig` (the engine's source of truth, via getRules) over the
+      // legacy `rules` String. Autopilot/Kickstarter promos populate ONLY
+      // ruleConfig, so reading `rules` showed an empty form (Discount % = 0) AND
+      // a Save would have written `{}` back, wiping the real discount. Mirror the
+      // engine's precedence here. Luigi 2026-06-10.
+      const rc = initialPromo.ruleConfig;
+      if (rc && typeof rc === "object" && !Array.isArray(rc) && Object.keys(rc as object).length > 0) {
+        return rc as PromoRules;
+      }
+      return parseRules(initialPromo.rules);
+    }
     return {};
   });
   const [step3, setStep3] = useState<Step3Form>(() => initialFormFromPromo(initialPromo ?? null));

@@ -73,9 +73,10 @@ async function ensurePromo(restaurantId: string, def: PromoDef, enabled: boolean
       customerType: "returning",
       minimumOrder: 0,
       ruleConfig: { discountPercent: def.percent },
-      // Emailed code (not auto-applied, not a menu banner).
+      // Emailed code: hidden from the menu, applied via the email's ?coupon link.
       autoApply: false,
       showOnBanner: false,
+      displayMode: "hidden_coupon_only",
       couponCode: def.code,
       channel: "website",
       campaignRef: def.campaignRef,
@@ -125,10 +126,18 @@ function defsFor(campaignType: string): PromoDef[] {
   return [];
 }
 
-/** Create-or-update one step's promo so its discount matches the step. Unlike
- *  `ensurePromo` (which preserves the % on existing rows), this WRITES THROUGH
- *  the step's discountPercent — the step editor is now the source of truth.
- *  Only creates a missing row when active; soft-disables otherwise. */
+/** The promo's display name, derived from the CURRENT discount so the title
+ *  always matches what it actually gives (Luigi 2026-06-10 — otherwise a WIN
+ *  promo whose % the owner lowered to 5 still reads "10% off"). */
+export function nameForStepPromo(def: PromoDef, pct: number): string {
+  if (def.campaignRef === SECOND_ORDER.campaignRef) return `${pct}% OFF, yours for the taking`;
+  return `${pct}% off your next online order`;
+}
+
+/** Create-or-update one step's promo so its discount AND TITLE match the step.
+ *  Unlike `ensurePromo` (which preserves the % on existing rows), this WRITES
+ *  THROUGH the step's discountPercent + regenerates the name — the step editor
+ *  is the source of truth. Only creates a missing row when active. */
 async function upsertStepPromo(restaurantId: string, def: PromoDef, discountPercent: number, active: boolean): Promise<void> {
   const existing = await prisma.promotion.findFirst({
     where: { restaurantId, campaignRef: def.campaignRef },
@@ -141,7 +150,7 @@ async function upsertStepPromo(restaurantId: string, def: PromoDef, discountPerc
         : {};
     await prisma.promotion.update({
       where: { id: existing.id },
-      data: { isActive: active, ruleConfig: { ...rc, discountPercent } },
+      data: { isActive: active, ruleConfig: { ...rc, discountPercent }, name: nameForStepPromo(def, discountPercent) },
     });
     return;
   }
@@ -149,7 +158,7 @@ async function upsertStepPromo(restaurantId: string, def: PromoDef, discountPerc
   await prisma.promotion.create({
     data: {
       restaurantId,
-      name: def.name,
+      name: nameForStepPromo(def, discountPercent),
       description: "Win-back offer — we miss you!",
       promotionType: "percentage_off",
       isActive: true,
@@ -160,6 +169,7 @@ async function upsertStepPromo(restaurantId: string, def: PromoDef, discountPerc
       ruleConfig: { discountPercent },
       autoApply: false,
       showOnBanner: false,
+      displayMode: "hidden_coupon_only",
       couponCode: def.code,
       channel: "website",
       campaignRef: def.campaignRef,
