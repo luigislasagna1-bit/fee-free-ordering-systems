@@ -233,10 +233,29 @@ export function liveOpenStatus(
   hours: OpeningHoursRow[] | undefined | null,
   now: Date = new Date(),
   format: "12h" | "24h" = "24h",
-  todayIsHoliday?: { name?: string },
+  todayIsHoliday?: { name?: string; intervals?: Array<{ open: string; close: string }> },
   timezone?: string,
 ): LiveOpenStatus {
-  if (todayIsHoliday) return { kind: "holiday", name: todayIsHoliday.name };
+  if (todayIsHoliday) {
+    // Special day with CUSTOM hours (Gloriafood parity, Luigi 2026-06-11):
+    // the holiday's intervals replace the weekly schedule for today. Inside
+    // an interval → open; before a later interval → opens_at; past them all
+    // → closed for the rest of the day. No intervals = classic full closure.
+    const intervals = todayIsHoliday.intervals;
+    if (intervals && intervals.length > 0) {
+      const { hhmm } = localDowAndHHMM(now, timezone);
+      const sorted = [...intervals].sort((a, b) => (a.open < b.open ? -1 : 1));
+      for (const iv of sorted) {
+        if (hhmm >= iv.open && hhmm < iv.close) {
+          return { kind: "open", closesAt: formatHour(iv.close, format), spansMidnight: false };
+        }
+      }
+      const upcoming = sorted.find((iv) => hhmm < iv.open);
+      if (upcoming) return { kind: "opens_at", opensAt: formatHour(upcoming.open, format) };
+      return { kind: "closed_today" };
+    }
+    return { kind: "holiday", name: todayIsHoliday.name };
+  }
   // Day-of-week and HH:MM must be computed in the RESTAURANT's local
   // timezone. The server runs in UTC on Vercel; without this projection,
   // a Friday-overnight-into-Saturday-2am window misfires at 12:55 AM

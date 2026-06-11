@@ -614,6 +614,9 @@ export function OrderingPageClient({
   customerIsReturning = false,
   currentCustomer = null,
   todayHolidayName = null,
+  todayHolidayMessage = null,
+  todayHolidayIntervals = null,
+  holidayClosedServices = [],
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
@@ -621,6 +624,16 @@ export function OrderingPageClient({
    *  set, the live open/closed status is forced to "closed today" so the
    *  customer sees the closed banner + must schedule for the next open day. */
   todayHolidayName?: string | null;
+  /** Optional customer-facing note attached to today's special day (Gloriafood
+   *  parity, Luigi 2026-06-11). Shown in the holiday banner. */
+  todayHolidayMessage?: string | null;
+  /** When today's special day is OPEN with custom hours, the intervals that
+   *  replace the weekly schedule (general / all-services rule). */
+  todayHolidayIntervals?: Array<{ open: string; close: string }> | null;
+  /** Canonical service keys (pickup/delivery/dine_in/take_out/…) that are
+   *  holiday-CLOSED today by a service-specific rule while the restaurant is
+   *  otherwise open. Disables those service buttons + shows a banner. */
+  holidayClosedServices?: string[];
   /** Active promotions to display as banners above the menu (per Fabrizio
    *  2026-05-28). Server-filtered for visibility (active, in date range,
    *  matches today's day-of-week, showOnBanner=true). The hour-of-day
@@ -1886,7 +1899,9 @@ export function OrderingPageClient({
     (restaurant.openingHours ?? []) as any,
     new Date(),
     hoursFmt,
-    todayHolidayName ? { name: todayHolidayName } : undefined,
+    todayHolidayName || (todayHolidayIntervals?.length ?? 0) > 0
+      ? { name: todayHolidayName ?? undefined, intervals: todayHolidayIntervals ?? undefined }
+      : undefined,
     restaurantTz,
   );
   const restaurantIsClosedNow = liveStatusForClient.kind !== "open";
@@ -3146,6 +3161,41 @@ export function OrderingPageClient({
       )}
 
       <div className="max-w-5xl mx-auto px-4 py-5">
+        {/* ── Special-day / holiday banner (Gloriafood parity) ───────────
+            Reseller report cmpxds2d2: a holiday closure must be VISIBLE on
+            the customer page, not just enforced at checkout. Three shapes:
+            fully closed today (rose), open with custom hours (amber), or
+            specific services closed while the rest is open (amber). The
+            owner's optional message renders underneath. Luigi 2026-06-11. */}
+        {(todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0) && (() => {
+          const hasCustomHours = (todayHolidayIntervals?.length ?? 0) > 0;
+          const generalClosed = !hasCustomHours && (todayHolidayName !== null || todayHolidayMessage !== null) && restaurantIsClosedNow;
+          const serviceLabel = (s: string) =>
+            s === "pickup" ? t("pickup")
+            : s === "delivery" ? t("delivery")
+            : s === "dine_in" ? t("dineIn")
+            : s === "take_out" ? t("takeOut")
+            : s === "reservation" ? t("tableReservation")
+            : s.charAt(0).toUpperCase() + s.slice(1);
+          return (
+            <div className={`mb-4 rounded-xl border px-4 py-3 text-sm ${generalClosed ? "border-rose-200 bg-rose-50" : "border-amber-200 bg-amber-50"}`}>
+              <div className={`font-semibold mb-0.5 ${generalClosed ? "text-rose-900" : "text-amber-900"}`}>
+                {generalClosed
+                  ? <>⛔ {t("holidayClosedToday")}{todayHolidayName ? ` — ${todayHolidayName}` : ""}</>
+                  : hasCustomHours
+                    ? <>🕒 {t("holidaySpecialHours")}{todayHolidayName ? ` — ${todayHolidayName}` : ""}: {todayHolidayIntervals!.map((iv) => `${formatHHMM(iv.open, hoursFmt)} – ${formatHHMM(iv.close, hoursFmt)}`).join(", ")}</>
+                    : <>⛔ {t("holidayNotAvailableToday", { services: holidayClosedServices.map(serviceLabel).join(", ") })}{todayHolidayName ? ` — ${todayHolidayName}` : ""}</>}
+              </div>
+              {todayHolidayMessage && (
+                <div className={`text-xs ${generalClosed ? "text-rose-800" : "text-amber-800"}`}>{todayHolidayMessage}</div>
+              )}
+              {generalClosed && (
+                <div className="text-xs text-rose-800 mt-0.5">{t("holidayOrderLater")}</div>
+              )}
+            </div>
+          );
+        })()}
+
         {/* ── Paused-service banner ──────────────────────────────────────
             Reads the per-service pausedUntil columns we added on
             Restaurant. When non-null AND in the future, that service
@@ -3198,7 +3248,8 @@ export function OrderingPageClient({
         <div className="flex flex-wrap gap-3 mb-5 [&>button]:min-w-[140px]">
           {restaurant.acceptsPickup && (() => {
             const until = (restaurant as any).pickupPausedUntil;
-            const paused = !!until && new Date(until).getTime() > Date.now();
+            const holClosed = holidayClosedServices.includes("pickup");
+            const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
             return (
               <button
                 onClick={() => !paused && setOrderType("pickup")}
@@ -3210,13 +3261,14 @@ export function OrderingPageClient({
                 }
               >
                 <ShoppingBag className="w-4 h-4" /> {t("pickup")} · {restaurant.estimatedPickup} {t("minutes")}
-                {paused && <span className="text-xs">(paused)</span>}
+                {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
               </button>
             );
           })()}
           {restaurant.acceptsDelivery && (() => {
             const until = (restaurant as any).deliveryPausedUntil;
-            const paused = !!until && new Date(until).getTime() > Date.now();
+            const holClosed = holidayClosedServices.includes("delivery");
+            const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
             return (
               <button
                 onClick={() => !paused && setOrderType("delivery")}
@@ -3229,7 +3281,7 @@ export function OrderingPageClient({
               >
                 <Truck className="w-4 h-4" /> {t("delivery")} · {estimatedDeliveryMinutes} {t("minutes")}
                 {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{fmt(baseDeliveryFee)})</span>}
-                {paused && <span className="text-xs">(paused)</span>}
+                {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
               </button>
             );
           })()}
@@ -3237,7 +3289,8 @@ export function OrderingPageClient({
               fee). Each shows its own estimated time from serviceSettings. */}
           {(restaurant as any).acceptsDineIn && (() => {
             const until = (restaurant as any).dineInPausedUntil;
-            const paused = !!until && new Date(until).getTime() > Date.now();
+            const holClosed = holidayClosedServices.includes("dine_in");
+            const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
             let est = restaurant.estimatedPickup;
             try { const v = JSON.parse((restaurant as any).serviceSettings || "null")?.dineIn?.estimatedTime; if (typeof v === "number" && v > 0) est = v; } catch {}
             return (
@@ -3251,13 +3304,14 @@ export function OrderingPageClient({
                 }
               >
                 <Utensils className="w-4 h-4" /> {t("dineIn")} · {est} {t("minutes")}
-                {paused && <span className="text-xs">(paused)</span>}
+                {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
               </button>
             );
           })()}
           {(restaurant as any).acceptsTakeOut && (() => {
             const until = (restaurant as any).takeOutPausedUntil;
-            const paused = !!until && new Date(until).getTime() > Date.now();
+            const holClosed = holidayClosedServices.includes("take_out");
+            const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
             let est = restaurant.estimatedPickup;
             try { const v = JSON.parse((restaurant as any).serviceSettings || "null")?.takeOut?.estimatedTime; if (typeof v === "number" && v > 0) est = v; } catch {}
             return (
@@ -3271,7 +3325,7 @@ export function OrderingPageClient({
                 }
               >
                 <Package className="w-4 h-4" /> {t("takeOut")} · {est} {t("minutes")}
-                {paused && <span className="text-xs">(paused)</span>}
+                {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
               </button>
             );
           })()}

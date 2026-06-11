@@ -24,7 +24,9 @@ export default async function HoursPage() {
       select: { hoursFormat: true },
     }),
     prisma.restaurantHoliday.findMany({
-      where: { restaurantId, date: { gte: todayStart } },
+      // A PERIOD that started in the past is still active until its endDate —
+      // don't hide it from the list just because its start date passed.
+      where: { restaurantId, OR: [{ date: { gte: todayStart } }, { endDate: { gte: todayStart } }] },
       orderBy: { date: "asc" },
     }),
   ]);
@@ -39,6 +41,9 @@ export default async function HoursPage() {
         // — the holiday-add UI also speaks YYYY-MM-DD throughout.
         date: h.date.toISOString().slice(0, 10),
         name: h.name,
+        endDate: (h as any).endDate ? (h as any).endDate.toISOString().slice(0, 10) : null,
+        message: (h as any).message ?? null,
+        rules: (h as any).rules ?? null,
       }))}
     />
   );

@@ -25,6 +25,7 @@ import {
   dateKeyInTimezone,
   type LiveOpenStatus,
 } from "@/lib/restaurant-hours";
+import { holidayEffectForDay } from "@/lib/holiday-rules";
 // Hosted-page map uses the same component as /order/[slug]/info. The
 // dynamic import (ssr:false) lives in the client wrapper because Next 16
 // doesn't allow ssr:false on next/dynamic inside server components.
@@ -155,12 +156,20 @@ export default async function HostedSitePage({
   // the page re-renders on every request anyway.
   const now = new Date();
   const todayKey = dateKeyInTimezone(now, r.timezone);
-  const todayHoliday = r.holidays.find((h) => h.date === todayKey);
+  // Range + per-service aware general effect (Gloriafood-parity special days,
+  // Luigi 2026-06-11): closed → forced-closed banner; custom hours → the
+  // intervals replace the weekly schedule for today's open status.
+  const todayHoliday = holidayEffectForDay(r.holidays, todayKey, null);
   const openStatus: LiveOpenStatus = liveOpenStatus(
     r.hours,
     now,
     r.hoursFormat,
-    todayHoliday ? { name: todayHoliday.name ?? undefined } : undefined,
+    todayHoliday
+      ? {
+          name: todayHoliday.name ?? undefined,
+          intervals: todayHoliday.kind === "custom_hours" ? todayHoliday.intervals : undefined,
+        }
+      : undefined,
     // Project to the restaurant's local tz so overnight windows
     // (e.g. Friday 11 AM → Saturday 2 AM) classify correctly even
     // when the server runs in UTC and the restaurant doesn't.

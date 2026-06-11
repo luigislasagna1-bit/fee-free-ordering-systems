@@ -3,7 +3,8 @@ import { after } from "next/server";
 import prisma from "@/lib/db";
 import { generateOrderNumber, formatCurrency } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
-import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, holidayNameForToday, localDowAndHHMM } from "@/lib/restaurant-hours";
+import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, localDowAndHHMM, dateKeyInTimezone } from "@/lib/restaurant-hours";
+import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmInsideIntervals } from "@/lib/holiday-rules";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import {
   resolveDeliveryAddressConfig,
@@ -1471,6 +1472,51 @@ export async function POST(req: NextRequest) {
       Number.isFinite(scheduledForDate.getTime()) &&
       scheduledForDate.getTime() > Date.now();
 
+    // ── Special-day / holiday enforcement (Gloriafood parity) ───────────────
+    // Reseller report cmpxds2d2: holiday closures must actually BLOCK orders.
+    // We resolve the holiday rule for the day the order is FOR (the scheduled
+    // slot's calendar day, else today) and the order's service:
+    //   - closed       → reject outright (an ASAP order on a closed holiday
+    //                    can't be cooked, and a scheduled order must move to
+    //                    another day)
+    //   - custom hours → the order's time (now for ASAP, the slot for
+    //                    scheduled) must fall inside the special intervals
+    // Legacy single-date rows resolve as "closed, all services" — same
+    // behaviour they had, but now enforced. Luigi 2026-06-11.
+    {
+      const holidayTzKey = (restaurant as any).timezone ?? "UTC";
+      const holidayTargetDate = hasFutureSchedule ? scheduledForDate! : new Date();
+      const holidayDayKey = dateKeyInTimezone(holidayTargetDate, holidayTzKey);
+      const holidayEffect = holidayEffectForDay(
+        (restaurant as any).holidays ?? [],
+        holidayDayKey,
+        canonicalHolidayService(type),
+      );
+      if (holidayEffect?.kind === "closed") {
+        const label = holidayEffect.name ? ` (${holidayEffect.name})` : "";
+        return NextResponse.json(
+          {
+            error: `We're closed on this date${label}. Please choose a different day.`,
+            code: "holiday_closed",
+          },
+          { status: 400 },
+        );
+      }
+      if (holidayEffect?.kind === "custom_hours") {
+        const { hhmm } = localDowAndHHMM(holidayTargetDate, holidayTzKey);
+        if (!hhmmInsideIntervals(hhmm, holidayEffect.intervals)) {
+          const windows = holidayEffect.intervals.map((iv) => `${iv.open}–${iv.close}`).join(", ");
+          return NextResponse.json(
+            {
+              error: `On this date we're only open ${windows}. Please pick a time within those hours.`,
+              code: "holiday_custom_hours",
+            },
+            { status: 400 },
+          );
+        }
+      }
+    }
+
     // For SCHEDULED orders, estimatedReady IS the customer's chosen
     // slot — they asked for "ready at 10:30 PM tomorrow", so that's
     // when it'll be ready. preparationTime is the gap from now until
@@ -1504,12 +1550,19 @@ export async function POST(req: NextRequest) {
       ?? (restaurant as any).hours
       ?? [];
     const restaurantTz = (restaurant as any).timezone ?? undefined;
-    const holidayToday = holidayNameForToday((restaurant as any).holidays, restaurantTz);
+    // General (all-services) holiday effect for today — closed → liveStatus
+    // "holiday"; custom hours → the intervals replace the weekly schedule.
+    const holidayToday = holidayEffectToday((restaurant as any).holidays, restaurantTz, null);
     const liveStatus = liveOpenStatus(
       openingHoursForCheck,
       new Date(),
       restaurant.hoursFormat === "12h" ? "12h" : "24h",
-      holidayToday ? { name: holidayToday } : undefined,
+      holidayToday
+        ? {
+            name: holidayToday.name ?? undefined,
+            intervals: holidayToday.kind === "custom_hours" ? holidayToday.intervals : undefined,
+          }
+        : undefined,
       restaurantTz,
     );
     const isClosedNow = liveStatus.kind !== "open";

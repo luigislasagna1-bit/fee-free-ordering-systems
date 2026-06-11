@@ -146,7 +146,24 @@ type Holiday = {
   id: string;
   date: string; // YYYY-MM-DD
   name: string | null;
+  /** Gloriafood-parity special days (Luigi 2026-06-11). */
+  endDate?: string | null; // YYYY-MM-DD — null = single day
+  message?: string | null; // customer-facing note
+  rules?: string | null; // JSON rules; null = closed, all services
 };
+
+/** Editor-side shape of one per-service rule. services [] = all services. */
+type HolidayRuleUI = {
+  services: string[];
+  mode: "closed" | "open";
+  intervals: { open: string; close: string }[];
+};
+
+const HOLIDAY_SERVICE_KEYS = ["pickup", "delivery", "dine_in", "take_out", "catering", "reservation"] as const;
+
+function normalizeHolidayDate(d: unknown): string {
+  return typeof d === "string" ? d.slice(0, 10) : d ? new Date(d as any).toISOString().slice(0, 10) : "";
+}
 
 type Format = "12h" | "24h";
 
@@ -217,7 +234,12 @@ export function HoursClient({
   };
   const [holidays, setHolidays] = useState<Holiday[]>(initialHolidays);
   const [newHolidayDate, setNewHolidayDate] = useState("");
+  const [newHolidayEndDate, setNewHolidayEndDate] = useState("");
   const [newHolidayName, setNewHolidayName] = useState("");
+  const [newHolidayMessage, setNewHolidayMessage] = useState("");
+  const [newHolidayRules, setNewHolidayRules] = useState<HolidayRuleUI[]>([
+    { services: [], mode: "closed", intervals: [] },
+  ]);
   const [loading, setLoading] = useState(false);
   const [bulkMenuOpen, setBulkMenuOpen] = useState<number | null>(null);
 
@@ -306,10 +328,24 @@ export function HoursClient({
     if (!newHolidayDate) return;
     setLoading(true);
     try {
+      // Serialise the rule rows for the API. An "open" rule needs at least one
+      // interval (the server treats interval-less open rules as closed anyway —
+      // fail-safe). services [] = all services → null on the wire.
+      const rules = newHolidayRules.map((r) => ({
+        services: r.services.length > 0 ? r.services : null,
+        mode: r.mode,
+        intervals: r.mode === "open" ? r.intervals : undefined,
+      }));
       const res = await fetch("/api/restaurants/holidays", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ date: newHolidayDate, name: newHolidayName }),
+        body: JSON.stringify({
+          date: newHolidayDate,
+          endDate: newHolidayEndDate || undefined,
+          name: newHolidayName,
+          message: newHolidayMessage,
+          rules,
+        }),
       });
       if (!res.ok) throw new Error("Failed");
       const { holiday } = await res.json();
@@ -319,18 +355,66 @@ export function HoursClient({
           ...filtered,
           {
             id: holiday.id,
-            date: typeof holiday.date === "string" ? holiday.date.slice(0, 10) : new Date(holiday.date).toISOString().slice(0, 10),
+            date: normalizeHolidayDate(holiday.date),
+            endDate: holiday.endDate ? normalizeHolidayDate(holiday.endDate) : null,
             name: holiday.name,
+            message: holiday.message ?? null,
+            rules: holiday.rules ?? null,
           },
         ].sort((a, b) => a.date.localeCompare(b.date));
       });
       setNewHolidayDate("");
+      setNewHolidayEndDate("");
       setNewHolidayName("");
-      toast.success("Holiday added");
+      setNewHolidayMessage("");
+      setNewHolidayRules([{ services: [], mode: "closed", intervals: [] }]);
+      toast.success(tHours("holidaySaved"));
     } catch {
-      toast.error("Failed to add holiday");
+      toast.error(tHours("holidaySaveFailed"));
     }
     setLoading(false);
+  }
+
+  function updateRule(idx: number, patch: Partial<HolidayRuleUI>) {
+    setNewHolidayRules((prev) => prev.map((r, i) => (i === idx ? { ...r, ...patch } : r)));
+  }
+
+  function toggleRuleService(idx: number, svc: string) {
+    setNewHolidayRules((prev) =>
+      prev.map((r, i) => {
+        if (i !== idx) return r;
+        const has = r.services.includes(svc);
+        return { ...r, services: has ? r.services.filter((s) => s !== svc) : [...r.services, svc] };
+      }),
+    );
+  }
+
+  /** Human summary of a saved entry's rules for the list (legacy null =
+   *  closed, all services). */
+  function rulesSummary(rulesJson: string | null | undefined): string {
+    const svcLabel = (s: string) =>
+      s === "pickup" ? tHours("svcPickup")
+      : s === "delivery" ? tHours("svcDelivery")
+      : s === "dine_in" ? tHours("svcDineIn")
+      : s === "take_out" ? tHours("svcTakeOut")
+      : s === "catering" ? tHours("svcCatering")
+      : s === "reservation" ? tHours("svcReservation")
+      : s;
+    try {
+      const rules = rulesJson ? (JSON.parse(rulesJson) as Array<{ services?: string[] | null; mode?: string; intervals?: Array<{ open: string; close: string }> }>) : null;
+      if (!rules || rules.length === 0) return `${tHours("modeClosed")} — ${tHours("allServices")}`;
+      return rules
+        .map((r) => {
+          const scope = r.services && r.services.length > 0 ? r.services.map(svcLabel).join(", ") : tHours("allServices");
+          const what = r.mode === "open" && r.intervals?.length
+            ? r.intervals.map((iv) => `${iv.open}–${iv.close}`).join(", ")
+            : tHours("modeClosed");
+          return `${what} — ${scope}`;
+        })
+        .join(" · ");
+    } catch {
+      return `${tHours("modeClosed")} — ${tHours("allServices")}`;
+    }
   }
 
   async function removeHoliday(id: string) {
@@ -562,22 +646,23 @@ export function HoursClient({
         ))}
       </div>
 
-      {/* Holidays */}
+      {/* Holidays / special days — Gloriafood parity (Luigi 2026-06-11,
+          reseller report cmpxds2d2): a date OR period, per-service rules
+          (closed, or open with custom hours), and an optional customer
+          message. Legacy entries (no rules) = fully closed, all services. */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-4 border-b border-gray-100 bg-gray-50 flex items-center gap-2 text-sm text-gray-600">
           <Calendar className="w-4 h-4" />
-          <span className="font-medium text-gray-700">Holidays &amp; one-off closures</span>
-          <span className="text-gray-400 text-xs ml-1">
-            — restaurant treated as closed on these dates regardless of the weekly schedule
-          </span>
+          <span className="font-medium text-gray-700">{tHours("holidaysTitle")}</span>
+          <span className="text-gray-400 text-xs ml-1">— {tHours("holidaysSubtitle")}</span>
         </div>
 
         {/* Add new */}
-        <div className="p-4 border-b border-gray-100 bg-amber-50/40">
+        <div className="p-4 border-b border-gray-100 bg-amber-50/40 space-y-4">
           <div className="flex items-end gap-3 flex-wrap">
             <div>
               <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                Date
+                {tHours("startDate")}
               </label>
               <input
                 type="date"
@@ -587,16 +672,165 @@ export function HoursClient({
                 className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
+            <div>
+              <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                {tHours("endDateOpt")}
+              </label>
+              <input
+                type="date"
+                min={newHolidayDate || todayIso}
+                value={newHolidayEndDate}
+                onChange={(e) => setNewHolidayEndDate(e.target.value)}
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
             <div className="flex-1 min-w-[180px]">
               <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                Reason (optional)
+                {tHours("reasonOpt")}
               </label>
               <input
                 type="text"
                 value={newHolidayName}
                 onChange={(e) => setNewHolidayName(e.target.value)}
-                placeholder="Christmas Day"
+                placeholder={tHours("reasonPlaceholder")}
                 maxLength={80}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+          </div>
+
+          {/* Per-service rules */}
+          <div className="space-y-3">
+            <div className="text-[11px] font-semibold text-gray-500 uppercase tracking-wide">
+              {tHours("affectedServices")}
+            </div>
+            {newHolidayRules.map((rule, idx) => (
+              <div key={idx} className="rounded-lg border border-amber-200 bg-white p-3 space-y-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {/* Service scope chips — none selected = all services */}
+                  <button
+                    type="button"
+                    onClick={() => updateRule(idx, { services: [] })}
+                    className={`px-2.5 py-1 rounded-full text-xs font-semibold border transition ${rule.services.length === 0 ? "bg-emerald-500 border-emerald-500 text-white" : "border-gray-300 text-gray-600 hover:border-gray-400"}`}
+                  >
+                    {tHours("allServices")}
+                  </button>
+                  {HOLIDAY_SERVICE_KEYS.map((svc) => (
+                    <button
+                      key={svc}
+                      type="button"
+                      onClick={() => toggleRuleService(idx, svc)}
+                      className={`px-2.5 py-1 rounded-full text-xs font-semibold border transition ${rule.services.includes(svc) ? "bg-emerald-500 border-emerald-500 text-white" : "border-gray-300 text-gray-600 hover:border-gray-400"}`}
+                    >
+                      {svc === "pickup" ? tHours("svcPickup")
+                        : svc === "delivery" ? tHours("svcDelivery")
+                        : svc === "dine_in" ? tHours("svcDineIn")
+                        : svc === "take_out" ? tHours("svcTakeOut")
+                        : svc === "catering" ? tHours("svcCatering")
+                        : tHours("svcReservation")}
+                    </button>
+                  ))}
+                  <div className="ml-auto inline-flex rounded-lg border border-gray-200 overflow-hidden text-xs font-semibold">
+                    <button
+                      type="button"
+                      onClick={() => updateRule(idx, { mode: "closed" })}
+                      className={`px-3 py-1.5 transition ${rule.mode === "closed" ? "bg-rose-500 text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
+                    >
+                      {tHours("modeClosed")}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        updateRule(idx, {
+                          mode: "open",
+                          intervals: rule.intervals.length > 0 ? rule.intervals : [{ open: "10:00", close: "20:00" }],
+                        })
+                      }
+                      className={`px-3 py-1.5 transition ${rule.mode === "open" ? "bg-emerald-500 text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
+                    >
+                      {tHours("modeOpen")}
+                    </button>
+                  </div>
+                  {newHolidayRules.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => setNewHolidayRules((prev) => prev.filter((_, i) => i !== idx))}
+                      className="text-gray-400 hover:text-red-600 p-1"
+                      title={tCommon("delete")}
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+
+                {rule.mode === "open" && (
+                  <div className="space-y-2">
+                    {rule.intervals.map((iv, ivIdx) => (
+                      <div key={ivIdx} className="flex items-center gap-2 text-sm">
+                        <span className="text-xs text-gray-500">{tHours("between")}:</span>
+                        <input
+                          type="time"
+                          value={iv.open}
+                          onChange={(e) =>
+                            updateRule(idx, {
+                              intervals: rule.intervals.map((x, i) => (i === ivIdx ? { ...x, open: e.target.value } : x)),
+                            })
+                          }
+                          className="border border-gray-300 rounded-lg px-2 py-1.5 text-sm"
+                        />
+                        <span className="text-gray-400">–</span>
+                        <input
+                          type="time"
+                          value={iv.close}
+                          onChange={(e) =>
+                            updateRule(idx, {
+                              intervals: rule.intervals.map((x, i) => (i === ivIdx ? { ...x, close: e.target.value } : x)),
+                            })
+                          }
+                          className="border border-gray-300 rounded-lg px-2 py-1.5 text-sm"
+                        />
+                        {rule.intervals.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => updateRule(idx, { intervals: rule.intervals.filter((_, i) => i !== ivIdx) })}
+                            className="text-gray-400 hover:text-red-600 p-1"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => updateRule(idx, { intervals: [...rule.intervals, { open: "10:00", close: "20:00" }] })}
+                      className="text-xs font-semibold text-emerald-600 hover:text-emerald-700"
+                    >
+                      + {tHours("addHours")}
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => setNewHolidayRules((prev) => [...prev, { services: [], mode: "closed", intervals: [] }])}
+              className="text-xs font-semibold text-emerald-600 hover:text-emerald-700"
+            >
+              + {tHours("addRule")}
+            </button>
+          </div>
+
+          <div className="flex items-end gap-3 flex-wrap">
+            <div className="flex-1 min-w-[220px]">
+              <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                {tHours("messageOpt")}
+              </label>
+              <input
+                type="text"
+                value={newHolidayMessage}
+                onChange={(e) => setNewHolidayMessage(e.target.value)}
+                placeholder={tHours("messagePlaceholder")}
+                maxLength={200}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
@@ -606,32 +840,37 @@ export function HoursClient({
               disabled={!newHolidayDate || loading}
               className="bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white font-semibold px-4 py-2 rounded-lg text-sm inline-flex items-center gap-1.5 transition"
             >
-              <Plus className="w-4 h-4" /> Add
+              <Plus className="w-4 h-4" /> {tHours("addSpecialDay")}
             </button>
           </div>
         </div>
 
         {/* List */}
         {holidays.length === 0 ? (
-          <div className="p-6 text-center text-sm text-gray-400">
-            No upcoming holidays. Add one above to close on a specific date.
-          </div>
+          <div className="p-6 text-center text-sm text-gray-400">{tHours("noUpcoming")}</div>
         ) : (
           <ul className="divide-y divide-gray-100">
             {holidays.map((h) => (
               <li key={h.id} className="px-4 sm:px-5 py-3 flex items-center justify-between gap-3 hover:bg-gray-50">
                 <div className="min-w-0">
-                  <div className="font-medium text-gray-900">{formatHolidayDate(h.date)}</div>
-                  {h.name && <div className="text-xs text-gray-500 mt-0.5">{h.name}</div>}
+                  <div className="font-medium text-gray-900">
+                    {formatHolidayDate(h.date)}
+                    {h.endDate && h.endDate !== h.date && <> – {formatHolidayDate(h.endDate)}</>}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-0.5">
+                    {h.name && <span className="font-medium">{h.name} · </span>}
+                    {rulesSummary(h.rules)}
+                  </div>
+                  {h.message && <div className="text-xs text-gray-400 mt-0.5 italic truncate">“{h.message}”</div>}
                 </div>
                 <button
                   type="button"
                   onClick={() => removeHoliday(h.id)}
                   className="text-gray-400 hover:text-red-600 inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded hover:bg-red-50 transition"
-                  title="Remove holiday"
+                  title={tCommon("delete")}
                 >
                   <Trash2 className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Remove</span>
+                  <span className="hidden sm:inline">{tCommon("delete")}</span>
                 </button>
               </li>
             ))}

@@ -49,8 +49,10 @@ export interface HostedSiteData {
   timezone: string;
   /** Upcoming holiday closures (60-day forward window). When today's
    *  date matches one of these, the restaurant is treated as closed
-   *  regardless of the weekly schedule. */
-  holidays: Array<{ id: string; date: string; name: string | null }>;
+   *  regardless of the weekly schedule. endDate/rules carry the
+   *  Gloriafood-parity period + per-service semantics (see
+   *  src/lib/holiday-rules.ts). */
+  holidays: Array<{ id: string; date: string; endDate: string | null; rules: string | null; name: string | null }>;
   /** Active "special offer" promotions — auto-apply promos within their
    *  startsAt/endsAt window. Rendered as marketing cards on the hosted
    *  site. Same source-of-truth as the order-page promo engine; the
@@ -212,13 +214,19 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
     prisma.restaurantHoliday.findMany({
       where: {
         restaurantId: restaurant.id,
-        date: {
-          gte: yesterdayStartUtc,
-          lte: new Date(todayStartUtc.getTime() + 60 * 24 * 60 * 60 * 1000),
-        },
+        OR: [
+          {
+            date: {
+              gte: yesterdayStartUtc,
+              lte: new Date(todayStartUtc.getTime() + 60 * 24 * 60 * 60 * 1000),
+            },
+          },
+          // PERIODS that started before the window but are still running.
+          { endDate: { gte: yesterdayStartUtc } },
+        ],
       },
       orderBy: { date: "asc" },
-      select: { id: true, date: true, name: true },
+      select: { id: true, date: true, endDate: true, rules: true, name: true },
     }),
     // Active auto-apply promotions to surface as marketing cards on
     // the hosted site. We filter to autoApply=true so customers see
@@ -302,6 +310,8 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       holidays: holidays.map((h) => ({
         id: h.id,
         date: h.date.toISOString().slice(0, 10),
+        endDate: h.endDate ? h.endDate.toISOString().slice(0, 10) : null,
+        rules: h.rules ?? null,
         name: h.name,
       })),
       specialOffers,

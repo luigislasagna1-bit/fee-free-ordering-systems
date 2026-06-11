@@ -30,7 +30,7 @@ import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveActiveMenuId } from "@/lib/menu";
-import { holidayNameForToday } from "@/lib/restaurant-hours";
+import { holidayEffectToday } from "@/lib/holiday-rules";
 import { isOnMarketplace } from "@/lib/marketplace";
 import { getCurrentCustomer } from "@/lib/customer-session";
 
@@ -395,7 +395,31 @@ export default async function OrderingPage({
         customerChannel={customerChannel}
         marketplaceAccount={marketplaceAccount}
         customerIsReturning={customerIsReturning}
-        todayHolidayName={holidayNameForToday((restaurant as any).holidays, (restaurant as any).timezone)}
+        {...(() => {
+          // Gloriafood-parity special days (Luigi 2026-06-11): resolve today's
+          // GENERAL effect (banner + open-status override) and which specific
+          // services are holiday-closed while the rest stays open.
+          const holRows = (restaurant as any).holidays;
+          const holTz = (restaurant as any).timezone;
+          const general = holidayEffectToday(holRows, holTz, null);
+          const generalClosed = general?.kind === "closed";
+          const holidayClosedServices = generalClosed
+            ? []
+            : ["pickup", "delivery", "dine_in", "take_out", "catering", "reservation"].filter(
+                (s) => holidayEffectToday(holRows, holTz, s)?.kind === "closed",
+              );
+          // Message: prefer the general entry's; else surface the first
+          // service-specific closed entry's message so it isn't lost.
+          const serviceMessage = !general && holidayClosedServices.length > 0
+            ? (holidayEffectToday(holRows, holTz, holidayClosedServices[0])?.message ?? null)
+            : null;
+          return {
+            todayHolidayName: general?.name ?? null,
+            todayHolidayMessage: general?.message ?? serviceMessage,
+            todayHolidayIntervals: general?.kind === "custom_hours" ? general.intervals : null,
+            holidayClosedServices,
+          };
+        })()}
         currentCustomer={currentCustomer
           ? {
               id: currentCustomer.id,

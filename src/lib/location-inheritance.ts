@@ -215,6 +215,9 @@ export async function cloneLocationRelations(
         restaurantId: childId,
         date: h.date,
         name: h.name,
+        endDate: (h as { endDate?: Date | null }).endDate ?? null,
+        rules: (h as { rules?: string | null }).rules ?? null,
+        message: (h as { message?: string | null }).message ?? null,
       })),
     });
   }

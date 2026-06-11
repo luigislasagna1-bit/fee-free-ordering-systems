@@ -1734,6 +1734,25 @@ model RestaurantHoliday {
   // closed for this reason. Falls back to a generic "Closed today" if
   // empty.
   name         String?
+  /// Gloriafood-parity special days (Luigi 2026-06-11, reseller report
+  /// cmpxds2d2). All three additive + nullable so every pre-existing row
+  /// keeps its legacy meaning: "fully closed, all services, single day".
+  ///
+  /// endDate — makes the entry a PERIOD (date..endDate inclusive, calendar
+  /// dates). Null = single day.
+  endDate      DateTime? @db.Date
+  /// JSON array of per-service rules:
+  ///   [{ "services": null | ["pickup","delivery","dine_in","take_out",
+  ///      "catering","reservation"],          // null/empty = ALL services
+  ///      "mode": "closed" | "open",          // open = custom hours that day
+  ///      "intervals": [{"open":"10:00","close":"20:00"}, …] }]   // mode=open
+  /// Null = legacy: closed, all services. Resolution: a rule naming the
+  /// specific service beats an all-services rule; "closed" beats "open".
+  /// Parsed/enforced by src/lib/holiday-rules.ts.
+  rules        String?
+  /// Optional customer-facing notification (max 200 chars) shown in the
+  /// closed/special-hours banner on the ordering page.
+  message      String?
   createdAt    DateTime @default(now())
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
