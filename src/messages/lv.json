@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Slēpt no ēdienkartes",
       "availabilityModeShow": "Rādīt, bet bloķēt pasūtīšanu",
       "availabilityModeHint": "“Rādīt” saglabā ēdienu redzamu ar piezīmi “Pieejams …”, lai klienti zinātu, kad to var pasūtīt.",
-      "previewTestOrdering": "Priekšskatījums un testa pasūtījums"
+      "previewTestOrdering": "Priekšskatījums un testa pasūtījums",
+      "masterMenuTitle": "Galvenā ēdienkarte — {inheriting} no {total} vietām manto šo ēdienkarti",
+      "masterMenuBody": "Šeit veiktās izmaiņas nekavējoties parādās katrā vietā, kas manto. Vietas ar pielāgotu ēdienkarti netiek ietekmētas."
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

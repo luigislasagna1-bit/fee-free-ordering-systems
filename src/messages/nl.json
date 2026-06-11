@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Verbergen in menu",
       "availabilityModeShow": "Tonen, maar bestellen blokkeren",
       "availabilityModeHint": "\"Tonen\" houdt het item zichtbaar met een \"Beschikbaar …\"-melding zodat klanten weten wanneer ze het kunnen bestellen.",
-      "previewTestOrdering": "Voorbeeld & testbestelling"
+      "previewTestOrdering": "Voorbeeld & testbestelling",
+      "masterMenuTitle": "Hoofdmenu — {inheriting} van {total} locaties erven dit menu",
+      "masterMenuBody": "Wijzigingen die je hier maakt, verschijnen direct op elke locatie die overerft. Locaties met een aangepast menu worden niet beïnvloed."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "ซ่อนจากเมนู",
       "availabilityModeShow": "แสดงแต่ห้ามสั่ง",
       "availabilityModeHint": "\"แสดง\" จะทำให้เมนูยังมองเห็นพร้อมหมายเหตุ \"มีจำหน่าย …\" เพื่อให้ลูกค้ารู้ว่าสั่งได้เมื่อใด",
-      "previewTestOrdering": "ดูตัวอย่างและสั่งทดสอบ"
+      "previewTestOrdering": "ดูตัวอย่างและสั่งทดสอบ",
+      "masterMenuTitle": "เมนูหลัก — {inheriting} จาก {total} สาขาใช้เมนูนี้",
+      "masterMenuBody": "การเปลี่ยนแปลงที่คุณทำที่นี่จะปรากฏทันทีในทุกสาขาที่สืบทอด สาขาที่มีเมนูกำหนดเองจะไม่ได้รับผลกระทบ"
     },
     "promotionsList": {
       "stackingMaster": "Master",

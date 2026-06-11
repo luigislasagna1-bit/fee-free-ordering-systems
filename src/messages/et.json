@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Peida menüüst",
       "availabilityModeShow": "Näita, kuid blokeeri tellimine",
       "availabilityModeHint": "„Näita” jätab toote nähtavaks märkega „Saadaval …”, et kliendid teaksid, millal saab tellida.",
-      "previewTestOrdering": "Eelvaade ja testtellimus"
+      "previewTestOrdering": "Eelvaade ja testtellimus",
+      "masterMenuTitle": "Põhimenüü — {total}-st asukohast {inheriting} pärib selle menüü",
+      "masterMenuBody": "Siin tehtud muudatused ilmuvad kohe igas pärivas asukohas. Kohandatud menüüga asukohti ei mõjutata."
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

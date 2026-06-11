@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Amaga del menú",
       "availabilityModeShow": "Mostra, però bloqueja la comanda",
       "availabilityModeHint": "\"Mostra\" manté l'article visible amb una nota \"Disponible …\" perquè els clients sàpiguen quan el poden demanar.",
-      "previewTestOrdering": "Previsualitza i comanda de prova"
+      "previewTestOrdering": "Previsualitza i comanda de prova",
+      "masterMenuTitle": "Menú mestre — {inheriting} de {total} ubicacions hereten aquest menú",
+      "masterMenuBody": "Els canvis que facis aquí s'apliquen a l'instant a cada ubicació que hereta. Les ubicacions amb un menú personalitzat no es veuen afectades."
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

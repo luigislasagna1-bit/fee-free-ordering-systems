@@ -1698,7 +1698,9 @@
       "availabilityModeHide": "Ukryj w menu",
       "availabilityModeShow": "Pokaż, ale zablokuj zamawianie",
       "availabilityModeHint": "„Pokaż” pozostawia pozycję widoczną z dopiskiem „Dostępne …”, aby klienci wiedzieli, kiedy mogą ją zamówić.",
-      "previewTestOrdering": "Podgląd i zamówienie testowe"
+      "previewTestOrdering": "Podgląd i zamówienie testowe",
+      "masterMenuTitle": "Menu główne — {inheriting} z {total} lokalizacji dziedziczy to menu",
+      "masterMenuBody": "Zmiany wprowadzone tutaj pojawiają się natychmiast w każdej dziedziczącej lokalizacji. Lokalizacje z własnym menu nie są zmieniane."
     },
     "promotionsList": {
       "stackingMaster": "Master",

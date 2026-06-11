@@ -2091,7 +2091,9 @@
       "availabilityModeHide": "Hide from menu",
       "availabilityModeShow": "Show, but block ordering",
       "availabilityModeHint": "\"Show\" keeps the item visible with an \"Available …\" note so customers know when they can order it.",
-      "previewTestOrdering": "Preview & test ordering"
+      "previewTestOrdering": "Preview & test ordering",
+      "masterMenuTitle": "Master menu — {inheriting} of {total} locations inherit this menu",
+      "masterMenuBody": "Changes you make here appear on every inheriting location instantly. Locations with a custom menu are not affected."
     },
     "promotionsList": {
       "stackingMaster": "Master",

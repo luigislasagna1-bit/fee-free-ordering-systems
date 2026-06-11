@@ -51,6 +51,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   let ownerEmail: string | null = null;
   let ownerEmailVerified = true; // default true so we don't nag superadmins / staff
   let locationsForSwitcher: Array<{ id: string; name: string; city: string | null; isParent: boolean }> = [];
+  // The restaurant's chosen language — used as the admin-console default locale
+  // when the viewer hasn't explicitly picked one. Luigi 2026-06-11.
+  let restaurantDefaultLanguage: string | null = null;
   if (restaurantId) {
     const [count, restaurant] = await Promise.all([
       prisma.order.count({ where: { restaurantId, status: "pending" } }),
@@ -63,6 +66,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           parentRestaurantId: true,
           id: true,
           currency: true,
+          // Drives the admin-console default language (Luigi 2026-06-11): the
+          // staff locale falls back to this when the viewer hasn't picked one.
+          defaultLanguage: true,
           // publishedAt: drives the sidebar "Ready to publish" chip —
           // when this is set, the chip hides because the restaurant
           // is already live, no nudge needed.
@@ -72,6 +78,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     ]);
     pendingOrders = count;
     restaurantName = restaurant?.name || "";
+    restaurantDefaultLanguage = restaurant?.defaultLanguage ?? null;
     restaurantCurrency = restaurant?.currency || "usd";
     isPublished = !!restaurant?.publishedAt;
 
@@ -190,10 +197,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     }
   }
 
-  // Staff UI language is per-user (own cookie / browser), NOT the restaurant's
-  // customer-facing default — so changing the customer language can't flip the
-  // owner's admin to another language. See resolveStaffLocale. Luigi 2026-06-05.
-  const locale = await resolveStaffLocale();
+  // Admin console starts in the restaurant's chosen language (Luigi 2026-06-11),
+  // but a staff member's own explicit pick still wins. See resolveStaffLocale.
+  const locale = await resolveStaffLocale(restaurantDefaultLanguage);
   const messages = await loadMessages(locale);
 
   return (

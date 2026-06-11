@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Dölj från menyn",
       "availabilityModeShow": "Visa, men blockera beställning",
       "availabilityModeHint": "\"Visa\" håller rätten synlig med en \"Tillgänglig …\"-notis så kunderna vet när de kan beställa.",
-      "previewTestOrdering": "Förhandsgranska & testbeställ"
+      "previewTestOrdering": "Förhandsgranska & testbeställ",
+      "masterMenuTitle": "Huvudmeny — {inheriting} av {total} platser ärver den här menyn",
+      "masterMenuBody": "Ändringar du gör här visas direkt på varje plats som ärver. Platser med en anpassad meny påverkas inte."
     },
     "promotionsList": {
       "stackingMaster": "Master",

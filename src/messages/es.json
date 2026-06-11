@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Ocultar del menú",
       "availabilityModeShow": "Mostrar, pero bloquear el pedido",
       "availabilityModeHint": "\"Mostrar\" mantiene el artículo visible con una nota \"Disponible …\" para que los clientes sepan cuándo pedirlo.",
-      "previewTestOrdering": "Vista previa y pedido de prueba"
+      "previewTestOrdering": "Vista previa y pedido de prueba",
+      "masterMenuTitle": "Menú maestro — {inheriting} de {total} ubicaciones heredan este menú",
+      "masterMenuBody": "Los cambios que hagas aquí se aplican al instante a cada ubicación que hereda. Las ubicaciones con un menú personalizado no se ven afectadas."
     },
     "promotionsList": {
       "stackingMaster": "Maestro",

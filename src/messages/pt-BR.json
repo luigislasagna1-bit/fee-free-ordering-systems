@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Ocultar do cardápio",
       "availabilityModeShow": "Mostrar, mas bloquear o pedido",
       "availabilityModeHint": "\"Mostrar\" mantém o item visível com uma nota \"Disponível …\" para os clientes saberem quando pedir.",
-      "previewTestOrdering": "Visualizar e testar pedidos"
+      "previewTestOrdering": "Visualizar e testar pedidos",
+      "masterMenuTitle": "Cardápio mestre — {inheriting} de {total} locais herdam este cardápio",
+      "masterMenuBody": "As alterações feitas aqui se aplicam instantaneamente a todos os locais que herdam. Locais com cardápio personalizado não são afetados."
     },
     "promotionsList": {
       "stackingMaster": "Master",

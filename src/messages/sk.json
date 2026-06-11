@@ -2402,7 +2402,9 @@
       "availabilityModeHide": "Skryť z ponuky",
       "availabilityModeShow": "Zobraziť, ale blokovať objednanie",
       "availabilityModeHint": "„Zobraziť“ ponechá položku viditeľnú s poznámkou „K dispozícii …“, aby zákazníci vedeli, kedy si ju môžu objednať.",
-      "previewTestOrdering": "Náhľad a testovacia objednávka"
+      "previewTestOrdering": "Náhľad a testovacia objednávka",
+      "masterMenuTitle": "Hlavné menu — {inheriting} z {total} pobočiek dedí toto menu",
+      "masterMenuBody": "Zmeny, ktoré tu vykonáte, sa okamžite prejavia v každej dediacej pobočke. Pobočky s vlastným menu nie sú ovplyvnené."
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

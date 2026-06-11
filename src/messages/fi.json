@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Piilota valikosta",
       "availabilityModeShow": "Näytä, mutta estä tilaaminen",
       "availabilityModeHint": "\"Näytä\" pitää tuotteen näkyvissä \"Saatavilla …\" -merkinnällä, jotta asiakkaat tietävät milloin sen voi tilata.",
-      "previewTestOrdering": "Esikatsele ja testitilaa"
+      "previewTestOrdering": "Esikatsele ja testitilaa",
+      "masterMenuTitle": "Päävalikko — {inheriting}/{total} toimipaikkaa perii tämän valikon",
+      "masterMenuBody": "Täällä tekemäsi muutokset näkyvät heti jokaisessa perivässä toimipaikassa. Mukautetun valikon toimipaikkoihin ei vaikuteta."
     },
     "promotionsList": {
       "stackingMaster": "Master",

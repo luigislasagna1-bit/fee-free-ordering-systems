@@ -1698,7 +1698,9 @@
       "availabilityModeHide": "Elrejtés az étlapról",
       "availabilityModeShow": "Mutasd, de tiltsd a rendelést",
       "availabilityModeHint": "A „Mutasd” láthatóan tartja a tételt egy „Elérhető …” jelzéssel, így a vendégek tudják, mikor rendelhetik.",
-      "previewTestOrdering": "Előnézet és tesztrendelés"
+      "previewTestOrdering": "Előnézet és tesztrendelés",
+      "masterMenuTitle": "Fő étlap — {total} helyszínből {inheriting} örökli ezt az étlapot",
+      "masterMenuBody": "Az itt végzett módosítások azonnal megjelennek minden öröklő helyszínen. Az egyéni étlappal rendelkező helyszíneket nem érinti."
     },
     "promotionsList": {
       "stackingMaster": "Master",

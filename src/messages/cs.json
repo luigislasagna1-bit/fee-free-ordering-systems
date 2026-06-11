@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Skrýt z nabídky",
       "availabilityModeShow": "Zobrazit, ale blokovat objednání",
       "availabilityModeHint": "„Zobrazit“ ponechá položku viditelnou s poznámkou „K dispozici …“, aby zákazníci věděli, kdy ji lze objednat.",
-      "previewTestOrdering": "Náhled a testovací objednávka"
+      "previewTestOrdering": "Náhled a testovací objednávka",
+      "masterMenuTitle": "Hlavní menu — {inheriting} z {total} poboček dědí toto menu",
+      "masterMenuBody": "Změny, které zde provedete, se okamžitě projeví v každé dědící pobočce. Pobočky s vlastním menu nejsou ovlivněny."
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

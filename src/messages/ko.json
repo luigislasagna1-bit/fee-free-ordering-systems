@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "메뉴에서 숨기기",
       "availabilityModeShow": "표시하되 주문 차단",
       "availabilityModeHint": "\"표시\"를 선택하면 \"이용 가능 …\" 안내와 함께 메뉴에 계속 표시되어 고객이 주문 가능 시간을 알 수 있습니다.",
-      "previewTestOrdering": "미리보기 및 테스트 주문"
+      "previewTestOrdering": "미리보기 및 테스트 주문",
+      "masterMenuTitle": "마스터 메뉴 — {total}개 지점 중 {inheriting}곳이 이 메뉴를 사용",
+      "masterMenuBody": "여기서 변경한 내용은 이 메뉴를 사용하는 모든 지점에 즉시 적용됩니다. 맞춤 메뉴를 사용하는 지점은 영향을 받지 않습니다."
     },
     "promotionsList": {
       "stackingMaster": "마스터",

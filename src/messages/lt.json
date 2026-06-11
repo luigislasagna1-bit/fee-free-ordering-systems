@@ -2402,7 +2402,9 @@
       "availabilityModeHide": "Slėpti iš meniu",
       "availabilityModeShow": "Rodyti, bet blokuoti užsakymą",
       "availabilityModeHint": "„Rodyti“ palieka patiekalą matomą su pastaba „Galima …“, kad klientai žinotų, kada jį galima užsisakyti.",
-      "previewTestOrdering": "Peržiūra ir bandomasis užsakymas"
+      "previewTestOrdering": "Peržiūra ir bandomasis užsakymas",
+      "masterMenuTitle": "Pagrindinis meniu — {inheriting} iš {total} vietų paveldi šį meniu",
+      "masterMenuBody": "Čia atlikti pakeitimai iškart atsiranda kiekvienoje paveldinčioje vietoje. Vietos su pritaikytu meniu nepaveikiamos."
     },
     "promotionsList": {
       "stackingMaster": "Master",

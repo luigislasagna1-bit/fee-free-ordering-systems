@@ -52,21 +52,29 @@ export const STAFF_LOCALE_COOKIE = "ff-staff-locale";
 /**
  * Resolve the locale for STAFF-facing surfaces (admin console, kitchen display).
  *
- * Unlike resolveLocale(), this is strictly PER-USER and never inherits
- * `restaurant.defaultLanguage` (which is the CUSTOMER-facing default) nor the
- * customer `fee-free-locale` cookie. So one person changing the customer
- * language — or the restaurant's default — can't suddenly turn another staff
- * member's admin Italian. Luigi 2026-06-05.
+ * The restaurant's chosen language is the DEFAULT for staff who haven't picked
+ * their own (Luigi 2026-06-11: "all of a restaurant's systems should start in
+ * the language the owner chose" — except the marketplace, which is always
+ * English). But an explicit per-staff choice (the ff-staff-locale cookie) still
+ * wins, so a staff member who reads another language can switch their OWN
+ * console without flipping anyone else's — preserving the 2026-06-05
+ * decoupling for people who actively choose.
  *
  * Order of precedence:
- *  1. ff-staff-locale cookie  (this staff member's explicit choice)
- *  2. Accept-Language header   (their browser's language)
- *  3. "en"                     (final fallback)
+ *  1. ff-staff-locale cookie     (this staff member's explicit choice)
+ *  2. restaurant.defaultLanguage (the owner's chosen language — the default)
+ *  3. Accept-Language header      (their browser's language)
+ *  4. "en"                        (final fallback)
+ *
+ * Callers pass the restaurant's defaultLanguage; omit it (superadmin/reseller
+ * with no restaurant context) to keep the old cookie → browser → en behavior.
  */
-export async function resolveStaffLocale(): Promise<Locale> {
+export async function resolveStaffLocale(restaurantDefault?: string | null): Promise<Locale> {
   const cookieStore = await cookies();
   const cookieLocale = cookieStore.get(STAFF_LOCALE_COOKIE)?.value;
   if (isSupportedLocale(cookieLocale)) return cookieLocale;
+
+  if (isSupportedLocale(restaurantDefault)) return restaurantDefault;
 
   const h = await headers();
   const accept = h.get("accept-language") ?? "";

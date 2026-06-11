@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "メニューから非表示",
       "availabilityModeShow": "表示するが注文は不可",
       "availabilityModeHint": "「表示」を選ぶと「提供時間 …」の注記付きで表示され、注文できる時間が分かります。",
-      "previewTestOrdering": "プレビュー＆テスト注文"
+      "previewTestOrdering": "プレビュー＆テスト注文",
+      "masterMenuTitle": "マスターメニュー — {total} 店舗中 {inheriting} 店舗がこのメニューを継承",
+      "masterMenuBody": "ここでの変更は、継承している各店舗に即座に反映されます。独自メニューの店舗には影響しません。"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

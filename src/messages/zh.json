@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "从菜单隐藏",
       "availabilityModeShow": "显示但禁止下单",
       "availabilityModeHint": "“显示”会保留菜品并附“供应时间 …”提示，让顾客知道何时可以下单。",
-      "previewTestOrdering": "预览并测试下单"
+      "previewTestOrdering": "预览并测试下单",
+      "masterMenuTitle": "主菜单 — {total} 个门店中有 {inheriting} 个沿用此菜单",
+      "masterMenuBody": "您在此处所做的更改会立即应用到每个沿用此菜单的门店。使用自定义菜单的门店不受影响。"
     },
     "promotionsList": {
       "stackingMaster": "主控",

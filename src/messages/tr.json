@@ -1698,7 +1698,9 @@
       "availabilityModeHide": "Menüden gizle",
       "availabilityModeShow": "Göster ama siparişi engelle",
       "availabilityModeHint": "\"Göster\" ürünü \"Mevcut …\" notuyla görünür tutar; müşteriler ne zaman sipariş verebileceklerini bilir.",
-      "previewTestOrdering": "Önizleme ve test siparişi"
+      "previewTestOrdering": "Önizleme ve test siparişi",
+      "masterMenuTitle": "Ana menü — {total} konumdan {inheriting} tanesi bu menüyü devralıyor",
+      "masterMenuBody": "Burada yaptığınız değişiklikler, devralan her konumda anında görünür. Özel menüsü olan konumlar etkilenmez."
     },
     "promotionsList": {
       "stackingMaster": "Ana",

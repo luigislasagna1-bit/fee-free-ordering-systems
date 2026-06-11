@@ -1698,7 +1698,9 @@
       "availabilityModeHide": "Ẩn khỏi thực đơn",
       "availabilityModeShow": "Hiển thị nhưng chặn đặt món",
       "availabilityModeHint": "\"Hiển thị\" giữ món hiển thị kèm ghi chú \"Có sẵn …\" để khách biết khi nào có thể đặt.",
-      "previewTestOrdering": "Xem trước & đặt thử"
+      "previewTestOrdering": "Xem trước & đặt thử",
+      "masterMenuTitle": "Menu chính — {inheriting}/{total} địa điểm kế thừa menu này",
+      "masterMenuBody": "Các thay đổi bạn thực hiện ở đây sẽ xuất hiện ngay lập tức tại mọi địa điểm kế thừa. Các địa điểm có menu tùy chỉnh không bị ảnh hưởng."
     },
     "promotionsList": {
       "stackingMaster": "Master",

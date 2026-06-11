@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Sakrij iz izbornika",
       "availabilityModeShow": "Prikaži, ali blokiraj naručivanje",
       "availabilityModeHint": "\"Prikaži\" ostavlja artikl vidljivim s napomenom \"Dostupno …\" pa kupci znaju kada ga mogu naručiti.",
-      "previewTestOrdering": "Pregled i testna narudžba"
+      "previewTestOrdering": "Pregled i testna narudžba",
+      "masterMenuTitle": "Glavni izbornik — {inheriting} od {total} lokacija nasljeđuje ovaj izbornik",
+      "masterMenuBody": "Promjene koje ovdje napravite odmah se prikazuju na svakoj lokaciji koja nasljeđuje. Lokacije s prilagođenim izbornikom nisu zahvaćene."
     },
     "promotionsList": {
       "stackingMaster": "Master",

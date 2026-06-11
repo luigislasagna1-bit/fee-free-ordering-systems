@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Nascondi dal menu",
       "availabilityModeShow": "Mostra, ma blocca l'ordine",
       "availabilityModeHint": "\"Mostra\" mantiene il piatto visibile con una nota \"Disponibile …\" così i clienti sanno quando ordinarlo.",
-      "previewTestOrdering": "Anteprima e ordine di prova"
+      "previewTestOrdering": "Anteprima e ordine di prova",
+      "masterMenuTitle": "Menu principale — {inheriting} di {total} sedi ereditano questo menu",
+      "masterMenuBody": "Le modifiche apportate qui vengono applicate immediatamente a ogni sede che eredita. Le sedi con un menu personalizzato non sono interessate."
     },
     "promotionsList": {
       "stackingMaster": "Master",

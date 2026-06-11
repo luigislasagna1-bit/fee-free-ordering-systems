@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "إخفاء من القائمة",
       "availabilityModeShow": "إظهار مع منع الطلب",
       "availabilityModeHint": "\"إظهار\" يُبقي الصنف مرئيًا مع ملاحظة \"متاح …\" ليعرف العملاء متى يمكنهم طلبه.",
-      "previewTestOrdering": "معاينة وطلب تجريبي"
+      "previewTestOrdering": "معاينة وطلب تجريبي",
+      "masterMenuTitle": "القائمة الرئيسية — {inheriting} من {total} موقعًا ترث هذه القائمة",
+      "masterMenuBody": "تظهر التغييرات التي تجريها هنا فورًا في كل موقع يرث القائمة. المواقع ذات القائمة المخصصة لا تتأثر."
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "הסתר מהתפריט",
       "availabilityModeShow": "הצג אך חסום הזמנה",
       "availabilityModeHint": "\"הצג\" משאיר את הפריט גלוי עם הערת \"זמין …\" כך שהלקוחות יודעים מתי אפשר להזמין.",
-      "previewTestOrdering": "תצוגה מקדימה והזמנת ניסיון"
+      "previewTestOrdering": "תצוגה מקדימה והזמנת ניסיון",
+      "masterMenuTitle": "תפריט ראשי — {inheriting} מתוך {total} סניפים יורשים תפריט זה",
+      "masterMenuBody": "השינויים שתבצע כאן יופיעו מיד בכל סניף שיורש. סניפים עם תפריט מותאם אישית אינם מושפעים."
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

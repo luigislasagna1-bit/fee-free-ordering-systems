@@ -1,5 +1,6 @@
 "use client";
 import { Layers } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * Banner shown above MenuClient on the BRAND PARENT's menu page when
@@ -17,6 +18,7 @@ export function MasterMenuBanner({
   inheritingCount: number;
   totalChildCount: number;
 }) {
+  const t = useTranslations("admin.menuEditor");
   if (inheritingCount <= 0) return null;
 
   return (
@@ -26,11 +28,10 @@ export function MasterMenuBanner({
       </div>
       <div className="flex-1 min-w-0 text-sm">
         <p className="font-semibold text-amber-900">
-          Master menu — {inheritingCount} of {totalChildCount} location{totalChildCount === 1 ? "" : "s"} inherit{inheritingCount === 1 ? "s" : ""} this menu
+          {t("masterMenuTitle", { inheriting: inheritingCount, total: totalChildCount })}
         </p>
         <p className="text-amber-700/85 mt-0.5 text-xs leading-snug">
-          Changes you make here appear on every inheriting location instantly. Locations with a custom menu (the
-          {totalChildCount - inheritingCount > 0 ? ` ${totalChildCount - inheritingCount} that customized` : " ones that customize"}) are not affected.
+          {t("masterMenuBody")}
         </p>
       </div>
     </div>

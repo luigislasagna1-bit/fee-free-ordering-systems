@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Skrij iz menija",
       "availabilityModeShow": "Prikaži, a prepreči naročanje",
       "availabilityModeHint": "»Prikaži« ohrani izdelek viden z opombo »Na voljo …«, da stranke vedo, kdaj ga lahko naročijo.",
-      "previewTestOrdering": "Predogled in testno naročilo"
+      "previewTestOrdering": "Predogled in testno naročilo",
+      "masterMenuTitle": "Glavni meni — {inheriting} od {total} lokacij podeduje ta meni",
+      "masterMenuBody": "Spremembe, ki jih naredite tukaj, se takoj prikažejo na vsaki lokaciji, ki podeduje. Lokacije s prilagojenim menijem niso prizadete."
     },
     "promotionsList": {
       "stackingMaster": "Master",

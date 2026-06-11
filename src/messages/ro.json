@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Ascunde din meniu",
       "availabilityModeShow": "Afișează, dar blochează comanda",
       "availabilityModeHint": "„Afișează” păstrează produsul vizibil cu o notă „Disponibil …”, ca să știe clienții când îl pot comanda.",
-      "previewTestOrdering": "Previzualizare și comandă de test"
+      "previewTestOrdering": "Previzualizare și comandă de test",
+      "masterMenuTitle": "Meniu principal — {inheriting} din {total} locații moștenesc acest meniu",
+      "masterMenuBody": "Modificările făcute aici apar instantaneu în fiecare locație care moștenește. Locațiile cu un meniu personalizat nu sunt afectate."
     },
     "promotionsList": {
       "stackingMaster": "Master",

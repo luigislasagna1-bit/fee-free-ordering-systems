@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Sembunyikan dari menu",
       "availabilityModeShow": "Tampilkan, tapi blokir pemesanan",
       "availabilityModeHint": "\"Tampilkan\" membuat item tetap terlihat dengan catatan \"Tersedia …\" agar pelanggan tahu kapan bisa memesannya.",
-      "previewTestOrdering": "Pratinjau & pesanan uji"
+      "previewTestOrdering": "Pratinjau & pesanan uji",
+      "masterMenuTitle": "Menu utama — {inheriting} dari {total} lokasi mewarisi menu ini",
+      "masterMenuBody": "Perubahan yang Anda buat di sini langsung muncul di setiap lokasi yang mewarisi. Lokasi dengan menu kustom tidak terpengaruh."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Aus dem Menü ausblenden",
       "availabilityModeShow": "Anzeigen, aber Bestellung sperren",
       "availabilityModeHint": "\"Anzeigen\" hält das Gericht sichtbar mit dem Hinweis \"Verfügbar …\", damit Kunden wissen, wann sie es bestellen können.",
-      "previewTestOrdering": "Vorschau & Testbestellung"
+      "previewTestOrdering": "Vorschau & Testbestellung",
+      "masterMenuTitle": "Hauptmenü — {inheriting} von {total} Standorten erben dieses Menü",
+      "masterMenuBody": "Hier vorgenommene Änderungen erscheinen sofort an jedem erbenden Standort. Standorte mit einem eigenen Menü sind nicht betroffen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

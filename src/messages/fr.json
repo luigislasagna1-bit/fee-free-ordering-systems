@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Masquer du menu",
       "availabilityModeShow": "Afficher, mais bloquer la commande",
       "availabilityModeHint": "« Afficher » garde l'article visible avec une note « Disponible … » pour que les clients sachent quand le commander.",
-      "previewTestOrdering": "Aperçu et commande test"
+      "previewTestOrdering": "Aperçu et commande test",
+      "masterMenuTitle": "Menu principal — {inheriting} sur {total} établissements héritent de ce menu",
+      "masterMenuBody": "Les modifications apportées ici s'appliquent instantanément à chaque établissement qui hérite. Les établissements avec un menu personnalisé ne sont pas affectés."
     },
     "promotionsList": {
       "stackingMaster": "Maître",

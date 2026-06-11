@@ -2060,7 +2060,9 @@
       "availabilityModeHide": "मेनू से छिपाएँ",
       "availabilityModeShow": "दिखाएँ, पर ऑर्डर रोकें",
       "availabilityModeHint": "\"दिखाएँ\" आइटम को \"उपलब्ध …\" नोट के साथ दिखाता रहता है ताकि ग्राहक जानें कि कब ऑर्डर कर सकते हैं।",
-      "previewTestOrdering": "पूर्वावलोकन और परीक्षण ऑर्डर"
+      "previewTestOrdering": "पूर्वावलोकन और परीक्षण ऑर्डर",
+      "masterMenuTitle": "मास्टर मेन्यू — {total} स्थानों में से {inheriting} इस मेन्यू को इनहेरिट करते हैं",
+      "masterMenuBody": "यहाँ किए गए बदलाव हर इनहेरिट करने वाले स्थान पर तुरंत दिखते हैं। कस्टम मेन्यू वाले स्थान प्रभावित नहीं होते।"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

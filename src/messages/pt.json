@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Ocultar do menu",
       "availabilityModeShow": "Mostrar, mas bloquear o pedido",
       "availabilityModeHint": "\"Mostrar\" mantém o item visível com uma nota \"Disponível …\" para os clientes saberem quando o podem pedir.",
-      "previewTestOrdering": "Pré-visualizar e testar pedidos"
+      "previewTestOrdering": "Pré-visualizar e testar pedidos",
+      "masterMenuTitle": "Menu principal — {inheriting} de {total} locais herdam este menu",
+      "masterMenuBody": "As alterações feitas aqui aplicam-se instantaneamente a todos os locais que herdam. Os locais com um menu personalizado não são afetados."
     },
     "promotionsList": {
       "stackingMaster": "Master",

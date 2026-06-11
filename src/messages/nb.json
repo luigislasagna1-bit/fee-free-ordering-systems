@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Skjul fra menyen",
       "availabilityModeShow": "Vis, men blokker bestilling",
       "availabilityModeHint": "\"Vis\" holder retten synlig med en \"Tilgjengelig …\"-merknad så kundene vet når de kan bestille.",
-      "previewTestOrdering": "Forhåndsvis & testbestill"
+      "previewTestOrdering": "Forhåndsvis & testbestill",
+      "masterMenuTitle": "Hovedmeny — {inheriting} av {total} steder arver denne menyen",
+      "masterMenuBody": "Endringer du gjør her, vises umiddelbart på hvert sted som arver. Steder med en egendefinert meny påvirkes ikke."
     },
     "promotionsList": {
       "stackingMaster": "Master",

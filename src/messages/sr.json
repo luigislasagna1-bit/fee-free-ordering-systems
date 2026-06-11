@@ -1737,7 +1737,9 @@
       "availabilityModeHide": "Сакриј из менија",
       "availabilityModeShow": "Прикажи, али блокирај наручивање",
       "availabilityModeHint": "„Прикажи“ оставља артикал видљивим уз напомену „Доступно …“ па купци знају када могу да га наруче.",
-      "previewTestOrdering": "Преглед и тест наруџба"
+      "previewTestOrdering": "Преглед и тест наруџба",
+      "masterMenuTitle": "Главни мени — {inheriting} од {total} локација наслеђује овај мени",
+      "masterMenuBody": "Промене које овде направите одмах се појављују на свакој локацији која наслеђује. Локације са прилагођеним менијем нису погођене."
     },
     "promotionsList": {
       "stackingMaster": "Master",
