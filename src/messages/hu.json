@@ -680,7 +680,8 @@
       "settings": "Beállítások",
       "viewOrderingPage": "Rendelési oldal megtekintése",
       "logOut": "Kijelentkezés",
-      "kitchenDisplay": "Konyhai kijelző"
+      "kitchenDisplay": "Konyhai kijelző",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Irányítópult",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Élővé válás ütemezve",
       "scheduleCleared": "Ütemezés törölve",
       "cancel": "Mégse"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Új okos link",
+      "newLink": "Új link",
+      "createButton": "Link létrehozása",
+      "namePlaceholder": "pl. Bejárati szórólap",
+      "copyUrl": "Link másolása",
+      "created": "Link létrehozva",
+      "createError": "Nem sikerült létrehozni — próbáld újra",
+      "copyError": "Nem sikerült másolni",
+      "colScans": "Beolvasások",
+      "colOrders": "Rendelések",
+      "colRevenue": "Bevétel",
+      "colConversion": "Konv.",
+      "emptyTitle": "Még nincs okos link",
+      "emptyBody": "Hozzon létre egy követhető linket, tegye a QR-kódját szórólapra vagy posztra, és nézze, ahogy a beolvasások rendelésekké válnak.",
+      "pageSubtitle": "Követhető linkek + QR-kódok — nézze meg, mely szórólapok és posztok hoznak valódi rendeléseket.",
+      "pointsToHint": "Az étlapodra mutat. Kapsz egy megosztható linket + QR-t a beolvasások és rendelések követéséhez."
     }
   },
   "impersonation": {

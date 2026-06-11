@@ -680,7 +680,8 @@
       "settings": "Indstillinger",
       "viewOrderingPage": "Se bestillingsside",
       "logOut": "Log ud",
-      "kitchenDisplay": "Køkkenskærm"
+      "kitchenDisplay": "Køkkenskærm",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Go-live planlagt",
       "scheduleCleared": "Planlægning ryddet",
       "cancel": "Annullér"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Nyt smart link",
+      "newLink": "Nyt link",
+      "createButton": "Opret link",
+      "namePlaceholder": "f.eks. Folder ved døren",
+      "copyUrl": "Kopiér link",
+      "created": "Link oprettet",
+      "createError": "Kunne ikke oprette — prøv igen",
+      "copyError": "Kunne ikke kopiere",
+      "colScans": "Scanninger",
+      "colOrders": "Ordrer",
+      "colRevenue": "Omsætning",
+      "colConversion": "Konv.",
+      "emptyTitle": "Ingen smarte links endnu",
+      "emptyBody": "Opret et sporbart link, sæt dets QR på en folder eller et opslag, og se scanninger blive til ordrer.",
+      "pageSubtitle": "Sporbare links + QR-koder — se hvilke foldere og opslag der giver rigtige ordrer.",
+      "pointsToHint": "Peger på dit menukort. Du får et delingslink + QR til at spore scanninger og ordrer."
     }
   },
   "impersonation": {

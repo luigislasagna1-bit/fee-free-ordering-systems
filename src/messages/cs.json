@@ -680,7 +680,8 @@
       "settings": "Nastavení",
       "viewOrderingPage": "Zobrazit stránku objednávek",
       "logOut": "Odhlásit se",
-      "kitchenDisplay": "Kuchyňský displej"
+      "kitchenDisplay": "Kuchyňský displej",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Přehled",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Aktivace naplánována",
       "scheduleCleared": "Plán vymazán",
       "cancel": "Zrušit"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Nový chytrý odkaz",
+      "newLink": "Nový odkaz",
+      "createButton": "Vytvořit odkaz",
+      "namePlaceholder": "např. Leták u dveří",
+      "copyUrl": "Kopírovat odkaz",
+      "created": "Odkaz vytvořen",
+      "createError": "Nepodařilo se vytvořit — zkuste znovu",
+      "copyError": "Nepodařilo se zkopírovat",
+      "colScans": "Skeny",
+      "colOrders": "Objednávky",
+      "colRevenue": "Tržby",
+      "colConversion": "Konv.",
+      "emptyTitle": "Zatím žádné chytré odkazy",
+      "emptyBody": "Vytvořte sledovatelný odkaz, umístěte jeho QR na leták nebo příspěvek a sledujte, jak se skeny mění v objednávky.",
+      "pageSubtitle": "Sledovatelné odkazy + QR kódy — zjistěte, které letáky a příspěvky přinášejí skutečné objednávky.",
+      "pointsToHint": "Odkazuje na vaše menu. Získáte odkaz ke sdílení + QR pro sledování skenů a objednávek."
     }
   },
   "impersonation": {

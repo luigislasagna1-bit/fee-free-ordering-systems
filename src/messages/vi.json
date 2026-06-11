@@ -680,7 +680,8 @@
       "settings": "Cài đặt",
       "viewOrderingPage": "Xem trang đặt hàng",
       "logOut": "Đăng xuất",
-      "kitchenDisplay": "Màn hình bếp"
+      "kitchenDisplay": "Màn hình bếp",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Bảng điều khiển",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Đã lên lịch hoạt động",
       "scheduleCleared": "Đã xóa lịch",
       "cancel": "Hủy"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Liên kết thông minh mới",
+      "newLink": "Liên kết mới",
+      "createButton": "Tạo liên kết",
+      "namePlaceholder": "vd. Tờ rơi cửa trước",
+      "copyUrl": "Sao chép liên kết",
+      "created": "Đã tạo liên kết",
+      "createError": "Không thể tạo — thử lại",
+      "copyError": "Không thể sao chép",
+      "colScans": "Lượt quét",
+      "colOrders": "Đơn hàng",
+      "colRevenue": "Doanh thu",
+      "colConversion": "Chuyển đổi",
+      "emptyTitle": "Chưa có liên kết thông minh",
+      "emptyBody": "Tạo một liên kết theo dõi được, đặt mã QR của nó lên tờ rơi hoặc bài đăng, và xem lượt quét biến thành đơn hàng.",
+      "pageSubtitle": "Liên kết theo dõi được + mã QR — xem tờ rơi và bài đăng nào tạo ra đơn hàng thực.",
+      "pointsToHint": "Trỏ đến thực đơn của bạn. Bạn sẽ nhận được liên kết chia sẻ + QR để theo dõi lượt quét và đơn hàng."
     }
   },
   "impersonation": {

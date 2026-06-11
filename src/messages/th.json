@@ -680,7 +680,8 @@
       "settings": "การตั้งค่า",
       "viewOrderingPage": "ดูหน้าสั่งอาหาร",
       "logOut": "ออกจากระบบ",
-      "kitchenDisplay": "จอครัว"
+      "kitchenDisplay": "จอครัว",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "แดชบอร์ด",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "ตั้งเวลาเริ่มใช้งานแล้ว",
       "scheduleCleared": "ล้างการตั้งเวลาแล้ว",
       "cancel": "ยกเลิก"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "ลิงก์อัจฉริยะใหม่",
+      "newLink": "ลิงก์ใหม่",
+      "createButton": "สร้างลิงก์",
+      "namePlaceholder": "เช่น ใบปลิวหน้าร้าน",
+      "copyUrl": "คัดลอกลิงก์",
+      "created": "สร้างลิงก์แล้ว",
+      "createError": "สร้างไม่สำเร็จ — ลองอีกครั้ง",
+      "copyError": "คัดลอกไม่สำเร็จ",
+      "colScans": "การสแกน",
+      "colOrders": "ออเดอร์",
+      "colRevenue": "รายได้",
+      "colConversion": "อัตราแปลง",
+      "emptyTitle": "ยังไม่มีลิงก์อัจฉริยะ",
+      "emptyBody": "สร้างลิงก์ที่ติดตามได้ นำคิวอาร์โค้ดไปติดบนใบปลิวหรือโพสต์ แล้วดูการสแกนกลายเป็นออเดอร์",
+      "pageSubtitle": "ลิงก์ที่ติดตามได้ + คิวอาร์โค้ด — ดูว่าใบปลิวและโพสต์ใดสร้างออเดอร์จริง",
+      "pointsToHint": "ชี้ไปยังเมนูของคุณ คุณจะได้ลิงก์แชร์ + คิวอาร์โค้ดเพื่อติดตามการสแกนและออเดอร์"
     }
   },
   "impersonation": {

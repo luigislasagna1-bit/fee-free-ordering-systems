@@ -24,6 +24,7 @@ import {
   recordMarketplaceOrder,
   isOnMarketplace,
 } from "@/lib/marketplace";
+import { recordSmartLinkOrder } from "@/lib/marketing-studio";
 import { getCurrentCustomer } from "@/lib/customer-session";
 import { validateBooking, resolveDayHours, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
@@ -1370,13 +1371,20 @@ export async function POST(req: NextRequest) {
     // have multiple visit rows across re-navigations — the most
     // recent one is the truest attribution.
     let resolvedChannel: string | null = null;
+    // Marketing Studio per-link attribution rides the SAME visit lookup (Luigi
+    // 2026-06-10): the /m/<code> redirect stored ?ref=<code> on the visit; we
+    // resolve it to the SmartLink after the order is created (idempotent).
+    let resolvedRefCode: string | null = null;
     if (typeof sessionHash === "string" && /^[a-f0-9]{16,64}$/i.test(sessionHash)) {
       const visit = await prisma.websiteVisit.findFirst({
         where: { restaurantId: restaurant.id, sessionHash },
-        select: { channel: true },
+        select: { channel: true, refCode: true },
         orderBy: { createdAt: "desc" },
       });
-      if (visit) resolvedChannel = visit.channel;
+      if (visit) {
+        resolvedChannel = visit.channel;
+        resolvedRefCode = visit.refCode;
+      }
     }
     if (!resolvedChannel && viaMarketplace) resolvedChannel = "marketplace";
 
@@ -1760,6 +1768,21 @@ export async function POST(req: NextRequest) {
             console.error("[orders POST] recordMarketplaceOrder:", e);
           }
         })(),
+      );
+    }
+
+    // Marketing Studio per-link attribution (Luigi 2026-06-10): if this session
+    // arrived via a smart-link scan (?ref=), bump that link's order + revenue
+    // counters EXACTLY once (idempotent claim). after() so it never delays the
+    // response; recordSmartLinkOrder is internally try/caught.
+    if (resolvedRefCode) {
+      after(
+        recordSmartLinkOrder({
+          orderId: order.id,
+          refCode: resolvedRefCode,
+          restaurantId: restaurant.id,
+          revenueCents: Math.round(serverTotal * 100),
+        }),
       );
     }
 

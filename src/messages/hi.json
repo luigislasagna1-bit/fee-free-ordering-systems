@@ -703,7 +703,8 @@
       "settings": "सेटिंग्स",
       "viewOrderingPage": "ऑर्डरिंग पेज देखें",
       "logOut": "लॉग आउट",
-      "kitchenDisplay": "किचन डिस्प्ले"
+      "kitchenDisplay": "किचन डिस्प्ले",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "डैशबोर्ड",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "गो-लाइव शेड्यूल हो गया",
       "scheduleCleared": "शेड्यूल साफ़ कर दिया गया",
       "cancel": "रद्द करें"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "नया स्मार्ट लिंक",
+      "newLink": "नया लिंक",
+      "createButton": "लिंक बनाएँ",
+      "namePlaceholder": "उदा. दरवाज़े का फ़्लायर",
+      "copyUrl": "लिंक कॉपी करें",
+      "created": "लिंक बन गया",
+      "createError": "नहीं बना सके — पुनः प्रयास करें",
+      "copyError": "कॉपी नहीं हो सका",
+      "colScans": "स्कैन",
+      "colOrders": "ऑर्डर",
+      "colRevenue": "राजस्व",
+      "colConversion": "रूपांतरण",
+      "emptyTitle": "अभी कोई स्मार्ट लिंक नहीं",
+      "emptyBody": "एक ट्रैक करने योग्य लिंक बनाएँ, उसका QR किसी फ़्लायर या पोस्ट पर लगाएँ, और स्कैन को ऑर्डर में बदलते देखें।",
+      "pageSubtitle": "ट्रैक करने योग्य लिंक + QR कोड — देखें कौन से फ़्लायर और पोस्ट असली ऑर्डर लाते हैं।",
+      "pointsToHint": "आपके मेन्यू पर ले जाता है। स्कैन और ऑर्डर ट्रैक करने के लिए आपको शेयर लिंक + QR मिलेगा।"
     }
   },
   "impersonation": {

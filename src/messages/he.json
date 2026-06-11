@@ -680,7 +680,8 @@
       "settings": "הגדרות",
       "viewOrderingPage": "צפה בדף ההזמנות",
       "logOut": "התנתק",
-      "kitchenDisplay": "תצוגת מטבח"
+      "kitchenDisplay": "תצוגת מטבח",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "לוח בקרה",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "ההפעלה תוזמנה",
       "scheduleCleared": "התזמון נוקה",
       "cancel": "ביטול"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "קישור חכם חדש",
+      "newLink": "קישור חדש",
+      "createButton": "צור קישור",
+      "namePlaceholder": "למשל עלון בכניסה",
+      "copyUrl": "העתק קישור",
+      "created": "הקישור נוצר",
+      "createError": "היצירה נכשלה — נסה שוב",
+      "copyError": "ההעתקה נכשלה",
+      "colScans": "סריקות",
+      "colOrders": "הזמנות",
+      "colRevenue": "הכנסה",
+      "colConversion": "המרה",
+      "emptyTitle": "אין עדיין קישורים חכמים",
+      "emptyBody": "צור קישור למעקב, הצב את ה-QR שלו על עלון או פוסט, וצפה בסריקות הופכות להזמנות.",
+      "pageSubtitle": "קישורים למעקב + קודי QR — ראה אילו עלונים ופוסטים מביאים הזמנות אמיתיות.",
+      "pointsToHint": "מפנה לתפריט שלך. תקבל קישור לשיתוף + QR למעקב אחר סריקות והזמנות."
     }
   },
   "impersonation": {

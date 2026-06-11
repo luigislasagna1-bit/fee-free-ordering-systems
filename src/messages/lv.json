@@ -680,7 +680,8 @@
       "settings": "Iestatījumi",
       "viewOrderingPage": "Skatīt pasūtīšanas lapu",
       "logOut": "Iziet",
-      "kitchenDisplay": "Virtuves ekrāns"
+      "kitchenDisplay": "Virtuves ekrāns",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Panelis",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Aktivizēšana ieplānota",
       "scheduleCleared": "Grafiks notīrīts",
       "cancel": "Atcelt"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Jauna vieda saite",
+      "newLink": "Jauna saite",
+      "createButton": "Izveidot saiti",
+      "namePlaceholder": "piem. Durvju buklets",
+      "copyUrl": "Kopēt saiti",
+      "created": "Saite izveidota",
+      "createError": "Neizdevās izveidot — mēģiniet vēlreiz",
+      "copyError": "Neizdevās kopēt",
+      "colScans": "Skenēšanas",
+      "colOrders": "Pasūtījumi",
+      "colRevenue": "Ieņēmumi",
+      "colConversion": "Konv.",
+      "emptyTitle": "Pagaidām nav viedo saišu",
+      "emptyBody": "Izveidojiet izsekojamu saiti, ievietojiet tās QR uz bukleta vai ziņas un vērojiet, kā skenēšanas kļūst par pasūtījumiem.",
+      "pageSubtitle": "Izsekojamas saites + QR kodi — uzziniet, kuri bukleti un ziņas dod reālus pasūtījumus.",
+      "pointsToHint": "Norāda uz jūsu ēdienkarti. Saņemsiet kopīgošanas saiti + QR, lai sekotu skenēšanām un pasūtījumiem."
     }
   },
   "impersonation": {

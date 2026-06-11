@@ -680,7 +680,8 @@
       "settings": "Ayarlar",
       "viewOrderingPage": "Sipariş sayfasını gör",
       "logOut": "Çıkış Yap",
-      "kitchenDisplay": "Mutfak Ekranı"
+      "kitchenDisplay": "Mutfak Ekranı",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Panel",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Yayına alım zamanlandı",
       "scheduleCleared": "Zamanlama temizlendi",
       "cancel": "İptal"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Yeni akıllı bağlantı",
+      "newLink": "Yeni bağlantı",
+      "createButton": "Bağlantı oluştur",
+      "namePlaceholder": "örn. Kapı broşürü",
+      "copyUrl": "Bağlantıyı kopyala",
+      "created": "Bağlantı oluşturuldu",
+      "createError": "Oluşturulamadı — tekrar deneyin",
+      "copyError": "Kopyalanamadı",
+      "colScans": "Taramalar",
+      "colOrders": "Siparişler",
+      "colRevenue": "Gelir",
+      "colConversion": "Dönş.",
+      "emptyTitle": "Henüz akıllı bağlantı yok",
+      "emptyBody": "Takip edilebilir bir bağlantı oluşturun, QR'ını bir broşüre veya paylaşıma koyun ve taramaların siparişe dönüşmesini izleyin.",
+      "pageSubtitle": "Takip edilebilir bağlantılar + QR kodları — hangi broşür ve paylaşımların gerçek sipariş getirdiğini görün.",
+      "pointsToHint": "Menünüze yönlendirir. Taramaları ve siparişleri izlemek için bir paylaşım bağlantısı + QR alırsınız."
     }
   },
   "impersonation": {

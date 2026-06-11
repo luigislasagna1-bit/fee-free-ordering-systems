@@ -680,7 +680,8 @@
       "settings": "Podešavanja",
       "viewOrderingPage": "Pogledaj stranicu za naručivanje",
       "logOut": "Odjavi se",
-      "kitchenDisplay": "Kuhinjski ekran"
+      "kitchenDisplay": "Kuhinjski ekran",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Kontrolna tabla",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Objavljivanje zakazano",
       "scheduleCleared": "Raspored obrisan",
       "cancel": "Otkaži"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Нова паметна веза",
+      "newLink": "Нова веза",
+      "createButton": "Направи везу",
+      "namePlaceholder": "нпр. Летак на улазу",
+      "copyUrl": "Копирај везу",
+      "created": "Веза је направљена",
+      "createError": "Прављење није успело — покушајте поново",
+      "copyError": "Копирање није успело",
+      "colScans": "Скенирања",
+      "colOrders": "Поруџбине",
+      "colRevenue": "Приход",
+      "colConversion": "Конв.",
+      "emptyTitle": "Још нема паметних веза",
+      "emptyBody": "Направите пратљиву везу, ставите њен QR на летак или објаву и гледајте како се скенирања претварају у поруџбине.",
+      "pageSubtitle": "Пратљиве везе + QR кодови — видите који леци и објаве доносе праве поруџбине.",
+      "pointsToHint": "Води на ваш јеловник. Добићете везу за дељење + QR за праћење скенирања и поруџбина."
     }
   },
   "impersonation": {

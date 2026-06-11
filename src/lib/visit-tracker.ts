@@ -58,6 +58,10 @@ export function trackVisit(opts: { restaurantId: string; landingPath?: string })
     campaign: search.get("utm_campaign") || undefined,
   };
   const fromMarketplace = search.get("from") === "marketplace";
+  // Marketing Studio smart-link code (the /m/<code> redirect appends ?ref=<code>).
+  // Persisted on the visit + resolved to the SmartLink at order-create for
+  // per-link scan→order attribution. Luigi 2026-06-10.
+  const ref = search.get("ref") || undefined;
 
   send("/api/track/visit", {
     restaurantId: opts.restaurantId,
@@ -65,6 +69,7 @@ export function trackVisit(opts: { restaurantId: string; landingPath?: string })
     landingPath: opts.landingPath ?? window.location.pathname,
     utm: (utm.source || utm.medium || utm.campaign) ? utm : undefined,
     fromMarketplace,
+    ref,
   });
 }
 

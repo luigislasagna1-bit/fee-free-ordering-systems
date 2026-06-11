@@ -680,7 +680,8 @@
       "settings": "Ustawienia",
       "viewOrderingPage": "Otwórz stronę zamówień",
       "logOut": "Wyloguj",
-      "kitchenDisplay": "Wyświetlacz kuchni"
+      "kitchenDisplay": "Wyświetlacz kuchni",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Panel główny",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Aktywacja zaplanowana",
       "scheduleCleared": "Harmonogram wyczyszczony",
       "cancel": "Anuluj"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Nowy inteligentny link",
+      "newLink": "Nowy link",
+      "createButton": "Utwórz link",
+      "namePlaceholder": "np. Ulotka przy drzwiach",
+      "copyUrl": "Kopiuj link",
+      "created": "Link utworzony",
+      "createError": "Nie udało się utworzyć — spróbuj ponownie",
+      "copyError": "Nie udało się skopiować",
+      "colScans": "Skany",
+      "colOrders": "Zamówienia",
+      "colRevenue": "Przychód",
+      "colConversion": "Konw.",
+      "emptyTitle": "Brak inteligentnych linków",
+      "emptyBody": "Utwórz śledzony link, umieść jego kod QR na ulotce lub poście i obserwuj, jak skany zamieniają się w zamówienia.",
+      "pageSubtitle": "Śledzone linki + kody QR — zobacz, które ulotki i posty generują prawdziwe zamówienia.",
+      "pointsToHint": "Prowadzi do Twojego menu. Otrzymasz link do udostępniania + QR, aby śledzić skany i zamówienia."
     }
   },
   "impersonation": {

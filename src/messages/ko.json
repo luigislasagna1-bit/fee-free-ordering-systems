@@ -680,7 +680,8 @@
       "settings": "설정",
       "viewOrderingPage": "주문 페이지 보기",
       "logOut": "로그아웃",
-      "kitchenDisplay": "주방 디스플레이"
+      "kitchenDisplay": "주방 디스플레이",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "대시보드",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "라이브가 예약되었습니다",
       "scheduleCleared": "예약이 취소되었습니다",
       "cancel": "취소"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "새 스마트 링크",
+      "newLink": "새 링크",
+      "createButton": "링크 만들기",
+      "namePlaceholder": "예: 출입문 전단지",
+      "copyUrl": "링크 복사",
+      "created": "링크가 생성되었습니다",
+      "createError": "생성하지 못했습니다 — 다시 시도하세요",
+      "copyError": "복사하지 못했습니다",
+      "colScans": "스캔",
+      "colOrders": "주문",
+      "colRevenue": "매출",
+      "colConversion": "전환",
+      "emptyTitle": "아직 스마트 링크가 없습니다",
+      "emptyBody": "추적 가능한 링크를 만들고 QR을 전단지나 게시물에 넣어 스캔이 주문으로 이어지는 것을 확인하세요.",
+      "pageSubtitle": "추적 가능한 링크 + QR 코드 — 어떤 전단지와 게시물이 실제 주문으로 이어지는지 확인하세요.",
+      "pointsToHint": "메뉴로 연결됩니다. 스캔과 주문을 추적할 수 있는 공유 링크와 QR을 받게 됩니다."
     }
   },
   "impersonation": {

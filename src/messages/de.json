@@ -680,7 +680,8 @@
       "settings": "Einstellungen",
       "viewOrderingPage": "Bestellseite anzeigen",
       "logOut": "Ausloggen",
-      "kitchenDisplay": "Küchenanzeige"
+      "kitchenDisplay": "Küchenanzeige",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Live-Schaltung geplant",
       "scheduleCleared": "Planung gelöscht",
       "cancel": "Abbrechen"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Neuer Smart-Link",
+      "newLink": "Neuer Smart-Link",
+      "createButton": "Link erstellen",
+      "namePlaceholder": "z. B. Flyer am Eingang",
+      "copyUrl": "Link kopieren",
+      "created": "Link erstellt",
+      "createError": "Erstellung fehlgeschlagen — erneut versuchen",
+      "copyError": "Kopieren fehlgeschlagen",
+      "colScans": "Scans",
+      "colOrders": "Bestellungen",
+      "colRevenue": "Umsatz",
+      "colConversion": "Konv.",
+      "emptyTitle": "Noch keine Smart-Links",
+      "emptyBody": "Erstellen Sie einen nachverfolgbaren Link, setzen Sie seinen QR auf einen Flyer oder Post und sehen Sie, wie Scans zu Bestellungen werden.",
+      "pageSubtitle": "Nachverfolgbare Links + QR-Codes — sehen Sie, welche Flyer und Posts echte Bestellungen bringen.",
+      "pointsToHint": "Verweist auf Ihr Menü. Sie erhalten einen Teilen-Link + QR, um Scans und Bestellungen zu verfolgen."
     }
   },
   "impersonation": {

@@ -297,6 +297,8 @@ model Restaurant {
   printerSettings        PrinterSettings?
   autopilotCampaigns     AutopilotCampaign[]
   autopilotSteps         AutopilotStep[]
+  smartLinks             SmartLink[]
+  marketingAssets        MarketingAsset[]
   paymentProvider        PaymentProvider?
   billingProfile         RestaurantBillingProfile?
   printLogs              PrintLog[]
@@ -915,6 +917,14 @@ model Order {
   /// actually happened. Prevents double-decrement on repeat status flips.
   /// Only ever true on orders with viaMarketplace=true.
   marketplaceCounterApplied Boolean   @default(false)
+  /// Marketing Studio per-link attribution (Luigi 2026-06-10). `smartLinkId` is
+  /// the SmartLink this order is attributed to (resolved from the matched
+  /// visit's refCode at create). `smartLinkCounterApplied` is the write-once
+  /// idempotency claim — mirrors marketplaceCounterApplied — so a link's
+  /// order/revenue counters bump EXACTLY once even on retries / status flips.
+  /// Both write-only at create; off the customer read hot path.
+  smartLinkId               String?
+  smartLinkCounterApplied   Boolean   @default(false)
   scheduledFor              DateTime?
   estimatedReady            DateTime?
   acceptedAt                DateTime?
@@ -2633,6 +2643,10 @@ model WebsiteVisit {
   /// ISO 3166-1 alpha-2 country code if we can derive it from the
   /// Vercel geolocation header. Null in dev / unknown.
   country      String?
+  /// Marketing Studio smart-link code (Luigi 2026-06-10): the /m/<code> redirect
+  /// appends ?ref=<code>; resolved to the SmartLink at order-create for per-link
+  /// scan→order attribution. Null for organic / non-link visits.
+  refCode      String?
   createdAt    DateTime @default(now())
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
@@ -2643,6 +2657,77 @@ model WebsiteVisit {
   @@index([sessionHash])
   // "By channel" pivot.
   @@index([restaurantId, channel, createdAt])
+}
+
+/// Marketing Studio (Luigi 2026-06-10). A trackable short link: /m/<code> 302s
+/// to the restaurant's ordering page (with ?ref=<code> + utm) and counts the
+/// scan. When a visit carrying that ref later places an order, the order/revenue
+/// counters bump (idempotently, via Order.smartLinkCounterApplied). Denormalized
+/// counters give O(1) dashboard reads; SmartLinkScan keeps the time-series.
+model SmartLink {
+  id           String   @id @default(cuid())
+  restaurantId String
+  /// GLOBALLY unique — the /m/<code> URL carries no restaurant context, so the
+  /// code alone must resolve the link. Generated base62 with retry-on-conflict.
+  code         String   @unique
+  name         String
+  /// Path on the PRIMARY platform domain the scan lands on (default: the
+  /// restaurant's order page). Links never use a tenant host (the proxy would
+  /// rewrite /m/<code> into /order/<slug>/m/<code> and 404).
+  targetPath   String
+  utmSource    String?
+  utmMedium    String?
+  utmCampaign  String?
+  /// Coarse channel hint surfaced to the existing visit channel detector.
+  channelHint  String?
+  scanCount    Int      @default(0)
+  orderCount   Int      @default(0)
+  revenueCents Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  scans      SmartLinkScan[]
+  assets     MarketingAsset[]
+
+  @@index([restaurantId])
+}
+
+/// One scan/click of a SmartLink — the time-series behind the scans chart.
+/// Inserted fire-and-forget (after the redirect flushes) so it never blocks /m.
+model SmartLinkScan {
+  id          String   @id @default(cuid())
+  smartLinkId String
+  /// Reserved: a scan happens BEFORE landing, so we usually can't stitch it to a
+  /// session yet. Kept for a future scan→visit join. Null in v1.
+  sessionHash String?
+  scannedAt   DateTime @default(now())
+
+  smartLink SmartLink @relation(fields: [smartLinkId], references: [id], onDelete: Cascade)
+
+  @@index([smartLinkId, scannedAt])
+}
+
+/// A saved marketing asset (flyer / poster). `designJson` holds the OWNER's
+/// inputs (template id, headline, offer text, chosen smart link) — branding
+/// (logo, colours, name, address) + the QR are pulled LIVE at render so the
+/// asset always reflects current branding. Printed via a window.print() page.
+model MarketingAsset {
+  id           String   @id @default(cuid())
+  restaurantId String
+  type         String   // "flyer" | "poster"
+  name         String
+  smartLinkId  String?
+  designJson   String   @default("{}")
+  previewUrl   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  smartLink  SmartLink? @relation(fields: [smartLinkId], references: [id], onDelete: SetNull)
+
+  @@index([restaurantId])
 }
 
 /// Append-only log of meaningful customer-journey events that pair with

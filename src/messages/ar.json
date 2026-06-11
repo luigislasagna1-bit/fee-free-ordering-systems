@@ -680,7 +680,8 @@
       "settings": "الإعدادات",
       "viewOrderingPage": "عرض صفحة الطلب",
       "logOut": "تسجيل الخروج",
-      "kitchenDisplay": "شاشة المطبخ"
+      "kitchenDisplay": "شاشة المطبخ",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "لوحة التحكم",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "تمت جدولة التفعيل المباشر",
       "scheduleCleared": "تم مسح الجدولة",
       "cancel": "إلغاء"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "رابط ذكي جديد",
+      "newLink": "رابط جديد",
+      "createButton": "إنشاء رابط",
+      "namePlaceholder": "مثل: نشرة الباب الأمامي",
+      "copyUrl": "نسخ الرابط",
+      "created": "تم إنشاء الرابط",
+      "createError": "تعذر الإنشاء — حاول مرة أخرى",
+      "copyError": "تعذر النسخ",
+      "colScans": "عمليات المسح",
+      "colOrders": "الطلبات",
+      "colRevenue": "الإيرادات",
+      "colConversion": "التحويل",
+      "emptyTitle": "لا توجد روابط ذكية بعد",
+      "emptyBody": "أنشئ رابطًا قابلًا للتتبع، وضع رمز QR الخاص به على نشرة أو منشور، وشاهد عمليات المسح تتحول إلى طلبات.",
+      "pageSubtitle": "روابط قابلة للتتبع + رموز QR — اعرف أي النشرات والمنشورات تجلب طلبات حقيقية.",
+      "pointsToHint": "يشير إلى قائمتك. ستحصل على رابط مشاركة + رمز QR لتتبع عمليات المسح والطلبات."
     }
   },
   "impersonation": {

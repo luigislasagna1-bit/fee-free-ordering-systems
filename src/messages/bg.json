@@ -680,7 +680,8 @@
       "settings": "Настройки",
       "viewOrderingPage": "Виж страницата за поръчки",
       "logOut": "Изход",
-      "kitchenDisplay": "Кухненски екран"
+      "kitchenDisplay": "Кухненски екран",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Табло",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Пускането на живо е планирано",
       "scheduleCleared": "Графикът е изчистен",
       "cancel": "Отказ"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Нова умна връзка",
+      "newLink": "Нова връзка",
+      "createButton": "Създай връзка",
+      "namePlaceholder": "напр. Флаер на входа",
+      "copyUrl": "Копирай връзката",
+      "created": "Връзката е създадена",
+      "createError": "Неуспешно създаване — опитайте отново",
+      "copyError": "Неуспешно копиране",
+      "colScans": "Сканирания",
+      "colOrders": "Поръчки",
+      "colRevenue": "Приходи",
+      "colConversion": "Конв.",
+      "emptyTitle": "Все още няма умни връзки",
+      "emptyBody": "Създайте проследима връзка, поставете нейния QR на флаер или публикация и гледайте как сканиранията се превръщат в поръчки.",
+      "pageSubtitle": "Проследими връзки + QR кодове — вижте кои флаери и публикации носят реални поръчки.",
+      "pointsToHint": "Сочи към вашето меню. Ще получите връзка за споделяне + QR за проследяване на сканирания и поръчки."
     }
   },
   "impersonation": {

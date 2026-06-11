@@ -680,7 +680,8 @@
       "settings": "Instellingen",
       "viewOrderingPage": "Bestelpagina bekijken",
       "logOut": "Uitloggen",
-      "kitchenDisplay": "Keukenweergave"
+      "kitchenDisplay": "Keukenweergave",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Live gaan ingepland",
       "scheduleCleared": "Planning gewist",
       "cancel": "Annuleren"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Nieuwe slimme link",
+      "newLink": "Nieuwe link",
+      "createButton": "Link maken",
+      "namePlaceholder": "bijv. Flyer bij de deur",
+      "copyUrl": "Link kopiëren",
+      "created": "Link gemaakt",
+      "createError": "Aanmaken mislukt — probeer opnieuw",
+      "copyError": "Kopiëren mislukt",
+      "colScans": "Scans",
+      "colOrders": "Bestellingen",
+      "colRevenue": "Omzet",
+      "colConversion": "Conv.",
+      "emptyTitle": "Nog geen slimme links",
+      "emptyBody": "Maak een volgbare link, zet de QR op een flyer of post en zie scans veranderen in bestellingen.",
+      "pageSubtitle": "Volgbare links + QR-codes — zie welke flyers en posts echte bestellingen opleveren.",
+      "pointsToHint": "Verwijst naar je menu. Je krijgt een deellink + QR om scans en bestellingen te volgen."
     }
   },
   "impersonation": {

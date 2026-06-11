@@ -680,7 +680,8 @@
       "settings": "Innstillinger",
       "viewOrderingPage": "Vis bestillingsside",
       "logOut": "Logg ut",
-      "kitchenDisplay": "Kjøkkenskjerm"
+      "kitchenDisplay": "Kjøkkenskjerm",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Dashbord",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Aktivering planlagt",
       "scheduleCleared": "Planlegging fjernet",
       "cancel": "Avbryt"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Ny smartlenke",
+      "newLink": "Ny lenke",
+      "createButton": "Opprett lenke",
+      "namePlaceholder": "f.eks. Flygeblad ved døren",
+      "copyUrl": "Kopier lenke",
+      "created": "Lenke opprettet",
+      "createError": "Kunne ikke opprette — prøv igjen",
+      "copyError": "Kunne ikke kopiere",
+      "colScans": "Skanninger",
+      "colOrders": "Bestillinger",
+      "colRevenue": "Inntekt",
+      "colConversion": "Konv.",
+      "emptyTitle": "Ingen smartlenker ennå",
+      "emptyBody": "Lag en sporbar lenke, sett QR-koden på et flygeblad eller innlegg, og se skanninger bli til bestillinger.",
+      "pageSubtitle": "Sporbare lenker + QR-koder — se hvilke flygeblader og innlegg som gir ekte bestillinger.",
+      "pointsToHint": "Peker til menyen din. Du får en delingslenke + QR for å spore skanninger og bestillinger."
     }
   },
   "impersonation": {

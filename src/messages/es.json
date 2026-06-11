@@ -680,7 +680,8 @@
       "viewOrderingPage": "Ver página de pedidos",
       "logOut": "Cerrar sesión",
       "socialMedia": "Redes sociales",
-      "kitchenDisplay": "Pantalla de Cocina"
+      "kitchenDisplay": "Pantalla de Cocina",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Panel principal",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Activación programada",
       "scheduleCleared": "Programación borrada",
       "cancel": "Cancelar"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Nuevo enlace inteligente",
+      "newLink": "Nuevo enlace",
+      "createButton": "Crear enlace",
+      "namePlaceholder": "p. ej. Folleto de la entrada",
+      "copyUrl": "Copiar enlace",
+      "created": "Enlace creado",
+      "createError": "No se pudo crear — inténtalo de nuevo",
+      "copyError": "No se pudo copiar",
+      "colScans": "Escaneos",
+      "colOrders": "Pedidos",
+      "colRevenue": "Ingresos",
+      "colConversion": "Conv.",
+      "emptyTitle": "Aún no hay enlaces inteligentes",
+      "emptyBody": "Crea un enlace rastreable, pon su QR en un folleto o publicación y observa cómo los escaneos se convierten en pedidos.",
+      "pageSubtitle": "Enlaces rastreables + códigos QR: descubre qué folletos y publicaciones generan pedidos reales.",
+      "pointsToHint": "Apunta a tu menú. Obtendrás un enlace para compartir + QR para seguir escaneos y pedidos."
     }
   },
   "impersonation": {

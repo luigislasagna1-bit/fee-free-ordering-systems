@@ -680,7 +680,8 @@
       "viewOrderingPage": "Vedi pagina ordini",
       "logOut": "Esci",
       "socialMedia": "Social media",
-      "kitchenDisplay": "Schermo Cucina"
+      "kitchenDisplay": "Schermo Cucina",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Pannello",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Attivazione programmata",
       "scheduleCleared": "Programmazione cancellata",
       "cancel": "Annulla"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Nuovo link intelligente",
+      "newLink": "Nuovo link",
+      "createButton": "Crea link",
+      "namePlaceholder": "es. Volantino all'ingresso",
+      "copyUrl": "Copia link",
+      "created": "Link creato",
+      "createError": "Creazione non riuscita — riprova",
+      "copyError": "Copia non riuscita",
+      "colScans": "Scansioni",
+      "colOrders": "Ordini",
+      "colRevenue": "Ricavi",
+      "colConversion": "Conv.",
+      "emptyTitle": "Ancora nessun link intelligente",
+      "emptyBody": "Crea un link tracciabile, metti il suo QR su un volantino o post e guarda le scansioni trasformarsi in ordini.",
+      "pageSubtitle": "Link tracciabili + codici QR: scopri quali volantini e post generano ordini reali.",
+      "pointsToHint": "Punta al tuo menu. Otterrai un link da condividere + QR per tracciare scansioni e ordini."
     }
   },
   "impersonation": {

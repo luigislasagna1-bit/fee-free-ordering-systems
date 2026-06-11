@@ -680,7 +680,8 @@
       "viewOrderingPage": "Voir la page de commande",
       "logOut": "Déconnexion",
       "socialMedia": "Réseaux sociaux",
-      "kitchenDisplay": "Écran cuisine"
+      "kitchenDisplay": "Écran cuisine",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Tableau de bord",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Mise en ligne programmée",
       "scheduleCleared": "Programmation effacée",
       "cancel": "Annuler"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Nouveau lien intelligent",
+      "newLink": "Nouveau lien",
+      "createButton": "Créer le lien",
+      "namePlaceholder": "ex. Prospectus d'entrée",
+      "copyUrl": "Copier le lien",
+      "created": "Lien créé",
+      "createError": "Échec de la création — réessayez",
+      "copyError": "Échec de la copie",
+      "colScans": "Scans",
+      "colOrders": "Commandes",
+      "colRevenue": "Revenus",
+      "colConversion": "Conv.",
+      "emptyTitle": "Aucun lien intelligent",
+      "emptyBody": "Créez un lien traçable, mettez son QR sur un prospectus ou une publication, et regardez les scans devenir des commandes.",
+      "pageSubtitle": "Liens traçables + QR codes — voyez quels prospectus et publications génèrent de vraies commandes.",
+      "pointsToHint": "Pointe vers votre menu. Vous obtiendrez un lien de partage + QR pour suivre les scans et les commandes."
     }
   },
   "impersonation": {

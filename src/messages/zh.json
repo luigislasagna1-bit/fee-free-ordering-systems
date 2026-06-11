@@ -680,7 +680,8 @@
       "settings": "设置",
       "viewOrderingPage": "查看点餐页面",
       "logOut": "退出登录",
-      "kitchenDisplay": "厨房显示屏"
+      "kitchenDisplay": "厨房显示屏",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "仪表盘",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "上线已排期",
       "scheduleCleared": "排期已清除",
       "cancel": "取消"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "新建智能链接",
+      "newLink": "新建链接",
+      "createButton": "创建链接",
+      "namePlaceholder": "例如：门口传单",
+      "copyUrl": "复制链接",
+      "created": "链接已创建",
+      "createError": "创建失败——请重试",
+      "copyError": "复制失败",
+      "colScans": "扫描",
+      "colOrders": "订单",
+      "colRevenue": "收入",
+      "colConversion": "转化",
+      "emptyTitle": "暂无智能链接",
+      "emptyBody": "创建一个可追踪链接，将其二维码放在传单或帖子上，看着扫描变成订单。",
+      "pageSubtitle": "可追踪链接 + 二维码——看看哪些传单和帖子带来真实订单。",
+      "pointsToHint": "指向您的菜单。您将获得一个分享链接 + 二维码，用于追踪扫描和订单。"
     }
   },
   "impersonation": {

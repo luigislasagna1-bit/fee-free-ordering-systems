@@ -680,7 +680,8 @@
       "settings": "Nustatymai",
       "viewOrderingPage": "Peržiūrėti užsakymų puslapį",
       "logOut": "Atsijungti",
-      "kitchenDisplay": "Virtuvės ekranas"
+      "kitchenDisplay": "Virtuvės ekranas",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Skydelis",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Aktyvinimas suplanuotas",
       "scheduleCleared": "Tvarkaraštis išvalytas",
       "cancel": "Atšaukti"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Nauja išmanioji nuoroda",
+      "newLink": "Nauja nuoroda",
+      "createButton": "Sukurti nuorodą",
+      "namePlaceholder": "pvz. Durų skrajutė",
+      "copyUrl": "Kopijuoti nuorodą",
+      "created": "Nuoroda sukurta",
+      "createError": "Nepavyko sukurti — bandykite dar kartą",
+      "copyError": "Nepavyko nukopijuoti",
+      "colScans": "Nuskaitymai",
+      "colOrders": "Užsakymai",
+      "colRevenue": "Pajamos",
+      "colConversion": "Konv.",
+      "emptyTitle": "Kol kas nėra išmaniųjų nuorodų",
+      "emptyBody": "Sukurkite stebimą nuorodą, įdėkite jos QR ant skrajutės ar įrašo ir stebėkite, kaip nuskaitymai virsta užsakymais.",
+      "pageSubtitle": "Stebimos nuorodos + QR kodai — sužinokite, kurios skrajutės ir įrašai duoda tikrų užsakymų.",
+      "pointsToHint": "Nukreipia į jūsų meniu. Gausite bendrinimo nuorodą + QR nuskaitymams ir užsakymams sekti."
     }
   },
   "impersonation": {

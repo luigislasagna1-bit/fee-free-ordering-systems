@@ -680,7 +680,8 @@
       "settings": "Setări",
       "viewOrderingPage": "Vezi pagina de comandă",
       "logOut": "Ieșire",
-      "kitchenDisplay": "Ecran Bucătărie"
+      "kitchenDisplay": "Ecran Bucătărie",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Panou de control",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Activare programată",
       "scheduleCleared": "Programare ștearsă",
       "cancel": "Anulează"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Link inteligent nou",
+      "newLink": "Link nou",
+      "createButton": "Creează link",
+      "namePlaceholder": "ex. Pliant la intrare",
+      "copyUrl": "Copiază linkul",
+      "created": "Link creat",
+      "createError": "Crearea a eșuat — încearcă din nou",
+      "copyError": "Copierea a eșuat",
+      "colScans": "Scanări",
+      "colOrders": "Comenzi",
+      "colRevenue": "Venit",
+      "colConversion": "Conv.",
+      "emptyTitle": "Încă niciun link inteligent",
+      "emptyBody": "Creează un link urmăribil, pune-i codul QR pe un pliant sau o postare și vezi cum scanările devin comenzi.",
+      "pageSubtitle": "Linkuri urmăribile + coduri QR — vezi ce pliante și postări aduc comenzi reale.",
+      "pointsToHint": "Trimite către meniul tău. Vei primi un link de partajare + QR pentru a urmări scanările și comenzile."
     }
   },
   "impersonation": {

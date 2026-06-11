@@ -703,7 +703,8 @@
       "settings": "Settings",
       "viewOrderingPage": "View ordering page",
       "logOut": "Log out",
-      "kitchenDisplay": "Kitchen Display"
+      "kitchenDisplay": "Kitchen Display",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3614,6 +3615,25 @@
       "thankYou": "Thank you for your business.",
       "notFound": "Invoice not found.",
       "back": "Back to Billing"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "New smart link",
+      "newLink": "New smart link",
+      "createButton": "Create link",
+      "namePlaceholder": "e.g. Front-door flyer",
+      "copyUrl": "Copy link",
+      "created": "Smart link created",
+      "createError": "Couldn't create — try again",
+      "copyError": "Couldn't copy",
+      "colScans": "Scans",
+      "colOrders": "Orders",
+      "colRevenue": "Revenue",
+      "colConversion": "Conv.",
+      "emptyTitle": "No smart links yet",
+      "emptyBody": "Create a trackable link, put its QR on a flyer or post, and watch scans turn into orders.",
+      "pageSubtitle": "Trackable links + QR codes — see which flyers and posts drive real orders.",
+      "pointsToHint": "Points to your menu. You'll get a share link + QR to track scans and orders."
     }
   },
   "impersonation": {

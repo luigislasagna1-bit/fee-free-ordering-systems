@@ -680,7 +680,8 @@
       "settings": "Pengaturan",
       "viewOrderingPage": "Lihat halaman pemesanan",
       "logOut": "Logout",
-      "kitchenDisplay": "Layar Dapur"
+      "kitchenDisplay": "Layar Dapur",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Dasbor",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Pengaktifan dijadwalkan",
       "scheduleCleared": "Jadwal dihapus",
       "cancel": "Batal"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Tautan pintar baru",
+      "newLink": "Tautan baru",
+      "createButton": "Buat tautan",
+      "namePlaceholder": "mis. Selebaran pintu depan",
+      "copyUrl": "Salin tautan",
+      "created": "Tautan dibuat",
+      "createError": "Gagal membuat — coba lagi",
+      "copyError": "Gagal menyalin",
+      "colScans": "Pemindaian",
+      "colOrders": "Pesanan",
+      "colRevenue": "Pendapatan",
+      "colConversion": "Konv.",
+      "emptyTitle": "Belum ada tautan pintar",
+      "emptyBody": "Buat tautan terlacak, pasang QR-nya di selebaran atau postingan, dan lihat pemindaian berubah menjadi pesanan.",
+      "pageSubtitle": "Tautan terlacak + kode QR — lihat selebaran dan postingan mana yang menghasilkan pesanan nyata.",
+      "pointsToHint": "Mengarah ke menu Anda. Anda akan mendapat tautan berbagi + QR untuk melacak pemindaian dan pesanan."
     }
   },
   "impersonation": {

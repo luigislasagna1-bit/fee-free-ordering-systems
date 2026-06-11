@@ -680,7 +680,8 @@
       "settings": "Seaded",
       "viewOrderingPage": "Vaata tellimislehte",
       "logOut": "Logi välja",
-      "kitchenDisplay": "Köögi ekraan"
+      "kitchenDisplay": "Köögi ekraan",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Juhtpaneel",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Aktiveerimine ajastatud",
       "scheduleCleared": "Ajastus tühjendatud",
       "cancel": "Tühista"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Uus nutilink",
+      "newLink": "Uus link",
+      "createButton": "Loo link",
+      "namePlaceholder": "nt Ukse flaier",
+      "copyUrl": "Kopeeri link",
+      "created": "Link loodud",
+      "createError": "Loomine ebaõnnestus — proovige uuesti",
+      "copyError": "Kopeerimine ebaõnnestus",
+      "colScans": "Skannimised",
+      "colOrders": "Tellimused",
+      "colRevenue": "Tulu",
+      "colConversion": "Konv.",
+      "emptyTitle": "Nutilinke veel pole",
+      "emptyBody": "Loo jälgitav link, pane selle QR flaierile või postitusele ja vaata, kuidas skannimised muutuvad tellimusteks.",
+      "pageSubtitle": "Jälgitavad lingid + QR-koodid — vaadake, millised flaierid ja postitused toovad päris tellimusi.",
+      "pointsToHint": "Viitab teie menüüle. Saate jagamislingi + QR-i skannimiste ja tellimuste jälgimiseks."
     }
   },
   "impersonation": {

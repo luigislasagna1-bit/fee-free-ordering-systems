@@ -680,7 +680,8 @@
       "settings": "Nastavitve",
       "viewOrderingPage": "Ogled strani za naročanje",
       "logOut": "Odjava",
-      "kitchenDisplay": "Kuhinjski zaslon"
+      "kitchenDisplay": "Kuhinjski zaslon",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Nadzorna plošča",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Objava načrtovana",
       "scheduleCleared": "Načrt počiščen",
       "cancel": "Prekliči"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Nova pametna povezava",
+      "newLink": "Nova povezava",
+      "createButton": "Ustvari povezavo",
+      "namePlaceholder": "npr. Letak pri vhodu",
+      "copyUrl": "Kopiraj povezavo",
+      "created": "Povezava ustvarjena",
+      "createError": "Ustvarjanje ni uspelo — poskusite znova",
+      "copyError": "Kopiranje ni uspelo",
+      "colScans": "Skeniranja",
+      "colOrders": "Naročila",
+      "colRevenue": "Prihodek",
+      "colConversion": "Konv.",
+      "emptyTitle": "Še ni pametnih povezav",
+      "emptyBody": "Ustvarite sledljivo povezavo, postavite njeno kodo QR na letak ali objavo in glejte, kako se skeniranja spremenijo v naročila.",
+      "pageSubtitle": "Sledljive povezave + kode QR — poglejte, kateri letaki in objave prinašajo prava naročila.",
+      "pointsToHint": "Kaže na vaš meni. Dobili boste povezavo za deljenje + QR za sledenje skeniranj in naročil."
     }
   },
   "impersonation": {

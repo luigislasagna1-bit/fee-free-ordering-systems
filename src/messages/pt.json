@@ -680,7 +680,8 @@
       "viewOrderingPage": "Ver página de pedidos",
       "logOut": "Sair",
       "socialMedia": "Redes sociais",
-      "kitchenDisplay": "Ecrã de Cozinha"
+      "kitchenDisplay": "Ecrã de Cozinha",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Painel",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Ativação agendada",
       "scheduleCleared": "Agendamento limpo",
       "cancel": "Cancelar"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Novo link inteligente",
+      "newLink": "Novo link",
+      "createButton": "Criar link",
+      "namePlaceholder": "ex. Panfleto da porta",
+      "copyUrl": "Copiar link",
+      "created": "Link criado",
+      "createError": "Não foi possível criar — tente novamente",
+      "copyError": "Não foi possível copiar",
+      "colScans": "Leituras",
+      "colOrders": "Pedidos",
+      "colRevenue": "Receita",
+      "colConversion": "Conv.",
+      "emptyTitle": "Ainda sem links inteligentes",
+      "emptyBody": "Crie um link rastreável, coloque o QR num panfleto ou publicação e veja as leituras tornarem-se pedidos.",
+      "pageSubtitle": "Links rastreáveis + códigos QR — veja que panfletos e publicações geram pedidos reais.",
+      "pointsToHint": "Aponta para o seu menu. Receberá um link de partilha + QR para acompanhar leituras e pedidos."
     }
   },
   "impersonation": {

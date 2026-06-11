@@ -680,7 +680,8 @@
       "settings": "Configuració",
       "viewOrderingPage": "Veure la pàgina de comandes",
       "logOut": "Surt",
-      "kitchenDisplay": "Pantalla de Cuina"
+      "kitchenDisplay": "Pantalla de Cuina",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Tauler de control",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Activació programada",
       "scheduleCleared": "Programació esborrada",
       "cancel": "Cancel·la"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Nou enllaç intel·ligent",
+      "newLink": "Nou enllaç",
+      "createButton": "Crea l'enllaç",
+      "namePlaceholder": "p. ex. Fullet de l'entrada",
+      "copyUrl": "Copia l'enllaç",
+      "created": "Enllaç creat",
+      "createError": "No s'ha pogut crear — torna-ho a provar",
+      "copyError": "No s'ha pogut copiar",
+      "colScans": "Escanejos",
+      "colOrders": "Comandes",
+      "colRevenue": "Ingressos",
+      "colConversion": "Conv.",
+      "emptyTitle": "Encara no hi ha enllaços intel·ligents",
+      "emptyBody": "Crea un enllaç rastrejable, posa el seu QR en un fullet o publicació i mira com els escanejos es converteixen en comandes.",
+      "pageSubtitle": "Enllaços rastrejables + codis QR: descobreix quins fullets i publicacions generen comandes reals.",
+      "pointsToHint": "Apunta al teu menú. Obtindràs un enllaç per compartir + QR per fer el seguiment d'escanejos i comandes."
     }
   },
   "impersonation": {

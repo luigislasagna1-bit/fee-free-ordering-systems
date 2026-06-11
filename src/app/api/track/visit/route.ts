@@ -55,6 +55,7 @@ export async function POST(req: NextRequest) {
     landingPath?: string;
     utm?: { source?: string; medium?: string; campaign?: string };
     fromMarketplace?: boolean;
+    ref?: string;
   };
   try {
     body = await req.json();
@@ -113,6 +114,10 @@ export async function POST(req: NextRequest) {
       ].filter(Boolean).join("|").slice(0, 255) || null
     : null;
 
+  // Marketing Studio smart-link code (?ref=) — a clean base62 code, resolved to
+  // the SmartLink at order-create for per-link attribution. Luigi 2026-06-10.
+  const refCode = typeof body.ref === "string" && /^[A-Za-z0-9]{1,32}$/.test(body.ref) ? body.ref : null;
+
   try {
     // Two inserts — same restaurant + sessionHash, related logically
     // but no DB-level enforcement (they're append-only logs).
@@ -124,6 +129,7 @@ export async function POST(req: NextRequest) {
           channel,
           referrer: referrer?.slice(0, 255) ?? null,
           utm: utmString,
+          refCode,
           landingPath,
           deviceType,
           country,

@@ -680,7 +680,8 @@
       "settings": "Asetukset",
       "viewOrderingPage": "Näytä tilaussivu",
       "logOut": "Kirjaudu ulos",
-      "kitchenDisplay": "Keittiönäyttö"
+      "kitchenDisplay": "Keittiönäyttö",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Kojelauta",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Käyttöönotto ajastettu",
       "scheduleCleared": "Ajastus tyhjennetty",
       "cancel": "Peruuta"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Uusi älylinkki",
+      "newLink": "Uusi linkki",
+      "createButton": "Luo linkki",
+      "namePlaceholder": "esim. Oven esite",
+      "copyUrl": "Kopioi linkki",
+      "created": "Linkki luotu",
+      "createError": "Luonti epäonnistui — yritä uudelleen",
+      "copyError": "Kopiointi epäonnistui",
+      "colScans": "Skannaukset",
+      "colOrders": "Tilaukset",
+      "colRevenue": "Tuotot",
+      "colConversion": "Konv.",
+      "emptyTitle": "Ei vielä älylinkkejä",
+      "emptyBody": "Luo seurattava linkki, lisää sen QR esitteeseen tai julkaisuun ja katso, kuinka skannaukset muuttuvat tilauksiksi.",
+      "pageSubtitle": "Seurattavat linkit + QR-koodit — näe, mitkä esitteet ja julkaisut tuovat oikeita tilauksia.",
+      "pointsToHint": "Osoittaa ruokalistaasi. Saat jakolinkin + QR:n skannausten ja tilausten seuraamiseen."
     }
   },
   "impersonation": {

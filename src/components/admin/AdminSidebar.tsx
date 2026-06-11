@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle, Sparkles, Rocket, Phone,
+  Check, Circle, Sparkles, Rocket, Phone, QrCode,
   // Reports sub-section icons — match GloriaFood's iconography by purpose:
   // TrendingUp for Sales (line going up), PieChart for Menu Insights (mix
   // breakdown), Globe2 for Online Ordering family, ListChecks for List View.
@@ -199,6 +199,9 @@ const navGroups: NavGroup[] = [
       // step before retention/reactivation that Autopilot handles).
       { href: "/admin/kickstarter",  labelKey: "kickstarter",  label: "Kickstarter",  icon: Rocket },
       { href: "/admin/autopilot",    labelKey: "autopilot",    label: "Autopilot",    icon: Zap },
+      // Marketing Studio — trackable smart links + QR codes + flyers with
+      // scan→order attribution. Luigi 2026-06-10.
+      { href: "/admin/marketing-studio", labelKey: "marketingStudio", label: "Marketing Studio", icon: QrCode },
     ],
   },
 

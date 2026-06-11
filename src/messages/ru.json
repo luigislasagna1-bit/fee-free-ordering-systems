@@ -680,7 +680,8 @@
       "settings": "Настройки",
       "viewOrderingPage": "Страница заказа",
       "logOut": "Выйти",
-      "kitchenDisplay": "Экран кухни"
+      "kitchenDisplay": "Экран кухни",
+      "marketingStudio": "Marketing Studio"
     },
     "dashboard": {
       "title": "Панель управления",
@@ -3614,6 +3615,25 @@
       "scheduleSaved": "Запуск запланирован",
       "scheduleCleared": "Расписание очищено",
       "cancel": "Отмена"
+    },
+    "marketingStudio": {
+      "pageTitle": "Marketing Studio",
+      "createTitle": "Новая умная ссылка",
+      "newLink": "Новая ссылка",
+      "createButton": "Создать ссылку",
+      "namePlaceholder": "напр. Листовка у входа",
+      "copyUrl": "Копировать ссылку",
+      "created": "Ссылка создана",
+      "createError": "Не удалось создать — попробуйте снова",
+      "copyError": "Не удалось скопировать",
+      "colScans": "Сканирования",
+      "colOrders": "Заказы",
+      "colRevenue": "Доход",
+      "colConversion": "Конв.",
+      "emptyTitle": "Пока нет умных ссылок",
+      "emptyBody": "Создайте отслеживаемую ссылку, разместите её QR на листовке или в посте и смотрите, как сканирования превращаются в заказы.",
+      "pageSubtitle": "Отслеживаемые ссылки + QR-коды — узнайте, какие листовки и посты приносят реальные заказы.",
+      "pointsToHint": "Ведёт в ваше меню. Вы получите ссылку для обмена + QR для отслеживания сканирований и заказов."
     }
   },
   "impersonation": {
