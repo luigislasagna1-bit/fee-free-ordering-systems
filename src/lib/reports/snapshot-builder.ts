@@ -104,7 +104,14 @@ export async function buildReportSnapshots(opts: BuildOptions = {}): Promise<Bui
 
 /** Compute the snapshot fields for a single (restaurant, day) pair. */
 async function buildSnapshotForDay(restaurantId: string, dayStart: Date, dayEnd: Date) {
-  const where = { restaurantId, createdAt: { gte: dayStart, lt: dayEnd } };
+  // Test orders (orderNumber "TEST-…") must never count toward report
+  // revenue / order counts in the snapshots that feed /admin/reports.
+  // Luigi 2026-06-11 (reseller report).
+  const where = {
+    restaurantId,
+    createdAt: { gte: dayStart, lt: dayEnd },
+    orderNumber: { not: { startsWith: "TEST-" } },
+  };
 
   // One big findMany covering everything — the (restaurantId, createdAt)
   // index keeps it O(orders_today) without a join. We could split into

@@ -85,6 +85,11 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
       restaurantId,
       createdAt: { gte: start, lt: end },
       status: { notIn: ["rejected", "cancelled"] },
+      // Exclude kitchen "Test Order" rows (orderNumber "TEST-…") so a
+      // restaurant's real takings aren't inflated in the EOD/EOM/today
+      // figures. Luigi 2026-06-11 (reseller report: test orders must never
+      // hit reports, or end-of-day bookkeeping won't reconcile).
+      orderNumber: { not: { startsWith: "TEST-" } },
     },
     select: {
       total: true,

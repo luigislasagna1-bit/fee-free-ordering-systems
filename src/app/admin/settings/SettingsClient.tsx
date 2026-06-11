@@ -1,7 +1,6 @@
 "use client";
-import { useState } from "react";
 import {
-  CreditCard, Zap, Bell, Globe, CheckCircle2,
+  CreditCard, Zap, Globe, CheckCircle2,
   ChevronRight, Shield, Building2, ArrowUpRight, ExternalLink, Sparkles,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -203,34 +202,11 @@ export function SettingsClient({
           })()}
         </Section>
 
-        {/* Notifications */}
-        <Section title={tSidebar("notifications")}>
-          <div className="flex items-start gap-5 mb-4">
-            <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Bell className="w-6 h-6 text-blue-500" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 mb-1">Order Notifications</h3>
-              <p className="text-sm text-gray-500">
-                Configure email alerts sent to <span className="font-medium">{restaurant?.email || "your restaurant email"}</span> when orders arrive or change status.
-              </p>
-            </div>
-          </div>
-          <div className="space-y-0 divide-y divide-gray-100">
-            {[
-              { label: "New order received", desc: "Alert when a customer places a new order", defaultOn: true },
-              { label: "Order accepted by kitchen", desc: "Notify when kitchen accepts an order", defaultOn: false },
-              { label: "Order ready for pickup", desc: "Alert when order is ready for customer", defaultOn: true },
-              { label: "Daily summary email", desc: "End-of-day summary of orders and revenue", defaultOn: false },
-            ].map((n) => (
-              <NotificationRow key={n.label} {...n} />
-            ))}
-          </div>
-          <div className="mt-4 p-3 bg-blue-50 rounded-lg text-xs text-blue-700 flex items-start gap-2">
-            <Bell className="w-4 h-4 flex-shrink-0 mt-0.5" />
-            <span>Email notifications are coming soon. Contact support to enable order email alerts for your account.</span>
-          </div>
-        </Section>
+        {/* Order-notification settings live on the dedicated, fully-functional
+            /admin/notifications page (sidebar → Notifications). The old stub
+            here showed fake toggles + a misleading "coming soon" note that
+            duplicated — and contradicted — that working page, so it was removed.
+            Luigi 2026-06-11 (reseller report: notifications were duplicated). */}
 
         {/* Advanced — real add-on tiles.
             2026-05-31: removed the legacy "Growth+ / Pro+ / Enterprise"
@@ -286,20 +262,3 @@ export function SettingsClient({
   );
 }
 
-function NotificationRow({ label, desc, defaultOn }: { label: string; desc: string; defaultOn: boolean }) {
-  const [on, setOn] = useState(defaultOn);
-  return (
-    <div className="flex items-center justify-between py-3.5">
-      <div>
-        <div className="text-sm font-medium text-gray-800">{label}</div>
-        <div className="text-xs text-gray-400">{desc}</div>
-      </div>
-      <button
-        onClick={() => setOn(!on)}
-        className={`w-11 h-6 rounded-full transition-colors relative flex-shrink-0 ${on ? "bg-emerald-500" : "bg-gray-300"}`}
-      >
-        <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all ${on ? "left-5" : "left-0.5"}`} />
-      </button>
-    </div>
-  );
-}
