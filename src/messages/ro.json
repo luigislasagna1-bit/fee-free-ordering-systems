@@ -1166,7 +1166,9 @@
       "markComplete": "Marchează finalizată",
       "rejectReason": "Motiv respingere",
       "noOrders": "Nicio comandă încă",
-      "viewDetails": "Vezi detalii"
+      "viewDetails": "Vezi detalii",
+      "confirmReject": "Respingeți această comandă? Clientul va fi notificat și orice plată va fi eliberată sau rambursată. Adăugați un motiv (opțional):",
+      "actionFailed": "Comanda nu a putut fi actualizată. Încercați din nou."
     },
     "customers": {
       "title": "Clienți",

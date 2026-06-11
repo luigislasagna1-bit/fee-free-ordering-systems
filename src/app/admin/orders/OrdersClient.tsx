@@ -29,6 +29,57 @@ export function OrdersClient({ orders }: { orders: any[] }) {
   const [search, setSearch] = useState("");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [lastRefresh, setLastRefresh] = useState(new Date());
+  // Which order is mid-Accept/Reject — disables its buttons so a double
+  // click can't fire two PATCHes (the second would 400 on an already-moved
+  // order, but we avoid the flash entirely).
+  const [busyId, setBusyId] = useState<string | null>(null);
+
+  // Accept / reject a PENDING order straight from the admin list — the same
+  // PATCH the kitchen uses, so payment capture (accept) / void+refund +
+  // customer notification (reject) all happen through one battle-tested path.
+  // This is how the owner CLEARS the pending bell: act on the order, never
+  // just hide it. Luigi 2026-06-11.
+  const act = async (
+    orderId: string,
+    status: "accepted" | "rejected",
+    extra?: Record<string, unknown>,
+  ) => {
+    setBusyId(orderId);
+    try {
+      const res = await fetch(`/api/orders/${orderId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status, ...extra }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error || "");
+      toast.success(status === "accepted" ? t("accepted") : t("rejected"));
+      // Refresh re-runs the server page (orders list) AND the admin layout,
+      // so the row updates and the header bell / sidebar pending count drop.
+      router.refresh();
+    } catch (e) {
+      // Surface the server's own message when it has one (e.g. "card declined
+      // at capture") so the owner knows WHY an accept was blocked.
+      const msg = e instanceof Error && e.message ? e.message : t("actionFailed");
+      toast.error(msg);
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const onAccept = (e: React.MouseEvent, orderId: string) => {
+    e.stopPropagation();
+    act(orderId, "accepted");
+  };
+
+  const onReject = (e: React.MouseEvent, orderId: string) => {
+    e.stopPropagation();
+    // The prompt doubles as the confirmation: Cancel (null) aborts; OK
+    // proceeds with whatever reason (blank allowed → server stores none).
+    const reason = window.prompt(t("confirmReject"));
+    if (reason === null) return;
+    act(orderId, "rejected", { rejectionReason: reason.trim() || undefined });
+  };
 
   // Track pending count so we can alert when new orders arrive
   const pendingCount = orders.filter((o) => o.status === "pending").length;
@@ -178,6 +229,30 @@ export function OrdersClient({ orders }: { orders: any[] }) {
                     <span className={`text-[10px] sm:text-xs font-medium px-2 py-0.5 sm:py-1 rounded-full whitespace-nowrap ${statusColors[order.status] || "bg-gray-100 text-gray-600"}`}>
                       {(() => { try { return t(order.status as any); } catch { return order.status; } })()}
                     </span>
+                    {/* Accept / Reject — only on pending orders. This is the
+                        owner's way to clear the pending bell from the admin
+                        side (mirrors the kitchen display). stopPropagation so
+                        the surrounding row-expand toggle doesn't also fire. */}
+                    {order.status === "pending" && (
+                      <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          type="button"
+                          onClick={(e) => onAccept(e, order.id)}
+                          disabled={busyId === order.id}
+                          className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500 text-white hover:bg-emerald-600 transition disabled:opacity-60 whitespace-nowrap"
+                        >
+                          {t("accept")}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => onReject(e, order.id)}
+                          disabled={busyId === order.id}
+                          className="px-3 py-1.5 rounded-lg text-xs font-semibold border border-red-300 text-red-600 hover:bg-red-50 transition disabled:opacity-60 whitespace-nowrap"
+                        >
+                          {t("reject")}
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
 

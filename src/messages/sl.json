@@ -1166,7 +1166,9 @@
       "markComplete": "Označi kot dokončano",
       "rejectReason": "Razlog zavrnitve",
       "noOrders": "Še ni naročil",
-      "viewDetails": "Ogled podrobnosti"
+      "viewDetails": "Ogled podrobnosti",
+      "confirmReject": "Zavrniti to naročilo? Stranka bo obveščena, vsako plačilo pa bo sproščeno ali vrnjeno. Dodajte neobvezen razlog:",
+      "actionFailed": "Naročila ni bilo mogoče posodobiti. Poskusite znova."
     },
     "customers": {
       "title": "Stranke",

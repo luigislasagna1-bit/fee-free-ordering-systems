@@ -1166,7 +1166,9 @@
       "markComplete": "Markér som afsluttet",
       "rejectReason": "Årsag til afvisning",
       "noOrders": "Ingen ordrer endnu",
-      "viewDetails": "Se detaljer"
+      "viewDetails": "Se detaljer",
+      "confirmReject": "Afvis denne ordre? Kunden får besked, og enhver betaling frigives eller refunderes. Tilføj en valgfri årsag:",
+      "actionFailed": "Kunne ikke opdatere ordren. Prøv igen."
     },
     "customers": {
       "title": "Kunder",

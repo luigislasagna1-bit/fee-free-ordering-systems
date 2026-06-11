@@ -1166,7 +1166,9 @@
       "markComplete": "完了にする",
       "rejectReason": "断る理由",
       "noOrders": "まだ注文はありません",
-      "viewDetails": "詳細を見る"
+      "viewDetails": "詳細を見る",
+      "confirmReject": "この注文を拒否しますか？お客様に通知され、支払いは解除または返金されます。任意で理由を追加してください：",
+      "actionFailed": "注文を更新できませんでした。もう一度お試しください。"
     },
     "customers": {
       "title": "顧客",

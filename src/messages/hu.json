@@ -1166,7 +1166,9 @@
       "markComplete": "Teljesítettnek jelölés",
       "rejectReason": "Visszautasítás oka",
       "noOrders": "Még nincsenek rendelések",
-      "viewDetails": "Részletek megtekintése"
+      "viewDetails": "Részletek megtekintése",
+      "confirmReject": "Elutasítja ezt a rendelést? Az ügyfél értesítést kap, és minden fizetés feloldásra vagy visszatérítésre kerül. Adjon meg egy opcionális indokot:",
+      "actionFailed": "A rendelést nem sikerült frissíteni. Próbálja újra."
     },
     "customers": {
       "title": "Ügyfelek",

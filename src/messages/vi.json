@@ -1166,7 +1166,9 @@
       "markComplete": "Đánh dấu hoàn thành",
       "rejectReason": "Lý do từ chối",
       "noOrders": "Chưa có đơn hàng",
-      "viewDetails": "Xem chi tiết"
+      "viewDetails": "Xem chi tiết",
+      "confirmReject": "Từ chối đơn hàng này? Khách hàng sẽ được thông báo và mọi khoản thanh toán sẽ được giải phóng hoặc hoàn lại. Thêm lý do (tùy chọn):",
+      "actionFailed": "Không thể cập nhật đơn hàng. Vui lòng thử lại."
     },
     "customers": {
       "title": "Khách hàng",

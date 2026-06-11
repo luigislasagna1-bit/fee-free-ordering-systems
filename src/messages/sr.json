@@ -1166,7 +1166,9 @@
       "markComplete": "Označi kao završeno",
       "rejectReason": "Razlog odbijanja",
       "noOrders": "Još nema porudžbina",
-      "viewDetails": "Pogledaj detalje"
+      "viewDetails": "Pogledaj detalje",
+      "confirmReject": "Одбити ову поруџбину? Купац ће бити обавештен, а свако плаћање биће ослобођено или враћено. Додајте опциони разлог:",
+      "actionFailed": "Поруџбину није могуће ажурирати. Покушајте поново."
     },
     "customers": {
       "title": "Kupci",

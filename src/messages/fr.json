@@ -1144,7 +1144,9 @@
       "markComplete": "Marquer terminée",
       "rejectReason": "Raison du refus",
       "noOrders": "Aucune commande pour l'instant",
-      "viewDetails": "Voir les détails"
+      "viewDetails": "Voir les détails",
+      "confirmReject": "Refuser cette commande ? Le client sera averti et tout paiement sera libéré ou remboursé. Ajoutez un motif (facultatif) :",
+      "actionFailed": "Impossible de mettre à jour la commande. Veuillez réessayer."
     },
     "customers": {
       "title": "Clients",

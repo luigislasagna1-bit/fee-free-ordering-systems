@@ -1166,7 +1166,9 @@
       "markComplete": "标记为已完成",
       "rejectReason": "拒绝原因",
       "noOrders": "暂无订单",
-      "viewDetails": "查看详情"
+      "viewDetails": "查看详情",
+      "confirmReject": "拒绝此订单？将通知客户，任何付款都将释放或退款。添加可选原因：",
+      "actionFailed": "无法更新订单，请重试。"
     },
     "customers": {
       "title": "顾客",

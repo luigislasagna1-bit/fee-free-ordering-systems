@@ -1166,7 +1166,9 @@
       "markComplete": "Marcar com a completada",
       "rejectReason": "Motiu del rebuig",
       "noOrders": "Encara no hi ha comandes",
-      "viewDetails": "Veure detalls"
+      "viewDetails": "Veure detalls",
+      "confirmReject": "Voleu rebutjar aquesta comanda? S'avisarà el client i qualsevol pagament s'alliberarà o es reemborsarà. Afegiu un motiu (opcional):",
+      "actionFailed": "No s'ha pogut actualitzar la comanda. Torneu-ho a provar."
     },
     "customers": {
       "title": "Clients",

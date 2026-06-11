@@ -1144,7 +1144,9 @@
       "markComplete": "Segna completato",
       "rejectReason": "Motivo del rifiuto",
       "noOrders": "Nessun ordine",
-      "viewDetails": "Vedi dettagli"
+      "viewDetails": "Vedi dettagli",
+      "confirmReject": "Rifiutare questo ordine? Il cliente verrà avvisato e qualsiasi pagamento sarà rilasciato o rimborsato. Aggiungi un motivo (facoltativo):",
+      "actionFailed": "Impossibile aggiornare l'ordine. Riprova."
     },
     "customers": {
       "title": "Clienti",

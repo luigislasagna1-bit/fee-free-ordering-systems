@@ -1166,7 +1166,9 @@
       "markComplete": "Pažymėti kaip atliktą",
       "rejectReason": "Atmetimo priežastis",
       "noOrders": "Dar nėra užsakymų",
-      "viewDetails": "Peržiūrėti detales"
+      "viewDetails": "Peržiūrėti detales",
+      "confirmReject": "Atmesti šį užsakymą? Klientas bus informuotas, o bet koks mokėjimas bus atlaisvintas arba grąžintas. Pridėkite neprivalomą priežastį:",
+      "actionFailed": "Nepavyko atnaujinti užsakymo. Bandykite dar kartą."
     },
     "customers": {
       "title": "Klientai",

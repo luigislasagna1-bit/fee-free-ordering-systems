@@ -1166,7 +1166,9 @@
       "markComplete": "Merkitse suoritetuksi",
       "rejectReason": "Hylkäyksen syy",
       "noOrders": "Ei tilauksia vielä",
-      "viewDetails": "Näytä tiedot"
+      "viewDetails": "Näytä tiedot",
+      "confirmReject": "Hylätäänkö tämä tilaus? Asiakkaalle ilmoitetaan ja mahdollinen maksu vapautetaan tai hyvitetään. Lisää valinnainen syy:",
+      "actionFailed": "Tilauksen päivittäminen epäonnistui. Yritä uudelleen."
     },
     "customers": {
       "title": "Asiakkaat",
