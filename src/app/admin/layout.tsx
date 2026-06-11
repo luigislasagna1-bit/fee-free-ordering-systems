@@ -106,29 +106,65 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       hasHostedSite = false;
     }
 
-    // Build the location list for the switcher. The "brand parent" is either
-    // the current restaurant (if it has no parent) or its parent. Then the
-    // children of that parent (plus the parent itself) are the dropdown options.
+    // Build the location list for the switcher — rooted in the user's CANONICAL
+    // brand, NOT the cookie-swapped active location. A genuine CHILD account
+    // (its own User.restaurantId points at a restaurant that HAS a parent) must
+    // see NO switcher: it can only ever be its own location and must not even
+    // glimpse siblings or HQ. Only a brand-PARENT owner — or an impersonating
+    // superadmin/reseller acting AS the owner — gets the multi-location
+    // switcher, including when they've switched INTO a child (so they can get
+    // back out). Mirrors the GET /api/restaurants/locations isolation rule.
+    // Luigi 2026-06-11.
     if (restaurant) {
-      const parentId = restaurant.parentRestaurantId ?? restaurant.id;
-      const [parent, children] = await Promise.all([
-        restaurant.parentRestaurantId
-          ? prisma.restaurant.findUnique({
-              where: { id: parentId },
-              select: { id: true, name: true, city: true },
+      let brandRootId: string | null = null;
+      if (!restaurant.parentRestaurantId) {
+        // Active restaurant is top-level → owner viewing HQ (or a single-
+        // restaurant owner, where the tree is just itself and the switcher
+        // hides). Root the tree here.
+        brandRootId = restaurant.id;
+      } else if (user?.isImpersonating) {
+        // Support impersonating into a child → let them navigate the brand.
+        brandRootId = restaurant.parentRestaurantId;
+      } else {
+        // Active restaurant is a child. Is the logged-in user the BRAND OWNER
+        // (who switched into this child) or the CHILD's OWN account? Decide
+        // from the canonical User.restaurantId — never the active location — so
+        // a child account stays isolated while the owner keeps their switcher.
+        const canonicalUser = user?.id
+          ? await prisma.user.findUnique({ where: { id: user.id }, select: { restaurantId: true } })
+          : null;
+        const canonicalRestaurant = canonicalUser?.restaurantId
+          ? await prisma.restaurant.findUnique({
+              where: { id: canonicalUser.restaurantId },
+              select: { id: true, parentRestaurantId: true },
             })
-          : Promise.resolve({ id: restaurant.id, name: restaurant.name, city: null as string | null }),
-        prisma.restaurant.findMany({
-          where: { parentRestaurantId: parentId },
-          select: { id: true, name: true, city: true },
-          orderBy: { createdAt: "asc" },
-        }),
-      ]);
-      if (parent) {
-        locationsForSwitcher = [
-          { id: parent.id, name: parent.name, city: parent.city, isParent: true },
-          ...children.map((c) => ({ id: c.id, name: c.name, city: c.city, isParent: false })),
-        ];
+          : null;
+        // Only a brand-parent owner (canonical restaurant has NO parent) keeps
+        // the switcher; a genuine child account gets none.
+        if (canonicalRestaurant && !canonicalRestaurant.parentRestaurantId) {
+          brandRootId = canonicalRestaurant.id;
+        }
+      }
+
+      if (brandRootId) {
+        const parentId = brandRootId;
+        const [parent, children] = await Promise.all([
+          prisma.restaurant.findUnique({
+            where: { id: parentId },
+            select: { id: true, name: true, city: true },
+          }),
+          prisma.restaurant.findMany({
+            where: { parentRestaurantId: parentId },
+            select: { id: true, name: true, city: true },
+            orderBy: { createdAt: "asc" },
+          }),
+        ]);
+        if (parent) {
+          locationsForSwitcher = [
+            { id: parent.id, name: parent.name, city: parent.city, isParent: true },
+            ...children.map((c) => ({ id: c.id, name: c.name, city: c.city, isParent: false })),
+          ];
+        }
       }
     }
 
