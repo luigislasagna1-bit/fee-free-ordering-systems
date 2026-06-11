@@ -5,7 +5,7 @@ import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { isRestaurantAdmin } from "@/lib/roles";
 import { slugify } from "@/lib/utils";
-import { sendPasswordResetEmail } from "@/lib/email";
+import { sendLocationWelcomeEmail } from "@/lib/email";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -155,7 +155,7 @@ export async function POST(req: NextRequest) {
   // reseller, the new location is too.
   const parent = await prisma.restaurant.findUnique({
     where: { id: parentId },
-    select: { resellerProfileId: true },
+    select: { resellerProfileId: true, name: true },
   });
 
   const newLocation = await prisma.restaurant.create({
@@ -237,11 +237,11 @@ export async function POST(req: NextRequest) {
     });
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
     try {
-      await sendPasswordResetEmail({
+      await sendLocationWelcomeEmail({
         to: email,
-        name,
-        resetUrl: `${baseUrl}/reset-password?token=${token}`,
-        locale: undefined,
+        locationName: name,
+        brandName: parent?.name ?? "Your brand",
+        setupUrl: `${baseUrl}/reset-password?token=${token}`,
       });
       inviteEmailed = true;
     } catch (err) {

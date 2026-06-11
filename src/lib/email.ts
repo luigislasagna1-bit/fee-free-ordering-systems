@@ -31,6 +31,7 @@ import EmailSettingsTest         from "@/emails/templates/EmailSettingsTest";
 import SignupConfirmation        from "@/emails/templates/SignupConfirmation";
 import VerifyEmail               from "@/emails/templates/VerifyEmail";
 import LocationInvite            from "@/emails/templates/LocationInvite";
+import LocationWelcome           from "@/emails/templates/LocationWelcome";
 import BillingNotification       from "@/emails/templates/BillingNotification";
 // TrialExpiring template was removed when the trial concept was killed —
 // every restaurant lands on the FREE plan instead of a 14-day trial.
@@ -829,6 +830,33 @@ export async function sendLocationInviteEmail(params: {
   return send({
     to: params.to,
     subject: `You've been invited to set up ${friendlyName} on Fee Free Ordering`,
+    html,
+  });
+}
+
+/**
+ * New-location welcome / set-password (Luigi 2026-06-10). Sent when a brand owner
+ * creates a child location directly: the location gets its own account and this
+ * invites that owner to set a password. Proper "your store is ready" wording —
+ * NOT "reset your password" (they never had one).
+ */
+export async function sendLocationWelcomeEmail(params: {
+  to: string;
+  locationName: string;
+  brandName: string;
+  setupUrl: string;
+}) {
+  const html = await renderEmail(
+    LocationWelcome({
+      locationName: params.locationName,
+      brandName: params.brandName,
+      setupUrl: params.setupUrl,
+      imprint: currentImprint(),
+    })
+  );
+  return send({
+    to: params.to,
+    subject: `Set up ${params.locationName} on Fee Free Ordering`,
     html,
   });
 }
