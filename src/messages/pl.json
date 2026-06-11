@@ -3634,7 +3634,26 @@
       "emptyBody": "Utwórz śledzony link, umieść jego kod QR na ulotce lub poście i obserwuj, jak skany zamieniają się w zamówienia.",
       "pageSubtitle": "Śledzone linki + kody QR — zobacz, które ulotki i posty generują prawdziwe zamówienia.",
       "pointsToHint": "Prowadzi do Twojego menu. Otrzymasz link do udostępniania + QR, aby śledzić skany i zamówienia.",
-      "downloadQr": "Pobierz QR"
+      "downloadQr": "Pobierz QR",
+      "flyersTitle": "Ulotki i plakaty",
+      "flyersHint": "Ulotki z Twoją marką i skanowalnym QR. Wydrukuj lub zapisz jako PDF.",
+      "newFlyer": "Nowa ulotka",
+      "templateLabel": "Styl",
+      "tplBold": "Wyrazisty",
+      "tplClean": "Czysty",
+      "tplBrand": "Marka",
+      "linkLabel": "QR którego linku?",
+      "headlineLabel": "Nagłówek",
+      "headlinePlaceholder": "10% zniżki na pierwsze zamówienie",
+      "offerLabel": "Podtekst",
+      "offerPlaceholder": "Zeskanuj, aby zamówić — odbiór i dostawa",
+      "printButton": "Drukuj / Zapisz jako PDF",
+      "previewLabel": "Podgląd",
+      "scanToOrder": "Zeskanuj, aby zamówić",
+      "savedFlyers": "Zapisane ulotki",
+      "flyerSaved": "Ulotka zapisana",
+      "needLinkFirst": "Najpierw utwórz inteligentny link — ulotka potrzebuje go do swojego QR.",
+      "printHint": "Twoja ulotka jest gotowa — użyj okna drukowania przeglądarki, aby wydrukować lub zapisać jako PDF."
     }
   },
   "impersonation": {

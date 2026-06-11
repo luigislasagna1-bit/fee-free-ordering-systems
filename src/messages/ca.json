@@ -3634,7 +3634,26 @@
       "emptyBody": "Crea un enllaç rastrejable, posa el seu QR en un fullet o publicació i mira com els escanejos es converteixen en comandes.",
       "pageSubtitle": "Enllaços rastrejables + codis QR: descobreix quins fullets i publicacions generen comandes reals.",
       "pointsToHint": "Apunta al teu menú. Obtindràs un enllaç per compartir + QR per fer el seguiment d'escanejos i comandes.",
-      "downloadQr": "Descarrega el QR"
+      "downloadQr": "Descarrega el QR",
+      "flyersTitle": "Fullets i cartells",
+      "flyersHint": "Fullets amb la teva marca i un QR escanejable. Imprimeix o desa en PDF.",
+      "newFlyer": "Nou fullet",
+      "templateLabel": "Estil",
+      "tplBold": "Intens",
+      "tplClean": "Net",
+      "tplBrand": "Marca",
+      "linkLabel": "QR de quin enllaç?",
+      "headlineLabel": "Titular",
+      "headlinePlaceholder": "10% de descompte en la teva primera comanda",
+      "offerLabel": "Subtext",
+      "offerPlaceholder": "Escaneja per demanar — recollida i lliurament",
+      "printButton": "Imprimeix / Desa com a PDF",
+      "previewLabel": "Vista prèvia",
+      "scanToOrder": "Escaneja per demanar",
+      "savedFlyers": "Fullets desats",
+      "flyerSaved": "Fullet desat",
+      "needLinkFirst": "Crea primer un enllaç intel·ligent — el fullet el necessita per al seu QR.",
+      "printHint": "El teu fullet està a punt — fes servir el quadre d'impressió del navegador per imprimir o desar com a PDF."
     }
   },
   "impersonation": {

@@ -3634,7 +3634,26 @@
       "emptyBody": "创建一个可追踪链接，将其二维码放在传单或帖子上，看着扫描变成订单。",
       "pageSubtitle": "可追踪链接 + 二维码——看看哪些传单和帖子带来真实订单。",
       "pointsToHint": "指向您的菜单。您将获得一个分享链接 + 二维码，用于追踪扫描和订单。",
-      "downloadQr": "下载二维码"
+      "downloadQr": "下载二维码",
+      "flyersTitle": "传单和海报",
+      "flyersHint": "带有您品牌和可扫描二维码的传单。打印或另存为 PDF。",
+      "newFlyer": "新建传单",
+      "templateLabel": "样式",
+      "tplBold": "醒目",
+      "tplClean": "简洁",
+      "tplBrand": "品牌",
+      "linkLabel": "哪个链接的二维码？",
+      "headlineLabel": "标题",
+      "headlinePlaceholder": "首单立减 10%",
+      "offerLabel": "副文案",
+      "offerPlaceholder": "扫码下单——自取和外送",
+      "printButton": "打印 / 另存为 PDF",
+      "previewLabel": "预览",
+      "scanToOrder": "扫码下单",
+      "savedFlyers": "已保存的传单",
+      "flyerSaved": "传单已保存",
+      "needLinkFirst": "请先创建一个智能链接——传单的二维码需要它。",
+      "printHint": "您的传单已就绪——使用浏览器的打印对话框来打印或另存为 PDF。"
     }
   },
   "impersonation": {

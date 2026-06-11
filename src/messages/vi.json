@@ -3634,7 +3634,26 @@
       "emptyBody": "Tạo một liên kết theo dõi được, đặt mã QR của nó lên tờ rơi hoặc bài đăng, và xem lượt quét biến thành đơn hàng.",
       "pageSubtitle": "Liên kết theo dõi được + mã QR — xem tờ rơi và bài đăng nào tạo ra đơn hàng thực.",
       "pointsToHint": "Trỏ đến thực đơn của bạn. Bạn sẽ nhận được liên kết chia sẻ + QR để theo dõi lượt quét và đơn hàng.",
-      "downloadQr": "Tải QR"
+      "downloadQr": "Tải QR",
+      "flyersTitle": "Tờ rơi & áp phích",
+      "flyersHint": "Tờ rơi gắn thương hiệu của bạn với mã QR quét được. In hoặc lưu PDF.",
+      "newFlyer": "Tờ rơi mới",
+      "templateLabel": "Kiểu",
+      "tplBold": "Đậm",
+      "tplClean": "Tối giản",
+      "tplBrand": "Thương hiệu",
+      "linkLabel": "QR của liên kết nào?",
+      "headlineLabel": "Tiêu đề",
+      "headlinePlaceholder": "Giảm 10% cho đơn đầu tiên",
+      "offerLabel": "Phụ đề",
+      "offerPlaceholder": "Quét để đặt hàng — lấy tại quầy & giao hàng",
+      "printButton": "In / Lưu PDF",
+      "previewLabel": "Xem trước",
+      "scanToOrder": "Quét để đặt hàng",
+      "savedFlyers": "Tờ rơi đã lưu",
+      "flyerSaved": "Đã lưu tờ rơi",
+      "needLinkFirst": "Hãy tạo một liên kết thông minh trước — tờ rơi cần nó cho mã QR.",
+      "printHint": "Tờ rơi của bạn đã sẵn sàng — dùng hộp thoại in của trình duyệt để in hoặc lưu PDF."
     }
   },
   "impersonation": {

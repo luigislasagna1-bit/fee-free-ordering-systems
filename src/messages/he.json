@@ -3634,7 +3634,26 @@
       "emptyBody": "צור קישור למעקב, הצב את ה-QR שלו על עלון או פוסט, וצפה בסריקות הופכות להזמנות.",
       "pageSubtitle": "קישורים למעקב + קודי QR — ראה אילו עלונים ופוסטים מביאים הזמנות אמיתיות.",
       "pointsToHint": "מפנה לתפריט שלך. תקבל קישור לשיתוף + QR למעקב אחר סריקות והזמנות.",
-      "downloadQr": "הורד QR"
+      "downloadQr": "הורד QR",
+      "flyersTitle": "עלונים ופוסטרים",
+      "flyersHint": "עלונים עם המותג שלך וקוד QR לסריקה. הדפס או שמור כ-PDF.",
+      "newFlyer": "עלון חדש",
+      "templateLabel": "סגנון",
+      "tplBold": "נועז",
+      "tplClean": "נקי",
+      "tplBrand": "מותג",
+      "linkLabel": "ה-QR של איזה קישור?",
+      "headlineLabel": "כותרת",
+      "headlinePlaceholder": "10% הנחה על ההזמנה הראשונה",
+      "offerLabel": "טקסט משנה",
+      "offerPlaceholder": "סרוק להזמנה — איסוף ומשלוח",
+      "printButton": "הדפס / שמור כ-PDF",
+      "previewLabel": "תצוגה מקדימה",
+      "scanToOrder": "סרוק להזמנה",
+      "savedFlyers": "עלונים שמורים",
+      "flyerSaved": "העלון נשמר",
+      "needLinkFirst": "צור קודם קישור חכם — העלון זקוק לו עבור ה-QR.",
+      "printHint": "העלון שלך מוכן — השתמש בתיבת ההדפסה של הדפדפן כדי להדפיס או לשמור כ-PDF."
     }
   },
   "impersonation": {

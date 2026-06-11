@@ -3634,7 +3634,26 @@
       "emptyBody": "Opret et sporbart link, sæt dets QR på en folder eller et opslag, og se scanninger blive til ordrer.",
       "pageSubtitle": "Sporbare links + QR-koder — se hvilke foldere og opslag der giver rigtige ordrer.",
       "pointsToHint": "Peger på dit menukort. Du får et delingslink + QR til at spore scanninger og ordrer.",
-      "downloadQr": "Download QR"
+      "downloadQr": "Download QR",
+      "flyersTitle": "Foldere & plakater",
+      "flyersHint": "Foldere med dit brand og en scanbar QR. Udskriv eller gem som PDF.",
+      "newFlyer": "Ny folder",
+      "templateLabel": "Stil",
+      "tplBold": "Markant",
+      "tplClean": "Ren",
+      "tplBrand": "Brand",
+      "linkLabel": "Hvilket links QR?",
+      "headlineLabel": "Overskrift",
+      "headlinePlaceholder": "10 % rabat på din første ordre",
+      "offerLabel": "Undertekst",
+      "offerPlaceholder": "Scan for at bestille — afhentning & levering",
+      "printButton": "Udskriv / Gem som PDF",
+      "previewLabel": "Forhåndsvisning",
+      "scanToOrder": "Scan for at bestille",
+      "savedFlyers": "Gemte foldere",
+      "flyerSaved": "Folder gemt",
+      "needLinkFirst": "Opret først et smart link — en folder skal bruge det til sin QR.",
+      "printHint": "Din folder er klar — brug browserens udskriftsdialog for at udskrive eller gemme som PDF."
     }
   },
   "impersonation": {

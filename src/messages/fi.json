@@ -3634,7 +3634,26 @@
       "emptyBody": "Luo seurattava linkki, lisää sen QR esitteeseen tai julkaisuun ja katso, kuinka skannaukset muuttuvat tilauksiksi.",
       "pageSubtitle": "Seurattavat linkit + QR-koodit — näe, mitkä esitteet ja julkaisut tuovat oikeita tilauksia.",
       "pointsToHint": "Osoittaa ruokalistaasi. Saat jakolinkin + QR:n skannausten ja tilausten seuraamiseen.",
-      "downloadQr": "Lataa QR"
+      "downloadQr": "Lataa QR",
+      "flyersTitle": "Esitteet ja julisteet",
+      "flyersHint": "Esitteet brändilläsi ja skannattavalla QR:llä. Tulosta tai tallenna PDF:ksi.",
+      "newFlyer": "Uusi esite",
+      "templateLabel": "Tyyli",
+      "tplBold": "Rohkea",
+      "tplClean": "Selkeä",
+      "tplBrand": "Brändi",
+      "linkLabel": "Minkä linkin QR?",
+      "headlineLabel": "Otsikko",
+      "headlinePlaceholder": "10 % alennus ensimmäisestä tilauksesta",
+      "offerLabel": "Alateksti",
+      "offerPlaceholder": "Skannaa ja tilaa — nouto ja toimitus",
+      "printButton": "Tulosta / Tallenna PDF:nä",
+      "previewLabel": "Esikatselu",
+      "scanToOrder": "Skannaa ja tilaa",
+      "savedFlyers": "Tallennetut esitteet",
+      "flyerSaved": "Esite tallennettu",
+      "needLinkFirst": "Luo ensin älylinkki — esite tarvitsee sen QR:ää varten.",
+      "printHint": "Esitteesi on valmis — käytä selaimen tulostusvalintaikkunaa tulostamiseen tai PDF:ksi tallentamiseen."
     }
   },
   "impersonation": {

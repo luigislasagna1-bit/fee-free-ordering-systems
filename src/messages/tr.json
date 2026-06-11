@@ -3634,7 +3634,26 @@
       "emptyBody": "Takip edilebilir bir bağlantı oluşturun, QR'ını bir broşüre veya paylaşıma koyun ve taramaların siparişe dönüşmesini izleyin.",
       "pageSubtitle": "Takip edilebilir bağlantılar + QR kodları — hangi broşür ve paylaşımların gerçek sipariş getirdiğini görün.",
       "pointsToHint": "Menünüze yönlendirir. Taramaları ve siparişleri izlemek için bir paylaşım bağlantısı + QR alırsınız.",
-      "downloadQr": "QR'ı indir"
+      "downloadQr": "QR'ı indir",
+      "flyersTitle": "Broşürler ve afişler",
+      "flyersHint": "Markanızla ve taranabilir QR ile broşürler. Yazdırın veya PDF olarak kaydedin.",
+      "newFlyer": "Yeni broşür",
+      "templateLabel": "Stil",
+      "tplBold": "Cesur",
+      "tplClean": "Sade",
+      "tplBrand": "Marka",
+      "linkLabel": "Hangi bağlantının QR'ı?",
+      "headlineLabel": "Başlık",
+      "headlinePlaceholder": "İlk siparişinizde %10 indirim",
+      "offerLabel": "Alt metin",
+      "offerPlaceholder": "Sipariş için tarayın — gel-al ve teslimat",
+      "printButton": "Yazdır / PDF olarak kaydet",
+      "previewLabel": "Önizleme",
+      "scanToOrder": "Sipariş için tarayın",
+      "savedFlyers": "Kayıtlı broşürler",
+      "flyerSaved": "Broşür kaydedildi",
+      "needLinkFirst": "Önce bir akıllı bağlantı oluşturun — broşürün QR'ı için gerekir.",
+      "printHint": "Broşürünüz hazır — yazdırmak veya PDF olarak kaydetmek için tarayıcının yazdırma penceresini kullanın."
     }
   },
   "impersonation": {

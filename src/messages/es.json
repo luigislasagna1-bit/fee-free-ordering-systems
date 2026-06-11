@@ -3634,7 +3634,26 @@
       "emptyBody": "Crea un enlace rastreable, pon su QR en un folleto o publicación y observa cómo los escaneos se convierten en pedidos.",
       "pageSubtitle": "Enlaces rastreables + códigos QR: descubre qué folletos y publicaciones generan pedidos reales.",
       "pointsToHint": "Apunta a tu menú. Obtendrás un enlace para compartir + QR para seguir escaneos y pedidos.",
-      "downloadQr": "Descargar QR"
+      "downloadQr": "Descargar QR",
+      "flyersTitle": "Folletos y carteles",
+      "flyersHint": "Folletos con tu marca y un QR escaneable. Imprime o guarda en PDF.",
+      "newFlyer": "Nuevo folleto",
+      "templateLabel": "Estilo",
+      "tplBold": "Intenso",
+      "tplClean": "Limpio",
+      "tplBrand": "Marca",
+      "linkLabel": "¿QR de qué enlace?",
+      "headlineLabel": "Titular",
+      "headlinePlaceholder": "10% de descuento en tu primer pedido",
+      "offerLabel": "Texto secundario",
+      "offerPlaceholder": "Escanea para pedir — recogida y entrega",
+      "printButton": "Imprimir / Guardar en PDF",
+      "previewLabel": "Vista previa",
+      "scanToOrder": "Escanea para pedir",
+      "savedFlyers": "Folletos guardados",
+      "flyerSaved": "Folleto guardado",
+      "needLinkFirst": "Primero crea un enlace inteligente — el folleto lo necesita para su QR.",
+      "printHint": "Tu folleto está listo — usa el cuadro de impresión del navegador para imprimir o guardar en PDF."
     }
   },
   "impersonation": {

@@ -3634,7 +3634,26 @@
       "emptyBody": "Hozzon létre egy követhető linket, tegye a QR-kódját szórólapra vagy posztra, és nézze, ahogy a beolvasások rendelésekké válnak.",
       "pageSubtitle": "Követhető linkek + QR-kódok — nézze meg, mely szórólapok és posztok hoznak valódi rendeléseket.",
       "pointsToHint": "Az étlapodra mutat. Kapsz egy megosztható linket + QR-t a beolvasások és rendelések követéséhez.",
-      "downloadQr": "QR letöltése"
+      "downloadQr": "QR letöltése",
+      "flyersTitle": "Szórólapok és plakátok",
+      "flyersHint": "Szórólapok az ön márkájával és beolvasható QR-kóddal. Nyomtassa ki vagy mentse PDF-ként.",
+      "newFlyer": "Új szórólap",
+      "templateLabel": "Stílus",
+      "tplBold": "Erőteljes",
+      "tplClean": "Letisztult",
+      "tplBrand": "Márka",
+      "linkLabel": "Melyik link QR-kódja?",
+      "headlineLabel": "Címsor",
+      "headlinePlaceholder": "10% kedvezmény az első rendelésre",
+      "offerLabel": "Alszöveg",
+      "offerPlaceholder": "Olvassa be a rendeléshez — átvétel és kiszállítás",
+      "printButton": "Nyomtatás / Mentés PDF-ként",
+      "previewLabel": "Előnézet",
+      "scanToOrder": "Olvassa be a rendeléshez",
+      "savedFlyers": "Mentett szórólapok",
+      "flyerSaved": "Szórólap mentve",
+      "needLinkFirst": "Először hozzon létre egy okos linket — a szórólapnak szüksége van rá a QR-hez.",
+      "printHint": "A szórólap kész — a nyomtatáshoz vagy PDF-mentéshez használja a böngésző nyomtatási ablakát."
     }
   },
   "impersonation": {

@@ -3634,7 +3634,26 @@
       "emptyBody": "Erstellen Sie einen nachverfolgbaren Link, setzen Sie seinen QR auf einen Flyer oder Post und sehen Sie, wie Scans zu Bestellungen werden.",
       "pageSubtitle": "Nachverfolgbare Links + QR-Codes — sehen Sie, welche Flyer und Posts echte Bestellungen bringen.",
       "pointsToHint": "Verweist auf Ihr Menü. Sie erhalten einen Teilen-Link + QR, um Scans und Bestellungen zu verfolgen.",
-      "downloadQr": "QR herunterladen"
+      "downloadQr": "QR herunterladen",
+      "flyersTitle": "Flyer & Poster",
+      "flyersHint": "Flyer mit Ihrem Branding und scannbarem QR. Drucken oder als PDF speichern.",
+      "newFlyer": "Neuer Flyer",
+      "templateLabel": "Stil",
+      "tplBold": "Kräftig",
+      "tplClean": "Schlicht",
+      "tplBrand": "Marke",
+      "linkLabel": "QR welches Links?",
+      "headlineLabel": "Überschrift",
+      "headlinePlaceholder": "10 % Rabatt auf Ihre erste Bestellung",
+      "offerLabel": "Untertext",
+      "offerPlaceholder": "Scannen zum Bestellen — Abholung & Lieferung",
+      "printButton": "Drucken / Als PDF speichern",
+      "previewLabel": "Vorschau",
+      "scanToOrder": "Scannen zum Bestellen",
+      "savedFlyers": "Gespeicherte Flyer",
+      "flyerSaved": "Flyer gespeichert",
+      "needLinkFirst": "Erstellen Sie zuerst einen Smart-Link — ein Flyer braucht ihn für den QR.",
+      "printHint": "Ihr Flyer ist fertig — nutzen Sie den Druckdialog Ihres Browsers zum Drucken oder als PDF zu speichern."
     }
   },
   "impersonation": {

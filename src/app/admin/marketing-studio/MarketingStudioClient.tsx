@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { Link2, Plus, Copy, Check, Trash2, ToggleLeft, ToggleRight, MousePointerClick, ShoppingBag, X, QrCode } from "lucide-react";
@@ -92,12 +93,20 @@ export function MarketingStudioClient({ currency, initialLinks }: { currency: st
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500">{t("pageSubtitle")}</p>
         </div>
-        <button
-          onClick={() => setShowCreate(true)}
-          className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
-        >
-          <Plus className="w-4 h-4" /> {t("newLink")}
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/admin/marketing-studio/flyers"
+            className="inline-flex items-center gap-1.5 bg-white border border-gray-200 hover:border-gray-300 text-gray-700 text-sm font-semibold px-3 py-2 rounded-lg transition"
+          >
+            <QrCode className="w-4 h-4" /> {t("flyersTitle")}
+          </Link>
+          <button
+            onClick={() => setShowCreate(true)}
+            className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
+          >
+            <Plus className="w-4 h-4" /> {t("newLink")}
+          </button>
+        </div>
       </div>
 
       {links.length === 0 ? (

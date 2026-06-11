@@ -3634,7 +3634,26 @@
       "emptyBody": "Créez un lien traçable, mettez son QR sur un prospectus ou une publication, et regardez les scans devenir des commandes.",
       "pageSubtitle": "Liens traçables + QR codes — voyez quels prospectus et publications génèrent de vraies commandes.",
       "pointsToHint": "Pointe vers votre menu. Vous obtiendrez un lien de partage + QR pour suivre les scans et les commandes.",
-      "downloadQr": "Télécharger le QR"
+      "downloadQr": "Télécharger le QR",
+      "flyersTitle": "Prospectus et affiches",
+      "flyersHint": "Prospectus à votre marque avec un QR scannable. Imprimez ou enregistrez en PDF.",
+      "newFlyer": "Nouveau prospectus",
+      "templateLabel": "Style",
+      "tplBold": "Audacieux",
+      "tplClean": "Épuré",
+      "tplBrand": "Marque",
+      "linkLabel": "QR de quel lien ?",
+      "headlineLabel": "Titre",
+      "headlinePlaceholder": "10 % de réduction sur votre première commande",
+      "offerLabel": "Sous-titre",
+      "offerPlaceholder": "Scannez pour commander — à emporter et livraison",
+      "printButton": "Imprimer / Enregistrer en PDF",
+      "previewLabel": "Aperçu",
+      "scanToOrder": "Scannez pour commander",
+      "savedFlyers": "Prospectus enregistrés",
+      "flyerSaved": "Prospectus enregistré",
+      "needLinkFirst": "Créez d'abord un lien intelligent — un prospectus en a besoin pour son QR.",
+      "printHint": "Votre prospectus est prêt — utilisez la boîte d'impression de votre navigateur pour imprimer ou enregistrer en PDF."
     }
   },
   "impersonation": {

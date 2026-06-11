@@ -3634,7 +3634,26 @@
       "emptyBody": "Maak een volgbare link, zet de QR op een flyer of post en zie scans veranderen in bestellingen.",
       "pageSubtitle": "Volgbare links + QR-codes — zie welke flyers en posts echte bestellingen opleveren.",
       "pointsToHint": "Verwijst naar je menu. Je krijgt een deellink + QR om scans en bestellingen te volgen.",
-      "downloadQr": "QR downloaden"
+      "downloadQr": "QR downloaden",
+      "flyersTitle": "Flyers & posters",
+      "flyersHint": "Flyers met je merk en een scanbare QR. Print of sla op als pdf.",
+      "newFlyer": "Nieuwe flyer",
+      "templateLabel": "Stijl",
+      "tplBold": "Gedurfd",
+      "tplClean": "Strak",
+      "tplBrand": "Merk",
+      "linkLabel": "QR van welke link?",
+      "headlineLabel": "Kop",
+      "headlinePlaceholder": "10% korting op je eerste bestelling",
+      "offerLabel": "Subtekst",
+      "offerPlaceholder": "Scan om te bestellen — afhalen & bezorgen",
+      "printButton": "Afdrukken / Opslaan als pdf",
+      "previewLabel": "Voorbeeld",
+      "scanToOrder": "Scan om te bestellen",
+      "savedFlyers": "Opgeslagen flyers",
+      "flyerSaved": "Flyer opgeslagen",
+      "needLinkFirst": "Maak eerst een slimme link — een flyer heeft die nodig voor de QR.",
+      "printHint": "Je flyer is klaar — gebruik het printvenster van je browser om af te drukken of op te slaan als pdf."
     }
   },
   "impersonation": {

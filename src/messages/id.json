@@ -3634,7 +3634,26 @@
       "emptyBody": "Buat tautan terlacak, pasang QR-nya di selebaran atau postingan, dan lihat pemindaian berubah menjadi pesanan.",
       "pageSubtitle": "Tautan terlacak + kode QR — lihat selebaran dan postingan mana yang menghasilkan pesanan nyata.",
       "pointsToHint": "Mengarah ke menu Anda. Anda akan mendapat tautan berbagi + QR untuk melacak pemindaian dan pesanan.",
-      "downloadQr": "Unduh QR"
+      "downloadQr": "Unduh QR",
+      "flyersTitle": "Selebaran & poster",
+      "flyersHint": "Selebaran berlogo Anda dengan QR yang dapat dipindai. Cetak atau simpan sebagai PDF.",
+      "newFlyer": "Selebaran baru",
+      "templateLabel": "Gaya",
+      "tplBold": "Tegas",
+      "tplClean": "Bersih",
+      "tplBrand": "Merek",
+      "linkLabel": "QR tautan mana?",
+      "headlineLabel": "Judul",
+      "headlinePlaceholder": "Diskon 10% untuk pesanan pertama",
+      "offerLabel": "Subteks",
+      "offerPlaceholder": "Pindai untuk memesan — ambil sendiri & antar",
+      "printButton": "Cetak / Simpan sebagai PDF",
+      "previewLabel": "Pratinjau",
+      "scanToOrder": "Pindai untuk memesan",
+      "savedFlyers": "Selebaran tersimpan",
+      "flyerSaved": "Selebaran disimpan",
+      "needLinkFirst": "Buat tautan pintar dulu — selebaran membutuhkannya untuk QR.",
+      "printHint": "Selebaran Anda siap — gunakan dialog cetak browser untuk mencetak atau menyimpan sebagai PDF."
     }
   },
   "impersonation": {

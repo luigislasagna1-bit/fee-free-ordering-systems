@@ -3634,7 +3634,26 @@
       "emptyBody": "Create a trackable link, put its QR on a flyer or post, and watch scans turn into orders.",
       "pageSubtitle": "Trackable links + QR codes — see which flyers and posts drive real orders.",
       "pointsToHint": "Points to your menu. You'll get a share link + QR to track scans and orders.",
-      "downloadQr": "Download QR"
+      "downloadQr": "Download QR",
+      "flyersTitle": "Flyers & posters",
+      "flyersHint": "Auto-branded flyers with a scannable QR. Print or save as PDF.",
+      "newFlyer": "New flyer",
+      "templateLabel": "Style",
+      "tplBold": "Bold",
+      "tplClean": "Clean",
+      "tplBrand": "Brand",
+      "linkLabel": "Which link's QR?",
+      "headlineLabel": "Headline",
+      "headlinePlaceholder": "10% off your first order",
+      "offerLabel": "Subtext",
+      "offerPlaceholder": "Scan to order — pickup & delivery",
+      "printButton": "Print / Save as PDF",
+      "previewLabel": "Preview",
+      "scanToOrder": "Scan to order",
+      "savedFlyers": "Saved flyers",
+      "flyerSaved": "Flyer saved",
+      "needLinkFirst": "Create a smart link first — a flyer needs one for its QR.",
+      "printHint": "Your flyer is ready — use your browser's print dialog to print or Save as PDF."
     }
   },
   "impersonation": {

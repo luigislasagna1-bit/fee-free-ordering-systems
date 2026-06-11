@@ -3634,7 +3634,26 @@
       "emptyBody": "Stvorite pratljivu poveznicu, stavite njezin QR na letak ili objavu i gledajte kako se skeniranja pretvaraju u narudžbe.",
       "pageSubtitle": "Pratljive poveznice + QR kodovi — vidite koji letci i objave donose prave narudžbe.",
       "pointsToHint": "Vodi na vaš jelovnik. Dobit ćete poveznicu za dijeljenje + QR za praćenje skeniranja i narudžbi.",
-      "downloadQr": "Preuzmi QR"
+      "downloadQr": "Preuzmi QR",
+      "flyersTitle": "Letci i plakati",
+      "flyersHint": "Letci s vašim brendom i skenirajućim QR-om. Ispišite ili spremite kao PDF.",
+      "newFlyer": "Novi letak",
+      "templateLabel": "Stil",
+      "tplBold": "Smjelo",
+      "tplClean": "Čisto",
+      "tplBrand": "Brend",
+      "linkLabel": "QR koje poveznice?",
+      "headlineLabel": "Naslov",
+      "headlinePlaceholder": "10% popusta na prvu narudžbu",
+      "offerLabel": "Podtekst",
+      "offerPlaceholder": "Skenirajte za narudžbu — preuzimanje i dostava",
+      "printButton": "Ispiši / Spremi kao PDF",
+      "previewLabel": "Pretpregled",
+      "scanToOrder": "Skenirajte za narudžbu",
+      "savedFlyers": "Spremljeni letci",
+      "flyerSaved": "Letak spremljen",
+      "needLinkFirst": "Prvo stvorite pametnu poveznicu — letku je potrebna za njegov QR.",
+      "printHint": "Vaš letak je spreman — koristite dijalog za ispis preglednika za ispis ili spremanje u PDF."
     }
   },
   "impersonation": {

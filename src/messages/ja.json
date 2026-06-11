@@ -3634,7 +3634,26 @@
       "emptyBody": "追跡可能なリンクを作成し、そのQRをチラシや投稿に載せて、スキャンが注文に変わる様子を見ましょう。",
       "pageSubtitle": "追跡可能なリンク + QRコード — どのチラシや投稿が実際の注文につながるかを確認。",
       "pointsToHint": "あなたのメニューにリンクします。スキャンと注文を追跡できる共有リンクとQRが手に入ります。",
-      "downloadQr": "QRをダウンロード"
+      "downloadQr": "QRをダウンロード",
+      "flyersTitle": "チラシ＆ポスター",
+      "flyersHint": "あなたのブランド入り、スキャン可能なQR付きのチラシ。印刷またはPDFで保存。",
+      "newFlyer": "新しいチラシ",
+      "templateLabel": "スタイル",
+      "tplBold": "ボールド",
+      "tplClean": "クリーン",
+      "tplBrand": "ブランド",
+      "linkLabel": "どのリンクのQR？",
+      "headlineLabel": "見出し",
+      "headlinePlaceholder": "初回注文10%オフ",
+      "offerLabel": "サブテキスト",
+      "offerPlaceholder": "スキャンして注文 — テイクアウト＆デリバリー",
+      "printButton": "印刷 / PDFで保存",
+      "previewLabel": "プレビュー",
+      "scanToOrder": "スキャンして注文",
+      "savedFlyers": "保存したチラシ",
+      "flyerSaved": "チラシを保存しました",
+      "needLinkFirst": "まずスマートリンクを作成してください — チラシのQRに必要です。",
+      "printHint": "チラシの準備ができました — ブラウザの印刷ダイアログから印刷またはPDFで保存してください。"
     }
   },
   "impersonation": {

@@ -3634,7 +3634,26 @@
       "emptyBody": "Crie um link rastreável, coloque o QR em um panfleto ou post e veja as leituras virarem pedidos.",
       "pageSubtitle": "Links rastreáveis + QR codes — veja quais panfletos e posts geram pedidos reais.",
       "pointsToHint": "Aponta para o seu cardápio. Você recebe um link de compartilhamento + QR para acompanhar leituras e pedidos.",
-      "downloadQr": "Baixar QR"
+      "downloadQr": "Baixar QR",
+      "flyersTitle": "Panfletos e pôsteres",
+      "flyersHint": "Panfletos com sua marca e um QR escaneável. Imprima ou salve em PDF.",
+      "newFlyer": "Novo panfleto",
+      "templateLabel": "Estilo",
+      "tplBold": "Forte",
+      "tplClean": "Limpo",
+      "tplBrand": "Marca",
+      "linkLabel": "QR de qual link?",
+      "headlineLabel": "Título",
+      "headlinePlaceholder": "10% de desconto no primeiro pedido",
+      "offerLabel": "Subtexto",
+      "offerPlaceholder": "Escaneie para pedir — retirada e entrega",
+      "printButton": "Imprimir / Salvar em PDF",
+      "previewLabel": "Pré-visualização",
+      "scanToOrder": "Escaneie para pedir",
+      "savedFlyers": "Panfletos salvos",
+      "flyerSaved": "Panfleto salvo",
+      "needLinkFirst": "Crie primeiro um link inteligente — o panfleto precisa dele para o QR.",
+      "printHint": "Seu panfleto está pronto — use a caixa de impressão do navegador para imprimir ou salvar em PDF."
     }
   },
   "impersonation": {

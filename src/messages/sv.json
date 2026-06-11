@@ -3634,7 +3634,26 @@
       "emptyBody": "Skapa en spårbar länk, sätt dess QR på ett flygblad eller inlägg och se skanningar bli beställningar.",
       "pageSubtitle": "Spårbara länkar + QR-koder — se vilka flygblad och inlägg som ger riktiga beställningar.",
       "pointsToHint": "Pekar på din meny. Du får en delningslänk + QR för att spåra skanningar och beställningar.",
-      "downloadQr": "Ladda ner QR"
+      "downloadQr": "Ladda ner QR",
+      "flyersTitle": "Flygblad & affischer",
+      "flyersHint": "Flygblad med ditt varumärke och en skanningsbar QR. Skriv ut eller spara som PDF.",
+      "newFlyer": "Nytt flygblad",
+      "templateLabel": "Stil",
+      "tplBold": "Djärv",
+      "tplClean": "Ren",
+      "tplBrand": "Varumärke",
+      "linkLabel": "Vilken länks QR?",
+      "headlineLabel": "Rubrik",
+      "headlinePlaceholder": "10 % rabatt på din första beställning",
+      "offerLabel": "Undertext",
+      "offerPlaceholder": "Skanna för att beställa — hämtning & leverans",
+      "printButton": "Skriv ut / Spara som PDF",
+      "previewLabel": "Förhandsvisning",
+      "scanToOrder": "Skanna för att beställa",
+      "savedFlyers": "Sparade flygblad",
+      "flyerSaved": "Flygblad sparat",
+      "needLinkFirst": "Skapa först en smart länk — flygbladet behöver den för sin QR.",
+      "printHint": "Ditt flygblad är klart — använd webbläsarens utskriftsdialog för att skriva ut eller spara som PDF."
     }
   },
   "impersonation": {

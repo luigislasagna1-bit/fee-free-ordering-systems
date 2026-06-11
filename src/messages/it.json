@@ -3634,7 +3634,26 @@
       "emptyBody": "Crea un link tracciabile, metti il suo QR su un volantino o post e guarda le scansioni trasformarsi in ordini.",
       "pageSubtitle": "Link tracciabili + codici QR: scopri quali volantini e post generano ordini reali.",
       "pointsToHint": "Punta al tuo menu. Otterrai un link da condividere + QR per tracciare scansioni e ordini.",
-      "downloadQr": "Scarica QR"
+      "downloadQr": "Scarica QR",
+      "flyersTitle": "Volantini e poster",
+      "flyersHint": "Volantini con il tuo brand e un QR scansionabile. Stampa o salva in PDF.",
+      "newFlyer": "Nuovo volantino",
+      "templateLabel": "Stile",
+      "tplBold": "Audace",
+      "tplClean": "Pulito",
+      "tplBrand": "Brand",
+      "linkLabel": "QR di quale link?",
+      "headlineLabel": "Titolo",
+      "headlinePlaceholder": "10% di sconto sul primo ordine",
+      "offerLabel": "Sottotitolo",
+      "offerPlaceholder": "Scansiona per ordinare — ritiro e consegna",
+      "printButton": "Stampa / Salva in PDF",
+      "previewLabel": "Anteprima",
+      "scanToOrder": "Scansiona per ordinare",
+      "savedFlyers": "Volantini salvati",
+      "flyerSaved": "Volantino salvato",
+      "needLinkFirst": "Crea prima un link intelligente — al volantino serve per il QR.",
+      "printHint": "Il tuo volantino è pronto — usa la finestra di stampa del browser per stampare o salvare in PDF."
     }
   },
   "impersonation": {

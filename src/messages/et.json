@@ -3634,7 +3634,26 @@
       "emptyBody": "Loo jälgitav link, pane selle QR flaierile või postitusele ja vaata, kuidas skannimised muutuvad tellimusteks.",
       "pageSubtitle": "Jälgitavad lingid + QR-koodid — vaadake, millised flaierid ja postitused toovad päris tellimusi.",
       "pointsToHint": "Viitab teie menüüle. Saate jagamislingi + QR-i skannimiste ja tellimuste jälgimiseks.",
-      "downloadQr": "Laadi QR alla"
+      "downloadQr": "Laadi QR alla",
+      "flyersTitle": "Flaierid ja plakatid",
+      "flyersHint": "Sinu brändiga flaierid skannitava QR-iga. Prindi või salvesta PDF-ina.",
+      "newFlyer": "Uus flaier",
+      "templateLabel": "Stiil",
+      "tplBold": "Julge",
+      "tplClean": "Puhas",
+      "tplBrand": "Bränd",
+      "linkLabel": "Millise lingi QR?",
+      "headlineLabel": "Pealkiri",
+      "headlinePlaceholder": "10% allahindlust esimeselt tellimuselt",
+      "offerLabel": "Alltekst",
+      "offerPlaceholder": "Skanni tellimiseks — järeltulemine ja kohaletoomine",
+      "printButton": "Prindi / Salvesta PDF-ina",
+      "previewLabel": "Eelvaade",
+      "scanToOrder": "Skanni tellimiseks",
+      "savedFlyers": "Salvestatud flaierid",
+      "flyerSaved": "Flaier salvestatud",
+      "needLinkFirst": "Loo kõigepealt nutilink — flaier vajab seda oma QR-i jaoks.",
+      "printHint": "Sinu flaier on valmis — kasuta brauseri printimisdialoogi printimiseks või PDF-ina salvestamiseks."
     }
   },
   "impersonation": {

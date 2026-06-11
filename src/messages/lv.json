@@ -3634,7 +3634,26 @@
       "emptyBody": "Izveidojiet izsekojamu saiti, ievietojiet tās QR uz bukleta vai ziņas un vērojiet, kā skenēšanas kļūst par pasūtījumiem.",
       "pageSubtitle": "Izsekojamas saites + QR kodi — uzziniet, kuri bukleti un ziņas dod reālus pasūtījumus.",
       "pointsToHint": "Norāda uz jūsu ēdienkarti. Saņemsiet kopīgošanas saiti + QR, lai sekotu skenēšanām un pasūtījumiem.",
-      "downloadQr": "Lejupielādēt QR"
+      "downloadQr": "Lejupielādēt QR",
+      "flyersTitle": "Bukleti un plakāti",
+      "flyersHint": "Bukleti ar jūsu zīmolu un skenējamu QR. Izdrukājiet vai saglabājiet kā PDF.",
+      "newFlyer": "Jauns buklets",
+      "templateLabel": "Stils",
+      "tplBold": "Drosmīgs",
+      "tplClean": "Tīrs",
+      "tplBrand": "Zīmols",
+      "linkLabel": "Kuras saites QR?",
+      "headlineLabel": "Virsraksts",
+      "headlinePlaceholder": "10% atlaide pirmajam pasūtījumam",
+      "offerLabel": "Apakšteksts",
+      "offerPlaceholder": "Skenējiet, lai pasūtītu — izņemšana un piegāde",
+      "printButton": "Drukāt / Saglabāt kā PDF",
+      "previewLabel": "Priekšskatījums",
+      "scanToOrder": "Skenējiet, lai pasūtītu",
+      "savedFlyers": "Saglabātie bukleti",
+      "flyerSaved": "Buklets saglabāts",
+      "needLinkFirst": "Vispirms izveidojiet viedo saiti — bukletam tā nepieciešama QR kodam.",
+      "printHint": "Jūsu buklets ir gatavs — izmantojiet pārlūka drukāšanas dialogu, lai drukātu vai saglabātu kā PDF."
     }
   },
   "impersonation": {

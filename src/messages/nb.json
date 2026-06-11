@@ -3634,7 +3634,26 @@
       "emptyBody": "Lag en sporbar lenke, sett QR-koden på et flygeblad eller innlegg, og se skanninger bli til bestillinger.",
       "pageSubtitle": "Sporbare lenker + QR-koder — se hvilke flygeblader og innlegg som gir ekte bestillinger.",
       "pointsToHint": "Peker til menyen din. Du får en delingslenke + QR for å spore skanninger og bestillinger.",
-      "downloadQr": "Last ned QR"
+      "downloadQr": "Last ned QR",
+      "flyersTitle": "Flygeblader og plakater",
+      "flyersHint": "Flygeblader med merkevaren din og en skannbar QR. Skriv ut eller lagre som PDF.",
+      "newFlyer": "Nytt flygeblad",
+      "templateLabel": "Stil",
+      "tplBold": "Dristig",
+      "tplClean": "Ren",
+      "tplBrand": "Merke",
+      "linkLabel": "QR for hvilken lenke?",
+      "headlineLabel": "Overskrift",
+      "headlinePlaceholder": "10 % rabatt på din første bestilling",
+      "offerLabel": "Undertekst",
+      "offerPlaceholder": "Skann for å bestille — henting og levering",
+      "printButton": "Skriv ut / Lagre som PDF",
+      "previewLabel": "Forhåndsvisning",
+      "scanToOrder": "Skann for å bestille",
+      "savedFlyers": "Lagrede flygeblader",
+      "flyerSaved": "Flygeblad lagret",
+      "needLinkFirst": "Lag en smartlenke først — et flygeblad trenger den til QR-koden.",
+      "printHint": "Flygebladet ditt er klart — bruk nettleserens utskriftsdialog for å skrive ut eller lagre som PDF."
     }
   },
   "impersonation": {

@@ -3634,7 +3634,26 @@
       "emptyBody": "Creează un link urmăribil, pune-i codul QR pe un pliant sau o postare și vezi cum scanările devin comenzi.",
       "pageSubtitle": "Linkuri urmăribile + coduri QR — vezi ce pliante și postări aduc comenzi reale.",
       "pointsToHint": "Trimite către meniul tău. Vei primi un link de partajare + QR pentru a urmări scanările și comenzile.",
-      "downloadQr": "Descarcă QR"
+      "downloadQr": "Descarcă QR",
+      "flyersTitle": "Pliante și postere",
+      "flyersHint": "Pliante cu marca ta și un QR scanabil. Printează sau salvează ca PDF.",
+      "newFlyer": "Pliant nou",
+      "templateLabel": "Stil",
+      "tplBold": "Îndrăzneț",
+      "tplClean": "Curat",
+      "tplBrand": "Marcă",
+      "linkLabel": "QR-ul cărui link?",
+      "headlineLabel": "Titlu",
+      "headlinePlaceholder": "10% reducere la prima comandă",
+      "offerLabel": "Subtext",
+      "offerPlaceholder": "Scanează pentru a comanda — ridicare și livrare",
+      "printButton": "Printează / Salvează ca PDF",
+      "previewLabel": "Previzualizare",
+      "scanToOrder": "Scanează pentru a comanda",
+      "savedFlyers": "Pliante salvate",
+      "flyerSaved": "Pliant salvat",
+      "needLinkFirst": "Creează mai întâi un link inteligent — pliantul are nevoie de el pentru QR.",
+      "printHint": "Pliantul tău este gata — folosește dialogul de printare al browserului pentru a printa sau salva ca PDF."
     }
   },
   "impersonation": {

@@ -3634,7 +3634,26 @@
       "emptyBody": "Vytvorte sledovateľný odkaz, umiestnite jeho QR na leták alebo príspevok a sledujte, ako sa skeny menia na objednávky.",
       "pageSubtitle": "Sledovateľné odkazy + QR kódy — zistite, ktoré letáky a príspevky prinášajú skutočné objednávky.",
       "pointsToHint": "Odkazuje na vaše menu. Získate odkaz na zdieľanie + QR na sledovanie skenov a objednávok.",
-      "downloadQr": "Stiahnuť QR"
+      "downloadQr": "Stiahnuť QR",
+      "flyersTitle": "Letáky a plagáty",
+      "flyersHint": "Letáky s vašou značkou a skenovateľným QR. Vytlačte alebo uložte ako PDF.",
+      "newFlyer": "Nový leták",
+      "templateLabel": "Štýl",
+      "tplBold": "Výrazný",
+      "tplClean": "Čistý",
+      "tplBrand": "Značka",
+      "linkLabel": "QR ktorého odkazu?",
+      "headlineLabel": "Nadpis",
+      "headlinePlaceholder": "10% zľava na prvú objednávku",
+      "offerLabel": "Podtitul",
+      "offerPlaceholder": "Naskenujte a objednajte — vyzdvihnutie a rozvoz",
+      "printButton": "Tlač / Uložiť ako PDF",
+      "previewLabel": "Náhľad",
+      "scanToOrder": "Naskenujte a objednajte",
+      "savedFlyers": "Uložené letáky",
+      "flyerSaved": "Leták uložený",
+      "needLinkFirst": "Najprv vytvorte inteligentný odkaz — leták ho potrebuje pre QR.",
+      "printHint": "Váš leták je pripravený — na tlač alebo uloženie do PDF použite dialóg tlače prehliadača."
     }
   },
   "impersonation": {

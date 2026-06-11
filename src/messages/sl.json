@@ -3634,7 +3634,26 @@
       "emptyBody": "Ustvarite sledljivo povezavo, postavite njeno kodo QR na letak ali objavo in glejte, kako se skeniranja spremenijo v naročila.",
       "pageSubtitle": "Sledljive povezave + kode QR — poglejte, kateri letaki in objave prinašajo prava naročila.",
       "pointsToHint": "Kaže na vaš meni. Dobili boste povezavo za deljenje + QR za sledenje skeniranj in naročil.",
-      "downloadQr": "Prenesi QR"
+      "downloadQr": "Prenesi QR",
+      "flyersTitle": "Letaki in plakati",
+      "flyersHint": "Letaki z vašo blagovno znamko in skenljivo kodo QR. Natisnite ali shranite kot PDF.",
+      "newFlyer": "Nov letak",
+      "templateLabel": "Slog",
+      "tplBold": "Krepko",
+      "tplClean": "Čist",
+      "tplBrand": "Znamka",
+      "linkLabel": "QR katere povezave?",
+      "headlineLabel": "Naslov",
+      "headlinePlaceholder": "10% popusta na prvo naročilo",
+      "offerLabel": "Podnapis",
+      "offerPlaceholder": "Skenirajte za naročilo — prevzem in dostava",
+      "printButton": "Natisni / Shrani kot PDF",
+      "previewLabel": "Predogled",
+      "scanToOrder": "Skenirajte za naročilo",
+      "savedFlyers": "Shranjeni letaki",
+      "flyerSaved": "Letak shranjen",
+      "needLinkFirst": "Najprej ustvarite pametno povezavo — letak jo potrebuje za svojo kodo QR.",
+      "printHint": "Vaš letak je pripravljen — za tiskanje ali shranjevanje v PDF uporabite pogovorno okno za tiskanje brskalnika."
     }
   },
   "impersonation": {

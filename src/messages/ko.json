@@ -3634,7 +3634,26 @@
       "emptyBody": "추적 가능한 링크를 만들고 QR을 전단지나 게시물에 넣어 스캔이 주문으로 이어지는 것을 확인하세요.",
       "pageSubtitle": "추적 가능한 링크 + QR 코드 — 어떤 전단지와 게시물이 실제 주문으로 이어지는지 확인하세요.",
       "pointsToHint": "메뉴로 연결됩니다. 스캔과 주문을 추적할 수 있는 공유 링크와 QR을 받게 됩니다.",
-      "downloadQr": "QR 다운로드"
+      "downloadQr": "QR 다운로드",
+      "flyersTitle": "전단지 & 포스터",
+      "flyersHint": "브랜드가 적용되고 스캔 가능한 QR이 포함된 전단지. 인쇄하거나 PDF로 저장하세요.",
+      "newFlyer": "새 전단지",
+      "templateLabel": "스타일",
+      "tplBold": "볼드",
+      "tplClean": "심플",
+      "tplBrand": "브랜드",
+      "linkLabel": "어느 링크의 QR?",
+      "headlineLabel": "헤드라인",
+      "headlinePlaceholder": "첫 주문 10% 할인",
+      "offerLabel": "보조 문구",
+      "offerPlaceholder": "스캔하여 주문 — 픽업 & 배달",
+      "printButton": "인쇄 / PDF로 저장",
+      "previewLabel": "미리보기",
+      "scanToOrder": "스캔하여 주문",
+      "savedFlyers": "저장된 전단지",
+      "flyerSaved": "전단지가 저장되었습니다",
+      "needLinkFirst": "먼저 스마트 링크를 만드세요 — 전단지의 QR에 필요합니다.",
+      "printHint": "전단지가 준비되었습니다 — 브라우저의 인쇄 대화상자를 사용해 인쇄하거나 PDF로 저장하세요."
     }
   },
   "impersonation": {
