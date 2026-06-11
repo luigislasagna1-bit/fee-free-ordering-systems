@@ -123,6 +123,13 @@ export async function cloneLocationRelations(
   prisma: import("@/generated/prisma/client").PrismaClient,
   parent: ParentWithConfig,
   childId: string,
+  /**
+   * The new location's own geocoded coordinates. Copied delivery zones are
+   * re-centered on THIS point so the brand's ring structure (radius + fee
+   * tiers) anchors to the new store's address instead of HQ's. Null → keep
+   * the original centers (best-effort fallback when geocoding failed).
+   */
+  center?: { lat: number; lng: number } | null,
 ) {
   // Opening hours — clone the brand's real hours; fall back to the same
   // "closed by default" 7-day skeleton the signup flow creates if the parent
@@ -157,8 +164,12 @@ export async function cloneLocationRelations(
         restaurantId: childId,
         name: z.name,
         color: z.color,
-        centerLat: z.centerLat,
-        centerLng: z.centerLng,
+        // Anchor the copied ring on the NEW store's coordinates (delivery
+        // gating + the admin map both treat the restaurant's own lat/lng as
+        // the center; radius/fee tiers carry over from the brand). Keep the
+        // original center only if we couldn't geocode the new address.
+        centerLat: center?.lat ?? z.centerLat,
+        centerLng: center?.lng ?? z.centerLng,
         radiusKm: z.radiusKm,
         deliveryFee: z.deliveryFee,
         minimumOrder: z.minimumOrder,

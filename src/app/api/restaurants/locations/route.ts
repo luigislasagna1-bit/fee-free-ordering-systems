@@ -7,6 +7,7 @@ import { isRestaurantAdmin } from "@/lib/roles";
 import { slugify } from "@/lib/utils";
 import { sendLocationWelcomeEmail } from "@/lib/email";
 import { pickInheritedScalars, cloneLocationRelations } from "@/lib/location-inheritance";
+import { geocodeAddress } from "@/lib/geocode";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -171,6 +172,16 @@ export async function POST(req: NextRequest) {
   });
   if (!parent) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
+  // Geocode the new location's OWN address so (a) delivery gating works and
+  // (b) the delivery zones we copy from the brand re-center on THIS store
+  // instead of HQ. Best-effort single Nominatim call on the rare add-location
+  // path — null coords just leave zones/gating dormant until the owner drops a
+  // pin, exactly as before. Luigi 2026-06-11.
+  const flatAddress = [address, city, state, zip, country ?? parent.country]
+    .filter(Boolean)
+    .join(", ");
+  const coords = flatAddress ? await geocodeAddress(flatAddress) : null;
+
   const newLocation = await prisma.restaurant.create({
     data: {
       // Inherited brand defaults FIRST; the identity + billing fields below
@@ -188,6 +199,9 @@ export async function POST(req: NextRequest) {
       // A per-location country (from the form) wins; otherwise inherit the
       // brand's country so currency/tax conventions line up by default.
       country: country ?? parent.country,
+      // The new store's own geocoded pin (drives its delivery zones + gating).
+      lat: coords?.lat ?? null,
+      lng: coords?.lng ?? null,
       parentRestaurantId: parentId,
       resellerProfileId: parent.resellerProfileId ?? null,
       // Every new restaurant lands on the FREE plan. No trial — they
@@ -206,7 +220,7 @@ export async function POST(req: NextRequest) {
   // so a clone hiccup must not fail creation — log and continue. The helper
   // falls back to a default 7-day hours skeleton if the parent has none.
   try {
-    await cloneLocationRelations(prisma, parent, newLocation.id);
+    await cloneLocationRelations(prisma, parent, newLocation.id, coords);
   } catch (err) {
     console.error("[locations] inheriting brand config failed", err);
   }
