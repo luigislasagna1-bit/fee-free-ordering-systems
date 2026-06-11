@@ -276,6 +276,13 @@ model Restaurant {
   customDomainAddedAt DateTime?
   customDomainError   String?
 
+  /// LOCAL calendar day (stored as a UTC-midnight @db.Date of the local day
+  /// key) the end-of-day digest email was last SENT for. Written by the
+  /// closing-time sweep and the morning catch-up; makes the two crons
+  /// idempotent so a restaurant never gets the same day's report twice.
+  /// Reseller report cmq8gfpxn, Luigi 2026-06-11.
+  lastEodDigestDate DateTime? @db.Date
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
