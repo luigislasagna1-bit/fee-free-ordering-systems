@@ -635,7 +635,10 @@
     "preOrder": "Vorbestellung",
     "tableReservation": "Tischreservierung",
     "missed": "Verpasst",
-    "firstOrder": "Erste Bestellung"
+    "firstOrder": "Erste Bestellung",
+    "openInMaps": "In Maps öffnen",
+    "calculatingEta": "Entfernung wird berechnet…",
+    "etaTrafficNote": "Fahrzeit mit aktuellem Verkehr"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

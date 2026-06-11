@@ -635,7 +635,10 @@
     "preOrder": "Voorbestelling",
     "tableReservation": "Tafelreservering",
     "missed": "Gemist",
-    "firstOrder": "Eerste bestelling"
+    "firstOrder": "Eerste bestelling",
+    "openInMaps": "Openen in Maps",
+    "calculatingEta": "Afstand berekenen…",
+    "etaTrafficNote": "Rijtijd met huidig verkeer"
   },
   "admin": {
     "welcomeBack": "Welkom terug",

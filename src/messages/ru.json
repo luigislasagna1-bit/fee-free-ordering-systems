@@ -635,7 +635,10 @@
     "preOrder": "Предзаказ",
     "tableReservation": "Бронирование столика",
     "missed": "Пропущен",
-    "firstOrder": "Первый заказ"
+    "firstOrder": "Первый заказ",
+    "openInMaps": "Открыть в Картах",
+    "calculatingEta": "Расчёт расстояния…",
+    "etaTrafficNote": "Время в пути с учётом текущего трафика"
   },
   "admin": {
     "welcomeBack": "С возвращением",

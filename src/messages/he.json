@@ -635,7 +635,10 @@
     "preOrder": "הזמנה מראש",
     "tableReservation": "הזמנת שולחן",
     "missed": "הוחמצה",
-    "firstOrder": "הזמנה ראשונה"
+    "firstOrder": "הזמנה ראשונה",
+    "openInMaps": "פתח במפות",
+    "calculatingEta": "מחשב מרחק…",
+    "etaTrafficNote": "זמן נסיעה לפי התנועה הנוכחית"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

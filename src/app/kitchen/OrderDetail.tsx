@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   X, Phone, Mail, MapPin, Clock, CheckCircle, XCircle, ChefHat,
   Package, CreditCard, Printer, UtensilsCrossed, RefreshCw, Loader2,
-  ReceiptText, User, Plus, Timer, MoreHorizontal, ChevronDown, ChevronUp, ArrowLeft,
+  ReceiptText, User, Plus, Timer, MoreHorizontal, ChevronDown, ChevronUp, ArrowLeft, Navigation,
 } from "lucide-react";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { formatDueLabel } from "@/lib/format-time";
@@ -385,6 +385,11 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                 <Row icon={<MapPin className="w-4 h-4" />} t={t}>
                   {order.deliveryAddress}{order.deliveryCity ? `, ${order.deliveryCity}` : ""}
                 </Row>
+              )}
+              {/* Drive distance + live-traffic ETA + directions (reseller report
+                  cmq3kv70d). Fetched once when the detail opens. */}
+              {order.type === "delivery" && order.deliveryAddress && (
+                <DeliveryEta orderId={order.id} t={t} />
               )}
               {/* Out-of-zone heads-up — shown here next to the address (only
                   visible once an order is opened), not on the list tile.
@@ -966,6 +971,69 @@ function Row({ icon, children, t }: { icon?: React.ReactNode; children: React.Re
     <div className={`flex items-center gap-2 text-sm ${t.text}`}>
       {icon && <span className={t.muted}>{icon}</span>}
       {children}
+    </div>
+  );
+}
+
+/**
+ * Drive distance + live-traffic ETA + "Open in Maps" for a delivery order
+ * (reseller report cmq3kv70d). Fetched once per detail open from
+ * /api/kitchen/orders/[id]/eta. The maps button always shows (works without a
+ * Distance Matrix key); distance + ETA chips show only when the API returned
+ * them. Never blocks the kitchen — a failed/absent estimate just hides chips.
+ */
+function DeliveryEta({ orderId, t }: { orderId: string; t: T }) {
+  const tk = useTranslations("kitchen");
+  const [data, setData] = useState<
+    | { mapsUrl: string; estimate: { ok: boolean; distanceText?: string; durationInTrafficText?: string } }
+    | null
+  >(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    fetch(`/api/kitchen/orders/${orderId}/eta`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (alive) setData(d); })
+      .catch(() => { /* network hiccup — silent */ })
+      .finally(() => { if (alive) setLoading(false); });
+    return () => { alive = false; };
+  }, [orderId]);
+
+  if (loading) {
+    return (
+      <div className={`mt-1 flex items-center gap-1.5 text-xs ${t.muted}`}>
+        <Loader2 className="w-3.5 h-3.5 animate-spin" /> {tk("calculatingEta")}
+      </div>
+    );
+  }
+  if (!data) return null;
+  const est = data.estimate;
+
+  return (
+    <div className="mt-2 flex items-center gap-2 flex-wrap">
+      {est?.ok && est.distanceText && (
+        <span className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full bg-blue-500/15 text-blue-700 dark:text-blue-300">
+          <MapPin className="w-3.5 h-3.5" /> {est.distanceText}
+        </span>
+      )}
+      {est?.ok && est.durationInTrafficText && (
+        <span
+          className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full bg-blue-500/15 text-blue-700 dark:text-blue-300"
+          title={tk("etaTrafficNote")}
+        >
+          <Clock className="w-3.5 h-3.5" /> {est.durationInTrafficText}
+        </span>
+      )}
+      <a
+        href={data.mapsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition"
+      >
+        <Navigation className="w-3.5 h-3.5" /> {tk("openInMaps")}
+      </a>
     </div>
   );
 }

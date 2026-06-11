@@ -635,7 +635,10 @@
     "preOrder": "Προπαραγγελία",
     "tableReservation": "Κράτηση τραπεζιού",
     "missed": "Χαμένη",
-    "firstOrder": "Πρώτη παραγγελία"
+    "firstOrder": "Πρώτη παραγγελία",
+    "openInMaps": "Άνοιγμα στους Χάρτες",
+    "calculatingEta": "Υπολογισμός απόστασης…",
+    "etaTrafficNote": "Χρόνος οδήγησης με την τρέχουσα κίνηση"
   },
   "admin": {
     "welcomeBack": "Καλώς ορίσατε",

@@ -635,7 +635,10 @@
     "preOrder": "Предварителна поръчка",
     "tableReservation": "Резервация на маса",
     "missed": "Пропуснато",
-    "firstOrder": "Първа поръчка"
+    "firstOrder": "Първа поръчка",
+    "openInMaps": "Отвори в Карти",
+    "calculatingEta": "Изчисляване на разстояние…",
+    "etaTrafficNote": "Време за път при текущия трафик"
   },
   "admin": {
     "welcomeBack": "Добре дошъл отново",

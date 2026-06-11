@@ -635,7 +635,10 @@
     "preOrder": "Iepriekšpasūtījums",
     "tableReservation": "Galda rezervācija",
     "missed": "Nokavēts",
-    "firstOrder": "Pirmais pasūtījums"
+    "firstOrder": "Pirmais pasūtījums",
+    "openInMaps": "Atvērt Maps",
+    "calculatingEta": "Aprēķina attālumu…",
+    "etaTrafficNote": "Brauciena laiks pašreizējā satiksmē"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

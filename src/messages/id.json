@@ -635,7 +635,10 @@
     "preOrder": "Pra-pesan",
     "tableReservation": "Reservasi Meja",
     "missed": "Terlewat",
-    "firstOrder": "Pesanan pertama"
+    "firstOrder": "Pesanan pertama",
+    "openInMaps": "Buka di Maps",
+    "calculatingEta": "Menghitung jarak…",
+    "etaTrafficNote": "Waktu berkendara dengan lalu lintas saat ini"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

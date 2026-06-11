@@ -635,7 +635,10 @@
     "preOrder": "Pedido anticipado",
     "tableReservation": "Reserva de mesa",
     "missed": "Perdido",
-    "firstOrder": "Primer pedido"
+    "firstOrder": "Primer pedido",
+    "openInMaps": "Abrir en Maps",
+    "calculatingEta": "Calculando distancia…",
+    "etaTrafficNote": "Tiempo de viaje con el tráfico actual"
   },
   "admin": {
     "welcomeBack": "Bienvenido de nuevo",

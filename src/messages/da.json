@@ -635,7 +635,10 @@
     "preOrder": "Forudbestilling",
     "tableReservation": "Bordbooking",
     "missed": "Mistet",
-    "firstOrder": "Første ordre"
+    "firstOrder": "Første ordre",
+    "openInMaps": "Åbn i Maps",
+    "calculatingEta": "Beregner afstand…",
+    "etaTrafficNote": "Køretid med aktuel trafik"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",

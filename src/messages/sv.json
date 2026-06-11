@@ -635,7 +635,10 @@
     "preOrder": "Förbeställning",
     "tableReservation": "Bordsreservation",
     "missed": "Missad",
-    "firstOrder": "Första beställning"
+    "firstOrder": "Första beställning",
+    "openInMaps": "Öppna i Maps",
+    "calculatingEta": "Beräknar avstånd…",
+    "etaTrafficNote": "Körtid med aktuell trafik"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",

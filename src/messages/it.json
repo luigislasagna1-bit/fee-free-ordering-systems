@@ -635,7 +635,10 @@
     "preOrder": "Preordine",
     "tableReservation": "Prenotazione tavolo",
     "missed": "Perso",
-    "firstOrder": "Primo ordine"
+    "firstOrder": "Primo ordine",
+    "openInMaps": "Apri in Maps",
+    "calculatingEta": "Calcolo distanza…",
+    "etaTrafficNote": "Tempo di guida con il traffico attuale"
   },
   "admin": {
     "welcomeBack": "Bentornato",

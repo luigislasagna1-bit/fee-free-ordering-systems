@@ -635,7 +635,10 @@
     "preOrder": "Išankstinis užsakymas",
     "tableReservation": "Stalo rezervacija",
     "missed": "Praleista",
-    "firstOrder": "Pirmasis užsakymas"
+    "firstOrder": "Pirmasis užsakymas",
+    "openInMaps": "Atidaryti Maps",
+    "calculatingEta": "Skaičiuojamas atstumas…",
+    "etaTrafficNote": "Kelionės laikas esant dabartiniam eismui"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

@@ -635,7 +635,10 @@
     "preOrder": "Ön sipariş",
     "tableReservation": "Masa Rezervasyonu",
     "missed": "Kaçırıldı",
-    "firstOrder": "İlk sipariş"
+    "firstOrder": "İlk sipariş",
+    "openInMaps": "Haritalar'da aç",
+    "calculatingEta": "Mesafe hesaplanıyor…",
+    "etaTrafficNote": "Mevcut trafikle sürüş süresi"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

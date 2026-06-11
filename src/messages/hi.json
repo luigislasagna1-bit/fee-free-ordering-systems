@@ -635,7 +635,10 @@
     "preOrder": "प्री-ऑर्डर",
     "tableReservation": "टेबल आरक्षण",
     "missed": "छूट गया",
-    "firstOrder": "पहला ऑर्डर"
+    "firstOrder": "पहला ऑर्डर",
+    "openInMaps": "मैप्स में खोलें",
+    "calculatingEta": "दूरी की गणना…",
+    "etaTrafficNote": "मौजूदा ट्रैफ़िक के साथ ड्राइव समय"
   },
   "admin": {
     "comingSoonPlaceholder": {

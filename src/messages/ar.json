@@ -635,7 +635,10 @@
     "preOrder": "طلب مسبق",
     "tableReservation": "حجز طاولة",
     "missed": "فائت",
-    "firstOrder": "أول طلب"
+    "firstOrder": "أول طلب",
+    "openInMaps": "افتح في الخرائط",
+    "calculatingEta": "جارٍ حساب المسافة…",
+    "etaTrafficNote": "وقت القيادة وفقًا لحركة المرور الحالية"
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",

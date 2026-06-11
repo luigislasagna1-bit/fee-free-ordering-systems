@@ -635,7 +635,10 @@
     "preOrder": "Előrendelés",
     "tableReservation": "Asztalfoglalás",
     "missed": "Elmulasztott",
-    "firstOrder": "Első rendelés"
+    "firstOrder": "Első rendelés",
+    "openInMaps": "Megnyitás a Térképen",
+    "calculatingEta": "Távolság számítása…",
+    "etaTrafficNote": "Menetidő a jelenlegi forgalommal"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

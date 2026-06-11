@@ -635,7 +635,10 @@
     "preOrder": "预点餐",
     "tableReservation": "餐桌预订",
     "missed": "已错过",
-    "firstOrder": "首次下单"
+    "firstOrder": "首次下单",
+    "openInMaps": "在地图中打开",
+    "calculatingEta": "正在计算距离…",
+    "etaTrafficNote": "按当前路况的驾车时间"
   },
   "admin": {
     "welcomeBack": "欢迎回来",

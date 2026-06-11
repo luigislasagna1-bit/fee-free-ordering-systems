@@ -635,7 +635,10 @@
     "preOrder": "事前注文",
     "tableReservation": "テーブル予約",
     "missed": "見逃し",
-    "firstOrder": "初回注文"
+    "firstOrder": "初回注文",
+    "openInMaps": "マップで開く",
+    "calculatingEta": "距離を計算中…",
+    "etaTrafficNote": "現在の交通状況での所要時間"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

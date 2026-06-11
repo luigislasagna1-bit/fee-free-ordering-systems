@@ -635,7 +635,10 @@
     "preOrder": "Ettetellimine",
     "tableReservation": "Laua reserveerimine",
     "missed": "Vastamata",
-    "firstOrder": "Esimene tellimus"
+    "firstOrder": "Esimene tellimus",
+    "openInMaps": "Ava Mapsis",
+    "calculatingEta": "Vahemaa arvutamine…",
+    "etaTrafficNote": "Sõiduaeg praeguse liiklusega"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

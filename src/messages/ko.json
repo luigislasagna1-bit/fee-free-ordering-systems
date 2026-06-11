@@ -635,7 +635,10 @@
     "preOrder": "사전 주문",
     "tableReservation": "테이블 예약",
     "missed": "놓침",
-    "firstOrder": "첫 주문"
+    "firstOrder": "첫 주문",
+    "openInMaps": "지도에서 열기",
+    "calculatingEta": "거리 계산 중…",
+    "etaTrafficNote": "현재 교통 상황 기준 운전 시간"
   },
   "admin": {
     "welcomeBack": "환영합니다",

@@ -635,7 +635,10 @@
     "preOrder": "Попереднє замовлення",
     "tableReservation": "Бронювання столика",
     "missed": "Пропущено",
-    "firstOrder": "Перше замовлення"
+    "firstOrder": "Перше замовлення",
+    "openInMaps": "Відкрити в Картах",
+    "calculatingEta": "Розрахунок відстані…",
+    "etaTrafficNote": "Час у дорозі з урахуванням поточного трафіку"
   },
   "admin": {
     "welcomeBack": "З поверненням",

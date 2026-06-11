@@ -635,7 +635,10 @@
     "preOrder": "สั่งล่วงหน้า",
     "tableReservation": "จองโต๊ะ",
     "missed": "พลาด",
-    "firstOrder": "ออเดอร์แรก"
+    "firstOrder": "ออเดอร์แรก",
+    "openInMaps": "เปิดในแผนที่",
+    "calculatingEta": "กำลังคำนวณระยะทาง…",
+    "etaTrafficNote": "เวลาขับขี่ตามการจราจรปัจจุบัน"
   },
   "admin": {
     "welcomeBack": "ยินดีต้อนรับกลับ",

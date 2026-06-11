@@ -635,7 +635,10 @@
     "preOrder": "Prednarudžba",
     "tableReservation": "Rezervacija stola",
     "missed": "Propušteno",
-    "firstOrder": "Prva narudžba"
+    "firstOrder": "Prva narudžba",
+    "openInMaps": "Otvori u Kartama",
+    "calculatingEta": "Izračun udaljenosti…",
+    "etaTrafficNote": "Vrijeme vožnje uz trenutni promet"
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",

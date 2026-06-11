@@ -635,7 +635,10 @@
     "preOrder": "Prednaročilo",
     "tableReservation": "Rezervacija mize",
     "missed": "Zamujeno",
-    "firstOrder": "Prvo naročilo"
+    "firstOrder": "Prvo naročilo",
+    "openInMaps": "Odpri v Zemljevidih",
+    "calculatingEta": "Računanje razdalje…",
+    "etaTrafficNote": "Čas vožnje glede na trenutni promet"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",

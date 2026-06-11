@@ -635,7 +635,10 @@
     "preOrder": "Predobjednávka",
     "tableReservation": "Rezervácia stola",
     "missed": "Zmeškané",
-    "firstOrder": "Prvá objednávka"
+    "firstOrder": "Prvá objednávka",
+    "openInMaps": "Otvoriť v Mapách",
+    "calculatingEta": "Výpočet vzdialenosti…",
+    "etaTrafficNote": "Čas jazdy pri aktuálnej premávke"
   },
   "admin": {
     "welcomeBack": "Vitajte späť",

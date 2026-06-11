@@ -635,7 +635,10 @@
     "preOrder": "Comanda anticipada",
     "tableReservation": "Reserva de taula",
     "missed": "Perduda",
-    "firstOrder": "Primera comanda"
+    "firstOrder": "Primera comanda",
+    "openInMaps": "Obre a Maps",
+    "calculatingEta": "Calculant distància…",
+    "etaTrafficNote": "Temps de conducció amb el trànsit actual"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

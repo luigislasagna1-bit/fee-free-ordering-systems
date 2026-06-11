@@ -635,7 +635,10 @@
     "preOrder": "Precomandă",
     "tableReservation": "Rezervare masă",
     "missed": "Ratată",
-    "firstOrder": "Prima comandă"
+    "firstOrder": "Prima comandă",
+    "openInMaps": "Deschide în Maps",
+    "calculatingEta": "Se calculează distanța…",
+    "etaTrafficNote": "Timp de condus cu traficul actual"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

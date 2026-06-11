@@ -635,7 +635,10 @@
     "preOrder": "Ennakkotilaus",
     "tableReservation": "Pöytävaraus",
     "missed": "Menetetty",
-    "firstOrder": "Ensimmäinen tilaus"
+    "firstOrder": "Ensimmäinen tilaus",
+    "openInMaps": "Avaa Mapsissa",
+    "calculatingEta": "Lasketaan etäisyyttä…",
+    "etaTrafficNote": "Ajoaika nykyisellä liikenteellä"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

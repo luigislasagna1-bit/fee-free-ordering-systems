@@ -635,7 +635,10 @@
     "preOrder": "Đặt trước",
     "tableReservation": "Đặt bàn",
     "missed": "Bị bỏ lỡ",
-    "firstOrder": "Đơn hàng đầu tiên"
+    "firstOrder": "Đơn hàng đầu tiên",
+    "openInMaps": "Mở trong Maps",
+    "calculatingEta": "Đang tính khoảng cách…",
+    "etaTrafficNote": "Thời gian lái xe theo giao thông hiện tại"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",
