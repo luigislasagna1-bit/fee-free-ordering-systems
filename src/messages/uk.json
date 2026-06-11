@@ -251,7 +251,8 @@
     "holidayOrderLater": "Ви все одно можете замовити на пізнішу дату.",
     "availableOnlyLabel": "Доступно {window}",
     "testModeBanner": "Тестовий режим — ви переглядаєте власний заклад",
-    "testModeHint": "Замовлення тут позначаються TEST: вони дзвонять на кухні та друкуються як завжди, але ніколи не враховуються у звітах чи виручці."
+    "testModeHint": "Замовлення тут позначаються TEST: вони дзвонять на кухні та друкуються як завжди, але ніколи не враховуються у звітах чи виручці.",
+    "fromPrice": "від {price}"
   },
   "pizza": {
     "chooseSize": "Оберіть розмір",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Заплановано на {when}",
     "timeCateringNotice": "Кейтеринг — оберіть час щонайменше за {hours} год",
     "deliveryTo": "Доставка за адресою {address}",
-    "deliveryAddAddress": "Доставка — додайте адресу"
+    "deliveryAddAddress": "Доставка — додайте адресу",
+    "free": "Безкоштовно",
+    "taxWithRate": "Податок ({rate}%)",
+    "unlockedPromoOne": "Ви відкрили промоакцію!",
+    "unlockedPromoMany": "Ви відкрили промоакції!",
+    "pickADateFirst": "Спершу виберіть дату",
+    "closedThisDay": "У цей день зачинено"
   },
   "reservation": {
     "title": "Забронювати столик",

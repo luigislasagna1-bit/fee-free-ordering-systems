@@ -251,7 +251,8 @@
     "holidayOrderLater": "I dalje možete naručiti za kasniji datum.",
     "availableOnlyLabel": "Dostupno {window}",
     "testModeBanner": "Testni način — pregledavate vlastitu trgovinu",
-    "testModeHint": "Narudžbe ovdje označene su TEST: zvone u kuhinji i ispisuju se normalno, ali se nikad ne računaju u izvještaje ni prihod."
+    "testModeHint": "Narudžbe ovdje označene su TEST: zvone u kuhinji i ispisuju se normalno, ali se nikad ne računaju u izvještaje ni prihod.",
+    "fromPrice": "od {price}"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Zakazano za {when}",
     "timeCateringNotice": "Catering — odaberite vrijeme barem {hours} h unaprijed",
     "deliveryTo": "Dostava na {address}",
-    "deliveryAddAddress": "Dostava — dodajte adresu"
+    "deliveryAddAddress": "Dostava — dodajte adresu",
+    "free": "Besplatno",
+    "taxWithRate": "Porez ({rate}%)",
+    "unlockedPromoOne": "Otključali ste promociju!",
+    "unlockedPromoMany": "Otključali ste promocije!",
+    "pickADateFirst": "Prvo odaberite datum",
+    "closedThisDay": "Zatvoreno na ovaj dan"
   },
   "reservation": {
     "title": "Rezervirajte stol",

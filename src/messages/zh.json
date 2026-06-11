@@ -251,7 +251,8 @@
     "holidayOrderLater": "您仍可预订其他日期。",
     "availableOnlyLabel": "供应时间 {window}",
     "testModeBanner": "测试模式——您正在预览自己的店铺",
-    "testModeHint": "在此下的订单会标记为 TEST：厨房正常响铃和打印，但绝不会计入报表或营业额。"
+    "testModeHint": "在此下的订单会标记为 TEST：厨房正常响铃和打印，但绝不会计入报表或营业额。",
+    "fromPrice": "{price} 起"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "预定时间 {when}",
     "timeCateringNotice": "宴会订餐——请至少提前 {hours} 小时选择时间",
     "deliveryTo": "配送至 {address}",
-    "deliveryAddAddress": "配送——请添加地址"
+    "deliveryAddAddress": "配送——请添加地址",
+    "free": "免费",
+    "taxWithRate": "税费（{rate}%）",
+    "unlockedPromoOne": "您解锁了一个优惠！",
+    "unlockedPromoMany": "您解锁了多个优惠！",
+    "pickADateFirst": "请先选择日期",
+    "closedThisDay": "当天休息"
   },
   "reservation": {
     "title": "预订餐桌",

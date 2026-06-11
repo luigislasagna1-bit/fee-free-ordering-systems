@@ -449,7 +449,7 @@ export function CheckoutModal({
 
   const tipsSummary = tipAmount > 0
     ? `${tipPercent}% (${formatCurrency(tipAmount)})`
-    : "No tip";
+    : tc("noTip");
 
   const notesSummary = customerInfo.notes
     ? customerInfo.notes.length > 60 ? customerInfo.notes.slice(0, 60) + "…" : customerInfo.notes
@@ -498,7 +498,9 @@ export function CheckoutModal({
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-xl" aria-hidden>🎉</span>
                 <div className="text-sm font-bold text-emerald-800">
-                  You unlocked {appliedPromos.length + (hasFreeDelivery && baseDeliveryFee > 0 ? 1 : 0) === 1 ? "a promo!" : "promos!"}
+                  {appliedPromos.length + (hasFreeDelivery && baseDeliveryFee > 0 ? 1 : 0) === 1
+                    ? tc("unlockedPromoOne")
+                    : tc("unlockedPromoMany")}
                 </div>
               </div>
               <div className="space-y-1.5">
@@ -1185,7 +1187,7 @@ export function CheckoutModal({
                             disabled={!datePart || slots.length === 0}
                           >
                             {slots.length === 0 ? (
-                              <option value="">{datePart ? "Closed this day" : "Pick a date first"}</option>
+                              <option value="">{datePart ? tc("closedThisDay") : tc("pickADateFirst")}</option>
                             ) : (
                               <>
                                 <option value="">{tc("pickATimePlaceholder")}</option>
@@ -1481,7 +1483,7 @@ export function CheckoutModal({
                   value so customers see what they would have paid
                   without the promo (Luigi feedback 2026-05-29). */}
               <div className="mt-4 pt-3 border-t border-gray-200 space-y-1 text-sm">
-                <div className="flex justify-between text-gray-600"><span>Sub-Total</span><span>{formatCurrency(subtotal)}</span></div>
+                <div className="flex justify-between text-gray-600"><span>{tc("subTotal")}</span><span>{formatCurrency(subtotal)}</span></div>
                 {totalDiscount > 0 && (
                   <div className="flex justify-between text-green-600 font-medium"><span>{tc("discount")}</span><span>− {formatCurrency(totalDiscount)}</span></div>
                 )}
@@ -1494,7 +1496,7 @@ export function CheckoutModal({
                           <span className="line-through text-gray-400 mr-1.5">
                             {formatCurrency(baseDeliveryFee)}
                           </span>
-                          <span className="text-emerald-600 font-semibold">FREE</span>
+                          <span className="text-emerald-600 font-semibold">{tc("free")}</span>
                         </>
                       ) : (
                         formatCurrency(deliveryFee)
@@ -1515,7 +1517,7 @@ export function CheckoutModal({
                     "Tax (0%) $0.00" sibling. Only render when there's
                     a real tax amount to show. */}
                 {taxAmount > 0 && (
-                  <div className="flex justify-between text-gray-600"><span>Tax ({taxRate}%)</span><span>{formatCurrency(taxAmount)}</span></div>
+                  <div className="flex justify-between text-gray-600"><span>{tc("taxWithRate", { rate: taxRate })}</span><span>{formatCurrency(taxAmount)}</span></div>
                 )}
                 {tipAmount > 0 && (
                   <div className="flex justify-between text-gray-600"><span>{tc("tip")}</span><span>{formatCurrency(tipAmount)}</span></div>

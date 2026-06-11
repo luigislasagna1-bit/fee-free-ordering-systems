@@ -251,7 +251,8 @@
     "holidayOrderLater": "Voit silti tilata myöhemmälle päivälle.",
     "availableOnlyLabel": "Saatavilla {window}",
     "testModeBanner": "Testitila — esikatselet omaa kauppaasi",
-    "testModeHint": "Täällä tehdyt tilaukset merkitään TEST: ne soivat keittiössä ja tulostuvat normaalisti, mutta eivät koskaan näy raporteissa tai liikevaihdossa."
+    "testModeHint": "Täällä tehdyt tilaukset merkitään TEST: ne soivat keittiössä ja tulostuvat normaalisti, mutta eivät koskaan näy raporteissa tai liikevaihdossa.",
+    "fromPrice": "alkaen {price}"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Ajastettu: {when}",
     "timeCateringNotice": "Catering — valitse aika vähintään {hours} h etukäteen",
     "deliveryTo": "Toimitus osoitteeseen {address}",
-    "deliveryAddAddress": "Toimitus — lisää osoite"
+    "deliveryAddAddress": "Toimitus — lisää osoite",
+    "free": "Ilmainen",
+    "taxWithRate": "Vero ({rate} %)",
+    "unlockedPromoOne": "Avasit tarjouksen!",
+    "unlockedPromoMany": "Avasit tarjouksia!",
+    "pickADateFirst": "Valitse ensin päivä",
+    "closedThisDay": "Suljettu tänä päivänä"
   },
   "reservation": {
     "title": "Varaa pöytä",

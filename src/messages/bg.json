@@ -251,7 +251,8 @@
     "holidayOrderLater": "Все пак можете да поръчате за по-късна дата.",
     "availableOnlyLabel": "Налично {window}",
     "testModeBanner": "Тестов режим — преглеждате собствения си магазин",
-    "testModeHint": "Поръчките тук се маркират като TEST: звънят в кухнята и се печатат нормално, но никога не се броят в отчети или приходи."
+    "testModeHint": "Поръчките тук се маркират като TEST: звънят в кухнята и се печатат нормално, но никога не се броят в отчети или приходи.",
+    "fromPrice": "от {price}"
   },
   "pizza": {
     "chooseSize": "Избери размер",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Насрочено за {when}",
     "timeCateringNotice": "Кетъринг — изберете час поне {hours} ч. предварително",
     "deliveryTo": "Доставка до {address}",
-    "deliveryAddAddress": "Доставка — добавете адрес"
+    "deliveryAddAddress": "Доставка — добавете адрес",
+    "free": "Безплатно",
+    "taxWithRate": "Данък ({rate}%)",
+    "unlockedPromoOne": "Отключихте промоция!",
+    "unlockedPromoMany": "Отключихте промоции!",
+    "pickADateFirst": "Първо изберете дата",
+    "closedThisDay": "Затворено в този ден"
   },
   "reservation": {
     "title": "Резервирай маса",

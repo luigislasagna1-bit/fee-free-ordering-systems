@@ -251,7 +251,8 @@
     "holidayOrderLater": "Saad siiski tellida hilisemaks kuupäevaks.",
     "availableOnlyLabel": "Saadaval {window}",
     "testModeBanner": "Testrežiim — vaatad omaenda poodi",
-    "testModeHint": "Siin tehtud tellimused märgitakse TEST: need helisevad köögis ja prinditakse tavapäraselt, kuid ei lähe kunagi aruannetesse ega tulusse."
+    "testModeHint": "Siin tehtud tellimused märgitakse TEST: need helisevad köögis ja prinditakse tavapäraselt, kuid ei lähe kunagi aruannetesse ega tulusse.",
+    "fromPrice": "alates {price}"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Ajastatud: {when}",
     "timeCateringNotice": "Catering — vali aeg vähemalt {hours} h ette",
     "deliveryTo": "Kohaletoimetamine: {address}",
-    "deliveryAddAddress": "Kohaletoimetamine — lisa aadress"
+    "deliveryAddAddress": "Kohaletoimetamine — lisa aadress",
+    "free": "Tasuta",
+    "taxWithRate": "Maks ({rate}%)",
+    "unlockedPromoOne": "Avasid sooduspakkumise!",
+    "unlockedPromoMany": "Avasid sooduspakkumisi!",
+    "pickADateFirst": "Vali esmalt kuupäev",
+    "closedThisDay": "Sel päeval suletud"
   },
   "reservation": {
     "title": "Broneeri laud",

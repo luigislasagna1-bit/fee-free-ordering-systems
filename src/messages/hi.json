@@ -251,7 +251,8 @@
     "holidayOrderLater": "आप बाद की तारीख़ के लिए ऑर्डर कर सकते हैं।",
     "availableOnlyLabel": "उपलब्ध {window}",
     "testModeBanner": "परीक्षण मोड — आप अपनी ही दुकान का पूर्वावलोकन कर रहे हैं",
-    "testModeHint": "यहाँ किए गए ऑर्डर TEST चिह्नित होते हैं: किचन में सामान्य रूप से बजते और प्रिंट होते हैं, पर रिपोर्ट या आय में कभी नहीं गिने जाते।"
+    "testModeHint": "यहाँ किए गए ऑर्डर TEST चिह्नित होते हैं: किचन में सामान्य रूप से बजते और प्रिंट होते हैं, पर रिपोर्ट या आय में कभी नहीं गिने जाते।",
+    "fromPrice": "{price} से"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "{when} के लिए निर्धारित",
     "timeCateringNotice": "कैटरिंग — कम से कम {hours} घंटे पहले का समय चुनें",
     "deliveryTo": "{address} पर डिलीवरी",
-    "deliveryAddAddress": "डिलीवरी — पता जोड़ें"
+    "deliveryAddAddress": "डिलीवरी — पता जोड़ें",
+    "free": "मुफ़्त",
+    "taxWithRate": "कर ({rate}%)",
+    "unlockedPromoOne": "आपने एक प्रोमो अनलॉक किया!",
+    "unlockedPromoMany": "आपने प्रोमो अनलॉक किए!",
+    "pickADateFirst": "पहले तारीख़ चुनें",
+    "closedThisDay": "इस दिन बंद"
   },
   "reservation": {
     "title": "टेबल बुक करें",

@@ -251,7 +251,8 @@
     "holidayOrderLater": "Anda tetap dapat memesan untuk tanggal lain.",
     "availableOnlyLabel": "Tersedia {window}",
     "testModeBanner": "Mode uji — Anda melihat pratinjau toko sendiri",
-    "testModeHint": "Pesanan di sini ditandai TEST: berdering di dapur dan dicetak seperti biasa, tetapi tidak pernah dihitung dalam laporan atau pendapatan."
+    "testModeHint": "Pesanan di sini ditandai TEST: berdering di dapur dan dicetak seperti biasa, tetapi tidak pernah dihitung dalam laporan atau pendapatan.",
+    "fromPrice": "mulai {price}"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Dijadwalkan untuk {when}",
     "timeCateringNotice": "Katering — pilih waktu minimal {hours} jam sebelumnya",
     "deliveryTo": "Antar ke {address}",
-    "deliveryAddAddress": "Pengantaran — tambahkan alamat"
+    "deliveryAddAddress": "Pengantaran — tambahkan alamat",
+    "free": "Gratis",
+    "taxWithRate": "Pajak ({rate}%)",
+    "unlockedPromoOne": "Anda membuka promo!",
+    "unlockedPromoMany": "Anda membuka promo!",
+    "pickADateFirst": "Pilih tanggal dulu",
+    "closedThisDay": "Tutup pada hari ini"
   },
   "reservation": {
     "title": "Pesan meja",

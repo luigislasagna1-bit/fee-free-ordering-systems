@@ -251,7 +251,8 @@
     "holidayOrderLater": "Вы всё ещё можете оформить заказ на другую дату.",
     "availableOnlyLabel": "Доступно {window}",
     "testModeBanner": "Тестовый режим — вы просматриваете собственный магазин",
-    "testModeHint": "Заказы здесь помечаются TEST: они звонят на кухне и печатаются как обычно, но никогда не попадают в отчёты и выручку."
+    "testModeHint": "Заказы здесь помечаются TEST: они звонят на кухне и печатаются как обычно, но никогда не попадают в отчёты и выручку.",
+    "fromPrice": "от {price}"
   },
   "pizza": {
     "chooseSize": "Выберите размер",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Запланировано на {when}",
     "timeCateringNotice": "Кейтеринг — выберите время минимум за {hours} ч.",
     "deliveryTo": "Доставка по адресу {address}",
-    "deliveryAddAddress": "Доставка — добавьте адрес"
+    "deliveryAddAddress": "Доставка — добавьте адрес",
+    "free": "Бесплатно",
+    "taxWithRate": "Налог ({rate}%)",
+    "unlockedPromoOne": "Вы открыли промоакцию!",
+    "unlockedPromoMany": "Вы открыли промоакции!",
+    "pickADateFirst": "Сначала выберите дату",
+    "closedThisDay": "В этот день закрыто"
   },
   "reservation": {
     "title": "Забронировать столик",

@@ -251,7 +251,8 @@
     "holidayOrderLater": "Jūs joprojām varat pasūtīt vēlākam datumam.",
     "availableOnlyLabel": "Pieejams {window}",
     "testModeBanner": "Testa režīms — skatāt savu veikalu",
-    "testModeHint": "Šeit veiktie pasūtījumi tiek atzīmēti TEST: tie zvana virtuvē un drukājas kā parasti, bet nekad netiek ieskaitīti atskaitēs vai ieņēmumos."
+    "testModeHint": "Šeit veiktie pasūtījumi tiek atzīmēti TEST: tie zvana virtuvē un drukājas kā parasti, bet nekad netiek ieskaitīti atskaitēs vai ieņēmumos.",
+    "fromPrice": "no {price}"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Ieplānots: {when}",
     "timeCateringNotice": "Ēdināšana — izvēlieties laiku vismaz {hours} h iepriekš",
     "deliveryTo": "Piegāde uz {address}",
-    "deliveryAddAddress": "Piegāde — pievienojiet adresi"
+    "deliveryAddAddress": "Piegāde — pievienojiet adresi",
+    "free": "Bezmaksas",
+    "taxWithRate": "Nodoklis ({rate}%)",
+    "unlockedPromoOne": "Atbloķēji akciju!",
+    "unlockedPromoMany": "Atbloķēji akcijas!",
+    "pickADateFirst": "Vispirms izvēlieties datumu",
+    "closedThisDay": "Šajā dienā slēgts"
   },
   "reservation": {
     "title": "Rezervēt galdu",

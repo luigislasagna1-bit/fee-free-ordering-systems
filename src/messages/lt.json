@@ -251,7 +251,8 @@
     "holidayOrderLater": "Vis tiek galite užsisakyti vėlesnei datai.",
     "availableOnlyLabel": "Galima {window}",
     "testModeBanner": "Bandomasis režimas — peržiūrite savo parduotuvę",
-    "testModeHint": "Čia pateikti užsakymai pažymimi TEST: jie skamba virtuvėje ir spausdinami įprastai, bet niekada neįskaičiuojami į ataskaitas ar pajamas."
+    "testModeHint": "Čia pateikti užsakymai pažymimi TEST: jie skamba virtuvėje ir spausdinami įprastai, bet niekada neįskaičiuojami į ataskaitas ar pajamas.",
+    "fromPrice": "nuo {price}"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Suplanuota: {when}",
     "timeCateringNotice": "Maitinimas — pasirinkite laiką bent prieš {hours} val.",
     "deliveryTo": "Pristatymas adresu {address}",
-    "deliveryAddAddress": "Pristatymas — pridėkite adresą"
+    "deliveryAddAddress": "Pristatymas — pridėkite adresą",
+    "free": "Nemokamai",
+    "taxWithRate": "Mokestis ({rate}%)",
+    "unlockedPromoOne": "Atrakinote akciją!",
+    "unlockedPromoMany": "Atrakinote akcijas!",
+    "pickADateFirst": "Pirma pasirinkite datą",
+    "closedThisDay": "Šią dieną uždaryta"
   },
   "reservation": {
     "title": "Rezervuoti stalą",

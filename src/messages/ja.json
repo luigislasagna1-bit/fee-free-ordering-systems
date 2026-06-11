@@ -251,7 +251,8 @@
     "holidayOrderLater": "後日の注文は引き続き可能です。",
     "availableOnlyLabel": "提供時間 {window}",
     "testModeBanner": "テストモード — 自分の店舗をプレビュー中",
-    "testModeHint": "ここで行った注文は TEST と表示されます。キッチンには通常どおり通知・印刷されますが、レポートや売上には一切計上されません。"
+    "testModeHint": "ここで行った注文は TEST と表示されます。キッチンには通常どおり通知・印刷されますが、レポートや売上には一切計上されません。",
+    "fromPrice": "{price}〜"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "{when} に予約",
     "timeCateringNotice": "ケータリング — {hours}時間以上先の時間を選択してください",
     "deliveryTo": "{address} へ配達",
-    "deliveryAddAddress": "配達 — 住所を追加"
+    "deliveryAddAddress": "配達 — 住所を追加",
+    "free": "無料",
+    "taxWithRate": "税（{rate}%）",
+    "unlockedPromoOne": "プロモを獲得しました！",
+    "unlockedPromoMany": "プロモを獲得しました！",
+    "pickADateFirst": "先に日付を選択",
+    "closedThisDay": "この日は休業"
   },
   "reservation": {
     "title": "テーブルを予約",

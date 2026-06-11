@@ -251,7 +251,8 @@
     "holidayOrderLater": "คุณยังสั่งล่วงหน้าสำหรับวันอื่นได้",
     "availableOnlyLabel": "มีจำหน่าย {window}",
     "testModeBanner": "โหมดทดสอบ — คุณกำลังดูร้านของคุณเอง",
-    "testModeHint": "ออเดอร์ที่สั่งที่นี่จะถูกทำเครื่องหมาย TEST: จะดังที่ครัวและพิมพ์ตามปกติ แต่จะไม่ถูกนับในรายงานหรือรายได้"
+    "testModeHint": "ออเดอร์ที่สั่งที่นี่จะถูกทำเครื่องหมาย TEST: จะดังที่ครัวและพิมพ์ตามปกติ แต่จะไม่ถูกนับในรายงานหรือรายได้",
+    "fromPrice": "เริ่มต้น {price}"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "กำหนดเวลา {when}",
     "timeCateringNotice": "จัดเลี้ยง — เลือกเวลาล่วงหน้าอย่างน้อย {hours} ชม.",
     "deliveryTo": "จัดส่งไปที่ {address}",
-    "deliveryAddAddress": "จัดส่ง — เพิ่มที่อยู่"
+    "deliveryAddAddress": "จัดส่ง — เพิ่มที่อยู่",
+    "free": "ฟรี",
+    "taxWithRate": "ภาษี ({rate}%)",
+    "unlockedPromoOne": "คุณปลดล็อกโปรโมชั่นแล้ว!",
+    "unlockedPromoMany": "คุณปลดล็อกโปรโมชั่นแล้ว!",
+    "pickADateFirst": "เลือกวันที่ก่อน",
+    "closedThisDay": "วันนี้ปิดทำการ"
   },
   "reservation": {
     "title": "จองโต๊ะ",

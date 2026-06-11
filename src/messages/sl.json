@@ -251,7 +251,8 @@
     "holidayOrderLater": "Še vedno lahko naročite za poznejši datum.",
     "availableOnlyLabel": "Na voljo {window}",
     "testModeBanner": "Testni način — predogled lastne trgovine",
-    "testModeHint": "Naročila tukaj so označena TEST: zvonijo v kuhinji in se natisnejo normalno, a se nikoli ne štejejo v poročila ali prihodek."
+    "testModeHint": "Naročila tukaj so označena TEST: zvonijo v kuhinji in se natisnejo normalno, a se nikoli ne štejejo v poročila ali prihodek.",
+    "fromPrice": "od {price}"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Načrtovano za {when}",
     "timeCateringNotice": "Catering — izberite čas vsaj {hours} h vnaprej",
     "deliveryTo": "Dostava na {address}",
-    "deliveryAddAddress": "Dostava — dodajte naslov"
+    "deliveryAddAddress": "Dostava — dodajte naslov",
+    "free": "Brezplačno",
+    "taxWithRate": "Davek ({rate}%)",
+    "unlockedPromoOne": "Odklenili ste promocijo!",
+    "unlockedPromoMany": "Odklenili ste promocije!",
+    "pickADateFirst": "Najprej izberite datum",
+    "closedThisDay": "Ta dan zaprto"
   },
   "reservation": {
     "title": "Rezerviraj mizo",

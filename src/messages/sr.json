@@ -251,7 +251,8 @@
     "holidayOrderLater": "И даље можете наручити за каснији датум.",
     "availableOnlyLabel": "Доступно {window}",
     "testModeBanner": "Тест режим — прегледате сопствену радњу",
-    "testModeHint": "Наруџбе овде су означене TEST: звоне у кухињи и штампају се нормално, али се никад не рачунају у извештаје или приход."
+    "testModeHint": "Наруџбе овде су означене TEST: звоне у кухињи и штампају се нормално, али се никад не рачунају у извештаје или приход.",
+    "fromPrice": "од {price}"
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Заказано за {when}",
     "timeCateringNotice": "Кетеринг — изаберите време бар {hours} ч унапред",
     "deliveryTo": "Достава на {address}",
-    "deliveryAddAddress": "Достава — додајте адресу"
+    "deliveryAddAddress": "Достава — додајте адресу",
+    "free": "Бесплатно",
+    "taxWithRate": "Порез ({rate}%)",
+    "unlockedPromoOne": "Откључали сте промоцију!",
+    "unlockedPromoMany": "Откључали сте промоције!",
+    "pickADateFirst": "Прво изаберите датум",
+    "closedThisDay": "Затворено овог дана"
   },
   "reservation": {
     "title": "Rezerviši sto",

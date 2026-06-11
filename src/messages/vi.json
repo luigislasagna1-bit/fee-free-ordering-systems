@@ -251,7 +251,8 @@
     "holidayOrderLater": "Bạn vẫn có thể đặt hàng cho ngày khác.",
     "availableOnlyLabel": "Có sẵn {window}",
     "testModeBanner": "Chế độ thử — bạn đang xem trước cửa hàng của mình",
-    "testModeHint": "Đơn đặt ở đây được đánh dấu TEST: vẫn reo ở bếp và in bình thường nhưng không bao giờ tính vào báo cáo hay doanh thu."
+    "testModeHint": "Đơn đặt ở đây được đánh dấu TEST: vẫn reo ở bếp và in bình thường nhưng không bao giờ tính vào báo cáo hay doanh thu.",
+    "fromPrice": "từ {price}"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Đã hẹn lúc {when}",
     "timeCateringNotice": "Tiệc đặt — chọn thời gian trước ít nhất {hours} giờ",
     "deliveryTo": "Giao đến {address}",
-    "deliveryAddAddress": "Giao hàng — thêm địa chỉ"
+    "deliveryAddAddress": "Giao hàng — thêm địa chỉ",
+    "free": "Miễn phí",
+    "taxWithRate": "Thuế ({rate}%)",
+    "unlockedPromoOne": "Bạn đã mở khóa ưu đãi!",
+    "unlockedPromoMany": "Bạn đã mở khóa các ưu đãi!",
+    "pickADateFirst": "Chọn ngày trước",
+    "closedThisDay": "Đóng cửa ngày này"
   },
   "reservation": {
     "title": "Đặt bàn",

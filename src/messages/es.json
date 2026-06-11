@@ -251,7 +251,8 @@
     "holidayOrderLater": "Aún puedes hacer un pedido para otra fecha.",
     "availableOnlyLabel": "Disponible {window}",
     "testModeBanner": "Modo de prueba — estás previsualizando tu propia tienda",
-    "testModeHint": "Los pedidos que hagas aquí se marcan como TEST: suenan en cocina y se imprimen con normalidad, pero nunca cuentan en informes ni ingresos."
+    "testModeHint": "Los pedidos que hagas aquí se marcan como TEST: suenan en cocina y se imprimen con normalidad, pero nunca cuentan en informes ni ingresos.",
+    "fromPrice": "desde {price}"
   },
   "pizza": {
     "chooseSize": "Elegir tamaño",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Programado para {when}",
     "timeCateringNotice": "Catering — elige una hora con al menos {hours}h de antelación",
     "deliveryTo": "Entrega en {address}",
-    "deliveryAddAddress": "Entrega — añade la dirección"
+    "deliveryAddAddress": "Entrega — añade la dirección",
+    "free": "Gratis",
+    "taxWithRate": "Impuesto ({rate}%)",
+    "unlockedPromoOne": "¡Has desbloqueado una promo!",
+    "unlockedPromoMany": "¡Has desbloqueado promos!",
+    "pickADateFirst": "Primero elige una fecha",
+    "closedThisDay": "Cerrado este día"
   },
   "reservation": {
     "title": "Reservar mesa",

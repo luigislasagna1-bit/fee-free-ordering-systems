@@ -251,7 +251,8 @@
     "holidayOrderLater": "Későbbi időpontra továbbra is rendelhetsz.",
     "availableOnlyLabel": "Elérhető: {window}",
     "testModeBanner": "Tesztmód — a saját éttermedet nézed",
-    "testModeHint": "Az itt leadott rendelések TEST jelölést kapnak: csörögnek a konyhán és normálisan nyomtatódnak, de soha nem számítanak a riportokba vagy a bevételbe."
+    "testModeHint": "Az itt leadott rendelések TEST jelölést kapnak: csörögnek a konyhán és normálisan nyomtatódnak, de soha nem számítanak a riportokba vagy a bevételbe.",
+    "fromPrice": "{price}-tól"
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Ütemezve: {when}",
     "timeCateringNotice": "Catering — válassz időpontot legalább {hours} órával előre",
     "deliveryTo": "Kiszállítás ide: {address}",
-    "deliveryAddAddress": "Kiszállítás — add meg a címet"
+    "deliveryAddAddress": "Kiszállítás — add meg a címet",
+    "free": "Ingyenes",
+    "taxWithRate": "Adó ({rate}%)",
+    "unlockedPromoOne": "Feloldottál egy promóciót!",
+    "unlockedPromoMany": "Feloldottál promóciókat!",
+    "pickADateFirst": "Először válassz dátumot",
+    "closedThisDay": "Ezen a napon zárva"
   },
   "reservation": {
     "title": "Asztal foglalása",

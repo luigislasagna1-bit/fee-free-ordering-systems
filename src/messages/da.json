@@ -251,7 +251,8 @@
     "holidayOrderLater": "Du kan stadig bestille til en senere dato.",
     "availableOnlyLabel": "Tilgængelig {window}",
     "testModeBanner": "Testtilstand — du forhåndsviser din egen butik",
-    "testModeHint": "Bestillinger her markeres som TEST: de ringer i køkkenet og printes normalt, men tæller aldrig i rapporter eller omsætning."
+    "testModeHint": "Bestillinger her markeres som TEST: de ringer i køkkenet og printes normalt, men tæller aldrig i rapporter eller omsætning.",
+    "fromPrice": "fra {price}"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Planlagt til {when}",
     "timeCateringNotice": "Catering — vælg et tidspunkt mindst {hours} t. forud",
     "deliveryTo": "Levering til {address}",
-    "deliveryAddAddress": "Levering — tilføj adresse"
+    "deliveryAddAddress": "Levering — tilføj adresse",
+    "free": "Gratis",
+    "taxWithRate": "Moms ({rate}%)",
+    "unlockedPromoOne": "Du har låst op for en kampagne!",
+    "unlockedPromoMany": "Du har låst op for kampagner!",
+    "pickADateFirst": "Vælg en dato først",
+    "closedThisDay": "Lukket denne dag"
   },
   "reservation": {
     "title": "Book et bord",

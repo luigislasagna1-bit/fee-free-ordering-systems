@@ -251,7 +251,8 @@
     "holidayOrderLater": "لا يزال بإمكانك الطلب لتاريخ لاحق.",
     "availableOnlyLabel": "متاح {window}",
     "testModeBanner": "وضع الاختبار — أنت تعاين متجرك",
-    "testModeHint": "الطلبات هنا تُوسم TEST: ترن في المطبخ وتُطبع كالمعتاد لكنها لا تُحتسب أبدًا في التقارير أو الإيرادات."
+    "testModeHint": "الطلبات هنا تُوسم TEST: ترن في المطبخ وتُطبع كالمعتاد لكنها لا تُحتسب أبدًا في التقارير أو الإيرادات.",
+    "fromPrice": "من {price}"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "مجدول في {when}",
     "timeCateringNotice": "تموين — اختر وقتًا قبل {hours} ساعة على الأقل",
     "deliveryTo": "توصيل إلى {address}",
-    "deliveryAddAddress": "توصيل — أضف العنوان"
+    "deliveryAddAddress": "توصيل — أضف العنوان",
+    "free": "مجانًا",
+    "taxWithRate": "ضريبة ({rate}%)",
+    "unlockedPromoOne": "لقد فتحت عرضًا ترويجيًا!",
+    "unlockedPromoMany": "لقد فتحت عروضًا ترويجية!",
+    "pickADateFirst": "اختر تاريخًا أولاً",
+    "closedThisDay": "مغلق في هذا اليوم"
   },
   "reservation": {
     "title": "احجز طاولة",

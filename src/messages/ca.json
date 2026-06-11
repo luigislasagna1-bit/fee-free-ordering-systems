@@ -251,7 +251,8 @@
     "holidayOrderLater": "Encara pots fer una comanda per a una data posterior.",
     "availableOnlyLabel": "Disponible {window}",
     "testModeBanner": "Mode de prova — estàs previsualitzant la teva botiga",
-    "testModeHint": "Les comandes fetes aquí es marquen com a TEST: sonen a la cuina i s'imprimeixen normalment, però mai no compten en informes ni ingressos."
+    "testModeHint": "Les comandes fetes aquí es marquen com a TEST: sonen a la cuina i s'imprimeixen normalment, però mai no compten en informes ni ingressos.",
+    "fromPrice": "des de {price}"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Programat per a {when}",
     "timeCateringNotice": "Càtering — tria una hora amb almenys {hours}h d'antelació",
     "deliveryTo": "Lliurament a {address}",
-    "deliveryAddAddress": "Lliurament — afegeix l'adreça"
+    "deliveryAddAddress": "Lliurament — afegeix l'adreça",
+    "free": "Gratis",
+    "taxWithRate": "Impost ({rate}%)",
+    "unlockedPromoOne": "Has desbloquejat una promo!",
+    "unlockedPromoMany": "Has desbloquejat promos!",
+    "pickADateFirst": "Tria primer una data",
+    "closedThisDay": "Tancat aquest dia"
   },
   "reservation": {
     "title": "Reservar taula",

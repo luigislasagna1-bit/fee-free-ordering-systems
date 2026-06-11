@@ -251,7 +251,8 @@
     "holidayOrderLater": "Stále můžete objednat na pozdější datum.",
     "availableOnlyLabel": "K dispozici {window}",
     "testModeBanner": "Testovací režim — prohlížíte si vlastní podnik",
-    "testModeHint": "Objednávky zadané zde jsou označeny TEST: v kuchyni zazvoní a normálně se vytisknou, ale nikdy se nepočítají do reportů ani tržeb."
+    "testModeHint": "Objednávky zadané zde jsou označeny TEST: v kuchyni zazvoní a normálně se vytisknou, ale nikdy se nepočítají do reportů ani tržeb.",
+    "fromPrice": "od {price}"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Naplánováno na {when}",
     "timeCateringNotice": "Catering — zvolte čas alespoň {hours} h předem",
     "deliveryTo": "Rozvoz na {address}",
-    "deliveryAddAddress": "Rozvoz — přidejte adresu"
+    "deliveryAddAddress": "Rozvoz — přidejte adresu",
+    "free": "Zdarma",
+    "taxWithRate": "Daň ({rate}%)",
+    "unlockedPromoOne": "Odemkli jste promo akci!",
+    "unlockedPromoMany": "Odemkli jste promo akce!",
+    "pickADateFirst": "Nejprve vyberte datum",
+    "closedThisDay": "Tento den zavřeno"
   },
   "reservation": {
     "title": "Rezervovat stůl",

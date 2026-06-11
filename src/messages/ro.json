@@ -251,7 +251,8 @@
     "holidayOrderLater": "Poți totuși plasa o comandă pentru o dată ulterioară.",
     "availableOnlyLabel": "Disponibil {window}",
     "testModeBanner": "Mod de test — previzualizezi propriul magazin",
-    "testModeHint": "Comenzile plasate aici sunt marcate TEST: sună în bucătărie și se tipăresc normal, dar nu se numără niciodată în rapoarte sau venituri."
+    "testModeHint": "Comenzile plasate aici sunt marcate TEST: sună în bucătărie și se tipăresc normal, dar nu se numără niciodată în rapoarte sau venituri.",
+    "fromPrice": "de la {price}"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Programat pentru {when}",
     "timeCateringNotice": "Catering — alege o oră cu cel puțin {hours}h înainte",
     "deliveryTo": "Livrare la {address}",
-    "deliveryAddAddress": "Livrare — adaugă adresa"
+    "deliveryAddAddress": "Livrare — adaugă adresa",
+    "free": "Gratuit",
+    "taxWithRate": "Taxă ({rate}%)",
+    "unlockedPromoOne": "Ai deblocat o promoție!",
+    "unlockedPromoMany": "Ai deblocat promoții!",
+    "pickADateFirst": "Alege mai întâi o dată",
+    "closedThisDay": "Închis în această zi"
   },
   "reservation": {
     "title": "Rezervă o masă",

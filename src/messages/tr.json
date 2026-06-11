@@ -251,7 +251,8 @@
     "holidayOrderLater": "Yine de ileri bir tarih için sipariş verebilirsiniz.",
     "availableOnlyLabel": "Şu zamanlarda mevcut: {window}",
     "testModeBanner": "Test modu — kendi mağazanızı önizliyorsunuz",
-    "testModeHint": "Burada verilen siparişler TEST olarak işaretlenir: mutfakta çalar ve normal yazdırılır ama raporlara veya gelire asla sayılmaz."
+    "testModeHint": "Burada verilen siparişler TEST olarak işaretlenir: mutfakta çalar ve normal yazdırılır ama raporlara veya gelire asla sayılmaz.",
+    "fromPrice": "{price} başlangıç"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "{when} için planlandı",
     "timeCateringNotice": "Catering — en az {hours} saat önceden bir saat seçin",
     "deliveryTo": "{address} adresine teslimat",
-    "deliveryAddAddress": "Teslimat — adres ekleyin"
+    "deliveryAddAddress": "Teslimat — adres ekleyin",
+    "free": "Ücretsiz",
+    "taxWithRate": "Vergi (%{rate})",
+    "unlockedPromoOne": "Bir promosyon açtınız!",
+    "unlockedPromoMany": "Promosyonlar açtınız!",
+    "pickADateFirst": "Önce bir tarih seçin",
+    "closedThisDay": "Bu gün kapalı"
   },
   "reservation": {
     "title": "Masa Rezervasyonu",

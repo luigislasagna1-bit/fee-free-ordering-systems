@@ -251,7 +251,8 @@
     "holidayOrderLater": "עדיין אפשר להזמין לתאריך מאוחר יותר.",
     "availableOnlyLabel": "זמין {window}",
     "testModeBanner": "מצב בדיקה — אתה צופה בחנות שלך",
-    "testModeHint": "הזמנות כאן מסומנות TEST: הן מצלצלות במטבח ומודפסות כרגיל אך לעולם לא נספרות בדוחות או בהכנסות."
+    "testModeHint": "הזמנות כאן מסומנות TEST: הן מצלצלות במטבח ומודפסות כרגיל אך לעולם לא נספרות בדוחות או בהכנסות.",
+    "fromPrice": "החל מ-{price}"
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "מתוזמן ל-{when}",
     "timeCateringNotice": "קייטרינג — בחר זמן לפחות {hours} שעות מראש",
     "deliveryTo": "משלוח אל {address}",
-    "deliveryAddAddress": "משלוח — הוסף כתובת"
+    "deliveryAddAddress": "משלוח — הוסף כתובת",
+    "free": "חינם",
+    "taxWithRate": "מס ({rate}%)",
+    "unlockedPromoOne": "פתחת מבצע!",
+    "unlockedPromoMany": "פתחת מבצעים!",
+    "pickADateFirst": "בחר תאריך תחילה",
+    "closedThisDay": "סגור ביום זה"
   },
   "reservation": {
     "title": "הזמן שולחן",

@@ -251,7 +251,8 @@
     "holidayOrderLater": "Je kunt nog steeds bestellen voor een latere datum.",
     "availableOnlyLabel": "Beschikbaar {window}",
     "testModeBanner": "Testmodus — je bekijkt je eigen winkel",
-    "testModeHint": "Bestellingen die je hier plaatst zijn gemarkeerd als TEST: ze rinkelen in de keuken en printen normaal, maar tellen nooit mee in rapporten of omzet."
+    "testModeHint": "Bestellingen die je hier plaatst zijn gemarkeerd als TEST: ze rinkelen in de keuken en printen normaal, maar tellen nooit mee in rapporten of omzet.",
+    "fromPrice": "vanaf {price}"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -438,7 +439,13 @@
     "timeScheduledFor": "Gepland voor {when}",
     "timeCateringNotice": "Catering — kies een tijd minstens {hours} u vooruit",
     "deliveryTo": "Bezorging naar {address}",
-    "deliveryAddAddress": "Bezorging — voeg adres toe"
+    "deliveryAddAddress": "Bezorging — voeg adres toe",
+    "free": "Gratis",
+    "taxWithRate": "Btw ({rate}%)",
+    "unlockedPromoOne": "Je hebt een promo ontgrendeld!",
+    "unlockedPromoMany": "Je hebt promo's ontgrendeld!",
+    "pickADateFirst": "Kies eerst een datum",
+    "closedThisDay": "Deze dag gesloten"
   },
   "reservation": {
     "title": "Tafel reserveren",

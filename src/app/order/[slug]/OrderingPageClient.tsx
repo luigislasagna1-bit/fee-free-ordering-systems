@@ -444,7 +444,7 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
         )}
         <div className="flex items-center justify-between mt-2">
           <span className="text-sm font-bold" style={{ color: theme.primaryColor }}>
-            {item.hasVariants ? `from ${fmt(basePrice)}` : fmt(basePrice)}
+            {item.hasVariants ? t("fromPrice", { price: fmt(basePrice) }) : fmt(basePrice)}
           </span>
           {!blocked && (
             <div className="w-7 h-7 rounded-full flex items-center justify-center shadow-sm transition" style={{ backgroundColor: theme.primaryColor }}>
@@ -569,7 +569,7 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
           </div>
           <div className="flex-shrink-0 flex flex-col items-end gap-2">
             <div className="font-bold text-base" style={{ color: theme.textColor }}>
-              {item.hasVariants ? `from ${fmt(basePrice)}` : fmt(basePrice)}
+              {item.hasVariants ? t("fromPrice", { price: fmt(basePrice) }) : fmt(basePrice)}
             </div>
             {!blocked && (
               <div className="w-9 h-9 rounded-full flex items-center justify-center shadow-sm transition" style={{ backgroundColor: theme.primaryColor }}>
@@ -632,7 +632,7 @@ function ListCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
           <p className="font-semibold leading-snug transition" style={{ color: theme.textColor }}>{item.name}</p>
           {item.description && <p className="text-sm text-gray-500 mt-1 line-clamp-2 leading-relaxed">{item.description}</p>}
           <div className="font-bold text-base mt-2" style={{ color: theme.textColor }}>
-            {item.hasVariants ? `from ${fmt(basePrice)}` : fmt(basePrice)}
+            {item.hasVariants ? t("fromPrice", { price: fmt(basePrice) }) : fmt(basePrice)}
           </div>
         </div>
         {!blocked && (
