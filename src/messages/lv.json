@@ -1201,7 +1201,12 @@
       "confirmPassword": "Apstiprināt jauno paroli",
       "dangerZone": "Bīstamā zona",
       "deleteAccount": "Dzēst kontu",
-      "deleteAccountHelp": "Neatgriezeniski dzēst šo restorānu un visus tā datus."
+      "deleteAccountHelp": "Neatgriezeniski dzēst šo restorānu un visus tā datus.",
+      "recommendedAddOnsTitle": "Ieteiktie papildinājumi",
+      "recommendedAddOnsSubtitle": "Populāri uzlabojumi, kas atmaksājas — aktivizējiet ar vienu klikšķi.",
+      "popularBadge": "Populārs",
+      "addOnEnableCta": "Aktivizēt",
+      "perMonth": "/mēn."
     },
     "coupons": {
       "title": "Kuponi",

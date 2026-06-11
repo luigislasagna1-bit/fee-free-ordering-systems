@@ -1201,7 +1201,12 @@
       "confirmPassword": "Neues Passwort bestätigen",
       "dangerZone": "Gefahrenzone",
       "deleteAccount": "Konto löschen",
-      "deleteAccountHelp": "Dieses Restaurant und alle seine Daten dauerhaft löschen."
+      "deleteAccountHelp": "Dieses Restaurant und alle seine Daten dauerhaft löschen.",
+      "recommendedAddOnsTitle": "Empfohlene Add-ons",
+      "recommendedAddOnsSubtitle": "Beliebte Upgrades, die sich rentieren — mit einem Klick aktivieren.",
+      "popularBadge": "Beliebt",
+      "addOnEnableCta": "Aktivieren",
+      "perMonth": "/Mon."
     },
     "coupons": {
       "title": "Gutscheine",

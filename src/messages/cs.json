@@ -1201,7 +1201,12 @@
       "confirmPassword": "Potvrdit nové heslo",
       "dangerZone": "Nebezpečná zóna",
       "deleteAccount": "Smazat účet",
-      "deleteAccountHelp": "Trvale smazat tuto restauraci a veškerá její data."
+      "deleteAccountHelp": "Trvale smazat tuto restauraci a veškerá její data.",
+      "recommendedAddOnsTitle": "Doporučené doplňky",
+      "recommendedAddOnsSubtitle": "Oblíbená vylepšení, která se vyplatí — aktivujte jedním kliknutím.",
+      "popularBadge": "Oblíbené",
+      "addOnEnableCta": "Aktivovat",
+      "perMonth": "/měs."
     },
     "coupons": {
       "title": "Kupóny",

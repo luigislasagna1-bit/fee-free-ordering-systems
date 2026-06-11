@@ -1201,7 +1201,12 @@
       "confirmPassword": "Xác nhận mật khẩu mới",
       "dangerZone": "Vùng nguy hiểm",
       "deleteAccount": "Xóa tài khoản",
-      "deleteAccountHelp": "Xóa vĩnh viễn nhà hàng này và toàn bộ dữ liệu."
+      "deleteAccountHelp": "Xóa vĩnh viễn nhà hàng này và toàn bộ dữ liệu.",
+      "recommendedAddOnsTitle": "Tiện ích được đề xuất",
+      "recommendedAddOnsSubtitle": "Các nâng cấp phổ biến đáng đồng tiền — bật chỉ với một cú nhấp.",
+      "popularBadge": "Phổ biến",
+      "addOnEnableCta": "Bật",
+      "perMonth": "/tháng"
     },
     "coupons": {
       "title": "Phiếu giảm giá",

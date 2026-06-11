@@ -1,7 +1,7 @@
 "use client";
 import {
-  CreditCard, Zap, Globe, CheckCircle2,
-  ChevronRight, Shield, Building2, ArrowUpRight, ExternalLink, Sparkles,
+  CreditCard, Zap, CheckCircle2,
+  ChevronRight, Shield, ArrowUpRight, ExternalLink, Sparkles,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrencyFormat } from "@/lib/currency-context";
@@ -25,12 +25,21 @@ export type ActiveAddOn = {
   monthlyPriceCents: number;
 };
 
+export type RecommendedAddOn = {
+  slug: string;
+  name: string;
+  description: string | null;
+  monthlyPriceCents: number;
+};
+
 export function SettingsClient({
   restaurant,
   activeAddOns = [],
+  recommendedAddOns = [],
 }: {
   restaurant: any;
   activeAddOns?: ActiveAddOn[];
+  recommendedAddOns?: RecommendedAddOn[];
 }) {
   const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.settings");
@@ -103,7 +112,7 @@ export function SettingsClient({
                           : "Current Plan: FREE"}
                       </h3>
                       <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
-                        {formatCurrency(monthlyTotalCents / 100)}/mo
+                        {formatCurrency(monthlyTotalCents / 100)}{t("perMonth")}
                       </span>
                     </div>
                     <p className="text-sm text-gray-500">
@@ -165,7 +174,7 @@ export function SettingsClient({
                               )}
                             </div>
                             <div className="text-sm font-semibold text-gray-700 whitespace-nowrap">
-                              {formatCurrency(a.monthlyPriceCents / 100)}/mo
+                              {formatCurrency(a.monthlyPriceCents / 100)}{t("perMonth")}
                             </div>
                           </div>
                         );
@@ -208,55 +217,48 @@ export function SettingsClient({
             duplicated — and contradicted — that working page, so it was removed.
             Luigi 2026-06-11 (reseller report: notifications were duplicated). */}
 
-        {/* Advanced — real add-on tiles.
-            2026-05-31: removed the legacy "Growth+ / Pro+ / Enterprise"
-            plan-tier badges. Those plan tiers don't exist anymore — we
-            ship a FREE base + à-la-carte add-ons. The badge would tell
-            a Luigi-style owner to "upgrade to Pro+" with no Pro+ to
-            upgrade to. Each tile now links straight to the matching
-            add-on on /admin/billing/add-ons where the price + Subscribe
-            CTA live. REST API was dropped from this list — there's no
-            corresponding add-on, so surfacing it here is misleading. */}
-        <Section title={t("dangerZone")}>
-          <div className="space-y-3">
-            {[
-              {
-                icon: Globe,
-                iconBg: "bg-amber-50",
-                iconColor: "text-amber-500",
-                title: "Custom Domain",
-                desc: "Serve your ordering page at yourdomain.com instead of the default URL.",
-                href: "/admin/billing/add-ons#custom_domain",
-              },
-              {
-                icon: Building2,
-                iconBg: "bg-gray-50",
-                iconColor: "text-gray-500",
-                title: "Multi-Location",
-                desc: "Manage multiple restaurant locations from one account.",
-                href: "/admin/billing/add-ons#multi_location",
-              },
-            ].map((item) => (
-              <a
-                key={item.title}
-                href={item.href}
-                className="flex items-center gap-4 p-4 border border-gray-100 rounded-xl hover:border-emerald-200 hover:bg-emerald-50/30 transition group"
-              >
-                <div className={`w-10 h-10 ${item.iconBg} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                  <item.icon className={`w-5 h-5 ${item.iconColor}`} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium text-gray-900 text-sm">{item.title}</div>
-                  <div className="text-xs text-gray-500">{item.desc}</div>
-                </div>
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className="text-xs font-medium text-emerald-600 group-hover:underline">Add-on</span>
-                  <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-emerald-500" />
-                </div>
-              </a>
-            ))}
-          </div>
-        </Section>
+        {/* Recommended add-ons — the old "Danger Zone" was mislabeled (it held
+            add-on upsell tiles, not destructive actions). Renamed + turned into
+            a real, data-driven upsell: live name / description / PRICE from the
+            add-on catalog, only ones the restaurant doesn't already have, each
+            linking to its Subscribe CTA. Luigi 2026-06-11. */}
+        {recommendedAddOns.length > 0 && (
+          <Section title={t("recommendedAddOnsTitle")}>
+            <p className="text-sm text-gray-500 -mt-2 mb-4">{t("recommendedAddOnsSubtitle")}</p>
+            <div className="space-y-3">
+              {recommendedAddOns.map((item, i) => (
+                <a
+                  key={item.slug}
+                  href={`/admin/billing/add-ons#${item.slug}`}
+                  className="flex items-center gap-4 p-4 border border-gray-100 rounded-xl hover:border-emerald-300 hover:bg-emerald-50/40 transition group"
+                >
+                  <div className="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="w-5 h-5 text-emerald-500" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-semibold text-gray-900 text-sm">{item.name}</span>
+                      {i === 0 && (
+                        <span className="text-[10px] font-bold uppercase tracking-wide text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
+                          {t("popularBadge")}
+                        </span>
+                      )}
+                    </div>
+                    {item.description && <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{item.description}</div>}
+                  </div>
+                  <div className="flex flex-col items-end flex-shrink-0 gap-1.5">
+                    <div className="text-sm font-bold text-gray-900 whitespace-nowrap">
+                      {formatCurrency(item.monthlyPriceCents / 100)}<span className="text-xs font-normal text-gray-400">{t("perMonth")}</span>
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-white bg-emerald-500 group-hover:bg-emerald-600 px-2.5 py-1 rounded-lg transition">
+                      {t("addOnEnableCta")} <ChevronRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </Section>
+        )}
       </div>
     </div>
   );

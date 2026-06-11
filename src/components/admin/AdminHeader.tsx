@@ -120,12 +120,21 @@ export function AdminHeader({
         <div className="hidden sm:block">
           <StaffLanguageSwitcher />
         </div>
-        <div className="relative p-2 text-gray-400 hidden sm:block">
+        {/* The bell was a dead decoration (Luigi 2026-06-11: "it does nothing").
+            Point it at the live orders feed — the restaurant's real "what needs
+            my attention" surface — and keep the red dot when orders are
+            pending. */}
+        <Link
+          href="/admin/orders"
+          title={tOrders("pending")}
+          aria-label={tOrders("pending")}
+          className="relative p-2 text-gray-400 hover:text-gray-600 transition hidden sm:block"
+        >
           <Bell className="w-5 h-5" />
           {pendingOrders > 0 && (
             <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500" />
           )}
-        </div>
+        </Link>
         <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
           {(user?.name || user?.email || "?")[0].toUpperCase()}
         </div>

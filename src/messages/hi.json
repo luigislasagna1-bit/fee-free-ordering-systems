@@ -1431,7 +1431,12 @@
       "confirmPassword": "नया पासवर्ड पुष्टि करें",
       "dangerZone": "खतरे का क्षेत्र",
       "deleteAccount": "खाता हटाएं",
-      "deleteAccountHelp": "इस रेस्टोरेंट और उसके सभी डेटा को स्थायी रूप से हटाएं।"
+      "deleteAccountHelp": "इस रेस्टोरेंट और उसके सभी डेटा को स्थायी रूप से हटाएं।",
+      "recommendedAddOnsTitle": "अनुशंसित ऐड-ऑन",
+      "recommendedAddOnsSubtitle": "लोकप्रिय अपग्रेड जो अपनी कीमत वसूल करते हैं — एक क्लिक में सक्षम करें।",
+      "popularBadge": "लोकप्रिय",
+      "addOnEnableCta": "सक्षम करें",
+      "perMonth": "/माह"
     },
     "coupons": {
       "title": "कूपन",

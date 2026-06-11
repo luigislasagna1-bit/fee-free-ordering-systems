@@ -1201,7 +1201,12 @@
       "confirmPassword": "Potvrdiť nové heslo",
       "dangerZone": "Nebezpečná zóna",
       "deleteAccount": "Odstrániť účet",
-      "deleteAccountHelp": "Trvalo odstrániť túto reštauráciu a všetky jej dáta."
+      "deleteAccountHelp": "Trvalo odstrániť túto reštauráciu a všetky jej dáta.",
+      "recommendedAddOnsTitle": "Odporúčané doplnky",
+      "recommendedAddOnsSubtitle": "Obľúbené vylepšenia, ktoré sa oplatia — aktivujte jedným kliknutím.",
+      "popularBadge": "Obľúbené",
+      "addOnEnableCta": "Aktivovať",
+      "perMonth": "/mes."
     },
     "coupons": {
       "title": "Kupóny",

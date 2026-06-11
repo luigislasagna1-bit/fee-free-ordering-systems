@@ -1201,7 +1201,12 @@
       "confirmPassword": "تأكيد كلمة المرور الجديدة",
       "dangerZone": "منطقة الخطر",
       "deleteAccount": "حذف الحساب",
-      "deleteAccountHelp": "حذف هذا المطعم وجميع بياناته بشكل دائم."
+      "deleteAccountHelp": "حذف هذا المطعم وجميع بياناته بشكل دائم.",
+      "recommendedAddOnsTitle": "الإضافات الموصى بها",
+      "recommendedAddOnsSubtitle": "ترقيات شائعة تستحق تكلفتها — فعّلها بنقرة واحدة.",
+      "popularBadge": "شائع",
+      "addOnEnableCta": "تفعيل",
+      "perMonth": "/شهر"
     },
     "coupons": {
       "title": "الكوبونات",

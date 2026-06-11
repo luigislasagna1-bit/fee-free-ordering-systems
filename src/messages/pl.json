@@ -1201,7 +1201,12 @@
       "confirmPassword": "Potwierdź nowe hasło",
       "dangerZone": "Strefa niebezpieczna",
       "deleteAccount": "Usuń konto",
-      "deleteAccountHelp": "Trwale usuń tę restaurację i wszystkie jej dane."
+      "deleteAccountHelp": "Trwale usuń tę restaurację i wszystkie jej dane.",
+      "recommendedAddOnsTitle": "Polecane dodatki",
+      "recommendedAddOnsSubtitle": "Popularne ulepszenia, które się zwracają — włącz jednym kliknięciem.",
+      "popularBadge": "Popularne",
+      "addOnEnableCta": "Włącz",
+      "perMonth": "/mies."
     },
     "coupons": {
       "title": "Kupony",

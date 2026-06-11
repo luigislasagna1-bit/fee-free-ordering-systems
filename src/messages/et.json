@@ -1201,7 +1201,12 @@
       "confirmPassword": "Kinnita uus parool",
       "dangerZone": "Ohutsoon",
       "deleteAccount": "Kustuta konto",
-      "deleteAccountHelp": "Kustuta see restoran ja kõik sellega seotud andmed jäädavalt."
+      "deleteAccountHelp": "Kustuta see restoran ja kõik sellega seotud andmed jäädavalt.",
+      "recommendedAddOnsTitle": "Soovitatud lisad",
+      "recommendedAddOnsSubtitle": "Populaarsed täiendused, mis tasuvad end ära — aktiveeri ühe klikiga.",
+      "popularBadge": "Populaarne",
+      "addOnEnableCta": "Aktiveeri",
+      "perMonth": "/kuus"
     },
     "coupons": {
       "title": "Kupongid",

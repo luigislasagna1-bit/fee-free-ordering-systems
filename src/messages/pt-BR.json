@@ -1201,7 +1201,12 @@
       "confirmPassword": "Confirmar nova senha",
       "dangerZone": "Zona de Perigo",
       "deleteAccount": "Excluir conta",
-      "deleteAccountHelp": "Excluir permanentemente este restaurante e todos os seus dados."
+      "deleteAccountHelp": "Excluir permanentemente este restaurante e todos os seus dados.",
+      "recommendedAddOnsTitle": "Complementos recomendados",
+      "recommendedAddOnsSubtitle": "Upgrades populares que se pagam — ative com um clique.",
+      "popularBadge": "Popular",
+      "addOnEnableCta": "Ativar",
+      "perMonth": "/mês"
     },
     "coupons": {
       "title": "Cupons",

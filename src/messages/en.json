@@ -1462,7 +1462,12 @@
       "confirmPassword": "Confirm new password",
       "dangerZone": "Danger Zone",
       "deleteAccount": "Delete account",
-      "deleteAccountHelp": "Permanently delete this restaurant and all its data."
+      "deleteAccountHelp": "Permanently delete this restaurant and all its data.",
+      "recommendedAddOnsTitle": "Recommended add-ons",
+      "recommendedAddOnsSubtitle": "Popular upgrades that pay for themselves — enable in one click.",
+      "popularBadge": "Popular",
+      "addOnEnableCta": "Enable",
+      "perMonth": "/mo"
     },
     "coupons": {
       "title": "Coupons",

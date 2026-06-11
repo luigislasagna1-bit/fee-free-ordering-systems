@@ -1201,7 +1201,12 @@
       "confirmPassword": "Підтвердіть новий пароль",
       "dangerZone": "Небезпечна зона",
       "deleteAccount": "Видалити акаунт",
-      "deleteAccountHelp": "Назавжди видалити цей ресторан та всі його дані."
+      "deleteAccountHelp": "Назавжди видалити цей ресторан та всі його дані.",
+      "recommendedAddOnsTitle": "Рекомендовані доповнення",
+      "recommendedAddOnsSubtitle": "Популярні покращення, що окупляються — увімкніть одним кліком.",
+      "popularBadge": "Популярне",
+      "addOnEnableCta": "Увімкнути",
+      "perMonth": "/міс."
     },
     "coupons": {
       "title": "Купони",

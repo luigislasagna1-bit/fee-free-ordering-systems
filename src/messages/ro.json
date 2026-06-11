@@ -1201,7 +1201,12 @@
       "confirmPassword": "Confirmă noua parolă",
       "dangerZone": "Zonă periculoasă",
       "deleteAccount": "Șterge contul",
-      "deleteAccountHelp": "Șterge definitiv acest restaurant și toate datele sale."
+      "deleteAccountHelp": "Șterge definitiv acest restaurant și toate datele sale.",
+      "recommendedAddOnsTitle": "Suplimente recomandate",
+      "recommendedAddOnsSubtitle": "Upgrade-uri populare care se amortizează — activează-le cu un clic.",
+      "popularBadge": "Popular",
+      "addOnEnableCta": "Activează",
+      "perMonth": "/lună"
     },
     "coupons": {
       "title": "Cupoane",

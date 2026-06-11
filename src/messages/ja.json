@@ -1201,7 +1201,12 @@
       "confirmPassword": "新しいパスワードを確認",
       "dangerZone": "危険な操作",
       "deleteAccount": "アカウントを削除",
-      "deleteAccountHelp": "このレストランとすべてのデータを完全に削除します。"
+      "deleteAccountHelp": "このレストランとすべてのデータを完全に削除します。",
+      "recommendedAddOnsTitle": "おすすめのアドオン",
+      "recommendedAddOnsSubtitle": "コストに見合う人気のアップグレード — ワンクリックで有効化。",
+      "popularBadge": "人気",
+      "addOnEnableCta": "有効化",
+      "perMonth": "/月"
     },
     "coupons": {
       "title": "クーポン",

@@ -1201,7 +1201,12 @@
       "confirmPassword": "אשר סיסמה חדשה",
       "dangerZone": "אזור מסוכן",
       "deleteAccount": "מחק חשבון",
-      "deleteAccountHelp": "מחק לצמיתות את המסעדה הזו וכל הנתונים שלה."
+      "deleteAccountHelp": "מחק לצמיתות את המסעדה הזו וכל הנתונים שלה.",
+      "recommendedAddOnsTitle": "תוספים מומלצים",
+      "recommendedAddOnsSubtitle": "שדרוגים פופולריים שמשתלמים — הפעלה בלחיצה אחת.",
+      "popularBadge": "פופולרי",
+      "addOnEnableCta": "הפעל",
+      "perMonth": "/לחודש"
     },
     "coupons": {
       "title": "קופונים",

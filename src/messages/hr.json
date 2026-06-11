@@ -1201,7 +1201,12 @@
       "confirmPassword": "Potvrdi novu lozinku",
       "dangerZone": "Opasna zona",
       "deleteAccount": "Izbriši račun",
-      "deleteAccountHelp": "Trajno izbriši ovaj restoran i sve njegove podatke."
+      "deleteAccountHelp": "Trajno izbriši ovaj restoran i sve njegove podatke.",
+      "recommendedAddOnsTitle": "Preporučeni dodaci",
+      "recommendedAddOnsSubtitle": "Popularna poboljšanja koja se isplate — aktivirajte jednim klikom.",
+      "popularBadge": "Popularno",
+      "addOnEnableCta": "Aktiviraj",
+      "perMonth": "/mj."
     },
     "coupons": {
       "title": "Kuponi",

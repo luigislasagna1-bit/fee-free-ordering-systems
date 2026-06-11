@@ -1201,7 +1201,12 @@
       "confirmPassword": "Bekräfta nytt lösenord",
       "dangerZone": "Farozon",
       "deleteAccount": "Ta bort konto",
-      "deleteAccountHelp": "Ta permanent bort den här restaurangen och all dess data."
+      "deleteAccountHelp": "Ta permanent bort den här restaurangen och all dess data.",
+      "recommendedAddOnsTitle": "Rekommenderade tillägg",
+      "recommendedAddOnsSubtitle": "Populära uppgraderingar som betalar sig — aktivera med ett klick.",
+      "popularBadge": "Populär",
+      "addOnEnableCta": "Aktivera",
+      "perMonth": "/mån"
     },
     "coupons": {
       "title": "Kuponger",

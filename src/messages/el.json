@@ -1201,7 +1201,12 @@
       "confirmPassword": "Επιβεβαίωση νέου κωδικού",
       "dangerZone": "Επικίνδυνη ζώνη",
       "deleteAccount": "Διαγραφή λογαριασμού",
-      "deleteAccountHelp": "Μόνιμη διαγραφή αυτού του εστιατορίου και όλων των δεδομένων του."
+      "deleteAccountHelp": "Μόνιμη διαγραφή αυτού του εστιατορίου και όλων των δεδομένων του.",
+      "recommendedAddOnsTitle": "Προτεινόμενα πρόσθετα",
+      "recommendedAddOnsSubtitle": "Δημοφιλείς αναβαθμίσεις που αποσβένονται — ενεργοποιήστε με ένα κλικ.",
+      "popularBadge": "Δημοφιλές",
+      "addOnEnableCta": "Ενεργοποίηση",
+      "perMonth": "/μήνα"
     },
     "coupons": {
       "title": "Κουπόνια",

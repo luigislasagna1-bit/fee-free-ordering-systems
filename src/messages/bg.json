@@ -1201,7 +1201,12 @@
       "confirmPassword": "Потвърди новата парола",
       "dangerZone": "Опасна зона",
       "deleteAccount": "Изтрий акаунта",
-      "deleteAccountHelp": "Трайно изтриване на ресторанта и всички данни."
+      "deleteAccountHelp": "Трайно изтриване на ресторанта и всички данни.",
+      "recommendedAddOnsTitle": "Препоръчани добавки",
+      "recommendedAddOnsSubtitle": "Популярни надстройки, които се изплащат — активирайте с едно кликване.",
+      "popularBadge": "Популярно",
+      "addOnEnableCta": "Активиране",
+      "perMonth": "/мес."
     },
     "coupons": {
       "title": "Купони",

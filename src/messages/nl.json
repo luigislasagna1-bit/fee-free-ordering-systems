@@ -1201,7 +1201,12 @@
       "confirmPassword": "Nieuw wachtwoord bevestigen",
       "dangerZone": "Gevarenzone",
       "deleteAccount": "Account verwijderen",
-      "deleteAccountHelp": "Dit restaurant en al zijn gegevens permanent verwijderen."
+      "deleteAccountHelp": "Dit restaurant en al zijn gegevens permanent verwijderen.",
+      "recommendedAddOnsTitle": "Aanbevolen add-ons",
+      "recommendedAddOnsSubtitle": "Populaire upgrades die zichzelf terugverdienen — activeer met één klik.",
+      "popularBadge": "Populair",
+      "addOnEnableCta": "Activeren",
+      "perMonth": "/mnd"
     },
     "coupons": {
       "title": "Coupons",

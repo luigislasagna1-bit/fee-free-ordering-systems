@@ -1201,7 +1201,12 @@
       "confirmPassword": "Konfirmasi kata sandi baru",
       "dangerZone": "Zona Berbahaya",
       "deleteAccount": "Hapus akun",
-      "deleteAccountHelp": "Hapus secara permanen restoran ini beserta semua datanya."
+      "deleteAccountHelp": "Hapus secara permanen restoran ini beserta semua datanya.",
+      "recommendedAddOnsTitle": "Add-on yang direkomendasikan",
+      "recommendedAddOnsSubtitle": "Peningkatan populer yang menguntungkan — aktifkan sekali klik.",
+      "popularBadge": "Populer",
+      "addOnEnableCta": "Aktifkan",
+      "perMonth": "/bln"
     },
     "coupons": {
       "title": "Kupon",

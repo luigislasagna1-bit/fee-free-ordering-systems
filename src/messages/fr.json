@@ -1179,7 +1179,12 @@
       "confirmPassword": "Confirmer le nouveau mot de passe",
       "dangerZone": "Zone dangereuse",
       "deleteAccount": "Supprimer le compte",
-      "deleteAccountHelp": "Supprime définitivement ce restaurant et toutes ses données."
+      "deleteAccountHelp": "Supprime définitivement ce restaurant et toutes ses données.",
+      "recommendedAddOnsTitle": "Modules recommandés",
+      "recommendedAddOnsSubtitle": "Des améliorations populaires qui se rentabilisent — activez-les en un clic.",
+      "popularBadge": "Populaire",
+      "addOnEnableCta": "Activer",
+      "perMonth": "/mois"
     },
     "coupons": {
       "title": "Coupons",

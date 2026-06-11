@@ -1201,7 +1201,12 @@
       "confirmPassword": "새 비밀번호 확인",
       "dangerZone": "위험 구역",
       "deleteAccount": "계정 삭제",
-      "deleteAccountHelp": "이 레스토랑과 모든 데이터를 영구적으로 삭제합니다."
+      "deleteAccountHelp": "이 레스토랑과 모든 데이터를 영구적으로 삭제합니다.",
+      "recommendedAddOnsTitle": "추천 부가 기능",
+      "recommendedAddOnsSubtitle": "비용 이상의 가치를 주는 인기 업그레이드 — 한 번의 클릭으로 사용 설정.",
+      "popularBadge": "인기",
+      "addOnEnableCta": "사용 설정",
+      "perMonth": "/월"
     },
     "coupons": {
       "title": "쿠폰",

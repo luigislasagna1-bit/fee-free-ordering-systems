@@ -1201,7 +1201,12 @@
       "confirmPassword": "Confirma la nova contrasenya",
       "dangerZone": "Zona de perill",
       "deleteAccount": "Elimina el compte",
-      "deleteAccountHelp": "Elimineu permanentment aquest restaurant i totes les seves dades."
+      "deleteAccountHelp": "Elimineu permanentment aquest restaurant i totes les seves dades.",
+      "recommendedAddOnsTitle": "Complements recomanats",
+      "recommendedAddOnsSubtitle": "Millores populars que s'amortitzen — activa-les amb un clic.",
+      "popularBadge": "Popular",
+      "addOnEnableCta": "Activa",
+      "perMonth": "/mes"
     },
     "coupons": {
       "title": "Cupons",

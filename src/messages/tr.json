@@ -1201,7 +1201,12 @@
       "confirmPassword": "Yeni şifreyi onayla",
       "dangerZone": "Tehlikeli Bölge",
       "deleteAccount": "Hesabı Sil",
-      "deleteAccountHelp": "Bu restoranı ve tüm verilerini kalıcı olarak silin."
+      "deleteAccountHelp": "Bu restoranı ve tüm verilerini kalıcı olarak silin.",
+      "recommendedAddOnsTitle": "Önerilen eklentiler",
+      "recommendedAddOnsSubtitle": "Kendini amorti eden popüler yükseltmeler — tek tıkla etkinleştirin.",
+      "popularBadge": "Popüler",
+      "addOnEnableCta": "Etkinleştir",
+      "perMonth": "/ay"
     },
     "coupons": {
       "title": "Kuponlar",

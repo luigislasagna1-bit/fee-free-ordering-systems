@@ -1201,7 +1201,12 @@
       "confirmPassword": "Patvirtinti naują slaptažodį",
       "dangerZone": "Pavojinga zona",
       "deleteAccount": "Ištrinti paskyrą",
-      "deleteAccountHelp": "Negrįžtamai ištrinti šį restoraną ir visus jo duomenis."
+      "deleteAccountHelp": "Negrįžtamai ištrinti šį restoraną ir visus jo duomenis.",
+      "recommendedAddOnsTitle": "Rekomenduojami priedai",
+      "recommendedAddOnsSubtitle": "Populiarūs patobulinimai, kurie atsiperka — įjunkite vienu paspaudimu.",
+      "popularBadge": "Populiaru",
+      "addOnEnableCta": "Įjungti",
+      "perMonth": "/mėn."
     },
     "coupons": {
       "title": "Kuponai",

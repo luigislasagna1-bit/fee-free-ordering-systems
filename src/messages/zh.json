@@ -1201,7 +1201,12 @@
       "confirmPassword": "确认新密码",
       "dangerZone": "危险操作",
       "deleteAccount": "删除账户",
-      "deleteAccountHelp": "永久删除此餐厅及其所有数据。"
+      "deleteAccountHelp": "永久删除此餐厅及其所有数据。",
+      "recommendedAddOnsTitle": "推荐的附加功能",
+      "recommendedAddOnsSubtitle": "热门升级，物超所值——一键启用。",
+      "popularBadge": "热门",
+      "addOnEnableCta": "启用",
+      "perMonth": "/月"
     },
     "coupons": {
       "title": "优惠券",

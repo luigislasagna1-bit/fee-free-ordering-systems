@@ -1201,7 +1201,12 @@
       "confirmPassword": "ยืนยันรหัสผ่านใหม่",
       "dangerZone": "โซนอันตราย",
       "deleteAccount": "ลบบัญชี",
-      "deleteAccountHelp": "ลบร้านอาหารนี้และข้อมูลทั้งหมดอย่างถาวร"
+      "deleteAccountHelp": "ลบร้านอาหารนี้และข้อมูลทั้งหมดอย่างถาวร",
+      "recommendedAddOnsTitle": "ส่วนเสริมที่แนะนำ",
+      "recommendedAddOnsSubtitle": "อัปเกรดยอดนิยมที่คุ้มค่า — เปิดใช้ได้ในคลิกเดียว",
+      "popularBadge": "ยอดนิยม",
+      "addOnEnableCta": "เปิดใช้งาน",
+      "perMonth": "/เดือน"
     },
     "coupons": {
       "title": "คูปอง",

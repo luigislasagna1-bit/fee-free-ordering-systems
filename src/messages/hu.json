@@ -1201,7 +1201,12 @@
       "confirmPassword": "Új jelszó megerősítése",
       "dangerZone": "Veszélyes zóna",
       "deleteAccount": "Fiók törlése",
-      "deleteAccountHelp": "Az étterem és összes adata véglegesen törlésre kerül."
+      "deleteAccountHelp": "Az étterem és összes adata véglegesen törlésre kerül.",
+      "recommendedAddOnsTitle": "Ajánlott bővítmények",
+      "recommendedAddOnsSubtitle": "Népszerű bővítések, amelyek megtérülnek — aktiváld egy kattintással.",
+      "popularBadge": "Népszerű",
+      "addOnEnableCta": "Aktiválás",
+      "perMonth": "/hó"
     },
     "coupons": {
       "title": "Kuponok",

@@ -1201,7 +1201,12 @@
       "confirmPassword": "Bekreft nytt passord",
       "dangerZone": "Farlig sone",
       "deleteAccount": "Slett konto",
-      "deleteAccountHelp": "Slett permanent denne restauranten og alle dens data."
+      "deleteAccountHelp": "Slett permanent denne restauranten og alle dens data.",
+      "recommendedAddOnsTitle": "Anbefalte tillegg",
+      "recommendedAddOnsSubtitle": "Populære oppgraderinger som lønner seg — aktiver med ett klikk.",
+      "popularBadge": "Populær",
+      "addOnEnableCta": "Aktiver",
+      "perMonth": "/md"
     },
     "coupons": {
       "title": "Kuponger",

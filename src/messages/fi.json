@@ -1201,7 +1201,12 @@
       "confirmPassword": "Vahvista uusi salasana",
       "dangerZone": "Vaaravyöhyke",
       "deleteAccount": "Poista tili",
-      "deleteAccountHelp": "Poista tämä ravintola ja kaikki sen tiedot pysyvästi."
+      "deleteAccountHelp": "Poista tämä ravintola ja kaikki sen tiedot pysyvästi.",
+      "recommendedAddOnsTitle": "Suositellut lisäosat",
+      "recommendedAddOnsSubtitle": "Suosittuja päivityksiä, jotka maksavat itsensä takaisin — ota käyttöön yhdellä klikkauksella.",
+      "popularBadge": "Suosittu",
+      "addOnEnableCta": "Ota käyttöön",
+      "perMonth": "/kk"
     },
     "coupons": {
       "title": "Kupongit",
