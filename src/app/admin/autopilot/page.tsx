@@ -7,17 +7,22 @@ export default async function AutopilotPage() {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
 
-  const [campaigns, coupons, restaurant] = await Promise.all([
+  const [campaigns, couponPromos, restaurant] = await Promise.all([
     prisma.autopilotCampaign.findMany({ where: { restaurantId } }),
-    prisma.coupon.findMany({
-      where: { restaurantId, isActive: true },
-      select: { id: true, code: true, description: true },
-      orderBy: { code: "asc" },
+    // The "Attach a Coupon" picker lists the restaurant's WORKING coupon-code
+    // promotions (CARTBACK / WIN1-5 / 2NDOFF / first-buy / any custom), not the
+    // empty Coupon table. "Add your own" = create a coupon-code promo under
+    // Promotions & Coupons and it appears here. Luigi 2026-06-10.
+    prisma.promotion.findMany({
+      where: { restaurantId, couponCode: { not: null }, isActive: true },
+      select: { id: true, couponCode: true, name: true },
+      orderBy: { createdAt: "desc" },
     }),
     restaurantId
       ? prisma.restaurant.findUnique({ where: { id: restaurantId }, select: { currency: true } })
       : Promise.resolve(null),
   ]);
+  const coupons = couponPromos.map((p) => ({ id: p.id, code: p.couponCode ?? "", description: p.name }));
 
   // ── Per-campaign results (Luigi 2026-06-09, E) ──────────────────────────────
   // Sent  = messages sent (AutopilotSend rows).

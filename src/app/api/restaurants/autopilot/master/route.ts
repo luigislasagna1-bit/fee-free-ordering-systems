@@ -22,6 +22,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import { getOrCreateAutopilotState } from "@/lib/autopilot-state";
 import { ensureSteppedCampaign } from "@/lib/autopilot-steps";
+import { ensureCartRecoveryPromo } from "@/lib/autopilot-promos";
 import prisma from "@/lib/db";
 
 export const runtime = "nodejs";
@@ -95,6 +96,24 @@ export async function PATCH(req: NextRequest) {
   for (const [key, type] of Object.entries(TOGGLE_TO_TYPE)) {
     const v = data[key as keyof typeof data];
     if (typeof v === "boolean") await ensureSteppedCampaign(restaurantId, type, v);
+  }
+
+  // Cart-abandonment recovery coupon (Luigi 2026-06-10): on enable, ensure the
+  // working CARTBACK promo exists + default the campaign's attached coupon to it
+  // (only when the owner hasn't already chosen one).
+  if (typeof data.cartAbandonmentEnabled === "boolean") {
+    const promoId = await ensureCartRecoveryPromo(restaurantId, data.cartAbandonmentEnabled);
+    if (data.cartAbandonmentEnabled && promoId) {
+      await prisma.autopilotCampaign.upsert({
+        where: { restaurantId_campaignType: { restaurantId, campaignType: "cart_abandonment" } },
+        update: {},
+        create: { restaurantId, campaignType: "cart_abandonment", isEnabled: true, couponId: promoId, subject: "", emailBody: "", delayHours: 2 },
+      });
+      await prisma.autopilotCampaign.updateMany({
+        where: { restaurantId, campaignType: "cart_abandonment", couponId: null },
+        data: { couponId: promoId },
+      });
+    }
   }
 
   return NextResponse.json({

@@ -215,6 +215,42 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
 }
 
 /**
+ * Resolve a campaign's attached coupon to { code, label } (Luigi 2026-06-10).
+ * The "Attach a Coupon" picker now lists working COUPON-CODE PROMOTIONS, so we
+ * resolve the id as a Promotion first; we still fall back to a legacy standalone
+ * Coupon row so any old selection keeps working. The label drives the email's
+ * coupon card; the code drives the ?coupon pre-apply link.
+ */
+async function resolveCampaignCoupon(
+  restaurantId: string,
+  couponId: string | null,
+): Promise<{ code: string; label: string } | null> {
+  if (!couponId) return null;
+  const promo = await prisma.promotion.findFirst({
+    where: { id: couponId, restaurantId, couponCode: { not: null } },
+    select: { couponCode: true, name: true, ruleConfig: true },
+  });
+  if (promo?.couponCode) {
+    const rc = promo.ruleConfig as { discountPercent?: unknown } | null;
+    const pct = rc && typeof rc === "object" && typeof rc.discountPercent === "number" ? rc.discountPercent : null;
+    return { code: promo.couponCode, label: pct != null ? `${pct}% off your next order` : promo.name };
+  }
+  const coupon = await prisma.coupon.findUnique({
+    where: { id: couponId },
+    select: { code: true, description: true, discountType: true, discountValue: true },
+  });
+  if (coupon) {
+    const label =
+      coupon.description ||
+      (coupon.discountType === "percentage"
+        ? `${coupon.discountValue}% off your next order`
+        : `$${coupon.discountValue.toFixed(2)} off your next order`);
+    return { code: coupon.code, label };
+  }
+  return null;
+}
+
+/**
  * Standard candidate-based campaign (second_order / reengagement).
  * Pulls candidates, de-dups, sends, records.
  */
@@ -235,20 +271,10 @@ async function runStandardCampaign(opts: {
   subject: string;
   emailBody: string;
 }): Promise<{ eligible: number; sent: number; errors: number }> {
-  const coupon = opts.couponId
-    ? await prisma.coupon.findUnique({
-        where: { id: opts.couponId },
-        select: { code: true, description: true, discountType: true, discountValue: true },
-      })
-    : null;
-  const couponLabel = coupon
-    ? coupon.description ||
-      (coupon.discountType === "percentage"
-        ? `${coupon.discountValue}% off your next order`
-        : `$${coupon.discountValue.toFixed(2)} off your next order`)
-    : null;
-  const ctaUrl = coupon
-    ? `${opts.restaurantOrderUrl}?coupon=${encodeURIComponent(coupon.code)}`
+  const resolved = await resolveCampaignCoupon(opts.restaurantId, opts.couponId);
+  const couponLabel = resolved?.label ?? null;
+  const ctaUrl = resolved
+    ? `${opts.restaurantOrderUrl}?coupon=${encodeURIComponent(resolved.code)}`
     : opts.restaurantOrderUrl;
 
   const candidates = await pickCandidates(opts.restaurantId, opts.campaignType, opts.delayHours);
@@ -276,10 +302,10 @@ async function runStandardCampaign(opts: {
         restaurantName: opts.restaurantName,
         subject: opts.subject,
         body: opts.emailBody,
-        couponCode: coupon?.code,
+        couponCode: resolved?.code,
         couponLabel,
         ctaUrl,
-        ctaLabel: coupon ? "Order with coupon" : "Order now",
+        ctaLabel: resolved ? "Order with coupon" : "Order now",
         restaurantUrl: opts.baseUrl ? `${opts.baseUrl}/order/${opts.slug}` : undefined,
         restaurantEmail: opts.restaurantEmail ?? undefined,
         restaurantPhone: opts.restaurantPhone ?? undefined,
@@ -571,20 +597,10 @@ export async function runCartAbandonmentForRestaurant(
     ? campaign.emailBody
     : CART_ABANDON_DEFAULT_BODY;
 
-  const coupon = campaign?.couponId
-    ? await prisma.coupon.findUnique({
-        where: { id: campaign.couponId },
-        select: { code: true, description: true, discountType: true, discountValue: true },
-      })
-    : null;
-  const couponLabel = coupon
-    ? coupon.description ||
-      (coupon.discountType === "percentage"
-        ? `${coupon.discountValue}% off your next order`
-        : `$${coupon.discountValue.toFixed(2)} off your next order`)
-    : null;
-  const ctaUrl = coupon
-    ? `${ctx.restaurantOrderUrl}?coupon=${encodeURIComponent(coupon.code)}`
+  const resolved = await resolveCampaignCoupon(restaurantId, campaign?.couponId ?? null);
+  const couponLabel = resolved?.label ?? null;
+  const ctaUrl = resolved
+    ? `${ctx.restaurantOrderUrl}?coupon=${encodeURIComponent(resolved.code)}`
     : ctx.restaurantOrderUrl;
 
   const staleCutoff = new Date(Date.now() - CART_STALE_MS);
@@ -655,10 +671,10 @@ export async function runCartAbandonmentForRestaurant(
         restaurantName: ctx.restaurantName,
         subject,
         body: emailBody,
-        couponCode: coupon?.code,
+        couponCode: resolved?.code,
         couponLabel,
         ctaUrl,
-        ctaLabel: coupon ? "Complete your order" : "Complete your order",
+        ctaLabel: "Complete your order",
         restaurantUrl: ctx.baseUrl ? `${ctx.baseUrl}/order/${ctx.slug}` : undefined,
         restaurantEmail: ctx.restaurantEmail ?? undefined,
         restaurantPhone: ctx.restaurantPhone ?? undefined,

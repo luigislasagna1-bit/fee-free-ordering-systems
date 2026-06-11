@@ -46,6 +46,62 @@ const SECOND_ORDER: PromoDef = {
   name: "15% OFF, yours for the taking",
 };
 
+/** The pre-set, working default for cart-abandonment recovery. Any customer
+ *  (abandoners may be new or returning) — unlike the WIN/2NDOFF promos, which are
+ *  audience-restricted. Luigi 2026-06-10. */
+const CART_RECOVERY: PromoDef = {
+  campaignRef: "autopilot_cart_recovery",
+  campaignSequence: null,
+  code: "CARTBACK",
+  percent: 10,
+  name: "10% off — finish your order",
+};
+
+/**
+ * Ensure the cart-abandonment recovery coupon exists + matches the enabled flag.
+ * Returns the promo id so the campaign can default to it. Idempotent + safe.
+ */
+export async function ensureCartRecoveryPromo(restaurantId: string, enabled: boolean): Promise<string | null> {
+  try {
+    const existing = await prisma.promotion.findFirst({
+      where: { restaurantId, campaignRef: CART_RECOVERY.campaignRef },
+      select: { id: true, isActive: true },
+    });
+    if (existing) {
+      if (existing.isActive !== enabled) {
+        await prisma.promotion.update({ where: { id: existing.id }, data: { isActive: enabled } });
+      }
+      return existing.id;
+    }
+    if (!enabled) return null;
+    const created = await prisma.promotion.create({
+      data: {
+        restaurantId,
+        name: CART_RECOVERY.name,
+        description: "Come back and finish your order!",
+        promotionType: "percentage_off",
+        isActive: true,
+        stackingRule: "master",
+        orderType: "both",
+        customerType: "any",
+        minimumOrder: 0,
+        ruleConfig: { discountPercent: CART_RECOVERY.percent },
+        autoApply: false,
+        showOnBanner: false,
+        displayMode: "hidden_coupon_only",
+        couponCode: CART_RECOVERY.code,
+        channel: "website",
+        campaignRef: CART_RECOVERY.campaignRef,
+      },
+      select: { id: true },
+    });
+    return created.id;
+  } catch (e) {
+    console.error("[autopilot-promos ensureCartRecoveryPromo]", e);
+    return null;
+  }
+}
+
 /** Ensure one campaign promo exists + matches the enabled state. Creates it on
  *  first enable (with the tier's default discount); only flips isActive on an
  *  existing row so owner edits survive. */
