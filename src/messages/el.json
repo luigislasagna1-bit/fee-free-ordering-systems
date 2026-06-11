@@ -434,7 +434,11 @@
     "reservationTitle": "Επιβεβαίωση της κράτησης τραπεζιού σας",
     "reservationDetail": "{date} στις {time} · {n} άτομα — το τραπέζι σας κρατείται μόλις ολοκληρώσετε αυτήν την παραγγελία.",
     "rememberedHint": "Συμπληρώσαμε τα στοιχεία σας από αυτή τη συσκευή.",
-    "rememberedClear": "Δεν είστε εσείς; Διαγραφή"
+    "rememberedClear": "Δεν είστε εσείς; Διαγραφή",
+    "timeScheduledFor": "Προγραμματισμένο για {when}",
+    "timeCateringNotice": "Catering — επιλέξτε ώρα τουλάχιστον {hours} ώρες νωρίτερα",
+    "deliveryTo": "Παράδοση σε {address}",
+    "deliveryAddAddress": "Παράδοση — προσθέστε διεύθυνση"
   },
   "reservation": {
     "title": "Κράτηση τραπεζιού",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— ΠΑΡΑΓΓΕΛΙΑ ΚΟΥΖΙΝΑΣ —",
       "noSpecialNotes": "(χωρίς ειδικές σημειώσεις)",
       "kitchenNoteHeading": "ΣΗΜΕΙΩΣΗ",
-      "prepTime": "Χρόνος προετοιμασίας: ________________ λεπτά"
+      "prepTime": "Χρόνος προετοιμασίας: ________________ λεπτά",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Αναφορές Αλυσίδας",

@@ -434,7 +434,11 @@
     "reservationTitle": "テーブル予約の確認",
     "reservationDetail": "{date} {time} · {n}名様 — この注文を確定すると席が予約されます。",
     "rememberedHint": "この端末に保存された情報を入力しました。",
-    "rememberedClear": "本人ではない場合は消去"
+    "rememberedClear": "本人ではない場合は消去",
+    "timeScheduledFor": "{when} に予約",
+    "timeCateringNotice": "ケータリング — {hours}時間以上先の時間を選択してください",
+    "deliveryTo": "{address} へ配達",
+    "deliveryAddAddress": "配達 — 住所を追加"
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— キッチンオーダー —",
       "noSpecialNotes": "（特記事項なし）",
       "kitchenNoteHeading": "備考",
-      "prepTime": "準備時間：________________ 分"
+      "prepTime": "準備時間：________________ 分",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — チェーンレポート",

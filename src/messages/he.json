@@ -434,7 +434,11 @@
     "reservationTitle": "מאשרים את שמירת השולחן שלכם",
     "reservationDetail": "{date} בשעה {time} · סועדים: {n} — השולחן שלכם נשמר כאשר תבצעו את ההזמנה הזו.",
     "rememberedHint": "מילאנו את הפרטים שלך מהמכשיר הזה.",
-    "rememberedClear": "לא אתה? נקה"
+    "rememberedClear": "לא אתה? נקה",
+    "timeScheduledFor": "מתוזמן ל-{when}",
+    "timeCateringNotice": "קייטרינג — בחר זמן לפחות {hours} שעות מראש",
+    "deliveryTo": "משלוח אל {address}",
+    "deliveryAddAddress": "משלוח — הוסף כתובת"
   },
   "reservation": {
     "title": "הזמן שולחן",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— הזמנת מטבח —",
       "noSpecialNotes": "(אין הערות מיוחדות)",
       "kitchenNoteHeading": "הערה",
-      "prepTime": "זמן הכנה: ________________ דק'"
+      "prepTime": "זמן הכנה: ________________ דק'",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — דוחות רשת",

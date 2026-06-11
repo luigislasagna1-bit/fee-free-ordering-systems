@@ -434,7 +434,11 @@
     "reservationTitle": "Potwierdzanie rezerwacji stolika",
     "reservationDetail": "{date} o {time} · grupa {n} osób — stolik zostaje zarezerwowany po złożeniu tego zamówienia.",
     "rememberedHint": "Uzupełniliśmy Twoje dane z tego urządzenia.",
-    "rememberedClear": "To nie Ty? Wyczyść"
+    "rememberedClear": "To nie Ty? Wyczyść",
+    "timeScheduledFor": "Zaplanowano na {when}",
+    "timeCateringNotice": "Catering — wybierz godzinę z wyprzedzeniem co najmniej {hours} h",
+    "deliveryTo": "Dostawa do {address}",
+    "deliveryAddAddress": "Dostawa — dodaj adres"
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— ZAMÓWIENIE KUCHNI —",
       "noSpecialNotes": "(brak specjalnych uwag)",
       "kitchenNoteHeading": "UWAGA",
-      "prepTime": "Czas przygotowania: ________________ min"
+      "prepTime": "Czas przygotowania: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Raporty sieci",

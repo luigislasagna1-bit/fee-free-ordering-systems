@@ -434,7 +434,11 @@
     "reservationTitle": "Bekräftar din bordsbokning",
     "reservationDetail": "{date} kl. {time} · {n} personer — bordet bokas när du lägger den här beställningen.",
     "rememberedHint": "Vi fyllde i dina uppgifter från den här enheten.",
-    "rememberedClear": "Inte du? Rensa"
+    "rememberedClear": "Inte du? Rensa",
+    "timeScheduledFor": "Schemalagd till {when}",
+    "timeCateringNotice": "Catering — välj en tid minst {hours} h i förväg",
+    "deliveryTo": "Leverans till {address}",
+    "deliveryAddAddress": "Leverans — lägg till adress"
   },
   "reservation": {
     "title": "Boka ett bord",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— KÖKSORDER —",
       "noSpecialNotes": "(inga särskilda noteringar)",
       "kitchenNoteHeading": "NOTERING",
-      "prepTime": "Tillagningstid: ________________ min"
+      "prepTime": "Tillagningstid: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Kedjerapporter",

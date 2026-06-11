@@ -434,7 +434,11 @@
     "reservationTitle": "Bekræfter din bordreservation",
     "reservationDetail": "{date} kl. {time} · {n} personer — bordet er reserveret, når du afgiver denne bestilling.",
     "rememberedHint": "Vi udfyldte dine oplysninger fra denne enhed.",
-    "rememberedClear": "Ikke dig? Ryd"
+    "rememberedClear": "Ikke dig? Ryd",
+    "timeScheduledFor": "Planlagt til {when}",
+    "timeCateringNotice": "Catering — vælg et tidspunkt mindst {hours} t. forud",
+    "deliveryTo": "Levering til {address}",
+    "deliveryAddAddress": "Levering — tilføj adresse"
   },
   "reservation": {
     "title": "Book et bord",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— KØKKENORDRE —",
       "noSpecialNotes": "(ingen særlige bemærkninger)",
       "kitchenNoteHeading": "BEMÆRKNING",
-      "prepTime": "Forberedelsestid: ________________ min"
+      "prepTime": "Forberedelsestid: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Kæderapporter",

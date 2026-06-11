@@ -434,7 +434,11 @@
     "reservationTitle": "Confirming your table reservation",
     "reservationDetail": "{date} at {time} · party of {n} — your table is booked when you place this order.",
     "rememberedHint": "We filled in your details from this device.",
-    "rememberedClear": "Not you? Clear"
+    "rememberedClear": "Not you? Clear",
+    "timeScheduledFor": "Scheduled for {when}",
+    "timeCateringNotice": "Catering — choose a time at least {hours}h ahead",
+    "deliveryTo": "Delivery to {address}",
+    "deliveryAddAddress": "Delivery — add address"
   },
   "reservation": {
     "title": "Book a table",
@@ -3365,7 +3369,8 @@
       "kitchenOrderTitle": "— KITCHEN ORDER —",
       "noSpecialNotes": "(no special notes)",
       "kitchenNoteHeading": "NOTE",
-      "prepTime": "Prep Time: ________________ min"
+      "prepTime": "Prep Time: ________________ min",
+      "asap": "ASAP"
     },
     "exportMenu": {
       "exportAriaLabel": "Export",

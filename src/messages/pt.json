@@ -434,7 +434,11 @@
     "reservationTitle": "A confirmar a sua reserva de mesa",
     "reservationDetail": "{date} às {time} · mesa para {n} — a sua mesa fica reservada quando efetua esta encomenda.",
     "rememberedHint": "Preenchemos os seus dados a partir deste dispositivo.",
-    "rememberedClear": "Não é você? Limpar"
+    "rememberedClear": "Não é você? Limpar",
+    "timeScheduledFor": "Agendado para {when}",
+    "timeCateringNotice": "Catering — escolha uma hora com pelo menos {hours}h de antecedência",
+    "deliveryTo": "Entrega em {address}",
+    "deliveryAddAddress": "Entrega — adicione a morada"
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— PEDIDO DA COZINHA —",
       "noSpecialNotes": "(sem notas especiais)",
       "kitchenNoteHeading": "NOTA",
-      "prepTime": "Tempo de Preparo: ________________ min"
+      "prepTime": "Tempo de Preparo: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Relatórios da Rede",

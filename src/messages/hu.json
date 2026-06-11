@@ -434,7 +434,11 @@
     "reservationTitle": "Asztalfoglalás megerősítése",
     "reservationDetail": "{date} {time} · {n} fő — az asztalt a rendelés leadásakor lefoglaljuk.",
     "rememberedHint": "Az adatait erről az eszközről töltöttük ki.",
-    "rememberedClear": "Nem Ön az? Törlés"
+    "rememberedClear": "Nem Ön az? Törlés",
+    "timeScheduledFor": "Ütemezve: {when}",
+    "timeCateringNotice": "Catering — válassz időpontot legalább {hours} órával előre",
+    "deliveryTo": "Kiszállítás ide: {address}",
+    "deliveryAddAddress": "Kiszállítás — add meg a címet"
   },
   "reservation": {
     "title": "Asztal foglalása",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— KONYHAI RENDELÉS —",
       "noSpecialNotes": "(nincs különleges megjegyzés)",
       "kitchenNoteHeading": "MEGJEGYZÉS",
-      "prepTime": "Elkészítési idő: ________________ perc"
+      "prepTime": "Elkészítési idő: ________________ perc",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Lánc riportok",

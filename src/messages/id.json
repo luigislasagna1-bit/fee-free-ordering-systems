@@ -434,7 +434,11 @@
     "reservationTitle": "Mengonfirmasi reservasi meja Anda",
     "reservationDetail": "{date} pukul {time} · untuk {n} orang — meja Anda dipesan saat Anda melakukan pesanan ini.",
     "rememberedHint": "Kami mengisi detail Anda dari perangkat ini.",
-    "rememberedClear": "Bukan Anda? Hapus"
+    "rememberedClear": "Bukan Anda? Hapus",
+    "timeScheduledFor": "Dijadwalkan untuk {when}",
+    "timeCateringNotice": "Katering — pilih waktu minimal {hours} jam sebelumnya",
+    "deliveryTo": "Antar ke {address}",
+    "deliveryAddAddress": "Pengantaran — tambahkan alamat"
   },
   "reservation": {
     "title": "Pesan meja",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— PESANAN DAPUR —",
       "noSpecialNotes": "(tidak ada catatan khusus)",
       "kitchenNoteHeading": "CATATAN",
-      "prepTime": "Waktu Persiapan: ________________ menit"
+      "prepTime": "Waktu Persiapan: ________________ menit",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Laporan Jaringan",

@@ -434,7 +434,11 @@
     "reservationTitle": "Staliuko rezervacijos patvirtinimas",
     "reservationDetail": "{date} {time} · {n} asmenims — jūsų staliukas rezervuojamas, kai pateikiate šį užsakymą.",
     "rememberedHint": "Užpildėme jūsų duomenis iš šio įrenginio.",
-    "rememberedClear": "Ne jūs? Išvalyti"
+    "rememberedClear": "Ne jūs? Išvalyti",
+    "timeScheduledFor": "Suplanuota: {when}",
+    "timeCateringNotice": "Maitinimas — pasirinkite laiką bent prieš {hours} val.",
+    "deliveryTo": "Pristatymas adresu {address}",
+    "deliveryAddAddress": "Pristatymas — pridėkite adresą"
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— VIRTUVĖS UŽSAKYMAS —",
       "noSpecialNotes": "(nėra specialių pastabų)",
       "kitchenNoteHeading": "PASTABA",
-      "prepTime": "Paruošimo laikas: ________________ min"
+      "prepTime": "Paruošimo laikas: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — tinklo ataskaitos",

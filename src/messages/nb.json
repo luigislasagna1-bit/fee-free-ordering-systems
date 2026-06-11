@@ -434,7 +434,11 @@
     "reservationTitle": "Bekrefter bordreservasjonen din",
     "reservationDetail": "{date} kl. {time} · {n} personer — bordet reserveres når du legger inn denne bestillingen.",
     "rememberedHint": "Vi fylte ut opplysningene dine fra denne enheten.",
-    "rememberedClear": "Ikke deg? Tøm"
+    "rememberedClear": "Ikke deg? Tøm",
+    "timeScheduledFor": "Planlagt til {when}",
+    "timeCateringNotice": "Catering — velg et tidspunkt minst {hours} t i forveien",
+    "deliveryTo": "Levering til {address}",
+    "deliveryAddAddress": "Levering — legg til adresse"
   },
   "reservation": {
     "title": "Bestill bord",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— KJØKKENBESTILLING —",
       "noSpecialNotes": "(ingen spesielle merknader)",
       "kitchenNoteHeading": "MERKNAD",
-      "prepTime": "Tilberedningstid: ________________ min"
+      "prepTime": "Tilberedningstid: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Kjederapporter",

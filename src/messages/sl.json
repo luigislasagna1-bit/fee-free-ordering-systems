@@ -434,7 +434,11 @@
     "reservationTitle": "Potrditev rezervacije mize",
     "reservationDetail": "{date} ob {time} · {n} oseb — miza je rezervirana, ko oddate to naročilo.",
     "rememberedHint": "Vaše podatke smo izpolnili iz te naprave.",
-    "rememberedClear": "Niste vi? Počisti"
+    "rememberedClear": "Niste vi? Počisti",
+    "timeScheduledFor": "Načrtovano za {when}",
+    "timeCateringNotice": "Catering — izberite čas vsaj {hours} h vnaprej",
+    "deliveryTo": "Dostava na {address}",
+    "deliveryAddAddress": "Dostava — dodajte naslov"
   },
   "reservation": {
     "title": "Rezerviraj mizo",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— KUHINJSKO NAROČILO —",
       "noSpecialNotes": "(brez posebnih opomb)",
       "kitchenNoteHeading": "OPOMBA",
-      "prepTime": "Čas priprave: ________________ min"
+      "prepTime": "Čas priprave: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Poročila verige",

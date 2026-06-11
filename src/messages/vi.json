@@ -434,7 +434,11 @@
     "reservationTitle": "Xác nhận đặt bàn của bạn",
     "reservationDetail": "{date} lúc {time} · nhóm {n} người — bàn của bạn được đặt khi bạn hoàn tất đơn này.",
     "rememberedHint": "Chúng tôi đã điền thông tin của bạn từ thiết bị này.",
-    "rememberedClear": "Không phải bạn? Xóa"
+    "rememberedClear": "Không phải bạn? Xóa",
+    "timeScheduledFor": "Đã hẹn lúc {when}",
+    "timeCateringNotice": "Tiệc đặt — chọn thời gian trước ít nhất {hours} giờ",
+    "deliveryTo": "Giao đến {address}",
+    "deliveryAddAddress": "Giao hàng — thêm địa chỉ"
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— ĐƠN BẾP —",
       "noSpecialNotes": "(không có ghi chú đặc biệt)",
       "kitchenNoteHeading": "GHI CHÚ",
-      "prepTime": "Thời gian chuẩn bị: ________________ phút"
+      "prepTime": "Thời gian chuẩn bị: ________________ phút",
+      "asap": "CÀNG SỚM CÀNG TỐT"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Báo cáo Chuỗi",

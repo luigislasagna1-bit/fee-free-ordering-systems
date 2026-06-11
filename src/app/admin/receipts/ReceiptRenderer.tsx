@@ -158,7 +158,7 @@ function renderCustomer(
     // ASAP-vs-scheduled timing line. The preview sample is an ASAP order; a
     // real scheduled order prints "ORDER FOR LATER: <date/time>" here instead.
     case "timing":
-      return <span><b>ASAP</b> : {fmtTime(order.createdAt)}</span>;
+      return <span><b>{t("asap")}</b> : {fmtTime(order.createdAt)}</span>;
 
     case "customer_info":
       return (
@@ -321,7 +321,7 @@ function renderKitchen(section: Section, order: SampleOrder, config: KitchenConf
     // ASAP-vs-scheduled timing line. The preview sample is an ASAP order; a
     // real scheduled order prints "** ORDER FOR LATER **" + date/time here.
     case "k_timing":
-      return <span style={{ fontWeight: "bold" }}>ASAP : {fmtTime(order.createdAt)}</span>;
+      return <span style={{ fontWeight: "bold" }}>{t("asap")} : {fmtTime(order.createdAt)}</span>;
 
     case "k_customer":
       return (

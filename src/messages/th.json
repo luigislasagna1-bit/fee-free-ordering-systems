@@ -434,7 +434,11 @@
     "reservationTitle": "ยืนยันการจองโต๊ะของคุณ",
     "reservationDetail": "{date} เวลา {time} · กลุ่ม {n} ท่าน — โต๊ะของคุณจะถูกจองเมื่อคุณทำการสั่งซื้อนี้",
     "rememberedHint": "เรากรอกข้อมูลของคุณจากอุปกรณ์นี้แล้ว",
-    "rememberedClear": "ไม่ใช่คุณ? ล้าง"
+    "rememberedClear": "ไม่ใช่คุณ? ล้าง",
+    "timeScheduledFor": "กำหนดเวลา {when}",
+    "timeCateringNotice": "จัดเลี้ยง — เลือกเวลาล่วงหน้าอย่างน้อย {hours} ชม.",
+    "deliveryTo": "จัดส่งไปที่ {address}",
+    "deliveryAddAddress": "จัดส่ง — เพิ่มที่อยู่"
   },
   "reservation": {
     "title": "จองโต๊ะ",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— ออเดอร์ครัว —",
       "noSpecialNotes": "(ไม่มีหมายเหตุพิเศษ)",
       "kitchenNoteHeading": "หมายเหตุ",
-      "prepTime": "เวลาเตรียม: ________________ นาที"
+      "prepTime": "เวลาเตรียม: ________________ นาที",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — รายงานเชน",

@@ -434,7 +434,11 @@
     "reservationTitle": "Galdiņa rezervācijas apstiprināšana",
     "reservationDetail": "{date} plkst. {time} · {n} personas — jūsu galdiņš tiek rezervēts, kad veicat šo pasūtījumu.",
     "rememberedHint": "Mēs aizpildījām jūsu datus no šīs ierīces.",
-    "rememberedClear": "Vai tas neesat jūs? Notīrīt"
+    "rememberedClear": "Vai tas neesat jūs? Notīrīt",
+    "timeScheduledFor": "Ieplānots: {when}",
+    "timeCateringNotice": "Ēdināšana — izvēlieties laiku vismaz {hours} h iepriekš",
+    "deliveryTo": "Piegāde uz {address}",
+    "deliveryAddAddress": "Piegāde — pievienojiet adresi"
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— VIRTUVES PASŪTĪJUMS —",
       "noSpecialNotes": "(nav īpašu piezīmju)",
       "kitchenNoteHeading": "PIEZĪME",
-      "prepTime": "Sagatavošanas laiks: ________________ min"
+      "prepTime": "Sagatavošanas laiks: ________________ min",
+      "asap": "TŪLĪT"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Tīkla pārskati",

@@ -434,7 +434,11 @@
     "reservationTitle": "确认您的餐桌预订",
     "reservationDetail": "{date} {time} · {n} 人 — 提交此订单后即完成餐桌预订。",
     "rememberedHint": "我们已根据此设备填写了您的信息。",
-    "rememberedClear": "不是您？清除"
+    "rememberedClear": "不是您？清除",
+    "timeScheduledFor": "预定时间 {when}",
+    "timeCateringNotice": "宴会订餐——请至少提前 {hours} 小时选择时间",
+    "deliveryTo": "配送至 {address}",
+    "deliveryAddAddress": "配送——请添加地址"
   },
   "reservation": {
     "title": "预订餐桌",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— 厨房订单 —",
       "noSpecialNotes": "（无特殊备注）",
       "kitchenNoteHeading": "备注",
-      "prepTime": "准备时间：________________ 分钟"
+      "prepTime": "准备时间：________________ 分钟",
+      "asap": "尽快"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — 连锁报告",

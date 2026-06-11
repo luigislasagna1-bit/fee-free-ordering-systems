@@ -434,7 +434,11 @@
     "reservationTitle": "Confirmació de la teva reserva de taula",
     "reservationDetail": "{date} a les {time} · grup de {n} — la teva taula queda reservada en fer aquesta comanda.",
     "rememberedHint": "Hem emplenat les teves dades des d'aquest dispositiu.",
-    "rememberedClear": "No ets tu? Esborra"
+    "rememberedClear": "No ets tu? Esborra",
+    "timeScheduledFor": "Programat per a {when}",
+    "timeCateringNotice": "Càtering — tria una hora amb almenys {hours}h d'antelació",
+    "deliveryTo": "Lliurament a {address}",
+    "deliveryAddAddress": "Lliurament — afegeix l'adreça"
   },
   "reservation": {
     "title": "Reservar taula",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— COMANDA DE CUINA —",
       "noSpecialNotes": "(sense notes especials)",
       "kitchenNoteHeading": "NOTA",
-      "prepTime": "Temps de preparació: ________________ min"
+      "prepTime": "Temps de preparació: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Informes de cadena",

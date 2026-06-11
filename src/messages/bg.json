@@ -434,7 +434,11 @@
     "reservationTitle": "Потвърждаване на резервацията на маса",
     "reservationDetail": "{date} в {time} · {n} души — масата ви се резервира, когато направите тази поръчка.",
     "rememberedHint": "Попълнихме данните ви от това устройство.",
-    "rememberedClear": "Не сте вие? Изчисти"
+    "rememberedClear": "Не сте вие? Изчисти",
+    "timeScheduledFor": "Насрочено за {when}",
+    "timeCateringNotice": "Кетъринг — изберете час поне {hours} ч. предварително",
+    "deliveryTo": "Доставка до {address}",
+    "deliveryAddAddress": "Доставка — добавете адрес"
   },
   "reservation": {
     "title": "Резервирай маса",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— ПОРЪЧКА ЗА КУХНЯТА —",
       "noSpecialNotes": "(без специални забележки)",
       "kitchenNoteHeading": "ЗАБЕЛЕЖКА",
-      "prepTime": "Време за приготвяне: ________________ мин"
+      "prepTime": "Време за приготвяне: ________________ мин",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Отчети за веригата",

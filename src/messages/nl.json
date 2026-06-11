@@ -434,7 +434,11 @@
     "reservationTitle": "Je tafelreservering bevestigen",
     "reservationDetail": "{date} om {time} · tafel voor {n} — je tafel is gereserveerd zodra je deze bestelling plaatst.",
     "rememberedHint": "We hebben je gegevens van dit apparaat ingevuld.",
-    "rememberedClear": "Niet jij? Wissen"
+    "rememberedClear": "Niet jij? Wissen",
+    "timeScheduledFor": "Gepland voor {when}",
+    "timeCateringNotice": "Catering — kies een tijd minstens {hours} u vooruit",
+    "deliveryTo": "Bezorging naar {address}",
+    "deliveryAddAddress": "Bezorging — voeg adres toe"
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— KEUKENBESTELLING —",
       "noSpecialNotes": "(geen bijzondere opmerkingen)",
       "kitchenNoteHeading": "OPMERKING",
-      "prepTime": "Bereidingstijd: ________________ min"
+      "prepTime": "Bereidingstijd: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Ketenrapporten",

@@ -434,7 +434,11 @@
     "reservationTitle": "Potvrdenie rezervácie stola",
     "reservationDetail": "{date} o {time} · {n} osôb — stôl bude rezervovaný po dokončení objednávky.",
     "rememberedHint": "Vyplnili sme vaše údaje z tohto zariadenia.",
-    "rememberedClear": "Nie ste to vy? Vymazať"
+    "rememberedClear": "Nie ste to vy? Vymazať",
+    "timeScheduledFor": "Naplánované na {when}",
+    "timeCateringNotice": "Catering — zvoľte čas aspoň {hours} h vopred",
+    "deliveryTo": "Donáška na {address}",
+    "deliveryAddAddress": "Donáška — pridajte adresu"
   },
   "reservation": {
     "title": "Rezervovať stôl",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— KUCHYNSKÁ OBJEDNÁVKA —",
       "noSpecialNotes": "(žiadne špeciálne pokyny)",
       "kitchenNoteHeading": "POZNÁMKA",
-      "prepTime": "Čas prípravy: ________________ min"
+      "prepTime": "Čas prípravy: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Reťazcové správy",

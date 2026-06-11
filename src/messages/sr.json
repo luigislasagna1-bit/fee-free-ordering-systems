@@ -434,7 +434,11 @@
     "reservationTitle": "Potvrda rezervacije stola",
     "reservationDetail": "{date} u {time} · {n} osoba — sto je rezervisan kada pošaljete ovu porudžbinu.",
     "rememberedHint": "Попунили смо ваше податке са овог уређаја.",
-    "rememberedClear": "Нисте ви? Обриши"
+    "rememberedClear": "Нисте ви? Обриши",
+    "timeScheduledFor": "Заказано за {when}",
+    "timeCateringNotice": "Кетеринг — изаберите време бар {hours} ч унапред",
+    "deliveryTo": "Достава на {address}",
+    "deliveryAddAddress": "Достава — додајте адресу"
   },
   "reservation": {
     "title": "Rezerviši sto",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— NARUDŽBA KUHINJE —",
       "noSpecialNotes": "(bez posebnih napomena)",
       "kitchenNoteHeading": "NAPOMENA",
-      "prepTime": "Vreme pripreme: ________________ min"
+      "prepTime": "Vreme pripreme: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Izveštaji lanca",

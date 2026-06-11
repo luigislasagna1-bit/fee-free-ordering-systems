@@ -434,7 +434,11 @@
     "reservationTitle": "Підтвердження бронювання столика",
     "reservationDetail": "{date} о {time} · на {n} осіб — ваш столик буде заброньовано, коли ви оформите це замовлення.",
     "rememberedHint": "Ми заповнили ваші дані з цього пристрою.",
-    "rememberedClear": "Це не ви? Очистити"
+    "rememberedClear": "Це не ви? Очистити",
+    "timeScheduledFor": "Заплановано на {when}",
+    "timeCateringNotice": "Кейтеринг — оберіть час щонайменше за {hours} год",
+    "deliveryTo": "Доставка за адресою {address}",
+    "deliveryAddAddress": "Доставка — додайте адресу"
   },
   "reservation": {
     "title": "Забронювати столик",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— ЗАМОВЛЕННЯ ДЛЯ КУХНІ —",
       "noSpecialNotes": "(без особливих приміток)",
       "kitchenNoteHeading": "ПРИМІТКА",
-      "prepTime": "Час приготування: ________________ хв"
+      "prepTime": "Час приготування: ________________ хв",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Звіти мережі",

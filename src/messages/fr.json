@@ -434,7 +434,11 @@
     "reservationTitle": "Confirmation de votre réservation de table",
     "reservationDetail": "{date} à {time} · table de {n} — votre table est réservée dès que vous passez cette commande.",
     "rememberedHint": "Nous avons rempli vos coordonnées depuis cet appareil.",
-    "rememberedClear": "Ce n'est pas vous ? Effacer"
+    "rememberedClear": "Ce n'est pas vous ? Effacer",
+    "timeScheduledFor": "Programmé pour {when}",
+    "timeCateringNotice": "Traiteur — choisissez un horaire au moins {hours} h à l'avance",
+    "deliveryTo": "Livraison à {address}",
+    "deliveryAddAddress": "Livraison — ajoutez l'adresse"
   },
   "reservation": {
     "title": "Réserver une table",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— COMMANDE CUISINE —",
       "noSpecialNotes": "(aucune note spéciale)",
       "kitchenNoteHeading": "NOTE",
-      "prepTime": "Temps de préparation : ________________ min"
+      "prepTime": "Temps de préparation : ________________ min",
+      "asap": "DÈS QUE POSSIBLE"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Rapports chaîne",

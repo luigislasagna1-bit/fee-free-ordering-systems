@@ -434,7 +434,11 @@
     "reservationTitle": "Lauabroneeringu kinnitamine",
     "reservationDetail": "{date} kell {time} · {n} inimest — teie laud broneeritakse selle tellimuse esitamisel.",
     "rememberedHint": "Täitsime teie andmed sellest seadmest.",
-    "rememberedClear": "Kas pole teie? Tühjenda"
+    "rememberedClear": "Kas pole teie? Tühjenda",
+    "timeScheduledFor": "Ajastatud: {when}",
+    "timeCateringNotice": "Catering — vali aeg vähemalt {hours} h ette",
+    "deliveryTo": "Kohaletoimetamine: {address}",
+    "deliveryAddAddress": "Kohaletoimetamine — lisa aadress"
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— KÖÖGI TELLIMUS —",
       "noSpecialNotes": "(erilisi märkusi pole)",
       "kitchenNoteHeading": "MÄRKUS",
-      "prepTime": "Ettevalmistusaeg: ________________ min"
+      "prepTime": "Ettevalmistusaeg: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — ketiaruanded",

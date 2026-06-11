@@ -434,7 +434,11 @@
     "reservationTitle": "تأكيد حجز طاولتك",
     "reservationDetail": "{date} الساعة {time} · مجموعة من {n} — يتم حجز طاولتك عند إتمام هذا الطلب.",
     "rememberedHint": "لقد ملأنا بياناتك من هذا الجهاز.",
-    "rememberedClear": "لست أنت؟ مسح"
+    "rememberedClear": "لست أنت؟ مسح",
+    "timeScheduledFor": "مجدول في {when}",
+    "timeCateringNotice": "تموين — اختر وقتًا قبل {hours} ساعة على الأقل",
+    "deliveryTo": "توصيل إلى {address}",
+    "deliveryAddAddress": "توصيل — أضف العنوان"
   },
   "reservation": {
     "title": "احجز طاولة",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— طلب المطبخ —",
       "noSpecialNotes": "(لا توجد ملاحظات خاصة)",
       "kitchenNoteHeading": "ملاحظة",
-      "prepTime": "وقت التحضير: ________________ دقيقة"
+      "prepTime": "وقت التحضير: ________________ دقيقة",
+      "asap": "في أقرب وقت"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — تقارير السلسلة",

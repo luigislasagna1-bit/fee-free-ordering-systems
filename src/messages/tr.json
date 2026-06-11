@@ -434,7 +434,11 @@
     "reservationTitle": "Masa rezervasyonunuzu onaylama",
     "reservationDetail": "{date} saat {time} · {n} kişilik — bu siparişi verdiğinizde masanız ayrılır.",
     "rememberedHint": "Bilgilerinizi bu cihazdan doldurduk.",
-    "rememberedClear": "Siz değil misiniz? Temizle"
+    "rememberedClear": "Siz değil misiniz? Temizle",
+    "timeScheduledFor": "{when} için planlandı",
+    "timeCateringNotice": "Catering — en az {hours} saat önceden bir saat seçin",
+    "deliveryTo": "{address} adresine teslimat",
+    "deliveryAddAddress": "Teslimat — adres ekleyin"
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— MUTFAK SİPARİŞİ —",
       "noSpecialNotes": "(özel not yok)",
       "kitchenNoteHeading": "NOT",
-      "prepTime": "Hazırlık Süresi: ________________ dak"
+      "prepTime": "Hazırlık Süresi: ________________ dak",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Zincir Raporları",

@@ -434,7 +434,11 @@
     "reservationTitle": "आपकी टेबल बुकिंग की पुष्टि",
     "reservationDetail": "{date} को {time} बजे · {n} लोगों के लिए — यह ऑर्डर देने पर आपकी टेबल बुक हो जाती है।",
     "rememberedHint": "हमने इस डिवाइस से आपकी जानकारी भर दी है।",
-    "rememberedClear": "आप नहीं? साफ़ करें"
+    "rememberedClear": "आप नहीं? साफ़ करें",
+    "timeScheduledFor": "{when} के लिए निर्धारित",
+    "timeCateringNotice": "कैटरिंग — कम से कम {hours} घंटे पहले का समय चुनें",
+    "deliveryTo": "{address} पर डिलीवरी",
+    "deliveryAddAddress": "डिलीवरी — पता जोड़ें"
   },
   "reservation": {
     "title": "टेबल बुक करें",
@@ -3334,7 +3338,8 @@
       "kitchenOrderTitle": "— किचन ऑर्डर —",
       "noSpecialNotes": "(कोई विशेष नोट नहीं)",
       "kitchenNoteHeading": "नोट",
-      "prepTime": "तैयारी समय: ________________ मिनट"
+      "prepTime": "तैयारी समय: ________________ मिनट",
+      "asap": "ASAP"
     },
     "exportMenu": {
       "exportAriaLabel": "निर्यात करें",

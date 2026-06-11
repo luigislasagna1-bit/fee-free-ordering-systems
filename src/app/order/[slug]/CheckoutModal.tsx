@@ -411,12 +411,15 @@ export function CheckoutModal({
 
   const orderingSummary = orderType === "delivery"
     ? (customerInfo.address
-        ? `Delivery to ${customerInfo.address}${customerInfo.city ? ", " + customerInfo.city : ""}`
-        : "Delivery — add address")
+        ? tc("deliveryTo", { address: `${customerInfo.address}${customerInfo.city ? ", " + customerInfo.city : ""}` })
+        : tc("deliveryAddAddress"))
     : orderType === "dine_in" ? tOrd("dineIn")
     : orderType === "take_out" ? tOrd("takeOut")
     : tOrd("pickup");
 
+  // Was hardcoded English ("ASAP · ~20 min" / "Scheduled for …") — reseller
+  // report cmq3s5xjl: an Italian customer must read "Appena possibile".
+  // tc("asap") carries the per-locale phrase; the rest is i18n'd too.
   const timeSummary = customerInfo.scheduledFor
     ? (() => {
         // Format the scheduled time in the restaurant's chosen 12h/24h format
@@ -425,11 +428,11 @@ export function CheckoutModal({
         const dateLabel = dPart
           ? new Date(`${dPart}T00:00`).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })
           : "";
-        return `Scheduled for ${dateLabel} ${formatTime((tPart || "").slice(0, 5), hoursFormat)}`.trim();
+        return tc("timeScheduledFor", { when: `${dateLabel} ${formatTime((tPart || "").slice(0, 5), hoursFormat)}`.trim() });
       })()
     : cateringMode
-      ? `Catering — choose a time ≥ ${cateringNoticeHours ?? 24}h ahead`
-      : `ASAP · ~${orderType === "delivery" ? estimatedDeliveryMinutes : estimatedPickupMinutes} min`;
+      ? tc("timeCateringNotice", { hours: cateringNoticeHours ?? 24 })
+      : `${tc("asap")} · ~${orderType === "delivery" ? estimatedDeliveryMinutes : estimatedPickupMinutes} min`;
 
   // Human-readable summary for the collapsed payment-method card.
   // Stays consistent with the picker labels below; "card" remains the

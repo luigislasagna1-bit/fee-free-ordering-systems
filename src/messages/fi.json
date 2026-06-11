@@ -434,7 +434,11 @@
     "reservationTitle": "Vahvistetaan pöytävarauksesi",
     "reservationDetail": "{date} klo {time} · {n} hengen seurue — pöytä varataan, kun teet tämän tilauksen.",
     "rememberedHint": "Täytimme tietosi tältä laitteelta.",
-    "rememberedClear": "Etkö sinä? Tyhjennä"
+    "rememberedClear": "Etkö sinä? Tyhjennä",
+    "timeScheduledFor": "Ajastettu: {when}",
+    "timeCateringNotice": "Catering — valitse aika vähintään {hours} h etukäteen",
+    "deliveryTo": "Toimitus osoitteeseen {address}",
+    "deliveryAddAddress": "Toimitus — lisää osoite"
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— KEITTIÖTILAUS —",
       "noSpecialNotes": "(ei erityishuomioita)",
       "kitchenNoteHeading": "HUOMIO",
-      "prepTime": "Valmistusaika: ________________ min"
+      "prepTime": "Valmistusaika: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Ketjuraportit",

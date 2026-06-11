@@ -434,7 +434,11 @@
     "reservationTitle": "Confirmăm rezervarea mesei",
     "reservationDetail": "{date} la {time} · grup de {n} — masa este rezervată când plasezi această comandă.",
     "rememberedHint": "Am completat datele tale de pe acest dispozitiv.",
-    "rememberedClear": "Nu ești tu? Șterge"
+    "rememberedClear": "Nu ești tu? Șterge",
+    "timeScheduledFor": "Programat pentru {when}",
+    "timeCateringNotice": "Catering — alege o oră cu cel puțin {hours}h înainte",
+    "deliveryTo": "Livrare la {address}",
+    "deliveryAddAddress": "Livrare — adaugă adresa"
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -3032,7 +3036,8 @@
       "kitchenOrderTitle": "— COMANDĂ BUCĂTĂRIE —",
       "noSpecialNotes": "(fără note speciale)",
       "kitchenNoteHeading": "NOTĂ",
-      "prepTime": "Timp de preparare: ________________ min"
+      "prepTime": "Timp de preparare: ________________ min",
+      "asap": "ASAP"
     },
     "brandReports": {
       "chainReportsHeading": "{brandName} — Rapoarte lanț",
