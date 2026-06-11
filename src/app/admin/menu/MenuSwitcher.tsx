@@ -32,7 +32,14 @@ export function MenuSwitcher({ menus, selectedMenuId }: { menus: MenuLite[]; sel
   const selected = menus.find((m) => m.id === selectedMenuId) ?? menus[0];
   const visible = menus.filter((m) => !m.isArchived);
 
-  const go = (menuId: string) => router.push(`/admin/menu?menu=${menuId}`);
+  // push() alone changes the URL but Next's client router can serve the
+  // previous menu's server-rendered categories from cache — so the editor
+  // showed the OLD menu until a manual reload (Luigi 2026-06-11). refresh()
+  // forces the server component to re-fetch for the newly-selected menu.
+  const go = (menuId: string) => {
+    router.push(`/admin/menu?menu=${menuId}`);
+    router.refresh();
+  };
 
   const run = async (fn: () => Promise<Response>, okMsg: string, after?: (json: any) => void) => {
     setBusy(true);
