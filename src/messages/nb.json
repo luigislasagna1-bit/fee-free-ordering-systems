@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Lag en smartlenke først — et flygeblad trenger den til QR-koden.",
       "printHint": "Flygebladet ditt er klart — bruk nettleserens utskriftsdialog for å skrive ut eller lagre som PDF.",
       "scansOverTime": "Skanninger (siste 30 dager)",
-      "noScansYet": "Ingen skanninger ennå"
+      "noScansYet": "Ingen skanninger ennå",
+      "phoneLabel": "Telefon",
+      "phonePlaceholder": "Telefonnummeret ditt",
+      "websiteLabel": "Nettsted",
+      "websitePlaceholder": "Nettstedet ditt",
+      "footerTextLabel": "Ekstra tekst (under QR)",
+      "footerTextPlaceholder": "Valgfri ekstra linje"
     }
   },
   "impersonation": {

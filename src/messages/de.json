@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Erstellen Sie zuerst einen Smart-Link — ein Flyer braucht ihn für den QR.",
       "printHint": "Ihr Flyer ist fertig — nutzen Sie den Druckdialog Ihres Browsers zum Drucken oder als PDF zu speichern.",
       "scansOverTime": "Scans (letzte 30 Tage)",
-      "noScansYet": "Noch keine Scans"
+      "noScansYet": "Noch keine Scans",
+      "phoneLabel": "Telefon",
+      "phonePlaceholder": "Deine Telefonnummer",
+      "websiteLabel": "Website",
+      "websitePlaceholder": "Deine Website",
+      "footerTextLabel": "Zusätzlicher Text (unter dem QR)",
+      "footerTextPlaceholder": "Optionale Zusatzzeile"
     }
   },
   "impersonation": {

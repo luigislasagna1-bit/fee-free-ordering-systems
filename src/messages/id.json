@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Buat tautan pintar dulu — selebaran membutuhkannya untuk QR.",
       "printHint": "Selebaran Anda siap — gunakan dialog cetak browser untuk mencetak atau menyimpan sebagai PDF.",
       "scansOverTime": "Pemindaian (30 hari terakhir)",
-      "noScansYet": "Belum ada pemindaian"
+      "noScansYet": "Belum ada pemindaian",
+      "phoneLabel": "Telepon",
+      "phonePlaceholder": "Nomor telepon Anda",
+      "websiteLabel": "Situs web",
+      "websitePlaceholder": "Situs web Anda",
+      "footerTextLabel": "Teks tambahan (di bawah QR)",
+      "footerTextPlaceholder": "Baris tambahan (opsional)"
     }
   },
   "impersonation": {

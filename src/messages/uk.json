@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Спершу створіть розумне посилання — воно потрібне листівці для QR.",
       "printHint": "Ваша листівка готова — скористайтеся діалогом друку браузера, щоб надрукувати або зберегти як PDF.",
       "scansOverTime": "Сканування (останні 30 днів)",
-      "noScansYet": "Поки немає сканувань"
+      "noScansYet": "Поки немає сканувань",
+      "phoneLabel": "Телефон",
+      "phonePlaceholder": "Ваш номер телефону",
+      "websiteLabel": "Вебсайт",
+      "websitePlaceholder": "Ваш вебсайт",
+      "footerTextLabel": "Додатковий текст (під QR)",
+      "footerTextPlaceholder": "Необов'язковий додатковий рядок"
     }
   },
   "impersonation": {

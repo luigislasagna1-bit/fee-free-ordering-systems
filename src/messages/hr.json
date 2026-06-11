@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Prvo stvorite pametnu poveznicu — letku je potrebna za njegov QR.",
       "printHint": "Vaš letak je spreman — koristite dijalog za ispis preglednika za ispis ili spremanje u PDF.",
       "scansOverTime": "Skeniranja (zadnjih 30 dana)",
-      "noScansYet": "Još nema skeniranja"
+      "noScansYet": "Još nema skeniranja",
+      "phoneLabel": "Telefon",
+      "phonePlaceholder": "Vaš telefonski broj",
+      "websiteLabel": "Web-stranica",
+      "websitePlaceholder": "Vaša web-stranica",
+      "footerTextLabel": "Dodatni tekst (ispod QR-a)",
+      "footerTextPlaceholder": "Neobavezni dodatni redak"
     }
   },
   "impersonation": {

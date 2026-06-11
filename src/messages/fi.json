@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Luo ensin älylinkki — esite tarvitsee sen QR:ää varten.",
       "printHint": "Esitteesi on valmis — käytä selaimen tulostusvalintaikkunaa tulostamiseen tai PDF:ksi tallentamiseen.",
       "scansOverTime": "Skannaukset (viimeiset 30 päivää)",
-      "noScansYet": "Ei vielä skannauksia"
+      "noScansYet": "Ei vielä skannauksia",
+      "phoneLabel": "Puhelin",
+      "phonePlaceholder": "Puhelinnumerosi",
+      "websiteLabel": "Verkkosivusto",
+      "websitePlaceholder": "Verkkosivustosi",
+      "footerTextLabel": "Lisäteksti (QR:n alla)",
+      "footerTextPlaceholder": "Valinnainen lisärivi"
     }
   },
   "impersonation": {

@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Pirmiausia sukurkite išmaniąją nuorodą — skrajutei jos reikia QR kodui.",
       "printHint": "Jūsų skrajutė paruošta — naudokite naršyklės spausdinimo langą, kad išspausdintumėte ar įrašytumėte kaip PDF.",
       "scansOverTime": "Nuskaitymai (paskutinės 30 d.)",
-      "noScansYet": "Kol kas nėra nuskaitymų"
+      "noScansYet": "Kol kas nėra nuskaitymų",
+      "phoneLabel": "Telefonas",
+      "phonePlaceholder": "Jūsų telefono numeris",
+      "websiteLabel": "Svetainė",
+      "websitePlaceholder": "Jūsų svetainė",
+      "footerTextLabel": "Papildomas tekstas (po QR)",
+      "footerTextPlaceholder": "Neprivaloma papildoma eilutė"
     }
   },
   "impersonation": {

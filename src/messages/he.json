@@ -3657,7 +3657,13 @@
       "needLinkFirst": "צור קודם קישור חכם — העלון זקוק לו עבור ה-QR.",
       "printHint": "העלון שלך מוכן — השתמש בתיבת ההדפסה של הדפדפן כדי להדפיס או לשמור כ-PDF.",
       "scansOverTime": "סריקות (30 הימים האחרונים)",
-      "noScansYet": "אין סריקות עדיין"
+      "noScansYet": "אין סריקות עדיין",
+      "phoneLabel": "טלפון",
+      "phonePlaceholder": "מספר הטלפון שלך",
+      "websiteLabel": "אתר אינטרנט",
+      "websitePlaceholder": "האתר שלך",
+      "footerTextLabel": "טקסט נוסף (מתחת ל-QR)",
+      "footerTextPlaceholder": "שורה נוספת (אופציונלי)"
     }
   },
   "impersonation": {

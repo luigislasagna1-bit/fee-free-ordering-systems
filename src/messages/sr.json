@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Прво направите паметну везу — летку је потребна за његов QR.",
       "printHint": "Ваш летак је спреман — користите дијалог за штампу прегледача да одштампате или сачувате као PDF.",
       "scansOverTime": "Скенирања (последњих 30 дана)",
-      "noScansYet": "Још нема скенирања"
+      "noScansYet": "Још нема скенирања",
+      "phoneLabel": "Телефон",
+      "phonePlaceholder": "Ваш број телефона",
+      "websiteLabel": "Веб-сајт",
+      "websitePlaceholder": "Ваш веб-сајт",
+      "footerTextLabel": "Додатни текст (испод QR-а)",
+      "footerTextPlaceholder": "Опционални додатни ред"
     }
   },
   "impersonation": {

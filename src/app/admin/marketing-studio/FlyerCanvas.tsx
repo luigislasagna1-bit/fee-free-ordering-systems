@@ -12,6 +12,8 @@ export function FlyerCanvas({
   logoUrl,
   address,
   phone,
+  website,
+  footerText,
   headline,
   offerText,
   qrSrc,
@@ -24,6 +26,8 @@ export function FlyerCanvas({
   logoUrl?: string | null;
   address?: string | null;
   phone?: string | null;
+  website?: string | null;
+  footerText?: string | null;
   headline: string;
   offerText: string;
   qrSrc: string;
@@ -68,9 +72,16 @@ export function FlyerCanvas({
           <div style={{ fontSize: "3.8cqw", fontWeight: 700, color: "#0f172a" }}>{scanLabel}</div>
         </div>
 
-        {(address || phone) && (
-          <div style={{ marginTop: "4cqw", fontSize: "3.2cqw", color: theme.muted }}>
-            {[address, phone].filter(Boolean).join("  ·  ")}
+        {/* Extra free-text line under the QR (e.g. "Mention this flyer for…"). */}
+        {footerText ? (
+          <div style={{ marginTop: "4cqw", fontSize: "4cqw", fontWeight: 600, lineHeight: 1.25 }}>{footerText}</div>
+        ) : null}
+
+        {/* Contact footer — phone · website on one line, address beneath. */}
+        {(phone || website || address) && (
+          <div style={{ marginTop: footerText ? "2.5cqw" : "4cqw", fontSize: "3.2cqw", color: theme.muted, lineHeight: 1.45 }}>
+            {(phone || website) && <div>{[phone, website].filter(Boolean).join("  ·  ")}</div>}
+            {address ? <div>{address}</div> : null}
           </div>
         )}
       </div>

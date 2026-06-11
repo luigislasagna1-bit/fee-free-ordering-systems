@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Maak eerst een slimme link — een flyer heeft die nodig voor de QR.",
       "printHint": "Je flyer is klaar — gebruik het printvenster van je browser om af te drukken of op te slaan als pdf.",
       "scansOverTime": "Scans (laatste 30 dagen)",
-      "noScansYet": "Nog geen scans"
+      "noScansYet": "Nog geen scans",
+      "phoneLabel": "Telefoon",
+      "phonePlaceholder": "Je telefoonnummer",
+      "websiteLabel": "Website",
+      "websitePlaceholder": "Je website",
+      "footerTextLabel": "Extra tekst (onder QR)",
+      "footerTextPlaceholder": "Optionele extra regel"
     }
   },
   "impersonation": {

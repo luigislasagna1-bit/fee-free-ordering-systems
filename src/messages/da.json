@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Opret først et smart link — en folder skal bruge det til sin QR.",
       "printHint": "Din folder er klar — brug browserens udskriftsdialog for at udskrive eller gemme som PDF.",
       "scansOverTime": "Scanninger (seneste 30 dage)",
-      "noScansYet": "Ingen scanninger endnu"
+      "noScansYet": "Ingen scanninger endnu",
+      "phoneLabel": "Telefon",
+      "phonePlaceholder": "Dit telefonnummer",
+      "websiteLabel": "Websted",
+      "websitePlaceholder": "Dit websted",
+      "footerTextLabel": "Ekstra tekst (under QR)",
+      "footerTextPlaceholder": "Valgfri ekstra linje"
     }
   },
   "impersonation": {

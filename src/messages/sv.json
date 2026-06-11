@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Skapa först en smart länk — flygbladet behöver den för sin QR.",
       "printHint": "Ditt flygblad är klart — använd webbläsarens utskriftsdialog för att skriva ut eller spara som PDF.",
       "scansOverTime": "Skanningar (senaste 30 dagarna)",
-      "noScansYet": "Inga skanningar ännu"
+      "noScansYet": "Inga skanningar ännu",
+      "phoneLabel": "Telefon",
+      "phonePlaceholder": "Ditt telefonnummer",
+      "websiteLabel": "Webbplats",
+      "websitePlaceholder": "Din webbplats",
+      "footerTextLabel": "Extra text (under QR)",
+      "footerTextPlaceholder": "Valfri extra rad"
     }
   },
   "impersonation": {

@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Crea primer un enllaç intel·ligent — el fullet el necessita per al seu QR.",
       "printHint": "El teu fullet està a punt — fes servir el quadre d'impressió del navegador per imprimir o desar com a PDF.",
       "scansOverTime": "Escanejos (últims 30 dies)",
-      "noScansYet": "Encara no hi ha escanejos"
+      "noScansYet": "Encara no hi ha escanejos",
+      "phoneLabel": "Telèfon",
+      "phonePlaceholder": "El teu número de telèfon",
+      "websiteLabel": "Lloc web",
+      "websitePlaceholder": "El teu lloc web",
+      "footerTextLabel": "Text addicional (sota el QR)",
+      "footerTextPlaceholder": "Línia addicional (opcional)"
     }
   },
   "impersonation": {

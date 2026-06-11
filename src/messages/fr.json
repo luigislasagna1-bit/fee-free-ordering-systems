@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Créez d'abord un lien intelligent — un prospectus en a besoin pour son QR.",
       "printHint": "Votre prospectus est prêt — utilisez la boîte d'impression de votre navigateur pour imprimer ou enregistrer en PDF.",
       "scansOverTime": "Scans (30 derniers jours)",
-      "noScansYet": "Aucun scan pour l'instant"
+      "noScansYet": "Aucun scan pour l'instant",
+      "phoneLabel": "Téléphone",
+      "phonePlaceholder": "Votre numéro de téléphone",
+      "websiteLabel": "Site web",
+      "websitePlaceholder": "Votre site web",
+      "footerTextLabel": "Texte supplémentaire (sous le QR)",
+      "footerTextPlaceholder": "Ligne supplémentaire (facultatif)"
     }
   },
   "impersonation": {

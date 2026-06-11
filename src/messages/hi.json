@@ -3657,7 +3657,13 @@
       "needLinkFirst": "पहले एक स्मार्ट लिंक बनाएँ — फ़्लायर को उसके QR के लिए इसकी ज़रूरत है।",
       "printHint": "आपका फ़्लायर तैयार है — प्रिंट करने या PDF के रूप में सहेजने के लिए ब्राउज़र के प्रिंट डायलॉग का उपयोग करें।",
       "scansOverTime": "स्कैन (पिछले 30 दिन)",
-      "noScansYet": "अभी कोई स्कैन नहीं"
+      "noScansYet": "अभी कोई स्कैन नहीं",
+      "phoneLabel": "फ़ोन",
+      "phonePlaceholder": "आपका फ़ोन नंबर",
+      "websiteLabel": "वेबसाइट",
+      "websitePlaceholder": "आपकी वेबसाइट",
+      "footerTextLabel": "अतिरिक्त टेक्स्ट (QR के नीचे)",
+      "footerTextPlaceholder": "वैकल्पिक अतिरिक्त पंक्ति"
     }
   },
   "impersonation": {

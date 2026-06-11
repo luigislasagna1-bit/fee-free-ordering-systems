@@ -3657,7 +3657,13 @@
       "needLinkFirst": "まずスマートリンクを作成してください — チラシのQRに必要です。",
       "printHint": "チラシの準備ができました — ブラウザの印刷ダイアログから印刷またはPDFで保存してください。",
       "scansOverTime": "スキャン（過去30日）",
-      "noScansYet": "スキャンはまだありません"
+      "noScansYet": "スキャンはまだありません",
+      "phoneLabel": "電話",
+      "phonePlaceholder": "電話番号",
+      "websiteLabel": "ウェブサイト",
+      "websitePlaceholder": "ウェブサイト",
+      "footerTextLabel": "追加テキスト（QRの下）",
+      "footerTextPlaceholder": "任意の追加行"
     }
   },
   "impersonation": {

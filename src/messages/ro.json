@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Creează mai întâi un link inteligent — pliantul are nevoie de el pentru QR.",
       "printHint": "Pliantul tău este gata — folosește dialogul de printare al browserului pentru a printa sau salva ca PDF.",
       "scansOverTime": "Scanări (ultimele 30 de zile)",
-      "noScansYet": "Încă nicio scanare"
+      "noScansYet": "Încă nicio scanare",
+      "phoneLabel": "Telefon",
+      "phonePlaceholder": "Numărul tău de telefon",
+      "websiteLabel": "Site web",
+      "websitePlaceholder": "Site-ul tău web",
+      "footerTextLabel": "Text suplimentar (sub QR)",
+      "footerTextPlaceholder": "Rând suplimentar (opțional)"
     }
   },
   "impersonation": {

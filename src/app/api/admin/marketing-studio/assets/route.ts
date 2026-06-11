@@ -18,6 +18,13 @@ export function parseDesign(body: Record<string, unknown>) {
     templateId: isFlyerTemplate(body.templateId) ? (body.templateId as string) : "bold",
     headline: String(body.headline ?? "").slice(0, 120),
     offerText: String(body.offerText ?? "").slice(0, 200),
+    // Optional contact + extra copy (Luigi 2026-06-11). Empty string = fall
+    // back to the live restaurant defaults at render. Stored per-flyer so an
+    // owner can override (e.g. a campaign-specific phone) without editing their
+    // restaurant profile.
+    phone: String(body.phone ?? "").slice(0, 40),
+    website: String(body.website ?? "").slice(0, 90),
+    footerText: String(body.footerText ?? "").slice(0, 200),
     smartLinkId: typeof body.smartLinkId === "string" ? body.smartLinkId : null,
   };
 }

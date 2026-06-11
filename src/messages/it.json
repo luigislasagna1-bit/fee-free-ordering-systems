@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Crea prima un link intelligente — al volantino serve per il QR.",
       "printHint": "Il tuo volantino è pronto — usa la finestra di stampa del browser per stampare o salvare in PDF.",
       "scansOverTime": "Scansioni (ultimi 30 giorni)",
-      "noScansYet": "Ancora nessuna scansione"
+      "noScansYet": "Ancora nessuna scansione",
+      "phoneLabel": "Telefono",
+      "phonePlaceholder": "Il tuo numero di telefono",
+      "websiteLabel": "Sito web",
+      "websitePlaceholder": "Il tuo sito web",
+      "footerTextLabel": "Testo aggiuntivo (sotto il QR)",
+      "footerTextPlaceholder": "Riga aggiuntiva (facoltativa)"
     }
   },
   "impersonation": {

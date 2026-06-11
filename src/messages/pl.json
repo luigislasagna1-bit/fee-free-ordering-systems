@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Najpierw utwórz inteligentny link — ulotka potrzebuje go do swojego QR.",
       "printHint": "Twoja ulotka jest gotowa — użyj okna drukowania przeglądarki, aby wydrukować lub zapisać jako PDF.",
       "scansOverTime": "Skany (ostatnie 30 dni)",
-      "noScansYet": "Brak skanów"
+      "noScansYet": "Brak skanów",
+      "phoneLabel": "Telefon",
+      "phonePlaceholder": "Twój numer telefonu",
+      "websiteLabel": "Strona internetowa",
+      "websitePlaceholder": "Twoja strona internetowa",
+      "footerTextLabel": "Dodatkowy tekst (pod QR)",
+      "footerTextPlaceholder": "Opcjonalny dodatkowy wiersz"
     }
   },
   "impersonation": {

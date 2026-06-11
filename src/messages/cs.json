@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Nejprve vytvořte chytrý odkaz — leták ho potřebuje pro QR.",
       "printHint": "Váš leták je připraven — k tisku nebo uložení do PDF použijte dialog tisku prohlížeče.",
       "scansOverTime": "Skeny (posledních 30 dní)",
-      "noScansYet": "Zatím žádné skeny"
+      "noScansYet": "Zatím žádné skeny",
+      "phoneLabel": "Telefon",
+      "phonePlaceholder": "Vaše telefonní číslo",
+      "websiteLabel": "Web",
+      "websitePlaceholder": "Váš web",
+      "footerTextLabel": "Další text (pod QR)",
+      "footerTextPlaceholder": "Volitelný další řádek"
     }
   },
   "impersonation": {

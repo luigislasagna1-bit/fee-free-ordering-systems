@@ -9,7 +9,7 @@ import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { parseTheme } from "@/lib/theme";
-import { buildSmartLinkUrl } from "@/lib/marketing-studio";
+import { buildSmartLinkUrl, flyerWebsiteDefault } from "@/lib/marketing-studio";
 import { FlyerCanvas } from "@/app/admin/marketing-studio/FlyerCanvas";
 import { PrintTrigger } from "./PrintTrigger";
 
@@ -29,14 +29,23 @@ export default async function FlyerPrintPage({ params }: { params: Promise<{ id:
   if (!asset) return <div style={{ padding: 40 }}>Not found</div>;
 
   const [restaurant, link] = await Promise.all([
-    prisma.restaurant.findUnique({ where: { id: restaurantId }, select: { name: true, logoUrl: true, address: true, city: true, phone: true, themeSettings: true } }),
+    prisma.restaurant.findUnique({
+      where: { id: restaurantId },
+      select: {
+        name: true, logoUrl: true, address: true, city: true, phone: true, themeSettings: true,
+        slug: true, customDomain: true, customDomainStatus: true, socialLinks: true,
+      },
+    }),
     asset.smartLinkId ? prisma.smartLink.findFirst({ where: { id: asset.smartLinkId, restaurantId }, select: { code: true } }) : Promise.resolve(null),
   ]);
 
-  let design: { templateId?: string; headline?: string; offerText?: string } = {};
+  let design: { templateId?: string; headline?: string; offerText?: string; phone?: string; website?: string; footerText?: string } = {};
   try { design = JSON.parse(asset.designJson || "{}"); } catch {}
 
   const theme = parseTheme(restaurant?.themeSettings);
+  // Contact: prefer the per-flyer override, else the live restaurant defaults.
+  const flyerPhone = design.phone || restaurant?.phone || "";
+  const flyerWebsite = design.website || (restaurant ? flyerWebsiteDefault(restaurant) : "");
   const t = await getTranslations("admin.marketingStudio");
   const qrDataUri = link
     ? await QRCode.toDataURL(buildSmartLinkUrl(link.code), { margin: 1, width: 800, errorCorrectionLevel: "M" })
@@ -58,7 +67,9 @@ export default async function FlyerPrintPage({ params }: { params: Promise<{ id:
           restaurantName={restaurant?.name ?? ""}
           logoUrl={restaurant?.logoUrl}
           address={[restaurant?.address, restaurant?.city].filter(Boolean).join(", ")}
-          phone={restaurant?.phone}
+          phone={flyerPhone}
+          website={flyerWebsite}
+          footerText={design.footerText || ""}
           headline={design.headline || ""}
           offerText={design.offerText || ""}
           qrSrc={qrDataUri}

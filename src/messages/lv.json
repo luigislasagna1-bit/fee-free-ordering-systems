@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Vispirms izveidojiet viedo saiti — bukletam tā nepieciešama QR kodam.",
       "printHint": "Jūsu buklets ir gatavs — izmantojiet pārlūka drukāšanas dialogu, lai drukātu vai saglabātu kā PDF.",
       "scansOverTime": "Skenēšanas (pēdējās 30 dienas)",
-      "noScansYet": "Pagaidām nav skenēšanu"
+      "noScansYet": "Pagaidām nav skenēšanu",
+      "phoneLabel": "Tālrunis",
+      "phonePlaceholder": "Jūsu tālruņa numurs",
+      "websiteLabel": "Vietne",
+      "websitePlaceholder": "Jūsu vietne",
+      "footerTextLabel": "Papildu teksts (zem QR)",
+      "footerTextPlaceholder": "Neobligāta papildu rinda"
     }
   },
   "impersonation": {

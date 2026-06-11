@@ -3657,7 +3657,13 @@
       "needLinkFirst": "Primero crea un enlace inteligente — el folleto lo necesita para su QR.",
       "printHint": "Tu folleto está listo — usa el cuadro de impresión del navegador para imprimir o guardar en PDF.",
       "scansOverTime": "Escaneos (últimos 30 días)",
-      "noScansYet": "Aún no hay escaneos"
+      "noScansYet": "Aún no hay escaneos",
+      "phoneLabel": "Teléfono",
+      "phonePlaceholder": "Tu número de teléfono",
+      "websiteLabel": "Sitio web",
+      "websitePlaceholder": "Tu sitio web",
+      "footerTextLabel": "Texto adicional (debajo del QR)",
+      "footerTextPlaceholder": "Línea adicional (opcional)"
     }
   },
   "impersonation": {

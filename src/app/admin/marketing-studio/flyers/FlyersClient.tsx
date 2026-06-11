@@ -7,9 +7,9 @@ import { ArrowLeft, Plus, Printer, Save, Trash2, Link2 } from "lucide-react";
 import { FLYER_TEMPLATES } from "@/lib/marketing-templates";
 import { FlyerCanvas } from "../FlyerCanvas";
 
-type Branding = { name: string; logoUrl: string | null; address: string; phone: string | null; primaryColor: string };
+type Branding = { name: string; logoUrl: string | null; address: string; phone: string | null; website: string; primaryColor: string };
 type SLink = { id: string; code: string; name: string };
-type Flyer = { id: string | null; name: string; smartLinkId: string | null; templateId: string; headline: string; offerText: string };
+type Flyer = { id: string | null; name: string; smartLinkId: string | null; templateId: string; headline: string; offerText: string; phone: string; website: string; footerText: string };
 
 export function FlyersClient({
   branding,
@@ -31,6 +31,10 @@ export function FlyersClient({
     templateId: "bold",
     headline: "",
     offerText: "",
+    // Auto-fill contact from the restaurant — editable per flyer.
+    phone: branding.phone ?? "",
+    website: branding.website ?? "",
+    footerText: "",
   });
   const [draft, setDraft] = useState<Flyer>(initialAssets[0] ?? blank());
   const [busy, setBusy] = useState(false);
@@ -59,6 +63,9 @@ export function FlyersClient({
       smartLinkId: draft.smartLinkId,
       headline: draft.headline,
       offerText: draft.offerText,
+      phone: draft.phone,
+      website: draft.website,
+      footerText: draft.footerText,
     };
     const res = draft.id
       ? await fetch(`/api/admin/marketing-studio/assets/${draft.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
@@ -160,6 +167,19 @@ export function FlyersClient({
             <textarea className="input resize-y" rows={2} value={draft.offerText} placeholder={t("offerPlaceholder")} onChange={(e) => set({ offerText: e.target.value })} />
           </Field>
 
+          <div className="grid grid-cols-2 gap-3">
+            <Field label={t("phoneLabel")}>
+              <input className="input" value={draft.phone} placeholder={t("phonePlaceholder")} onChange={(e) => set({ phone: e.target.value })} />
+            </Field>
+            <Field label={t("websiteLabel")}>
+              <input className="input" value={draft.website} placeholder={t("websitePlaceholder")} onChange={(e) => set({ website: e.target.value })} />
+            </Field>
+          </div>
+
+          <Field label={t("footerTextLabel")}>
+            <input className="input" value={draft.footerText} placeholder={t("footerTextPlaceholder")} onChange={(e) => set({ footerText: e.target.value })} />
+          </Field>
+
           <div className="flex gap-2 pt-1">
             <button onClick={save} disabled={busy} className="inline-flex items-center gap-2 bg-white border border-gray-200 hover:border-gray-300 text-gray-700 text-sm font-semibold px-4 py-2.5 rounded-lg disabled:opacity-50">
               <Save className="w-4 h-4" /> {tc("save")}
@@ -179,7 +199,9 @@ export function FlyersClient({
               restaurantName={branding.name}
               logoUrl={branding.logoUrl}
               address={branding.address}
-              phone={branding.phone}
+              phone={draft.phone}
+              website={draft.website}
+              footerText={draft.footerText}
               headline={draft.headline || t("headlinePlaceholder")}
               offerText={draft.offerText || t("offerPlaceholder")}
               qrSrc={qrSrc}

@@ -17,6 +17,33 @@ export function platformBaseUrl(): string {
   return (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001").replace(/\/$/, "");
 }
 
+/** Strip protocol + trailing slash for a clean, human-readable URL on a flyer. */
+function displayUrl(u: string): string {
+  return u.replace(/^https?:\/\//i, "").replace(/\/$/, "");
+}
+
+/**
+ * Best default "website" line for a flyer, derived from the restaurant: a
+ * verified custom domain → their social-links website → the public ordering
+ * page on the platform (always live, so a printed flyer never points at a dead
+ * URL). Always editable in the flyer builder. Luigi 2026-06-11.
+ */
+export function flyerWebsiteDefault(r: {
+  slug: string;
+  customDomain?: string | null;
+  customDomainStatus?: string | null;
+  socialLinks?: string | null;
+}): string {
+  if (r.customDomain && r.customDomainStatus === "verified") return displayUrl(r.customDomain);
+  try {
+    const sl = r.socialLinks ? (JSON.parse(r.socialLinks) as Record<string, string>) : null;
+    if (sl?.website) return displayUrl(sl.website);
+  } catch {
+    /* malformed socialLinks — fall through to the order page */
+  }
+  return `${displayUrl(platformBaseUrl())}/order/${r.slug}`;
+}
+
 // Unambiguous base62 (no 0/O/1/I/l) so a code printed on a flyer can't be misread.
 const CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
 

@@ -3657,7 +3657,13 @@
       "needLinkFirst": "สร้างลิงก์อัจฉริยะก่อน — ใบปลิวต้องใช้สำหรับคิวอาร์",
       "printHint": "ใบปลิวของคุณพร้อมแล้ว — ใช้กล่องพิมพ์ของเบราว์เซอร์เพื่อพิมพ์หรือบันทึกเป็น PDF",
       "scansOverTime": "การสแกน (30 วันที่ผ่านมา)",
-      "noScansYet": "ยังไม่มีการสแกน"
+      "noScansYet": "ยังไม่มีการสแกน",
+      "phoneLabel": "โทรศัพท์",
+      "phonePlaceholder": "หมายเลขโทรศัพท์ของคุณ",
+      "websiteLabel": "เว็บไซต์",
+      "websitePlaceholder": "เว็บไซต์ของคุณ",
+      "footerTextLabel": "ข้อความเพิ่มเติม (ใต้ QR)",
+      "footerTextPlaceholder": "บรรทัดเพิ่มเติม (ไม่บังคับ)"
     }
   },
   "impersonation": {
