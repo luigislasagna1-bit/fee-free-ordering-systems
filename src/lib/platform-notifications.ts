@@ -134,16 +134,22 @@ interface AudienceCopy {
   emailCtaLabel: string;
 }
 
-/** In-app rows + emails for one audience with one copy block. */
-async function dispatch(recipients: Recipient[], copy: AudienceCopy): Promise<void> {
-  if (recipients.length === 0) return;
-  await createInApp(recipients, {
+/** In-app rows for `inApp` recipients + emails for `email` recipients. The two
+ *  lists differ for the superadmin audience: the in-app bell is keyed to the
+ *  superadmin login (admin@…, which drives the panel badge), while the EMAIL
+ *  also goes to the monitored ops inbox (support@…) — that inbox isn't a panel
+ *  user but IS where the operator actually reads mail. */
+async function dispatch(
+  audience: { inApp: Recipient[]; email: Recipient[] },
+  copy: AudienceCopy,
+): Promise<void> {
+  await createInApp(audience.inApp, {
     kind: copy.kind,
     title: copy.inAppTitle,
     body: copy.inAppBody ?? null,
     linkUrl: copy.link,
   });
-  await emailAll(recipients, (r) => ({
+  await emailAll(audience.email, (r) => ({
     to: r.email,
     recipientName: r.name?.split(" ")[0] ?? null,
     subject: copy.emailSubject,
@@ -153,6 +159,29 @@ async function dispatch(recipients: Recipient[], copy: AudienceCopy): Promise<vo
     ctaLabel: copy.emailCtaLabel,
     ctaUrl: `${appUrl()}${copy.link}`,
   }));
+}
+
+/** The monitored platform ops inbox. Defaults to support@feefreeordering.com —
+ *  which is also the email `from` address and the report-center OPS default —
+ *  and is overridable via env. This is where signup / add-on alerts must land:
+ *  the superadmin LOGIN (admin@…) isn't necessarily a real, monitored mailbox,
+ *  which is why the first round of emails went unseen. Luigi 2026-06-11. */
+function opsEmail(): string {
+  return (process.env.PLATFORM_OPS_EMAIL || process.env.REPORTS_OPS_EMAIL || "support@feefreeordering.com")
+    .trim()
+    .toLowerCase();
+}
+
+/** Superadmin audience: in-app to the superadmin login(s) (drives the panel
+ *  bell), email to those PLUS the ops inbox, deduped, so support@ always gets
+ *  a copy. */
+async function superadminAudience(): Promise<{ inApp: Recipient[]; email: Recipient[] }> {
+  const users = await superadminRecipients();
+  const byAddr = new Map<string, Recipient>();
+  for (const u of users) byAddr.set(u.email, u);
+  const ops = opsEmail();
+  if (ops && !byAddr.has(ops)) byAddr.set(ops, { email: ops, name: "Super Admin" });
+  return { inApp: users, email: [...byAddr.values()] };
 }
 
 /**
@@ -176,7 +205,7 @@ export async function notifyRestaurantSignup(restaurantId: string): Promise<void
   const whereSuffix = where ? ` (${where})` : "";
 
   const [sa, reseller] = await Promise.all([
-    superadminRecipients(),
+    superadminAudience(),
     resellerRecipient(r.resellerProfileId),
   ]);
 
@@ -193,7 +222,7 @@ export async function notifyRestaurantSignup(restaurantId: string): Promise<void
   });
 
   if (reseller) {
-    await dispatch([reseller], {
+    await dispatch({ inApp: [reseller], email: [reseller] }, {
       kind: "restaurant_signup",
       inAppTitle: `New restaurant under you: ${r.name}`,
       inAppBody: where || null,
@@ -231,7 +260,7 @@ export async function notifyAddOnChange(
   if (!r) return;
 
   const [sa, reseller] = await Promise.all([
-    superadminRecipients(),
+    superadminAudience(),
     resellerRecipient(r.resellerProfileId),
   ]);
 
@@ -259,7 +288,7 @@ export async function notifyAddOnChange(
   });
 
   if (reseller) {
-    await dispatch([reseller], {
+    await dispatch({ inApp: [reseller], email: [reseller] }, {
       kind,
       inAppTitle:
         change === "activated"
