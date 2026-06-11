@@ -1166,9 +1166,7 @@
       "markComplete": "Oznacz jako zrealizowane",
       "rejectReason": "Powód odrzucenia",
       "noOrders": "Brak zamówień",
-      "viewDetails": "Zobacz szczegóły",
-      "confirmReject": "Odrzucić to zamówienie? Klient zostanie powiadomiony, a wszelkie płatności zostaną zwolnione lub zwrócone. Dodaj opcjonalny powód:",
-      "actionFailed": "Nie udało się zaktualizować zamówienia. Spróbuj ponownie."
+      "viewDetails": "Zobacz szczegóły"
     },
     "customers": {
       "title": "Klienci",

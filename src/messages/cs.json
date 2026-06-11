@@ -1166,9 +1166,7 @@
       "markComplete": "Označit jako dokončeno",
       "rejectReason": "Důvod odmítnutí",
       "noOrders": "Zatím žádné objednávky",
-      "viewDetails": "Zobrazit podrobnosti",
-      "confirmReject": "Odmítnout tuto objednávku? Zákazník bude upozorněn a jakákoli platba bude uvolněna nebo vrácena. Přidejte volitelný důvod:",
-      "actionFailed": "Objednávku se nepodařilo aktualizovat. Zkuste to znovu."
+      "viewDetails": "Zobrazit podrobnosti"
     },
     "customers": {
       "title": "Zákazníci",

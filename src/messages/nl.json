@@ -1166,9 +1166,7 @@
       "markComplete": "Markeer als voltooid",
       "rejectReason": "Reden voor afwijzing",
       "noOrders": "Nog geen bestellingen",
-      "viewDetails": "Details bekijken",
-      "confirmReject": "Deze bestelling weigeren? De klant wordt op de hoogte gesteld en elke betaling wordt vrijgegeven of terugbetaald. Voeg een optionele reden toe:",
-      "actionFailed": "Kan de bestelling niet bijwerken. Probeer het opnieuw."
+      "viewDetails": "Details bekijken"
     },
     "customers": {
       "title": "Klanten",

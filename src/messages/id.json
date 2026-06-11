@@ -1166,9 +1166,7 @@
       "markComplete": "Tandai selesai",
       "rejectReason": "Alasan penolakan",
       "noOrders": "Belum ada pesanan",
-      "viewDetails": "Lihat detail",
-      "confirmReject": "Tolak pesanan ini? Pelanggan akan diberi tahu dan pembayaran apa pun akan dilepaskan atau dikembalikan. Tambahkan alasan opsional:",
-      "actionFailed": "Tidak dapat memperbarui pesanan. Silakan coba lagi."
+      "viewDetails": "Lihat detail"
     },
     "customers": {
       "title": "Pelanggan",

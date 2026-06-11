@@ -1166,9 +1166,7 @@
       "markComplete": "Merk som fullført",
       "rejectReason": "Avsvisningsårsak",
       "noOrders": "Ingen bestillinger ennå",
-      "viewDetails": "Vis detaljer",
-      "confirmReject": "Avvis denne bestillingen? Kunden blir varslet, og enhver betaling frigis eller refunderes. Legg til en valgfri årsak:",
-      "actionFailed": "Kunne ikke oppdatere bestillingen. Prøv igjen."
+      "viewDetails": "Vis detaljer"
     },
     "customers": {
       "title": "Kunder",

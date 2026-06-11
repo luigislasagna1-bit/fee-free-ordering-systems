@@ -1166,9 +1166,7 @@
       "markComplete": "Tamamlandı işaretle",
       "rejectReason": "Red Sebebi",
       "noOrders": "Henüz sipariş yok",
-      "viewDetails": "Ayrıntıları Gör",
-      "confirmReject": "Bu sipariş reddedilsin mi? Müşteri bilgilendirilecek ve her türlü ödeme serbest bırakılacak veya iade edilecek. İsteğe bağlı bir neden ekleyin:",
-      "actionFailed": "Sipariş güncellenemedi. Lütfen tekrar deneyin."
+      "viewDetails": "Ayrıntıları Gör"
     },
     "customers": {
       "title": "Müşteriler",

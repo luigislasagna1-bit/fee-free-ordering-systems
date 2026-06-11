@@ -1269,9 +1269,7 @@
       "markComplete": "Mark complete",
       "rejectReason": "Rejection reason",
       "noOrders": "No orders yet",
-      "viewDetails": "View details",
-      "confirmReject": "Reject this order? The customer will be notified and any payment released or refunded. Add an optional reason:",
-      "actionFailed": "Couldn't update the order. Please try again."
+      "viewDetails": "View details"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kitchen workflow",

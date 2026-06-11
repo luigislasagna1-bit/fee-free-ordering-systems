@@ -1166,9 +1166,7 @@
       "markComplete": "Als abgeschlossen markieren",
       "rejectReason": "Ablehnungsgrund",
       "noOrders": "Noch keine Bestellungen",
-      "viewDetails": "Details anzeigen",
-      "confirmReject": "Diese Bestellung ablehnen? Der Kunde wird benachrichtigt und jede Zahlung wird freigegeben oder erstattet. Optionalen Grund hinzufügen:",
-      "actionFailed": "Bestellung konnte nicht aktualisiert werden. Bitte erneut versuchen."
+      "viewDetails": "Details anzeigen"
     },
     "customers": {
       "title": "Kunden",

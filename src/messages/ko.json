@@ -1166,9 +1166,7 @@
       "markComplete": "완료 처리",
       "rejectReason": "거절 사유",
       "noOrders": "아직 주문이 없습니다",
-      "viewDetails": "상세 보기",
-      "confirmReject": "이 주문을 거부하시겠습니까? 고객에게 알림이 전송되며 모든 결제는 해제되거나 환불됩니다. 선택적으로 사유를 추가하세요:",
-      "actionFailed": "주문을 업데이트할 수 없습니다. 다시 시도해 주세요."
+      "viewDetails": "상세 보기"
     },
     "customers": {
       "title": "고객",

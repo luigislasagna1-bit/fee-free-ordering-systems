@@ -1144,9 +1144,7 @@
       "markComplete": "Marcar concluído",
       "rejectReason": "Motivo da recusa",
       "noOrders": "Ainda sem pedidos",
-      "viewDetails": "Ver detalhes",
-      "confirmReject": "Recusar este pedido? O cliente será notificado e qualquer pagamento será libertado ou reembolsado. Adicione um motivo (opcional):",
-      "actionFailed": "Não foi possível atualizar o pedido. Tente novamente."
+      "viewDetails": "Ver detalhes"
     },
     "customers": {
       "title": "Clientes",

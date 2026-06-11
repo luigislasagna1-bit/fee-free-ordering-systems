@@ -1166,9 +1166,7 @@
       "markComplete": "Označi kao završeno",
       "rejectReason": "Razlog odbijanja",
       "noOrders": "Još nema narudžbi",
-      "viewDetails": "Pogledaj detalje",
-      "confirmReject": "Odbiti ovu narudžbu? Kupac će biti obaviješten, a svako plaćanje bit će oslobođeno ili vraćeno. Dodajte neobavezni razlog:",
-      "actionFailed": "Narudžbu nije moguće ažurirati. Pokušajte ponovno."
+      "viewDetails": "Pogledaj detalje"
     },
     "customers": {
       "title": "Kupci",

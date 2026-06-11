@@ -1166,9 +1166,7 @@
       "markComplete": "Märgi lõpetatuks",
       "rejectReason": "Tagasilükkamise põhjus",
       "noOrders": "Tellimusi pole veel",
-      "viewDetails": "Vaata üksikasju",
-      "confirmReject": "Kas lükata see tellimus tagasi? Klienti teavitatakse ja iga makse vabastatakse või tagastatakse. Lisage valikuline põhjus:",
-      "actionFailed": "Tellimust ei õnnestunud värskendada. Proovige uuesti."
+      "viewDetails": "Vaata üksikasju"
     },
     "customers": {
       "title": "Kliendid",

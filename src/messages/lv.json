@@ -1166,9 +1166,7 @@
       "markComplete": "Atzīmēt kā pabeigtu",
       "rejectReason": "Noraidīšanas iemesls",
       "noOrders": "Vēl nav pasūtījumu",
-      "viewDetails": "Skatīt detaļas",
-      "confirmReject": "Noraidīt šo pasūtījumu? Klients tiks informēts, un jebkurš maksājums tiks atbrīvots vai atmaksāts. Pievienojiet neobligātu iemeslu:",
-      "actionFailed": "Neizdevās atjaunināt pasūtījumu. Mēģiniet vēlreiz."
+      "viewDetails": "Skatīt detaļas"
     },
     "customers": {
       "title": "Klienti",

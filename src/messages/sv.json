@@ -1166,9 +1166,7 @@
       "markComplete": "Markera som avslutad",
       "rejectReason": "Anledning till avvisning",
       "noOrders": "Inga beställningar ännu",
-      "viewDetails": "Visa detaljer",
-      "confirmReject": "Avvisa den här beställningen? Kunden meddelas och eventuell betalning frigörs eller återbetalas. Lägg till en valfri orsak:",
-      "actionFailed": "Det gick inte att uppdatera beställningen. Försök igen."
+      "viewDetails": "Visa detaljer"
     },
     "customers": {
       "title": "Kunder",

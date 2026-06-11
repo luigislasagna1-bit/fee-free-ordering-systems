@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
+import { ORDERS_SEEN_COOKIE } from "@/app/api/admin/orders/mark-seen/route";
 import { NextIntlClientProvider } from "next-intl";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
@@ -55,8 +56,27 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   // when the viewer hasn't explicitly picked one. Luigi 2026-06-11.
   let restaurantDefaultLanguage: string | null = null;
   if (restaurantId) {
+    // "New orders" notification = pending orders that arrived since the owner
+    // last opened the Orders page. The /admin/orders page stamps a per-restaurant
+    // "seen at" cookie; we only count pending orders created after it. Opening
+    // the page clears the bell; a later arrival re-lights it. If there's no
+    // stamp (or it belongs to a different restaurant — superadmin switching),
+    // every pending order counts as new. Luigi 2026-06-11.
+    const seenRaw = (await cookies()).get(ORDERS_SEEN_COOKIE)?.value ?? "";
+    let seenAfter: Date | null = null;
+    const sep = seenRaw.indexOf(":");
+    if (sep > 0 && seenRaw.slice(0, sep) === restaurantId) {
+      const d = new Date(seenRaw.slice(sep + 1));
+      if (!isNaN(d.getTime())) seenAfter = d;
+    }
+    const pendingWhere = {
+      restaurantId,
+      status: "pending",
+      ...(seenAfter ? { createdAt: { gt: seenAfter } } : {}),
+    };
+
     const [count, restaurant] = await Promise.all([
-      prisma.order.count({ where: { restaurantId, status: "pending" } }),
+      prisma.order.count({ where: pendingWhere }),
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
         select: {
