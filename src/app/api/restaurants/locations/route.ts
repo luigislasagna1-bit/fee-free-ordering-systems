@@ -6,6 +6,7 @@ import { getSessionUser } from "@/lib/session";
 import { isRestaurantAdmin } from "@/lib/roles";
 import { slugify } from "@/lib/utils";
 import { sendLocationWelcomeEmail } from "@/lib/email";
+import { pickInheritedScalars, cloneLocationRelations } from "@/lib/location-inheritance";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -151,15 +152,30 @@ export async function POST(req: NextRequest) {
 
   const starterPlan = await prisma.subscriptionPlan.findUnique({ where: { slug: "starter" } });
 
-  // Inherit reseller attribution from the parent — if the parent is under a
-  // reseller, the new location is too.
+  // Fetch the full brand parent + its per-location config so the new child
+  // INHERITS everything that makes sense (branding, currency, time format,
+  // services, hours, delivery zones, reservation rules, …). Identity + money
+  // rails are deliberately NOT copied — see src/lib/location-inheritance.ts.
+  // Reseller attribution still flows through: a child of a reseller-sourced
+  // brand stays attributed to that reseller. Luigi 2026-06-11.
   const parent = await prisma.restaurant.findUnique({
     where: { id: parentId },
-    select: { resellerProfileId: true, name: true },
+    include: {
+      openingHours: true,
+      deliveryZones: true,
+      serviceFees: true,
+      receiptTemplates: true,
+      reservationSettings: true,
+      holidays: true,
+    },
   });
+  if (!parent) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
   const newLocation = await prisma.restaurant.create({
     data: {
+      // Inherited brand defaults FIRST; the identity + billing fields below
+      // override anything that must stay unique to this location.
+      ...pickInheritedScalars(parent),
       name,
       slug,
       subdomain: slug,
@@ -169,9 +185,11 @@ export async function POST(req: NextRequest) {
       city,
       state,
       zip,
-      ...(country ? { country } : {}),
+      // A per-location country (from the form) wins; otherwise inherit the
+      // brand's country so currency/tax conventions line up by default.
+      country: country ?? parent.country,
       parentRestaurantId: parentId,
-      resellerProfileId: parent?.resellerProfileId ?? null,
+      resellerProfileId: parent.resellerProfileId ?? null,
       // Every new restaurant lands on the FREE plan. No trial — they
       // stay on free forever unless they (a) hit the 100 orders/month
       // soft cap and upgrade to Unlimited Orders, or (b) subscribe to
@@ -182,18 +200,27 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  // Default opening hours for every day of the week — same default as the
-  // /api/auth/register flow.
-  for (let i = 0; i < 7; i++) {
-    await prisma.openingHours.create({
-      data: {
-        restaurantId: newLocation.id,
-        dayOfWeek: i,
-        isOpen: true,
-        openTime: "09:00",
-        closeTime: "21:00",
-      },
+  // Clone the brand parent's per-location config rows (opening hours, delivery
+  // zones, service fees, receipt templates, reservation settings, holidays)
+  // onto the new child. Best-effort: the location + its account already exist,
+  // so a clone hiccup must not fail creation — log and continue. The helper
+  // falls back to a default 7-day hours skeleton if the parent has none.
+  try {
+    await cloneLocationRelations(prisma, parent, newLocation.id);
+  } catch (err) {
+    console.error("[locations] inheriting brand config failed", err);
+  }
+
+  // Seed the new location's OWN notification recipient (its login email) so it
+  // receives order notifications out of the box — mirrors the signup flow. We
+  // intentionally do NOT copy the parent's recipients (those are brand-HQ
+  // inboxes; this store's orders should go to this store).
+  try {
+    await prisma.notificationRecipient.create({
+      data: { restaurantId: newLocation.id, email, name },
     });
+  } catch (err) {
+    console.error("[locations] seeding notification recipient failed", err);
   }
 
   // Grant the PARENT owner explicit access on the child so they can keep
