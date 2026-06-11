@@ -747,8 +747,8 @@ export default async function HostedSitePage({
                   )}
                   <div className="p-4">
                     <div className="flex items-start justify-between gap-3">
-                      <h3 className="font-semibold text-gray-900">{item.name}</h3>
-                      <span className="font-bold" style={{ color: themeColor }}>
+                      <h3 className="font-semibold text-gray-900 min-w-0">{item.name}</h3>
+                      <span className="font-bold whitespace-nowrap flex-shrink-0" style={{ color: themeColor }}>
                         ${item.price.toFixed(2)}
                       </span>
                     </div>

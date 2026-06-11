@@ -1051,7 +1051,7 @@ function PrintBtn({ label, icon, onClick, loading, t }: { label: string; icon: R
     <button
       onClick={onClick}
       disabled={loading}
-      className={`flex flex-col items-center gap-1 py-2 rounded-xl text-xs ${t.btn} ${t.muted} hover:text-emerald-500 transition disabled:opacity-50`}
+      className={`flex flex-col items-center gap-1 py-3 px-2 rounded-xl text-xs ${t.btn} ${t.muted} hover:text-emerald-500 transition disabled:opacity-50`}
     >
       {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : icon}
       {label}

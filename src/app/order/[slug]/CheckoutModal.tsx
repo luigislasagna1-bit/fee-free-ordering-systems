@@ -897,7 +897,7 @@ export function CheckoutModal({
                             }}
                           />
                         </GoogleMap>
-                        <p className="text-[11px] text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
+                        <p className="text-xs text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
                       </div>
                     )}
                     {/* Draggable delivery pin (Leaflet / free-map restaurants).
@@ -912,7 +912,7 @@ export function CheckoutModal({
                           lng={customerInfo.lng ?? null}
                           onMove={(la, ln) => setCustomerInfo({ ...customerInfo, lat: la, lng: ln })}
                         />
-                        <p className="text-[11px] text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
+                        <p className="text-xs text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
                       </div>
                     )}
                     {/* Customizable extra address fields (Neighbourhood, Block/
@@ -970,7 +970,7 @@ export function CheckoutModal({
                       acceptOutsideZoneOrders ? (
                         // Out-of-zone orders accepted → soft note; the order can
                         // still be placed and the store follows up. Luigi 2026-06-08.
-                        <p className="text-xs text-amber-700">
+                        <p className="text-xs text-amber-800">
                           <strong>{tc("outsideStandard")}</strong> {tc("outsideAreaWarning", { fee: formatCurrency(resolvedZone.zone.deliveryFee), minutes: resolvedZone.zone.estimatedMinutes })}
                           {resolvedZone.zone.minimumOrder > 0 && (
                             <> {tc("zoneMinimum", { min: formatCurrency(resolvedZone.zone.minimumOrder) })}</>
@@ -1292,7 +1292,7 @@ export function CheckoutModal({
                   </div>
                 )}
                 {customerInfo.paymentMethod === "paypal" && !paypalEnabled && (
-                  <div className="mt-2 p-2.5 bg-amber-50 rounded-lg text-xs text-amber-700 flex items-start gap-2">
+                  <div className="mt-2 p-2.5 bg-amber-50 rounded-lg text-xs text-amber-800 flex items-start gap-2">
                     <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
                     This restaurant hasn&apos;t finished PayPal setup yet. Pick another payment method.
                   </div>

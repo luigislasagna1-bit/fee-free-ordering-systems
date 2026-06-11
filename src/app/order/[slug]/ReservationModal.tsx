@@ -559,7 +559,7 @@ export function ReservationModal({
                 <select
                   value={partySize}
                   onChange={e => setPartySize(parseInt(e.target.value))}
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2"
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 >
                   {partySizeRange.map(n => (
@@ -579,7 +579,7 @@ export function ReservationModal({
                   min={todayISO()}
                   max={maxISO(settings.maxAdvanceDays)}
                   onChange={e => setDate(e.target.value)}
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2"
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 />
               </div>
@@ -616,7 +616,7 @@ export function ReservationModal({
                     <select
                       value={time}
                       onChange={e => setTime(e.target.value)}
-                      className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
+                      className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2"
                       style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                     >
                       {timeSlots.map(t => (
@@ -644,7 +644,7 @@ export function ReservationModal({
                   placeholder={`${tr("firstName")} *`}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
+                  className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2"
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 />
                 <input
@@ -653,7 +653,7 @@ export function ReservationModal({
                   placeholder={`${tr("lastName")} *`}
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
+                  className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2"
                   style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                 />
                 <input
@@ -676,7 +676,7 @@ export function ReservationModal({
                     : tr("emailForConfirmationOptional")
                 }
                 value={email} onChange={e => setEmail(e.target.value)}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
+                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2"
                 style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
               />
 

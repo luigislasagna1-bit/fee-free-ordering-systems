@@ -309,7 +309,7 @@ function RestaurantTile({
 
       <div className="p-3.5">
         <div className="flex items-start justify-between gap-2 mb-1">
-          <h3 className="font-bold text-gray-900 leading-tight truncate">{listing.name}</h3>
+          <h3 className="font-bold text-gray-900 leading-tight truncate min-w-0">{listing.name}</h3>
         </div>
         {listing.marketplaceTagline && (
           <p className="text-xs text-gray-600 line-clamp-1 italic">{listing.marketplaceTagline}</p>

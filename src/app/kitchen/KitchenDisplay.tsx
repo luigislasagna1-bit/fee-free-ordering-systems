@@ -2816,7 +2816,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             )}
             aria-label={tk("clearOrders")}
             title={tk("clearOrders")}
-            className={`flex-shrink-0 my-1.5 mr-1.5 sm:mr-2 flex items-center justify-center w-8 h-8 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 active:bg-red-500/20 transition touch-manipulation cursor-pointer`}
+            className={`flex-shrink-0 my-1.5 mr-1.5 sm:mr-2 flex items-center justify-center w-10 h-10 sm:w-8 sm:h-8 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 active:bg-red-500/20 transition touch-manipulation cursor-pointer`}
           >
             <Trash2 className="w-4 h-4" />
           </button>

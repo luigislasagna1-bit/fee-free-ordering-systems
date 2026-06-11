@@ -132,7 +132,7 @@ export function SignupForm({
                   type="text"
                   disabled={!!inviteBlocked}
                   placeholder="Mario Rossi"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
                   value={form.ownerName}
                   onChange={(e) => setForm({ ...form, ownerName: e.target.value })}
                 />
@@ -144,7 +144,7 @@ export function SignupForm({
                   required
                   disabled={!!inviteBlocked}
                   placeholder="you@yourrestaurant.com"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
@@ -157,7 +157,7 @@ export function SignupForm({
                   minLength={8}
                   disabled={!!inviteBlocked}
                   placeholder="At least 8 characters"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                 />
@@ -180,19 +180,19 @@ export function SignupForm({
                   required
                   disabled={!!inviteBlocked}
                   placeholder="Mario's Pizzeria"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
                   value={form.restaurantName}
                   onChange={(e) => setForm({ ...form, restaurantName: e.target.value })}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
                   <input
                     type="tel"
                     disabled={!!inviteBlocked}
                     placeholder="+1 (555) 555-1234"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
                   />
@@ -204,7 +204,7 @@ export function SignupForm({
                     list="cuisine-options"
                     disabled={!!inviteBlocked}
                     placeholder="e.g. Italian"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
                     value={form.cuisineType}
                     onChange={(e) => setForm({ ...form, cuisineType: e.target.value })}
                   />
@@ -252,19 +252,19 @@ export function SignupForm({
                   type="text"
                   disabled={!!inviteBlocked}
                   placeholder="123 Main Street"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
                   value={form.address}
                   onChange={(e) => setForm({ ...form, address: e.target.value })}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
                   <input
                     type="text"
                     disabled={!!inviteBlocked}
                     placeholder="Milton"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
                     value={form.city}
                     onChange={(e) => setForm({ ...form, city: e.target.value })}
                   />
@@ -275,20 +275,20 @@ export function SignupForm({
                     type="text"
                     disabled={!!inviteBlocked}
                     placeholder="ON"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
                     value={form.state}
                     onChange={(e) => setForm({ ...form, state: e.target.value })}
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">ZIP / Postal code</label>
                   <input
                     type="text"
                     disabled={!!inviteBlocked}
                     placeholder="L9T 2H6"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
                     value={form.zip}
                     onChange={(e) => setForm({ ...form, zip: e.target.value })}
                   />
