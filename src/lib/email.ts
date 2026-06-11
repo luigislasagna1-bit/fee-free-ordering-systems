@@ -1054,12 +1054,24 @@ export async function sendAutopilotEmail(params: {
    *  staff can flag the recipient as do-not-contact. */
   unsubscribeUrl?: string;
 }) {
+  // Substitute the owner-editable tokens in BOTH the subject header and the body
+  // (Luigi 2026-06-10 — they were sent raw, so customers saw "{restaurant_name}"
+  // etc.). Centralised here so every campaign (re-engage / second-order /
+  // cart-abandon) is fixed at once.
+  const vars = {
+    customerName: params.customerName || "there",
+    restaurantName: params.restaurantName || "",
+    restaurantLink: params.restaurantUrl || params.ctaUrl || "",
+  };
+  const subject = applyEmailTokens(params.subject, vars);
+  const body = applyEmailTokens(params.body, vars);
+
   const html = await renderEmail(
     AutopilotEmail({
       customerName: params.customerName,
       restaurantName: params.restaurantName,
-      subject: params.subject,
-      body: params.body,
+      subject,
+      body,
       couponCode: params.couponCode,
       couponLabel: params.couponLabel,
       ctaUrl: params.ctaUrl,
@@ -1072,11 +1084,28 @@ export async function sendAutopilotEmail(params: {
   );
   return send({
     to: params.to,
-    subject: params.subject,
+    subject,
     html,
     replyTo: params.restaurantEmail,
     listUnsubscribeUrl: params.unsubscribeUrl,
   });
+}
+
+/** Replace the owner-editable tokens in an Autopilot subject/body.
+ *  {coupon_section} is dropped — the coupon renders as its own card in the
+ *  template, so leaving the token would duplicate it. Collapses the blank lines
+ *  a removed token leaves behind. Luigi 2026-06-10. */
+function applyEmailTokens(
+  text: string,
+  vars: { customerName: string; restaurantName: string; restaurantLink: string },
+): string {
+  return (text || "")
+    .replace(/\{customer_name\}/g, vars.customerName)
+    .replace(/\{restaurant_name\}/g, vars.restaurantName)
+    .replace(/\{restaurant_link\}/g, vars.restaurantLink)
+    .replace(/\{coupon_section\}/g, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 // ─── Reseller payout notifications ───────────────────────────────────

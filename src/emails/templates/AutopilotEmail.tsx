@@ -34,7 +34,7 @@ export type AutopilotEmailProps = {
 
 export default function AutopilotEmail(props: AutopilotEmailProps) {
   const {
-    customerName, restaurantName, subject, body, couponCode, couponLabel,
+    restaurantName, subject, body, couponCode, couponLabel,
     ctaUrl, ctaLabel, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
   } = props;
 
@@ -42,7 +42,9 @@ export default function AutopilotEmail(props: AutopilotEmailProps) {
     <EmailLayout preview={subject}>
       <EmailHeader variant="status" title={subject} subtitle={restaurantName} />
       <EmailBody>
-        <P>Hi {customerName},</P>
+        {/* The greeting comes from the owner's body ("Hi {customer_name},"), which
+            is token-substituted at send time — no separate greeting here, else it
+            doubles up. Luigi 2026-06-10. */}
         <div style={{ whiteSpace: "pre-line" }}>
           <P>{body}</P>
         </div>
