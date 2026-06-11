@@ -2424,6 +2424,18 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
   const [expandedCats, setExpandedCats] = useState<Record<string, boolean>>(
     Object.fromEntries(initial.map(c => [c.id, true]))
   );
+  // Switching to a different menu version sends that menu's categories as fresh
+  // server props, but useState() reads its argument only on first mount — so
+  // the editor kept showing the previously-loaded menu until a manual reload
+  // (Luigi 2026-06-11). Re-sync the editable state whenever the menu changes.
+  // Keyed on `menuId` (not on `initial`) so a within-menu edit followed by
+  // router.refresh() doesn't clobber the optimistic local state mid-session.
+  useEffect(() => {
+    setCategories(initial);
+    setLibraryGroups(initialGroups);
+    setExpandedCats(Object.fromEntries(initial.map((c) => [c.id, true])));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [menuId]);
   const [itemModal, setItemModal] = useState<{ catId: string; item?: MenuItem } | null>(null);
   const [modModal, setModModal] = useState<{ group?: ModifierGroup; menuItemId?: string } | null>(null);
   const [catModal, setCatModal] = useState<{ cat?: Category } | null>(null);
