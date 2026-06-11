@@ -248,7 +248,8 @@
     "holidayClosedToday": "Danas smo zatvoreni",
     "holidaySpecialHours": "Danas posebno radno vrijeme",
     "holidayNotAvailableToday": "Danas nije dostupno: {services}",
-    "holidayOrderLater": "I dalje možete naručiti za kasniji datum."
+    "holidayOrderLater": "I dalje možete naručiti za kasniji datum.",
+    "availableOnlyLabel": "Dostupno {window}"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Naziv koraka (prikazuje se kupcima, npr. \"Odaberite pizzu\")",
       "toppingsOptionalTitle": "Dodaci nisu obavezni",
       "toppingsOptionalOnHint": "Kupci mogu ne odabrati nijedan dodatak (npr. samo sir) i svejedno dovršiti narudžbu.",
-      "toppingsOptionalOffHint": "Za nastavak je potreban barem jedan dodatak."
+      "toppingsOptionalOffHint": "Za nastavak je potreban barem jedan dodatak.",
+      "availabilityModeLabel": "Kad nije dostupno",
+      "availabilityModeHide": "Sakrij iz izbornika",
+      "availabilityModeShow": "Prikaži, ali blokiraj naručivanje",
+      "availabilityModeHint": "\"Prikaži\" ostavlja artikl vidljivim s napomenom \"Dostupno …\" pa kupci znaju kada ga mogu naručiti."
     },
     "promotionsList": {
       "stackingMaster": "Master",

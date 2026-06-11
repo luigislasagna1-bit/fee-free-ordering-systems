@@ -248,7 +248,8 @@
     "holidayClosedToday": "Сегодня мы закрыты",
     "holidaySpecialHours": "Сегодня особый график",
     "holidayNotAvailableToday": "Сегодня недоступно: {services}",
-    "holidayOrderLater": "Вы всё ещё можете оформить заказ на другую дату."
+    "holidayOrderLater": "Вы всё ещё можете оформить заказ на другую дату.",
+    "availableOnlyLabel": "Доступно {window}"
   },
   "pizza": {
     "chooseSize": "Выберите размер",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Название шага (видно клиентам, напр. «Выберите пиццу»)",
       "toppingsOptionalTitle": "Топпинги необязательны",
       "toppingsOptionalOnHint": "Клиенты могут не добавлять топпинги (например, простую пиццу с сыром) и всё равно оформить заказ.",
-      "toppingsOptionalOffHint": "Для продолжения нужно выбрать хотя бы один топпинг."
+      "toppingsOptionalOffHint": "Для продолжения нужно выбрать хотя бы один топпинг.",
+      "availabilityModeLabel": "Когда недоступно",
+      "availabilityModeHide": "Скрыть из меню",
+      "availabilityModeShow": "Показывать, но блокировать заказ",
+      "availabilityModeHint": "«Показывать» оставляет блюдо видимым с пометкой «Доступно …», чтобы клиенты знали, когда его можно заказать."
     },
     "promotionsList": {
       "stackingMaster": "Мастер",

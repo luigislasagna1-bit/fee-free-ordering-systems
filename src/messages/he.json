@@ -248,7 +248,8 @@
     "holidayClosedToday": "אנחנו סגורים היום",
     "holidaySpecialHours": "שעות מיוחדות היום",
     "holidayNotAvailableToday": "לא זמין היום: {services}",
-    "holidayOrderLater": "עדיין אפשר להזמין לתאריך מאוחר יותר."
+    "holidayOrderLater": "עדיין אפשר להזמין לתאריך מאוחר יותר.",
+    "availableOnlyLabel": "זמין {window}"
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "שם השלב (מוצג ללקוחות, לדוגמה \"בחרו את הפיצה\")",
       "toppingsOptionalTitle": "תוספות הן רשות",
       "toppingsOptionalOnHint": "לקוחות יכולים להשלים הזמנה גם בלי תוספות (למשל גבינה בלבד).",
-      "toppingsOptionalOffHint": "יש לבחור לפחות תוספת אחת כדי להמשיך."
+      "toppingsOptionalOffHint": "יש לבחור לפחות תוספת אחת כדי להמשיך.",
+      "availabilityModeLabel": "כשאינו זמין",
+      "availabilityModeHide": "הסתר מהתפריט",
+      "availabilityModeShow": "הצג אך חסום הזמנה",
+      "availabilityModeHint": "\"הצג\" משאיר את הפריט גלוי עם הערת \"זמין …\" כך שהלקוחות יודעים מתי אפשר להזמין."
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

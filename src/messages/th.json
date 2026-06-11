@@ -248,7 +248,8 @@
     "holidayClosedToday": "วันนี้เราปิดทำการ",
     "holidaySpecialHours": "เวลาพิเศษวันนี้",
     "holidayNotAvailableToday": "วันนี้ไม่พร้อมให้บริการ: {services}",
-    "holidayOrderLater": "คุณยังสั่งล่วงหน้าสำหรับวันอื่นได้"
+    "holidayOrderLater": "คุณยังสั่งล่วงหน้าสำหรับวันอื่นได้",
+    "availableOnlyLabel": "มีจำหน่าย {window}"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "ชื่อขั้นตอน (แสดงให้ลูกค้าเห็น เช่น \"เลือกพิซซ่าของคุณ\")",
       "toppingsOptionalTitle": "ท็อปปิ้งไม่บังคับ",
       "toppingsOptionalOnHint": "ลูกค้าสามารถไม่ใส่ท็อปปิ้ง (เช่น ชีสล้วน) และสั่งซื้อได้ตามปกติ",
-      "toppingsOptionalOffHint": "ต้องเลือกท็อปปิ้งอย่างน้อยหนึ่งอย่างจึงจะดำเนินการต่อได้"
+      "toppingsOptionalOffHint": "ต้องเลือกท็อปปิ้งอย่างน้อยหนึ่งอย่างจึงจะดำเนินการต่อได้",
+      "availabilityModeLabel": "เมื่อไม่พร้อมจำหน่าย",
+      "availabilityModeHide": "ซ่อนจากเมนู",
+      "availabilityModeShow": "แสดงแต่ห้ามสั่ง",
+      "availabilityModeHint": "\"แสดง\" จะทำให้เมนูยังมองเห็นพร้อมหมายเหตุ \"มีจำหน่าย …\" เพื่อให้ลูกค้ารู้ว่าสั่งได้เมื่อใด"
     },
     "promotionsList": {
       "stackingMaster": "Master",

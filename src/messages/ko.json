@@ -248,7 +248,8 @@
     "holidayClosedToday": "오늘은 휴무입니다",
     "holidaySpecialHours": "오늘은 특별 영업시간입니다",
     "holidayNotAvailableToday": "오늘 이용 불가: {services}",
-    "holidayOrderLater": "다른 날짜로는 주문하실 수 있습니다."
+    "holidayOrderLater": "다른 날짜로는 주문하실 수 있습니다.",
+    "availableOnlyLabel": "이용 가능 {window}"
   },
   "pizza": {
     "chooseSize": "크기 선택",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "단계 이름 (고객에게 표시, 예: \"피자를 선택하세요\")",
       "toppingsOptionalTitle": "토핑 선택 사항",
       "toppingsOptionalOnHint": "고객이 토핑을 추가하지 않고도(예: 플레인 치즈) 결제할 수 있습니다.",
-      "toppingsOptionalOffHint": "계속하려면 토핑을 하나 이상 선택해야 합니다."
+      "toppingsOptionalOffHint": "계속하려면 토핑을 하나 이상 선택해야 합니다.",
+      "availabilityModeLabel": "이용 불가 시간에는",
+      "availabilityModeHide": "메뉴에서 숨기기",
+      "availabilityModeShow": "표시하되 주문 차단",
+      "availabilityModeHint": "\"표시\"를 선택하면 \"이용 가능 …\" 안내와 함께 메뉴에 계속 표시되어 고객이 주문 가능 시간을 알 수 있습니다."
     },
     "promotionsList": {
       "stackingMaster": "마스터",

@@ -248,7 +248,8 @@
     "holidayClosedToday": "Днес сме затворени",
     "holidaySpecialHours": "Специално работно време днес",
     "holidayNotAvailableToday": "Не е налично днес: {services}",
-    "holidayOrderLater": "Все пак можете да поръчате за по-късна дата."
+    "holidayOrderLater": "Все пак можете да поръчате за по-късна дата.",
+    "availableOnlyLabel": "Налично {window}"
   },
   "pizza": {
     "chooseSize": "Избери размер",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Име на стъпка (показва се на клиентите, напр. „Изберете своята пица“)",
       "toppingsOptionalTitle": "Топингите са по избор",
       "toppingsOptionalOnHint": "Клиентите могат да не добавят топинги (напр. само сирене) и пак да завършат поръчката.",
-      "toppingsOptionalOffHint": "За да продължите, е необходим поне един топинг."
+      "toppingsOptionalOffHint": "За да продължите, е необходим поне един топинг.",
+      "availabilityModeLabel": "Когато не е налично",
+      "availabilityModeHide": "Скрий от менюто",
+      "availabilityModeShow": "Показвай, но блокирай поръчката",
+      "availabilityModeHint": "„Показвай“ оставя артикула видим с бележка „Налично …“, за да знаят клиентите кога могат да го поръчат."
     },
     "promotionsList": {
       "stackingMaster": "Главна",

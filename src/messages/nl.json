@@ -248,7 +248,8 @@
     "holidayClosedToday": "Vandaag gesloten",
     "holidaySpecialHours": "Vandaag speciale openingstijden",
     "holidayNotAvailableToday": "Vandaag niet beschikbaar: {services}",
-    "holidayOrderLater": "Je kunt nog steeds bestellen voor een latere datum."
+    "holidayOrderLater": "Je kunt nog steeds bestellen voor een latere datum.",
+    "availableOnlyLabel": "Beschikbaar {window}"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Stapnaam (zichtbaar voor klanten, bijv. \"Kies je pizza\")",
       "toppingsOptionalTitle": "Toppings optioneel",
       "toppingsOptionalOnHint": "Klanten kunnen geen toppings toevoegen (bijv. alleen kaas) en toch afrekenen.",
-      "toppingsOptionalOffHint": "Minstens één topping is vereist om verder te gaan."
+      "toppingsOptionalOffHint": "Minstens één topping is vereist om verder te gaan.",
+      "availabilityModeLabel": "Wanneer niet beschikbaar",
+      "availabilityModeHide": "Verbergen in menu",
+      "availabilityModeShow": "Tonen, maar bestellen blokkeren",
+      "availabilityModeHint": "\"Tonen\" houdt het item zichtbaar met een \"Beschikbaar …\"-melding zodat klanten weten wanneer ze het kunnen bestellen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

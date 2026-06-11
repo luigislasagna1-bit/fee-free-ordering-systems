@@ -248,7 +248,8 @@
     "holidayClosedToday": "Vi har stängt idag",
     "holidaySpecialHours": "Specialtider idag",
     "holidayNotAvailableToday": "Inte tillgängligt idag: {services}",
-    "holidayOrderLater": "Du kan fortfarande beställa till ett senare datum."
+    "holidayOrderLater": "Du kan fortfarande beställa till ett senare datum.",
+    "availableOnlyLabel": "Tillgänglig {window}"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Stegnamn (visas för kunder, t.ex. \"Välj din pizza\")",
       "toppingsOptionalTitle": "Pålägg valfria",
       "toppingsOptionalOnHint": "Kunder kan välja inga pålägg (t.ex. enbart ost) och ändå slutföra köpet.",
-      "toppingsOptionalOffHint": "Minst ett pålägg krävs för att fortsätta."
+      "toppingsOptionalOffHint": "Minst ett pålägg krävs för att fortsätta.",
+      "availabilityModeLabel": "När den inte är tillgänglig",
+      "availabilityModeHide": "Dölj från menyn",
+      "availabilityModeShow": "Visa, men blockera beställning",
+      "availabilityModeHint": "\"Visa\" håller rätten synlig med en \"Tillgänglig …\"-notis så kunderna vet när de kan beställa."
     },
     "promotionsList": {
       "stackingMaster": "Master",

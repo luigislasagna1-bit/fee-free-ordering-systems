@@ -248,7 +248,8 @@
     "holidayClosedToday": "نحن مغلقون اليوم",
     "holidaySpecialHours": "ساعات عمل خاصة اليوم",
     "holidayNotAvailableToday": "غير متاح اليوم: {services}",
-    "holidayOrderLater": "لا يزال بإمكانك الطلب لتاريخ لاحق."
+    "holidayOrderLater": "لا يزال بإمكانك الطلب لتاريخ لاحق.",
+    "availableOnlyLabel": "متاح {window}"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "اسم الخطوة (يظهر للعملاء، مثل \"اختر البيتزا\")",
       "toppingsOptionalTitle": "الإضافات اختيارية",
       "toppingsOptionalOnHint": "يمكن للعملاء عدم إضافة أي مكوّنات (مثل الجبن السادة) وإتمام الطلب رغم ذلك.",
-      "toppingsOptionalOffHint": "يلزم اختيار إضافة واحدة على الأقل للمتابعة."
+      "toppingsOptionalOffHint": "يلزم اختيار إضافة واحدة على الأقل للمتابعة.",
+      "availabilityModeLabel": "عند عدم التوفر",
+      "availabilityModeHide": "إخفاء من القائمة",
+      "availabilityModeShow": "إظهار مع منع الطلب",
+      "availabilityModeHint": "\"إظهار\" يُبقي الصنف مرئيًا مع ملاحظة \"متاح …\" ليعرف العملاء متى يمكنهم طلبه."
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

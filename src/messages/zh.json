@@ -248,7 +248,8 @@
     "holidayClosedToday": "今天休息",
     "holidaySpecialHours": "今日特殊营业时间",
     "holidayNotAvailableToday": "今日不可用：{services}",
-    "holidayOrderLater": "您仍可预订其他日期。"
+    "holidayOrderLater": "您仍可预订其他日期。",
+    "availableOnlyLabel": "供应时间 {window}"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "步骤名称（向顾客显示，例如\"选择您的披萨\"）",
       "toppingsOptionalTitle": "配料可选",
       "toppingsOptionalOnHint": "顾客可以不添加任何配料（例如纯芝士）即可结账。",
-      "toppingsOptionalOffHint": "至少需要选择一种配料才能继续。"
+      "toppingsOptionalOffHint": "至少需要选择一种配料才能继续。",
+      "availabilityModeLabel": "不可用时",
+      "availabilityModeHide": "从菜单隐藏",
+      "availabilityModeShow": "显示但禁止下单",
+      "availabilityModeHint": "“显示”会保留菜品并附“供应时间 …”提示，让顾客知道何时可以下单。"
     },
     "promotionsList": {
       "stackingMaster": "主控",

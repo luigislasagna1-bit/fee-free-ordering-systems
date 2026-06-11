@@ -248,7 +248,8 @@
     "holidayClosedToday": "Bugün kapalıyız",
     "holidaySpecialHours": "Bugün özel çalışma saatleri",
     "holidayNotAvailableToday": "Bugün kullanılamıyor: {services}",
-    "holidayOrderLater": "Yine de ileri bir tarih için sipariş verebilirsiniz."
+    "holidayOrderLater": "Yine de ileri bir tarih için sipariş verebilirsiniz.",
+    "availableOnlyLabel": "Şu zamanlarda mevcut: {window}"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -1679,7 +1680,11 @@
       "comboSlotNameLabel": "Adım adı (müşterilere gösterilir, örn. \"Pizzanızı seçin\")",
       "toppingsOptionalTitle": "Malzemeler isteğe bağlı",
       "toppingsOptionalOnHint": "Müşteriler hiç malzeme eklemeden (ör. sade peynirli) sipariş verebilir.",
-      "toppingsOptionalOffHint": "Devam etmek için en az bir malzeme seçilmelidir."
+      "toppingsOptionalOffHint": "Devam etmek için en az bir malzeme seçilmelidir.",
+      "availabilityModeLabel": "Mevcut olmadığında",
+      "availabilityModeHide": "Menüden gizle",
+      "availabilityModeShow": "Göster ama siparişi engelle",
+      "availabilityModeHint": "\"Göster\" ürünü \"Mevcut …\" notuyla görünür tutar; müşteriler ne zaman sipariş verebileceklerini bilir."
     },
     "promotionsList": {
       "stackingMaster": "Ana",

@@ -248,7 +248,8 @@
     "holidayClosedToday": "Šodien esam slēgti",
     "holidaySpecialHours": "Šodien īpašs darba laiks",
     "holidayNotAvailableToday": "Šodien nav pieejams: {services}",
-    "holidayOrderLater": "Jūs joprojām varat pasūtīt vēlākam datumam."
+    "holidayOrderLater": "Jūs joprojām varat pasūtīt vēlākam datumam.",
+    "availableOnlyLabel": "Pieejams {window}"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Soļa nosaukums (redzams klientiem, piem., \"Izvēlieties picu\")",
       "toppingsOptionalTitle": "Piedevas pēc izvēles",
       "toppingsOptionalOnHint": "Klienti var nepievienot piedevas (piemēram, tikai siers) un tomēr noformēt pasūtījumu.",
-      "toppingsOptionalOffHint": "Lai turpinātu, jāizvēlas vismaz viena piedeva."
+      "toppingsOptionalOffHint": "Lai turpinātu, jāizvēlas vismaz viena piedeva.",
+      "availabilityModeLabel": "Kad nav pieejams",
+      "availabilityModeHide": "Slēpt no ēdienkartes",
+      "availabilityModeShow": "Rādīt, bet bloķēt pasūtīšanu",
+      "availabilityModeHint": "“Rādīt” saglabā ēdienu redzamu ar piezīmi “Pieejams …”, lai klienti zinātu, kad to var pasūtīt."
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

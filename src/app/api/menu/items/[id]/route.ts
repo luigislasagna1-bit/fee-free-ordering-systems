@@ -34,7 +34,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const body = await req.json();
   const { name, description, price, categoryId, imageUrl, isAvailable, isFeatured, isHidden,
           isSoldOut, forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
-          hasVariants, sortOrder, variants, pizzaConfig, comboConfig } = body;
+          availabilityMode, hasVariants, sortOrder, variants, pizzaConfig, comboConfig } = body;
 
   const updateData: any = {};
   if (name !== undefined) updateData.name = name;
@@ -52,6 +52,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (availableDays !== undefined) updateData.availableDays = availableDays ? JSON.stringify(availableDays) : null;
   if (availableFrom !== undefined) updateData.availableFrom = availableFrom;
   if (availableTo !== undefined) updateData.availableTo = availableTo;
+  // "show" = visible-but-purchase-restricted outside the window
+  // (reseller report cmpxec829); anything else = legacy hide.
+  if (availabilityMode !== undefined) updateData.availabilityMode = availabilityMode === "show" ? "show" : null;
   if (hasVariants !== undefined) updateData.hasVariants = hasVariants;
   if (sortOrder !== undefined) updateData.sortOrder = sortOrder;
   // pizzaConfig: null clears the pizza builder; a JSON string enables it

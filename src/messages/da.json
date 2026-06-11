@@ -248,7 +248,8 @@
     "holidayClosedToday": "Vi har lukket i dag",
     "holidaySpecialHours": "Særlige åbningstider i dag",
     "holidayNotAvailableToday": "Ikke tilgængelig i dag: {services}",
-    "holidayOrderLater": "Du kan stadig bestille til en senere dato."
+    "holidayOrderLater": "Du kan stadig bestille til en senere dato.",
+    "availableOnlyLabel": "Tilgængelig {window}"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Trinnavn (vises til kunder, f.eks. \"Vælg din pizza\")",
       "toppingsOptionalTitle": "Fyld valgfrit",
       "toppingsOptionalOnHint": "Kunder kan undlade at tilføje fyld (f.eks. ren ost) og stadig gennemføre bestillingen.",
-      "toppingsOptionalOffHint": "Mindst ét fyld er påkrævet for at fortsætte."
+      "toppingsOptionalOffHint": "Mindst ét fyld er påkrævet for at fortsætte.",
+      "availabilityModeLabel": "Når ikke tilgængelig",
+      "availabilityModeHide": "Skjul fra menuen",
+      "availabilityModeShow": "Vis, men bloker bestilling",
+      "availabilityModeHint": "\"Vis\" holder retten synlig med en \"Tilgængelig …\"-note, så kunderne ved, hvornår de kan bestille."
     },
     "promotionsList": {
       "stackingMaster": "Master",

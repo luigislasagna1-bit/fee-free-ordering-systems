@@ -248,7 +248,8 @@
     "holidayClosedToday": "We're closed today",
     "holidaySpecialHours": "Special hours today",
     "holidayNotAvailableToday": "Not available today: {services}",
-    "holidayOrderLater": "You can still place an order for a later date."
+    "holidayOrderLater": "You can still place an order for a later date.",
+    "availableOnlyLabel": "Available {window}"
   },
   "pizza": {
     "chooseSize": "Choose Size",
@@ -2072,7 +2073,11 @@
       "limitedDaysBadge": "Selected days",
       "duplicateCategory": "Duplicate category",
       "categoryDuplicated": "Category duplicated — the copy is hidden until you publish it.",
-      "failedToDuplicateCategory": "Couldn’t duplicate the category. Please try again."
+      "failedToDuplicateCategory": "Couldn’t duplicate the category. Please try again.",
+      "availabilityModeLabel": "When not available",
+      "availabilityModeHide": "Hide from menu",
+      "availabilityModeShow": "Show, but block ordering",
+      "availabilityModeHint": "\"Show\" keeps the item visible with an \"Available …\" note so customers know when they can order it."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -248,7 +248,8 @@
     "holidayClosedToday": "Hôm nay chúng tôi đóng cửa",
     "holidaySpecialHours": "Giờ đặc biệt hôm nay",
     "holidayNotAvailableToday": "Hôm nay không khả dụng: {services}",
-    "holidayOrderLater": "Bạn vẫn có thể đặt hàng cho ngày khác."
+    "holidayOrderLater": "Bạn vẫn có thể đặt hàng cho ngày khác.",
+    "availableOnlyLabel": "Có sẵn {window}"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -1679,7 +1680,11 @@
       "comboSlotNameLabel": "Tên bước (hiển thị cho khách hàng, ví dụ \"Chọn pizza của bạn\")",
       "toppingsOptionalTitle": "Topping không bắt buộc",
       "toppingsOptionalOnHint": "Khách hàng có thể không thêm topping nào (ví dụ: chỉ phô mai) mà vẫn thanh toán được.",
-      "toppingsOptionalOffHint": "Cần chọn ít nhất một topping để tiếp tục."
+      "toppingsOptionalOffHint": "Cần chọn ít nhất một topping để tiếp tục.",
+      "availabilityModeLabel": "Khi không có sẵn",
+      "availabilityModeHide": "Ẩn khỏi thực đơn",
+      "availabilityModeShow": "Hiển thị nhưng chặn đặt món",
+      "availabilityModeHint": "\"Hiển thị\" giữ món hiển thị kèm ghi chú \"Có sẵn …\" để khách biết khi nào có thể đặt."
     },
     "promotionsList": {
       "stackingMaster": "Master",

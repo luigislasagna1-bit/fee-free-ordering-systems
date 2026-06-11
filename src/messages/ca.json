@@ -248,7 +248,8 @@
     "holidayClosedToday": "Avui estem tancats",
     "holidaySpecialHours": "Horari especial avui",
     "holidayNotAvailableToday": "No disponible avui: {services}",
-    "holidayOrderLater": "Encara pots fer una comanda per a una data posterior."
+    "holidayOrderLater": "Encara pots fer una comanda per a una data posterior.",
+    "availableOnlyLabel": "Disponible {window}"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Nom del pas (visible per als clients, p. ex. \"Tria la teva pizza\")",
       "toppingsOptionalTitle": "Ingredients opcionals",
       "toppingsOptionalOnHint": "Els clients poden no afegir cap ingredient (per exemple, només formatge) i tot i així finalitzar la comanda.",
-      "toppingsOptionalOffHint": "Cal com a mínim un ingredient per continuar."
+      "toppingsOptionalOffHint": "Cal com a mínim un ingredient per continuar.",
+      "availabilityModeLabel": "Quan no està disponible",
+      "availabilityModeHide": "Amaga del menú",
+      "availabilityModeShow": "Mostra, però bloqueja la comanda",
+      "availabilityModeHint": "\"Mostra\" manté l'article visible amb una nota \"Disponible …\" perquè els clients sàpiguen quan el poden demanar."
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

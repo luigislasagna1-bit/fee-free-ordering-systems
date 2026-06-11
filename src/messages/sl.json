@@ -248,7 +248,8 @@
     "holidayClosedToday": "Danes smo zaprti",
     "holidaySpecialHours": "Danes poseben delovni čas",
     "holidayNotAvailableToday": "Danes ni na voljo: {services}",
-    "holidayOrderLater": "Še vedno lahko naročite za poznejši datum."
+    "holidayOrderLater": "Še vedno lahko naročite za poznejši datum.",
+    "availableOnlyLabel": "Na voljo {window}"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Ime koraka (vidno strankam, npr. »Izberite svojo pico«)",
       "toppingsOptionalTitle": "Dodatki neobvezni",
       "toppingsOptionalOnHint": "Stranke lahko ne dodajo nobenega dodatka (npr. samo sir) in vseeno zaključijo naročilo.",
-      "toppingsOptionalOffHint": "Za nadaljevanje je potreben vsaj en dodatek."
+      "toppingsOptionalOffHint": "Za nadaljevanje je potreben vsaj en dodatek.",
+      "availabilityModeLabel": "Ko ni na voljo",
+      "availabilityModeHide": "Skrij iz menija",
+      "availabilityModeShow": "Prikaži, a prepreči naročanje",
+      "availabilityModeHint": "»Prikaži« ohrani izdelek viden z opombo »Na voljo …«, da stranke vedo, kdaj ga lahko naročijo."
     },
     "promotionsList": {
       "stackingMaster": "Master",

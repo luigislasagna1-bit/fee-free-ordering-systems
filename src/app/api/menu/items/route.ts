@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { name, description, price, categoryId, imageUrl, isHidden, isSoldOut,
           forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
-          hasVariants, variants, pizzaConfig, comboConfig } = body;
+          availabilityMode, hasVariants, variants, pizzaConfig, comboConfig } = body;
   if (!name || price === undefined || !categoryId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
   const cat = await prisma.menuCategory.findFirst({ where: { id: categoryId, restaurantId } });
@@ -40,6 +40,9 @@ export async function POST(req: NextRequest) {
         hasVariants: hasVariants ?? false,
         availableDays: availableDays ? JSON.stringify(availableDays) : null,
         availableFrom: availableFrom || null, availableTo: availableTo || null,
+        // "show" = stay visible outside the window but block ordering
+        // (reseller report cmpxec829); anything else = legacy hide.
+        availabilityMode: availabilityMode === "show" ? "show" : null,
         sortOrder: existing,
         pizzaConfig: pizzaConfig ?? null,
         comboConfig: safeComboConfig,

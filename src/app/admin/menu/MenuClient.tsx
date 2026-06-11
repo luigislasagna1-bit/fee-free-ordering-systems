@@ -38,6 +38,7 @@ type MenuItem = {
   isSoldOut: boolean; isHidden: boolean; hasVariants: boolean;
   forPickup: boolean; forDelivery: boolean;
   availableDays?: number[]; availableFrom?: string; availableTo?: string;
+  availabilityMode?: string | null;
   sortOrder: number; variants: ItemVariant[];
   modifierGroups: ModifierGroup[];
   pizzaConfig?: string;
@@ -481,6 +482,9 @@ function ItemModal({
     availableFrom: item?.availableFrom ?? "",
     availableTo: item?.availableTo ?? "",
     availableDays: item?.availableDays ?? [0, 1, 2, 3, 4, 5, 6],
+    // "hide" (legacy) = item disappears outside its window; "show" = stays
+    // visible but can't be ordered (reseller report cmpxec829).
+    availabilityMode: ((item as any)?.availabilityMode === "show" ? "show" : "hide") as "hide" | "show",
   });
   const [variants, setVariants] = useState<ItemVariant[]>(
     item?.variants?.length ? item.variants : [{ name: "", price: 0, sortOrder: 0, isDefault: true }]
@@ -801,6 +805,28 @@ function ItemModal({
                 </div>
               </div>
               <p className="text-xs text-gray-400">{t("availabilityAllDayHint")}</p>
+
+              {/* Outside-the-window behaviour (reseller report cmpxec829,
+                  Cloudwaitress-style): hide entirely, or keep the item visible
+                  with an "available …" note while blocking add-to-cart. */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("availabilityModeLabel")}</label>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setForm(f => ({ ...f, availabilityMode: "hide" }))}
+                    className={`flex-1 text-sm font-medium py-2 px-3 rounded-lg border transition ${form.availabilityMode !== "show" ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-400"}`}
+                  >
+                    {t("availabilityModeHide")}
+                  </button>
+                  <button
+                    onClick={() => setForm(f => ({ ...f, availabilityMode: "show" }))}
+                    className={`flex-1 text-sm font-medium py-2 px-3 rounded-lg border transition ${form.availabilityMode === "show" ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-400"}`}
+                  >
+                    {t("availabilityModeShow")}
+                  </button>
+                </div>
+                <p className="text-xs text-gray-400 mt-1.5">{t("availabilityModeHint")}</p>
+              </div>
             </div>
           )}
 

@@ -248,7 +248,8 @@
     "holidayClosedToday": "Olemme tänään suljettu",
     "holidaySpecialHours": "Erityisaukioloajat tänään",
     "holidayNotAvailableToday": "Ei saatavilla tänään: {services}",
-    "holidayOrderLater": "Voit silti tilata myöhemmälle päivälle."
+    "holidayOrderLater": "Voit silti tilata myöhemmälle päivälle.",
+    "availableOnlyLabel": "Saatavilla {window}"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Vaiheen nimi (näkyy asiakkaille, esim. \"Valitse pizzasi\")",
       "toppingsOptionalTitle": "Täytteet valinnaisia",
       "toppingsOptionalOnHint": "Asiakkaat voivat jättää täytteet pois (esim. pelkkä juusto) ja silti viedä tilauksen kassalle.",
-      "toppingsOptionalOffHint": "Jatkaminen edellyttää vähintään yhtä täytettä."
+      "toppingsOptionalOffHint": "Jatkaminen edellyttää vähintään yhtä täytettä.",
+      "availabilityModeLabel": "Kun ei saatavilla",
+      "availabilityModeHide": "Piilota valikosta",
+      "availabilityModeShow": "Näytä, mutta estä tilaaminen",
+      "availabilityModeHint": "\"Näytä\" pitää tuotteen näkyvissä \"Saatavilla …\" -merkinnällä, jotta asiakkaat tietävät milloin sen voi tilata."
     },
     "promotionsList": {
       "stackingMaster": "Master",

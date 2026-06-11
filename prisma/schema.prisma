@@ -719,6 +719,13 @@ model MenuItem {
   availableDays String? // JSON: [0,1,2,3,4,5,6] — null = all days
   availableFrom String? // "HH:MM"
   availableTo   String? // "HH:MM"
+  /// What happens OUTSIDE the availability window (Luigi 2026-06-11, reseller
+  /// report cmpxec829 — Cloudwaitress-style): null/"hide" = item disappears
+  /// from the customer menu (legacy); "show" = item stays VISIBLE with an
+  /// "available …" note but can't be added to the cart. Server-side order
+  /// validation rejects out-of-window items in BOTH modes. Nullable so the
+  /// hot MenuItem table needs no rewrite/backfill.
+  availabilityMode String?
   sortOrder     Int      @default(0)
   calories      Int?
   allergens     String?

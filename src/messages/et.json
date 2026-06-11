@@ -248,7 +248,8 @@
     "holidayClosedToday": "Täna oleme suletud",
     "holidaySpecialHours": "Täna eriline lahtiolekuaeg",
     "holidayNotAvailableToday": "Täna pole saadaval: {services}",
-    "holidayOrderLater": "Saad siiski tellida hilisemaks kuupäevaks."
+    "holidayOrderLater": "Saad siiski tellida hilisemaks kuupäevaks.",
+    "availableOnlyLabel": "Saadaval {window}"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Sammu nimi (kuvatakse klientidele, nt \"Vali oma pitsa\")",
       "toppingsOptionalTitle": "Lisandid pole kohustuslikud",
       "toppingsOptionalOnHint": "Kliendid saavad tellimuse vormistada ka ilma lisanditeta (nt tavaline juustupitsa).",
-      "toppingsOptionalOffHint": "Jätkamiseks on vaja vähemalt üht lisandit."
+      "toppingsOptionalOffHint": "Jätkamiseks on vaja vähemalt üht lisandit.",
+      "availabilityModeLabel": "Kui pole saadaval",
+      "availabilityModeHide": "Peida menüüst",
+      "availabilityModeShow": "Näita, kuid blokeeri tellimine",
+      "availabilityModeHint": "„Näita” jätab toote nähtavaks märkega „Saadaval …”, et kliendid teaksid, millal saab tellida."
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

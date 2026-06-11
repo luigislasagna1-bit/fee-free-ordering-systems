@@ -248,7 +248,8 @@
     "holidayClosedToday": "Dnes máme zatvorené",
     "holidaySpecialHours": "Dnes špeciálne otváracie hodiny",
     "holidayNotAvailableToday": "Dnes nie je k dispozícii: {services}",
-    "holidayOrderLater": "Stále môžete objednať na neskorší dátum."
+    "holidayOrderLater": "Stále môžete objednať na neskorší dátum.",
+    "availableOnlyLabel": "K dispozícii {window}"
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",
@@ -2383,7 +2384,11 @@
       "comboSlotNameLabel": "Názov kroku (zobrazí sa zákazníkom, napr. „Vyberte si pizzu\")",
       "toppingsOptionalTitle": "Ingrediencie voliteľné",
       "toppingsOptionalOnHint": "Zákazníci môžu nepridať žiadne ingrediencie (napr. iba syr) a aj tak dokončiť objednávku.",
-      "toppingsOptionalOffHint": "Na pokračovanie je potrebná aspoň jedna ingrediencia."
+      "toppingsOptionalOffHint": "Na pokračovanie je potrebná aspoň jedna ingrediencia.",
+      "availabilityModeLabel": "Keď nie je k dispozícii",
+      "availabilityModeHide": "Skryť z ponuky",
+      "availabilityModeShow": "Zobraziť, ale blokovať objednanie",
+      "availabilityModeHint": "„Zobraziť“ ponechá položku viditeľnú s poznámkou „K dispozícii …“, aby zákazníci vedeli, kedy si ju môžu objednať."
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

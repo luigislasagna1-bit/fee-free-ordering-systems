@@ -104,6 +104,29 @@ interface CartItem {
 
 const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
+/** Human-readable availability window for a day/time-limited item, e.g.
+ *  "Mon, Fri · 12:00 – 15:00". Day names come from Intl in the browser
+ *  locale. Used by the visible-but-purchase-restricted treatment
+ *  (reseller report cmpxec829). */
+function itemAvailabilityWindow(item: MenuItem, hoursFmt: "12h" | "24h"): string {
+  const parts: string[] = [];
+  try {
+    if (item.availableDays) {
+      const days: number[] = typeof item.availableDays === "string" ? JSON.parse(item.availableDays) : item.availableDays;
+      if (Array.isArray(days) && days.length > 0 && days.length < 7) {
+        // 2021-08-01 was a Sunday — offsetting by the dow index yields each
+        // weekday name in the customer's own locale.
+        const fmt = new Intl.DateTimeFormat(undefined, { weekday: "short", timeZone: "UTC" });
+        parts.push([...days].sort().map((d) => fmt.format(new Date(Date.UTC(2021, 7, 1 + d)))).join(", "));
+      }
+    }
+  } catch { /* malformed days JSON — skip the day part */ }
+  if (item.availableFrom && item.availableTo) {
+    parts.push(`${formatHHMM(item.availableFrom, hoursFmt)} – ${formatHHMM(item.availableTo, hoursFmt)}`);
+  }
+  return parts.join(" · ");
+}
+
 function isItemAvailableNow(item: MenuItem, timezone?: string): boolean {
   // Day-of-week and HH:MM must be computed in the RESTAURANT's local
   // timezone so an out-of-town customer (e.g. delivery scheduled from
@@ -371,15 +394,17 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
   const t = useTranslations("ordering");
   const fmt = useCurrencyFormat();
   const isSold = item.isSoldOut;
+  const availNote = (item as any).__availabilityNote as string | undefined;
+  const blocked = isSold || !!availNote;
   const basePrice = item.hasVariants && item.variants?.length
     ? Math.min(...item.variants.map(v => v.price))
     : item.price;
   return (
     <button
       id={`menu-item-${item.id}`}
-      onClick={() => !isSold && onOpen(item)}
-      disabled={isSold}
-      className={`flex-shrink-0 text-left rounded-2xl overflow-hidden shadow-sm transition group ${isSold ? "opacity-60 cursor-not-allowed" : "hover:shadow-md"}`}
+      onClick={() => !blocked && onOpen(item)}
+      disabled={blocked}
+      className={`flex-shrink-0 text-left rounded-2xl overflow-hidden shadow-sm transition group ${blocked ? "opacity-60 cursor-not-allowed" : "hover:shadow-md"}`}
       style={{ width: 168, backgroundColor: theme.cardBackground, border: "1px solid #e5e7eb" }}
     >
       {/* Image block renders ONLY when the item has an image — no broken/gray
@@ -399,6 +424,11 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
               <span className="bg-white text-gray-800 text-xs font-bold px-2 py-1 rounded-full">{t("soldOut")}</span>
             </div>
           )}
+          {!isSold && availNote && (
+            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <span className="bg-white text-amber-700 text-[10px] font-bold px-2 py-1 rounded-full text-center leading-tight">{availNote}</span>
+            </div>
+          )}
         </div>
       )}
       <div className="p-2.5">
@@ -409,11 +439,14 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
         {!item.imageUrl && isSold && (
           <span className="inline-block mt-1 bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{t("soldOut")}</span>
         )}
+        {!item.imageUrl && !isSold && availNote && (
+          <span className="inline-block mt-1 bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">{availNote}</span>
+        )}
         <div className="flex items-center justify-between mt-2">
           <span className="text-sm font-bold" style={{ color: theme.primaryColor }}>
             {item.hasVariants ? `from ${fmt(basePrice)}` : fmt(basePrice)}
           </span>
-          {!isSold && (
+          {!blocked && (
             <div className="w-7 h-7 rounded-full flex items-center justify-center shadow-sm transition" style={{ backgroundColor: theme.primaryColor }}>
               <Plus className="w-4 h-4 text-white" />
             </div>
@@ -474,15 +507,19 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
   const t = useTranslations("ordering");
   const fmt = useCurrencyFormat();
   const isSold = item.isSoldOut;
+  // Visible-but-purchase-restricted (reseller report cmpxec829): outside the
+  // item's window it renders like sold-out but with an "Available …" note.
+  const availNote = (item as any).__availabilityNote as string | undefined;
+  const blocked = isSold || !!availNote;
   const basePrice = item.hasVariants && item.variants?.length
     ? Math.min(...item.variants.map(v => v.price))
     : item.price;
   return (
     <button
       id={`menu-item-${item.id}`}
-      onClick={() => !isSold && onOpen(item)}
-      disabled={isSold}
-      className={`text-left rounded-2xl border overflow-hidden shadow-sm transition group ${isSold ? "opacity-60 cursor-not-allowed border-gray-100" : "hover:shadow-lg"}`}
+      onClick={() => !blocked && onOpen(item)}
+      disabled={blocked}
+      className={`text-left rounded-2xl border overflow-hidden shadow-sm transition group ${blocked ? "opacity-60 cursor-not-allowed border-gray-100" : "hover:shadow-lg"}`}
       style={{ backgroundColor: theme.cardBackground, borderColor: "#e5e7eb" }}
     >
       {/* Image block renders ONLY when the item has an image — no broken/gray
@@ -502,12 +539,17 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
               <span className="bg-white text-gray-800 text-xs font-bold px-3 py-1.5 rounded-full">{t("soldOut")}</span>
             </div>
           )}
+          {!isSold && availNote && (
+            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <span className="bg-white text-amber-700 text-xs font-bold px-3 py-1.5 rounded-full">{availNote}</span>
+            </div>
+          )}
         </div>
       )}
       <div className="p-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            {!item.imageUrl && (item.isFeatured || isSold) && (
+            {!item.imageUrl && (item.isFeatured || blocked) && (
               <div className="flex items-center gap-1.5 mb-1">
                 {item.isFeatured && (
                   <span className="inline-flex items-center gap-1 bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
@@ -516,6 +558,9 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
                 )}
                 {isSold && (
                   <span className="inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{t("soldOut")}</span>
+                )}
+                {!isSold && availNote && (
+                  <span className="inline-block bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">{availNote}</span>
                 )}
               </div>
             )}
@@ -526,7 +571,7 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
             <div className="font-bold text-base" style={{ color: theme.textColor }}>
               {item.hasVariants ? `from ${fmt(basePrice)}` : fmt(basePrice)}
             </div>
-            {!isSold && (
+            {!blocked && (
               <div className="w-9 h-9 rounded-full flex items-center justify-center shadow-sm transition" style={{ backgroundColor: theme.primaryColor }}>
                 <Plus className="w-5 h-5 text-white" />
               </div>
@@ -542,15 +587,17 @@ function ListCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
   const t = useTranslations("ordering");
   const fmt = useCurrencyFormat();
   const isSold = item.isSoldOut;
+  const availNote = (item as any).__availabilityNote as string | undefined;
+  const blocked = isSold || !!availNote;
   const basePrice = item.hasVariants && item.variants?.length
     ? Math.min(...item.variants.map(v => v.price))
     : item.price;
   return (
     <button
       id={`menu-item-${item.id}`}
-      onClick={() => !isSold && onOpen(item)}
-      disabled={isSold}
-      className={`w-full text-left rounded-2xl border overflow-hidden shadow-sm transition group flex items-stretch ${isSold ? "opacity-60 cursor-not-allowed border-gray-100" : "hover:shadow-lg"}`}
+      onClick={() => !blocked && onOpen(item)}
+      disabled={blocked}
+      className={`w-full text-left rounded-2xl border overflow-hidden shadow-sm transition group flex items-stretch ${blocked ? "opacity-60 cursor-not-allowed border-gray-100" : "hover:shadow-lg"}`}
       style={{ backgroundColor: theme.cardBackground, borderColor: "#e5e7eb" }}
     >
       {/* Photo on the LEFT — rendered ONLY when present (no blank placeholder). */}
@@ -567,7 +614,7 @@ function ListCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
       {/* Text on the RIGHT. */}
       <div className="flex-1 min-w-0 p-3 sm:p-4 flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          {(item.isFeatured || (isSold && !item.imageUrl)) && (
+          {(item.isFeatured || (isSold && !item.imageUrl) || (!isSold && availNote)) && (
             <div className="flex items-center gap-1.5 mb-1">
               {item.isFeatured && (
                 <span className="inline-flex items-center gap-1 bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
@@ -577,6 +624,9 @@ function ListCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
               {isSold && !item.imageUrl && (
                 <span className="inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{t("soldOut")}</span>
               )}
+              {!isSold && availNote && (
+                <span className="inline-block bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">{availNote}</span>
+              )}
             </div>
           )}
           <p className="font-semibold leading-snug transition" style={{ color: theme.textColor }}>{item.name}</p>
@@ -585,7 +635,7 @@ function ListCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
             {item.hasVariants ? `from ${fmt(basePrice)}` : fmt(basePrice)}
           </div>
         </div>
-        {!isSold && (
+        {!blocked && (
           <div className="flex-shrink-0 self-center w-9 h-9 rounded-full flex items-center justify-center shadow-sm transition" style={{ backgroundColor: theme.primaryColor }}>
             <Plus className="w-5 h-5 text-white" />
           </div>
@@ -1507,7 +1557,10 @@ export function OrderingPageClient({
             // Delivery uses forDelivery; pickup / dine-in / take-out all use
             // the pickup availability flag (they're pickup-style channels).
             (orderType === "delivery" ? i.forDelivery : i.forPickup) &&
-            isItemAvailableNow(i, restaurantTz)
+            // availabilityMode "show" keeps the item VISIBLE outside its
+            // day/time window — it renders greyed with an "Available …" note
+            // and can't be added to the cart (reseller report cmpxec829).
+            (isItemAvailableNow(i, restaurantTz) || (i as any).availabilityMode === "show")
           )
           .map(item => {
             // Merge: item-level groups first (in their sortOrder), then category-level
@@ -1518,10 +1571,17 @@ export function OrderingPageClient({
             const uniqueCatGroups = catGroups.filter(
               cg => !(itemLibraryIds.has((cg as any).libraryGroupId ?? cg.id) || itemLibraryIds.has(cg.id))
             );
+            // Visible-but-restricted: outside the window, attach the
+            // human-readable availability note the cards + add-to-cart gate
+            // surface ("Available Mon, Fri · 12:00 – 15:00").
+            const availabilityNote = !isItemAvailableNow(item, restaurantTz)
+              ? t("availableOnlyLabel", { window: itemAvailabilityWindow(item, hoursFmt) })
+              : undefined;
             return {
               ...item,
               categoryId: c.id,
               modifierGroups: [...item.modifierGroups, ...uniqueCatGroups],
+              __availabilityNote: availabilityNote,
             };
           }),
       };
@@ -2246,6 +2306,11 @@ export function OrderingPageClient({
 
   const addToCart = () => {
     if (!selectedItem) return;
+    // Visible-but-purchase-restricted (reseller report cmpxec829): the cards
+    // block opening, but belt-and-suspenders here too (deep links, kept-open
+    // modals across a window boundary). Server-side validation re-checks.
+    const availNote = (selectedItem as any).__availabilityNote as string | undefined;
+    if (availNote) { toast.error(availNote); return; }
     if (selectedItem.hasVariants && !selectedVariant) { toast.error(tT("chooseSize")); return; }
     for (const g of selectedItem.modifierGroups) {
       const selected = mods[g.id] || [];

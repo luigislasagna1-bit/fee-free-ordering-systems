@@ -248,7 +248,8 @@
     "holidayClosedToday": "Heute geschlossen",
     "holidaySpecialHours": "Heute Sonderöffnungszeiten",
     "holidayNotAvailableToday": "Heute nicht verfügbar: {services}",
-    "holidayOrderLater": "Du kannst trotzdem für einen späteren Termin bestellen."
+    "holidayOrderLater": "Du kannst trotzdem für einen späteren Termin bestellen.",
+    "availableOnlyLabel": "Verfügbar {window}"
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Schrittname (für Kunden sichtbar, z. B. „Wähle deine Pizza\")",
       "toppingsOptionalTitle": "Beläge optional",
       "toppingsOptionalOnHint": "Kunden können auch ohne Beläge bestellen (z. B. nur Käse) und trotzdem zur Kasse gehen.",
-      "toppingsOptionalOffHint": "Mindestens ein Belag ist erforderlich, um fortzufahren."
+      "toppingsOptionalOffHint": "Mindestens ein Belag ist erforderlich, um fortzufahren.",
+      "availabilityModeLabel": "Wenn nicht verfügbar",
+      "availabilityModeHide": "Aus dem Menü ausblenden",
+      "availabilityModeShow": "Anzeigen, aber Bestellung sperren",
+      "availabilityModeHint": "\"Anzeigen\" hält das Gericht sichtbar mit dem Hinweis \"Verfügbar …\", damit Kunden wissen, wann sie es bestellen können."
     },
     "promotionsList": {
       "stackingMaster": "Master",

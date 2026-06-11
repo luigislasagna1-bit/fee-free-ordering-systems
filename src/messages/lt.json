@@ -248,7 +248,8 @@
     "holidayClosedToday": "Šiandien nedirbame",
     "holidaySpecialHours": "Šiandien ypatingos darbo valandos",
     "holidayNotAvailableToday": "Šiandien negalima: {services}",
-    "holidayOrderLater": "Vis tiek galite užsisakyti vėlesnei datai."
+    "holidayOrderLater": "Vis tiek galite užsisakyti vėlesnei datai.",
+    "availableOnlyLabel": "Galima {window}"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -2383,7 +2384,11 @@
       "comboSlotNameLabel": "Žingsnio pavadinimas (rodomas klientams, pvz. „Pasirinkite picą“)",
       "toppingsOptionalTitle": "Priedai neprivalomi",
       "toppingsOptionalOnHint": "Klientai gali nepasirinkti jokių priedų (pvz., picą tik su sūriu) ir vis tiek užbaigti užsakymą.",
-      "toppingsOptionalOffHint": "Norint tęsti, būtina pasirinkti bent vieną priedą."
+      "toppingsOptionalOffHint": "Norint tęsti, būtina pasirinkti bent vieną priedą.",
+      "availabilityModeLabel": "Kai negalima",
+      "availabilityModeHide": "Slėpti iš meniu",
+      "availabilityModeShow": "Rodyti, bet blokuoti užsakymą",
+      "availabilityModeHint": "„Rodyti“ palieka patiekalą matomą su pastaba „Galima …“, kad klientai žinotų, kada jį galima užsisakyti."
     },
     "promotionsList": {
       "stackingMaster": "Master",

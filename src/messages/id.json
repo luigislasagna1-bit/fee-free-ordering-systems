@@ -248,7 +248,8 @@
     "holidayClosedToday": "Hari ini kami tutup",
     "holidaySpecialHours": "Jam khusus hari ini",
     "holidayNotAvailableToday": "Tidak tersedia hari ini: {services}",
-    "holidayOrderLater": "Anda tetap dapat memesan untuk tanggal lain."
+    "holidayOrderLater": "Anda tetap dapat memesan untuk tanggal lain.",
+    "availableOnlyLabel": "Tersedia {window}"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Nama langkah (ditampilkan ke pelanggan, mis. \"Pilih pizza Anda\")",
       "toppingsOptionalTitle": "Topping opsional",
       "toppingsOptionalOnHint": "Pelanggan dapat tidak menambahkan topping (mis. keju polos) dan tetap melanjutkan checkout.",
-      "toppingsOptionalOffHint": "Setidaknya satu topping wajib dipilih untuk melanjutkan."
+      "toppingsOptionalOffHint": "Setidaknya satu topping wajib dipilih untuk melanjutkan.",
+      "availabilityModeLabel": "Saat tidak tersedia",
+      "availabilityModeHide": "Sembunyikan dari menu",
+      "availabilityModeShow": "Tampilkan, tapi blokir pemesanan",
+      "availabilityModeHint": "\"Tampilkan\" membuat item tetap terlihat dengan catatan \"Tersedia …\" agar pelanggan tahu kapan bisa memesannya."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -248,7 +248,8 @@
     "holidayClosedToday": "Oggi siamo chiusi",
     "holidaySpecialHours": "Orari speciali oggi",
     "holidayNotAvailableToday": "Non disponibile oggi: {services}",
-    "holidayOrderLater": "Puoi comunque ordinare per una data successiva."
+    "holidayOrderLater": "Puoi comunque ordinare per una data successiva.",
+    "availableOnlyLabel": "Disponibile {window}"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Nome del passaggio (mostrato ai clienti, es. \"Scegli la tua pizza\")",
       "toppingsOptionalTitle": "Aggiunte facoltative",
       "toppingsOptionalOnHint": "I clienti possono non aggiungere alcun ingrediente (ad es. solo formaggio) e procedere comunque all'ordine.",
-      "toppingsOptionalOffHint": "È necessario almeno un ingrediente per continuare."
+      "toppingsOptionalOffHint": "È necessario almeno un ingrediente per continuare.",
+      "availabilityModeLabel": "Quando non è disponibile",
+      "availabilityModeHide": "Nascondi dal menu",
+      "availabilityModeShow": "Mostra, ma blocca l'ordine",
+      "availabilityModeHint": "\"Mostra\" mantiene il piatto visibile con una nota \"Disponibile …\" così i clienti sanno quando ordinarlo."
     },
     "promotionsList": {
       "stackingMaster": "Master",

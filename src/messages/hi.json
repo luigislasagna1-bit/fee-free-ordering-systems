@@ -248,7 +248,8 @@
     "holidayClosedToday": "आज हम बंद हैं",
     "holidaySpecialHours": "आज विशेष समय",
     "holidayNotAvailableToday": "आज उपलब्ध नहीं: {services}",
-    "holidayOrderLater": "आप बाद की तारीख़ के लिए ऑर्डर कर सकते हैं।"
+    "holidayOrderLater": "आप बाद की तारीख़ के लिए ऑर्डर कर सकते हैं।",
+    "availableOnlyLabel": "उपलब्ध {window}"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",
@@ -2041,7 +2042,11 @@
       "comboSlotNameLabel": "चरण का नाम (ग्राहकों को दिखता है, जैसे \"अपना पिज़्ज़ा चुनें\")",
       "toppingsOptionalTitle": "टॉपिंग वैकल्पिक",
       "toppingsOptionalOnHint": "ग्राहक बिना किसी टॉपिंग के (जैसे सादा चीज़) भी ऑर्डर पूरा कर सकते हैं।",
-      "toppingsOptionalOffHint": "आगे बढ़ने के लिए कम से कम एक टॉपिंग आवश्यक है।"
+      "toppingsOptionalOffHint": "आगे बढ़ने के लिए कम से कम एक टॉपिंग आवश्यक है।",
+      "availabilityModeLabel": "जब उपलब्ध न हो",
+      "availabilityModeHide": "मेनू से छिपाएँ",
+      "availabilityModeShow": "दिखाएँ, पर ऑर्डर रोकें",
+      "availabilityModeHint": "\"दिखाएँ\" आइटम को \"उपलब्ध …\" नोट के साथ दिखाता रहता है ताकि ग्राहक जानें कि कब ऑर्डर कर सकते हैं।"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

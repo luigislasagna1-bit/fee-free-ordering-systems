@@ -248,7 +248,8 @@
     "holidayClosedToday": "Astăzi suntem închiși",
     "holidaySpecialHours": "Program special astăzi",
     "holidayNotAvailableToday": "Indisponibil astăzi: {services}",
-    "holidayOrderLater": "Poți totuși plasa o comandă pentru o dată ulterioară."
+    "holidayOrderLater": "Poți totuși plasa o comandă pentru o dată ulterioară.",
+    "availableOnlyLabel": "Disponibil {window}"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -1718,7 +1719,11 @@
       "comboSlotNameLabel": "Nume pas (afișat clienților, ex.: „Alege pizza\")",
       "toppingsOptionalTitle": "Toppinguri opționale",
       "toppingsOptionalOnHint": "Clienții pot să nu adauge niciun topping (de ex. doar cu brânză) și pot finaliza comanda.",
-      "toppingsOptionalOffHint": "Este necesar cel puțin un topping pentru a continua."
+      "toppingsOptionalOffHint": "Este necesar cel puțin un topping pentru a continua.",
+      "availabilityModeLabel": "Când nu este disponibil",
+      "availabilityModeHide": "Ascunde din meniu",
+      "availabilityModeShow": "Afișează, dar blochează comanda",
+      "availabilityModeHint": "„Afișează” păstrează produsul vizibil cu o notă „Disponibil …”, ca să știe clienții când îl pot comanda."
     },
     "promotionsList": {
       "stackingMaster": "Master",

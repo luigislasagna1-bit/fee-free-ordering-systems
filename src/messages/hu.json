@@ -248,7 +248,8 @@
     "holidayClosedToday": "Ma zárva vagyunk",
     "holidaySpecialHours": "Ma rendkívüli nyitvatartás",
     "holidayNotAvailableToday": "Ma nem elérhető: {services}",
-    "holidayOrderLater": "Későbbi időpontra továbbra is rendelhetsz."
+    "holidayOrderLater": "Későbbi időpontra továbbra is rendelhetsz.",
+    "availableOnlyLabel": "Elérhető: {window}"
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -1679,7 +1680,11 @@
       "comboSlotNameLabel": "Lépés neve (a vendégeknek látszik, pl. „Válassz pizzát”)",
       "toppingsOptionalTitle": "Feltétek megadása nem kötelező",
       "toppingsOptionalOnHint": "A vásárlók feltétek nélkül is leadhatják a rendelést (pl. csak sajttal).",
-      "toppingsOptionalOffHint": "A folytatáshoz legalább egy feltét kiválasztása szükséges."
+      "toppingsOptionalOffHint": "A folytatáshoz legalább egy feltét kiválasztása szükséges.",
+      "availabilityModeLabel": "Ha nem elérhető",
+      "availabilityModeHide": "Elrejtés az étlapról",
+      "availabilityModeShow": "Mutasd, de tiltsd a rendelést",
+      "availabilityModeHint": "A „Mutasd” láthatóan tartja a tételt egy „Elérhető …” jelzéssel, így a vendégek tudják, mikor rendelhetik."
     },
     "promotionsList": {
       "stackingMaster": "Master",
