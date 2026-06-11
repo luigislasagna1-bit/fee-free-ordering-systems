@@ -62,8 +62,15 @@ export default async function SettingsPage() {
 
   // Recommend the top few add-ons the restaurant doesn't already have.
   const ownedSlugs = new Set(activeAddOns.map((a) => a.slug));
+  // FREE Unlimited Orders is redundant the moment ANY other paid add-on is
+  // active — every paid add-on already exempts the 100-order/month cap, so
+  // subscribing to Unlimited Orders on top buys nothing. Mirror the
+  // billing/add-ons "Already included" rule and simply don't recommend it in
+  // that case. Luigi 2026-06-11.
+  const hasOtherPaidAddOn = activeAddOns.some((a) => a.slug !== "unlimited_orders");
   const recommendedAddOns: RecommendedAddOn[] = (catalog as Array<{ slug: string; name: string; description: string | null; monthlyPriceCents: number }>)
     .filter((a) => !ownedSlugs.has(a.slug))
+    .filter((a) => !(a.slug === "unlimited_orders" && hasOtherPaidAddOn))
     .slice(0, 4)
     .map((a) => ({ slug: a.slug, name: a.name, description: a.description, monthlyPriceCents: a.monthlyPriceCents }));
 
