@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Специално работно време днес",
     "holidayNotAvailableToday": "Не е налично днес: {services}",
     "holidayOrderLater": "Все пак можете да поръчате за по-късна дата.",
-    "availableOnlyLabel": "Налично {window}"
+    "availableOnlyLabel": "Налично {window}",
+    "testModeBanner": "Тестов режим — преглеждате собствения си магазин",
+    "testModeHint": "Поръчките тук се маркират като TEST: звънят в кухнята и се печатат нормално, но никога не се броят в отчети или приходи."
   },
   "pizza": {
     "chooseSize": "Избери размер",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "Когато не е налично",
       "availabilityModeHide": "Скрий от менюто",
       "availabilityModeShow": "Показвай, но блокирай поръчката",
-      "availabilityModeHint": "„Показвай“ оставя артикула видим с бележка „Налично …“, за да знаят клиентите кога могат да го поръчат."
+      "availabilityModeHint": "„Показвай“ оставя артикула видим с бележка „Налично …“, за да знаят клиентите кога могат да го поръчат.",
+      "previewTestOrdering": "Преглед и тестова поръчка"
     },
     "promotionsList": {
       "stackingMaster": "Главна",

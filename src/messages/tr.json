@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Bugün özel çalışma saatleri",
     "holidayNotAvailableToday": "Bugün kullanılamıyor: {services}",
     "holidayOrderLater": "Yine de ileri bir tarih için sipariş verebilirsiniz.",
-    "availableOnlyLabel": "Şu zamanlarda mevcut: {window}"
+    "availableOnlyLabel": "Şu zamanlarda mevcut: {window}",
+    "testModeBanner": "Test modu — kendi mağazanızı önizliyorsunuz",
+    "testModeHint": "Burada verilen siparişler TEST olarak işaretlenir: mutfakta çalar ve normal yazdırılır ama raporlara veya gelire asla sayılmaz."
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -1684,7 +1686,8 @@
       "availabilityModeLabel": "Mevcut olmadığında",
       "availabilityModeHide": "Menüden gizle",
       "availabilityModeShow": "Göster ama siparişi engelle",
-      "availabilityModeHint": "\"Göster\" ürünü \"Mevcut …\" notuyla görünür tutar; müşteriler ne zaman sipariş verebileceklerini bilir."
+      "availabilityModeHint": "\"Göster\" ürünü \"Mevcut …\" notuyla görünür tutar; müşteriler ne zaman sipariş verebileceklerini bilir.",
+      "previewTestOrdering": "Önizleme ve test siparişi"
     },
     "promotionsList": {
       "stackingMaster": "Ana",

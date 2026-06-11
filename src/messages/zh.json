@@ -249,7 +249,9 @@
     "holidaySpecialHours": "今日特殊营业时间",
     "holidayNotAvailableToday": "今日不可用：{services}",
     "holidayOrderLater": "您仍可预订其他日期。",
-    "availableOnlyLabel": "供应时间 {window}"
+    "availableOnlyLabel": "供应时间 {window}",
+    "testModeBanner": "测试模式——您正在预览自己的店铺",
+    "testModeHint": "在此下的订单会标记为 TEST：厨房正常响铃和打印，但绝不会计入报表或营业额。"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "不可用时",
       "availabilityModeHide": "从菜单隐藏",
       "availabilityModeShow": "显示但禁止下单",
-      "availabilityModeHint": "“显示”会保留菜品并附“供应时间 …”提示，让顾客知道何时可以下单。"
+      "availabilityModeHint": "“显示”会保留菜品并附“供应时间 …”提示，让顾客知道何时可以下单。",
+      "previewTestOrdering": "预览并测试下单"
     },
     "promotionsList": {
       "stackingMaster": "主控",

@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Vandaag speciale openingstijden",
     "holidayNotAvailableToday": "Vandaag niet beschikbaar: {services}",
     "holidayOrderLater": "Je kunt nog steeds bestellen voor een latere datum.",
-    "availableOnlyLabel": "Beschikbaar {window}"
+    "availableOnlyLabel": "Beschikbaar {window}",
+    "testModeBanner": "Testmodus — je bekijkt je eigen winkel",
+    "testModeHint": "Bestellingen die je hier plaatst zijn gemarkeerd als TEST: ze rinkelen in de keuken en printen normaal, maar tellen nooit mee in rapporten of omzet."
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "Wanneer niet beschikbaar",
       "availabilityModeHide": "Verbergen in menu",
       "availabilityModeShow": "Tonen, maar bestellen blokkeren",
-      "availabilityModeHint": "\"Tonen\" houdt het item zichtbaar met een \"Beschikbaar …\"-melding zodat klanten weten wanneer ze het kunnen bestellen."
+      "availabilityModeHint": "\"Tonen\" houdt het item zichtbaar met een \"Beschikbaar …\"-melding zodat klanten weten wanneer ze het kunnen bestellen.",
+      "previewTestOrdering": "Voorbeeld & testbestelling"
     },
     "promotionsList": {
       "stackingMaster": "Master",

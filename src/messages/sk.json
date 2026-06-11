@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Dnes špeciálne otváracie hodiny",
     "holidayNotAvailableToday": "Dnes nie je k dispozícii: {services}",
     "holidayOrderLater": "Stále môžete objednať na neskorší dátum.",
-    "availableOnlyLabel": "K dispozícii {window}"
+    "availableOnlyLabel": "K dispozícii {window}",
+    "testModeBanner": "Testovací režim — prezeráte si vlastný podnik",
+    "testModeHint": "Objednávky zadané tu sú označené TEST: v kuchyni zazvonia a normálne sa vytlačia, ale nikdy sa nepočítajú do reportov ani tržieb."
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",
@@ -2388,7 +2390,8 @@
       "availabilityModeLabel": "Keď nie je k dispozícii",
       "availabilityModeHide": "Skryť z ponuky",
       "availabilityModeShow": "Zobraziť, ale blokovať objednanie",
-      "availabilityModeHint": "„Zobraziť“ ponechá položku viditeľnú s poznámkou „K dispozícii …“, aby zákazníci vedeli, kedy si ju môžu objednať."
+      "availabilityModeHint": "„Zobraziť“ ponechá položku viditeľnú s poznámkou „K dispozícii …“, aby zákazníci vedeli, kedy si ju môžu objednať.",
+      "previewTestOrdering": "Náhľad a testovacia objednávka"
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

@@ -249,7 +249,9 @@
     "holidaySpecialHours": "आज विशेष समय",
     "holidayNotAvailableToday": "आज उपलब्ध नहीं: {services}",
     "holidayOrderLater": "आप बाद की तारीख़ के लिए ऑर्डर कर सकते हैं।",
-    "availableOnlyLabel": "उपलब्ध {window}"
+    "availableOnlyLabel": "उपलब्ध {window}",
+    "testModeBanner": "परीक्षण मोड — आप अपनी ही दुकान का पूर्वावलोकन कर रहे हैं",
+    "testModeHint": "यहाँ किए गए ऑर्डर TEST चिह्नित होते हैं: किचन में सामान्य रूप से बजते और प्रिंट होते हैं, पर रिपोर्ट या आय में कभी नहीं गिने जाते।"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",
@@ -2046,7 +2048,8 @@
       "availabilityModeLabel": "जब उपलब्ध न हो",
       "availabilityModeHide": "मेनू से छिपाएँ",
       "availabilityModeShow": "दिखाएँ, पर ऑर्डर रोकें",
-      "availabilityModeHint": "\"दिखाएँ\" आइटम को \"उपलब्ध …\" नोट के साथ दिखाता रहता है ताकि ग्राहक जानें कि कब ऑर्डर कर सकते हैं।"
+      "availabilityModeHint": "\"दिखाएँ\" आइटम को \"उपलब्ध …\" नोट के साथ दिखाता रहता है ताकि ग्राहक जानें कि कब ऑर्डर कर सकते हैं।",
+      "previewTestOrdering": "पूर्वावलोकन और परीक्षण ऑर्डर"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

@@ -8,6 +8,8 @@ import { MasterMenuBanner } from "./MasterMenuBanner";
 import { isInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveActiveMenuId } from "@/lib/menu";
 import { hasFeature } from "@/lib/entitlements";
+import { getTranslations } from "next-intl/server";
+import { ExternalLink } from "lucide-react";
 
 export default async function MenuPage({
   searchParams,
@@ -71,6 +73,7 @@ export default async function MenuPage({
       parentRestaurantId: true,
       parentRestaurant: { select: { name: true } },
       hoursFormat: true,
+      slug: true,
     },
   });
   const isChildOnCustomMenu = !!selfRow?.parentRestaurantId;
@@ -150,8 +153,27 @@ export default async function MenuPage({
     })(),
   ]);
 
+  const tMenu = await getTranslations("admin.menuEditor");
+
   return (
     <>
+      {/* Preview & test ordering (reseller report cmq3red6b, Gloriafood
+          parity): opens the live customer ordering page in TEST mode — the
+          admin session makes ?testing=1 mark any order placed there with a
+          TEST- number, so it rings the kitchen normally but never touches
+          reports/revenue. */}
+      {selfRow?.slug && (
+        <div className="flex justify-end mb-3">
+          <a
+            href={`/order/${selfRow.slug}?testing=1`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 bg-white border border-gray-200 hover:border-gray-300 text-gray-700 text-sm font-semibold px-3 py-2 rounded-lg transition"
+          >
+            <ExternalLink className="w-4 h-4" /> {tMenu("previewTestOrdering")}
+          </a>
+        </div>
+      )}
       {isChildOnCustomMenu && (
         <RevertToBrandMenuBanner
           brandName={selfRow?.parentRestaurant?.name ?? "the brand"}

@@ -249,7 +249,9 @@
     "holidaySpecialHours": "本日は特別営業時間です",
     "holidayNotAvailableToday": "本日はご利用いただけません：{services}",
     "holidayOrderLater": "後日の注文は引き続き可能です。",
-    "availableOnlyLabel": "提供時間 {window}"
+    "availableOnlyLabel": "提供時間 {window}",
+    "testModeBanner": "テストモード — 自分の店舗をプレビュー中",
+    "testModeHint": "ここで行った注文は TEST と表示されます。キッチンには通常どおり通知・印刷されますが、レポートや売上には一切計上されません。"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "提供時間外のとき",
       "availabilityModeHide": "メニューから非表示",
       "availabilityModeShow": "表示するが注文は不可",
-      "availabilityModeHint": "「表示」を選ぶと「提供時間 …」の注記付きで表示され、注文できる時間が分かります。"
+      "availabilityModeHint": "「表示」を選ぶと「提供時間 …」の注記付きで表示され、注文できる時間が分かります。",
+      "previewTestOrdering": "プレビュー＆テスト注文"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

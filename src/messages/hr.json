@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Danas posebno radno vrijeme",
     "holidayNotAvailableToday": "Danas nije dostupno: {services}",
     "holidayOrderLater": "I dalje možete naručiti za kasniji datum.",
-    "availableOnlyLabel": "Dostupno {window}"
+    "availableOnlyLabel": "Dostupno {window}",
+    "testModeBanner": "Testni način — pregledavate vlastitu trgovinu",
+    "testModeHint": "Narudžbe ovdje označene su TEST: zvone u kuhinji i ispisuju se normalno, ali se nikad ne računaju u izvještaje ni prihod."
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "Kad nije dostupno",
       "availabilityModeHide": "Sakrij iz izbornika",
       "availabilityModeShow": "Prikaži, ali blokiraj naručivanje",
-      "availabilityModeHint": "\"Prikaži\" ostavlja artikl vidljivim s napomenom \"Dostupno …\" pa kupci znaju kada ga mogu naručiti."
+      "availabilityModeHint": "\"Prikaži\" ostavlja artikl vidljivim s napomenom \"Dostupno …\" pa kupci znaju kada ga mogu naručiti.",
+      "previewTestOrdering": "Pregled i testna narudžba"
     },
     "promotionsList": {
       "stackingMaster": "Master",

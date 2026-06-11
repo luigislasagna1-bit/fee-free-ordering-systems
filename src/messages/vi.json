@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Giờ đặc biệt hôm nay",
     "holidayNotAvailableToday": "Hôm nay không khả dụng: {services}",
     "holidayOrderLater": "Bạn vẫn có thể đặt hàng cho ngày khác.",
-    "availableOnlyLabel": "Có sẵn {window}"
+    "availableOnlyLabel": "Có sẵn {window}",
+    "testModeBanner": "Chế độ thử — bạn đang xem trước cửa hàng của mình",
+    "testModeHint": "Đơn đặt ở đây được đánh dấu TEST: vẫn reo ở bếp và in bình thường nhưng không bao giờ tính vào báo cáo hay doanh thu."
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -1684,7 +1686,8 @@
       "availabilityModeLabel": "Khi không có sẵn",
       "availabilityModeHide": "Ẩn khỏi thực đơn",
       "availabilityModeShow": "Hiển thị nhưng chặn đặt món",
-      "availabilityModeHint": "\"Hiển thị\" giữ món hiển thị kèm ghi chú \"Có sẵn …\" để khách biết khi nào có thể đặt."
+      "availabilityModeHint": "\"Hiển thị\" giữ món hiển thị kèm ghi chú \"Có sẵn …\" để khách biết khi nào có thể đặt.",
+      "previewTestOrdering": "Xem trước & đặt thử"
     },
     "promotionsList": {
       "stackingMaster": "Master",

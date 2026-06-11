@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Program special astăzi",
     "holidayNotAvailableToday": "Indisponibil astăzi: {services}",
     "holidayOrderLater": "Poți totuși plasa o comandă pentru o dată ulterioară.",
-    "availableOnlyLabel": "Disponibil {window}"
+    "availableOnlyLabel": "Disponibil {window}",
+    "testModeBanner": "Mod de test — previzualizezi propriul magazin",
+    "testModeHint": "Comenzile plasate aici sunt marcate TEST: sună în bucătărie și se tipăresc normal, dar nu se numără niciodată în rapoarte sau venituri."
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "Când nu este disponibil",
       "availabilityModeHide": "Ascunde din meniu",
       "availabilityModeShow": "Afișează, dar blochează comanda",
-      "availabilityModeHint": "„Afișează” păstrează produsul vizibil cu o notă „Disponibil …”, ca să știe clienții când îl pot comanda."
+      "availabilityModeHint": "„Afișează” păstrează produsul vizibil cu o notă „Disponibil …”, ca să știe clienții când îl pot comanda.",
+      "previewTestOrdering": "Previzualizare și comandă de test"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -27,6 +27,7 @@ import {
 } from "@/lib/marketplace";
 import { recordSmartLinkOrder } from "@/lib/marketing-studio";
 import { getCurrentCustomer } from "@/lib/customer-session";
+import { getSessionUser } from "@/lib/session";
 import { validateBooking, resolveDayHours, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { isPaymentMethodAcceptedForType } from "@/lib/payment-methods";
@@ -77,6 +78,10 @@ export async function POST(req: NextRequest) {
       restaurantSlug, type, customerName, customerEmail, customerPhone,
       deliveryAddress, deliveryCity, deliveryZip, deliveryAddressData: bodyDeliveryData, notes, paymentMethod,
       scheduledFor, couponId, marketingConsent,
+      // Owner "Preview & test ordering" (reseller report cmq3red6b). Only
+      // honoured after the admin-session check below — customers can't flag
+      // their own orders as tests.
+      isTest: bodyIsTest,
       // Typed coupon code from the cart's Apply field — fed into the
       // engine's couponPromos branch so autoApply=false promos with a
       // Promotion.couponCode match can fire on the server recompute.
@@ -163,6 +168,19 @@ export async function POST(req: NextRequest) {
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+
+    // Owner "Preview & test ordering" (reseller report cmq3red6b): honour the
+    // client's isTest flag ONLY for a logged-in admin of THIS restaurant (or a
+    // superadmin). Verified test orders get a TEST- order number + "[TEST]"
+    // name, ring the kitchen like real orders, and are excluded from every
+    // report (the aggregators filter orderNumber TEST-). A customer sending
+    // isTest gets a normal order — no way to self-exclude from revenue.
+    let isVerifiedTest = false;
+    if (bodyIsTest === true) {
+      const adminUser = await getSessionUser().catch(() => null);
+      isVerifiedTest =
+        !!adminUser && (adminUser.restaurantId === restaurant.id || adminUser.role === "superadmin");
+    }
 
     // ── Reserve-then-order: validate the optional table-booking payload ───────
     // Done EARLY (fail-fast) so we never create an order — or take a payment —
@@ -1614,7 +1632,9 @@ export async function POST(req: NextRequest) {
       data: {
         restaurantId: restaurant.id,
         customerId: customer?.id || null,
-        orderNumber: generateOrderNumber(),
+        // Verified owner test orders take the kitchen-test TEST- prefix so the
+        // kitchen badges them and the report aggregators exclude them.
+        orderNumber: isVerifiedTest ? `TEST-${Date.now()}` : generateOrderNumber(),
         status: initialStatus,
         acceptedAt: acceptedAtValue,
         estimatedReady: estimatedReadyValue,
@@ -1637,7 +1657,9 @@ export async function POST(req: NextRequest) {
             )
           : null,
         type,
-        customerName: sanitize(customerName, 100),
+        customerName: isVerifiedTest
+          ? `[TEST] ${sanitize(customerName, 92).replace(/^\[TEST\] /, "")}`
+          : sanitize(customerName, 100),
         customerEmail: cleanEmail,
         customerPhone: cleanPhone,
         deliveryAddress: flatAddress ? sanitize(flatAddress, 300) : null,

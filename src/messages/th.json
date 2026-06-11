@@ -249,7 +249,9 @@
     "holidaySpecialHours": "เวลาพิเศษวันนี้",
     "holidayNotAvailableToday": "วันนี้ไม่พร้อมให้บริการ: {services}",
     "holidayOrderLater": "คุณยังสั่งล่วงหน้าสำหรับวันอื่นได้",
-    "availableOnlyLabel": "มีจำหน่าย {window}"
+    "availableOnlyLabel": "มีจำหน่าย {window}",
+    "testModeBanner": "โหมดทดสอบ — คุณกำลังดูร้านของคุณเอง",
+    "testModeHint": "ออเดอร์ที่สั่งที่นี่จะถูกทำเครื่องหมาย TEST: จะดังที่ครัวและพิมพ์ตามปกติ แต่จะไม่ถูกนับในรายงานหรือรายได้"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "เมื่อไม่พร้อมจำหน่าย",
       "availabilityModeHide": "ซ่อนจากเมนู",
       "availabilityModeShow": "แสดงแต่ห้ามสั่ง",
-      "availabilityModeHint": "\"แสดง\" จะทำให้เมนูยังมองเห็นพร้อมหมายเหตุ \"มีจำหน่าย …\" เพื่อให้ลูกค้ารู้ว่าสั่งได้เมื่อใด"
+      "availabilityModeHint": "\"แสดง\" จะทำให้เมนูยังมองเห็นพร้อมหมายเหตุ \"มีจำหน่าย …\" เพื่อให้ลูกค้ารู้ว่าสั่งได้เมื่อใด",
+      "previewTestOrdering": "ดูตัวอย่างและสั่งทดสอบ"
     },
     "promotionsList": {
       "stackingMaster": "Master",

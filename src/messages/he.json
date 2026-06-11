@@ -249,7 +249,9 @@
     "holidaySpecialHours": "שעות מיוחדות היום",
     "holidayNotAvailableToday": "לא זמין היום: {services}",
     "holidayOrderLater": "עדיין אפשר להזמין לתאריך מאוחר יותר.",
-    "availableOnlyLabel": "זמין {window}"
+    "availableOnlyLabel": "זמין {window}",
+    "testModeBanner": "מצב בדיקה — אתה צופה בחנות שלך",
+    "testModeHint": "הזמנות כאן מסומנות TEST: הן מצלצלות במטבח ומודפסות כרגיל אך לעולם לא נספרות בדוחות או בהכנסות."
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "כשאינו זמין",
       "availabilityModeHide": "הסתר מהתפריט",
       "availabilityModeShow": "הצג אך חסום הזמנה",
-      "availabilityModeHint": "\"הצג\" משאיר את הפריט גלוי עם הערת \"זמין …\" כך שהלקוחות יודעים מתי אפשר להזמין."
+      "availabilityModeHint": "\"הצג\" משאיר את הפריט גלוי עם הערת \"זמין …\" כך שהלקוחות יודעים מתי אפשר להזמין.",
+      "previewTestOrdering": "תצוגה מקדימה והזמנת ניסיון"
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

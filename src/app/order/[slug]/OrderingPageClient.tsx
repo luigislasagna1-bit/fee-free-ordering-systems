@@ -667,6 +667,7 @@ export function OrderingPageClient({
   todayHolidayMessage = null,
   todayHolidayIntervals = null,
   holidayClosedServices = [],
+  isTestPreview = false,
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
@@ -684,6 +685,11 @@ export function OrderingPageClient({
    *  holiday-CLOSED today by a service-specific rule while the restaurant is
    *  otherwise open. Disables those service buttons + shows a banner. */
   holidayClosedServices?: string[];
+  /** Owner "Preview & test ordering" mode (reseller report cmq3red6b): true
+   *  only when ?testing=1 AND the viewer has an admin session for THIS
+   *  restaurant (verified server-side). Orders placed are marked TEST- and
+   *  excluded from all reports; a banner makes the mode obvious. */
+  isTestPreview?: boolean;
   /** Active promotions to display as banners above the menu (per Fabrizio
    *  2026-05-28). Server-filtered for visibility (active, in date range,
    *  matches today's day-of-week, showOnBanner=true). The hour-of-day
@@ -2466,6 +2472,10 @@ export function OrderingPageClient({
     // get stamped as "opted in" with nothing to send.
     marketingConsent: customerInfo.marketingConsent === true && customerInfo.email.trim().length > 0,
     from: fromMarketplace ? "marketplace" : undefined,
+    // Owner "Preview & test ordering" mode (reseller report cmq3red6b): the
+    // server only honours this when the caller has an ADMIN session for this
+    // restaurant — it then marks the order TEST- so reports exclude it.
+    isTest: isTestPreview || undefined,
     // Reports attribution — server-side join from this hash back to
     // the WebsiteVisit row written when the session started. Server
     // validates format + ignores unknown sessions; safe to include
@@ -3226,6 +3236,14 @@ export function OrderingPageClient({
       )}
 
       <div className="max-w-5xl mx-auto px-4 py-5">
+        {/* ── Owner test-mode banner (reseller report cmq3red6b) ───────── */}
+        {isTestPreview && (
+          <div className="mb-4 rounded-xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm">
+            <div className="font-semibold text-violet-900">🧪 {t("testModeBanner")}</div>
+            <div className="text-xs text-violet-800 mt-0.5">{t("testModeHint")}</div>
+          </div>
+        )}
+
         {/* ── Special-day / holiday banner (Gloriafood parity) ───────────
             Reseller report cmpxds2d2: a holiday closure must be VISIBLE on
             the customer page, not just enforced at checkout. Three shapes:

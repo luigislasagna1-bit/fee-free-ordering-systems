@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Specialtider idag",
     "holidayNotAvailableToday": "Inte tillgängligt idag: {services}",
     "holidayOrderLater": "Du kan fortfarande beställa till ett senare datum.",
-    "availableOnlyLabel": "Tillgänglig {window}"
+    "availableOnlyLabel": "Tillgänglig {window}",
+    "testModeBanner": "Testläge — du förhandsgranskar din egen butik",
+    "testModeHint": "Beställningar här markeras som TEST: de ringer i köket och skrivs ut normalt men räknas aldrig i rapporter eller intäkter."
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "När den inte är tillgänglig",
       "availabilityModeHide": "Dölj från menyn",
       "availabilityModeShow": "Visa, men blockera beställning",
-      "availabilityModeHint": "\"Visa\" håller rätten synlig med en \"Tillgänglig …\"-notis så kunderna vet när de kan beställa."
+      "availabilityModeHint": "\"Visa\" håller rätten synlig med en \"Tillgänglig …\"-notis så kunderna vet när de kan beställa.",
+      "previewTestOrdering": "Förhandsgranska & testbeställ"
     },
     "promotionsList": {
       "stackingMaster": "Master",

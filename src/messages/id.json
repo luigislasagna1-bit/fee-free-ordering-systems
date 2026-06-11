@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Jam khusus hari ini",
     "holidayNotAvailableToday": "Tidak tersedia hari ini: {services}",
     "holidayOrderLater": "Anda tetap dapat memesan untuk tanggal lain.",
-    "availableOnlyLabel": "Tersedia {window}"
+    "availableOnlyLabel": "Tersedia {window}",
+    "testModeBanner": "Mode uji — Anda melihat pratinjau toko sendiri",
+    "testModeHint": "Pesanan di sini ditandai TEST: berdering di dapur dan dicetak seperti biasa, tetapi tidak pernah dihitung dalam laporan atau pendapatan."
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "Saat tidak tersedia",
       "availabilityModeHide": "Sembunyikan dari menu",
       "availabilityModeShow": "Tampilkan, tapi blokir pemesanan",
-      "availabilityModeHint": "\"Tampilkan\" membuat item tetap terlihat dengan catatan \"Tersedia …\" agar pelanggan tahu kapan bisa memesannya."
+      "availabilityModeHint": "\"Tampilkan\" membuat item tetap terlihat dengan catatan \"Tersedia …\" agar pelanggan tahu kapan bisa memesannya.",
+      "previewTestOrdering": "Pratinjau & pesanan uji"
     },
     "promotionsList": {
       "stackingMaster": "Master",

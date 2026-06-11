@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Horari especial avui",
     "holidayNotAvailableToday": "No disponible avui: {services}",
     "holidayOrderLater": "Encara pots fer una comanda per a una data posterior.",
-    "availableOnlyLabel": "Disponible {window}"
+    "availableOnlyLabel": "Disponible {window}",
+    "testModeBanner": "Mode de prova — estàs previsualitzant la teva botiga",
+    "testModeHint": "Les comandes fetes aquí es marquen com a TEST: sonen a la cuina i s'imprimeixen normalment, però mai no compten en informes ni ingressos."
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "Quan no està disponible",
       "availabilityModeHide": "Amaga del menú",
       "availabilityModeShow": "Mostra, però bloqueja la comanda",
-      "availabilityModeHint": "\"Mostra\" manté l'article visible amb una nota \"Disponible …\" perquè els clients sàpiguen quan el poden demanar."
+      "availabilityModeHint": "\"Mostra\" manté l'article visible amb una nota \"Disponible …\" perquè els clients sàpiguen quan el poden demanar.",
+      "previewTestOrdering": "Previsualitza i comanda de prova"
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

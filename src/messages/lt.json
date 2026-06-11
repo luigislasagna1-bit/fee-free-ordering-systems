@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Šiandien ypatingos darbo valandos",
     "holidayNotAvailableToday": "Šiandien negalima: {services}",
     "holidayOrderLater": "Vis tiek galite užsisakyti vėlesnei datai.",
-    "availableOnlyLabel": "Galima {window}"
+    "availableOnlyLabel": "Galima {window}",
+    "testModeBanner": "Bandomasis režimas — peržiūrite savo parduotuvę",
+    "testModeHint": "Čia pateikti užsakymai pažymimi TEST: jie skamba virtuvėje ir spausdinami įprastai, bet niekada neįskaičiuojami į ataskaitas ar pajamas."
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -2388,7 +2390,8 @@
       "availabilityModeLabel": "Kai negalima",
       "availabilityModeHide": "Slėpti iš meniu",
       "availabilityModeShow": "Rodyti, bet blokuoti užsakymą",
-      "availabilityModeHint": "„Rodyti“ palieka patiekalą matomą su pastaba „Galima …“, kad klientai žinotų, kada jį galima užsisakyti."
+      "availabilityModeHint": "„Rodyti“ palieka patiekalą matomą su pastaba „Galima …“, kad klientai žinotų, kada jį galima užsisakyti.",
+      "previewTestOrdering": "Peržiūra ir bandomasis užsakymas"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Special hours today",
     "holidayNotAvailableToday": "Not available today: {services}",
     "holidayOrderLater": "You can still place an order for a later date.",
-    "availableOnlyLabel": "Available {window}"
+    "availableOnlyLabel": "Available {window}",
+    "testModeBanner": "Test mode — you're previewing your own store",
+    "testModeHint": "Orders you place here are marked TEST: they ring the kitchen and print normally but never count in reports or revenue."
   },
   "pizza": {
     "chooseSize": "Choose Size",
@@ -2077,7 +2079,8 @@
       "availabilityModeLabel": "When not available",
       "availabilityModeHide": "Hide from menu",
       "availabilityModeShow": "Show, but block ordering",
-      "availabilityModeHint": "\"Show\" keeps the item visible with an \"Available …\" note so customers know when they can order it."
+      "availabilityModeHint": "\"Show\" keeps the item visible with an \"Available …\" note so customers know when they can order it.",
+      "previewTestOrdering": "Preview & test ordering"
     },
     "promotionsList": {
       "stackingMaster": "Master",

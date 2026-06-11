@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Täna eriline lahtiolekuaeg",
     "holidayNotAvailableToday": "Täna pole saadaval: {services}",
     "holidayOrderLater": "Saad siiski tellida hilisemaks kuupäevaks.",
-    "availableOnlyLabel": "Saadaval {window}"
+    "availableOnlyLabel": "Saadaval {window}",
+    "testModeBanner": "Testrežiim — vaatad omaenda poodi",
+    "testModeHint": "Siin tehtud tellimused märgitakse TEST: need helisevad köögis ja prinditakse tavapäraselt, kuid ei lähe kunagi aruannetesse ega tulusse."
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "Kui pole saadaval",
       "availabilityModeHide": "Peida menüüst",
       "availabilityModeShow": "Näita, kuid blokeeri tellimine",
-      "availabilityModeHint": "„Näita” jätab toote nähtavaks märkega „Saadaval …”, et kliendid teaksid, millal saab tellida."
+      "availabilityModeHint": "„Näita” jätab toote nähtavaks märkega „Saadaval …”, et kliendid teaksid, millal saab tellida.",
+      "previewTestOrdering": "Eelvaade ja testtellimus"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

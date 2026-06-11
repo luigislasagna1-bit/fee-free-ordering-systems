@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Erityisaukioloajat tänään",
     "holidayNotAvailableToday": "Ei saatavilla tänään: {services}",
     "holidayOrderLater": "Voit silti tilata myöhemmälle päivälle.",
-    "availableOnlyLabel": "Saatavilla {window}"
+    "availableOnlyLabel": "Saatavilla {window}",
+    "testModeBanner": "Testitila — esikatselet omaa kauppaasi",
+    "testModeHint": "Täällä tehdyt tilaukset merkitään TEST: ne soivat keittiössä ja tulostuvat normaalisti, mutta eivät koskaan näy raporteissa tai liikevaihdossa."
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "Kun ei saatavilla",
       "availabilityModeHide": "Piilota valikosta",
       "availabilityModeShow": "Näytä, mutta estä tilaaminen",
-      "availabilityModeHint": "\"Näytä\" pitää tuotteen näkyvissä \"Saatavilla …\" -merkinnällä, jotta asiakkaat tietävät milloin sen voi tilata."
+      "availabilityModeHint": "\"Näytä\" pitää tuotteen näkyvissä \"Saatavilla …\" -merkinnällä, jotta asiakkaat tietävät milloin sen voi tilata.",
+      "previewTestOrdering": "Esikatsele ja testitilaa"
     },
     "promotionsList": {
       "stackingMaster": "Master",

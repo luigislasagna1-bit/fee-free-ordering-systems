@@ -33,13 +33,14 @@ import { resolveActiveMenuId } from "@/lib/menu";
 import { holidayEffectToday } from "@/lib/holiday-rules";
 import { isOnMarketplace } from "@/lib/marketplace";
 import { getCurrentCustomer } from "@/lib/customer-session";
+import { getSessionUser } from "@/lib/session";
 
 export default async function OrderingPage({
   params,
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ embedded?: string; from?: string }>;
+  searchParams: Promise<{ embedded?: string; from?: string; testing?: string }>;
 }) {
   const { slug } = await params;
   // `?embedded=1` — set by the iframe widget script. Strips banner photo,
@@ -270,6 +271,18 @@ export default async function OrderingPage({
   // component reads `restaurant.menuCategories` unchanged. The location's
   // own row carries everything; only `menuCategories` is potentially from
   // the parent.
+  // Owner "Preview & test ordering" (reseller report cmq3red6b): ?testing=1
+  // only takes effect for a logged-in admin of THIS restaurant (or a
+  // superadmin) — for customers the param is inert. The flag flows to the
+  // client (banner + isTest on the order POST); the order route re-verifies
+  // the session before honouring isTest, so this is display-level only.
+  let isTestPreview = false;
+  if (sp.testing === "1") {
+    const adminUser = await getSessionUser().catch(() => null);
+    isTestPreview =
+      !!adminUser && (adminUser.restaurantId === restaurantBase.id || adminUser.role === "superadmin");
+  }
+
   const restaurant = { ...restaurantBase, menuCategories } as typeof restaurantBase & {
     menuCategories: typeof menuCategories;
   };
@@ -395,6 +408,7 @@ export default async function OrderingPage({
         customerChannel={customerChannel}
         marketplaceAccount={marketplaceAccount}
         customerIsReturning={customerIsReturning}
+        isTestPreview={isTestPreview}
         {...(() => {
           // Gloriafood-parity special days (Luigi 2026-06-11): resolve today's
           // GENERAL effect (banner + open-status override) and which specific

@@ -249,7 +249,9 @@
     "holidaySpecialHours": "ساعات عمل خاصة اليوم",
     "holidayNotAvailableToday": "غير متاح اليوم: {services}",
     "holidayOrderLater": "لا يزال بإمكانك الطلب لتاريخ لاحق.",
-    "availableOnlyLabel": "متاح {window}"
+    "availableOnlyLabel": "متاح {window}",
+    "testModeBanner": "وضع الاختبار — أنت تعاين متجرك",
+    "testModeHint": "الطلبات هنا تُوسم TEST: ترن في المطبخ وتُطبع كالمعتاد لكنها لا تُحتسب أبدًا في التقارير أو الإيرادات."
   },
   "pizza": {
     "chooseSize": "اختر الحجم",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "عند عدم التوفر",
       "availabilityModeHide": "إخفاء من القائمة",
       "availabilityModeShow": "إظهار مع منع الطلب",
-      "availabilityModeHint": "\"إظهار\" يُبقي الصنف مرئيًا مع ملاحظة \"متاح …\" ليعرف العملاء متى يمكنهم طلبه."
+      "availabilityModeHint": "\"إظهار\" يُبقي الصنف مرئيًا مع ملاحظة \"متاح …\" ليعرف العملاء متى يمكنهم طلبه.",
+      "previewTestOrdering": "معاينة وطلب تجريبي"
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

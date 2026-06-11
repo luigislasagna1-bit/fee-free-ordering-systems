@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Ειδικό ωράριο σήμερα",
     "holidayNotAvailableToday": "Μη διαθέσιμο σήμερα: {services}",
     "holidayOrderLater": "Μπορείτε ακόμη να παραγγείλετε για άλλη ημερομηνία.",
-    "availableOnlyLabel": "Διαθέσιμο {window}"
+    "availableOnlyLabel": "Διαθέσιμο {window}",
+    "testModeBanner": "Λειτουργία δοκιμής — προεπισκοπείτε το δικό σας κατάστημα",
+    "testModeHint": "Οι παραγγελίες εδώ επισημαίνονται TEST: χτυπούν στην κουζίνα και εκτυπώνονται κανονικά, αλλά δεν μετρούν ποτέ σε αναφορές ή έσοδα."
   },
   "pizza": {
     "chooseSize": "Επιλογή μεγέθους",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "Όταν δεν είναι διαθέσιμο",
       "availabilityModeHide": "Απόκρυψη από το μενού",
       "availabilityModeShow": "Εμφάνιση, αλλά αποκλεισμός παραγγελίας",
-      "availabilityModeHint": "Η «Εμφάνιση» κρατά το πιάτο ορατό με σημείωση «Διαθέσιμο …» ώστε οι πελάτες να ξέρουν πότε μπορούν να το παραγγείλουν."
+      "availabilityModeHint": "Η «Εμφάνιση» κρατά το πιάτο ορατό με σημείωση «Διαθέσιμο …» ώστε οι πελάτες να ξέρουν πότε μπορούν να το παραγγείλουν.",
+      "previewTestOrdering": "Προεπισκόπηση & δοκιμαστική παραγγελία"
     },
     "promotionsList": {
       "stackingMaster": "Master",

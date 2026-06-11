@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Ma rendkívüli nyitvatartás",
     "holidayNotAvailableToday": "Ma nem elérhető: {services}",
     "holidayOrderLater": "Későbbi időpontra továbbra is rendelhetsz.",
-    "availableOnlyLabel": "Elérhető: {window}"
+    "availableOnlyLabel": "Elérhető: {window}",
+    "testModeBanner": "Tesztmód — a saját éttermedet nézed",
+    "testModeHint": "Az itt leadott rendelések TEST jelölést kapnak: csörögnek a konyhán és normálisan nyomtatódnak, de soha nem számítanak a riportokba vagy a bevételbe."
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -1684,7 +1686,8 @@
       "availabilityModeLabel": "Ha nem elérhető",
       "availabilityModeHide": "Elrejtés az étlapról",
       "availabilityModeShow": "Mutasd, de tiltsd a rendelést",
-      "availabilityModeHint": "A „Mutasd” láthatóan tartja a tételt egy „Elérhető …” jelzéssel, így a vendégek tudják, mikor rendelhetik."
+      "availabilityModeHint": "A „Mutasd” láthatóan tartja a tételt egy „Elérhető …” jelzéssel, így a vendégek tudják, mikor rendelhetik.",
+      "previewTestOrdering": "Előnézet és tesztrendelés"
     },
     "promotionsList": {
       "stackingMaster": "Master",

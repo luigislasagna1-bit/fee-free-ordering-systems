@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Šodien īpašs darba laiks",
     "holidayNotAvailableToday": "Šodien nav pieejams: {services}",
     "holidayOrderLater": "Jūs joprojām varat pasūtīt vēlākam datumam.",
-    "availableOnlyLabel": "Pieejams {window}"
+    "availableOnlyLabel": "Pieejams {window}",
+    "testModeBanner": "Testa režīms — skatāt savu veikalu",
+    "testModeHint": "Šeit veiktie pasūtījumi tiek atzīmēti TEST: tie zvana virtuvē un drukājas kā parasti, bet nekad netiek ieskaitīti atskaitēs vai ieņēmumos."
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "Kad nav pieejams",
       "availabilityModeHide": "Slēpt no ēdienkartes",
       "availabilityModeShow": "Rādīt, bet bloķēt pasūtīšanu",
-      "availabilityModeHint": "“Rādīt” saglabā ēdienu redzamu ar piezīmi “Pieejams …”, lai klienti zinātu, kad to var pasūtīt."
+      "availabilityModeHint": "“Rādīt” saglabā ēdienu redzamu ar piezīmi “Pieejams …”, lai klienti zinātu, kad to var pasūtīt.",
+      "previewTestOrdering": "Priekšskatījums un testa pasūtījums"
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

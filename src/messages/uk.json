@@ -249,7 +249,9 @@
     "holidaySpecialHours": "Сьогодні особливий графік",
     "holidayNotAvailableToday": "Сьогодні недоступно: {services}",
     "holidayOrderLater": "Ви все одно можете замовити на пізнішу дату.",
-    "availableOnlyLabel": "Доступно {window}"
+    "availableOnlyLabel": "Доступно {window}",
+    "testModeBanner": "Тестовий режим — ви переглядаєте власний заклад",
+    "testModeHint": "Замовлення тут позначаються TEST: вони дзвонять на кухні та друкуються як завжди, але ніколи не враховуються у звітах чи виручці."
   },
   "pizza": {
     "chooseSize": "Оберіть розмір",
@@ -1723,7 +1725,8 @@
       "availabilityModeLabel": "Коли недоступно",
       "availabilityModeHide": "Сховати з меню",
       "availabilityModeShow": "Показувати, але блокувати замовлення",
-      "availabilityModeHint": "«Показувати» залишає страву видимою з позначкою «Доступно …», щоб клієнти знали, коли її можна замовити."
+      "availabilityModeHint": "«Показувати» залишає страву видимою з позначкою «Доступно …», щоб клієнти знали, коли її можна замовити.",
+      "previewTestOrdering": "Попередній перегляд і тестове замовлення"
     },
     "promotionsList": {
       "stackingMaster": "Майстер",
