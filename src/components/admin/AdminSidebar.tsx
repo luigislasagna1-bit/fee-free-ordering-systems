@@ -52,6 +52,11 @@ type NavSubGroup = {
   items: NavItem[];
   /** When set, the sub-group header shows "X/Y" completion counts based on SetupProgress. */
   setupSectionId?: "basics" | "services" | "payments" | "orders" | "menu" | "publishing";
+  /** When set, the sub-group header is ALSO a link to its own page — clicking
+   *  the label navigates there, the chevron still toggles the nested items.
+   *  Used by GrowthNet (a real hub page) so it can both open the bundle page
+   *  AND reveal its member tools. Luigi 2026-06-11. */
+  href?: string;
 };
 
 type NavGroup = {
@@ -190,33 +195,37 @@ const navGroups: NavGroup[] = [
     labelKey: "categoryMarketing",
     label: "Marketing Tools",
     icon: Megaphone,
+    // FREE for everyone: Customers, Promotions (basic types — advanced types
+    // are gated in the promo wizard), Social Media. Marketplace is a separate
+    // paid channel (its own billing). The PAID marketing suite lives under the
+    // GrowthNet sub-group below. Luigi 2026-06-11.
     items: [
-      // Customers — the editable CRM hub. Different from the analytical
-      // surfaces under Reports → Clients: this is where the owner reaches
-      // out to customers, assigns personal coupons, leaves internal notes.
-      // The comment block above the Reports section promises this is
-      // linked here; for a long time it wasn't. Now it is.
-      // FREE for everyone: Customers, Promotions (basic types — advanced types
-      // are gated inside the promo wizard), Social Media. Everything else in
-      // this group is a PAID add-on and renders with a lock for free accounts.
-      // Luigi 2026-06-11.
       { href: "/admin/customers",    labelKey: "customers",    label: "Customers",    icon: Users },
       { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",   icon: Tag },
-      // GrowthNet — Fee Free's Restaurant Growth System: the bundle hub where
-      // every paid marketing add-on lives (activate one at a time or all at
-      // once at the discounted bundle price). Always visible — it IS the
-      // upsell surface, so no requiresFeature. Brand name, untranslated.
-      { href: "/admin/growthnet",    labelKey: "growthNet",    label: "GrowthNet",    icon: Network },
-      { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles, requiresFeature: "marketplace_listing" },
       { href: "/admin/social-media", labelKey: "socialMedia",  label: "Social Media", icon: Share2 },
-      // Kickstarter — Marketing Suite Phase 4 (First Buy Promo + Invite Prospects).
-      // Sits above Autopilot because it acquires NEW customers (the funnel
-      // step before retention/reactivation that Autopilot handles).
-      { href: "/admin/kickstarter",  labelKey: "kickstarter",  label: "Kickstarter",  icon: Rocket, requiresFeature: "kickstarter" },
-      { href: "/admin/autopilot",    labelKey: "autopilot",    label: "Autopilot",    icon: Zap, requiresFeature: "automated_campaigns" },
-      // Marketing Studio — trackable smart links + QR codes + flyers with
-      // scan→order attribution. Luigi 2026-06-10.
-      { href: "/admin/marketing-studio", labelKey: "marketingStudio", label: "Marketing Studio", icon: QrCode, requiresFeature: "marketing_studio" },
+      { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles, requiresFeature: "marketplace_listing" },
+    ],
+    subGroups: [
+      // GrowthNet — Fee Free's Restaurant Growth System. The bundle hub: its
+      // header links to /admin/growthnet (activate one tool at a time or all at
+      // once at the discounted bundle price), and expanding it reveals the paid
+      // member tools as sub-headings (Luigi 2026-06-11 — "Kickstarter,
+      // Autopilot and Marketing Studio as sub-headings, only seen when we click
+      // GrowthNet"). Each member keeps its own lock + upsell wall for free
+      // accounts. "GrowthNet" is a brand name → untranslated (tr falls back to
+      // the label). New growth tools get added here as the bundle grows.
+      {
+        key: "marketing.growthnet",
+        labelKey: "growthNet",
+        label: "GrowthNet",
+        icon: Network,
+        href: "/admin/growthnet",
+        items: [
+          { href: "/admin/kickstarter",      labelKey: "kickstarter",     label: "Kickstarter",      icon: Rocket, requiresFeature: "kickstarter" },
+          { href: "/admin/autopilot",        labelKey: "autopilot",       label: "Autopilot",        icon: Zap,    requiresFeature: "automated_campaigns" },
+          { href: "/admin/marketing-studio", labelKey: "marketingStudio", label: "Marketing Studio", icon: QrCode, requiresFeature: "marketing_studio" },
+        ],
+      },
     ],
   },
 
@@ -513,11 +522,26 @@ export function AdminSidebar({
   // pops the right accordion sections open without the user having to do it.
   useEffect(() => {
     const active = allItems().find((it) => isActiveItem(it, pathname));
-    if (!active) return;
-    const loc = locateItem(active);
-    if (!loc) return;
-    if (openGroup !== loc.groupKey) setOpenGroup(loc.groupKey);
-    if (loc.subKey && openSubGroup !== loc.subKey) setOpenSubGroup(loc.subKey);
+    if (active) {
+      const loc = locateItem(active);
+      if (loc) {
+        if (openGroup !== loc.groupKey) setOpenGroup(loc.groupKey);
+        if (loc.subKey && openSubGroup !== loc.subKey) setOpenSubGroup(loc.subKey);
+      }
+      return;
+    }
+    // A sub-group HUB page (e.g. /admin/growthnet) isn't a leaf item — open the
+    // group + sub-group whose own href matches the current path so its members
+    // are revealed when the owner lands there directly.
+    for (const group of navGroups) {
+      for (const sg of group.subGroups ?? []) {
+        if (sg.href && pathname.startsWith(sg.href)) {
+          if (openGroup !== group.key) setOpenGroup(group.key);
+          if (openSubGroup !== sg.key) setOpenSubGroup(sg.key);
+          return;
+        }
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
@@ -836,39 +860,68 @@ export function AdminSidebar({
                       const subActive = sg.items.some((it) => isActiveItem(it, pathname));
                       return (
                         <div key={sg.key} className="mx-2 mt-0.5">
-                          <button
-                            onClick={() => toggleSubGroup(sg.key)}
-                            className={cn(
-                              // SUB-GROUP HEADER — text-sm + semibold, mixed
-                              // case. All seven SETUP sub-groups (and any
-                              // future sub-groups in other categories) share
-                              // this exact style so they read as one tier.
-                              "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-semibold transition",
-                              subActive
+                          {(() => {
+                            // SUB-GROUP HEADER — text-sm + semibold. The 7 SETUP
+                            // sub-groups are pure toggles; a sub-group with its
+                            // own `href` (GrowthNet) splits into a navigating
+                            // label + a separate chevron toggle.
+                            const headerActive = subActive || (!!sg.href && pathname.startsWith(sg.href));
+                            const headerClass = cn(
+                              "flex items-center justify-between px-3 py-2 rounded-lg text-sm font-semibold transition",
+                              headerActive
                                 ? "text-emerald-300 bg-gray-800/60"
                                 : "text-gray-300 hover:bg-gray-800/40 hover:text-white"
-                            )}
-                          >
-                            <span className="flex items-center gap-2.5">
-                              <SubIcon className="w-4 h-4" />
-                              {tr(sg.labelKey, sg.label)}
-                              {counts && (
-                                <span
-                                  className={cn(
-                                    "text-[9px] font-bold px-1.5 py-0.5 rounded-full",
-                                    counts.done === counts.total
-                                      ? "bg-green-500/20 text-green-400"
-                                      : "bg-gray-800 text-gray-400"
-                                  )}
-                                >
-                                  {counts.done}/{counts.total}
-                                </span>
-                              )}
-                            </span>
-                            <ChevronDown
-                              className={cn("w-3.5 h-3.5 transition-transform", !subOpen && "-rotate-90")}
-                            />
-                          </button>
+                            );
+                            const labelContent = (
+                              <>
+                                <SubIcon className="w-4 h-4 flex-shrink-0" />
+                                <span className="truncate">{tr(sg.labelKey, sg.label)}</span>
+                                {counts && (
+                                  <span
+                                    className={cn(
+                                      "text-[9px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0",
+                                      counts.done === counts.total
+                                        ? "bg-green-500/20 text-green-400"
+                                        : "bg-gray-800 text-gray-400"
+                                    )}
+                                  >
+                                    {counts.done}/{counts.total}
+                                  </span>
+                                )}
+                              </>
+                            );
+                            const chevron = (
+                              <ChevronDown
+                                className={cn("w-3.5 h-3.5 transition-transform flex-shrink-0", !subOpen && "-rotate-90")}
+                              />
+                            );
+                            if (sg.href) {
+                              return (
+                                <div className={headerClass}>
+                                  <Link href={sg.href} className="flex items-center gap-2.5 min-w-0 flex-1">
+                                    {labelContent}
+                                  </Link>
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleSubGroup(sg.key)}
+                                    aria-label={tr(sg.labelKey, sg.label)}
+                                    className="ml-1 -mr-1 p-1 rounded hover:bg-gray-700/50"
+                                  >
+                                    {chevron}
+                                  </button>
+                                </div>
+                              );
+                            }
+                            return (
+                              <button
+                                onClick={() => toggleSubGroup(sg.key)}
+                                className={cn("w-full", headerClass)}
+                              >
+                                <span className="flex items-center gap-2.5 min-w-0">{labelContent}</span>
+                                {chevron}
+                              </button>
+                            );
+                          })()}
                           {subOpen && (
                             <div className="pl-3 mt-0.5">
                               {sg.items.map(renderItem)}
