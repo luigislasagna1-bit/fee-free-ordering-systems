@@ -2369,11 +2369,15 @@ export function OrderingPageClient({
     setCart(updated);
   };
 
-  const applyCoupon = async () => {
-    if (!couponCode.trim()) return;
+  const applyCoupon = async (codeArg?: string) => {
+    // codeArg lets callers apply a specific code without waiting for the
+    // couponCode state to flush (used by the ?coupon= URL auto-apply). The
+    // typed-input callers pass nothing and fall back to the state.
+    const codeToApply = (codeArg ?? couponCode).trim();
+    if (!codeToApply) return;
     setCouponLoading(true);
     try {
-      const res = await fetch(`/api/public/coupon?code=${couponCode}&restaurantSlug=${restaurant.slug}&subtotal=${subtotal}`);
+      const res = await fetch(`/api/public/coupon?code=${encodeURIComponent(codeToApply)}&restaurantSlug=${restaurant.slug}&subtotal=${subtotal}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || tT("invalidCoupon"));
       // Two code sources (Phase 2 marketing suite):
@@ -2390,7 +2394,7 @@ export function OrderingPageClient({
         // blocked by a non-stackable deal — see the pendingCoupon effect. No
         // optimistic "applied!" toast (it was lying when an exclusive won).
         if (data.promoId) restorePromo(String(data.promoId));
-        setPendingCoupon(String(couponCode).trim().toUpperCase());
+        setPendingCoupon(codeToApply.toUpperCase());
         // Force a refresh of the auto-apply effect by re-setting cart
         // (cheap — same reference). The cart-change useEffect calls
         // /api/public/apply-promos with the live couponCode and the
@@ -2404,6 +2408,25 @@ export function OrderingPageClient({
     } catch (e: any) { toast.error(e.message); }
     setCouponLoading(false);
   };
+
+  // Auto-apply a coupon passed in the URL (?coupon=CODE). The cart-recovery +
+  // WIN-ladder marketing emails link their "Order with coupon" CTA here so the
+  // discount is pre-applied — the customer shouldn't have to retype the code.
+  // Runs once; also fills the coupon input so the code is visible. Without this
+  // the email links silently did nothing (the engine never saw the code).
+  // Luigi 2026-06-11.
+  const couponUrlConsumedRef = useRef(false);
+  useEffect(() => {
+    if (couponUrlConsumedRef.current) return;
+    const urlCoupon = searchParams.get("coupon");
+    if (!urlCoupon) return;
+    couponUrlConsumedRef.current = true;
+    const code = urlCoupon.trim().toUpperCase().slice(0, 40);
+    if (!code) return;
+    setCouponCode(code);
+    applyCoupon(code);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   // Marketplace attribution: when the customer arrived via /marketplace/[slug]
   // (which redirects here with ?from=marketplace), forward the flag to the
@@ -4336,7 +4359,7 @@ export function OrderingPageClient({
                           onChange={e => setCouponCode(e.target.value.toUpperCase())}
                           onKeyDown={e => e.key === "Enter" && applyCoupon()} />
                       </div>
-                      <button onClick={applyCoupon} disabled={couponLoading}
+                      <button onClick={() => applyCoupon()} disabled={couponLoading}
                         className="bg-gray-900 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition disabled:opacity-50">
                         {couponLoading ? "..." : t("apply")}
                       </button>
