@@ -3766,7 +3766,8 @@
       "windowSaved": "Menun päivittäiset ajat tallennettu",
       "windowCleared": "Menun päivittäiset ajat poistettu",
       "everyDay": "Joka päivä",
-      "coverageGap": "Joiltakin aukioloajoilta puuttuisi menu: {list}. Lisää menu, joka kattaa nuo ajat, tai merkitse ne suljetuiksi."
+      "coverageGap": "Joiltakin aukioloajoilta puuttuisi menu: {list}. Lisää menu, joka kattaa nuo ajat, tai merkitse ne suljetuiksi.",
+      "dailyHoursExplainer": "Käytössä oleva menusi on oletus — asiakkaat näkevät sen aina, kun mikään ajastettu menu ei ole voimassa. Anna muille menuille omat päivittäiset ajat, niin ne ottavat automaattisesti vallan noina aikoina ja palauttavat sitten oletukselle. Jokaisen aukiolotunnin on oltava jonkin menun kattama."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

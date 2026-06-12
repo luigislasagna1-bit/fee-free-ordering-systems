@@ -3766,7 +3766,8 @@
       "windowSaved": "Menyens daglige tider lagret",
       "windowCleared": "Menyens daglige tider fjernet",
       "everyDay": "Hver dag",
-      "coverageGap": "Noen åpningstider ville mangle en meny: {list}. Legg til en meny som dekker de timene, eller merk dem som stengt."
+      "coverageGap": "Noen åpningstider ville mangle en meny: {list}. Legg til en meny som dekker de timene, eller merk dem som stengt.",
+      "dailyHoursExplainer": "Din Aktive meny er standard — kundene ser den når ingen tidsstyrt meny gjelder. Gi andre menyer egne daglige tider, så overtar de automatisk i de tidsrommene og gir så tilbake til standarden. Hver åpningstime må dekkes av en meny."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

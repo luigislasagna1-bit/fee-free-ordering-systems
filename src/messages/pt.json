@@ -3766,7 +3766,8 @@
       "windowSaved": "Horário diário do menu guardado",
       "windowCleared": "Horário diário do menu removido",
       "everyDay": "Todos os dias",
-      "coverageGap": "Algumas horas de funcionamento ficariam sem menu: {list}. Adicione um menu que cubra essas horas ou marque-as como fechadas."
+      "coverageGap": "Algumas horas de funcionamento ficariam sem menu: {list}. Adicione um menu que cubra essas horas ou marque-as como fechadas.",
+      "dailyHoursExplainer": "O seu menu Ativo é o predefinido — os clientes veem-no sempre que nenhum menu programado se aplica. Dê a outros menus os seus próprios horários diários e eles assumem automaticamente nessas horas, devolvendo depois o controlo ao predefinido. Cada hora de funcionamento tem de ser coberta por um menu."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

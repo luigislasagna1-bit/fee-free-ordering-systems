@@ -3766,7 +3766,8 @@
       "windowSaved": "Menüü päevased kellaajad salvestatud",
       "windowCleared": "Menüü päevased kellaajad eemaldatud",
       "everyDay": "Iga päev",
-      "coverageGap": "Mõnel lahtiolekuajal poleks menüüd: {list}. Lisa menüü, mis katab need ajad, või märgi need suletuks."
+      "coverageGap": "Mõnel lahtiolekuajal poleks menüüd: {list}. Lisa menüü, mis katab need ajad, või märgi need suletuks.",
+      "dailyHoursExplainer": "Sinu Aktiivne menüü on vaikemenüü — kliendid näevad seda alati, kui ükski ajastatud menüü ei kehti. Anna teistele menüüdele oma päevased kellaajad ja need võtavad neil aegadel automaatselt üle, andes seejärel vaikemenüüle tagasi. Iga lahtiolekutund peab olema mõne menüüga kaetud."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

@@ -3766,7 +3766,8 @@
       "windowSaved": "Meniu dienos valandos įrašytos",
       "windowCleared": "Meniu dienos valandos pašalintos",
       "everyDay": "Kiekvieną dieną",
-      "coverageGap": "Kai kuriomis darbo valandomis nebūtų jokio meniu: {list}. Pridėkite meniu toms valandoms arba pažymėkite jas kaip uždarytas."
+      "coverageGap": "Kai kuriomis darbo valandomis nebūtų jokio meniu: {list}. Pridėkite meniu toms valandoms arba pažymėkite jas kaip uždarytas.",
+      "dailyHoursExplainer": "Jūsų Aktyvus meniu yra numatytasis — klientai jį mato, kai negalioja joks suplanuotas meniu. Suteikite kitiems meniu jų pačių dienos valandas ir jie tuo metu automatiškai perima, o paskui grąžina valdymą numatytajam. Kiekvieną darbo valandą turi dengti koks nors meniu."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

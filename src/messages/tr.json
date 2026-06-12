@@ -3766,7 +3766,8 @@
       "windowSaved": "Menünün günlük saatleri kaydedildi",
       "windowCleared": "Menünün günlük saatleri kaldırıldı",
       "everyDay": "Her gün",
-      "coverageGap": "Bazı açık saatlerde menü olmazdı: {list}. O saatleri kapsayan bir menü ekleyin veya bu saatleri kapalı olarak ayarlayın."
+      "coverageGap": "Bazı açık saatlerde menü olmazdı: {list}. O saatleri kapsayan bir menü ekleyin veya bu saatleri kapalı olarak ayarlayın.",
+      "dailyHoursExplainer": "Etkin menünüz varsayılandır — zamanlanmış bir menü geçerli olmadığında müşteriler bunu görür. Diğer menülere kendi günlük saatlerini verin; o saatlerde otomatik olarak devreye girer, sonra varsayılana geri bırakırlar. Her açık saat bir menü tarafından kapsanmalıdır."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

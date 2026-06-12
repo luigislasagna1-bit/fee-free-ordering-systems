@@ -26,13 +26,66 @@ function dowLabels(locale: string): string[] {
   return Array.from({ length: 7 }, (_, d) => fmt.format(new Date(2023, 0, 1 + d)));
 }
 
+// Format a stored 24h "HH:MM" for display in the restaurant's chosen format.
+function fmtTime(hhmm: string, fmt: "12h" | "24h"): string {
+  if (fmt !== "12h" || !/^\d\d:\d\d$/.test(hhmm)) return hhmm;
+  const [h, m] = hhmm.split(":").map((s) => parseInt(s, 10));
+  const ap = h >= 12 ? "PM" : "AM";
+  return `${(h % 12) || 12}:${String(m).padStart(2, "0")} ${ap}`;
+}
+
+/** Time picker that honours the restaurant's 12h/24h setting. Always emits a
+ *  24h "HH:MM" value (what the API + storage use); only the display differs.
+ *  Native <input type="time"> follows the BROWSER locale, which ignored the
+ *  restaurant's 12h setting (Luigi 2026-06-12) — this select-based control
+ *  guarantees the right format. 5-minute granularity is plenty for menu hours. */
+function TimeField({ value, onChange, fmt }: { value: string; onChange: (v: string) => void; fmt: "12h" | "24h" }) {
+  const valid = /^\d\d:\d\d$/.test(value);
+  const h = valid ? parseInt(value.slice(0, 2), 10) : 0;
+  const m = valid ? parseInt(value.slice(3, 5), 10) : 0;
+  const mins = Array.from({ length: 12 }, (_, i) => i * 5); // 00,05,…,55
+  const emit = (nh: number, nm: number) => onChange(`${String(nh).padStart(2, "0")}:${String(nm).padStart(2, "0")}`);
+  const sel = "border border-gray-200 rounded-lg px-1.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500";
+  if (fmt === "12h") {
+    const ap = h >= 12 ? "PM" : "AM";
+    const h12 = (h % 12) || 12;
+    const toH24 = (nh12: number, nap: string) => (nh12 % 12) + (nap === "PM" ? 12 : 0);
+    return (
+      <span className="inline-flex items-center gap-1">
+        <select className={sel} value={h12} onChange={(e) => emit(toH24(parseInt(e.target.value, 10), ap), m)}>
+          {Array.from({ length: 12 }, (_, i) => i + 1).map((hh) => <option key={hh} value={hh}>{hh}</option>)}
+        </select>
+        <span className="text-gray-400">:</span>
+        <select className={sel} value={m} onChange={(e) => emit(h, parseInt(e.target.value, 10))}>
+          {mins.map((mm) => <option key={mm} value={mm}>{String(mm).padStart(2, "0")}</option>)}
+        </select>
+        <select className={sel} value={ap} onChange={(e) => emit(toH24(h12, e.target.value), m)}>
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1">
+      <select className={sel} value={h} onChange={(e) => emit(parseInt(e.target.value, 10), m)}>
+        {Array.from({ length: 24 }, (_, i) => i).map((hh) => <option key={hh} value={hh}>{String(hh).padStart(2, "0")}</option>)}
+      </select>
+      <span className="text-gray-400">:</span>
+      <select className={sel} value={m} onChange={(e) => emit(h, parseInt(e.target.value, 10))}>
+        {mins.map((mm) => <option key={mm} value={mm}>{String(mm).padStart(2, "0")}</option>)}
+      </select>
+    </span>
+  );
+}
+
 /**
  * Menu-version switcher + manager bar shown above the menu editor. Lets the
  * owner pick which menu to edit (a draft while the live one stays untouched),
  * create / duplicate / rename / delete menus, and set one live. Multi-menu
  * Phase 2. Luigi 2026-06-05.
  */
-export function MenuSwitcher({ menus, selectedMenuId }: { menus: MenuLite[]; selectedMenuId: string }) {
+export function MenuSwitcher({ menus, selectedMenuId, hoursFormat = "24h" }: { menus: MenuLite[]; selectedMenuId: string; hoursFormat?: "12h" | "24h" }) {
   const router = useRouter();
   const t = useTranslations("admin.menus");
   const locale = useLocale();
@@ -68,7 +121,7 @@ export function MenuSwitcher({ menus, selectedMenuId }: { menus: MenuLite[]; sel
         // Coverage gap — localize from the structured gaps (server `error` is
         // English fallback). Day labels come from the viewer's locale.
         if (json.code === "menu_coverage_gap" && Array.isArray(json.gaps)) {
-          const list = json.gaps.map((g: any) => `${dowLabels(locale)[g.dow] ?? g.dayLabel} ${g.from}–${g.to}`).join(", ");
+          const list = json.gaps.map((g: any) => `${dowLabels(locale)[g.dow] ?? g.dayLabel} ${fmtTime(g.from, hoursFormat)}–${fmtTime(g.to, hoursFormat)}`).join(", ");
           throw new Error(t("coverageGap", { list }));
         }
         throw new Error(json.error || "Failed");
@@ -124,8 +177,9 @@ export function MenuSwitcher({ menus, selectedMenuId }: { menus: MenuLite[]; sel
       const days = selected.availableDays ? (JSON.parse(selected.availableDays) as number[]) : [0, 1, 2, 3, 4, 5, 6];
       setWinDays(Array.isArray(days) && days.length ? days : [0, 1, 2, 3, 4, 5, 6]);
     } catch { setWinDays([0, 1, 2, 3, 4, 5, 6]); }
-    setWinFrom(selected.availableFrom ?? "");
-    setWinTo(selected.availableTo ?? "");
+    // Sensible defaults so the time selects start populated for a new window.
+    setWinFrom(selected.availableFrom ?? "10:00");
+    setWinTo(selected.availableTo ?? "22:00");
     setWindowing(true);
   };
   const toggleWinDay = (d: number) =>
@@ -155,7 +209,7 @@ export function MenuSwitcher({ menus, selectedMenuId }: { menus: MenuLite[]; sel
       const days = selected.availableDays ? (JSON.parse(selected.availableDays) as number[]) : null;
       if (days && days.length && days.length < 7) daysTxt = days.map((d) => dayNames[d]).join(", ");
     } catch { /* every day */ }
-    return `${daysTxt} ${selected.availableFrom}–${selected.availableTo}`;
+    return `${daysTxt} ${fmtTime(selected.availableFrom!, hoursFormat)}–${fmtTime(selected.availableTo!, hoursFormat)}`;
   })();
 
   const schedLabel = selected.scheduledActivateAt
@@ -191,7 +245,7 @@ export function MenuSwitcher({ menus, selectedMenuId }: { menus: MenuLite[]; sel
                 >
                   <span className="min-w-0">
                     <span className="block truncate font-medium text-gray-800">{m.name}</span>
-                    <span className="block text-[11px] text-gray-400">{t("categories", { n: m.categoryCount })}{m.availableFrom && m.availableTo ? ` · ${m.availableFrom}–${m.availableTo}` : ""}{m.scheduledActivateAt ? ` · ${t("scheduled")}` : ""}</span>
+                    <span className="block text-[11px] text-gray-400">{t("categories", { n: m.categoryCount })}{m.availableFrom && m.availableTo ? ` · ${fmtTime(m.availableFrom, hoursFormat)}–${fmtTime(m.availableTo, hoursFormat)}` : ""}{m.scheduledActivateAt ? ` · ${t("scheduled")}` : ""}</span>
                   </span>
                   {m.isActive && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 flex-shrink-0"><Radio className="w-3 h-3" /> {t("live")}</span>}
                 </button>
@@ -282,6 +336,13 @@ export function MenuSwitcher({ menus, selectedMenuId }: { menus: MenuLite[]; sel
           </div>
         ) : (
           <div className="flex flex-col gap-2">
+            {/* How-it-works notice (Luigi 2026-06-12): explain the default-vs-
+                timed-menu model so owners understand what setting a window does
+                when a Live default already exists. */}
+            <div className="flex gap-2 rounded-lg bg-sky-50 border border-sky-100 px-3 py-2 text-xs text-sky-900">
+              <CalendarClock className="w-4 h-4 flex-shrink-0 mt-0.5 text-sky-500" />
+              <span>{t("dailyHoursExplainer")}</span>
+            </div>
             <span className="text-sm text-gray-600">{t("dailyHoursHint")}</span>
             <div className="flex flex-wrap items-center gap-1.5">
               {dayNames.map((label, d) => (
@@ -297,9 +358,9 @@ export function MenuSwitcher({ menus, selectedMenuId }: { menus: MenuLite[]; sel
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <label className="text-xs text-gray-500">{t("windowFrom")}</label>
-              <input type="time" value={winFrom} onChange={(e) => setWinFrom(e.target.value)} className="border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500" />
+              <TimeField value={winFrom} onChange={setWinFrom} fmt={hoursFormat} />
               <label className="text-xs text-gray-500">{t("windowTo")}</label>
-              <input type="time" value={winTo} onChange={(e) => setWinTo(e.target.value)} className="border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500" />
+              <TimeField value={winTo} onChange={setWinTo} fmt={hoursFormat} />
               <button onClick={saveWindow} disabled={busy || !winFrom || !winTo || winDays.length === 0} className="px-3 py-1.5 rounded-lg bg-sky-500 text-white text-sm font-semibold hover:bg-sky-600 disabled:opacity-50">{t("windowSave")}</button>
               <button onClick={() => setWindowing(false)} className="text-xs text-gray-400 hover:text-gray-600">{t("cancel")}</button>
             </div>

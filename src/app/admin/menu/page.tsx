@@ -186,7 +186,11 @@ export default async function MenuPage({
         totalChildCount={childCounts.total}
       />
       {menus.length > 0 && selectedMenuId && (
-        <MenuSwitcher menus={menus as MenuLite[]} selectedMenuId={selectedMenuId} />
+        <MenuSwitcher
+          menus={menus as MenuLite[]}
+          selectedMenuId={selectedMenuId}
+          hoursFormat={selfRow?.hoursFormat === "12h" ? "12h" : "24h"}
+        />
       )}
       <MenuClient
         categories={categories as any}

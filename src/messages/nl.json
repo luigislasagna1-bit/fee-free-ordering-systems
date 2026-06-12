@@ -3766,7 +3766,8 @@
       "windowSaved": "Dagelijkse menutijden opgeslagen",
       "windowCleared": "Dagelijkse menutijden verwijderd",
       "everyDay": "Elke dag",
-      "coverageGap": "Sommige openingstijden zouden geen menu hebben: {list}. Voeg een menu toe voor die uren of zet ze op gesloten."
+      "coverageGap": "Sommige openingstijden zouden geen menu hebben: {list}. Voeg een menu toe voor die uren of zet ze op gesloten.",
+      "dailyHoursExplainer": "Je Live-menu is het standaardmenu — klanten zien het wanneer geen enkel ingepland menu van toepassing is. Geef andere menu's hun eigen dagelijkse uren en ze nemen automatisch over op die tijden, en geven daarna terug aan het standaardmenu. Elk openingsuur moet door een menu gedekt zijn."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

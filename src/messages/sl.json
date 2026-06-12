@@ -3766,7 +3766,8 @@
       "windowSaved": "Dnevne ure menija shranjene",
       "windowCleared": "Dnevne ure menija odstranjene",
       "everyDay": "Vsak dan",
-      "coverageGap": "Nekatere ure odprtja bi ostale brez menija: {list}. Dodajte meni za te ure ali jih označite kot zaprte."
+      "coverageGap": "Nekatere ure odprtja bi ostale brez menija: {list}. Dodajte meni za te ure ali jih označite kot zaprte.",
+      "dailyHoursExplainer": "Vaš Aktivni meni je privzeti — stranke ga vidijo, kadar ne velja noben časovni meni. Drugim menijem dajte lastne dnevne ure in v teh terminih samodejno prevzamejo, nato pa predajo nazaj privzetemu. Vsako uro odprtja mora pokrivati nek meni."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

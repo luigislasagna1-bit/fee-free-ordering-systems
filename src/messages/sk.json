@@ -3766,7 +3766,8 @@
       "windowSaved": "Denné hodiny menu uložené",
       "windowCleared": "Denné hodiny menu odstránené",
       "everyDay": "Každý deň",
-      "coverageGap": "Niektoré otváracie hodiny by nemali žiadne menu: {list}. Pridajte menu pokrývajúce tieto hodiny alebo ich označte ako zatvorené."
+      "coverageGap": "Niektoré otváracie hodiny by nemali žiadne menu: {list}. Pridajte menu pokrývajúce tieto hodiny alebo ich označte ako zatvorené.",
+      "dailyHoursExplainer": "Vaše Aktívne menu je predvolené — zákazníci ho vidia vždy, keď neplatí žiadne časované menu. Dajte iným menu vlastné denné hodiny a v tých časoch sa automaticky ujmú a potom odovzdajú späť predvolenému. Každú otváraciu hodinu musí pokrývať nejaké menu."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

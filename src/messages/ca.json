@@ -3766,7 +3766,8 @@
       "windowSaved": "Horari diari del menú desat",
       "windowCleared": "Horari diari del menú eliminat",
       "everyDay": "Cada dia",
-      "coverageGap": "Algunes hores d'obertura es quedarien sense menú: {list}. Afegeix un menú que cobreixi aquestes hores o marca-les com a tancades."
+      "coverageGap": "Algunes hores d'obertura es quedarien sense menú: {list}. Afegeix un menú que cobreixi aquestes hores o marca-les com a tancades.",
+      "dailyHoursExplainer": "El teu menú Actiu és el predeterminat: els clients el veuen sempre que no s'apliqui cap menú programat. Dona a altres menús els seus propis horaris diaris i prendran el relleu automàticament en aquelles hores, tornant després el control al predeterminat. Cada hora d'obertura ha d'estar coberta per un menú."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

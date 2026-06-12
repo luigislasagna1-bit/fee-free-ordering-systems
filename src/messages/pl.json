@@ -3766,7 +3766,8 @@
       "windowSaved": "Zapisano dzienne godziny menu",
       "windowCleared": "Usunięto dzienne godziny menu",
       "everyDay": "Codziennie",
-      "coverageGap": "Niektóre godziny otwarcia byłyby bez menu: {list}. Dodaj menu obejmujące te godziny lub oznacz je jako zamknięte."
+      "coverageGap": "Niektóre godziny otwarcia byłyby bez menu: {list}. Dodaj menu obejmujące te godziny lub oznacz je jako zamknięte.",
+      "dailyHoursExplainer": "Twoje menu Aktywne jest domyślne — klienci widzą je, gdy nie obowiązuje żadne menu z harmonogramem. Nadaj innym menu własne godziny dzienne, a automatycznie przejmą one w tych porach, po czym oddadzą sterowanie domyślnemu. Każda godzina otwarcia musi być pokryta przez jakieś menu."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

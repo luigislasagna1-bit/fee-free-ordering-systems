@@ -3766,7 +3766,8 @@
       "windowSaved": "Menuens daglige tider gemt",
       "windowCleared": "Menuens daglige tider fjernet",
       "everyDay": "Hver dag",
-      "coverageGap": "Nogle åbningstider ville mangle en menu: {list}. Tilføj en menu, der dækker de timer, eller markér dem som lukkede."
+      "coverageGap": "Nogle åbningstider ville mangle en menu: {list}. Tilføj en menu, der dækker de timer, eller markér dem som lukkede.",
+      "dailyHoursExplainer": "Din Aktive menu er standard — kunder ser den, når ingen tidsstyret menu gælder. Giv andre menuer deres egne daglige tider, så overtager de automatisk i de tidsrum og giver derefter tilbage til standarden. Hver åbningstime skal være dækket af en menu."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

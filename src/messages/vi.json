@@ -3766,7 +3766,8 @@
       "windowSaved": "Đã lưu giờ hằng ngày của thực đơn",
       "windowCleared": "Đã xóa giờ hằng ngày của thực đơn",
       "everyDay": "Hằng ngày",
-      "coverageGap": "Một số giờ mở cửa sẽ không có thực đơn: {list}. Thêm một thực đơn cho những giờ đó, hoặc đặt những giờ đó là đóng cửa."
+      "coverageGap": "Một số giờ mở cửa sẽ không có thực đơn: {list}. Thêm một thực đơn cho những giờ đó, hoặc đặt những giờ đó là đóng cửa.",
+      "dailyHoursExplainer": "Thực đơn Đang hoạt động của bạn là mặc định — khách hàng thấy nó bất cứ khi nào không có thực đơn theo giờ nào áp dụng. Hãy đặt giờ hằng ngày riêng cho các thực đơn khác và chúng sẽ tự động tiếp quản trong những khung giờ đó, rồi trả lại cho thực đơn mặc định. Mỗi giờ mở cửa phải được một thực đơn nào đó bao phủ."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

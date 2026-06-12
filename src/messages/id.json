@@ -3766,7 +3766,8 @@
       "windowSaved": "Jam harian menu disimpan",
       "windowCleared": "Jam harian menu dihapus",
       "everyDay": "Setiap hari",
-      "coverageGap": "Beberapa jam buka tidak akan memiliki menu: {list}. Tambahkan menu yang mencakup jam tersebut, atau tetapkan jam itu sebagai tutup."
+      "coverageGap": "Beberapa jam buka tidak akan memiliki menu: {list}. Tambahkan menu yang mencakup jam tersebut, atau tetapkan jam itu sebagai tutup.",
+      "dailyHoursExplainer": "Menu Aktif Anda adalah default — pelanggan melihatnya kapan pun tidak ada menu terjadwal yang berlaku. Beri menu lain jam hariannya sendiri dan menu itu otomatis mengambil alih pada waktu tersebut, lalu menyerahkan kembali ke default. Setiap jam buka harus tercakup oleh sebuah menu."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

@@ -3766,7 +3766,8 @@
       "windowSaved": "Orele zilnice ale meniului au fost salvate",
       "windowCleared": "Orele zilnice ale meniului au fost eliminate",
       "everyDay": "În fiecare zi",
-      "coverageGap": "Unele ore de program nu ar avea niciun meniu: {list}. Adaugă un meniu pentru acele ore sau marchează-le ca închise."
+      "coverageGap": "Unele ore de program nu ar avea niciun meniu: {list}. Adaugă un meniu pentru acele ore sau marchează-le ca închise.",
+      "dailyHoursExplainer": "Meniul tău Activ este cel implicit — clienții îl văd ori de câte ori nu se aplică niciun meniu programat. Dă altor meniuri propriile ore zilnice și vor prelua automat în acele intervale, apoi predau înapoi celui implicit. Fiecare oră de program trebuie acoperită de un meniu."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

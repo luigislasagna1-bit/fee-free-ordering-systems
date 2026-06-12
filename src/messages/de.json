@@ -3766,7 +3766,8 @@
       "windowSaved": "Tageszeiten des Menüs gespeichert",
       "windowCleared": "Tageszeiten des Menüs entfernt",
       "everyDay": "Täglich",
-      "coverageGap": "Einige Öffnungszeiten hätten kein Menü: {list}. Fügen Sie ein Menü für diese Zeiten hinzu oder markieren Sie sie als geschlossen."
+      "coverageGap": "Einige Öffnungszeiten hätten kein Menü: {list}. Fügen Sie ein Menü für diese Zeiten hinzu oder markieren Sie sie als geschlossen.",
+      "dailyHoursExplainer": "Ihr Live-Menü ist das Standardmenü — Kunden sehen es immer dann, wenn kein zeitgesteuertes Menü gilt. Geben Sie anderen Menüs eigene Tageszeiten, dann übernehmen sie zu diesen Zeiten automatisch und geben danach an das Standardmenü zurück. Jede Öffnungsstunde muss von einem Menü abgedeckt sein."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",
