@@ -3767,7 +3767,8 @@
       "windowCleared": "Horaires quotidiens du menu supprimés",
       "everyDay": "Tous les jours",
       "coverageGap": "Certaines heures d'ouverture n'auraient aucun menu : {list}. Ajoutez un menu couvrant ces heures, ou marquez-les comme fermées.",
-      "dailyHoursExplainer": "Votre menu En ligne est celui par défaut — les clients le voient lorsqu'aucun menu programmé ne s'applique. Donnez à d'autres menus leurs propres horaires quotidiens : ils prennent le relais automatiquement à ces heures, puis redonnent la main au menu par défaut. Chaque heure d'ouverture doit être couverte par un menu."
+      "dailyHoursExplainer": "Votre menu En ligne est celui par défaut — les clients le voient lorsqu'aucun menu programmé ne s'applique. Donnez à d'autres menus leurs propres horaires quotidiens : ils prennent le relais automatiquement à ces heures, puis redonnent la main au menu par défaut. Chaque heure d'ouverture doit être couverte par un menu.",
+      "scheduleHelp": "Choisissez une date et une heure : ce menu remplacera automatiquement votre menu en ligne à ce moment-là — un changement unique. Pour un menu qui revient chaque jour (déjeuner/dîner), utilisez plutôt les Horaires quotidiens."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

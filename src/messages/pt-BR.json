@@ -3767,7 +3767,8 @@
       "windowCleared": "Horário diário do cardápio removido",
       "everyDay": "Todos os dias",
       "coverageGap": "Alguns horários de funcionamento ficariam sem cardápio: {list}. Adicione um cardápio que cubra esses horários ou marque-os como fechados.",
-      "dailyHoursExplainer": "Seu cardápio Ativo é o padrão — os clientes o veem sempre que nenhum cardápio programado se aplica. Dê a outros cardápios seus próprios horários diários e eles assumem automaticamente nesses horários, devolvendo depois o controle ao padrão. Cada horário de funcionamento precisa ser coberto por um cardápio."
+      "dailyHoursExplainer": "Seu cardápio Ativo é o padrão — os clientes o veem sempre que nenhum cardápio programado se aplica. Dê a outros cardápios seus próprios horários diários e eles assumem automaticamente nesses horários, devolvendo depois o controle ao padrão. Cada horário de funcionamento precisa ser coberto por um cardápio.",
+      "scheduleHelp": "Escolha uma data e hora e este cardápio substitui automaticamente o seu cardápio ativo nesse momento — uma troca única. Para um cardápio que se repete todos os dias (almoço/jantar), use o Horário diário."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

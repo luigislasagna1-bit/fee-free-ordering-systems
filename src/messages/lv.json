@@ -3767,7 +3767,8 @@
       "windowCleared": "Ēdienkartes dienas laiki noņemti",
       "everyDay": "Katru dienu",
       "coverageGap": "Dažās darba stundās nebūtu ēdienkartes: {list}. Pievienojiet ēdienkarti šīm stundām vai atzīmējiet tās kā slēgtas.",
-      "dailyHoursExplainer": "Jūsu Aktīvā ēdienkarte ir noklusējuma — klienti to redz vienmēr, kad nav spēkā neviena plānota ēdienkarte. Piešķiriet citām ēdienkartēm savas dienas stundas, un tās šajos laikos automātiski pārņem vadību un pēc tam atdod to noklusējuma ēdienkartei. Katrai darba stundai jābūt nosegtai ar kādu ēdienkarti."
+      "dailyHoursExplainer": "Jūsu Aktīvā ēdienkarte ir noklusējuma — klienti to redz vienmēr, kad nav spēkā neviena plānota ēdienkarte. Piešķiriet citām ēdienkartēm savas dienas stundas, un tās šajos laikos automātiski pārņem vadību un pēc tam atdod to noklusējuma ēdienkartei. Katrai darba stundai jābūt nosegtai ar kādu ēdienkarti.",
+      "scheduleHelp": "Izvēlieties datumu un laiku, un šī ēdienkarte tajā brīdī automātiski aizstās jūsu aktīvo ēdienkarti — vienreizēja maiņa. Ēdienkartei, kas atkārtojas katru dienu (pusdienas/vakariņas), izmantojiet Dienas laikus."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

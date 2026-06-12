@@ -3767,7 +3767,8 @@
       "windowCleared": "Dnevni sati jelovnika uklonjeni",
       "everyDay": "Svaki dan",
       "coverageGap": "Neki radni sati ostali bi bez jelovnika: {list}. Dodajte jelovnik koji pokriva te sate ili ih označite kao zatvorene.",
-      "dailyHoursExplainer": "Vaš Aktivni jelovnik je zadani — kupci ga vide kad god ne vrijedi nijedan vremenski jelovnik. Dajte drugim jelovnicima vlastite dnevne sate i oni automatski preuzimaju u tim terminima, a zatim vraćaju kontrolu zadanom. Svaki radni sat mora biti pokriven nekim jelovnikom."
+      "dailyHoursExplainer": "Vaš Aktivni jelovnik je zadani — kupci ga vide kad god ne vrijedi nijedan vremenski jelovnik. Dajte drugim jelovnicima vlastite dnevne sate i oni automatski preuzimaju u tim terminima, a zatim vraćaju kontrolu zadanom. Svaki radni sat mora biti pokriven nekim jelovnikom.",
+      "scheduleHelp": "Odaberite datum i vrijeme i ovaj će jelovnik u tom trenutku automatski zamijeniti vaš aktivni jelovnik — jednokratna promjena. Za jelovnik koji se ponavlja svaki dan (ručak/večera) umjesto toga koristite Dnevne sate."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

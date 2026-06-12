@@ -3767,7 +3767,8 @@
       "windowCleared": "Menünün günlük saatleri kaldırıldı",
       "everyDay": "Her gün",
       "coverageGap": "Bazı açık saatlerde menü olmazdı: {list}. O saatleri kapsayan bir menü ekleyin veya bu saatleri kapalı olarak ayarlayın.",
-      "dailyHoursExplainer": "Etkin menünüz varsayılandır — zamanlanmış bir menü geçerli olmadığında müşteriler bunu görür. Diğer menülere kendi günlük saatlerini verin; o saatlerde otomatik olarak devreye girer, sonra varsayılana geri bırakırlar. Her açık saat bir menü tarafından kapsanmalıdır."
+      "dailyHoursExplainer": "Etkin menünüz varsayılandır — zamanlanmış bir menü geçerli olmadığında müşteriler bunu görür. Diğer menülere kendi günlük saatlerini verin; o saatlerde otomatik olarak devreye girer, sonra varsayılana geri bırakırlar. Her açık saat bir menü tarafından kapsanmalıdır.",
+      "scheduleHelp": "Bir tarih ve saat seçin; bu menü o anda etkin menünüzün yerini otomatik alır — tek seferlik bir geçiş. Her gün tekrarlanan bir menü için (öğle/akşam) bunun yerine Günlük saatler'i kullanın."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

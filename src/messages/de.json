@@ -3767,7 +3767,8 @@
       "windowCleared": "Tageszeiten des Menüs entfernt",
       "everyDay": "Täglich",
       "coverageGap": "Einige Öffnungszeiten hätten kein Menü: {list}. Fügen Sie ein Menü für diese Zeiten hinzu oder markieren Sie sie als geschlossen.",
-      "dailyHoursExplainer": "Ihr Live-Menü ist das Standardmenü — Kunden sehen es immer dann, wenn kein zeitgesteuertes Menü gilt. Geben Sie anderen Menüs eigene Tageszeiten, dann übernehmen sie zu diesen Zeiten automatisch und geben danach an das Standardmenü zurück. Jede Öffnungsstunde muss von einem Menü abgedeckt sein."
+      "dailyHoursExplainer": "Ihr Live-Menü ist das Standardmenü — Kunden sehen es immer dann, wenn kein zeitgesteuertes Menü gilt. Geben Sie anderen Menüs eigene Tageszeiten, dann übernehmen sie zu diesen Zeiten automatisch und geben danach an das Standardmenü zurück. Jede Öffnungsstunde muss von einem Menü abgedeckt sein.",
+      "scheduleHelp": "Wählen Sie Datum und Uhrzeit, und dieses Menü ersetzt zu diesem Zeitpunkt automatisch Ihr Live-Menü — ein einmaliger Wechsel. Für ein Menü, das sich täglich wiederholt (Mittag/Abend), nutzen Sie stattdessen die Tageszeiten."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

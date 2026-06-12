@@ -4,6 +4,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { ChevronDown, Plus, Copy, Pencil, Trash2, CheckCircle2, Loader2, Radio, Clock, CalendarClock, X } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
+import { HelpTip } from "@/components/HelpTip";
 
 export type MenuLite = {
   id: string;
@@ -308,7 +309,7 @@ export function MenuSwitcher({ menus, selectedMenuId, hoursFormat = "24h" }: { m
           </>
         ) : (
           <>
-            <span className="text-sm text-gray-600">{t("scheduleGoLive")}</span>
+            <span className="inline-flex items-center gap-1.5 text-sm text-gray-600">{t("scheduleGoLive")}<HelpTip text={t("scheduleHelp")} /></span>
             <input
               type="datetime-local"
               value={schedAt}
@@ -336,12 +337,12 @@ export function MenuSwitcher({ menus, selectedMenuId, hoursFormat = "24h" }: { m
           </div>
         ) : (
           <div className="flex flex-col gap-2">
-            {/* How-it-works notice (Luigi 2026-06-12): explain the default-vs-
-                timed-menu model so owners understand what setting a window does
-                when a Live default already exists. */}
-            <div className="flex gap-2 rounded-lg bg-sky-50 border border-sky-100 px-3 py-2 text-xs text-sky-900">
-              <CalendarClock className="w-4 h-4 flex-shrink-0 mt-0.5 text-sky-500" />
-              <span>{t("dailyHoursExplainer")}</span>
+            {/* Heading + hover help (Luigi 2026-06-12 standing rule: explain
+                non-obvious features via a hover ⓘ, not a cluttering text box).
+                The ⓘ explains the default-vs-timed-menu model. */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm font-semibold text-gray-700">{t("dailyHours")}</span>
+              <HelpTip text={t("dailyHoursExplainer")} />
             </div>
             <span className="text-sm text-gray-600">{t("dailyHoursHint")}</span>
             <div className="flex flex-wrap items-center gap-1.5">

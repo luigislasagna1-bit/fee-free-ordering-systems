@@ -3767,7 +3767,8 @@
       "windowCleared": "Dagelijkse menutijden verwijderd",
       "everyDay": "Elke dag",
       "coverageGap": "Sommige openingstijden zouden geen menu hebben: {list}. Voeg een menu toe voor die uren of zet ze op gesloten.",
-      "dailyHoursExplainer": "Je Live-menu is het standaardmenu — klanten zien het wanneer geen enkel ingepland menu van toepassing is. Geef andere menu's hun eigen dagelijkse uren en ze nemen automatisch over op die tijden, en geven daarna terug aan het standaardmenu. Elk openingsuur moet door een menu gedekt zijn."
+      "dailyHoursExplainer": "Je Live-menu is het standaardmenu — klanten zien het wanneer geen enkel ingepland menu van toepassing is. Geef andere menu's hun eigen dagelijkse uren en ze nemen automatisch over op die tijden, en geven daarna terug aan het standaardmenu. Elk openingsuur moet door een menu gedekt zijn.",
+      "scheduleHelp": "Kies een datum en tijd en dit menu vervangt op dat moment automatisch je live menu — een eenmalige wissel. Voor een menu dat zich elke dag herhaalt (lunch/diner) gebruik je in plaats daarvan Dagelijkse uren."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",
