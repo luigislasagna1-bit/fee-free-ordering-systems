@@ -146,9 +146,14 @@ export function MenuSwitcher({ menus, selectedMenuId }: { menus: MenuLite[]; sel
             <CheckCircle2 className="w-4 h-4" /> {t("setLive")}
           </button>
         )}
+        {/* Schedule = the headline feature of this menu manager (set a draft
+            to go live automatically at a future time). It was an unlabeled
+            clock icon and owners couldn't find it (Luigi 2026-06-12) — now a
+            labelled button, like New menu. Only shown on a draft (you schedule
+            a DRAFT to replace the live menu, not the live one itself). */}
         {!selected.isActive && (
-          <button onClick={() => setScheduling((s) => !s)} disabled={busy} title={t("schedule")} className="p-2 rounded-lg border border-gray-200 text-gray-500 hover:text-sky-600 hover:border-gray-300 disabled:opacity-60">
-            <Clock className="w-4 h-4" />
+          <button onClick={() => setScheduling((s) => !s)} disabled={busy} title={t("schedule")} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 text-sm text-gray-700 hover:text-sky-600 hover:border-gray-300 disabled:opacity-60">
+            <Clock className="w-4 h-4" /> <span className="hidden sm:inline">{t("schedule")}</span>
           </button>
         )}
         <button onClick={newMenu} disabled={busy} title={t("newMenu")} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 text-sm text-gray-700 hover:border-gray-300 disabled:opacity-60">
