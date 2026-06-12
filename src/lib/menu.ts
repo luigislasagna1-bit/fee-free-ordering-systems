@@ -179,7 +179,9 @@ export async function duplicateMenu(restaurantId: string, sourceMenuId: string, 
             isAvailable: item.isAvailable, isFeatured: item.isFeatured, isSoldOut: item.isSoldOut, isHidden: item.isHidden,
             hasVariants: item.hasVariants, forPickup: item.forPickup, forDelivery: item.forDelivery, isCatering: item.isCatering,
             availableDays: item.availableDays, availableFrom: item.availableFrom, availableTo: item.availableTo,
+            availabilityMode: item.availabilityMode,
             sortOrder: item.sortOrder, calories: item.calories, allergens: item.allergens, pizzaConfig: item.pizzaConfig,
+            comboConfig: item.comboConfig,
           },
         });
         const variantIdMap = new Map<string, string>();

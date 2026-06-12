@@ -2602,18 +2602,27 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     activeTab === "inprogress" ? inProgressItems :
     completeItems;
 
-  // Each badge = the number of items ACTUALLY shown in that tab, so the count
-  // always matches what staff see on screen. The All / In Progress / Complete
-  // tabs display walk-up bookings ALONGSIDE orders, so those are added in; the
-  // Reservations tab is the full ledger. Previously the order tabs counted
-  // orders only and the Reservations tab counted only "active" bookings, so
-  // every badge under-counted by exactly the bookings on that tab. Luigi
-  // 2026-06-08: "none of the numbers are correct for the tabs".
+  // Rows ACTUALLY shown per tab (orders + the bookings that tab displays).
+  // Feeds the clear-history button's "tab has content" gate below — NOT the
+  // tab badges anymore.
   const tabCounts = {
     orders: ordersTabItems.length + allTabReservations.length,
     inprogress: inProgressItems.length + inProgressReservations.length,
     complete: completeItems.length + completeTabReservations.length,
     reservations: reservationsTabItems.length,
+  };
+  // Tab BADGE = "how many need attention", not the ledger size (Fabrizio
+  // cmqaosva5 2026-06-12: "the number is only useful for In progress").
+  // All / Complete are unbounded history ledgers — their row totals carry
+  // no signal, so no badge. In Progress keeps its live-work count.
+  // Reservations shows only bookings still awaiting confirmation — pending
+  // walk-ups are NOT part of the In Progress bucket (it only holds
+  // confirmed/seated), so this badge is that tab's one actionable cue.
+  const tabBadges: Record<KTab, number> = {
+    orders: 0,
+    inprogress: tabCounts.inprogress,
+    complete: 0,
+    reservations: reservationsTabItems.filter((r) => r.status === "pending").length,
   };
 
   // pendingCount is declared above next to `alerting`.
@@ -2778,7 +2787,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               complete: tk("complete"),
               reservations: tk("reservations"),
             };
-            const count = tabCounts[tab];
+            const count = tabBadges[tab];
             const isActive = activeTab === tab;
             const styles = (themeMode === "dark" ? TAB_STYLES_DARK : TAB_STYLES_LIGHT)[tab];
             const Icon = styles.Icon;
