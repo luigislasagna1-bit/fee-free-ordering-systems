@@ -224,7 +224,9 @@
       "promoReadded": "\"{name}\" znova dodano",
       "couponSwitchedSavesMore": "\"{name}\" je uporabljena – prinese vam večji prihranek, zato smo odstranili \"{winner}\". Za vrnitev kadar koli tapnite pasico \"{winner}\".",
       "itemUnavailable": "Ta izdelek ni na voljo",
-      "scheduledInPast": "Izbrani načrtovani čas je že minil. Izberite nov čas."
+      "scheduledInPast": "Izbrani načrtovani čas je že minil. Izberite nov čas.",
+      "holidayClosedFull": "Na ta dan smo zaprti. Izberite drug dan.",
+      "holidayServiceClosed": "{service} na ta dan ni na voljo. Izberite drug dan ali storitev."
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",

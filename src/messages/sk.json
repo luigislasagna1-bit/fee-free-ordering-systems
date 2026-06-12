@@ -224,7 +224,9 @@
       "promoReadded": "„{name}“ bola pridaná späť",
       "couponSwitchedSavesMore": "\"{name}\" sa použila – ušetrí vám viac, preto sme odstránili \"{winner}\". Späť môžete kedykoľvek prepnúť klepnutím na jej banner.",
       "itemUnavailable": "Táto položka nie je dostupná",
-      "scheduledInPast": "Zvolený naplánovaný čas už uplynul. Vyberte si prosím nový čas."
+      "scheduledInPast": "Zvolený naplánovaný čas už uplynul. Vyberte si prosím nový čas.",
+      "holidayClosedFull": "V tento deň máme zatvorené. Vyberte iný deň.",
+      "holidayServiceClosed": "{service} nie je v tento deň dostupná. Vyberte iný deň alebo službu."
     },
     "searchMenu": "Hľadať v menu…",
     "signIn": "Prihlásiť sa",

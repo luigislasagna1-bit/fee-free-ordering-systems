@@ -224,7 +224,9 @@
       "promoReadded": "„{name}” je ponovo dodata",
       "couponSwitchedSavesMore": "\"{name}\" je primenjen — donosi vam veću uštedu, pa smo uklonili \"{winner}\". Dodirnite njegov baner da se vratite nazad bilo kada.",
       "itemUnavailable": "Ова ставка није доступна",
-      "scheduledInPast": "Изабрано заказано време је већ прошло. Изаберите ново време."
+      "scheduledInPast": "Изабрано заказано време је већ прошло. Изаберите ново време.",
+      "holidayClosedFull": "На овај датум смо затворени. Изаберите други дан.",
+      "holidayServiceClosed": "{service} није доступна на овај датум. Изаберите други дан или услугу."
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",

@@ -224,7 +224,9 @@
       "promoReadded": "\"{name}\" dodano z powrotem",
       "couponSwitchedSavesMore": "Zastosowano \"{name}\" — daje Ci większą zniżkę, więc usunęliśmy \"{winner}\". Stuknij jego baner, aby w każdej chwili wrócić.",
       "itemUnavailable": "Ten produkt jest niedostępny",
-      "scheduledInPast": "Wybrana godzina już minęła. Wybierz nowy termin."
+      "scheduledInPast": "Wybrana godzina już minęła. Wybierz nowy termin.",
+      "holidayClosedFull": "W tym dniu jesteśmy zamknięci. Wybierz inny dzień.",
+      "holidayServiceClosed": "{service} jest niedostępna w tym dniu. Wybierz inny dzień lub usługę."
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",

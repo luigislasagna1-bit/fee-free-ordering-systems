@@ -171,10 +171,15 @@ export function HoursClient({
   hours: initial,
   hoursFormat: initialFormat,
   holidays: initialHolidays,
+  offeredServices = [],
 }: {
   hours: (HoursRow & { service?: string | null })[];
   hoursFormat: Format;
   holidays: Holiday[];
+  /** Canonical holiday-service keys the restaurant actually offers. The
+   *  "affected services" chips render only these (empty = show all, for
+   *  back-compat / the logged-out fallback). */
+  offeredServices?: string[];
 }) {
   const tSidebar = useTranslations("admin.sidebar");
   const tHours = useTranslations("admin.hours");
@@ -715,7 +720,9 @@ export function HoursClient({
                   >
                     {tHours("allServices")}
                   </button>
-                  {HOLIDAY_SERVICE_KEYS.map((svc) => (
+                  {HOLIDAY_SERVICE_KEYS.filter(
+                    (svc) => offeredServices.length === 0 || offeredServices.includes(svc),
+                  ).map((svc) => (
                     <button
                       key={svc}
                       type="button"

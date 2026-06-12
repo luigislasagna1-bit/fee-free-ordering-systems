@@ -7,7 +7,7 @@ export default async function HoursPage() {
   const restaurantId = user?.restaurantId;
 
   if (!restaurantId) {
-    return <HoursClient hours={[]} hoursFormat="24h" holidays={[]} />;
+    return <HoursClient hours={[]} hoursFormat="24h" holidays={[]} offeredServices={[]} />;
   }
 
   // Three queries in parallel — they're independent, no point serializing.
@@ -21,7 +21,14 @@ export default async function HoursPage() {
     }),
     prisma.restaurant.findUnique({
       where: { id: restaurantId },
-      select: { hoursFormat: true },
+      select: {
+        hoursFormat: true,
+        // Drive the holiday "affected services" chips off the services the
+        // restaurant actually offers — no point letting an owner close a
+        // service they don't run (Luigi 2026-06-12, report cmpxds2d2).
+        acceptsPickup: true, acceptsDelivery: true, acceptsDineIn: true,
+        acceptsTakeOut: true, acceptsCatering: true, acceptsReservations: true,
+      },
     }),
     prisma.restaurantHoliday.findMany({
       // A PERIOD that started in the past is still active until its endDate —
@@ -31,10 +38,24 @@ export default async function HoursPage() {
     }),
   ]);
 
+  // Canonical holiday-rule service keys for the services this restaurant
+  // offers (note: dine-in/reservation map to the holiday keys dine_in/
+  // reservation). Order preserved to match the chip row.
+  const r = restaurant as any;
+  const offeredServices = [
+    r?.acceptsPickup && "pickup",
+    r?.acceptsDelivery && "delivery",
+    r?.acceptsDineIn && "dine_in",
+    r?.acceptsTakeOut && "take_out",
+    r?.acceptsCatering && "catering",
+    r?.acceptsReservations && "reservation",
+  ].filter(Boolean) as string[];
+
   return (
     <HoursClient
       hours={hours as any}
       hoursFormat={(restaurant?.hoursFormat as "12h" | "24h") || "24h"}
+      offeredServices={offeredServices}
       holidays={holidays.map((h) => ({
         id: h.id,
         // Send ISO date string to the client to avoid timezone smear

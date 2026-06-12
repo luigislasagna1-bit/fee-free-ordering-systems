@@ -2736,6 +2736,27 @@ export function OrderingPageClient({
         // Localized message for the past-schedule rejection; everything else
         // falls back to the server's English error string (existing pattern).
         if (orderData.code === "scheduled_in_past") throw new Error(tT("scheduledInPast"));
+        // Holiday closure — name the affected service when it's a
+        // single-service closure (the restaurant is still open otherwise),
+        // and append the owner's optional message. Luigi 2026-06-12.
+        if (orderData.code === "holiday_closed") {
+          const svcLabel = (() => {
+            switch (orderData.service) {
+              case "delivery": return t("delivery");
+              case "dine_in": return t("dineIn");
+              case "take_out": return t("takeOut");
+              case "catering": return t("catering");
+              case "reservation": return t("tableReservation");
+              default: return t("pickup");
+            }
+          })();
+          const note = orderData.holidayMessage ? ` ${orderData.holidayMessage}` : "";
+          throw new Error(
+            (orderData.fullyClosed
+              ? tT("holidayClosedFull")
+              : tT("holidayServiceClosed", { service: svcLabel })) + note,
+          );
+        }
         throw new Error(orderData.error || tT("orderFailed"));
       }
 

@@ -224,7 +224,9 @@
       "promoReadded": "\"{name}\" נוסף בחזרה",
       "couponSwitchedSavesMore": "\"{name}\" הוחל — הוא חוסך לך יותר, אז הסרנו את \"{winner}\". אפשר להקיש על הבאנר שלו כדי לחזור אחורה בכל רגע.",
       "itemUnavailable": "פריט זה אינו זמין",
-      "scheduledInPast": "השעה המתוזמנת שבחרת כבר עברה. אנא בחר שעה חדשה."
+      "scheduledInPast": "השעה המתוזמנת שבחרת כבר עברה. אנא בחר שעה חדשה.",
+      "holidayClosedFull": "אנחנו סגורים בתאריך זה. אנא בחר יום אחר.",
+      "holidayServiceClosed": "{service} אינו זמין בתאריך זה. אנא בחר יום אחר או שירות אחר."
     },
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",

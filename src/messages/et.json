@@ -224,7 +224,9 @@
       "promoReadded": "„{name}” lisati uuesti",
       "couponSwitchedSavesMore": "\"{name}\" rakendatud — see säästab sulle rohkem, seega eemaldasime \"{winner}\". Tagasi vahetamiseks puuduta selle bännerit igal ajal.",
       "itemUnavailable": "See toode pole saadaval",
-      "scheduledInPast": "Valitud aeg on juba möödas. Palun vali uus aeg."
+      "scheduledInPast": "Valitud aeg on juba möödas. Palun vali uus aeg.",
+      "holidayClosedFull": "Sel kuupäeval oleme suletud. Palun valige teine päev.",
+      "holidayServiceClosed": "{service} ei ole sel kuupäeval saadaval. Palun valige teine päev või teenus."
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",

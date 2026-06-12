@@ -224,7 +224,9 @@
       "promoReadded": "\"{name}\" lisätty takaisin",
       "couponSwitchedSavesMore": "\"{name}\" otettiin käyttöön – se tuo sinulle suuremmat säästöt, joten poistimme \"{winner}\"-edun. Voit milloin tahansa vaihtaa takaisin napauttamalla sen banneria.",
       "itemUnavailable": "Tämä tuote ei ole saatavilla",
-      "scheduledInPast": "Valitsemasi ajankohta on jo mennyt. Valitse uusi aika."
+      "scheduledInPast": "Valitsemasi ajankohta on jo mennyt. Valitse uusi aika.",
+      "holidayClosedFull": "Olemme suljettuna tänä päivänä. Valitse toinen päivä.",
+      "holidayServiceClosed": "{service} ei ole saatavilla tänä päivänä. Valitse toinen päivä tai palvelu."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",

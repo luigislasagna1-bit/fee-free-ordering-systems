@@ -224,7 +224,9 @@
       "promoReadded": "„{name}\" pridėtas atgal",
       "couponSwitchedSavesMore": "\"{name}\" pritaikytas — su juo sutaupote daugiau, todėl pašalinome \"{winner}\". Bet kada bakstelėkite jo juostą, kad grįžtumėte atgal.",
       "itemUnavailable": "Ši prekė neprieinama",
-      "scheduledInPast": "Pasirinktas suplanuotas laikas jau praėjo. Pasirinkite naują laiką."
+      "scheduledInPast": "Pasirinktas suplanuotas laikas jau praėjo. Pasirinkite naują laiką.",
+      "holidayClosedFull": "Šią dieną nedirbame. Pasirinkite kitą dieną.",
+      "holidayServiceClosed": "{service} šią dieną neprieinama. Pasirinkite kitą dieną arba paslaugą."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",

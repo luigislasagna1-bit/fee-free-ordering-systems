@@ -224,7 +224,9 @@
       "promoReadded": "\"{name}\" opnieuw toegevoegd",
       "couponSwitchedSavesMore": "\"{name}\" toegepast — hiermee bespaar je meer, dus we hebben \"{winner}\" verwijderd. Tik op de banner ervan om altijd weer terug te wisselen.",
       "itemUnavailable": "Dit item is niet beschikbaar",
-      "scheduledInPast": "De gekozen geplande tijd is al verstreken. Kies een nieuwe tijd."
+      "scheduledInPast": "De gekozen geplande tijd is al verstreken. Kies een nieuwe tijd.",
+      "holidayClosedFull": "We zijn gesloten op deze datum. Kies een andere dag.",
+      "holidayServiceClosed": "{service} is niet beschikbaar op deze datum. Kies een andere dag of service."
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",

@@ -224,7 +224,9 @@
       "promoReadded": "\"{name}\" er tilføjet igen",
       "couponSwitchedSavesMore": "\"{name}\" er anvendt – den sparer dig mere, så vi fjernede \"{winner}\". Tryk på dens banner for at skifte tilbage når som helst.",
       "itemUnavailable": "Denne vare er ikke tilgængelig",
-      "scheduledInPast": "Det planlagte tidspunkt, du valgte, er allerede passeret. Vælg venligst et nyt tidspunkt."
+      "scheduledInPast": "Det planlagte tidspunkt, du valgte, er allerede passeret. Vælg venligst et nyt tidspunkt.",
+      "holidayClosedFull": "Vi har lukket på denne dato. Vælg en anden dag.",
+      "holidayServiceClosed": "{service} er ikke tilgængelig på denne dato. Vælg en anden dag eller service."
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",

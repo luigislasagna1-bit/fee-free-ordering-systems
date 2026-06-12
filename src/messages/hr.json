@@ -224,7 +224,9 @@
       "promoReadded": "\"{name}\" ponovno dodana",
       "couponSwitchedSavesMore": "\"{name}\" je primijenjena — donosi vam veću uštedu, pa smo uklonili \"{winner}\". Dodirnite njezin natpis da se u svakom trenutku vratite na nju.",
       "itemUnavailable": "Ova stavka nije dostupna",
-      "scheduledInPast": "Odabrano zakazano vrijeme već je prošlo. Odaberite novo vrijeme."
+      "scheduledInPast": "Odabrano zakazano vrijeme već je prošlo. Odaberite novo vrijeme.",
+      "holidayClosedFull": "Na ovaj datum smo zatvoreni. Odaberite drugi dan.",
+      "holidayServiceClosed": "{service} nije dostupna na ovaj datum. Odaberite drugi dan ili uslugu."
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",

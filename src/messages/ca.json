@@ -224,7 +224,9 @@
       "promoReadded": "\"{name}\" tornada a afegir",
       "couponSwitchedSavesMore": "\"{name}\" aplicada: t'estalvia més, així que hem tret \"{winner}\". Toca el seu rètol per tornar-hi quan vulguis.",
       "itemUnavailable": "Aquest article no està disponible",
-      "scheduledInPast": "L'hora programada que has triat ja ha passat. Tria una hora nova."
+      "scheduledInPast": "L'hora programada que has triat ja ha passat. Tria una hora nova.",
+      "holidayClosedFull": "Estem tancats en aquesta data. Tria un altre dia.",
+      "holidayServiceClosed": "{service} no està disponible en aquesta data. Tria un altre dia o servei."
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",

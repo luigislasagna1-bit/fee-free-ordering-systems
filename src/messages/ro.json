@@ -224,7 +224,9 @@
       "promoReadded": "„{name}\" a fost adăugată din nou",
       "couponSwitchedSavesMore": "\"{name}\" a fost aplicat — îți oferă o reducere mai mare, așa că am eliminat \"{winner}\". Atinge bannerul lui \"{winner}\" oricând ca să revii.",
       "itemUnavailable": "Acest produs nu este disponibil",
-      "scheduledInPast": "Ora programată aleasă a trecut deja. Te rugăm să alegi o oră nouă."
+      "scheduledInPast": "Ora programată aleasă a trecut deja. Te rugăm să alegi o oră nouă.",
+      "holidayClosedFull": "Suntem închiși în această dată. Alege altă zi.",
+      "holidayServiceClosed": "{service} nu este disponibil în această dată. Alege altă zi sau alt serviciu."
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",

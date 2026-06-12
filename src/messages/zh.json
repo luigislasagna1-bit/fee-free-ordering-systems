@@ -224,7 +224,9 @@
       "promoReadded": "已重新添加 \"{name}\"",
       "couponSwitchedSavesMore": "已应用 \"{name}\"——它为您节省得更多，因此我们移除了 \"{winner}\"。随时点按其横幅即可切换回来。",
       "itemUnavailable": "此商品暂不可用",
-      "scheduledInPast": "您选择的预约时间已过。请选择新的时间。"
+      "scheduledInPast": "您选择的预约时间已过。请选择新的时间。",
+      "holidayClosedFull": "我们在这一天休息。请选择其他日期。",
+      "holidayServiceClosed": "{service}在这一天不可用。请选择其他日期或服务。"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",

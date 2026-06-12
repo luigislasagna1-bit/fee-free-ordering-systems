@@ -224,7 +224,9 @@
       "promoReadded": "\"{name}\" pievienots atpakaļ",
       "couponSwitchedSavesMore": "\"{name}\" piemērots — tas ietaupa vairāk, tāpēc noņēmām \"{winner}\". Pieskarieties tā reklāmkarogam, lai jebkurā brīdī pārslēgtos atpakaļ.",
       "itemUnavailable": "Šī prece nav pieejama",
-      "scheduledInPast": "Izvēlētais ieplānotais laiks jau ir pagājis. Lūdzu, izvēlieties jaunu laiku."
+      "scheduledInPast": "Izvēlētais ieplānotais laiks jau ir pagājis. Lūdzu, izvēlieties jaunu laiku.",
+      "holidayClosedFull": "Šajā datumā esam slēgti. Lūdzu, izvēlieties citu dienu.",
+      "holidayServiceClosed": "{service} šajā datumā nav pieejama. Lūdzu, izvēlieties citu dienu vai pakalpojumu."
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",

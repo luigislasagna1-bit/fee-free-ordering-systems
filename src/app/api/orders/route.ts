@@ -32,6 +32,19 @@ import { validateBooking, resolveDayHours, type ReservationSettingsLike } from "
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { isPaymentMethodAcceptedForType } from "@/lib/payment-methods";
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "take_out", "catering"] as const;
+
+/** Human English label for an order type — used only as the en fallback in
+ *  service-specific holiday rejections; the client re-localizes from the
+ *  structured `service` field. */
+function serviceDisplayLabel(orderType: string): string {
+  const s = canonicalHolidayService(orderType);
+  return s === "delivery" ? "Delivery"
+    : s === "dine_in" ? "Dine-in"
+    : s === "take_out" ? "Take-out"
+    : s === "catering" ? "Catering"
+    : s === "reservation" ? "Table reservations"
+    : "Pickup";
+}
 // "cash"           = pay on pickup/delivery in cash
 // "card"           = pay online by card via Stripe (gated by cardPaymentEnabled)
 // "card_in_person" = customer pays by card in person (restaurant's own POS).
@@ -1529,11 +1542,30 @@ export async function POST(req: NextRequest) {
         canonicalHolidayService(type),
       );
       if (holidayEffect?.kind === "closed") {
+        // Distinguish a FULL closure from a single-service one: if the
+        // all-services rule isn't closed, only THIS service is unavailable
+        // (the restaurant is still open for others). Drives a clearer,
+        // service-named message instead of a blanket "we're closed".
+        // Luigi 2026-06-12, report cmpxds2d2.
+        const generalEffect = holidayEffectForDay(
+          (restaurant as any).holidays ?? [],
+          holidayDayKey,
+          null,
+        );
+        const fullyClosed = generalEffect?.kind === "closed";
         const label = holidayEffect.name ? ` (${holidayEffect.name})` : "";
+        const error = fullyClosed
+          ? `We're closed on this date${label}. Please choose a different day.`
+          : `${serviceDisplayLabel(type)} isn't available on this date${label}. Please choose a different day or service.`;
         return NextResponse.json(
           {
-            error: `We're closed on this date${label}. Please choose a different day.`,
+            error,
             code: "holiday_closed",
+            // Client localizes from these (en fallback above).
+            fullyClosed,
+            service: canonicalHolidayService(type),
+            holidayName: holidayEffect.name ?? null,
+            holidayMessage: holidayEffect.message ?? null,
           },
           { status: 400 },
         );

@@ -224,7 +224,9 @@
       "promoReadded": "\"{name}\" har lagts tillbaka",
       "couponSwitchedSavesMore": "\"{name}\" har lagts till – den ger dig en större rabatt, så vi tog bort \"{winner}\". Tryck på dess banner för att byta tillbaka när som helst.",
       "itemUnavailable": "Den här varan är inte tillgänglig",
-      "scheduledInPast": "Den schemalagda tiden du valde har redan passerat. Välj en ny tid."
+      "scheduledInPast": "Den schemalagda tiden du valde har redan passerat. Välj en ny tid.",
+      "holidayClosedFull": "Vi har stängt detta datum. Välj en annan dag.",
+      "holidayServiceClosed": "{service} är inte tillgängligt detta datum. Välj en annan dag eller tjänst."
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",

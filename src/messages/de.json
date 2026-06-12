@@ -224,7 +224,9 @@
       "promoReadded": "\"{name}\" wieder hinzugefügt",
       "couponSwitchedSavesMore": "\"{name}\" angewendet – das spart dir mehr, daher haben wir \"{winner}\" entfernt. Tippe jederzeit auf dessen Banner, um zurückzuwechseln.",
       "itemUnavailable": "Dieser Artikel ist nicht verfügbar",
-      "scheduledInPast": "Die gewählte Vorbestellzeit liegt bereits in der Vergangenheit. Bitte wählen Sie eine neue Zeit."
+      "scheduledInPast": "Die gewählte Vorbestellzeit liegt bereits in der Vergangenheit. Bitte wählen Sie eine neue Zeit.",
+      "holidayClosedFull": "An diesem Datum haben wir geschlossen. Bitte wählen Sie einen anderen Tag.",
+      "holidayServiceClosed": "{service} ist an diesem Datum nicht verfügbar. Bitte wählen Sie einen anderen Tag oder Service."
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",

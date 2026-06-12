@@ -224,7 +224,9 @@
       "promoReadded": "Đã thêm lại \"{name}\"",
       "couponSwitchedSavesMore": "Đã áp dụng \"{name}\" — nó giúp bạn tiết kiệm nhiều hơn, nên chúng tôi đã xóa \"{winner}\". Chạm vào biểu ngữ của nó để chuyển lại bất cứ lúc nào.",
       "itemUnavailable": "Món này hiện không có sẵn",
-      "scheduledInPast": "Thời gian đã chọn đã trôi qua. Vui lòng chọn thời gian mới."
+      "scheduledInPast": "Thời gian đã chọn đã trôi qua. Vui lòng chọn thời gian mới.",
+      "holidayClosedFull": "Chúng tôi đóng cửa vào ngày này. Vui lòng chọn ngày khác.",
+      "holidayServiceClosed": "{service} không khả dụng vào ngày này. Vui lòng chọn ngày hoặc dịch vụ khác."
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",

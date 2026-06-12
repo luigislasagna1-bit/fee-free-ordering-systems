@@ -223,7 +223,9 @@
       "promoReadded": "\"{name}\" añadida de nuevo",
       "couponSwitchedSavesMore": "\"{name}\" aplicada: te hace ahorrar más, así que quitamos \"{winner}\". Toca su banner para volver a cambiar cuando quieras.",
       "itemUnavailable": "Este artículo no está disponible",
-      "scheduledInPast": "La hora programada que elegiste ya ha pasado. Elige una nueva hora."
+      "scheduledInPast": "La hora programada que elegiste ya ha pasado. Elige una nueva hora.",
+      "holidayClosedFull": "Estamos cerrados en esta fecha. Elige otro día.",
+      "holidayServiceClosed": "{service} no está disponible en esta fecha. Elige otro día u otro servicio."
     },
     "followUs": "Síguenos",
     "searchMenu": "Buscar en el menú…",
