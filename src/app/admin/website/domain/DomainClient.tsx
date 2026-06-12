@@ -302,7 +302,7 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
         <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-1">
           {t("customDomainTitle")}
           <span className="ml-2 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 rounded-full px-2 py-0.5">
-            $9.99/mo add-on
+            {t("addOnBadge")}
           </span>
         </h2>
         <p className="text-xs text-gray-500 mb-4">{t("customDomainBody")}</p>
@@ -319,17 +319,17 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
                 <Globe className="w-5 h-5" />
               </div>
               <div className="flex-1">
-                <h3 className="text-sm font-bold text-emerald-900 mb-1">Custom Domain — $9.99/mo add-on</h3>
+                <h3 className="text-sm font-bold text-emerald-900 mb-1">{t("upsellTitle")}</h3>
                 <p className="text-xs text-emerald-900 leading-relaxed mb-3">
-                  Point your own domain (e.g. <code className="bg-emerald-100 px-1 rounded">yourrestaurant.com</code>) at
-                  your ordering page. Includes free SSL, automatic DNS verification, and unlimited
-                  domain changes. Cancel anytime.
+                  {t.rich("upsellBody", {
+                    code: (chunks) => <code className="bg-emerald-100 px-1 rounded">{chunks}</code>,
+                  })}
                 </p>
                 <a
                   href="/admin/billing/add-ons"
                   className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition"
                 >
-                  Activate add-on →
+                  {t("upsellCta")}
                 </a>
               </div>
             </div>
@@ -387,10 +387,9 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
                 <div className="mt-3 rounded-lg bg-blue-50 border border-blue-200 p-3 flex items-start gap-2">
                   <Clock className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
                   <div className="text-xs text-blue-900 leading-relaxed">
-                    <strong>How long does this take?</strong> Usually 5-30 minutes after you add
-                    the records below at your registrar. Occasionally up to 24 hours if your
-                    DNS provider is slow or you had old records cached. We&apos;ll check automatically
-                    every 20 seconds while you wait — no need to refresh.
+                    {t.rich("etaBanner", {
+                      strong: (chunks) => <strong>{chunks}</strong>,
+                    })}
                   </div>
                 </div>
 
@@ -433,12 +432,12 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
                     email us BEFORE they give up + churn. The mailto
                     pre-fills the domain so we have context immediately. */}
                 <div className="mt-3 flex items-center justify-between text-xs">
-                  <span className="text-gray-500">Stuck? We&apos;ll walk you through it.</span>
+                  <span className="text-gray-500">{t("supportNudge")}</span>
                   <a
                     href={`mailto:support@feefreeordering.com?subject=Custom%20domain%20help%20for%20${encodeURIComponent(initial.customDomain ?? "")}&body=Hi%20%2D%20I%27m%20trying%20to%20connect%20${encodeURIComponent(initial.customDomain ?? "")}%20but%20%5Bdescribe%20the%20issue%5D.`}
                     className="inline-flex items-center gap-1 text-emerald-600 font-semibold hover:text-emerald-700"
                   >
-                    <Mail className="w-3 h-3" /> Email support
+                    <Mail className="w-3 h-3" /> {t("emailSupport")}
                   </a>
                 </div>
               </>
@@ -466,8 +465,13 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <h2 className="text-lg font-bold text-gray-900">Before we connect this domain</h2>
-                <p className="text-xs text-gray-500 mt-0.5">Heads up — connecting <code className="font-mono text-gray-700 bg-gray-100 px-1 rounded">{customDomain}</code> means:</p>
+                <h2 className="text-lg font-bold text-gray-900">{t("confirmTitle")}</h2>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  {t.rich("confirmIntro", {
+                    domain: customDomain,
+                    code: (chunks) => <code className="font-mono text-gray-700 bg-gray-100 px-1 rounded">{chunks}</code>,
+                  })}
+                </p>
               </div>
             </div>
 
@@ -475,33 +479,33 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
               <li className="flex gap-2">
                 <span className="text-amber-500 flex-shrink-0">⚠️</span>
                 <span>
-                  <strong>If this domain currently points to another website</strong> (your old
-                  ordering site, a WordPress page, a Squarespace site, etc.), that site will go
-                  offline within 5-30 minutes as DNS propagates. You&apos;ll need to update DNS
-                  records at your registrar — we&apos;ll give you the exact records to add.
+                  {t.rich("confirmBulletOffline", {
+                    strong: (chunks) => <strong>{chunks}</strong>,
+                  })}
                 </span>
               </li>
               <li className="flex gap-2">
                 <span className="text-emerald-500 flex-shrink-0">✓</span>
                 <span>
-                  <strong>Your email is safe.</strong> If you have email on this domain
-                  (e.g. <code className="font-mono text-gray-600 bg-gray-100 px-1 rounded">orders@{customDomain || "yourdomain.com"}</code>),
-                  it keeps working. We only update the records that route web traffic — not the
-                  ones that route email.
+                  {t.rich("confirmBulletEmail", {
+                    email: `orders@${customDomain || "yourdomain.com"}`,
+                    strong: (chunks) => <strong>{chunks}</strong>,
+                    code: (chunks) => <code className="font-mono text-gray-600 bg-gray-100 px-1 rounded">{chunks}</code>,
+                  })}
                 </span>
               </li>
               <li className="flex gap-2">
                 <span className="text-emerald-500 flex-shrink-0">✓</span>
                 <span>
-                  <strong>SSL is included.</strong> We auto-provision a free Let&apos;s Encrypt
-                  certificate the moment DNS verifies. Nothing to install.
+                  {t.rich("confirmBulletSsl", {
+                    strong: (chunks) => <strong>{chunks}</strong>,
+                  })}
                 </span>
               </li>
               <li className="flex gap-2">
                 <span className="text-gray-400 flex-shrink-0">ℹ️</span>
                 <span className="text-gray-600">
-                  Already on Vercel for another project? Remove it from there first or we&apos;ll
-                  get a &ldquo;domain already in use&rdquo; error.
+                  {t("confirmBulletVercel")}
                 </span>
               </li>
             </ul>
@@ -513,7 +517,7 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
                 disabled={connecting}
                 className="px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 rounded-lg transition disabled:opacity-50"
               >
-                Cancel
+                {t("cancel")}
               </button>
               <button
                 type="button"
@@ -525,7 +529,7 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
                 className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg transition disabled:opacity-50 inline-flex items-center gap-2"
               >
                 {connecting && <Loader2 className="w-4 h-4 animate-spin" />}
-                Yes, connect it
+                {t("confirmConnect")}
               </button>
             </div>
           </div>

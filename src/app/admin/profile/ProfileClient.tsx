@@ -34,15 +34,43 @@ import { ActiveToggle } from "./ActiveToggle";
 import { useTranslations } from "next-intl";
 
 // Leaflet must be loaded client-side only
-const ProfileMap = dynamic(() => import("./ProfileMap"), {
-  ssr: false,
-  loading: () => (
+function MapLoadingFallback() {
+  const t = useTranslations("admin.profile");
+  return (
     <div className="flex items-center justify-center h-full text-gray-400">
       <Loader2 className="w-5 h-5 animate-spin mr-2" />
-      Loading map…
+      {t("loadingMap")}
     </div>
-  ),
+  );
+}
+const ProfileMap = dynamic(() => import("./ProfileMap"), {
+  ssr: false,
+  loading: () => <MapLoadingFallback />,
 });
+
+// regions.ts ships English region labels ("Province", "ZIP code", …).
+// Map each onto its admin.profile.* translation key; unmapped labels
+// (brand names like "Eircode" / "CEP") render as-is in every language.
+const STATE_LABEL_KEYS: Record<string, string> = {
+  "State": "stateLabelState",
+  "Province": "stateLabelProvince",
+  "County": "stateLabelCounty",
+  "Canton": "stateLabelCanton",
+  "Oblast": "stateLabelOblast",
+  "Emirate": "stateLabelEmirate",
+  "Region": "stateLabelRegion",
+  "State/Territory": "stateLabelStateTerritory",
+  "Prefecture": "stateLabelPrefecture",
+  "Department": "stateLabelDepartment",
+  "Governorate": "stateLabelGovernorate",
+  "State/Region": "stateLabelStateRegion",
+};
+const POSTAL_LABEL_KEYS: Record<string, string> = {
+  "ZIP code": "postalLabelZipCode",
+  "Postal code": "postalLabelPostalCode",
+  "Postcode": "postalLabelPostcode",
+  "PIN code": "postalLabelPinCode",
+};
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -145,6 +173,8 @@ interface LocationSectionProps {
  * across re-renders only when the component identity stays stable.
  */
 function KitchenSoundSection({ initialUrl }: { initialUrl: string | null }) {
+  const t = useTranslations("admin.profile");
+  const tCommon = useTranslations("common");
   const [url, setUrl] = useState<string | null>(initialUrl);
   const [busy, setBusy] = useState<"upload" | "delete" | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -160,11 +190,11 @@ function KitchenSoundSection({ initialUrl }: { initialUrl: string | null }) {
     // Quick client-side gate. The server re-validates; this just
     // avoids round-tripping 5 MB files for an obvious rejection.
     if (file.size > 2 * 1024 * 1024) {
-      setError("File must be under 2 MB.");
+      setError(t("kitchenSoundFileTooLarge"));
       return;
     }
     if (!/^audio\//.test(file.type)) {
-      setError("Please choose an audio file (MP3, WAV, or OGG).");
+      setError(t("kitchenSoundWrongType"));
       return;
     }
 
@@ -174,12 +204,12 @@ function KitchenSoundSection({ initialUrl }: { initialUrl: string | null }) {
     fetch("/api/restaurants/kitchen-sound", { method: "POST", body: form })
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(data.error || "Upload failed");
+        if (!res.ok) throw new Error(data.error || t("kitchenSoundUploadFailed"));
         setUrl(data.url);
-        toast.success("Custom ring sound uploaded");
+        toast.success(t("kitchenSoundUploaded"));
       })
       .catch((err) => {
-        const msg = err instanceof Error ? err.message : "Upload failed";
+        const msg = err instanceof Error ? err.message : t("kitchenSoundUploadFailed");
         setError(msg);
         toast.error(msg);
       })
@@ -193,12 +223,12 @@ function KitchenSoundSection({ initialUrl }: { initialUrl: string | null }) {
     fetch("/api/restaurants/kitchen-sound", { method: "DELETE" })
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(data.error || "Delete failed");
+        if (!res.ok) throw new Error(data.error || t("kitchenSoundDeleteFailed"));
         setUrl(null);
-        toast.success("Custom ring sound removed");
+        toast.success(t("kitchenSoundRemoved"));
       })
       .catch((err) => {
-        const msg = err instanceof Error ? err.message : "Delete failed";
+        const msg = err instanceof Error ? err.message : t("kitchenSoundDeleteFailed");
         setError(msg);
         toast.error(msg);
       })
@@ -215,34 +245,30 @@ function KitchenSoundSection({ initialUrl }: { initialUrl: string | null }) {
     audioRef.current.currentTime = 0;
     audioRef.current.play().catch((err) => {
       console.warn("[kitchen-sound preview] play threw:", err);
-      toast.error("Couldn't play preview — your browser may have blocked it.");
+      toast.error(t("kitchenSoundPreviewBlocked"));
     });
   };
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
       <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-2 flex items-center gap-2">
-        <Bell className="w-4 h-4" /> Kitchen Alert Sound
+        <Bell className="w-4 h-4" /> {t("kitchenSoundTitle")}
       </div>
       <p className="text-sm text-gray-500 mb-4">
-        Upload a custom ring sound for new-order alerts. Once saved,
-        it shows up as a third option (alongside <strong>GloriaFood Ding</strong>
-        {" "}and <strong>Classic Bell</strong>) in the Kitchen Display&apos;s
-        Sound Settings. Best results: a short 1–5 second clip, under 2 MB.
-        MP3, WAV, or OGG.
+        {t.rich("kitchenSoundHelp", { strong: (chunks) => <strong>{chunks}</strong> })}
       </p>
 
       {url ? (
         <div className="flex items-center gap-3 flex-wrap">
           <div className="flex-1 min-w-0 px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg text-sm text-emerald-900 truncate">
-            ✓ Custom ring on file
+            ✓ {t("kitchenSoundOnFile")}
           </div>
           <button
             type="button"
             onClick={onPreview}
             className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50"
           >
-            <Play className="w-3.5 h-3.5" /> Preview
+            <Play className="w-3.5 h-3.5" /> {tCommon("preview")}
           </button>
           <button
             type="button"
@@ -250,7 +276,7 @@ function KitchenSoundSection({ initialUrl }: { initialUrl: string | null }) {
             disabled={busy !== null}
             className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50"
           >
-            <Upload className="w-3.5 h-3.5" /> Replace
+            <Upload className="w-3.5 h-3.5" /> {t("kitchenSoundReplace")}
           </button>
           <button
             type="button"
@@ -259,7 +285,7 @@ function KitchenSoundSection({ initialUrl }: { initialUrl: string | null }) {
             className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg border border-red-200 text-red-600 hover:bg-red-50 disabled:opacity-50"
           >
             {busy === "delete" ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
-            Remove
+            {tCommon("remove")}
           </button>
         </div>
       ) : (
@@ -270,7 +296,7 @@ function KitchenSoundSection({ initialUrl }: { initialUrl: string | null }) {
           className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:opacity-50"
         >
           {busy === "upload" ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
-          {busy === "upload" ? "Uploading…" : "Upload Custom Ring"}
+          {busy === "upload" ? t("kitchenSoundUploading") : t("kitchenSoundUploadButton")}
         </button>
       )}
 
@@ -361,7 +387,7 @@ function LocationSection({
   const geocodeFromFields = useCallback(async () => {
     const addrStr = [address, city, state, zip, country].filter(Boolean).join(", ");
     if (!addrStr.trim()) {
-      toast.error("Fill in the address fields first.");
+      toast.error(tProfile("fillAddressFirst"));
       return;
     }
     setGeocoding(true);
@@ -376,12 +402,12 @@ function LocationSection({
         const newLat = parseFloat(data[0].lat);
         const newLng = parseFloat(data[0].lon);
         onCoordsChange(newLat, newLng);
-        toast.success("Location pinned from address!");
+        toast.success(tProfile("locationPinnedFromAddress"));
       } else {
-        toast.error("Could not geocode this address. Try the search box above.");
+        toast.error(tProfile("geocodeNotFound"));
       }
     } catch {
-      toast.error("Geocoding failed. Check your internet connection.");
+      toast.error(tProfile("geocodeFailed"));
     }
     setGeocoding(false);
   }, [address, city, state, zip, country, onCoordsChange]);
@@ -408,7 +434,7 @@ function LocationSection({
         {locationSet ? (
           <div className="flex items-center gap-2 text-sm">
             <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
-            <span className="text-green-700 font-medium">Location pinned</span>
+            <span className="text-green-700 font-medium">{tProfile("locationPinned")}</span>
             <span className="text-gray-400 font-mono text-xs">
               {lat!.toFixed(6)}, {lng!.toFixed(6)}
             </span>
@@ -416,9 +442,9 @@ function LocationSection({
         ) : (
           <div className="flex items-center gap-2 text-sm">
             <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0" />
-            <span className="text-amber-700 font-medium">No location set</span>
+            <span className="text-amber-700 font-medium">{tProfile("noLocationSet")}</span>
             <span className="text-amber-600 text-xs">
-              — Delivery Zones will not work correctly until this is set.
+              — {tProfile("noLocationHint")}
             </span>
           </div>
         )}
@@ -434,7 +460,7 @@ function LocationSection({
           <input
             type="text"
             className="w-full border border-gray-300 rounded-lg pl-8 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-            placeholder="Start typing your restaurant address…"
+            placeholder={tProfile("addressSearchPlaceholder")}
             value={query}
             onChange={(e) => handleQueryChange(e.target.value)}
             onFocus={() => suggestions.length > 0 && setShowDropdown(true)}
@@ -495,8 +521,7 @@ function LocationSection({
         />
       </div>
       <p className="text-xs text-gray-400 mt-1.5">
-        Click the map or drag the orange pin to fine-tune your exact location.
-        This is used as the origin for all delivery zone radius calculations.
+        {tProfile("mapHint")}
       </p>
     </div>
   );
@@ -557,6 +582,12 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
   if (form.timezone && !timezoneOptions.includes(form.timezone)) {
     timezoneOptions = [form.timezone, ...timezoneOptions];
   }
+
+  // Localized State / Province / ZIP / Postal-code labels for the
+  // current country (falls back to the raw regions.ts label for
+  // unmapped brand-name labels like "Eircode" / "CEP").
+  const stateLabelKey = region?.stateLabel ? STATE_LABEL_KEYS[region.stateLabel] : undefined;
+  const postalLabelKey = region?.postalLabel ? POSTAL_LABEL_KEYS[region.postalLabel] : undefined;
 
   // lat/lng are managed separately — they're not part of the main text form
   const [lat, setLat] = useState<number | null>(restaurant?.lat ?? null);
@@ -627,9 +658,9 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
       });
 
       if (!res.ok) throw new Error("Failed");
-      toast.success("Profile saved!");
+      toast.success(t("profileSaved"));
     } catch {
-      toast.error("Failed to save profile");
+      toast.error(t("profileSaveFailed"));
     }
     setLoading(false);
   };
@@ -672,7 +703,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
                 rows={3}
                 value={form.description}
                 onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-                placeholder="Tell customers about your restaurant…"
+                placeholder={t("descriptionPlaceholder")}
               />
             </div>
           </div>
@@ -732,8 +763,8 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
             <Field {...fp} label={t("city")} field="city" />
             {/* Address-field labels adapt to the country: State / Province /
                 Region, and ZIP code / Postcode / PIN code, from regions.ts. */}
-            <Field {...fp} label={region?.stateLabel ?? t("state")} field="state" />
-            <Field {...fp} label={region?.postalLabel ?? t("zip")} field="zip" />
+            <Field {...fp} label={stateLabelKey ? t(stateLabelKey) : (region?.stateLabel ?? t("state"))} field="state" />
+            <Field {...fp} label={postalLabelKey ? t(postalLabelKey) : (region?.postalLabel ?? t("zip"))} field="zip" />
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">{t("country")}</label>
               <select
@@ -746,11 +777,11 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
                 ))}
               </select>
               <p className="text-xs text-gray-400 mt-1">
-                Sets your timezone, currency &amp; language defaults — adjust any below.
+                {t("countryCascadeHint")}
               </p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Timezone</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("timezone")}</label>
               <select
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
                 value={form.timezone}
@@ -761,7 +792,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
                 ))}
               </select>
               <p className="text-xs text-gray-400 mt-1">
-                Used for opening hours, scheduling &amp; time-limited promos.
+                {t("timezoneHint")}
               </p>
             </div>
           </div>
@@ -807,7 +838,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
             <Field {...fp} label={t("estDeliveryTime")} field="estimatedDelivery" type="number" />
             <Field {...fp} label={t("minimumOrder")} field="minimumOrder" type="number" />
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Currency</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("currency")}</label>
               <select
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
                 value={form.currency}
@@ -819,7 +850,7 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
                   </option>
                 ))}
               </select>
-              <p className="text-xs text-gray-400 mt-1">All prices across your menu, checkout &amp; receipts use this.</p>
+              <p className="text-xs text-gray-400 mt-1">{t("currencyHint")}</p>
             </div>
           </div>
           {/* Delivery-fee and tax-rate fields used to live here. Both
@@ -832,12 +863,12 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
                   Fees & Tax). */}
           <div className="mt-4 grid sm:grid-cols-2 gap-3 text-xs text-gray-500">
             <a href="/admin/delivery" className="rounded-lg border border-gray-100 px-3 py-2 hover:border-emerald-300 hover:bg-emerald-50 transition">
-              <div className="font-semibold text-gray-700">Delivery fees</div>
-              <div className="mt-0.5">Set per delivery zone →</div>
+              <div className="font-semibold text-gray-700">{t("deliveryFeesLink")}</div>
+              <div className="mt-0.5">{t("deliveryFeesLinkHint")} →</div>
             </a>
             <a href="/admin/service-fees" className="rounded-lg border border-gray-100 px-3 py-2 hover:border-emerald-300 hover:bg-emerald-50 transition">
-              <div className="font-semibold text-gray-700">Sales tax rate</div>
-              <div className="mt-0.5">Configure in Service Fees &amp; Tax →</div>
+              <div className="font-semibold text-gray-700">{t("salesTaxLink")}</div>
+              <div className="mt-0.5">{t("salesTaxLinkHint")} →</div>
             </a>
           </div>
         </div>

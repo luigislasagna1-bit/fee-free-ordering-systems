@@ -27,6 +27,7 @@ export function AdminHeader({
 }) {
   const tAdmin = useTranslations("admin");
   const tOrders = useTranslations("admin.orders");
+  const tSetup = useTranslations("admin.setupBanner");
   const user = session.user as any;
   const displayName = restaurantName || user?.name || user?.email;
 
@@ -54,14 +55,14 @@ export function AdminHeader({
           <div className="flex items-center gap-2 min-w-0">
             <AlertCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
             <span className="text-sm text-emerald-900 truncate">
-              <span className="font-semibold">Setup {setupProgress.percent}% complete</span>
+              <span className="font-semibold">{tSetup("setupPercentComplete", { percent: setupProgress.percent })}</span>
               <span className="text-emerald-700">
                 {" · "}
                 {setupProgress.publishReady
-                  ? "You're ready to publish"
-                  : `${setupProgress.requiredStepsRemaining.length} required step${
-                      setupProgress.requiredStepsRemaining.length === 1 ? "" : "s"
-                    } left`}
+                  ? tSetup("readyToPublish")
+                  : tSetup("requiredStepsLeft", {
+                      count: setupProgress.requiredStepsRemaining.length,
+                    })}
               </span>
             </span>
           </div>
@@ -73,7 +74,7 @@ export function AdminHeader({
               />
             </div>
             <span className="text-xs font-medium text-emerald-700 hidden sm:inline">
-              Finish setup &rarr;
+              {tSetup("finishSetup")} &rarr;
             </span>
           </div>
         </div>
@@ -87,7 +88,7 @@ export function AdminHeader({
             boundary. Hidden on md+ since the sidebar is always visible. */}
         <button
           type="button"
-          aria-label="Open sidebar"
+          aria-label={tAdmin("openSidebar")}
           onClick={() => window.dispatchEvent(new Event("admin-sidebar-toggle"))}
           className="md:hidden p-2 -ml-1 text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100"
         >

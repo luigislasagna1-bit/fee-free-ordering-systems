@@ -424,13 +424,13 @@ function isActiveItem(item: NavItem, pathname: string): boolean {
  *  UI usable even before en/fr/es/it/pt JSON is updated. */
 function useSafeT() {
   const t = useTranslations("admin.sidebar");
-  return (key: string, fallback?: string) => {
+  return (key: string, fallback?: string, values?: Record<string, string | number>) => {
     // next-intl's t() throws in dev mode when a key is missing — that
     // takes down the whole sidebar and blocks navigation. Wrap in a
     // try/catch so a missing translation degrades gracefully to the
     // hardcoded English fallback (which every NavItem already carries).
     try {
-      const v = t(key);
+      const v = t(key, values);
       return v.startsWith("admin.sidebar.") || v === key ? fallback ?? key : v;
     } catch {
       return fallback ?? key;
@@ -679,7 +679,7 @@ export function AdminSidebar({
       {mobileOpen && (
         <button
           type="button"
-          aria-label="Close sidebar"
+          aria-label={tr("closeSidebar", "Close sidebar")}
           onClick={() => setMobileOpen(false)}
           className="md:hidden fixed inset-0 z-30 bg-black/50 backdrop-blur-sm"
         />
@@ -737,11 +737,15 @@ export function AdminSidebar({
             className="mx-2 mt-3 mb-1 bg-gradient-to-r from-emerald-500/20 to-emerald-500/10 border border-emerald-500/40 rounded-lg px-3 py-2 text-xs hover:border-emerald-500/70 transition"
           >
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-emerald-400">Ready to publish</span>
+              <span className="font-semibold text-emerald-400">{tr("readyToPublish", "Ready to publish")}</span>
               <Rocket className="w-3.5 h-3.5 text-emerald-300" />
             </div>
             <div className="text-[10px] text-gray-400 mt-1">
-              All {setupProgress.totalSteps} steps complete · click to go live
+              {tr(
+                "allStepsComplete",
+                `All ${setupProgress.totalSteps} steps complete · click to go live`,
+                { total: setupProgress.totalSteps },
+              )}
             </div>
           </Link>
         ) : (
@@ -750,7 +754,7 @@ export function AdminSidebar({
             className="mx-2 mt-3 mb-1 bg-gradient-to-r from-emerald-500/20 to-emerald-500/10 border border-emerald-500/40 rounded-lg px-3 py-2 text-xs hover:border-emerald-500/70 transition"
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="font-semibold text-emerald-400">Setup progress</span>
+              <span className="font-semibold text-emerald-400">{tr("setupProgress", "Setup progress")}</span>
               <span className="text-emerald-300 font-bold">{setupProgress.percent}%</span>
             </div>
             <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
@@ -760,8 +764,17 @@ export function AdminSidebar({
               />
             </div>
             <div className="text-[10px] text-gray-400 mt-1">
-              {setupProgress.completedSteps}/{setupProgress.totalSteps} steps complete
-              {!setupProgress.publishReady && ` · ${setupProgress.requiredStepsRemaining.length} required`}
+              {tr(
+                "stepsComplete",
+                `${setupProgress.completedSteps}/${setupProgress.totalSteps} steps complete`,
+                { completed: setupProgress.completedSteps, total: setupProgress.totalSteps },
+              )}
+              {!setupProgress.publishReady &&
+                ` · ${tr(
+                  "requiredCount",
+                  `${setupProgress.requiredStepsRemaining.length} required`,
+                  { count: setupProgress.requiredStepsRemaining.length },
+                )}`}
             </div>
           </Link>
         )

@@ -154,7 +154,7 @@ export function ServicesClient() {
           <button
             onClick={() => setAutoAcceptOrders(v => !v)}
             className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
-            title={autoAcceptOrders ? "Disable" : "Enable"}
+            title={autoAcceptOrders ? t("disable") : t("enable")}
           >
             {autoAcceptOrders
               ? <ToggleRight className="w-8 h-8 text-emerald-500" />
@@ -174,7 +174,7 @@ export function ServicesClient() {
           <button
             onClick={() => setPreorder(p => ({ ...p, allowScheduledOrders: !p.allowScheduledOrders }))}
             className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
-            title={preorder.allowScheduledOrders ? "Disable" : "Enable"}
+            title={preorder.allowScheduledOrders ? t("disable") : t("enable")}
           >
             {preorder.allowScheduledOrders ? <ToggleRight className="w-8 h-8 text-emerald-500" /> : <ToggleLeft className="w-8 h-8" />}
           </button>
@@ -188,7 +188,7 @@ export function ServicesClient() {
             <button
               onClick={() => setPreorder(p => ({ ...p, requireScheduledOrders: !p.requireScheduledOrders }))}
               className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
-              title={preorder.requireScheduledOrders ? "Disable" : "Enable"}
+              title={preorder.requireScheduledOrders ? t("disable") : t("enable")}
             >
               {preorder.requireScheduledOrders ? <ToggleRight className="w-8 h-8 text-emerald-500" /> : <ToggleLeft className="w-8 h-8" />}
             </button>
@@ -221,7 +221,7 @@ export function ServicesClient() {
                 <button
                   onClick={() => setEnabled(e => ({ ...e, [key]: !e[key] }))}
                   className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
-                  title={on ? "Disable" : "Enable"}
+                  title={on ? t("disable") : t("enable")}
                 >
                   {on
                     ? <ToggleRight className="w-8 h-8 text-emerald-500" />
@@ -245,7 +245,7 @@ export function ServicesClient() {
                     <label className="block text-xs font-medium text-gray-600 mb-1">{t("shortDescription")}</label>
                     <input
                       className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                      placeholder="e.g. Order online and pick up in 20 min"
+                      placeholder={t("shortDescriptionPlaceholder")}
                       value={settings[key].description}
                       onChange={e => updateSetting(key, "description", e.target.value)}
                     />
@@ -301,8 +301,11 @@ export function ServicesClient() {
                   {key === "reservations" && (
                     <div className="sm:col-span-3">
                       <p className="text-xs text-gray-400">
-                        Configure reservation times, tables, and availability in{" "}
-                        <a href="/admin/reservations" className="text-emerald-500 hover:underline font-medium">Table Reservations settings</a>.
+                        {t.rich("configureReservationsLink", {
+                          link: (chunks) => (
+                            <a href="/admin/reservations" className="text-emerald-500 hover:underline font-medium">{chunks}</a>
+                          ),
+                        })}
                       </p>
                     </div>
                   )}
@@ -359,7 +362,7 @@ export function ServicesClient() {
                   {key === "catering" && (
                     <div className="sm:col-span-3 pt-2 border-t border-gray-100">
                       <label className="block text-xs font-medium text-gray-600 mb-1">
-                        Required advance notice
+                        {t("cateringNoticeLabel")}
                       </label>
                       <div className="flex items-center gap-2 flex-wrap">
                         {[24, 48, 72].map((h) => (
@@ -373,7 +376,7 @@ export function ServicesClient() {
                                 : "bg-white text-gray-700 border-gray-300 hover:border-emerald-300"
                             }`}
                           >
-                            {h === 24 ? "24h (1 day)" : h === 48 ? "48h (2 days)" : "72h (3 days)"}
+                            {h === 24 ? t("cateringNotice24h") : h === 48 ? t("cateringNotice48h") : t("cateringNotice72h")}
                           </button>
                         ))}
                         <div className="flex items-center gap-1.5">
@@ -389,17 +392,16 @@ export function ServicesClient() {
                               if (!Number.isNaN(v) && v > 0 && v <= 720) setCateringNoticeHours(v);
                             }}
                           />
-                          <span className="text-xs text-gray-500">hours</span>
+                          <span className="text-xs text-gray-500">{t("unitHours")}</span>
                         </div>
                       </div>
                       <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
-                        Items marked as catering — or items inside a category marked catering —
-                        can&apos;t be ordered for ASAP. The customer must schedule the order
-                        at least {cateringNoticeHours}h in advance.
-                        Manage which items are catering on{" "}
-                        <a href="/admin/menu" className="text-emerald-600 hover:underline font-medium">
-                          the menu page
-                        </a>.
+                        {t.rich("cateringNoticeHelp", {
+                          hours: cateringNoticeHours,
+                          link: (chunks) => (
+                            <a href="/admin/menu" className="text-emerald-600 hover:underline font-medium">{chunks}</a>
+                          ),
+                        })}
                       </p>
                     </div>
                   )}
