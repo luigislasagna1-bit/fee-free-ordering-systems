@@ -222,7 +222,8 @@
       "couponPromoApplied": "Промоцията „{name}“ е приложена!",
       "couponBlocked": "\"{name}\" не може да се комбинира с \"{winner}\", който вече ви носи по-голяма отстъпка. Все пак можете да премахнете \"{winner}\" в количката си, за да използвате тази вместо него.",
       "promoReadded": "„{name}“ е добавена отново",
-      "couponSwitchedSavesMore": "\"{name}\" е приложен — носи ви по-голяма отстъпка, затова премахнахме \"{winner}\". Докоснете банера му, за да превключите обратно по всяко време."
+      "couponSwitchedSavesMore": "\"{name}\" е приложен — носи ви по-голяма отстъпка, затова премахнахме \"{winner}\". Докоснете банера му, за да превключите обратно по всяко време.",
+      "itemUnavailable": "Този артикул не е наличен"
     },
     "searchMenu": "Търсене в менюто…",
     "signIn": "Вход",
@@ -1222,7 +1223,8 @@
       "markComplete": "Маркирай като завършено",
       "rejectReason": "Причина за отказ",
       "noOrders": "Все още няма поръчки",
-      "viewDetails": "Виж детайли"
+      "viewDetails": "Виж детайли",
+      "hasNotes": "С бележки"
     },
     "customers": {
       "title": "Клиенти",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Профил → Активен",
       "youAreLiveOfflineSuffix": "— това те скрива от клиентите, без да загубиш данните от настройката.",
       "sectionStepCount": "{completed} от {total} {count, plural, one {стъпка} other {стъпки}}",
-      "requiredToPublish": "Задължително за публикуване"
+      "requiredToPublish": "Задължително за публикуване",
+      "publishSuccessToast": "Вече сте на живо! Клиентите вече могат да правят поръчки.",
+      "publishFailedGeneric": "Ресторантът ви не можа да бъде публикуван. Опитайте отново."
     },
     "locations": {
       "pageTitle": "Локации",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Уебсайт",
       "websitePlaceholder": "Вашият уебсайт",
       "footerTextLabel": "Допълнителен текст (под QR)",
-      "footerTextPlaceholder": "Незадължителен допълнителен ред"
+      "footerTextPlaceholder": "Незадължителен допълнителен ред",
+      "deleteConfirm": "Да се изтрие ли този дизайн? Това действие не може да бъде отменено."
     },
     "featureLocked": {
       "badge": "Платена добавка",

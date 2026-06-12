@@ -221,7 +221,8 @@
       "couponPromoApplied": "Promo \"{name}\" applicata!",
       "couponBlocked": "\"{name}\" non è cumulabile con \"{winner}\", che ti fa già risparmiare di più. Puoi comunque rimuovere \"{winner}\" dal carrello per usare questo al suo posto.",
       "promoReadded": "\"{name}\" aggiunta di nuovo",
-      "couponSwitchedSavesMore": "\"{name}\" applicato: ti fa risparmiare di più, quindi abbiamo rimosso \"{winner}\". Tocca il suo banner per ripristinarlo quando vuoi."
+      "couponSwitchedSavesMore": "\"{name}\" applicato: ti fa risparmiare di più, quindi abbiamo rimosso \"{winner}\". Tocca il suo banner per ripristinarlo quando vuoi.",
+      "itemUnavailable": "Questo articolo non è disponibile"
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",
@@ -1211,7 +1212,8 @@
       "markComplete": "Segna completato",
       "rejectReason": "Motivo del rifiuto",
       "noOrders": "Nessun ordine",
-      "viewDetails": "Vedi dettagli"
+      "viewDetails": "Vedi dettagli",
+      "hasNotes": "Con note"
     },
     "customers": {
       "title": "Clienti",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profilo → Attivo",
       "youAreLiveOfflineSuffix": "— in questo modo verrai nascosto ai clienti senza perdere i dati di configurazione.",
       "sectionStepCount": "{completed} di {total} {count, plural, one {passaggio} other {passaggi}}",
-      "requiredToPublish": "Obbligatorio per pubblicare"
+      "requiredToPublish": "Obbligatorio per pubblicare",
+      "publishSuccessToast": "Sei online! Ora i clienti possono ordinare.",
+      "publishFailedGeneric": "Impossibile pubblicare il tuo ristorante. Riprova."
     },
     "locations": {
       "pageTitle": "Sedi",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Sito web",
       "websitePlaceholder": "Il tuo sito web",
       "footerTextLabel": "Testo aggiuntivo (sotto il QR)",
-      "footerTextPlaceholder": "Riga aggiuntiva (facoltativa)"
+      "footerTextPlaceholder": "Riga aggiuntiva (facoltativa)",
+      "deleteConfirm": "Eliminare questo design? L'operazione è irreversibile."
     },
     "featureLocked": {
       "badge": "Componente aggiuntivo a pagamento",

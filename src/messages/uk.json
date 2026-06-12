@@ -222,7 +222,8 @@
       "couponPromoApplied": "Акцію \"{name}\" застосовано!",
       "couponBlocked": "\"{name}\" не можна поєднати з \"{winner}\", який уже дає вам більшу знижку. Ви все одно можете видалити \"{winner}\" у кошику, щоб скористатися цим натомість.",
       "promoReadded": "\"{name}\" повернуто",
-      "couponSwitchedSavesMore": "\"{name}\" застосовано — він дає вам більшу знижку, тож ми видалили \"{winner}\". Натисніть його банер, щоб повернутися назад будь-коли."
+      "couponSwitchedSavesMore": "\"{name}\" застосовано — він дає вам більшу знижку, тож ми видалили \"{winner}\". Натисніть його банер, щоб повернутися назад будь-коли.",
+      "itemUnavailable": "Цей товар недоступний"
     },
     "searchMenu": "Пошук у меню…",
     "signIn": "Увійти",
@@ -1222,7 +1223,8 @@
       "markComplete": "Позначити виконаним",
       "rejectReason": "Причина відхилення",
       "noOrders": "Поки немає замовлень",
-      "viewDetails": "Переглянути деталі"
+      "viewDetails": "Переглянути деталі",
+      "hasNotes": "Є нотатки"
     },
     "customers": {
       "title": "Клієнти",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Профіль → Активний",
       "youAreLiveOfflineSuffix": "— це приховає вас від клієнтів без втрати даних налаштування.",
       "sectionStepCount": "{completed} з {total} {count, plural, one {крок} other {кроків}}",
-      "requiredToPublish": "Обов'язково для публікації"
+      "requiredToPublish": "Обов'язково для публікації",
+      "publishSuccessToast": "Ви в ефірі! Клієнти тепер можуть оформлювати замовлення.",
+      "publishFailedGeneric": "Не вдалося опублікувати ваш ресторан. Спробуйте ще раз."
     },
     "locations": {
       "pageTitle": "Локації",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Вебсайт",
       "websitePlaceholder": "Ваш вебсайт",
       "footerTextLabel": "Додатковий текст (під QR)",
-      "footerTextPlaceholder": "Необов'язковий додатковий рядок"
+      "footerTextPlaceholder": "Необов'язковий додатковий рядок",
+      "deleteConfirm": "Видалити цей дизайн? Цю дію не можна скасувати."
     },
     "featureLocked": {
       "badge": "Платне доповнення",

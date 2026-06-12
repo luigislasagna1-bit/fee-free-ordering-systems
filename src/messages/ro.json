@@ -222,7 +222,8 @@
       "couponPromoApplied": "Promoția „{name}\" a fost aplicată!",
       "couponBlocked": "\"{name}\" nu poate fi combinat cu \"{winner}\", care îți oferă deja o reducere mai mare. Totuși, poți elimina \"{winner}\" din coș ca să folosești în loc această ofertă.",
       "promoReadded": "„{name}\" a fost adăugată din nou",
-      "couponSwitchedSavesMore": "\"{name}\" a fost aplicat — îți oferă o reducere mai mare, așa că am eliminat \"{winner}\". Atinge bannerul lui \"{winner}\" oricând ca să revii."
+      "couponSwitchedSavesMore": "\"{name}\" a fost aplicat — îți oferă o reducere mai mare, așa că am eliminat \"{winner}\". Atinge bannerul lui \"{winner}\" oricând ca să revii.",
+      "itemUnavailable": "Acest produs nu este disponibil"
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
@@ -1222,7 +1223,8 @@
       "markComplete": "Marchează finalizată",
       "rejectReason": "Motiv respingere",
       "noOrders": "Nicio comandă încă",
-      "viewDetails": "Vezi detalii"
+      "viewDetails": "Vezi detalii",
+      "hasNotes": "Cu note"
     },
     "customers": {
       "title": "Clienți",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Activ",
       "youAreLiveOfflineSuffix": "pe dezactivat — te ascunde de clienți fără a pierde datele de configurare.",
       "sectionStepCount": "{completed} din {total} {count, plural, one {pas} other {pași}}",
-      "requiredToPublish": "Obligatoriu pentru publicare"
+      "requiredToPublish": "Obligatoriu pentru publicare",
+      "publishSuccessToast": "Ești online! Clienții pot plasa comenzi acum.",
+      "publishFailedGeneric": "Nu am putut publica restaurantul. Încearcă din nou."
     },
     "locations": {
       "pageTitle": "Locații",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Site web",
       "websitePlaceholder": "Site-ul tău web",
       "footerTextLabel": "Text suplimentar (sub QR)",
-      "footerTextPlaceholder": "Rând suplimentar (opțional)"
+      "footerTextPlaceholder": "Rând suplimentar (opțional)",
+      "deleteConfirm": "Ștergi acest design? Această acțiune nu poate fi anulată."
     },
     "featureLocked": {
       "badge": "Supliment cu plată",

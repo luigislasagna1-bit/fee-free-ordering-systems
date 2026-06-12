@@ -222,7 +222,8 @@
       "couponPromoApplied": "Đã áp dụng ưu đãi \"{name}\"!",
       "couponBlocked": "\"{name}\" không thể kết hợp với \"{winner}\", vốn đang giúp bạn tiết kiệm nhiều hơn. Bạn vẫn có thể xóa \"{winner}\" khỏi giỏ hàng để dùng ưu đãi này thay thế.",
       "promoReadded": "Đã thêm lại \"{name}\"",
-      "couponSwitchedSavesMore": "Đã áp dụng \"{name}\" — nó giúp bạn tiết kiệm nhiều hơn, nên chúng tôi đã xóa \"{winner}\". Chạm vào biểu ngữ của nó để chuyển lại bất cứ lúc nào."
+      "couponSwitchedSavesMore": "Đã áp dụng \"{name}\" — nó giúp bạn tiết kiệm nhiều hơn, nên chúng tôi đã xóa \"{winner}\". Chạm vào biểu ngữ của nó để chuyển lại bất cứ lúc nào.",
+      "itemUnavailable": "Món này hiện không có sẵn"
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",
@@ -1222,7 +1223,8 @@
       "markComplete": "Đánh dấu hoàn thành",
       "rejectReason": "Lý do từ chối",
       "noOrders": "Chưa có đơn hàng",
-      "viewDetails": "Xem chi tiết"
+      "viewDetails": "Xem chi tiết",
+      "hasNotes": "Có ghi chú"
     },
     "customers": {
       "title": "Khách hàng",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Hồ sơ → Đang hoạt động",
       "youAreLiveOfflineSuffix": "tắt — điều này ẩn bạn khỏi khách hàng mà không mất dữ liệu thiết lập.",
       "sectionStepCount": "{completed} trong {total} {count, plural, one {bước} other {bước}}",
-      "requiredToPublish": "Bắt buộc để xuất bản"
+      "requiredToPublish": "Bắt buộc để xuất bản",
+      "publishSuccessToast": "Bạn đã hoạt động! Khách hàng giờ có thể đặt hàng.",
+      "publishFailedGeneric": "Không thể đăng nhà hàng của bạn. Vui lòng thử lại."
     },
     "menuEditor": {
       "sectionSizeLabel": "Chọn kích cỡ",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Trang web",
       "websitePlaceholder": "Trang web của bạn",
       "footerTextLabel": "Văn bản thêm (dưới mã QR)",
-      "footerTextPlaceholder": "Dòng bổ sung (tùy chọn)"
+      "footerTextPlaceholder": "Dòng bổ sung (tùy chọn)",
+      "deleteConfirm": "Xóa thiết kế này? Hành động này không thể hoàn tác."
     },
     "featureLocked": {
       "badge": "Tiện ích trả phí",

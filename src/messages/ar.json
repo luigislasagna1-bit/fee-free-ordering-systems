@@ -222,7 +222,8 @@
       "couponPromoApplied": "تم تطبيق العرض \"{name}\"!",
       "couponBlocked": "لا يمكن دمج \"{name}\" مع \"{winner}\"، الذي يوفّر لك مبلغًا أكبر بالفعل. وما زال بإمكانك إزالة \"{winner}\" من سلّتك لاستخدام هذا العرض بدلًا منه.",
       "promoReadded": "تمت إعادة إضافة \"{name}\"",
-      "couponSwitchedSavesMore": "تم تطبيق \"{name}\" — فهو يوفّر لك مبلغًا أكبر، لذا أزلنا \"{winner}\". اضغط على شريطه للعودة إليه في أي وقت."
+      "couponSwitchedSavesMore": "تم تطبيق \"{name}\" — فهو يوفّر لك مبلغًا أكبر، لذا أزلنا \"{winner}\". اضغط على شريطه للعودة إليه في أي وقت.",
+      "itemUnavailable": "هذا العنصر غير متوفر"
     },
     "searchMenu": "ابحث في القائمة…",
     "signIn": "تسجيل الدخول",
@@ -1222,7 +1223,8 @@
       "markComplete": "تحديد كمكتمل",
       "rejectReason": "سبب الرفض",
       "noOrders": "لا طلبات بعد",
-      "viewDetails": "عرض التفاصيل"
+      "viewDetails": "عرض التفاصيل",
+      "hasNotes": "بها ملاحظات"
     },
     "customers": {
       "title": "العملاء",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "الملف الشخصي ← نشط",
       "youAreLiveOfflineSuffix": "— يخفيك عن العملاء دون فقدان بيانات الإعداد.",
       "sectionStepCount": "{completed} من {total} {count, plural, one {خطوة} other {خطوات}}",
-      "requiredToPublish": "مطلوب للنشر"
+      "requiredToPublish": "مطلوب للنشر",
+      "publishSuccessToast": "أصبحت متاحًا الآن! يمكن للعملاء الآن تقديم الطلبات.",
+      "publishFailedGeneric": "تعذّر نشر مطعمك. يرجى المحاولة مرة أخرى."
     },
     "locations": {
       "pageTitle": "الفروع",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "الموقع الإلكتروني",
       "websitePlaceholder": "موقعك الإلكتروني",
       "footerTextLabel": "نص إضافي (أسفل رمز QR)",
-      "footerTextPlaceholder": "سطر إضافي (اختياري)"
+      "footerTextPlaceholder": "سطر إضافي (اختياري)",
+      "deleteConfirm": "حذف هذا التصميم؟ لا يمكن التراجع عن هذا الإجراء."
     },
     "featureLocked": {
       "badge": "إضافة مدفوعة",

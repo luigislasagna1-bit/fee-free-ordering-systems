@@ -222,7 +222,8 @@
       "couponPromoApplied": "Promocija „{name}” je primenjena!",
       "couponBlocked": "\"{name}\" se ne može kombinovati sa \"{winner}\", koji vam već donosi veću uštedu. I dalje možete ukloniti \"{winner}\" iz korpe da biste umesto njega iskoristili ovaj.",
       "promoReadded": "„{name}” je ponovo dodata",
-      "couponSwitchedSavesMore": "\"{name}\" je primenjen — donosi vam veću uštedu, pa smo uklonili \"{winner}\". Dodirnite njegov baner da se vratite nazad bilo kada."
+      "couponSwitchedSavesMore": "\"{name}\" je primenjen — donosi vam veću uštedu, pa smo uklonili \"{winner}\". Dodirnite njegov baner da se vratite nazad bilo kada.",
+      "itemUnavailable": "Ова ставка није доступна"
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",
@@ -1222,7 +1223,8 @@
       "markComplete": "Označi kao završeno",
       "rejectReason": "Razlog odbijanja",
       "noOrders": "Još nema porudžbina",
-      "viewDetails": "Pogledaj detalje"
+      "viewDetails": "Pogledaj detalje",
+      "hasNotes": "Има напомене"
     },
     "customers": {
       "title": "Kupci",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktivno",
       "youAreLiveOfflineSuffix": "— to vas skriva od kupaca bez gubitka podataka o podešavanju.",
       "sectionStepCount": "{completed} od {total} {count, plural, one {korak} other {koraka}}",
-      "requiredToPublish": "Obavezno za objavu"
+      "requiredToPublish": "Obavezno za objavu",
+      "publishSuccessToast": "Уживо сте! Купци сада могу да наручују.",
+      "publishFailedGeneric": "Није могуће објавити ваш ресторан. Покушајте поново."
     },
     "locations": {
       "pageTitle": "Lokacije",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Веб-сајт",
       "websitePlaceholder": "Ваш веб-сајт",
       "footerTextLabel": "Додатни текст (испод QR-а)",
-      "footerTextPlaceholder": "Опционални додатни ред"
+      "footerTextPlaceholder": "Опционални додатни ред",
+      "deleteConfirm": "Избрисати овај дизајн? Ова радња се не може поништити."
     },
     "featureLocked": {
       "badge": "Плаћени додатак",

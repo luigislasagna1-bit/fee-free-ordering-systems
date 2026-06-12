@@ -222,7 +222,8 @@
       "couponPromoApplied": "Promoció \"{name}\" aplicada!",
       "couponBlocked": "\"{name}\" no es pot combinar amb \"{winner}\", que ja t'estalvia més. Si vols, pots treure \"{winner}\" de la cistella per fer servir aquesta.",
       "promoReadded": "\"{name}\" tornada a afegir",
-      "couponSwitchedSavesMore": "\"{name}\" aplicada: t'estalvia més, així que hem tret \"{winner}\". Toca el seu rètol per tornar-hi quan vulguis."
+      "couponSwitchedSavesMore": "\"{name}\" aplicada: t'estalvia més, així que hem tret \"{winner}\". Toca el seu rètol per tornar-hi quan vulguis.",
+      "itemUnavailable": "Aquest article no està disponible"
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
@@ -1222,7 +1223,8 @@
       "markComplete": "Marcar com a completada",
       "rejectReason": "Motiu del rebuig",
       "noOrders": "Encara no hi ha comandes",
-      "viewDetails": "Veure detalls"
+      "viewDetails": "Veure detalls",
+      "hasNotes": "Amb notes"
     },
     "customers": {
       "title": "Clients",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Perfil → Actiu",
       "youAreLiveOfflineSuffix": "— això us amaga als clients sense perdre les dades de configuració.",
       "sectionStepCount": "{completed} de {total} {count, plural, one {pas} other {passos}}",
-      "requiredToPublish": "Obligatori per publicar"
+      "requiredToPublish": "Obligatori per publicar",
+      "publishSuccessToast": "Ja estàs en línia! Els clients ja poden fer comandes.",
+      "publishFailedGeneric": "No s'ha pogut publicar el teu restaurant. Torna-ho a provar."
     },
     "locations": {
       "pageTitle": "Ubicacions",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Lloc web",
       "websitePlaceholder": "El teu lloc web",
       "footerTextLabel": "Text addicional (sota el QR)",
-      "footerTextPlaceholder": "Línia addicional (opcional)"
+      "footerTextPlaceholder": "Línia addicional (opcional)",
+      "deleteConfirm": "Vols eliminar aquest disseny? Aquesta acció no es pot desfer."
     },
     "featureLocked": {
       "badge": "Complement de pagament",

@@ -222,7 +222,8 @@
       "couponPromoApplied": "Promotie \"{name}\" toegepast!",
       "couponBlocked": "\"{name}\" kan niet worden gecombineerd met \"{winner}\", waarmee je al meer bespaart. Je kunt \"{winner}\" nog steeds uit je winkelwagen verwijderen om in plaats daarvan deze te gebruiken.",
       "promoReadded": "\"{name}\" opnieuw toegevoegd",
-      "couponSwitchedSavesMore": "\"{name}\" toegepast — hiermee bespaar je meer, dus we hebben \"{winner}\" verwijderd. Tik op de banner ervan om altijd weer terug te wisselen."
+      "couponSwitchedSavesMore": "\"{name}\" toegepast — hiermee bespaar je meer, dus we hebben \"{winner}\" verwijderd. Tik op de banner ervan om altijd weer terug te wisselen.",
+      "itemUnavailable": "Dit item is niet beschikbaar"
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
@@ -1222,7 +1223,8 @@
       "markComplete": "Markeer als voltooid",
       "rejectReason": "Reden voor afwijzing",
       "noOrders": "Nog geen bestellingen",
-      "viewDetails": "Details bekijken"
+      "viewDetails": "Details bekijken",
+      "hasNotes": "Met notities"
     },
     "customers": {
       "title": "Klanten",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profiel → Actief",
       "youAreLiveOfflineSuffix": "uit — zo wordt u verborgen voor klanten zonder uw installatiegegevens te verliezen.",
       "sectionStepCount": "{completed} van {total} {count, plural, one {stap} other {stappen}}",
-      "requiredToPublish": "Vereist om te publiceren"
+      "requiredToPublish": "Vereist om te publiceren",
+      "publishSuccessToast": "Je bent live! Klanten kunnen nu bestellen.",
+      "publishFailedGeneric": "Kan je restaurant niet publiceren. Probeer het opnieuw."
     },
     "locations": {
       "pageTitle": "Locaties",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Website",
       "websitePlaceholder": "Je website",
       "footerTextLabel": "Extra tekst (onder QR)",
-      "footerTextPlaceholder": "Optionele extra regel"
+      "footerTextPlaceholder": "Optionele extra regel",
+      "deleteConfirm": "Dit ontwerp verwijderen? Dit kan niet ongedaan worden gemaakt."
     },
     "featureLocked": {
       "badge": "Betaalde add-on",

@@ -222,7 +222,8 @@
       "couponPromoApplied": "Akce „{name}\" byla uplatněna!",
       "couponBlocked": "\"{name}\" nelze kombinovat s \"{winner}\", která vám ušetří víc. V košíku ale můžete \"{winner}\" odebrat a použít místo ní tuto slevu.",
       "promoReadded": "„{name}\" bylo přidáno zpět",
-      "couponSwitchedSavesMore": "\"{name}\" je aktivní – ušetří vám víc, takže jsme \"{winner}\" odebrali. Kdykoli se můžete vrátit zpět klepnutím na její banner."
+      "couponSwitchedSavesMore": "\"{name}\" je aktivní – ušetří vám víc, takže jsme \"{winner}\" odebrali. Kdykoli se můžete vrátit zpět klepnutím na její banner.",
+      "itemUnavailable": "Tato položka není dostupná"
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",
@@ -1222,7 +1223,8 @@
       "markComplete": "Označit jako dokončeno",
       "rejectReason": "Důvod odmítnutí",
       "noOrders": "Zatím žádné objednávky",
-      "viewDetails": "Zobrazit podrobnosti"
+      "viewDetails": "Zobrazit podrobnosti",
+      "hasNotes": "S poznámkami"
     },
     "customers": {
       "title": "Zákazníci",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktivní",
       "youAreLiveOfflineSuffix": "na vypnuto — to vás skryje před zákazníky, aniž byste ztratili data nastavení.",
       "sectionStepCount": "{completed} z {total} {count, plural, one {krok} other {kroků}}",
-      "requiredToPublish": "Povinné pro publikování"
+      "requiredToPublish": "Povinné pro publikování",
+      "publishSuccessToast": "Jste online! Zákazníci teď mohou zadávat objednávky.",
+      "publishFailedGeneric": "Vaši restauraci se nepodařilo publikovat. Zkuste to znovu."
     },
     "locations": {
       "pageTitle": "Pobočky",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Web",
       "websitePlaceholder": "Váš web",
       "footerTextLabel": "Další text (pod QR)",
-      "footerTextPlaceholder": "Volitelný další řádek"
+      "footerTextPlaceholder": "Volitelný další řádek",
+      "deleteConfirm": "Smazat tento návrh? Tuto akci nelze vrátit zpět."
     },
     "featureLocked": {
       "badge": "Placený doplněk",

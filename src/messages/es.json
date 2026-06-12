@@ -221,7 +221,8 @@
       "couponPromoApplied": "¡Promoción \"{name}\" aplicada!",
       "couponBlocked": "\"{name}\" no se puede combinar con \"{winner}\", que ya te hace ahorrar más. Si quieres, puedes quitar \"{winner}\" de tu carrito para usar esta en su lugar.",
       "promoReadded": "\"{name}\" añadida de nuevo",
-      "couponSwitchedSavesMore": "\"{name}\" aplicada: te hace ahorrar más, así que quitamos \"{winner}\". Toca su banner para volver a cambiar cuando quieras."
+      "couponSwitchedSavesMore": "\"{name}\" aplicada: te hace ahorrar más, así que quitamos \"{winner}\". Toca su banner para volver a cambiar cuando quieras.",
+      "itemUnavailable": "Este artículo no está disponible"
     },
     "followUs": "Síguenos",
     "searchMenu": "Buscar en el menú…",
@@ -1211,7 +1212,8 @@
       "markComplete": "Marcar completado",
       "rejectReason": "Razón del rechazo",
       "noOrders": "Aún no hay pedidos",
-      "viewDetails": "Ver detalles"
+      "viewDetails": "Ver detalles",
+      "hasNotes": "Con notas"
     },
     "customers": {
       "title": "Clientes",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Perfil → Activo",
       "youAreLiveOfflineSuffix": "— esto te oculta a los clientes sin perder tus datos de configuración.",
       "sectionStepCount": "{completed} de {total} {count, plural, one {paso} other {pasos}}",
-      "requiredToPublish": "Obligatorio para publicar"
+      "requiredToPublish": "Obligatorio para publicar",
+      "publishSuccessToast": "¡Ya estás en línea! Los clientes ya pueden hacer pedidos.",
+      "publishFailedGeneric": "No se pudo publicar tu restaurante. Inténtalo de nuevo."
     },
     "locations": {
       "pageTitle": "Sucursales",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Sitio web",
       "websitePlaceholder": "Tu sitio web",
       "footerTextLabel": "Texto adicional (debajo del QR)",
-      "footerTextPlaceholder": "Línea adicional (opcional)"
+      "footerTextPlaceholder": "Línea adicional (opcional)",
+      "deleteConfirm": "¿Eliminar este diseño? Esta acción no se puede deshacer."
     },
     "featureLocked": {
       "badge": "Complemento de pago",

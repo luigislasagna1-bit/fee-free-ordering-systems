@@ -222,7 +222,8 @@
       "couponPromoApplied": "प्रोमो \"{name}\" लागू हो गया!",
       "couponBlocked": "\"{name}\" को \"{winner}\" के साथ नहीं जोड़ा जा सकता, जो पहले से ही आपको ज़्यादा बचत दे रहा है। इसके बजाय इसका उपयोग करने के लिए आप अपनी कार्ट में से \"{winner}\" को हटा सकते हैं।",
       "promoReadded": "\"{name}\" फिर से जोड़ा गया",
-      "couponSwitchedSavesMore": "\"{name}\" लागू किया गया — यह आपको ज़्यादा बचत देता है, इसलिए हमने \"{winner}\" को हटा दिया। वापस स्विच करने के लिए कभी भी इसके बैनर पर टैप करें।"
+      "couponSwitchedSavesMore": "\"{name}\" लागू किया गया — यह आपको ज़्यादा बचत देता है, इसलिए हमने \"{winner}\" को हटा दिया। वापस स्विच करने के लिए कभी भी इसके बैनर पर टैप करें।",
+      "itemUnavailable": "यह आइटम उपलब्ध नहीं है"
     },
     "searchMenu": "मेनू खोजें…",
     "signIn": "साइन इन करें",
@@ -1294,7 +1295,8 @@
       "markComplete": "पूर्ण चिह्नित करें",
       "rejectReason": "अस्वीकृति का कारण",
       "noOrders": "अभी तक कोई ऑर्डर नहीं",
-      "viewDetails": "विवरण देखें"
+      "viewDetails": "विवरण देखें",
+      "hasNotes": "नोट्स के साथ"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "किचन वर्कफ़्लो",
@@ -1853,7 +1855,9 @@
       "youAreLiveProfileLink": "प्रोफ़ाइल → सक्रिय",
       "youAreLiveOfflineSuffix": "बंद — इससे आप ग्राहकों से छुप जाते हैं और आपका सेटअप डेटा सुरक्षित रहता है।",
       "sectionStepCount": "{total} में से {completed} {count, plural, one {चरण} other {चरण}}",
-      "requiredToPublish": "प्रकाशित करने के लिए ज़रूरी"
+      "requiredToPublish": "प्रकाशित करने के लिए ज़रूरी",
+      "publishSuccessToast": "आप लाइव हैं! ग्राहक अब ऑर्डर कर सकते हैं।",
+      "publishFailedGeneric": "आपका रेस्तरां प्रकाशित नहीं हो सका। कृपया पुनः प्रयास करें।"
     },
     "locations": {
       "pageTitle": "स्थान",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "वेबसाइट",
       "websitePlaceholder": "आपकी वेबसाइट",
       "footerTextLabel": "अतिरिक्त टेक्स्ट (QR के नीचे)",
-      "footerTextPlaceholder": "वैकल्पिक अतिरिक्त पंक्ति"
+      "footerTextPlaceholder": "वैकल्पिक अतिरिक्त पंक्ति",
+      "deleteConfirm": "इस डिज़ाइन को हटाएं? इसे वापस नहीं किया जा सकता।"
     },
     "featureLocked": {
       "badge": "सशुल्क ऐड-ऑन",

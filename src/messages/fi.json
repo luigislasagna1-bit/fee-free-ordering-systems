@@ -222,7 +222,8 @@
       "couponPromoApplied": "Tarjous \"{name}\" lisätty!",
       "couponBlocked": "\"{name}\" ei ole yhdistettävissä etuun \"{winner}\", joka tuo sinulle jo suuremmat säästöt. Voit silti poistaa \"{winner}\"-edun ostoskorista ja käyttää tätä sen sijaan.",
       "promoReadded": "\"{name}\" lisätty takaisin",
-      "couponSwitchedSavesMore": "\"{name}\" otettiin käyttöön – se tuo sinulle suuremmat säästöt, joten poistimme \"{winner}\"-edun. Voit milloin tahansa vaihtaa takaisin napauttamalla sen banneria."
+      "couponSwitchedSavesMore": "\"{name}\" otettiin käyttöön – se tuo sinulle suuremmat säästöt, joten poistimme \"{winner}\"-edun. Voit milloin tahansa vaihtaa takaisin napauttamalla sen banneria.",
+      "itemUnavailable": "Tämä tuote ei ole saatavilla"
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
@@ -1222,7 +1223,8 @@
       "markComplete": "Merkitse suoritetuksi",
       "rejectReason": "Hylkäyksen syy",
       "noOrders": "Ei tilauksia vielä",
-      "viewDetails": "Näytä tiedot"
+      "viewDetails": "Näytä tiedot",
+      "hasNotes": "Sisältää muistiinpanoja"
     },
     "customers": {
       "title": "Asiakkaat",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profiili → Aktiivinen",
       "youAreLiveOfflineSuffix": "pois päältä — se piilottaa sinut asiakkailta menettämättä asetustietojasi.",
       "sectionStepCount": "{completed} / {total} {count, plural, one {vaihe} other {vaihetta}}",
-      "requiredToPublish": "Vaaditaan julkaisemiseen"
+      "requiredToPublish": "Vaaditaan julkaisemiseen",
+      "publishSuccessToast": "Olet julkaistu! Asiakkaat voivat nyt tehdä tilauksia.",
+      "publishFailedGeneric": "Ravintolasi julkaiseminen epäonnistui. Yritä uudelleen."
     },
     "locations": {
       "pageTitle": "Toimipisteet",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Verkkosivusto",
       "websitePlaceholder": "Verkkosivustosi",
       "footerTextLabel": "Lisäteksti (QR:n alla)",
-      "footerTextPlaceholder": "Valinnainen lisärivi"
+      "footerTextPlaceholder": "Valinnainen lisärivi",
+      "deleteConfirm": "Poistetaanko tämä suunnitelma? Tätä ei voi kumota."
     },
     "featureLocked": {
       "badge": "Maksullinen lisäosa",

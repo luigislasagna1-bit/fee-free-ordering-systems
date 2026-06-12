@@ -222,7 +222,8 @@
       "couponPromoApplied": "Promo \"{name}\" diterapkan!",
       "couponBlocked": "\"{name}\" tidak bisa digabung dengan \"{winner}\", yang sudah menghemat lebih banyak untukmu. Kamu tetap bisa menghapus \"{winner}\" di keranjang untuk memakai ini sebagai gantinya.",
       "promoReadded": "\"{name}\" ditambahkan kembali",
-      "couponSwitchedSavesMore": "\"{name}\" diterapkan — ini menghemat lebih banyak, jadi kami menghapus \"{winner}\". Ketuk bannernya kapan saja untuk beralih kembali."
+      "couponSwitchedSavesMore": "\"{name}\" diterapkan — ini menghemat lebih banyak, jadi kami menghapus \"{winner}\". Ketuk bannernya kapan saja untuk beralih kembali.",
+      "itemUnavailable": "Item ini tidak tersedia"
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
@@ -1222,7 +1223,8 @@
       "markComplete": "Tandai selesai",
       "rejectReason": "Alasan penolakan",
       "noOrders": "Belum ada pesanan",
-      "viewDetails": "Lihat detail"
+      "viewDetails": "Lihat detail",
+      "hasNotes": "Ada catatan"
     },
     "customers": {
       "title": "Pelanggan",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktif",
       "youAreLiveOfflineSuffix": "— itu menyembunyikan Anda dari pelanggan tanpa kehilangan data pengaturan Anda.",
       "sectionStepCount": "{completed} dari {total} {count, plural, one {langkah} other {langkah}}",
-      "requiredToPublish": "Wajib untuk publikasi"
+      "requiredToPublish": "Wajib untuk publikasi",
+      "publishSuccessToast": "Anda sudah aktif! Pelanggan kini dapat memesan.",
+      "publishFailedGeneric": "Tidak dapat memublikasikan restoran Anda. Silakan coba lagi."
     },
     "locations": {
       "pageTitle": "Lokasi",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Situs web",
       "websitePlaceholder": "Situs web Anda",
       "footerTextLabel": "Teks tambahan (di bawah QR)",
-      "footerTextPlaceholder": "Baris tambahan (opsional)"
+      "footerTextPlaceholder": "Baris tambahan (opsional)",
+      "deleteConfirm": "Hapus desain ini? Tindakan ini tidak dapat dibatalkan."
     },
     "featureLocked": {
       "badge": "Add-on berbayar",

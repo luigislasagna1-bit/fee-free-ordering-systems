@@ -226,7 +226,8 @@
       "cityRequired": "City required for delivery",
       "zipRequired": "Postal code required for delivery",
       "fieldRequired": "Please enter {field}",
-      "phoneInvalid": "Please enter a valid phone number (digits only)."
+      "phoneInvalid": "Please enter a valid phone number (digits only).",
+      "itemUnavailable": "This item is unavailable"
     },
     "searchMenu": "Search the menu…",
     "expandAll": "Expand all",
@@ -1325,7 +1326,8 @@
       "markComplete": "Mark complete",
       "rejectReason": "Rejection reason",
       "noOrders": "No orders yet",
-      "viewDetails": "View details"
+      "viewDetails": "View details",
+      "hasNotes": "Has notes"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kitchen workflow",
@@ -1884,7 +1886,9 @@
       "youAreLiveProfileLink": "Profile → Active",
       "youAreLiveOfflineSuffix": "off — that hides you from customers without losing your setup data.",
       "sectionStepCount": "{completed} of {total} {count, plural, one {step} other {steps}}",
-      "requiredToPublish": "Required to publish"
+      "requiredToPublish": "Required to publish",
+      "publishSuccessToast": "You're live! Customers can now place orders.",
+      "publishFailedGeneric": "Couldn't publish your restaurant. Please try again."
     },
     "locations": {
       "pageTitle": "Locations",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Website",
       "websitePlaceholder": "Your website",
       "footerTextLabel": "Extra text (under QR)",
-      "footerTextPlaceholder": "Optional extra line"
+      "footerTextPlaceholder": "Optional extra line",
+      "deleteConfirm": "Delete this design? This can't be undone."
     },
     "featureLocked": {
       "badge": "Paid add-on",

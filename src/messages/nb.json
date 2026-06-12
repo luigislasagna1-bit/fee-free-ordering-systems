@@ -222,7 +222,8 @@
       "couponPromoApplied": "Kampanjen \"{name}\" er aktivert!",
       "couponBlocked": "\"{name}\" kan ikke kombineres med \"{winner}\", som allerede gir deg større rabatt. Du kan likevel fjerne \"{winner}\" i handlekurven for å bruke denne i stedet.",
       "promoReadded": "\"{name}\" er lagt til igjen",
-      "couponSwitchedSavesMore": "\"{name}\" er aktivert – den gir deg større rabatt, så vi fjernet \"{winner}\". Trykk på banneret for å bytte tilbake når som helst."
+      "couponSwitchedSavesMore": "\"{name}\" er aktivert – den gir deg større rabatt, så vi fjernet \"{winner}\". Trykk på banneret for å bytte tilbake når som helst.",
+      "itemUnavailable": "Denne varen er ikke tilgjengelig"
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",
@@ -1222,7 +1223,8 @@
       "markComplete": "Merk som fullført",
       "rejectReason": "Avsvisningsårsak",
       "noOrders": "Ingen bestillinger ennå",
-      "viewDetails": "Vis detaljer"
+      "viewDetails": "Vis detaljer",
+      "hasNotes": "Har notater"
     },
     "customers": {
       "title": "Kunder",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktiv",
       "youAreLiveOfflineSuffix": "— det skjuler deg for kunder uten å miste oppsettsdata.",
       "sectionStepCount": "{completed} av {total} {count, plural, one {steg} other {steg}}",
-      "requiredToPublish": "Obligatorisk for publisering"
+      "requiredToPublish": "Obligatorisk for publisering",
+      "publishSuccessToast": "Du er live! Kundene kan nå legge inn bestillinger.",
+      "publishFailedGeneric": "Kunne ikke publisere restauranten din. Prøv igjen."
     },
     "locations": {
       "pageTitle": "Steder",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Nettsted",
       "websitePlaceholder": "Nettstedet ditt",
       "footerTextLabel": "Ekstra tekst (under QR)",
-      "footerTextPlaceholder": "Valgfri ekstra linje"
+      "footerTextPlaceholder": "Valgfri ekstra linje",
+      "deleteConfirm": "Slette dette designet? Dette kan ikke angres."
     },
     "featureLocked": {
       "badge": "Betalt tillegg",

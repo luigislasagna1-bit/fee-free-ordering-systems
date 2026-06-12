@@ -222,7 +222,8 @@
       "couponPromoApplied": "Promocja \"{name}\" zastosowana!",
       "couponBlocked": "\"{name}\" nie łączy się z \"{winner}\", który już daje Ci większą zniżkę. Możesz jednak usunąć \"{winner}\" z koszyka, aby skorzystać z tego zamiast niego.",
       "promoReadded": "\"{name}\" dodano z powrotem",
-      "couponSwitchedSavesMore": "Zastosowano \"{name}\" — daje Ci większą zniżkę, więc usunęliśmy \"{winner}\". Stuknij jego baner, aby w każdej chwili wrócić."
+      "couponSwitchedSavesMore": "Zastosowano \"{name}\" — daje Ci większą zniżkę, więc usunęliśmy \"{winner}\". Stuknij jego baner, aby w każdej chwili wrócić.",
+      "itemUnavailable": "Ten produkt jest niedostępny"
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
@@ -1222,7 +1223,8 @@
       "markComplete": "Oznacz jako zrealizowane",
       "rejectReason": "Powód odrzucenia",
       "noOrders": "Brak zamówień",
-      "viewDetails": "Zobacz szczegóły"
+      "viewDetails": "Zobacz szczegóły",
+      "hasNotes": "Z notatkami"
     },
     "customers": {
       "title": "Klienci",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktywna",
       "youAreLiveOfflineSuffix": "na wyłączone — ukryje Cię przed klientami bez utraty danych konfiguracji.",
       "sectionStepCount": "{completed} z {total} {count, plural, one {krok} other {kroków}}",
-      "requiredToPublish": "Wymagane do opublikowania"
+      "requiredToPublish": "Wymagane do opublikowania",
+      "publishSuccessToast": "Jesteś online! Klienci mogą już składać zamówienia.",
+      "publishFailedGeneric": "Nie udało się opublikować Twojej restauracji. Spróbuj ponownie."
     },
     "menuEditor": {
       "sectionSizeLabel": "Wybór rozmiaru",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Strona internetowa",
       "websitePlaceholder": "Twoja strona internetowa",
       "footerTextLabel": "Dodatkowy tekst (pod QR)",
-      "footerTextPlaceholder": "Opcjonalny dodatkowy wiersz"
+      "footerTextPlaceholder": "Opcjonalny dodatkowy wiersz",
+      "deleteConfirm": "Usunąć ten projekt? Tej operacji nie można cofnąć."
     },
     "featureLocked": {
       "badge": "Płatny dodatek",

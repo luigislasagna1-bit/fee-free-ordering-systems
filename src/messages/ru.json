@@ -222,7 +222,8 @@
       "couponPromoApplied": "Акция \"{name}\" применена!",
       "couponBlocked": "\"{name}\" нельзя совместить с \"{winner}\" — эта скидка для вас выгоднее. Но вы можете удалить \"{winner}\" в корзине, чтобы применить вместо неё.",
       "promoReadded": "\"{name}\" снова добавлена",
-      "couponSwitchedSavesMore": "\"{name}\" применён — так выгоднее, поэтому мы убрали \"{winner}\". Нажмите на его баннер, чтобы в любой момент вернуться обратно."
+      "couponSwitchedSavesMore": "\"{name}\" применён — так выгоднее, поэтому мы убрали \"{winner}\". Нажмите на его баннер, чтобы в любой момент вернуться обратно.",
+      "itemUnavailable": "Этот товар недоступен"
     },
     "searchMenu": "Поиск по меню…",
     "signIn": "Войти",
@@ -1222,7 +1223,8 @@
       "markComplete": "Отметить выполненным",
       "rejectReason": "Причина отказа",
       "noOrders": "Заказов пока нет",
-      "viewDetails": "Подробности"
+      "viewDetails": "Подробности",
+      "hasNotes": "Есть заметки"
     },
     "customers": {
       "title": "Клиенты",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Профиль → Активен",
       "youAreLiveOfflineSuffix": "выключите — это скроет вас от клиентов без потери данных настройки.",
       "sectionStepCount": "{completed} из {total} {count, plural, one {шага} other {шагов}}",
-      "requiredToPublish": "Обязательно для публикации"
+      "requiredToPublish": "Обязательно для публикации",
+      "publishSuccessToast": "Вы в эфире! Клиенты теперь могут оформлять заказы.",
+      "publishFailedGeneric": "Не удалось опубликовать ваш ресторан. Попробуйте ещё раз."
     },
     "locations": {
       "pageTitle": "Локации",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Веб-сайт",
       "websitePlaceholder": "Ваш веб-сайт",
       "footerTextLabel": "Дополнительный текст (под QR)",
-      "footerTextPlaceholder": "Необязательная дополнительная строка"
+      "footerTextPlaceholder": "Необязательная дополнительная строка",
+      "deleteConfirm": "Удалить этот дизайн? Это действие нельзя отменить."
     },
     "featureLocked": {
       "badge": "Платное дополнение",

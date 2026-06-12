@@ -222,7 +222,8 @@
       "couponPromoApplied": "Akcija \"{name}\" piemērota!",
       "couponBlocked": "\"{name}\" nav apvienojams ar \"{winner}\", kas jau ietaupa vairāk. Jūs joprojām varat noņemt \"{winner}\" no groza, lai izmantotu šo.",
       "promoReadded": "\"{name}\" pievienots atpakaļ",
-      "couponSwitchedSavesMore": "\"{name}\" piemērots — tas ietaupa vairāk, tāpēc noņēmām \"{winner}\". Pieskarieties tā reklāmkarogam, lai jebkurā brīdī pārslēgtos atpakaļ."
+      "couponSwitchedSavesMore": "\"{name}\" piemērots — tas ietaupa vairāk, tāpēc noņēmām \"{winner}\". Pieskarieties tā reklāmkarogam, lai jebkurā brīdī pārslēgtos atpakaļ.",
+      "itemUnavailable": "Šī prece nav pieejama"
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
@@ -1222,7 +1223,8 @@
       "markComplete": "Atzīmēt kā pabeigtu",
       "rejectReason": "Noraidīšanas iemesls",
       "noOrders": "Vēl nav pasūtījumu",
-      "viewDetails": "Skatīt detaļas"
+      "viewDetails": "Skatīt detaļas",
+      "hasNotes": "Ar piezīmēm"
     },
     "customers": {
       "title": "Klienti",
@@ -1452,7 +1454,9 @@
       "youAreLiveProfileLink": "Profils → Aktīvs",
       "youAreLiveOfflineSuffix": "— tas paslēpj jūs no klientiem, nezaudējot iestatīšanas datus.",
       "sectionStepCount": "{completed} no {total} {count, plural, one {soļa} other {soļiem}}",
-      "requiredToPublish": "Nepieciešams publicēšanai"
+      "requiredToPublish": "Nepieciešams publicēšanai",
+      "publishSuccessToast": "Esat tiešsaistē! Klienti tagad var veikt pasūtījumus.",
+      "publishFailedGeneric": "Neizdevās publicēt jūsu restorānu. Mēģiniet vēlreiz."
     },
     "locations": {
       "pageTitle": "Atrašanās vietas",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Vietne",
       "websitePlaceholder": "Jūsu vietne",
       "footerTextLabel": "Papildu teksts (zem QR)",
-      "footerTextPlaceholder": "Neobligāta papildu rinda"
+      "footerTextPlaceholder": "Neobligāta papildu rinda",
+      "deleteConfirm": "Dzēst šo dizainu? Šo darbību nevar atsaukt."
     },
     "featureLocked": {
       "badge": "Maksas papildinājums",

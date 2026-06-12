@@ -222,7 +222,8 @@
       "couponPromoApplied": "Tilbuddet \"{name}\" er anvendt!",
       "couponBlocked": "\"{name}\" kan ikke kombineres med \"{winner}\", som allerede sparer dig mere. Du kan stadig fjerne \"{winner}\" i din kurv for at bruge denne i stedet.",
       "promoReadded": "\"{name}\" er tilføjet igen",
-      "couponSwitchedSavesMore": "\"{name}\" er anvendt – den sparer dig mere, så vi fjernede \"{winner}\". Tryk på dens banner for at skifte tilbage når som helst."
+      "couponSwitchedSavesMore": "\"{name}\" er anvendt – den sparer dig mere, så vi fjernede \"{winner}\". Tryk på dens banner for at skifte tilbage når som helst.",
+      "itemUnavailable": "Denne vare er ikke tilgængelig"
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",
@@ -1222,7 +1223,8 @@
       "markComplete": "Markér som afsluttet",
       "rejectReason": "Årsag til afvisning",
       "noOrders": "Ingen ordrer endnu",
-      "viewDetails": "Se detaljer"
+      "viewDetails": "Se detaljer",
+      "hasNotes": "Har noter"
     },
     "customers": {
       "title": "Kunder",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktiv",
       "youAreLiveOfflineSuffix": "fra — det skjuler dig for kunder uden at miste dine opsætningsdata.",
       "sectionStepCount": "{completed} af {total} {count, plural, one {trin} other {trin}}",
-      "requiredToPublish": "Påkrævet for publicering"
+      "requiredToPublish": "Påkrævet for publicering",
+      "publishSuccessToast": "Du er live! Kunder kan nu afgive bestillinger.",
+      "publishFailedGeneric": "Din restaurant kunne ikke offentliggøres. Prøv igen."
     },
     "locations": {
       "pageTitle": "Lokationer",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Websted",
       "websitePlaceholder": "Dit websted",
       "footerTextLabel": "Ekstra tekst (under QR)",
-      "footerTextPlaceholder": "Valgfri ekstra linje"
+      "footerTextPlaceholder": "Valgfri ekstra linje",
+      "deleteConfirm": "Slet dette design? Dette kan ikke fortrydes."
     },
     "featureLocked": {
       "badge": "Betalt tilføjelse",

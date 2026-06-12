@@ -222,7 +222,8 @@
       "couponPromoApplied": "Promoção \"{name}\" aplicada!",
       "couponBlocked": "\"{name}\" não pode ser combinado com \"{winner}\", que já garante uma economia maior para você. Mas você ainda pode remover \"{winner}\" no seu carrinho para usar este no lugar.",
       "promoReadded": "\"{name}\" adicionada de volta",
-      "couponSwitchedSavesMore": "\"{name}\" aplicado — ele garante uma economia maior, então removemos \"{winner}\". Toque no banner dele quando quiser para voltar atrás."
+      "couponSwitchedSavesMore": "\"{name}\" aplicado — ele garante uma economia maior, então removemos \"{winner}\". Toque no banner dele quando quiser para voltar atrás.",
+      "itemUnavailable": "Este item não está disponível"
     },
     "searchMenu": "Buscar no cardápio…",
     "signIn": "Entrar",
@@ -1222,7 +1223,8 @@
       "markComplete": "Marcar concluído",
       "rejectReason": "Motivo da rejeição",
       "noOrders": "Nenhum pedido ainda",
-      "viewDetails": "Ver detalhes"
+      "viewDetails": "Ver detalhes",
+      "hasNotes": "Com observações"
     },
     "customers": {
       "title": "Clientes",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Perfil → Ativo",
       "youAreLiveOfflineSuffix": "— isso oculta você dos clientes sem perder seus dados de configuração.",
       "sectionStepCount": "{completed} de {total} {count, plural, one {etapa} other {etapas}}",
-      "requiredToPublish": "Obrigatório para publicar"
+      "requiredToPublish": "Obrigatório para publicar",
+      "publishSuccessToast": "Você está no ar! Os clientes já podem fazer pedidos.",
+      "publishFailedGeneric": "Não foi possível publicar seu restaurante. Tente novamente."
     },
     "locations": {
       "pageTitle": "Localizações",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Site",
       "websitePlaceholder": "Seu site",
       "footerTextLabel": "Texto extra (abaixo do QR)",
-      "footerTextPlaceholder": "Linha extra (opcional)"
+      "footerTextPlaceholder": "Linha extra (opcional)",
+      "deleteConfirm": "Excluir este design? Esta ação não pode ser desfeita."
     },
     "featureLocked": {
       "badge": "Complemento pago",

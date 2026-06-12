@@ -222,7 +222,8 @@
       "couponPromoApplied": "ใช้โปรโมชัน \"{name}\" แล้ว!",
       "couponBlocked": "\"{name}\" ใช้ร่วมกับ \"{winner}\" ไม่ได้ เพราะ \"{winner}\" ช่วยคุณประหยัดได้มากกว่าอยู่แล้ว หากต้องการใช้โปรนี้แทน คุณสามารถนำ \"{winner}\" ออกจากตะกร้าได้",
       "promoReadded": "เพิ่ม \"{name}\" กลับแล้ว",
-      "couponSwitchedSavesMore": "ใช้ \"{name}\" แล้ว เพราะช่วยคุณประหยัดได้มากกว่า เราจึงนำ \"{winner}\" ออกให้ แตะแบนเนอร์ของ \"{winner}\" เพื่อสลับกลับได้ทุกเมื่อ"
+      "couponSwitchedSavesMore": "ใช้ \"{name}\" แล้ว เพราะช่วยคุณประหยัดได้มากกว่า เราจึงนำ \"{winner}\" ออกให้ แตะแบนเนอร์ของ \"{winner}\" เพื่อสลับกลับได้ทุกเมื่อ",
+      "itemUnavailable": "สินค้านี้ไม่พร้อมให้บริการ"
     },
     "searchMenu": "ค้นหาเมนู…",
     "signIn": "เข้าสู่ระบบ",
@@ -1222,7 +1223,8 @@
       "markComplete": "ทำเครื่องหมายว่าเสร็จ",
       "rejectReason": "เหตุผลที่ปฏิเสธ",
       "noOrders": "ยังไม่มีออเดอร์",
-      "viewDetails": "ดูรายละเอียด"
+      "viewDetails": "ดูรายละเอียด",
+      "hasNotes": "มีหมายเหตุ"
     },
     "customers": {
       "title": "ลูกค้า",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "โปรไฟล์ → ใช้งาน",
       "youAreLiveOfflineSuffix": "ปิด — จะซ่อนคุณจากลูกค้าโดยไม่สูญเสียข้อมูลการตั้งค่า",
       "sectionStepCount": "{completed} จาก {total} {count, plural, one {ขั้นตอน} other {ขั้นตอน}}",
-      "requiredToPublish": "บังคับสำหรับการเผยแพร่"
+      "requiredToPublish": "บังคับสำหรับการเผยแพร่",
+      "publishSuccessToast": "ร้านของคุณเปิดให้บริการแล้ว! ลูกค้าสามารถสั่งซื้อได้แล้ว",
+      "publishFailedGeneric": "ไม่สามารถเผยแพร่ร้านอาหารของคุณได้ โปรดลองอีกครั้ง"
     },
     "locations": {
       "pageTitle": "สาขา",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "เว็บไซต์",
       "websitePlaceholder": "เว็บไซต์ของคุณ",
       "footerTextLabel": "ข้อความเพิ่มเติม (ใต้ QR)",
-      "footerTextPlaceholder": "บรรทัดเพิ่มเติม (ไม่บังคับ)"
+      "footerTextPlaceholder": "บรรทัดเพิ่มเติม (ไม่บังคับ)",
+      "deleteConfirm": "ลบดีไซน์นี้ใช่ไหม การกระทำนี้ไม่สามารถยกเลิกได้"
     },
     "featureLocked": {
       "badge": "ส่วนเสริมแบบชำระเงิน",

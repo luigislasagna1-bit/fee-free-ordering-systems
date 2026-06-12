@@ -222,7 +222,8 @@
       "couponPromoApplied": "プロモ「{name}」を適用しました！",
       "couponBlocked": "「{name}」は、すでにそれ以上お得な「{winner}」とは併用できません。代わりにこちらを使うには、カート内の「{winner}」を解除してください。",
       "promoReadded": "「{name}」を再度追加しました",
-      "couponSwitchedSavesMore": "「{name}」を適用しました。こちらのほうがお得なので、「{winner}」を解除しました。「{winner}」のバナーをタップすれば、いつでも元に戻せます。"
+      "couponSwitchedSavesMore": "「{name}」を適用しました。こちらのほうがお得なので、「{winner}」を解除しました。「{winner}」のバナーをタップすれば、いつでも元に戻せます。",
+      "itemUnavailable": "この商品は現在ご利用いただけません"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
@@ -1222,7 +1223,8 @@
       "markComplete": "完了にする",
       "rejectReason": "断る理由",
       "noOrders": "まだ注文はありません",
-      "viewDetails": "詳細を見る"
+      "viewDetails": "詳細を見る",
+      "hasNotes": "メモあり"
     },
     "customers": {
       "title": "顧客",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "プロフィール → 有効",
       "youAreLiveOfflineSuffix": "をオフにすると、設定データを失わずにお客様から非表示になります。",
       "sectionStepCount": "{total} {count, plural, one {ステップ} other {ステップ}}中 {completed} 完了",
-      "requiredToPublish": "公開に必須"
+      "requiredToPublish": "公開に必須",
+      "publishSuccessToast": "公開されました！お客様が注文できるようになりました。",
+      "publishFailedGeneric": "レストランを公開できませんでした。もう一度お試しください。"
     },
     "locations": {
       "pageTitle": "店舗",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "ウェブサイト",
       "websitePlaceholder": "ウェブサイト",
       "footerTextLabel": "追加テキスト（QRの下）",
-      "footerTextPlaceholder": "任意の追加行"
+      "footerTextPlaceholder": "任意の追加行",
+      "deleteConfirm": "このデザインを削除しますか？この操作は元に戻せません。"
     },
     "featureLocked": {
       "badge": "有料アドオン",

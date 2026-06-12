@@ -222,7 +222,8 @@
       "couponPromoApplied": "המבצע \"{name}\" הופעל!",
       "couponBlocked": "\"{name}\" לא ניתן לשילוב עם \"{winner}\", שכבר חוסך לך יותר. תמיד אפשר להסיר את \"{winner}\" בעגלה כדי להשתמש בזה במקום.",
       "promoReadded": "\"{name}\" נוסף בחזרה",
-      "couponSwitchedSavesMore": "\"{name}\" הוחל — הוא חוסך לך יותר, אז הסרנו את \"{winner}\". אפשר להקיש על הבאנר שלו כדי לחזור אחורה בכל רגע."
+      "couponSwitchedSavesMore": "\"{name}\" הוחל — הוא חוסך לך יותר, אז הסרנו את \"{winner}\". אפשר להקיש על הבאנר שלו כדי לחזור אחורה בכל רגע.",
+      "itemUnavailable": "פריט זה אינו זמין"
     },
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",
@@ -1222,7 +1223,8 @@
       "markComplete": "סמן כהושלם",
       "rejectReason": "סיבת דחייה",
       "noOrders": "אין הזמנות עדיין",
-      "viewDetails": "צפה בפרטים"
+      "viewDetails": "צפה בפרטים",
+      "hasNotes": "יש הערות"
     },
     "customers": {
       "title": "לקוחות",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "פרופיל → פעיל",
       "youAreLiveOfflineSuffix": "כבוי — הסתרה מלקוחות ללא אובדן נתוני ההגדרה.",
       "sectionStepCount": "{completed} מתוך {total} {count, plural, one {שלב} other {שלבים}}",
-      "requiredToPublish": "נדרש לפרסום"
+      "requiredToPublish": "נדרש לפרסום",
+      "publishSuccessToast": "אתם באוויר! לקוחות יכולים כעת לבצע הזמנות.",
+      "publishFailedGeneric": "לא ניתן היה לפרסם את המסעדה שלך. נסה שוב."
     },
     "locations": {
       "pageTitle": "סניפים",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "אתר אינטרנט",
       "websitePlaceholder": "האתר שלך",
       "footerTextLabel": "טקסט נוסף (מתחת ל-QR)",
-      "footerTextPlaceholder": "שורה נוספת (אופציונלי)"
+      "footerTextPlaceholder": "שורה נוספת (אופציונלי)",
+      "deleteConfirm": "למחוק את העיצוב הזה? לא ניתן לבטל פעולה זו."
     },
     "featureLocked": {
       "badge": "תוסף בתשלום",

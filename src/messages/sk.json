@@ -222,7 +222,8 @@
       "couponPromoApplied": "Akcia „{name}“ bola uplatnená!",
       "couponBlocked": "\"{name}\" sa nedá kombinovať s \"{winner}\", ktorá vám ušetrí viac. Ak chcete použiť túto namiesto nej, môžete \"{winner}\" odstrániť v košíku.",
       "promoReadded": "„{name}“ bola pridaná späť",
-      "couponSwitchedSavesMore": "\"{name}\" sa použila – ušetrí vám viac, preto sme odstránili \"{winner}\". Späť môžete kedykoľvek prepnúť klepnutím na jej banner."
+      "couponSwitchedSavesMore": "\"{name}\" sa použila – ušetrí vám viac, preto sme odstránili \"{winner}\". Späť môžete kedykoľvek prepnúť klepnutím na jej banner.",
+      "itemUnavailable": "Táto položka nie je dostupná"
     },
     "searchMenu": "Hľadať v menu…",
     "signIn": "Prihlásiť sa",
@@ -1222,7 +1223,8 @@
       "markComplete": "Označiť ako dokončené",
       "rejectReason": "Dôvod odmietnutia",
       "noOrders": "Zatiaľ žiadne objednávky",
-      "viewDetails": "Zobraziť detaily"
+      "viewDetails": "Zobraziť detaily",
+      "hasNotes": "S poznámkami"
     },
     "customers": {
       "title": "Zákazníci",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktívne",
       "youAreLiveOfflineSuffix": "na vypnuté — to vás skryje pred zákazníkmi bez straty údajov nastavenia.",
       "sectionStepCount": "{completed} z {total} {count, plural, one {krok} other {kroky}}",
-      "requiredToPublish": "Vyžadované pre zverejnenie"
+      "requiredToPublish": "Vyžadované pre zverejnenie",
+      "publishSuccessToast": "Ste online! Zákazníci teraz môžu zadávať objednávky.",
+      "publishFailedGeneric": "Vašu reštauráciu sa nepodarilo publikovať. Skúste to znova."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Prehľad značky",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Webová stránka",
       "websitePlaceholder": "Vaša webová stránka",
       "footerTextLabel": "Ďalší text (pod QR)",
-      "footerTextPlaceholder": "Voliteľný ďalší riadok"
+      "footerTextPlaceholder": "Voliteľný ďalší riadok",
+      "deleteConfirm": "Odstrániť tento návrh? Túto akciu nie je možné vrátiť späť."
     },
     "featureLocked": {
       "badge": "Platený doplnok",

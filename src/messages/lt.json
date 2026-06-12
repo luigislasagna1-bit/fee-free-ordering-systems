@@ -222,7 +222,8 @@
       "couponPromoApplied": "Pasiūlymas „{name}\" pritaikytas!",
       "couponBlocked": "\"{name}\" negalima derinti su \"{winner}\", kuris jau leidžia sutaupyti daugiau. Vis dėlto galite pašalinti \"{winner}\" iš krepšelio ir vietoj jo pritaikyti šį.",
       "promoReadded": "„{name}\" pridėtas atgal",
-      "couponSwitchedSavesMore": "\"{name}\" pritaikytas — su juo sutaupote daugiau, todėl pašalinome \"{winner}\". Bet kada bakstelėkite jo juostą, kad grįžtumėte atgal."
+      "couponSwitchedSavesMore": "\"{name}\" pritaikytas — su juo sutaupote daugiau, todėl pašalinome \"{winner}\". Bet kada bakstelėkite jo juostą, kad grįžtumėte atgal.",
+      "itemUnavailable": "Ši prekė neprieinama"
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
@@ -1222,7 +1223,8 @@
       "markComplete": "Pažymėti kaip atliktą",
       "rejectReason": "Atmetimo priežastis",
       "noOrders": "Dar nėra užsakymų",
-      "viewDetails": "Peržiūrėti detales"
+      "viewDetails": "Peržiūrėti detales",
+      "hasNotes": "Su pastabomis"
     },
     "customers": {
       "title": "Klientai",
@@ -1452,7 +1454,9 @@
       "youAreLiveProfileLink": "Profilis → Aktyvus",
       "youAreLiveOfflineSuffix": "— tai paslėps jus nuo klientų neprarandant sąrankos duomenų.",
       "sectionStepCount": "{completed} iš {total} {count, plural, one {žingsnis} other {žingsniai}}",
-      "requiredToPublish": "Privaloma skelbti"
+      "requiredToPublish": "Privaloma skelbti",
+      "publishSuccessToast": "Esate aktyvūs! Klientai jau gali pateikti užsakymus.",
+      "publishFailedGeneric": "Nepavyko paskelbti jūsų restorano. Bandykite dar kartą."
     },
     "locations": {
       "pageTitle": "Vietos",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Svetainė",
       "websitePlaceholder": "Jūsų svetainė",
       "footerTextLabel": "Papildomas tekstas (po QR)",
-      "footerTextPlaceholder": "Neprivaloma papildoma eilutė"
+      "footerTextPlaceholder": "Neprivaloma papildoma eilutė",
+      "deleteConfirm": "Ištrinti šį dizainą? Šio veiksmo anuliuoti negalima."
     },
     "featureLocked": {
       "badge": "Mokamas priedas",

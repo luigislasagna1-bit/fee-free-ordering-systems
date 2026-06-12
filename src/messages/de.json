@@ -222,7 +222,8 @@
       "couponPromoApplied": "Aktion \"{name}\" angewendet!",
       "couponBlocked": "\"{name}\" lässt sich nicht mit \"{winner}\" kombinieren, da \"{winner}\" dir bereits mehr spart. Du kannst \"{winner}\" aber in deinem Warenkorb entfernen, um stattdessen diesen zu nutzen.",
       "promoReadded": "\"{name}\" wieder hinzugefügt",
-      "couponSwitchedSavesMore": "\"{name}\" angewendet – das spart dir mehr, daher haben wir \"{winner}\" entfernt. Tippe jederzeit auf dessen Banner, um zurückzuwechseln."
+      "couponSwitchedSavesMore": "\"{name}\" angewendet – das spart dir mehr, daher haben wir \"{winner}\" entfernt. Tippe jederzeit auf dessen Banner, um zurückzuwechseln.",
+      "itemUnavailable": "Dieser Artikel ist nicht verfügbar"
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",
@@ -1222,7 +1223,8 @@
       "markComplete": "Als abgeschlossen markieren",
       "rejectReason": "Ablehnungsgrund",
       "noOrders": "Noch keine Bestellungen",
-      "viewDetails": "Details anzeigen"
+      "viewDetails": "Details anzeigen",
+      "hasNotes": "Mit Notizen"
     },
     "customers": {
       "title": "Kunden",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktiv",
       "youAreLiveOfflineSuffix": "aus — das verbirgt Sie vor Kunden, ohne Ihre Einrichtungsdaten zu verlieren.",
       "sectionStepCount": "{completed} von {total} {count, plural, one {Schritt} other {Schritte}}",
-      "requiredToPublish": "Erforderlich zur Veröffentlichung"
+      "requiredToPublish": "Erforderlich zur Veröffentlichung",
+      "publishSuccessToast": "Sie sind online! Kunden können jetzt bestellen.",
+      "publishFailedGeneric": "Ihr Restaurant konnte nicht veröffentlicht werden. Bitte versuchen Sie es erneut."
     },
     "locations": {
       "pageTitle": "Standorte",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Website",
       "websitePlaceholder": "Deine Website",
       "footerTextLabel": "Zusätzlicher Text (unter dem QR)",
-      "footerTextPlaceholder": "Optionale Zusatzzeile"
+      "footerTextPlaceholder": "Optionale Zusatzzeile",
+      "deleteConfirm": "Dieses Design löschen? Das kann nicht rückgängig gemacht werden."
     },
     "featureLocked": {
       "badge": "Kostenpflichtiges Add-on",

@@ -222,7 +222,8 @@
       "couponPromoApplied": "Pakkumine „{name}” rakendatud!",
       "couponBlocked": "\"{name}\" ei saa kombineerida sooduspakkumisega \"{winner}\", mis juba säästab sulle rohkem. Soovi korral eemalda \"{winner}\" ostukorvist, et selle asemel seda kasutada.",
       "promoReadded": "„{name}” lisati uuesti",
-      "couponSwitchedSavesMore": "\"{name}\" rakendatud — see säästab sulle rohkem, seega eemaldasime \"{winner}\". Tagasi vahetamiseks puuduta selle bännerit igal ajal."
+      "couponSwitchedSavesMore": "\"{name}\" rakendatud — see säästab sulle rohkem, seega eemaldasime \"{winner}\". Tagasi vahetamiseks puuduta selle bännerit igal ajal.",
+      "itemUnavailable": "See toode pole saadaval"
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",
@@ -1222,7 +1223,8 @@
       "markComplete": "Märgi lõpetatuks",
       "rejectReason": "Tagasilükkamise põhjus",
       "noOrders": "Tellimusi pole veel",
-      "viewDetails": "Vaata üksikasju"
+      "viewDetails": "Vaata üksikasju",
+      "hasNotes": "Märkmetega"
     },
     "customers": {
       "title": "Kliendid",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profiil → Aktiivne",
       "youAreLiveOfflineSuffix": "välja — see peidab sind klientide eest, kaotamata seadistusandmeid.",
       "sectionStepCount": "{completed} / {total} {count, plural, one {samm} other {sammu}}",
-      "requiredToPublish": "Avaldamiseks nõutav"
+      "requiredToPublish": "Avaldamiseks nõutav",
+      "publishSuccessToast": "Oled eetris! Kliendid saavad nüüd tellimusi esitada.",
+      "publishFailedGeneric": "Teie restorani ei õnnestunud avaldada. Proovige uuesti."
     },
     "locations": {
       "pageTitle": "Asukohad",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Veebisait",
       "websitePlaceholder": "Sinu veebisait",
       "footerTextLabel": "Lisatekst (QR-koodi all)",
-      "footerTextPlaceholder": "Valikuline lisarida"
+      "footerTextPlaceholder": "Valikuline lisarida",
+      "deleteConfirm": "Kustutada see kujundus? Seda toimingut ei saa tagasi võtta."
     },
     "featureLocked": {
       "badge": "Tasuline lisa",

@@ -222,7 +222,8 @@
       "couponPromoApplied": "\"{name}\" kampanyası uygulandı!",
       "couponBlocked": "\"{name}\" kuponu, zaten size daha fazla kazandıran \"{winner}\" ile birleştirilemez. Bunu kullanmak isterseniz sepetinizden \"{winner}\" kuponunu kaldırabilirsiniz.",
       "promoReadded": "\"{name}\" yeniden eklendi",
-      "couponSwitchedSavesMore": "\"{name}\" uygulandı — size daha fazla kazandırdığı için \"{winner}\" kuponunu kaldırdık. Geri dönmek isterseniz dilediğiniz zaman afişine dokunabilirsiniz."
+      "couponSwitchedSavesMore": "\"{name}\" uygulandı — size daha fazla kazandırdığı için \"{winner}\" kuponunu kaldırdık. Geri dönmek isterseniz dilediğiniz zaman afişine dokunabilirsiniz.",
+      "itemUnavailable": "Bu ürün mevcut değil"
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
@@ -1222,7 +1223,8 @@
       "markComplete": "Tamamlandı işaretle",
       "rejectReason": "Red Sebebi",
       "noOrders": "Henüz sipariş yok",
-      "viewDetails": "Ayrıntıları Gör"
+      "viewDetails": "Ayrıntıları Gör",
+      "hasNotes": "Notlu"
     },
     "customers": {
       "title": "Müşteriler",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktif",
       "youAreLiveOfflineSuffix": "— bu, kurulum verilerinizi kaybetmeden müşterilere görünmemenizi sağlar.",
       "sectionStepCount": "{total} {count, plural, one {adımın} other {adımın}} {completed} tanesi",
-      "requiredToPublish": "Yayınlamak için zorunlu"
+      "requiredToPublish": "Yayınlamak için zorunlu",
+      "publishSuccessToast": "Yayındasınız! Müşteriler artık sipariş verebilir.",
+      "publishFailedGeneric": "Restoranınız yayınlanamadı. Lütfen tekrar deneyin."
     },
     "menuEditor": {
       "sectionSizeLabel": "Boyut seçimi",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Web sitesi",
       "websitePlaceholder": "Web siteniz",
       "footerTextLabel": "Ek metin (QR'ın altında)",
-      "footerTextPlaceholder": "İsteğe bağlı ek satır"
+      "footerTextPlaceholder": "İsteğe bağlı ek satır",
+      "deleteConfirm": "Bu tasarım silinsin mi? Bu işlem geri alınamaz."
     },
     "featureLocked": {
       "badge": "Ücretli eklenti",

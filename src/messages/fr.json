@@ -221,7 +221,8 @@
       "couponPromoApplied": "Promo « {name} » appliquée !",
       "couponBlocked": "\"{name}\" ne peut pas être combiné avec \"{winner}\", qui vous fait déjà économiser plus. Vous pouvez quand même retirer \"{winner}\" de votre panier pour l'utiliser à la place.",
       "promoReadded": "« {name} » de nouveau ajoutée",
-      "couponSwitchedSavesMore": "\"{name}\" appliqué — il vous fait économiser plus, nous avons donc retiré \"{winner}\". Touchez sa bannière pour revenir en arrière à tout moment."
+      "couponSwitchedSavesMore": "\"{name}\" appliqué — il vous fait économiser plus, nous avons donc retiré \"{winner}\". Touchez sa bannière pour revenir en arrière à tout moment.",
+      "itemUnavailable": "Cet article n'est pas disponible"
     },
     "followUs": "Suivez-nous",
     "searchMenu": "Rechercher dans le menu…",
@@ -1211,7 +1212,8 @@
       "markComplete": "Marquer terminée",
       "rejectReason": "Raison du refus",
       "noOrders": "Aucune commande pour l'instant",
-      "viewDetails": "Voir les détails"
+      "viewDetails": "Voir les détails",
+      "hasNotes": "Avec notes"
     },
     "customers": {
       "title": "Clients",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Actif",
       "youAreLiveOfflineSuffix": "— cela vous masque aux clients sans perdre vos données de configuration.",
       "sectionStepCount": "{completed} sur {total} {count, plural, one {étape} other {étapes}}",
-      "requiredToPublish": "Obligatoire pour publier"
+      "requiredToPublish": "Obligatoire pour publier",
+      "publishSuccessToast": "Vous êtes en ligne ! Les clients peuvent désormais passer commande.",
+      "publishFailedGeneric": "Impossible de publier votre restaurant. Veuillez réessayer."
     },
     "locations": {
       "pageTitle": "Emplacements",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Site web",
       "websitePlaceholder": "Votre site web",
       "footerTextLabel": "Texte supplémentaire (sous le QR)",
-      "footerTextPlaceholder": "Ligne supplémentaire (facultatif)"
+      "footerTextPlaceholder": "Ligne supplémentaire (facultatif)",
+      "deleteConfirm": "Supprimer ce visuel ? Cette action est irréversible."
     },
     "featureLocked": {
       "badge": "Module payant",

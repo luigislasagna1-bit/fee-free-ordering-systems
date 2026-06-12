@@ -222,7 +222,8 @@
       "couponPromoApplied": "Promocija \"{name}\" uveljavljena!",
       "couponBlocked": "\"{name}\" ni mogoče združiti s promocijo \"{winner}\", ki vam že prinese večji prihranek. Če želite namesto tega uporabiti to ponudbo, lahko \"{winner}\" odstranite iz košarice.",
       "promoReadded": "\"{name}\" znova dodano",
-      "couponSwitchedSavesMore": "\"{name}\" je uporabljena – prinese vam večji prihranek, zato smo odstranili \"{winner}\". Za vrnitev kadar koli tapnite pasico \"{winner}\"."
+      "couponSwitchedSavesMore": "\"{name}\" je uporabljena – prinese vam večji prihranek, zato smo odstranili \"{winner}\". Za vrnitev kadar koli tapnite pasico \"{winner}\".",
+      "itemUnavailable": "Ta izdelek ni na voljo"
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",
@@ -1222,7 +1223,8 @@
       "markComplete": "Označi kot dokončano",
       "rejectReason": "Razlog zavrnitve",
       "noOrders": "Še ni naročil",
-      "viewDetails": "Ogled podrobnosti"
+      "viewDetails": "Ogled podrobnosti",
+      "hasNotes": "Z opombami"
     },
     "customers": {
       "title": "Stranke",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktivno",
       "youAreLiveOfflineSuffix": "izklopi — to vas skrije pred strankami brez izgube podatkov nastavitve.",
       "sectionStepCount": "{completed} od {total} {count, plural, one {korak} other {korakov}}",
-      "requiredToPublish": "Obvezno za objavo"
+      "requiredToPublish": "Obvezno za objavo",
+      "publishSuccessToast": "Ste v živo! Stranke lahko zdaj oddajo naročila.",
+      "publishFailedGeneric": "Vaše restavracije ni bilo mogoče objaviti. Poskusite znova."
     },
     "locations": {
       "pageTitle": "Lokacije",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Spletno mesto",
       "websitePlaceholder": "Vaše spletno mesto",
       "footerTextLabel": "Dodatno besedilo (pod QR)",
-      "footerTextPlaceholder": "Neobvezna dodatna vrstica"
+      "footerTextPlaceholder": "Neobvezna dodatna vrstica",
+      "deleteConfirm": "Izbrišem to oblikovanje? Tega dejanja ni mogoče razveljaviti."
     },
     "featureLocked": {
       "badge": "Plačljiv dodatek",

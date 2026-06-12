@@ -222,7 +222,8 @@
       "couponPromoApplied": "Promocija \"{name}\" primijenjena!",
       "couponBlocked": "\"{name}\" se ne može kombinirati s \"{winner}\", koja vam već donosi veću uštedu. Možete ukloniti \"{winner}\" iz košarice ako želite umjesto nje iskoristiti ovu.",
       "promoReadded": "\"{name}\" ponovno dodana",
-      "couponSwitchedSavesMore": "\"{name}\" je primijenjena — donosi vam veću uštedu, pa smo uklonili \"{winner}\". Dodirnite njezin natpis da se u svakom trenutku vratite na nju."
+      "couponSwitchedSavesMore": "\"{name}\" je primijenjena — donosi vam veću uštedu, pa smo uklonili \"{winner}\". Dodirnite njezin natpis da se u svakom trenutku vratite na nju.",
+      "itemUnavailable": "Ova stavka nije dostupna"
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",
@@ -1222,7 +1223,8 @@
       "markComplete": "Označi kao završeno",
       "rejectReason": "Razlog odbijanja",
       "noOrders": "Još nema narudžbi",
-      "viewDetails": "Pogledaj detalje"
+      "viewDetails": "Pogledaj detalje",
+      "hasNotes": "Ima napomene"
     },
     "customers": {
       "title": "Kupci",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktivno",
       "youAreLiveOfflineSuffix": "na isključeno — to vas sakriva od kupaca bez gubitka podataka postavljanja.",
       "sectionStepCount": "{completed} od {total} {count, plural, one {korak} other {koraka}}",
-      "requiredToPublish": "Obavezno za objavu"
+      "requiredToPublish": "Obavezno za objavu",
+      "publishSuccessToast": "Uživo ste! Kupci sada mogu naručivati.",
+      "publishFailedGeneric": "Nije moguće objaviti vaš restoran. Pokušajte ponovno."
     },
     "locations": {
       "pageTitle": "Lokacije",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Web-stranica",
       "websitePlaceholder": "Vaša web-stranica",
       "footerTextLabel": "Dodatni tekst (ispod QR-a)",
-      "footerTextPlaceholder": "Neobavezni dodatni redak"
+      "footerTextPlaceholder": "Neobavezni dodatni redak",
+      "deleteConfirm": "Izbrisati ovaj dizajn? Ova se radnja ne može poništiti."
     },
     "featureLocked": {
       "badge": "Plaćeni dodatak",

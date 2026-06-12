@@ -222,7 +222,8 @@
       "couponPromoApplied": "A(z) \"{name}\" akció alkalmazva!",
       "couponBlocked": "A(z) \"{name}\" nem vonható össze a(z) \"{winner}\" akcióval, amellyel jelenleg többet spórolsz. Ha mégis ezt szeretnéd, a kosaradban eltávolíthatod a(z) \"{winner}\" akciót.",
       "promoReadded": "A(z) \"{name}\" visszaadva",
-      "couponSwitchedSavesMore": "A(z) \"{name}\" alkalmazva – ezzel többet spórolsz, ezért eltávolítottuk a(z) \"{winner}\" akciót. Bármikor visszaválthatsz a(z) \"{winner}\" szalagjára koppintva."
+      "couponSwitchedSavesMore": "A(z) \"{name}\" alkalmazva – ezzel többet spórolsz, ezért eltávolítottuk a(z) \"{winner}\" akciót. Bármikor visszaválthatsz a(z) \"{winner}\" szalagjára koppintva.",
+      "itemUnavailable": "Ez a tétel nem elérhető"
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
@@ -1222,7 +1223,8 @@
       "markComplete": "Teljesítettnek jelölés",
       "rejectReason": "Visszautasítás oka",
       "noOrders": "Még nincsenek rendelések",
-      "viewDetails": "Részletek megtekintése"
+      "viewDetails": "Részletek megtekintése",
+      "hasNotes": "Megjegyzéssel"
     },
     "customers": {
       "title": "Ügyfelek",
@@ -1530,7 +1532,9 @@
       "youAreLiveProfileLink": "Profil → Aktív",
       "youAreLiveOfflineSuffix": " kapcsolót — ezzel elrejti az ügyfelek elől, de a beállítási adatai megmaradnak.",
       "sectionStepCount": "{completed} / {total} {count, plural, one {lépés} other {lépés}}",
-      "requiredToPublish": "Közzétételhez szükséges"
+      "requiredToPublish": "Közzétételhez szükséges",
+      "publishSuccessToast": "Élesben vagy! A vásárlók már rendelhetnek.",
+      "publishFailedGeneric": "Nem sikerült közzétenni az éttermedet. Próbáld újra."
     },
     "menuEditor": {
       "sectionSizeLabel": "Méret kiválasztása",
@@ -3793,7 +3797,8 @@
       "websiteLabel": "Webhely",
       "websitePlaceholder": "Webhelyed",
       "footerTextLabel": "További szöveg (a QR alatt)",
-      "footerTextPlaceholder": "Választható plusz sor"
+      "footerTextPlaceholder": "Választható plusz sor",
+      "deleteConfirm": "Törlöd ezt a dizájnt? Ez a művelet nem vonható vissza."
     },
     "featureLocked": {
       "badge": "Fizetős bővítmény",
