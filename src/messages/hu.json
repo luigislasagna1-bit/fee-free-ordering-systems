@@ -3755,7 +3755,18 @@
       "clearSchedule": "Törlés",
       "scheduleSaved": "Élővé válás ütemezve",
       "scheduleCleared": "Ütemezés törölve",
-      "cancel": "Mégse"
+      "cancel": "Mégse",
+      "dailyHours": "Napi órák",
+      "dailyHoursActive": "Aktív {window}",
+      "dailyHoursHint": "Csak ezeken a napokon és időpontokban jelenjen meg ez az étlap. A vásárlók automatikusan az éppen aktív étlapot látják.",
+      "windowFrom": "Tól",
+      "windowTo": "Ig",
+      "windowSave": "Mentés",
+      "windowClear": "Törlés",
+      "windowSaved": "Az étlap napi órái elmentve",
+      "windowCleared": "Az étlap napi órái eltávolítva",
+      "everyDay": "Minden nap",
+      "coverageGap": "Egyes nyitvatartási órákhoz nem tartozna étlap: {list}. Adj hozzá egy étlapot azokra az órákra, vagy állítsd zárva állapotúra."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

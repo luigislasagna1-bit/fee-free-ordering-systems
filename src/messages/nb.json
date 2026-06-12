@@ -3755,7 +3755,18 @@
       "clearSchedule": "Fjern",
       "scheduleSaved": "Aktivering planlagt",
       "scheduleCleared": "Planlegging fjernet",
-      "cancel": "Avbryt"
+      "cancel": "Avbryt",
+      "dailyHours": "Daglige tider",
+      "dailyHoursActive": "Aktiv {window}",
+      "dailyHoursHint": "Vis denne menyen kun på disse dagene og tidspunktene. Kundene ser automatisk menyen som er aktiv nå.",
+      "windowFrom": "Fra",
+      "windowTo": "Til",
+      "windowSave": "Lagre",
+      "windowClear": "Fjern",
+      "windowSaved": "Menyens daglige tider lagret",
+      "windowCleared": "Menyens daglige tider fjernet",
+      "everyDay": "Hver dag",
+      "coverageGap": "Noen åpningstider ville mangle en meny: {list}. Legg til en meny som dekker de timene, eller merk dem som stengt."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

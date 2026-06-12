@@ -3755,7 +3755,18 @@
       "clearSchedule": "Tyhjennä",
       "scheduleSaved": "Käyttöönotto ajastettu",
       "scheduleCleared": "Ajastus tyhjennetty",
-      "cancel": "Peruuta"
+      "cancel": "Peruuta",
+      "dailyHours": "Päivittäiset ajat",
+      "dailyHoursActive": "Käytössä {window}",
+      "dailyHoursHint": "Näytä tämä menu vain näinä päivinä ja kellonaikoina. Asiakkaat näkevät automaattisesti juuri nyt aktiivisen menun.",
+      "windowFrom": "Alkaen",
+      "windowTo": "Asti",
+      "windowSave": "Tallenna",
+      "windowClear": "Tyhjennä",
+      "windowSaved": "Menun päivittäiset ajat tallennettu",
+      "windowCleared": "Menun päivittäiset ajat poistettu",
+      "everyDay": "Joka päivä",
+      "coverageGap": "Joiltakin aukioloajoilta puuttuisi menu: {list}. Lisää menu, joka kattaa nuo ajat, tai merkitse ne suljetuiksi."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

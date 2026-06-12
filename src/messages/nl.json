@@ -3755,7 +3755,18 @@
       "clearSchedule": "Wissen",
       "scheduleSaved": "Live gaan ingepland",
       "scheduleCleared": "Planning gewist",
-      "cancel": "Annuleren"
+      "cancel": "Annuleren",
+      "dailyHours": "Dagelijkse uren",
+      "dailyHoursActive": "Actief {window}",
+      "dailyHoursHint": "Toon dit menu alleen op deze dagen en tijden. Klanten zien automatisch het menu dat nu actief is.",
+      "windowFrom": "Van",
+      "windowTo": "Tot",
+      "windowSave": "Opslaan",
+      "windowClear": "Wissen",
+      "windowSaved": "Dagelijkse menutijden opgeslagen",
+      "windowCleared": "Dagelijkse menutijden verwijderd",
+      "everyDay": "Elke dag",
+      "coverageGap": "Sommige openingstijden zouden geen menu hebben: {list}. Voeg een menu toe voor die uren of zet ze op gesloten."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

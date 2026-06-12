@@ -3755,7 +3755,18 @@
       "clearSchedule": "Obriši",
       "scheduleSaved": "Objavljivanje zakazano",
       "scheduleCleared": "Raspored obrisan",
-      "cancel": "Otkaži"
+      "cancel": "Otkaži",
+      "dailyHours": "Дневни сати",
+      "dailyHoursActive": "Активно {window}",
+      "dailyHoursHint": "Прикажите овај мени само ових дана и сати. Купци аутоматски виде мени који је тренутно активан.",
+      "windowFrom": "Од",
+      "windowTo": "До",
+      "windowSave": "Сачувај",
+      "windowClear": "Обриши",
+      "windowSaved": "Дневни сати менија су сачувани",
+      "windowCleared": "Дневни сати менија су уклоњени",
+      "everyDay": "Сваког дана",
+      "coverageGap": "Неки радни сати остали би без менија: {list}. Додајте мени који покрива те сате или их означите као затворене."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

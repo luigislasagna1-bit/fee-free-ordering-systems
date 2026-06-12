@@ -3755,7 +3755,18 @@
       "clearSchedule": "Esborra",
       "scheduleSaved": "Activació programada",
       "scheduleCleared": "Programació esborrada",
-      "cancel": "Cancel·la"
+      "cancel": "Cancel·la",
+      "dailyHours": "Horari diari",
+      "dailyHoursActive": "Actiu {window}",
+      "dailyHoursHint": "Mostra aquest menú només aquests dies i hores. Els clients veuen automàticament el menú actiu en cada moment.",
+      "windowFrom": "Des de",
+      "windowTo": "Fins a",
+      "windowSave": "Desa",
+      "windowClear": "Esborra",
+      "windowSaved": "Horari diari del menú desat",
+      "windowCleared": "Horari diari del menú eliminat",
+      "everyDay": "Cada dia",
+      "coverageGap": "Algunes hores d'obertura es quedarien sense menú: {list}. Afegeix un menú que cobreixi aquestes hores o marca-les com a tancades."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

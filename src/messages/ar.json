@@ -3755,7 +3755,18 @@
       "clearSchedule": "مسح",
       "scheduleSaved": "تمت جدولة التفعيل المباشر",
       "scheduleCleared": "تم مسح الجدولة",
-      "cancel": "إلغاء"
+      "cancel": "إلغاء",
+      "dailyHours": "ساعات يومية",
+      "dailyHoursActive": "نشط {window}",
+      "dailyHoursHint": "اعرض هذه القائمة فقط في هذه الأيام والأوقات. يرى العملاء تلقائيًا القائمة النشطة في الوقت الحالي.",
+      "windowFrom": "من",
+      "windowTo": "إلى",
+      "windowSave": "حفظ",
+      "windowClear": "مسح",
+      "windowSaved": "تم حفظ ساعات القائمة اليومية",
+      "windowCleared": "تمت إزالة ساعات القائمة اليومية",
+      "everyDay": "كل يوم",
+      "coverageGap": "ستبقى بعض ساعات العمل دون قائمة: {list}. أضف قائمة تغطي تلك الساعات، أو اضبطها على مغلق."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

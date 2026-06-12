@@ -3755,7 +3755,18 @@
       "clearSchedule": "Temizle",
       "scheduleSaved": "Yayına alım zamanlandı",
       "scheduleCleared": "Zamanlama temizlendi",
-      "cancel": "İptal"
+      "cancel": "İptal",
+      "dailyHours": "Günlük saatler",
+      "dailyHoursActive": "Etkin {window}",
+      "dailyHoursHint": "Bu menüyü yalnızca bu gün ve saatlerde göster. Müşteriler o anda etkin olan menüyü otomatik görür.",
+      "windowFrom": "Başlangıç",
+      "windowTo": "Bitiş",
+      "windowSave": "Kaydet",
+      "windowClear": "Temizle",
+      "windowSaved": "Menünün günlük saatleri kaydedildi",
+      "windowCleared": "Menünün günlük saatleri kaldırıldı",
+      "everyDay": "Her gün",
+      "coverageGap": "Bazı açık saatlerde menü olmazdı: {list}. O saatleri kapsayan bir menü ekleyin veya bu saatleri kapalı olarak ayarlayın."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

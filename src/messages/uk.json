@@ -3755,7 +3755,18 @@
       "clearSchedule": "Очистити",
       "scheduleSaved": "Активацію заплановано",
       "scheduleCleared": "Розклад очищено",
-      "cancel": "Скасувати"
+      "cancel": "Скасувати",
+      "dailyHours": "Щоденні години",
+      "dailyHoursActive": "Активно {window}",
+      "dailyHoursHint": "Показуйте це меню лише в ці дні та години. Клієнти автоматично бачать меню, активне зараз.",
+      "windowFrom": "З",
+      "windowTo": "До",
+      "windowSave": "Зберегти",
+      "windowClear": "Очистити",
+      "windowSaved": "Щоденні години меню збережено",
+      "windowCleared": "Щоденні години меню вилучено",
+      "everyDay": "Щодня",
+      "coverageGap": "У деякі робочі години не було б меню: {list}. Додайте меню на ці години або позначте їх як закриті."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

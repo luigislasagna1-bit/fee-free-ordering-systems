@@ -3755,7 +3755,18 @@
       "clearSchedule": "지우기",
       "scheduleSaved": "라이브가 예약되었습니다",
       "scheduleCleared": "예약이 취소되었습니다",
-      "cancel": "취소"
+      "cancel": "취소",
+      "dailyHours": "일별 시간",
+      "dailyHoursActive": "운영 중 {window}",
+      "dailyHoursHint": "이 메뉴를 지정한 요일과 시간에만 표시합니다. 고객에게는 현재 운영 중인 메뉴가 자동으로 표시됩니다.",
+      "windowFrom": "시작",
+      "windowTo": "종료",
+      "windowSave": "저장",
+      "windowClear": "지우기",
+      "windowSaved": "메뉴의 일별 시간을 저장했습니다",
+      "windowCleared": "메뉴의 일별 시간을 삭제했습니다",
+      "everyDay": "매일",
+      "coverageGap": "일부 영업 시간에 메뉴가 없게 됩니다: {list}. 해당 시간을 포함하는 메뉴를 추가하거나 그 시간을 휴무로 설정하세요."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

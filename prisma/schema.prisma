@@ -660,6 +660,14 @@ model Menu {
   scheduledActivateAt DateTime?
   /// Last time this menu went live (audit / "published on" display).
   publishedAt         DateTime?
+  /// Recurring daily-window scheduling (Luigi 2026-06-12, report cmpxdzr9y
+  /// follow-up). When availableFrom/To are set, this menu is the live one
+  /// ONLY during these days/hours (restaurant tz); a menu with no window is
+  /// the all-hours default. Mirrors MenuItem's availability columns. Save-
+  /// time validation guarantees the active menus cover every open hour.
+  availableDays       String?   // JSON: [0,1,2,3,4,5,6] — null = every day
+  availableFrom       String?   // "HH:MM" — null = no time restriction (default menu)
+  availableTo         String?   // "HH:MM"
   isArchived          Boolean   @default(false)
   sortOrder           Int       @default(0)
   createdAt           DateTime  @default(now())

@@ -866,7 +866,18 @@
       "clearSchedule": "Clear",
       "scheduleSaved": "Go-live scheduled",
       "scheduleCleared": "Schedule cleared",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "dailyHours": "Daily hours",
+      "dailyHoursActive": "Live {window}",
+      "dailyHoursHint": "Show this menu only on these days and times. Customers automatically see whichever menu is live now.",
+      "windowFrom": "From",
+      "windowTo": "To",
+      "windowSave": "Save",
+      "windowClear": "Clear",
+      "windowSaved": "Daily menu hours saved",
+      "windowCleared": "Daily menu hours removed",
+      "everyDay": "Every day",
+      "coverageGap": "Some open hours would have no menu: {list}. Add a menu covering those hours, or set those hours to closed."
     },
     "menu": {
       "title": "Menu",

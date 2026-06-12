@@ -3755,7 +3755,18 @@
       "clearSchedule": "Išvalyti",
       "scheduleSaved": "Aktyvinimas suplanuotas",
       "scheduleCleared": "Tvarkaraštis išvalytas",
-      "cancel": "Atšaukti"
+      "cancel": "Atšaukti",
+      "dailyHours": "Dienos valandos",
+      "dailyHoursActive": "Aktyvu {window}",
+      "dailyHoursHint": "Rodyti šį meniu tik šiomis dienomis ir valandomis. Klientai automatiškai mato tuo metu aktyvų meniu.",
+      "windowFrom": "Nuo",
+      "windowTo": "Iki",
+      "windowSave": "Įrašyti",
+      "windowClear": "Išvalyti",
+      "windowSaved": "Meniu dienos valandos įrašytos",
+      "windowCleared": "Meniu dienos valandos pašalintos",
+      "everyDay": "Kiekvieną dieną",
+      "coverageGap": "Kai kuriomis darbo valandomis nebūtų jokio meniu: {list}. Pridėkite meniu toms valandoms arba pažymėkite jas kaip uždarytas."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

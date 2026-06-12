@@ -3755,7 +3755,18 @@
       "clearSchedule": "Hapus",
       "scheduleSaved": "Pengaktifan dijadwalkan",
       "scheduleCleared": "Jadwal dihapus",
-      "cancel": "Batal"
+      "cancel": "Batal",
+      "dailyHours": "Jam harian",
+      "dailyHoursActive": "Aktif {window}",
+      "dailyHoursHint": "Tampilkan menu ini hanya pada hari dan jam ini. Pelanggan otomatis melihat menu yang aktif saat ini.",
+      "windowFrom": "Dari",
+      "windowTo": "Sampai",
+      "windowSave": "Simpan",
+      "windowClear": "Hapus",
+      "windowSaved": "Jam harian menu disimpan",
+      "windowCleared": "Jam harian menu dihapus",
+      "everyDay": "Setiap hari",
+      "coverageGap": "Beberapa jam buka tidak akan memiliki menu: {list}. Tambahkan menu yang mencakup jam tersebut, atau tetapkan jam itu sebagai tutup."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

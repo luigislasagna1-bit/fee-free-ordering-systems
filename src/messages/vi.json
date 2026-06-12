@@ -3755,7 +3755,18 @@
       "clearSchedule": "Xóa",
       "scheduleSaved": "Đã lên lịch hoạt động",
       "scheduleCleared": "Đã xóa lịch",
-      "cancel": "Hủy"
+      "cancel": "Hủy",
+      "dailyHours": "Giờ hằng ngày",
+      "dailyHoursActive": "Hoạt động {window}",
+      "dailyHoursHint": "Chỉ hiển thị thực đơn này vào những ngày và giờ này. Khách hàng tự động thấy thực đơn đang hoạt động.",
+      "windowFrom": "Từ",
+      "windowTo": "Đến",
+      "windowSave": "Lưu",
+      "windowClear": "Xóa",
+      "windowSaved": "Đã lưu giờ hằng ngày của thực đơn",
+      "windowCleared": "Đã xóa giờ hằng ngày của thực đơn",
+      "everyDay": "Hằng ngày",
+      "coverageGap": "Một số giờ mở cửa sẽ không có thực đơn: {list}. Thêm một thực đơn cho những giờ đó, hoặc đặt những giờ đó là đóng cửa."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

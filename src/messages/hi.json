@@ -3755,7 +3755,18 @@
       "clearSchedule": "साफ़ करें",
       "scheduleSaved": "गो-लाइव शेड्यूल हो गया",
       "scheduleCleared": "शेड्यूल साफ़ कर दिया गया",
-      "cancel": "रद्द करें"
+      "cancel": "रद्द करें",
+      "dailyHours": "दैनिक समय",
+      "dailyHoursActive": "सक्रिय {window}",
+      "dailyHoursHint": "इस मेन्यू को केवल इन दिनों और समय पर दिखाएं। ग्राहक स्वतः वही मेन्यू देखते हैं जो अभी सक्रिय है।",
+      "windowFrom": "से",
+      "windowTo": "तक",
+      "windowSave": "सहेजें",
+      "windowClear": "हटाएं",
+      "windowSaved": "मेन्यू के दैनिक समय सहेजे गए",
+      "windowCleared": "मेन्यू के दैनिक समय हटाए गए",
+      "everyDay": "हर दिन",
+      "coverageGap": "कुछ खुले घंटों में कोई मेन्यू नहीं होगा: {list}। उन घंटों को कवर करने वाला मेन्यू जोड़ें, या उन घंटों को बंद पर सेट करें।"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

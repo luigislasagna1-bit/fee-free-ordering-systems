@@ -3755,7 +3755,18 @@
       "clearSchedule": "Rensa",
       "scheduleSaved": "Aktivering schemalagd",
       "scheduleCleared": "Schema rensat",
-      "cancel": "Avbryt"
+      "cancel": "Avbryt",
+      "dailyHours": "Dagliga tider",
+      "dailyHoursActive": "Aktiv {window}",
+      "dailyHoursHint": "Visa den här menyn endast dessa dagar och tider. Kunder ser automatiskt den meny som är aktiv just nu.",
+      "windowFrom": "Från",
+      "windowTo": "Till",
+      "windowSave": "Spara",
+      "windowClear": "Rensa",
+      "windowSaved": "Menyns dagliga tider sparade",
+      "windowCleared": "Menyns dagliga tider borttagna",
+      "everyDay": "Varje dag",
+      "coverageGap": "Vissa öppettider skulle sakna meny: {list}. Lägg till en meny som täcker de timmarna, eller markera dem som stängda."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

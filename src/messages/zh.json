@@ -3755,7 +3755,18 @@
       "clearSchedule": "清除",
       "scheduleSaved": "上线已排期",
       "scheduleCleared": "排期已清除",
-      "cancel": "取消"
+      "cancel": "取消",
+      "dailyHours": "每日时段",
+      "dailyHoursActive": "生效 {window}",
+      "dailyHoursHint": "仅在这些日期和时间显示此菜单。顾客会自动看到当前生效的菜单。",
+      "windowFrom": "从",
+      "windowTo": "至",
+      "windowSave": "保存",
+      "windowClear": "清除",
+      "windowSaved": "已保存菜单每日时段",
+      "windowCleared": "已移除菜单每日时段",
+      "everyDay": "每天",
+      "coverageGap": "部分营业时间将没有菜单：{list}。请添加覆盖这些时段的菜单，或将这些时段设为休息。"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

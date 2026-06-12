@@ -3755,7 +3755,18 @@
       "clearSchedule": "Изчисти",
       "scheduleSaved": "Пускането на живо е планирано",
       "scheduleCleared": "Графикът е изчистен",
-      "cancel": "Отказ"
+      "cancel": "Отказ",
+      "dailyHours": "Дневни часове",
+      "dailyHoursActive": "Активно {window}",
+      "dailyHoursHint": "Показвайте това меню само в тези дни и часове. Клиентите автоматично виждат менюто, активно в момента.",
+      "windowFrom": "От",
+      "windowTo": "До",
+      "windowSave": "Запази",
+      "windowClear": "Изчисти",
+      "windowSaved": "Дневните часове на менюто са запазени",
+      "windowCleared": "Дневните часове на менюто са премахнати",
+      "everyDay": "Всеки ден",
+      "coverageGap": "Някои работни часове биха останали без меню: {list}. Добавете меню за тези часове или ги задайте като затворени."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

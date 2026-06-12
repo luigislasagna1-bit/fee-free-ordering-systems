@@ -8,10 +8,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
+import { findCoverageGaps, openIntervalsFromHours, toMenuWindow } from "@/lib/menu-schedule";
 
 async function ownMenu(restaurantId: string, id: string) {
   return prisma.menu.findFirst({ where: { id, restaurantId }, select: { id: true, isActive: true } });
 }
+
+const HHMM_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const user = await getSessionUser();
@@ -44,7 +47,79 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       data.scheduledActivateAt = d;
     }
   }
+
+  // Recurring daily window (Luigi 2026-06-12). body.window:
+  //   null                          → clear (this menu becomes the all-hours default)
+  //   { from, to, days? }           → set; from/to are "HH:MM" (from !== to), days
+  //                                    an optional [0..6] subset (omitted = every day)
+  // After applying the change we validate that the restaurant's open hours stay
+  // fully covered by SOME active menu — else we reject so customers never hit an
+  // open hour with no menu.
+  let windowChanged = false;
+  if (body.window !== undefined) {
+    windowChanged = true;
+    if (body.window === null) {
+      data.availableDays = null;
+      data.availableFrom = null;
+      data.availableTo = null;
+    } else {
+      const w = body.window as { from?: unknown; to?: unknown; days?: unknown };
+      if (typeof w.from !== "string" || typeof w.to !== "string" || !HHMM_RE.test(w.from) || !HHMM_RE.test(w.to)) {
+        return NextResponse.json({ error: "Window needs a valid start and end time (HH:MM)." }, { status: 400 });
+      }
+      if (w.from === w.to) {
+        return NextResponse.json({ error: "Start and end time can't be the same." }, { status: 400 });
+      }
+      let days: number[] | null = null;
+      if (Array.isArray(w.days)) {
+        days = [...new Set(w.days.map((n) => Number(n)).filter((n) => n >= 0 && n <= 6))].sort();
+        if (days.length === 0) return NextResponse.json({ error: "Pick at least one day for the menu window." }, { status: 400 });
+        if (days.length === 7) days = null; // all days = no day restriction
+      }
+      data.availableFrom = w.from;
+      data.availableTo = w.to;
+      data.availableDays = days ? JSON.stringify(days) : null;
+    }
+  }
+
   if (Object.keys(data).length === 0) return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
+
+  // Coverage guard — only when a window changed, and only when the result would
+  // be an all-windowed set (a no-window default makes coverage trivially fine).
+  if (windowChanged) {
+    const [hours, menus] = await Promise.all([
+      prisma.openingHours.findMany({
+        where: { restaurantId },
+        select: { dayOfWeek: true, isOpen: true, openTime: true, closeTime: true, closesNextDay: true, service: true },
+      }),
+      prisma.menu.findMany({
+        where: { restaurantId, isArchived: false },
+        select: { id: true, name: true, availableDays: true, availableFrom: true, availableTo: true },
+      }),
+    ]);
+    const windows = menus.map((m) =>
+      m.id === id
+        ? toMenuWindow({
+            id: m.id, name: m.name,
+            availableDays: (data.availableDays as string | null) ?? null,
+            availableFrom: (data.availableFrom as string | null) ?? null,
+            availableTo: (data.availableTo as string | null) ?? null,
+          })
+        : toMenuWindow(m),
+    );
+    const gaps = findCoverageGaps(openIntervalsFromHours(hours), windows);
+    if (gaps.length > 0) {
+      const list = gaps.map((g) => `${g.dayLabel} ${g.from}–${g.to}`).join(", ");
+      return NextResponse.json(
+        {
+          error: `Some open hours would have no menu: ${list}. Add a menu covering those hours, or set those hours to closed.`,
+          code: "menu_coverage_gap",
+          gaps,
+        },
+        { status: 400 },
+      );
+    }
+  }
 
   await prisma.menu.update({ where: { id }, data });
   return NextResponse.json({ ok: true });

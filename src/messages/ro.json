@@ -3755,7 +3755,18 @@
       "clearSchedule": "Șterge",
       "scheduleSaved": "Activare programată",
       "scheduleCleared": "Programare ștearsă",
-      "cancel": "Anulează"
+      "cancel": "Anulează",
+      "dailyHours": "Ore zilnice",
+      "dailyHoursActive": "Activ {window}",
+      "dailyHoursHint": "Afișează acest meniu doar în aceste zile și ore. Clienții văd automat meniul activ în acel moment.",
+      "windowFrom": "De la",
+      "windowTo": "Până la",
+      "windowSave": "Salvează",
+      "windowClear": "Șterge",
+      "windowSaved": "Orele zilnice ale meniului au fost salvate",
+      "windowCleared": "Orele zilnice ale meniului au fost eliminate",
+      "everyDay": "În fiecare zi",
+      "coverageGap": "Unele ore de program nu ar avea niciun meniu: {list}. Adaugă un meniu pentru acele ore sau marchează-le ca închise."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

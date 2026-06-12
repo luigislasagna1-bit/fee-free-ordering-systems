@@ -3755,7 +3755,18 @@
       "clearSchedule": "Limpar",
       "scheduleSaved": "Entrada no ar agendada",
       "scheduleCleared": "Agendamento removido",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "dailyHours": "Horário diário",
+      "dailyHoursActive": "Ativo {window}",
+      "dailyHoursHint": "Mostre este cardápio apenas nestes dias e horários. Os clientes veem automaticamente o cardápio ativo no momento.",
+      "windowFrom": "De",
+      "windowTo": "Até",
+      "windowSave": "Salvar",
+      "windowClear": "Limpar",
+      "windowSaved": "Horário diário do cardápio salvo",
+      "windowCleared": "Horário diário do cardápio removido",
+      "everyDay": "Todos os dias",
+      "coverageGap": "Alguns horários de funcionamento ficariam sem cardápio: {list}. Adicione um cardápio que cubra esses horários ou marque-os como fechados."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

@@ -3755,7 +3755,18 @@
       "clearSchedule": "クリア",
       "scheduleSaved": "公開を予約しました",
       "scheduleCleared": "予約をクリアしました",
-      "cancel": "キャンセル"
+      "cancel": "キャンセル",
+      "dailyHours": "日次の時間帯",
+      "dailyHoursActive": "公開中 {window}",
+      "dailyHoursHint": "このメニューを指定した曜日と時間帯のみ表示します。お客様にはその時点で公開中のメニューが自動的に表示されます。",
+      "windowFrom": "開始",
+      "windowTo": "終了",
+      "windowSave": "保存",
+      "windowClear": "クリア",
+      "windowSaved": "メニューの日次時間帯を保存しました",
+      "windowCleared": "メニューの日次時間帯を削除しました",
+      "everyDay": "毎日",
+      "coverageGap": "一部の営業時間にメニューがなくなります：{list}。その時間帯をカバーするメニューを追加するか、その時間を休業に設定してください。"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

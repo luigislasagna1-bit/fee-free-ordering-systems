@@ -3755,7 +3755,18 @@
       "clearSchedule": "Notīrīt",
       "scheduleSaved": "Aktivizēšana ieplānota",
       "scheduleCleared": "Grafiks notīrīts",
-      "cancel": "Atcelt"
+      "cancel": "Atcelt",
+      "dailyHours": "Dienas laiki",
+      "dailyHoursActive": "Aktīvs {window}",
+      "dailyHoursHint": "Rādiet šo ēdienkarti tikai šajās dienās un laikos. Klienti automātiski redz pašlaik aktīvo ēdienkarti.",
+      "windowFrom": "No",
+      "windowTo": "Līdz",
+      "windowSave": "Saglabāt",
+      "windowClear": "Notīrīt",
+      "windowSaved": "Ēdienkartes dienas laiki saglabāti",
+      "windowCleared": "Ēdienkartes dienas laiki noņemti",
+      "everyDay": "Katru dienu",
+      "coverageGap": "Dažās darba stundās nebūtu ēdienkartes: {list}. Pievienojiet ēdienkarti šīm stundām vai atzīmējiet tās kā slēgtas."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

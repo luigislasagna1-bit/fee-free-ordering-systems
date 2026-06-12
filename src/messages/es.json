@@ -3755,7 +3755,18 @@
       "clearSchedule": "Borrar",
       "scheduleSaved": "Activación programada",
       "scheduleCleared": "Programación borrada",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "dailyHours": "Horario diario",
+      "dailyHoursActive": "Activo {window}",
+      "dailyHoursHint": "Muestra este menú solo en estos días y horas. Los clientes ven automáticamente el menú activo en cada momento.",
+      "windowFrom": "Desde",
+      "windowTo": "Hasta",
+      "windowSave": "Guardar",
+      "windowClear": "Borrar",
+      "windowSaved": "Horario diario del menú guardado",
+      "windowCleared": "Horario diario del menú eliminado",
+      "everyDay": "Todos los días",
+      "coverageGap": "Algunas horas de apertura quedarían sin menú: {list}. Añade un menú que cubra esas horas o márcalas como cerradas."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

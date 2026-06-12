@@ -3755,7 +3755,18 @@
       "clearSchedule": "Vymazat",
       "scheduleSaved": "Aktivace naplánována",
       "scheduleCleared": "Plán vymazán",
-      "cancel": "Zrušit"
+      "cancel": "Zrušit",
+      "dailyHours": "Denní hodiny",
+      "dailyHoursActive": "Aktivní {window}",
+      "dailyHoursHint": "Zobrazte toto menu jen v těchto dnech a hodinách. Zákazníci automaticky vidí menu, které je právě aktivní.",
+      "windowFrom": "Od",
+      "windowTo": "Do",
+      "windowSave": "Uložit",
+      "windowClear": "Vymazat",
+      "windowSaved": "Denní hodiny menu uloženy",
+      "windowCleared": "Denní hodiny menu odstraněny",
+      "everyDay": "Každý den",
+      "coverageGap": "Některé otevírací hodiny by neměly žádné menu: {list}. Přidejte menu pokrývající tyto hodiny nebo je označte jako zavřené."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

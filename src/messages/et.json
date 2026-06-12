@@ -3755,7 +3755,18 @@
       "clearSchedule": "Tühjenda",
       "scheduleSaved": "Aktiveerimine ajastatud",
       "scheduleCleared": "Ajastus tühjendatud",
-      "cancel": "Tühista"
+      "cancel": "Tühista",
+      "dailyHours": "Päevased kellaajad",
+      "dailyHoursActive": "Aktiivne {window}",
+      "dailyHoursHint": "Näita seda menüüd ainult neil päevadel ja kellaaegadel. Kliendid näevad automaatselt parajasti aktiivset menüüd.",
+      "windowFrom": "Alates",
+      "windowTo": "Kuni",
+      "windowSave": "Salvesta",
+      "windowClear": "Tühjenda",
+      "windowSaved": "Menüü päevased kellaajad salvestatud",
+      "windowCleared": "Menüü päevased kellaajad eemaldatud",
+      "everyDay": "Iga päev",
+      "coverageGap": "Mõnel lahtiolekuajal poleks menüüd: {list}. Lisa menüü, mis katab need ajad, või märgi need suletuks."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

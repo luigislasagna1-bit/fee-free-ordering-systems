@@ -94,6 +94,7 @@ export default async function MenuPage({
     select: {
       id: true, name: true, isActive: true, isArchived: true,
       scheduledActivateAt: true, publishedAt: true,
+      availableDays: true, availableFrom: true, availableTo: true,
       _count: { select: { categories: true } },
     },
   });
@@ -103,6 +104,7 @@ export default async function MenuPage({
     id: m.id, name: m.name, isActive: m.isActive, isArchived: m.isArchived,
     scheduledActivateAt: m.scheduledActivateAt?.toISOString() ?? null,
     publishedAt: m.publishedAt?.toISOString() ?? null,
+    availableDays: m.availableDays, availableFrom: m.availableFrom, availableTo: m.availableTo,
     categoryCount: m._count.categories,
   }));
 

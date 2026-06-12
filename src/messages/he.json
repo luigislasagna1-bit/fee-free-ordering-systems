@@ -3755,7 +3755,18 @@
       "clearSchedule": "נקה",
       "scheduleSaved": "ההפעלה תוזמנה",
       "scheduleCleared": "התזמון נוקה",
-      "cancel": "ביטול"
+      "cancel": "ביטול",
+      "dailyHours": "שעות יומיות",
+      "dailyHoursActive": "פעיל {window}",
+      "dailyHoursHint": "הצג תפריט זה רק בימים ובשעות אלה. הלקוחות רואים אוטומטית את התפריט הפעיל כעת.",
+      "windowFrom": "מ",
+      "windowTo": "עד",
+      "windowSave": "שמור",
+      "windowClear": "נקה",
+      "windowSaved": "שעות התפריט היומיות נשמרו",
+      "windowCleared": "שעות התפריט היומיות הוסרו",
+      "everyDay": "כל יום",
+      "coverageGap": "בחלק משעות הפתיחה לא יהיה תפריט: {list}. הוסף תפריט שמכסה את השעות האלה, או הגדר אותן כסגורות."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

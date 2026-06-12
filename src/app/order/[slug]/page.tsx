@@ -29,7 +29,7 @@ import { VisitTracker } from "@/components/order/VisitTracker";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
-import { resolveActiveMenuId } from "@/lib/menu";
+import { resolveScheduledMenuId } from "@/lib/menu-schedule";
 import { holidayEffectToday } from "@/lib/holiday-rules";
 import { isOnMarketplace } from "@/lib/marketplace";
 import { getCurrentCustomer } from "@/lib/customer-session";
@@ -226,10 +226,12 @@ export default async function OrderingPage({
     }
   });
 
-  // Multi-menu: serve only the menu-source restaurant's ACTIVE menu. Falls
-  // back to a restaurant-wide query if (somehow) there's no active menu, so the
-  // ordering page never goes blank. Luigi 2026-06-05.
-  const activeMenuId = await resolveActiveMenuId(menuRestaurantId);
+  // Multi-menu: serve the menu that is live for the customer RIGHT NOW. With no
+  // daily windows configured this is just the single active menu (unchanged);
+  // with windows it auto-switches by time of day (Lunch/Dinner), restaurant tz.
+  // Falls back to a restaurant-wide query if (somehow) there's no menu, so the
+  // ordering page never goes blank. Luigi 2026-06-05 / 2026-06-12.
+  const activeMenuId = await resolveScheduledMenuId(menuRestaurantId);
   const menuCategories = await prisma.menuCategory.findMany({
     where: activeMenuId
       ? { menuId: activeMenuId, isActive: true }

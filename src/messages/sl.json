@@ -3755,7 +3755,18 @@
       "clearSchedule": "Počisti",
       "scheduleSaved": "Objava načrtovana",
       "scheduleCleared": "Načrt počiščen",
-      "cancel": "Prekliči"
+      "cancel": "Prekliči",
+      "dailyHours": "Dnevne ure",
+      "dailyHoursActive": "Aktivno {window}",
+      "dailyHoursHint": "Ta meni prikažite le ob teh dneh in urah. Stranke samodejno vidijo meni, ki je trenutno aktiven.",
+      "windowFrom": "Od",
+      "windowTo": "Do",
+      "windowSave": "Shrani",
+      "windowClear": "Počisti",
+      "windowSaved": "Dnevne ure menija shranjene",
+      "windowCleared": "Dnevne ure menija odstranjene",
+      "everyDay": "Vsak dan",
+      "coverageGap": "Nekatere ure odprtja bi ostale brez menija: {list}. Dodajte meni za te ure ali jih označite kot zaprte."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

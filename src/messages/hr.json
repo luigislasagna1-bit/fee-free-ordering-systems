@@ -3755,7 +3755,18 @@
       "clearSchedule": "Očisti",
       "scheduleSaved": "Aktivacija je zakazana",
       "scheduleCleared": "Raspored je očišćen",
-      "cancel": "Odustani"
+      "cancel": "Odustani",
+      "dailyHours": "Dnevni sati",
+      "dailyHoursActive": "Aktivno {window}",
+      "dailyHoursHint": "Prikažite ovaj jelovnik samo ovim danima i satima. Kupci automatski vide jelovnik koji je trenutno aktivan.",
+      "windowFrom": "Od",
+      "windowTo": "Do",
+      "windowSave": "Spremi",
+      "windowClear": "Očisti",
+      "windowSaved": "Dnevni sati jelovnika spremljeni",
+      "windowCleared": "Dnevni sati jelovnika uklonjeni",
+      "everyDay": "Svaki dan",
+      "coverageGap": "Neki radni sati ostali bi bez jelovnika: {list}. Dodajte jelovnik koji pokriva te sate ili ih označite kao zatvorene."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

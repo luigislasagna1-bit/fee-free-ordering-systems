@@ -3755,7 +3755,18 @@
       "clearSchedule": "ล้าง",
       "scheduleSaved": "ตั้งเวลาเริ่มใช้งานแล้ว",
       "scheduleCleared": "ล้างการตั้งเวลาแล้ว",
-      "cancel": "ยกเลิก"
+      "cancel": "ยกเลิก",
+      "dailyHours": "เวลารายวัน",
+      "dailyHoursActive": "ใช้งาน {window}",
+      "dailyHoursHint": "แสดงเมนูนี้เฉพาะวันและเวลาเหล่านี้ ลูกค้าจะเห็นเมนูที่กำลังใช้งานอยู่โดยอัตโนมัติ",
+      "windowFrom": "ตั้งแต่",
+      "windowTo": "ถึง",
+      "windowSave": "บันทึก",
+      "windowClear": "ล้าง",
+      "windowSaved": "บันทึกเวลารายวันของเมนูแล้ว",
+      "windowCleared": "ลบเวลารายวันของเมนูแล้ว",
+      "everyDay": "ทุกวัน",
+      "coverageGap": "บางช่วงเวลาเปิดทำการจะไม่มีเมนู: {list} เพิ่มเมนูสำหรับช่วงเวลาดังกล่าว หรือตั้งเวลานั้นเป็นปิดทำการ"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",
