@@ -1604,7 +1604,9 @@ export async function POST(req: NextRequest) {
     const isClosedNow = liveStatus.kind !== "open";
     let alertAtValue: Date | null = null;
     if (isClosedNow) {
-      const next = nextOpenAt(openingHoursForCheck, new Date(), restaurantTz);
+      // Holiday-aware: the deferred kitchen alert must not fire on a day a
+      // holiday rule closes — skip to the first genuinely open moment.
+      const next = nextOpenAt(openingHoursForCheck, new Date(), restaurantTz, (restaurant as any).holidays ?? []);
       alertAtValue = next ?? null;
     }
     // Sanity guard: if we couldn't resolve a next-open (e.g. restaurant

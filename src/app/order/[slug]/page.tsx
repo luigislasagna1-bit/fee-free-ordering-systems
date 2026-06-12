@@ -431,6 +431,12 @@ export default async function OrderingPage({
             todayHolidayName: general?.name ?? null,
             todayHolidayMessage: general?.message ?? serviceMessage,
             todayHolidayIntervals: general?.kind === "custom_hours" ? general.intervals : null,
+            // Explicit flag — name and message are both OPTIONAL, so the
+            // client can't infer "fully closed today" from their presence
+            // (a blank-name closure rendered the wrong banner variant and
+            // never reached closed-now detection — found in Luigi's live
+            // test of cmpxds2d2, 2026-06-12).
+            todayHolidayClosed: generalClosed,
             holidayClosedServices,
           };
         })()}

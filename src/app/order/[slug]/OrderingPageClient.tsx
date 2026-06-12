@@ -697,6 +697,7 @@ export function OrderingPageClient({
   todayHolidayName = null,
   todayHolidayMessage = null,
   todayHolidayIntervals = null,
+  todayHolidayClosed = false,
   holidayClosedServices = [],
   isTestPreview = false,
 }: {
@@ -712,6 +713,9 @@ export function OrderingPageClient({
   /** When today's special day is OPEN with custom hours, the intervals that
    *  replace the weekly schedule (general / all-services rule). */
   todayHolidayIntervals?: Array<{ open: string; close: string }> | null;
+  /** TRUE when a holiday rule fully closes the restaurant today. Explicit —
+   *  name + message are both optional, so their absence proves nothing. */
+  todayHolidayClosed?: boolean;
   /** Canonical service keys (pickup/delivery/dine_in/take_out/…) that are
    *  holiday-CLOSED today by a service-specific rule while the restaurant is
    *  otherwise open. Disables those service buttons + shows a banner. */
@@ -2028,14 +2032,24 @@ export function OrderingPageClient({
     (restaurant.openingHours ?? []) as any,
     new Date(),
     hoursFmt,
-    todayHolidayName || (todayHolidayIntervals?.length ?? 0) > 0
+    // Keyed on the explicit closed flag — NOT on the name. Name and
+    // message are optional, so a blank-name full closure must still
+    // reach the open/closed logic (live-test bug, 2026-06-12).
+    todayHolidayClosed || (todayHolidayIntervals?.length ?? 0) > 0
       ? { name: todayHolidayName ?? undefined, intervals: todayHolidayIntervals ?? undefined }
       : undefined,
     restaurantTz,
   );
   const restaurantIsClosedNow = liveStatusForClient.kind !== "open";
   const nextOpenDate = restaurantIsClosedNow
-    ? nextOpenAt((restaurant.openingHours ?? []) as any, new Date(), restaurantTz)
+    ? nextOpenAt(
+        (restaurant.openingHours ?? []) as any,
+        new Date(),
+        restaurantTz,
+        // Skip holiday-closed days so the "order for later" minimum never
+        // lands on a date the server will reject.
+        (restaurant.holidays ?? []) as any,
+      )
     : null;
   // Convert nextOpenDate (a UTC Date that represents the local opening
   // moment) to a "YYYY-MM-DDTHH:MM" string in the restaurant's local
@@ -3190,9 +3204,11 @@ export function OrderingPageClient({
         todayHours && (
           <div className="border-b border-gray-100" style={{ backgroundColor: theme.cardBackground }}>
             <div className="px-4 py-2 text-xs">
-              <span className={`flex items-center gap-1.5 ${todayHours.isOpen ? "text-green-600" : "text-red-600"}`}>
+              {/* Holiday closure overrides the weekly row (live-test bug
+                  2026-06-12: chip said "Open" on a holiday-closed day). */}
+              <span className={`flex items-center gap-1.5 ${todayHours.isOpen && !todayHolidayClosed ? "text-green-600" : "text-red-600"}`}>
                 <Clock className="w-3.5 h-3.5" />
-                {todayHours.isOpen
+                {todayHours.isOpen && !todayHolidayClosed
                   ? `${t("open")} · ${formatHHMM(todayHours.openTime, hoursFmt)} – ${formatHHMM(todayHours.closeTime, hoursFmt)}`
                   : t("closedToday")}
               </span>
@@ -3209,9 +3225,11 @@ export function OrderingPageClient({
               <a href={`tel:${restaurant.phone}`} className="flex items-center gap-1.5"><Phone className="w-4 h-4" style={{ color: theme.primaryColor }} />{restaurant.phone}</a>
             )}
             {todayHours && (
-              <span className={`flex items-center gap-1.5 ${todayHours.isOpen ? "text-green-600" : "text-red-600"}`}>
+              // Holiday closure overrides the weekly row (live-test bug
+              // 2026-06-12: chip said "Open" on a holiday-closed day).
+              <span className={`flex items-center gap-1.5 ${todayHours.isOpen && !todayHolidayClosed ? "text-green-600" : "text-red-600"}`}>
                 <Clock className="w-4 h-4" />
-                {todayHours.isOpen
+                {todayHours.isOpen && !todayHolidayClosed
                   ? `${t("open")}: ${formatHHMM(todayHours.openTime, hoursFmt)} – ${formatHHMM(todayHours.closeTime, hoursFmt)}`
                   : t("closedToday")}
               </span>
@@ -3302,6 +3320,44 @@ export function OrderingPageClient({
         </div>
       )}
 
+      {/* ── Special-day / holiday banner (Gloriafood parity) ─────────────
+          Reseller report cmpxds2d2: a holiday closure must be VISIBLE on
+          the customer page, not just enforced at checkout. Full-bleed
+          strip spanning the page width in dark amber (Luigi 2026-06-12
+          styling request), sitting ABOVE the menu container. The variant
+          is keyed on the explicit todayHolidayClosed flag — deriving it
+          from name/message presence rendered the wrong shape when the
+          owner left the optional name blank. */}
+      {(todayHolidayClosed || todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0) && (() => {
+        const hasCustomHours = (todayHolidayIntervals?.length ?? 0) > 0;
+        const serviceLabel = (s: string) =>
+          s === "pickup" ? t("pickup")
+          : s === "delivery" ? t("delivery")
+          : s === "dine_in" ? t("dineIn")
+          : s === "take_out" ? t("takeOut")
+          : s === "reservation" ? t("tableReservation")
+          : s.charAt(0).toUpperCase() + s.slice(1);
+        return (
+          <div className="w-full bg-amber-500 border-b border-amber-600 px-4 sm:px-6 py-3 text-sm">
+            <div className="max-w-5xl mx-auto">
+              <div className="font-bold text-amber-950 mb-0.5">
+                {todayHolidayClosed
+                  ? <>⛔ {t("holidayClosedToday")}{todayHolidayName ? ` — ${todayHolidayName}` : ""}</>
+                  : hasCustomHours
+                    ? <>🕒 {t("holidaySpecialHours")}{todayHolidayName ? ` — ${todayHolidayName}` : ""}: {todayHolidayIntervals!.map((iv) => `${formatHHMM(iv.open, hoursFmt)} – ${formatHHMM(iv.close, hoursFmt)}`).join(", ")}</>
+                    : <>⛔ {t("holidayNotAvailableToday", { services: holidayClosedServices.map(serviceLabel).join(", ") })}{todayHolidayName ? ` — ${todayHolidayName}` : ""}</>}
+              </div>
+              {todayHolidayMessage && (
+                <div className="text-xs text-amber-900">{todayHolidayMessage}</div>
+              )}
+              {todayHolidayClosed && (
+                <div className="text-xs text-amber-900 mt-0.5">{t("holidayOrderLater")}</div>
+              )}
+            </div>
+          </div>
+        );
+      })()}
+
       <div className="max-w-5xl mx-auto px-4 py-5">
         {/* ── Owner test-mode banner (reseller report cmq3red6b) ───────── */}
         {isTestPreview && (
@@ -3310,41 +3366,6 @@ export function OrderingPageClient({
             <div className="text-xs text-violet-800 mt-0.5">{t("testModeHint")}</div>
           </div>
         )}
-
-        {/* ── Special-day / holiday banner (Gloriafood parity) ───────────
-            Reseller report cmpxds2d2: a holiday closure must be VISIBLE on
-            the customer page, not just enforced at checkout. Three shapes:
-            fully closed today (rose), open with custom hours (amber), or
-            specific services closed while the rest is open (amber). The
-            owner's optional message renders underneath. Luigi 2026-06-11. */}
-        {(todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0) && (() => {
-          const hasCustomHours = (todayHolidayIntervals?.length ?? 0) > 0;
-          const generalClosed = !hasCustomHours && (todayHolidayName !== null || todayHolidayMessage !== null) && restaurantIsClosedNow;
-          const serviceLabel = (s: string) =>
-            s === "pickup" ? t("pickup")
-            : s === "delivery" ? t("delivery")
-            : s === "dine_in" ? t("dineIn")
-            : s === "take_out" ? t("takeOut")
-            : s === "reservation" ? t("tableReservation")
-            : s.charAt(0).toUpperCase() + s.slice(1);
-          return (
-            <div className={`mb-4 rounded-xl border px-4 py-3 text-sm ${generalClosed ? "border-rose-200 bg-rose-50" : "border-amber-200 bg-amber-50"}`}>
-              <div className={`font-semibold mb-0.5 ${generalClosed ? "text-rose-900" : "text-amber-900"}`}>
-                {generalClosed
-                  ? <>⛔ {t("holidayClosedToday")}{todayHolidayName ? ` — ${todayHolidayName}` : ""}</>
-                  : hasCustomHours
-                    ? <>🕒 {t("holidaySpecialHours")}{todayHolidayName ? ` — ${todayHolidayName}` : ""}: {todayHolidayIntervals!.map((iv) => `${formatHHMM(iv.open, hoursFmt)} – ${formatHHMM(iv.close, hoursFmt)}`).join(", ")}</>
-                    : <>⛔ {t("holidayNotAvailableToday", { services: holidayClosedServices.map(serviceLabel).join(", ") })}{todayHolidayName ? ` — ${todayHolidayName}` : ""}</>}
-              </div>
-              {todayHolidayMessage && (
-                <div className={`text-xs ${generalClosed ? "text-rose-800" : "text-amber-800"}`}>{todayHolidayMessage}</div>
-              )}
-              {generalClosed && (
-                <div className="text-xs text-rose-800 mt-0.5">{t("holidayOrderLater")}</div>
-              )}
-            </div>
-          );
-        })()}
 
         {/* ── Paused-service banner ──────────────────────────────────────
             Reads the per-service pausedUntil columns we added on

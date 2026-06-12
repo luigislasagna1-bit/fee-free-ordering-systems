@@ -18,6 +18,8 @@
  * closed regardless of the weekly schedule.
  */
 
+import { holidayEffectForDay } from "./holiday-rules";
+
 export interface OpeningHoursRow {
   dayOfWeek: number;
   isOpen: boolean;
@@ -330,9 +332,25 @@ export function nextOpenAt(
   hours: OpeningHoursRow[] | undefined | null,
   now: Date = new Date(),
   timezone?: string,
+  /** Optional holiday/special-day rows. When provided, days that a
+   *  holiday rule closes are SKIPPED, and custom-hours days use the
+   *  holiday's own intervals instead of the weekly row — so "order for
+   *  later" minimums never land on a day the server would reject.
+   *  (Holiday gap found during Luigi's live test of cmpxds2d2.) */
+  holidays?: Parameters<typeof holidayEffectForDay>[0],
 ): Date | null {
-  // If currently open, the answer is "now."
-  const status = liveOpenStatus(hours, now, "24h", undefined, timezone);
+  const holEff = (dayKey: string) =>
+    holidays && holidays.length > 0 ? holidayEffectForDay(holidays, dayKey, null) : null;
+
+  // If currently open RIGHT NOW (weekly hours + today's holiday rules
+  // agreeing), the answer is "now."
+  const todayKey = timezone ? dateKeyInTimezone(now, timezone) : now.toISOString().slice(0, 10);
+  const todayEff = holEff(todayKey);
+  const todayHol =
+    todayEff?.kind === "closed" ? {}
+    : todayEff?.kind === "custom_hours" ? { intervals: todayEff.intervals }
+    : undefined;
+  const status = liveOpenStatus(hours, now, "24h", todayHol, timezone);
   if (status.kind === "open") return now;
 
   if (!hours || hours.length === 0) return null;
@@ -342,27 +360,40 @@ export function nextOpenAt(
   // viable schedule; bail null so the caller picks a sane fallback.)
   for (let offset = 0; offset < 14; offset++) {
     const targetDow = (dow + offset) % 7;
-    // Prefer the default (service=null) row — service-scoped rows
-    // (pickup / delivery / reservation) are for slot pickers, not for
-    // "is the kitchen open at all". Same fix as liveOpenStatus above.
-    const row = pickDayRow(hours, targetDow);
-    if (!row || !row.isOpen || !row.openTime) continue;
-
     // Build the YYYY-MM-DD for `offset` days from `now` in the
     // restaurant's local timezone.
     const target = new Date(now.getTime() + offset * 24 * 3600 * 1000);
     const dateKey = timezone ? dateKeyInTimezone(target, timezone) : target.toISOString().slice(0, 10);
-    const [hh, mm] = row.openTime.split(":").map((s) => parseInt(s, 10));
-    if (!Number.isFinite(hh) || !Number.isFinite(mm)) continue;
 
-    // Construct the moment that corresponds to `dateKey` at `hh:mm`
-    // in the restaurant's local timezone. We do this by hand-rolling
-    // an ISO string and asking JS to parse it; for timezone-correctness
-    // we use a known offset trick: render the string in the tz,
-    // re-interpret, and let Date math close the loop.
-    const candidate = parseLocalDateTimeInTz(dateKey, hh, mm, timezone);
-    if (offset === 0 && candidate <= now) continue; // today's open already passed
-    return candidate;
+    // Holiday rules first: a closed day is skipped entirely; a
+    // custom-hours day opens at ITS intervals, not the weekly row's.
+    const eff = holEff(dateKey);
+    if (eff?.kind === "closed") continue;
+    let openTimes: string[];
+    if (eff?.kind === "custom_hours" && eff.intervals.length > 0) {
+      openTimes = [...eff.intervals].sort((a, b) => (a.open < b.open ? -1 : 1)).map((iv) => iv.open);
+    } else {
+      // Prefer the default (service=null) row — service-scoped rows
+      // (pickup / delivery / reservation) are for slot pickers, not for
+      // "is the kitchen open at all". Same fix as liveOpenStatus above.
+      const row = pickDayRow(hours, targetDow);
+      if (!row || !row.isOpen || !row.openTime) continue;
+      openTimes = [row.openTime];
+    }
+
+    for (const openTime of openTimes) {
+      const [hh, mm] = openTime.split(":").map((s) => parseInt(s, 10));
+      if (!Number.isFinite(hh) || !Number.isFinite(mm)) continue;
+
+      // Construct the moment that corresponds to `dateKey` at `hh:mm`
+      // in the restaurant's local timezone. We do this by hand-rolling
+      // an ISO string and asking JS to parse it; for timezone-correctness
+      // we use a known offset trick: render the string in the tz,
+      // re-interpret, and let Date math close the loop.
+      const candidate = parseLocalDateTimeInTz(dateKey, hh, mm, timezone);
+      if (candidate <= now) continue; // this opening already passed
+      return candidate;
+    }
   }
   return null;
 }
