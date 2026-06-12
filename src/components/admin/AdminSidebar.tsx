@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock, Network,
+  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock, Network, MessageSquare, Bot,
   // Reports sub-section icons — match GloriaFood's iconography by purpose:
   // TrendingUp for Sales (line going up), PieChart for Menu Insights (mix
   // breakdown), Globe2 for Online Ordering family, ListChecks for List View.
@@ -224,6 +224,10 @@ const navGroups: NavGroup[] = [
           { href: "/admin/kickstarter",      labelKey: "kickstarter",     label: "Kickstarter",      icon: Rocket, requiresFeature: "kickstarter" },
           { href: "/admin/autopilot",        labelKey: "autopilot",       label: "Autopilot",        icon: Zap,    requiresFeature: "automated_campaigns" },
           { href: "/admin/marketing-studio", labelKey: "marketingStudio", label: "Marketing Studio", icon: QrCode, requiresFeature: "marketing_studio" },
+          { href: "/admin/customer-sms",     labelKey: "customerSms",     label: "Customer SMS",     icon: MessageSquare, requiresFeature: "customer_sms" },
+          // ContentPilot — AI social media manager (brand name, untranslated).
+          // comingSoon add-on: the page is a teaser until it ships.
+          { href: "/admin/contentpilot",     labelKey: "contentPilot",    label: "ContentPilot",     icon: Bot, requiresFeature: "contentpilot" },
         ],
       },
     ],

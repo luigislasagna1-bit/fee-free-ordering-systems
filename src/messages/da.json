@@ -1103,18 +1103,7 @@
       "saveFailed": "Kunne ikke gemme sociale links.",
       "openLink": "Åbn link",
       "customerPreviewTitle": "Hvor kunderne ser dette",
-      "customerPreviewBody": "Gemte links vises som en række klikbare ikoner i bunden af din kundebestillingsside.",
-      "comingSoon": "Kommer snart",
-      "aiPostsTitle": "Auto-udkast til sociale opslag",
-      "aiPostsBody": "Udfyld en hurtig ugentlig formular (tilbud, begivenheder, kampagner), og vi udarbejder opslag, du godkender med ét klik.",
-      "tierGated": "Premiumabonnement",
-      "roadmapScheduleTitle": "Automatisk planlægning til dine platforme",
-      "roadmapScheduleBody": "Forbind Instagram, Facebook, X og TikTok. Godkend udkast i bunker — vi poster dem planmæssigt.",
-      "roadmapTemplateTitle": "Ugentlige indholdstemaplater",
-      "roadmapTemplateBody": "Færdigbyggede skabeloner til daglige specialtilbud, begivenheder og bag kulisserne — udfyld felterne og få et poleret opslag.",
-      "roadmapAutoTitle": "Fuldt automatisk tilstand",
-      "roadmapAutoBody": "Når du stoler på udkastene, skifter du til auto-publisering, og vi holder dine feeds aktive håndfrit.",
-      "currentTier": "Nuværende abonnement"
+      "customerPreviewBody": "Gemte links vises som en række klikbare ikoner i bunden af din kundebestillingsside."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Nye vækstværktøjer føjes til GrowthNet, efterhånden som vi udgiver dem — abonnenter får hver nyhed automatisk, uden ekstra omkostninger.",
       "whatsInside": "Hvad er inkluderet",
       "moreChannels": "Flere vækstkanaler"
+    },
+    "contentpilot": {
+      "tagline": "Din AI-drevne sociale medie-manager",
+      "heroBody": "Udfyld en hurtig ugentlig formular — tilbud, events, kampagner — og ContentPilot udarbejder polerede opslag, du godkender med ét klik.",
+      "featureDraftTitle": "Automatisk udarbejdede opslag",
+      "featureDraftBody": "Fortæl ContentPilot, hvad der sker i denne uge, og få publiceringsklare udkast i dit brands tone.",
+      "featureScheduleTitle": "Auto-planlægning til dine platforme",
+      "featureScheduleBody": "Forbind Instagram, Facebook, X og TikTok. Godkend udkast i bundter — vi poster efter planen.",
+      "featureTemplatesTitle": "Ugentlige indholdsskabeloner",
+      "featureTemplatesBody": "Færdige skabeloner til dagens tilbud, events og behind-the-scenes — udfyld felterne, få et poleret opslag.",
+      "featureAutoTitle": "Fuldautomatisk tilstand",
+      "featureAutoBody": "Når du stoler på udkastene, skifter du til auto-udgivelse og holder dine feeds aktive uden indsats.",
+      "includedNote": "ContentPilot bliver inkluderet i GrowthNet — abonnenter får det automatisk på lanceringsdagen."
+    },
+    "customerSms": {
+      "subtitle": "Send sms til kunder, mens ordren går gennem køkkenet — bekræftet, accepteret, klar, afsluttet.",
+      "howTitle": "Sådan fungerer det",
+      "how1": "Beskeder sendes automatisk, når ordrestatus ændres — dit personale skal intet gøre.",
+      "how2": "Sms'er sendes fra vores delte nummer — ingen Twilio-konto eller opsætning nødvendig.",
+      "how3": "Giver mere præcise afhentninger og kundetillid — færre 'er min ordre klar?'-opkald.",
+      "togglesNote": "Styr hvilke statusopdateringer kunder modtager på siden Notifikationer.",
+      "openNotifications": "Åbn Notifikationer"
     }
   },
   "impersonation": {

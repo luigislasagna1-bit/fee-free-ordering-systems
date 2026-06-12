@@ -1103,18 +1103,7 @@
       "saveFailed": "Lưu liên kết mạng xã hội thất bại.",
       "openLink": "Mở liên kết",
       "customerPreviewTitle": "Khách hàng thấy phần này ở đâu",
-      "customerPreviewBody": "Các liên kết đã lưu xuất hiện dưới dạng hàng icon có thể nhấp ở dưới cùng trang đặt hàng.",
-      "comingSoon": "Sắp ra mắt",
-      "aiPostsTitle": "Bài đăng mạng xã hội tự soạn thảo",
-      "aiPostsBody": "Điền form hàng tuần nhanh (đặc sản, sự kiện, khuyến mãi) và chúng tôi sẽ soạn bài để bạn duyệt bằng một cú nhấp.",
-      "tierGated": "Gói Premium",
-      "roadmapScheduleTitle": "Tự động đăng lên các nền tảng",
-      "roadmapScheduleBody": "Kết nối Instagram, Facebook, X và TikTok. Duyệt bài hàng loạt, chúng tôi đăng đúng lịch.",
-      "roadmapTemplateTitle": "Mẫu nội dung hàng tuần",
-      "roadmapTemplateBody": "Mẫu có sẵn cho món đặc biệt hàng ngày, sự kiện, hậu trường — điền vào chỗ trống, có ngay bài đăng hoàn chỉnh.",
-      "roadmapAutoTitle": "Chế độ tự động hoàn toàn",
-      "roadmapAutoBody": "Khi bạn tin tưởng bản thảo, chuyển sang tự động đăng và chúng tôi sẽ duy trì feed hoạt động không cần can thiệp.",
-      "currentTier": "Gói hiện tại"
+      "customerPreviewBody": "Các liên kết đã lưu xuất hiện dưới dạng hàng icon có thể nhấp ở dưới cùng trang đặt hàng."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Các công cụ tăng trưởng mới được thêm vào GrowthNet khi chúng tôi ra mắt — người đăng ký tự động nhận mọi bổ sung mới mà không tốn thêm phí.",
       "whatsInside": "Bao gồm những gì",
       "moreChannels": "Các kênh tăng trưởng khác"
+    },
+    "contentpilot": {
+      "tagline": "Trình quản lý mạng xã hội AI của bạn",
+      "heroBody": "Điền nhanh biểu mẫu hàng tuần — món đặc biệt, sự kiện, khuyến mãi — và ContentPilot soạn các bài đăng chỉn chu để bạn duyệt chỉ với một cú nhấp.",
+      "featureDraftTitle": "Bài đăng được soạn tự động",
+      "featureDraftBody": "Cho ContentPilot biết tuần này có gì và nhận bản nháp sẵn sàng đăng theo phong cách thương hiệu của bạn.",
+      "featureScheduleTitle": "Tự động lên lịch lên các nền tảng",
+      "featureScheduleBody": "Kết nối Instagram, Facebook, X và TikTok. Duyệt bản nháp hàng loạt — chúng tôi đăng đúng lịch.",
+      "featureTemplatesTitle": "Mẫu nội dung hàng tuần",
+      "featureTemplatesBody": "Mẫu dựng sẵn cho món đặc biệt mỗi ngày, sự kiện và hậu trường — điền vào chỗ trống, nhận bài đăng chỉn chu.",
+      "featureAutoTitle": "Chế độ hoàn toàn tự động",
+      "featureAutoBody": "Khi đã tin tưởng bản nháp, hãy chuyển sang tự động đăng và giữ trang của bạn luôn hoạt động mà không cần động tay.",
+      "includedNote": "ContentPilot sẽ nằm trong GrowthNet — người đăng ký tự động nhận được ngay ngày ra mắt."
+    },
+    "customerSms": {
+      "subtitle": "Nhắn tin cho khách khi đơn hàng tiến triển — đã xác nhận, đã nhận, sẵn sàng, hoàn tất.",
+      "howTitle": "Cách hoạt động",
+      "how1": "Tin nhắn tự động gửi khi trạng thái đơn hàng thay đổi — nhân viên không cần thao tác gì.",
+      "how2": "Tin nhắn gửi từ số dùng chung của chúng tôi — không cần tài khoản Twilio hay cài đặt gì.",
+      "how3": "Tăng độ đúng giờ khi đến lấy và niềm tin của khách — ít cuộc gọi 'đơn của tôi xong chưa?' hơn.",
+      "togglesNote": "Kiểm soát khách nhận cập nhật trạng thái nào trên trang Thông báo.",
+      "openNotifications": "Mở Thông báo"
     }
   },
   "impersonation": {

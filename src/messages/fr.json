@@ -1226,18 +1226,7 @@
       "saveFailed": "Échec de l’enregistrement des liens sociaux.",
       "openLink": "Ouvrir le lien",
       "customerPreviewTitle": "Où les clients voient ceci",
-      "customerPreviewBody": "Les liens enregistrés apparaissent sous forme d’icônes cliquables en bas de votre page de commande.",
-      "comingSoon": "Bientôt disponible",
-      "aiPostsTitle": "Publications auto-générées",
-      "aiPostsBody": "Remplissez un formulaire hebdo (spéciaux, événements, promos) et nous rédigeons des posts à approuver en un clic.",
-      "tierGated": "Forfait premium",
-      "roadmapScheduleTitle": "Programmation auto sur vos plateformes",
-      "roadmapScheduleBody": "Connectez Instagram, Facebook, X et TikTok. Approuvez par lots, nous publions selon le calendrier.",
-      "roadmapTemplateTitle": "Modèles de contenu hebdomadaire",
-      "roadmapTemplateBody": "Modèles prêts à l’emploi pour spéciaux, événements, coulisses — remplissez les blancs, obtenez un post soigné.",
-      "roadmapAutoTitle": "Mode entièrement automatisé",
-      "roadmapAutoBody": "Une fois confiance acquise, passez en publication automatique pour garder vos comptes actifs sans intervention.",
-      "currentTier": "Forfait actuel"
+      "customerPreviewBody": "Les liens enregistrés apparaissent sous forme d’icônes cliquables en bas de votre page de commande."
     },
     "websiteHub": {
       "title": "Site web",
@@ -3746,6 +3735,28 @@
       "futureNote": "De nouveaux outils de croissance sont ajoutés à GrowthNet au fil de leur sortie — les abonnés reçoivent automatiquement chaque nouveauté, sans frais supplémentaires.",
       "whatsInside": "Ce qui est inclus",
       "moreChannels": "Autres canaux de croissance"
+    },
+    "contentpilot": {
+      "tagline": "Votre gestionnaire de réseaux sociaux IA",
+      "heroBody": "Remplissez un court formulaire hebdomadaire — plats du jour, événements, promotions — et ContentPilot rédige des publications soignées que vous approuvez en un clic.",
+      "featureDraftTitle": "Publications rédigées automatiquement",
+      "featureDraftBody": "Indiquez à ContentPilot ce qui se passe cette semaine et recevez des brouillons prêts à publier, fidèles à votre image.",
+      "featureScheduleTitle": "Planification automatique sur vos plateformes",
+      "featureScheduleBody": "Connectez Instagram, Facebook, X et TikTok. Approuvez les brouillons par lots — nous les publions au moment prévu.",
+      "featureTemplatesTitle": "Modèles de contenu hebdomadaires",
+      "featureTemplatesBody": "Des modèles prêts à l'emploi pour les plats du jour, les événements et les coulisses — remplissez les blancs, obtenez une publication soignée.",
+      "featureAutoTitle": "Mode entièrement automatisé",
+      "featureAutoBody": "Une fois les brouillons fiables à vos yeux, passez en publication automatique et gardez vos fils actifs sans rien faire.",
+      "includedNote": "ContentPilot sera inclus dans GrowthNet — les abonnés l'obtiennent automatiquement dès son lancement."
+    },
+    "customerSms": {
+      "subtitle": "Envoyez des SMS aux clients au fil de leur commande — reçue, acceptée, prête, terminée.",
+      "howTitle": "Comment ça marche",
+      "how1": "Les messages partent automatiquement quand le statut d'une commande change — aucune action de votre équipe.",
+      "how2": "Les SMS partent depuis notre numéro partagé — aucun compte Twilio ni configuration de votre côté.",
+      "how3": "Améliore la ponctualité des retraits et la confiance client — moins d'appels « ma commande est-elle prête ? ».",
+      "togglesNote": "Choisissez quelles mises à jour de statut les clients reçoivent depuis la page Notifications.",
+      "openNotifications": "Ouvrir les notifications"
     }
   },
   "impersonation": {

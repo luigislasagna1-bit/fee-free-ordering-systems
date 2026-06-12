@@ -1103,18 +1103,7 @@
       "saveFailed": "Social-Media-Links konnten nicht gespeichert werden.",
       "openLink": "Link öffnen",
       "customerPreviewTitle": "So sehen das Kunden",
-      "customerPreviewBody": "Gespeicherte Links erscheinen als Reihe anklickbarer Icons am unteren Ende Ihrer Kunden-Bestellseite.",
-      "comingSoon": "Demnächst verfügbar",
-      "aiPostsTitle": "Automatisch entworfene Social-Media-Beiträge",
-      "aiPostsBody": "Füllen Sie ein kurzes Wochenformular aus (Specials, Veranstaltungen, Aktionen) und wir entwerfen Beiträge, die Sie mit einem Klick genehmigen.",
-      "tierGated": "Premium-Tarif",
-      "roadmapScheduleTitle": "Automatisch auf Ihren Plattformen planen",
-      "roadmapScheduleBody": "Verbinden Sie Instagram, Facebook, X und TikTok. Entwürfe in Batches genehmigen, wir posten sie planmäßig.",
-      "roadmapTemplateTitle": "Wöchentliche Inhaltsvorlagen",
-      "roadmapTemplateBody": "Vorgefertigte Vorlagen für Tagesspecials, Veranstaltungen, Behind-the-Scenes — Lücken ausfüllen, fertigen Beitrag erhalten.",
-      "roadmapAutoTitle": "Vollautomatischer Modus",
-      "roadmapAutoBody": "Sobald Sie den Entwürfen vertrauen, auf Auto-Veröffentlichung umstellen und wir halten Ihre Feeds aktiv.",
-      "currentTier": "Aktueller Tarif"
+      "customerPreviewBody": "Gespeicherte Links erscheinen als Reihe anklickbarer Icons am unteren Ende Ihrer Kunden-Bestellseite."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Neue Wachstums-Tools werden laufend zu GrowthNet hinzugefügt — Abonnenten erhalten jede Neuerung automatisch, ohne Aufpreis.",
       "whatsInside": "Das ist enthalten",
       "moreChannels": "Weitere Wachstumskanäle"
+    },
+    "contentpilot": {
+      "tagline": "Ihr KI-Social-Media-Manager",
+      "heroBody": "Füllen Sie ein kurzes Wochenformular aus — Specials, Events, Aktionen — und ContentPilot entwirft fertige Posts, die Sie mit einem Klick freigeben.",
+      "featureDraftTitle": "Automatisch entworfene Posts",
+      "featureDraftBody": "Sagen Sie ContentPilot, was diese Woche ansteht, und erhalten Sie veröffentlichungsreife Entwürfe im Ton Ihrer Marke.",
+      "featureScheduleTitle": "Automatische Planung auf Ihren Plattformen",
+      "featureScheduleBody": "Verbinden Sie Instagram, Facebook, X und TikTok. Geben Sie Entwürfe gesammelt frei — wir posten nach Zeitplan.",
+      "featureTemplatesTitle": "Wöchentliche Content-Vorlagen",
+      "featureTemplatesBody": "Fertige Vorlagen für Tagesangebote, Events und Behind-the-Scenes — Lücken ausfüllen, fertiger Post.",
+      "featureAutoTitle": "Vollautomatischer Modus",
+      "featureAutoBody": "Sobald Sie den Entwürfen vertrauen, schalten Sie auf Auto-Publishing um und halten Ihre Feeds ohne Aufwand aktiv.",
+      "includedNote": "ContentPilot wird Teil von GrowthNet sein — Abonnenten erhalten es automatisch am Tag des Starts."
+    },
+    "customerSms": {
+      "subtitle": "Senden Sie Kunden SMS, während ihre Bestellung durch die Küche läuft — bestätigt, angenommen, fertig, abgeschlossen.",
+      "howTitle": "So funktioniert es",
+      "how1": "Nachrichten werden automatisch gesendet, wenn sich der Bestellstatus ändert — Ihr Team muss nichts tun.",
+      "how2": "SMS werden über unsere gemeinsame Nummer versendet — kein Twilio-Konto, keine Einrichtung nötig.",
+      "how3": "Verbessert pünktliche Abholungen und das Kundenvertrauen — weniger „Ist meine Bestellung fertig?“-Anrufe.",
+      "togglesNote": "Legen Sie auf der Seite Benachrichtigungen fest, welche Status-Updates Kunden erhalten.",
+      "openNotifications": "Benachrichtigungen öffnen"
     }
   },
   "impersonation": {

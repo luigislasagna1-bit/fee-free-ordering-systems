@@ -58,7 +58,11 @@ export type Feature =
   | "marketing_studio"
   /** Kickstarter launch-campaign tools. Granted by the `kickstarter`
    *  add-on. Free accounts see a locked upsell. */
-  | "kickstarter";
+  | "kickstarter"
+  /** ContentPilot — the AI social media manager (auto-drafted posts,
+   *  auto-scheduling, templates, fully automated mode). Granted by the
+   *  `contentpilot` add-on; comingSoon until the feature ships. */
+  | "contentpilot";
 
 /** Statuses on RestaurantAddOn that grant entitlements. past_due / cancelled
  *  / incomplete subscriptions do NOT grant access — the feature drops the
@@ -182,4 +186,5 @@ export const ALL_FEATURES: readonly Feature[] = [
   "customer_sms",
   "marketing_studio",
   "kickstarter",
+  "contentpilot",
 ];

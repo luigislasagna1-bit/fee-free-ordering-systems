@@ -1103,18 +1103,7 @@
       "saveFailed": "ソーシャルリンクの保存に失敗しました。",
       "openLink": "リンクを開く",
       "customerPreviewTitle": "顧客に表示される場所",
-      "customerPreviewBody": "保存したリンクは顧客の注文ページの下部にクリック可能なアイコン行として表示されます。",
-      "comingSoon": "近日公開",
-      "aiPostsTitle": "AI自動投稿下書き",
-      "aiPostsBody": "週次フォーム（特別メニュー、イベント、プロモーション）を入力すると、1クリックで承認できる投稿を下書きします。",
-      "tierGated": "プレミアムプラン",
-      "roadmapScheduleTitle": "プラットフォームへの自動スケジュール投稿",
-      "roadmapScheduleBody": "Instagram、Facebook、X、TikTokを連携。下書きをまとめて承認し、スケジュール通りに投稿します。",
-      "roadmapTemplateTitle": "週次コンテンツテンプレート",
-      "roadmapTemplateBody": "日替わりメニュー、イベント、舞台裏向けの既成テンプレート — 空欄を埋めるだけで完成度の高い投稿に。",
-      "roadmapAutoTitle": "完全自動モード",
-      "roadmapAutoBody": "下書きを信頼できるようになったら、自動公開に切り替えて手間なくフィードを更新し続けます。",
-      "currentTier": "現在のプラン"
+      "customerPreviewBody": "保存したリンクは顧客の注文ページの下部にクリック可能なアイコン行として表示されます。"
     },
     "autopilot": {
       "title": "自動化",
@@ -3746,6 +3735,28 @@
       "futureNote": "新しい成長ツールはリリースのたびに GrowthNet に追加されます — 加入者は追加料金なしで自動的に利用できます。",
       "whatsInside": "含まれるもの",
       "moreChannels": "その他の成長チャネル"
+    },
+    "contentpilot": {
+      "tagline": "あなたのAIソーシャルメディアマネージャー",
+      "heroBody": "週1回の簡単なフォームに入力するだけ — スペシャル、イベント、プロモーション — ContentPilot が洗練された投稿を下書きし、ワンクリックで承認できます。",
+      "featureDraftTitle": "投稿の自動下書き",
+      "featureDraftBody": "今週の予定を ContentPilot に伝えるだけで、ブランドのトーンに合った公開可能な下書きが届きます。",
+      "featureScheduleTitle": "各プラットフォームへ自動スケジュール",
+      "featureScheduleBody": "Instagram、Facebook、X、TikTok を連携。下書きをまとめて承認すれば、予定どおりに投稿します。",
+      "featureTemplatesTitle": "週次コンテンツテンプレート",
+      "featureTemplatesBody": "日替わりスペシャル、イベント、舞台裏用の既製テンプレート — 空欄を埋めるだけで洗練された投稿に。",
+      "featureAutoTitle": "完全自動モード",
+      "featureAutoBody": "下書きを信頼できるようになったら自動公開に切り替え、手間なくフィードを活性化し続けましょう。",
+      "includedNote": "ContentPilot は GrowthNet に含まれる予定です — リリース当日、加入者は自動的に利用できます。"
+    },
+    "customerSms": {
+      "subtitle": "注文の進行に合わせてお客様にSMSを送信 — 確認、受付、準備完了、完了。",
+      "howTitle": "仕組み",
+      "how1": "注文ステータスが変わると自動でメッセージを送信 — スタッフの操作は不要です。",
+      "how2": "メッセージは共有番号から送信されます — Twilio アカウントや設定は不要です。",
+      "how3": "受け取りの正確さと顧客の信頼を向上 — 「注文はできてますか？」という電話が減ります。",
+      "togglesNote": "お客様が受け取るステータス更新は通知ページで管理できます。",
+      "openNotifications": "通知を開く"
     }
   },
   "impersonation": {

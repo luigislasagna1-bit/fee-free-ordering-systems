@@ -1226,18 +1226,7 @@
       "saveFailed": "Salvataggio dei link social non riuscito.",
       "openLink": "Apri link",
       "customerPreviewTitle": "Dove lo vedono i clienti",
-      "customerPreviewBody": "I link salvati appaiono come una riga di icone cliccabili in fondo alla pagina d’ordinazione.",
-      "comingSoon": "Prossimamente",
-      "aiPostsTitle": "Post auto-generati",
-      "aiPostsBody": "Compila un breve modulo settimanale (offerte, eventi, promozioni) e creiamo post da approvare con un clic.",
-      "tierGated": "Piano premium",
-      "roadmapScheduleTitle": "Pianificazione automatica sulle tue piattaforme",
-      "roadmapScheduleBody": "Collega Instagram, Facebook, X e TikTok. Approva in blocchi, pubblichiamo secondo il calendario.",
-      "roadmapTemplateTitle": "Template di contenuti settimanali",
-      "roadmapTemplateBody": "Template pronti per offerte, eventi, dietro le quinte — riempi i campi, ottieni un post curato.",
-      "roadmapAutoTitle": "Modalità completamente automatica",
-      "roadmapAutoBody": "Quando ti fidi delle bozze, passa alla pubblicazione automatica e teniamo i tuoi profili attivi senza intervento.",
-      "currentTier": "Piano attuale"
+      "customerPreviewBody": "I link salvati appaiono come una riga di icone cliccabili in fondo alla pagina d’ordinazione."
     },
     "websiteHub": {
       "title": "Sito web",
@@ -3746,6 +3735,28 @@
       "futureNote": "Nuovi strumenti di crescita vengono aggiunti a GrowthNet man mano che li rilasciamo — gli abbonati ricevono ogni novità automaticamente, senza costi aggiuntivi.",
       "whatsInside": "Cosa include",
       "moreChannels": "Altri canali di crescita"
+    },
+    "contentpilot": {
+      "tagline": "Il tuo social media manager IA",
+      "heroBody": "Compila un breve modulo settimanale — specialità, eventi, promozioni — e ContentPilot prepara post curati che approvi con un clic.",
+      "featureDraftTitle": "Post redatti automaticamente",
+      "featureDraftBody": "Racconta a ContentPilot cosa succede questa settimana e ricevi bozze pronte da pubblicare con la voce del tuo brand.",
+      "featureScheduleTitle": "Programmazione automatica sulle tue piattaforme",
+      "featureScheduleBody": "Collega Instagram, Facebook, X e TikTok. Approva le bozze in blocco — le pubblichiamo noi secondo il calendario.",
+      "featureTemplatesTitle": "Modelli di contenuto settimanali",
+      "featureTemplatesBody": "Modelli pronti per piatti del giorno, eventi e dietro le quinte — riempi gli spazi e ottieni un post curato.",
+      "featureAutoTitle": "Modalità completamente automatica",
+      "featureAutoBody": "Quando ti fidi delle bozze, passa alla pubblicazione automatica e mantieni i tuoi profili attivi senza pensarci.",
+      "includedNote": "ContentPilot sarà incluso in GrowthNet — gli abbonati lo ricevono automaticamente il giorno del lancio."
+    },
+    "customerSms": {
+      "subtitle": "Invia SMS ai clienti mentre l'ordine avanza in cucina — confermato, accettato, pronto, completato.",
+      "howTitle": "Come funziona",
+      "how1": "I messaggi partono automaticamente quando lo stato dell'ordine cambia — nessuna azione richiesta al personale.",
+      "how2": "Gli SMS partono dal nostro numero condiviso — niente account Twilio né configurazione da parte tua.",
+      "how3": "Migliora la puntualità dei ritiri e la fiducia dei clienti — meno telefonate \"il mio ordine è pronto?\".",
+      "togglesNote": "Scegli quali aggiornamenti di stato ricevono i clienti dalla pagina Notifiche.",
+      "openNotifications": "Apri Notifiche"
     }
   },
   "impersonation": {

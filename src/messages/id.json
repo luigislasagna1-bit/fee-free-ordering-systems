@@ -1103,18 +1103,7 @@
       "saveFailed": "Gagal menyimpan tautan sosial.",
       "openLink": "Buka tautan",
       "customerPreviewTitle": "Di mana pelanggan melihat ini",
-      "customerPreviewBody": "Tautan yang tersimpan muncul sebagai baris ikon yang dapat diklik di bagian bawah halaman pemesanan pelanggan Anda.",
-      "comingSoon": "Segera hadir",
-      "aiPostsTitle": "Postingan sosial yang dibuat otomatis",
-      "aiPostsBody": "Isi formulir mingguan singkat (penawaran spesial, acara, promosi) dan kami akan membuat postingan yang Anda setujui dengan satu klik.",
-      "tierGated": "Tingkatan premium",
-      "roadmapScheduleTitle": "Jadwal otomatis ke platform Anda",
-      "roadmapScheduleBody": "Hubungkan Instagram, Facebook, X, dan TikTok. Setujui draf secara massal, kami memposting sesuai jadwal.",
-      "roadmapTemplateTitle": "Template konten mingguan",
-      "roadmapTemplateBody": "Template siap pakai untuk menu harian, acara, di balik layar — isi bagian kosong, dapatkan postingan yang rapi.",
-      "roadmapAutoTitle": "Mode penuh otomatis",
-      "roadmapAutoBody": "Setelah Anda mempercayai draf, beralih ke penerbitan otomatis dan kami akan menjaga feed Anda tetap aktif tanpa tangan.",
-      "currentTier": "Tingkatan saat ini"
+      "customerPreviewBody": "Tautan yang tersimpan muncul sebagai baris ikon yang dapat diklik di bagian bawah halaman pemesanan pelanggan Anda."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Alat pertumbuhan baru ditambahkan ke GrowthNet saat kami merilisnya — pelanggan mendapatkan setiap tambahan baru secara otomatis, tanpa biaya ekstra.",
       "whatsInside": "Apa saja isinya",
       "moreChannels": "Saluran pertumbuhan lainnya"
+    },
+    "contentpilot": {
+      "tagline": "Manajer media sosial AI Anda",
+      "heroBody": "Isi formulir mingguan singkat — menu spesial, acara, promosi — dan ContentPilot menyusun postingan rapi yang Anda setujui sekali klik.",
+      "featureDraftTitle": "Postingan draf otomatis",
+      "featureDraftBody": "Beri tahu ContentPilot apa yang terjadi minggu ini dan dapatkan draf siap terbit dengan gaya merek Anda.",
+      "featureScheduleTitle": "Jadwal otomatis ke platform Anda",
+      "featureScheduleBody": "Hubungkan Instagram, Facebook, X, dan TikTok. Setujui draf secara massal — kami memostingnya sesuai jadwal.",
+      "featureTemplatesTitle": "Templat konten mingguan",
+      "featureTemplatesBody": "Templat siap pakai untuk menu spesial harian, acara, dan di balik layar — isi bagian kosong, dapatkan postingan rapi.",
+      "featureAutoTitle": "Mode otomatis penuh",
+      "featureAutoBody": "Setelah Anda percaya pada drafnya, beralih ke publikasi otomatis dan biarkan feed Anda tetap aktif tanpa repot.",
+      "includedNote": "ContentPilot akan termasuk dalam GrowthNet — pelanggan mendapatkannya otomatis pada hari peluncuran."
+    },
+    "customerSms": {
+      "subtitle": "Kirim SMS ke pelanggan saat pesanan berjalan — dikonfirmasi, diterima, siap, selesai.",
+      "howTitle": "Cara kerjanya",
+      "how1": "Pesan terkirim otomatis saat status pesanan berubah — staf Anda tidak perlu melakukan apa pun.",
+      "how2": "SMS dikirim dari nomor bersama kami — tanpa akun Twilio atau penyiapan di pihak Anda.",
+      "how3": "Meningkatkan kepatuhan pengambilan dan kepercayaan pelanggan — lebih sedikit telepon 'apakah pesanan saya sudah siap?'.",
+      "togglesNote": "Atur pembaruan status mana yang diterima pelanggan di halaman Notifikasi.",
+      "openNotifications": "Buka Notifikasi"
     }
   },
   "impersonation": {

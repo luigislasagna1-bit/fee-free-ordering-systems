@@ -18,7 +18,6 @@ export default async function SocialMediaPage() {
   return (
     <SocialMediaClient
       initialLinks={parsed}
-      marketingTier={r?.marketingTier ?? "free"}
       restaurantSlug={r?.slug ?? ""}
     />
   );

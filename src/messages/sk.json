@@ -1103,18 +1103,7 @@
       "saveFailed": "Uloženie sociálnych odkazov zlyhalo.",
       "openLink": "Otvoriť odkaz",
       "customerPreviewTitle": "Kde to zákazníci vidia",
-      "customerPreviewBody": "Uložené odkazy sa zobrazujú ako rad klikateľných ikon v dolnej časti vašej stránky objednávania.",
-      "comingSoon": "Čoskoro",
-      "aiPostsTitle": "Automaticky navrhnuté príspevky na sociálne siete",
-      "aiPostsBody": "Vyplňte krátky týždenný formulár (špeciality, udalosti, akcie) a my navrhneme príspevky, ktoré schválite jedným kliknutím.",
-      "tierGated": "Prémiový plán",
-      "roadmapScheduleTitle": "Automatické plánovanie na vaše platformy",
-      "roadmapScheduleBody": "Prepojte Instagram, Facebook, X a TikTok. Schvaľujte návrhy hromadne, my ich zverejníme podľa plánu.",
-      "roadmapTemplateTitle": "Týždenné obsahové šablóny",
-      "roadmapTemplateBody": "Predpripravené šablóny pre denné špeciality, udalosti, zákulisie — vyplňte medzery a získajte prepracovaný príspevok.",
-      "roadmapAutoTitle": "Plne automatický režim",
-      "roadmapAutoBody": "Keď dôverujete návrhom, prepnite na automatické zverejňovanie a my udržíme vaše kanály aktívne bez námahy.",
-      "currentTier": "Aktuálny plán"
+      "customerPreviewBody": "Uložené odkazy sa zobrazujú ako rad klikateľných ikon v dolnej časti vašej stránky objednávania."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Nové rastové nástroje pridávame do GrowthNet priebežne — predplatitelia dostávajú každú novinku automaticky a bez príplatku.",
       "whatsInside": "Čo obsahuje",
       "moreChannels": "Ďalšie rastové kanály"
+    },
+    "contentpilot": {
+      "tagline": "Váš AI správca sociálnych sietí",
+      "heroBody": "Vyplňte krátky týždenný formulár — špeciality, akcie, promo — a ContentPilot pripraví vyladené príspevky, ktoré schválite jedným kliknutím.",
+      "featureDraftTitle": "Automaticky pripravené príspevky",
+      "featureDraftBody": "Povedzte ContentPilotu, čo sa tento týždeň deje, a dostanete koncepty pripravené na zverejnenie v tóne vašej značky.",
+      "featureScheduleTitle": "Automatické plánovanie na vaše platformy",
+      "featureScheduleBody": "Prepojte Instagram, Facebook, X a TikTok. Schvaľujte koncepty hromadne — my ich zverejníme podľa plánu.",
+      "featureTemplatesTitle": "Týždenné šablóny obsahu",
+      "featureTemplatesBody": "Hotové šablóny pre denné ponuky, akcie a zákulisie — doplňte prázdne miesta a získate vyladený príspevok.",
+      "featureAutoTitle": "Plne automatický režim",
+      "featureAutoBody": "Keď konceptom dôverujete, prepnite na automatické publikovanie a udržujte profily aktívne bez námahy.",
+      "includedNote": "ContentPilot bude súčasťou GrowthNet — predplatitelia ho dostanú automaticky v deň spustenia."
+    },
+    "customerSms": {
+      "subtitle": "Posielajte zákazníkom SMS, ako objednávka postupuje — potvrdená, prijatá, hotová, dokončená.",
+      "howTitle": "Ako to funguje",
+      "how1": "Správy sa odosielajú automaticky pri zmene stavu objednávky — personál nemusí nič robiť.",
+      "how2": "SMS odchádzajú z nášho zdieľaného čísla — žiadny účet Twilio ani nastavenie.",
+      "how3": "Zlepšuje včasné vyzdvihnutie a dôveru zákazníkov — menej telefonátov „je moja objednávka hotová?“.",
+      "togglesNote": "Na stránke Oznámenia určte, ktoré stavové aktualizácie zákazníci dostávajú.",
+      "openNotifications": "Otvoriť Oznámenia"
     }
   },
   "impersonation": {

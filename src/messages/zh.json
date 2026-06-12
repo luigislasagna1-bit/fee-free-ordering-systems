@@ -1103,18 +1103,7 @@
       "saveFailed": "保存社交链接失败。",
       "openLink": "打开链接",
       "customerPreviewTitle": "顾客看到的位置",
-      "customerPreviewBody": "已保存的链接将以一排可点击图标的形式显示在顾客点餐页面底部。",
-      "comingSoon": "即将推出",
-      "aiPostsTitle": "AI 自动草拟社交帖子",
-      "aiPostsBody": "填写每周简短表单（特价、活动、促销），我们将草拟帖子，您只需一键审批。",
-      "tierGated": "付费功能",
-      "roadmapScheduleTitle": "自动发布到您的平台",
-      "roadmapScheduleBody": "关联 Instagram、Facebook、X 和 TikTok，批量审批草稿，我们按计划发布。",
-      "roadmapTemplateTitle": "每周内容模板",
-      "roadmapTemplateBody": "每日特价、活动、幕后花絮的预设模板——填写空白内容即可获得精美帖子。",
-      "roadmapAutoTitle": "全自动模式",
-      "roadmapAutoBody": "信任草稿后切换到自动发布，我们将持续保持您的社交动态活跃。",
-      "currentTier": "当前套餐"
+      "customerPreviewBody": "已保存的链接将以一排可点击图标的形式显示在顾客点餐页面底部。"
     },
     "autopilot": {
       "title": "自动营销",
@@ -3746,6 +3735,28 @@
       "futureNote": "新的增长工具会随发布持续加入 GrowthNet——订阅者自动获得每项新增功能，无需额外付费。",
       "whatsInside": "包含内容",
       "moreChannels": "更多增长渠道"
+    },
+    "contentpilot": {
+      "tagline": "您的 AI 社交媒体管家",
+      "heroBody": "每周填写一份快速表单——特色菜、活动、促销——ContentPilot 会起草精美帖子，您一键批准即可。",
+      "featureDraftTitle": "自动起草帖子",
+      "featureDraftBody": "告诉 ContentPilot 本周有什么动态，即可获得符合品牌风格、可直接发布的草稿。",
+      "featureScheduleTitle": "自动排期发布到您的平台",
+      "featureScheduleBody": "连接 Instagram、Facebook、X 和 TikTok。批量批准草稿——我们按计划发布。",
+      "featureTemplatesTitle": "每周内容模板",
+      "featureTemplatesBody": "为每日特色、活动和幕后花絮准备的现成模板——填空即可获得精美帖子。",
+      "featureAutoTitle": "全自动模式",
+      "featureAutoBody": "当您信任草稿后，切换到自动发布，让您的账号保持活跃，完全无需动手。",
+      "includedNote": "ContentPilot 将包含在 GrowthNet 中——上线当天订阅者自动获得。"
+    },
+    "customerSms": {
+      "subtitle": "随订单进展向顾客发送短信——已确认、已接单、已就绪、已完成。",
+      "howTitle": "工作原理",
+      "how1": "订单状态变化时短信自动发送——员工无需任何操作。",
+      "how2": "短信由我们的共享号码发出——您无需 Twilio 账号或任何配置。",
+      "how3": "提升取餐准时率与顾客信任——减少「我的订单好了吗？」的来电。",
+      "togglesNote": "在「通知」页面控制顾客收到哪些状态更新。",
+      "openNotifications": "打开通知"
     }
   },
   "impersonation": {

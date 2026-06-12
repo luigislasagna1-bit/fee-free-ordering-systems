@@ -1,9 +1,7 @@
 "use client";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import {
-  Save, Share2, ExternalLink, Lock, Sparkles, Calendar, Rocket, MessageSquare,
-} from "lucide-react";
+import { Save, Share2, ExternalLink } from "lucide-react";
 import { useTranslations } from "next-intl";
 import {
   SocialIcon, PLATFORM_LABELS, PLATFORM_PLACEHOLDERS,
@@ -14,7 +12,6 @@ type LinkMap = Partial<Record<SocialPlatform, string>>;
 
 interface Props {
   initialLinks: LinkMap;
-  marketingTier: string;
   restaurantSlug: string;
 }
 
@@ -24,7 +21,7 @@ const PLATFORMS: SocialPlatform[] = [
   "yelp", "googleBusiness", "tripadvisor", "website",
 ];
 
-export function SocialMediaClient({ initialLinks, marketingTier, restaurantSlug }: Props) {
+export function SocialMediaClient({ initialLinks, restaurantSlug }: Props) {
   const t = useTranslations("admin.socialMedia");
   const tCommon = useTranslations("common");
   const [links, setLinks] = useState<LinkMap>(initialLinks);
@@ -75,9 +72,9 @@ export function SocialMediaClient({ initialLinks, marketingTier, restaurantSlug 
         </button>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="max-w-3xl">
         {/* ── Links column ──────────────────────────────────────────── */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-1">
               {t("yourAccounts")}
@@ -140,43 +137,9 @@ export function SocialMediaClient({ initialLinks, marketingTier, restaurantSlug 
           </div>
         </div>
 
-        {/* ── Roadmap / upsell column ───────────────────────────────── */}
-        <div className="space-y-4">
-          <div className="bg-gradient-to-br from-emerald-600 to-slate-900 text-white rounded-xl p-5 shadow-sm">
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="w-5 h-5" />
-              <span className="text-xs font-bold uppercase tracking-wider opacity-90">{t("comingSoon")}</span>
-            </div>
-            <h3 className="text-lg font-bold leading-snug">{t("aiPostsTitle")}</h3>
-            <p className="text-sm opacity-95 mt-1.5">{t("aiPostsBody")}</p>
-            <div className="mt-3 inline-flex items-center gap-1.5 text-xs bg-white/20 px-2.5 py-1 rounded-full">
-              <Lock className="w-3 h-3" /> {t("tierGated")}
-            </div>
-          </div>
-
-          <RoadmapItem icon={Calendar} title={t("roadmapScheduleTitle")} body={t("roadmapScheduleBody")} />
-          <RoadmapItem icon={MessageSquare} title={t("roadmapTemplateTitle")} body={t("roadmapTemplateBody")} />
-          <RoadmapItem icon={Rocket} title={t("roadmapAutoTitle")} body={t("roadmapAutoBody")} />
-
-          <div className="text-xs text-gray-400 px-1">
-            {t("currentTier")}: <span className="font-mono text-gray-600">{marketingTier}</span>
-          </div>
-        </div>
       </div>
     </div>
   );
 }
 
-function RoadmapItem({ icon: Icon, title, body }: { icon: any; title: string; body: string }) {
-  return (
-    <div className="bg-white border border-gray-100 rounded-xl p-4 flex items-start gap-3 shadow-sm">
-      <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
-        <Icon className="w-4 h-4" />
-      </div>
-      <div>
-        <h4 className="text-sm font-semibold text-gray-900">{title}</h4>
-        <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{body}</p>
-      </div>
-    </div>
-  );
-}
+

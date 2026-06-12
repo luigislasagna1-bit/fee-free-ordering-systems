@@ -1103,18 +1103,7 @@
       "saveFailed": "Falha ao salvar links sociais.",
       "openLink": "Abrir link",
       "customerPreviewTitle": "Onde os clientes veem isso",
-      "customerPreviewBody": "Os links salvos aparecem como uma linha de ícones clicáveis no rodapé da sua página de pedidos.",
-      "comingSoon": "Em breve",
-      "aiPostsTitle": "Publicações sociais redigidas por IA",
-      "aiPostsBody": "Preencha um formulário semanal rápido (especiais, eventos, promoções) e criaremos rascunhos que você aprova em um clique.",
-      "tierGated": "Plano Premium",
-      "roadmapScheduleTitle": "Agendamento automático nas suas plataformas",
-      "roadmapScheduleBody": "Conecte Instagram, Facebook, X e TikTok. Aprove rascunhos em lote, nós publicamos no horário certo.",
-      "roadmapTemplateTitle": "Modelos de conteúdo semanal",
-      "roadmapTemplateBody": "Modelos prontos para especiais diários, eventos, bastidores — preencha os campos e receba uma publicação bem elaborada.",
-      "roadmapAutoTitle": "Modo totalmente automático",
-      "roadmapAutoBody": "Quando confiar nos rascunhos, ative a publicação automática e manteremos seus feeds ativos sem esforço.",
-      "currentTier": "Plano atual"
+      "customerPreviewBody": "Os links salvos aparecem como uma linha de ícones clicáveis no rodapé da sua página de pedidos."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Novas ferramentas de crescimento são adicionadas ao GrowthNet conforme as lançamos — os assinantes recebem cada novidade automaticamente, sem custo extra.",
       "whatsInside": "O que está incluído",
       "moreChannels": "Mais canais de crescimento"
+    },
+    "contentpilot": {
+      "tagline": "Seu gerente de redes sociais com IA",
+      "heroBody": "Preencha um formulário semanal rápido — especiais, eventos, promoções — e o ContentPilot redige posts caprichados que você aprova em um clique.",
+      "featureDraftTitle": "Posts redigidos automaticamente",
+      "featureDraftBody": "Conte ao ContentPilot o que acontece nesta semana e receba rascunhos prontos para publicar com a voz da sua marca.",
+      "featureScheduleTitle": "Agendamento automático nas suas plataformas",
+      "featureScheduleBody": "Conecte Instagram, Facebook, X e TikTok. Aprove rascunhos em lote — nós publicamos no horário.",
+      "featureTemplatesTitle": "Modelos de conteúdo semanais",
+      "featureTemplatesBody": "Modelos prontos para especiais do dia, eventos e bastidores — preencha as lacunas e receba um post caprichado.",
+      "featureAutoTitle": "Modo totalmente automatizado",
+      "featureAutoBody": "Quando confiar nos rascunhos, mude para publicação automática e mantenha suas redes ativas sem esforço.",
+      "includedNote": "O ContentPilot estará incluído no GrowthNet — assinantes o recebem automaticamente no dia do lançamento."
+    },
+    "customerSms": {
+      "subtitle": "Envie SMS aos clientes conforme o pedido avança — confirmado, aceito, pronto, concluído.",
+      "howTitle": "Como funciona",
+      "how1": "As mensagens são enviadas automaticamente quando o status do pedido muda — sem nenhuma ação da equipe.",
+      "how2": "Os SMS saem do nosso número compartilhado — sem conta Twilio nem configuração do seu lado.",
+      "how3": "Melhora a pontualidade das retiradas e a confiança do cliente — menos ligações de “meu pedido está pronto?”.",
+      "togglesNote": "Controle quais atualizações de status os clientes recebem na página de Notificações.",
+      "openNotifications": "Abrir Notificações"
     }
   },
   "impersonation": {

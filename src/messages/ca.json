@@ -1103,18 +1103,7 @@
       "saveFailed": "No s'han pogut desar els enllaços socials.",
       "openLink": "Obre l'enllaç",
       "customerPreviewTitle": "On ho veuen els clients",
-      "customerPreviewBody": "Els enllaços desats apareixen com una fila d'icones clicables al peu de la pàgina de comandes dels clients.",
-      "comingSoon": "Properament",
-      "aiPostsTitle": "Publicacions socials preparades per IA",
-      "aiPostsBody": "Empleneu un formulari setmanal ràpid (especials, esdeveniments, promocions) i prepararem publicacions que aprovareu amb un sol clic.",
-      "tierGated": "Nivell Premium",
-      "roadmapScheduleTitle": "Programació automàtica a les vostres plataformes",
-      "roadmapScheduleBody": "Connecteu Instagram, Facebook, X i TikTok. Aproveu esborranys en lots i els publiquem de manera programada.",
-      "roadmapTemplateTitle": "Plantilles de contingut setmanal",
-      "roadmapTemplateBody": "Plantilles predissenyades per a especials diaris, esdeveniments i bastidors — empleneu els espais i obteniu una publicació polida.",
-      "roadmapAutoTitle": "Mode totalment automatitzat",
-      "roadmapAutoBody": "Un cop confieu en els esborranys, activeu la publicació automàtica i mantindrem els vostres perfils actius sense esforç.",
-      "currentTier": "Nivell actual"
+      "customerPreviewBody": "Els enllaços desats apareixen com una fila d'icones clicables al peu de la pàgina de comandes dels clients."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "S'afegeixen noves eines de creixement a GrowthNet a mesura que les llancem — els subscriptors reben cada novetat automàticament, sense cost addicional.",
       "whatsInside": "Què inclou",
       "moreChannels": "Més canals de creixement"
+    },
+    "contentpilot": {
+      "tagline": "El teu gestor de xarxes socials amb IA",
+      "heroBody": "Omple un formulari setmanal ràpid — especials, esdeveniments, promocions — i ContentPilot redacta publicacions polides que aproves amb un clic.",
+      "featureDraftTitle": "Publicacions redactades automàticament",
+      "featureDraftBody": "Explica a ContentPilot què passa aquesta setmana i rep esborranys a punt per publicar amb la veu de la teva marca.",
+      "featureScheduleTitle": "Programació automàtica a les teves plataformes",
+      "featureScheduleBody": "Connecta Instagram, Facebook, X i TikTok. Aprova esborranys per lots — els publiquem segons el calendari.",
+      "featureTemplatesTitle": "Plantilles de contingut setmanals",
+      "featureTemplatesBody": "Plantilles fetes per a especials del dia, esdeveniments i rere les escenes — omple els buits i obtén una publicació polida.",
+      "featureAutoTitle": "Mode totalment automatitzat",
+      "featureAutoBody": "Quan confiïs en els esborranys, passa a publicació automàtica i mantén els teus perfils actius sense esforç.",
+      "includedNote": "ContentPilot s'inclourà a GrowthNet — els subscriptors el reben automàticament el dia del llançament."
+    },
+    "customerSms": {
+      "subtitle": "Envia SMS als clients mentre la comanda avança — confirmada, acceptada, a punt, completada.",
+      "howTitle": "Com funciona",
+      "how1": "Els missatges s'envien automàticament quan canvia l'estat de la comanda — sense cap acció del personal.",
+      "how2": "Els SMS surten del nostre número compartit — sense compte de Twilio ni configuració.",
+      "how3": "Millora la puntualitat de les recollides i la confiança del client — menys trucades de «la meva comanda està a punt?».",
+      "togglesNote": "Controla quines actualitzacions d'estat reben els clients a la pàgina de Notificacions.",
+      "openNotifications": "Obre Notificacions"
     }
   },
   "impersonation": {

@@ -1103,18 +1103,7 @@
       "saveFailed": "Nije moguće spremiti poveznice na društvene mreže.",
       "openLink": "Otvori poveznicu",
       "customerPreviewTitle": "Gdje kupci ovo vide",
-      "customerPreviewBody": "Spremljene poveznice se pojavljuju kao red klikabilnih ikona pri dnu stranice narudžbi kupaca.",
-      "comingSoon": "Uskoro dostupno",
-      "aiPostsTitle": "Automatski sastavljeni objave na društvenim mrežama",
-      "aiPostsBody": "Ispunite kratki tjedni obrazac (specijali, eventi, promocije) i mi ćemo sastaviti objave koje odobravaš jednim klikom.",
-      "tierGated": "Premium razina",
-      "roadmapScheduleTitle": "Automatski raspored na vaše platforme",
-      "roadmapScheduleBody": "Povežite Instagram, Facebook, X i TikTok. Odobrite nacrte u serijama, mi ih objavljujemo prema rasporedu.",
-      "roadmapTemplateTitle": "Tjedni predlošci sadržaja",
-      "roadmapTemplateBody": "Gotovi predlošci za dnevne specijalitete, evente, iza kulisa — ispunite praznine, dobijte uglađenu objavu.",
-      "roadmapAutoTitle": "Potpuno automatski način",
-      "roadmapAutoBody": "Kada ste zadovoljni nacrtima, prebacite na automatsku objavu i mi ćemo održavati vaše feedove aktivnima bez napora.",
-      "currentTier": "Trenutna razina"
+      "customerPreviewBody": "Spremljene poveznice se pojavljuju kao red klikabilnih ikona pri dnu stranice narudžbi kupaca."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Novi alati za rast dodaju se u GrowthNet kako ih objavljujemo — pretplatnici svaku novost dobivaju automatski, bez dodatnih troškova.",
       "whatsInside": "Što uključuje",
       "moreChannels": "Više kanala rasta"
+    },
+    "contentpilot": {
+      "tagline": "Vaš AI upravitelj društvenih mreža",
+      "heroBody": "Ispunite kratak tjedni obrazac — specijaliteti, događanja, promocije — a ContentPilot sastavlja dotjerane objave koje odobravate jednim klikom.",
+      "featureDraftTitle": "Automatski sastavljene objave",
+      "featureDraftBody": "Recite ContentPilotu što se događa ovaj tjedan i dobijte nacrte spremne za objavu u tonu vašeg brenda.",
+      "featureScheduleTitle": "Automatsko zakazivanje na vaše platforme",
+      "featureScheduleBody": "Povežite Instagram, Facebook, X i TikTok. Odobravajte nacrte u serijama — mi ih objavljujemo prema rasporedu.",
+      "featureTemplatesTitle": "Tjedni predlošci sadržaja",
+      "featureTemplatesBody": "Gotovi predlošci za dnevne specijalitete, događanja i iza kulisa — popunite praznine i dobijte dotjeranu objavu.",
+      "featureAutoTitle": "Potpuno automatizirani način",
+      "featureAutoBody": "Kad se pouzdate u nacrte, prebacite na automatsko objavljivanje i držite profile aktivnima bez truda.",
+      "includedNote": "ContentPilot će biti uključen u GrowthNet — pretplatnici ga dobivaju automatski na dan lansiranja."
+    },
+    "customerSms": {
+      "subtitle": "Šaljite SMS kupcima dok narudžba napreduje — potvrđena, prihvaćena, spremna, dovršena.",
+      "howTitle": "Kako funkcionira",
+      "how1": "Poruke se šalju automatski kad se status narudžbe promijeni — bez ikakvih radnji osoblja.",
+      "how2": "SMS-ovi se šalju s našeg zajedničkog broja — bez Twilio računa ili postavljanja s vaše strane.",
+      "how3": "Poboljšava točnost preuzimanja i povjerenje kupaca — manje poziva „je li moja narudžba spremna?“.",
+      "togglesNote": "Na stranici Obavijesti odredite koja ažuriranja statusa kupci primaju.",
+      "openNotifications": "Otvori Obavijesti"
     }
   },
   "impersonation": {

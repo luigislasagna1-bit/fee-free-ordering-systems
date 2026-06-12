@@ -1103,18 +1103,7 @@
       "saveFailed": "Nem sikerült menteni a közösségi linkeket.",
       "openLink": "Link megnyitása",
       "customerPreviewTitle": "Hol látják az ügyfelek",
-      "customerPreviewBody": "A mentett linkek kattintható ikonként jelennek meg az ügyfél rendelési oldalának alján.",
-      "comingSoon": "Hamarosan",
-      "aiPostsTitle": "AI által tervezett bejegyzések",
-      "aiPostsBody": "Töltsön ki egy gyors heti űrlapot (ajánlatok, események, promóciók), és mi egy kattintással jóváhagyható bejegyzés-tervezeteket készítünk.",
-      "tierGated": "Prémium csomag",
-      "roadmapScheduleTitle": "Automatikus ütemezés platformjain",
-      "roadmapScheduleBody": "Csatlakoztassa az Instagram, Facebook, X és TikTok fiókjait. Hagyja jóvá a tervezeteket kötegekben, mi az ütemezés szerint közzétesszük őket.",
-      "roadmapTemplateTitle": "Heti tartalmi sablonok",
-      "roadmapTemplateBody": "Előre elkészített sablonok napi ajánlatokhoz, eseményekhez, kulisszák mögé — töltse ki az üres helyeket, és kész a csiszolt bejegyzés.",
-      "roadmapAutoTitle": "Teljesen automatizált mód",
-      "roadmapAutoBody": "Ha megbízik a tervezetekben, váltson automatikus közzétételre, és mi kézzel fogás nélkül tartjuk aktívan a csatornáit.",
-      "currentTier": "Jelenlegi csomag"
+      "customerPreviewBody": "A mentett linkek kattintható ikonként jelennek meg az ügyfél rendelési oldalának alján."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Új növekedési eszközök kerülnek a GrowthNetbe, ahogy kiadjuk őket — az előfizetők minden újdonságot automatikusan, felár nélkül megkapnak.",
       "whatsInside": "Mit tartalmaz",
       "moreChannels": "További növekedési csatornák"
+    },
+    "contentpilot": {
+      "tagline": "AI közösségimédia-menedzsered",
+      "heroBody": "Tölts ki egy gyors heti űrlapot — ajánlatok, események, akciók — és a ContentPilot kész posztokat fogalmaz, amelyeket egy kattintással jóváhagysz.",
+      "featureDraftTitle": "Automatikusan megírt posztok",
+      "featureDraftBody": "Mondd el a ContentPilotnak, mi történik a héten, és kész piszkozatokat kapsz a márkád hangján.",
+      "featureScheduleTitle": "Automatikus ütemezés a platformjaidra",
+      "featureScheduleBody": "Kösd össze az Instagramot, Facebookot, X-et és TikTokot. Hagyd jóvá a piszkozatokat csoportosan — mi időzítve közzétesszük.",
+      "featureTemplatesTitle": "Heti tartalomsablonok",
+      "featureTemplatesBody": "Kész sablonok napi ajánlatokhoz, eseményekhez és kulisszatitkokhoz — töltsd ki az üres részeket, és kész a poszt.",
+      "featureAutoTitle": "Teljesen automata mód",
+      "featureAutoBody": "Ha már megbízol a piszkozatokban, válts automatikus közzétételre, és tartsd aktívan a profiljaidat erőfeszítés nélkül.",
+      "includedNote": "A ContentPilot a GrowthNet része lesz — az előfizetők automatikusan megkapják a megjelenés napján."
+    },
+    "customerSms": {
+      "subtitle": "Küldj SMS-t a vásárlóknak, ahogy a rendelés halad — visszaigazolva, elfogadva, kész, lezárva.",
+      "howTitle": "Így működik",
+      "how1": "Az üzenetek automatikusan mennek ki a rendelés állapotának változásakor — a személyzetnek nincs teendője.",
+      "how2": "Az SMS-ek a közös számunkról mennek — nem kell Twilio-fiók vagy beállítás.",
+      "how3": "Pontosabb átvételt és nagyobb vásárlói bizalmat hoz — kevesebb „kész a rendelésem?” hívás.",
+      "togglesNote": "Az Értesítések oldalon szabályozhatod, mely állapotfrissítéseket kapják a vásárlók.",
+      "openNotifications": "Értesítések megnyitása"
     }
   },
   "impersonation": {

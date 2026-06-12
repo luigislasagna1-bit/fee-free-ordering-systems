@@ -310,6 +310,24 @@ async function main() {
       enabledFeatures: ["kickstarter"],
     },
     {
+      // ContentPilot — the AI social media manager (Luigi 2026-06-11, named
+      // by him). Auto-drafted posts from a quick weekly form, auto-scheduled
+      // to the restaurant's platforms, weekly templates, fully automated
+      // mode. The teaser copy used to squat on the FREE Social Media page;
+      // it now lives at /admin/contentpilot under GrowthNet. comingSoon
+      // until the feature actually ships; in the GrowthNet bundle from day
+      // one so subscribers get it automatically at launch.
+      slug: "contentpilot",
+      inGrowthNet: true,
+      name: "ContentPilot",
+      description:
+        "Your AI social media manager — fill in a quick weekly form (specials, events, promotions) and ContentPilot drafts polished posts you approve in one click, auto-scheduled to Instagram, Facebook, X and TikTok.",
+      monthlyPriceCents: 1999, // $19.99 placeholder — superadmin sets the real price
+      displayOrder: 98,
+      enabledFeatures: ["contentpilot"],
+      comingSoon: true,
+    },
+    {
       // Driver Pool: standalone access to the ShipDay third-party driver
       // network without subscribing to the full Marketplace. Useful for
       // restaurants that don't want public discovery but DO want

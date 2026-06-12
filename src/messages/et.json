@@ -1103,18 +1103,7 @@
       "saveFailed": "Sotsiaalmeedia linkide salvestamine ebaõnnestus.",
       "openLink": "Ava link",
       "customerPreviewTitle": "Kus kliendid seda näevad",
-      "customerPreviewBody": "Salvestatud lingid kuvatakse kliendi tellimislehe allosas klõpsatavate ikoonide reana.",
-      "comingSoon": "Tulemas peatselt",
-      "aiPostsTitle": "AI-koostatud sotsiaalmeedia postitused",
-      "aiPostsBody": "Täida kiire iganädalane vorm (eripakkumised, sündmused, kampaaniad) ja me koostame postitused, mida saad ühe klõpsuga kinnitada.",
-      "tierGated": "Premium tase",
-      "roadmapScheduleTitle": "Automaatne avaldamine platvormidele",
-      "roadmapScheduleBody": "Ühenda Instagram, Facebook, X ja TikTok. Kinnita mustandid partiidena, me avaldame need ajakava järgi.",
-      "roadmapTemplateTitle": "Iganädalased sisumallid",
-      "roadmapTemplateBody": "Eelnevalt koostatud mallid igapäevaste eripakkumiste, sündmuste ja kulisside taha vaatamise jaoks — täida lüngad, saa viimistletud postitus.",
-      "roadmapAutoTitle": "Täisautomaatne režiim",
-      "roadmapAutoBody": "Kui usaldad mustandeid, lülitu automaatavaldamisele ja meie hoiame su kanalid aktiivsena käsi-vabalt.",
-      "currentTier": "Praegune tase"
+      "customerPreviewBody": "Salvestatud lingid kuvatakse kliendi tellimislehe allosas klõpsatavate ikoonide reana."
     },
     "autopilot": {
       "title": "Autopiloot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Uusi kasvutööriistu lisatakse GrowthNetti jooksvalt — tellijad saavad iga uuenduse automaatselt, lisatasuta.",
       "whatsInside": "Mida sisaldab",
       "moreChannels": "Veel kasvukanaleid"
+    },
+    "contentpilot": {
+      "tagline": "Sinu AI sotsiaalmeedia haldur",
+      "heroBody": "Täida kiire nädalavorm — eripakkumised, üritused, sooduskampaaniad — ja ContentPilot koostab viimistletud postitused, mille kinnitad ühe klikiga.",
+      "featureDraftTitle": "Automaatselt koostatud postitused",
+      "featureDraftBody": "Räägi ContentPilotile, mis sel nädalal toimub, ja saad avaldamiseks valmis mustandid sinu brändi hääles.",
+      "featureScheduleTitle": "Automaatne ajastamine sinu platvormidele",
+      "featureScheduleBody": "Ühenda Instagram, Facebook, X ja TikTok. Kinnita mustandid kogumikuna — meie avaldame need graafiku järgi.",
+      "featureTemplatesTitle": "Iganädalased sisumallid",
+      "featureTemplatesBody": "Valmis mallid päevapakkumistele, üritustele ja telgitagustele — täida lüngad ja saad viimistletud postituse.",
+      "featureAutoTitle": "Täisautomaatne režiim",
+      "featureAutoBody": "Kui mustandeid usaldad, lülitu automaatsele avaldamisele ja hoia oma vood aktiivsena käed-vabad.",
+      "includedNote": "ContentPilot kuulub GrowthNetti — tellijad saavad selle automaatselt avaldamise päeval."
+    },
+    "customerSms": {
+      "subtitle": "Saada klientidele sõnumeid tellimuse edenedes — kinnitatud, vastu võetud, valmis, lõpetatud.",
+      "howTitle": "Kuidas see töötab",
+      "how1": "Sõnumid saadetakse automaatselt, kui tellimuse olek muutub — personal ei pea midagi tegema.",
+      "how2": "Sõnumid lähevad meie jagatud numbrilt — Twilio kontot ega seadistust pole vaja.",
+      "how3": "Parandab õigeaegset järeletulemist ja klientide usaldust — vähem „kas mu tellimus on valmis?“ kõnesid.",
+      "togglesNote": "Halda Teavituste lehel, milliseid olekuuuendusi kliendid saavad.",
+      "openNotifications": "Ava Teavitused"
     }
   },
   "impersonation": {

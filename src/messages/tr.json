@@ -1103,18 +1103,7 @@
       "saveFailed": "Sosyal bağlantılar kaydedilemedi.",
       "openLink": "Bağlantıyı Aç",
       "customerPreviewTitle": "Müşterilerin bunu nerede gördüğü",
-      "customerPreviewBody": "Kaydedilen bağlantılar, müşteri sipariş sayfanızın alt kısmında tıklanabilir simge satırı olarak görünür.",
-      "comingSoon": "Yakında",
-      "aiPostsTitle": "Otomatik taslak sosyal paylaşımlar",
-      "aiPostsBody": "Hızlı bir haftalık form doldurun (özel teklifler, etkinlikler, promosyonlar) ve bir tıklamayla onaylayacağınız taslaklar hazırlayalım.",
-      "tierGated": "Premium katman",
-      "roadmapScheduleTitle": "Platformlarınıza otomatik zamanlama",
-      "roadmapScheduleBody": "Instagram, Facebook, X ve TikTok'u bağlayın. Taslakları toplu onaylayın, zamanında yayınlayalım.",
-      "roadmapTemplateTitle": "Haftalık içerik şablonları",
-      "roadmapTemplateBody": "Günlük özel teklifler, etkinlikler, sahne arkası için hazır şablonlar — boşlukları doldurun, cilalı bir paylaşım alın.",
-      "roadmapAutoTitle": "Tam otomatik mod",
-      "roadmapAutoBody": "Taslakları güvenilir bulduğunuzda, otomatik yayına geçin ve beslemenizi eller serbest aktif tutalım.",
-      "currentTier": "Mevcut katman"
+      "customerPreviewBody": "Kaydedilen bağlantılar, müşteri sipariş sayfanızın alt kısmında tıklanabilir simge satırı olarak görünür."
     },
     "autopilot": {
       "title": "Otomatik Pilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Yeni büyüme araçları yayınladıkça GrowthNet'e eklenir — aboneler her yeniliği otomatik olarak, ek ücret ödemeden alır.",
       "whatsInside": "İçinde neler var",
       "moreChannels": "Daha fazla büyüme kanalı"
+    },
+    "contentpilot": {
+      "tagline": "Yapay zekâ sosyal medya yöneticiniz",
+      "heroBody": "Hızlı bir haftalık form doldurun — günün spesiyalleri, etkinlikler, kampanyalar — ContentPilot tek tıkla onaylayacağınız özenli gönderiler hazırlasın.",
+      "featureDraftTitle": "Otomatik taslak gönderiler",
+      "featureDraftBody": "ContentPilot'a bu hafta neler olduğunu söyleyin, markanızın diliyle yayına hazır taslaklar alın.",
+      "featureScheduleTitle": "Platformlarınıza otomatik zamanlama",
+      "featureScheduleBody": "Instagram, Facebook, X ve TikTok'u bağlayın. Taslakları toplu onaylayın — biz programa göre yayınlayalım.",
+      "featureTemplatesTitle": "Haftalık içerik şablonları",
+      "featureTemplatesBody": "Günün spesiyalleri, etkinlikler ve kamera arkası için hazır şablonlar — boşlukları doldurun, özenli bir gönderi alın.",
+      "featureAutoTitle": "Tam otomatik mod",
+      "featureAutoBody": "Taslaklara güvendiğinizde otomatik yayına geçin, akışlarınızı elinizi sürmeden aktif tutun.",
+      "includedNote": "ContentPilot, GrowthNet'e dahil olacak — aboneler yayınlandığı gün otomatik olarak alır."
+    },
+    "customerSms": {
+      "subtitle": "Sipariş mutfakta ilerledikçe müşterilere SMS gönderin — onaylandı, kabul edildi, hazır, tamamlandı.",
+      "howTitle": "Nasıl çalışır",
+      "how1": "Sipariş durumu değiştiğinde mesajlar otomatik gönderilir — personelinizin hiçbir şey yapması gerekmez.",
+      "how2": "Mesajlar ortak numaramızdan gönderilir — Twilio hesabına veya kuruluma gerek yok.",
+      "how3": "Zamanında teslim almayı ve müşteri güvenini artırır — daha az 'siparişim hazır mı?' araması.",
+      "togglesNote": "Müşterilerin hangi durum güncellemelerini alacağını Bildirimler sayfasından yönetin.",
+      "openNotifications": "Bildirimleri Aç"
     }
   },
   "impersonation": {

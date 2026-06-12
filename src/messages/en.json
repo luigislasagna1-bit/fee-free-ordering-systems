@@ -1157,18 +1157,7 @@
       "saveFailed": "Failed to save social links.",
       "openLink": "Open link",
       "customerPreviewTitle": "Where customers see this",
-      "customerPreviewBody": "Saved links appear as a row of clickable icons at the bottom of your customer ordering page.",
-      "comingSoon": "Coming soon",
-      "aiPostsTitle": "Auto-drafted social posts",
-      "aiPostsBody": "Fill in a quick weekly form (specials, events, promotions) and we'll draft posts you approve in one click.",
-      "tierGated": "Premium tier",
-      "roadmapScheduleTitle": "Auto-schedule to your platforms",
-      "roadmapScheduleBody": "Connect Instagram, Facebook, X and TikTok. Approve drafts in batches, we post them on schedule.",
-      "roadmapTemplateTitle": "Weekly content templates",
-      "roadmapTemplateBody": "Pre-built templates for daily specials, events, behind-the-scenes — fill the blanks, get a polished post.",
-      "roadmapAutoTitle": "Fully automated mode",
-      "roadmapAutoBody": "Once you trust the drafts, switch to auto-publish and we'll keep your feeds active hands-free.",
-      "currentTier": "Current tier"
+      "customerPreviewBody": "Saved links appear as a row of clickable icons at the bottom of your customer ordering page."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "New growth tools are added to GrowthNet as we ship them — subscribers get every new addition automatically, at no extra cost.",
       "whatsInside": "What's inside",
       "moreChannels": "More growth channels"
+    },
+    "contentpilot": {
+      "tagline": "Your AI social media manager",
+      "heroBody": "Fill in a quick weekly form — specials, events, promotions — and ContentPilot drafts polished posts you approve in one click.",
+      "featureDraftTitle": "Auto-drafted posts",
+      "featureDraftBody": "Tell ContentPilot what's happening this week and get ready-to-publish drafts in your brand's voice.",
+      "featureScheduleTitle": "Auto-schedule to your platforms",
+      "featureScheduleBody": "Connect Instagram, Facebook, X and TikTok. Approve drafts in batches — we post them on schedule.",
+      "featureTemplatesTitle": "Weekly content templates",
+      "featureTemplatesBody": "Pre-built templates for daily specials, events and behind-the-scenes — fill in the blanks, get a polished post.",
+      "featureAutoTitle": "Fully automated mode",
+      "featureAutoBody": "Once you trust the drafts, switch to auto-publish and keep your feeds active hands-free.",
+      "includedNote": "ContentPilot will be included in GrowthNet — subscribers get it automatically the day it launches."
+    },
+    "customerSms": {
+      "subtitle": "Text customers as their order moves through the kitchen — confirmed, accepted, ready, complete.",
+      "howTitle": "How it works",
+      "how1": "Messages send automatically when an order's status changes — no action needed from your staff.",
+      "how2": "Texts go out from our shared number — no Twilio account or setup needed on your side.",
+      "how3": "Drives pickup compliance and customer trust — fewer 'is my order ready?' calls.",
+      "togglesNote": "Control which status updates customers receive on the Notifications page.",
+      "openNotifications": "Open Notifications"
     }
   },
   "impersonation": {

@@ -1103,18 +1103,7 @@
       "saveFailed": "Opslaan van sociale links mislukt.",
       "openLink": "Link openen",
       "customerPreviewTitle": "Waar klanten dit zien",
-      "customerPreviewBody": "Opgeslagen links verschijnen als een rij klikbare pictogrammen onderaan uw klantbestelpagina.",
-      "comingSoon": "Binnenkort beschikbaar",
-      "aiPostsTitle": "Automatisch opgestelde sociale berichten",
-      "aiPostsBody": "Vul een snel wekelijks formulier in (specials, evenementen, promoties) en we stellen berichten op die u met één klik goedkeurt.",
-      "tierGated": "Premium-abonnement",
-      "roadmapScheduleTitle": "Automatisch plannen op uw platforms",
-      "roadmapScheduleBody": "Verbind Instagram, Facebook, X en TikTok. Keur concepten in batches goed en wij plaatsen ze op schema.",
-      "roadmapTemplateTitle": "Wekelijkse inhoudssjablonen",
-      "roadmapTemplateBody": "Kant-en-klare sjablonen voor dagelijkse specials, evenementen, achter de schermen — vul de blanks in en ontvang een verzorgd bericht.",
-      "roadmapAutoTitle": "Volledig geautomatiseerde modus",
-      "roadmapAutoBody": "Zodra u de concepten vertrouwt, schakelt u over naar automatisch publiceren en wij houden uw feeds actief zonder dat u iets hoeft te doen.",
-      "currentTier": "Huidig abonnement"
+      "customerPreviewBody": "Opgeslagen links verschijnen als een rij klikbare pictogrammen onderaan uw klantbestelpagina."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Nieuwe groeitools worden aan GrowthNet toegevoegd zodra we ze uitbrengen — abonnees krijgen elke toevoeging automatisch, zonder extra kosten.",
       "whatsInside": "Wat zit erin",
       "moreChannels": "Meer groeikanalen"
+    },
+    "contentpilot": {
+      "tagline": "Je AI-socialmediamanager",
+      "heroBody": "Vul een kort wekelijks formulier in — specials, evenementen, promoties — en ContentPilot stelt verzorgde posts op die je met één klik goedkeurt.",
+      "featureDraftTitle": "Automatisch opgestelde posts",
+      "featureDraftBody": "Vertel ContentPilot wat er deze week speelt en ontvang publicatieklare concepten in de stem van je merk.",
+      "featureScheduleTitle": "Automatisch inplannen op je platforms",
+      "featureScheduleBody": "Koppel Instagram, Facebook, X en TikTok. Keur concepten in batches goed — wij plaatsen ze op schema.",
+      "featureTemplatesTitle": "Wekelijkse contentsjablonen",
+      "featureTemplatesBody": "Kant-en-klare sjablonen voor dagspecials, evenementen en behind-the-scenes — vul de lege velden in en krijg een verzorgde post.",
+      "featureAutoTitle": "Volledig geautomatiseerde modus",
+      "featureAutoBody": "Zodra je de concepten vertrouwt, schakel je over op automatisch publiceren en blijven je feeds moeiteloos actief.",
+      "includedNote": "ContentPilot wordt onderdeel van GrowthNet — abonnees krijgen het automatisch op de lanceringsdag."
+    },
+    "customerSms": {
+      "subtitle": "Sms klanten terwijl hun bestelling door de keuken gaat — bevestigd, geaccepteerd, klaar, afgerond.",
+      "howTitle": "Hoe het werkt",
+      "how1": "Berichten worden automatisch verstuurd wanneer de orderstatus verandert — je personeel hoeft niets te doen.",
+      "how2": "Sms'jes gaan via ons gedeelde nummer — geen Twilio-account of configuratie nodig.",
+      "how3": "Zorgt voor stiptere afhalingen en meer klantvertrouwen — minder 'is mijn bestelling klaar?'-telefoontjes.",
+      "togglesNote": "Bepaal op de pagina Meldingen welke statusupdates klanten ontvangen.",
+      "openNotifications": "Meldingen openen"
     }
   },
   "impersonation": {

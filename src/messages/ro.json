@@ -1103,18 +1103,7 @@
       "saveFailed": "Salvarea link-urilor sociale a eșuat.",
       "openLink": "Deschide link",
       "customerPreviewTitle": "Unde văd clienții asta",
-      "customerPreviewBody": "Link-urile salvate apar ca un rând de pictograme pe care se poate da click în partea de jos a paginii tale de comandă.",
-      "comingSoon": "În curând",
-      "aiPostsTitle": "Postări sociale redactate automat",
-      "aiPostsBody": "Completează un formular săptămânal rapid (speciale, evenimente, promoții) și vom redacta postări pe care le aprobi cu un singur click.",
-      "tierGated": "Nivel premium",
-      "roadmapScheduleTitle": "Programare automată pe platformele tale",
-      "roadmapScheduleBody": "Conectează Instagram, Facebook, X și TikTok. Aprobă schițele în loturi, noi le publicăm conform programului.",
-      "roadmapTemplateTitle": "Șabloane de conținut săptămânal",
-      "roadmapTemplateBody": "Șabloane pre-construite pentru specialele zilnice, evenimente, culise — completează câmpurile, obții o postare îngrijită.",
-      "roadmapAutoTitle": "Mod complet automatizat",
-      "roadmapAutoBody": "Odată ce ai încredere în schițe, comută la publicare automată și noi îți vom menține fluxurile active fără intervenție.",
-      "currentTier": "Nivelul curent"
+      "customerPreviewBody": "Link-urile salvate apar ca un rând de pictograme pe care se poate da click în partea de jos a paginii tale de comandă."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Instrumente noi de creștere sunt adăugate în GrowthNet pe măsură ce le lansăm — abonații primesc automat fiecare noutate, fără costuri suplimentare.",
       "whatsInside": "Ce conține",
       "moreChannels": "Mai multe canale de creștere"
+    },
+    "contentpilot": {
+      "tagline": "Managerul tău de social media cu IA",
+      "heroBody": "Completează un formular săptămânal rapid — specialități, evenimente, promoții — iar ContentPilot redactează postări finisate pe care le aprobi cu un clic.",
+      "featureDraftTitle": "Postări redactate automat",
+      "featureDraftBody": "Spune-i lui ContentPilot ce se întâmplă săptămâna aceasta și primești ciorne gata de publicat, în vocea brandului tău.",
+      "featureScheduleTitle": "Programare automată pe platformele tale",
+      "featureScheduleBody": "Conectează Instagram, Facebook, X și TikTok. Aprobă ciornele în serie — noi le publicăm conform programului.",
+      "featureTemplatesTitle": "Șabloane de conținut săptămânale",
+      "featureTemplatesBody": "Șabloane gata făcute pentru specialitățile zilei, evenimente și culise — completezi spațiile, primești o postare finisată.",
+      "featureAutoTitle": "Mod complet automatizat",
+      "featureAutoBody": "Când ai încredere în ciorne, treci pe publicare automată și menții feedurile active fără efort.",
+      "includedNote": "ContentPilot va fi inclus în GrowthNet — abonații îl primesc automat în ziua lansării."
+    },
+    "customerSms": {
+      "subtitle": "Trimite SMS clienților pe măsură ce comanda avansează — confirmată, acceptată, gata, finalizată.",
+      "howTitle": "Cum funcționează",
+      "how1": "Mesajele se trimit automat când statusul comenzii se schimbă — fără nicio acțiune din partea echipei.",
+      "how2": "SMS-urile pleacă de pe numărul nostru partajat — fără cont Twilio sau configurare din partea ta.",
+      "how3": "Îmbunătățește punctualitatea ridicărilor și încrederea clienților — mai puține apeluri „e gata comanda mea?”.",
+      "togglesNote": "Controlează ce actualizări de status primesc clienții din pagina Notificări.",
+      "openNotifications": "Deschide Notificările"
     }
   },
   "impersonation": {

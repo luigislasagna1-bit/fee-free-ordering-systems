@@ -1103,18 +1103,7 @@
       "saveFailed": "Nepavyko išsaugoti socialinių tinklų nuorodų.",
       "openLink": "Atidaryti nuorodą",
       "customerPreviewTitle": "Kur klientai tai mato",
-      "customerPreviewBody": "Išsaugotos nuorodos rodomos kaip paspaudžiamų ikonų eilutė jūsų kliento užsakymų puslapio apačioje.",
-      "comingSoon": "Netrukus",
-      "aiPostsTitle": "Automatiškai parengti socialiniai įrašai",
-      "aiPostsBody": "Užpildykite trumpą savaitinę formą (akcijos, renginiai, reklama) ir mes parengsime įrašus, kuriuos patvirtinsite vienu paspaudimu.",
-      "tierGated": "Aukštesnis planas",
-      "roadmapScheduleTitle": "Automatinis skelbimas jūsų platformose",
-      "roadmapScheduleBody": "Prijunkite Instagram, Facebook, X ir TikTok. Tvirtinkite juodraščius paketais, o mes juos skelbiame grafiku.",
-      "roadmapTemplateTitle": "Savaitiniai turinio šablonai",
-      "roadmapTemplateBody": "Paruošti šablonai dienos specialiems pasiūlymams, renginiams, užkulisiams — užpildykite spragas ir gausite baigtą įrašą.",
-      "roadmapAutoTitle": "Visiškai automatinis režimas",
-      "roadmapAutoBody": "Kai pasitikėsite juodraščiais, perjunkite į automatinio skelbimo režimą ir mes palaikysime jūsų kanalus aktyvius be jūsų įsikišimo.",
-      "currentTier": "Dabartinis planas"
+      "customerPreviewBody": "Išsaugotos nuorodos rodomos kaip paspaudžiamų ikonų eilutė jūsų kliento užsakymų puslapio apačioje."
     },
     "autopilot": {
       "title": "Autopilotai",
@@ -3746,6 +3735,28 @@
       "futureNote": "Nauji augimo įrankiai į „GrowthNet“ pridedami juos išleidus — prenumeratoriai kiekvieną naujovę gauna automatiškai, be papildomo mokesčio.",
       "whatsInside": "Kas viduje",
       "moreChannels": "Daugiau augimo kanalų"
+    },
+    "contentpilot": {
+      "tagline": "Jūsų DI socialinių tinklų vadybininkas",
+      "heroBody": "Užpildykite trumpą savaitinę formą — pasiūlymai, renginiai, akcijos — ir „ContentPilot“ parengs nugludintus įrašus, kuriuos patvirtinsite vienu paspaudimu.",
+      "featureDraftTitle": "Automatiškai parengti įrašai",
+      "featureDraftBody": "Papasakokite „ContentPilot“, kas vyksta šią savaitę, ir gausite publikuoti paruoštus juodraščius jūsų prekės ženklo tonu.",
+      "featureScheduleTitle": "Automatinis planavimas jūsų platformose",
+      "featureScheduleBody": "Prijunkite „Instagram“, „Facebook“, „X“ ir „TikTok“. Tvirtinkite juodraščius grupėmis — mes paskelbsime pagal grafiką.",
+      "featureTemplatesTitle": "Savaitiniai turinio šablonai",
+      "featureTemplatesBody": "Paruošti šablonai dienos pasiūlymams, renginiams ir užkulisiams — užpildykite tuščias vietas ir gaukite nugludintą įrašą.",
+      "featureAutoTitle": "Visiškai automatinis režimas",
+      "featureAutoBody": "Kai pasitikėsite juodraščiais, perjunkite į automatinį skelbimą ir išlaikykite savo kanalus aktyvius be pastangų.",
+      "includedNote": "„ContentPilot“ bus įtrauktas į „GrowthNet“ — prenumeratoriai jį gaus automatiškai paleidimo dieną."
+    },
+    "customerSms": {
+      "subtitle": "Siųskite klientams SMS, užsakymui judant — patvirtintas, priimtas, paruoštas, įvykdytas.",
+      "howTitle": "Kaip tai veikia",
+      "how1": "Žinutės išsiunčiamos automatiškai pasikeitus užsakymo būsenai — darbuotojams nieko daryti nereikia.",
+      "how2": "Žinutės siunčiamos iš mūsų bendro numerio — „Twilio“ paskyros ar nustatymų nereikia.",
+      "how3": "Gerina punktualų atsiėmimą ir klientų pasitikėjimą — mažiau skambučių „ar mano užsakymas paruoštas?“.",
+      "togglesNote": "Puslapyje „Pranešimai“ valdykite, kuriuos būsenos atnaujinimus gauna klientai.",
+      "openNotifications": "Atidaryti Pranešimus"
     }
   },
   "impersonation": {

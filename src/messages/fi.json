@@ -1103,18 +1103,7 @@
       "saveFailed": "Sosiaalisen median linkkien tallennus epäonnistui.",
       "openLink": "Avaa linkki",
       "customerPreviewTitle": "Missä asiakkaat näkevät tämän",
-      "customerPreviewBody": "Tallennetut linkit näkyvät rivinä klikattavia kuvakkeita asiakkaan tilaussivun alaosassa.",
-      "comingSoon": "Tulossa pian",
-      "aiPostsTitle": "Automaattisesti luonnostelut sosiaalisen median julkaisut",
-      "aiPostsBody": "Täytä nopea viikkokaavake (tarjoukset, tapahtumat, kampanjat) ja me luonnostelemme julkaisut, jotka hyväksyt yhdellä napsautuksella.",
-      "tierGated": "Premium-taso",
-      "roadmapScheduleTitle": "Automaattinen ajastus alustoillesi",
-      "roadmapScheduleBody": "Yhdistä Instagram, Facebook, X ja TikTok. Hyväksy luonnokset erissä, me julkaisemme ne aikataulun mukaan.",
-      "roadmapTemplateTitle": "Viikottaiset sisältömallit",
-      "roadmapTemplateBody": "Valmiit mallit päivittäisille tarjouksille, tapahtumille, kulissien takaisille kuville — täytä kohdat, saat viimeistellyn julkaisun.",
-      "roadmapAutoTitle": "Täysin automaattinen tila",
-      "roadmapAutoBody": "Kun luotat luonnoksiin, vaihda automaattijulkaisutilaan ja me pidämme syötteesi aktiivisena ilman käsityötä.",
-      "currentTier": "Nykyinen taso"
+      "customerPreviewBody": "Tallennetut linkit näkyvät rivinä klikattavia kuvakkeita asiakkaan tilaussivun alaosassa."
     },
     "autopilot": {
       "title": "Autopilotti",
@@ -3746,6 +3735,28 @@
       "futureNote": "Uusia kasvutyökaluja lisätään GrowthNetiin sitä mukaa kuin julkaisemme niitä — tilaajat saavat jokaisen uutuuden automaattisesti ilman lisämaksua.",
       "whatsInside": "Mitä sisältyy",
       "moreChannels": "Lisää kasvukanavia"
+    },
+    "contentpilot": {
+      "tagline": "Tekoälypohjainen somemanagerisi",
+      "heroBody": "Täytä nopea viikkolomake — tarjoukset, tapahtumat, kampanjat — ja ContentPilot laatii viimeistellyt julkaisut, jotka hyväksyt yhdellä klikkauksella.",
+      "featureDraftTitle": "Automaattisesti laaditut julkaisut",
+      "featureDraftBody": "Kerro ContentPilotille viikon tapahtumat ja saat julkaisuvalmiit luonnokset brändisi äänellä.",
+      "featureScheduleTitle": "Automaattinen ajastus alustoillesi",
+      "featureScheduleBody": "Yhdistä Instagram, Facebook, X ja TikTok. Hyväksy luonnokset erissä — me julkaisemme aikataulussa.",
+      "featureTemplatesTitle": "Viikoittaiset sisältöpohjat",
+      "featureTemplatesBody": "Valmiit pohjat päivän tarjouksille, tapahtumille ja kulissien taakse — täytä aukot, saat viimeistellyn julkaisun.",
+      "featureAutoTitle": "Täysin automaattinen tila",
+      "featureAutoBody": "Kun luotat luonnoksiin, siirry automaattijulkaisuun ja pidä syötteesi aktiivisina vaivatta.",
+      "includedNote": "ContentPilot sisältyy GrowthNetiin — tilaajat saavat sen automaattisesti julkaisupäivänä."
+    },
+    "customerSms": {
+      "subtitle": "Lähetä asiakkaille tekstiviestejä tilauksen edetessä — vahvistettu, hyväksytty, valmis, noudettu.",
+      "howTitle": "Näin se toimii",
+      "how1": "Viestit lähtevät automaattisesti tilauksen tilan muuttuessa — henkilökunnan ei tarvitse tehdä mitään.",
+      "how2": "Viestit lähtevät jaetusta numerostamme — et tarvitse Twilio-tiliä tai määrityksiä.",
+      "how3": "Parantaa noutojen täsmällisyyttä ja asiakkaiden luottamusta — vähemmän \"onko tilaukseni valmis?\" -puheluita.",
+      "togglesNote": "Hallitse Ilmoitukset-sivulla, mitkä tilapäivitykset asiakkaat saavat.",
+      "openNotifications": "Avaa Ilmoitukset"
     }
   },
   "impersonation": {

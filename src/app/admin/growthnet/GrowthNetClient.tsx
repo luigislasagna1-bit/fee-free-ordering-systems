@@ -41,6 +41,7 @@ export function GrowthNetClient({
   const t = useTranslations("admin.growthnet");
   const tCommon = useTranslations("common");
   const tSettings = useTranslations("admin.settings");
+  const tAddOns = useTranslations("admin.addOns");
   const formatCurrency = useCurrencyFormat();
 
   const active = new Set(activeSlugs);
@@ -123,7 +124,12 @@ export function GrowthNetClient({
                 </div>
                 {m.description && <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{m.description}</div>}
               </div>
-              {!isActive && (
+              {!isActive && m.comingSoon && (
+                <span className="text-[10px] font-bold uppercase tracking-wide text-amber-700 bg-amber-100 px-2 py-1 rounded-full flex-shrink-0">
+                  {tAddOns("comingSoonBadge")}
+                </span>
+              )}
+              {!isActive && !m.comingSoon && (
                 <div className="flex flex-col items-end flex-shrink-0 gap-1.5">
                   <div className="text-sm font-bold text-gray-900 whitespace-nowrap">
                     {formatCurrency(m.monthlyPriceCents / 100)}

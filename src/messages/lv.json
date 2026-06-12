@@ -1103,18 +1103,7 @@
       "saveFailed": "Neizdevās saglabāt sociālo mediju saites.",
       "openLink": "Atvērt saiti",
       "customerPreviewTitle": "Kur klienti to redz",
-      "customerPreviewBody": "Saglabātās saites parādās kā noklikšķināmu ikonu rinda jūsu klientu pasūtīšanas lapas apakšā.",
-      "comingSoon": "Drīzumā",
-      "aiPostsTitle": "AI sagatavoti sociālo mediju ieraksti",
-      "aiPostsBody": "Aizpildiet īsu iknedēļas veidlapu (speciālie piedāvājumi, pasākumi, akcijas) un mēs sagatavosim ierakstus, kurus apstiprina ar vienu klikšķi.",
-      "tierGated": "Premium pakāpe",
-      "roadmapScheduleTitle": "Automātiska publicēšana jūsu platformās",
-      "roadmapScheduleBody": "Savienojiet Instagram, Facebook, X un TikTok. Apstipriniet melnrakstus paketēs, mēs tos publicējam pēc grafika.",
-      "roadmapTemplateTitle": "Iknedēļas satura veidnes",
-      "roadmapTemplateBody": "Iepriekš veidotas veidnes ikdienas speciālajiem piedāvājumiem, pasākumiem, aizkulisēm — aizpildiet tukšās vietas un saņemiet poļuotu ierakstu.",
-      "roadmapAutoTitle": "Pilnīgi automatizēts režīms",
-      "roadmapAutoBody": "Kad uzticat melnrakstiem, pārslēdzieties uz autopublicēšanu un mēs uzturēsim jūsu plūsmas aktīvas bez roku darba.",
-      "currentTier": "Pašreizējā pakāpe"
+      "customerPreviewBody": "Saglabātās saites parādās kā noklikšķināmu ikonu rinda jūsu klientu pasūtīšanas lapas apakšā."
     },
     "autopilot": {
       "title": "Autopilots",
@@ -3746,6 +3735,28 @@
       "futureNote": "Jauni izaugsmes rīki tiek pievienoti GrowthNet, tiklīdz tos izlaižam — abonenti katru jaunumu saņem automātiski, bez papildu maksas.",
       "whatsInside": "Kas iekļauts",
       "moreChannels": "Vairāk izaugsmes kanālu"
+    },
+    "contentpilot": {
+      "tagline": "Jūsu MI sociālo tīklu pārvaldnieks",
+      "heroBody": "Aizpildiet ātru iknedēļas veidlapu — piedāvājumi, pasākumi, akcijas — un ContentPilot sagatavos noslīpētas ziņas, ko apstiprināt ar vienu klikšķi.",
+      "featureDraftTitle": "Automātiski sagatavotas ziņas",
+      "featureDraftBody": "Pastāstiet ContentPilot, kas notiek šonedēļ, un saņemiet publicēšanai gatavus melnrakstus jūsu zīmola balsī.",
+      "featureScheduleTitle": "Automātiska plānošana jūsu platformās",
+      "featureScheduleBody": "Pievienojiet Instagram, Facebook, X un TikTok. Apstipriniet melnrakstus pa partijām — mēs tos publicējam pēc grafika.",
+      "featureTemplatesTitle": "Iknedēļas satura veidnes",
+      "featureTemplatesBody": "Gatavas veidnes dienas piedāvājumiem, pasākumiem un aizkulisēm — aizpildiet tukšumus un saņemiet noslīpētu ziņu.",
+      "featureAutoTitle": "Pilnībā automātisks režīms",
+      "featureAutoBody": "Kad uzticaties melnrakstiem, pārslēdzieties uz automātisku publicēšanu un uzturiet savus profilus aktīvus bez piepūles.",
+      "includedNote": "ContentPilot tiks iekļauts GrowthNet — abonenti to saņems automātiski palaišanas dienā."
+    },
+    "customerSms": {
+      "subtitle": "Sūtiet klientiem īsziņas, pasūtījumam virzoties — apstiprināts, pieņemts, gatavs, pabeigts.",
+      "howTitle": "Kā tas darbojas",
+      "how1": "Ziņas tiek nosūtītas automātiski, mainoties pasūtījuma statusam — personālam nekas nav jādara.",
+      "how2": "Īsziņas tiek sūtītas no mūsu kopīgā numura — nav vajadzīgs Twilio konts vai iestatīšana.",
+      "how3": "Uzlabo savlaicīgu saņemšanu un klientu uzticību — mazāk zvanu „vai mans pasūtījums ir gatavs?“.",
+      "togglesNote": "Paziņojumu lapā kontrolējiet, kurus statusa atjauninājumus klienti saņem.",
+      "openNotifications": "Atvērt Paziņojumus"
     }
   },
   "impersonation": {

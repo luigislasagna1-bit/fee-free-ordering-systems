@@ -1103,18 +1103,7 @@
       "saveFailed": "Shranjevanje povezav ni uspelo.",
       "openLink": "Odpri povezavo",
       "customerPreviewTitle": "Kje stranke to vidijo",
-      "customerPreviewBody": "Shranjene povezave se prikažejo kot vrstica klikabilnih ikon na dnu strani naročanja strank.",
-      "comingSoon": "Kmalu na voljo",
-      "aiPostsTitle": "Samodejno pripravljene objave",
-      "aiPostsBody": "Izpolnite kratek tedenski obrazec (posebne ponudbe, dogodki, promocije) in mi bomo pripravili objave, ki jih odobrite z enim klikom.",
-      "tierGated": "Premium raven",
-      "roadmapScheduleTitle": "Samodejno načrtovanje objav",
-      "roadmapScheduleBody": "Povežite Instagram, Facebook, X in TikTok. Odobrite osnutke v skupinah, mi jih objavimo po urniku.",
-      "roadmapTemplateTitle": "Tedenske vsebinske predloge",
-      "roadmapTemplateBody": "Vnaprej pripravljene predloge za dnevne posebne ponudbe, dogodke, zakulisje — izpolnite praznine in dobite poliran prispevek.",
-      "roadmapAutoTitle": "Popolnoma samodejni način",
-      "roadmapAutoBody": "Ko zaupate osnutkom, preklopite na samodejno objavljanje in mi bomo vaše vire aktivno vzdrževali brez poseganja.",
-      "currentTier": "Trenutna raven"
+      "customerPreviewBody": "Shranjene povezave se prikažejo kot vrstica klikabilnih ikon na dnu strani naročanja strank."
     },
     "autopilot": {
       "title": "Autopilot",
@@ -3746,6 +3735,28 @@
       "futureNote": "Nova orodja za rast dodajamo v GrowthNet sproti — naročniki vsako novost prejmejo samodejno, brez doplačila.",
       "whatsInside": "Kaj vsebuje",
       "moreChannels": "Več kanalov rasti"
+    },
+    "contentpilot": {
+      "tagline": "Vaš AI upravitelj družbenih omrežij",
+      "heroBody": "Izpolnite kratek tedenski obrazec — posebnosti, dogodki, akcije — in ContentPilot pripravi izpiljene objave, ki jih potrdite z enim klikom.",
+      "featureDraftTitle": "Samodejno pripravljene objave",
+      "featureDraftBody": "Povejte ContentPilotu, kaj se dogaja ta teden, in prejmite osnutke, pripravljene za objavo, v glasu vaše znamke.",
+      "featureScheduleTitle": "Samodejno razporejanje na vaše platforme",
+      "featureScheduleBody": "Povežite Instagram, Facebook, X in TikTok. Osnutke potrjujte v paketih — mi jih objavimo po urniku.",
+      "featureTemplatesTitle": "Tedenske predloge vsebine",
+      "featureTemplatesBody": "Pripravljene predloge za dnevne posebnosti, dogodke in zakulisje — izpolnite praznine in dobite izpiljeno objavo.",
+      "featureAutoTitle": "Popolnoma samodejni način",
+      "featureAutoBody": "Ko osnutkom zaupate, preklopite na samodejno objavo in ohranite profile aktivne brez truda.",
+      "includedNote": "ContentPilot bo vključen v GrowthNet — naročniki ga prejmejo samodejno na dan izida."
+    },
+    "customerSms": {
+      "subtitle": "Pošiljajte SMS strankam, ko naročilo napreduje — potrjeno, sprejeto, pripravljeno, zaključeno.",
+      "howTitle": "Kako deluje",
+      "how1": "Sporočila se pošljejo samodejno ob spremembi statusa naročila — osebju ni treba storiti ničesar.",
+      "how2": "SMS-i se pošiljajo z naše skupne številke — brez Twilio računa ali nastavitev.",
+      "how3": "Izboljša točnost prevzemov in zaupanje strank — manj klicev »ali je moje naročilo pripravljeno?«.",
+      "togglesNote": "Na strani Obvestila nadzirajte, katere posodobitve statusa stranke prejmejo.",
+      "openNotifications": "Odpri Obvestila"
     }
   },
   "impersonation": {
