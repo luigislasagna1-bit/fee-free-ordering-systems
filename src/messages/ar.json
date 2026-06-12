@@ -223,7 +223,8 @@
       "couponBlocked": "لا يمكن دمج \"{name}\" مع \"{winner}\"، الذي يوفّر لك مبلغًا أكبر بالفعل. وما زال بإمكانك إزالة \"{winner}\" من سلّتك لاستخدام هذا العرض بدلًا منه.",
       "promoReadded": "تمت إعادة إضافة \"{name}\"",
       "couponSwitchedSavesMore": "تم تطبيق \"{name}\" — فهو يوفّر لك مبلغًا أكبر، لذا أزلنا \"{winner}\". اضغط على شريطه للعودة إليه في أي وقت.",
-      "itemUnavailable": "هذا العنصر غير متوفر"
+      "itemUnavailable": "هذا العنصر غير متوفر",
+      "scheduledInPast": "الوقت المجدول الذي اخترته قد مضى بالفعل. يرجى اختيار وقت جديد."
     },
     "searchMenu": "ابحث في القائمة…",
     "signIn": "تسجيل الدخول",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "خصم {value}%",
       "discountLabelFixed": "خصم ${value}",
       "successMessage": "تم تعيين القسيمة <couponCode>{code}</couponCode> ({discount}) لـ {customerName}.",
-      "buttonCreate": "إنشاء وتعيين القسيمة"
+      "buttonCreate": "إنشاء وتعيين القسيمة",
+      "emailSent": "تم إرسال الرمز والشروط إلى العميل عبر البريد الإلكتروني.",
+      "emailSkipped": "لم يُرسل أي بريد إلكتروني (لا يوجد بريد إلكتروني مسجل للعميل أو أنه رفض الرسائل التسويقية) — شارك الرمز معه بنفسك."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "سير عمل المطبخ",
@@ -4170,6 +4173,24 @@
       "amountLabel": "مبلغ الاسترداد",
       "timing": "قد يستغرق ظهوره في كشف حسابك من 5 إلى 10 أيام عمل.",
       "contactLine": "إذا كانت لديك أي أسئلة، ما عليك سوى الرد على هذا البريد الإلكتروني."
+    },
+    "couponAssigned": {
+      "subject": "لقد تلقيت قسيمة من {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} أرسل لك {discountLabel}",
+      "title": "{discountLabel} — خصيصًا لك",
+      "greeting": "مرحبًا {customerName}،",
+      "intro": "أهداك {restaurantName} قسيمة شخصية بقيمة {discountLabel}. وهي مرتبطة بحسابك بالفعل — استخدم الرمز أدناه عند إتمام الطلب.",
+      "codeLabel": "رمز القسيمة الخاص بك",
+      "noteLabel": "رسالة من المطعم",
+      "termsLabel": "الشروط",
+      "discountPercent": "خصم {value}%",
+      "discountFixed": "خصم {amount}",
+      "minOrder": "الحد الأدنى للطلب: {amount}",
+      "validUntil": "صالحة حتى {date}",
+      "usesOnce": "يمكن استخدامها مرة واحدة",
+      "usesMany": "يمكن استخدامها حتى {count} مرات",
+      "redeemHint": "أدخل الرمز عند إتمام الطلب، أو اعثر عليه في لوحة حسابك — وهو صالح لحسابك فقط.",
+      "cta": "اطلب الآن"
     }
   },
   "marketing": {

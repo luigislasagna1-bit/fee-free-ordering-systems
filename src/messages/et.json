@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" ei saa kombineerida sooduspakkumisega \"{winner}\", mis juba säästab sulle rohkem. Soovi korral eemalda \"{winner}\" ostukorvist, et selle asemel seda kasutada.",
       "promoReadded": "„{name}” lisati uuesti",
       "couponSwitchedSavesMore": "\"{name}\" rakendatud — see säästab sulle rohkem, seega eemaldasime \"{winner}\". Tagasi vahetamiseks puuduta selle bännerit igal ajal.",
-      "itemUnavailable": "See toode pole saadaval"
+      "itemUnavailable": "See toode pole saadaval",
+      "scheduledInPast": "Valitud aeg on juba möödas. Palun vali uus aeg."
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% allahindlus",
       "discountLabelFixed": "${value} allahindlus",
       "successMessage": "Kupong <couponCode>{code}</couponCode> ({discount}) on määratud kasutajale {customerName}.",
-      "buttonCreate": "Loo ja määra kupong"
+      "buttonCreate": "Loo ja määra kupong",
+      "emailSent": "Kliendile saadeti e-kiri koodi ja tingimustega.",
+      "emailSkipped": "E-kirja ei saadetud (kliendil pole e-posti aadressi kirjas või ta on turundusteadetest loobunud) — jaga koodi temaga ise."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Köögi töövoog",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Tagasimakse summa",
       "timing": "Summa ilmumine teie kontoväljavõttele võib võtta 5–10 tööpäeva.",
       "contactLine": "Kui teil on küsimusi, vastake lihtsalt sellele e-kirjale."
+    },
+    "couponAssigned": {
+      "subject": "Said kupongi restoranilt {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} saatis sulle {discountLabel}",
+      "title": "{discountLabel} — ainult sinule",
+      "greeting": "Tere, {customerName}!",
+      "intro": "{restaurantName} kinkis sulle isikliku kupongi väärtusega {discountLabel}. See on juba sinu kontoga seotud — kasuta allolevat koodi tellimuse vormistamisel.",
+      "codeLabel": "Sinu kupongikood",
+      "noteLabel": "Sõnum restoranilt",
+      "termsLabel": "Tingimused",
+      "discountPercent": "{value}% soodustust",
+      "discountFixed": "{amount} soodustust",
+      "minOrder": "Minimaalne tellimus: {amount}",
+      "validUntil": "Kehtib kuni {date}",
+      "usesOnce": "Saab kasutada üks kord",
+      "usesMany": "Saab kasutada kuni {count} korda",
+      "redeemHint": "Sisesta kood tellimuse vormistamisel või leia see oma konto töölaualt — kehtib ainult sinu kontol.",
+      "cta": "Telli kohe"
     }
   },
   "marketing": {

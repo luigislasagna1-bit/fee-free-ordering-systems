@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" nie łączy się z \"{winner}\", który już daje Ci większą zniżkę. Możesz jednak usunąć \"{winner}\" z koszyka, aby skorzystać z tego zamiast niego.",
       "promoReadded": "\"{name}\" dodano z powrotem",
       "couponSwitchedSavesMore": "Zastosowano \"{name}\" — daje Ci większą zniżkę, więc usunęliśmy \"{winner}\". Stuknij jego baner, aby w każdej chwili wrócić.",
-      "itemUnavailable": "Ten produkt jest niedostępny"
+      "itemUnavailable": "Ten produkt jest niedostępny",
+      "scheduledInPast": "Wybrana godzina już minęła. Wybierz nowy termin."
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% rabatu",
       "discountLabelFixed": "${value} rabatu",
       "successMessage": "Kupon <couponCode>{code}</couponCode> ({discount}) przypisany do {customerName}.",
-      "buttonCreate": "Utwórz i przypisz kupon"
+      "buttonCreate": "Utwórz i przypisz kupon",
+      "emailSent": "Klient otrzymał e-mail z kodem i warunkami.",
+      "emailSkipped": "E-mail nie został wysłany (klient nie ma zapisanego adresu e-mail lub zrezygnował z wiadomości marketingowych) — przekaż mu kod samodzielnie."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Tryb pracy kuchni",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Kwota zwrotu",
       "timing": "Zaksięgowanie na Twoim wyciągu może potrwać od 5 do 10 dni roboczych.",
       "contactLine": "W razie pytań wystarczy odpowiedzieć na tę wiadomość."
+    },
+    "couponAssigned": {
+      "subject": "Masz kupon od {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} ma dla Ciebie {discountLabel}",
+      "title": "{discountLabel} — specjalnie dla Ciebie",
+      "greeting": "Cześć {customerName},",
+      "intro": "{restaurantName} ma dla Ciebie osobisty kupon na {discountLabel}. Kupon jest już przypisany do Twojego konta — wystarczy, że użyjesz poniższego kodu przy finalizacji zamówienia.",
+      "codeLabel": "Twój kod kuponu",
+      "noteLabel": "Wiadomość od restauracji",
+      "termsLabel": "Warunki",
+      "discountPercent": "{value}% zniżki",
+      "discountFixed": "{amount} zniżki",
+      "minOrder": "Minimalna wartość zamówienia: {amount}",
+      "validUntil": "Ważny do {date}",
+      "usesOnce": "Można użyć tylko raz",
+      "usesMany": "Można użyć maksymalnie {count} razy",
+      "redeemHint": "Wpisz kod przy finalizacji zamówienia lub znajdź go w panelu swojego konta — kod działa wyłącznie na Twoim koncie.",
+      "cta": "Zamów teraz"
     }
   },
   "marketing": {

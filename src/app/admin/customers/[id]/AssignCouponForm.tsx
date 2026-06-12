@@ -16,7 +16,7 @@ export function AssignCouponForm({
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<{ code: string; discount: string } | null>(null);
+  const [success, setSuccess] = useState<{ code: string; discount: string; emailed: boolean } | null>(null);
   const [form, setForm] = useState({
     discountType: "percentage" as "percentage" | "fixed",
     discountValue: "10",
@@ -53,7 +53,7 @@ export function AssignCouponForm({
       const discountLabel = form.discountType === "percentage"
         ? t("discountLabelPercent", { value: form.discountValue })
         : t("discountLabelFixed", { value: form.discountValue });
-      setSuccess({ code: c.code, discount: discountLabel });
+      setSuccess({ code: c.code, discount: discountLabel, emailed: data.emailed === true });
       // Reset form
       setForm({ ...form, description: "", discountValue: "10" });
       // Refresh the page-server-side to pull the new coupon into the
@@ -162,6 +162,12 @@ export function AssignCouponForm({
             customerName: customerName ?? "",
             couponCode: (chunks) => <code className="font-mono font-bold">{chunks}</code>,
           })}
+          {/* Whether the customer was emailed the code (reseller report
+              cmqa6lls1) — "no consent / no email" gets a gentle heads-up so
+              the owner knows to pass the code along themselves. */}
+          <div className="mt-1 text-[11px] text-emerald-700">
+            {success.emailed ? t("emailSent") : t("emailSkipped")}
+          </div>
         </div>
       )}
 

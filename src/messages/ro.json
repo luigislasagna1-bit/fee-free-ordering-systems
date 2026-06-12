@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" nu poate fi combinat cu \"{winner}\", care îți oferă deja o reducere mai mare. Totuși, poți elimina \"{winner}\" din coș ca să folosești în loc această ofertă.",
       "promoReadded": "„{name}\" a fost adăugată din nou",
       "couponSwitchedSavesMore": "\"{name}\" a fost aplicat — îți oferă o reducere mai mare, așa că am eliminat \"{winner}\". Atinge bannerul lui \"{winner}\" oricând ca să revii.",
-      "itemUnavailable": "Acest produs nu este disponibil"
+      "itemUnavailable": "Acest produs nu este disponibil",
+      "scheduledInPast": "Ora programată aleasă a trecut deja. Te rugăm să alegi o oră nouă."
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% reducere",
       "discountLabelFixed": "${value} reducere",
       "successMessage": "Cuponul <couponCode>{code}</couponCode> ({discount}) a fost atribuit lui {customerName}.",
-      "buttonCreate": "Creează și atribuie cupon"
+      "buttonCreate": "Creează și atribuie cupon",
+      "emailSent": "Clientul a primit prin e-mail codul și condițiile.",
+      "emailSkipped": "Nu s-a trimis niciun e-mail (clientul nu are o adresă de e-mail salvată sau a refuzat comunicările de marketing) — transmite-i chiar tu codul."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Flux de lucru bucătărie",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Suma rambursată",
       "timing": "Pot trece între 5 și 10 zile lucrătoare până când suma apare pe extrasul tău.",
       "contactLine": "Dacă ai întrebări, răspunde pur și simplu la acest e-mail."
+    },
+    "couponAssigned": {
+      "subject": "Ai primit un cupon de la {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} ți-a trimis {discountLabel}",
+      "title": "{discountLabel} — special pentru tine",
+      "greeting": "Bună, {customerName},",
+      "intro": "{restaurantName} ți-a oferit un cupon personal cu {discountLabel}. Este deja asociat contului tău — folosește codul de mai jos la finalizarea comenzii.",
+      "codeLabel": "Codul tău de cupon",
+      "noteLabel": "Un mesaj din partea restaurantului",
+      "termsLabel": "Condiții",
+      "discountPercent": "{value}% reducere",
+      "discountFixed": "{amount} reducere",
+      "minOrder": "Comandă minimă: {amount}",
+      "validUntil": "Valabil până la {date}",
+      "usesOnce": "Poate fi folosit o singură dată",
+      "usesMany": "Poate fi folosit de cel mult {count} ori",
+      "redeemHint": "Introdu codul la finalizarea comenzii sau găsește-l în panoul contului tău — se aplică doar contului tău.",
+      "cta": "Comandă acum"
     }
   },
   "marketing": {

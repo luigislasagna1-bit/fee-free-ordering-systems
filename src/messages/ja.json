@@ -223,7 +223,8 @@
       "couponBlocked": "「{name}」は、すでにそれ以上お得な「{winner}」とは併用できません。代わりにこちらを使うには、カート内の「{winner}」を解除してください。",
       "promoReadded": "「{name}」を再度追加しました",
       "couponSwitchedSavesMore": "「{name}」を適用しました。こちらのほうがお得なので、「{winner}」を解除しました。「{winner}」のバナーをタップすれば、いつでも元に戻せます。",
-      "itemUnavailable": "この商品は現在ご利用いただけません"
+      "itemUnavailable": "この商品は現在ご利用いただけません",
+      "scheduledInPast": "選択した予約時間はすでに過ぎています。新しい時間を選んでください。"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% 割引",
       "discountLabelFixed": "${value} 割引",
       "successMessage": "クーポン <couponCode>{code}</couponCode>（{discount}）を {customerName} に付与しました。",
-      "buttonCreate": "クーポンを作成して付与する"
+      "buttonCreate": "クーポンを作成して付与する",
+      "emailSent": "コードと利用条件をお客様にメールで送信しました。",
+      "emailSkipped": "メールは送信されていません（お客様のメールアドレスが未登録か、マーケティング配信を拒否しています）— コードは直接お伝えください。"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "キッチンワークフロー",
@@ -4170,6 +4173,24 @@
       "amountLabel": "返金額",
       "timing": "ご利用明細に反映されるまで5〜10営業日かかる場合があります。",
       "contactLine": "ご不明な点がございましたら、このメールにご返信ください。"
+    },
+    "couponAssigned": {
+      "subject": "{restaurantName}からクーポンが届きました — {discountLabel}",
+      "preview": "{restaurantName}から{discountLabel}が届きました",
+      "title": "{discountLabel} — あなただけの特典",
+      "greeting": "{customerName}様",
+      "intro": "{restaurantName}から{discountLabel}のパーソナルクーポンが贈られました。すでにお客様のアカウントに紐付いています — ご注文時に下記のコードをご利用ください。",
+      "codeLabel": "クーポンコード",
+      "noteLabel": "レストランからのメッセージ",
+      "termsLabel": "ご利用条件",
+      "discountPercent": "{value}%オフ",
+      "discountFixed": "{amount}オフ",
+      "minOrder": "最低注文金額：{amount}",
+      "validUntil": "有効期限：{date}",
+      "usesOnce": "1回のみ利用可能",
+      "usesMany": "最大{count}回まで利用可能",
+      "redeemHint": "ご注文時にコードを入力するか、アカウントページでご確認ください — このクーポンはお客様のアカウントでのみ有効です。",
+      "cta": "今すぐ注文"
     }
   },
   "marketing": {

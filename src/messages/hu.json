@@ -223,7 +223,8 @@
       "couponBlocked": "A(z) \"{name}\" nem vonható össze a(z) \"{winner}\" akcióval, amellyel jelenleg többet spórolsz. Ha mégis ezt szeretnéd, a kosaradban eltávolíthatod a(z) \"{winner}\" akciót.",
       "promoReadded": "A(z) \"{name}\" visszaadva",
       "couponSwitchedSavesMore": "A(z) \"{name}\" alkalmazva – ezzel többet spórolsz, ezért eltávolítottuk a(z) \"{winner}\" akciót. Bármikor visszaválthatsz a(z) \"{winner}\" szalagjára koppintva.",
-      "itemUnavailable": "Ez a tétel nem elérhető"
+      "itemUnavailable": "Ez a tétel nem elérhető",
+      "scheduledInPast": "A kiválasztott időpont már elmúlt. Kérjük, válassz új időpontot."
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% kedvezmény",
       "discountLabelFixed": "${value} kedvezmény",
       "successMessage": "A <couponCode>{code}</couponCode> ({discount}) kupon hozzárendelve: {customerName}.",
-      "buttonCreate": "Kupon létrehozása és hozzárendelése"
+      "buttonCreate": "Kupon létrehozása és hozzárendelése",
+      "emailSent": "A vásárló e-mailben megkapta a kódot és a feltételeket.",
+      "emailSkipped": "Nem küldtünk e-mailt (a vásárlónak nincs megadott e-mail-címe, vagy nem kért marketingüzeneteket) — ossza meg vele a kódot saját maga."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Konyhai munkafolyamat",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Visszatérített összeg",
       "timing": "5–10 munkanapba telhet, mire megjelenik a számlakivonatodon.",
       "contactLine": "Ha bármilyen kérdésed van, csak válaszolj erre az e-mailre."
+    },
+    "couponAssigned": {
+      "subject": "Kupont kapott a(z) {restaurantName} étteremtől — {discountLabel}",
+      "preview": "A(z) {restaurantName} ezt küldte Önnek: {discountLabel}",
+      "title": "{discountLabel} — csak Önnek",
+      "greeting": "Kedves {customerName}!",
+      "intro": "A(z) {restaurantName} személyre szóló kupont ajándékozott Önnek: {discountLabel}. A kupon már össze van kapcsolva a fiókjával — használja az alábbi kódot a fizetésnél.",
+      "codeLabel": "Az Ön kuponkódja",
+      "noteLabel": "Üzenet az étteremtől",
+      "termsLabel": "Feltételek",
+      "discountPercent": "{value}% kedvezmény",
+      "discountFixed": "{amount} kedvezmény",
+      "minOrder": "Minimális rendelési érték: {amount}",
+      "validUntil": "Érvényes eddig: {date}",
+      "usesOnce": "Egyszer használható fel",
+      "usesMany": "Legfeljebb {count} alkalommal használható fel",
+      "redeemHint": "Adja meg a kódot a fizetésnél, vagy megtalálja a fiókja áttekintő oldalán — a kupon kizárólag az Ön fiókjára érvényes.",
+      "cta": "Rendeljen most"
     }
   },
   "marketing": {

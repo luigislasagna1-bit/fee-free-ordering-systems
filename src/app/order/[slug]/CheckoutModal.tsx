@@ -214,6 +214,14 @@ interface Props {
    *  ahead a customer can pre-order (per-service max advance days). Empty =
    *  no cap. Applied as the `max` on the schedule date picker. */
   maxScheduledDate?: string;
+  /** Formats an absolute ms timestamp as "YYYY-MM-DDTHH:MM" wall clock in
+   *  the RESTAURANT's timezone (optionally rounded up to 15 min) — the same
+   *  convention the server uses to parse scheduledFor. Used for all
+   *  "today"/"now" picker math; computing those in browser/UTC time let a
+   *  late-night customer pick YESTERDAY (reseller report cmqa5nlv0: the
+   *  date input's min was `toISOString()` = still the previous day in a
+   *  UTC+2 browser at 1 AM). */
+  toWallClock?: (msAbsolute: number, roundUp15?: boolean) => string;
   /** Whether the "schedule for later" picker is offered at all. False = the
    *  restaurant disabled scheduling, so only ASAP is available (the picker is
    *  hidden) — unless cateringMode forces scheduling. */
@@ -274,6 +282,7 @@ export function CheckoutModal({
   cateringMode = false,
   cateringMinScheduledLocal,
   maxScheduledDate,
+  toWallClock,
   schedulingEnabled = true,
   schedulingInterval = 15,
   schedulingMode = "bands",
@@ -1048,9 +1057,19 @@ export function CheckoutModal({
                     const parts = (customerInfo.scheduledFor || "").split("T");
                     const datePart = parts[0] || "";
                     const timePart = (parts[1] || "").slice(0, 5);
+                    // "Now" in the RESTAURANT's wall clock — the convention
+                    // every scheduledFor string uses. Browser-local fallback
+                    // only when the parent didn't supply the helper.
+                    const wallClock = (ms: number): string => {
+                      if (toWallClock) return toWallClock(ms);
+                      const d = new Date(ms);
+                      const pad = (n: number) => String(n).padStart(2, "0");
+                      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+                    };
+                    const todayISO = wallClock(Date.now()).split("T")[0];
                     const minDate = cateringMode && cateringMinScheduledLocal
                       ? cateringMinScheduledLocal.split("T")[0]
-                      : new Date().toISOString().slice(0, 10);
+                      : todayISO;
                     const minTimeForDate = (() => {
                       // If the chosen date is today, slots in the past
                       // are off-limits AND the earliest selectable slot
@@ -1062,7 +1081,6 @@ export function CheckoutModal({
                       // a 20-min-prep restaurant, which is impossible.
                       // Luigi 2026-06-01: "first pickup time should
                       // be at least standard pickup time away".
-                      const todayISO = new Date().toISOString().slice(0, 10);
                       if (datePart === todayISO) {
                         const prepMinutes = Math.max(
                           0,
@@ -1070,8 +1088,7 @@ export function CheckoutModal({
                             ? estimatedDeliveryMinutes
                             : estimatedPickupMinutes,
                         );
-                        const cutoff = new Date(Date.now() + prepMinutes * 60_000);
-                        return `${String(cutoff.getHours()).padStart(2, "0")}:${String(cutoff.getMinutes()).padStart(2, "0")}`;
+                        return wallClock(Date.now() + prepMinutes * 60_000).split("T")[1];
                       }
                       if (cateringMode && cateringMinScheduledLocal && datePart === cateringMinScheduledLocal.split("T")[0]) {
                         return cateringMinScheduledLocal.split("T")[1] || "00:00";
@@ -1128,7 +1145,7 @@ export function CheckoutModal({
                       setCustomerInfo({ ...customerInfo, scheduledFor: d ? `${d}T${newTime || "12:00"}` : "" });
                     };
                     const setTime = (tt: string) => {
-                      const d = datePart || new Date().toISOString().slice(0, 10);
+                      const d = datePart || todayISO;
                       setCustomerInfo({ ...customerInfo, scheduledFor: `${d}T${tt}` });
                     };
                     // Exact-time mode bounds: earliest = later of opening time

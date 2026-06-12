@@ -1485,6 +1485,24 @@ export async function POST(req: NextRequest) {
           return new Date(effectiveScheduledFor);
         })()
       : null;
+    // Reject schedules in the PAST (reseller report cmqa5nlv0: at 01:49 AM
+    // the picker's UTC-based "today" still offered yesterday, and a stale
+    // scheduledFor sailed through here as a quasi-ASAP order). The grace
+    // window absorbs clock skew and a customer who picked the earliest
+    // slot, then sat on the payment screen for a few minutes.
+    if (
+      scheduledForDate !== null &&
+      Number.isFinite(scheduledForDate.getTime()) &&
+      scheduledForDate.getTime() < Date.now() - 10 * 60_000
+    ) {
+      return NextResponse.json(
+        {
+          error: "The scheduled time you picked has already passed. Please choose a new time.",
+          code: "scheduled_in_past",
+        },
+        { status: 400 },
+      );
+    }
     const hasFutureSchedule =
       scheduledForDate !== null &&
       Number.isFinite(scheduledForDate.getTime()) &&

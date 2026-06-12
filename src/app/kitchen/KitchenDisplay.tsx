@@ -937,8 +937,18 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     // Print a booking confirmation only when the kitchen ACCEPTS a brand-new
     // (pending) walk-up reservation, mirroring the auto-print on order accept.
     // Pre-order bookings print via their order's auto-print instead.
+    // Guarded on an actually-configured printer, same as the auto-confirmed
+    // booking path above: printReservation()'s no-printer fallback opens the
+    // full Printer Setup modal, which must never interrupt an Accept tap on a
+    // printer-less kitchen (reseller report cmqa7ci9q). Manual Print buttons
+    // keep that helpful fallback.
     if (status === "confirmed" && prevStatus === "pending") {
-      printReservation(id).catch((e) => console.error("[reservation accept print]", e));
+      const hasPrinter =
+        !!getDirectPrinterConfig() ||
+        (!!printerSettings?.printNodeConnected && !!printerSettings.selectedPrinterId);
+      if (hasPrinter) {
+        printReservation(id).catch((e) => console.error("[reservation accept print]", e));
+      }
     }
   };
   const [selectedId, setSelectedId] = useState<string | null>(null);

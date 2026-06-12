@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" không thể kết hợp với \"{winner}\", vốn đang giúp bạn tiết kiệm nhiều hơn. Bạn vẫn có thể xóa \"{winner}\" khỏi giỏ hàng để dùng ưu đãi này thay thế.",
       "promoReadded": "Đã thêm lại \"{name}\"",
       "couponSwitchedSavesMore": "Đã áp dụng \"{name}\" — nó giúp bạn tiết kiệm nhiều hơn, nên chúng tôi đã xóa \"{winner}\". Chạm vào biểu ngữ của nó để chuyển lại bất cứ lúc nào.",
-      "itemUnavailable": "Món này hiện không có sẵn"
+      "itemUnavailable": "Món này hiện không có sẵn",
+      "scheduledInPast": "Thời gian đã chọn đã trôi qua. Vui lòng chọn thời gian mới."
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "Giảm {value}%",
       "discountLabelFixed": "Giảm ${value}",
       "successMessage": "Phiếu giảm giá <couponCode>{code}</couponCode> ({discount}) đã được gán cho {customerName}.",
-      "buttonCreate": "Tạo & gán phiếu giảm giá"
+      "buttonCreate": "Tạo & gán phiếu giảm giá",
+      "emailSent": "Đã gửi email mã và điều kiện cho khách hàng.",
+      "emailSkipped": "Chưa gửi email (khách hàng không có email trong hồ sơ hoặc đã từ chối nhận thông tin tiếp thị) — hãy tự chia sẻ mã với họ."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Quy trình bếp",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Số tiền hoàn lại",
       "timing": "Có thể mất 5–10 ngày làm việc để khoản tiền hiển thị trên sao kê của bạn.",
       "contactLine": "Nếu bạn có bất kỳ thắc mắc nào, chỉ cần trả lời email này."
+    },
+    "couponAssigned": {
+      "subject": "Bạn nhận được phiếu giảm giá từ {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} đã gửi cho bạn {discountLabel}",
+      "title": "{discountLabel} — dành riêng cho bạn",
+      "greeting": "Chào {customerName},",
+      "intro": "{restaurantName} đã tặng bạn một phiếu giảm giá cá nhân trị giá {discountLabel}. Phiếu đã được liên kết với tài khoản của bạn — hãy dùng mã bên dưới khi thanh toán.",
+      "codeLabel": "Mã giảm giá của bạn",
+      "noteLabel": "Lời nhắn từ nhà hàng",
+      "termsLabel": "Điều kiện",
+      "discountPercent": "Giảm {value}%",
+      "discountFixed": "Giảm {amount}",
+      "minOrder": "Đơn hàng tối thiểu: {amount}",
+      "validUntil": "Có hiệu lực đến {date}",
+      "usesOnce": "Dùng được một lần",
+      "usesMany": "Dùng được tối đa {count} lần",
+      "redeemHint": "Nhập mã khi thanh toán, hoặc xem trong trang tài khoản của bạn — mã chỉ áp dụng cho tài khoản của bạn.",
+      "cta": "Đặt món ngay"
     }
   },
   "marketing": {

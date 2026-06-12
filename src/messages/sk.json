@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" sa nedá kombinovať s \"{winner}\", ktorá vám ušetrí viac. Ak chcete použiť túto namiesto nej, môžete \"{winner}\" odstrániť v košíku.",
       "promoReadded": "„{name}“ bola pridaná späť",
       "couponSwitchedSavesMore": "\"{name}\" sa použila – ušetrí vám viac, preto sme odstránili \"{winner}\". Späť môžete kedykoľvek prepnúť klepnutím na jej banner.",
-      "itemUnavailable": "Táto položka nie je dostupná"
+      "itemUnavailable": "Táto položka nie je dostupná",
+      "scheduledInPast": "Zvolený naplánovaný čas už uplynul. Vyberte si prosím nový čas."
     },
     "searchMenu": "Hľadať v menu…",
     "signIn": "Prihlásiť sa",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% zľava",
       "discountLabelFixed": "${value} zľava",
       "successMessage": "Kupón <couponCode>{code}</couponCode> ({discount}) bol pridelený zákazníkovi {customerName}.",
-      "buttonCreate": "Vytvoriť a prideliť kupón"
+      "buttonCreate": "Vytvoriť a prideliť kupón",
+      "emailSent": "Zákazníkovi sme e-mailom poslali kód a podmienky.",
+      "emailSkipped": "E-mail sa neodoslal (zákazník nemá uvedenú e-mailovú adresu alebo sa odhlásil z marketingu) — kód mu odovzdajte sami."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kuchynský pracovný tok",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Vrátená suma",
       "timing": "Zobrazenie na vašom výpise môže trvať 5 – 10 pracovných dní.",
       "contactLine": "Ak máte akékoľvek otázky, jednoducho odpovedzte na tento e-mail."
+    },
+    "couponAssigned": {
+      "subject": "Dostali ste kupón od {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} vám posiela kupón: {discountLabel}",
+      "title": "{discountLabel} — len pre vás",
+      "greeting": "Dobrý deň, {customerName},",
+      "intro": "{restaurantName} vám daruje osobný kupón: {discountLabel}. Je už prepojený s vaším účtom — kód uvedený nižšie stačí zadať pri dokončení objednávky.",
+      "codeLabel": "Váš kód kupónu",
+      "noteLabel": "Odkaz od reštaurácie",
+      "termsLabel": "Podmienky",
+      "discountPercent": "zľava {value} %",
+      "discountFixed": "zľava {amount}",
+      "minOrder": "Minimálna objednávka: {amount}",
+      "validUntil": "Platí do {date}",
+      "usesOnce": "Možno použiť raz",
+      "usesMany": "Možno použiť až {count}-krát",
+      "redeemHint": "Kód zadajte pri dokončení objednávky alebo ho nájdete vo svojom účte — platí iba pre váš účet.",
+      "cta": "Objednať teraz"
     }
   },
   "marketing": {

@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" se ne može kombinovati sa \"{winner}\", koji vam već donosi veću uštedu. I dalje možete ukloniti \"{winner}\" iz korpe da biste umesto njega iskoristili ovaj.",
       "promoReadded": "„{name}” je ponovo dodata",
       "couponSwitchedSavesMore": "\"{name}\" je primenjen — donosi vam veću uštedu, pa smo uklonili \"{winner}\". Dodirnite njegov baner da se vratite nazad bilo kada.",
-      "itemUnavailable": "Ова ставка није доступна"
+      "itemUnavailable": "Ова ставка није доступна",
+      "scheduledInPast": "Изабрано заказано време је већ прошло. Изаберите ново време."
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% popusta",
       "discountLabelFixed": "${value} popusta",
       "successMessage": "Kupon <couponCode>{code}</couponCode> ({discount}) dodeljen korisniku {customerName}.",
-      "buttonCreate": "Kreiraj i dodeli kupon"
+      "buttonCreate": "Kreiraj i dodeli kupon",
+      "emailSent": "Kupcu je poslat email sa kodom i uslovima.",
+      "emailSkipped": "Email nije poslat (kupac nema sačuvanu email adresu ili se odjavio od marketinških poruka) — sami mu prosledite kod."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Tok rada kuhinje",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Iznos povraćaja",
       "timing": "Može potrajati 5–10 radnih dana da se prikaže na vašem izvodu.",
       "contactLine": "Ako imate bilo kakvih pitanja, samo odgovorite na ovaj imejl."
+    },
+    "couponAssigned": {
+      "subject": "Dobili ste kupon od {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} vam šalje {discountLabel}",
+      "title": "{discountLabel} — samo za vas",
+      "greeting": "Zdravo {customerName},",
+      "intro": "{restaurantName} vam poklanja lični kupon za {discountLabel}. Kupon je već povezan sa vašim nalogom — iskoristite kod ispod prilikom plaćanja.",
+      "codeLabel": "Vaš kod kupona",
+      "noteLabel": "Poruka iz restorana",
+      "termsLabel": "Uslovi",
+      "discountPercent": "{value}% popusta",
+      "discountFixed": "{amount} popusta",
+      "minOrder": "Minimalna porudžbina: {amount}",
+      "validUntil": "Važi do {date}",
+      "usesOnce": "Može se iskoristiti jednom",
+      "usesMany": "Može se iskoristiti do {count} puta",
+      "redeemHint": "Unesite kod prilikom plaćanja ili ga pronađite na svom nalogu — važi samo za vaš nalog.",
+      "cta": "Naručite odmah"
     }
   },
   "marketing": {

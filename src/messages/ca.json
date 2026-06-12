@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" no es pot combinar amb \"{winner}\", que ja t'estalvia més. Si vols, pots treure \"{winner}\" de la cistella per fer servir aquesta.",
       "promoReadded": "\"{name}\" tornada a afegir",
       "couponSwitchedSavesMore": "\"{name}\" aplicada: t'estalvia més, així que hem tret \"{winner}\". Toca el seu rètol per tornar-hi quan vulguis.",
-      "itemUnavailable": "Aquest article no està disponible"
+      "itemUnavailable": "Aquest article no està disponible",
+      "scheduledInPast": "L'hora programada que has triat ja ha passat. Tria una hora nova."
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% de descompte",
       "discountLabelFixed": "${value} de descompte",
       "successMessage": "Cupó <couponCode>{code}</couponCode> ({discount}) assignat a {customerName}.",
-      "buttonCreate": "Crear i assignar cupó"
+      "buttonCreate": "Crear i assignar cupó",
+      "emailSent": "S'ha enviat al client un correu amb el codi i les condicions.",
+      "emailSkipped": "No s'ha enviat cap correu (el client no té correu registrat o ha rebutjat les comunicacions de màrqueting) — comparteix-li el codi directament."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Flux de treball de cuina",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Import del reembossament",
       "timing": "Pot trigar de 5 a 10 dies hàbils a aparèixer al teu extracte.",
       "contactLine": "Si tens cap pregunta, només cal que responguis aquest correu."
+    },
+    "couponAssigned": {
+      "subject": "Has rebut un cupó de {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} t'ha enviat {discountLabel}",
+      "title": "{discountLabel} — només per a tu",
+      "greeting": "Hola, {customerName}:",
+      "intro": "{restaurantName} t'ha regalat un cupó personal de {discountLabel}. Ja està vinculat al teu compte — fes servir el codi de sota en finalitzar la comanda.",
+      "codeLabel": "El teu codi de cupó",
+      "noteLabel": "Una nota del restaurant",
+      "termsLabel": "Condicions",
+      "discountPercent": "{value}% de descompte",
+      "discountFixed": "{amount} de descompte",
+      "minOrder": "Comanda mínima: {amount}",
+      "validUntil": "Vàlid fins al {date}",
+      "usesOnce": "Es pot fer servir un cop",
+      "usesMany": "Es pot fer servir fins a {count} vegades",
+      "redeemHint": "Introdueix el codi en finalitzar la comanda, o troba'l al tauler del teu compte — només és vàlid per al teu compte.",
+      "cta": "Demana ara"
     }
   },
   "marketing": {

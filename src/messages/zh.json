@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" 无法与 \"{winner}\" 同时使用，而 \"{winner}\" 为您节省得更多。如果想改用此优惠，您仍可在购物车中移除 \"{winner}\"。",
       "promoReadded": "已重新添加 \"{name}\"",
       "couponSwitchedSavesMore": "已应用 \"{name}\"——它为您节省得更多，因此我们移除了 \"{winner}\"。随时点按其横幅即可切换回来。",
-      "itemUnavailable": "此商品暂不可用"
+      "itemUnavailable": "此商品暂不可用",
+      "scheduledInPast": "您选择的预约时间已过。请选择新的时间。"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% 折扣",
       "discountLabelFixed": "${value} 折扣",
       "successMessage": "优惠券 <couponCode>{code}</couponCode>（{discount}）已分配给 {customerName}。",
-      "buttonCreate": "创建并分配优惠券"
+      "buttonCreate": "创建并分配优惠券",
+      "emailSent": "已通过电子邮件将优惠码和使用条件发送给客户。",
+      "emailSkipped": "未发送电子邮件（客户未登记邮箱或已拒绝接收营销信息）— 请自行将优惠码告知客户。"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "厨房工作流程",
@@ -4170,6 +4173,24 @@
       "amountLabel": "退款金额",
       "timing": "退款可能需要 5–10 个工作日才会显示在您的对账单上。",
       "contactLine": "如有任何疑问，请直接回复本邮件。"
+    },
+    "couponAssigned": {
+      "subject": "您收到了来自{restaurantName}的优惠券 — {discountLabel}",
+      "preview": "{restaurantName}向您发送了{discountLabel}",
+      "title": "{discountLabel} — 专属于您",
+      "greeting": "您好，{customerName}：",
+      "intro": "{restaurantName}赠送给您一张价值{discountLabel}的专属优惠券。它已绑定到您的账户 — 结账时使用下方代码即可。",
+      "codeLabel": "您的优惠码",
+      "noteLabel": "来自餐厅的留言",
+      "termsLabel": "使用条件",
+      "discountPercent": "立减 {value}%",
+      "discountFixed": "立减 {amount}",
+      "minOrder": "最低订单金额：{amount}",
+      "validUntil": "有效期至 {date}",
+      "usesOnce": "限用一次",
+      "usesMany": "最多可使用 {count} 次",
+      "redeemHint": "结账时输入该优惠码，或在账户中心查看 — 仅限您的账户使用。",
+      "cta": "立即下单"
     }
   },
   "marketing": {

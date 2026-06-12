@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" negalima derinti su \"{winner}\", kuris jau leidžia sutaupyti daugiau. Vis dėlto galite pašalinti \"{winner}\" iš krepšelio ir vietoj jo pritaikyti šį.",
       "promoReadded": "„{name}\" pridėtas atgal",
       "couponSwitchedSavesMore": "\"{name}\" pritaikytas — su juo sutaupote daugiau, todėl pašalinome \"{winner}\". Bet kada bakstelėkite jo juostą, kad grįžtumėte atgal.",
-      "itemUnavailable": "Ši prekė neprieinama"
+      "itemUnavailable": "Ši prekė neprieinama",
+      "scheduledInPast": "Pasirinktas suplanuotas laikas jau praėjo. Pasirinkite naują laiką."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% nuolaida",
       "discountLabelFixed": "${value} nuolaida",
       "successMessage": "Kuponas <couponCode>{code}</couponCode> ({discount}) priskirtas {customerName}.",
-      "buttonCreate": "Sukurti ir priskirti kuponą"
+      "buttonCreate": "Sukurti ir priskirti kuponą",
+      "emailSent": "Klientui el. paštu išsiųstas kodas ir sąlygos.",
+      "emailSkipped": "El. laiškas neišsiųstas (klientas neturi registruoto el. pašto arba atsisakė rinkodaros pranešimų) — perduokite kodą jam patys."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Virtuvės darbo eiga",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Grąžinama suma",
       "timing": "Suma jūsų sąskaitos išraše gali atsirasti per 5–10 darbo dienų.",
       "contactLine": "Jei turite klausimų, tiesiog atsakykite į šį el. laišką."
+    },
+    "couponAssigned": {
+      "subject": "Gavote kuponą iš {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} atsiuntė jums {discountLabel}",
+      "title": "{discountLabel} — tik jums",
+      "greeting": "Sveiki, {customerName},",
+      "intro": "{restaurantName} padovanojo jums asmeninį {discountLabel} vertės kuponą. Jis jau susietas su jūsų paskyra — atsiskaitydami panaudokite žemiau esantį kodą.",
+      "codeLabel": "Jūsų kupono kodas",
+      "noteLabel": "Restorano žinutė",
+      "termsLabel": "Sąlygos",
+      "discountPercent": "{value}% nuolaida",
+      "discountFixed": "{amount} nuolaida",
+      "minOrder": "Minimalus užsakymas: {amount}",
+      "validUntil": "Galioja iki {date}",
+      "usesOnce": "Galima panaudoti vieną kartą",
+      "usesMany": "Galima panaudoti iki {count} kartų",
+      "redeemHint": "Įveskite kodą atsiskaitydami arba raskite jį savo paskyros skydelyje — jis galioja tik jūsų paskyrai.",
+      "cta": "Užsakyti dabar"
     }
   },
   "marketing": {

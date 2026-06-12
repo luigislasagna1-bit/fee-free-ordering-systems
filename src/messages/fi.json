@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" ei ole yhdistettävissä etuun \"{winner}\", joka tuo sinulle jo suuremmat säästöt. Voit silti poistaa \"{winner}\"-edun ostoskorista ja käyttää tätä sen sijaan.",
       "promoReadded": "\"{name}\" lisätty takaisin",
       "couponSwitchedSavesMore": "\"{name}\" otettiin käyttöön – se tuo sinulle suuremmat säästöt, joten poistimme \"{winner}\"-edun. Voit milloin tahansa vaihtaa takaisin napauttamalla sen banneria.",
-      "itemUnavailable": "Tämä tuote ei ole saatavilla"
+      "itemUnavailable": "Tämä tuote ei ole saatavilla",
+      "scheduledInPast": "Valitsemasi ajankohta on jo mennyt. Valitse uusi aika."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% alennus",
       "discountLabelFixed": "${value} alennus",
       "successMessage": "Kuponki <couponCode>{code}</couponCode> ({discount}) on myönnetty asiakkaalle {customerName}.",
-      "buttonCreate": "Luo ja myönnä kuponki"
+      "buttonCreate": "Luo ja myönnä kuponki",
+      "emailSent": "Asiakkaalle on lähetetty sähköpostitse koodi ja ehdot.",
+      "emailSkipped": "Sähköpostia ei lähetetty (asiakkaalla ei ole sähköpostiosoitetta tallennettuna tai hän on kieltäytynyt markkinoinnista) — jaa koodi hänelle itse."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Keittiön työnkulku",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Hyvityksen summa",
       "timing": "Summa voi näkyä tiliotteellasi 5–10 arkipäivän kuluessa.",
       "contactLine": "Jos sinulla on kysyttävää, vastaa vain tähän sähköpostiin."
+    },
+    "couponAssigned": {
+      "subject": "Olet saanut kupongin ravintolalta {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} lähetti sinulle kupongin: {discountLabel}",
+      "title": "{discountLabel} — juuri sinulle",
+      "greeting": "Hei {customerName},",
+      "intro": "{restaurantName} on antanut sinulle henkilökohtaisen kupongin: {discountLabel}. Se on jo liitetty tiliisi — käytä alla olevaa koodia kassalla.",
+      "codeLabel": "Kuponkikoodisi",
+      "noteLabel": "Viesti ravintolalta",
+      "termsLabel": "Ehdot",
+      "discountPercent": "{value} % alennus",
+      "discountFixed": "{amount} alennus",
+      "minOrder": "Vähimmäistilaus: {amount}",
+      "validUntil": "Voimassa {date} saakka",
+      "usesOnce": "Voidaan käyttää kerran",
+      "usesMany": "Voidaan käyttää enintään {count} kertaa",
+      "redeemHint": "Syötä koodi kassalla, tai löydät sen myös tilisi hallintasivulta — koodi toimii vain sinun tililläsi.",
+      "cta": "Tilaa nyt"
     }
   },
   "marketing": {

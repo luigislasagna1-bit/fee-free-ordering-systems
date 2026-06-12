@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" לא ניתן לשילוב עם \"{winner}\", שכבר חוסך לך יותר. תמיד אפשר להסיר את \"{winner}\" בעגלה כדי להשתמש בזה במקום.",
       "promoReadded": "\"{name}\" נוסף בחזרה",
       "couponSwitchedSavesMore": "\"{name}\" הוחל — הוא חוסך לך יותר, אז הסרנו את \"{winner}\". אפשר להקיש על הבאנר שלו כדי לחזור אחורה בכל רגע.",
-      "itemUnavailable": "פריט זה אינו זמין"
+      "itemUnavailable": "פריט זה אינו זמין",
+      "scheduledInPast": "השעה המתוזמנת שבחרת כבר עברה. אנא בחר שעה חדשה."
     },
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% הנחה",
       "discountLabelFixed": "${value} הנחה",
       "successMessage": "קופון <couponCode>{code}</couponCode> ({discount}) הוקצה ל-{customerName}.",
-      "buttonCreate": "צור והקצה קופון"
+      "buttonCreate": "צור והקצה קופון",
+      "emailSent": "הקוד והתנאים נשלחו ללקוח במייל.",
+      "emailSkipped": "לא נשלח מייל (ללקוח אין כתובת מייל רשומה או שהוא סירב לקבל דיוור שיווקי) — מסור לו את הקוד בעצמך."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "תהליך עבודה במטבח",
@@ -4170,6 +4173,24 @@
       "amountLabel": "סכום ההחזר",
       "timing": "ייתכן שיחלפו 5–10 ימי עסקים עד שההחזר יופיע בדף החשבון שלך.",
       "contactLine": "אם יש לך שאלות, פשוט השב לאימייל זה."
+    },
+    "couponAssigned": {
+      "subject": "קיבלת קופון מ-{restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} שלח לך {discountLabel}",
+      "title": "{discountLabel} — במיוחד בשבילך",
+      "greeting": "שלום {customerName},",
+      "intro": "{restaurantName} העניק לך קופון אישי בשווי {discountLabel}. הוא כבר מקושר לחשבון שלך — השתמש בקוד שלמטה בעת התשלום.",
+      "codeLabel": "קוד הקופון שלך",
+      "noteLabel": "הודעה מהמסעדה",
+      "termsLabel": "תנאים",
+      "discountPercent": "{value}% הנחה",
+      "discountFixed": "{amount} הנחה",
+      "minOrder": "הזמנה מינימלית: {amount}",
+      "validUntil": "בתוקף עד {date}",
+      "usesOnce": "ניתן לשימוש פעם אחת",
+      "usesMany": "ניתן לשימוש עד {count} פעמים",
+      "redeemHint": "הזן את הקוד בעת התשלום, או מצא אותו באזור האישי — הוא תקף לחשבון שלך בלבד.",
+      "cta": "להזמנה עכשיו"
     }
   },
   "marketing": {

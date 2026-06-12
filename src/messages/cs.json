@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" nelze kombinovat s \"{winner}\", která vám ušetří víc. V košíku ale můžete \"{winner}\" odebrat a použít místo ní tuto slevu.",
       "promoReadded": "„{name}\" bylo přidáno zpět",
       "couponSwitchedSavesMore": "\"{name}\" je aktivní – ušetří vám víc, takže jsme \"{winner}\" odebrali. Kdykoli se můžete vrátit zpět klepnutím na její banner.",
-      "itemUnavailable": "Tato položka není dostupná"
+      "itemUnavailable": "Tato položka není dostupná",
+      "scheduledInPast": "Zvolený naplánovaný čas už uplynul. Vyberte prosím nový čas."
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "Sleva {value} %",
       "discountLabelFixed": "Sleva ${value}",
       "successMessage": "Kupón <couponCode>{code}</couponCode> ({discount}) přiřazen zákazníkovi {customerName}.",
-      "buttonCreate": "Vytvořit a přiřadit kupón"
+      "buttonCreate": "Vytvořit a přiřadit kupón",
+      "emailSent": "Zákazníkovi byl e-mailem odeslán kód a podmínky.",
+      "emailSkipped": "E-mail nebyl odeslán (zákazník nemá uvedený e-mail, nebo odmítl marketingová sdělení) — kód mu předejte sami."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kuchyňský pracovní postup",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Vrácená částka",
       "timing": "Připsání na váš výpis může trvat 5–10 pracovních dnů.",
       "contactLine": "Máte-li jakékoli dotazy, stačí odpovědět na tento e-mail."
+    },
+    "couponAssigned": {
+      "subject": "Dostali jste kupon od {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} vám posílá kupon: {discountLabel}",
+      "title": "{discountLabel} — jen pro vás",
+      "greeting": "Dobrý den, {customerName},",
+      "intro": "{restaurantName} vám věnuje osobní kupon: {discountLabel}. Kupon je už propojen s vaším účtem — při placení stačí zadat níže uvedený kód.",
+      "codeLabel": "Váš kód kuponu",
+      "noteLabel": "Vzkaz od restaurace",
+      "termsLabel": "Podmínky",
+      "discountPercent": "Sleva {value} %",
+      "discountFixed": "Sleva {amount}",
+      "minOrder": "Minimální objednávka: {amount}",
+      "validUntil": "Platí do {date}",
+      "usesOnce": "Lze uplatnit jednou",
+      "usesMany": "Lze uplatnit až {count}krát",
+      "redeemHint": "Kód zadejte při placení, nebo ho najdete v přehledu svého účtu — platí pouze pro váš účet.",
+      "cta": "Objednat nyní"
     }
   },
   "marketing": {

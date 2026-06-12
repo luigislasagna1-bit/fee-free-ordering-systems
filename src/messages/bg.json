@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" не може да се комбинира с \"{winner}\", който вече ви носи по-голяма отстъпка. Все пак можете да премахнете \"{winner}\" в количката си, за да използвате тази вместо него.",
       "promoReadded": "„{name}“ е добавена отново",
       "couponSwitchedSavesMore": "\"{name}\" е приложен — носи ви по-голяма отстъпка, затова премахнахме \"{winner}\". Докоснете банера му, за да превключите обратно по всяко време.",
-      "itemUnavailable": "Този артикул не е наличен"
+      "itemUnavailable": "Този артикул не е наличен",
+      "scheduledInPast": "Избраният от вас час вече е минал. Моля, изберете нов час."
     },
     "searchMenu": "Търсене в менюто…",
     "signIn": "Вход",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% отстъпка",
       "discountLabelFixed": "${value} отстъпка",
       "successMessage": "Купонът <couponCode>{code}</couponCode> ({discount}) е присвоен на {customerName}.",
-      "buttonCreate": "Създай и присвои купон"
+      "buttonCreate": "Създай и присвои купон",
+      "emailSent": "Кодът и условията са изпратени на клиента по имейл.",
+      "emailSkipped": "Имейл не е изпратен (клиентът няма имейл в системата или е отказал маркетингови съобщения) — споделете кода с него лично."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Работен процес на кухнята",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Възстановена сума",
       "timing": "Може да отнеме 5–10 работни дни, докато сумата се появи в извлечението ви.",
       "contactLine": "Ако имате въпроси, просто отговорете на този имейл."
+    },
+    "couponAssigned": {
+      "subject": "Получихте купон от {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} ви изпрати {discountLabel}",
+      "title": "{discountLabel} — специално за вас",
+      "greeting": "Здравейте, {customerName},",
+      "intro": "{restaurantName} ви подари личен купон за {discountLabel}. Той вече е свързан с вашия акаунт — използвайте кода по-долу при плащане.",
+      "codeLabel": "Кодът на вашия купон",
+      "noteLabel": "Бележка от ресторанта",
+      "termsLabel": "Условия",
+      "discountPercent": "{value}% отстъпка",
+      "discountFixed": "{amount} отстъпка",
+      "minOrder": "Минимална поръчка: {amount}",
+      "validUntil": "Валиден до {date}",
+      "usesOnce": "Може да се използва еднократно",
+      "usesMany": "Може да се използва до {count} пъти",
+      "redeemHint": "Въведете кода при плащане или го намерете в таблото на акаунта си — той важи само за вашия акаунт.",
+      "cta": "Поръчайте сега"
     }
   },
   "marketing": {

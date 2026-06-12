@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" ใช้ร่วมกับ \"{winner}\" ไม่ได้ เพราะ \"{winner}\" ช่วยคุณประหยัดได้มากกว่าอยู่แล้ว หากต้องการใช้โปรนี้แทน คุณสามารถนำ \"{winner}\" ออกจากตะกร้าได้",
       "promoReadded": "เพิ่ม \"{name}\" กลับแล้ว",
       "couponSwitchedSavesMore": "ใช้ \"{name}\" แล้ว เพราะช่วยคุณประหยัดได้มากกว่า เราจึงนำ \"{winner}\" ออกให้ แตะแบนเนอร์ของ \"{winner}\" เพื่อสลับกลับได้ทุกเมื่อ",
-      "itemUnavailable": "สินค้านี้ไม่พร้อมให้บริการ"
+      "itemUnavailable": "สินค้านี้ไม่พร้อมให้บริการ",
+      "scheduledInPast": "เวลาที่คุณเลือกได้ผ่านไปแล้ว กรุณาเลือกเวลาใหม่"
     },
     "searchMenu": "ค้นหาเมนู…",
     "signIn": "เข้าสู่ระบบ",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "ลด {value}%",
       "discountLabelFixed": "ลด ${value}",
       "successMessage": "กำหนดคูปอง <couponCode>{code}</couponCode> ({discount}) ให้กับ {customerName} แล้ว",
-      "buttonCreate": "สร้างและกำหนดคูปอง"
+      "buttonCreate": "สร้างและกำหนดคูปอง",
+      "emailSent": "ส่งโค้ดและเงื่อนไขให้ลูกค้าทางอีเมลแล้ว",
+      "emailSkipped": "ไม่ได้ส่งอีเมล (ลูกค้าไม่มีอีเมลในระบบหรือปฏิเสธรับข่าวสารการตลาด) — กรุณาแจ้งโค้ดให้ลูกค้าด้วยตนเอง"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "การทำงานของครัว",
@@ -4170,6 +4173,24 @@
       "amountLabel": "ยอดเงินที่คืน",
       "timing": "อาจใช้เวลา 5–10 วันทำการจึงจะปรากฏในใบแจ้งยอดของคุณ",
       "contactLine": "หากคุณมีคำถามใด ๆ เพียงตอบกลับอีเมลฉบับนี้ได้เลย"
+    },
+    "couponAssigned": {
+      "subject": "คุณได้รับคูปองจาก {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} ส่ง {discountLabel} ให้คุณ",
+      "title": "{discountLabel} — สำหรับคุณโดยเฉพาะ",
+      "greeting": "สวัสดีคุณ {customerName}",
+      "intro": "{restaurantName} มอบคูปองส่วนตัวมูลค่า {discountLabel} ให้คุณ คูปองผูกกับบัญชีของคุณแล้ว — ใช้โค้ดด้านล่างตอนชำระเงินได้เลย",
+      "codeLabel": "โค้ดคูปองของคุณ",
+      "noteLabel": "ข้อความจากร้านอาหาร",
+      "termsLabel": "เงื่อนไข",
+      "discountPercent": "ส่วนลด {value}%",
+      "discountFixed": "ส่วนลด {amount}",
+      "minOrder": "ยอดสั่งซื้อขั้นต่ำ: {amount}",
+      "validUntil": "ใช้ได้ถึง {date}",
+      "usesOnce": "ใช้ได้ 1 ครั้ง",
+      "usesMany": "ใช้ได้สูงสุด {count} ครั้ง",
+      "redeemHint": "กรอกโค้ดตอนชำระเงิน หรือดูได้ในหน้าบัญชีของคุณ — ใช้ได้กับบัญชีของคุณเท่านั้น",
+      "cta": "สั่งเลย"
     }
   },
   "marketing": {

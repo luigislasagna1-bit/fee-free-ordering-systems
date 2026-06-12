@@ -27,10 +27,11 @@
  * restaurant before doing anything.
  */
 
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import crypto from "crypto";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
+import { sendCouponAssignedEmail } from "@/lib/email";
 
 function makePrefix(name: string): string {
   const initials = name
@@ -56,7 +57,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
 
   const customer = await prisma.customer.findUnique({
     where: { id: customerId },
-    select: { id: true, restaurantId: true, name: true, email: true },
+    select: { id: true, restaurantId: true, name: true, email: true, marketingConsent: true },
   });
   if (!customer || customer.restaurantId !== restaurantId) {
     return NextResponse.json({ error: "Customer not found" }, { status: 404 });
@@ -132,5 +133,49 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
     return NextResponse.json({ error: "Could not generate a unique code" }, { status: 500 });
   }
 
-  return NextResponse.json({ ok: true, coupon });
+  // Email the code + every attached condition to the customer (reseller
+  // report cmqa6lls1). MARKETING-CONSENT GATED: an opted-out customer gets
+  // nothing — the coupon still appears in their account dashboard. Sent
+  // fire-and-forget after the response so a slow/down Resend never blocks
+  // the admin UI; `emailed` tells the admin whether a send was queued.
+  const emailed = !!(customer.email && customer.marketingConsent);
+  if (emailed) {
+    const createdCoupon = coupon;
+    after(async () => {
+      try {
+        const restaurant = await prisma.restaurant.findUnique({
+          where: { id: restaurantId },
+          select: {
+            name: true, slug: true, currency: true, defaultLanguage: true,
+            email: true, phone: true,
+          },
+        });
+        if (!restaurant) return;
+        const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || "").replace(/\/$/, "");
+        const orderUrl = baseUrl ? `${baseUrl}/order/${restaurant.slug}` : "#";
+        await sendCouponAssignedEmail({
+          to: customer.email!,
+          customerName: customer.name,
+          restaurantName: restaurant.name,
+          code: createdCoupon.code,
+          discountType: discountType as "percentage" | "fixed",
+          discountValue,
+          currency: restaurant.currency,
+          minimumOrder,
+          maxUses,
+          expiresAt,
+          description: body.description?.toString().slice(0, 200) || null,
+          orderUrl,
+          restaurantUrl: orderUrl !== "#" ? orderUrl : undefined,
+          restaurantEmail: restaurant.email,
+          restaurantPhone: restaurant.phone,
+          locale: restaurant.defaultLanguage,
+        });
+      } catch (e) {
+        console.error("[assign-coupon] email send failed:", e);
+      }
+    });
+  }
+
+  return NextResponse.json({ ok: true, coupon, emailed });
 }

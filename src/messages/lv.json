@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" nav apvienojams ar \"{winner}\", kas jau ietaupa vairāk. Jūs joprojām varat noņemt \"{winner}\" no groza, lai izmantotu šo.",
       "promoReadded": "\"{name}\" pievienots atpakaļ",
       "couponSwitchedSavesMore": "\"{name}\" piemērots — tas ietaupa vairāk, tāpēc noņēmām \"{winner}\". Pieskarieties tā reklāmkarogam, lai jebkurā brīdī pārslēgtos atpakaļ.",
-      "itemUnavailable": "Šī prece nav pieejama"
+      "itemUnavailable": "Šī prece nav pieejama",
+      "scheduledInPast": "Izvēlētais ieplānotais laiks jau ir pagājis. Lūdzu, izvēlieties jaunu laiku."
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% atlaide",
       "discountLabelFixed": "${value} atlaide",
       "successMessage": "Kupons <couponCode>{code}</couponCode> ({discount}) piešķirts {customerName}.",
-      "buttonCreate": "Izveidot un piešķirt kuponu"
+      "buttonCreate": "Izveidot un piešķirt kuponu",
+      "emailSent": "Klientam pa e-pastu nosūtīts kods un nosacījumi.",
+      "emailSkipped": "E-pasts netika nosūtīts (klientam nav reģistrēta e-pasta vai viņš atteicies no mārketinga paziņojumiem) — nododiet kodu viņam pats."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Virtuves darbplūsma",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Atmaksas summa",
       "timing": "Lai summa parādītos jūsu konta pārskatā, var paiet 5–10 darba dienas.",
       "contactLine": "Ja jums ir kādi jautājumi, vienkārši atbildiet uz šo e-pastu."
+    },
+    "couponAssigned": {
+      "subject": "Jūs saņēmāt kuponu no {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} jums nosūtīja {discountLabel}",
+      "title": "{discountLabel} — tikai jums",
+      "greeting": "Sveiki, {customerName}!",
+      "intro": "{restaurantName} jums uzdāvināja personisku kuponu {discountLabel} vērtībā. Tas jau ir piesaistīts jūsu kontam — norēķinoties izmantojiet zemāk redzamo kodu.",
+      "codeLabel": "Jūsu kupona kods",
+      "noteLabel": "Ziņa no restorāna",
+      "termsLabel": "Nosacījumi",
+      "discountPercent": "{value}% atlaide",
+      "discountFixed": "{amount} atlaide",
+      "minOrder": "Minimālais pasūtījums: {amount}",
+      "validUntil": "Derīgs līdz {date}",
+      "usesOnce": "Var izmantot vienu reizi",
+      "usesMany": "Var izmantot līdz {count} reizēm",
+      "redeemHint": "Ievadiet kodu norēķinoties vai atrodiet to sava konta panelī — tas ir derīgs tikai jūsu kontam.",
+      "cta": "Pasūtīt tūlīt"
     }
   },
   "marketing": {

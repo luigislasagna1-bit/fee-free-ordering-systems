@@ -145,6 +145,22 @@ function isItemAvailableNow(item: MenuItem, timezone?: string): boolean {
   return true;
 }
 
+/** DAY-only availability: is today (restaurant tz) one of the item's
+ *  available days? Drives availabilityMode "show" semantics (reseller
+ *  report cmpxec829, Fabrizio's follow-up): a Mon–Fri lunch special
+ *  shows greyed-out on Mon–Fri mornings/evenings, but on Sat/Sun — a
+ *  day it's never sold — it disappears from the menu entirely. */
+function isItemDayAvailable(item: MenuItem, timezone?: string): boolean {
+  if (!item.availableDays) return true;
+  try {
+    const days: number[] = typeof item.availableDays === "string" ? JSON.parse(item.availableDays) : item.availableDays;
+    if (!Array.isArray(days) || days.length === 0) return true;
+    return days.includes(localDowAndHHMM(new Date(), timezone).dow);
+  } catch {
+    return true;
+  }
+}
+
 // ─── Mobile detection ────────────────────────────────────────────────────────
 // SSR-safe: starts false (desktop) and corrects on mount via matchMedia, so the
 // mobile-only category accordion never affects desktop or the server render.
@@ -395,7 +411,8 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
   const fmt = useCurrencyFormat();
   const isSold = item.isSoldOut;
   const availNote = (item as any).__availabilityNote as string | undefined;
-  const blocked = isSold || !!availNote;
+  const availBlocked = !!(item as any).__availabilityBlocked;
+  const blocked = isSold || availBlocked;
   const basePrice = item.hasVariants && item.variants?.length
     ? Math.min(...item.variants.map(v => v.price))
     : item.price;
@@ -424,7 +441,7 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
               <span className="bg-white text-gray-800 text-xs font-bold px-2 py-1 rounded-full">{t("soldOut")}</span>
             </div>
           )}
-          {!isSold && availNote && (
+          {!isSold && availBlocked && availNote && (
             <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
               <span className="bg-white text-amber-700 text-[10px] font-bold px-2 py-1 rounded-full text-center leading-tight">{availNote}</span>
             </div>
@@ -439,8 +456,13 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
         {!item.imageUrl && isSold && (
           <span className="inline-block mt-1 bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{t("soldOut")}</span>
         )}
-        {!item.imageUrl && !isSold && availNote && (
+        {!item.imageUrl && !isSold && availBlocked && availNote && (
           <span className="inline-block mt-1 bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">{availNote}</span>
+        )}
+        {/* Currently purchasable but day/time-limited — informational line so
+            the customer learns the window without the item reading "blocked". */}
+        {!isSold && !availBlocked && availNote && (
+          <p className="mt-1 text-[10px] font-medium text-amber-700 leading-tight">{availNote}</p>
         )}
         <div className="flex items-center justify-between mt-2">
           <span className="text-sm font-bold" style={{ color: theme.primaryColor }}>
@@ -509,8 +531,10 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
   const isSold = item.isSoldOut;
   // Visible-but-purchase-restricted (reseller report cmpxec829): outside the
   // item's window it renders like sold-out but with an "Available …" note.
+  // The note also renders (informational, not blocking) while purchasable.
   const availNote = (item as any).__availabilityNote as string | undefined;
-  const blocked = isSold || !!availNote;
+  const availBlocked = !!(item as any).__availabilityBlocked;
+  const blocked = isSold || availBlocked;
   const basePrice = item.hasVariants && item.variants?.length
     ? Math.min(...item.variants.map(v => v.price))
     : item.price;
@@ -539,7 +563,7 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
               <span className="bg-white text-gray-800 text-xs font-bold px-3 py-1.5 rounded-full">{t("soldOut")}</span>
             </div>
           )}
-          {!isSold && availNote && (
+          {!isSold && availBlocked && availNote && (
             <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
               <span className="bg-white text-amber-700 text-xs font-bold px-3 py-1.5 rounded-full">{availNote}</span>
             </div>
@@ -559,13 +583,16 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
                 {isSold && (
                   <span className="inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{t("soldOut")}</span>
                 )}
-                {!isSold && availNote && (
+                {!isSold && availBlocked && availNote && (
                   <span className="inline-block bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">{availNote}</span>
                 )}
               </div>
             )}
             <p className="font-semibold leading-snug transition" style={{ color: theme.textColor }}>{item.name}</p>
             {item.description && <p className="text-sm text-gray-500 mt-1 line-clamp-2 leading-relaxed">{item.description}</p>}
+            {!isSold && !availBlocked && availNote && (
+              <p className="text-[11px] font-medium text-amber-700 mt-1">{availNote}</p>
+            )}
           </div>
           <div className="flex-shrink-0 flex flex-col items-end gap-2">
             <div className="font-bold text-base" style={{ color: theme.textColor }}>
@@ -588,7 +615,8 @@ function ListCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
   const fmt = useCurrencyFormat();
   const isSold = item.isSoldOut;
   const availNote = (item as any).__availabilityNote as string | undefined;
-  const blocked = isSold || !!availNote;
+  const availBlocked = !!(item as any).__availabilityBlocked;
+  const blocked = isSold || availBlocked;
   const basePrice = item.hasVariants && item.variants?.length
     ? Math.min(...item.variants.map(v => v.price))
     : item.price;
@@ -614,7 +642,7 @@ function ListCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
       {/* Text on the RIGHT. */}
       <div className="flex-1 min-w-0 p-3 sm:p-4 flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          {(item.isFeatured || (isSold && !item.imageUrl) || (!isSold && availNote)) && (
+          {(item.isFeatured || (isSold && !item.imageUrl) || (!isSold && availBlocked && availNote)) && (
             <div className="flex items-center gap-1.5 mb-1">
               {item.isFeatured && (
                 <span className="inline-flex items-center gap-1 bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
@@ -624,13 +652,16 @@ function ListCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
               {isSold && !item.imageUrl && (
                 <span className="inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{t("soldOut")}</span>
               )}
-              {!isSold && availNote && (
+              {!isSold && availBlocked && availNote && (
                 <span className="inline-block bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">{availNote}</span>
               )}
             </div>
           )}
           <p className="font-semibold leading-snug transition" style={{ color: theme.textColor }}>{item.name}</p>
           {item.description && <p className="text-sm text-gray-500 mt-1 line-clamp-2 leading-relaxed">{item.description}</p>}
+          {!isSold && !availBlocked && availNote && (
+            <p className="text-[11px] font-medium text-amber-700 mt-1">{availNote}</p>
+          )}
           <div className="font-bold text-base mt-2" style={{ color: theme.textColor }}>
             {item.hasVariants ? t("fromPrice", { price: fmt(basePrice) }) : fmt(basePrice)}
           </div>
@@ -1563,10 +1594,12 @@ export function OrderingPageClient({
             // Delivery uses forDelivery; pickup / dine-in / take-out all use
             // the pickup availability flag (they're pickup-style channels).
             (orderType === "delivery" ? i.forDelivery : i.forPickup) &&
-            // availabilityMode "show" keeps the item VISIBLE outside its
-            // day/time window — it renders greyed with an "Available …" note
-            // and can't be added to the cart (reseller report cmpxec829).
-            (isItemAvailableNow(i, restaurantTz) || (i as any).availabilityMode === "show")
+            // availabilityMode "show" keeps the item VISIBLE outside its TIME
+            // window — greyed with an "Available …" note, not addable — but
+            // only on days it's actually sold: on an excluded DAY it hides
+            // entirely (reseller report cmpxec829 + Fabrizio's follow-up).
+            (isItemAvailableNow(i, restaurantTz) ||
+              ((i as any).availabilityMode === "show" && isItemDayAvailable(i, restaurantTz)))
           )
           .map(item => {
             // Merge: item-level groups first (in their sortOrder), then category-level
@@ -1577,17 +1610,22 @@ export function OrderingPageClient({
             const uniqueCatGroups = catGroups.filter(
               cg => !(itemLibraryIds.has((cg as any).libraryGroupId ?? cg.id) || itemLibraryIds.has(cg.id))
             );
-            // Visible-but-restricted: outside the window, attach the
-            // human-readable availability note the cards + add-to-cart gate
-            // surface ("Available Mon, Fri · 12:00 – 15:00").
-            const availabilityNote = !isItemAvailableNow(item, restaurantTz)
-              ? t("availableOnlyLabel", { window: itemAvailabilityWindow(item, hoursFmt) })
+            // Day/time-limited items always carry their human-readable
+            // window ("Available Mon, Fri · 12:00 – 15:00") so customers see
+            // WHEN a special is sold even while it's currently purchasable
+            // (Fabrizio's follow-up on cmpxec829). A separate blocked flag
+            // drives the grey-out + add-to-cart gate — the note alone no
+            // longer implies "blocked".
+            const window = itemAvailabilityWindow(item, hoursFmt);
+            const availabilityNote = window
+              ? t("availableOnlyLabel", { window })
               : undefined;
             return {
               ...item,
               categoryId: c.id,
               modifierGroups: [...item.modifierGroups, ...uniqueCatGroups],
               __availabilityNote: availabilityNote,
+              __availabilityBlocked: !isItemAvailableNow(item, restaurantTz) || undefined,
             };
           }),
       };
@@ -1939,21 +1977,46 @@ export function OrderingPageClient({
     }
   }
   const cartHasCatering = cart.some((ci) => cateringItemIds.has(ci.menuItem.id));
-  // Earliest schedulable slot — now + cateringNoticeHours, rounded UP
-  // to the next 15-minute boundary so the datetime-local picker doesn't
-  // land on an odd minute value the customer didn't choose. Output is
-  // local "YYYY-MM-DDTHH:MM" (no Z) so the picker accepts it.
-  const cateringMinScheduledLocal = (() => {
-    const ms = Date.now() + cateringNoticeHours * 3600 * 1000;
+  // Format an absolute moment as a "YYYY-MM-DDTHH:MM" wall-clock string in
+  // the RESTAURANT's timezone — the same convention the server applies when
+  // it parses scheduledFor (parseLocalDateTimeInTz). Computing these picker
+  // bounds in the browser's timezone instead shifted every min/max by the
+  // tz difference for remote customers: the picker offered times the server
+  // then rejected (browser behind restaurant) or hid valid ones (ahead).
+  // Falls back to the browser wall clock when no timezone is set. The
+  // optional 15-min round-up happens on the absolute moment BEFORE
+  // formatting — every real-world tz offset is a multiple of 15 minutes,
+  // so the rounded value stays on a quarter-hour boundary in any timezone.
+  const toRestaurantWallClock = (msAbsolute: number, roundUp15 = false): string => {
+    let ms = msAbsolute;
+    if (roundUp15) {
+      const q = 15 * 60 * 1000;
+      ms = Math.ceil(ms / q) * q;
+    }
     const d = new Date(ms);
-    // Round up to next 15min
-    const m = d.getMinutes();
-    const add = (15 - (m % 15)) % 15;
-    if (add > 0) d.setMinutes(m + add, 0, 0);
-    else d.setSeconds(0, 0);
     const pad = (n: number) => String(n).padStart(2, "0");
+    if (restaurantTz) {
+      try {
+        const parts = new Intl.DateTimeFormat("en-US", {
+          timeZone: restaurantTz,
+          year: "numeric", month: "2-digit", day: "2-digit",
+          hour: "2-digit", minute: "2-digit", hour12: false,
+        }).formatToParts(d);
+        const get = (t: string) => parts.find((p) => p.type === t)?.value ?? "";
+        let h = get("hour");
+        if (h === "24") h = "00";
+        return `${get("year")}-${get("month")}-${get("day")}T${h}:${get("minute")}`;
+      } catch { /* invalid tz id — fall through to browser-local */ }
+    }
     return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-  })();
+  };
+  // Earliest schedulable slot — now + cateringNoticeHours, rounded UP to
+  // the next 15-minute boundary so the datetime-local picker doesn't land
+  // on an odd minute value the customer didn't choose.
+  const cateringMinScheduledLocal = toRestaurantWallClock(
+    Date.now() + cateringNoticeHours * 3600 * 1000,
+    true,
+  );
 
   // ── Closed-now detection (Luigi 2026-05-30) ─────────────────────────
   // When the restaurant is closed RIGHT NOW, we don't let customers
@@ -1977,32 +2040,9 @@ export function OrderingPageClient({
   // Convert nextOpenDate (a UTC Date that represents the local opening
   // moment) to a "YYYY-MM-DDTHH:MM" string in the restaurant's local
   // timezone so the datetime-local picker shows the right wall clock.
-  const closedMinScheduledLocal = (() => {
-    if (!nextOpenDate) return "";
-    if (!restaurantTz) {
-      const d = nextOpenDate;
-      const pad = (n: number) => String(n).padStart(2, "0");
-      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    }
-    try {
-      const parts = new Intl.DateTimeFormat("en-US", {
-        timeZone: restaurantTz,
-        year: "numeric", month: "2-digit", day: "2-digit",
-        hour: "2-digit", minute: "2-digit", hour12: false,
-      }).formatToParts(nextOpenDate);
-      const y = parts.find(p => p.type === "year")?.value ?? "1970";
-      const mo = parts.find(p => p.type === "month")?.value ?? "01";
-      const d = parts.find(p => p.type === "day")?.value ?? "01";
-      let h = parts.find(p => p.type === "hour")?.value ?? "00";
-      if (h === "24") h = "00";
-      const mn = parts.find(p => p.type === "minute")?.value ?? "00";
-      return `${y}-${mo}-${d}T${h}:${mn}`;
-    } catch {
-      const pad = (n: number) => String(n).padStart(2, "0");
-      const d = nextOpenDate;
-      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    }
-  })();
+  const closedMinScheduledLocal = nextOpenDate
+    ? toRestaurantWallClock(nextOpenDate.getTime())
+    : "";
 
   // Scheduled-orders master controls (GloriaFood parity, Fabrizio cmq14gy64).
   // allowScheduledOrders=false → no time picker (ASAP only) unless catering /
@@ -2017,22 +2057,16 @@ export function OrderingPageClient({
   const orderMaxAdvanceDays = !schedulingAllowed ? 0 : ((restaurant as any)[`${leadFieldPrefix}MaxAdvanceDays`] ?? 0);
   // Earliest schedulable slot when a min lead is set: now + lead, rounded up
   // to the next 15-min boundary (same shape as the catering min).
-  const leadMinScheduledLocal = (() => {
-    if (!(orderMinLeadMinutes > 0)) return "";
-    const d = new Date(Date.now() + orderMinLeadMinutes * 60 * 1000);
-    const m = d.getMinutes();
-    const add = (15 - (m % 15)) % 15;
-    if (add > 0) d.setMinutes(m + add, 0, 0); else d.setSeconds(0, 0);
-    const pad = (n: number) => String(n).padStart(2, "0");
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-  })();
-  // Latest schedulable DATE (date-only) when a max advance is set.
-  const maxScheduledDate = (() => {
-    if (!(orderMaxAdvanceDays > 0)) return "";
-    const d = new Date(Date.now() + orderMaxAdvanceDays * 86400 * 1000);
-    const pad = (n: number) => String(n).padStart(2, "0");
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-  })();
+  const leadMinScheduledLocal =
+    orderMinLeadMinutes > 0
+      ? toRestaurantWallClock(Date.now() + orderMinLeadMinutes * 60 * 1000, true)
+      : "";
+  // Latest schedulable DATE (date-only, restaurant wall clock) when a max
+  // advance is set.
+  const maxScheduledDate =
+    orderMaxAdvanceDays > 0
+      ? toRestaurantWallClock(Date.now() + orderMaxAdvanceDays * 86400 * 1000).slice(0, 10)
+      : "";
 
   // Combined "schedule required" reasoning. If ANY condition pushes the
   // customer into schedule mode, we honor the stricter (latest) min slot.
@@ -2315,8 +2349,13 @@ export function OrderingPageClient({
     // Visible-but-purchase-restricted (reseller report cmpxec829): the cards
     // block opening, but belt-and-suspenders here too (deep links, kept-open
     // modals across a window boundary). Server-side validation re-checks.
+    // Gate on the BLOCKED flag, not the note — the note now also renders
+    // informationally while the item is purchasable.
     const availNote = (selectedItem as any).__availabilityNote as string | undefined;
-    if (availNote) { toast.error(availNote); return; }
+    if ((selectedItem as any).__availabilityBlocked) {
+      toast.error(availNote || tT("itemUnavailable"));
+      return;
+    }
     if (selectedItem.hasVariants && !selectedVariant) { toast.error(tT("chooseSize")); return; }
     for (const g of selectedItem.modifierGroups) {
       const selected = mods[g.id] || [];
@@ -2679,7 +2718,12 @@ export function OrderingPageClient({
         body: JSON.stringify(buildOrderPayload()),
       });
       const orderData = await orderRes.json();
-      if (!orderRes.ok) throw new Error(orderData.error || tT("orderFailed"));
+      if (!orderRes.ok) {
+        // Localized message for the past-schedule rejection; everything else
+        // falls back to the server's English error string (existing pattern).
+        if (orderData.code === "scheduled_in_past") throw new Error(tT("scheduledInPast"));
+        throw new Error(orderData.error || tT("orderFailed"));
+      }
 
       // Order accepted by the API → clear the persisted cart so a return
       // visit doesn't show the same items they just ordered. The in-memory
@@ -4625,6 +4669,7 @@ export function OrderingPageClient({
           geocodeCountry={(restaurant as any).country ?? null}
           cateringMode={scheduleRequired}
           cateringMinScheduledLocal={effectiveMinScheduledLocal}
+          toWallClock={toRestaurantWallClock}
           cateringNoticeHours={cateringNoticeHours}
           maxScheduledDate={maxScheduledDate}
           schedulingEnabled={schedulingEnabled}

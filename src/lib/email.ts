@@ -44,6 +44,8 @@ import AutopilotEmail            from "@/emails/templates/AutopilotEmail";
 import ResellerPayoutNotification from "@/emails/templates/ResellerPayoutNotification";
 import ResellerApplicationStatus from "@/emails/templates/ResellerApplicationStatus";
 import ReportNotification        from "@/emails/templates/ReportNotification";
+import CouponAssigned            from "@/emails/templates/CouponAssigned";
+import { formatCurrency } from "@/lib/utils";
 import type { EmailOrderItem } from "@/emails/components/EmailParts";
 
 // Cached transport so we don't query PlatformSettings on every call.
@@ -647,6 +649,86 @@ export async function sendOrderRefundEmail(params: {
 }
 
 // ─── Reservations ─────────────────────────────────────────────────────────────
+
+/** "You've received a personal coupon" — fired when the restaurant assigns
+ *  a customer-locked coupon (reseller report cmqa6lls1). The CALLER gates on
+ *  marketingConsent; this helper just renders + sends. Term lines include
+ *  only the conditions that actually apply, each pre-localized here so the
+ *  template stays dumb. */
+export async function sendCouponAssignedEmail(params: {
+  to: string;
+  customerName: string;
+  restaurantName: string;
+  code: string;
+  discountType: "percentage" | "fixed";
+  discountValue: number;
+  currency: string;
+  minimumOrder?: number;
+  maxUses?: number;
+  expiresAt?: Date | null;
+  description?: string | null;
+  orderUrl: string;
+  restaurantUrl?: string;
+  restaurantEmail?: string | null;
+  restaurantPhone?: string | null;
+  /** Restaurant defaultLanguage. Defaults to "en". */
+  locale?: string;
+}) {
+  const t = await getDict(params.locale);
+  const discountLabel =
+    params.discountType === "percentage"
+      ? t("email.couponAssigned.discountPercent", { value: params.discountValue })
+      : t("email.couponAssigned.discountFixed", {
+          amount: formatCurrency(params.discountValue, params.currency, params.locale),
+        });
+  const termLines: string[] = [];
+  if (params.minimumOrder && params.minimumOrder > 0) {
+    termLines.push(
+      t("email.couponAssigned.minOrder", {
+        amount: formatCurrency(params.minimumOrder, params.currency, params.locale),
+      }),
+    );
+  }
+  if (params.expiresAt) {
+    termLines.push(
+      t("email.couponAssigned.validUntil", {
+        date: params.expiresAt.toLocaleDateString(params.locale || undefined, {
+          year: "numeric", month: "long", day: "numeric",
+        }),
+      }),
+    );
+  }
+  if (params.maxUses && params.maxUses > 0) {
+    termLines.push(
+      params.maxUses === 1
+        ? t("email.couponAssigned.usesOnce")
+        : t("email.couponAssigned.usesMany", { count: params.maxUses }),
+    );
+  }
+  const html = await renderEmail(
+    CouponAssigned({
+      t,
+      customerName: params.customerName,
+      restaurantName: params.restaurantName,
+      code: params.code,
+      discountLabel,
+      termLines,
+      description: params.description,
+      orderUrl: params.orderUrl,
+      restaurantUrl: params.restaurantUrl,
+      restaurantEmail: params.restaurantEmail ?? undefined,
+      restaurantPhone: params.restaurantPhone ?? undefined,
+      imprint: currentImprint(),
+    }),
+  );
+  return send({
+    to: params.to,
+    subject: t("email.couponAssigned.subject", { restaurantName: params.restaurantName, discountLabel }),
+    html,
+    replyTo: params.restaurantEmail ?? undefined,
+    fromName: params.restaurantName,
+  });
+}
 
 export async function sendReservationConfirmation(params: {
   to: string;

@@ -731,18 +731,18 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               instead of waiting for the end-of-day roll to move them all.
               Shown only for an order opened FROM the In Progress tab — never
               from the All tab — and not once it's already been cleared.
-              GATED behind the order's due time: until the scheduled slot (or
-              accept-time + prep estimate) is reached the order is still
-              cooking, so no Complete button. Luigi 2026-06-07, reaffirmed
-              2026-06-08 — passing the ready time must NOT auto-complete an
-              order, but it DOES unlock this manual button.
+              Available ANY time after accept — the due-time gate was removed
+              (reseller report cmqa73m5b, Fabrizio 2026-06-12): on a busy night
+              food is often ready before the countdown, and GloriaFood lets
+              staff check those off immediately. Completion stays MANUAL only —
+              passing the ready time must still never auto-complete an order
+              (Luigi 2026-06-07/08).
               "completed" is included so an order the old auto-sweep already
               flipped (and which is now stranded in In Progress) can still be
               cleared into Complete by hand. */}
           {isSimpleMode && fromInProgress
             && ["accepted", "preparing", "ready", "completed"].includes(order.status)
-            && !(order as any).manuallyClearedAt
-            && (dueMs == null || nowTick >= dueMs) && (
+            && !(order as any).manuallyClearedAt && (
             <button
               onClick={() => act(() => onUpdate(order.id, "completed"))}
               disabled={busy}

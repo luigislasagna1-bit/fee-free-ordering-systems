@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" нельзя совместить с \"{winner}\" — эта скидка для вас выгоднее. Но вы можете удалить \"{winner}\" в корзине, чтобы применить вместо неё.",
       "promoReadded": "\"{name}\" снова добавлена",
       "couponSwitchedSavesMore": "\"{name}\" применён — так выгоднее, поэтому мы убрали \"{winner}\". Нажмите на его баннер, чтобы в любой момент вернуться обратно.",
-      "itemUnavailable": "Этот товар недоступен"
+      "itemUnavailable": "Этот товар недоступен",
+      "scheduledInPast": "Выбранное время уже прошло. Пожалуйста, выберите новое время."
     },
     "searchMenu": "Поиск по меню…",
     "signIn": "Войти",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% скидки",
       "discountLabelFixed": "${value} скидки",
       "successMessage": "Купон <couponCode>{code}</couponCode> ({discount}) назначен клиенту {customerName}.",
-      "buttonCreate": "Создать и назначить купон"
+      "buttonCreate": "Создать и назначить купон",
+      "emailSent": "Клиенту отправлено письмо с кодом и условиями.",
+      "emailSkipped": "Письмо не отправлено (у клиента нет адреса электронной почты или он отказался от маркетинговых рассылок) — сообщите ему код самостоятельно."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Режим работы кухни",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Сумма возврата",
       "timing": "Зачисление средств на ваш счёт может занять от 5 до 10 рабочих дней.",
       "contactLine": "Если у вас возникнут вопросы, просто ответьте на это письмо."
+    },
+    "couponAssigned": {
+      "subject": "Вы получили купон от {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} отправил вам {discountLabel}",
+      "title": "{discountLabel} — специально для вас",
+      "greeting": "Здравствуйте, {customerName}!",
+      "intro": "{restaurantName} дарит вам персональный купон на {discountLabel}. Он уже привязан к вашему аккаунту — используйте код ниже при оформлении заказа.",
+      "codeLabel": "Ваш код купона",
+      "noteLabel": "Сообщение от ресторана",
+      "termsLabel": "Условия",
+      "discountPercent": "Скидка {value}%",
+      "discountFixed": "Скидка {amount}",
+      "minOrder": "Минимальный заказ: {amount}",
+      "validUntil": "Действует до {date}",
+      "usesOnce": "Можно использовать один раз",
+      "usesMany": "Можно использовать до {count} раз",
+      "redeemHint": "Введите код при оформлении заказа или найдите его в личном кабинете — он действует только для вашего аккаунта.",
+      "cta": "Заказать сейчас"
     }
   },
   "marketing": {

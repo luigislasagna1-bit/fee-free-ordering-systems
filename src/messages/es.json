@@ -222,7 +222,8 @@
       "couponBlocked": "\"{name}\" no se puede combinar con \"{winner}\", que ya te hace ahorrar más. Si quieres, puedes quitar \"{winner}\" de tu carrito para usar esta en su lugar.",
       "promoReadded": "\"{name}\" añadida de nuevo",
       "couponSwitchedSavesMore": "\"{name}\" aplicada: te hace ahorrar más, así que quitamos \"{winner}\". Toca su banner para volver a cambiar cuando quieras.",
-      "itemUnavailable": "Este artículo no está disponible"
+      "itemUnavailable": "Este artículo no está disponible",
+      "scheduledInPast": "La hora programada que elegiste ya ha pasado. Elige una nueva hora."
     },
     "followUs": "Síguenos",
     "searchMenu": "Buscar en el menú…",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% de descuento",
       "discountLabelFixed": "${value} de descuento",
       "successMessage": "Cupón <couponCode>{code}</couponCode> ({discount}) asignado a {customerName}.",
-      "buttonCreate": "Crear y asignar cupón"
+      "buttonCreate": "Crear y asignar cupón",
+      "emailSent": "Se ha enviado al cliente un correo con el código y las condiciones.",
+      "emailSkipped": "No se envió ningún correo (el cliente no tiene correo registrado o rechazó las comunicaciones de marketing) — compártele el código directamente."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Flujo de trabajo de cocina",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Importe del reembolso",
       "timing": "Puede tardar entre 5 y 10 días hábiles en aparecer en tu estado de cuenta.",
       "contactLine": "Si tienes alguna pregunta, solo responde a este correo electrónico."
+    },
+    "couponAssigned": {
+      "subject": "Has recibido un cupón de {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} te ha enviado {discountLabel}",
+      "title": "{discountLabel} — solo para ti",
+      "greeting": "Hola, {customerName}:",
+      "intro": "{restaurantName} te ha regalado un cupón personal de {discountLabel}. Ya está vinculado a tu cuenta — usa el código de abajo al finalizar tu pedido.",
+      "codeLabel": "Tu código de cupón",
+      "noteLabel": "Una nota del restaurante",
+      "termsLabel": "Condiciones",
+      "discountPercent": "{value}% de descuento",
+      "discountFixed": "{amount} de descuento",
+      "minOrder": "Pedido mínimo: {amount}",
+      "validUntil": "Válido hasta el {date}",
+      "usesOnce": "Se puede usar una sola vez",
+      "usesMany": "Se puede usar hasta {count} veces",
+      "redeemHint": "Introduce el código al finalizar tu pedido, o encuéntralo en el panel de tu cuenta — solo es válido para tu cuenta.",
+      "cta": "Pedir ahora"
     }
   },
   "marketing": {

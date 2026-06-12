@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" lässt sich nicht mit \"{winner}\" kombinieren, da \"{winner}\" dir bereits mehr spart. Du kannst \"{winner}\" aber in deinem Warenkorb entfernen, um stattdessen diesen zu nutzen.",
       "promoReadded": "\"{name}\" wieder hinzugefügt",
       "couponSwitchedSavesMore": "\"{name}\" angewendet – das spart dir mehr, daher haben wir \"{winner}\" entfernt. Tippe jederzeit auf dessen Banner, um zurückzuwechseln.",
-      "itemUnavailable": "Dieser Artikel ist nicht verfügbar"
+      "itemUnavailable": "Dieser Artikel ist nicht verfügbar",
+      "scheduledInPast": "Die gewählte Vorbestellzeit liegt bereits in der Vergangenheit. Bitte wählen Sie eine neue Zeit."
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% Rabatt",
       "discountLabelFixed": "${value} Rabatt",
       "successMessage": "Gutschein <couponCode>{code}</couponCode> ({discount}) wurde {customerName} zugewiesen.",
-      "buttonCreate": "Gutschein erstellen & zuweisen"
+      "buttonCreate": "Gutschein erstellen & zuweisen",
+      "emailSent": "Der Kunde hat den Code und die Bedingungen per E-Mail erhalten.",
+      "emailSkipped": "Keine E-Mail gesendet (keine E-Mail-Adresse hinterlegt oder Marketing abgelehnt) — teilen Sie dem Kunden den Code selbst mit."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Küchenworkflow",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Erstattungsbetrag",
       "timing": "Es kann 5–10 Werktage dauern, bis der Betrag auf Ihrem Kontoauszug erscheint.",
       "contactLine": "Bei Fragen antworten Sie einfach auf diese E-Mail."
+    },
+    "couponAssigned": {
+      "subject": "Sie haben einen Gutschein von {restaurantName} erhalten — {discountLabel}",
+      "preview": "{restaurantName} schenkt Ihnen {discountLabel}",
+      "title": "{discountLabel} — nur für Sie",
+      "greeting": "Hallo {customerName},",
+      "intro": "{restaurantName} hat Ihnen einen persönlichen Gutschein über {discountLabel} geschenkt. Er ist bereits mit Ihrem Konto verknüpft — nutzen Sie einfach den untenstehenden Code an der Kasse.",
+      "codeLabel": "Ihr Gutscheincode",
+      "noteLabel": "Eine Nachricht vom Restaurant",
+      "termsLabel": "Bedingungen",
+      "discountPercent": "{value} % Rabatt",
+      "discountFixed": "{amount} Rabatt",
+      "minOrder": "Mindestbestellwert: {amount}",
+      "validUntil": "Gültig bis {date}",
+      "usesOnce": "Einmal einlösbar",
+      "usesMany": "Bis zu {count}-mal einlösbar",
+      "redeemHint": "Geben Sie den Code an der Kasse ein oder finden Sie ihn in Ihrem Konto-Dashboard — er gilt nur für Ihr Konto.",
+      "cta": "Jetzt bestellen"
     }
   },
   "marketing": {

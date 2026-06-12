@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" को \"{winner}\" के साथ नहीं जोड़ा जा सकता, जो पहले से ही आपको ज़्यादा बचत दे रहा है। इसके बजाय इसका उपयोग करने के लिए आप अपनी कार्ट में से \"{winner}\" को हटा सकते हैं।",
       "promoReadded": "\"{name}\" फिर से जोड़ा गया",
       "couponSwitchedSavesMore": "\"{name}\" लागू किया गया — यह आपको ज़्यादा बचत देता है, इसलिए हमने \"{winner}\" को हटा दिया। वापस स्विच करने के लिए कभी भी इसके बैनर पर टैप करें।",
-      "itemUnavailable": "यह आइटम उपलब्ध नहीं है"
+      "itemUnavailable": "यह आइटम उपलब्ध नहीं है",
+      "scheduledInPast": "आपके द्वारा चुना गया निर्धारित समय बीत चुका है। कृपया नया समय चुनें।"
     },
     "searchMenu": "मेनू खोजें…",
     "signIn": "साइन इन करें",
@@ -3476,7 +3477,9 @@
       "discountLabelPercent": "{value}% की छूट",
       "discountLabelFixed": "${value} की छूट",
       "successMessage": "कूपन <couponCode>{code}</couponCode> ({discount}) {customerName} को असाइन किया गया।",
-      "buttonCreate": "कूपन बनाएं और असाइन करें"
+      "buttonCreate": "कूपन बनाएं और असाइन करें",
+      "emailSent": "ग्राहक को कोड और शर्तें ईमेल कर दी गई हैं।",
+      "emailSkipped": "कोई ईमेल नहीं भेजा गया (ग्राहक का ईमेल दर्ज नहीं है या उन्होंने मार्केटिंग संदेश लेने से मना किया है) — कोड उन्हें खुद बताएं।"
     },
     "legalPageShell": {
       "backToHome": "Fee Free Ordering पर वापस जाएं",
@@ -4170,6 +4173,24 @@
       "amountLabel": "रिफंड राशि",
       "timing": "आपके स्टेटमेंट में दिखने में 5–10 कार्य दिवस लग सकते हैं।",
       "contactLine": "यदि आपका कोई प्रश्न हो, तो बस इस ईमेल का उत्तर दें।"
+    },
+    "couponAssigned": {
+      "subject": "आपको {restaurantName} से एक कूपन मिला है — {discountLabel}",
+      "preview": "{restaurantName} ने आपको {discountLabel} भेजा है",
+      "title": "{discountLabel} — सिर्फ़ आपके लिए",
+      "greeting": "नमस्ते {customerName},",
+      "intro": "{restaurantName} ने आपको {discountLabel} का व्यक्तिगत कूपन दिया है। यह पहले से आपके खाते से जुड़ा है — चेकआउट पर नीचे दिया कोड इस्तेमाल करें।",
+      "codeLabel": "आपका कूपन कोड",
+      "noteLabel": "रेस्तरां की ओर से संदेश",
+      "termsLabel": "शर्तें",
+      "discountPercent": "{value}% छूट",
+      "discountFixed": "{amount} की छूट",
+      "minOrder": "न्यूनतम ऑर्डर: {amount}",
+      "validUntil": "{date} तक मान्य",
+      "usesOnce": "एक बार इस्तेमाल किया जा सकता है",
+      "usesMany": "अधिकतम {count} बार इस्तेमाल किया जा सकता है",
+      "redeemHint": "चेकआउट पर कोड दर्ज करें, या इसे अपने खाता डैशबोर्ड में देखें — यह सिर्फ़ आपके खाते पर लागू होता है।",
+      "cta": "अभी ऑर्डर करें"
     }
   },
   "marketing": {

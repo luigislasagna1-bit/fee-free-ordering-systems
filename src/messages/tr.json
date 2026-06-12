@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" kuponu, zaten size daha fazla kazandıran \"{winner}\" ile birleştirilemez. Bunu kullanmak isterseniz sepetinizden \"{winner}\" kuponunu kaldırabilirsiniz.",
       "promoReadded": "\"{name}\" yeniden eklendi",
       "couponSwitchedSavesMore": "\"{name}\" uygulandı — size daha fazla kazandırdığı için \"{winner}\" kuponunu kaldırdık. Geri dönmek isterseniz dilediğiniz zaman afişine dokunabilirsiniz.",
-      "itemUnavailable": "Bu ürün mevcut değil"
+      "itemUnavailable": "Bu ürün mevcut değil",
+      "scheduledInPast": "Seçtiğiniz planlanan saat geçti. Lütfen yeni bir saat seçin."
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "%{value} indirim",
       "discountLabelFixed": "${value} indirim",
       "successMessage": "<couponCode>{code}</couponCode> kuponu ({discount}) {customerName} kişisine atandı.",
-      "buttonCreate": "Kupon oluştur ve ata"
+      "buttonCreate": "Kupon oluştur ve ata",
+      "emailSent": "Kod ve koşullar müşteriye e-postayla gönderildi.",
+      "emailSkipped": "E-posta gönderilmedi (müşterinin kayıtlı e-postası yok veya pazarlama iletişimini reddetti) — kodu kendisiyle siz paylaşın."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Mutfak iş akışı",
@@ -4170,6 +4173,24 @@
       "amountLabel": "İade tutarı",
       "timing": "Tutarın hesap ekstrenizde görünmesi 5–10 iş günü sürebilir.",
       "contactLine": "Herhangi bir sorunuz varsa, bu e-postayı yanıtlamanız yeterlidir."
+    },
+    "couponAssigned": {
+      "subject": "{restaurantName} size bir kupon gönderdi — {discountLabel}",
+      "preview": "{restaurantName} size {discountLabel} gönderdi",
+      "title": "{discountLabel} — size özel",
+      "greeting": "Merhaba {customerName},",
+      "intro": "{restaurantName} size {discountLabel} değerinde kişisel bir kupon hediye etti. Kupon hesabınıza zaten bağlı — ödeme sırasında aşağıdaki kodu kullanın.",
+      "codeLabel": "Kupon kodunuz",
+      "noteLabel": "Restorandan bir not",
+      "termsLabel": "Koşullar",
+      "discountPercent": "%{value} indirim",
+      "discountFixed": "{amount} indirim",
+      "minOrder": "Minimum sipariş: {amount}",
+      "validUntil": "Son geçerlilik: {date}",
+      "usesOnce": "Bir kez kullanılabilir",
+      "usesMany": "En fazla {count} kez kullanılabilir",
+      "redeemHint": "Kodu ödeme sırasında girin veya hesap panelinizde bulun — yalnızca sizin hesabınız için geçerlidir.",
+      "cta": "Şimdi sipariş ver"
     }
   },
   "marketing": {

@@ -227,7 +227,8 @@
       "zipRequired": "Postal code required for delivery",
       "fieldRequired": "Please enter {field}",
       "phoneInvalid": "Please enter a valid phone number (digits only).",
-      "itemUnavailable": "This item is unavailable"
+      "itemUnavailable": "This item is unavailable",
+      "scheduledInPast": "The scheduled time you picked has already passed. Please choose a new time."
     },
     "searchMenu": "Search the menu…",
     "expandAll": "Expand all",
@@ -3507,7 +3508,9 @@
       "discountLabelPercent": "{value}% off",
       "discountLabelFixed": "${value} off",
       "successMessage": "Coupon <couponCode>{code}</couponCode> ({discount}) assigned to {customerName}.",
-      "buttonCreate": "Create & assign coupon"
+      "buttonCreate": "Create & assign coupon",
+      "emailSent": "The customer has been emailed the code and conditions.",
+      "emailSkipped": "No email sent (customer has no email on file or opted out of marketing) — share the code with them yourself."
     },
     "legalPageShell": {
       "backToHome": "Back to Fee Free Ordering",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Refund amount",
       "timing": "It may take 5–10 business days to appear on your statement.",
       "contactLine": "If you have any questions, just reply to this email."
+    },
+    "couponAssigned": {
+      "subject": "You've received a coupon from {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} sent you {discountLabel}",
+      "title": "{discountLabel} — just for you",
+      "greeting": "Hi {customerName},",
+      "intro": "{restaurantName} has given you a personal coupon worth {discountLabel}. It's already linked to your account — use the code below at checkout.",
+      "codeLabel": "Your coupon code",
+      "noteLabel": "A note from the restaurant",
+      "termsLabel": "Conditions",
+      "discountPercent": "{value}% off",
+      "discountFixed": "{amount} off",
+      "minOrder": "Minimum order: {amount}",
+      "validUntil": "Valid until {date}",
+      "usesOnce": "Can be used once",
+      "usesMany": "Can be used up to {count} times",
+      "redeemHint": "Enter the code at checkout, or find it in your account dashboard — it applies only to your account.",
+      "cta": "Order now"
     }
   },
   "marketing": {

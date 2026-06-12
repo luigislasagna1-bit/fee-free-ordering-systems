@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" kan ikke kombineres med \"{winner}\", som allerede gir deg større rabatt. Du kan likevel fjerne \"{winner}\" i handlekurven for å bruke denne i stedet.",
       "promoReadded": "\"{name}\" er lagt til igjen",
       "couponSwitchedSavesMore": "\"{name}\" er aktivert – den gir deg større rabatt, så vi fjernet \"{winner}\". Trykk på banneret for å bytte tilbake når som helst.",
-      "itemUnavailable": "Denne varen er ikke tilgjengelig"
+      "itemUnavailable": "Denne varen er ikke tilgjengelig",
+      "scheduledInPast": "Det planlagte tidspunktet du valgte har allerede passert. Velg et nytt tidspunkt."
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% rabatt",
       "discountLabelFixed": "${value} rabatt",
       "successMessage": "Kupong <couponCode>{code}</couponCode> ({discount}) tildelt {customerName}.",
-      "buttonCreate": "Opprett og tildel kupong"
+      "buttonCreate": "Opprett og tildel kupong",
+      "emailSent": "Kunden har fått koden og vilkårene tilsendt på e-post.",
+      "emailSkipped": "Ingen e-post ble sendt (kunden mangler e-postadresse eller har reservert seg mot markedsføring) – du må dele koden med kunden selv."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kjøkkenarbeidsflyt",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Refundert beløp",
       "timing": "Det kan ta 5–10 virkedager før det vises på kontoutskriften din.",
       "contactLine": "Har du spørsmål, er det bare å svare på denne e-posten."
+    },
+    "couponAssigned": {
+      "subject": "Du har fått en kupong fra {restaurantName} – {discountLabel}",
+      "preview": "{restaurantName} har sendt deg {discountLabel}",
+      "title": "{discountLabel} – bare til deg",
+      "greeting": "Hei {customerName},",
+      "intro": "{restaurantName} har gitt deg en personlig kupong verdt {discountLabel}. Den er allerede knyttet til kontoen din – bruk koden nedenfor i kassen.",
+      "codeLabel": "Kupongkoden din",
+      "noteLabel": "En hilsen fra restauranten",
+      "termsLabel": "Vilkår",
+      "discountPercent": "{value} % rabatt",
+      "discountFixed": "{amount} i rabatt",
+      "minOrder": "Minstebestilling: {amount}",
+      "validUntil": "Gyldig til {date}",
+      "usesOnce": "Kan brukes én gang",
+      "usesMany": "Kan brukes opptil {count} ganger",
+      "redeemHint": "Skriv inn koden i kassen, eller finn den på kontosiden din – den gjelder kun for din konto.",
+      "cta": "Bestill nå"
     }
   },
   "marketing": {

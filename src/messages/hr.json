@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" se ne može kombinirati s \"{winner}\", koja vam već donosi veću uštedu. Možete ukloniti \"{winner}\" iz košarice ako želite umjesto nje iskoristiti ovu.",
       "promoReadded": "\"{name}\" ponovno dodana",
       "couponSwitchedSavesMore": "\"{name}\" je primijenjena — donosi vam veću uštedu, pa smo uklonili \"{winner}\". Dodirnite njezin natpis da se u svakom trenutku vratite na nju.",
-      "itemUnavailable": "Ova stavka nije dostupna"
+      "itemUnavailable": "Ova stavka nije dostupna",
+      "scheduledInPast": "Odabrano zakazano vrijeme već je prošlo. Odaberite novo vrijeme."
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% popusta",
       "discountLabelFixed": "${value} popusta",
       "successMessage": "Kupon <couponCode>{code}</couponCode> ({discount}) dodijeljen korisniku {customerName}.",
-      "buttonCreate": "Stvori i dodijeli kupon"
+      "buttonCreate": "Stvori i dodijeli kupon",
+      "emailSent": "Kupcu su e-poštom poslani kod i uvjeti.",
+      "emailSkipped": "E-pošta nije poslana (kupac nema spremljenu e-adresu ili je odbio primanje marketinških poruka) — sami mu prenesite kod."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Tijek rada kuhinje",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Iznos povrata",
       "timing": "Može potrajati od 5 do 10 radnih dana da se iznos prikaže na vašem izvodu.",
       "contactLine": "Ako imate bilo kakvih pitanja, jednostavno odgovorite na ovu e-poruku."
+    },
+    "couponAssigned": {
+      "subject": "Stigao vam je kupon od restorana {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} vam šalje {discountLabel}",
+      "title": "{discountLabel} — samo za vas",
+      "greeting": "Pozdrav {customerName},",
+      "intro": "Restoran {restaurantName} darovao vam je osobni kupon za {discountLabel}. Kupon je već povezan s vašim računom — upotrijebite kod u nastavku prilikom plaćanja.",
+      "codeLabel": "Vaš kod kupona",
+      "noteLabel": "Poruka restorana",
+      "termsLabel": "Uvjeti",
+      "discountPercent": "{value}% popusta",
+      "discountFixed": "{amount} popusta",
+      "minOrder": "Minimalna narudžba: {amount}",
+      "validUntil": "Vrijedi do {date}",
+      "usesOnce": "Može se iskoristiti jednom",
+      "usesMany": "Može se iskoristiti do {count} puta",
+      "redeemHint": "Unesite kod prilikom plaćanja ili ga pronađite na nadzornoj ploči svog računa — vrijedi isključivo za vaš račun.",
+      "cta": "Naručite odmah"
     }
   },
   "marketing": {

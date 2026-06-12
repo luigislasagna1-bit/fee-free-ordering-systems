@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" tidak bisa digabung dengan \"{winner}\", yang sudah menghemat lebih banyak untukmu. Kamu tetap bisa menghapus \"{winner}\" di keranjang untuk memakai ini sebagai gantinya.",
       "promoReadded": "\"{name}\" ditambahkan kembali",
       "couponSwitchedSavesMore": "\"{name}\" diterapkan — ini menghemat lebih banyak, jadi kami menghapus \"{winner}\". Ketuk bannernya kapan saja untuk beralih kembali.",
-      "itemUnavailable": "Item ini tidak tersedia"
+      "itemUnavailable": "Item ini tidak tersedia",
+      "scheduledInPast": "Waktu terjadwal yang Anda pilih sudah lewat. Silakan pilih waktu baru."
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% diskon",
       "discountLabelFixed": "${value} diskon",
       "successMessage": "Kupon <couponCode>{code}</couponCode> ({discount}) telah ditetapkan untuk {customerName}.",
-      "buttonCreate": "Buat & tetapkan kupon"
+      "buttonCreate": "Buat & tetapkan kupon",
+      "emailSent": "Kode dan ketentuannya telah dikirim ke pelanggan melalui email.",
+      "emailSkipped": "Email tidak dikirim (pelanggan tidak punya email terdaftar atau menolak komunikasi pemasaran) — bagikan kodenya secara langsung."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Alur kerja dapur",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Jumlah pengembalian dana",
       "timing": "Dana mungkin membutuhkan waktu 5–10 hari kerja untuk muncul di laporan rekening Anda.",
       "contactLine": "Jika Anda memiliki pertanyaan, cukup balas email ini."
+    },
+    "couponAssigned": {
+      "subject": "Anda menerima kupon dari {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} mengirimi Anda {discountLabel}",
+      "title": "{discountLabel} — khusus untuk Anda",
+      "greeting": "Halo {customerName},",
+      "intro": "{restaurantName} memberi Anda kupon pribadi senilai {discountLabel}. Kupon sudah terhubung ke akun Anda — gunakan kode di bawah saat checkout.",
+      "codeLabel": "Kode kupon Anda",
+      "noteLabel": "Pesan dari restoran",
+      "termsLabel": "Ketentuan",
+      "discountPercent": "Diskon {value}%",
+      "discountFixed": "Diskon {amount}",
+      "minOrder": "Pesanan minimum: {amount}",
+      "validUntil": "Berlaku hingga {date}",
+      "usesOnce": "Dapat digunakan satu kali",
+      "usesMany": "Dapat digunakan hingga {count} kali",
+      "redeemHint": "Masukkan kode saat checkout, atau temukan di dasbor akun Anda — hanya berlaku untuk akun Anda.",
+      "cta": "Pesan sekarang"
     }
   },
   "marketing": {

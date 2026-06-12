@@ -223,7 +223,8 @@
       "couponBlocked": "\"{name}\" kan niet worden gecombineerd met \"{winner}\", waarmee je al meer bespaart. Je kunt \"{winner}\" nog steeds uit je winkelwagen verwijderen om in plaats daarvan deze te gebruiken.",
       "promoReadded": "\"{name}\" opnieuw toegevoegd",
       "couponSwitchedSavesMore": "\"{name}\" toegepast — hiermee bespaar je meer, dus we hebben \"{winner}\" verwijderd. Tik op de banner ervan om altijd weer terug te wisselen.",
-      "itemUnavailable": "Dit item is niet beschikbaar"
+      "itemUnavailable": "Dit item is niet beschikbaar",
+      "scheduledInPast": "De gekozen geplande tijd is al verstreken. Kies een nieuwe tijd."
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
@@ -3068,7 +3069,9 @@
       "discountLabelPercent": "{value}% korting",
       "discountLabelFixed": "${value} korting",
       "successMessage": "Coupon <couponCode>{code}</couponCode> ({discount}) toegewezen aan {customerName}.",
-      "buttonCreate": "Coupon aanmaken en toewijzen"
+      "buttonCreate": "Coupon aanmaken en toewijzen",
+      "emailSent": "De klant heeft de code en voorwaarden per e-mail ontvangen.",
+      "emailSkipped": "Geen e-mail verzonden (geen e-mailadres bekend of de klant heeft zich afgemeld voor marketing) — deel de code zelf met de klant."
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Keukenworkflow",
@@ -4170,6 +4173,24 @@
       "amountLabel": "Terugbetaald bedrag",
       "timing": "Het kan 5–10 werkdagen duren voordat dit op je afschrift verschijnt.",
       "contactLine": "Heb je vragen? Beantwoord dan gewoon deze e-mail."
+    },
+    "couponAssigned": {
+      "subject": "Je hebt een coupon ontvangen van {restaurantName} — {discountLabel}",
+      "preview": "{restaurantName} heeft je {discountLabel} gestuurd",
+      "title": "{discountLabel} — speciaal voor jou",
+      "greeting": "Hoi {customerName},",
+      "intro": "{restaurantName} heeft je een persoonlijke coupon van {discountLabel} gegeven. Deze is al gekoppeld aan je account — gebruik de onderstaande code bij het afrekenen.",
+      "codeLabel": "Je couponcode",
+      "noteLabel": "Een bericht van het restaurant",
+      "termsLabel": "Voorwaarden",
+      "discountPercent": "{value}% korting",
+      "discountFixed": "{amount} korting",
+      "minOrder": "Minimaal bestelbedrag: {amount}",
+      "validUntil": "Geldig tot {date}",
+      "usesOnce": "Eenmalig te gebruiken",
+      "usesMany": "Maximaal {count} keer te gebruiken",
+      "redeemHint": "Voer de code in bij het afrekenen of vind hem terug in je accountoverzicht — de coupon geldt alleen voor jouw account.",
+      "cta": "Bestel nu"
     }
   },
   "marketing": {
