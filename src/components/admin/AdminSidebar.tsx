@@ -610,7 +610,7 @@ export function AdminSidebar({
     return map;
   })();
 
-  const renderItem = (item: NavItem) => {
+  const renderItem = (item: NavItem, nested = false) => {
     // Entitlement gate — hide items flagged as requiring the hosted-site
     // add-on when the restaurant doesn't have it. Avoids surfacing dead
     // links and the "you need to subscribe" landing for unsubscribed users.
@@ -630,15 +630,24 @@ export function AdminSidebar({
         href={href}
         title={locked ? `${display} · ${tLock("badge")}` : display}
         className={cn(
-          // LEAF ITEM — text-sm + medium weight, mixed case, smaller padding
-          // than sub-group buttons so the visual indentation reads as
-          // hierarchy. All leaves share this exact style.
-          "flex items-center gap-2.5 px-3 py-1.5 text-sm font-medium transition mx-2 rounded-lg mb-0.5 relative",
-          active ? "bg-emerald-500 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
+          // LEAF ITEM — two visual variants sharing one renderer:
+          //   tier-2 (direct under a top-level category, e.g. Customers):
+          //     text-sm gray-300, same as before.
+          //   tier-3 (`nested`, inside a sub-group, e.g. Services): one
+          //     notch smaller + dimmer, sits inside the tree guide-line
+          //     rail so children can't be confused with their parents.
+          // Active state is the same emerald pill at both tiers.
+          "flex items-center gap-2.5 py-1.5 transition rounded-lg mb-0.5 relative",
+          nested ? "px-2.5 text-[13px] font-normal ml-1 mr-2" : "px-3 text-sm font-medium mx-2",
+          active
+            ? "bg-emerald-500 text-white"
+            : nested
+              ? "text-gray-400 hover:bg-gray-800 hover:text-white"
+              : "text-gray-300 hover:bg-gray-800 hover:text-white"
         )}
       >
         <div className="relative flex-shrink-0">
-          <Icon className={cn("w-4 h-4", locked && !active && "opacity-60")} />
+          <Icon className={cn(nested ? "w-3.5 h-3.5" : "w-4 h-4", locked && !active && "opacity-60")} />
           {badge !== null && (
             <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-1">
               {badge > 99 ? "99+" : badge}
@@ -862,8 +871,10 @@ export function AdminSidebar({
 
                 {isOpen && (
                   <div className="pb-1">
-                    {/* Direct items rendered at the same level as the group header */}
-                    {group.items?.map(renderItem)}
+                    {/* Direct items rendered at the same level as the group header.
+                        NB: explicit lambda — .map(renderItem) would pass the array
+                        index into renderItem's `nested` param. */}
+                    {group.items?.map((it) => renderItem(it))}
 
                     {/* Nested sub-groups: each with its own accordion. Within
                         a single parent group only ONE sub-group is open at a
@@ -884,10 +895,12 @@ export function AdminSidebar({
                             // label + a separate chevron toggle.
                             const headerActive = subActive || (!!sg.href && pathname.startsWith(sg.href));
                             const headerClass = cn(
+                              // One shade brighter than leaf items (gray-200 vs
+                              // gray-300/400) so parents read "above" children.
                               "flex items-center justify-between px-3 py-2 rounded-lg text-sm font-semibold transition",
                               headerActive
                                 ? "text-emerald-300 bg-gray-800/60"
-                                : "text-gray-300 hover:bg-gray-800/40 hover:text-white"
+                                : "text-gray-200 hover:bg-gray-800/40 hover:text-white"
                             );
                             const labelContent = (
                               <>
@@ -940,8 +953,11 @@ export function AdminSidebar({
                             );
                           })()}
                           {subOpen && (
-                            <div className="pl-3 mt-0.5">
-                              {sg.items.map(renderItem)}
+                            // Tree guide-line: vertical rail anchored under the
+                            // sub-group's icon, so nested items visibly hang off
+                            // their parent instead of floating at the same level.
+                            <div className="ml-5 pl-1.5 mt-0.5 border-l border-gray-700/70">
+                              {sg.items.map((it) => renderItem(it, true))}
                             </div>
                           )}
                         </div>
