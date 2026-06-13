@@ -3,6 +3,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { blockIfInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveActiveMenuId } from "@/lib/menu";
+import { buildVisibilityData } from "@/lib/menu-visibility";
 
 export async function GET(req: NextRequest) {
   const user = await getSessionUser();
@@ -59,8 +60,14 @@ export async function POST(req: NextRequest) {
   if (blocked) return blocked;
 
   const body = await req.json();
-  const { name, description, imageUrl, isHidden, isCatering, menuId: bodyMenuId } = body;
+  const { name, description, imageUrl, isHidden, isCatering, menuId: bodyMenuId, visibility } = body;
   if (!name?.trim()) return NextResponse.json({ error: "Name required" }, { status: 400 });
+  let visData: Record<string, unknown> = {};
+  if (visibility !== undefined) {
+    const v = buildVisibilityData(visibility);
+    if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 });
+    visData = v.data;
+  }
 
   // New categories belong to the targeted menu (the one being edited) — or the
   // active menu when none is given — so they show up where expected.
@@ -81,6 +88,7 @@ export async function POST(req: NextRequest) {
       isHidden: isHidden ?? false,
       isCatering: !!isCatering,
       sortOrder: existing,
+      ...visData,
     },
   });
   return NextResponse.json(cat);

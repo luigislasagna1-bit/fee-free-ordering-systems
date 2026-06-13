@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
+import { buildVisibilityData } from "@/lib/menu-visibility";
 
 async function getOwned(id: string, restaurantId: string) {
   return prisma.menuCategory.findFirst({ where: { id, restaurantId } });
@@ -17,7 +18,13 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (!await getOwned(id, restaurantId)) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   const body = await req.json();
-  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder } = body;
+  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder, visibility } = body;
+  let visData: Record<string, unknown> = {};
+  if (visibility !== undefined) {
+    const v = buildVisibilityData(visibility);
+    if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 });
+    visData = v.data;
+  }
   const cat = await prisma.menuCategory.update({
     where: { id },
     data: {
@@ -26,6 +33,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // the existing value (matches Prisma's update semantics for the
       // other optional flags above).
       ...(isCatering !== undefined ? { isCatering: !!isCatering } : {}),
+      ...visData,
     },
   });
   return NextResponse.json(cat);

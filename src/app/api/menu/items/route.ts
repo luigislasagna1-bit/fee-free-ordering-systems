@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { syncPizzaConfigAttachments } from "@/lib/pizza-config";
 import { blockIfInheritingMenu } from "@/lib/brand";
 import { hasFeature } from "@/lib/entitlements";
+import { buildVisibilityData } from "@/lib/menu-visibility";
 
 export async function POST(req: NextRequest) {
   const user = await getSessionUser();
@@ -17,8 +18,16 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { name, description, price, categoryId, imageUrl, isHidden, isSoldOut,
           forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
-          availabilityMode, hasVariants, variants, pizzaConfig, comboConfig } = body;
+          availabilityMode, hasVariants, variants, pizzaConfig, comboConfig, visibility } = body;
   if (!name || price === undefined || !categoryId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+
+  // Scheduled visibility (GloriaFood-style). Overrides isHidden when supplied.
+  let visData: Record<string, unknown> = {};
+  if (visibility !== undefined) {
+    const v = buildVisibilityData(visibility);
+    if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 });
+    visData = v.data;
+  }
 
   const cat = await prisma.menuCategory.findFirst({ where: { id: categoryId, restaurantId } });
   if (!cat) return NextResponse.json({ error: "Category not found" }, { status: 404 });
@@ -46,6 +55,7 @@ export async function POST(req: NextRequest) {
         sortOrder: existing,
         pizzaConfig: pizzaConfig ?? null,
         comboConfig: safeComboConfig,
+        ...visData,
       },
     });
 

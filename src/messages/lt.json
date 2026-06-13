@@ -2487,7 +2487,8 @@
       "availabilityModeHint": "„Rodyti“ palieka patiekalą matomą su pastaba „Galima …“, kad klientai žinotų, kada jį galima užsisakyti.",
       "previewTestOrdering": "Peržiūra ir bandomasis užsakymas",
       "masterMenuTitle": "Pagrindinis meniu — {inheriting} iš {total} vietų paveldi šį meniu",
-      "masterMenuBody": "Čia atlikti pakeitimai iškart atsiranda kiekvienoje paveldinčioje vietoje. Vietos su pritaikytu meniu nepaveikiamos."
+      "masterMenuBody": "Čia atlikti pakeitimai iškart atsiranda kiekvienoje paveldinčioje vietoje. Vietos su pritaikytu meniu nepaveikiamos.",
+      "tabVisibility": "Matomumas"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Esate pasirengę publikuoti",
       "requiredStepsLeft": "{count, plural, one {Liko # privalomas žingsnis} few {Liko # privalomi žingsniai} other {Liko # privalomų žingsnių}}",
       "finishSetup": "Užbaigti sąranką"
+    },
+    "visibilityEditor": {
+      "title": "Kada tai rodoma?",
+      "help": "Nustato, kada tai rodoma jūsų meniu. „Visada“ rodo įprastai. „Slėpti“ pašalina — iškart arba iki pasirinktos datos. „Rodyti“ atskleidžia tik tam tikromis dienomis ir valandomis arba tik nurodytu datų laikotarpiu.",
+      "always": "Visada",
+      "hide": "Slėpti",
+      "show": "Rodyti",
+      "hideFromMenu": "Slėpti iš meniu",
+      "hideUntil": "Slėpti iki",
+      "showOnlyFrom": "Tik šiomis dienomis / valandomis",
+      "showFromUntil": "Tik nurodytu datų laikotarpiu",
+      "from": "Nuo",
+      "to": "Iki",
+      "timeOptional": "palikite laukus tuščius – visai dienai"
     }
   },
   "impersonation": {

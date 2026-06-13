@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "“显示”会保留菜品并附“供应时间 …”提示，让顾客知道何时可以下单。",
       "previewTestOrdering": "预览并测试下单",
       "masterMenuTitle": "主菜单 — {total} 个门店中有 {inheriting} 个沿用此菜单",
-      "masterMenuBody": "您在此处所做的更改会立即应用到每个沿用此菜单的门店。使用自定义菜单的门店不受影响。"
+      "masterMenuBody": "您在此处所做的更改会立即应用到每个沿用此菜单的门店。使用自定义菜单的门店不受影响。",
+      "tabVisibility": "显示设置"
     },
     "promotionsList": {
       "stackingMaster": "主控",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "您已准备好发布",
       "requiredStepsLeft": "{count, plural, other {还剩 # 个必需步骤}}",
       "finishSetup": "完成设置"
+    },
+    "visibilityEditor": {
+      "title": "何时显示？",
+      "help": "控制此项目何时出现在菜单上。\"始终\"会正常显示。\"隐藏\"会将其移除——立即移除，或在你选定的日期前隐藏。\"显示\"仅在特定的日期和时段显示，或仅在某个日期范围内显示。",
+      "always": "始终",
+      "hide": "隐藏",
+      "show": "显示",
+      "hideFromMenu": "从菜单中隐藏",
+      "hideUntil": "隐藏至",
+      "showOnlyFrom": "仅在这些日期/时段",
+      "showFromUntil": "仅在某个日期范围内",
+      "from": "从",
+      "to": "至",
+      "timeOptional": "时段留空表示全天"
     }
   },
   "impersonation": {

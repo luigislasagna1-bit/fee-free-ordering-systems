@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "“Rādīt” saglabā ēdienu redzamu ar piezīmi “Pieejams …”, lai klienti zinātu, kad to var pasūtīt.",
       "previewTestOrdering": "Priekšskatījums un testa pasūtījums",
       "masterMenuTitle": "Galvenā ēdienkarte — {inheriting} no {total} vietām manto šo ēdienkarti",
-      "masterMenuBody": "Šeit veiktās izmaiņas nekavējoties parādās katrā vietā, kas manto. Vietas ar pielāgotu ēdienkarti netiek ietekmētas."
+      "masterMenuBody": "Šeit veiktās izmaiņas nekavējoties parādās katrā vietā, kas manto. Vietas ar pielāgotu ēdienkarti netiek ietekmētas.",
+      "tabVisibility": "Redzamība"
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Esat gatavs publicēt",
       "requiredStepsLeft": "{count, plural, zero {Atlikuši # obligātie soļi} one {Atlicis # obligāts solis} other {Atlikuši # obligāti soļi}}",
       "finishSetup": "Pabeigt iestatīšanu"
+    },
+    "visibilityEditor": {
+      "title": "Kad tas tiek rādīts?",
+      "help": "Nosaka, kad tas parādās jūsu ēdienkartē. 'Vienmēr' rāda to parastajā režīmā. 'Slēpt' to noņem — uzreiz vai līdz izvēlētam datumam. 'Rādīt' to parāda tikai noteiktās dienās un laikos vai tikai noteiktā datumu periodā.",
+      "always": "Vienmēr",
+      "hide": "Slēpt",
+      "show": "Rādīt",
+      "hideFromMenu": "Slēpt no ēdienkartes",
+      "hideUntil": "Slēpt līdz",
+      "showOnlyFrom": "Tikai šajās dienās/laikos",
+      "showFromUntil": "Tikai noteiktā datumu periodā",
+      "from": "No",
+      "to": "Līdz",
+      "timeOptional": "atstājiet laikus tukšus, lai rādītu visu dienu"
     }
   },
   "impersonation": {

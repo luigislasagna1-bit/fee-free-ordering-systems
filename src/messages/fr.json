@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "« Afficher » garde l'article visible avec une note « Disponible … » pour que les clients sachent quand le commander.",
       "previewTestOrdering": "Aperçu et commande test",
       "masterMenuTitle": "Menu principal — {inheriting} sur {total} établissements héritent de ce menu",
-      "masterMenuBody": "Les modifications apportées ici s'appliquent instantanément à chaque établissement qui hérite. Les établissements avec un menu personnalisé ne sont pas affectés."
+      "masterMenuBody": "Les modifications apportées ici s'appliquent instantanément à chaque établissement qui hérite. Les établissements avec un menu personnalisé ne sont pas affectés.",
+      "tabVisibility": "Visibilité"
     },
     "promotionsList": {
       "stackingMaster": "Maître",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Vous êtes prêt à publier",
       "requiredStepsLeft": "{count, plural, one {# étape obligatoire restante} other {# étapes obligatoires restantes}}",
       "finishSetup": "Terminer la configuration"
+    },
+    "visibilityEditor": {
+      "title": "Quand est-ce affiché ?",
+      "help": "Contrôle quand ceci apparaît sur votre menu. « Toujours » l'affiche normalement. « Masquer » le retire — immédiatement, ou jusqu'à une date de votre choix. « Afficher » ne le montre que certains jours et à certaines heures, ou seulement pendant une période donnée.",
+      "always": "Toujours",
+      "hide": "Masquer",
+      "show": "Afficher",
+      "hideFromMenu": "Masquer du menu",
+      "hideUntil": "Masquer jusqu'au",
+      "showOnlyFrom": "Uniquement ces jours/heures",
+      "showFromUntil": "Uniquement pendant une période",
+      "from": "Du",
+      "to": "Au",
+      "timeOptional": "laisser les heures vides pour toute la journée"
     }
   },
   "impersonation": {

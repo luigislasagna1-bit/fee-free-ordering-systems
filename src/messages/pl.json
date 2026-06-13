@@ -1783,7 +1783,8 @@
       "availabilityModeHint": "„Pokaż” pozostawia pozycję widoczną z dopiskiem „Dostępne …”, aby klienci wiedzieli, kiedy mogą ją zamówić.",
       "previewTestOrdering": "Podgląd i zamówienie testowe",
       "masterMenuTitle": "Menu główne — {inheriting} z {total} lokalizacji dziedziczy to menu",
-      "masterMenuBody": "Zmiany wprowadzone tutaj pojawiają się natychmiast w każdej dziedziczącej lokalizacji. Lokalizacje z własnym menu nie są zmieniane."
+      "masterMenuBody": "Zmiany wprowadzone tutaj pojawiają się natychmiast w każdej dziedziczącej lokalizacji. Lokalizacje z własnym menu nie są zmieniane.",
+      "tabVisibility": "Widoczność"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Możesz już opublikować",
       "requiredStepsLeft": "{count, plural, one {Pozostał # wymagany krok} few {Pozostały # wymagane kroki} many {Pozostało # wymaganych kroków} other {Pozostało # wymaganego kroku}}",
       "finishSetup": "Dokończ konfigurację"
+    },
+    "visibilityEditor": {
+      "title": "Kiedy to jest wyświetlane?",
+      "help": "Określa, kiedy ta pozycja pojawia się w menu. 'Zawsze' wyświetla ją normalnie. 'Ukryj' usuwa ją — od razu lub do wybranej daty. 'Pokaż' wyświetla ją tylko w określone dni i godziny albo wyłącznie w danym przedziale dat.",
+      "always": "Zawsze",
+      "hide": "Ukryj",
+      "show": "Pokaż",
+      "hideFromMenu": "Ukryj w menu",
+      "hideUntil": "Ukryj do",
+      "showOnlyFrom": "Tylko w te dni/godziny",
+      "showFromUntil": "Tylko w danym przedziale dat",
+      "from": "Od",
+      "to": "Do",
+      "timeOptional": "pozostaw godziny puste, aby ustawić cały dzień"
     }
   },
   "impersonation": {

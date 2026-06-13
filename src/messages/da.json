@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Vis\" holder retten synlig med en \"Tilgængelig …\"-note, så kunderne ved, hvornår de kan bestille.",
       "previewTestOrdering": "Forhåndsvis & testbestil",
       "masterMenuTitle": "Hovedmenu — {inheriting} af {total} placeringer arver denne menu",
-      "masterMenuBody": "Ændringer, du foretager her, vises straks på hver placering, der arver. Placeringer med en tilpasset menu påvirkes ikke."
+      "masterMenuBody": "Ændringer, du foretager her, vises straks på hver placering, der arver. Placeringer med en tilpasset menu påvirkes ikke.",
+      "tabVisibility": "Synlighed"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Du er klar til at udgive",
       "requiredStepsLeft": "{count, plural, one {# obligatorisk trin tilbage} other {# obligatoriske trin tilbage}}",
       "finishSetup": "Fuldfør opsætningen"
+    },
+    "visibilityEditor": {
+      "title": "Hvornår vises dette?",
+      "help": "Styrer, hvornår dette vises på din menu. 'Altid' viser det normalt. 'Skjul' fjerner det — med det samme eller indtil en dato, du vælger. 'Vis' viser det kun på bestemte dage og tidspunkter eller kun inden for en datoperiode.",
+      "always": "Altid",
+      "hide": "Skjul",
+      "show": "Vis",
+      "hideFromMenu": "Skjul fra menu",
+      "hideUntil": "Skjul indtil",
+      "showOnlyFrom": "Kun på disse dage/tidspunkter",
+      "showFromUntil": "Kun inden for en datoperiode",
+      "from": "Fra",
+      "to": "Til",
+      "timeOptional": "lad tidspunkter stå tomme for hele dagen"
     }
   },
   "impersonation": {

@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Tampilkan\" membuat item tetap terlihat dengan catatan \"Tersedia …\" agar pelanggan tahu kapan bisa memesannya.",
       "previewTestOrdering": "Pratinjau & pesanan uji",
       "masterMenuTitle": "Menu utama — {inheriting} dari {total} lokasi mewarisi menu ini",
-      "masterMenuBody": "Perubahan yang Anda buat di sini langsung muncul di setiap lokasi yang mewarisi. Lokasi dengan menu kustom tidak terpengaruh."
+      "masterMenuBody": "Perubahan yang Anda buat di sini langsung muncul di setiap lokasi yang mewarisi. Lokasi dengan menu kustom tidak terpengaruh.",
+      "tabVisibility": "Visibilitas"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Anda siap untuk menerbitkan",
       "requiredStepsLeft": "{count, plural, other {# langkah wajib tersisa}}",
       "finishSetup": "Selesaikan penyiapan"
+    },
+    "visibilityEditor": {
+      "title": "Kapan ini ditampilkan?",
+      "help": "Mengatur kapan item ini muncul di menu Anda. 'Selalu' menampilkannya secara normal. 'Sembunyikan' menghapusnya — langsung, atau sampai tanggal yang Anda pilih. 'Tampilkan' memperlihatkannya hanya pada hari dan jam tertentu, atau hanya selama rentang tanggal.",
+      "always": "Selalu",
+      "hide": "Sembunyikan",
+      "show": "Tampilkan",
+      "hideFromMenu": "Sembunyikan dari menu",
+      "hideUntil": "Sembunyikan sampai",
+      "showOnlyFrom": "Hanya pada hari/jam ini",
+      "showFromUntil": "Hanya selama rentang tanggal",
+      "from": "Dari",
+      "to": "Sampai",
+      "timeOptional": "kosongkan jam untuk sepanjang hari"
     }
   },
   "impersonation": {

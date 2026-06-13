@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Mostra\" mantiene il piatto visibile con una nota \"Disponibile …\" così i clienti sanno quando ordinarlo.",
       "previewTestOrdering": "Anteprima e ordine di prova",
       "masterMenuTitle": "Menu principale — {inheriting} di {total} sedi ereditano questo menu",
-      "masterMenuBody": "Le modifiche apportate qui vengono applicate immediatamente a ogni sede che eredita. Le sedi con un menu personalizzato non sono interessate."
+      "masterMenuBody": "Le modifiche apportate qui vengono applicate immediatamente a ogni sede che eredita. Le sedi con un menu personalizzato non sono interessate.",
+      "tabVisibility": "Visibilità"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Sei pronto per pubblicare",
       "requiredStepsLeft": "{count, plural, one {# passaggio obbligatorio rimanente} other {# passaggi obbligatori rimanenti}}",
       "finishSetup": "Completa la configurazione"
+    },
+    "visibilityEditor": {
+      "title": "Quando viene mostrato?",
+      "help": "Controlla quando appare nel tuo menu. 'Sempre' lo mostra normalmente. 'Nascondi' lo rimuove, subito oppure fino a una data scelta. 'Mostra' lo rende visibile solo in certi giorni e orari, oppure solo durante un intervallo di date.",
+      "always": "Sempre",
+      "hide": "Nascondi",
+      "show": "Mostra",
+      "hideFromMenu": "Nascondi dal menu",
+      "hideUntil": "Nascondi fino al",
+      "showOnlyFrom": "Solo in questi giorni/orari",
+      "showFromUntil": "Solo durante un intervallo di date",
+      "from": "Dal",
+      "to": "Al",
+      "timeOptional": "lascia gli orari vuoti per tutto il giorno"
     }
   },
   "impersonation": {

@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { syncPizzaConfigAttachments } from "@/lib/pizza-config";
 import { blockIfInheritingMenu } from "@/lib/brand";
 import { hasFeature } from "@/lib/entitlements";
+import { buildVisibilityData } from "@/lib/menu-visibility";
 
 async function getRestaurantId() {
   const user = await getSessionUser();
@@ -34,9 +35,16 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const body = await req.json();
   const { name, description, price, categoryId, imageUrl, isAvailable, isFeatured, isHidden,
           isSoldOut, forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
-          availabilityMode, hasVariants, sortOrder, variants, pizzaConfig, comboConfig } = body;
+          availabilityMode, hasVariants, sortOrder, variants, pizzaConfig, comboConfig, visibility } = body;
 
   const updateData: any = {};
+  // GloriaFood-style scheduled visibility (Luigi 2026-06-12). When present,
+  // overrides the legacy isHidden toggle and sets the full mode + sub-fields.
+  if (visibility !== undefined) {
+    const vis = buildVisibilityData(visibility);
+    if (!vis.ok) return NextResponse.json({ error: vis.error }, { status: 400 });
+    Object.assign(updateData, vis.data);
+  }
   if (name !== undefined) updateData.name = name;
   if (description !== undefined) updateData.description = description || null;
   if (price !== undefined) updateData.price = parseFloat(price);

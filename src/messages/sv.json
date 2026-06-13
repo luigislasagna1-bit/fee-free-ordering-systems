@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Visa\" håller rätten synlig med en \"Tillgänglig …\"-notis så kunderna vet när de kan beställa.",
       "previewTestOrdering": "Förhandsgranska & testbeställ",
       "masterMenuTitle": "Huvudmeny — {inheriting} av {total} platser ärver den här menyn",
-      "masterMenuBody": "Ändringar du gör här visas direkt på varje plats som ärver. Platser med en anpassad meny påverkas inte."
+      "masterMenuBody": "Ändringar du gör här visas direkt på varje plats som ärver. Platser med en anpassad meny påverkas inte.",
+      "tabVisibility": "Synlighet"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Du är redo att publicera",
       "requiredStepsLeft": "{count, plural, one {# obligatoriskt steg kvar} other {# obligatoriska steg kvar}}",
       "finishSetup": "Slutför konfigurationen"
+    },
+    "visibilityEditor": {
+      "title": "När visas detta?",
+      "help": "Styr när detta visas i menyn. 'Alltid' visar det som vanligt. 'Dölj' tar bort det – direkt eller fram till ett datum du väljer. 'Visa' visar det endast på vissa dagar och tider, eller bara under en angiven period.",
+      "always": "Alltid",
+      "hide": "Dölj",
+      "show": "Visa",
+      "hideFromMenu": "Dölj från menyn",
+      "hideUntil": "Dölj till",
+      "showOnlyFrom": "Endast dessa dagar/tider",
+      "showFromUntil": "Endast under en period",
+      "from": "Från",
+      "to": "Till",
+      "timeOptional": "lämna tiderna tomma för hela dagen"
     }
   },
   "impersonation": {

@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Mostrar\" mantém o item visível com uma nota \"Disponível …\" para os clientes saberem quando pedir.",
       "previewTestOrdering": "Visualizar e testar pedidos",
       "masterMenuTitle": "Cardápio mestre — {inheriting} de {total} locais herdam este cardápio",
-      "masterMenuBody": "As alterações feitas aqui se aplicam instantaneamente a todos os locais que herdam. Locais com cardápio personalizado não são afetados."
+      "masterMenuBody": "As alterações feitas aqui se aplicam instantaneamente a todos os locais que herdam. Locais com cardápio personalizado não são afetados.",
+      "tabVisibility": "Visibilidade"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Você está pronto para publicar",
       "requiredStepsLeft": "{count, plural, one {Falta # etapa obrigatória} other {Faltam # etapas obrigatórias}}",
       "finishSetup": "Concluir configuração"
+    },
+    "visibilityEditor": {
+      "title": "Quando isto é exibido?",
+      "help": "Controla quando isto aparece no seu cardápio. 'Sempre' exibe normalmente. 'Ocultar' remove — imediatamente ou até uma data que você escolher. 'Exibir' mostra apenas em certos dias e horários, ou somente durante um período de datas.",
+      "always": "Sempre",
+      "hide": "Ocultar",
+      "show": "Exibir",
+      "hideFromMenu": "Ocultar do cardápio",
+      "hideUntil": "Ocultar até",
+      "showOnlyFrom": "Apenas nestes dias/horários",
+      "showFromUntil": "Apenas durante um período de datas",
+      "from": "De",
+      "to": "Até",
+      "timeOptional": "deixe os horários em branco para o dia todo"
     }
   },
   "impersonation": {

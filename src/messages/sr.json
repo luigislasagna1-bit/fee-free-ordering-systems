@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "„Прикажи“ оставља артикал видљивим уз напомену „Доступно …“ па купци знају када могу да га наруче.",
       "previewTestOrdering": "Преглед и тест наруџба",
       "masterMenuTitle": "Главни мени — {inheriting} од {total} локација наслеђује овај мени",
-      "masterMenuBody": "Промене које овде направите одмах се појављују на свакој локацији која наслеђује. Локације са прилагођеним менијем нису погођене."
+      "masterMenuBody": "Промене које овде направите одмах се појављују на свакој локацији која наслеђује. Локације са прилагођеним менијем нису погођене.",
+      "tabVisibility": "Vidljivost"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Спремни сте за објављивање",
       "requiredStepsLeft": "{count, plural, one {Преостао је # обавезан корак} few {Преостала су # обавезна корака} other {Преостало је # обавезних корака}}",
       "finishSetup": "Заврши подешавање"
+    },
+    "visibilityEditor": {
+      "title": "Kada se ovo prikazuje?",
+      "help": "Određuje kada se ovo pojavljuje u vašem meniju. „Uvek“ ga prikazuje uobičajeno. „Sakrij“ ga uklanja — odmah ili do datuma koji izaberete. „Prikaži“ ga otkriva samo određenih dana i u određeno vreme, ili samo tokom određenog perioda.",
+      "always": "Uvek",
+      "hide": "Sakrij",
+      "show": "Prikaži",
+      "hideFromMenu": "Sakrij iz menija",
+      "hideUntil": "Sakrij do",
+      "showOnlyFrom": "Samo ovih dana/vremena",
+      "showFromUntil": "Samo tokom određenog perioda",
+      "from": "Od",
+      "to": "Do",
+      "timeOptional": "ostavite vreme prazno za ceo dan"
     }
   },
   "impersonation": {

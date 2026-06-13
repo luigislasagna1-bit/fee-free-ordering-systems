@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "„Näita” jätab toote nähtavaks märkega „Saadaval …”, et kliendid teaksid, millal saab tellida.",
       "previewTestOrdering": "Eelvaade ja testtellimus",
       "masterMenuTitle": "Põhimenüü — {total}-st asukohast {inheriting} pärib selle menüü",
-      "masterMenuBody": "Siin tehtud muudatused ilmuvad kohe igas pärivas asukohas. Kohandatud menüüga asukohti ei mõjutata."
+      "masterMenuBody": "Siin tehtud muudatused ilmuvad kohe igas pärivas asukohas. Kohandatud menüüga asukohti ei mõjutata.",
+      "tabVisibility": "Nähtavus"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Olete valmis avaldama",
       "requiredStepsLeft": "{count, plural, one {Jäänud on # kohustuslik samm} other {Jäänud on # kohustuslikku sammu}}",
       "finishSetup": "Lõpeta seadistus"
+    },
+    "visibilityEditor": {
+      "title": "Millal seda näidatakse?",
+      "help": "Määrab, millal see menüüs kuvatakse. 'Alati' näitab seda tavapäraselt. 'Peida' eemaldab selle — kohe või kuni valitud kuupäevani. 'Näita' kuvab selle ainult kindlatel päevadel ja kellaaegadel või ainult kuupäevavahemikus.",
+      "always": "Alati",
+      "hide": "Peida",
+      "show": "Näita",
+      "hideFromMenu": "Peida menüüst",
+      "hideUntil": "Peida kuni",
+      "showOnlyFrom": "Ainult neil päevadel/kellaaegadel",
+      "showFromUntil": "Ainult kuupäevavahemikus",
+      "from": "Alates",
+      "to": "Kuni",
+      "timeOptional": "jäta kellaajad tühjaks kogu päeva jaoks"
     }
   },
   "impersonation": {

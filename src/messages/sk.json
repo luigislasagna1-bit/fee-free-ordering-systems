@@ -2487,7 +2487,8 @@
       "availabilityModeHint": "„Zobraziť“ ponechá položku viditeľnú s poznámkou „K dispozícii …“, aby zákazníci vedeli, kedy si ju môžu objednať.",
       "previewTestOrdering": "Náhľad a testovacia objednávka",
       "masterMenuTitle": "Hlavné menu — {inheriting} z {total} pobočiek dedí toto menu",
-      "masterMenuBody": "Zmeny, ktoré tu vykonáte, sa okamžite prejavia v každej dediacej pobočke. Pobočky s vlastným menu nie sú ovplyvnené."
+      "masterMenuBody": "Zmeny, ktoré tu vykonáte, sa okamžite prejavia v každej dediacej pobočke. Pobočky s vlastným menu nie sú ovplyvnené.",
+      "tabVisibility": "Viditeľnosť"
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Môžete publikovať",
       "requiredStepsLeft": "{count, plural, one {Zostáva # povinný krok} few {Zostávajú # povinné kroky} other {Zostáva # povinných krokov}}",
       "finishSetup": "Dokončiť nastavenie"
+    },
+    "visibilityEditor": {
+      "title": "Kedy sa toto zobrazuje?",
+      "help": "Určuje, kedy sa toto objaví vo vašom menu. Možnosť 'Vždy' ho zobrazí normálne. Možnosť 'Skryť' ho odstráni — hneď, alebo do zvoleného dátumu. Možnosť 'Zobraziť' ho ukáže iba v určité dni a časy, alebo iba počas rozsahu dátumov.",
+      "always": "Vždy",
+      "hide": "Skryť",
+      "show": "Zobraziť",
+      "hideFromMenu": "Skryť z menu",
+      "hideUntil": "Skryť do",
+      "showOnlyFrom": "Iba v tieto dni/časy",
+      "showFromUntil": "Iba počas rozsahu dátumov",
+      "from": "Od",
+      "to": "Do",
+      "timeOptional": "časy nechajte prázdne pre celý deň"
     }
   },
   "impersonation": {

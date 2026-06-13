@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Näytä\" pitää tuotteen näkyvissä \"Saatavilla …\" -merkinnällä, jotta asiakkaat tietävät milloin sen voi tilata.",
       "previewTestOrdering": "Esikatsele ja testitilaa",
       "masterMenuTitle": "Päävalikko — {inheriting}/{total} toimipaikkaa perii tämän valikon",
-      "masterMenuBody": "Täällä tekemäsi muutokset näkyvät heti jokaisessa perivässä toimipaikassa. Mukautetun valikon toimipaikkoihin ei vaikuteta."
+      "masterMenuBody": "Täällä tekemäsi muutokset näkyvät heti jokaisessa perivässä toimipaikassa. Mukautetun valikon toimipaikkoihin ei vaikuteta.",
+      "tabVisibility": "Näkyvyys"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Olet valmis julkaisemaan",
       "requiredStepsLeft": "{count, plural, one {# pakollinen vaihe jäljellä} other {# pakollista vaihetta jäljellä}}",
       "finishSetup": "Viimeistele määritys"
+    },
+    "visibilityEditor": {
+      "title": "Milloin tämä näytetään?",
+      "help": "Määrittää, milloin tämä näkyy menussasi. 'Aina' näyttää sen normaalisti. 'Piilota' poistaa sen – heti tai valitsemaasi päivään asti. 'Näytä' tuo sen esiin vain tiettyinä päivinä ja kellonaikoina tai vain tietyllä ajanjaksolla.",
+      "always": "Aina",
+      "hide": "Piilota",
+      "show": "Näytä",
+      "hideFromMenu": "Piilota menusta",
+      "hideUntil": "Piilota kunnes",
+      "showOnlyFrom": "Vain näinä päivinä/aikoina",
+      "showFromUntil": "Vain tietyllä ajanjaksolla",
+      "from": "Alkaen",
+      "to": "Asti",
+      "timeOptional": "jätä kellonajat tyhjiksi koko päivän ajaksi"
     }
   },
   "impersonation": {

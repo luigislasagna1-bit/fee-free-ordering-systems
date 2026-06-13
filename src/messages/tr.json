@@ -1783,7 +1783,8 @@
       "availabilityModeHint": "\"Göster\" ürünü \"Mevcut …\" notuyla görünür tutar; müşteriler ne zaman sipariş verebileceklerini bilir.",
       "previewTestOrdering": "Önizleme ve test siparişi",
       "masterMenuTitle": "Ana menü — {total} konumdan {inheriting} tanesi bu menüyü devralıyor",
-      "masterMenuBody": "Burada yaptığınız değişiklikler, devralan her konumda anında görünür. Özel menüsü olan konumlar etkilenmez."
+      "masterMenuBody": "Burada yaptığınız değişiklikler, devralan her konumda anında görünür. Özel menüsü olan konumlar etkilenmez.",
+      "tabVisibility": "Görünürlük"
     },
     "promotionsList": {
       "stackingMaster": "Ana",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Yayınlamaya hazırsınız",
       "requiredStepsLeft": "{count, plural, one {# zorunlu adım kaldı} other {# zorunlu adım kaldı}}",
       "finishSetup": "Kurulumu tamamla"
+    },
+    "visibilityEditor": {
+      "title": "Bu ne zaman gösterilsin?",
+      "help": "Bunun menünüzde ne zaman görüneceğini denetler. 'Her zaman' onu normal şekilde gösterir. 'Gizle' onu kaldırır — hemen ya da seçtiğiniz bir tarihe kadar. 'Göster' onu yalnızca belirli gün ve saatlerde ya da yalnızca bir tarih aralığında görünür kılar.",
+      "always": "Her zaman",
+      "hide": "Gizle",
+      "show": "Göster",
+      "hideFromMenu": "Menüden gizle",
+      "hideUntil": "Şu tarihe kadar gizle",
+      "showOnlyFrom": "Yalnızca bu gün/saatlerde",
+      "showFromUntil": "Yalnızca bir tarih aralığında",
+      "from": "Başlangıç",
+      "to": "Bitiş",
+      "timeOptional": "tüm gün için saatleri boş bırakın"
     }
   },
   "impersonation": {

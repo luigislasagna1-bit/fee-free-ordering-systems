@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "„Afișează” păstrează produsul vizibil cu o notă „Disponibil …”, ca să știe clienții când îl pot comanda.",
       "previewTestOrdering": "Previzualizare și comandă de test",
       "masterMenuTitle": "Meniu principal — {inheriting} din {total} locații moștenesc acest meniu",
-      "masterMenuBody": "Modificările făcute aici apar instantaneu în fiecare locație care moștenește. Locațiile cu un meniu personalizat nu sunt afectate."
+      "masterMenuBody": "Modificările făcute aici apar instantaneu în fiecare locație care moștenește. Locațiile cu un meniu personalizat nu sunt afectate.",
+      "tabVisibility": "Vizibilitate"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Sunteți gata de publicare",
       "requiredStepsLeft": "{count, plural, one {A mai rămas # pas obligatoriu} few {Au mai rămas # pași obligatorii} other {Au mai rămas # de pași obligatorii}}",
       "finishSetup": "Finalizați configurarea"
+    },
+    "visibilityEditor": {
+      "title": "Când se afișează?",
+      "help": "Controlează când apare în meniul tău. „Întotdeauna” îl afișează normal. „Ascunde” îl elimină — imediat sau până la o dată aleasă. „Afișează” îl arată doar în anumite zile și ore sau doar într-un interval de date.",
+      "always": "Întotdeauna",
+      "hide": "Ascunde",
+      "show": "Afișează",
+      "hideFromMenu": "Ascunde din meniu",
+      "hideUntil": "Ascunde până la",
+      "showOnlyFrom": "Doar în aceste zile/ore",
+      "showFromUntil": "Doar într-un interval de date",
+      "from": "De la",
+      "to": "Până la",
+      "timeOptional": "lasă orele goale pentru toată ziua"
     }
   },
   "impersonation": {

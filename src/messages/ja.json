@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "「表示」を選ぶと「提供時間 …」の注記付きで表示され、注文できる時間が分かります。",
       "previewTestOrdering": "プレビュー＆テスト注文",
       "masterMenuTitle": "マスターメニュー — {total} 店舗中 {inheriting} 店舗がこのメニューを継承",
-      "masterMenuBody": "ここでの変更は、継承している各店舗に即座に反映されます。独自メニューの店舗には影響しません。"
+      "masterMenuBody": "ここでの変更は、継承している各店舗に即座に反映されます。独自メニューの店舗には影響しません。",
+      "tabVisibility": "表示設定"
     },
     "promotionsList": {
       "stackingMaster": "マスター",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "公開の準備ができました",
       "requiredStepsLeft": "{count, plural, other {必須ステップが残り#件}}",
       "finishSetup": "セットアップを完了"
+    },
+    "visibilityEditor": {
+      "title": "いつ表示しますか？",
+      "help": "メニューに表示するタイミングを設定します。「常に表示」は通常どおり表示します。「非表示」はすぐに、または指定した日付まで非表示にします。「表示」は特定の曜日・時間帯のみ、または指定した期間中のみ表示します。",
+      "always": "常に表示",
+      "hide": "非表示",
+      "show": "表示",
+      "hideFromMenu": "メニューから非表示",
+      "hideUntil": "次の日付まで非表示",
+      "showOnlyFrom": "指定した曜日・時間帯のみ",
+      "showFromUntil": "指定した期間中のみ",
+      "from": "開始",
+      "to": "終了",
+      "timeOptional": "終日にする場合は時間を空欄のままにします"
     }
   },
   "impersonation": {

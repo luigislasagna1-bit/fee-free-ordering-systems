@@ -1783,7 +1783,8 @@
       "availabilityModeHint": "A „Mutasd” láthatóan tartja a tételt egy „Elérhető …” jelzéssel, így a vendégek tudják, mikor rendelhetik.",
       "previewTestOrdering": "Előnézet és tesztrendelés",
       "masterMenuTitle": "Fő étlap — {total} helyszínből {inheriting} örökli ezt az étlapot",
-      "masterMenuBody": "Az itt végzett módosítások azonnal megjelennek minden öröklő helyszínen. Az egyéni étlappal rendelkező helyszíneket nem érinti."
+      "masterMenuBody": "Az itt végzett módosítások azonnal megjelennek minden öröklő helyszínen. Az egyéni étlappal rendelkező helyszíneket nem érinti.",
+      "tabVisibility": "Láthatóság"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Készen áll a közzétételre",
       "requiredStepsLeft": "{count, plural, one {# kötelező lépés van hátra} other {# kötelező lépés van hátra}}",
       "finishSetup": "Beállítás befejezése"
+    },
+    "visibilityEditor": {
+      "title": "Mikor jelenik meg?",
+      "help": "Szabályozza, mikor jelenik meg ez az étlapon. A „Mindig” a szokásos módon mutatja. Az „Elrejtés” eltávolítja – azonnal, vagy egy kiválasztott dátumig. A „Megjelenítés” csak bizonyos napokon és időpontokban, vagy csak egy adott időszakban mutatja.",
+      "always": "Mindig",
+      "hide": "Elrejtés",
+      "show": "Megjelenítés",
+      "hideFromMenu": "Elrejtés az étlapról",
+      "hideUntil": "Elrejtés eddig",
+      "showOnlyFrom": "Csak ezeken a napokon/időpontokban",
+      "showFromUntil": "Csak egy adott időszakban",
+      "from": "Ettől",
+      "to": "Eddig",
+      "timeOptional": "hagyja üresen az időt az egész naphoz"
     }
   },
   "impersonation": {

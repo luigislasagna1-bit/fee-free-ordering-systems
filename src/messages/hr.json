@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Prikaži\" ostavlja artikl vidljivim s napomenom \"Dostupno …\" pa kupci znaju kada ga mogu naručiti.",
       "previewTestOrdering": "Pregled i testna narudžba",
       "masterMenuTitle": "Glavni izbornik — {inheriting} od {total} lokacija nasljeđuje ovaj izbornik",
-      "masterMenuBody": "Promjene koje ovdje napravite odmah se prikazuju na svakoj lokaciji koja nasljeđuje. Lokacije s prilagođenim izbornikom nisu zahvaćene."
+      "masterMenuBody": "Promjene koje ovdje napravite odmah se prikazuju na svakoj lokaciji koja nasljeđuje. Lokacije s prilagođenim izbornikom nisu zahvaćene.",
+      "tabVisibility": "Vidljivost"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Spremni ste za objavu",
       "requiredStepsLeft": "{count, plural, one {Preostao je # obavezan korak} few {Preostala su # obavezna koraka} other {Preostalo je # obaveznih koraka}}",
       "finishSetup": "Dovrši postavljanje"
+    },
+    "visibilityEditor": {
+      "title": "Kada se ovo prikazuje?",
+      "help": "Određuje kada se ovo pojavljuje na vašem jelovniku. 'Uvijek' ga prikazuje normalno. 'Sakrij' ga uklanja — odmah ili do datuma koji odaberete. 'Prikaži' ga otkriva samo određenim danima i u određeno vrijeme ili samo tijekom raspona datuma.",
+      "always": "Uvijek",
+      "hide": "Sakrij",
+      "show": "Prikaži",
+      "hideFromMenu": "Sakrij s jelovnika",
+      "hideUntil": "Sakrij do",
+      "showOnlyFrom": "Samo ovim danima/u ovo vrijeme",
+      "showFromUntil": "Samo tijekom raspona datuma",
+      "from": "Od",
+      "to": "Do",
+      "timeOptional": "ostavite vrijeme prazno za cijeli dan"
     }
   },
   "impersonation": {

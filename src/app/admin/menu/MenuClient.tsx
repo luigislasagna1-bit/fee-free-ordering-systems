@@ -15,6 +15,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { parseComboConfig } from "@/lib/combo";
+import { VisibilityEditor, visibilityFromRow, type VisibilityValue } from "@/components/admin/VisibilityEditor";
 import toast from "react-hot-toast";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -469,7 +470,6 @@ function ItemModal({
     price: item?.price?.toString() ?? "",
     categoryId: item ? (categories.find(c => c.menuItems.some(i => i.id === item.id))?.id ?? categoryId) : categoryId,
     imageUrl: item?.imageUrl ?? "",
-    isHidden: item?.isHidden ?? false,
     isSoldOut: item?.isSoldOut ?? false,
     forPickup: item?.forPickup ?? true,
     forDelivery: item?.forDelivery ?? true,
@@ -490,8 +490,10 @@ function ItemModal({
     item?.variants?.length ? item.variants : [{ name: "", price: 0, sortOrder: 0, isDefault: true }]
   );
   const [pizza, setPizza] = useState<PizzaFormState>(() => parsePizzaForm(item?.pizzaConfig));
+  // GloriaFood-style scheduled visibility (Phase 1) — replaces the old isHidden toggle.
+  const [visibility, setVisibility] = useState<VisibilityValue>(() => visibilityFromRow(item));
   const [saving, setSaving] = useState(false);
-  const [tab, setTab] = useState<"basic" | "availability" | "variants" | "pizza" | "combo">("basic");
+  const [tab, setTab] = useState<"basic" | "visibility" | "availability" | "variants" | "pizza" | "combo">("basic");
 
   // ── Combo builder state ──────────────────────────────────────────────────
   // A combo item is composed of "slots", each offering a pool of eligible items
@@ -665,6 +667,7 @@ function ItemModal({
       variants: form.hasVariants ? variants.filter(v => v.name) : undefined,
       pizzaConfig,
       comboConfig,
+      visibility,
     };
     try {
       const url = isNew ? "/api/menu/items" : `/api/menu/items/${item!.id}`;
@@ -694,6 +697,7 @@ function ItemModal({
         <div className="flex border-b px-5 overflow-x-auto">
           {([
             ["basic",        t("tabBasic"),                                             "border-emerald-500", "text-emerald-700", "bg-emerald-50", "text-emerald-500"],
+            ["visibility",   t("tabVisibility"),                                        "border-rose-500",    "text-rose-700",    "bg-rose-50",    "text-rose-500"   ],
             ["availability", t("tabAvailability"),                                      "border-sky-500",     "text-sky-700",     "bg-sky-50",     "text-sky-500"    ],
             ["variants",     t("tabSizes"),                                             "border-amber-500",   "text-amber-700",   "bg-amber-50",   "text-amber-500"  ],
             ["pizza",        pizza.isPizza ? t("tabPizzaActive") : t("tabPizzaSetup"),  "border-slate-900",   "text-slate-900",   "bg-slate-100",  "text-slate-600"  ],
@@ -702,7 +706,7 @@ function ItemModal({
               ? [["combo", isCombo ? t("tabComboActive") : t("tabComboSetup"), "border-fuchsia-600", "text-fuchsia-700", "bg-fuchsia-50", "text-fuchsia-500"]]
               : []) as [string, string, string, string, string, string][]),
           ] as [string, string, string, string, string, string][]).map(([tabKey, label, activeBorder, activeText, activeBg]) => (
-            <button key={tabKey} onClick={() => setTab(tabKey as "basic" | "availability" | "variants" | "pizza" | "combo")}
+            <button key={tabKey} onClick={() => setTab(tabKey as "basic" | "visibility" | "availability" | "variants" | "pizza" | "combo")}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition whitespace-nowrap flex-shrink-0 ${
                 tab === tabKey
                   ? `${activeBorder} ${activeText} ${activeBg}`
@@ -760,7 +764,6 @@ function ItemModal({
               </div>
               <div className="flex flex-wrap gap-3 pt-2">
                 {([
-                  ["isHidden", t("hiddenFromMenu"), EyeOff],
                   ["isSoldOut", t("soldOut"), AlertCircle],
                   ["forPickup", t("availableForPickup"), ShoppingBag],
                   ["forDelivery", t("availableForDelivery"), Truck],
@@ -775,6 +778,10 @@ function ItemModal({
                 ))}
               </div>
             </>
+          )}
+
+          {tab === "visibility" && (
+            <VisibilityEditor value={visibility} onChange={setVisibility} />
           )}
 
           {tab === "availability" && (
@@ -1973,13 +1980,13 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
     name: cat?.name ?? "",
     description: cat?.description ?? "",
     imageUrl: cat?.imageUrl ?? "",
-    isHidden: cat?.isHidden ?? false,
     // Catering-category flag — every item in this category is treated
     // as catering for the advance-notice rule, regardless of the per-
     // item isCatering flag. Owners with a dedicated catering menu just
     // tag the whole category instead of every item one by one.
     isCatering: (cat as any)?.isCatering ?? false,
   });
+  const [visibility, setVisibility] = useState<VisibilityValue>(() => visibilityFromRow(cat));
   const [saving, setSaving] = useState(false);
 
   const { menuId: editMenuId } = useContext(MenuEditCtx);
@@ -1991,7 +1998,7 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
       const method = isNew ? "POST" : "PATCH";
       // On create, tell the server which menu version this category belongs to
       // (the one being edited) so it doesn't default to the live menu.
-      const payload = isNew ? { ...form, menuId: editMenuId } : form;
+      const payload = isNew ? { ...form, visibility, menuId: editMenuId } : { ...form, visibility };
       await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       toast.success(isNew ? t("categoryAdded") : t("categoryUpdated"));
       onSaved();
@@ -2025,11 +2032,10 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
               aspectRatio="wide"
             />
           </div>
+          <div className="border-t border-gray-100 pt-4">
+            <VisibilityEditor value={visibility} onChange={setVisibility} />
+          </div>
           <div className="flex flex-wrap gap-2">
-            <button onClick={() => setForm(f => ({ ...f, isHidden: !f.isHidden }))}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isHidden ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
-              <EyeOff className="w-4 h-4" /> {t("hiddenFromCustomerMenu")} {form.isHidden && "✓"}
-            </button>
             <button onClick={() => setForm(f => ({ ...f, isCatering: !f.isCatering }))}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.isCatering ? "border-amber-500 bg-amber-50 text-amber-700" : "border-gray-200 text-gray-600"}`}
               title={t("cateringCategoryTitle")}

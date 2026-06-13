@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "»Prikaži« ohrani izdelek viden z opombo »Na voljo …«, da stranke vedo, kdaj ga lahko naročijo.",
       "previewTestOrdering": "Predogled in testno naročilo",
       "masterMenuTitle": "Glavni meni — {inheriting} od {total} lokacij podeduje ta meni",
-      "masterMenuBody": "Spremembe, ki jih naredite tukaj, se takoj prikažejo na vsaki lokaciji, ki podeduje. Lokacije s prilagojenim menijem niso prizadete."
+      "masterMenuBody": "Spremembe, ki jih naredite tukaj, se takoj prikažejo na vsaki lokaciji, ki podeduje. Lokacije s prilagojenim menijem niso prizadete.",
+      "tabVisibility": "Vidnost"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Pripravljeni ste na objavo",
       "requiredStepsLeft": "{count, plural, one {Preostane še # obvezen korak} two {Preostaneta še # obvezna koraka} few {Preostanejo še # obvezni koraki} other {Preostane še # obveznih korakov}}",
       "finishSetup": "Dokončaj nastavitev"
+    },
+    "visibilityEditor": {
+      "title": "Kdaj je to prikazano?",
+      "help": "Določa, kdaj se to pojavi na vašem meniju. 'Vedno' to prikaže običajno. 'Skrij' to odstrani – takoj ali do datuma, ki ga izberete. 'Pokaži' to razkrije samo ob določenih dnevih in urah ali samo v določenem časovnem obdobju.",
+      "always": "Vedno",
+      "hide": "Skrij",
+      "show": "Pokaži",
+      "hideFromMenu": "Skrij iz menija",
+      "hideUntil": "Skrij do",
+      "showOnlyFrom": "Samo ob teh dnevih/urah",
+      "showFromUntil": "Samo v določenem časovnem obdobju",
+      "from": "Od",
+      "to": "Do",
+      "timeOptional": "pustite ure prazne za ves dan"
     }
   },
   "impersonation": {

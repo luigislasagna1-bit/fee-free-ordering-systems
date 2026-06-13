@@ -2189,7 +2189,8 @@
       "availabilityModeHint": "\"Show\" keeps the item visible with an \"Available …\" note so customers know when they can order it.",
       "previewTestOrdering": "Preview & test ordering",
       "masterMenuTitle": "Master menu — {inheriting} of {total} locations inherit this menu",
-      "masterMenuBody": "Changes you make here appear on every inheriting location instantly. Locations with a custom menu are not affected."
+      "masterMenuBody": "Changes you make here appear on every inheriting location instantly. Locations with a custom menu are not affected.",
+      "tabVisibility": "Visibility"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "You're ready to publish",
       "requiredStepsLeft": "{count, plural, one {# required step left} other {# required steps left}}",
       "finishSetup": "Finish setup"
+    },
+    "visibilityEditor": {
+      "title": "When is this shown?",
+      "help": "Controls when this appears on your menu. 'Always' shows it normally. 'Hide' removes it — right away, or until a date you pick. 'Show' reveals it only on certain days and times, or only during a date range.",
+      "always": "Always",
+      "hide": "Hide",
+      "show": "Show",
+      "hideFromMenu": "Hide from menu",
+      "hideUntil": "Hide until",
+      "showOnlyFrom": "Only on these days/times",
+      "showFromUntil": "Only during a date range",
+      "from": "From",
+      "to": "To",
+      "timeOptional": "leave times blank for all day"
     }
   },
   "impersonation": {

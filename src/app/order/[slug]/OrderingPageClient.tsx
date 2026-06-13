@@ -12,6 +12,7 @@ import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
 import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
 import { localDowAndHHMM, liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
+import { isVisibleNow } from "@/lib/menu-visibility";
 
 /** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
  *  Used by the promo-banner usability-window label so a 12-3 PM lunch
@@ -54,16 +55,27 @@ import { SocialFooter } from "./SocialFooter";
 interface ModOption { id: string; name: string; priceAdjustment: number; isDefault: boolean; isAvailable: boolean }
 interface ModGroup  { id: string; name: string; description?: string; required: boolean; minSelect: number; maxSelect: number; maxPerOption?: number; isHidden?: boolean; libraryGroupId?: string | null; options: ModOption[] }
 interface ItemVariant { id: string; name: string; price: number; isDefault: boolean; sortOrder: number }
-interface MenuItem {
+// GloriaFood-style scheduled visibility fields (shared by items + categories).
+interface VisibilityProps {
+  isHidden: boolean;
+  visibilityMode?: string | null;
+  visibleUntil?: string | null;
+  visibleStartDate?: string | null;
+  visibleEndDate?: string | null;
+  visibleDays?: string | null;
+  visibleFrom?: string | null;
+  visibleTo?: string | null;
+}
+interface MenuItem extends VisibilityProps {
   id: string; name: string; description: string; price: number;
-  imageUrl?: string; isFeatured: boolean; isSoldOut: boolean; isHidden: boolean;
+  imageUrl?: string; isFeatured: boolean; isSoldOut: boolean;
   hasVariants: boolean; forPickup: boolean; forDelivery: boolean;
   availableDays?: number[]; availableFrom?: string; availableTo?: string;
   modifierGroups: ModGroup[]; variants: ItemVariant[];
   categoryId?: string;
   pizzaConfig?: string;
 }
-interface Category { id: string; name: string; imageUrl?: string; isHidden: boolean; modifierGroups: ModGroup[]; menuItems: MenuItem[] }
+interface Category extends VisibilityProps { id: string; name: string; imageUrl?: string; modifierGroups: ModGroup[]; menuItems: MenuItem[] }
 interface CartItem {
   menuItem: MenuItem; variant?: ItemVariant; quantity: number;
   selectedMods: Record<string, string[]>; notes: string; lineTotal: number;
@@ -1585,16 +1597,19 @@ export function OrderingPageClient({
   const { dow: today } = localDowAndHHMM(new Date(), restaurantTz);
   const todayHours = restaurant.openingHours?.find((h: any) => h.dayOfWeek === today);
 
-  // Visible categories and items, merging category-level modifier groups into each item
+  // Visible categories and items, merging category-level modifier groups into each item.
+  // Visibility (show/hide, scheduled) is the GloriaFood-style isVisibleNow model;
+  // a separate availability path below still gates ordering (Phase 2 territory).
+  const visNow = new Date();
   const visibleCategories: Category[] = (restaurant.menuCategories as Category[])
-    .filter(c => !c.isHidden)
+    .filter(c => isVisibleNow(c, visNow, restaurantTz))
     .map(c => {
       const catGroups: ModGroup[] = (c.modifierGroups ?? []).filter((g: ModGroup) => !g.isHidden);
       return {
         ...c,
         menuItems: c.menuItems
           .filter(i =>
-            !i.isHidden &&
+            isVisibleNow(i, visNow, restaurantTz) &&
             // Delivery uses forDelivery; pickup / dine-in / take-out all use
             // the pickup availability flag (they're pickup-style channels).
             (orderType === "delivery" ? i.forDelivery : i.forPickup) &&

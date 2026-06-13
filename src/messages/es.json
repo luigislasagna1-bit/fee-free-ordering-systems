@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Mostrar\" mantiene el artículo visible con una nota \"Disponible …\" para que los clientes sepan cuándo pedirlo.",
       "previewTestOrdering": "Vista previa y pedido de prueba",
       "masterMenuTitle": "Menú maestro — {inheriting} de {total} ubicaciones heredan este menú",
-      "masterMenuBody": "Los cambios que hagas aquí se aplican al instante a cada ubicación que hereda. Las ubicaciones con un menú personalizado no se ven afectadas."
+      "masterMenuBody": "Los cambios que hagas aquí se aplican al instante a cada ubicación que hereda. Las ubicaciones con un menú personalizado no se ven afectadas.",
+      "tabVisibility": "Visibilidad"
     },
     "promotionsList": {
       "stackingMaster": "Maestro",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Ya puedes publicar",
       "requiredStepsLeft": "{count, plural, one {Queda # paso obligatorio} other {Quedan # pasos obligatorios}}",
       "finishSetup": "Terminar la configuración"
+    },
+    "visibilityEditor": {
+      "title": "¿Cuándo se muestra esto?",
+      "help": "Controla cuándo aparece esto en tu menú. 'Siempre' lo muestra con normalidad. 'Ocultar' lo quita, de inmediato o hasta una fecha que elijas. 'Mostrar' lo revela solo en ciertos días y horas, o solo durante un intervalo de fechas.",
+      "always": "Siempre",
+      "hide": "Ocultar",
+      "show": "Mostrar",
+      "hideFromMenu": "Ocultar del menú",
+      "hideUntil": "Ocultar hasta",
+      "showOnlyFrom": "Solo estos días/horas",
+      "showFromUntil": "Solo durante un intervalo de fechas",
+      "from": "Desde",
+      "to": "Hasta",
+      "timeOptional": "deja las horas en blanco para todo el día"
     }
   },
   "impersonation": {

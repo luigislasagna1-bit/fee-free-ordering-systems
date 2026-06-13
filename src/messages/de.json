@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Anzeigen\" hält das Gericht sichtbar mit dem Hinweis \"Verfügbar …\", damit Kunden wissen, wann sie es bestellen können.",
       "previewTestOrdering": "Vorschau & Testbestellung",
       "masterMenuTitle": "Hauptmenü — {inheriting} von {total} Standorten erben dieses Menü",
-      "masterMenuBody": "Hier vorgenommene Änderungen erscheinen sofort an jedem erbenden Standort. Standorte mit einem eigenen Menü sind nicht betroffen."
+      "masterMenuBody": "Hier vorgenommene Änderungen erscheinen sofort an jedem erbenden Standort. Standorte mit einem eigenen Menü sind nicht betroffen.",
+      "tabVisibility": "Sichtbarkeit"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Sie können jetzt veröffentlichen",
       "requiredStepsLeft": "{count, plural, one {Noch # erforderlicher Schritt} other {Noch # erforderliche Schritte}}",
       "finishSetup": "Einrichtung abschließen"
+    },
+    "visibilityEditor": {
+      "title": "Wann wird das angezeigt?",
+      "help": "Legt fest, wann dies auf Ihrer Speisekarte erscheint. 'Immer' zeigt es normal an. 'Ausblenden' entfernt es – sofort oder bis zu einem von Ihnen gewählten Datum. 'Anzeigen' zeigt es nur an bestimmten Tagen und Uhrzeiten oder nur in einem Datumsbereich.",
+      "always": "Immer",
+      "hide": "Ausblenden",
+      "show": "Anzeigen",
+      "hideFromMenu": "Aus Speisekarte ausblenden",
+      "hideUntil": "Ausblenden bis",
+      "showOnlyFrom": "Nur an diesen Tagen/Uhrzeiten",
+      "showFromUntil": "Nur in einem Datumsbereich",
+      "from": "Von",
+      "to": "Bis",
+      "timeOptional": "Uhrzeiten leer lassen für ganztägig"
     }
   },
   "impersonation": {

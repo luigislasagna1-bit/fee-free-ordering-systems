@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Tonen\" houdt het item zichtbaar met een \"Beschikbaar …\"-melding zodat klanten weten wanneer ze het kunnen bestellen.",
       "previewTestOrdering": "Voorbeeld & testbestelling",
       "masterMenuTitle": "Hoofdmenu — {inheriting} van {total} locaties erven dit menu",
-      "masterMenuBody": "Wijzigingen die je hier maakt, verschijnen direct op elke locatie die overerft. Locaties met een aangepast menu worden niet beïnvloed."
+      "masterMenuBody": "Wijzigingen die je hier maakt, verschijnen direct op elke locatie die overerft. Locaties met een aangepast menu worden niet beïnvloed.",
+      "tabVisibility": "Zichtbaarheid"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Je bent klaar om te publiceren",
       "requiredStepsLeft": "{count, plural, one {Nog # verplichte stap} other {Nog # verplichte stappen}}",
       "finishSetup": "Configuratie voltooien"
+    },
+    "visibilityEditor": {
+      "title": "Wanneer wordt dit getoond?",
+      "help": "Bepaalt wanneer dit op je menu verschijnt. 'Altijd' toont het normaal. 'Verbergen' haalt het weg — meteen of tot een datum die je kiest. 'Tonen' laat het alleen op bepaalde dagen en tijden zien, of alleen tijdens een datumbereik.",
+      "always": "Altijd",
+      "hide": "Verbergen",
+      "show": "Tonen",
+      "hideFromMenu": "Verbergen uit menu",
+      "hideUntil": "Verbergen tot",
+      "showOnlyFrom": "Alleen op deze dagen/tijden",
+      "showFromUntil": "Alleen tijdens een datumbereik",
+      "from": "Van",
+      "to": "Tot",
+      "timeOptional": "laat tijden leeg voor de hele dag"
     }
   },
   "impersonation": {

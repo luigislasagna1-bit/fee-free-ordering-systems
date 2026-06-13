@@ -691,7 +691,24 @@ model MenuCategory {
   description  String?
   imageUrl     String?
   isActive     Boolean  @default(true)
+  /// LEGACY visibility toggle. Superseded by the visibility* model below
+  /// (Luigi 2026-06-12, GloriaFood-style rebuild). Migrated to
+  /// visibilityMode="hide_from_menu"; kept so old rows / un-migrated data
+  /// still hide. New code reads visibilityMode first, falls back to isHidden.
   isHidden     Boolean  @default(false)
+  /// GloriaFood-style scheduled visibility. null = always visible. One of:
+  ///   "hide_from_menu"  → hidden from customers entirely
+  ///   "hide_until"      → hidden now, auto-appears at visibleUntil
+  ///   "show_only_from"  → visible ONLY on visibleDays during visibleFrom–visibleTo (recurring weekly)
+  ///   "show_from_until" → visible ONLY between visibleStartDate and visibleEndDate (one-off period)
+  /// Mirrors MenuItem's visibility columns. Restaurant timezone applies.
+  visibilityMode   String?
+  visibleUntil     DateTime? // hide_until: hidden until this moment
+  visibleStartDate DateTime? // show_from_until: visible from
+  visibleEndDate   DateTime? // show_from_until: visible until
+  visibleDays      String?   // show_only_from: JSON [0..6] (null = every day)
+  visibleFrom      String?   // show_only_from: "HH:MM"
+  visibleTo        String?   // show_only_from: "HH:MM"
   /// When true, every item in this category is treated as catering —
   /// cart with any of them must be scheduled ≥ Restaurant.cateringNoticeHours
   /// in advance (ASAP is blocked). Per-item MenuItem.isCatering ORs with
@@ -728,7 +745,20 @@ model MenuItem {
   isAvailable   Boolean  @default(true)
   isFeatured    Boolean  @default(false)
   isSoldOut     Boolean  @default(false)
+  /// LEGACY visibility toggle — superseded by the visibility* model below
+  /// (GloriaFood-style rebuild, Luigi 2026-06-12). Migrated to
+  /// visibilityMode="hide_from_menu"; new code reads visibilityMode first.
   isHidden      Boolean  @default(false)
+  /// GloriaFood-style scheduled visibility (same model as MenuCategory).
+  /// null = always visible. One of: "hide_from_menu" | "hide_until" |
+  /// "show_only_from" | "show_from_until". See MenuCategory for field meanings.
+  visibilityMode   String?
+  visibleUntil     DateTime?
+  visibleStartDate DateTime?
+  visibleEndDate   DateTime?
+  visibleDays      String?
+  visibleFrom      String?
+  visibleTo        String?
   hasVariants   Boolean  @default(false)
   forPickup     Boolean  @default(true)
   forDelivery   Boolean  @default(true)

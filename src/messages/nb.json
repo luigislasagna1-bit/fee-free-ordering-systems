@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Vis\" holder retten synlig med en \"Tilgjengelig …\"-merknad så kundene vet når de kan bestille.",
       "previewTestOrdering": "Forhåndsvis & testbestill",
       "masterMenuTitle": "Hovedmeny — {inheriting} av {total} steder arver denne menyen",
-      "masterMenuBody": "Endringer du gjør her, vises umiddelbart på hvert sted som arver. Steder med en egendefinert meny påvirkes ikke."
+      "masterMenuBody": "Endringer du gjør her, vises umiddelbart på hvert sted som arver. Steder med en egendefinert meny påvirkes ikke.",
+      "tabVisibility": "Synlighet"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Du er klar til å publisere",
       "requiredStepsLeft": "{count, plural, one {# obligatorisk steg igjen} other {# obligatoriske steg igjen}}",
       "finishSetup": "Fullfør oppsettet"
+    },
+    "visibilityEditor": {
+      "title": "Når vises dette?",
+      "help": "Styrer når dette vises på menyen. 'Alltid' viser det som vanlig. 'Skjul' fjerner det – med en gang, eller frem til en dato du velger. 'Vis' viser det bare på bestemte dager og tider, eller bare i en datoperiode.",
+      "always": "Alltid",
+      "hide": "Skjul",
+      "show": "Vis",
+      "hideFromMenu": "Skjul fra menyen",
+      "hideUntil": "Skjul frem til",
+      "showOnlyFrom": "Bare på disse dagene/tidene",
+      "showFromUntil": "Bare i en datoperiode",
+      "from": "Fra",
+      "to": "Til",
+      "timeOptional": "la tidene stå tomme for hele dagen"
     }
   },
   "impersonation": {

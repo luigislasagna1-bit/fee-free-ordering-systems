@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"표시\"를 선택하면 \"이용 가능 …\" 안내와 함께 메뉴에 계속 표시되어 고객이 주문 가능 시간을 알 수 있습니다.",
       "previewTestOrdering": "미리보기 및 테스트 주문",
       "masterMenuTitle": "마스터 메뉴 — {total}개 지점 중 {inheriting}곳이 이 메뉴를 사용",
-      "masterMenuBody": "여기서 변경한 내용은 이 메뉴를 사용하는 모든 지점에 즉시 적용됩니다. 맞춤 메뉴를 사용하는 지점은 영향을 받지 않습니다."
+      "masterMenuBody": "여기서 변경한 내용은 이 메뉴를 사용하는 모든 지점에 즉시 적용됩니다. 맞춤 메뉴를 사용하는 지점은 영향을 받지 않습니다.",
+      "tabVisibility": "노출 설정"
     },
     "promotionsList": {
       "stackingMaster": "마스터",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "게시할 준비가 되었습니다",
       "requiredStepsLeft": "{count, plural, other {필수 단계 #개 남음}}",
       "finishSetup": "설정 완료하기"
+    },
+    "visibilityEditor": {
+      "title": "언제 표시할까요?",
+      "help": "메뉴에 표시되는 시점을 설정합니다. '항상'은 평소처럼 표시합니다. '숨김'은 즉시 또는 지정한 날짜까지 숨깁니다. '표시'는 특정 요일과 시간에만, 또는 지정한 기간 동안에만 표시합니다.",
+      "always": "항상",
+      "hide": "숨김",
+      "show": "표시",
+      "hideFromMenu": "메뉴에서 숨기기",
+      "hideUntil": "숨김 종료일",
+      "showOnlyFrom": "지정 요일/시간에만",
+      "showFromUntil": "지정 기간에만",
+      "from": "시작",
+      "to": "종료",
+      "timeOptional": "하루 종일이면 시간을 비워 두세요"
     }
   },
   "impersonation": {

@@ -1822,7 +1822,8 @@
       "availabilityModeHint": "\"Mostra\" manté l'article visible amb una nota \"Disponible …\" perquè els clients sàpiguen quan el poden demanar.",
       "previewTestOrdering": "Previsualitza i comanda de prova",
       "masterMenuTitle": "Menú mestre — {inheriting} de {total} ubicacions hereten aquest menú",
-      "masterMenuBody": "Els canvis que facis aquí s'apliquen a l'instant a cada ubicació que hereta. Les ubicacions amb un menú personalitzat no es veuen afectades."
+      "masterMenuBody": "Els canvis que facis aquí s'apliquen a l'instant a cada ubicació que hereta. Les ubicacions amb un menú personalitzat no es veuen afectades.",
+      "tabVisibility": "Visibilitat"
     },
     "promotionsList": {
       "stackingMaster": "Mestre",
@@ -3867,6 +3868,20 @@
       "readyToPublish": "Ja podeu publicar",
       "requiredStepsLeft": "{count, plural, one {Queda # pas obligatori} other {Queden # passos obligatoris}}",
       "finishSetup": "Acaba la configuració"
+    },
+    "visibilityEditor": {
+      "title": "Quan es mostra?",
+      "help": "Controla quan apareix al teu menú. «Sempre» el mostra amb normalitat. «Amaga» el treu, immediatament o fins a una data que triïs. «Mostra» el fa visible només determinats dies i hores, o només durant un interval de dates.",
+      "always": "Sempre",
+      "hide": "Amaga",
+      "show": "Mostra",
+      "hideFromMenu": "Amaga del menú",
+      "hideUntil": "Amaga fins a",
+      "showOnlyFrom": "Només aquests dies/hores",
+      "showFromUntil": "Només durant un interval de dates",
+      "from": "Des de",
+      "to": "Fins a",
+      "timeOptional": "deixa les hores en blanc per a tot el dia"
     }
   },
   "impersonation": {
