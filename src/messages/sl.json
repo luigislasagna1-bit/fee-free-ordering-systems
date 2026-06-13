@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Lokacije ni bilo mogoče ustvariti",
       "errorCouldNotSwitch": "Preklapljanje ni uspelo",
       "fieldEmail": "E-naslov za prijavo",
-      "fieldEmailHint": "To postane lastna skrbniška prijava lokacije — poslali bomo povezavo za nastavitev gesla."
+      "fieldEmailHint": "To postane lastna skrbniška prijava lokacije — poslali bomo povezavo za nastavitev gesla.",
+      "inheritTitle": "Kaj nadzoruje vaša znamka",
+      "inheritSubtitle": "Izberite, katere nastavitve ta lokacija v živo prevzema od vaše znamke, ali jih nastavite tukaj po meri.",
+      "inheritEverything": "Vse od znamke",
+      "inheritEverythingHint": "Zrcalite znamko za vsako nastavitev. Izklopite katero koli spodaj, da jo prilagodite samo za to lokacijo.",
+      "setting_menu": "Meni",
+      "setting_hours": "Delovni čas",
+      "setting_zones": "Območja dostave",
+      "setting_availability": "Razpoložljivost izdelkov",
+      "stateInherited": "Od znamke",
+      "stateCustom": "Nastavljeno tukaj",
+      "inheritSaved": "Posodobljeno",
+      "inheritSaveError": "Posodobitev ni uspela — poskusite znova.",
+      "menuRevertConfirm": "Želite meni vrniti na meni znamke? Meni te lokacije po meri bo zamenjan."
     },
     "menuEditor": {
       "sectionSizeLabel": "Izbira velikosti",

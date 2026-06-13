@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Impossible de créer l'emplacement",
       "errorCouldNotSwitch": "Impossible de basculer",
       "fieldEmail": "E-mail de connexion",
-      "fieldEmailHint": "Cela devient l'identifiant d'administration propre à l'établissement — nous lui enverrons un lien pour définir un mot de passe."
+      "fieldEmailHint": "Cela devient l'identifiant d'administration propre à l'établissement — nous lui enverrons un lien pour définir un mot de passe.",
+      "inheritTitle": "Ce que votre marque contrôle",
+      "inheritSubtitle": "Choisissez les réglages que cet établissement hérite en direct de votre marque, ou définissez les siens ici.",
+      "inheritEverything": "Tout depuis la marque",
+      "inheritEverythingHint": "Refléter la marque pour chaque réglage. Désactivez l'un d'eux ci-dessous pour le personnaliser uniquement pour cet établissement.",
+      "setting_menu": "Menu",
+      "setting_hours": "Heures d'ouverture",
+      "setting_zones": "Zones de livraison",
+      "setting_availability": "Disponibilité des articles",
+      "stateInherited": "Depuis la marque",
+      "stateCustom": "Défini ici",
+      "inheritSaved": "Mis à jour",
+      "inheritSaveError": "Échec de la mise à jour — veuillez réessayer.",
+      "menuRevertConfirm": "Revenir au menu de la marque ? Le menu personnalisé de cet établissement sera remplacé."
     },
     "menuEditor": {
       "sectionSizeLabel": "Sélection de la taille",

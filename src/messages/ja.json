@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "店舗を作成できませんでした",
       "errorCouldNotSwitch": "切り替えできませんでした",
       "fieldEmail": "ログイン用メール",
-      "fieldEmailHint": "これはその店舗専用の管理者ログインになります。パスワード設定用のリンクをメールで送信します。"
+      "fieldEmailHint": "これはその店舗専用の管理者ログインになります。パスワード設定用のリンクをメールで送信します。",
+      "inheritTitle": "ブランドが管理する設定",
+      "inheritSubtitle": "この店舗でブランドからリアルタイムに継承する設定を選ぶか、ここで個別に設定します。",
+      "inheritEverything": "すべてブランドに従う",
+      "inheritEverythingHint": "すべての設定をブランドに合わせます。下の項目をオフにすると、この店舗だけ個別に設定できます。",
+      "setting_menu": "メニュー",
+      "setting_hours": "営業時間",
+      "setting_zones": "配達エリア",
+      "setting_availability": "商品の提供状況",
+      "stateInherited": "ブランドに従う",
+      "stateCustom": "個別に設定",
+      "inheritSaved": "更新しました",
+      "inheritSaveError": "更新できませんでした。もう一度お試しください。",
+      "menuRevertConfirm": "メニューをブランドのものに戻しますか？この店舗のカスタムメニューは置き換えられます。"
     },
     "menuEditor": {
       "sectionSizeLabel": "サイズ選択",

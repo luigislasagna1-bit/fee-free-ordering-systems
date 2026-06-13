@@ -2365,7 +2365,20 @@
       "errorCouldNotCreate": "Nie udało się utworzyć lokalizacji",
       "errorCouldNotSwitch": "Nie udało się przełączyć",
       "fieldEmail": "E-mail logowania",
-      "fieldEmailHint": "To będzie własny login administratora lokalu — wyślemy link do ustawienia hasła."
+      "fieldEmailHint": "To będzie własny login administratora lokalu — wyślemy link do ustawienia hasła.",
+      "inheritTitle": "Co kontroluje Twoja marka",
+      "inheritSubtitle": "Wybierz, które ustawienia ta lokalizacja dziedziczy na żywo z Twojej marki, lub ustaw własne tutaj.",
+      "inheritEverything": "Wszystko z marki",
+      "inheritEverythingHint": "Odzwierciedlaj markę w każdym ustawieniu. Wyłącz dowolne poniżej, aby dostosować je tylko dla tej lokalizacji.",
+      "setting_menu": "Menu",
+      "setting_hours": "Godziny otwarcia",
+      "setting_zones": "Strefy dostawy",
+      "setting_availability": "Dostępność produktów",
+      "stateInherited": "Z marki",
+      "stateCustom": "Ustawione tutaj",
+      "inheritSaved": "Zaktualizowano",
+      "inheritSaveError": "Nie udało się zaktualizować – spróbuj ponownie.",
+      "menuRevertConfirm": "Przywrócić menu do menu marki? Niestandardowe menu tej lokalizacji zostanie zastąpione."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Panel marki",

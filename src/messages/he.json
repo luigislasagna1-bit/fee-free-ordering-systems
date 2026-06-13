@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "לא ניתן ליצור סניף",
       "errorCouldNotSwitch": "לא ניתן לעבור",
       "fieldEmail": "אימייל להתחברות",
-      "fieldEmailHint": "זה הופך לכניסת המנהל הייחודית של הסניף — נשלח קישור להגדרת סיסמה."
+      "fieldEmailHint": "זה הופך לכניסת המנהל הייחודית של הסניף — נשלח קישור להגדרת סיסמה.",
+      "inheritTitle": "ההגדרות שהמותג שלך שולט בהן",
+      "inheritSubtitle": "בחר אילו הגדרות הסניף הזה יורש ישירות מהמותג שלך, או הגדר אותן כאן במיוחד עבורו.",
+      "inheritEverything": "הכול מהמותג",
+      "inheritEverythingHint": "התאם את כל ההגדרות למותג. כבה כל אחת מהן למטה כדי להתאים אותה לסניף הזה בלבד.",
+      "setting_menu": "תפריט",
+      "setting_hours": "שעות פתיחה",
+      "setting_zones": "אזורי משלוח",
+      "setting_availability": "זמינות הפריטים",
+      "stateInherited": "מהמותג",
+      "stateCustom": "מוגדר כאן",
+      "inheritSaved": "עודכן",
+      "inheritSaveError": "העדכון נכשל — נסה שוב.",
+      "menuRevertConfirm": "להחזיר את התפריט לתפריט המותג? התפריט המותאם אישית של הסניף הזה יוחלף."
     },
     "menuEditor": {
       "sectionSizeLabel": "בחירת גודל",

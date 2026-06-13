@@ -2244,7 +2244,20 @@
       "errorCouldNotCreate": "Prevádzku sa nepodarilo vytvoriť",
       "errorCouldNotSwitch": "Prepnutie sa nepodarilo",
       "fieldEmail": "Prihlasovací e-mail",
-      "fieldEmailHint": "Toto sa stane vlastným administrátorským prihlásením prevádzky — pošleme odkaz na nastavenie hesla."
+      "fieldEmailHint": "Toto sa stane vlastným administrátorským prihlásením prevádzky — pošleme odkaz na nastavenie hesla.",
+      "inheritTitle": "Čo riadi vaša značka",
+      "inheritSubtitle": "Vyberte, ktoré nastavenia táto pobočka dedí naživo z vašej značky, alebo tu nastavte vlastné.",
+      "inheritEverything": "Všetko zo značky",
+      "inheritEverythingHint": "Zrkadlite značku pri každom nastavení. Vypnutím ktoréhokoľvek nižšie ho prispôsobíte len pre túto pobočku.",
+      "setting_menu": "Menu",
+      "setting_hours": "Otváracie hodiny",
+      "setting_zones": "Zóny rozvozu",
+      "setting_availability": "Dostupnosť položiek",
+      "stateInherited": "Zo značky",
+      "stateCustom": "Nastavené tu",
+      "inheritSaved": "Aktualizované",
+      "inheritSaveError": "Nepodarilo sa aktualizovať – skúste to znova.",
+      "menuRevertConfirm": "Vrátiť menu späť na menu značky? Vlastné menu tejto pobočky bude nahradené."
     },
     "menuEditor": {
       "sectionSizeLabel": "Výber veľkosti",

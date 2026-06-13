@@ -2365,7 +2365,20 @@
       "errorCouldNotCreate": "Konum oluşturulamadı",
       "errorCouldNotSwitch": "Geçiş yapılamadı",
       "fieldEmail": "Giriş e-postası",
-      "fieldEmailHint": "Bu, konumun kendi yönetici girişi olur — şifre belirlemeleri için bir bağlantı e-postayla göndereceğiz."
+      "fieldEmailHint": "Bu, konumun kendi yönetici girişi olur — şifre belirlemeleri için bir bağlantı e-postayla göndereceğiz.",
+      "inheritTitle": "Markanızın kontrol ettikleri",
+      "inheritSubtitle": "Bu şubenin hangi ayarları markanızdan canlı olarak devraldığını seçin ya da burada kendi ayarlarını belirleyin.",
+      "inheritEverything": "Her şey markadan",
+      "inheritEverythingHint": "Her ayarda markayı yansıtın. Yalnızca bu şubeye özel hâle getirmek için aşağıdakilerden istediğinizi kapatın.",
+      "setting_menu": "Menü",
+      "setting_hours": "Çalışma saatleri",
+      "setting_zones": "Teslimat bölgeleri",
+      "setting_availability": "Ürün durumu",
+      "stateInherited": "Markadan",
+      "stateCustom": "Burada ayarlandı",
+      "inheritSaved": "Güncellendi",
+      "inheritSaveError": "Güncellenemedi — lütfen tekrar deneyin.",
+      "menuRevertConfirm": "Menü markanınkine geri döndürülsün mü? Bu şubenin özel menüsü değiştirilecek."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Marka paneli",

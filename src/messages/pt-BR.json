@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Não foi possível criar a unidade",
       "errorCouldNotSwitch": "Não foi possível alternar",
       "fieldEmail": "E-mail de login",
-      "fieldEmailHint": "Este será o login de administrador próprio do local — enviaremos um link para definir uma senha."
+      "fieldEmailHint": "Este será o login de administrador próprio do local — enviaremos um link para definir uma senha.",
+      "inheritTitle": "O que a sua marca controla",
+      "inheritSubtitle": "Escolha quais configurações este local herda ao vivo da sua marca, ou defina as próprias aqui.",
+      "inheritEverything": "Tudo da marca",
+      "inheritEverythingHint": "Espelhar a marca em todas as configurações. Desative qualquer uma abaixo para personalizá-la apenas para este local.",
+      "setting_menu": "Cardápio",
+      "setting_hours": "Horário de funcionamento",
+      "setting_zones": "Zonas de entrega",
+      "setting_availability": "Disponibilidade dos itens",
+      "stateInherited": "Da marca",
+      "stateCustom": "Definido aqui",
+      "inheritSaved": "Atualizado",
+      "inheritSaveError": "Não foi possível atualizar — tente novamente.",
+      "menuRevertConfirm": "Voltar para o cardápio da marca? O cardápio personalizado deste local será substituído."
     },
     "menuEditor": {
       "sectionSizeLabel": "Seleção de tamanho",

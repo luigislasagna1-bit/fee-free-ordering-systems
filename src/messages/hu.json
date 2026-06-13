@@ -2365,7 +2365,20 @@
       "errorCouldNotCreate": "Nem sikerült létrehozni a helyszínt",
       "errorCouldNotSwitch": "Nem sikerült váltani",
       "fieldEmail": "Bejelentkezési e-mail",
-      "fieldEmailHint": "Ez lesz a helyszín saját rendszergazdai bejelentkezése — küldünk egy linket a jelszó beállításához."
+      "fieldEmailHint": "Ez lesz a helyszín saját rendszergazdai bejelentkezése — küldünk egy linket a jelszó beállításához.",
+      "inheritTitle": "Mit szabályoz a márkád",
+      "inheritSubtitle": "Válaszd ki, mely beállításokat örökli ez a helyszín élőben a márkádtól, vagy állíts be sajátot itt.",
+      "inheritEverything": "Minden a márkától",
+      "inheritEverythingHint": "Tükrözd a márkát minden beállításnál. Kapcsold ki bármelyiket alább, hogy csak ehhez a helyszínhez szabd testre.",
+      "setting_menu": "Étlap",
+      "setting_hours": "Nyitvatartás",
+      "setting_zones": "Kiszállítási zónák",
+      "setting_availability": "Tételek elérhetősége",
+      "stateInherited": "A márkától",
+      "stateCustom": "Itt beállítva",
+      "inheritSaved": "Frissítve",
+      "inheritSaveError": "Nem sikerült frissíteni – próbáld újra.",
+      "menuRevertConfirm": "Visszaállítod az étlapot a márka étlapjára? Ennek a helyszínnek az egyéni étlapja felülíródik."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Márka irányítópult",

@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Tidak dapat membuat lokasi",
       "errorCouldNotSwitch": "Tidak dapat beralih",
       "fieldEmail": "Email login",
-      "fieldEmailHint": "Ini menjadi login admin lokasi tersebut — kami akan mengirim tautan untuk mengatur kata sandi."
+      "fieldEmailHint": "Ini menjadi login admin lokasi tersebut — kami akan mengirim tautan untuk mengatur kata sandi.",
+      "inheritTitle": "Yang dikontrol merek Anda",
+      "inheritSubtitle": "Pilih pengaturan mana yang diwarisi lokasi ini secara langsung dari merek Anda, atau atur sendiri di sini.",
+      "inheritEverything": "Semua dari merek",
+      "inheritEverythingHint": "Ikuti merek untuk setiap pengaturan. Matikan salah satu di bawah untuk menyesuaikannya khusus lokasi ini.",
+      "setting_menu": "Menu",
+      "setting_hours": "Jam buka",
+      "setting_zones": "Zona pengiriman",
+      "setting_availability": "Ketersediaan item",
+      "stateInherited": "Dari merek",
+      "stateCustom": "Diatur di sini",
+      "inheritSaved": "Diperbarui",
+      "inheritSaveError": "Tidak dapat memperbarui — silakan coba lagi.",
+      "menuRevertConfirm": "Kembalikan menu ke milik merek? Menu khusus lokasi ini akan diganti."
     },
     "menuEditor": {
       "sectionSizeLabel": "Pilihan ukuran",

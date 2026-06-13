@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Impossibile creare la sede",
       "errorCouldNotSwitch": "Impossibile effettuare il passaggio",
       "fieldEmail": "Email di accesso",
-      "fieldEmailHint": "Diventa l'accesso amministratore dedicato della sede — invieremo un link per impostare una password."
+      "fieldEmailHint": "Diventa l'accesso amministratore dedicato della sede — invieremo un link per impostare una password.",
+      "inheritTitle": "Cosa controlla il tuo brand",
+      "inheritSubtitle": "Scegli quali impostazioni questa sede eredita in tempo reale dal tuo brand, oppure imposta le sue qui.",
+      "inheritEverything": "Tutto dal brand",
+      "inheritEverythingHint": "Rispecchia il brand per ogni impostazione. Disattivane una qui sotto per personalizzarla solo per questa sede.",
+      "setting_menu": "Menu",
+      "setting_hours": "Orari di apertura",
+      "setting_zones": "Zone di consegna",
+      "setting_availability": "Disponibilità degli articoli",
+      "stateInherited": "Dal brand",
+      "stateCustom": "Impostato qui",
+      "inheritSaved": "Aggiornato",
+      "inheritSaveError": "Impossibile aggiornare — riprova.",
+      "menuRevertConfirm": "Tornare al menu del brand? Il menu personalizzato di questa sede verrà sostituito."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selezione taglia",

@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Kunne ikke oprette lokation",
       "errorCouldNotSwitch": "Kunne ikke skifte",
       "fieldEmail": "Login-e-mail",
-      "fieldEmailHint": "Dette bliver lokationens egen admin-login — vi sender et link til at oprette en adgangskode."
+      "fieldEmailHint": "Dette bliver lokationens egen admin-login — vi sender et link til at oprette en adgangskode.",
+      "inheritTitle": "Hvad dit brand styrer",
+      "inheritSubtitle": "Vælg, hvilke indstillinger denne lokation arver direkte fra dit brand, eller angiv egne her.",
+      "inheritEverything": "Alt fra brandet",
+      "inheritEverythingHint": "Spejl brandet for hver indstilling. Slå nogen fra nedenfor for at tilpasse den kun til denne lokation.",
+      "setting_menu": "Menu",
+      "setting_hours": "Åbningstider",
+      "setting_zones": "Leveringszoner",
+      "setting_availability": "Varetilgængelighed",
+      "stateInherited": "Fra brandet",
+      "stateCustom": "Angivet her",
+      "inheritSaved": "Opdateret",
+      "inheritSaveError": "Kunne ikke opdatere – prøv igen.",
+      "menuRevertConfirm": "Skift menuen tilbage til brandets? Denne lokations tilpassede menu erstattes."
     },
     "menuEditor": {
       "sectionSizeLabel": "Størrelsesvalg",

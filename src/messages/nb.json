@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Kunne ikke opprette sted",
       "errorCouldNotSwitch": "Kunne ikke bytte",
       "fieldEmail": "Innloggings-e-post",
-      "fieldEmailHint": "Dette blir stedets egen admin-pålogging — vi sender en lenke for å sette et passord."
+      "fieldEmailHint": "Dette blir stedets egen admin-pålogging — vi sender en lenke for å sette et passord.",
+      "inheritTitle": "Hva merkevaren din styrer",
+      "inheritSubtitle": "Velg hvilke innstillinger denne lokasjonen arver direkte fra merkevaren din, eller angi egne her.",
+      "inheritEverything": "Alt fra merkevaren",
+      "inheritEverythingHint": "Speil merkevaren for hver innstilling. Slå av noen nedenfor for å tilpasse den kun for denne lokasjonen.",
+      "setting_menu": "Meny",
+      "setting_hours": "Åpningstider",
+      "setting_zones": "Leveringssoner",
+      "setting_availability": "Tilgjengelighet for varer",
+      "stateInherited": "Fra merkevaren",
+      "stateCustom": "Angitt her",
+      "inheritSaved": "Oppdatert",
+      "inheritSaveError": "Kunne ikke oppdatere – prøv igjen.",
+      "menuRevertConfirm": "Bytte menyen tilbake til merkevarens? Denne lokasjonens tilpassede meny erstattes."
     },
     "menuEditor": {
       "sectionSizeLabel": "Størrelsesvalg",

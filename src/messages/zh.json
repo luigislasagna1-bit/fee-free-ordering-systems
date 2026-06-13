@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "无法创建门店",
       "errorCouldNotSwitch": "切换失败",
       "fieldEmail": "登录邮箱",
-      "fieldEmailHint": "这将成为该门店自己的管理员登录账号——我们会发送设置密码的链接。"
+      "fieldEmailHint": "这将成为该门店自己的管理员登录账号——我们会发送设置密码的链接。",
+      "inheritTitle": "品牌统一管理的设置",
+      "inheritSubtitle": "选择本门店哪些设置实时沿用品牌，或在此单独设置。",
+      "inheritEverything": "全部沿用品牌",
+      "inheritEverythingHint": "所有设置均与品牌保持一致。关闭下方任一项即可仅为本门店单独设置。",
+      "setting_menu": "菜单",
+      "setting_hours": "营业时间",
+      "setting_zones": "配送范围",
+      "setting_availability": "商品供应情况",
+      "stateInherited": "沿用品牌",
+      "stateCustom": "单独设置",
+      "inheritSaved": "已更新",
+      "inheritSaveError": "更新失败，请重试。",
+      "menuRevertConfirm": "将菜单切换回品牌菜单？本门店的自定义菜单将被替换。"
     },
     "menuEditor": {
       "sectionSizeLabel": "尺寸选择",

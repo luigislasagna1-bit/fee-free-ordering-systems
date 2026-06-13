@@ -1501,7 +1501,20 @@
       "errorCouldNotCreate": "Nepavyko sukurti vietos",
       "errorCouldNotSwitch": "Nepavyko perjungti",
       "fieldEmail": "Prisijungimo el. paštas",
-      "fieldEmailHint": "Tai taps vietos administratoriaus prisijungimu — atsiųsime nuorodą slaptažodžiui nustatyti."
+      "fieldEmailHint": "Tai taps vietos administratoriaus prisijungimu — atsiųsime nuorodą slaptažodžiui nustatyti.",
+      "inheritTitle": "Ką valdo jūsų prekės ženklas",
+      "inheritSubtitle": "Pasirinkite, kuriuos nustatymus ši vieta tiesiogiai paveldi iš jūsų prekės ženklo, arba nustatykite savo čia.",
+      "inheritEverything": "Viskas iš prekės ženklo",
+      "inheritEverythingHint": "Atspindėkite prekės ženklą kiekvienam nustatymui. Išjunkite bet kurį žemiau, kad pritaikytumėte jį tik šiai vietai.",
+      "setting_menu": "Meniu",
+      "setting_hours": "Darbo laikas",
+      "setting_zones": "Pristatymo zonos",
+      "setting_availability": "Prekių prieinamumas",
+      "stateInherited": "Iš prekės ženklo",
+      "stateCustom": "Nustatyta čia",
+      "inheritSaved": "Atnaujinta",
+      "inheritSaveError": "Nepavyko atnaujinti — bandykite dar kartą.",
+      "menuRevertConfirm": "Grąžinti meniu į prekės ženklo? Šios vietos pritaikytas meniu bus pakeistas."
     },
     "toasts": {
       "saved": "Pakeitimai išsaugoti",

@@ -1501,7 +1501,20 @@
       "errorCouldNotCreate": "Nevarēja izveidot atrašanās vietu",
       "errorCouldNotSwitch": "Nevarēja pārslēgties",
       "fieldEmail": "Pieteikšanās e-pasts",
-      "fieldEmailHint": "Tas kļūst par atrašanās vietas savu administratora pieteikšanos — nosūtīsim saiti paroles iestatīšanai."
+      "fieldEmailHint": "Tas kļūst par atrašanās vietas savu administratora pieteikšanos — nosūtīsim saiti paroles iestatīšanai.",
+      "inheritTitle": "Ko kontrolē jūsu zīmols",
+      "inheritSubtitle": "Izvēlieties, kurus iestatījumus šī atrašanās vieta reāllaikā pārmanto no jūsu zīmola, vai iestatiet šeit savus.",
+      "inheritEverything": "Viss no zīmola",
+      "inheritEverythingHint": "Atspoguļojiet zīmolu katram iestatījumam. Izslēdziet jebkuru zemāk, lai pielāgotu to tikai šai atrašanās vietai.",
+      "setting_menu": "Ēdienkarte",
+      "setting_hours": "Darba laiks",
+      "setting_zones": "Piegādes zonas",
+      "setting_availability": "Vienību pieejamība",
+      "stateInherited": "No zīmola",
+      "stateCustom": "Iestatīts šeit",
+      "inheritSaved": "Atjaunināts",
+      "inheritSaveError": "Neizdevās atjaunināt — lūdzu, mēģiniet vēlreiz.",
+      "menuRevertConfirm": "Pārslēgt ēdienkarti atpakaļ uz zīmola? Šīs atrašanās vietas pielāgotā ēdienkarte tiks aizstāta."
     },
     "toasts": {
       "saved": "Izmaiņas saglabātas",

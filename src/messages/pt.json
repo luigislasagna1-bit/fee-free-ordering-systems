@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Não foi possível criar a localização",
       "errorCouldNotSwitch": "Não foi possível alternar",
       "fieldEmail": "E-mail de início de sessão",
-      "fieldEmailHint": "Torna-se o acesso de administrador próprio do local — enviaremos um link para definir uma palavra-passe."
+      "fieldEmailHint": "Torna-se o acesso de administrador próprio do local — enviaremos um link para definir uma palavra-passe.",
+      "inheritTitle": "O que a sua marca controla",
+      "inheritSubtitle": "Escolha quais definições esta localização herda em direto da sua marca, ou defina as suas próprias aqui.",
+      "inheritEverything": "Tudo a partir da marca",
+      "inheritEverythingHint": "Espelhar a marca em todas as definições. Desative qualquer uma abaixo para a personalizar apenas para esta localização.",
+      "setting_menu": "Menu",
+      "setting_hours": "Horário de funcionamento",
+      "setting_zones": "Zonas de entrega",
+      "setting_availability": "Disponibilidade dos itens",
+      "stateInherited": "Da marca",
+      "stateCustom": "Definido aqui",
+      "inheritSaved": "Atualizado",
+      "inheritSaveError": "Não foi possível atualizar — tente novamente.",
+      "menuRevertConfirm": "Voltar ao menu da marca? O menu personalizado desta localização será substituído."
     },
     "menuEditor": {
       "sectionSizeLabel": "Seleção de tamanho",

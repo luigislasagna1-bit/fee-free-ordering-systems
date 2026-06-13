@@ -1956,7 +1956,20 @@
       "errorCouldNotCreate": "Could not create location",
       "errorCouldNotSwitch": "Could not switch",
       "fieldEmail": "Login email",
-      "fieldEmailHint": "This becomes the location's own admin login — we'll email them a link to set a password."
+      "fieldEmailHint": "This becomes the location's own admin login — we'll email them a link to set a password.",
+      "inheritTitle": "What your brand controls",
+      "inheritSubtitle": "Choose which settings this location inherits live from your brand, or set its own here.",
+      "inheritEverything": "Everything from the brand",
+      "inheritEverythingHint": "Mirror the brand for every setting. Turn off any below to customize it just for this location.",
+      "setting_menu": "Menu",
+      "setting_hours": "Opening hours",
+      "setting_zones": "Delivery zones",
+      "setting_availability": "Item availability",
+      "stateInherited": "From the brand",
+      "stateCustom": "Set here",
+      "inheritSaved": "Updated",
+      "inheritSaveError": "Couldn't update — please try again.",
+      "menuRevertConfirm": "Switch the menu back to the brand's? This location's custom menu will be replaced."
     },
     "menuEditor": {
       "sectionSizeLabel": "Size selection",

@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Kunde inte skapa platsen",
       "errorCouldNotSwitch": "Kunde inte byta",
       "fieldEmail": "Inloggnings-e-post",
-      "fieldEmailHint": "Detta blir platsens egna admininloggning — vi mejlar en länk för att ange ett lösenord."
+      "fieldEmailHint": "Detta blir platsens egna admininloggning — vi mejlar en länk för att ange ett lösenord.",
+      "inheritTitle": "Vad ditt varumärke styr",
+      "inheritSubtitle": "Välj vilka inställningar den här platsen ärver direkt från ditt varumärke, eller ange egna här.",
+      "inheritEverything": "Allt från varumärket",
+      "inheritEverythingHint": "Spegla varumärket för varje inställning. Stäng av någon nedan för att anpassa den enbart för den här platsen.",
+      "setting_menu": "Meny",
+      "setting_hours": "Öppettider",
+      "setting_zones": "Leveranszoner",
+      "setting_availability": "Tillgänglighet för artiklar",
+      "stateInherited": "Från varumärket",
+      "stateCustom": "Anges här",
+      "inheritSaved": "Uppdaterad",
+      "inheritSaveError": "Kunde inte uppdatera – försök igen.",
+      "menuRevertConfirm": "Återställ menyn till varumärkets? Den här platsens anpassade meny ersätts."
     },
     "menuEditor": {
       "sectionSizeLabel": "Storleksval",

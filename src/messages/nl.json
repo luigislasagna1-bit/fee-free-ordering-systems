@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Locatie kon niet worden aangemaakt",
       "errorCouldNotSwitch": "Overschakelen mislukt",
       "fieldEmail": "Inlog-e-mail",
-      "fieldEmailHint": "Dit wordt de eigen beheerderslogin van de locatie — we sturen een link om een wachtwoord in te stellen."
+      "fieldEmailHint": "Dit wordt de eigen beheerderslogin van de locatie — we sturen een link om een wachtwoord in te stellen.",
+      "inheritTitle": "Wat je merk bepaalt",
+      "inheritSubtitle": "Kies welke instellingen deze locatie live overneemt van je merk, of stel hier eigen instellingen in.",
+      "inheritEverything": "Alles van het merk",
+      "inheritEverythingHint": "Het merk voor elke instelling spiegelen. Zet er hieronder een uit om die alleen voor deze locatie aan te passen.",
+      "setting_menu": "Menu",
+      "setting_hours": "Openingstijden",
+      "setting_zones": "Bezorgzones",
+      "setting_availability": "Beschikbaarheid van artikelen",
+      "stateInherited": "Van het merk",
+      "stateCustom": "Hier ingesteld",
+      "inheritSaved": "Bijgewerkt",
+      "inheritSaveError": "Bijwerken mislukt — probeer het opnieuw.",
+      "menuRevertConfirm": "Terug naar het menu van het merk? Het aangepaste menu van deze locatie wordt vervangen."
     },
     "menuEditor": {
       "sectionSizeLabel": "Maatkeuze",

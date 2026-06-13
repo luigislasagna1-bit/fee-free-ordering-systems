@@ -2365,7 +2365,20 @@
       "errorCouldNotCreate": "Không thể tạo chi nhánh",
       "errorCouldNotSwitch": "Không thể chuyển đổi",
       "fieldEmail": "Email đăng nhập",
-      "fieldEmailHint": "Đây sẽ là tài khoản quản trị riêng của địa điểm — chúng tôi sẽ gửi liên kết để đặt mật khẩu."
+      "fieldEmailHint": "Đây sẽ là tài khoản quản trị riêng của địa điểm — chúng tôi sẽ gửi liên kết để đặt mật khẩu.",
+      "inheritTitle": "Những gì thương hiệu của bạn kiểm soát",
+      "inheritSubtitle": "Chọn những cài đặt mà địa điểm này kế thừa trực tiếp từ thương hiệu của bạn, hoặc tự thiết lập tại đây.",
+      "inheritEverything": "Mọi thứ từ thương hiệu",
+      "inheritEverythingHint": "Sao chép thương hiệu cho mọi cài đặt. Tắt bất kỳ mục nào bên dưới để tùy chỉnh riêng cho địa điểm này.",
+      "setting_menu": "Thực đơn",
+      "setting_hours": "Giờ mở cửa",
+      "setting_zones": "Khu vực giao hàng",
+      "setting_availability": "Tình trạng món",
+      "stateInherited": "Từ thương hiệu",
+      "stateCustom": "Đặt tại đây",
+      "inheritSaved": "Đã cập nhật",
+      "inheritSaveError": "Không thể cập nhật — vui lòng thử lại.",
+      "menuRevertConfirm": "Chuyển thực đơn về của thương hiệu? Thực đơn tùy chỉnh của địa điểm này sẽ bị thay thế."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Bảng điều khiển thương hiệu",

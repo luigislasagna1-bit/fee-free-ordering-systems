@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Asukoha loomine ebaõnnestus",
       "errorCouldNotSwitch": "Asukoha vahetus ebaõnnestus",
       "fieldEmail": "Sisselogimise e-post",
-      "fieldEmailHint": "Sellest saab asukoha oma administraatori sisselogimine — saadame lingi parooli määramiseks."
+      "fieldEmailHint": "Sellest saab asukoha oma administraatori sisselogimine — saadame lingi parooli määramiseks.",
+      "inheritTitle": "Mida teie bränd juhib",
+      "inheritSubtitle": "Valige, millised seaded see asukoht teie brändilt reaalajas pärib, või määrake siin enda omad.",
+      "inheritEverything": "Kõik brändilt",
+      "inheritEverythingHint": "Peegeldage brändi iga seade puhul. Lülitage allpool mõni välja, et kohandada seda ainult selle asukoha jaoks.",
+      "setting_menu": "Menüü",
+      "setting_hours": "Lahtiolekuajad",
+      "setting_zones": "Tarnetsoonid",
+      "setting_availability": "Toodete saadavus",
+      "stateInherited": "Brändilt",
+      "stateCustom": "Määratud siin",
+      "inheritSaved": "Uuendatud",
+      "inheritSaveError": "Uuendamine ebaõnnestus — proovige uuesti.",
+      "menuRevertConfirm": "Kas lülitada menüü tagasi brändi omale? Selle asukoha kohandatud menüü asendatakse."
     },
     "menuEditor": {
       "sectionSizeLabel": "Suuruse valik",

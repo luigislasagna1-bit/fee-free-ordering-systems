@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Standort konnte nicht erstellt werden",
       "errorCouldNotSwitch": "Wechsel nicht möglich",
       "fieldEmail": "Anmelde-E-Mail",
-      "fieldEmailHint": "Dies wird der eigene Admin-Login des Standorts — wir senden einen Link zum Festlegen eines Passworts."
+      "fieldEmailHint": "Dies wird der eigene Admin-Login des Standorts — wir senden einen Link zum Festlegen eines Passworts.",
+      "inheritTitle": "Was Ihre Marke steuert",
+      "inheritSubtitle": "Wählen Sie, welche Einstellungen dieser Standort live von Ihrer Marke übernimmt oder hier selbst festlegt.",
+      "inheritEverything": "Alles von der Marke",
+      "inheritEverythingHint": "Die Marke für jede Einstellung spiegeln. Deaktivieren Sie unten eine, um sie nur für diesen Standort anzupassen.",
+      "setting_menu": "Menü",
+      "setting_hours": "Öffnungszeiten",
+      "setting_zones": "Liefergebiete",
+      "setting_availability": "Artikelverfügbarkeit",
+      "stateInherited": "Von der Marke",
+      "stateCustom": "Hier festgelegt",
+      "inheritSaved": "Aktualisiert",
+      "inheritSaveError": "Aktualisierung fehlgeschlagen — bitte erneut versuchen.",
+      "menuRevertConfirm": "Zum Menü der Marke zurückwechseln? Das individuelle Menü dieses Standorts wird ersetzt."
     },
     "menuEditor": {
       "sectionSizeLabel": "Größenauswahl",

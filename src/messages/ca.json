@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "No s'ha pogut crear la ubicació",
       "errorCouldNotSwitch": "No s'ha pogut canviar",
       "fieldEmail": "Correu d'inici de sessió",
-      "fieldEmailHint": "Aquest serà l'accés d'administrador propi de la ubicació — li enviarem un enllaç per definir una contrasenya."
+      "fieldEmailHint": "Aquest serà l'accés d'administrador propi de la ubicació — li enviarem un enllaç per definir una contrasenya.",
+      "inheritTitle": "Què controla la teva marca",
+      "inheritSubtitle": "Tria quins paràmetres hereta aquest local de la teva marca en directe, o configura'n els propis aquí.",
+      "inheritEverything": "Tot de la marca",
+      "inheritEverythingHint": "Reflecteix la marca a cada paràmetre. Desactiva'n qualsevol de sota per personalitzar-lo només per a aquest local.",
+      "setting_menu": "Menú",
+      "setting_hours": "Horari d'obertura",
+      "setting_zones": "Zones de lliurament",
+      "setting_availability": "Disponibilitat d'articles",
+      "stateInherited": "De la marca",
+      "stateCustom": "Configurat aquí",
+      "inheritSaved": "Actualitzat",
+      "inheritSaveError": "No s'ha pogut actualitzar — torna-ho a provar.",
+      "menuRevertConfirm": "Vols tornar el menú al de la marca? El menú personalitzat d'aquest local se substituirà."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selecció de mida",

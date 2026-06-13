@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Nije moguće kreirati lokaciju",
       "errorCouldNotSwitch": "Nije moguće prebaciti se",
       "fieldEmail": "E-pošta za prijavu",
-      "fieldEmailHint": "Ovo postaje vlastiti administratorski login lokacije — poslat ćemo poveznicu za postavljanje lozinke."
+      "fieldEmailHint": "Ovo postaje vlastiti administratorski login lokacije — poslat ćemo poveznicu za postavljanje lozinke.",
+      "inheritTitle": "Što kontrolira vaš brend",
+      "inheritSubtitle": "Odaberite koje postavke ova lokacija uživo nasljeđuje od vašeg brenda ili ovdje postavite vlastite.",
+      "inheritEverything": "Sve od brenda",
+      "inheritEverythingHint": "Preslikajte brend za svaku postavku. Isključite bilo koju ispod kako biste je prilagodili samo za ovu lokaciju.",
+      "setting_menu": "Jelovnik",
+      "setting_hours": "Radno vrijeme",
+      "setting_zones": "Zone dostave",
+      "setting_availability": "Dostupnost stavki",
+      "stateInherited": "Od brenda",
+      "stateCustom": "Postavljeno ovdje",
+      "inheritSaved": "Ažurirano",
+      "inheritSaveError": "Ažuriranje nije uspjelo — pokušajte ponovno.",
+      "menuRevertConfirm": "Vratiti jelovnik na onaj brenda? Prilagođeni jelovnik ove lokacije bit će zamijenjen."
     },
     "menuEditor": {
       "sectionSizeLabel": "Odabir veličine",

@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Nu s-a putut crea locația",
       "errorCouldNotSwitch": "Nu s-a putut comuta",
       "fieldEmail": "E-mail de conectare",
-      "fieldEmailHint": "Acesta devine contul de administrator propriu al locației — îi vom trimite un link pentru a seta o parolă."
+      "fieldEmailHint": "Acesta devine contul de administrator propriu al locației — îi vom trimite un link pentru a seta o parolă.",
+      "inheritTitle": "Ce controlează brandul tău",
+      "inheritSubtitle": "Alege ce setări moștenește această locație în timp real de la brandul tău sau stabilește-le pe ale ei aici.",
+      "inheritEverything": "Totul de la brand",
+      "inheritEverythingHint": "Oglindește brandul pentru fiecare setare. Dezactivează oricare de mai jos pentru a o personaliza doar pentru această locație.",
+      "setting_menu": "Meniu",
+      "setting_hours": "Program de funcționare",
+      "setting_zones": "Zone de livrare",
+      "setting_availability": "Disponibilitatea articolelor",
+      "stateInherited": "De la brand",
+      "stateCustom": "Stabilit aici",
+      "inheritSaved": "Actualizat",
+      "inheritSaveError": "Nu s-a putut actualiza — încearcă din nou.",
+      "menuRevertConfirm": "Revii la meniul brandului? Meniul personalizat al acestei locații va fi înlocuit."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selecție mărime",

@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Toimipisteen luominen epäonnistui",
       "errorCouldNotSwitch": "Vaihtaminen epäonnistui",
       "fieldEmail": "Kirjautumissähköposti",
-      "fieldEmailHint": "Tästä tulee toimipisteen oma järjestelmänvalvojan kirjautuminen — lähetämme linkin salasanan asettamiseksi."
+      "fieldEmailHint": "Tästä tulee toimipisteen oma järjestelmänvalvojan kirjautuminen — lähetämme linkin salasanan asettamiseksi.",
+      "inheritTitle": "Mitä brändisi hallitsee",
+      "inheritSubtitle": "Valitse, mitkä asetukset tämä toimipiste perii suoraan brändiltäsi tai määritä omat tässä.",
+      "inheritEverything": "Kaikki brändiltä",
+      "inheritEverythingHint": "Peilaa brändiä jokaisessa asetuksessa. Poista jokin alla käytöstä mukauttaaksesi sen vain tälle toimipisteelle.",
+      "setting_menu": "Ruokalista",
+      "setting_hours": "Aukioloajat",
+      "setting_zones": "Toimitusalueet",
+      "setting_availability": "Tuotteiden saatavuus",
+      "stateInherited": "Brändiltä",
+      "stateCustom": "Määritetty tässä",
+      "inheritSaved": "Päivitetty",
+      "inheritSaveError": "Päivitys epäonnistui – yritä uudelleen.",
+      "menuRevertConfirm": "Palautetaanko ruokalista brändin mukaiseksi? Tämän toimipisteen mukautettu ruokalista korvataan."
     },
     "menuEditor": {
       "sectionSizeLabel": "Koon valinta",

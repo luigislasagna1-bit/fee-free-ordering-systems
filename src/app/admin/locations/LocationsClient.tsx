@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Loader2, Plus, MapPin, X, ExternalLink, ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { InheritancePanel } from "./InheritancePanel";
 
 type Location = {
   id: string;
@@ -126,6 +127,11 @@ export function LocationsClient({
           <strong>{t("infoMenusShared")}</strong> {t("infoMenusSharedBody")}
         </div>
       )}
+
+      {/* Child locations get the per-option inheritance panel (Luigi's
+          multi-location spec). Hidden for the brand parent (nothing to inherit).
+          The panel re-confirms child status via its own API call. */}
+      {!isBrandParent && <InheritancePanel />}
 
       <div className="space-y-3">
         {allLocations.map((loc) => {

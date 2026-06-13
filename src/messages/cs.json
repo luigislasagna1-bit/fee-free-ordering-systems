@@ -1579,7 +1579,20 @@
       "errorCouldNotCreate": "Pobočku se nepodařilo vytvořit",
       "errorCouldNotSwitch": "Přepnutí se nepodařilo",
       "fieldEmail": "Přihlašovací e-mail",
-      "fieldEmailHint": "Toto se stane vlastním administrátorským přihlášením pobočky — pošleme odkaz pro nastavení hesla."
+      "fieldEmailHint": "Toto se stane vlastním administrátorským přihlášením pobočky — pošleme odkaz pro nastavení hesla.",
+      "inheritTitle": "Co řídí vaše značka",
+      "inheritSubtitle": "Vyberte, která nastavení tato pobočka dědí živě z vaší značky, nebo zde nastavte vlastní.",
+      "inheritEverything": "Vše ze značky",
+      "inheritEverythingHint": "Zrcadlete značku u každého nastavení. Vypnutím kteréhokoli níže jej přizpůsobíte jen pro tuto pobočku.",
+      "setting_menu": "Menu",
+      "setting_hours": "Otevírací doba",
+      "setting_zones": "Zóny rozvozu",
+      "setting_availability": "Dostupnost položek",
+      "stateInherited": "Ze značky",
+      "stateCustom": "Nastaveno zde",
+      "inheritSaved": "Aktualizováno",
+      "inheritSaveError": "Nepodařilo se aktualizovat – zkuste to znovu.",
+      "menuRevertConfirm": "Vrátit menu zpět na menu značky? Vlastní menu této pobočky bude nahrazeno."
     },
     "menuEditor": {
       "sectionSizeLabel": "Výběr velikosti",
