@@ -2225,21 +2225,27 @@ export function OrderingPageClient({
     // current scheduledFor. Closed-now restaurants get the same default-
     // fill UX as catering — customer never sees an invalid empty-ASAP
     // state when the rule is in effect.
-    if (scheduleRequired && effectiveMinScheduledLocal) {
-      if (!customerInfo.scheduledFor) {
-        setCustomerInfo({ ...customerInfo, scheduledFor: effectiveMinScheduledLocal });
-      } else {
+    // FUNCTIONAL updater — reads the FRESH ci so it only ever touches
+    // scheduledFor and never clobbers fields another mount effect just set
+    // (the device-remembered guest name/email/phone). The old `{ ...customerInfo }`
+    // closure snapshotted the initial EMPTY form and, when scheduling was forced
+    // on mount (closed-now / lead / catering / fulfilment), wrote that stale
+    // empty identity back — wiping the guest prefill. (Reseller report cmq3l14kq.)
+    setCustomerInfo((ci) => {
+      if (scheduleRequired && effectiveMinScheduledLocal) {
+        if (!ci.scheduledFor) return { ...ci, scheduledFor: effectiveMinScheduledLocal };
         try {
-          if (new Date(customerInfo.scheduledFor) < new Date(effectiveMinScheduledLocal)) {
-            setCustomerInfo({ ...customerInfo, scheduledFor: effectiveMinScheduledLocal });
+          if (new Date(ci.scheduledFor) < new Date(effectiveMinScheduledLocal)) {
+            return { ...ci, scheduledFor: effectiveMinScheduledLocal };
           }
         } catch { /* malformed — ignore */ }
+        return ci;
       }
-    } else if (!schedulingEnabled && customerInfo.scheduledFor) {
       // Scheduling turned off (and nothing forces it) — drop any stale slot so
       // the order goes through as ASAP.
-      setCustomerInfo({ ...customerInfo, scheduledFor: "" });
-    }
+      if (!schedulingEnabled && ci.scheduledFor) return { ...ci, scheduledFor: "" };
+      return ci;
+    });
     prevCateringRef.current = cartHasCatering;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduleRequired, effectiveMinScheduledLocal, schedulingEnabled]);
